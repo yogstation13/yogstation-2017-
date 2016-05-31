@@ -17,7 +17,9 @@
 	var/obj/item/device/flashlight/F = null
 	var/can_flashlight = 0
 	var/gang //Is this a gang outfit?
+	var/canbetorn //can this particular item be torn down to be used for cloth?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
+	var/tearhealth = 100
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
@@ -325,6 +327,12 @@ BLIND     // can't see anything
 	put_on_delay = 80
 	burn_state = FIRE_PROOF
 
+/obj/item/clothing/torncloth
+	name = "strip of torn cloth"
+	desc = "Looks like it was pulled from a piece of clothing with considerable force. Could be used for a makeshift bandage if worked a little bit on a sturdy surface."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "clothscrap"
+
 //Under clothing
 
 /obj/item/clothing/under
@@ -334,6 +342,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.90
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	canbetorn = 1 //all jumpsuits can be torn down and used for cloth in an emergency
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/random_sensor = 1
@@ -363,6 +372,32 @@ BLIND     // can't see anything
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
 	adjusted = 0
 	..()
+
+/obj/item/clothing/under/proc/handle_tear(mob/user)
+	if (src.canbetorn)
+		if (src.tearhealth >= 20)
+			src.tearhealth -= 20
+			src.permeability_coefficient += 0.20
+			if (src.armor)
+				if (src.armor["brute"])
+					src.armor["brute"] -= 2
+				if (src.armor["melee"])
+					src.armor["melee"] -= 2
+			if (user)
+				if (user.loc)
+					new /obj/item/clothing/torncloth(user.loc)
+					user.visible_message("You hear cloth tearing.", "A segment of [src] falls away to the floor, torn apart.", "*riiip*")
+			return 1
+		else
+			//no more cloth left on the item, so nix it
+			user.visible_message("[src] falls away to tatters, stripped to its barest seams.")
+			qdel(src)
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H.update_inv_w_uniform()
+		return 1
+	else
+		return 0
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)
@@ -409,6 +444,20 @@ BLIND     // can't see anything
 			user << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
 		user << "\A [hastie] is attached to it."
+	if(src.tearhealth)
+		switch (src.tearhealth)
+			if (100)
+				user << "It appears to be in pristine condition."
+			if (80)
+				user << "The garment appears to be torn slightly."
+			if (60)
+				user << "Segments of the fabric are torn away to the seams."
+			if (40)
+				user << "The garment is badly damaged, several seams completely torn away."
+			if (20)
+				user << "The basic form of the garment is barely holding together, the bulk badly torn."
+			if (0)
+				user << "It is completely torn, with only tatters remaining. Completely unusuable."
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
@@ -497,6 +546,18 @@ BLIND     // can't see anything
 		fitted = initial(fitted)
 		body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	return adjusted
+
+/obj/item/clothing/under/verb/rip()
+	set name = "Tear cloth from garment"
+	set category = "Object"
+	set src in usr
+	var/mob/M = usr
+	if (istype(M, /mob/dead/))
+		return
+	if (!can_use(M))
+		return
+
+	src.handle_tear(usr)
 
 /obj/item/clothing/under/examine(mob/user)
 	..()

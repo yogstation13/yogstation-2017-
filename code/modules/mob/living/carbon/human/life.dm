@@ -38,6 +38,11 @@
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
+
+		//handle bandage healing
+		handle_bandaged_limbs()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -50,6 +55,11 @@
 	else
 		return pressure
 
+/mob/living/carbon/human/proc/handle_bandaged_limbs()
+	for(var/obj/item/bodypart/L in bodyparts)
+		if (L.can_be_bandaged && L.bandaged)
+			var/obj/item/medical/bandage/B = L.bandaged
+			B.handle_bandage(src)
 
 /mob/living/carbon/human/handle_disabilities()
 	if(eye_blind)			//blindness, heals slowly over time

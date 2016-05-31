@@ -13,6 +13,8 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
+	var/can_be_bandaged = 1
+	var/bandaged = 0
 	var/list/embedded_objects = list()
 
 	//Coloring and proper item icon update
@@ -340,3 +342,16 @@
 	icon_state = "severedtail"
 	color = "#161"
 	var/markings = "Smooth"
+
+
+/////////////////////////////////////////////////////////////////////////
+
+/obj/item/bodypart/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed
+	switch(name)
+		if("l_leg")		return "left leg"
+		if("r_leg")		return "right leg"
+		if("l_arm")		return "left arm"
+		if("r_arm")		return "right arm"
+		if("chest")     return "chest"
+		if("head")		return "head"
+		else			return name

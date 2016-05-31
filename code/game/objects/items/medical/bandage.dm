@@ -1,0 +1,192 @@
+/obj/item/medical/bandage
+	name = "\improper Bandage"
+	desc = "A generic bandage of unknown origin and use. What does it cover? Is it a trendy accessory? Will I ever know?."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "improv_bandage"
+	w_class = 1
+	throw_speed = 3
+	throw_range = 7
+	var/healtype = "brute" //determines what damage type the item heals
+	var/healamount = 70 //determines how much it heals OVERALL (over duration)
+	var/staunch_bleeding = 600 //does it stop bleeding and if so, how much?
+	var/duration = 40 //duration in ticks of healing effect (these roughly equate to 1.5s each)
+	var/activefor = 1
+	var/used = 0 //has the bandage been used or not?
+	var/obj/item/bodypart/healing_limb = null
+	//bandages unwrap bloodied after the duration ends and fall to the floor with the user's blood on them
+
+/obj/item/medical/bandage/proc/handle_bandage(mob/living/carbon/human/H)
+	//handles bandage healing per tick, called in life
+	if (!src.used)
+		if (src.healing_limb && src.healing_limb.status == ORGAN_ORGANIC)
+			var/success = 0
+			switch (src.healtype)
+				if ("brute")
+					if (src.healing_limb.brute_dam)
+						success = src.healing_limb.heal_damage(src.healamount/src.duration, 0, 0)
+					else
+						H << "<span class='notice'>The wounds on your [src.healing_limb.getDisplayName()] have stopped bleeding and appear to be healed.</span>"
+						src.used = 1
+				if ("burn")
+					if (src.healing_limb.burn_dam)
+						success = src.healing_limb.heal_damage(0, src.healamount/src.duration, 0)
+					else
+						src.used = 1
+						H << "<span class='notice'>The burns on your [src.healing_limb.getDisplayName()] feel much better, and seem to be completely healed.</span>"
+			if (success)
+				H.update_damage_overlays(0)
+			if (src.staunch_bleeding && !H.bleedsuppress)
+				H.suppress_bloodloss(src.staunch_bleeding)
+			if (src.activefor <= src.duration)
+				src.activefor += 1
+			else
+				src.used = 1
+	else
+		//eject the bandage onto the floor with
+		src.fall_off(H, src.healing_limb)
+
+/obj/item/medical/bandage/proc/unwrap(mob/living/M, mob/living/carbon/human/T)
+	//DUPLICATE CODE BUT I'M FUCKING LAZY
+	if (src.healing_limb.bandaged)
+		M.visible_message("<span class='warning'>[M] grabs and pulls at the [src] on [T]'s [src.healing_limb.name], unwrapping it instantly!</span>", "<span class='notice'>You deftly yank [src] off [T]'s [src.healing_limb.getDisplayName()].</span>")
+		src.name = "used [src.name]"
+		src.desc = "Piled into a tangled, crusty mess, these bandages have obviously been used and then disposed of in great haste."
+		src.color = "red"
+		src.loc = T.loc
+		src.healing_limb.bandaged = 0
+		src.used = 1
+
+
+/obj/item/medical/bandage/proc/fall_off(mob/living/carbon/human/H, obj/item/bodypart/L)
+	if (L.bandaged)
+		H << "You loosen the bandage around [L.getDisplayName()] and let it fall to the floor."
+		src.name = "used [src.name]"
+		src.desc = "Bloodied and crusted, these bandages have clearly been used and aren't fit for much anymore. Seems as if they were wrapped around someone's [L.getDisplayName()] last."
+		src.color = "red"
+		src.loc = H.loc
+		L.bandaged = 0
+		src.used = 1
+
+/obj/item/medical/bandage/proc/apply(mob/living/user, mob/tar, obj/item/bodypart/lt)
+	var/mob/living/carbon/human/temphuman
+	if (!ishuman(user))
+		user << "<span class='warning'>You don't have the dexterity to use this!</span>"
+		return 0
+
+	if (ishuman(tar))
+		temphuman = tar
+		if (!lt.bandaged)
+			if (user == tar)
+				user.visible_message("<span class='notice'>[user] begins winding [src] about their [lt.getDisplayName()]..</span>", "<span class='notice'>You begin winding [src] around your [lt.getDisplayName()]..</span>")
+			else
+				user.visible_message("<span class='notice'>[user] begins winding [src] about [tar]'s [lt.getDisplayName()]..</span>", "<span class='notice'>You begin winding [src] around [tar]'s [lt.getDisplayName()]..</span>")
+
+			if (do_after(user, 50, target = tar))
+				if(!user.unEquip(src))
+					return 0
+				if(!src.blood_DNA)
+					src.blood_DNA = list()
+				src.blood_DNA.Add(temphuman.dna.unique_enzymes)
+				src.healing_limb = lt
+				lt.bandaged = src
+				src.loc = temphuman
+				user.visible_message("[user] has applied [src] successfully.", "You have applied [src] successfully.")
+				return 1
+			else
+				if(user.get_active_hand() == src)
+					if(!user.unEquip(src))
+						return 0
+					src.loc = temphuman.loc
+					user.visible_message("<span class='warning'>Interrupted, [user] fumbles and drops [src] to the floor!</span>", "<span class='warning'>Losing your concentration, you find yourself unable to apply [src] and let it slip through your fingers to pool upon the floor!</span>")
+				else
+					user.visible_message("<span class='warning'>[user] stops applying [src] to [tar].</span>", "<span class='warning'>You stop applying [src] to [tar].</span>")
+				return 0
+		else
+			user << "[tar] is already bandaged for the moment."
+			return 0
+	else
+		user << "This doesn't look like it'll work."
+		return 0
+
+/obj/item/medical/bandage/proc/wash(obj/O, mob/user)
+	if (src.used)
+		user << "You clean [src] fastidiously washing away as much of the detritus and residue as you can. The bandage can probably be used again now."
+		src.name = "reused bandages"
+		src.desc = "Whatever quality these bandages once were, there's no sign of it any more. Not like the wounds you put this stuff over care, though."
+		src.healamount = src.healamount * 0.85
+		src.duration = src.duration * 1.15
+		src.activefor = 1
+		src.blood_DNA = 0
+		src.color = 0
+		src.used = 0
+	else
+		user << "There's no real need to wash this - it's perfectly clean!"
+
+/obj/item/medical/bandage/attack(mob/living/carbon/human/T, mob/living/carbon/human/U)
+	if (src.used)
+		U << "These bandages have already been used. They're worthless as they are. Maybe if they had the blood washed out of them with running water?"
+		return
+
+	var/obj/item/bodypart/O =  T.get_bodypart(check_zone(U.zone_selected))
+
+	if (O.status == ORGAN_ROBOTIC)
+		U << "You don't have time to explain why there's no time to explain why you can't bandage this very obviously robotic limb."
+		return
+
+	if (O.can_be_bandaged && !O.bandaged)
+		src.apply(U, T, O)
+		return
+	else if (O.can_be_bandaged && O.bandaged)
+		U << "This limb has already been bandaged, so there's no point putting another one on. Your mummification fetish will have to wait for another day."
+		return
+	else if (!O.can_be_bandaged)
+		U << "Upon further examination, you conclusively determine that bandaging this would be an absolute waste of time."
+		return
+
+
+/obj/item/medical/bandage/improvised
+	name = "improvised bandage"
+	desc = "A primitive bandage fashioned from some torn cloth and leftover elastic. Will do in a pinch, but is nowhere near as effective as actual medical-grade bandages."
+	healtype = "brute"
+	healamount = 40
+	duration = 120
+	staunch_bleeding = 240
+
+/obj/item/medical/bandage/improvised_soaked
+	name = "soaked improvised bandage"
+	desc = "Primitive bandage thoroughly soaked in water, Probably decent for a burn wound, but definitely isn't sterile. Useless at stopping bleeding."
+	healtype = "burn"
+	color = "blue"
+	healamount = 40
+	duration = 120
+	staunch_bleeding = 0
+
+/obj/item/medical/bandage/destitute
+	name = "beggar's bandage"
+	desc = "Aptly named. These tattered shreds of cloth look about as useful as their namesake."
+	healamount = 15
+	duration = 120
+	staunch_bleeding = 120
+
+/obj/item/medical/bandage/normal
+	name = "standard NT-issue emergency bandage"
+	desc = "Does the job, and does it well. Wrap tightly around a wound. Smells like a pay docking."
+	healamount = 65
+	duration = 80
+	staunch_bleeding = 600
+
+/obj/item/medical/bandage/burn
+	name = "standard NT-issue burn dressing"
+	desc = "Does the job, but stings like all hell. Wrap tightly around the wound. Smells slightly worse than the burning flesh it is supposed to heal, probably because it's being docked from your pay."
+	healamount = 65
+	healtype = "burn"
+	duration = 80
+	staunch_bleeding = 0
+
+/obj/item/medical/bandage/quality
+	name = "\improper RB-ST brand medicinal bandages"
+	desc = "Quality bandages with a novel toolbox-icon weave. Comes with a polymer stabilizing agent built into the fabric to stiffen and secure broken limbs. Smells like cough syrup and pine needles."
+	color = "blue"
+	healamount = 90
+	duration = 35
+	staunch_bleeding = 1200
