@@ -27,14 +27,28 @@
 # +SPAWN (or +CREATE) = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too)
 # +EVERYTHING (or +HOST or +ALL) = Simply gives you everything without having to type every flag
 
-Admin Observer
-Moderator		= +ADMIN
-Admin Candidate	= +@
-Trial Admin		= +@ +SPAWN +REJUV +VAREDIT +BAN
-Badmin			= +@ +POSSESS +BUILDMODE +SERVER +FUN
-Game Admin		= +@ +STEALTH +SOUNDS +DEBUG
-Game Master		= +EVERYTHING
-
-Host			= +EVERYTHING
-
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
+ 
+AdminOnVacation	=	+STEALTH
+ 
+Head Coder	=	+EVERYTHING
+Council Member	=	+EVERYTHING
+ 
+SeniorAdmin	=	+EVERYTHING
+ProbationAdmin	=	+STEALTH +ADMIN +REJUV +BAN +SERVER +VAREDIT +TICKET
+Primary Admin	=	+STEALTH +ADMIN +REJUV +BAN +SPAWN +VAREDIT +DEBUG +SERVER +FUN +POSSESS +BUILDMODE +TICKET
+Non Playing Admin	=	+STEALTH +ADMIN +REJUV +NOJOIN +BAN +SERVER
+Administrator	=	+STEALTH +ADMIN +REJUV +BAN +SPAWN +VAREDIT +DEBUG +SERVER +FUN +TICKET
+Admin Observer	=	+STEALTH +TICKET
+ 
+Non Playing Mod	=	+STEALTH +ADMIN +REJUV +NOJOIN
+ModeratorOnProbation	=	+STEALTH +ADMIN +REJUV +NOJOIN +BAN +TICKET
+Moderator V2	=	+STEALTH +ADMIN +REJUV +BAN +TICKET
+Moderator	=	+STEALTH +ADMIN +REJUV +TICKET
+ 
+Senior Coder	=	+ADMIN +VAREDIT +DEBUG +SERVER +FUN +BUILDMODE +SPAWN
+Coder Initiate	=	+STEALTH
+Coder	=	+ADMIN +VAREDIT +DEBUG +SERVER +FUN +BUILDMODE +SPAWN
+ 
+Retired Admin	=	+ADMIN +STEALTH +REJUV +SERVER +BAN +TICKET
+ 
+Bot	=	+ALL

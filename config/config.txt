@@ -1,11 +1,11 @@
 ## Server name: This appears at the top of the screen in-game. Remove the # infront of SERVERNAME and replace 'tgstation' with the name of your choice
-# SERVERNAME tgstation
+SERVERNAME Yogstation 13 [99% LAGFREE!][Custom map!]
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Space Station 13
+# STATIONNAME Space Station 13
 
 # Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
-LOBBY_COUNTDOWN 120
+LOBBY_COUNTDOWN 180
 
 # Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 90
@@ -14,14 +14,14 @@ ROUND_END_COUNTDOWN 90
 ADMIN_LEGACY_SYSTEM
 
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
-BAN_LEGACY_SYSTEM
+#BAN_LEGACY_SYSTEM
 
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
 ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
 ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
-#USE_AGE_RESTRICTION_FOR_JOBS
+USE_AGE_RESTRICTION_FOR_JOBS
 
 ## log OOC channel
 LOG_OOC
@@ -102,7 +102,7 @@ NORESPAWN
 # DONT_DEL_NEWMOB
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Yournamehere
+HOSTEDBY Yogstation13-bot
 
 ## Set to jobban "Guest-" accounts from Captain, HoS, HoP, CE, RD, CMO, Warden, Security, Detective, and AI positions.
 ## Set to 1 to jobban them from those positions, set to 0 to allow them.
@@ -128,19 +128,19 @@ GUEST_BAN
 # SERVER ss13.example.com:2506
 
 ## forum address
-# FORUMURL http://tgstation13.org/phpBB/index.php
+FORUMURL http://yogstation.net
 
 ## Wiki address
 # WIKIURL http://www.tgstation13.org/wiki
 
 ##Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+RULESURL http://forums.yogstation.net/index.php?pages/rules/
 
 ##Github address
-# GITHUBURL https://www.github.com/tgstation/-tg-station
+GITHUBURL https://www.github.com/yogstation13/yogstation
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+BANAPPEALS http://forums.yogstation.net/index.php?forms/unban-appeal-form.1/respond
 
 ## In-game features
 ##Toggle for having jobs load up from the .txt
@@ -160,7 +160,7 @@ ALLOW_HOLIDAYS
 #USEIRCBOT
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.9
+TICKLAG 0.65
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
