@@ -374,15 +374,15 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/proc/handle_tear(mob/user)
-	if (src.canbetorn)
-		if (src.tearhealth >= 20)
-			src.tearhealth -= 20
-			src.permeability_coefficient += 0.20
-			if (src.armor)
-				if (src.armor["brute"])
-					src.armor["brute"] -= 2
-				if (src.armor["melee"])
-					src.armor["melee"] -= 2
+	if (canbetorn)
+		if (tearhealth >= 20)
+			tearhealth -= 20
+			permeability_coefficient += 0.20
+			if (armor)
+				if (armor["brute"])
+					armor["brute"] -= 2
+				if (armor["melee"])
+					armor["melee"] -= 2
 			if (user)
 				if (user.loc)
 					new /obj/item/clothing/torncloth(user.loc)
@@ -444,8 +444,8 @@ BLIND     // can't see anything
 			user << "Its vital tracker and tracking beacon appear to be enabled."
 	if(hastie)
 		user << "\A [hastie] is attached to it."
-	if(src.tearhealth)
-		switch (src.tearhealth)
+	if(tearhealth)
+		switch (tearhealth)
 			if (100)
 				user << "It appears to be in pristine condition."
 			if (80)
