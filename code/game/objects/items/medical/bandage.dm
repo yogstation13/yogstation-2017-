@@ -123,7 +123,7 @@
 		user << "There's no real need to wash this - it's perfectly clean!"
 
 /obj/item/medical/bandage/attack(mob/living/carbon/human/T, mob/living/carbon/human/U)
-	if (src.used)
+	if (used)
 		U << "These bandages have already been used. They're worthless as they are. Maybe if they had the blood washed out of them with running water?"
 		return
 
