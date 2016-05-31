@@ -544,6 +544,22 @@
 	// handles the equipping of species-specific gear
 	return
 
+/datum/species/proc/handle_emp(mob/living/carbon/human/H, severity)
+	var/informed = 0
+	for(var/obj/item/bodypart/L in H.internal_organs)
+		if(L.status == ORGAN_ROBOTIC)
+			if(!informed)
+				H << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				informed = 1
+			switch(severity)
+				if(1)
+					L.take_damage(0,10)
+					H.Stun(10)
+				if(2)
+					L.take_damage(0,5)
+					H.Stun(5)
+	return //return value does nothing.
+
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
 	if(slot in no_equip)
 		if(!(type in I.species_exception))
@@ -1069,6 +1085,87 @@
 				H.visible_message("<span class='danger'>[M] attempted to disarm [H]!</span>", \
 								"<span class='userdanger'>[M] attemped to disarm [H]!</span>")
 	return
+
+/datum/species/proc/handle_vision(mob/living/carbon/human/H)
+	if( H.stat == DEAD )
+		H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		H.see_in_dark = 8
+		if(!H.druggy)
+			H.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		return
+
+	if(!(SEE_TURFS & H.permanent_sight_flags))
+		H.sight &= ~SEE_TURFS
+	if(!(SEE_MOBS & H.permanent_sight_flags))
+		H.sight &= ~SEE_MOBS
+	if(!(SEE_OBJS & H.permanent_sight_flags))
+		H.sight &= ~SEE_OBJS
+
+	if(H.remote_view)
+		H.sight |= SEE_TURFS
+		H.sight |= SEE_MOBS
+		H.sight |= SEE_OBJS
+
+	H.see_in_dark = (H.sight == SEE_TURFS|SEE_MOBS|SEE_OBJS) ? 8 : darksight
+	var/see_temp = H.see_invisible
+	H.see_invisible = invis_sight
+
+	if(H.glasses)
+		if(istype(H.glasses, /obj/item/clothing/glasses))
+			var/obj/item/clothing/glasses/G = H.glasses
+			H.sight |= G.vision_flags
+			H.see_in_dark = G.darkness_view
+			H.see_invisible = G.invis_view
+	if(H.druggy)	//Override for druggy
+		H.see_invisible = see_temp
+
+	if(H.see_override)	//Override all
+		H.see_invisible = H.see_override
+
+	//	This checks how much the mob's eyewear impairs their vision
+	if(H.tinttotal >= TINT_IMPAIR)
+		if(tinted_weldhelh)
+			H.overlay_fullscreen("tint", /obj/screen/fullscreen/impaired, 2)
+		if(H.tinttotal >= TINT_BLIND)
+			H.eye_blind = max(H.eye_blind, 1)
+	else
+		H.clear_fullscreen("tint")
+
+	if(H.adjust_eye_damage() > 30)
+		H.overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 2)
+	else if(H.adjust_eye_damage() > 20)
+		H.overlay_fullscreen("impaired", /obj/screen/fullscreen/impaired, 1)
+	else
+		H.clear_fullscreen("impaired")
+
+	if(!H.client)//no client, no screen to update
+		return 1
+
+	if(H.eye_blind)
+		H.overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		H.throw_alert("blind")
+	else
+		H.clear_fullscreen("blind")
+		H.clear_alert("blind")
+
+	if(H.disabilities & NEARSIGHT && !istype(H.glasses, /obj/item/clothing/glasses/regular))
+		H.overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+	else
+		H.clear_fullscreen("nearsighted")
+
+	if(H.eye_blurry)
+		H.overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	else
+		H.clear_fullscreen("blurry")
+
+	if(H.druggy)
+		H.overlay_fullscreen("high", /obj/screen/fullscreen/high)
+		H.throw_alert("high", /obj/screen/alert/high)
+	else
+		H.clear_fullscreen("high")
+		H.clear_alert("high")
+
+	return 1
 
 /datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, target_area, mob/living/carbon/human/H)
 	// Allows you to put in item-specific reactions based on species
