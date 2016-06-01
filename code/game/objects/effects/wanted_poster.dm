@@ -1,6 +1,7 @@
 /obj/item/weapon/poster/legit/wanted
 	var/poster_desc
 	icon_state = "rolled_poster"
+	subtype = 2
 
 /obj/item/weapon/poster/legit/wanted/New(turf/loc, icon/person_icon, wanted_name, description)
 	..(loc)
