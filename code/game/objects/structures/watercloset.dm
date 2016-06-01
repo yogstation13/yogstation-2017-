@@ -432,6 +432,12 @@
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
+	if(istype(O, /obj/item/medical/bandage))
+		var/obj/item/medical/bandage/B = O
+		B.wash(src, user)
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return
+
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
 		user << "<span class='notice'>You place [src] under a stream of water...</span>"

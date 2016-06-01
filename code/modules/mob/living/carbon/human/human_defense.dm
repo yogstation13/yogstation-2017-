@@ -36,7 +36,10 @@
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
+		if(istype(P, /obj/item/projectile/bullet))
+			lastbrutetype = "bullet"
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
+			lastburntype = "laser"
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -104,7 +107,7 @@
 	var/target_area = parse_zone(check_zone(user.zone_selected))
 	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
 	feedback_add_details("zone_targeted","[target_area]")
-
+	lastbrutetype = "melee"
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, target_area, src)
 
