@@ -154,14 +154,14 @@
 		mob << "The chameleon security HUD in your [where2] will help you keep track of who is loyalty-implanted, and unable to be recruited."
 
 	if (!where)
-		mob << "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool.  Maybe try prayer?."
+		mob << "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool. Maybe try a prayer?"
 	else
 		mob << "The suspicious device in your [where] will help you to persuade the crew to join your cause."
 
 	if(!where3)
 		mob << "The Syndicate were unable to get you a hijack tool."
 	else
-		mob << "The hijack tool that resembles an implanter in your [where3] is designed to create a conversion tool out of NT's flash devices. It can be startd by holding both items in your hand, and plugging the implanter into the flash."
+		mob << "The hijack tool that resembles an implanter in your [where3] is designed to create a conversion tool out of NT's flash devices. It can be started by holding both items in your hand, and plugging the implanter into the flash."
 
 	if(!where4)
 		mob << "The Syndicate were unable to supply you with a spraycan."
