@@ -49,6 +49,13 @@
 	item_color = "chef"
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/rank/clerk
+	desc = "Oh, look it comes with its own vest."
+	name = "clerk's uniform"
+	icon_state = "clerk"
+	item_state = "clerk"
+	item_color = "clerk"
+	can_adjust = 0
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
