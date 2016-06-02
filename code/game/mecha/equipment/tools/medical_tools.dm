@@ -260,6 +260,7 @@
 	var/max_syringes = 10
 	var/max_volume = 75 //max reagent volume
 	var/synth_speed = 5 //[num] reagent units per cycle
+	var/syringe_cost = 100
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MELEE|RANGED
@@ -296,7 +297,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
+		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] [(syringes.len < max_syringes) ? " - <a href='?src=\ref[src];rearm=1'>Rearm</a>" : null] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
@@ -401,7 +402,33 @@
 	if(filter.get("purge_all"))
 		reagents.clear_reagents()
 		return
+	if(filter.get("rearm"))
+		rearm()
+		return
 	return
+
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/rearm()
+	var/syr_diff = max_syringes - syringes.len
+	if(syr_diff)
+		var/obj/item/weapon/stock_parts/cell/mech_cell = chassis.cell
+		var/cost = syr_diff*syringe_cost
+		if(mech_cell.charge < cost)
+			usr << "<span class='warning'>Not enough energy to replicate syringes, you need [cost].</span>"
+			return
+		var/time_to_replicate = syr_diff * 20 //2 seconds per syringe
+		usr << "<span class='notice'>Syringe replication process engaged, it will take [time_to_replicate/10] seconds. You must remain still during the entire process.</span>"
+		if(do_after(chassis.occupant, time_to_replicate, target = chassis))
+			mech_cell.use(min(mech_cell.charge, cost)) //If they are stupid enough to replicate at minimum charge level needed, I won't stop them
+			var/obj/item/weapon/reagent_containers/syringe/STL = null
+			for(var/i in 1 to syr_diff)
+				STL = new(loc)
+				syringes += STL
+			usr << "<span class='notice'>Syringe replication complete!</span>"
+			update_equip_info()
+		else
+			usr << "<span class='notice'>Replication process aborted!</span>"
+			return
+	return 1	
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>

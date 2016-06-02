@@ -505,7 +505,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(dir!=direction && !strafe)
+	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
