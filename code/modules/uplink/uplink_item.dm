@@ -995,6 +995,19 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/implants/zombie
+	name = "Zombie Implant"
+	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative along with an anti-toxin solution to counteract some negative effects. \
+	You will appear dead to most casual observers, and will eventually wake up of your own accord. Can also be purged by medical chemistry."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
+	cost = 12
+
+/datum/uplink_item/implants/mindslave
+	name = "Mindslave Implant"
+	desc = "An implant injected into a targets body. Will cause the target to obey your every command whilst the target is implanted. Implant can be removed by surgery!"
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_mindslave
+	cost = 12
+
 
 // Cybernetics
 /datum/uplink_item/cyber_implants
