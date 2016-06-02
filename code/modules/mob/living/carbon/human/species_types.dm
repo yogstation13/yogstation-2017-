@@ -51,11 +51,13 @@
 	name = "Manfly"
 	id = "manfly"
 	say_mod = "buzzes"
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS) //Else the shits over with the amputations and make you invisible
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	use_skintones = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	specflags = list()
 	roundstart = 0
+	limbs_id = "fly"
 	var/last_eat_message = -EATING_MESSAGE_COOLDOWN //I am here because flies
 
 
@@ -83,7 +85,7 @@
 
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
-	name = "Lizardperson"
+	name = "Unathi"
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
@@ -96,6 +98,11 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+
+datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time. Thick scales afford you protection from heat, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"
+	H << "<span class='notice'>You possess sharp claws that rend flesh easily, though NT obviously does not sanction their use against the crew.</span>"
+	H << "<span class='notice'>Beware all things cold, for your metabolism cannot mitigate their effects as well as other warm-blooded creatures.</span>"
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -128,6 +135,7 @@
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	specflags = list(EYECOLOR,LIPS,NODISMEMBER)
 	roundstart = 0
 	var/last_eat_message = -EATING_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
@@ -166,7 +174,7 @@
 	name = "Preternis"
 	id = "android"
 	default_color = "FFFFFF"
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	say_mod = "intones"
 	roundstart = 1
 	attack_verb = "assault"
@@ -214,7 +222,7 @@
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	default_color = "FFFFFF"
-	specflags = list()
+	specflags = list(NODISMEMBER)
 	roundstart = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 
@@ -408,6 +416,7 @@
 	// Phytosian turned into fly-like abominations in teleporter accidents.
 	name = "Flytosian"
 	id = "flytosian"
+	specflags = list(NODISMEMBER)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
