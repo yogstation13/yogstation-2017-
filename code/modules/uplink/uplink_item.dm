@@ -637,7 +637,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They do not work on heavily lubricated surfaces."
+			They also work on heavily lubricated surfaces."
 	item = /obj/item/clothing/shoes/chameleon
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
@@ -646,7 +646,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They do not work on heavily lubricated surfaces. The manufacturer claims they are much more stealthy than the normal brand."
+			They also work on heavily lubricated surfaces. The manufacturer claims they are much more stealthy than the normal brand."
 	item = /obj/item/clothing/shoes/chameleon
 	cost = 4
 	exclude_modes = list()

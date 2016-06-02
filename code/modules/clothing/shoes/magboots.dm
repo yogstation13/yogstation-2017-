@@ -21,12 +21,12 @@
 
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
-	if(src.magpulse)
-		src.flags &= ~NOSLIP
-		src.slowdown = SHOES_SLOWDOWN
+	if(magpulse)
+		flags &= ~SUPERNOSLIP
+		slowdown = SHOES_SLOWDOWN
 	else
-		src.flags |= NOSLIP
-		src.slowdown = slowdown_active
+		flags |= SUPERNOSLIP
+		slowdown = slowdown_active
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
 	user << "<span class='notice'>You [magpulse ? "enable" : "disable"] the mag-pulse traction system.</span>"
@@ -37,7 +37,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
-	return flags & NOSLIP
+	return flags & SUPERNOSLIP
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
