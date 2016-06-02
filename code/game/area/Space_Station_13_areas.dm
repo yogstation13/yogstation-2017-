@@ -846,6 +846,10 @@ var/list/teleportlocs = list()
 	name = "Transfer Centre"
 	icon_state = "armory"
 
+/area/security/interrogation
+	name = "\improper Interrogation"
+	icon_state = "firingrange"
+
 /*
 /area/security/transfer/New()
 	..()
@@ -943,6 +947,10 @@ var/list/teleportlocs = list()
 	name = "Hydroponics"
 	icon_state = "hydro"
 
+/area/hydroponics/backroom
+	name = "Hydroponics Backroom"
+	icon_state = "hydro"
+
 //Toxins
 
 /area/toxins/lab
@@ -981,6 +989,14 @@ var/list/teleportlocs = list()
 /area/toxins/explab
 	name = "Experimentation Lab"
 	icon_state = "toxmisc"
+
+/area/toxins/telesci
+	name = "\improper Telescience Lab"
+	icon_state = "toxtest"
+
+/area/toxins/toxlab
+	name = "\improper Toxins Lab"
+	icon_state = "toxlab"
 
 //Storage
 
