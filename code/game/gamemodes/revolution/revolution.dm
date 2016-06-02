@@ -128,9 +128,10 @@
 			mob.dna.remove_mutation(CLOWNMUT)
 
 
-	var/obj/item/device/assembly/flash/T = new(mob)
-	var/obj/item/toy/crayon/spraycan/R = new(mob)
+	var/obj/item/device/assembly/flash/rev/T = new(mob)
+	var/obj/item/device/revtool/RT = new(mob)
 	var/obj/item/clothing/glasses/hud/security/chameleon/C = new(mob)
+	var/obj/item/toy/crayon/spraycan/R = new(mob)
 
 	var/list/slots = list (
 		"backpack" = slot_in_backpack,
@@ -141,6 +142,8 @@
 	)
 	var/where = mob.equip_in_one_of_slots(T, slots)
 	var/where2 = mob.equip_in_one_of_slots(C, slots)
+	var/where3 = mob.equip_in_one_of_slots(RT, slots)
+	var/where4 = mob.equip_in_one_of_slots(R, slots)
 	mob.equip_in_one_of_slots(R,slots)
 
 	mob.update_icons()
@@ -151,9 +154,17 @@
 		mob << "The chameleon security HUD in your [where2] will help you keep track of who is loyalty-implanted, and unable to be recruited."
 
 	if (!where)
-		mob << "The Syndicate were unfortunately unable to get you a flash."
+		mob << "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool.  Maybe try prayer?."
 	else
-		mob << "The flash in your [where] will help you to persuade the crew to join your cause."
+		mob << "The suspecious device in your [where] will help you to persuade the crew to join your cause."
+
+	if(!where3)
+		mob << "The Syndicate were unable to get you a hijack tool."
+	else
+		mob << "The hijack tool that resembles an implanter in your [where3] is designed to create a conversion tool out of NT's flash devices. It can be startd by holding both items in your hand, and plugging the implanter into the flash."
+
+	if(!where4)
+		mob << "The Syndicate were unable to supply you with a spraycan."
 		return 1
 
 /////////////////////////////////
@@ -369,3 +380,11 @@
 			text += printplayer(head, 1)
 		text += "<br>"
 		world << text
+
+/obj/item/device/revtool
+	name = "Electronic Flashbulb Hijacker"
+	desc = "A device designed to reconfigure standard NT issue flashbulbs into something more sinister. Property of Cybersun Industries."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implanter1"
+	item_state = "syringe_0"
+	origin_tech = "magnets=7;syndicate=1;biotech=7" //wew. pretty valuable.

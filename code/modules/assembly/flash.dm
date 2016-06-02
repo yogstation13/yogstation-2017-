@@ -87,7 +87,6 @@
 			M.Weaken(3) //quick weaken bypasses eye protection but has no eye flash
 		if(M.flash_eyes(1, 1))
 			M.confused += power
-			terrible_conversion_proc(M, user)
 			M.Stun(1)
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
 			user << "<span class='danger'>You blind [M] with the flash!</span>"
@@ -139,30 +138,26 @@
 	burn_out()
 	..()
 
-
-/obj/item/device/assembly/flash/proc/terrible_conversion_proc(mob/M, mob/user)
-	if(ishuman(M) && ishuman(user) && M.stat != DEAD)
+/obj/item/device/assembly/flash/attackby(obj/item/W, mob/user, params)
+	..()
+	if(crit_fail)
+		user << "<span class='warning'>You cannot do this to a broken flash!</span>"
+		return
+	if(istype(W,/obj/item/device/revtool))
 		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
-			if(M.client)
-				if(M.stat == CONSCIOUS)
-					M.mind_initialize() //give them a mind datum if they don't have one.
-					var/resisted
-					if(!isloyal(M))
-						if(user.mind in ticker.mode.head_revolutionaries)
-							if(ticker.mode.add_revolutionary(M.mind))
-								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
-							else
-								resisted = 1
-					else
-						resisted = 1
-
-					if(resisted)
-						user << "<span class='warning'>This mind seems resistant to the flash!</span>"
-				else
-					user << "<span class='warning'>They must be conscious before you can convert them!</span>"
-			else
-				user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
-
+			if(istype(src, /obj/item/device/assembly/flash/rev))
+				user << "<span class='danger'>This device is already a conversion tool!"
+				return
+			user << "<span class='warning'>You plug the device into the flash. (This will take about 30 seconds, and you need to stand still!)</span>"
+			if(do_after(user, rand(250,350), target = src))
+				var/obj/item/device/assembly/flash/rev/R = new
+				user.unEquip(src)
+				user.put_in_hands(R)
+				user << "<span class='warning'>The flash seems to elongate, and lets out a soft whistle.</span>"
+				qdel(src)
+		else
+			user << "<span class='warning'>You're not sure how to use this!</span>"
+			return
 
 /obj/item/device/assembly/flash/cyborg
 	origin_tech = null
