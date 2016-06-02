@@ -122,7 +122,9 @@
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(filter.get("inject"))
-		inject_reagent(filter.getType("inject",/datum/reagent),filter.getObj("source"))
+		var/injection = filter.getNum("injection")
+		if(injection)
+			inject_reagent(filter.getType("inject",/datum/reagent),filter.getObj("source"), injection)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
@@ -188,14 +190,16 @@
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
-				output += "<a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG]\">Inject [R.name]</a><br />"
+				output += "<a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG];injection=10\">Inject [R.name] 10u</a>"
+				output += " <a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG];injection=1\">1u</a>"
+				output += " <a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG];injection=5\">5u</a><br />"
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG, amount)
 	if(!R || !patient || !SG || !(SG in chassis.equipment))
 		return 0
-	var/to_inject = min(R.volume, inject_amount)
+	var/to_inject = min(R.volume, amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
 		log_message("Injecting [patient] with [to_inject] units of [R.name].")
@@ -484,10 +488,26 @@
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
+	if(istype(A, /obj/machinery/sleeper))
+		var/obj/item/mecha_parts/mecha_equipment/medical/sleeper/SLPR = locate(/obj/item/mecha_parts/mecha_equipment/medical/sleeper) in chassis
+		if(SLPR)
+			var/obj/machinery/sleeper/target = A
+			for(var/IC in target.available_chems)
+				var/datum/reagent/C = chemical_reagents_list[IC]
+				if(C)
+					if(C.can_synth && add_known_reagent(C.id, C.name))
+						occupant_message("Reagent analyzed, identified as [C.name] and added to database.")
+						send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
+				else
+					occupant_message("Error analyzing reagent from sleeper.")
+			occupant_message("Analyzis complete.")
+			return 1
+		else
+			occupant_message("<span class=\"alert\">Error, your require an installed mounted sleeper to interface with this device.</span>")
+			return 0
 	if(!A.reagents || istype(A,/mob))
 		occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
 		return 0
-	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
 		if(R.can_synth && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
