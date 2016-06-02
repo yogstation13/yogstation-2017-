@@ -367,6 +367,7 @@
 	item_state = "helmet"
 	var/build_step = 0
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
+	var/obj/item/clothing/head/helmet/justice/siren_hat = null
 
 /obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
 	..()
@@ -424,7 +425,15 @@
 		name = "helmet/signaler/prox sensor/robot arm assembly"
 		overlays += "hs_arm"
 		qdel(I)
-
+	else if(istype(I, /obj/item/clothing/head/helmet/justice) && (build_step == 3))
+		if(!user.unEquip(I))
+			return
+		build_step++
+		user << "<span class='notice'>You add the robot arm to [src]!</span>"
+		name = "helmet/signaler/prox sensor/justice/robot arm assembly"
+		I.forceMove(src)
+		siren_hat = I
+		siren_hat.up = 0
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
 		if(!user.unEquip(I))
 			return
@@ -433,6 +442,9 @@
 		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot
 		S.loc = get_turf(src)
 		S.name = created_name
+		if(siren_hat)
+			S.siren_hat = siren_hat
+			siren_hat.forceMove(S)
 		qdel(I)
 		qdel(src)
 
@@ -461,4 +473,9 @@
 			overlays -= "hs_arm"
 			new /obj/item/robot_parts/l_arm(get_turf(src))
 			user << "<span class='notice'>You remove the robot arm from [src].</span>"
+			build_step--
+		else if(build_step == 4)
+			siren_hat.forceMove(get_turf(src))
+			siren_hat = null
+			user << "<span class='notice'>You detach the justice helmet from [src].</span>"
 			build_step--
