@@ -100,6 +100,12 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
 
+///mining medic///
+
+/obj/machinery/suit_storage_unit/mmedic
+	suit_type = /obj/item/clothing/suit/space/hardsuit/mining/mmedic
+	mask_type = /obj/item/clothing/mask/breath
+
 /obj/machinery/suit_storage_unit/New()
 	..()
 	wires = new /datum/wires/suit_storage_unit(src)

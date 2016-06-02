@@ -999,6 +999,22 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
+//Clerk//
+
+/obj/machinery/vending/gifts
+	name = "gift vendor"
+	desc = "A vending machine for the gift shop."
+	icon_state = "gifts"
+	icon_deny = "gifts-deny"
+	product_slogans = "Toys For All!;Oh its a Gift!;A Gift for Your Loved ones!;Purchase more Gifts, Now!"
+	vend_delay = 15
+	vend_reply = "Thank you for using Gift Vendor!"
+	products = list(/obj/item/toy/heartballoon = 3,/obj/item/toy/toyballoon = 3,/obj/item/toy/toyglock = 3,/obj/item/toy/toyflaregun = 3,/obj/item/toy/toygrenade = 15,/obj/item/toy/teddybear = 5,
+	/obj/item/toy/stuffedmonkey = 5, /obj/item/toy/flowerbunch = 5, /obj/item/device/camera_film = 30, /obj/item/weapon/storage/photo_album = 5, /obj/item/weapon/storage/photobook = 5 , /obj/item/weapon/storage/bag/photo = 5) //Pretty much everything that had a chance to spawn.
+
+
+
+
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE
