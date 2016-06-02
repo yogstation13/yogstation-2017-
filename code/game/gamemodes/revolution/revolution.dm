@@ -156,7 +156,7 @@
 	if (!where)
 		mob << "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool.  Maybe try prayer?."
 	else
-		mob << "The suspecious device in your [where] will help you to persuade the crew to join your cause."
+		mob << "The suspicious device in your [where] will help you to persuade the crew to join your cause."
 
 	if(!where3)
 		mob << "The Syndicate were unable to get you a hijack tool."
