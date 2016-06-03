@@ -52,7 +52,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/title3.ogg' =31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 33, 'sound/ambience/title1.ogg' = 33, 'sound/ambience/title3.ogg' =33, 'sound/ambience/clown.ogg' = 1)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -455,7 +455,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-		
+
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return
