@@ -1166,12 +1166,13 @@
 							<i>Help the operatives secure the disk at all costs!</i></b>"
 
 /mob/living/silicon/robot/syndicate/New(loc)
+	cell = new /obj/item/weapon/stock_parts/cell/hyper(src)
 	..()
-	cell.maxcharge = 25000
-	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
+	var/obj/item/borg/upgrade/vtec/VTEC = new(src)
+	VTEC.action(src)
 	spawn(5)
 		if(playstyle_string)
 			src << playstyle_string

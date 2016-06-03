@@ -235,16 +235,13 @@
 	coldmod = 2
 	heatmod = 0.5
 	var/datum/action/innate/split_body/slime_split
-	var/datum/action/innate/swap_body/callforward
-	var/datum/action/innate/swap_body/callback
+	var/datum/action/innate/swap_body/body_swap
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
-	if(callforward)
-		callforward.Remove(C)
-	if(callback)
-		callback.Remove(C)
+	if(body_swap)
+		body_swap.Remove(C)
 	C.faction -= "slime"
 	..()
 
@@ -282,20 +279,22 @@
 			spare.underwear = "Nude"
 			H.dna.transfer_identity(spare, transfer_SE=1)
 			H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-			spare.real_name = spare.dna.real_name
-			spare.name = spare.dna.real_name
+			var/rand_num = rand(1, 999)
+			spare.real_name = "[spare.dna.real_name] ([rand_num])"
+			spare.name = "[spare.dna.real_name] ([rand_num])"
 			spare.updateappearance(mutcolor_update=1)
 			spare.domutcheck()
 			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 			S.volume = 80
 			H.notransform = 0
 			var/datum/species/jelly/slime/SS = H.dna.species
-			SS.callforward = new
-			SS.callforward.body = spare
-			SS.callforward.Grant(H)
-			SS.callback = new
-			SS.callback.body = H
-			SS.callback.Grant(spare)
+			if(!H.mind.slime_bodies.len) //if this is our first time splitting add current body
+				SS.body_swap = new
+				SS.body_swap.Grant(H)
+				H.mind.slime_bodies += H
+			H.mind.slime_bodies += spare
+			SS.body_swap = new
+			SS.body_swap.Grant(spare)
 			H.mind.transfer_to(spare)
 			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
 			return
@@ -308,18 +307,39 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
 	background_icon_state = "bg_alien"
-	var/mob/living/carbon/human/body
 
 /datum/action/innate/swap_body/Activate()
-	if(!body || !istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
-		owner << "<span class='warning'>Something is wrong, you cannot sense your other body!</span>"
+	var/list/temp_body_list = list()
+
+	for(var/slime_body in owner.mind.slime_bodies)
+		var/mob/living/carbon/human/body = slime_body
+		if(!istype(body) || !body.dna || !body.dna.species || body.dna.species.id != "slime" || body.stat == DEAD || qdeleted(body))
+			owner.mind.slime_bodies -= body
+			continue
+		if((body != owner) && (body.stat == CONSCIOUS)) //Only swap into conscious bodies that are not the ones we're in
+			temp_body_list += body
+
+	if(owner.mind.slime_bodies.len == 1) //if our current body is our only one it means the rest are dead
+		owner << "<span class='warning'>Something is wrong, you cannot sense your other bodies!</span>"
 		Remove(owner)
 		return
-	if(body.stat == UNCONSCIOUS)
-		owner << "<span class='warning'>You sense this body has passed out for some reason. Best to stay away.</span>"
+
+	if(!temp_body_list.len)
+		owner << "<span class='warning'>You can sense your bodies, but they are unconscious.</span>"
 		return
 
-	owner.mind.transfer_to(body)
+	var/body_name = input(owner, "Select the body you want to move into", "List of active bodies") as null|anything in temp_body_list
+
+	if(!body_name)
+		return
+
+	var/mob/living/carbon/human/selected_body = body_name
+
+	if(selected_body.stat == UNCONSCIOUS || owner.stat == UNCONSCIOUS) //sanity check
+		owner << "<span class='warning'>The user or the target body have become unconscious during selection.</span>"
+		return
+
+	owner.mind.transfer_to(selected_body)
 
 /*
  GOLEMS
