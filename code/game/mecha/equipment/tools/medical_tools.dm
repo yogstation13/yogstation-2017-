@@ -411,13 +411,15 @@
 	var/syr_diff = max_syringes - syringes.len
 	if(syr_diff)
 		var/obj/item/weapon/stock_parts/cell/mech_cell = chassis.cell
-		var/cost = syr_diff*syringe_cost
+		var/cost = syr_diff * syringe_cost
 		if(mech_cell.charge < cost)
 			usr << "<span class='warning'>Not enough energy to replicate syringes, you need [cost].</span>"
 			return
 		var/time_to_replicate = syr_diff * 20 //2 seconds per syringe
 		usr << "<span class='notice'>Syringe replication process engaged, it will take [time_to_replicate/10] seconds. You must remain still during the entire process.</span>"
 		if(do_after(chassis.occupant, time_to_replicate, target = chassis))
+			syr_diff = min(syr_diff, max_syringes - syringes.len) //in case they put any in during the do_after
+			cost = syr_diff * syringe_cost
 			mech_cell.use(min(mech_cell.charge, cost)) //If they are stupid enough to replicate at minimum charge level needed, I won't stop them
 			var/obj/item/weapon/reagent_containers/syringe/STL = null
 			for(var/i in 1 to syr_diff)
