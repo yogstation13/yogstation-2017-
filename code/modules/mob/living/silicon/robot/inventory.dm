@@ -37,6 +37,7 @@
 		module_state_3 = null
 		inv3.icon_state = "inv3"
 	hud_used.update_robot_modules_display()
+	O.unequipped(src)
 	return 1
 
 /mob/living/silicon/robot/proc/activate_module(obj/item/O)
@@ -77,6 +78,7 @@
 			update_sight()
 	else
 		src << "<span class='warning'>You need to disable a module first!</span>"
+	O.equipped(src)
 
 /mob/living/silicon/robot/proc/uneq_active()
 	uneq_module(module_active)

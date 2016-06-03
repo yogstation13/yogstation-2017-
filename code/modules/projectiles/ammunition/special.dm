@@ -44,3 +44,4 @@
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	e_cost = 20
+	delay = 3
