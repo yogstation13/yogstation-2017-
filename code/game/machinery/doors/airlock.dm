@@ -599,7 +599,7 @@ var/list/airlock_overlays = list()
 	if((in_range(src, usr) && istype(src.loc, /turf)) && panel_open)
 		usr.set_machine(src)
 
-
+	var/no_window_msg
 
 	if((istype(usr, /mob/living/silicon) && src.canAIControl()) || IsAdminGhost(usr))
 		//AI
@@ -616,10 +616,12 @@ var/list/airlock_overlays = list()
 						usr << "You've already disabled the IdScan feature."
 					else
 						src.aiDisabledIdScanner = 1
+						no_window_msg = "ID scan disabled."
 				if(2)
 					//disrupt main power
 					if(src.secondsMainPowerLost == 0)
 						src.loseMainPower()
+						no_window_msg = "Airlock main power disabled."
 						update_icon()
 					else
 						usr << "Main power is already offline."
@@ -627,6 +629,7 @@ var/list/airlock_overlays = list()
 					//disrupt backup power
 					if(src.secondsBackupPowerLost == 0)
 						src.loseBackupPower()
+						no_window_msg = "Airlock backup power disabled."
 						update_icon()
 					else
 						usr << "Backup power is already offline."
@@ -636,14 +639,14 @@ var/list/airlock_overlays = list()
 						usr << "You can't drop the door bolts - The door bolt dropping wire has been cut."
 					else
 						bolt()
+						no_window_msg = "Door bolts dropped."
 				if(5)
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
 						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(src.secondsElectrified==-1)
+					else if(src.secondsElectrified==-1 || src.secondsElectrified>0)
 						src.secondsElectrified = 0
-					else if(src.secondsElectrified>0)
-						src.secondsElectrified = 0
+						no_window_msg = "Door un-electrified."
 
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
@@ -651,6 +654,7 @@ var/list/airlock_overlays = list()
 						usr << text("Control to door sensors is disabled.")
 					else if (src.safe)
 						safe = 0
+						no_window_msg = "Door safeties disabled."
 					else
 						usr << text("Firmware reports safeties already overriden.")
 
@@ -660,6 +664,7 @@ var/list/airlock_overlays = list()
 						usr << text("Control to door timing circuitry has been severed.")
 					else if (src.normalspeed)
 						normalspeed = 0
+						no_window_msg = "Door speed accelerated."
 					else
 						usr << text("Door timing circuitry already accelerated.")
 				if(7)
@@ -680,6 +685,7 @@ var/list/airlock_overlays = list()
 					else if (src.lights)
 						lights = 0
 						update_icon()
+						no_window_msg = "Door bolt lights disabled."
 					else
 						usr << text("Door bolt lights are already disabled!")
 
@@ -688,6 +694,7 @@ var/list/airlock_overlays = list()
 					if (src.emergency)
 						emergency = 0
 						update_icon()
+						no_window_msg = "Airlock emergency access disabled."
 					else
 						usr << text("Emergency access is already disabled!")
 
@@ -701,6 +708,7 @@ var/list/airlock_overlays = list()
 						usr << "You can't enable IdScan - The IdScan wire has been cut."
 					else if(src.aiDisabledIdScanner)
 						src.aiDisabledIdScanner = 0
+						no_window_msg = "ID scan enabled."
 					else
 						usr << "The IdScan feature is not disabled."
 				if(4)
@@ -712,6 +720,7 @@ var/list/airlock_overlays = list()
 					else
 						if(src.hasPower())
 							unbolt()
+							no_window_msg = "Door bolts raised."
 						else
 							usr << text("Cannot raise door bolts due to power failure.<br>\n")
 
@@ -746,6 +755,7 @@ var/list/airlock_overlays = list()
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
 						src.secondsElectrified = -1
+						no_window_msg = "Door electrified"
 
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
@@ -754,6 +764,7 @@ var/list/airlock_overlays = list()
 					else if (!src.safe)
 						safe = 1
 						src.updateUsrDialog()
+						no_window_msg = "Door safeties enabled."
 					else
 						usr << text("Firmware reports safeties already in place.")
 
@@ -764,6 +775,7 @@ var/list/airlock_overlays = list()
 					else if (!src.normalspeed)
 						normalspeed = 1
 						src.updateUsrDialog()
+						no_window_msg = "Door speed set to normal."
 					else
 						usr << text("Door timing circuitry currently operating normally.")
 
@@ -785,6 +797,7 @@ var/list/airlock_overlays = list()
 						lights = 1
 						update_icon()
 						src.updateUsrDialog()
+						no_window_msg = "Door bolt lights enabled."
 					else
 						usr << text("Door bolt lights are already enabled!")
 				if(11)
@@ -792,11 +805,15 @@ var/list/airlock_overlays = list()
 					if (!src.emergency)
 						emergency = 1
 						update_icon()
+						no_window_msg = "Airlock emergency access enabled."
 					else
 						usr << text("Emergency access is already enabled!")
 
 	add_fingerprint(usr)
-	if(!nowindow)
+	if(nowindow)
+		if(no_window_msg)
+			usr << no_window_msg
+	else
 		updateUsrDialog()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
