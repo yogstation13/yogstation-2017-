@@ -719,6 +719,20 @@
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
 
+/datum/supply_pack/medical/surgery
+	name = "Surgery Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/weapon/scalpel,
+					/obj/item/weapon/hemostat,
+					/obj/item/weapon/cautery,
+					/obj/item/weapon/retractor,
+					/obj/item/weapon/circular_saw,
+					/obj/item/weapon/surgicaldrill,
+					/obj/item/weapon/surgical_drapes,
+					/obj/item/weapon/tank/internals/anesthetic,
+					/obj/item/clothing/mask/breath/medical)
+	crate_name = "surgery crate"
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
