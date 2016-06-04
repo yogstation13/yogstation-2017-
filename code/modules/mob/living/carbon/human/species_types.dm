@@ -135,7 +135,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
-	specflags = list(EYECOLOR,LIPS,NODISMEMBER)
+	specflags = list(EYECOLOR,LIPS)
 	roundstart = 0
 	var/last_eat_message = -EATING_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
@@ -222,7 +222,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	default_color = "FFFFFF"
-	specflags = list(NODISMEMBER)
+	specflags = list()
 	roundstart = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 
@@ -416,7 +416,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	// Phytosian turned into fly-like abominations in teleporter accidents.
 	name = "Flytosian"
 	id = "flytosian"
-	specflags = list(NODISMEMBER)
+	specflags = list()
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
