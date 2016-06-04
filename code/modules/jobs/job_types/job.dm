@@ -39,6 +39,9 @@
 	//If you have the use_age_restriction_for_jobs config option enabled and the database set up, this option will add a requirement for players to be at least minimal_player_age days old. (meaning they first signed in at least that many days before.)
 	var/minimal_player_age = 0
 
+	//Whitelist for jobs that have ULTRA preference for people who are accepted into the whitelist
+	var/whitelisted = 0
+
 	var/outfit = null
 
 //Only override this proc

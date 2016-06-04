@@ -19,6 +19,12 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["alt"])
+		ShiftAltClickOn(A)
+		return
+	if(modifiers["alt"] && modifiers["ctrl"])
+		CtrlAltClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -104,6 +110,8 @@
 	A.BorgCtrlClick(src)
 /mob/living/silicon/robot/AltClickOn(atom/A)
 	A.BorgAltClick(src)
+/mob/living/silicon/robot/ShiftAltClickOn(var/atom/A)
+	A.BorgShiftAltClick(src)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlShiftClick(user)
@@ -111,6 +119,11 @@
 /obj/machinery/door/airlock/BorgCtrlShiftClick() // Sets/Unsets Emergency Access Override Forwards to AI code.
 	AICtrlShiftClick()
 
+/atom/proc/BorgShiftAltClick(mob/living/silicon/robot/user) //forward to human click if not overriden
+	ShiftAltClick(user)
+
+/obj/machinery/door/airlock/BorgShiftAltClick() // Toggles speed override on doors. Forwards to AI code.
+	AIShiftAltClick()
 
 /atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	ShiftClick(user)

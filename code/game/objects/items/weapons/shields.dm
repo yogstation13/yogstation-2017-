@@ -16,8 +16,8 @@
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
 	origin_tech = "materials=2"
 	attack_verb = list("shoved", "bashed")
+	block_chance = 0
 	var/cooldown = 0 //shield bash cooldown. based on world.time
-
 
 /obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/melee/baton))
@@ -30,14 +30,25 @@
 
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
-	return ..()
+		final_block_chance += 80
+	else if(attack_type == PROJECTILE_ATTACK)
+		return ..()
+	else
+		return 1
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+
+/obj/item/weapon/shield/riot/roman/prop
+	desc = "Made of cheap, lightweight plastic. Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
+	force = 3
+	throwforce = 3
+
+/obj/item/weapon/shield/riot/roman/prop/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	return 0
 
 /obj/item/weapon/shield/riot/buckler
 	name = "wooden buckler"

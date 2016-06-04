@@ -1,6 +1,6 @@
 /obj/machinery/door
 	name = "door"
-	desc = "It opens and closes."
+	desc = "It opens and closes. On the bottom is a small hatch for drones."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
 	anchored = 1
@@ -74,8 +74,11 @@
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return !opacity
+	if(istype(mover))
+		if(mover.checkpass(PASSDOOR))
+			return 1
+		else if(mover.checkpass(PASSGLASS))
+			return !opacity
 	return !density
 
 /obj/machinery/door/CanAtmosPass()

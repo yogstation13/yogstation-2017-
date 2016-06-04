@@ -391,6 +391,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 
+/obj/item/proc/unequipped(mob/user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.Remove(user)
+
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 obj/item/proc/item_action_slot_check(slot, mob/user)
 	return 1

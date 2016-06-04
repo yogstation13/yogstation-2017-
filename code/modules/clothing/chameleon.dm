@@ -302,7 +302,7 @@
 	desc = "A pair of black shoes."
 
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	flags = SUPERNOSLIP
 	origin_tech = "syndicate=3"
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
