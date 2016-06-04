@@ -505,12 +505,25 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
 				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 			else
-				if(prob(75))
-					user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
+				var/mob/living/carbon/human/H = user
+				var/prot = 0
+				if(istype(user, /mob/living/carbon/human))
+					var/obj/item/clothing/gloves/G = H.gloves
+					if(H.gloves && G.max_heat_protection_temperature)
+						prot = (G.max_heat_protection_temperature > 360) // lazy code. nothing else seemed to work as properly as this though
+
+				if(!istype(src, /obj/item/weapon/lighter/greyscale))
+					user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
 				else
-					var/hitzone = user.r_hand == src ? "r_hand" : "l_hand"
-					user.apply_damage(5, BURN, hitzone)
-					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
+					if(prot > 0)
+						user.visible_message("After a few attempts, [user] manages to light [src], without burning themself.", "<span class='notice'>After a few attempts, you manage to light [src]. Your fire-resistant gloves shield you from burning yourself.</span>")
+						return
+					else if(prob(75))
+						user.visible_message("After a few attempts, [user] manages to light [src].", "<span class='notice'>After a few attempts, you manage to light [src].</span>")
+					else
+						var/hitzone = user.r_hand == src ? "r_hand" : "l_hand"
+						user.apply_damage(5, BURN, hitzone)
+						user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
 			SSobj.processing |= src
