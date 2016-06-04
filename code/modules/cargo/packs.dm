@@ -594,6 +594,16 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engineering/flood_lamp
+	name = "Flood Lamp Assembly Crate"
+	contains = list(/obj/machinery/flood_lamp,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/paper/flood_lamp)
+	cost = 15
+	crate_name = "floodlamp assembly crate"
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
