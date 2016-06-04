@@ -10,6 +10,7 @@
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/device/aicard(src)
 	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/clothing/shoes/magboots/security(src)
 	if(prob(50))
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/ammo_box/magazine/m50(src)
@@ -32,6 +33,7 @@
 	new /obj/item/weapon/storage/box/flashes(src)
 	new /obj/item/weapon/storage/box/handcuffs(src)
 	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/clothing/shoes/magboots/security(src)
 
 /obj/structure/closet/secure_closet/ertMed
 	name = "medical closet"
@@ -48,6 +50,7 @@
 	new /obj/item/weapon/storage/firstaid/regular(src)
 	new /obj/item/weapon/defibrillator/compact/combat/loaded(src)
 	new /mob/living/simple_animal/bot/medbot(src)
+	new /obj/item/clothing/shoes/magboots/security(src)
 
 /obj/structure/closet/secure_closet/ertEngi
 	name = "engineer closet"
@@ -61,7 +64,7 @@
 	new /obj/item/stack/sheet/metal(src, 50)
 	new /obj/item/stack/sheet/glass(src, 50)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 30)
-	new /obj/item/clothing/shoes/magboots(src)
+	new /obj/item/clothing/shoes/magboots/security(src)
 	new /obj/item/weapon/storage/box/metalfoam(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/rcd_ammo/large(src)
