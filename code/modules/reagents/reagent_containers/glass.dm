@@ -225,7 +225,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	name = "bucket"
-	desc = "It's a bucket."
+	desc = "It's a bucket. Wear it on your head and pretend you're a knight."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "bucket"
 	item_state = "bucket"
