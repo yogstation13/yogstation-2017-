@@ -474,13 +474,16 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/lit = 0
 	heat = 1500
+	var/lit = 0
+	var/stop_bleeding = 600
+
 
 /obj/item/weapon/lighter/greyscale
 	name = "cheap lighter"
 	desc = "A cheap-as-free lighter."
 	icon_state = "lighter"
+	stop_bleeding = 525
 
 /obj/item/weapon/lighter/greyscale/New()
 	var/image/I = image(icon,"lighter-overlay")
@@ -568,6 +571,25 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/is_hot()
 	return lit * heat
+
+/obj/item/weapon/lighter/attack(mob/living/carbon/human/H, mob/living/carbon/user)
+	if(src.lit && !H.bleedsuppress && user.a_intent == "help" && H.blood_max)
+		var/hitzone = user.zone_selected
+		H.suppress_bloodloss(src.stop_bleeding)
+		H.apply_damage(rand(5,10), BURN, hitzone)
+		if (H.blood_max >= 1.5) // a simple lighter won't fix your problems.
+			user.visible_message("<span class='alert'>There is too much blood coming out of the wound for you to fix it with [src] and you screw up!</span>")
+			visible_message("<span class='alert'>[H]'s wounds are burned by [src], but are unable to be closed by it's flame!</span>")
+			return
+		if(user == H)
+			user.visible_message("<span class='notice'>You mend your bleeding wound with [src], sealing it completely. Also looking like a total badass.</span>")
+			visible_message("<span class='alert'>[user] mends their bleeding wounds with a lighter! What a badass.</span>")
+		else
+			visible_message("<span class='alert'>[user] uses [src] to close some of [H]'s wounds by burning them fiercly!</span>")
+		H.cauterized = 1
+	else
+		..()
+
 
 ///////////
 //ROLLING//
