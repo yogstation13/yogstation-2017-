@@ -19,8 +19,11 @@
 	return 1 //diseases, stings, etc can pass
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
-		return prob(60)
+	if(istype(A))
+		if(A.checkpass(PASSDOOR))
+			return 1
+		else if(A.checkpass(PASSGLASS))
+			return prob(60)
 
 	var/obj/structure/bed/B = A
 	if (istype(A, /obj/structure/bed) && (B.buckled_mobs.len || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass

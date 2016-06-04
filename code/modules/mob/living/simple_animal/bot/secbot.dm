@@ -29,6 +29,8 @@
 	var/weaponscheck = 0 //If true, arrest people for weapons if they lack access
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
+	var/siren = 0 //0 - off, 1 - on but not active, 2 - on and active
+	var/obj/item/clothing/head/helmet/justice/siren_hat = null
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -36,6 +38,11 @@
 	idcheck = 0
 	weaponscheck = 0
 	auto_patrol = 1
+	siren = 1
+
+/mob/living/simple_animal/bot/secbot/beepsky/New()
+	..()
+	siren_hat = new /obj/item/clothing/head/helmet/justice(src)
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/turf/Tsec = get_turf(src)
@@ -111,6 +118,8 @@ Auto Patrol: []"},
 "<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+		if(siren_hat)
+			dat += "<BR>Siren: <A href='?src=\ref[src];operation=siren'>[siren ? "On" : "Off"]</A>"
 
 	return	dat
 
@@ -134,6 +143,10 @@ Auto Patrol: []"},
 		if("declarearrests")
 			declare_arrests = !declare_arrests
 			update_controls()
+		if("siren")
+			if(siren_hat)
+				siren = !siren
+				update_controls()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
 	threatlevel = H.assess_threat(src)
@@ -232,7 +245,18 @@ Auto Patrol: []"},
 	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
 							"<span class='userdanger'>[src] has stunned you!</span>")
 
+
+/mob/living/simple_animal/bot/secbot/Life()
+	if(ckey)
+		siren = 0
+	..()
+
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
+	if(on && siren && (mode == BOT_PREP_ARREST || mode == BOT_HUNT || mode == BOT_ARREST || mode == BOT_SUMMON || mode == BOT_RESPONDING))
+		if(siren == 1)
+			siren_on()
+	else
+		siren_off()
 	if(!..())
 		return
 
@@ -368,6 +392,20 @@ Auto Patrol: []"},
 		return 1
 	return 0
 
+/mob/living/simple_animal/bot/secbot/proc/siren_on()
+	if(!siren || siren == 2)
+		return
+	siren = 2
+	overlays += "secbot_flashing"
+	while(siren_hat && siren == 2)
+		playsound(loc, "[siren_hat.active_sound]", 100, 0, 4)
+		sleep(15)
+	overlays -= "secbot_flashing"
+
+/mob/living/simple_animal/bot/secbot/proc/siren_off()
+	if(siren)
+		siren = 1
+
 /mob/living/simple_animal/bot/secbot/explode()
 
 	walk_to(src,0)
@@ -389,6 +427,9 @@ Auto Patrol: []"},
 	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
+	if(siren_hat)
+		siren_hat.forceMove(loc)
+		siren_hat = null
 	..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)

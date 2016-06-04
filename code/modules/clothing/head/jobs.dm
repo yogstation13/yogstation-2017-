@@ -135,3 +135,10 @@
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
 	icon_state = "officerberet"
+
+//Clerk
+/obj/item/clothing/head/clerkcap
+	name = "clerk's hat"
+	desc = "It's a hat used by clerk's to help keep dust out of thier eyes."
+	icon_state = "clerkcap"
+	item_state = "clerkcap"

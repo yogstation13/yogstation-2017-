@@ -103,7 +103,8 @@
 		/obj/item/weapon/storage/bag/chemistry,
 		/obj/item/weapon/storage/bag/bio,
 		/obj/item/weapon/reagent_containers/blood,
-		/obj/item/weapon/tank/internals/emergency_oxygen
+		/obj/item/weapon/tank/internals/emergency_oxygen,
+		/obj/item/medical/bandage
 		)
 
 

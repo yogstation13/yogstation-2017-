@@ -57,7 +57,7 @@
 /obj/structure/closet/wardrobe/green/New()
 	..()
 	contents = list()
-	for(var/i in 1 to 3)		
+	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/color/green(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)
@@ -195,3 +195,17 @@
 		new /obj/item/clothing/suit/hooded/wintercoat(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 	return
+
+/*Clerk Locker*/
+
+/obj/structure/closet/wardrobe/clerk
+	name = "clerk's locker"
+	icon_door = "mixed"
+
+/obj/structure/closet/wardrobe/clerk/New()
+	..()
+	contents = list()
+	new /obj/item/device/radio/headset/headset_srv(src)
+	new /obj/item/clothing/under/rank/clerk(src)
+	new /obj/item/clothing/shoes/sneakers/black(src)
+	new /obj/item/clothing/head/clerkcap(src)

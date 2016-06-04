@@ -600,3 +600,19 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+
+
+////mining medic///
+
+/obj/item/clothing/suit/space/hardsuit/mining/mmedic
+	icon_state = "hardsuit-mmedic"
+	name = "mining medic hardsuit"
+	item_state = "mmedic_suit"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining/mmedic
+
+/obj/item/clothing/head/helmet/space/hardsuit/mining/mmedic
+	name = "mining medic hardsuit helmet"
+	icon_state = "hardsuit0-mmedic"
+	item_state = "mmedic_helm"
+	item_color = "mmedic"
+

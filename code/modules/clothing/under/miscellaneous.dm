@@ -574,6 +574,14 @@
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
 
+/obj/item/clothing/under/tourist
+	name = "Hawaiian shirt"
+	desc = "I explored the galaxy and all I got was this lousy T-shirt!"
+	icon_state = "tourist"
+	item_state = "gy_suit"
+	item_color = "tourist"
+	can_adjust = 0
+
 /obj/item/clothing/under/ronaldmcdonald
 	name = "ronald mcdonald uniform"
 	desc = "An old uniform that was used as a mascot in commercial advertising to make children smile while in other places slaughtering children."

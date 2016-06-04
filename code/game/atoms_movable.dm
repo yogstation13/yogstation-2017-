@@ -294,6 +294,10 @@
 		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
 	return 1
 
+/atom/movable/proc/prethrow_at(var/target) // If an item is thrown by a mob, but it's still currently held.
+	return;
+
+
 /atom/movable/proc/hitcheck()
 	for(var/atom/movable/AM in get_turf(src))
 		if(AM == src)
