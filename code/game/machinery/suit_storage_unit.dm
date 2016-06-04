@@ -40,7 +40,7 @@
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots
+	storage_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/ce
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/elite
@@ -50,12 +50,12 @@
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots/security
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots/security
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
@@ -86,22 +86,22 @@
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
 	mask_type = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots/security
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	mask_type = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots/security
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/engineer
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	mask_type = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots/security
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	STORAGE_TYPE = /obj/item/clothing/shoes/magboots/security
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 ///mining medic///
 
