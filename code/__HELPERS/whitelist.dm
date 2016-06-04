@@ -30,8 +30,6 @@
 		0: The user is NOT whitelisted (or an error happened - just disable whitelisting
 */
 /proc/is_job_whitelisted_mob(mob/M)
-	//DEBUG
-	return 1
 	var/client/C = get_client(M)
 	if(!C || !istype(C, /client))
 		return 0
