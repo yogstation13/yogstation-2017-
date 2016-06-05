@@ -66,7 +66,7 @@
 						OOC_tag = "\[Donator\]" */
 					for(C in admins)
 						switch(C.holder.rank.name)
-							if("Admin Observer")
+							if("AdminObserver")
 								C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 								return
 
