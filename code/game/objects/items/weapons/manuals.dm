@@ -956,3 +956,10 @@
 	author = "Engineering Encyclopedia"
 	title = "Hacking"
 	page_link = "Hacking"
+
+/obj/item/weapon/book/manual/wiki/surgery
+	name = "Surgery for Dummies"
+	icon_state = "bookCloning"
+	author = "United Earth Surgical Association"
+	title = "Surgery for Dummies"
+	page_link = "Surgery"

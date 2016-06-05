@@ -54,6 +54,10 @@
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
 		return
 	for(var/mob/living/simple_animal/shade/A in src)
+		if(!A.key)
+			for(var/mob/dead/observer/G in player_list)
+				if(G.name == A.name) // to prevent whatever needs to be prevented.
+					attack_ghost(G)
 		A.status_flags &= ~GODMODE
 		A.canmove = 1
 		A.forceMove(get_turf(user))
@@ -253,3 +257,10 @@
 	init_shade(T, U)
 	qdel(T)
 	return 1
+
+/obj/item/device/soulstone/attack_ghost(mob/dead/observer/user)
+	for(var/mob/living/simple_animal/shade/S in src.contents)
+		if(S.name == user.name && S.real_name == user.real_name) // ghosts match. so that's our shade.
+			S.ckey = user.ckey
+			user.mind.transfer_to(S)
+	return
