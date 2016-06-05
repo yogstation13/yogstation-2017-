@@ -602,7 +602,7 @@
 					/obj/item/device/flashlight,
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/paper/flood_lamp)
-	cost = 15
+	cost = 1500
 	crate_name = "floodlamp assembly crate"
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
