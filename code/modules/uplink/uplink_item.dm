@@ -998,10 +998,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/implants/zombie
 	name = "Zombie Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative along with an anti-toxin solution to counteract some negative effects. \
-	You will appear dead to most casual observers, and will eventually wake up of your own accord. Can also be purged by medical chemistry."
+	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
+	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
-	cost = 12
+	cost = 7
 
 /datum/uplink_item/implants/mindslave
 	name = "Mindslave Implant"

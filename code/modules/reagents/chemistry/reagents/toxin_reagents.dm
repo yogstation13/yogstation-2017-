@@ -673,6 +673,14 @@
 	..()
 
 
+/datum/reagent/toxin/capilletum	//disguised as normal beer for use by emagged brobots
+	name = "Capilletum"
+	id = "capilletum"
+	description = "A powerful toxin that exemplifies the colors and features of punctured skin, matching their pigments and applying it to make wound appear more severe.. Unlike other toxins, it does not have any negative effects."
+	color = "#FFB9D2"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0 // no side effects
+
 //ACID
 
 

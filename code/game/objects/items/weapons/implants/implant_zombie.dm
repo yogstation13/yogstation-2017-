@@ -2,19 +2,24 @@
 	name = "zombie implant"
 	desc = "Fake your death and trick those NT shills"
 	icon_state = "zombie"
+	origin_tech = "biotech=5;syndicate=4"
+	uses = 2
 	//allow_reagents = 1
 
 /obj/item/weapon/implant/zombie/New()
 	..()
 	create_reagents(50)
-	src.reagents.add_reagent("zombiepowder", 35)
-	src.reagents.add_reagent("antitoxin", 15)
+	src.reagents.add_reagent("capilletum", 35)
 
 /obj/item/weapon/implant/zombie/activate()
 	var/mob/living/carbon/H = imp_in
 	H << "You hear a soft whirr as your implant discharges it's toxins into you."
 	reagents.trans_to(H, reagents.total_volume)
-	qdel(src)
+	if(uses == 2)
+		uses--
+	else
+		H << "You feel something slip away from you."
+		qdel(src)
 
 /obj/item/weapon/implant/zombie/get_data()
 	var/dat = {"
