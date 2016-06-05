@@ -1,6 +1,6 @@
-
-/var/list/tickets_list = list()
-/var/ticket_count = 0;
+var/list/tickets_list = list()
+var/ticket_count = 0
+var/ticket_counter_visible_to_everyone = 0
 
 /datum/ticket_log
 	var/datum/admin_ticket/parent
@@ -11,26 +11,34 @@
 	var/text_admin
 	var/for_admins
 
-/datum/ticket_log/New(var/datum/admin_ticket/parent, var/client/user, var/text, var/for_admins = 0)
+/datum/ticket_log/New(var/datum/admin_ticket/parent, var/user, var/text, var/for_admins = 0)
 	src.gametime = gameTimestamp()
 	src.parent = parent
-	src.user_admin = is_admin(user)
+	if(istype(user, /client))
+		src.user_admin = is_admin(user)
+	else
+		src.user_admin = text
 	src.for_admins = for_admins
-	src.user = get_fancy_key(user)
+	if(istype(user, /client))
+		src.user = get_fancy_key(user)
+	else
+		src.user = user
 	src.text = text
 	src.text_admin = generate_admin_info(text)
 
 /datum/ticket_log/proc/isAdminComment()
-	return (for_admins && !(compare_ckey(parent.owner_ckey, user) || compare_ckey(parent.handling_admin, user)) ? 1 : 0)
+	return istype(user, /client) && (for_admins && !(compare_ckey(parent.owner_ckey, user) || compare_ckey(parent.handling_admin, user)) ? 1 : 0)
 
+/datum/ticket_log/proc/toSanitizedString()
+	return "[gametime] - [user] - [text]"
 /datum/ticket_log/proc/toString()
-	return "[gametime] - [isAdminComment() ? "<font color='red'>" : ""]<b>[key_name_params(user, 0, 0, null, parent)]</b>[isAdminComment() ? "</font>" : ""] - [text]"
+	return "[gametime] - [isAdminComment() ? "<font color='red'>" : ""]<b>[istype(user, /client) ? key_name_params(user, 0, 0, null, parent) : user]</b>[isAdminComment() ? "</font>" : ""] - [text]"
 
 /datum/ticket_log/proc/toAdminString()
-	return "[gametime] - [isAdminComment() ? "<font color='red'>" : ""]<b>[key_name_params(user, 0, 1, null, parent)]</b>[isAdminComment() ? "</font>" : ""] - [text_admin]"
+	return "[gametime] - [isAdminComment() ? "<font color='red'>" : ""]<b>[istype(user, /client) ? key_name_params(user, 0, 1, null, parent) : user]</b>[isAdminComment() ? "</font>" : ""] - [text_admin]"
 
 /datum/ticket_log/proc/toLogString()
-	return "[isAdminComment() ? "COMMENT - " : ""][key_name_params(user, 0, 1, null, parent)] - [text]"
+	return "[isAdminComment() ? "COMMENT - " : ""][istype(user, /client) ? key_name_params(user, 0, 1, null, parent) : user] - [text]"
 
 
 

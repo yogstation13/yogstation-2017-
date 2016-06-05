@@ -370,3 +370,7 @@
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
+
+/atom/movable/proc/on_z_level_change()
+	for(var/atom/movable/A in contents)
+		A.on_z_level_change()

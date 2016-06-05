@@ -98,6 +98,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles |= MEMBER_PUBLIC
 	if(current_version < 11)
 		chat_toggles = TOGGLES_DEFAULT_CHAT
+		agree = 0
 		toggles = TOGGLES_DEFAULT
 	if(current_version < 12)
 		ignoring = list()
@@ -226,6 +227,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
 	S["inquisitive_ghost"]	>> inquisitive_ghost
+	S["agree"] 				>> agree
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -245,6 +247,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	agree			= sanitize_integer(agree, -1, 65535, 0)
 
 	return 1
 
@@ -277,6 +280,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
+	S["agree"] 				<< agree
 
 	return 1
 
