@@ -1,7 +1,6 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
-	// /client/proc/toggleannouncelogin, /*toggles if an admin's login is announced during a round*/
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
@@ -78,14 +77,11 @@ var/list/admin_verbs_admin = list(
 	/client/proc/test_pretty_filters,
 	/client/proc/add_pretty_filter,
 	/client/proc/reset_pretty_filter,
-	// /client/proc/admin_credits_get,
-	// /client/proc/admin_credits_list,
-	// /client/proc/admin_credits_spend,
-	// /client/proc/admin_credits_earn,
-	// /client/proc/admin_credits_set,
-	// /client/proc/check_words,			/* Displays cult-words*/
-	// /client/proc/reset_all_tcs,		/* Resets all telecomms scripts*/
-	// /datum/admins/proc/cybermen_panel,  /* Lots of cybermen options */
+	/client/proc/admin_credits_get,
+	/client/proc/admin_credits_list,
+	/client/proc/admin_credits_spend,
+	/client/proc/admin_credits_earn,
+	/client/proc/admin_credits_set,
 	/client/proc/toggle_restart_vote,	/* Moderator tool for toggling restart vote */
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility	/* toggles all players being able to see tickets remaining */
@@ -355,7 +351,7 @@ var/list/admin_verbs_hideable = list(
 
 	src << "<span class='interface'>All of your adminverbs are now visible.</span>"
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/*
+
 /client/proc/admin_credits_get(mob/M as mob)
 	set category = "Special Verbs"
 	set name = "Credits Show"
@@ -445,7 +441,7 @@ var/list/admin_verbs_hideable = list(
 		src << "[get_ckey(M)] now has [credits] credits"
 	else
 		src << "Error giving credits: [result]"
-*/
+
 /client/proc/admin_ghost()
 	set category = "Admin"
 	set name = "Aghost"

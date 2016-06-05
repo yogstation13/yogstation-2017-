@@ -52,7 +52,7 @@ var/global/BSACooldown = 0
 		if(check_rights(R_PERMISSIONS))
 			body += "<b>Whitelisted</b> = [C.is_whitelisted ? "Yes" : "No"] \[ <a href='?_src_=holder;toggle_whitelisted=\ref[M]'>Toggle</a> \]<br>"
 
-		//body += "<b>Credits</b> = [C.credits]<br><br>"
+		body += "<b>Credits</b> = [C.credits]<br><br>"
 
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
