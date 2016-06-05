@@ -160,7 +160,7 @@
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
-	emag = new /obj/item/weapon/reagent_containers/borghypo/hacked(src)
+	emag = new /obj/item/weapon/gun/syringe/rapidsyringe/borg(src)
 
 	fix_modules()
 
@@ -323,6 +323,27 @@
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
+	fix_modules()
+
+
+/obj/item/weapon/robot_module/clown
+	name = "clown robot module"
+
+/obj/item/weapon/robot_module/clown/New()
+	..()
+	modules += new /obj/item/toy/crayon/rainbow(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/bikehorn(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/bikehorn/airhorn(src)
+	modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/device/instrument/violin(src)
+	modules += new /obj/item/device/instrument/guitar(src)
+	modules += new /obj/item/weapon/gun/magic/wand/(src)
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+	emag.reagents.add_reagent("lube", 250)
+	emag.name = "lube spray"
 	fix_modules()
 
 /obj/item/weapon/robot_module/syndicate
