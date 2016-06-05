@@ -57,7 +57,7 @@
 						if(sender)
 							T.owner.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
 						else
-							C.adminhelp(reply)													//sender has left, adminhelp instead
+							C.admin_ticket(reply)													//sender has left, adminhelp instead
 					return
 	else if(href_list["action"] == "monitor_admin_ticket")
 		// Limited to admins

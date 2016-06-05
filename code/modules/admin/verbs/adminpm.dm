@@ -70,8 +70,10 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
-		else		adminhelp(msg)	//admin we are replying to left. adminhelp instead
+		if(holder)
+			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		else
+			admin_ticket(msg)	//admin we are replying to left. adminhelp instead
 		return
 
 	// Search current tickets, is this user the owner or primary admin of a ticket
@@ -104,8 +106,10 @@
 				wasAlreadyClicked.pm_started_flag = 0
 			return
 		if(!C)
-			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
-			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
+			if(holder)
+				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			else
+				admin_ticket(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
@@ -148,7 +152,7 @@
 							if(sender)
 								C.cmd_admin_pm(src,reply)										//sender is still about, let's reply to them
 							else
-								adminhelp(reply)													//sender has left, adminhelp instead
+								admin_ticket(reply)													//sender has left, adminhelp instead
 						return
 
 				return

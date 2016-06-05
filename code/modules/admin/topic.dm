@@ -11,8 +11,6 @@
 		var/client/C = locate(href_list["rejectadminhelp"])
 		if(!C)
 			return
-		if (deltimer(C.adminhelptimerid))
-			C.giveadminhelpverb()
 
 		C << 'sound/effects/adminhelp.ogg'
 
@@ -1588,7 +1586,7 @@
 				T.view_log()
 				return
 		usr << "<span class='adminnotice'>There is no ticket with the ID of [href_list["adminticketview"]]!</span>"
-		
+
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
@@ -1617,7 +1615,7 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
-	
+
 	else if(href_list["admincheckdevilinfo"])
 		output_devil_info()
 
@@ -1890,7 +1888,7 @@
 		for(var/client/X in admins)
 			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
 		show_player_panel(M)
-		
+
 	else if(href_list["getmob"])
 		if(!check_rights(R_ADMIN))
 			return
