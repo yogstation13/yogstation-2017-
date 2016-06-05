@@ -237,7 +237,6 @@
 		if(.)
 			damaged += .
 
-
 	//DAMAGE//
 	for(var/obj/item/bodypart/affecting in damaged)
 		affecting.take_damage(acidity, 2*acidity)
@@ -268,6 +267,9 @@
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
 
+/mob/living/carbon/human/emp_act(severity)
+	if (dna)
+		dna.species.handle_emp(src, severity)
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())

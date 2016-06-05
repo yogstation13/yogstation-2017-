@@ -52,6 +52,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/static_equip
 	var/static_light = 0
 	var/static_environ
+	var/murders_plants = 1
 
 	var/has_gravity = 0
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
@@ -120,6 +121,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	valid_territory = 0
 	icon_state = "shuttle"
+	murders_plants = 0
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
