@@ -9,8 +9,13 @@
 	var/t_him = "it"
 	var/t_has = "has"
 	var/t_is = "is"
+	var/t_is2 = "is"
+	var/t_His = "Its"
 
 	var/msg = "<span class='info'>*---------*\nThis is "
+
+
+	var/t_surface = "skin"
 
 	if( (slot_w_uniform in obscured) && skipface ) //big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
@@ -210,24 +215,71 @@
 		msg += "<B>[capitalize(t_his)] [parse_zone(t)] is missing!</B>\n"
 
 	if(temp)
-		if(temp < 30)
-			msg += "[t_He] [t_has] minor bruising.\n"
+		if(temp < 45)
+			if (lastbrutetype)
+				switch (lastbrutetype)
+					if ("melee")
+						msg += "[t_He] [t_has] a number of minor wounds.\n"
+					if ("pressure")
+						msg += "[t_His] [t_surface] [t_is2] slightly swollen and cracked.\n"
+					if ("bullet")
+						msg += "[t_He] [t_has] a few bullet grazes upon their outer limbs.\n"
+			else
+				msg += "[t_He] [t_has] a number of minor wounds.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+			if (lastbrutetype)
+				switch (lastbrutetype)
+					if ("melee")
+						msg += "<B>[t_He] [t_has] many open cuts, gashes and bruises!</B>\n"
+					if ("pressure")
+						msg += "<B>[t_His] [t_surface] [t_is2] severely swollen and bloated!</B>\n"
+					if ("bullet")
+						msg += "<B>[t_His] body is devastated by multiple bullet wounds!</B>\n"
+			else
+				msg += "<B>[t_He] [t_has] several severe wounds!</B>\n"
 
 	temp = getFireLoss()
 	if(temp)
-		if(temp < 30)
-			msg += "[t_He] [t_has] minor burns.\n"
+		if(temp < 45)
+			if (lastburntype)
+				switch (lastburntype)
+					if ("electric")
+						msg += "[t_He] [t_is] slightly charred in places.\n"
+					if ("laser")
+						msg += "[t_He] [t_has] several pockmarked blisters.\n"
+					if ("coldburn")
+						msg += "[t_He] [t_is] covered in a faint coating of frost.\n"
+					if ("hotburn")
+						msg += "[t_He] [t_has] patches of red burns.\n"
+			else
+				msg += "[t_He] [t_has] minor burns.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+			if (lastburntype)
+				switch (lastburntype)
+					if ("electric")
+						msg += "<B>[t_His] [t_surface] [t_is2] charred and smoking, arc-like patterns clearly visible!</B>\n"
+					if ("laser")
+						msg += "<B>[t_He] [t_has] several extremely severe blistered burns!</B>\n"
+					if ("coldburn")
+						msg += "<B>[t_His] [t_surface] [t_is2] badly frostbitten, cracking away in places!</B>\n"
+					if ("hotburn")
+						msg += "<B>[t_His] [t_surface] [t_is2] severely burned and sloughing off with the slightest movement!</B>\n"
+			else
+				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
 	temp = getCloneLoss()
 	if(temp)
-		if(temp < 30)
-			msg += "[t_He] [t_has] minor cellular damage.\n"
+		if(temp < 45)
+			msg += "[t_He] [t_has] appears slightly stunted and pale.\n"
 		else
-			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
+			msg += "<B>[t_He] [t_has] is severely deformed and bears a greyish pallor.</B>\n"
+
+	temp = getOxyLoss()
+	if (temp)
+		if (temp < 35)
+			msg += "[t_His] [t_surface] and lips are bluish in colour.\n"
+		else
+			msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
 
 
 	if(fire_stacks > 0)

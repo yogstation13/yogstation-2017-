@@ -1408,19 +1408,25 @@
 			switch(breath.temperature)
 				if(-INFINITY to 120)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					H.lastburntype = "coldburn"
 				if(120 to 200)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					H.lastburntype = "coldburn"
 				if(200 to 260)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					H.lastburntype = "coldburn"
 
 		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(360 to 400)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+					H.lastburntype = "hotburn"
 				if(400 to 1000)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+					H.lastburntype = "hotburn"
 				if(1000 to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					H.lastburntype = "hotburn"
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
 	if(!environment)
@@ -1488,6 +1494,7 @@
 	switch(adjusted_pressure)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!(RESISTTEMP in specflags))
+				H.lastbrutetype = "pressure"
 				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 			else

@@ -276,6 +276,7 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
+	pass_flags = PASSDOOR
 	gold_core_spawnable = 0
 	var/age = 0
 	var/record_age = 1

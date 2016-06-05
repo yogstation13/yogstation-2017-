@@ -573,3 +573,11 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/tourist
+	name = "Hawaiian shirt"
+	desc = "I explored the galaxy and all I got was this lousy T-shirt!"
+	icon_state = "tourist"
+	item_state = "gy_suit"
+	item_color = "tourist"
+	can_adjust = 0

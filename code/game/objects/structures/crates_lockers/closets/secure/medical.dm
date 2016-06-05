@@ -91,3 +91,59 @@
 	..()
 	new /obj/item/weapon/storage/box/pillbottles(src)
 	new /obj/item/weapon/storage/box/pillbottles(src)
+
+/obj/structure/closet/secure_closet/mmedical
+	name = "mining medic's locker"
+	req_access = list(access_medical)
+	icon_state = "med_secure"
+
+/obj/structure/closet/secure_closet/mmedical/New()
+	..()
+	sleep(2)
+	if(prob(50))
+		new /obj/item/weapon/storage/backpack/medic(src)
+	else
+		new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/clothing/under/rank/mmedical(src)
+	new /obj/item/clothing/shoes/sneakers/white(src)
+	new /obj/item/weapon/cartridge/medical(src)
+	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/weapon/storage/firstaid/regular(src)
+	new /obj/item/weapon/storage/firstaid/o2(src)
+	new /obj/item/weapon/reagent_containers/hypospray/mini(src)
+	return
+
+/obj/structure/closet/secure_closet/paramedic
+	name = "paramedical closet"
+	desc = "It's a secure storage unit for paramedical supplies."
+	icon_state = "paramedic"
+	req_access = list(access_paramedic)
+
+/obj/structure/closet/secure_closet/paramedic/New()
+	..()
+	if(prob(50))
+		new /obj/item/weapon/storage/backpack/medic(src)
+	else
+		new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/weapon/storage/firstaid/regular(src)
+	new /obj/item/clothing/shoes/sneakers/white(src)
+	switch(pick("blue", "green", "purple"))
+		if ("blue")
+			new /obj/item/clothing/under/rank/medical/blue(src)
+		if ("green")
+			new /obj/item/clothing/under/rank/medical/green(src)
+		if ("purple")
+			new /obj/item/clothing/under/rank/medical/purple(src)
+	switch(pick("blue", "green", "purple"))
+		if ("blue")
+			new /obj/item/clothing/under/rank/medical/blue(src)
+		if ("green")
+			new /obj/item/clothing/under/rank/medical/green(src)
+		if ("purple")
+			new /obj/item/clothing/under/rank/medical/purple(src)
+	new /obj/item/clothing/under/rank/medical(src)
+	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
+	new /obj/item/clothing/head/soft/emt(src)
+	new /obj/item/weapon/defibrillator/loaded(src)
+	new /obj/item/device/radio/headset/headset_med(src)
+	new /obj/item/weapon/storage/belt/medical(src)

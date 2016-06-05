@@ -78,13 +78,21 @@
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
-	new /obj/item/weapon/screwdriver(src, "red")
-	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool/largetank(src)
-	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/wirecutters(src, "red")
-	new /obj/item/device/multitool(src)
-	new /obj/item/clothing/gloves/combat(src)
+	var/obj/item/I
+	I = new /obj/item/weapon/screwdriver(src, "red")
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/wrench(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/weldingtool/largetank(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/crowbar/red(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/wirecutters(src, "red")
+	I.toolspeed = 1.5
+	I = new /obj/item/device/multitool(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/clothing/gloves/combat(src)
+	I.toolspeed = 1.5
 
 /obj/item/weapon/storage/toolbox/drone
 	name = "mechanical toolbox"
