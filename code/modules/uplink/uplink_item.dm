@@ -663,6 +663,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/card/id/syndicate
 	cost = 2
 
+/datum/uplink_item/stealthy_tools/cham_belt
+	name = "Chameleon Military Belt"
+	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment. This one can be disguised to imitate many of the standard belts found around the station."
+	item = /obj/item/weapon/storage/belt/military/chameleon
+	cost = 3
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't \
@@ -785,7 +793,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
