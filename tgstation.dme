@@ -55,7 +55,7 @@
 #include "code\__HELPERS\_string_lists.dm"
 #include "code\__HELPERS\bandetect.dm"
 #include "code\__HELPERS\cmp.dm"
-#include "code\__HELPERS\credits.dm"
+#include "code\__HELPERS\devices.dm"
 #include "code\__HELPERS\files.dm"
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
