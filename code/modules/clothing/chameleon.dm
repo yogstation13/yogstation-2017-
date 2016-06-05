@@ -362,3 +362,18 @@
 	chameleon_action.chameleon_name = "PDA"
 	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/ai)
 	chameleon_action.initialize_disguises()
+
+/obj/item/weapon/storage/belt/military/chameleon
+	name = "military belt"
+	desc = "A syndicate belt designed to be used by boarding parties. Its style is modeled after the hardsuits they wear."
+	icon_state = "militarybelt"
+	item_state = "military"
+	burn_state = FIRE_PROOF
+
+/obj/item/weapon/storage/belt/military/chameleon/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/weapon/storage/belt
+	chameleon_action.chameleon_name = "Belt"
+	chameleon_action.chameleon_blacklist = list()
+	chameleon_action.initialize_disguises()

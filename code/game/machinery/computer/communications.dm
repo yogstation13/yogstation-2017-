@@ -63,20 +63,22 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("main")
 			src.state = STATE_DEFAULT
 		if("login")
-			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/mob/living/carbon/human/M = usr
+			var/obj/item/weapon/card/id/I = M.get_idcard()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-			if (I && istype(I))
+			if(src.allowed(M) && M.wear_id)
 				if(src.check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"
 					if((20 in I.access))
 						authenticated = 2
-				if(src.emagged)
-					authenticated = 2
-					auth_id = "Unknown"
+			if(src.emagged)
+				authenticated = 2
+				auth_id = "Unknown"
+			else if(!M.wear_id && !src.emagged)
+				return
 		if("logout")
 			authenticated = 0
 

@@ -46,6 +46,24 @@
 			message = "<B>[src]</B> burps."
 			m_type = 2
 
+		if ("cwhistle", "catwhistle", "cat_whistle", "w_whistle", "whip-woo")
+			if(src.restrained()) // hah, no.
+				return
+			var/M = null
+			var/adjective = pick("slick", "smooth", "passionate", "flirtatious", "flirty")
+			if (param)
+				for (var/mob/A in view(1, src))
+					if (param == A.name)
+						M = A
+						break
+			if (!M)
+				param = null
+			if (param)
+				message = "<B>[src]</B> gives [param] a [adjective] whistle."
+			else
+				var/adjective2 = pick("smooth", "passionate", "flirtatious")
+				message = "<B>[src]</B> whistles [adjective2]ly."
+
 		if ("choke","chokes")
 			message = "<B>[src]</B> chokes!"
 			m_type = 2
@@ -212,7 +230,7 @@
 		if ("pout","pouts")
 			message = "<B>[src]</B> pouts."
 			m_type = 2
-		
+
 		if ("scream","screams")
 			message = "<B>[src]</B> screams!"
 			m_type = 2
@@ -267,6 +285,15 @@
 			else
 				message = "<B>[src]</B> stares."
 
+		if ("smirk", "smirks")
+			message = "<B>[src]</B> smirks."
+			m_type = 1
+
+		if ("smug", "smugsmile")
+			message = "<B>[src]</b> makes a smug smile."
+			m_type = 1
+
+
 		if ("stretch","stretches")
 			message = "<B>[src]</B> stretches their arms."
 			m_type = 2
@@ -314,9 +341,18 @@
 			message = "<B>[src]</B> whimpers."
 			m_type = 2
 
+		if ("whistle", "whistles")
+			message = "<B>[src]</B> whistles."
+			m_type = 2
+
+		if ("i_whistle", "i_whistles")
+			message = "<B>[src]</B> innocently whistles."
+			m_type = 2
+
 		if ("wsmile","wsmiles")
 			message = "<B>[src]</B> smiles weakly."
 			m_type = 2
+
 
 		if ("yawn","yawns")
 			message = "<B>[src]</B> yawns."

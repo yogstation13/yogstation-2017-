@@ -57,3 +57,10 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	origin_tech = "magnets=2;syndicate=3"
+
+/obj/item/clothing/shoes/magboots/security
+	name = "combat magboots"
+	desc = "Combat-edition magboots issued by Nanotrasen Security for extravehicular missions. Unlike the Syndicates reverse engineered pair, these do not carry such a heavy burden on the wearer, however you may find that the advanced version carries much more mobility."
+	icon_state = "cmagboots0"
+	magboot_state = "cmagboots"
+	slowdown_active = 1
