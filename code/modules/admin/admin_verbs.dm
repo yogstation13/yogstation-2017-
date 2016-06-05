@@ -78,11 +78,11 @@ var/list/admin_verbs_admin = list(
 	/client/proc/test_pretty_filters,
 	/client/proc/add_pretty_filter,
 	/client/proc/reset_pretty_filter,
-	/client/proc/admin_credits_get,
-	/client/proc/admin_credits_list,
-	/client/proc/admin_credits_spend,
-	/client/proc/admin_credits_earn,
-	/client/proc/admin_credits_set,
+	// /client/proc/admin_credits_get,
+	// /client/proc/admin_credits_list,
+	// /client/proc/admin_credits_spend,
+	// /client/proc/admin_credits_earn,
+	// /client/proc/admin_credits_set,
 	// /client/proc/check_words,			/* Displays cult-words*/
 	// /client/proc/reset_all_tcs,		/* Resets all telecomms scripts*/
 	// /datum/admins/proc/cybermen_panel,  /* Lots of cybermen options */
@@ -355,7 +355,7 @@ var/list/admin_verbs_hideable = list(
 
 	src << "<span class='interface'>All of your adminverbs are now visible.</span>"
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+/*
 /client/proc/admin_credits_get(mob/M as mob)
 	set category = "Special Verbs"
 	set name = "Credits Show"
@@ -445,7 +445,7 @@ var/list/admin_verbs_hideable = list(
 		src << "[get_ckey(M)] now has [credits] credits"
 	else
 		src << "Error giving credits: [result]"
-
+*/
 /client/proc/admin_ghost()
 	set category = "Admin"
 	set name = "Aghost"

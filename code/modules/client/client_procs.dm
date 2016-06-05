@@ -156,7 +156,7 @@ var/next_external_rsc = 0
 
 	spawn(30)
 		antag_token_reload_from_db(src)
-		credits_reload_from_db(src)
+		//credits_reload_from_db(src)
 
 		for(var/datum/admin_ticket/T in tickets_list)
 			if(compare_ckey(T.owner_ckey, src) && !T.resolved)
