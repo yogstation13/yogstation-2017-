@@ -113,7 +113,6 @@ var/datum/subsystem/ticker/ticker
 				next_alert_time = world.time+1800 /* 6000 */
 
 				var/admins_online = total_admins_active()
-				var/unresolved_tickets = total_unresolved_tickets()
 
 				if(!admins_online)
 					next_check_admin = 0
