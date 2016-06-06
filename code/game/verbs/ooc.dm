@@ -108,25 +108,25 @@
 								OOC_tag = "\[Moderator\]"
 
 							if("AdminOnVacation")
-								OOC_tag = "\[Inactivemin\]"
+								OOC_tag = "\[AdminOnVacation\]"
 
 							if("ModeratorOnVacation")
-								OOC_tag = "\[InactiveMod\]"
-							/*
+								OOC_tag = "\[ModOnVacation\]"
+
 							if("SeniorCoder")
 								OOC_tag = "\[SeniorCoder\]"
 
 							if("Coder")
 								OOC_tag = "\[Coder\]"
-								*/
+
 							if("Bot")
-								OOC_tag = "\[AnActualFuckingTerminator\]"
+								OOC_tag = "\[YogBot\]"
 
 							if("RetiredAdmin")
 								OOC_tag = "\[Retmin\]"
 
 						if(!OOC_tag)
-							OOC_tag = "\[UnknownMin\]"
+							OOC_tag = "\[Admin\]"
 						C << "<font color=[config.allow_admin_ooccolor && prefs.ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>[OOC_tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
 
 
