@@ -220,9 +220,9 @@
 
 
 		if("Medical")
+			module = new /obj/item/weapon/robot_module/medical(src)
 			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen")
 			if(!icontype) return
-			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			switch(icontype)
 				if("Mediborg")
@@ -270,9 +270,9 @@
 			magpulse = 1
 
 		if("Janitor")
+			module = new /obj/item/weapon/robot_module/janitor(src)
 			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal")
 			if(!icontype) return
-			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			switch(icontype)
 				if("Janiborg")
@@ -288,9 +288,9 @@
 			feedback_inc("cyborg_janitor",1)
 
 		if("Clown")
+			module = new /obj/item/weapon/robot_module/clown(src)
 			var/icontype = input("Select an icon!", "Robot", "Clown") in list("Clown", "Wizard Bot", "Wizard Borg","Chicken")
 			if(!icontype) return
-			module = new /obj/item/weapon/robot_module/clown(src)
 			hands.icon_state = "standard"
 			switch(icontype)
 				if("Clown")
