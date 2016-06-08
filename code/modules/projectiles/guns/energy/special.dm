@@ -186,7 +186,7 @@
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	name = "mini energy crossbow"
+	name = "mini radiation crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
