@@ -262,7 +262,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 /datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
 	if(gangs.len)
 		if(!winner)
-			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
+			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The loyalists win!"]</span><br>"
 			feedback_set_details("round_end_result","win - gang domination complete")
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
