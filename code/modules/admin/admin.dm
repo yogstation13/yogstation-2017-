@@ -45,6 +45,15 @@ var/global/BSACooldown = 0
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
+	var/client/C = get_client(M)
+	if(C)
+		body += "<b>Antag Tokens</b> = [C.antag_tokens] \[ <a href='?_src_=holder;antag_token_decrease=\ref[M]'>- Less -</a> | <a href='?_src_=holder;antag_token_increase=\ref[M]'>+ More +</a> \]<br>"
+
+		if(check_rights(R_PERMISSIONS))
+			body += "<b>Whitelisted</b> = [C.is_whitelisted ? "Yes" : "No"] \[ <a href='?_src_=holder;toggle_whitelisted=\ref[M]'>Toggle</a> \]<br>"
+
+		body += "<b>Credits</b> = [C.credits]<br><br>"
+
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
 	body += "<A href='?_src_=holder;jobban2=\ref[M]'>Jobban</A> | "
@@ -69,6 +78,7 @@ var/global/BSACooldown = 0
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
+		var/frozen = M.client.prefs.afreeze
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
@@ -76,6 +86,7 @@ var/global/BSACooldown = 0
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
 		body += "(<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "<A href='?_src_=holder;afreeze=\ref[M]'><font color='[frozen ? "red":"blue"]'>FREEZE</font></a>)"
 
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;jumpto=\ref[M]'><b>Jump to</b></A> | "
@@ -164,6 +175,18 @@ var/global/BSACooldown = 0
 		body += "<A href='?_src_=holder;tdome2=\ref[M]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += "<br>"
+		var/agree = M.client.prefs.agree
+		if(agree == -1)
+			body += "Forced to agree to rules every time.<br>"
+			body += "<A href='?_src_=holder;fixagree=\ref[M]'>Enough</A>"
+		else
+			if(agree == 0)
+				body += "Did not agree to rules.<br>"
+			else
+				body += "Agreed to rules revision [agree] (max=[MAXAGREE]).<br>"
+				body += "<A href='?_src_=holder;resetagree=\ref[M]'>Reset</A> | "
+			body += "<A href='?_src_=holder;forceagree=\ref[M]'>Force Disclaimer Every Time</A>"
 
 	body += "<br>"
 	body += "</body></html>"
@@ -817,3 +840,19 @@ var/global/BSACooldown = 0
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")
+
+/datum/admins/proc/toggle_high_risk_item_notifications()
+	set category = "Admin"
+	set desc = "Toggles receiving notifications if a high-risk item has left the z-level."
+	set name = "Toggle High Risk Item Notifications"
+	high_risk_item_notifications = !high_risk_item_notifications
+	var/message = "[key_name_admin(usr)] has toggled high risk item notifications [high_risk_item_notifications ? "on" : "off"]."
+	message_admins(message)
+	log_admin(message)
+
+/datum/admins/proc/toggle_ticket_counter_visibility()
+	set category = "Admin"
+	set desc = "Toggles whether or not players are shown how many tickets are active."
+	set name = "Toggle Ticket Counter Visibility"
+	ticket_counter_visible_to_everyone = !ticket_counter_visible_to_everyone
+	message_admins("[key_name_admin(usr)] has made the ticket counter [ticket_counter_visible_to_everyone ? "visible" : "invisible"] to normal players.")

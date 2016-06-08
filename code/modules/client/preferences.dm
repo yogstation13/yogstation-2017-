@@ -11,6 +11,7 @@ var/list/preferences_datums = list()
 
 	//non-preference stuff
 	var/muted = 0
+	var/afreeze = 0
 	var/last_ip
 	var/last_id
 
@@ -90,6 +91,7 @@ var/list/preferences_datums = list()
 	var/metadata = ""
 
 	var/unlock_content = 0
+	var/agree = 0
 
 	var/list/ignoring = list()
 
