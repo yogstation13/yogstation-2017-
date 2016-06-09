@@ -302,13 +302,24 @@
 	if(pale)
 		msg += "[t_He] [t_has] pale skin.\n"
 
-	if(bleedsuppress)
+	if(bleedsuppress && !cauterized)
 		msg += "[t_He] [t_is] bandaged with something.\n"
+
+	if(cauterized)
+		msg += "[t_He] [t_is] bearing wounds that were burnt closed.\n"
 	if(blood_max)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
-		else
-			msg += "<B>[t_He] [t_is] bleeding!</B>\n"
+		else if(blood_max)
+			switch (blood_max)
+				if (0.05 to 1)
+					msg += "[t_He] [t_is] bleeding very slightly.\n"
+				if (1.5 to 3)
+					msg += "<B>[t_He] [t_is] bleeding significantly!</B>\n"
+				if (4 to 6)
+					msg += "<B>[t_He] [t_is] bleeding severely!</B>\n"
+				if (6 to INFINITY)
+					msg += "<B>[t_He] [t_is] bleeding out quickly!</B>\n"
 
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"

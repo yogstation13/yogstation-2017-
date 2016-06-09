@@ -98,6 +98,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles |= MEMBER_PUBLIC
 	if(current_version < 11)
 		chat_toggles = TOGGLES_DEFAULT_CHAT
+		agree = 0
 		toggles = TOGGLES_DEFAULT
 	if(current_version < 12)
 		ignoring = list()
@@ -226,6 +227,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
 	S["inquisitive_ghost"]	>> inquisitive_ghost
+	S["agree"] 				>> agree
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -245,6 +247,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	agree			= sanitize_integer(agree, -1, 65535, 0)
 
 	return 1
 
@@ -277,6 +280,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
+	S["agree"] 				<< agree
 
 	return 1
 
@@ -353,12 +357,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
+	S["job_civilian_ultra"]	>> job_civilian_ultra
 	S["job_civilian_high"]	>> job_civilian_high
 	S["job_civilian_med"]	>> job_civilian_med
 	S["job_civilian_low"]	>> job_civilian_low
+	S["job_medsci_ultra"]	>> job_medsci_ultra
 	S["job_medsci_high"]	>> job_medsci_high
 	S["job_medsci_med"]		>> job_medsci_med
 	S["job_medsci_low"]		>> job_medsci_low
+	S["job_engsec_ultra"]	>> job_engsec_ultra
 	S["job_engsec_high"]	>> job_engsec_high
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
@@ -405,12 +412,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
+	job_civilian_ultra = sanitize_integer(job_civilian_ultra, 0, 65535, initial(job_civilian_ultra))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
 	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
+	job_medsci_ultra = sanitize_integer(job_medsci_ultra, 0, 65535, initial(job_medsci_ultra))
 	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
 	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
 	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
+	job_engsec_ultra = sanitize_integer(job_engsec_ultra, 0, 65535, initial(job_engsec_ultra))
 	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
@@ -463,12 +473,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob
+	S["job_civilian_ultra"]	<< job_civilian_ultra
 	S["job_civilian_high"]	<< job_civilian_high
 	S["job_civilian_med"]	<< job_civilian_med
 	S["job_civilian_low"]	<< job_civilian_low
+	S["job_medsci_ultra"]	<< job_medsci_ultra
 	S["job_medsci_high"]	<< job_medsci_high
 	S["job_medsci_med"]		<< job_medsci_med
 	S["job_medsci_low"]		<< job_medsci_low
+	S["job_engsec_ultra"]	<< job_engsec_ultra
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low

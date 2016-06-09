@@ -186,7 +186,7 @@
 		icon_state = initial(icon_state)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	name = "mini energy crossbow"
+	name = "mini radiation crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
@@ -315,6 +315,27 @@
 	cell_type = "/obj/item/weapon/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
 	can_charge = 0
+	charge_delay = 2
+	burst_size = 3
+	actions_types = list(/datum/action/item_action/toggle_firemode/trimode)
+
+	var/list/burst_size_options = list(1, 3, 5)
+	var/burst_mode = 2
+
+/obj/item/weapon/gun/energy/printer/New()
+	..()
+	SSobj.processing |= src
+
+/obj/item/weapon/gun/energy/printer/process()
+	charge_tick++
+	if(charge_tick < charge_delay)
+		return 0
+	charge_tick = 0
+	if(!power_supply) 
+		return 0
+	if(power_supply.charge < power_supply.maxcharge)
+		robocharge()
+	return 1
 
 /obj/item/weapon/gun/energy/printer/update_icon()
 	return
@@ -322,9 +343,31 @@
 /obj/item/weapon/gun/energy/printer/emp_act()
 	return
 
-/obj/item/weapon/gun/energy/printer/newshot()
+/obj/item/weapon/gun/energy/printer/examine(mob/user)
 	..()
-	robocharge()
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	user << "Has [round(power_supply.charge/shot.e_cost)] round\s in it's replication chamber."
+
+/obj/item/weapon/gun/energy/printer/ui_action_click(mob/user, actiontype)
+	if(actiontype == /datum/action/item_action/toggle_firemode/trimode)
+		toggle_burst()
+
+/obj/item/weapon/gun/energy/printer/proc/toggle_burst()
+	burst_mode++
+
+	if(burst_mode > burst_size_options.len)
+		burst_mode %= burst_size_options.len
+
+	burst_size = burst_size_options[burst_mode]
+
+	if(burst_size_options[burst_mode] == 1)
+		usr << "<span class='notice'>You switch to semi-automatic.</span>"
+	else
+		usr << "<span class='notice'>You switch to [burst_size_options[burst_mode]]-rnd burst.</span>"
+	return
+
+/datum/action/item_action/toggle_firemode/trimode
+	name = "Toggle Firemode (1/3/5 round bursts)"
 
 /obj/item/weapon/gun/energy/temperature
 	name = "temperature gun"

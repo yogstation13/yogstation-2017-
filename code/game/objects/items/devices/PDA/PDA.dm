@@ -23,7 +23,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 
 	//Secondary variables
-	var/scanmode = 0 //1 is medical scanner, 2 is forensics, 3 is reagent scanner.
+	var/scanmode = 0
 	var/fon = 0 //Is the flashlight function on?
 	var/f_lum = 3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
@@ -137,34 +137,65 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
 
 				if (cartridge)
-					if (cartridge.access_clown)
+					if (cartridge.functions & PDA_CLOWN_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Honk'><img src=pda_honk.png> Honk Synthesizer</a></li>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=Trombone'><img src=pda_honk.png> Sad Trombone</a></li>"
-					if (cartridge.access_manifest)
+					if (cartridge.functions & PDA_MANIFEST_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
-					if(cartridge.access_status_display)
+					if(cartridge.functions & PDA_STATUS_DISPLAY_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
 					dat += "</ul>"
-					if (cartridge.access_engine)
+					if ((cartridge.functions & PDA_ENGINE_FUNCTIONS) || (cartridge.alert_flags & PDA_POWER_ALERT))
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=43'><img src=pda_power.png> Power Monitor</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Halogen Counter'><img src=pda_reagent.png> [scanmode == PDA_SCAN_HALOGEN ? "Disable" : "Enable"] Halogen Counter</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Power Meter'><img src=pda_reagent.png> [scanmode == PDA_SCAN_POWER ? "Disable" : "Enable"] Power Meter</a></li>"
+						if(cartridge.alert_flags & PDA_POWER_ALERT)
+							dat += "<li><a href='byond://?src=\ref[src];choice=power alerts'><img src=pda_signaler.png> [(cartridge.alert_toggles & PDA_POWER_ALERT) ? "Disable" : "Enable"] Power Alert Notifications</a></li>"
 						dat += "</ul>"
-					if (cartridge.access_medical)
+					if((cartridge.functions & PDA_ATMOS_FUNCTIONS) || (cartridge.functions & PDA_ATMOS_MONITOR_FUNCTIONS) || (cartridge.alert_flags & PDA_ATMOS_ALERT) || (cartridge.alert_flags & PDA_FIRE_ALERT))
+						dat += "<h4>Atmospherics Functions:</h4>"
+						dat += "<ul>"
+						if(cartridge.functions & PDA_ATMOS_FUNCTIONS)
+							dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == PDA_SCAN_GAS ? "Disable" : "Enable"] Gas Scanner</a></li>"
+						if(cartridge.functions & PDA_ATMOS_MONITOR_FUNCTIONS)
+							dat += "<li><a href='byond://?src=\ref[src];choice=50'><img src=pda_power.png> Atmospherics Monitor</a></li>"
+						if(cartridge.alert_flags & PDA_ATMOS_ALERT)
+							dat += "<li><a href='byond://?src=\ref[src];choice=atmos alerts'><img src=pda_signaler.png> [(cartridge.alert_toggles & PDA_ATMOS_ALERT) ? "Disable" : "Enable"] Atmos Alert Notifications</a></li>"
+						if(cartridge.alert_flags & PDA_FIRE_ALERT)
+							dat += "<li><a href='byond://?src=\ref[src];choice=fire alerts'><img src=pda_signaler.png> [(cartridge.alert_toggles & PDA_FIRE_ALERT) ? "Disable" : "Enable"] Fire Alert Notifications</a></li>"
+						dat += "</ul>"
+					if (cartridge.functions & PDA_MEDICAL_FUNCTIONS)
 						dat += "<h4>Medical Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=44'><img src=pda_medical.png> Medical Records</a></li>"
-						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == 1 ? "Disable" : "Enable"] Medical Scanner</a></li>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Medical Scan'><img src=pda_scanner.png> [scanmode == PDA_SCAN_MEDICAL ? "Disable" : "Enable"] Medical Scanner</a></li>"
 						dat += "</ul>"
-					if (cartridge.access_security)
+					if (cartridge.functions & PDA_REAGENT_FUNCTIONS)
+						dat += "<h4>Chemistry Functions:</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == PDA_SCAN_REAGENT ? "Disable" : "Enable"] Reagent Scanner</a></li>"
+						dat += "</ul>"
+					if (cartridge.functions & PDA_BOTANY_FUNCTIONS)
+						dat += "<h4>Botany Functions</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=Plant Analyze'><img src=pda_botany.png> [scanmode == PDA_SCAN_FLORAL ? "Disable" : "Enable"] Plant Analyzer</a></li>"
+						dat += "</ul>"
+					if (cartridge.functions & PDA_SECURITY_FUNCTIONS)
 						dat += "<h4>Security Functions</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=45'><img src=pda_cuffs.png> Security Records</A></li>"
 						dat += "</ul>"
-					if(cartridge.access_quartermaster)
+					if(cartridge.functions & PDA_QUARTERMASTER_FUNCTIONS)
 						dat += "<h4>Quartermaster Functions:</h4>"
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=47'><img src=pda_crate.png> Supply Records</A></li>"
+						dat += "</ul>"
+					if(cartridge.functions & PDA_JANITOR_FUNCTIONS)
+						dat += "<h4>Janitorial Functions:</h4>"
+						dat += "<ul>"
+						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
 						dat += "</ul>"
 				dat += "</ul>"
 
@@ -173,19 +204,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if (cartridge)
 					if(cartridge.bot_access_flags)
 						dat += "<li><a href='byond://?src=\ref[src];choice=54'><img src=pda_medbot.png> Bots Access</a></li>"
-					if (cartridge.access_janitor)
-						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
+					if(cartridge.alert_flags)
+						dat += "<li><a href='byond://?src=\ref[src];choice=51'><img src=pda_signaler.png> View Alerts</a></li>"
 					if (istype(cartridge.radio, /obj/item/radio/integrated/signal))
 						dat += "<li><a href='byond://?src=\ref[src];choice=40'><img src=pda_signaler.png> Signaler System</a></li>"
-					if (cartridge.access_newscaster)
+					if (cartridge.functions & PDA_NEWSCASTER_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=53'><img src=pda_notes.png> Newscaster Access </a></li>"
-					if (cartridge.access_reagent_scanner)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Reagent Scan'><img src=pda_reagent.png> [scanmode == 3 ? "Disable" : "Enable"] Reagent Scanner</a></li>"
-					if (cartridge.access_engine)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Halogen Counter'><img src=pda_reagent.png> [scanmode == 4 ? "Disable" : "Enable"] Halogen Counter</a></li>"
-					if (cartridge.access_atmos)
-						dat += "<li><a href='byond://?src=\ref[src];choice=Gas Scan'><img src=pda_reagent.png> [scanmode == 5 ? "Disable" : "Enable"] Gas Scanner</a></li>"
-					if (cartridge.access_remote_door)
+					if (cartridge.functions & PDA_REMOTE_DOOR_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
@@ -354,20 +379,35 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					else
 						SetLuminosity(f_lum)
 			if("Medical Scan")
-				if(scanmode == 1)
+				if(scanmode == PDA_SCAN_MEDICAL)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_medical))
-					scanmode = 1
+				else if((!isnull(cartridge)) && (cartridge.functions & PDA_MEDICAL_FUNCTIONS))
+					scanmode = PDA_SCAN_MEDICAL
 			if("Reagent Scan")
-				if(scanmode == 3)
+				if(scanmode == PDA_SCAN_REAGENT)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_reagent_scanner))
-					scanmode = 3
+				else if((!isnull(cartridge)) && (cartridge.functions & PDA_REAGENT_FUNCTIONS))
+					scanmode = PDA_SCAN_REAGENT
 			if("Halogen Counter")
-				if(scanmode == 4)
+				if(scanmode == PDA_SCAN_HALOGEN)
 					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_engine))
-					scanmode = 4
+				else if((!isnull(cartridge)) && (cartridge.functions & PDA_ENGINE_FUNCTIONS))
+					scanmode = PDA_SCAN_HALOGEN
+			if("Gas Scan")
+				if(scanmode == PDA_SCAN_GAS)
+					scanmode = 0
+				else if((!isnull(cartridge)) && (cartridge.functions & PDA_ATMOS_FUNCTIONS))
+					scanmode = PDA_SCAN_GAS
+			if("Plant Analyze")
+				if(scanmode == PDA_SCAN_FLORAL)
+					scanmode = 0
+				else if((!isnull(cartridge)) && (cartridge.functions & PDA_BOTANY_FUNCTIONS))
+					scanmode = PDA_SCAN_FLORAL
+			if("Power Meter")
+				if(scanmode == PDA_SCAN_POWER)
+					scanmode = 0
+				else if((!isnull(cartridge)) && (cartridge.functions & PDA_ENGINE_FUNCTIONS))
+					scanmode = PDA_SCAN_POWER
 			if("Honk")
 				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
@@ -376,11 +416,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
 					last_noise = world.time
-			if("Gas Scan")
-				if(scanmode == 5)
-					scanmode = 0
-				else if((!isnull(cartridge)) && (cartridge.access_atmos))
-					scanmode = 5
+
+//ALERT FUNCTIONS========================================
+			if("power alerts")
+				if(cartridge)
+					cartridge.alert_toggles ^= PDA_POWER_ALERT
+
+			if("atmos alerts")
+				if(cartridge)
+					cartridge.alert_toggles ^= PDA_ATMOS_ALERT
+
+			if("fire alerts")
+				if(cartridge)
+					cartridge.alert_toggles ^= PDA_FIRE_ALERT
 
 //NOTEKEEPER FUNCTIONS===================================
 
@@ -456,7 +504,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
-				if(cartridge && cartridge.access_remote_door)
+				if(cartridge && cartridge.functions & PDA_REMOTE_DOOR_FUNCTIONS)
 					for(var/obj/machinery/door/poddoor/M in machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
@@ -470,24 +518,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if(!isnull(P))
 						if (!P.toff && cartridge:shock_charges > 0)
 							cartridge:shock_charges--
+							U.show_message("<span class='notice'>Success!</span>", 1)
+							P.explode()
 
-							var/difficulty = 0
-
-							if(P.cartridge)
-								difficulty += P.cartridge.access_medical
-								difficulty += P.cartridge.access_security
-								difficulty += P.cartridge.access_engine
-								difficulty += P.cartridge.access_clown
-								difficulty += P.cartridge.access_janitor
-								difficulty += P.cartridge.access_manifest * 2
-							else
-								difficulty += 2
-
-							if(prob(difficulty * 15) || (P.hidden_uplink))
-								U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
-							else
-								U.show_message("<span class='notice'>Success!</span>", 1)
-								P.explode()
 					else
 						U << "PDA not found."
 				else

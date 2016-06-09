@@ -734,7 +734,7 @@
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"
 
-	else if(istype(O, /obj/item/device/analyzer/plant_analyzer))
+	else if(is_plant_analyzer(O))
 		if(myseed)
 			user << "*** <B>[myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
 			user << "- Plant Age: <span class='notice'>[age]</span>"

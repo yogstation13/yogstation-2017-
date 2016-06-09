@@ -42,7 +42,6 @@
 	for(var/i in 1 to rand(0, max_ammo*2))
 		rotate()
 
-
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0

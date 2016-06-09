@@ -27,14 +27,65 @@
 		var/job = text2num(href_list["asset_cache_confirm_arrival"])
 		completed_asset_jobs += job
 		return
+
 	// Admin PM
 	if(href_list["priv_msg"])
+		if (href_list["ticket"])
+			var/datum/admin_ticket/T = locate(href_list["ticket"])
+
+			if(holder && T.resolved)
+				var/found_ticket = 0
+				for(var/datum/admin_ticket/T2 in tickets_list)
+					if(!T.resolved && compare_ckey(T.owner_ckey, T2.owner_ckey))
+						found_ticket = 1
+
+				if(!found_ticket)
+					if(alert(usr, "No open ticket exists, would you like to make a new one?", "Tickets", "New ticket", "Cancel") == "Cancel")
+						return
+			else if(!holder && T.resolved)
+				usr << "<span class='boldnotice'>Your ticket was closed. Only admins can add finishing comments to it.</span>"
+				return
+
+			if(get_ckey(usr) == get_ckey(T.owner))
+				T.owner.cmd_admin_pm(get_ckey(T.handling_admin),null)
+			else if(get_ckey(usr) == get_ckey(T.handling_admin))
+				T.handling_admin.cmd_admin_pm(get_ckey(T.owner),null)
+			else
+				cmd_admin_pm(get_ckey(T.owner),null)
+			return
+
+		if(href_list["new"])
+			var/datum/admin_ticket/T = locate(href_list["ticket"])
+			if(T.handling_admin && !compare_ckey(T.handling_admin, usr))
+				usr << "Using this PM-link for this ticket would usually be the first response to a ticket. However, an admin has already responded to this ticket. This link is now disabled, to ensure that no additional tickets are created for the same problem. You can create a new ticket by PMing the user any other way."
+				return
+			else
+				T.pm_started_user = get_client(usr)
 		if (href_list["ahelp_reply"])
 			cmd_ahelp_reply(href_list["priv_msg"])
 			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	if(href_list["view_admin_ticket"])
+		var/id = text2num(href_list["view_admin_ticket"])
+		var/client/C = usr.client
+		if(!C.holder)
+			message_admins("EXPLOIT \[admin_ticket\]: [usr] attempted to operate ticket [id].")
+			return
+
+		for(var/datum/admin_ticket/T in tickets_list)
+			if(T.ticket_id == id)
+				T.view_log()
+				return
+
+		usr << "The ticket ID #[id] doesn't exist."
+
+		return
+
+	if(prefs.afreeze && !holder)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -103,6 +154,20 @@ var/next_external_rsc = 0
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 
+	spawn(30)
+		antag_token_reload_from_db(src)
+		//credits_reload_from_db(src)
+
+		for(var/datum/admin_ticket/T in tickets_list)
+			if(compare_ckey(T.owner_ckey, src) && !T.resolved)
+				T.owner = src
+				T.add_log(new /datum/ticket_log(T, src, "¤ Connected ¤", 1), src)
+				break
+			if(compare_ckey(T.handling_admin, src) && !T.resolved)
+				T.handling_admin = src
+				T.add_log(new /datum/ticket_log(T, src, "¤ Connected ¤", 1), src)
+				break
+
 #if (PRELOAD_RSC == 0)
 	if(external_rsc_urls && external_rsc_urls.len)
 		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
@@ -130,6 +195,9 @@ var/next_external_rsc = 0
 		admins += src
 		holder.owner = src
 
+	//Need to load before we load preferences for correctly removing Ultra if user no longer whitelisted
+	is_whitelisted = is_job_whitelisted(src)
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
@@ -137,6 +205,14 @@ var/next_external_rsc = 0
 		preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
+	if(ckey in donators)
+		prefs.unlock_content |= 2
+		add_donor_verbs()
+	else
+		prefs.unlock_content &= ~2
+		if(prefs.toggles & QUIET_ROUND)
+			prefs.toggles &= ~QUIET_ROUND
+			prefs.save_preferences()
 
 	. = ..()	//calls mob.Login()
 
@@ -173,11 +249,17 @@ var/next_external_rsc = 0
 		world.update_status()
 
 	if(holder)
+		message_admins("Admin login: [key_name(src)]")
+		if(config.allow_vote_restart && check_rights_for(src, R_ADMIN))
+			log_admin("Staff joined with +ADMIN. Restart vote disallowed.")
+			message_admins("Staff joined with +ADMIN. Restart vote disallowed.")
+			config.allow_vote_restart = 0
 		add_admin_verbs()
+		add_donor_verbs()
 		admin_memo_output("Show")
-		adminGreet()
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
+		verbs += /client/verb/weightstats
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -224,12 +306,16 @@ var/next_external_rsc = 0
 			src << message
 		clientmessages.Remove(ckey)
 
+	if(holder || !config.admin_who_blocked)
+		verbs += /client/proc/adminwho
+
 	if(config && config.autoconvert_notes)
 		convert_notes_sql(ckey)
 
 	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
 		src << "<span class='warning'>Unable to access asset cache browser, if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>"
 
+	world.manage_fps()
 
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)

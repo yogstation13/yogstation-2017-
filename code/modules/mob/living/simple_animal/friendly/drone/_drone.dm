@@ -30,7 +30,7 @@
 	ventcrawler = 2
 	healable = 0
 	density = 0
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSTABLE | PASSMOB | PASSDOOR
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER

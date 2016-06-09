@@ -21,6 +21,7 @@
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 #define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
+#define TINT_IMPAIR 2
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0

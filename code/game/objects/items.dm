@@ -85,6 +85,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/sharpness = IS_BLUNT
 	var/toolspeed = 1
 
+	var/high_risk = 0 //if admins should be notified when this destoryed
+	
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
@@ -127,12 +129,31 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		new path(src)
 
 /obj/item/Destroy()
+	if(high_risk)
+		var/turf/T = get_turf(src)
+		if(high_risk_item_notifications)
+			message_admins("Antag objective item [src] deleted at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>). Last associated key is [src.fingerprintslast].")
+		log_game("Antag objective item [src] deleted at ([T.x],[T.y],[T.z]). Last associated key is [src.fingerprintslast].")
+		antag_objective_items -= src
 	if(ismob(loc))
 		var/mob/m = loc
 		m.unEquip(src, 1)
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/obj/item/on_z_level_change()
+	if(high_risk)
+		var/turf/T = get_turf(src)
+		if(T)
+			if(high_risk_item_notifications)
+				message_admins("Antag objective item [src] changed z levels at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>). Last associated key is [src.fingerprintslast].")
+			log_game("Antag objective item [src] changed z levels at ([T.x],[T.y],[T.z]). Last associated key is [src.fingerprintslast].")
+		else
+			if(high_risk_item_notifications)
+				message_admins("Antag objective item [src] changed z levels at (no loc). Last associated key is [src.fingerprintslast].")
+			log_game("Antag objective item [src] changed z levels at (no loc). Last associated key is [src.fingerprintslast].")
+	..()
 
 /obj/item/blob_act(obj/effect/blob/B)
 	qdel(src)
@@ -390,6 +411,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+
+/obj/item/proc/unequipped(mob/user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.Remove(user)
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 obj/item/proc/item_action_slot_check(slot, mob/user)

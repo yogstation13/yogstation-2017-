@@ -63,7 +63,8 @@
 		update_icon()
 
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
-	newshot() //prepare a new shot
+	if(!chambered || !chambered.BB)
+		newshot() //prepare a new shot
 	..()
 
 /obj/item/weapon/gun/energy/can_shoot()
@@ -83,7 +84,10 @@
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		power_supply.use(shot.e_cost)//... drain the power_supply cell
-	chambered = null //either way, released the prepared shot
+		chambered = null 
+		newshot()
+	else
+		chambered = null
 	return
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
@@ -93,6 +97,9 @@
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
+	if(chambered)
+		chambered = null
+		newshot()
 	if (shot.select_name)
 		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
 	update_icon()

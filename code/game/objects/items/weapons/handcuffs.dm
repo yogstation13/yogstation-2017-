@@ -106,6 +106,15 @@
 
 	return ..()
 
+/obj/item/weapon/restraints/handcuffs/cable/attack_self(mob/user)
+		var/obj/item/stack/cable_coil/new_coil = new /obj/item/stack/cable_coil
+		new_coil.amount = 15
+		qdel(src)
+		usr.put_in_hands(new_coil)
+		usr.visible_message("<span class='notice'>[user.name] unties the knot that holds together [src].</span>")
+
+/obj/item/weapon/restraints/handcuffs/cable
+
 /obj/item/weapon/restraints/handcuffs/cable/red
 	icon_state = "cuff_red"
 	item_state = "coil_red"
@@ -211,6 +220,10 @@
 	icon_state = "cuff_white_used"
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/used/attack()
+	return
+
+
+/obj/item/weapon/restraints/handcuffs/cable/zipties/attack_self(mob/user)
 	return
 
 

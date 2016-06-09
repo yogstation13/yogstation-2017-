@@ -385,4 +385,3 @@
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
 	traitorhud.leave_hud(traitor_mind.current)
 	set_antag_hud(traitor_mind.current, null)
-

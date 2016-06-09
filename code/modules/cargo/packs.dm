@@ -594,6 +594,16 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engineering/flood_lamp
+	name = "Flood Lamp Assembly Crate"
+	contains = list(/obj/machinery/flood_lamp,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/paper/flood_lamp)
+	cost = 1500
+	crate_name = "floodlamp assembly crate"
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -718,6 +728,20 @@
 	contains = list(/obj/item/weapon/defibrillator/loaded,
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
+
+/datum/supply_pack/medical/surgery
+	name = "Surgery Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/weapon/scalpel,
+					/obj/item/weapon/hemostat,
+					/obj/item/weapon/cautery,
+					/obj/item/weapon/retractor,
+					/obj/item/weapon/circular_saw,
+					/obj/item/weapon/surgicaldrill,
+					/obj/item/weapon/surgical_drapes,
+					/obj/item/weapon/tank/internals/anesthetic,
+					/obj/item/clothing/mask/breath/medical)
+	crate_name = "surgery crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////

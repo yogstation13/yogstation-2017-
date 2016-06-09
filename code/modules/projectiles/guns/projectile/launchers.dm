@@ -26,9 +26,40 @@
 	icon_state = "mecha_grenadelnchr"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/device/firing_pin
+	actions_types = list(/datum/action/item_action/replicate_ammo)
 
-/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self()
-	return
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self(mob/user)
+	replicate_ammo(user)
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/proc/replicate_ammo(mob/living/silicon/robot/syndicate/SR)
+	if(magazine)
+		if(!istype(SR))
+			return
+		var/ammo_count = get_ammo(0,0)
+		if(ammo_count < magazine.max_ammo && SR && SR.cell)
+			var/left_to_replicate = magazine.max_ammo-ammo_count
+			SR << "<span class='notice'>You start fabricating [left_to_replicate] [left_to_replicate > 1 ? "shells" : "shell"], you will need to stay still for this.</span>"
+			for(var/i in 1 to magazine.max_ammo-ammo_count)
+				if(do_after(SR, 60, target = SR))
+					if(SR.cell.use(500))
+						var/shell_to_load = new magazine.ammo_type()
+						magazine.give_round(shell_to_load, 1)
+						if(!chambered || !chambered.BB)
+							chamber_round(0)
+						left_to_replicate = magazine.max_ammo-ammo_count-i
+						SR << "<span class='notice'>[left_to_replicate > 0 ? "Grenade replicated, [left_to_replicate] more to go." : "Replication complete."]"
+				else
+					SR << "<span class='notice'>Fabrication interrupted."
+					break
+	else
+		SR << "<span class='notice'>You should never see this message.</span>"
+
+/obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/ui_action_click(mob/user, actiontype)
+	if(actiontype == /datum/action/item_action/replicate_ammo)
+		replicate_ammo(user)
+
+/datum/action/item_action/replicate_ammo
+	name = "Replicate Ammo"
 
 /obj/item/weapon/gun/projectile/automatic/gyropistol
 	name = "gyrojet pistol"
