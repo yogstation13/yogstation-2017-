@@ -241,6 +241,11 @@
 /datum/action/item_action/hands_free/activate
 	name = "Activate"
 
+/datum/action/item_action/unrestricted
+	check_flags = 0
+
+/datum/action/item_action/unrestricted/activate
+	name = "Activate"
 
 /datum/action/item_action/hands_free/shift_nerves
 	name = "Shift Nerves"

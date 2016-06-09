@@ -1565,10 +1565,12 @@
 	if(teleport=="Yes")
 		switch(role)
 			if("Agent")
+				special_role = "abductor agent"
 				S.agent = 1
 				L = agent_landmarks[team]
 				H.loc = L.loc
 			if("Scientist")
+				special_role = "abductor scientist"
 				S.scientist = 1
 				L = agent_landmarks[team]
 				H.loc = L.loc
