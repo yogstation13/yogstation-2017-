@@ -108,7 +108,7 @@
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-
+/*
 /obj/effect/proc_holder/changeling/sting/false_armblade
 	name = "False Armblade Sting"
 	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
@@ -158,7 +158,7 @@
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
-
+*/
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -174,8 +174,11 @@
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
-	if(!(user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.add_new_profile(target, user)
+	if((user.mind.changeling.has_dna(target.dna)))
+		user.mind.changeling.remove_profile(target)
+		user.mind.changeling.absorbedcount--
+		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
+	user.mind.changeling.add_new_profile(target, user)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
@@ -211,21 +214,24 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/LSD
-	name = "Hallucination Sting"
+	name = "Hallucinogenic Pathogen Sting"
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
-	chemical_cost = 10
-	dna_cost = 1
+	chemical_cost = 50
+	dna_cost = 5
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
 	spawn(rand(300,600))
 		if(target)
-			target.hallucination = max(400, target.hallucination)
+			if(!target.resistances.Find(/datum/disease/lingvirus))
+				var/datum/disease/welp = new /datum/disease/lingvirus(0)
+				target.ContractDisease(welp)
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
+/*
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
@@ -240,3 +246,4 @@
 		target.reagents.add_reagent("frostoil", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1
+*/
