@@ -1319,7 +1319,7 @@
 					/obj/item/clothing/shoes/clown_shoes,
 					/obj/item/clothing/mask/gas/clown_hat,
 					/obj/item/clothing/under/rank/clown,
-					/obj/item/weapon/bikehorn,
+					/obj/item/device/assembly/bikehorn,
 					/obj/item/clothing/under/rank/mime,
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/color/white,

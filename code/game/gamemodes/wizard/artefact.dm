@@ -403,7 +403,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
-			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/device/assembly/bikehorn(M), slot_l_store)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
 		if("killer")
@@ -496,7 +496,7 @@ var/global/list/multiverse = list()
 			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
 			target.Weaken(2)
 			GiveHint(target)
-		else if(istype(I,/obj/item/weapon/bikehorn))
+		else if(istype(I,/obj/item/device/assembly/bikehorn))
 			target << "<span class='userdanger'>HONK</span>"
 			target << 'sound/items/AirHorn.ogg'
 			target.adjustEarDamage(0,3)

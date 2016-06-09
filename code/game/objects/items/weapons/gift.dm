@@ -47,7 +47,7 @@
 		/obj/item/weapon/poster/legit,
 		/obj/item/weapon/book/manual/barman_recipes,
 		/obj/item/weapon/book/manual/chef_recipes,
-		/obj/item/weapon/bikehorn,
+		/obj/item/device/assembly/bikehorn,
 		/obj/item/toy/beach_ball,
 		/obj/item/toy/beach_ball/holoball,
 		/obj/item/weapon/banhammer,

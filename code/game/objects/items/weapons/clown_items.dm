@@ -89,7 +89,7 @@
  */
 
 
-/obj/item/weapon/bikehorn
+/obj/item/device/assembly/bikehorn
 	name = "bike horn"
 	desc = "A horn off of a bicycle."
 	icon = 'icons/obj/items.dmi'
@@ -105,52 +105,58 @@
 	var/honksound = 'sound/items/bikehorn.ogg'
 	var/cooldowntime = 20
 
-/obj/item/weapon/bikehorn/suicide_act(mob/user)
+/obj/item/device/assembly/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points the horn at \his temple! It looks like \he's trying to commit suicide..</span>")
-	playsound(src.loc, honksound, 50, 1)
+	playsound(get_turf(src), honksound, 50, 1)
 	return (BRUTELOSS)
 
-/obj/item/weapon/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/device/assembly/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!spam_flag)
-		playsound(loc, honksound, 50, 1, -1) //plays instead of tap.ogg!
+		playsound(get_turf(src), honksound, 50, 1, -1) //plays instead of tap.ogg!
 	return ..()
 
-/obj/item/weapon/bikehorn/attack_self(mob/user)
+/obj/item/device/assembly/bikehorn/attack_self(mob/user)
 	if(!spam_flag)
 		spam_flag = 1
-		playsound(src.loc, honksound, 50, 1)
+		playsound(get_turf(src), honksound, 50, 1)
 		src.add_fingerprint(user)
 		spawn(cooldowntime)
 			spam_flag = 0
 	return
 
-/obj/item/weapon/bikehorn/Crossed(mob/living/L)
+/obj/item/device/assembly/bikehorn/Crossed(mob/living/L)
 	if(isliving(L))
 		playsound(loc, honksound, 50, 1, -1)
 	..()
 
-/obj/item/weapon/bikehorn/airhorn
+/obj/item/device/assembly/bikehorn/activate()
+	if(!..())
+		return 0
+	attack_self()
+	return 1
+
+/obj/item/device/assembly/bikehorn/airhorn
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
 	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
 
-/obj/item/weapon/bikehorn/golden
+/obj/item/device/assembly/bikehorn/golden
 	name = "golden bike horn"
 	desc = "Golden? Clearly, its made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
 
-/obj/item/weapon/bikehorn/golden/attack()
+/obj/item/device/assembly/bikehorn/golden/attack()
 	flip_mobs()
 	return ..()
 
-/obj/item/weapon/bikehorn/golden/attack_self(mob/user)
+/obj/item/device/assembly/bikehorn/golden/attack_self(mob/user)
 	flip_mobs()
 	..()
 
-/obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
+/obj/item/device/assembly/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
 	if (!spam_flag)
 		var/turf/T = get_turf(src)
 		for(M in ohearers(7, T))

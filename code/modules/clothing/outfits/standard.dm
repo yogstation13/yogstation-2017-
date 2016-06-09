@@ -103,7 +103,7 @@
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	l_pocket = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
-	r_pocket = /obj/item/weapon/bikehorn
+	r_pocket = /obj/item/device/assembly/bikehorn
 	id = /obj/item/weapon/card/id
 	r_hand = /obj/item/weapon/twohanded/fireaxe
 

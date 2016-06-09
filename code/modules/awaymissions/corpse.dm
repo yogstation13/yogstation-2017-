@@ -329,7 +329,7 @@
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	radio = /obj/item/device/radio/headset
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	pocket1 = /obj/item/weapon/bikehorn
+	pocket1 = /obj/item/device/assembly/bikehorn
 	back = /obj/item/weapon/storage/backpack/clown
 	has_id = 1
 	id_job = "Clown"

@@ -383,7 +383,7 @@ datum/design/diagnostic_hud_night
 	req_tech = list("materials" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_BANANIUM = 1000)
-	build_path = /obj/item/weapon/bikehorn/airhorn
+	build_path = /obj/item/device/assembly/bikehorn/airhorn
 	category = list("Equipment")
 
 /datum/design/mesons

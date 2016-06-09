@@ -24,7 +24,7 @@ Clown
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	l_pocket = /obj/item/weapon/bikehorn
+	l_pocket = /obj/item/device/assembly/bikehorn
 	r_pocket = /obj/item/toy/crayon/rainbow
 	backpack_contents = list(
 		/obj/item/weapon/stamp/clown = 1,

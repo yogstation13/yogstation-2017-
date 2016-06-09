@@ -111,7 +111,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	name = "why are you using this dummy"
 	lootdoubles = 0
 	lootcount = 1
-	loot = list(/obj/item/weapon/bikehorn = 100)
+	loot = list(/obj/item/device/assembly/bikehorn = 100)
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonlite
 	name = "dungeon lite"
