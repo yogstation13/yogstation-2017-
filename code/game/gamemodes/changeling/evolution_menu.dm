@@ -369,6 +369,13 @@ var/list/sting_paths
 			if(!mind.changeling.has_sting(S))
 				mind.changeling.purchasedpowers+=S
 			S.on_purchase(src)
+	//move any revive abilities to the bottom of the list, like people are used to.
+	var/revive_abilities = list()//there is only one regenerate abiliy at the moment, but there may be more in the future. Hence the list. Hopefully if more are added, the coders extend the current revive ability or add to this proc.
+	for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
+		if(istype(p, /obj/effect/proc_holder/changeling/revive))
+			revive_abilities += p
+			mind.changeling.purchasedpowers -= p
+	mind.changeling.purchasedpowers += revive_abilities
 
 	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
 	if(ishuman(C))
