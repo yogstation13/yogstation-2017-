@@ -462,55 +462,6 @@
 	if(src)
 		qdel(src)
 
-/obj/item/weapon/grenade/barrier
-	name = "barrier grenade"
-	desc = "Instant cover. Alt+click to toggle modes."
-	icon = 'icons/obj/grenade.dmi'
-	icon_state = "flashbang"
-	item_state = "flashbang"
-	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
-	var/mode = SINGLE
-
-/obj/item/weapon/grenade/barrier/AltClick(mob/living/user)
-	if(!istype(user) || user.incapacitated())
-		return
-	toggle_mode(user)
-
-/obj/item/weapon/grenade/barrier/proc/toggle_mode(mob/user)
-	switch(mode)
-		if(SINGLE)
-			mode = VERTICAL
-		if(VERTICAL)
-			mode = HORIZONTAL
-		if(HORIZONTAL)
-			mode = SINGLE
-
-	user << "[src] is now in [mode] mode."
-
-/obj/item/weapon/grenade/barrier/prime()
-	new /obj/structure/barricade/security(get_turf(src.loc))
-	switch(mode)
-		if(VERTICAL)
-			var/target_turf = get_step(src, NORTH)
-			if(!(is_blocked_turf(target_turf)))
-				new /obj/structure/barricade/security(target_turf)
-
-			var/target_turf2 = get_step(src, SOUTH)
-			if(!(is_blocked_turf(target_turf2)))
-				new /obj/structure/barricade/security(target_turf2)
-		if(HORIZONTAL)
-			var/target_turf = get_step(src, EAST)
-			if(!(is_blocked_turf(target_turf)))
-				new /obj/structure/barricade/security(target_turf)
-
-			var/target_turf2 = get_step(src, WEST)
-			if(!(is_blocked_turf(target_turf2)))
-				new /obj/structure/barricade/security(target_turf2)
-	qdel(src)
-
-/obj/item/weapon/grenade/barrier/ui_action_click(mob/user)
-	toggle_mode(user)
-
 
 #undef SINGLE
 #undef VERTICAL
