@@ -299,19 +299,18 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
-	if(pale)
+	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress && !cauterized)
 		msg += "[t_He] [t_is] bandaged with something.\n"
-
 	if(cauterized)
 		msg += "[t_He] [t_is] bearing wounds that were burnt closed.\n"
-	if(blood_max)
+	if(bleed_rate)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
-		else if(blood_max)
-			switch (blood_max)
+		else if(bleed_rate)
+			switch (bleed_rate)
 				if (0.05 to 1)
 					msg += "[t_He] [t_is] bleeding very slightly.\n"
 				if (1.5 to 3)
