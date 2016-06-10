@@ -25,3 +25,23 @@
 		if(A.scanmode == PDA_SCAN_POWER)
 			return 1
 	return 0
+
+/proc/is_rcd(obj/O)
+	if(istype(O, /obj/item/weapon/rcd))
+		return 1
+	var/obj/item/weapon/rapid_engineering_device/special_device = O
+	return istype(special_device) && special_device.mode == RED_RCD_MODE
+
+/proc/is_pipe_device(obj/O)
+	if(istype(O, /obj/item/weapon/pipe_dispenser) || istype(O, /obj/item/device/pipe_painter) )
+		return 1
+	var/obj/item/weapon/rapid_engineering_device/special_device = O
+	return istype(special_device) && special_device.mode == RED_RPD_MODE
+
+/proc/get_airlock_painter(obj/O)
+	if(istype(O, /obj/item/weapon/airlock_painter))
+		return O
+	var/obj/item/weapon/rapid_engineering_device/special_device = O
+	if(istype(special_device) && special_device.mode == RED_AIRLOCK_PAINTER_MODE)
+		return special_device.painter
+	return null

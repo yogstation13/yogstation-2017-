@@ -217,6 +217,8 @@
 
 	for(var/obj/item/RCD in rcd_list)
 		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			if(istype(RCD.loc, /obj/item/weapon/rapid_engineering_device))
+				RCD = RCD.loc
 			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
 			spawn(50) //5 seconds to get rid of it!
 				if(RCD) //Make sure it still exists (In case of chain-reaction)
