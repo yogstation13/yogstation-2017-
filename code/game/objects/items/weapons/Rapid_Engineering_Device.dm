@@ -1,7 +1,7 @@
 
 /obj/item/weapon/rapid_engineering_device
 	name = "Rapid Engineering Device (RED)"
-	desc = "A device used to rapidly build, paint, and deconstruct pipes, walls, floors, and doors."
+	desc = "" //handled in update_desc()
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "HT_RCD"
 	opacity = 0
@@ -63,7 +63,7 @@
 	update_desc()
 
 /obj/item/weapon/rapid_engineering_device/proc/update_desc()
-	desc = initial(desc) + " It is currently in [mode_names[mode]] configuration. Use Alt-"
+	desc = initial(desc) + " It is currently in [mode_names[mode]] configuration. Use Alt-Click to change its configuration."
 
 /obj/item/weapon/rapid_engineering_device/examine(mob/user)
 	..()
