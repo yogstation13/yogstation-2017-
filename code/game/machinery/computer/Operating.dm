@@ -21,7 +21,7 @@
 	..()
 	if(ticker)
 		find_table()
-	implants += new /obj/item/weapon/implant/loyalty(src)
+	implants += new /obj/item/weapon/implant/mindshield(src)
 	implants += new /obj/item/weapon/implant/tracking(src)
 	implants += new /obj/item/weapon/implant/chem(src)
 	organs += new /obj/item/organ/heart(src)
