@@ -1,7 +1,7 @@
 
 /obj/item/weapon/rapid_engineering_device
 	name = "Rapid Engineering Device (RED)"
-	desc = "" //handled in update_desc()
+	desc = "A device used to rapidly build, paint, and deconstruct pipes, walls, floors, and doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "HT_RCD"
 	opacity = 0
