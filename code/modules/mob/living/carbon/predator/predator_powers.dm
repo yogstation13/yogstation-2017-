@@ -9,7 +9,8 @@
 	var/busy
 
 /datum/action/innate/predator_remove_skull/Activate()
-	if(!ispredator(usr)) qdel(src)
+	if(!ispredator(usr))
+    	Remove(usr)
 
 	if(busy)
 		return
