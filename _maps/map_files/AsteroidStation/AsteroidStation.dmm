@@ -6056,7 +6056,7 @@
 /area/storage/tech)
 "amV" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -16339,7 +16339,7 @@
 "aHe" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
@@ -27393,7 +27393,7 @@
 	},
 /area/security/prison)
 "bdD" = (
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/structure/table,
 /obj/item/seeds/wheat,
 /obj/structure/window/reinforced{
@@ -45264,7 +45264,7 @@
 /turf/closed/wall,
 /area/mine/abandoned)
 "bMU" = (
-/obj/item/organ/internal/appendix,
+/obj/item/organ/appendix,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
@@ -46944,7 +46944,7 @@
 	},
 /area/mine/abandoned)
 "bQA" = (
-/obj/item/organ/internal/heart{
+/obj/item/organ/heart{
 	beating = 0
 	},
 /obj/effect/decal/cleanable/blood/gibs,
