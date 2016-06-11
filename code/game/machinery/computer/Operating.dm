@@ -9,7 +9,7 @@
 
 	var/menu = 1 // one is the standard surgery set up two is scanning cubicles, implant cases, and possibly diskettes, three is database.
 	var/list/implants = list(
-		/obj/item/weapon/implant/loyalty,
+		/obj/item/weapon/implant/mindshield,
 		/obj/item/weapon/implant/tracking,
 		/obj/item/weapon/implant/chem,
 
@@ -71,7 +71,7 @@
 
 /obj/machinery/computer/operating/proc/bootup_implants()
 	audible_message("[src] reboots their implant database and reverts back the intiial set.")
-	implants += /obj/item/weapon/implant/loyalty
+	implants += /obj/item/weapon/implant/mindshield
 	implants += /obj/item/weapon/implant/tracking
 	implants += /obj/item/weapon/implant/chem
 	for(var/obj/I in implants)
