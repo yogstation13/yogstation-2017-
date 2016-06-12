@@ -114,7 +114,8 @@ Made by Xhuis
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>"
-	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
+	shadow.current << "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>"
+	shadow.current << "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>"
 	shadow.current << "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>"
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
 
@@ -132,7 +133,6 @@ Made by Xhuis
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
 	var/mob/living/carbon/human/S = shadow_mind.current
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hatch(null))
-	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/enthrall(null))
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hivemind(null))
 	spawn(0)
 		update_shadow_icons_added(shadow_mind)
