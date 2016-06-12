@@ -1199,7 +1199,7 @@
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/shadow/enthrall)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
