@@ -10,6 +10,7 @@
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 	actions_types = list(/datum/action/item_action/toggle_light)
 	var/on = 0
+	var/broken = 0
 	var/brightness_on = 4 //luminosity when on
 
 /obj/item/device/flashlight/initialize()
@@ -38,6 +39,9 @@
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
 		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		return 0
+	if(broken)
+		user << "<spawn class='warning'>The [src] refuses to turn on!</span>"
 		return 0
 	on = !on
 	update_brightness(user)

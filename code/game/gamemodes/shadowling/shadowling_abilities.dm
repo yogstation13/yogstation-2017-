@@ -163,6 +163,9 @@
 				I.visible_message("<span class='danger'>[I] dims slightly before scattering the shadows around it.</span>")
 				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
 			F.on = 0
+			F.broken = 1
+			spawn(100)
+				F.broken = 0
 			F.update_brightness()
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
@@ -267,7 +270,7 @@
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
 	panel = "Shadowling Abilities"
 	range = 5
-	charge_max = 1200
+	charge_max = 600
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "icy_veins"
@@ -282,6 +285,9 @@
 				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
 			F.visible_message("<span class='warning'>An icy wind kills [F]'s flame.</span>")
 			F.on = 0
+			F.broken = 1
+			spawn(100)
+				F.broken = 0
 			F.update_brightness()
 	I.SetLuminosity(0)
 	return I.luminosity
