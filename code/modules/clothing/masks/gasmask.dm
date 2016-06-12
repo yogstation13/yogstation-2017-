@@ -21,7 +21,7 @@
 	flash_protect = 2
 	tint = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	origin_tech = "materials=2;engineering=2"
+	origin_tech = "materials=2;engineering=3"
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
@@ -76,6 +76,7 @@
 	options["The Feminist"] = "sexyclown"
 	options["The Madman"] = "joker"
 	options["The Rainbow Color"] ="rainbow"
+	options["The Mascot"] = "ronald"
 
 	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
 

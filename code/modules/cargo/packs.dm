@@ -342,11 +342,11 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/loyalty
-	name = "Loyalty Implants Crate"
+/datum/supply_pack/security/armory/mindshield
+	name = "mindshield implants Crate"
 	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
-	crate_name = "loyalty implant crate"
+	crate_name = "mindshield implant crate"
 
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
@@ -594,6 +594,16 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engineering/flood_lamp
+	name = "Flood Lamp Assembly Crate"
+	contains = list(/obj/machinery/flood_lamp,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/device/flashlight,
+					/obj/item/weapon/stock_parts/cell/high,
+					/obj/item/weapon/paper/flood_lamp)
+	cost = 1500
+	crate_name = "floodlamp assembly crate"
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -703,7 +713,7 @@
 					/obj/item/weapon/reagent_containers/blood/BMinus,
 					/obj/item/weapon/reagent_containers/blood/OPlus,
 					/obj/item/weapon/reagent_containers/blood/OMinus)
-	crate_name = "blood pack crate"
+	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/iv_drip
@@ -718,6 +728,20 @@
 	contains = list(/obj/item/weapon/defibrillator/loaded,
 					/obj/item/weapon/defibrillator/loaded)
 	crate_name = "defibrillator crate"
+
+/datum/supply_pack/medical/surgery
+	name = "Surgery Supply Crate"
+	cost = 1000
+	contains = list(/obj/item/weapon/scalpel,
+					/obj/item/weapon/hemostat,
+					/obj/item/weapon/cautery,
+					/obj/item/weapon/retractor,
+					/obj/item/weapon/circular_saw,
+					/obj/item/weapon/surgicaldrill,
+					/obj/item/weapon/surgical_drapes,
+					/obj/item/weapon/tank/internals/anesthetic,
+					/obj/item/clothing/mask/breath/medical)
+	crate_name = "surgery crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Science /////////////////////////////////////////
@@ -949,7 +973,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/ammonia,
 					/obj/item/weapon/hatchet,
 					/obj/item/weapon/cultivator,
-					/obj/item/device/analyzer/plant_analyzer,
+					/obj/item/device/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
 					/obj/item/clothing/suit/apron)
 	crate_name = "hydroponics crate"
@@ -1133,6 +1157,13 @@
 	cost = 600
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	crate_name = "water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/hightank
+	name = "High-Capacity Water Tank Crate"
+	cost = 1200
+	contains = list(/obj/structure/reagent_dispensers/watertank/high)
+	crate_name = "high-capacity water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/lasertag
@@ -1370,7 +1401,7 @@
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
-	                /obj/item/stack/tile/fakespace,
+	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"

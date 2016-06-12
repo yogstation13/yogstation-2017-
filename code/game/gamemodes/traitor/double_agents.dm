@@ -1,6 +1,7 @@
 /datum/game_mode/traitor/double_agents
 	name = "double agents"
 	config_tag = "double_agents"
+	antag_flag = ROLE_DOUBLEAGENT
 	required_players = 25
 	required_enemies = 5
 	recommended_enemies = 8
@@ -100,3 +101,14 @@
 
 		// If any check fails, remove them from our list
 		late_joining_list -= M
+
+/datum/game_mode/traitor/double_agents/make_antag_chance(mob/living/carbon/human/character)
+	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
+	if(ticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
+		return
+	if(ticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
+		if(ROLE_DOUBLEAGENT in character.client.prefs.be_special) // different check.
+			if(!jobban_isbanned(character, ROLE_DOUBLEAGENT) && !jobban_isbanned(character, "Syndicate"))
+				if(age_check(character.client))
+					if(!(character.job in restricted_jobs))
+						add_latejoin_traitor(character.mind)

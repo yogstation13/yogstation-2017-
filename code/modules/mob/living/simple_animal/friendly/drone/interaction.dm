@@ -70,6 +70,7 @@
 		visible_message("<span class='warning'>[user] starts picking up [src].</span>", \
 						"<span class='userdanger'>[user] starts picking you up!</span>")
 		if(!do_after(user, 20, target = src))
+			user << "You failed picking up [src]."
 			return
 		visible_message("<span class='warning'>[user] picks up [src]!</span>", \
 						"<span class='userdanger'>[user] picks you up!</span>")

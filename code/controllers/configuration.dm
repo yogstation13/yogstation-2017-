@@ -46,7 +46,9 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 10
+	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
+	var/admin_who_blocked = 0	// log OOC channel
 
 	var/hostedby = null
 	var/respawn = 1
@@ -72,6 +74,7 @@
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
+	var/donator_legacy_system = 0
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
@@ -257,6 +260,8 @@
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")
 					config.ban_legacy_system = 1
+				if("donator_legacy_system")
+					config.donator_legacy_system = 1
 				if("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1
 				if("lobby_countdown")
@@ -291,6 +296,8 @@
 					config.log_pda = 1
 				if("log_hrefs")
 					config.log_hrefs = 1
+				if("admin_who_blocked")
+					admin_who_blocked = 1
 				if("log_world_topic")
 					config.log_world_topic = 1
 				if("allow_admin_ooccolor")
@@ -357,6 +364,8 @@
 						fps = 10 / ticklag
 				if("fps")
 					fps = text2num(value)
+				if("tickcomp")
+					Tickcomp = 1
 				if("automute_on")
 					automute_on = 1
 				if("comms_key")

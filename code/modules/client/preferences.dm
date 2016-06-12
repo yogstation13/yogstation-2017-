@@ -1,8 +1,7 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+#define DONOR_CHARACTER_SLOTS 6
 
 var/list/preferences_datums = list()
-
-
 
 /datum/preferences
 	//doohickeys for savefiles
@@ -12,6 +11,7 @@ var/list/preferences_datums = list()
 
 	//non-preference stuff
 	var/muted = 0
+	var/afreeze = 0
 	var/last_ip
 	var/last_id
 
@@ -47,7 +47,6 @@ var/list/preferences_datums = list()
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
@@ -66,14 +65,17 @@ var/list/preferences_datums = list()
 	var/icon/preview_icon = null
 
 		//Jobs, uses bitflags
+	var/job_civilian_ultra = 0
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
 	var/job_civilian_low = 0
 
+	var/job_medsci_ultra = 0
 	var/job_medsci_high = 0
 	var/job_medsci_med = 0
 	var/job_medsci_low = 0
 
+	var/job_engsec_ultra = 0
 	var/job_engsec_high = 0
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
@@ -88,11 +90,11 @@ var/list/preferences_datums = list()
 	var/metadata = ""
 
 	var/unlock_content = 0
+	var/agree = 0
 
 	var/list/ignoring = list()
 
 /datum/preferences/New(client/C)
-	blood_type = random_blood_type()
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
@@ -103,9 +105,16 @@ var/list/preferences_datums = list()
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
+			else if(is_donator(C))
+				max_save_slots = DONOR_CHARACTER_SLOTS
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
+			if(!is_whitelisted(C))
+				job_civilian_ultra = 0
+				job_medsci_ultra = 0
+				job_engsec_ultra = 0
+				save_character()
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
@@ -190,7 +199,6 @@ var/list/preferences_datums = list()
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
-			dat += "<b>Blood Type:</b> [blood_type]<BR>"
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
@@ -509,32 +517,48 @@ var/list/preferences_datums = list()
 
 		var/prefLevelLabel = "ERROR"
 		var/prefLevelColor = "pink"
+		var/prefLevelClass = "white"
 		var/prefUpperLevel = -1 // level to assign on left click
 		var/prefLowerLevel = -1 // level to assign on right click
 
 		if(GetJobDepartment(job, 1) & job.flag)
-			prefLevelLabel = "High"
-			prefLevelColor = "slateblue"
-			prefUpperLevel = 4
+			prefLevelLabel = "Ultra"
+			prefLevelColor = "#E5E4E2"
+			prefUpperLevel = 5
 			prefLowerLevel = 2
 		else if(GetJobDepartment(job, 2) & job.flag)
-			prefLevelLabel = "Medium"
-			prefLevelColor = "green"
-			prefUpperLevel = 1
+			prefLevelLabel = "High"
+			prefLevelColor = "slateblue"
+			if(job.whitelisted && is_whitelisted(user))
+				prefUpperLevel = 1
+			else
+				prefUpperLevel = 5
 			prefLowerLevel = 3
 		else if(GetJobDepartment(job, 3) & job.flag)
-			prefLevelLabel = "Low"
-			prefLevelColor = "orange"
+			prefLevelLabel = "Medium"
+			prefLevelColor = "green"
 			prefUpperLevel = 2
 			prefLowerLevel = 4
+		else if(GetJobDepartment(job, 4) & job.flag)
+			prefLevelLabel = "Low"
+			prefLevelColor = "orange"
+			prefUpperLevel = 3
+			prefLowerLevel = 5
 		else
 			prefLevelLabel = "NEVER"
 			prefLevelColor = "red"
-			prefUpperLevel = 3
-			prefLowerLevel = 1
+			prefUpperLevel = 4
+			if(job.whitelisted && is_whitelisted(user))
+				prefLowerLevel = 1
+			else
+				prefLowerLevel = 2
 
-
-		HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
+		if(job.whitelisted && is_whitelisted(user))
+			prefLevelClass = "special"
+		else
+			prefLevelClass = "white"
+				
+		HTML += "<a class='[prefLevelClass]' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 		if(rank == "Assistant")//Assistant is special
 			if(job_civilian_low & ASSISTANT)
@@ -569,7 +593,7 @@ var/list/preferences_datums = list()
 	if (!job)
 		return 0
 
-	if (level == 1) // to high
+	if (level == 2) // to high
 		// remove any other job(s) set to high
 		job_civilian_med |= job_civilian_high
 		job_engsec_med |= job_engsec_high
@@ -582,13 +606,16 @@ var/list/preferences_datums = list()
 		job_civilian_low &= ~job.flag
 		job_civilian_med &= ~job.flag
 		job_civilian_high &= ~job.flag
+		job_civilian_ultra &= ~job.flag
 
 		switch(level)
 			if (1)
-				job_civilian_high |= job.flag
+				job_civilian_ultra |= job.flag
 			if (2)
-				job_civilian_med |= job.flag
+				job_civilian_high |= job.flag
 			if (3)
+				job_civilian_med |= job.flag
+			if (4)
 				job_civilian_low |= job.flag
 
 		return 1
@@ -596,13 +623,16 @@ var/list/preferences_datums = list()
 		job_engsec_low &= ~job.flag
 		job_engsec_med &= ~job.flag
 		job_engsec_high &= ~job.flag
+		job_engsec_ultra &= ~job.flag
 
 		switch(level)
 			if (1)
-				job_engsec_high |= job.flag
+				job_engsec_ultra |= job.flag
 			if (2)
-				job_engsec_med |= job.flag
+				job_engsec_high |= job.flag
 			if (3)
+				job_engsec_med |= job.flag
+			if (4)
 				job_engsec_low |= job.flag
 
 		return 1
@@ -610,13 +640,16 @@ var/list/preferences_datums = list()
 		job_medsci_low &= ~job.flag
 		job_medsci_med &= ~job.flag
 		job_medsci_high &= ~job.flag
+		job_medsci_ultra &= ~job.flag
 
 		switch(level)
 			if (1)
-				job_medsci_high |= job.flag
+				job_medsci_ultra |= job.flag
 			if (2)
-				job_medsci_med |= job.flag
+				job_medsci_high |= job.flag
 			if (3)
+				job_medsci_med |= job.flag
+			if (4)
 				job_medsci_low |= job.flag
 
 		return 1
@@ -654,14 +687,17 @@ var/list/preferences_datums = list()
 
 /datum/preferences/proc/ResetJobs()
 
+	job_civilian_ultra = 0
 	job_civilian_high = 0
 	job_civilian_med = 0
 	job_civilian_low = 0
 
+	job_medsci_ultra = 0
 	job_medsci_high = 0
 	job_medsci_med = 0
 	job_medsci_low = 0
 
+	job_engsec_ultra = 0
 	job_engsec_high = 0
 	job_engsec_med = 0
 	job_engsec_low = 0
@@ -674,26 +710,32 @@ var/list/preferences_datums = list()
 		if(CIVILIAN)
 			switch(level)
 				if(1)
-					return job_civilian_high
+					return job_civilian_ultra
 				if(2)
-					return job_civilian_med
+					return job_civilian_high
 				if(3)
+					return job_civilian_med
+				if(4)
 					return job_civilian_low
 		if(MEDSCI)
 			switch(level)
 				if(1)
-					return job_medsci_high
+					return job_medsci_ultra
 				if(2)
-					return job_medsci_med
+					return job_medsci_high
 				if(3)
+					return job_medsci_med
+				if(4)
 					return job_medsci_low
 		if(ENGSEC)
 			switch(level)
 				if(1)
-					return job_engsec_high
+					return job_engsec_ultra
 				if(2)
-					return job_engsec_med
+					return job_engsec_high
 				if(3)
+					return job_engsec_med
+				if(4)
 					return job_engsec_low
 	return 0
 
@@ -1144,11 +1186,21 @@ var/list/preferences_datums = list()
 				if("load")
 					load_preferences()
 					load_character()
+					if(!is_whitelisted(user))
+						job_civilian_ultra = 0
+						job_medsci_ultra = 0
+						job_engsec_ultra = 0
+						save_character()
 
 				if("changeslot")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
+						save_character()
+					else if(!is_whitelisted(user))
+						job_civilian_ultra = 0
+						job_medsci_ultra = 0
+						job_engsec_ultra = 0
 						save_character()
 
 				if("tab")
@@ -1192,7 +1244,6 @@ var/list/preferences_datums = list()
 
 	character.backbag = backbag
 
-	character.dna.blood_type = blood_type
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
@@ -1206,3 +1257,5 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+#undef DONOR_CHARACTER_SLOTS

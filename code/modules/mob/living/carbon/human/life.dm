@@ -21,6 +21,7 @@
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 #define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
+#define TINT_IMPAIR 2
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -350,9 +351,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 	if(drunkenness)
 		if(sleeping)
-			drunkenness = max(drunkenness - 1.5, 0)
+			drunkenness = max(drunkenness - (drunkenness / 10), 0)
 		else
-			drunkenness = max(drunkenness - 0.2, 0)
+			drunkenness = max(drunkenness - (drunkenness / 25), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))
