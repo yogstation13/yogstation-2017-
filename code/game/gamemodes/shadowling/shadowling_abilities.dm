@@ -270,7 +270,7 @@
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
 	panel = "Shadowling Abilities"
 	range = 5
-	charge_max = 600
+	charge_max = 1200
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "icy_veins"
