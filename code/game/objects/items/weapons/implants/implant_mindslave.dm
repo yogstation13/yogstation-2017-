@@ -17,14 +17,14 @@
 /obj/item/weapon/implant/mindslave/implant(mob/source, var/mob/user)
 
 	if(!source.mind)
-		user.mind << "<span class='notice'>[source] doesent posses the mental capabilities to be a slave.</span>"
+		user.mind << "<span class='notice'>[source] doesn't posses the mental capabilities to be a slave.</span>"
 		return 0
 
 	var/mob/living/carbon/human/target = source.mind.current
 	var/mob/living/carbon/human/holder = user.mind.current
 
 	if(target == holder)
-		holder << "<span class='notice'>You cant implant yourself!</span>"
+		holder << "<span class='notice'>You can't implant yourself!</span>"
 		return 0
 
 	var/obj/item/weapon/implant/mindslave/imp = locate(src.type) in source
