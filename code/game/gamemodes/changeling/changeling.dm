@@ -352,10 +352,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		if(verbose)
 			user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
 		return
-	if(has_dna(target.dna))
-		if(verbose)
-			user << "<span class='warning'>We already have this DNA in storage!</span>"
-		return
 	if(!target.has_dna())
 		if(verbose)
 			user << "<span class='warning'>[target] is not compatible with our biology.</span>"

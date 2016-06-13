@@ -54,6 +54,17 @@
 	usr << "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_deathrattle()
+	set name = "Toggle Deathrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when sentient mobs \
+		die."
+	prefs.toggles ^= DISABLE_DEATHRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
+		messages when a sentient mob dies."
+	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
+
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
@@ -65,6 +76,16 @@
 	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
 	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/toggleticketlistenall()
+	set name = "Monitor/Unmonitor All Tickets"
+	set category = "Preferences"
+	set desc = "Toggles getting PMs for all tickets. Even if this is unset, you will still get PMs for your tickets."
+	if(!holder)	return
+	prefs.toggles ^= TICKET_ALL
+	prefs.save_preferences()
+	usr << "You will [(prefs.toggles & TICKET_ALL) ? "now" : "no longer"] monitor all tickets."
+	feedback_add_details("admin_verb","TicketListenAll") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+/*
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
 	set category = "Preferences"
@@ -75,7 +96,7 @@
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login."
 	feedback_add_details("admin_verb","TAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
+*/
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
 	set category = "Preferences"
@@ -206,6 +227,14 @@
 		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
 		src.ambience_playing = 0
 	feedback_add_details("admin_verb", "SAmbi") //If you are copy-pasting this, I bet you read this comment expecting to see the same thing :^)
+
+/client/verb/toggle_member_publicity()
+	set name = "Toggle Membership Publicity"
+	set category = "Preferences"
+	set desc = "Toggles whether other players can see that you are a BYOND member (OOC blag icon/colours)."
+	prefs.toggles ^= MEMBER_PUBLIC
+	prefs.save_preferences()
+	src << "Others can[(prefs.toggles & MEMBER_PUBLIC) ? "" : "not"] see whether you are a byond member."
 
 var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost","ghost_red","ghost_black", \
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \

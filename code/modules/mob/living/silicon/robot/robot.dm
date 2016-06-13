@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -218,12 +218,25 @@
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
+
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
+			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen")
+			if(!icontype) return
 			hands.icon_state = "medical"
-			icon_state = "mediborg"
-			animation_length = 35
-			modtype = "Med"
+			switch(icontype)
+				if("Mediborg")
+					icon_state = "mediborg"
+					animation_length = 34
+				if("Medihover")
+					icon_state = "medihover"
+					animation_length = 8
+				if("Smile Screen")
+					icon_state = "mediborg+smile"
+					animation_length = 28
+				else
+					icon_state = "mediborg"
+					animation_length = 34
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_medical",1)
 
@@ -237,7 +250,7 @@
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
-		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+		if("Peacekeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			hands.icon_state = "standard"
 			icon_state = "peaceborg"
@@ -245,7 +258,7 @@
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
+			feedback_inc("cyborg_peacekeeper",1)
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -258,11 +271,49 @@
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
+			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal")
+			if(!icontype) return
 			hands.icon_state = "janitor"
-			icon_state = "janiborg"
-			animation_length = 22
+			switch(icontype)
+				if("Janiborg")
+					icon_state = "janiborg"
+					animation_length = 22
+				if("Disposal")
+					icon_state = "disposalbot"
+					animation_length = 6
+				else
+					icon_state = "janiborg"
+					animation_length = 22
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
+
+		if("Clown")
+			module = new /obj/item/weapon/robot_module/clown(src)
+			var/icontype = input("Select an icon!", "Robot", "Clown") in list("Clown", "Wizard Bot", "Wizard Borg","Chicken")
+			if(!icontype) return
+			hands.icon_state = "standard"
+			switch(icontype)
+				if("Clown")
+					icon_state = "ClownBot"
+					animation_length= 8
+					modtype = "Clown"
+				if("Wizard Bot")
+					icon_state = "WizardBot"
+					animation_length = 1
+					modtype = "Wizard"
+				if("Wizard Borg")
+					icon_state = "WizardBorg"
+					animation_length = 1
+					modtype = "Wizard"
+				if("Chicken")
+					icon_state = "ChickenBot"
+					animation_length = 1
+					modtype = "Chicken"
+				else
+					icon_state = "ClownBot"
+					animation_length = 8
+			modtype = "Clown"
+			feedback_inc("cyborg_clown",1)
 
 	transform_animation(animation_length)
 
@@ -827,10 +878,17 @@
 				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
 				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg")
+			if("minerborg","ashborg")
 				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				state_name = "minerborg"
+			if("peaceborg")
+				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
+			if("medihover")
+				overlays += "eyes-medihover[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("disposalbot")
+				overlays += "eyes-disposalbot[is_servant_of_ratvar(src) ? "_r" : ""]"
 			else
 				overlays += "eyes"
 				state_name = "serviceborg"

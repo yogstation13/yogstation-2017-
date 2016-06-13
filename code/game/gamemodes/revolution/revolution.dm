@@ -151,7 +151,7 @@
 	if (!where2)
 		mob << "The Syndicate were unfortunately unable to get you a chameleon security HUD."
 	else
-		mob << "The chameleon security HUD in your [where2] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+		mob << "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited."
 
 	if (!where)
 		mob << "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool. Maybe try a prayer?"
@@ -242,6 +242,15 @@
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
+/proc/is_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+
+/proc/is_head_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+
+/proc/is_revolutionary_in_general(mob/M)
+	return is_revolutionary(M) || is_head_revolutionary(M)
+
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
 		return 0

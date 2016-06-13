@@ -24,8 +24,10 @@
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/cell/high = 1,
+							/obj/item/weapon/stock_parts/cell = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
+	def_components = list(
+		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -142,3 +144,20 @@
 		if(R && R.module)
 			var/coeff = recharge_speed * 0.005
 			R.module.respawn_consumable(R, coeff)
+
+
+			///emagged///
+
+			if(R.module.emag)
+				if(istype(R.module.emag, /obj/item/weapon/reagent_containers/spray))
+					var/obj/item/weapon/reagent_containers/spray/S = R.module.emag
+					if(S.name == "lube spray")
+						S.reagents.add_reagent("lube", 2 * coeff)
+				else if(istype(R.module.emag, /obj/item/weapon/gun/syringe/rapidsyringe))
+					var/obj/item/weapon/gun/syringe/rapidsyringe/borg/borggun = R.module.emag
+					if(borggun.syringes.len < borggun.max_syringes)
+						var/delta = max(borggun.syringes.len - borggun.max_syringes, coeff)
+						for(var/i = 1 to delta)
+							var/obj/item/weapon/reagent_containers/syringe/TEMP = new(borggun)
+							TEMP.reagents.add_reagent("tirizene", 15)
+							borggun.syringes.Add(TEMP)

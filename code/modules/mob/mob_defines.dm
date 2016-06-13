@@ -142,3 +142,8 @@
 	var/list/permanent_huds = list()
 
 	var/resize = 1 //Badminnery resize
+
+	var/permanent_sight_flags = 0
+
+	//Spooky shadow walking. For Spooks. //So spoopy
+	var/shadow_walk = 0
