@@ -37,9 +37,6 @@
 	if(ticker)
 		find_table()
 
-	for(var/obj/O in (implants || organs))
-		O.hologram = 1
-
 /obj/machinery/computer/operating/erase_data()
 	implants = null
 	organs = null
@@ -51,11 +48,9 @@
 	..()
 
 	if(!organs)
-		message_admins("It happened")
 		bootup_organs()
 
 	if(!implants)
-		message_admins("It happeed again!")
 		bootup_implants()
 
 /obj/machinery/computer/operating/proc/bootup_organs()
@@ -65,8 +60,6 @@
 	organs += /obj/item/organ/brain
 	organs += /obj/item/organ/brain/alien
 	organs += /obj/item/organ/body_egg/alien_embryo
-	for(var/obj/O in organs)
-		O.hologram = 1
 
 
 /obj/machinery/computer/operating/proc/bootup_implants()
@@ -74,8 +67,6 @@
 	implants += /obj/item/weapon/implant/mindshield
 	implants += /obj/item/weapon/implant/tracking
 	implants += /obj/item/weapon/implant/chem
-	for(var/obj/I in implants)
-		I.hologram = 1
 
 /obj/machinery/computer/operating/initialize()
 	find_table()
@@ -232,7 +223,6 @@
 
 
 					organs += O
-					O.hologram = 1
 					playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 					lastscan = O.name
 
@@ -267,7 +257,6 @@
 
 					theimplant = case.imp
 					implants += theimplant
-					theimplant.hologram = 1
 					lastscan = case.imp.name
 					playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 
