@@ -525,6 +525,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
+	speedmod = 4
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0

@@ -85,7 +85,7 @@ Made by Xhuis
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/shadowlings = max(3, round(num_players()/14))
+	var/shadowlings = max(2, round(num_players()/10))
 
 
 	while(shadowlings)
@@ -114,7 +114,8 @@ Made by Xhuis
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>"
-	shadow.current << "<b>In your limited state, you have three abilities: Enthrall, Hatch, and Hivemind Commune.</b>"
+	shadow.current << "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>"
+	shadow.current << "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>"
 	shadow.current << "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>"
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
 
@@ -148,7 +149,7 @@ Made by Xhuis
 		new_thrall_mind.special_role = "thrall"
 		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind(null))
-		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/lesser_glare(null))
+		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/lesser_glare(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_vision(null))
 		new_thrall_mind.current << "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>"
@@ -260,7 +261,8 @@ Made by Xhuis
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
-	if(!H.weakeyes) H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs
+	if(!H.weakeyes)
+		H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs
 	var/light_amount = 0
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
 	if(isturf(H.loc))
@@ -288,7 +290,8 @@ Made by Xhuis
 	heatmod = 1.1
 
 /datum/species/shadow/ling/lesser/spec_life(mob/living/carbon/human/H)
-	if(!H.weakeyes) H.weakeyes = 1
+	if(!H.weakeyes)
+		H.weakeyes = 1
 	var/light_amount = 0
 	H.nutrition = NUTRITION_LEVEL_WELL_FED //i aint never get hongry
 	if(isturf(H.loc))
@@ -311,5 +314,3 @@ Made by Xhuis
 	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)
-
-

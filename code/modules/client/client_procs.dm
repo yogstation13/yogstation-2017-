@@ -178,12 +178,14 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
+	
 	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
-		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_MAXPERMISSION - 1 - R_NOJOIN)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)
+	
 	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
