@@ -98,6 +98,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	exotic_bloodtype = "L"
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time. Thick scales afford you protection from heat, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"
@@ -524,6 +525,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
+	speedmod = 4
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -554,26 +556,20 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
-	if(!H.reagents.get_reagent_amount(exotic_blood))
-		H.reagents.add_reagent(exotic_blood, 5)
+	if(!H.blood_volume)
+		H.blood_volume += 5
 		H.adjustBruteLoss(5)
 		H << "<span class='danger'>You feel empty!</span>"
 
-	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
-
-	if(jelly_amount < 100)
+	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.reagents.add_reagent(exotic_blood, 0.5)
+			H.blood_volume += 3
 			H.nutrition -= 2.5
-	if(jelly_amount < 50)
+	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
 			H << "<span class='danger'>You feel drained!</span>"
-	if(jelly_amount < 10)
+	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		H.losebreath++
-
-/datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == exotic_blood)
-		return 1
 
 /*
  SLIMEPEOPLE
@@ -603,6 +599,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(body_swap)
 		body_swap.Remove(C)
 	C.faction -= "slime"
+	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C)
@@ -613,12 +610,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	C.faction |= "slime"
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
-	if(jelly_amount >= 200)
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
 			H << "<span class='notice'>You feel very bloated!</span>"
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.reagents.add_reagent(exotic_blood, 0.5)
+		H.blood_volume += 3
 		H.nutrition -= 2.5
 
 	..()
@@ -658,7 +654,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.mind.transfer_to(spare)
 			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
 			return
-
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
 	H.notransform = 0
 
@@ -1235,12 +1230,10 @@ SYNDICATE BLACK OPS
 	if(A.CanFly(H))
 		if(FLYING in A.specflags)
 			H << "<span class='notice'>You settle gently back onto the ground...</span>"
-			A.specflags -= FLYING
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
 			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
-			A.specflags += FLYING
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -1273,6 +1266,7 @@ SYNDICATE BLACK OPS
 
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
 	if(FLYING in specflags)
+		ToggleFlight(H,0)
 		flyslip(H)
 	. = ..()
 

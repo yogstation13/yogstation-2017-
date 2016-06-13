@@ -300,7 +300,6 @@
 
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
-		text_buffer = copytext(text_buffer,2)
 
 	if(actually_paints)
 		if(gang_mode)
@@ -314,6 +313,9 @@
 
 	user << "<span class='notice'>You finish \
 		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+
+	if(length(text_buffer))
+		text_buffer = copytext(text_buffer,2)
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -627,7 +629,7 @@
 		overlays += I
 
 /obj/item/toy/crayon/spraycan/gang
-	//desc = "A modified container containing suspicious paint."
+	desc = "A modified container holding suspicious paint used by gangsters to mark their territory."
 	charges = 20
 	gang = TRUE
 
@@ -640,11 +642,7 @@
 		paint_color = G.color_hex
 		update_icon()
 
-/obj/item/toy/crayon/spraycan/gang/examine(mob/user)
-	. = ..()
-	if((user.mind && user.mind.gang_datum) || isobserver(user))
-		user << "This spraycan has \
-			been specially modified for tagging territory."
+
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"
