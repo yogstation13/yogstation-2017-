@@ -174,7 +174,7 @@
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (status_flags & FAKEDEATH))
+	if(stat == DEAD || (status_flags & FAKEDEATH) || (reagents.has_reagent("capilletum") && lying))
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
 			if(suiciding)
@@ -219,13 +219,19 @@
 			if (lastbrutetype)
 				switch (lastbrutetype)
 					if ("melee")
-						msg += "[t_He] [t_has] a number of minor wounds.\n"
+						if(reagents.has_reagent("capilletum") && lying)
+							msg += "<B>[t_He] [t_has] many open cuts, gashes and bruises!</B>\n"
+						else
+							msg += "[t_He] [t_has] a number of minor wounds.\n"
 					if ("pressure")
 						msg += "[t_His] [t_surface] [t_is2] slightly swollen and cracked.\n"
 					if ("bullet")
 						msg += "[t_He] [t_has] a few bullet grazes upon their outer limbs.\n"
 			else
-				msg += "[t_He] [t_has] a number of minor wounds.\n"
+				if(reagents.has_reagent("capilletum") && lying)
+					msg += "<B>[t_He] [t_has] several severe wounds!</B>\n"
+				else
+					msg += "[t_He] [t_has] a number of minor wounds.\n"
 		else
 			if (lastbrutetype)
 				switch (lastbrutetype)
@@ -244,9 +250,15 @@
 			if (lastburntype)
 				switch (lastburntype)
 					if ("electric")
-						msg += "[t_He] [t_is] slightly charred in places.\n"
+						if(reagents.has_reagent("capilletum") && lying)
+							msg += "<B>[t_His] [t_surface] [t_is2] charred and smoking, arc-like patterns clearly visible!</B>\n"
+						else
+							msg += "[t_He] [t_is] slightly charred in places.\n"
 					if ("laser")
-						msg += "[t_He] [t_has] several pockmarked blisters.\n"
+						if(reagents.has_reagent("capilletum") && lying)
+							msg += "<B>[t_He] [t_has] several extremely severe blistered burns!</B>\n"
+						else
+							msg += "[t_He] [t_has] several pockmarked blisters.\n"
 					if ("coldburn")
 						msg += "[t_He] [t_is] covered in a faint coating of frost.\n"
 					if ("hotburn")
@@ -277,7 +289,10 @@
 	temp = getOxyLoss()
 	if (temp)
 		if (temp < 35)
-			msg += "[t_His] [t_surface] and lips are bluish in colour.\n"
+			if(reagents.has_reagent("capilletum") && lying)
+				msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
+			else
+				msg += "[t_His] [t_surface] and lips are bluish in colour.\n"
 		else
 			msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
 
@@ -307,7 +322,7 @@
 	if(cauterized)
 		msg += "[t_He] [t_is] bearing wounds that were burnt closed.\n"
 	if(bleed_rate)
-		if(reagents.has_reagent("heparin"))
+		if(reagents.has_reagent("heparin") || (reagents.has_reagent("capilletum") && lying))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else if(bleed_rate)
 			switch (bleed_rate)

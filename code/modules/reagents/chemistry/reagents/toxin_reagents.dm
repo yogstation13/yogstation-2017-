@@ -673,6 +673,14 @@
 	..()
 
 
+/datum/reagent/toxin/capilletum
+	name = "Capilletum"
+	id = "capilletum"
+	description = "A powerful toxin that exemplifies the patterns of punctured skin, matching their pigments and shapes, and then expands them across the body. Unlike other toxins, it does not have any negative effects."
+	color = "#FFB9D2"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0 // no side effects
+
 //ACID
 
 
