@@ -112,19 +112,8 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
-	var/informed = 0
-	for(var/obj/item/bodypart/L in src.bodyparts)
-		if(L.status == ORGAN_ROBOTIC)
-			if(!informed)
-				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
-				informed = 1
-			switch(severity)
-				if(1)
-					L.take_damage(0,10)
-					src.Stun(10)
-				if(2)
-					L.take_damage(0,5)
-					src.Stun(5)
+	if (dna)
+		dna.species.handle_emp(src, severity)
 	..()
 
 /mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
@@ -266,10 +255,6 @@
 	for(var/obj/item/I in inventory_items_to_kill)
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
-
-/mob/living/carbon/human/emp_act(severity)
-	if (dna)
-		dna.species.handle_emp(src, severity)
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
