@@ -97,13 +97,14 @@
 /obj/machinery/computer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << "<span class='notice'> You start to disconnect the monitor...</span>"
+		user << "<span class='notice'>You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
 			deconstruction()
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null
+			erase_data()
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if (stat & BROKEN)
@@ -139,3 +140,6 @@
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
 			stat |= BROKEN
 			update_icon()
+
+/obj/machinery/computer/proc/erase_data()
+	return 0
