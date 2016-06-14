@@ -838,7 +838,7 @@ var/list/airlock_overlays = list()
 	else if(istype(C, /obj/item/weapon/pai_cable))
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.plugin(src, user)
-	else if(istype(C, /obj/item/weapon/airlock_painter))
+	else if(get_airlock_painter(C))
 		change_paintjob(C, user)
 	else if(istype(C, /obj/item/device/doorCharge))
 		if(!panel_open)
@@ -1070,6 +1070,7 @@ var/list/airlock_overlays = list()
 
 
 /obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	W = get_airlock_painter(W)
 	if(!W.can_use(user))
 		return
 
