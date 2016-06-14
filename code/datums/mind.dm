@@ -247,6 +247,7 @@
 		"changeling",
 		"nuclear",
 		"traitor", // "traitorchan",
+		"cyberman",
 		"monkey",
 		"clockcult"
 	)
@@ -539,6 +540,23 @@
 		text += "|HOG Disabled in Prefs"
 
 	sections["follower"] = text
+
+	/** CYBERMAN **/
+	text = "cyberman"
+	if(ticker.mode.config_tag == "cybermen")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(ticker.mode.is_cyberman(src) )
+		text += "<b>CYBERMAN</b>|<a href='?src=\ref[src];cyberman=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];cyberman=cyberman'>cyberman</a>|<b>HUMAN</b>"
+
+	if(current && current.client && (ROLE_CYBERMAN in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["cyberman"] = text
 
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
@@ -1359,6 +1377,21 @@
 						R.SetEmagged(0)
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
+
+	else if(href_list["cyberman"])
+		switch(href_list["cyberman"])
+			if("clear")
+				if(ticker.mode.is_cyberman(src))
+					ticker.mode.remove_cyberman(src ,"<span class='userdanger'>Your cyberman implants have dissolved! You are no longer a cyberman!</span>")
+					message_admins("[key_name_admin(usr)] has de-cyberman'ed [current].")
+					log_admin("[key_name(usr)] has de-cyberman'ed [current].")
+			if("cyberman")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.add_cyberman(src, "<span class='userdanger'>Suddenly, you feel new, digital senses in your mind. You are now a cyberman!</span>")
+				message_admins("[key_name_admin(usr)] has cyberman'ed [current].")
+				log_admin("[key_name(usr)] has cyberman'ed [current].")
 
 	else if (href_list["common"])
 		switch(href_list["common"])

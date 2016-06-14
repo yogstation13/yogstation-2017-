@@ -83,6 +83,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/admin_credits_earn,
 	/client/proc/admin_credits_set,
 	/client/proc/toggle_restart_vote,	/* Moderator tool for toggling restart vote */
+	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility	/* toggles all players being able to see tickets remaining */
 	)
@@ -248,7 +249,10 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/debug_huds,
 	/client/proc/customiseSNPC,
 	/client/proc/resetSNPC,
-	/client/proc/toggleSNPC
+	/client/proc/toggleSNPC,
+	/datum/admins/proc/cybermen_panel,
+	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
+	/datum/admins/proc/toggle_ticket_counter_visibility	/* toggles all players being able to see tickets remaining */
 	)
 
 /client/proc/add_admin_verbs()
