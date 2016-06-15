@@ -549,7 +549,7 @@
 
 /datum/species/proc/handle_emp(mob/living/carbon/human/H, severity)
 	var/informed = 0
-	for(var/obj/item/bodypart/L in H.internal_organs)
+	for(var/obj/item/bodypart/L in H.bodyparts)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed)
 				H << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
