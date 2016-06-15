@@ -78,6 +78,8 @@
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
+#define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
+
 #define ispredator(A) (istype(A, /mob/living/carbon/human/predator))
 
 // ASSEMBLY HELPERS
