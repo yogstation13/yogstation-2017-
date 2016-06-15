@@ -319,7 +319,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/dolphincereal
 	name = "dolphin cereal"
-	desc = "Finest dolphin skin flakes. This looks flippin' disguisting."
+	desc = "Finest dolphin skin flakes. This looks flippin' disgusting."
 	icon_state = "dolphincereal"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
