@@ -1,6 +1,6 @@
-///////////////////////
-///		SKULL 		///
-///////////////////////
+///////////////////////////////
+///		SKULL REMOVAL 		///
+///////////////////////////////
 
 /datum/action/innate/predator_remove_skull
 	name = "Remove Skull"
@@ -10,7 +10,7 @@
 
 /datum/action/innate/predator_remove_skull/Activate()
 	if(!ispredator(usr))
-    	Remove(usr)
+		Remove(usr)
 
 	if(busy)
 		return
