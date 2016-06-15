@@ -174,7 +174,7 @@
 	var/tick_dist
 	var/tick_same_z_level
 
-/datum/cyberman_hack/New(var/atom/target, var/mob/living/carbon/human/user = usr)
+/datum/cyberman_hack/New(atom/target, mob/living/carbon/human/user = usr)
 	name = "[display_verb] of \the [target_name]"
 	if(!cyberman_network)
 		new /datum/cyberman_network()
@@ -213,7 +213,7 @@
 			return 0
 	return 1
 
-/datum/cyberman_hack/process(var/checkForNullTarget = 1)
+/datum/cyberman_hack/process(checkForNullTarget = 1)
 	last_tick_calcs_user = null
 	if(!maintained && !innate_processing)
 		progress -= decay_speed
@@ -235,11 +235,11 @@
 		if(progress >= cost)
 			complete()
 
-/datum/cyberman_hack/proc/do_tick_calculations_if_required(var/mob/living/carbon/human/cyberman)
+/datum/cyberman_hack/proc/do_tick_calculations_if_required(mob/living/carbon/human/cyberman)
 	if(cyberman != last_tick_calcs_user)
 		do_tick_calculations(cyberman)
 
-/datum/cyberman_hack/proc/do_tick_calculations(var/mob/living/carbon/human/cyberman)
+/datum/cyberman_hack/proc/do_tick_calculations(mob/living/carbon/human/cyberman)
 	last_tick_calcs_user = cyberman
 	if(cyberman && target)
 		tick_dist = get_dist(cyberman, target)
@@ -253,7 +253,7 @@
 		tick_dist = -1
 		tick_same_z_level = 0
 
-/datum/cyberman_hack/proc/contribute_to(var/mob/living/carbon/human/cyberman)
+/datum/cyberman_hack/proc/contribute_to(mob/living/carbon/human/cyberman)
 	if(!cyberman || !cyberman.mind || !cyberman.mind.cyberman)
 		return
 	if(progress >= cost)
@@ -273,7 +273,7 @@
 
 	return
 
-/datum/cyberman_hack/proc/get_preference_for(var/mob/living/carbon/human/cyberman)
+/datum/cyberman_hack/proc/get_preference_for(mob/living/carbon/human/cyberman)
 	if(!cyberman || !cyberman.mind || !cyberman.mind.cyberman)
 		return 0
 	if(progress >= cost)
@@ -283,7 +283,7 @@
 		return 0
 	return CYBERMEN_HACK_MAX_PREFERENCE - tick_dist
 
-/datum/cyberman_hack/proc/can_cancel(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/proc/can_cancel(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.mind.cyberman)
 		return 0
 	var/turf/cyberman_turf = get_turf(H)
@@ -300,13 +300,13 @@
 	cyberman_network.log_hacking(message)
 	qdel(src)
 
-/datum/cyberman_hack/proc/drop(var/messageOverride, var/list/datum/mind/messageLimiter)//messageLimiter, if it is initialized, overrides outputLimiter.
+/datum/cyberman_hack/proc/drop(messageOverride, list/datum/mind/messageLimiter)//messageLimiter, if it is initialized, overrides outputLimiter.
 	var/message = messageOverride ? messageOverride : "<span class='warning'>[display_verb] of \the [target_name] has failed for unknown reasons.</span>"
 	cyberman_network.log_hacking(message)
 	outputMessage(message, messageLimiter)
 	qdel(src)
 
-/datum/cyberman_hack/proc/outputMessage(var/message, var/list/datum/mind/messageLimiter)
+/datum/cyberman_hack/proc/outputMessage(message, list/datum/mind/messageLimiter)
 	if(messageLimiter)
 		for(var/datum/mind/M in messageLimiter)
 			if(M && M.current)
@@ -318,7 +318,7 @@
 	else
 		cyberman_network.message_all_cybermen(message)
 
-/datum/cyberman_hack/proc/get_status(var/mob/living/user)
+/datum/cyberman_hack/proc/get_status(mob/living/user)
 	if(!target || qdeleted(target))
 		return "ERROR: target was destroyed or disassembled"
 	var/result = "[target_name] | progress: [progress] / [cost]"
@@ -365,7 +365,7 @@
 //MULTIPLE VECTOR HACK
 //A hack that can be contributed to from multiple vectors, i.e. tcomms hack and AI hack. Works by storing multiple more specific hacks in a list, allowing some of the vectors to use useful superclasses like /machinery.
 //component hacks can drop as normal, and must be restarted. If all component hacks drop, the multiple_vector hack drops. It is the responsibility of the get_cybermen_hack() method to attach its component hack to an existing multiple_vector hack.
-/datum/cyberman_hack/proc/component_hack_start(var/multi_vector_hack_type, var/atom/multi_vector_hack_target) //call this in the start() method of a component hack.
+/datum/cyberman_hack/proc/component_hack_start(multi_vector_hack_type, atom/multi_vector_hack_target) //call this in the start() method of a component hack.
 	if(!start_helper())
 		return 0
 	cost = 65535//Effectively infinite. there is a more elegant way to do this, but in practice, no hack will ever come close to this progress. 2^16-1 for no particular reason.
@@ -382,13 +382,13 @@
 	var/datum/cyberman_hack/tick_best_hack
 	var/tick_best_hack_pref
 
-/datum/cyberman_hack/multiple_vector/start(var/datum/cyberman_hack/first_component_hack)
+/datum/cyberman_hack/multiple_vector/start(datum/cyberman_hack/first_component_hack)
 	cyberman_network.log_hacking("[usr.real_name]([usr.ckey]) started a multiple vector hack of \the [target_name] through \the [first_component_hack.target_name]")
 	if(start_helper(first_component_hack))
 		return 1
 	return 0
 
-/datum/cyberman_hack/multiple_vector/start_helper(var/datum/cyberman_hack/first_component_hack)
+/datum/cyberman_hack/multiple_vector/start_helper(datum/cyberman_hack/first_component_hack)
 	for(var/datum/cyberman_hack/multiple_vector/H in cyberman_network.active_cybermen_hacks)
 		if(istype(H, src.type) && H.target == target)
 			drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")//this should never happen, because whatever started this should have checked to see if it could join H before starting this one.
@@ -416,7 +416,7 @@
 	else
 		..(0)
 
-/datum/cyberman_hack/multiple_vector/do_tick_calculations(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/multiple_vector/do_tick_calculations(mob/living/carbon/human/H)
 	..()
 	tick_best_hack = null
 	tick_best_hack_pref = -1//should be beaten by anything from get_preference_for().
@@ -431,16 +431,16 @@
 	if(tick_best_hack_pref == -1)
 		tick_best_hack_pref = 0
 
-/datum/cyberman_hack/multiple_vector/get_preference_for(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/multiple_vector/get_preference_for(mob/living/carbon/human/H)
 	do_tick_calculations_if_required(H)
 	return tick_best_hack_pref
 
-/datum/cyberman_hack/multiple_vector/contribute_to(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/multiple_vector/contribute_to(mob/living/carbon/human/H)
 	do_tick_calculations_if_required(H)
 	if(tick_best_hack)
 		tick_best_hack.contribute_to(H)
 
-/datum/cyberman_hack/multiple_vector/can_cancel(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/multiple_vector/can_cancel(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.mind.cyberman)
 		return 0
 	for(var/datum/cyberman_hack/hack in component_hacks)
@@ -451,7 +451,7 @@
 			return 1
 	return 0
 
-/datum/cyberman_hack/multiple_vector/proc/add_component_hack(var/datum/cyberman_hack/H)
+/datum/cyberman_hack/multiple_vector/proc/add_component_hack(datum/cyberman_hack/H)
 	for(var/datum/cyberman_hack/hack in component_hacks)
 		if(hack.target == H.target)
 			H.drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")
@@ -460,7 +460,7 @@
 	usr << "<span class='notice'>You join the ongoing [display_verb] of \the [target_name] through \the [H.target_name].</span>"
 	return 1
 
-/datum/cyberman_hack/multiple_vector/get_status(var/mob/living/user)
+/datum/cyberman_hack/multiple_vector/get_status(mob/living/user)
 	var/result = "[target_name] | progress: [progress] / [cost]"
 	if(user)
 		var/best_pref = -1//should be beaten by anything from get_preference_for().
@@ -983,7 +983,7 @@
 
 //HELPERS
 
-/datum/cyberman_hack/proc/get_research(var/datum/tech/new_tech)
+/datum/cyberman_hack/proc/get_research(datum/tech/new_tech)
 	if(!new_tech)
 		return 0
 	for(var/list/datum/tech/old_tech in cyberman_network.cybermen_research_downloaded)
@@ -1433,7 +1433,7 @@
 	explanation = "Installs the part into the hacking cyberman, increasing their processing power, hack range, or other abilities. The part must remain in very close proximity to the installer, and fellow cybermen cannot assist in the installation."
 	var/datum/mind/installer
 
-/datum/cyberman_hack/upgrade/New(var/atom/target, var/mob/living/carbon/human/user = usr)
+/datum/cyberman_hack/upgrade/New(atom/target, mob/living/carbon/human/user = usr)
 	outputLimiter = list(user.mind)
 	..()
 
@@ -1479,7 +1479,7 @@
 	outputMessage("<span class='notice'>You have installed a [target], increasing your processing power.</span>")
 	..()
 
-/datum/cyberman_hack/upgrade/get_preference_for(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/upgrade/get_preference_for(mob/living/carbon/human/H)
 	if(H.mind != installer)
 		return 0
 	if(get_dist(H, target) > 1)
@@ -1490,7 +1490,7 @@
 		return 0
 	return CYBERMEN_HACK_MAX_PREFERENCE
 
-/datum/cyberman_hack/upgrade/contribute_to(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/upgrade/contribute_to(mob/living/carbon/human/H)
 	if(H.mind != installer)
 		return
 	if(!H.mind || !H.mind.cyberman)
@@ -1501,7 +1501,7 @@
 	maintained = 1
 	progress += H.mind.cyberman.hack_power_level_1
 
-/datum/cyberman_hack/upgrade/can_cancel(var/mob/living/carbon/human/H)
+/datum/cyberman_hack/upgrade/can_cancel(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.mind.cyberman)
 		return 0
 	var/turf/cyberman_turf = get_turf(H)
@@ -1510,7 +1510,7 @@
 		return 0
 	return get_dist(H, target) <= 1
 
-/datum/cyberman_hack/upgrade/get_status(var/mob/living/user)
+/datum/cyberman_hack/upgrade/get_status(mob/living/user)
 	var/result
 	if(installer.current)
 		result = "Installation: [target_name] into [installer.current] | progress: [progress] / [cost]"

@@ -93,7 +93,7 @@ var/datum/cyberman_network/cyberman_network
 		return 0
 	return mind.cyberman
 
-/datum/game_mode/proc/add_cyberman(var/datum/mind/cyberman, var/message_override)
+/datum/game_mode/proc/add_cyberman(datum/mind/cyberman, message_override)
 	if(!cyberman_network)
 		new /datum/cyberman_network()
 	if(is_cyberman(cyberman))
@@ -244,12 +244,12 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 	process_cyberman_hacking()
 	process_cyberman_objectives()
 
-/datum/cyberman_network/proc/log_hacking(var/message, var/high_priority = 0)
+/datum/cyberman_network/proc/log_hacking(message, high_priority = 0)
 	if(high_priority)
 		message_admins(message)
 	hacking_log += "\[[time_stamp()]\][message]"
 
-/datum/cyberman_network/proc/log_broadcast(var/message, var/high_priority = 0)
+/datum/cyberman_network/proc/log_broadcast(message, high_priority = 0)
 	if(high_priority)
 		message_admins(message)
 	cyberman_broadcast_log += "\[[time_stamp()]\][message]"
@@ -414,7 +414,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 	var/list/upgrades_installed = list()
 	var/list/datum/action/cyberman/abilities = list(new /datum/action/cyberman/commune(), new /datum/action/cyberman/cyberman_disp_objectives(), new /datum/action/cyberman/cyberman_toggle_quickhack(), new /datum/action/cyberman/cyberman_cancel_hack(), new /datum/action/cyberman/cyberman_manual_select_hack())
 
-/datum/cyberman_datum/proc/validate(var/mob/living/carbon/human/user = usr)
+/datum/cyberman_datum/proc/validate(mob/living/carbon/human/user = usr)
 	if(!user)
 		return 0
 	if(!ishuman(user))//cybermen need to be human.
@@ -426,7 +426,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 		return 0
 	return 1
 
-/datum/cyberman_datum/proc/add_cyberman_abilities_to_statpanel(var/mob/user)
+/datum/cyberman_datum/proc/add_cyberman_abilities_to_statpanel(mob/user)
 	if(!validate(user))
 		return
 	for(var/datum/action/cyberman/A in abilities)
@@ -481,7 +481,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 		selected_hack.contribute_to(user)
 	return
 
-/datum/cyberman_datum/proc/emp_act(var/mob/living/carbon/human/mob = src, var/severity)
+/datum/cyberman_datum/proc/emp_act(mob/living/carbon/human/mob, severity)
 	mob.Stun(14)
 	mob.Weaken(14)
 	mob.silent = max(60, mob.silent)
@@ -491,7 +491,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 	mob.visible_message("<span class='danger'>[mob] clutches their head, writhing in pain!</span>")
 	emp_hit = max(60, emp_hit)
 
-/datum/cyberman_datum/proc/get_status_objs(var/mob/living/carbon/human/user)
+/datum/cyberman_datum/proc/get_status_objs(mob/living/carbon/human/user)
 	var/list/obj/status_obj/status_objs = list()
 	var/obj/status_obj/temp = new /obj/status_obj()
 	if(selected_hack)
@@ -511,7 +511,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 /obj/status_obj/
 	var/obj/obj
 
-/obj/status_obj/proc/assign_obj(var/obj/newObj, var/newName)
+/obj/status_obj/proc/assign_obj(obj/newObj, newName)
 	obj = newObj
 	name = newName
 

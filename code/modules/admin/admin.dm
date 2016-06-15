@@ -998,9 +998,6 @@ datum/admins/proc/cyberman_varedit(list/href_list)
 						hack.drop("<span class='warning'>[hack.display_verb] of \the [hack.target_name] cancelled by the Cyberman Collective.</span>")
 		if("set_cost")
 			var/datum/cyberman_hack/hack = locate(href_list["target"])
-			world << "Test"
-			world << "[hack], "
-			world << "[istype(hack)]"
 			if(istype(hack))
 				var/num = input("Set cost to what?") as num
 				if(hack)
