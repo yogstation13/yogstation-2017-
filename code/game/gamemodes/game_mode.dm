@@ -298,10 +298,10 @@
 
 		// Add all our antag candidates to a list()
 		for (var/datum/mind/player in antag_candidates)
-			ckey_listed += get_ckey(player)
+			ckey_listed += sanitizeSQL(get_ckey(player))
 
 		// Turn the list into a string that we will use to filter the player table
-		ckey_for_sql = list2string(ckey_listed, "', '")
+		ckey_for_sql = jointext(ckey_listed, "', '")
 
 		// Find all antag candidate antag-weights
 		var/DBQuery/query_whitelist = dbcon.NewQuery("SELECT `ckey`, `antag_weight` FROM [format_table_name("player")] WHERE `ckey` IN ('[ckey_for_sql]')")

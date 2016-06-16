@@ -31,6 +31,7 @@
 
 /datum/mind
 	var/key
+	var/ckey
 	var/name				//replaces mob/var/original_name
 	var/mob/living/current
 	var/list/slime_bodies = list()
@@ -63,8 +64,11 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
+	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+
 /datum/mind/New(var/key)
 	src.key = key
+	ckey = ckey(key)
 	soulOwner = src
 
 
@@ -1042,12 +1046,12 @@
 	else if(href_list["clockcult"])
 		switch(href_list["clockcult"])
 			if("clear")
-				remove_servant_of_ratvar(current)
+				remove_servant_of_ratvar(current, TRUE)
 				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
 				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
 			if("servant")
-				if(!(src in ticker.mode.servants_of_ratvar))
-					add_servant_of_ratvar(current)
+				if(!is_servant_of_ratvar(current))
+					add_servant_of_ratvar(current, TRUE)
 					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
 					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
 			if("slab")
@@ -1197,12 +1201,19 @@
 					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
+					RemoveSpell(/obj/effect/proc_holder/spell/targeted/shadow/enthrall)
 					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
 					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
 					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
 				else if(src in ticker.mode.thralls)
-					ticker.mode.remove_thrall(src,0)
+					var/safty = 0
+					var/mob/living/carbon/human/H = current
+					for(var/obj/item/organ/thrall_tumor/T in H.internal_organs)
+						T.Remove(current,0,1)
+						qdel(T)
+						safty = 1
+					if(!safty)
+						ticker.mode.remove_thrall(current,0)
 					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
 					log_admin("[key_name(usr)] has de-thrall'ed [current].")
 			if("shadowling")
@@ -1220,7 +1231,8 @@
 				if(!ishuman(current))
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
-				ticker.mode.add_thrall(src)
+				var/obj/item/organ/thrall_tumor/T = new/obj/item/organ/thrall_tumor(current)
+				T.Insert(current)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 
@@ -1749,6 +1761,7 @@
 /mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key
+		mind.ckey = ckey
 
 	else
 		mind = new /datum/mind(key)
@@ -1757,7 +1770,8 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN

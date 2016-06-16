@@ -328,7 +328,7 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
-/proc/get_ckey(var/user)
+/proc/get_ckey(user)
 	if(ismob(user))
 		var/mob/temp = user
 		return temp.ckey
@@ -337,7 +337,7 @@ Proc for attack log creation, because really why not
 		return temp.ckey
 	else if(istype(user, /datum/mind))
 		var/datum/mind/temp = user
-		return lowertext(replacetext(temp.key, " ", ""))
+		return temp.ckey
 
 	return "* Unknown *"
 
@@ -355,6 +355,9 @@ Proc for attack log creation, because really why not
 		return temp.key
 	else if(istype(user, /client))
 		var/client/temp = user
+		return temp.key
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
 		return temp.key
 
 	return "* Unknown *"
@@ -480,3 +483,30 @@ Proc for attack log creation, because really why not
 		return temp.computer_id
 
 	return "Unknown"
+
+/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	for(var/mob/M in player_list)
+		var/datum/preferences/prefs
+		if(M.client && M.client.prefs)
+			prefs = M.client.prefs
+		else
+			prefs = new
+
+		var/adminoverride = 0
+		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+			adminoverride = 1
+		if(istype(M, /mob/new_player) && !adminoverride)
+			continue
+		if(M.stat != DEAD && !adminoverride)
+			continue
+		if(speaker_key && speaker_key in prefs.ignoring)
+			continue
+		if(message_type == DEADCHAT_DEATHRATTLE)
+			if(prefs.toggles & DISABLE_DEATHRATTLE)
+				continue
+
+		if(istype(M, /mob/dead/observer) && follow_target)
+			var/link = FOLLOW_LINK(M, follow_target)
+			M << "[link] [message]"
+		else
+			M << "[message]"

@@ -178,6 +178,14 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
+	
+	var/localhost_addresses = list("127.0.0.1", "::1")
+	if(address && (address in localhost_addresses))
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_MAXPERMISSION - 1 - R_NOJOIN)
+		if(localhost_rank)
+			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
+			localhost_holder.associate(src)
+	
 	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -192,7 +200,7 @@ var/next_external_rsc = 0
 				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
-		admins += src
+		admins |= src
 		holder.owner = src
 
 	//Need to load before we load preferences for correctly removing Ultra if user no longer whitelisted
@@ -392,7 +400,6 @@ var/next_external_rsc = 0
 	var/sql_ip = sanitizeSQL(src.address)
 	var/sql_computerid = sanitizeSQL(src.computer_id)
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
-
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	query_insert.Execute()

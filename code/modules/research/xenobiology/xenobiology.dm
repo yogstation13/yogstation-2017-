@@ -160,27 +160,15 @@
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
-	origin_tech = "biotech=5"
+	origin_tech = "biotech=6"
 	var/list/not_interested = list()
 	var/being_used = 0
 	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
-	if(being_used || !ismob(M))
-		return
-	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
-		return ..()
-	if(M.stat)
-		user << "<span class='warning'>[M] is dead!</span>"
+	if(!do_checks(M, user))
 		return ..()
 	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != sentience_type)
-		user << "<span class='warning'>The potion won't work on [SM].</span>"
-		return ..()
-
-
-
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
@@ -200,6 +188,21 @@
 		user << "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
 		being_used = 0
 		..()
+
+/obj/item/slimepotion/sentience/proc/do_checks(mob/living/M, mob/user)
+	if(being_used || !ismob(M))
+		return 0
+	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
+		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
+		return 0
+	if(M.stat)
+		user << "<span class='warning'>[M] is dead!</span>"
+		return 0
+	var/mob/living/simple_animal/SM = M
+	if(SM.sentience_type != sentience_type)
+		user << "<span class='warning'>The potion won't work on [SM].</span>"
+		return 0
+	return 1
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
@@ -326,6 +329,7 @@
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
+	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
@@ -356,6 +360,7 @@
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
+	origin_tech = "biotech=5"
 	var/uses = 3
 
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
@@ -494,6 +499,33 @@
 	G.key = ghost.key
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
+
+	var/golem_becomes_antag = FALSE
+	if(iscultist(user)) //If the golem's master is a part of a team antagonist, immediately make the golem one, too
+		ticker.mode.add_cultist(G.mind)
+		golem_becomes_antag = TRUE
+	else if(is_gangster(user))
+		ticker.mode.add_gangster(G.mind, user.mind.gang_datum, TRUE)
+		golem_becomes_antag = TRUE
+	else if(is_handofgod_redcultist(user) || is_handofgod_redprophet(user))
+		ticker.mode.add_hog_follower(G.mind, "Red")
+		golem_becomes_antag = TRUE
+	else if(is_handofgod_bluecultist(user) || is_handofgod_blueprophet(user))
+		ticker.mode.add_hog_follower(G.mind, "Blue")
+		golem_becomes_antag = TRUE
+	else if(is_revolutionary_in_general(user))
+		ticker.mode.add_revolutionary(G.mind)
+		golem_becomes_antag = TRUE
+	else if(is_shadow_or_thrall(user))
+		ticker.mode.add_thrall(G.mind)
+		golem_becomes_antag = TRUE
+	else if(is_servant_of_ratvar(user))
+		add_servant_of_ratvar(G)
+		golem_becomes_antag = TRUE
+
+	G.mind.enslaved_to = user
+	if(golem_becomes_antag)
+		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
 	if(user.mind.special_role)
 		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")
@@ -635,4 +667,3 @@
 		for(var/turf/T in A)
 			T.color = "#2956B2"
 		qdel(src)
-
