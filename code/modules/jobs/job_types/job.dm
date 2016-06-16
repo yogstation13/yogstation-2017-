@@ -60,6 +60,21 @@
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
+	//Donor stuff
+	give_donor_stuff(H)
+
+/datum/job/proc/give_donor_stuff(mob/living/carbon/human/H)
+	if(!is_donator(H))
+		return
+	if(H.client.prefs.donor_hat)
+		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
+			backpack.contents += H.client.prefs.donor_hat
+			break
+	if(H.client.prefs.donor_pda)
+		for(var/obj/item/device/pda/PDA in H.GetAllContents())
+			PDA.icon_state = "pda-clear"
+			break
+
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
 		return

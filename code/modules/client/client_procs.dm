@@ -335,14 +335,30 @@ var/next_external_rsc = 0
 //////////////
 
 /client/Del()
+	for(var/datum/admin_ticket/T in tickets_list)
+		if(compare_ckey(T.owner_ckey, usr) && !T.resolved)
+			T.add_log(new /datum/ticket_log(T, src, "¤ Disconnected ¤", 1))
+	
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
 		admins -= src
+	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src
+
+	world.manage_fps()
+
 	return ..()
 
+/client/proc/sync_logout_with_db(number)
+	if(!number || !isnum(number))
+		return
+	establish_db_connection()
+	if (!dbcon.IsConnected())
+		return
+	var/DBQuery/query_logout = dbcon.NewQuery("UPDATE `[format_table_name("connection_log")]` SET `left`=Now() WHERE `id`=[number];")
+	query_logout.Execute()
 
 /client/proc/set_client_age_from_db()
 	if (IsGuestKey(src.key))
@@ -409,6 +425,10 @@ var/next_external_rsc = 0
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+	var/DBQuery/query_getid = dbcon.NewQuery("SELECT `id` FROM `[format_table_name("connection_log")]` WHERE `serverip`='[serverip]' AND `ckey`='[sql_ckey]' AND `ip`='[sql_ip]' AND `computerid`='[sql_computerid]' ORDER BY datetime DESC LIMIT 1;")
+	query_getid.Execute()
+	while (query_getid.NextRow())
+		connection_number = text2num(query_getid.item[1])
 
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)

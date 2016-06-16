@@ -64,6 +64,7 @@
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+	var/quiet_round = 0 //Won't be picked as target in most cases
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -235,6 +236,8 @@
 		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+	if(quiet_round)
+		out += "<font color=red><b>QUIET ROUND ACTIVE</b></font> (<a href='?src=\ref[src];quiet_override=1'>Override</a>)<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
@@ -1390,6 +1393,10 @@
 			current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
+	else if (href_list["quiet_override"])
+		quiet_round = 0
+		message_admins("[key_name_admin(usr)] has disabled [current]'s quiet round mode.")
+		log_admin("[key_name(usr)] has disabled [current]'s quiet round mode.")
 	edit_memory()
 
 /datum/mind/proc/find_syndicate_uplink()
@@ -1405,6 +1412,8 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.traitors))
 		ticker.mode.traitors += src
 		special_role = "traitor"
@@ -1413,6 +1422,8 @@
 		ticker.mode.greet_traitor(src)
 
 /datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0, telecrystals = TRUE)
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1445,6 +1456,8 @@
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 
 /datum/mind/proc/make_Changling()
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.changelings))
 		ticker.mode.changelings += src
 		current.make_changeling()
@@ -1454,6 +1467,8 @@
 		ticker.mode.update_changeling_icons_added(src)
 
 /datum/mind/proc/make_Wizard()
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
