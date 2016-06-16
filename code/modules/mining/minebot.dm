@@ -1,5 +1,10 @@
 /**********************Mining drone**********************/
 
+#define MINEDRONE_COLLECT 0
+#define MINEDRONE_ATTACK 1
+#define MINEDRONE_IDLE 2
+#define MINEDRONE_EMAGGED 3
+
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
 	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife. A mining scanner can instruct it to drop loose ore. Field repairs can be done with a welder."
@@ -35,13 +40,14 @@
 	speak_emote = list("states")
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/bananium)
+						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/glass)
 	healable = 0
+	var/mode = MINEDRONE_COLLECT
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-		if(W.welding && !stat)
+		if(W.welding && !stat && user.a_intent == "help")
 			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
 				user << "<span class='info'>[src] is moving around too much to repair!</span>"
 				return
@@ -71,17 +77,24 @@
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == "help")
-		switch(search_objects)
-			if(0)
+		switch(mode)
+			if(MINEDRONE_IDLE)
 				SetCollectBehavior()
 				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
-			if(2)
+			if(MINEDRONE_COLLECT)
 				SetOffenseBehavior()
 				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
+			if(MINEDRONE_ATTACK)
+				SetInactiveBehavior()
+				M << "<span class='info'>[src] has been set to idle.</span>"
 		return
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
+	if(mode == MINEDRONE_EMAGGED)
+		return
+	mode = MINEDRONE_COLLECT
+	AIStatus = AI_ON
 	idle_vision_range = 9
 	search_objects = 2
 	wander = 1
@@ -91,6 +104,10 @@
 	icon_state = "mining_drone"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
+	if(mode == MINEDRONE_EMAGGED)
+		return
+	mode = MINEDRONE_ATTACK
+	AIStatus = AI_ON
 	idle_vision_range = 7
 	search_objects = 0
 	wander = 0
@@ -98,6 +115,50 @@
 	retreat_distance = 1
 	minimum_distance = 2
 	icon_state = "mining_drone_offense"
+
+/mob/living/simple_animal/hostile/mining_drone/proc/SetInactiveBehavior()
+	if(mode == MINEDRONE_EMAGGED)
+		return
+	mode = MINEDRONE_IDLE
+	LoseTarget()
+	AIStatus = AI_OFF
+	idle_vision_range = 3
+	search_objects = 0
+	wander = 0
+	ranged = 0
+	minimum_distance = 0
+	retreat_distance = null
+	icon_state = "mining_drone_idle"
+
+/mob/living/simple_animal/hostile/mining_drone/proc/SetEmagBehavior()
+	mode = MINEDRONE_EMAGGED
+	AIStatus = AI_ON
+	idle_vision_range = 9
+	search_objects = 0
+	wander = 1
+	ranged = 1
+	stat_attack = 1
+	retreat_distance = 1
+	minimum_distance = 2
+	environment_smash = 1
+	projectiletype = /obj/item/projectile/kinetic/traitor //double the damage. Very lethal in space, mildly lethal otherwise
+	icon_state = "mining_drone_emag"
+
+/mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
+	if(mode == MINEDRONE_EMAGGED || ckey)
+		return
+	if(user)
+		user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		faction |= user.faction
+	faction -= "neutral"
+	faction += "mining_drone" //No drone on drone violence.
+	SetEmagBehavior()
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread()
+	s.set_up(5, 1, src)
+	s.start()
+	Stun(5)
+	icon_state = "mining_drone_emag"
+	return
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -123,8 +184,8 @@
 		O.loc = src.loc
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth()
-	if(search_objects)
+/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)
+	if(mode != MINEDRONE_EMAGGED && mode != MINEDRONE_ATTACK && amount > 0)
 		SetOffenseBehavior()
 	. = ..()
 
@@ -186,3 +247,17 @@
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
 	origin_tech = "programming=6"
+
+/obj/item/slimepotion/sentience/mining/do_checks(mob/living/M, mob/user)
+	if(!..())
+		return 0
+	var/mob/living/simple_animal/hostile/mining_drone/drone = M
+	if(istype(drone) && drone.mode == MINEDRONE_EMAGGED)
+		user << "<span class='warning'>[M] is not responding to [src]!</span>"
+		return 0
+	return 1
+
+#undef MINEDRONE_COLLECT
+#undef MINEDRONE_ATTACK
+#undef MINEDRONE_IDLE
+#undef MINEDRONE_EMAGGED
