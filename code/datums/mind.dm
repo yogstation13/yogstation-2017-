@@ -31,6 +31,7 @@
 
 /datum/mind
 	var/key
+	var/ckey
 	var/name				//replaces mob/var/original_name
 	var/mob/living/current
 	var/list/slime_bodies = list()
@@ -67,6 +68,7 @@
 
 /datum/mind/New(var/key)
 	src.key = key
+	ckey = ckey(key)
 	soulOwner = src
 
 
@@ -1757,6 +1759,7 @@
 /mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key
+		mind.ckey = ckey
 
 	else
 		mind = new /datum/mind(key)
@@ -1765,7 +1768,8 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN

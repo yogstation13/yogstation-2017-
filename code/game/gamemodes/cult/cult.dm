@@ -76,7 +76,7 @@
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
-		var/datum/mind/cultist = pick(antag_candidates)
+		var/datum/mind/cultist = pick_candidate()
 		antag_candidates -= cultist
 		cultists_to_cult += cultist
 		cultist.special_role = "Cultist"

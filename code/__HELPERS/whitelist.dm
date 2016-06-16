@@ -81,7 +81,7 @@
 
 			ckeys_to_join += ckey
 
-	ckeys_joined = jointext(ckeys_to_join, ", ")
+	ckeys_joined = jointext(ckeys_to_join, "', '")
 
 	var/DBQuery/query_whitelist = dbcon.NewQuery("SELECT `ckey` FROM `job_whitelist` WHERE `ckey` IN ('[ckeys_joined]')")
 

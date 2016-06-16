@@ -47,7 +47,7 @@
 	for (var/i=1 to max_headrevs)
 		if (antag_candidates.len==0)
 			break
-		var/datum/mind/lenin = pick(antag_candidates)
+		var/datum/mind/lenin = pick_candidate()
 		antag_candidates -= lenin
 		head_revolutionaries += lenin
 		lenin.restricted_roles = restricted_jobs
