@@ -219,6 +219,12 @@
 	icon_state = "cart"
 	var/obj/item/weapon/implant/mindslave/imp = null
 
+/obj/item/weapon/cartridge/virusmaster //This is for debugging, do not give this out in game!
+	name = "\improper H4XMAST3R cartridge"
+	desc = "A pda cartridge used by centcomm for nefarious purposes."
+	functions = PDA_ADMIN_FUNCTIONS
+	icon_state = "cart"
+
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))
 		return
@@ -734,6 +740,16 @@ Code:
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
 
+		if(55) // Admin stuff
+			menu = "<h4><img src=pda_signaler.png>Malware Viewer</h4><br>\
+			<A href='byond://?src=\ref[src];choice=del_malware;target=all'>\[Delete All Malware\]</a><br>\
+			<br>Active Malware:<ul>"
+			listclearnulls(active_malware)
+			for(var/V in active_malware)
+				var/datum/malware/M = V
+				menu += "<li>[M] in [M.host] <A href='byond://?src=\ref[src];choice=del_malware;target=\ref[M]'>\[Delete\]</a></li>"
+			menu += "</ul>"
+
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
@@ -843,6 +859,18 @@ Code:
 							var/mob/detonated = src:imp.loc
 							log_game("[detonator.ckey]/([detonator] has detonated [detonated.ckey]/([detonated]) with a mindslave implant");
 					src:imp.activate()
+		if("del_malware")
+			if(functions & PDA_ADMIN_FUNCTIONS)
+				var/target = href_list["target"]
+				if(target)
+					if(target == "all")
+						for(var/V in active_malware)
+							qdel(V)
+						usr << "<span class='warning'>All malware deleted.</span>"
+					else
+						qdel(locate(target))
+						usr << "<span class='warning'>Malware deleted.</span>"
+				pda.Topic(null,list("choice"=num2text(mode)))
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])

@@ -119,6 +119,7 @@ Class Procs:
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
+	var/list/malware = null
 
 /obj/machinery/New()
 	..()
@@ -148,6 +149,10 @@ Class Procs:
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
+	if(malware)
+		for(var/V in malware)
+			var/datum/malware/M = V
+			M.onEMP()
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
@@ -218,6 +223,13 @@ Class Procs:
 
 /obj/machinery/interact(mob/user)
 	add_fingerprint(user)
+	if(malware)
+		var/failUse = 0
+		for(var/V in malware)
+			var/datum/malware/M = V
+			failUse |= M.onActivate(user)
+		if(failUse)
+			return
 	ui_interact(user)
 
 /obj/machinery/ui_status(mob/user)

@@ -30,6 +30,10 @@
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+	if(malware)
+		for(var/V in malware)
+			var/datum/malware/M = V
+			M.onMachineTick()
 	return 1
 
 /obj/machinery/computer/emp_act(severity)
