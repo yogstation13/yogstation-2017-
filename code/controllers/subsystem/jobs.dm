@@ -100,6 +100,9 @@ var/datum/subsystem/job/SSjob
 		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
 			Debug("FOC non-human failed, Player: [player]")
 			continue
+		if(((job.title in command_positions) || (job.title in nonhuman_positions)) && (player.client.prefs.toggles & QUIET_ROUND))
+			Debug("FOC quiet check failed, Player: [player]")
+			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player

@@ -39,6 +39,8 @@
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 	var/is_whitelisted = "Requires database"	//Used to determine if the player is whitelisted - gives access to Ultra preference for command jobs + AI
 
+	var/connection_number = 0
+
 	preload_rsc = PRELOAD_RSC
 
 	var/global/obj/screen/click_catcher/void
