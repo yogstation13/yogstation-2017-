@@ -22,8 +22,14 @@
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
 	toolspeed = 1
-	var/list/malware = null
+	var/list/software = null
 
+/obj/item/device/multitool/emp_act(severity)
+	..()
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onEMP()
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 

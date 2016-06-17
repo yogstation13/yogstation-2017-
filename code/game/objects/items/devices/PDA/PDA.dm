@@ -47,7 +47,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	var/image/photo = null //Scanned photo
-	var/list/malware = null
+	var/list/software = null
 
 
 /obj/item/device/pda/pickup(mob/user)
@@ -94,10 +94,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
-	if(malware)
+	if(software)
 		var/failUse = 0
-		for(var/V in malware)
-			var/datum/malware/M = V
+		for(var/V in software)
+			var/datum/software/M = V
 			failUse |= M.onActivate(user)
 		if(failUse)
 			return
@@ -140,8 +140,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(cartridge && cartridge.functions & PDA_ADMIN_FUNCTIONS)
 					dat += "<h4>Centcomm Administration Functions</h4>"
 					dat += "<ul>"
-					dat += "<li><a href='byond://?src=\ref[src];choice=create_virus'><img src=pda_signaler.png>Create Virus</a></li>"
-					dat += "<li><a href='byond://?src=\ref[src];choice=55'><img src=pda_signaler.png>View Malware</a></li>"
+					dat += "<li><a href='byond://?src=\ref[src];choice=create_virus'><img src=pda_signaler.png>Create Software</a></li>"
+					dat += "<li><a href='byond://?src=\ref[src];choice=55'><img src=pda_signaler.png>View Software</a></li>"
 					dat += "</ul>"
 				dat += "<h4>General Functions</h4>"
 				dat += "<ul>"
@@ -324,10 +324,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Topic(href, href_list)
 	..()
-	if(malware)
+	if(software)
 		var/failTopic = 0
-		for(var/V in malware)
-			var/datum/malware/M = V
+		for(var/V in software)
+			var/datum/software/M = V
 			failTopic |= M.onTopicCall(href, href_list)
 		if(failTopic)
 			return
@@ -501,7 +501,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
 					if(!isnull(P))
 						if (!P.toff && cartridge:honk_charges > 0)
-							var/datum/malware/honkvirus/virus = new /datum/malware/honkvirus()
+							var/datum/software/malware/honkvirus/virus = new /datum/software/malware/honkvirus()
 							if(virus.infect(P))
 								cart.honk_charges--
 								U.show_message("<span class='notice'>Virus sent!</span>", 1)
@@ -518,7 +518,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!isnull(P))
 						if (!P.toff && cartridge:mime_charges > 0)
-							var/datum/malware/mimevirus/virus = new /datum/malware/mimevirus()
+							var/datum/software/malware/mimevirus/virus = new /datum/software/malware/mimevirus()
 							if(virus.infect(P))
 								cart.mime_charges--
 								U.show_message("<span class='notice'>Virus sent!</span>", 1)
@@ -547,7 +547,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!isnull(P))
 						if (!P.toff && cartridge:shock_charges > 0)
-							var/datum/malware/detomatix/virus = new /datum/malware/detomatix()
+							var/datum/software/malware/detomatix/virus = new /datum/software/malware/detomatix()
 							if(virus.infect(P))
 								cart.shock_charges--
 								U.show_message("<span class='notice'>Success!</span>", 1)
@@ -575,9 +575,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("create_virus")
 				if((!isnull(cartridge)) && (cartridge.functions & PDA_ADMIN_FUNCTIONS))
 					var/list/viruses = list()
-					for(var/V in subtypesof(/datum/malware))
+					for(var/V in (typesof(/datum/software) - ABSTRACT_SOFTWARE))
 						viruses += new V()
-					var/datum/malware/virus_selected = input(U, "Please select a virus to create.") as null|anything in viruses
+					var/datum/software/virus_selected = input(U, "Please select a virus to create.") as null|anything in viruses
 					for(var/V in viruses)
 						if(V != virus_selected)
 							qdel(V)
@@ -658,8 +658,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		MS = can_send(P)
 		if(MS)
 			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
-			for(var/V in malware)
-				var/datum/malware/M = V
+			for(var/V in software)
+				var/datum/software/M = V
 				M.attempt_infect(P)
 			if(msg)
 				last_sucessful_msg = msg
@@ -1063,6 +1063,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onEMP()
+
 	for(var/atom/A in src)
 		A.emp_act(severity)
 	emped += 1
