@@ -59,9 +59,9 @@
 	var/banana_rate = 10
 
 
-/obj/item/weapon/storage/firstaid/attackby(var/obj/item/weapon/bikehorn/S, mob/user as mob)
+/obj/item/weapon/storage/firstaid/attackby(var/obj/item/device/assembly/bikehorn/S, mob/user as mob)
 
-	if (!istype(S, /obj/item/weapon/bikehorn))
+	if (!istype(S, /obj/item/device/assembly/bikehorn))
 		..()
 		return
 

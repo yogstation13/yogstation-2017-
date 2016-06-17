@@ -343,7 +343,7 @@
 
 
 
-/obj/item/weapon/bikehorn/rubberducky
+/obj/item/device/assembly/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'

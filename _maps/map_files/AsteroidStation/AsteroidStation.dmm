@@ -6056,7 +6056,7 @@
 /area/storage/tech)
 "amV" = (
 /obj/structure/table,
-/obj/item/device/plant_analyzer,
+/obj/item/device/analyzer/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -16339,7 +16339,7 @@
 "aHe" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/device/plant_analyzer,
+/obj/item/device/analyzer/plant_analyzer,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
@@ -18162,7 +18162,7 @@
 	dir = 4
 	},
 /obj/item/weapon/soap,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/machinery/button/door{
 	id = "shutbath";
 	 name = "Bathroom Bolt Control";
@@ -21101,7 +21101,7 @@
 /area/security/prison)
 "aRe" = (
 /obj/structure/window/reinforced,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -27393,7 +27393,7 @@
 	},
 /area/security/prison)
 "bdD" = (
-/obj/item/device/plant_analyzer,
+/obj/item/device/analyzer/plant_analyzer,
 /obj/structure/table,
 /obj/item/seeds/wheat,
 /obj/structure/window/reinforced{
@@ -36625,7 +36625,7 @@
 	dir = 4
 	},
 /obj/item/weapon/soap,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/machinery/button/door{
 	id = "shutbath2";
 	 name = "Bathroom Bolt Control";
@@ -36919,7 +36919,7 @@
 	})
 "bvJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bikehorn/airhorn,
+/obj/item/device/assembly/bikehorn/airhorn,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -45264,7 +45264,7 @@
 /turf/closed/wall,
 /area/mine/abandoned)
 "bMU" = (
-/obj/item/organ/appendix,
+/obj/item/weapon/reagent_containers/food/snacks/burger/appendix,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)

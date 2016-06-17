@@ -240,6 +240,7 @@
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/alien(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/abductor(agent), slot_wear_id)
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)
