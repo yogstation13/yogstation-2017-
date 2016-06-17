@@ -328,7 +328,7 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
-/proc/get_ckey(var/user)
+/proc/get_ckey(user)
 	if(ismob(user))
 		var/mob/temp = user
 		return temp.ckey
@@ -337,7 +337,7 @@ Proc for attack log creation, because really why not
 		return temp.ckey
 	else if(istype(user, /datum/mind))
 		var/datum/mind/temp = user
-		return lowertext(replacetext(temp.key, " ", ""))
+		return temp.ckey
 
 	return "* Unknown *"
 
@@ -355,6 +355,9 @@ Proc for attack log creation, because really why not
 		return temp.key
 	else if(istype(user, /client))
 		var/client/temp = user
+		return temp.key
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
 		return temp.key
 
 	return "* Unknown *"

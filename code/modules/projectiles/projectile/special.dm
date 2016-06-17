@@ -129,6 +129,9 @@
 	range = 5
 	splash = 1
 
+/obj/item/projectile/kinetic/traitor
+	damage = 30
+
 /obj/item/projectile/kinetic/New()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
