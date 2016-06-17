@@ -83,7 +83,7 @@
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves/,
 		/obj/item/weapon/lazarus_injector,
-		/obj/item/weapon/bikehorn/rubberducky,
+		/obj/item/device/assembly/bikehorn/rubberducky,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/breath/medical,
