@@ -2955,12 +2955,8 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/grenade/barrier{
-	step_x = 4
-	},
-/obj/item/weapon/grenade/barrier{
-	step_x = 8
-	},
+/obj/item/weapon/grenade/barrier,
+/obj/item/weapon/grenade/barrier,
 /obj/item/weapon/grenade/barrier,
 /obj/item/key/security,
 /turf/open/floor/plasteel{
@@ -34054,12 +34050,8 @@
 /obj/item/weapon/stock_parts/capacitor,
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/manipulator{
-	step_x = 0
-	},
-/obj/item/weapon/stock_parts/manipulator{
-	step_x = 0
-	},
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
 /obj/item/weapon/stock_parts/capacitor,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
@@ -35292,10 +35284,7 @@
 	pixel_x = 26;
 	req_access_txt = "5"
 	},
-/obj/item/weapon/book/manual/wiki/chemistry{
-	step_x = 2;
-	step_y = 6
-	},
+/obj/item/weapon/book/manual/wiki/chemistry,
 /obj/item/weapon/book/manual/wiki/chemistry,
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -46079,7 +46068,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/computer/communications{
+/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -52107,11 +52096,11 @@
 	pixel_x = -30;
 	pixel_y = 0
 	},
-/obj/item/device/gps/science,
-/obj/item/device/gps/science,
-/obj/item/device/gps/science,
-/obj/item/device/gps/science,
-/obj/item/device/gps/science,
+/obj/item/device/tsbeacon,
+/obj/item/device/tsbeacon,
+/obj/item/device/tsbeacon,
+/obj/item/device/tsbeacon,
+/obj/item/device/tsbeacon,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -58415,9 +58404,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "clm" = (
-/obj/structure/sign/securearea{
-	step_y = 31
-	},
+/obj/structure/sign/securearea,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cln" = (
@@ -68807,129 +68794,75 @@
 	},
 /turf/open/space,
 /area/space)
-"cFy" = (
+"cES" = (
+/obj/machinery/camera/motion{
+	c_tag = "Armory Exterior";
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/space,
+/area/space)
+"cET" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	icon_state = "bot"
-	},
-/area/hallway/primary/central)
-"cFx" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	icon_state = "bot"
-	},
-/area/quartermaster/storage)
-"cFw" = (
-/obj/machinery/door/window/eastright{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Research Division Delivery";
-	req_access_txt = "47"
-	},
-/turf/open/floor/plasteel/delivery,
-/area/toxins/lab)
-"cFv" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/toxins/lab)
-"cFu" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/toxins/lab)
-"cFt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bed/dogbed{
-	name = "Ian's Bed"
-	},
 /turf/open/floor/plasteel,
-/area/crew_quarters/heads)
-"cFs" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/closet/cardboard,
+/area/security/prison)
+"cEU" = (
+/obj/machinery/door/airlock/external{
+	name = "Security Escape Pod";
+	req_access_txt = "63"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
+"cEV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/security/brig)
+"cEW" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
-/area/quartermaster/storage)
-"cFr" = (
-/obj/machinery/light/small,
-/turf/open/floor/plating,
-/area/hallway/secondary/exit)
-"cFq" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit)
-"cFp" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"cFo" = (
+/area/security/brig)
+"cEX" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
-	icon_state = "cafeteria"
+	icon_state = "dark"
 	},
-/area/crew_quarters/kitchen)
-"cFn" = (
+/area/crew_quarters/courtroom)
+"cEY" = (
 /obj/effect/landmark/event_spawn,
-/obj/item/chair/stool/bar,
+/turf/open/floor/wood,
+/area/crew_quarters/sleep)
+"cEZ" = (
+/obj/structure/window/reinforced,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
-	icon_state = "bar"
+	icon_state = "dark"
 	},
-/area/crew_quarters/bar)
-"cFm" = (
+/area/crew_quarters/fitness)
+"cFa" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"cFb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit)
-"cFl" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	icon_state = "bar"
-	},
-/area/crew_quarters/bar)
-"cFk" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/bridge)
-"cFj" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/carpet,
+/turf/open/floor/plasteel/black,
 /area/chapel/main)
-"cFi" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/hydroponics)
-"cFh" = (
-/obj/effect/landmark/event_spawn,
-/turf/closed/wall,
-/area/crew_quarters/bar)
-"cFg" = (
+"cFc" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/secondary/entry)
-"cFf" = (
-/obj/machinery/light/small{
-	dir = 1
+/area/storage/primary)
+"cFd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/hallway/secondary/exit)
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "cFe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
@@ -68945,75 +68878,129 @@
 	icon_state = "green"
 	},
 /area/hydroponics)
-"cFd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+"cFf" = (
+/obj/machinery/light/small{
+	dir = 1
 	},
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
+"cFg" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/primary/port)
-"cFc" = (
+/area/hallway/secondary/entry)
+"cFh" = (
 /obj/effect/landmark/event_spawn,
+/turf/closed/wall,
+/area/crew_quarters/bar)
+"cFi" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
-/area/storage/primary)
-"cFb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
+/area/hydroponics)
+"cFj" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
 /area/chapel/main)
-"cFa" = (
+"cFk" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"cEZ" = (
-/obj/structure/window/reinforced,
+/area/bridge)
+"cFl" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "bar"
 	},
-/area/crew_quarters/fitness)
-"cEY" = (
+/area/crew_quarters/bar)
+"cFm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"cEX" = (
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
+"cFn" = (
+/obj/effect/landmark/event_spawn,
+/obj/item/chair/stool/bar,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/crew_quarters/bar)
+"cFo" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "cafeteria"
 	},
-/area/crew_quarters/courtroom)
-"cEW" = (
+/area/crew_quarters/kitchen)
+"cFp" = (
 /obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"cFq" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit)
+"cFr" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating,
+/area/hallway/secondary/exit)
+"cFs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/cardboard,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
-/area/security/brig)
-"cEV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/area/quartermaster/storage)
+"cFt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/bed/dogbed{
+	name = "Ian's Bed"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/heads)
+"cFu" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/toxins/lab)
+"cFv" = (
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/security/brig)
-"cEU" = (
-/obj/machinery/door/airlock/external{
-	name = "Security Escape Pod";
-	req_access_txt = "63"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint)
-"cET" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/security/prison)
-"cES" = (
-/obj/machinery/camera/motion{
-	c_tag = "Armory Exterior";
-	dir = 1;
-	network = list("SS13")
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/space,
-/area/space)
+/turf/closed/wall,
+/area/toxins/lab)
+"cFw" = (
+/obj/machinery/door/window/eastright{
+	base_state = "left";
+	dir = 8;
+	icon_state = "left";
+	name = "Research Division Delivery";
+	req_access_txt = "47"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/toxins/lab)
+"cFx" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
+/area/quartermaster/storage)
+"cFy" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel{
+	icon_state = "bot"
+	},
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 aaa

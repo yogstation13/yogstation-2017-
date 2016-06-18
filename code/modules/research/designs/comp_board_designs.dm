@@ -81,7 +81,7 @@
 	desc = "Allows for the construction of circuit boards used to build a communications console."
 	id = "comconsole"
 	req_tech = list("programming" = 3, "magnets" = 3)
-	build_path = /obj/item/weapon/circuitboard/computer/communications
+	build_path = /obj/item/weapon/circuitboard/cooldown_holder/computer/communications
 	category = list("Computer Boards")
 
 /datum/design/board/idcardconsole

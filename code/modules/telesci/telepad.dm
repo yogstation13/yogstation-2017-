@@ -9,11 +9,17 @@
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/efficiency
+	var/beacon
 
 /obj/machinery/telepad/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telesci_pad(null)
 	B.apply_default_parts(src)
+	beacon = new /obj/item/device/tsbeacon/advanced/telepad(src)
+
+/obj/machinery/telepad/Destroy()
+	qdel(beacon)
+	..()
 
 /obj/item/weapon/circuitboard/machine/telesci_pad
 	name = "circuit board (Telepad)"
@@ -41,7 +47,8 @@
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			user << "<span class='caution'>You save the data in the [I.name]'s buffer.</span>"
-
+			return
+			
 	if(exchange_parts(user, I))
 		return
 

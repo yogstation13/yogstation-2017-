@@ -1794,6 +1794,7 @@
 #include "code\modules\telesci\gps.dm"
 #include "code\modules\telesci\telepad.dm"
 #include "code\modules\telesci\telesci_computer.dm"
+#include "code\modules\telesci\tsbeacon.dm"
 #include "code\modules\tgui\external.dm"
 #include "code\modules\tgui\states.dm"
 #include "code\modules\tgui\subsystem.dm"
