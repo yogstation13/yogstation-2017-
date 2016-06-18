@@ -2955,12 +2955,8 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/grenade/barrier{
-	step_x = 4
-	},
-/obj/item/weapon/grenade/barrier{
-	step_x = 8
-	},
+/obj/item/weapon/grenade/barrier,
+/obj/item/weapon/grenade/barrier,
 /obj/item/weapon/grenade/barrier,
 /obj/item/key/security,
 /turf/open/floor/plasteel{
@@ -34054,12 +34050,8 @@
 /obj/item/weapon/stock_parts/capacitor,
 /obj/item/weapon/stock_parts/micro_laser,
 /obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/manipulator{
-	step_x = 0
-	},
-/obj/item/weapon/stock_parts/manipulator{
-	step_x = 0
-	},
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
 /obj/item/weapon/stock_parts/capacitor,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
@@ -35292,10 +35284,7 @@
 	pixel_x = 26;
 	req_access_txt = "5"
 	},
-/obj/item/weapon/book/manual/wiki/chemistry{
-	step_x = 2;
-	step_y = 6
-	},
+/obj/item/weapon/book/manual/wiki/chemistry,
 /obj/item/weapon/book/manual/wiki/chemistry,
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -58415,9 +58404,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "clm" = (
-/obj/structure/sign/securearea{
-	step_y = 31
-	},
+/obj/structure/sign/securearea,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cln" = (
