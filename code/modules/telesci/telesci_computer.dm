@@ -3,7 +3,7 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
+	circuit = /obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -16,7 +16,6 @@
 	var/offset_y = 0
 
 	// Based on the power used
-	var/teleport_cooldown = 0
 	var/teleporting = 0
 	var/obj/item/device/gps/inserted_gps
 	var/last_target
@@ -71,8 +70,10 @@
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
-		if(teleport_cooldown > world.time)
-			temp_msg = "Telepad is recharging power.<BR>Please wait [round((teleport_cooldown - world.time) / 10)] seconds."
+		var/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console/CM = circuit
+		var/timeleft = CM.cooldownLeft()
+		if(timeleft)
+			temp_msg = "Telepad is recharging power.<BR>Please wait [round((timeleft) / 10)] seconds."
 		else
 			temp_msg = "Telepad ready and operational."
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
@@ -167,7 +168,9 @@
 			temp_msg = "ERROR!<BR>Impossible y offset."
 			return
 
-	if(teleport_cooldown > world.time)
+	var/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console/CM = circuit
+	var/timeleft = CM.cooldownLeft()
+	if(timeleft)
 		return
 
 	if(teleporting)
@@ -205,7 +208,7 @@
 			var/area/A = get_area(target)
 
 			teleporting = 0
-			teleport_cooldown = world.time + (spawn_time * 20)
+			CM.nextAllowedTime = world.time + spawn_time * 20
 
 			// use a lot of power
 			use_power(spawn_time * 20)
