@@ -5,7 +5,8 @@
 	icon = 'icons/mob/predators.dmi'
 	base_icon_state = "pred_s"
 	icon_state = "pred_s"
-	languages = PREDATOR
+	languages_spoken = PREDATOR
+	languages_understood = HUMAN | PREDATOR
 	gender = NEUTER
 	ventcrawler = 0
 	var/datum/action/innate/predator_remove_skull/skull = new

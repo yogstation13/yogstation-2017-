@@ -242,6 +242,26 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/gps
 	category = list("Bluespace Designs")
 
+/datum/design/tsbeacon
+	name = "Telescience Beacon"
+	desc = "A bluespace beacon that provides a target for the telepad."
+	id = "telesci_beacon"
+	req_tech = list("materials" = 2, "magnets" = 2, "bluespace" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
+	build_path = /obj/item/device/tsbeacon
+	category = list("Bluespace Designs")
+
+/datum/design/tsadvbeacon
+	name = "Advanced Telescience Beacon"
+	desc = "An advanced telescience beacon with higher operating range."
+	id = "telesci_advbeacon"
+	req_tech = list("materials" = 6, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_DIAMOND = 500, MAT_METAL = 500, MAT_GLASS = 1000)
+	build_path = /obj/item/device/tsbeacon/advanced
+	category = list("Bluespace Designs")
+
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
