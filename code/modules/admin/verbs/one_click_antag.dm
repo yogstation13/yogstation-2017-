@@ -18,6 +18,7 @@
 		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=12'>Make Gangsters</a><br>
 		<a href='?src=\ref[src];makeAntag=16'>Make Shadowling</a><br>
+		<a href='?src=\ref[src];makeAntag=17'>Make Cyberman</a><br>
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
@@ -544,6 +545,32 @@
 		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
 		ticker.mode.finalize_shadowling(H.mind)
 		message_admins("[H] has been made into a shadowling.")
+		candidates.Remove(H)
+		return 1
+	return 0
+
+/datum/admins/proc/makeCyberman()
+	var/datum/game_mode/cybermen/temp = new
+	if(config.protect_roles_from_antagonist)
+		temp.restricted_jobs += temp.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		temp.restricted_jobs += "Assistant"
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+	for(var/mob/living/carbon/human/applicant in player_list)
+		if(ROLE_CYBERMAN in applicant.client.prefs.be_special)
+			if(!applicant.stat)
+				if(applicant.mind)
+					if(!applicant.mind.special_role)
+						if(temp.age_check(applicant.client))
+							if(!(applicant.job in temp.restricted_jobs))
+								if(!(ticker.mode.is_cyberman(applicant.mind)))
+									candidates += applicant
+
+	if(candidates.len)
+		H = pick(candidates)
+		ticker.mode.add_cyberman(H.mind)
+		message_admins("[H] has been made into a cyberman.")
 		candidates.Remove(H)
 		return 1
 	return 0

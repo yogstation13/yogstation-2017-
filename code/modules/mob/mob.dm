@@ -582,7 +582,7 @@ var/next_mob_id = 0
 				else
 					tickets_unresolved++
 			stat(null,"Tickets([tickets_total]):\t[tickets_unclaimed > 0 ? "Unclaimed([tickets_unclaimed])\t" : ""][tickets_resolved > 0 ? "Resolved([tickets_resolved])\t" : ""][tickets_unresolved > 0 ? "Unresolved([tickets_unresolved])\t" : ""]")
-			
+
 		if(SSshuttle.emergency)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
@@ -634,6 +634,8 @@ var/next_mob_id = 0
 		add_spells_to_statpanel(mind.spell_list)
 		if(mind.changeling)
 			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		if(mind.cyberman)
+			mind.cyberman.add_cyberman_abilities_to_statpanel(src)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)

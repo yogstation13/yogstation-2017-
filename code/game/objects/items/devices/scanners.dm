@@ -131,6 +131,14 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+		if(cyberman_network)
+			if(ticker.mode.is_cyberman(M.mind))
+				user << "<span class='danger'>Unknown harmful implants detected in patient's brain - recommend removal via brain surgery.</span>"
+			else
+				for(var/datum/cyberman_hack/human/hack in cyberman_network.active_cybermen_hacks)
+					if(hack.target == H)
+						user << "<span class='danger'>Unknown harmful microscopic machines detected in subject's bloodstream: Recommend treatment via Electro Magnetic Pulse or Strong Electric Shock immediately!</span>"
+						break
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
