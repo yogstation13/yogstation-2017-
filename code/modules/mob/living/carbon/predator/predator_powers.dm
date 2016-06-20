@@ -9,7 +9,7 @@
 	icon_state = "skull"
 
 
-/obj/effect/proc_holder/spell/self/remove_skull //This spell exists mainly for debugging purposes, and also to show how casting works
+/obj/effect/proc_holder/spell/self/remove_skull
 	name = "Skull Removal"
 	desc = "Rips the skull out of your target's head and claims your trophy."
 	clothes_req = 0
