@@ -17,6 +17,7 @@ var/list/department_radio_keys = list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
+	  ":p" = "phytosian",	"#p" = "phytosian",		".p" = "phytosian",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -36,6 +37,7 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
+	  ":P" = "phytosian",	"#P" = "phytosian",		".P" = "phytosian",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -243,6 +245,17 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
+			return 1
+
+	if(message_mode == MODE_PHYTOSIAN)
+		if(languages_spoken & PHYTOSIAN)
+			emote("speaks swiftly and softly as they sway back and forth")
+			log_say("[name]/[key] said : '[message]' in phytosian.")
+			for(var/mob/living/L in view(5, src))
+				if(L.languages_understood & PHYTOSIAN)
+					L << "<B>[real_name]</B> says, \"[message]\" <i>in Phytosian tounge</i>."
+				else
+					L << "<B>[real_name]</B> speaks in Phytosian tongue."
 			return 1
 	return 0
 

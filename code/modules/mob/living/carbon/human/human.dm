@@ -4,7 +4,8 @@
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian1_m_s"
-
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 
 
 /mob/living/carbon/human/dummy

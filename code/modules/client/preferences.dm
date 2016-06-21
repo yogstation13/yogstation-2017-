@@ -61,6 +61,7 @@ var/list/preferences_datums = list()
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/secondary_language = "Cyborg"
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -197,12 +198,21 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
 
-
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
 
 			dat += "</td></tr></table>"
+
+			dat += "<h2>Languages</h2>"
+			if(pref_species.name != "Phytosian")
+				dat += "<b>Primary:</b><BR> English "
+				dat += "<BR><b>Secondary:</b><BR> <a href='?_src_=prefs;preference=langauge;task=input'>[secondary_language]</a> "
+			else
+				dat += "<BR><b>Primary:</b><BR> English and Phytosian"
+				dat += "<BR><b>Secondary:</b><BR> None<BR>"
+
+
 
 			dat += "<h2>Body</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
@@ -355,7 +365,6 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
 					dat += "</td>"
-
 			dat += "</tr></table>"
 
 
@@ -912,6 +921,7 @@ var/list/preferences_datums = list()
 				if("all")
 					random_character()
 
+
 		if("input")
 			switch(href_list["preference"])
 				if("ghostform")
@@ -951,7 +961,20 @@ var/list/preferences_datums = list()
 						real_name = new_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
-
+				if("langauge")
+					// library of language. be sure to mention them in the dat variable above with the language section, and confirm it in copy_to defined at the bottom
+					var/list/lib_lang = list (
+					"Phytosian",
+					"Cyborg"
+					)
+					var/languages = input(usr, "Which langauge would you understand?","Language") as null|anything in lib_lang
+					if(languages)
+						if(languages == "Cyborg")
+							secondary_language = "Cyborg"
+							user << "<span class='notice'>You have chosen borg speak as your secondary language. You will now be able to understand cyborg beeps and boops, but as it is your secondary language you cannot speak it.</span>"
+						if(languages == "Phytosian")
+							secondary_language = "Phytosian"
+							user << "<span class='notice'>You have chosen phytosian as your secondary language. As a secondary language, you will be only able to understand it, rather than speaking it..</span>"
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
@@ -1334,6 +1357,26 @@ var/list/preferences_datums = list()
 	character.eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
+
+
+	if(pref_species.name == "Phytosian")
+		secondary_language = "Phytosian"
+	switch(secondary_language)
+		if("Cyborg")
+			character.languages_understood |= ROBOT
+
+			if(character.languages_understood & PHYTOSIAN)
+				character.languages_understood &= ~PHYTOSIAN
+		if("Phytosian")
+			character.languages_understood |= PHYTOSIAN
+
+			if(character.languages_understood & ROBOT)
+				character.languages_understood &= ~ROBOT
+
+			if(pref_species.name == "Phytosian") // phytosian checks
+				character.languages_spoken |= PHYTOSIAN // phytosians get primary
+				if(character.languages_understood & ROBOT) // just an extra check, incase we missed anything.
+					character.languages_understood &= ~ROBOT
 
 	character.skin_tone = skin_tone
 	character.hair_style = hair_style
