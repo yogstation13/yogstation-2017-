@@ -461,7 +461,7 @@
 						L.flicker(3)
 				if(istype(M, /obj/machinery/camera))
 					var/obj/machinery/camera/C = M
-					if(C.isEmpProof())
+					if(C.isEmpProof() || !C.status)
 						continue
 					successfulprocess = TRUE
 					if(C.emped)
@@ -476,7 +476,6 @@
 						continue
 					if(!try_use_power(disrupt_cost))
 						break
-					costused += disrupt_cost
 					O.emp_act(1)
 				else //there's probably not another radio in that radio, right?
 					var/atom/movable/A = M
@@ -486,7 +485,6 @@
 							continue
 						if(!try_use_power(disrupt_cost))
 							break
-						costused += disrupt_cost
 						O.emp_act(1)
 		if(!successfulprocess)
 			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
