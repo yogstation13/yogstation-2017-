@@ -148,6 +148,7 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	clockwork_caches++
+	SetLuminosity(2,1)
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
