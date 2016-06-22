@@ -49,7 +49,7 @@ var/total_borer_hosts_needed = 10
 	borer_chems += /datum/borer_chem/perfluorodecalin
 	borer_chems += /datum/borer_chem/spacedrugs
 	borer_chems += /datum/borer_chem/mutadone
-//	borer_chems += /datum/borer_chem/creagent
+	borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
 
 	borers += src
@@ -211,6 +211,7 @@ var/total_borer_hosts_needed = 10
 	M.transfer_to(src)
 
 	candidate.mob = src
+	src.ckey = candidate.ckey
 
 	if(src.mind)
 		src.mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")

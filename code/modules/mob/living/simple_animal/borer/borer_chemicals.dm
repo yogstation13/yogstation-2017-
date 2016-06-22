@@ -54,11 +54,11 @@
 	chem_desc = "Heals your genetic mutations."
 	chemuse = 100
 
-/*/datum/borer_chem/creagent
+/datum/borer_chem/creagent
 	chemname = "colorful_reagent"
 	chem_desc = "Change the colour of your host."
-	needed_influence = 100
-	chemuse = 25*/
+	//needed_influence = 100
+	chemuse = 50
 
 /datum/borer_chem/ethanol
 	chemname = "ethanol"
