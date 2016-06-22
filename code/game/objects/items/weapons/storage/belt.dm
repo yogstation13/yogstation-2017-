@@ -362,6 +362,21 @@
 	storage_slots = 3
 	max_w_class = 2
 
+/obj/item/weapon/storage/belt/fannypack/holding
+	name = "fannypack of holding"
+	desc = "As dorky as this device looks, it's incredibly useful."
+	icon_state = "fannypack_holding"
+	item_state = "fannypack_white"
+	origin_tech = "bluespace=4"
+	storage_slots = 28
+	max_w_class = 5
+	max_combined_w_class = 35
+
+/obj/item/weapon/storage/belt/fannypack/holding/can_be_inserted(obj/item/I)
+	if (istype(I, /obj/item/weapon/storage/belt/fannypack/holding) || istype(I, /obj/item/weapon/storage/backpack/holding))
+		return 0
+	return ..()
+
 /obj/item/weapon/storage/belt/fannypack/black
 	name = "black fannypack"
 	icon_state = "fannypack_black"

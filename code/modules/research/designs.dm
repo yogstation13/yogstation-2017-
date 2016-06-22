@@ -222,6 +222,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
+/datum/design/fannypack_holding
+	name = "Fannypack of Holding"
+	desc = "A Fannypack that opens into a localized pocket of Blue Space. But at what cost?"
+	id = "fannypack_holding"
+	req_tech = list("bluespace" = 3, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 3000, MAT_URANIUM = 250)
+	build_path = /obj/item/weapon/storage/belt/fannypack/holding
+	category = list("Bluespace Designs")
+
 /datum/design/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
 	desc = "A small blue crystal with mystical properties."
