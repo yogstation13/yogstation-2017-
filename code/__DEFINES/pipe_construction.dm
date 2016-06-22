@@ -39,3 +39,7 @@ Construction breaks otherwise
 #define DISP_END_CHUTE			8
 #define DISP_SORTJUNCTION		9
 #define DISP_SORTJUNCTION_FLIP	10
+
+#define RED_RCD_MODE 1
+#define RED_RPD_MODE 2
+#define RED_AIRLOCK_PAINTER_MODE 3

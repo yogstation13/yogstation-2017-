@@ -57,13 +57,13 @@
 	var/datum/mind/agent
 
 	if(!preset_scientist)
-		scientist = pick(antag_candidates)
+		scientist = pick_candidate()
 		antag_candidates -= scientist
 	else
 		scientist = preset_scientist
 
 	if(!preset_agent)
-		agent = pick(antag_candidates)
+		agent = pick_candidate()
 		antag_candidates -= agent
 	else
 		agent = preset_agent
@@ -240,6 +240,7 @@
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/alien(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
+	agent.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate/abductor(agent), slot_wear_id)
 
 
 /datum/game_mode/abduction/proc/equip_scientist(var/mob/living/carbon/human/scientist,var/team_number)

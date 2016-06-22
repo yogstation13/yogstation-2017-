@@ -7,7 +7,7 @@
  *			angle2text
  *			worldtime2text
  *			text2dir_extended & dir2text_short
- *			list2string
+ *			list2string  //LEGACY SUPPORT FOR YOGS, USE jointext() instead!!!
  */
 
 //Returns an integer given a hex input, supports negative values "-ff"

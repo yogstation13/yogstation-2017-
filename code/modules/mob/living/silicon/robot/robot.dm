@@ -220,9 +220,9 @@
 
 
 		if("Medical")
+			module = new /obj/item/weapon/robot_module/medical(src)
 			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen")
 			if(!icontype) return
-			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			switch(icontype)
 				if("Mediborg")
@@ -250,7 +250,7 @@
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
-		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+		if("Peacekeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			hands.icon_state = "standard"
 			icon_state = "peaceborg"
@@ -258,7 +258,7 @@
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
+			feedback_inc("cyborg_peacekeeper",1)
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -270,9 +270,9 @@
 			magpulse = 1
 
 		if("Janitor")
+			module = new /obj/item/weapon/robot_module/janitor(src)
 			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal")
 			if(!icontype) return
-			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			switch(icontype)
 				if("Janiborg")
@@ -288,9 +288,9 @@
 			feedback_inc("cyborg_janitor",1)
 
 		if("Clown")
+			module = new /obj/item/weapon/robot_module/clown(src)
 			var/icontype = input("Select an icon!", "Robot", "Clown") in list("Clown", "Wizard Bot", "Wizard Borg","Chicken")
 			if(!icontype) return
-			module = new /obj/item/weapon/robot_module/clown(src)
 			hands.icon_state = "standard"
 			switch(icontype)
 				if("Clown")
@@ -878,8 +878,11 @@
 				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
 				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg")
+			if("minerborg","ashborg")
 				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				state_name = "minerborg"
+			if("peaceborg")
+				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
 			if("medihover")

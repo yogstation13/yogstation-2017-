@@ -190,7 +190,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
-	item = /obj/item/weapon/gun/projectile/sniper_rifle/syndicate
+	item = /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
 	cost = 16
 	surplus = 25
 	include_modes = list(/datum/game_mode/nuclear)
@@ -203,10 +203,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/crossbow
-	name = "Miniature Energy Crossbow"
+	name = "Miniature Radiation Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to \
 		fit into a pocket or slip into a bag unnoticed. It will synthesize \
-		and fire bolts tipped with a paralyzing toxin that will briefly stun \
+		and fire bolts tipped with a debilitating toxin that will stun \
 		targets and cause them to slur as if inebriated. It can produce an \
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
@@ -1003,6 +1003,19 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/implants/zombie
+	name = "Zombie Implant"
+	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
+	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
+	cost = 7
+
+/datum/uplink_item/implants/mindslave
+	name = "Mindslave Implant"
+	desc = "An implant injected into a targets body. Will cause the target to obey your every command whilst the target is implanted. Implant can be removed by surgery!"
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_mindslave
+	cost = 12
 
 
 // Cybernetics
