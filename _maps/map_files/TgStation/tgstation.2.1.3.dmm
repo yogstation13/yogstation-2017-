@@ -7,7 +7,7 @@
 	dheight = 9;
 	dir = 2;
 	dwidth = 5;
-	height = 22;
+	height = 24;
 	id = "syndicate_n";
 	name = "north of station";
 	turf_type = /turf/open/space;
@@ -20,7 +20,7 @@
 	dheight = 9;
 	dir = 2;
 	dwidth = 5;
-	height = 22;
+	height = 24;
 	id = "syndicate_ne";
 	name = "northeast of station";
 	turf_type = /turf/open/space;
@@ -68704,7 +68704,7 @@
 	dheight = 9;
 	dir = 2;
 	dwidth = 5;
-	height = 22;
+	height = 24;
 	id = "syndicate_sw";
 	name = "southwest of station";
 	turf_type = /turf/open/space;
@@ -68774,7 +68774,7 @@
 	dheight = 9;
 	dir = 2;
 	dwidth = 5;
-	height = 22;
+	height = 24;
 	id = "syndicate_se";
 	name = "southeast of station";
 	turf_type = /turf/open/space;
@@ -68787,7 +68787,7 @@
 	dheight = 9;
 	dir = 2;
 	dwidth = 5;
-	height = 22;
+	height = 24;
 	id = "syndicate_s";
 	name = "south of station";
 	turf_type = /turf/open/space;
@@ -81135,7 +81135,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aaa
 aaa
 aai
