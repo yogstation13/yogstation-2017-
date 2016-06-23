@@ -51027,10 +51027,10 @@
 "bWx" = (
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
-	input_tag = "waste_in";
+	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "waste_out";
-	sensors = list("waste_sensor" = "Tank")
+	output_tag = "mix_in";
+	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel{
 	icon_state = "green";
@@ -54073,7 +54073,7 @@
 "ccw" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 4;
+	filter_type = "n2o";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -56152,6 +56152,7 @@
 "cgB" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
+	filter_type = "plasma";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -57994,7 +57995,7 @@
 "cko" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = 3;
+	filter_type = "co2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -58620,7 +58621,7 @@
 "clJ" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = 2;
+	filter_type = "n2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
@@ -59052,7 +59053,7 @@
 "cmE" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "o2";
 	on = 1
 	},
 /turf/open/floor/plasteel,
