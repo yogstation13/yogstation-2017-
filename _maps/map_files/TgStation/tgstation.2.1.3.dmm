@@ -51027,10 +51027,10 @@
 "bWx" = (
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
-	input_tag = "waste_in";
+	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "waste_out";
-	sensors = list("waste_sensor" = "Tank")
+	output_tag = "mix_in";
+	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel{
 	icon_state = "green";
