@@ -552,7 +552,7 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
+			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgvingr!")
 			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
 			if(gateway_active)
@@ -562,7 +562,7 @@
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
 			if(procure_gateway(user, 100, 5, 1))
-				user.say("Fcnpvny Tngrjnl, npgvingr!")
+				clockwork_say(user, "Fcnpvny Tngrjnl, npgvingr!")
 			else
 				return_power(gateway_cost)
 		if("Cancel")
