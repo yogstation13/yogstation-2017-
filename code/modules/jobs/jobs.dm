@@ -23,6 +23,13 @@ var/const/CMO				=(1<<3)
 var/const/DOCTOR			=(1<<4)
 var/const/GENETICIST		=(1<<5)
 var/const/VIROLOGIST		=(1<<6)
+var/const/MMEDIC			=(1<<7)
+var/const/PARAMEDIC			=(1<<8)
+var/const/PSYCH				=(1<<9)
+var/const/TOUR				=(1<<10)
+var/const/WAITER			=(1<<11)
+var/const/CLERK				=(1<<12)
+
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -49,7 +56,8 @@ var/list/assistant_occupations = list(
 	"Cargo Technician",
 	"Chaplain",
 	"Lawyer",
-	"Librarian"
+	"Librarian",
+	"Psychiatrist"
 )
 
 
@@ -75,7 +83,10 @@ var/list/medical_positions = list(
 	"Medical Doctor",
 	"Geneticist",
 	"Virologist",
-	"Chemist"
+	"Chemist",
+	"Mining Medic",
+	"Paramedic",
+	"Psychiatrist"
 )
 
 
@@ -104,7 +115,9 @@ var/list/civilian_positions = list(
 	"Chaplain",
 	"Clown",
 	"Mime",
-	"Assistant"
+	"Assistant",
+	"Clerk",
+	"Tourist"
 )
 
 
@@ -120,6 +133,15 @@ var/list/nonhuman_positions = list(
 	"AI",
 	"Cyborg",
 	"pAI"
+)
+
+var/list/yog_positions = list(
+	"Waiter",
+	"Tourist",
+	"Mining Medic",
+	"Clerk",
+	"Paramedic",
+	"Psychiatrist"
 )
 
 

@@ -16,6 +16,7 @@
 #define DIAG_BOT_HUD	"12"// Bot HUDs
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"13"
+#define CYBERMEN_HACK_HUD	"14"
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
@@ -40,6 +41,9 @@
 #define ANTAG_HUD_SINTOUCHED	18
 #define ANTAG_HUD_SOULLESS		19
 #define ANTAG_HUD_CLOCKWORK		20
+#define ANTAG_HUD_CYBERMEN		21
+
+#define DATA_HUD_CYBERMEN_HACK	22
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

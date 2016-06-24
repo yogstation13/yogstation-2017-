@@ -83,7 +83,7 @@
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves/,
 		/obj/item/weapon/lazarus_injector,
-		/obj/item/weapon/bikehorn/rubberducky,
+		/obj/item/device/assembly/bikehorn/rubberducky,
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
 		/obj/item/clothing/mask/breath/medical,
@@ -103,7 +103,8 @@
 		/obj/item/weapon/storage/bag/chemistry,
 		/obj/item/weapon/storage/bag/bio,
 		/obj/item/weapon/reagent_containers/blood,
-		/obj/item/weapon/tank/internals/emergency_oxygen
+		/obj/item/weapon/tank/internals/emergency_oxygen,
+		/obj/item/medical/bandage
 		)
 
 
@@ -360,6 +361,21 @@
 	item_state = "fannypack_leather"
 	storage_slots = 3
 	max_w_class = 2
+
+/obj/item/weapon/storage/belt/fannypack/holding
+	name = "fannypack of holding"
+	desc = "As dorky as this device looks, it's incredibly useful."
+	icon_state = "fannypack_holding"
+	item_state = "fannypack_white"
+	origin_tech = "bluespace=4"
+	storage_slots = 28
+	max_w_class = 5
+	max_combined_w_class = 35
+
+/obj/item/weapon/storage/belt/fannypack/holding/can_be_inserted(obj/item/I)
+	if (istype(I, /obj/item/weapon/storage/belt/fannypack/holding) || istype(I, /obj/item/weapon/storage/backpack/holding))
+		return 0
+	return ..()
 
 /obj/item/weapon/storage/belt/fannypack/black
 	name = "black fannypack"

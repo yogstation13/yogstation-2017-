@@ -340,7 +340,7 @@
 	item_state = "hostrench"
 	burn_state = FIRE_PROOF
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio,/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -348,6 +348,7 @@
 	icon_state = "leathercoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	cold_protection = CHEST|GROIN|ARMS|LEGS
+	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"
@@ -355,6 +356,7 @@
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
+	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
@@ -364,13 +366,38 @@
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
+	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/miljacket
 	name = "military jacket"
 	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
 	icon_state = "militaryjacket"
 	item_state = "militaryjacket"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio,/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
+
+/obj/item/clothing/suit/jacket/letterman
+	name = "letterman jacket"
+	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
+	icon_state = "letterman"
+	item_state = "letterman"
+
+/obj/item/clothing/suit/jacket/letterman_red
+	name = "red letterman jacket"
+	desc = "A letterman jacket in a sick red color. Radical."
+	icon_state = "letterman_red"
+	item_state = "letterman_red"
+
+/obj/item/clothing/suit/jacket/letterman_syndie
+	name = "blood-red letterman jacket"
+	desc = "Oddly, this jacket seems to have a large S on the back..."
+	icon_state = "letterman_s"
+	item_state = "letterman_s"
+
+/obj/item/clothing/suit/jacket/letterman_nanotrasen
+	name = "blue letterman jacket"
+	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
+	icon_state = "letterman_n"
+	item_state = "letterman_n"
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
@@ -467,7 +494,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
+	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 	hoodtype = /obj/item/clothing/head/winterhood/hydro
 
 /obj/item/clothing/head/winterhood/hydro

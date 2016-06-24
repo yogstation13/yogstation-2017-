@@ -30,14 +30,15 @@
 	ventcrawler = 2
 	healable = 0
 	density = 0
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSTABLE | PASSMOB | PASSDOOR
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
-	languages = DRONE
+	languages_spoken = DRONE
+	languages_understood = DRONE | HUMAN
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)

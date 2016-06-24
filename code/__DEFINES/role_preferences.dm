@@ -8,6 +8,7 @@
 //then you MUST update the database!
 #define ROLE_TRAITOR			"traitor"
 #define ROLE_OPERATIVE			"operative"
+#define ROLE_DOUBLEAGENT 		"double agent"
 #define ROLE_CHANGELING			"changeling"
 #define ROLE_WIZARD				"wizard"
 #define ROLE_MALF				"malf AI"
@@ -26,6 +27,7 @@
 #define ROLE_HOG_CULTIST		"hand of god: cultist"
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
+#define ROLE_CYBERMAN			"cyberman"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -51,4 +53,5 @@ var/global/list/special_roles = list(
 	ROLE_HOG_CULTIST = /datum/game_mode/hand_of_god,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
+	ROLE_CYBERMAN = /datum/game_mode/cybermen,
 )

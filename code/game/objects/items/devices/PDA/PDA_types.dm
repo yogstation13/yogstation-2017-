@@ -153,7 +153,7 @@
 
 /obj/item/device/pda/botanist
 	name = "botanist PDA"
-	//default_cartridge = /obj/item/weapon/cartridge/botanist
+	default_cartridge = /obj/item/weapon/cartridge/botanist
 	icon_state = "pda-hydro"
 
 /obj/item/device/pda/roboticist

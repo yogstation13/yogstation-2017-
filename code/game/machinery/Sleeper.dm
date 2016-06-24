@@ -12,6 +12,8 @@
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
+	var/emag_effect
+	var/datum/effect_system/spark_spread/spark_system
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -28,16 +30,20 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
 	B.apply_default_parts(src)
 	update_icon()
+	spark_system = new /datum/effect_system/spark_spread()
+	spark_system.set_up(5, 0, src)
+	spark_system.attach(src)
 
 /obj/item/weapon/circuitboard/machine/sleeper
 	name = "circuit board (Sleeper)"
 	build_path = /obj/machinery/sleeper
-	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
+	origin_tech = "programming=3;biotech=2;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 2)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -112,10 +118,27 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+	if(istype(I, /obj/item/weapon/wirecutters) && emag_effect)
+		user << "<span class='alert'>You begin mending seperated wires and cutting the useless ones...</span>"
+		spark_system.start()
+		playsound(user, "sparks", 50, 1)
+		if(do_after(user, 80/I.toolspeed, target = src))
+			user << "<span class='notice'>You mend some of the wires together and cut off the burnt out ones, allowing the sleeper to function properly.</span>"
+			emag_effect = !emag_effect
+			emagged = !emagged
+			return
+		else
+			return
 	return ..()
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+
+	if(emag_effect)
+		user << "<span class='danger'>You see a small line of smoke coming from inside of the sleeper and wires ripped apart creating brief electric sparks making you hesitate from touching it.</span>"
+		if(ui)
+			ui.close()
+		return
 
 	if(controls_inside && state == notcontained_state)
 		state = default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
@@ -170,6 +193,13 @@
 				return
 			if(occupant.health < min_health && chem != "epinephrine")
 				return
+			if(emagged)
+				for(var/reagent_id in available_chems)
+					occupant.reagents.add_reagent(reagent_id, 30)
+					audible_message("<span class='alert'>[src] begins to overloading and goes REEEEEEEEEEEEEEEEEEE!</span>")
+					emag_effect = 1
+					open_machine()
+					return
 			if(inject_chem(chem))
 				. = TRUE
 
@@ -185,10 +215,18 @@
 	var/health = occupant.health > min_health || chem == "epinephrine"
 	return amount && health
 
+/obj/machinery/sleeper/emag_act(mob/user)
+	if(!emagged)
+		src.emagged = 1
+		user << "You breach the safety mechanics.."
+
 
 /obj/machinery/sleeper/syndie
 	icon_state = "sleeper_s"
 	controls_inside = TRUE
+
+/obj/machinery/sleeper/syndie/emag_act(mob/user)
+	return
 
 
 /obj/machinery/sleeper/old

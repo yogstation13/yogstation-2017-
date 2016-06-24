@@ -442,3 +442,13 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/random_accessible_turf(z)
+	if(!z)
+		var/list/zlevels = list()
+		for(var/i in 1 to ZLEVEL_SPACEMAX)
+			if(i != ZLEVEL_CENTCOM) zlevels += i
+		z = pick(zlevels)
+	var/rx = rand(TRANSITIONEDGE + 1, world.maxx - TRANSITIONEDGE - 2)
+	var/ry = rand(TRANSITIONEDGE + 1, world.maxy - TRANSITIONEDGE - 2)
+	return locate(rx, ry, z)

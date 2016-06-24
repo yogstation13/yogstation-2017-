@@ -21,6 +21,7 @@
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
 #define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
+#define TINT_IMPAIR 2
 
 /mob/living/carbon/human/Life()
 	set invisibility = 0
@@ -38,6 +39,11 @@
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
+
+		//handle bandage healing
+		handle_bandaged_limbs()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -50,6 +56,11 @@
 	else
 		return pressure
 
+/mob/living/carbon/human/proc/handle_bandaged_limbs()
+	for(var/obj/item/bodypart/L in bodyparts)
+		if (L.can_be_bandaged && L.bandaged)
+			var/obj/item/medical/bandage/B = L.bandaged
+			B.handle_bandage(src)
 
 /mob/living/carbon/human/handle_disabilities()
 	if(eye_blind)			//blindness, heals slowly over time
@@ -340,9 +351,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 	if(drunkenness)
 		if(sleeping)
-			drunkenness = max(drunkenness - 1.5, 0)
+			drunkenness = max(drunkenness - (drunkenness / 10), 0)
 		else
-			drunkenness = max(drunkenness - 0.2, 0)
+			drunkenness = max(drunkenness - (drunkenness / 25), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))

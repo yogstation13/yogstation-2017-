@@ -13,6 +13,8 @@
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
+	var/can_be_bandaged = 1
+	var/bandaged = 0
 	var/list/embedded_objects = list()
 
 	//Coloring and proper item icon update
@@ -113,13 +115,11 @@
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, robotic)
 
-	if(robotic && status != ORGAN_ROBOTIC) // This makes organic limbs not heal when the proc is in Robotic mode.
-		brute = max(0, brute - 3)
-		burn = max(0, burn - 3)
+	if(robotic && status != ORGAN_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
+		return
 
-	if(!robotic && status == ORGAN_ROBOTIC) // This makes robolimbs not healable by chems.
-		brute = max(0, brute - 3)
-		burn = max(0, burn - 3)
+	if(!robotic && status == ORGAN_ROBOTIC) //This makes robolimbs not healable by chems.
+		return
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
@@ -288,6 +288,7 @@
 		be possessed by the devil? This arm appears to be possessed by no \
 		one though."
 	icon_state = "l_arm"
+	attack_verb = list("slapped", "punched")
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
@@ -299,6 +300,7 @@
 	desc = "Over 87% of humans are right handed. That figure is much lower \
 		among humans missing their right arm."
 	icon_state = "r_arm"
+	attack_verb = list("slapped", "punched")
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
@@ -310,6 +312,7 @@
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
 		luck. In this instance, it probably would not have helped."
 	icon_state = "l_leg"
+	attack_verb = list("kicked", "stomped")
 	max_damage = 50
 	body_zone = "l_leg"
 	body_part = LEG_LEFT
@@ -323,6 +326,7 @@
 		The hokey pokey has certainly changed a lot since space colonisation."
 	// alternative spellings of 'pokey' are availible
 	icon_state = "r_leg"
+	attack_verb = list("kicked", "stomped")
 	max_damage = 50
 	body_zone = "r_leg"
 	body_part = LEG_RIGHT
@@ -340,3 +344,16 @@
 	icon_state = "severedtail"
 	color = "#161"
 	var/markings = "Smooth"
+
+
+/////////////////////////////////////////////////////////////////////////
+
+/obj/item/bodypart/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed
+	switch(name)
+		if("l_leg")		return "left leg"
+		if("r_leg")		return "right leg"
+		if("l_arm")		return "left arm"
+		if("r_arm")		return "right arm"
+		if("chest")     return "chest"
+		if("head")		return "head"
+		else			return name

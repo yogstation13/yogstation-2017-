@@ -34,10 +34,9 @@
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	origin_tech = "programming=2;biotech=3"
+	origin_tech = "engineering=3;biotech=3;plasmatech=2"
 	energy_drain = 20
 	range = MELEE
-	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
@@ -78,7 +77,7 @@
 	if(target.buckled)
 		occupant_message("<span class='warning'>[target] will not fit into the sleeper because they are buckled to [target.buckled]!</span>")
 		return
-	if(target.buckled_mobs.len)
+	if(target.has_buckled_mobs())
 		occupant_message("<span class='warning'>[target] will not fit into the sleeper because of the creatures attached to it!</span>")
 		return
 	if(patient)
@@ -122,7 +121,9 @@
 		onclose(chassis.occupant, "msleeper")
 		return
 	if(filter.get("inject"))
-		inject_reagent(filter.getType("inject",/datum/reagent),filter.getObj("source"))
+		var/injection = filter.getNum("injection")
+		if(injection)
+			inject_reagent(filter.getType("inject",/datum/reagent),filter.getObj("source"), injection)
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_patient_stats()
@@ -188,14 +189,16 @@
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
-				output += "<a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG]\">Inject [R.name]</a><br />"
+				output += "<a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG];injection=10\">Inject [R.name] 10u</a>"
+				output += " <a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG];injection=1\">1u</a>"
+				output += " <a href=\"?src=\ref[src];inject=\ref[R];source=\ref[SG];injection=5\">5u</a><br />"
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG, amount)
 	if(!R || !patient || !SG || !(SG in chassis.equipment))
 		return 0
-	var/to_inject = min(R.volume, inject_amount)
+	var/to_inject = min(R.volume, amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
 		log_message("Injecting [patient] with [to_inject] units of [R.name].")
@@ -256,11 +259,12 @@
 	var/max_syringes = 10
 	var/max_volume = 75 //max reagent volume
 	var/synth_speed = 5 //[num] reagent units per cycle
+	var/syringe_cost = 100
 	energy_drain = 10
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MELEE|RANGED
 	equip_cooldown = 10
-	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
+	origin_tech = "materials=3;biotech=4;magnets=4"
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
 	..()
@@ -292,7 +296,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
+		return "[output] \[<a href=\"?src=\ref[src];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] [(syringes.len < max_syringes) ? " - <a href='?src=\ref[src];rearm=1'>Rearm</a>" : null] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=\ref[src];show_reagents=1'>Reagents list</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
@@ -397,7 +401,35 @@
 	if(filter.get("purge_all"))
 		reagents.clear_reagents()
 		return
+	if(filter.get("rearm"))
+		rearm()
+		return
 	return
+
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/rearm()
+	var/syr_diff = max_syringes - syringes.len
+	if(syr_diff)
+		var/obj/item/weapon/stock_parts/cell/mech_cell = chassis.cell
+		var/cost = syr_diff * syringe_cost
+		if(mech_cell.charge < cost)
+			usr << "<span class='warning'>Not enough energy to replicate syringes, you need [cost].</span>"
+			return
+		var/time_to_replicate = syr_diff * 20 //2 seconds per syringe
+		usr << "<span class='notice'>Syringe replication process engaged, it will take [time_to_replicate/10] seconds. You must remain still during the entire process.</span>"
+		if(do_after(chassis.occupant, time_to_replicate, target = chassis))
+			syr_diff = min(syr_diff, max_syringes - syringes.len) //in case they put any in during the do_after
+			cost = syr_diff * syringe_cost
+			mech_cell.use(min(mech_cell.charge, cost)) //If they are stupid enough to replicate at minimum charge level needed, I won't stop them
+			var/obj/item/weapon/reagent_containers/syringe/STL = null
+			for(var/i in 1 to syr_diff)
+				STL = new(loc)
+				syringes += STL
+			usr << "<span class='notice'>Syringe replication complete!</span>"
+			update_equip_info()
+		else
+			usr << "<span class='notice'>Replication process aborted!</span>"
+			return
+	return 1	
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
@@ -484,10 +516,26 @@
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
+	if(istype(A, /obj/machinery/sleeper))
+		var/obj/item/mecha_parts/mecha_equipment/medical/sleeper/SLPR = locate(/obj/item/mecha_parts/mecha_equipment/medical/sleeper) in chassis
+		if(SLPR)
+			var/obj/machinery/sleeper/target = A
+			for(var/IC in target.available_chems)
+				var/datum/reagent/C = chemical_reagents_list[IC]
+				if(C)
+					if(C.can_synth && add_known_reagent(C.id, C.name))
+						occupant_message("Reagent analyzed, identified as [C.name] and added to database.")
+						send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
+				else
+					occupant_message("Error analyzing reagent from sleeper.")
+			occupant_message("Analyzis complete.")
+			return 1
+		else
+			occupant_message("<span class=\"alert\">Error, your require an installed mounted sleeper to interface with this device.</span>")
+			return 0
 	if(!A.reagents || istype(A,/mob))
 		occupant_message("<span class=\"alert\">No reagent info gained from [A].</span>")
 		return 0
-	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
 		if(R.can_synth && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
@@ -523,8 +571,6 @@
 		log_message("Reagent processing stopped.")
 		SSobj.processing -= src
 		return
-	if(anyprob(reliability))
-		critfail()
 	var/amount = synth_speed / processed_reagents.len
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)

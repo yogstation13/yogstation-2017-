@@ -68,6 +68,7 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
+	origin_tech = "materials=4;bluespace=4;engineering=4;plasmatech=3"
 	max_combined_w_class = 60
 	storage_slots = 60
 
@@ -80,6 +81,7 @@
 	desc = "This little bugger can be used to store and transport ores."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
+	origin_tech = "engineering=2"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = 3
 	storage_slots = 50
@@ -95,7 +97,7 @@
 	desc = "A revolution in convenience, this satchel allows for infinite ore storage. It's been outfitted with anti-malfunction safety measures."
 	storage_slots = INFINITY
 	max_combined_w_class = INFINITY
-	origin_tech = "bluespace=3"
+	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
 
 // -----------------------------
@@ -119,6 +121,7 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
+	origin_tech = "biotech=3;engineering=2"
 
 /obj/item/weapon/storage/bag/plants/portaseeder/verb/dissolve_contents()
 	set name = "Activate Seed Extraction"
@@ -378,3 +381,19 @@
 	preposition = "in"
 	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse)
 	burn_state = FLAMMABLE
+
+// -----------------------------
+//       Photo Satchel
+// -----------------------------
+
+/obj/item/weapon/storage/bag/photo
+	name = "Photo Bag"
+	desc = "This Satchel can be used to store all your photo related items."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "photobag"
+	slot_flags = SLOT_BELT | SLOT_POCKET
+	w_class = 4
+	storage_slots = 50
+	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots *
+	max_w_class = 3
+	can_hold = list(/obj/item/device/camera_film,/obj/item/weapon/photo,/obj/item/weapon/storage/photo_album,/obj/item/device/camera,/obj/item/weapon/storage/photobook)

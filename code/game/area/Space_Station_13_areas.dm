@@ -52,8 +52,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/static_equip
 	var/static_light = 0
 	var/static_environ
+	var/murders_plants = 1
 
 	var/has_gravity = 0
+	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
 	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 
 	var/no_air = null
@@ -67,7 +69,7 @@ var/list/teleportlocs = list()
 
 /proc/process_teleport_locs()
 	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station)) continue
+		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station) || AR.noteleport) continue
 		if(teleportlocs.Find(AR.name)) continue
 		var/turf/picked = safepick(get_area_turfs(AR.type))
 		if (picked && (picked.z == ZLEVEL_STATION))
@@ -120,6 +122,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	valid_territory = 0
 	icon_state = "shuttle"
+	murders_plants = 0
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -175,6 +178,7 @@ var/list/teleportlocs = list()
 	icon_state = "centcom"
 	requires_power = 0
 	has_gravity = 1
+	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
 
 /area/centcom/control
@@ -202,6 +206,7 @@ var/list/teleportlocs = list()
 	icon_state = "syndie-ship"
 	requires_power = 0
 	has_gravity = 1
+	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 
 /area/syndicate_mothership/control
@@ -284,12 +289,14 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	noteleport = 1
 
 //Abductors
 /area/abductor_ship
 	name = "Abductor Ship"
 	icon_state = "yellow"
 	requires_power = 0
+	noteleport = 1
 	has_gravity = 1
 
 
@@ -846,6 +853,10 @@ var/list/teleportlocs = list()
 	name = "Transfer Centre"
 	icon_state = "armory"
 
+/area/security/interrogation
+	name = "\improper Interrogation"
+	icon_state = "firingrange"
+
 /*
 /area/security/transfer/New()
 	..()
@@ -943,6 +954,10 @@ var/list/teleportlocs = list()
 	name = "Hydroponics"
 	icon_state = "hydro"
 
+/area/hydroponics/backroom
+	name = "Hydroponics Backroom"
+	icon_state = "hydro"
+
 //Toxins
 
 /area/toxins/lab
@@ -981,6 +996,14 @@ var/list/teleportlocs = list()
 /area/toxins/explab
 	name = "Experimentation Lab"
 	icon_state = "toxmisc"
+
+/area/toxins/telesci
+	name = "\improper Telescience Lab"
+	icon_state = "toxtest"
+
+/area/toxins/toxlab
+	name = "\improper Toxins Lab"
+	icon_state = "toxlab"
 
 //Storage
 

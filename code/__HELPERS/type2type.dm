@@ -7,6 +7,7 @@
  *			angle2text
  *			worldtime2text
  *			text2dir_extended & dir2text_short
+ *			list2string  //LEGACY SUPPORT FOR YOGS, USE jointext() instead!!!
  */
 
 //Returns an integer given a hex input, supports negative values "-ff"
@@ -586,3 +587,7 @@ for(var/t in test_times)
 				. += i
 				A -= values[i]
 				break
+
+/proc/list2string( l[], sep )
+    for( var/x = 1 to l.len )
+        . += ( l[x] + (x < l.len ? sep :null) )

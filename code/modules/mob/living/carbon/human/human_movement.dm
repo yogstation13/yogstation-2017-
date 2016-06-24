@@ -5,13 +5,13 @@
 
 
 /mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
-	if(isobj(shoes) && (shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP))
+	if(isobj(shoes) && ( (shoes.flags & SUPERNOSLIP) || ((shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP)) ))
 		return 0
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
 	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
-	if(shoes && shoes.flags&NOSLIP)
+	if(shoes && (shoes.flags & NOSLIP || shoes.flags & SUPERNOSLIP))
 		return 0
 	return ..()
 
@@ -48,6 +48,8 @@
 						FP.blood_state = S.blood_state
 						FP.entered_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state]
+						if(S.blood_DNA && S.blood_DNA.len)
+							FP.transfer_blood_dna(S.blood_DNA)
 						FP.update_icon()
 						update_inv_shoes()
 				//End bloody footprints

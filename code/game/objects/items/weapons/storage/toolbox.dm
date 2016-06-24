@@ -11,7 +11,7 @@
 	throw_range = 7
 	w_class = 4
 	materials = list(MAT_METAL = 500)
-	origin_tech = "combat=1"
+	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 
@@ -71,20 +71,28 @@
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
-	origin_tech = "combat=1;syndicate=1"
+	origin_tech = "combat=2;syndicate=1;engineering=2"
 	silent = 1
 	force = 15
 	throwforce = 18
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
-	new /obj/item/weapon/screwdriver(src, "red")
-	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool/largetank(src)
-	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/wirecutters(src, "red")
-	new /obj/item/device/multitool(src)
-	new /obj/item/clothing/gloves/combat(src)
+	var/obj/item/I
+	I = new /obj/item/weapon/screwdriver(src, "red")
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/wrench(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/weldingtool/largetank(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/crowbar/red(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/weapon/wirecutters(src, "red")
+	I.toolspeed = 1.5
+	I = new /obj/item/device/multitool(src)
+	I.toolspeed = 1.5
+	I = new /obj/item/clothing/gloves/combat(src)
+	I.toolspeed = 1.5
 
 /obj/item/weapon/storage/toolbox/drone
 	name = "mechanical toolbox"

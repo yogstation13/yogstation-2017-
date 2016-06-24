@@ -1,6 +1,7 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	sight = 0
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
@@ -18,6 +19,8 @@
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are stunned if it gets too high. Holodeck and hallucinations deal this.
 
+	var/lastburntype = 0
+	var/lastbrutetype = 0
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for
 
@@ -68,3 +71,6 @@
 
 	var/mob/living/mental_dominator //The person controlling the mind of this person, if applicable
 	var/mob/living/mind_control_holder/mind_control_holder //If the mob is being mind controlled, where their old mind is stored (check clock_mobs.dm)
+
+	var/blood_volume = 0 //how much blood the mob has
+	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override

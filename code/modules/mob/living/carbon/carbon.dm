@@ -1,3 +1,6 @@
+/mob/living/carbon
+	blood_volume = BLOOD_VOLUME_NORMAL
+
 /mob/living/carbon/New()
 	create_reagents(1000)
 	..()
@@ -47,9 +50,9 @@
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
-	CHECK_DNA_AND_SPECIES(src)
-
-	shock_damage *= (siemens_coeff * dna.species.siemens_coeff)
+	shock_damage *= siemens_coeff
+	if(dna && dna.species)
+		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))
@@ -229,6 +232,11 @@
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
+	if(I && I.prethrow_at(target))
+		return
+
+	if(!(I && istype(I)))
+		return //Grab processing has a chance of returning null
 	else if(!(I.flags & (NODROP|ABSTRACT)))
 		thrown_thing = I
 		unEquip(I)
@@ -295,16 +303,6 @@
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
-
-
-/mob/living/carbon/getTrail()
-	if(getBruteLoss() < 300)
-		if(prob(50))
-			return "ltrails_1"
-		return "ltrails_2"
-	else if(prob(50))
-		return "trails_1"
-	return "trails_2"
 
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
@@ -384,51 +382,21 @@
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		if(do_after(src, breakouttime, 0, target = src))
-			if(I.loc != src || buckled)
-				return
-			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
-			src << "<span class='notice'>You successfully remove [I].</span>"
-
-			if(I == handcuffed)
-				handcuffed.loc = loc
-				handcuffed.dropped(src)
-				handcuffed = null
-				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob(src)
-				update_handcuffed()
-				return
-			if(I == legcuffed)
-				legcuffed.loc = loc
-				legcuffed.dropped()
-				legcuffed = null
-				update_inv_legcuffed()
-				return
-			return 1
+			clear_cuffs(I, cuff_break)
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
-	else
+	else if(cuff_break == FAST_CUFFBREAK)
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
 		if(do_after(src, breakouttime, 0, target = src))
-			if(!I.loc || buckled)
-				return
-			visible_message("<span class='danger'>[src] manages to break [I]!</span>")
-			src << "<span class='notice'>You successfully break [I].</span>"
-			qdel(I)
-
-			if(I == handcuffed)
-				handcuffed = null
-				update_handcuffed()
-				return
-			else if(I == legcuffed)
-				legcuffed = null
-				update_inv_legcuffed()
-				return
-			return 1
+			clear_cuffs(I, cuff_break)
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
+
+	else if(cuff_break == INSTANT_CUFFBREAK)
+		clear_cuffs(I, cuff_break)
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -455,6 +423,41 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+
+/mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
+	if(!I.loc || buckled)
+		return
+	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
+	src << "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>"
+
+	if(cuff_break)
+		qdel(I)
+		if(I == handcuffed)
+			handcuffed = null
+			update_handcuffed()
+			return
+		else if(I == legcuffed)
+			legcuffed = null
+			update_inv_legcuffed()
+			return
+		return TRUE
+
+	else
+		if(I == handcuffed)
+			handcuffed.loc = loc
+			handcuffed.dropped(src)
+			handcuffed = null
+			if(buckled && buckled.buckle_requires_restraints)
+				buckled.unbuckle_mob(src)
+			update_handcuffed()
+			return
+		if(I == legcuffed)
+			legcuffed.loc = loc
+			legcuffed.dropped()
+			legcuffed = null
+			update_inv_legcuffed()
+			return
+		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
@@ -563,7 +566,7 @@
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
-				T.add_blood_floor(src)
+				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
 		else

@@ -8,7 +8,7 @@
 	w_class = 2
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=1"
+	origin_tech = "engineering=2"
 
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
@@ -16,6 +16,7 @@
 	var/obj/item/device/toner/ink = null
 
 /obj/item/weapon/airlock_painter/New()
+	..()
 	ink = new /obj/item/device/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.
@@ -90,6 +91,9 @@
 
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()
+	get_examine_info(user)
+
+/obj/item/weapon/airlock_painter/proc/get_examine_info(user)
 	if(!ink)
 		user << "<span class='notice'>It doesn't have a toner cardridge installed.</span>"
 		return
@@ -101,7 +105,6 @@
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
 	user << "<span class='notice'>Its ink levels look [ink_level].</span>"
-
 
 /obj/item/weapon/airlock_painter/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/toner))

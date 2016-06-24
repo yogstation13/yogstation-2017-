@@ -343,7 +343,7 @@
 
 
 
-/obj/item/weapon/bikehorn/rubberducky
+/obj/item/device/assembly/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
@@ -431,6 +431,12 @@
 		O.reagents.add_reagent("water", 5)
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+
+	if(istype(O, /obj/item/medical/bandage))
+		var/obj/item/medical/bandage/B = O
+		B.wash(src, user)
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O

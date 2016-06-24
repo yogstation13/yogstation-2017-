@@ -35,7 +35,8 @@ var/time_last_changed_position = 0
 		"Chief Engineer",
 		"Research Director",
 		"Chief Medical Officer",
-		"Chaplain")
+		"Chaplain",
+		"Tourist")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -504,12 +505,16 @@ var/time_last_changed_position = 0
 
 /obj/machinery/computer/card/minor/hos
 	target_dept = 2
+	icon_screen = "idhos"
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3
+	icon_screen = "idcmo"
 
 /obj/machinery/computer/card/minor/rd
 	target_dept = 4
+	icon_screen = "idrd"
 
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
+	icon_screen = "idce"

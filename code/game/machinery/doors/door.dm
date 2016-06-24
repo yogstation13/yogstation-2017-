@@ -1,6 +1,6 @@
 /obj/machinery/door
 	name = "door"
-	desc = "It opens and closes."
+	desc = "It opens and closes. On the bottom is a small hatch for drones."
 	icon = 'icons/obj/doors/Doorint.dmi'
 	icon_state = "door1"
 	anchored = 1
@@ -74,8 +74,11 @@
 	move_update_air(T)
 
 /obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return !opacity
+	if(istype(mover))
+		if(mover.checkpass(PASSDOOR))
+			return 1
+		else if(mover.checkpass(PASSGLASS))
+			return !opacity
 	return !density
 
 /obj/machinery/door/CanAtmosPass()
@@ -175,16 +178,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-
 
 
 /obj/machinery/door/blob_act(obj/effect/blob/B)
 	if(prob(40))
 		qdel(src)
-	return
-
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -193,10 +191,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
-			spawn(300)
-				secondsElectrified = 0
+			addtimer(src, "unelectrify", 300)
 	..()
 
+/obj/machinery/door/proc/unelectrify()
+	secondsElectrified = 0
 
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
@@ -212,8 +211,6 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		icon_state = "door1"
 	else
 		icon_state = "door0"
-	return
-
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -307,7 +304,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-		location.add_blood_floor(L)
+		L.add_splatter_floor(location)
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 

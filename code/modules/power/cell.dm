@@ -15,7 +15,6 @@
 	var/maxcharge = 1000
 	materials = list(MAT_METAL=700, MAT_GLASS=50)
 	var/rigged = 0		// true if rigged to explode
-	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 
@@ -77,19 +76,58 @@
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
-	if(crit_fail)
-		return 0
-	if(!prob(reliability))
-		minor_fault++
-		if(prob(minor_fault))
-			crit_fail = 1
-			return 0
 	charge += power_used
 	return power_used
 
+
+/obj/item/weapon/stock_parts/cell/attack_self(mob/user)
+	if (istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/maybedroid = user
+		if (maybedroid.dna.species.id == "android" || maybedroid.dna.species.id == "flyternis")
+			//BEGIN THE NUTRITION RECHARGEEEE
+			if (charge)
+				if (rigged)
+					//oh, shit.
+					explode()
+
+				if (maybedroid.nutrition > NUTRITION_LEVEL_FED)
+					maybedroid << "<span class='notice'>CONSUME protocol reports no need for additional power at this time.</span>"
+					return
+
+				var/drain = maxcharge/40
+				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
+				var/ischarging = 1
+				spark_system.set_up(5, 0, maybedroid.loc)
+				maybedroid.visible_message("[maybedroid] deftly inserts [src] into a slot within their torso. A low hum begins to fill the air.", "<span class='info'>Extracutaneous implants detect viable power source in location: HANDS. Activating CONSUME protocol..</span>")
+				while (ischarging)
+					if (drain > charge)
+						drain = charge
+
+					if (prob(35))
+						var/nutpercents
+						nutpercents = (maybedroid.nutrition / NUTRITION_LEVEL_WELL_FED)*100
+
+						maybedroid << "<span class='info'>CONSUME protocol continues. Current satiety level: [nutpercents]%."
+					if (do_after(maybedroid, 10, target = src))
+						spark_system.start()
+						playsound(maybedroid.loc, "sparks", 35, 1)
+
+					charge -= drain
+					src.update_icon()
+					maybedroid.nutrition += drain/22
+
+					if (maybedroid.nutrition >= NUTRITION_LEVEL_WELL_FED || maybedroid.get_active_hand() != src || !charge)
+						maybedroid.visible_message("A slight hiss emanates from [maybedroid] as [src] pops free from a slot in their torso.", "<span class='info>CONSUME protocol complete. Physical nourishment refreshed. Advise cell recharging.</span>")
+						ischarging = 0
+			else
+				user << "<span class='info'>You currently surmise via ocular sensors that this cell does not possess enough charge to be of use to you.</span>"
+				return
+		else
+			user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"
+
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
-	if(crit_fail || rigged)
+	if(rigged)
 		user << "<span class='danger'>This power cell seems to be faulty!</span>"
 	else
 		user << "The charge meter reads [round(src.percent() )]%."
@@ -140,8 +178,6 @@
 	charge -= 1000 / severity
 	if (charge < 0)
 		charge = 0
-	if(reliability != 100 && prob(50/severity))
-		reliability -= 10 / severity
 	..()
 
 /obj/item/weapon/stock_parts/cell/ex_act(severity, target)
@@ -169,7 +205,6 @@
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
-	origin_tech = null
 	maxcharge = 500
 	materials = list(MAT_GLASS=40)
 	rating = 2
@@ -225,10 +260,10 @@
 
 /obj/item/weapon/stock_parts/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=5"
+	origin_tech = "powerstorage=3;materials=3"
 	icon_state = "scell"
 	maxcharge = 20000
-	materials = list(MAT_GLASS=70)
+	materials = list(MAT_GLASS=300)
 	rating = 4
 	chargerate = 2000
 
@@ -238,10 +273,10 @@
 
 /obj/item/weapon/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
-	origin_tech = "powerstorage=6"
+	origin_tech = "powerstorage=4;engineering=4;materials=4"
 	icon_state = "hpcell"
 	maxcharge = 30000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=400)
 	rating = 5
 	chargerate = 3000
 
@@ -252,10 +287,10 @@
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
 	desc = "A rechargable transdimensional power cell."
-	origin_tech = "powerstorage=7"
+	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
 	icon_state = "bscell"
 	maxcharge = 40000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=600)
 	rating = 6
 	chargerate = 4000
 
@@ -266,9 +301,9 @@
 /obj/item/weapon/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
 	icon_state = "icell"
-	origin_tech =  null
+	origin_tech =  "powerstorage=7"
 	maxcharge = 30000
-	materials = list(MAT_GLASS=80)
+	materials = list(MAT_GLASS=1000)
 	rating = 6
 	chargerate = 30000
 
@@ -278,19 +313,18 @@
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
 	desc = "A rechargable starch based power cell."
-	origin_tech = "powerstorage=1"
 	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
+	origin_tech = "powerstorage=1;biotech=1"
 	charge = 100
 	maxcharge = 300
 	materials = list()
-	minor_fault = 1
 	rating = 1
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"
 	desc = "A yellow slime core infused with plasma, it crackles with power."
-	origin_tech = "powerstorage=2;biotech=4"
+	origin_tech = "powerstorage=5;biotech=4"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	materials = list()

@@ -21,6 +21,9 @@ var/global/BSACooldown = 0
 	if(!check_rights())
 		return
 
+	if(!isobserver(usr))
+		log_game("[key_name_admin(usr)] checked the player panel while in game.")
+
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
 		return
@@ -44,6 +47,15 @@ var/global/BSACooldown = 0
 	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
+
+	var/client/C = get_client(M)
+	if(C)
+		body += "<b>Antag Tokens</b> = [C.antag_tokens] \[ <a href='?_src_=holder;antag_token_decrease=\ref[M]'>- Less -</a> | <a href='?_src_=holder;antag_token_increase=\ref[M]'>+ More +</a> \]<br>"
+
+		if(check_rights(R_PERMISSIONS))
+			body += "<b>Whitelisted</b> = [C.is_whitelisted ? "Yes" : "No"] \[ <a href='?_src_=holder;toggle_whitelisted=\ref[M]'>Toggle</a> \]<br>"
+
+		body += "<b>Credits</b> = [C.credits]<br><br>"
 
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "
@@ -69,6 +81,7 @@ var/global/BSACooldown = 0
 		body += "| <A href='?_src_=holder;sendtoprison=\ref[M]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;sendbacktolobby=\ref[M]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
+		var/frozen = M.client.prefs.afreeze
 		body += "<br><b>Mute: </b> "
 		body += "\[<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
@@ -76,6 +89,7 @@ var/global/BSACooldown = 0
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
 		body += "<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
 		body += "(<A href='?_src_=holder;mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		body += "<A href='?_src_=holder;afreeze=\ref[M]'><font color='[frozen ? "red":"blue"]'>FREEZE</font></a>)"
 
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;jumpto=\ref[M]'><b>Jump to</b></A> | "
@@ -164,6 +178,18 @@ var/global/BSACooldown = 0
 		body += "<A href='?_src_=holder;tdome2=\ref[M]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += "<br>"
+		var/agree = M.client.prefs.agree
+		if(agree == -1)
+			body += "Forced to agree to rules every time.<br>"
+			body += "<A href='?_src_=holder;fixagree=\ref[M]'>Enough</A>"
+		else
+			if(agree == 0)
+				body += "Did not agree to rules.<br>"
+			else
+				body += "Agreed to rules revision [agree] (max=[MAXAGREE]).<br>"
+				body += "<A href='?_src_=holder;resetagree=\ref[M]'>Reset</A> | "
+			body += "<A href='?_src_=holder;forceagree=\ref[M]'>Force Disclaimer Every Time</A>"
 
 	body += "<br>"
 	body += "</body></html>"
@@ -817,3 +843,169 @@ var/global/BSACooldown = 0
 				"Admin login: [key_name(src)]")
 		if(string)
 			message_admins("[string]")
+
+/datum/admins/proc/toggle_high_risk_item_notifications()
+	set category = "Admin"
+	set desc = "Toggles receiving notifications if a high-risk item has left the z-level."
+	set name = "Toggle High Risk Item Notifications"
+	high_risk_item_notifications = !high_risk_item_notifications
+	var/message = "[key_name_admin(usr)] has toggled high risk item notifications [high_risk_item_notifications ? "on" : "off"]."
+	message_admins(message)
+	log_admin(message)
+
+/datum/admins/proc/toggle_ticket_counter_visibility()
+	set category = "Admin"
+	set desc = "Toggles whether or not players are shown how many tickets are active."
+	set name = "Toggle Ticket Counter Visibility"
+	ticket_counter_visible_to_everyone = !ticket_counter_visible_to_everyone
+	message_admins("[key_name_admin(usr)] has made the ticket counter [ticket_counter_visible_to_everyone ? "visible" : "invisible"] to normal players.")
+
+///////////////////////////////////////////////////
+/////////////////CYBERMEN//////////////////////////
+///////////////////////////////////////////////////
+
+datum/admins/proc/cybermen_panel()
+	set name = "Cybermen Panel"
+	set category = "Admin"
+
+	if(!check_rights(0))	return
+
+	var/dat = {"
+		<A href='?_src_=holder;cybermen=1'>Refresh</A><br>
+		<center><B>Cybermen Panel</B></center><hr><BR><BR>
+		"}
+	if(!cyberman_network)
+		dat += "There is no Cyberman Network at this time. Creating a cyberman will automatically initialize a new network.<BR><A href='?_src_=holder;cybermen=7'>Initialize Network</A>"
+	else
+		dat += {"
+			<A href='?_src_=holder;cybermen=2'>Force Complete Current Objective</A>(automatically displays to all cybermen)<br>
+			<A href='?_src_=holder;cybermen=3'>Set Current Objective</A><br>
+			<A href='?_src_=holder;cybermen=6'>Set Random Current Objective</A><br>
+			<A href='?_src_=holder;cybermen=11'>Set Queued Objective</A><br>
+			<A href='?_src_=holder;cybermen=4'>Display Current Objective to all Cybermen</A><br>
+			<A href='?_src_=holder;cybermen=5'>Message All Cybermen</A><br>
+			<A href='?_src_=holder;cybermen=8'>Show Broadcast Log</A><br>
+			<A href='?_src_=holder;cybermen=9'>Show Hacking Log</A><br>
+			"}
+
+		dat += "<BR>Current Cybermen:<BR>"
+		for(var/datum/mind/M in cyberman_network.cybermen)
+			if(M)
+				dat += "[M] "
+				if(M.current)
+					dat += "([M.current])(<a href='?_src_=holder;adminmoreinfo=\ref[M.current]'>???</a> | <a href='?_src_=holder;adminplayerobservefollow=\ref[M.current]'>FLW</A>)"
+				else
+					dat += "(has no body)"
+			else
+				dat += "ERROR - null in the cybermen mind list"
+			dat += "<BR>"
+
+		dat += "<BR>Cybermen objectives:<BR>"
+		if(cyberman_network.queued_cybermen_objective)
+			dat += "Queued:<BR>"
+			dat += "[cyberman_network.queued_cybermen_objective.phase] (<A href='?_src_=holder;cybermen=10;editvar=toggle_win_on_complete;target=\ref[cyberman_network.queued_cybermen_objective]'>[cyberman_network.queued_cybermen_objective.win_upon_completion ? "Cybermen win on completion" : "Cybermen do not win on completion"]</A>)<BR>[cyberman_network.queued_cybermen_objective.explanation_text]"
+			dat += "<BR>[cyberman_network.queued_cybermen_objective.is_valid() ? "<font color='green'>Valid</font>" : "<font color='red'>Not Valid</font>"]<BR><BR>"
+		else
+			dat += "No queued objective<BR><BR>"
+		for(var/i = 1 to cyberman_network.cybermen_objectives.len)
+			var/datum/objective/cybermen/O = cyberman_network.cybermen_objectives[i]
+			if(O)
+				if(i == cyberman_network.cybermen_objectives.len)
+					dat += "Phase [i]:[O.phase] (<A href='?_src_=holder;cybermen=10;editvar=toggle_win_on_complete;target=\ref[O]'>[O.win_upon_completion ? "Cybermen win on completion" : "Cybermen do not win on completion"]</A>)<BR>[O.explanation_text]<BR><BR>"
+				else
+					dat += "Phase [i]:[O.phase]<BR>[O.explanation_text]<BR><BR>"
+			else
+				dat += "ERROR - null in the objective list<BR>"
+
+		dat += "<BR>Current Active Hacks:<BR>"
+		for(var/datum/cyberman_hack/H in cyberman_network.active_cybermen_hacks)
+			if(H)
+				dat += "[H.target_name] (<A href='?_src_=holder;cybermen=10;editvar=set_progress;target=\ref[H]'>[H.progress]</A>/<A href='?_src_=holder;cybermen=10;editvar=set_cost;target=\ref[H]'>[H.cost]</A>) (+<A href='?_src_=holder;cybermen=10;editvar=set_innate;target=\ref[H]'>[H.innate_processing]</A>/tick)"
+				if(istype(H, /datum/cyberman_hack/multiple_vector))
+					var/datum/cyberman_hack/multiple_vector/MVH = H
+					for(var/datum/cyberman_hack/CH in MVH.component_hacks)
+						dat += "<BR>---[CH.target_name]"
+				dat += "<BR>"
+			else
+				dat += "ERROR - null in the hack list<BR>"
+		dat += "<BR>Objects Hacked:<BR>"
+		for(var/O in cyberman_network.cybermen_hacked_objects)
+			if(O)
+				dat += "[O]\[<A href='?_src_=holder;cybermen=10;editvar=remove_hacked_obj;target=\ref[O]'>Remove</A>\]"
+			else
+				dat += "ERROR - null in the hacked items list."
+			dat += "<BR>"
+		dat += "<BR>Access Downloaded:<BR>"
+		for(var/O in cyberman_network.cybermen_access_downloaded)
+			if(O)
+				dat += "[get_access_desc(O)]\[<A href='?_src_=holder;cybermen=10;editvar=remove_hacked_access;target=[O]'>Remove</A>\]"
+			else
+				dat += "ERROR - null in the hacked items list."
+			dat += "<BR>"
+		dat += "<BR>Research Downloaded:<BR>"
+		for(var/O in cyberman_network.cybermen_research_downloaded)
+			var/datum/tech/T = O
+			if(T)
+				dat += "[T.id] [T.level]\[<A href='?_src_=holder;cybermen=10;editvar=remove_hacked_obj;target=\ref[O]'>Remove</A>\]"
+			else
+				dat += "ERROR - null in the hacked items list."
+			dat += "<BR>"
+
+	usr << browse(dat, "window=cybermen;size=400x600")
+	return
+
+datum/admins/proc/cyberman_broadcast_log()
+	var/dat = {"
+			<A href='?_src_=holder;cybermen=8'>Refresh</A><br><br>
+			<center>Cybermen Hacking Log</center><hr>
+			"}
+	for(var/entry in cyberman_network.cyberman_broadcast_log)
+		dat += "[entry]<BR>"
+	usr << browse(dat, "window=cybermen_broadcast;size=400x600")
+
+datum/admins/proc/cyberman_hacking_log()
+	var/dat = {"
+			<A href='?_src_=holder;cybermen=9'>Refresh</A><br><br>
+			<center>Cybermen Hacking Log</center><hr>
+			"}
+	for(var/entry in cyberman_network.hacking_log)
+		dat += "[entry]<BR>"
+	usr << browse(dat, "window=cybermen_hacking;size=400x600")
+
+datum/admins/proc/cyberman_varedit(list/href_list)
+	if(!cyberman_network)
+		return
+	switch(href_list["editvar"])
+		if("remove_hacked_obj")
+			var/obj = locate(href_list["target"])
+			if(!cyberman_network.cybermen_hacked_objects.Remove(obj))
+				cyberman_network.cybermen_research_downloaded.Remove(obj)
+		if("remove_hacked_access")
+			cyberman_network.cybermen_access_downloaded.Remove(text2num(href_list["target"]))
+		if("toggle_win_on_complete")
+			var/datum/objective/cybermen/obj = locate(href_list["target"])
+			if(istype(obj))
+				obj.win_upon_completion = !obj.win_upon_completion
+		if("set_progress")
+			var/datum/cyberman_hack/hack = locate(href_list["target"])
+			if(istype(hack))
+				var/num = input("Set progress to what?") as num
+				if(hack)
+					hack.progress = num
+					if(hack.progress >= 0)
+						hack.maintained = 1
+					else
+						hack.drop("<span class='warning'>[hack.display_verb] of \the [hack.target_name] cancelled by the Cyberman Collective.</span>")
+		if("set_cost")
+			var/datum/cyberman_hack/hack = locate(href_list["target"])
+			if(istype(hack))
+				var/num = input("Set cost to what?") as num
+				if(hack)
+					hack.cost = num
+					hack.maintained = 1
+		if("set_innate")
+			var/datum/cyberman_hack/hack = locate(href_list["target"])
+			if(istype(hack))
+				var/num = input("Set innate processing to what? (If this is not 0, the hack will not lose progress if no cybermen are nearby)") as num
+				if(hack)
+					hack.innate_processing = num

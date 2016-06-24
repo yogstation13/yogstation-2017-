@@ -327,3 +327,186 @@ Proc for attack log creation, because really why not
 		var/mob/living/carbon/human/H = A
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
+
+/proc/get_ckey(user)
+	if(ismob(user))
+		var/mob/temp = user
+		return temp.ckey
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.ckey
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
+		return temp.ckey
+
+	return "* Unknown *"
+
+/proc/get_client(var/user)
+	if(istype(user, /client))
+		return user
+	if(ismob(user))
+		var/mob/temp = user
+		return temp.client
+	return user
+
+/proc/get_fancy_key(mob/user)
+	if(ismob(user))
+		var/mob/temp = user
+		return temp.key
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.key
+	else if(istype(user, /datum/mind))
+		var/datum/mind/temp = user
+		return temp.key
+
+	return "* Unknown *"
+
+/proc/has_pref(var/user, var/pref)
+	if(ismob(user))
+		var/mob/temp = user
+
+		if(temp && temp.client && temp.client.prefs && temp.client.prefs.toggles & pref)
+			return 1
+	else if(istype(user, /client))
+		var/client/temp = user
+
+		if(temp && temp.prefs && temp.prefs.toggles & pref)
+			return 1
+
+	return 0
+
+/proc/is_admin(var/user)
+	if(ismob(user))
+		var/mob/temp = user
+
+		if(temp && temp.client && temp.client.holder)
+			return 1
+	else if(istype(user, /client))
+		var/client/temp = user
+
+		if(temp && temp.holder)
+			return 1
+
+	return 0
+
+/proc/compare_ckey(var/user, var/target)
+	if(!user || !target)
+		return 0
+
+	var/key1 = user
+	var/key2 = target
+
+	if(ismob(user))
+		var/mob/M = user
+		if(M.ckey)
+			key1 = M.ckey
+		else if(M.client && M.client.ckey)
+			key1 = M.client.ckey
+	else if(istype(user, /client))
+		var/client/C = user
+		key1 = C.ckey
+	else
+		key1 = lowertext(key1)
+
+	if(ismob(target))
+		var/mob/M = target
+		if(M.ckey)
+			key2 = M.ckey
+		else if(M.client && M.client.ckey)
+			key2 = M.client.ckey
+	else if(istype(target, /client))
+		var/client/C = target
+		key2 = C.ckey
+	else
+		key2 = lowertext(key2)
+
+
+	if(key1 == key2)
+		return 1
+	else
+		return 0
+
+/proc/is_donator(mob/user)
+	// Enable only for testing!
+	if(is_admin(user))
+		return 1
+
+	if(ismob(user))
+		if(user.client && user.client.prefs)
+			return (user.client.prefs.unlock_content & 2)
+	else if(istype(user, /client))
+		var/client/C = user
+		if(C.prefs)
+			return (C.prefs.unlock_content & 2)
+	else
+		return 0
+
+/proc/is_whitelisted(mob/user)
+	if(ismob(user))
+		if(user.client)
+			return user.client.is_whitelisted
+	else if(istype(user, /client))
+		var/client/C = user
+		return C.is_whitelisted
+	return 0
+
+/proc/is_veteran(mob/user)
+	if(ismob(user))
+		if(user.client && user.client.prefs)
+			return (user.client.prefs.unlock_content & 4)
+	else if(istype(user, /client))
+		var/client/C = user
+		if(C.prefs)
+			return (C.prefs.unlock_content & 4)
+	else
+		return 0
+
+/proc/get_ip(user)
+	if(ismob(user))
+		var/mob/temp = user
+		if(temp.client)
+			return temp.client.address
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.address
+
+	return "0.0.0.0"
+
+/proc/get_computer_id(user)
+	if(ismob(user))
+		var/mob/temp = user
+		if(temp.client)
+			return temp.client.computer_id
+	else if(istype(user, /client))
+		var/client/temp = user
+		return temp.computer_id
+
+	return "Unknown"
+
+/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	for(var/mob/M in player_list)
+		var/datum/preferences/prefs
+		if(M.client && M.client.prefs)
+			prefs = M.client.prefs
+		else
+			prefs = new
+
+		var/adminoverride = 0
+		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+			adminoverride = 1
+		if(istype(M, /mob/new_player) && !adminoverride)
+			continue
+		if(M.stat != DEAD && !adminoverride)
+			continue
+		if(speaker_key && speaker_key in prefs.ignoring)
+			continue
+		if(message_type == DEADCHAT_DEATHRATTLE)
+			if(prefs.toggles & DISABLE_DEATHRATTLE)
+				continue
+
+		if(istype(M, /mob/dead/observer) && follow_target)
+			var/link = FOLLOW_LINK(M, follow_target)
+			M << "[link] [message]"
+		else
+			M << "[message]"

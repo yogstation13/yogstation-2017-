@@ -49,8 +49,6 @@
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
-	make_blood()
-
 	martial_art = default_martial_art
 
 	handcrafting = new()
@@ -87,6 +85,10 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			if(mind.cyberman)
+				stat("Hacking Module: [mind.cyberman.quickhack ? "Enabled" : "Disabled"] [mind.cyberman.emp_hit ? "%$&ERROR EMP DAMAGE [mind.cyberman.emp_hit]% #?@": ""]")
+				for(var/obj/status_obj in mind.cyberman.get_status_objs(src))
+					stat("", status_obj)
 
 
 	//NINJACODE
@@ -166,6 +168,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)
@@ -268,6 +271,10 @@
 		dat += "&nbsp;<A href='?src=\ref[src];pockets=right'>[(r_store && !(r_store.flags&ABSTRACT)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A></td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>ID:</B></td><td><A href='?src=\ref[src];item=[slot_wear_id]'>[(wear_id && !(wear_id.flags&ABSTRACT)) ? wear_id : "<font color=grey>Empty</font>"]</A></td></tr>"
 
+	for (var/obj/item/bodypart/org in bodyparts)
+		if (org.can_be_bandaged && org.bandaged)
+			dat += "<tr><td><i>[org.getDisplayName()]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
+
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A></td></tr>"
 	if(legcuffed)
@@ -314,6 +321,13 @@
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
+	//CYBERMEN STUFF
+	//I'd prefer to have an event-listener setup. see emp_act in human_defense.
+	if(cyberman_network)
+		for(var/datum/cyberman_hack/human/H in cyberman_network.active_cybermen_hacks)
+			if(H.target == src)
+				H.electrocute_act()
+				break
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
 	if(.)
 		electrocution_animation(40)
@@ -703,7 +717,7 @@
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
@@ -797,7 +811,7 @@
 			for(var/t in missing)
 				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
-			if(blood_max)
+			if(bleed_rate)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
@@ -875,7 +889,7 @@
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(..(I, cuff_break = 1))
+		if(..(I, cuff_break = FAST_CUFFBREAK))
 			unEquip(I)
 	else
 		if(..())
@@ -890,7 +904,6 @@
 		..() // Clear the Blood_DNA list
 		if(H.bloody_hands)
 			H.bloody_hands = 0
-			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -1029,7 +1042,6 @@
 				T = new()
 				T.Insert(src)
 
-	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)

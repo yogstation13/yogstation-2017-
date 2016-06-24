@@ -482,3 +482,16 @@
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
 	usr << "<span class='notice'>You print a photograph.</span>"
+
+/*
+ * Photo book
+ */
+/obj/item/weapon/storage/photobook
+	w_class = 3.0
+	name = "photo book"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "photobook"
+	item_state = "photobook"
+	can_hold = list(/obj/item/weapon/photo)
+	storage_slots = 70
+	burn_state = 0 //Burnable
