@@ -22117,9 +22117,7 @@
 /area/crew_quarters/bar)
 "aRl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/chair/stool/bar{
-	step_x = 0
-	},
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -23317,9 +23315,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/chair/stool/bar{
-	step_x = 0
-	},
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -24010,9 +24006,7 @@
 	tag = "icon-manifold-r-f (WEST)";
 	dir = 8
 	},
-/obj/structure/chair/stool/bar{
-	step_x = 0
-	},
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -25722,9 +25716,7 @@
 	dir = 4;
 	initialize_directions = 11
 	},
-/obj/structure/chair/stool/bar{
-	step_x = 0
-	},
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -26439,9 +26431,7 @@
 	},
 /area/crew_quarters/bar)
 "baG" = (
-/obj/structure/chair/stool/bar{
-	step_x = 0
-	},
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -68928,9 +68918,7 @@
 /area/hallway/secondary/exit)
 "cFn" = (
 /obj/effect/landmark/event_spawn,
-/obj/structure/chair/stool/bar{
-	step_x = 0
-	},
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
