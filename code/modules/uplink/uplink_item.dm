@@ -603,11 +603,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen \
 			them for longer. Beware, it has a chance to detonate your PDA."
 	item = /obj/item/weapon/cartridge/syndicate
-
 	cost = 4
-
 	exclude_modes = list(/datum/game_mode/traitor/double_agents)
-	cost = 6
 
 
 /datum/uplink_item/stealthy_weapons/suppressor
