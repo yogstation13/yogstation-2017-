@@ -267,7 +267,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "You cannot target yourself with the Compromise."
+	usage_tip = "The Compromise is very fast to invoke."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/sentinels_compromise/scripture_effects()
