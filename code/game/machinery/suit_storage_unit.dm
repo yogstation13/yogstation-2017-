@@ -40,6 +40,7 @@
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
+	storage_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/ce
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/elite
@@ -49,10 +50,12 @@
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
@@ -83,22 +86,28 @@
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/engineer
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	storage_type = /obj/item/clothing/shoes/magboots/security
+
+///mining medic///
+
+/obj/machinery/suit_storage_unit/mmedic
+	suit_type = /obj/item/clothing/suit/space/hardsuit/mining/mmedic
+	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/New()
 	..()
@@ -165,10 +174,10 @@
 				dump_contents()
 				qdel(src)
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(target))
+/obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
 		return
-
+	var/mob/living/target = A
 	if(!state_open)
 		user << "<span class='warning'>The unit's doors are shut!</span>"
 		return
@@ -180,11 +189,17 @@
 		return
 
 	if(target == user)
-		visible_message("<span class='warning'>[user] squeezes into [src]!</span>", "<span class='notice'>You squeeze into [src].</span>")
+		user.visible_message("<span class='warning'>[user] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>")
 	else
-		visible_message("<span class='warning'>[user] starts putting [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
+		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 
-	if(do_mob(user, target, 10))
+	if(do_mob(user, target, 30))
+		if(occupant || helmet || suit || storage)
+			return
+		if(target == user)
+			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+		else
+			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
 		add_fingerprint(user)
 
@@ -207,7 +222,8 @@
 		uv = FALSE
 		locked = FALSE
 		if(uv_super)
-			visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A foul cloud of smoke emanates from the chamber.</span>")
+			visible_message("<span class='warning'>[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber.</span>")
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, 1)
 			helmet = null
 			qdel(helmet)
 			suit = null
@@ -219,10 +235,15 @@
 			// The wires get damaged too.
 			wires.cut_all()
 		else
-			visible_message("<span class='warning'>With a loud whining noise, [src]'s door grinds open. A light cloud of steam escapes from the chamber.</span>")
-			for(var/obj/item/I in src)
+			if(!occupant)
+				visible_message("<span class='notice'>[src]'s door slides open. The glowing yellow lights dim to a gentle green.</span>")
+			else
+				visible_message("<span class='warning'>[src]'s door slides open, barraging you with the nauseating smell of charred flesh.</span>")
+			playsound(src, 'sound/machines/AirlockClose.ogg', 25, 1)
+			for(var/obj/item/I in src) //Scorches away blood and forensic evidence, although the SSU itself is unaffected
 				I.clean_blood()
-		open_machine()
+				I.fingerprints = list()
+		open_machine(FALSE)
 		if(occupant)
 			dump_contents()
 
@@ -346,6 +367,7 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
+				occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
 				cook()
 				. = TRUE
 		if("dispense")

@@ -29,6 +29,8 @@
 			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
+	if(mind.enslaved_to)
+		return 0
 	return 1
 
 /datum/game_mode/cult
@@ -74,7 +76,7 @@
 	for(var/cultists_number = 1 to recommended_enemies)
 		if(!antag_candidates.len)
 			break
-		var/datum/mind/cultist = pick(antag_candidates)
+		var/datum/mind/cultist = pick_candidate()
 		antag_candidates -= cultist
 		cultists_to_cult += cultist
 		cultist.special_role = "Cultist"

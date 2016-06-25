@@ -18,10 +18,10 @@ Chief Medical Officer
 
 	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -181,3 +181,99 @@ Virologist
 	backpack = /obj/item/weapon/storage/backpack/virology
 	satchel = /obj/item/weapon/storage/backpack/satchel_vir
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+
+/*
+Mining Medic
+*/
+/datum/job/miningmedic
+	title = "Mining Medic"
+	flag = MMEDIC
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+
+	outfit = /datum/outfit/job/miningmedic
+
+	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
+
+
+
+/datum/outfit/job/miningmedic
+	name = "Mining Medic"
+
+
+	backpack_contents = list(/obj/item/weapon/reagent_containers/hypospray/mini, /obj/item/weapon/storage/firstaid/o2)
+	belt = /obj/item/device/pda/medical
+	ears = /obj/item/device/radio/headset/headset_cargo
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	uniform = /obj/item/clothing/under/rank/mmedical
+	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_pocket = /obj/item/device/flashlight/pen
+
+
+/*
+Paramedic
+*/
+/datum/job/paramedic
+	title = "Paramedic"
+	flag = PARAMEDIC
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 3
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+
+
+	outfit = /datum/outfit/job/paramedic
+
+	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic)
+	minimal_access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic)
+
+/datum/outfit/job/paramedic
+	name = "Paramedic"
+
+	backpack_contents = list(/obj/item/weapon/storage/firstaid/regular)
+	belt = /obj/item/device/pda/medical
+	ears = /obj/item/device/radio/headset/headset_med
+	uniform = /obj/item/clothing/under/rank/medical
+	suit = /obj/item/clothing/suit/toggle/labcoat/emt
+	shoes = /obj/item/clothing/shoes/sneakers/white
+	l_hand = /obj/item/roller
+	l_pocket = /obj/item/device/flashlight
+	r_pocket = /obj/item/device/gps
+
+
+/*
+Psychiatrist
+*/
+/datum/job/psych
+	title = "Psychiatrist"
+	flag = PSYCH
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+
+	outfit = /datum/outfit/job/psych
+
+	access = list(access_medical)
+	minimal_access = list(access_medical)
+
+/datum/outfit/job/psych
+	name = "Psych"
+
+	shoes = /obj/item/clothing/shoes/sneakers/brown
+	uniform = /obj/item/clothing/under/suit_jacket/burgundy
+	l_hand = /obj/item/weapon/storage/briefcase
+	glasses = /obj/item/clothing/glasses/regular
+	belt = /obj/item/device/pda
+	ears = /obj/item/device/radio/headset/headset_med
+
+

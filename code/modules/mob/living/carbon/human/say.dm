@@ -1,3 +1,7 @@
+/mob/living/carbon/human
+	var/hearBinaryProb = 0
+	var/speakBinaryProb = 0
+
 /mob/living/carbon/human/say_quote(input, spans)
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
@@ -25,6 +29,8 @@
 				message = jointext(temp_message, " ")
 	message = ..(message)
 	message = dna.mutations_say_mods(message)
+	if(speakBinaryProb && prob(speakBinaryProb))//This could be more modular. I'll look into it at some point.
+		message = binaryspeech(message)
 	return message
 
 /mob/living/carbon/human/get_spans()
@@ -70,6 +76,8 @@
 	return special_voice
 
 /mob/living/carbon/human/binarycheck()
+	if(ticker.mode.is_cyberman(src.mind))
+		return 1
 	if(ears)
 		var/obj/item/device/radio/headset/dongle = ears
 		if(!istype(dongle)) return 0

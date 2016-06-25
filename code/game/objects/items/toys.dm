@@ -116,6 +116,32 @@
 	item_state = "syndballoon"
 	w_class = 4
 
+/obj/item/toy/heartballoon
+	name = "heart balloon"
+	desc = "A balloon for that special someone in your life."
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	force = 0
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "heartballoon"
+	item_state = "heartballoon"
+	w_class = 4.0
+
+
+/obj/item/toy/toyballoon
+	name = "toy balloon"
+	desc = "A very colorful balloon, fun for all ages."
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	force = 0
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toyballoon"
+	item_state = "toyballoon"
+	w_class = 4.0
+
+
 /*
  * Fake singularity
  */
@@ -202,6 +228,55 @@
 	..()
 	user << "There [amount_left == 1 ? "is" : "are"] [amount_left] cap\s left."
 
+/obj/item/toy/toyglock
+	name = "toy glock"
+	desc = "Oh, looks just like the real thing, but its only a toy."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toyglock"
+	item_state = "toyglock"
+	flags =  CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 3.0
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
+	var/bullets = 0.0
+
+
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+		if (src.bullets < 1)
+			user.show_message("\red *click* *click*", 2)
+			return
+		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+		src.bullets--
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+
+/obj/item/toy/toyflaregun
+	name = "toy flare gun"
+	desc = "For use in make believe emergencies."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toyflaregun"
+	item_state = "toyflaregun"
+	flags =  CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 3.0
+	materials = list(MAT_METAL=10, MAT_GLASS=10)
+	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
+	var/bullets = 0.0
+
+
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+		if (src.bullets < 1)
+			user.show_message("\red *click* *click*", 2)
+			return
+		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+		src.bullets--
+		for(var/mob/O in viewers(user, null))
+			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+
+
 /*
  * Toy swords
  */
@@ -239,12 +314,9 @@
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if(W == src)
-			user << "<span class='warning'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else if((W.flags & NODROP) || (flags & NODROP))
+		if((W.flags & NODROP) || (flags & NODROP))
 			user << "<span class='warning'>\the [flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [flags & NODROP ? W : src]!</span>"
+			return
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
@@ -365,6 +437,46 @@
 			src.visible_message("<span class='danger'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
 			playsound(src, 'sound/effects/snap.ogg', 50, 1)
 			qdel(src)
+
+/obj/item/toy/toygrenade
+	name = "toy grenade"
+	desc = "Booooom!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "toygrenade"
+	w_class = 1
+
+	throw_impact(atom/hit_atom)
+		..()
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(3, 1, src)
+		s.start()
+		new /obj/effect/decal/cleanable/ash(src.loc)
+		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
+		qdel(src)
+
+/*
+ * Other prizes
+ */
+/obj/item/toy/teddybear
+	name = "teddy bear"
+	desc = "A soft brown bear you can cuddle with anywhere."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "teddybear"
+
+/obj/item/toy/stuffedmonkey
+	name = "stuffed monkey"
+	desc = "Looks just like the live ones on station.Except this one is made from plush"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "stuffedmonkey"
+
+
+/obj/item/toy/flowerbunch
+	name = "flower bunch"
+	desc = "Oh, a bunch of flowers to show you care!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "flowerbunch"
+
 
 /*
  * Mech prizes

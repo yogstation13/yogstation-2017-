@@ -7,25 +7,16 @@
 	w_class = 1
 
 	var/obj/item/radio/integrated/radio = null
-	var/access_security = 0
-	var/access_engine = 0
-	var/access_atmos = 0
-	var/access_medical = 0
-	var/access_manifest = 0
-	var/access_clown = 0
-	var/access_mime = 0
-	var/access_janitor = 0
-//	var/access_flora = 0
-	var/access_reagent_scanner = 0
-	var/access_newscaster = 0
-	var/access_remote_door = 0 //Control some blast doors remotely!!
+	var/functions = 0 //Bitflags in __DEFINES/pda.dm
 	var/remote_door_id = ""
-	var/access_status_display = 0
-	var/access_quartermaster = 0
-	var/access_hydroponics = 0
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
-	var/spam_enabled = 0 //Enables "Send to All" Option
+	var/list/area/atmos_alerts = list()
+	var/list/area/fire_alerts = list()
+	var/list/area/power_alerts = list()
+	var/alert_flags = 0 //Bitflags in __DEFINES/pda.dm
+	var/alert_toggles = 0
 
+	var/spam_enabled = 0 //Enables "Send to All" Option
 	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
@@ -33,6 +24,8 @@
 	var/datum/data/record/active3 = null //Security
 	var/obj/machinery/computer/monitor/powmonitor = null // Power Monitor
 	var/list/powermonitors = list()
+	var/obj/machinery/computer/atmos_control/atmosmonitor = null
+	var/list/atmosmonitors = list()
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
@@ -41,80 +34,93 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
+/obj/item/weapon/cartridge/New()
+	..()
+	if(alert_flags & PDA_ATMOS_ALERT)
+		atmos_alert_listeners |= src
+	if(alert_flags & PDA_POWER_ALERT)
+		power_alert_listeners |= src
+	if(alert_flags & PDA_FIRE_ALERT)
+		fire_alert_listeners |= src
+
+/obj/item/weapon/cartridge/Destroy()
+	atmos_alert_listeners -= src
+	power_alert_listeners -= src
+	fire_alert_listeners -= src
+	return ..()
+
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
-	access_engine = 1
+	functions = PDA_ENGINE_FUNCTIONS
+	alert_flags = PDA_POWER_ALERT
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
-	access_atmos = 1
+	functions = PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS
+	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
-	access_medical = 1
+	functions = PDA_MEDICAL_FUNCTIONS
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
-	access_reagent_scanner = 1
+	functions = PDA_REAGENT_FUNCTIONS
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
-	access_security = 1
+	functions = PDA_SECURITY_FUNCTIONS
 	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
 	icon_state = "cart-s"
-	access_security = 1
-	access_medical = 1
-	access_manifest = 1
+	functions = PDA_SECURITY_FUNCTIONS|PDA_MEDICAL_FUNCTIONS|PDA_MANIFEST_FUNCTIONS
 	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
-	access_janitor = 1
+	functions = PDA_JANITOR_FUNCTIONS
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
-	access_security = 1
+	functions = PDA_SECURITY_FUNCTIONS
 	spam_enabled = 1
 
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
 	icon_state = "cart-clown"
-	access_clown = 1
+	functions = PDA_CLOWN_FUNCTIONS
 	var/honk_charges = 5
 
 /obj/item/weapon/cartridge/mime
 	name = "\improper Gestur-O 1000 cartridge"
 	icon_state = "cart-mi"
-	access_mime = 1
+	functions = PDA_MIME_FUNCTIONS
 	var/mime_charges = 5
 
 /obj/item/weapon/cartridge/librarian
 	name = "\improper Lib-Tweet cartridge"
 	icon_state = "cart-s"
-	access_newscaster = 1
+	functions = PDA_NEWSCASTER_FUNCTIONS
 
-/*
 /obj/item/weapon/cartridge/botanist
 	name = "\improper Green Thumb v4.20 cartridge"
 	icon_state = "cart-b"
-	access_flora = 1
-*/
+	functions = PDA_BOTANY_FUNCTIONS
 
 /obj/item/weapon/cartridge/roboticist
 	name = "\improper B.O.O.P. Remote Control cartridge"
@@ -129,8 +135,7 @@
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
 	icon_state = "cart-tox"
-	access_reagent_scanner = 1
-	access_atmos = 1
+	functions = PDA_ATMOS_FUNCTIONS|PDA_REAGENT_FUNCTIONS
 
 /obj/item/weapon/cartridge/signal/New()
 	..()
@@ -142,60 +147,45 @@
 	name = "space parts & space vendors cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
-	access_quartermaster = 1
+	functions = PDA_QUARTERMASTER_FUNCTIONS
 	bot_access_flags = MULE_BOT
 
 /obj/item/weapon/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
 	icon_state = "cart-h"
-	access_manifest = 1
-	access_status_display = 1
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS
 
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	access_manifest = 1
-	access_status_display = 1
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS
 	bot_access_flags = MULE_BOT|CLEAN_BOT
-	access_janitor = 1
-	access_security = 1
-	access_newscaster = 1
-	access_quartermaster = 1
+	functions = PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
-	access_manifest = 1
-	access_status_display = 1
-	access_security = 1
+	functions = PDA_SECURITY_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_SECURITY_FUNCTIONS
 	bot_access_flags = SEC_BOT
 
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
-	access_manifest = 1
-	access_status_display = 1
-	access_engine = 1
-	access_atmos = 1
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ENGINE_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS
+	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
-	access_manifest = 1
-	access_status_display = 1
-	access_reagent_scanner = 1
-	access_medical = 1
+	functions = PDA_MEDICAL_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_MEDICAL_FUNCTIONS
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
-	access_manifest = 1
-	access_status_display = 1
-	access_reagent_scanner = 1
-	access_atmos = 1
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_ATMOS_FUNCTIONS
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
 /obj/item/weapon/cartridge/rd/New()
@@ -204,18 +194,12 @@
 
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
-	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
+	desc = "Now with 450% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
-	access_manifest = 1
-	access_engine = 1
-	access_security = 1
-	access_medical = 1
-	access_reagent_scanner = 1
-	access_status_display = 1
-	access_atmos = 1
-	access_newscaster = 1
-	access_quartermaster = 1
-	access_janitor = 1
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_ENGINE_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_MEDICAL_FUNCTIONS|\
+				PDA_REAGENT_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS|\
+				PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_BOTANY_FUNCTIONS
+	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 
@@ -226,9 +210,14 @@
 /obj/item/weapon/cartridge/syndicate
 	name = "\improper Detomatix cartridge"
 	icon_state = "cart"
-	access_remote_door = 1
+	functions = PDA_REMOTE_DOOR_FUNCTIONS
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
 	var/shock_charges = 4
+
+/obj/item/weapon/cartridge/slavemaster
+	name = "\improper Slavemaster-2000 cartridge"
+	icon_state = "cart"
+	var/obj/item/weapon/implant/mindslave/imp = null
 
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))
@@ -249,6 +238,70 @@
 			P.attack_self(M)
 
 	return
+
+/obj/item/weapon/cartridge/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
+	var/msg
+	var/turf/myTurf = get_turf(src)
+	if(!alarmsource || !myTurf || (alarmsource.z != myTurf.z))
+		return
+	switch(class)
+		if("Atmosphere")
+			if(!(alert_flags & PDA_ATMOS_ALERT) || (A in atmos_alerts))
+				return
+			atmos_alerts += A
+			if(alert_toggles & PDA_ATMOS_ALERT)
+				msg = "Alert: Atmos alarm in \the [A]"
+		if("Power")
+			if(!(alert_flags & PDA_POWER_ALERT) || (A in power_alerts))
+				return
+			power_alerts += A
+			if(alert_toggles & PDA_POWER_ALERT)
+				msg = "Alert: Power alarm in \the [A]"
+		if("Fire")
+			if(!(alert_flags & PDA_FIRE_ALERT) || (A in fire_alerts))
+				return
+			fire_alerts += A
+			if(alert_toggles & PDA_FIRE_ALERT)
+				msg = "Alert: Fire alarm in \the [A]"
+		else
+			return
+	if(istype(loc, /obj/item/device/pda))
+		var/obj/item/device/pda/pda = loc
+		if(!pda.silent && msg)
+			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			pda.audible_message("\icon[pda] [msg]", null, 3)
+
+/obj/item/weapon/cartridge/proc/cancelAlarm(class, area/A, obj/alarmsource)
+	var/msg
+	var/turf/myTurf = get_turf(src)
+	if(!alarmsource || !myTurf || (alarmsource.z != myTurf.z))
+		return
+	switch(class)
+		if("Atmosphere")
+			if(!(alert_flags & PDA_ATMOS_ALERT))
+				return
+			atmos_alerts -= A
+			if(alert_toggles & PDA_ATMOS_ALERT)
+				msg = "Notice: Atmos alarm cleared in \the [A]"
+		if("Power")
+			if(!(alert_flags & PDA_POWER_ALERT))
+				return
+			power_alerts -= A
+			if(alert_toggles & PDA_POWER_ALERT)
+				msg = "Notice: Power alarm cleared in \the [A]"
+		if("Fire")
+			if(!(alert_flags & PDA_FIRE_ALERT))
+				return
+			fire_alerts -= A
+			if(alert_toggles & PDA_FIRE_ALERT)
+				msg = "Notice: Fire alarm cleared in \the [A]"
+		else
+			return
+	if(istype(loc, /obj/item/device/pda))
+		var/obj/item/device/pda/pda = loc
+		if(!pda.silent && msg)
+			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			pda.audible_message("\icon[pda] [msg]", null, 3)
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
@@ -343,7 +396,7 @@ Code:
 
 		if (433)
 			menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
-			if(!powmonitor)
+			if(!powmonitor || !powmonitor.attached || !powmonitor.attached.powernet || !powmonitor.attached.powernet.nodes)
 				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
@@ -510,6 +563,15 @@ Code:
 				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 
+		if (48) //Slavermaster 2000 //Whoever came up with the idea of making menu choices numerical is a idiot.
+			menu = "<h4><img src=pda_signaller.png> Slave Controller</h4>"
+
+			menu += "<BR><B>Available Slaves: </B><BR>"
+			if(src:imp.imp_in)
+				menu += "<ul><li>[src:imp.imp_in]<A href='byond://?src=\ref[src];choice=Detonate Slave'> *Detonate*</a></li></ul>"
+			else
+				menu += "No slaves detected."
+
 		if (49) //janitorial locator
 			menu = "<h4><img src=pda_bucket.png> Persistent Custodial Object Locator</h4>"
 
@@ -571,6 +633,80 @@ Code:
 			else
 				menu += "ERROR: Unable to determine current location."
 			menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
+
+		if(50)//atmos monitoring
+			menu = "<h4><img src=pda_power.png> Atmosphere Monitors - Please select one</h4><BR>"
+			atmosmonitor = null
+			atmosmonitors = list()
+
+			for(var/obj/machinery/computer/atmos_control/aMon in world)
+				if(!(aMon.stat & (NOPOWER|BROKEN)) )
+					atmosmonitors += aMon
+			if(!atmosmonitors.len)
+				menu += "<span class='danger'>No connection<BR></span>"
+			else
+				menu += "<FONT SIZE=-1>"
+				var/count = 0
+				for(var/obj/machinery/computer/atmos_control/aMon in atmosmonitors)
+					count++
+					menu += "<a href='byond://?src=\ref[src];choice=Atmos Select;target=[count]'>[aMon] </a><BR>"
+				menu += "</FONT>"
+		if(501)
+			menu = "<h4><img src=pda_power.png> Atmosphere Monitor</h4><BR>"
+			if(!atmosmonitor.sensors.len)
+				menu += "<span class='danger'>No connection<BR></span>"
+			else
+				for(var/id_tag in atmosmonitor.sensors)
+					var/list/data = atmosmonitor.sensor_information[id_tag]
+					menu += "<b>[atmosmonitor.sensors[id_tag]]</b><ul>"
+					if(data)
+						if(data["pressure"])
+							menu += "<li><B>Pressure:</B> [data["pressure"]] kPa<BR></li>"
+						else
+							menu += "<li><B>Pressure:</B> No pressure detected<BR></li>"
+						if(data["temperature"])
+							menu += "<li><B>Temperature:</B> [data["temperature"]] K<BR></li>"
+						if(data["oxygen"]||data["toxins"]||data["nitrogen"]||data["carbon_dioxide"])
+							menu += "<li><B>Gas Composition : </B></li>"
+							if(data["oxygen"])
+								menu += "<li>[data["oxygen"]]% O2;</li>"
+							if(data["nitrogen"])
+								menu += "<li>[data["nitrogen"]]% N;</li>"
+							if(data["carbon_dioxide"])
+								menu += "<li>[data["carbon_dioxide"]]% CO2;</li>"
+							if(data["toxins"])
+								menu += "<li>[data["toxins"]]% TX;</li>"
+						menu += "</ul>"
+
+					else
+						menu = "<FONT class='bad'>[atmosmonitor.sensors[id_tag]] can not be found!</FONT><BR>"
+
+		if(51)//alerts monitoring
+			var/turf/myTurf = get_turf(src)
+			for(var/alert in atmos_alerts|fire_alerts|power_alerts)
+				var/area/a = alert
+				if(a.z != myTurf.z)
+					atmos_alerts -= a
+					fire_alerts -= a
+					power_alerts -= a
+			menu = "<h4><img src=pda_signaler.png> Active Alerts</h4><BR>"
+			if(alert_flags & PDA_ATMOS_ALERT)
+				menu += "<b>Atmosphere Alerts:</b><ul>"
+				for(var/alert in atmos_alerts)
+					menu += "<li>[alert]</li>"
+				menu += "</ul>"
+
+			if(alert_flags & PDA_FIRE_ALERT)
+				menu += "<b>Fire Alerts:</b><ul>"
+				for(var/alert in fire_alerts)
+					menu += "<li>[alert]</li>"
+				menu += "</ul>"
+
+			if(alert_flags & PDA_POWER_ALERT)
+				menu += "<b>Power Alerts:</b><ul>"
+				for(var/alert in power_alerts)
+					menu += "<li>[alert]</li>"
+				menu += "</ul>"
 
 		if (53) // Newscaster
 			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
@@ -665,6 +801,12 @@ Code:
 			pda.mode = 433
 			mode = 433
 
+		if("Atmos Select")
+			var/pnum = text2num(href_list["target"])
+			atmosmonitor = atmosmonitors[pnum]
+			loc:mode = 501
+			mode = 501
+
 		if("Supply Orders")
 			pda.mode =47
 			mode = 47
@@ -691,6 +833,16 @@ Code:
 			current_channel = pda.msg_input()
 			pda.Topic(null,list("choice"=num2text(mode)))
 			return
+
+		if("Detonate Slave")
+			if(istype(src, /obj/item/weapon/cartridge/slavemaster))
+				if(src:imp)
+					if (ismob(src.loc))
+						var/mob/detonator = src.loc
+						if(ismob(src:imp.loc))
+							var/mob/detonated = src:imp.loc
+							log_game("[detonator.ckey]/([detonator] has detonated [detonated.ckey]/([detonated]) with a mindslave implant");
+					src:imp.activate()
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])

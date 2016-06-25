@@ -815,17 +815,17 @@
 
 /datum/construction/mecha/honker
 	result = "/obj/mecha/combat/honker"
-	steps = list(list("key"=/obj/item/weapon/bikehorn),//1
+	steps = list(list("key"=/obj/item/device/assembly/bikehorn),//1
 					 list("key"=/obj/item/clothing/shoes/clown_shoes),//2
-					 list("key"=/obj/item/weapon/bikehorn),//3
+					 list("key"=/obj/item/device/assembly/bikehorn),//3
 					 list("key"=/obj/item/clothing/mask/gas/clown_hat),//4
-					 list("key"=/obj/item/weapon/bikehorn),//5
+					 list("key"=/obj/item/device/assembly/bikehorn),//5
 					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/targeting),//6
-					 list("key"=/obj/item/weapon/bikehorn),//7
+					 list("key"=/obj/item/device/assembly/bikehorn),//7
 					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/peripherals),//8
-					 list("key"=/obj/item/weapon/bikehorn),//9
+					 list("key"=/obj/item/device/assembly/bikehorn),//9
 					 list("key"=/obj/item/weapon/circuitboard/mecha/honker/main),//10
-					 list("key"=/obj/item/weapon/bikehorn),//11
+					 list("key"=/obj/item/device/assembly/bikehorn),//11
 					 )
 
 /datum/construction/mecha/honker/action(atom/used_atom,mob/user)
@@ -835,7 +835,7 @@
 	if(!..())
 		return 0
 
-	if(istype(used_atom, /obj/item/weapon/bikehorn))
+	if(istype(used_atom, /obj/item/device/assembly/bikehorn))
 		playsound(holder, 'sound/items/bikehorn.ogg', 50, 1)
 		user.visible_message("HONK!")
 

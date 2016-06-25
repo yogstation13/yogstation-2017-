@@ -6,7 +6,8 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages = 0 //For say() and Hear()
+	var/languages_spoken = 0 //For say() and Hear()
+	var/languages_understood = 0
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -74,7 +75,7 @@
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
-	if(. && buckled_mobs.len && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
+	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
@@ -137,7 +138,7 @@
 	stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	. = ..()
 	if(client)
@@ -294,6 +295,10 @@
 		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
 	return 1
 
+/atom/movable/proc/prethrow_at(var/target) // If an item is thrown by a mob, but it's still currently held.
+	return;
+
+
 /atom/movable/proc/hitcheck()
 	for(var/atom/movable/AM in get_turf(src))
 		if(AM == src)
@@ -366,3 +371,7 @@
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
+
+/atom/movable/proc/on_z_level_change()
+	for(var/atom/movable/A in contents)
+		A.on_z_level_change()

@@ -18162,7 +18162,7 @@
 	dir = 4
 	},
 /obj/item/weapon/soap,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/machinery/button/door{
 	id = "shutbath";
 	 name = "Bathroom Bolt Control";
@@ -21101,7 +21101,7 @@
 /area/security/prison)
 "aRe" = (
 /obj/structure/window/reinforced,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -36625,7 +36625,7 @@
 	dir = 4
 	},
 /obj/item/weapon/soap,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/machinery/button/door{
 	id = "shutbath2";
 	 name = "Bathroom Bolt Control";
@@ -36919,7 +36919,7 @@
 	})
 "bvJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bikehorn/airhorn,
+/obj/item/device/assembly/bikehorn/airhorn,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -45264,7 +45264,7 @@
 /turf/closed/wall,
 /area/mine/abandoned)
 "bMU" = (
-/obj/item/organ/internal/appendix,
+/obj/item/weapon/reagent_containers/food/snacks/burger/appendix,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
@@ -46944,7 +46944,7 @@
 	},
 /area/mine/abandoned)
 "bQA" = (
-/obj/item/organ/internal/heart{
+/obj/item/organ/heart{
 	beating = 0
 	},
 /obj/effect/decal/cleanable/blood/gibs,

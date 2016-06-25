@@ -17,6 +17,9 @@
 
 	sight |= SEE_TURFS
 
+	if(check_rights(R_NOJOIN, 0))
+		joining_forbidden = 1
+
 /*
 	var/list/watch_locations = list()
 	for(var/obj/effect/landmark/landmark in landmarks_list)
@@ -28,6 +31,12 @@
 */
 	new_player_panel()
 
+	if(client.prefs.agree < MAXAGREE)
+		disclaimer()
+	else
+		new_player_panel()
+	if(ckey in deadmins)
+		verbs += /client/proc/readmin
 	spawn(40)
 		if(client)
 			client.playtitlemusic()

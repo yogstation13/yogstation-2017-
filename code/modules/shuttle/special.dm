@@ -27,22 +27,19 @@
 
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
-	var/changed = FALSE
 	if(active_tables.len >= 2)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] opens its eyes.</span>")
-			changed = TRUE
+			update_icon()
 		active = TRUE
 	else
 		if(active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] closes its eyes.</span>")
-			changed = TRUE
+			update_icon()
 		active = FALSE
 
-	if(changed)
-		update_icon()
 
 /obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
 	return
@@ -115,7 +112,7 @@
 			say(desc)
 			never_spoken = FALSE
 	else
-		our_statue.active_tables &= src
+		our_statue.active_tables -= src
 
 /obj/structure/table/abductor/wabbajack/left
 	desc = "You sleep so it may wake."
@@ -133,7 +130,8 @@
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 
@@ -147,7 +145,8 @@
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
 	status_flags = GODMODE
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE

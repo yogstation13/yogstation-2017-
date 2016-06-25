@@ -1,7 +1,7 @@
 //gangtool device
 /obj/item/device/gangtool
 	name = "suspicious device"
-	desc = "A strange device of sorts. Hard to really make out what it actually does if you don't know how to operate it."
+	desc = "A strange device of sorts. Hard to really make out what it actually does if you don't know how to operate it. May want to test the loyalty to Nanotrasen of the owner."
 	icon_state = "gangtool-white"
 	item_state = "walkietalkie"
 	throwforce = 0
@@ -9,12 +9,18 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	origin_tech = "programming=3;bluespace=2;syndicate=5"
+	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 3
 	var/free_pen = 0
 	var/promotable = 0
+
+/obj/item/device/gangtool/examine(mob/user)
+	..()
+	if((user.mind && user.mind.gang_datum) || isobserver(user))
+		user = "This small but complex Syndicate-manufactured device allows trained agents to access a variety of weapons and tools that will help them in taking over Nanotrasen stations."
+
 
 /obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
 	if(!ticker.mode.gang_points)
@@ -87,23 +93,61 @@
 			else
 				dat += "10mm Ammo<br>"
 
-			dat += "(60 Influence) "
-			if(points >= 60)
+			dat += "(45 Influence) "
+			if(points >= 45)
 				dat += "<a href='?src=\ref[src];purchase=uzi'>Uzi SMG</a><br>"
 			else
 				dat += "Uzi SMG<br>"
 
-			dat += "&nbsp;&#8627;(40 Influence) "
-			if(points >= 40)
+			dat += "&nbsp;&#8627;(15 Influence) "
+			if(points >= 15)
 				dat += "<a href='?src=\ref[src];purchase=9mmammo'>Uzi Ammo</a><br>"
 			else
 				dat += "Uzi Ammo<br>"
 
-			dat += "(1 Influence) "
-			if(points >=1)
-				dat += "<a href='?src=\ref[src];purchase=necklace'>Dope Necklace</a><br>"
+			dat += "(90 Influence) "
+			if(points >= 90)
+				dat += "<a href='?src=\ref[src];purchase=tommy gun'>Thompson SMG</a><br>"
 			else
-				dat += "Dope Necklace<br>"
+				dat += "Thompson SMG<br>"
+
+			dat += "&nbsp;&#8627;(25 Influence) "
+			if(points >= 25)
+				dat += "<a href='?src=\ref[src];purchase=.45ammo'>Thompson Ammo</a><br>"
+			else
+				dat += "Thompson Ammo<br>"
+
+			dat += "(1 Influence) "
+			if(points >= 1)
+				dat += "<a href='?src=\ref[src];purchase=gold necklace'>Gold Necklace</a><br>"
+			else
+				dat += "Gold Necklace<br>"
+
+			dat += "<br>"
+
+		//////////////////
+		// MARTIAL ARTS //
+		//////////////////
+
+		else if(gang.fighting_style == "martial")
+			dat += "(10 Influence) "
+			if(points >= 10)
+				dat += "<a href='?src=\ref[src];purchase=bostaff'>Bo Staff</a><br>"
+			else
+				dat += "Bo Staff<br>"
+
+			dat += "(25 Influence) "
+			if(points >= 25)
+				dat += "<a href='?src=\ref[src];purchase=scroll'>Sleeping Carp Scroll (one-use)</a><br>"
+			else
+				dat += "Sleeping Carp Scroll (one-use)<br>"
+
+			dat += "(55 Influence) "
+			if(points >= 55)
+				dat += "<a href='?src=\ref[src];purchase=throwing weapons box'>Throwing Weapons Box </a><br>"
+			else
+				dat += "Throwing Weapons Box <br>"
+
 
 			dat += "<br>"
 
@@ -113,14 +157,14 @@
 
 		dat += "<B>Purchase Equipment:</B><br>"
 
-		dat += "(5 Influence) "
-		if(points >= 5)
+		dat += "(3 Influence) "
+		if(points >= 3)
 			dat += "<a href='?src=\ref[src];purchase=spraycan'>Territory Spraycan</a><br>"
 		else
 			dat += "Territory Spraycan<br>"
 
-		dat += "(10 Influence) "
-		if(points >= 10)
+		dat += "(5 Influence) "
+		if(points >= 5)
 			dat += "<a href='?src=\ref[src];purchase=C4'>C4 Explosive</a><br>"
 		else
 			dat += "C4 Explosive<br>"
@@ -168,6 +212,7 @@
 
 
 
+
 /obj/item/device/gangtool/Topic(href, href_list)
 	if(!can_use(usr))
 		return
@@ -185,9 +230,9 @@
 		var/item_type
 		switch(href_list["purchase"])
 			if("spraycan")
-				if(gang.points >= 5)
+				if(gang.points >= 3)
 					item_type = /obj/item/toy/crayon/spraycan/gang
-					pointcost = 5
+					pointcost = 3
 			if("switchblade")
 				if(gang.points >= 10)
 					item_type = /obj/item/weapon/switchblade
@@ -205,31 +250,38 @@
 					item_type = /obj/item/ammo_box/magazine/m10mm
 					pointcost = 10
 			if("uzi")
-				if(gang.points >= 60)
+				if(gang.points >= 45)
 					item_type = /obj/item/weapon/gun/projectile/automatic/mini_uzi
-					pointcost = 60
+					pointcost = 45
 			if("9mmammo")
-				if(gang.points >= 40)
+				if(gang.points >= 15)
 					item_type = /obj/item/ammo_box/magazine/uzim9mm
-					pointcost = 40
+					pointcost = 15
 			if("scroll")
-				if(gang.points >= 30)
+				if(gang.points >= 25)
 					item_type = /obj/item/weapon/sleeping_carp_scroll
 					usr << "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
-					pointcost = 30
-			if("wrestlingbelt")
-				if(gang.points >= 20)
-					item_type = /obj/item/weapon/storage/belt/champion/wrestling
-					usr << "<span class='notice'>Anyone wearing the <b>wresting belt</b> will know how to be effective with wrestling.</span>"
-					pointcost = 20
+					pointcost = 25
 			if("bostaff")
 				if(gang.points >= 10)
 					item_type = /obj/item/weapon/twohanded/bostaff
 					pointcost = 10
+			if("throwing weapons box")
+				if(gang.points >= 55)
+					item_type = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
+					pointcost = 55
+			if("tommy gun")
+				if(gang.points >= 90)
+					item_type = /obj/item/weapon/gun/projectile/automatic/tommygun
+					pointcost = 90
+			if(".45mammo")
+				if(gang.points >= 25)
+					item_type = /obj/item/ammo_box/magazine/tommygunm45
+					pointcost = 25
 			if("C4")
-				if(gang.points >= 10)
+				if(gang.points >= 5)
 					item_type = /obj/item/weapon/grenade/plastic/c4
-					pointcost = 10
+					pointcost = 5
 			if("pen")
 				if((gang.points >= 50) || free_pen)
 					item_type = /obj/item/weapon/pen/gang
@@ -310,9 +362,6 @@
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
 	if(!message || !can_use(user))
 		return
-	if(user.z > 2)
-		user << "<span class='info'>\icon[src]Error: Station out of range.</span>"
-		return
 	var/list/members = list()
 	members += gang.gangsters
 	members += gang.bosses
@@ -329,12 +378,13 @@
 				gang_rank = "3rd Lieutenant"
 			else
 				gang_rank = "[gang_rank - 1]th Lieutenant"
-		var/ping = "<span class='danger'><B><i>[gang.name] [gang_rank]</i>: [message]</B></span>"
+		var/ping = "<span class='danger'><B><i>([gang.name] [gang_rank])</i> [usr.real_name]: [message]</B></span>"
 		for(var/datum/mind/ganger in members)
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [ping]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [ping]"
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 

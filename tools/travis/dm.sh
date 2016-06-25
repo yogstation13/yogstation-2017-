@@ -68,21 +68,13 @@ then
 		exit 3
 	fi
 	
-	"$dm" $dmepath.mdme 2>&1 | tee result.log
+	"$dm" $dmepath.mdme
 	retval=$?
-	if ! grep '0 errors, 0 warnings' result.log
-	then
-		retval=1 #hard fail, due to warnings or errors
-	fi
 else
 	if hash DreamMaker 2>/dev/null
 	then
-		DreamMaker $dmepath.mdme 2>&1 | tee result.log
+		DreamMaker $dmepath.mdme
 		retval=$?
-		if ! grep '0 errors, 0 warnings' result.log
-		then
-			retval=1 #hard fail, due to warnings or errors
-		fi
 	else
 		echo "Couldn't find the DreamMaker executable, aborting."
 		exit 3

@@ -133,6 +133,7 @@ var/global/list/RPD_recipes=list(
 	w_class = 3
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
+	var/abbreviated_name = "RPD"
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
 	var/p_type = PIPE_SIMPLE
@@ -167,7 +168,7 @@ var/global/list/RPD_recipes=list(
 	show_menu(user)
 
 /obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] points the end of the RPD down \his throat and presses a button! It looks like \he's trying to commit suicide...</span>")
+	user.visible_message("<span class='suicide'>[user] points the end of the [abbreviated_name] down \his throat and presses a button! It looks like \he's trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
@@ -452,7 +453,18 @@ var/global/list/RPD_recipes=list(
 	popup.open()
 	return
 
+/obj/item/weapon/pipe_dispenser/proc/handle_failed_topic(mob/user)
+	user << browse(null, "window=pipedispenser")
+
 /obj/item/weapon/pipe_dispenser/Topic(href, href_list)
+	if(!usr.canUseTopic(src))
+		handle_failed_topic(usr)
+		return
+	usr.set_machine(src)
+	src.add_fingerprint(usr)
+	handle_topic(href, href_list)
+
+/obj/item/weapon/pipe_dispenser/proc/handle_topic(href, href_list)
 	if(!usr.canUseTopic(src))
 		usr << browse(null, "window=pipedispenser")
 		return
@@ -517,8 +529,12 @@ var/global/list/RPD_recipes=list(
 
 
 /obj/item/weapon/pipe_dispenser/afterattack(atom/A, mob/user)
-	if(!in_range(A,user) || loc != user)
+	if(!in_range(A,user))
 		return 0
+	if(loc != user)
+		var/obj/item/weapon/rapid_engineering_device/RED = loc
+		if(!istype(RED) || !RED.loc == user)
+			return 0
 
 	if(!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -536,7 +552,7 @@ var/global/list/RPD_recipes=list(
 		if(PAINT_MODE) // Paint pipes
 			if(!istype(A,/obj/machinery/atmospherics/pipe))
 				// Avoid spewing errors about invalid mode -2 when clicking on stuff that aren't pipes.
-				user << "<span class='warning'>\The [src]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
+				user << "<span class='warning'>\The [abbreviated_name]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
 				return 0
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -559,11 +575,11 @@ var/global/list/RPD_recipes=list(
 				return 0
 
 			// Avoid spewing errors about invalid mode -1 when clicking on stuff that aren't pipes.
-			user << "<span class='warning'>The [src]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
+			user << "<span class='warning'>The [abbreviated_name]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
 			return 0
 		if(ATMOS_MODE)
 			if(!(istype(A, /turf)))
-				user << "<span class='warning'>The [src]'s error light flickers!</span>"
+				user << "<span class='warning'>The [abbreviated_name]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -578,7 +594,7 @@ var/global/list/RPD_recipes=list(
 
 		if(METER_MODE)
 			if(!(istype(A, /turf)))
-				user << "<span class='warning'>The [src]'s error light flickers!</span>"
+				user << "<span class='warning'>The [abbreviated_name]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -590,7 +606,7 @@ var/global/list/RPD_recipes=list(
 
 		if(DISPOSALS_MODE)
 			if(!isturf(A) || is_anchored_dense_turf(A))
-				user << "<span class='warning'>The [src]'s error light flickers!</span>"
+				user << "<span class='warning'>The [abbreviated_name]'s error light flickers!</span>"
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
