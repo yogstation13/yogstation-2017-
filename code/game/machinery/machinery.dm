@@ -137,6 +137,8 @@ Class Procs:
 	else
 		SSfastprocess.processing -= src
 	dropContents()
+	for(var/V in software)
+		qdel(V)
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -485,3 +487,8 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
+
+/obj/machinery/get_software_list()
+	if(!software)
+		software = list()
+	return software

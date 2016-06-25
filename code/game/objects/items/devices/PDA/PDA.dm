@@ -577,14 +577,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					var/list/viruses = list()
 					for(var/V in (typesof(/datum/software) - ABSTRACT_SOFTWARE))
 						viruses += new V()
-					var/datum/software/virus_selected = input(U, "Please select a virus to create.") as null|anything in viruses
+					var/datum/software/virus_selected = input(U, "Please select a piece of software to create.") as null|anything in viruses
 					for(var/V in viruses)
 						if(V != virus_selected)
 							qdel(V)
 					if(!virus_selected)
 						return
-					var/list/infect_options = PDAs
-					var/virus_target = input(U, "Please select a PDA to send [virus_selected] to.") as null|anything in infect_options
+					var/virus_target
+					if(istype(virus_selected, /datum/software/malware/stuxnet))
+						var/list/infect_options = machines
+						virus_target = input(U, "Please select a machine to send [virus_selected] to.") as null|anything in infect_options
+					else
+						var/list/infect_options = PDAs
+						virus_target = input(U, "Please select a PDA to send [virus_selected] to.") as null|anything in infect_options
 					if(!virus_target)
 						qdel(virus_selected)
 						return
@@ -960,6 +965,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
+	for(var/V in software)
+		qdel(V)
 	return ..()
 
 //AI verb and proc for sending PDA messages.
@@ -1065,14 +1072,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/emp_act(severity)
 	if(software)
 		for(var/V in software)
-			var/datum/software/M = V
-			M.onEMP()
+			var/datum/software/S = V
+			S.onEMP()
 
 	for(var/atom/A in src)
 		A.emp_act(severity)
 	emped += 1
 	spawn(200 * severity)
 		emped -= 1
+
+/obj/item/device/pda/get_software_list()
+	if(!software)
+		software = list()
+	return software
 
 /proc/get_viewable_pdas()
 	. = list()

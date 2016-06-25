@@ -646,8 +646,7 @@
 				if (do_after(user, 20/W.toolspeed, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
-						var/obj/item/weapon/electronics/airalarm/board = new /obj/item/weapon/electronics/airalarm( src.loc )
-						board.software
+						new /obj/item/weapon/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()

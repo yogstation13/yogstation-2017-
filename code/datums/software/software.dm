@@ -1,46 +1,32 @@
 var/list/datum/software/active_software = list()
 
-/proc/get_software_list(atom/target)
-	if(!target)
-		return null
-	if(istype(target, /obj/item/device/pda))
-		var/obj/item/device/pda/PDA = target
-		if(!PDA.software)
-			PDA.software = list()
-		return PDA.software
-	if(istype(target, /obj/machinery))
-		var/obj/machinery/M = target
-		if(!M.software)
-			M.software = list()
-		return M.software
-	if(istype(target, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = target
-		if(!M.software)
-			M.software = list()
-		return M.software
-	if(istype(target, /obj/item/weapon/electronics))
-		var/obj/item/weapon/electronics/E = target
-		if(!E.software)
-			E.software = list()
-		return E.software
+/atom/proc/get_software_list()
 	return null
 
 /proc/swap_software(var/atom/first, var/atom/second)
-	var/list/firstSoftware = get_software_list(first)
-	var/list/secondSoftware = get_software_list(second)
+	if(!first || !second)
+		return
+	var/list/firstSoftware = first.get_software_list()
+	var/list/secondSoftware = second.get_software_list()
+	if(!firstSoftware || !secondSoftware)
+		return
 	for(var/V in firstSoftware)
 		var/datum/software/S = V
-		V.attempt_infect(second)
+		S.attempt_infect(second)
 	for(var/V in secondSoftware)
 		var/datum/software/S = V
-		V.attempt_infect(first)
+		S.attempt_infect(first)
 
 /proc/transfer_software(var/atom/first, var/atom/second)
-	var/list/firstSoftware = get_software_list(first)
-	var/list/secondSoftware = get_software_list(second)
+	if(!first || !second)
+		return
+	var/list/firstSoftware = first.get_software_list()
+	var/list/secondSoftware = second.get_software_list()
+	if(!firstSoftware || !secondSoftware)
+		return
 	for(var/V in firstSoftware)
 		var/datum/software/S = V
-		V.infect(second)
+		S.infect(second)
 
 /datum/software
 	var/name = "malware"
@@ -110,7 +96,7 @@ var/list/datum/software/active_software = list()
 
 /datum/software/proc/uninfect(delete = 1)
 	if(host)
-		var/list/host_malware_list = get_software_list(host)
+		var/list/host_malware_list = host.get_software_list()
 		if(host_malware_list)
 			host_malware_list -= src
 	host = null
@@ -118,7 +104,7 @@ var/list/datum/software/active_software = list()
 		qdel(src)
 
 /datum/software/proc/infect(atom/target)
-	var/target_software_list = get_software_list(target)
+	var/target_software_list = target.get_software_list()
 	if(target_software_list)
 		for(var/V in target_software_list)
 			var/datum/software/other = V
@@ -141,6 +127,49 @@ var/list/datum/software/active_software = list()
 		uninfect()
 
 /datum/software/proc/onMachineTick()
+	if(flags & SOFTWARE_SPREAD_POWERNET)
+		if(istype(host, /obj/machinery/power))
+			var/obj/machinery/power/P = host
+			if(P.stat)
+				return
+			if(prob(20))
+				var/datum/powernet/powernet = P.powernet
+				if(istype(host, /obj/machinery/power/apc) || istype(host, /obj/machinery/power/smes))
+					var/obj/machinery/power/apc/APC = host
+					if(APC.terminal)
+						powernet = APC.terminal.powernet
+				if(powernet)
+					var/target = pick(powernet.nodes)
+					attempt_infect(target)
+			else
+				var/list/candidates = list()
+				var/area/a = get_area(P)
+				if(a)
+					var/list/areas = list(a) + a.related
+					for(var/A in areas)
+						a = A
+						for(var/obj/machinery/M in a)
+							if(M != host)
+								candidates += M
+					var/target = pick(candidates)
+					attempt_infect(target)
+
+		else if(istype(host, /obj/machinery))
+			var/obj/machinery/M = host
+			if(M.stat)
+				return
+			var/list/candidates = list()
+			var/area/a = get_area(M)
+			if(a)
+				var/list/areas = list(a) + a.related
+				for(var/A in areas)
+					a = A
+					for(var/obj/machinery/power/P in a)
+						if(P != host)
+							candidates += P
+				var/target = pick(candidates)
+				attempt_infect(target)
+
 	return
 
 /datum/software/proc/onActivate(mob/user)
