@@ -29,18 +29,15 @@
 /turf/open/space,
 /area/space)
 "aad" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 22;
-	id = "syndicate_nw";
-	name = "northwest of station";
-	turf_type = /turf/open/space;
-	width = 18
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
 	},
-/turf/open/space,
-/area/space)
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/turf/open/floor/plasteel,
+/area/ai_monitored/storage/eva)
 "aae" = (
 /obj/effect/landmark{
 	name = "carpspawn"
@@ -15876,9 +15873,7 @@
 	name = "Command EVA";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aEd" = (
 /obj/structure/grille,
@@ -16596,9 +16591,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aFA" = (
 /obj/machinery/light/small{
@@ -17299,11 +17292,11 @@
 	},
 /area/ai_monitored/storage/eva)
 "aGR" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
 	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aGS" = (
 /obj/machinery/door/firedoor/border_only,
@@ -24755,7 +24748,7 @@
 /area/crew_quarters/kitchen)
 "aXp" = (
 /obj/effect/landmark/start{
-	name = "Chef"
+	name = "Cook"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
@@ -24764,7 +24757,7 @@
 "aXq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start{
-	name = "Chef"
+	name = "Cook"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
@@ -42838,7 +42831,7 @@
 	},
 /area/crew_quarters/hor)
 "bGR" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
 	},
@@ -46557,7 +46550,7 @@
 /turf/closed/wall,
 /area/medical/cmo)
 "bNO" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
@@ -96354,7 +96347,7 @@ aAt
 aBH
 aAt
 aEc
-aFy
+aAt
 aGR
 aEd
 aaa
@@ -96612,7 +96605,7 @@ aAt
 aAt
 aEd
 aFz
-aGR
+aad
 aEd
 aaa
 aJQ
