@@ -127,6 +127,14 @@
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover) && mover.checkpass(JETPACKTABLE))
+		if(!iscarbon(mover))
+			message_admins("Error. CanPass() has detected a non-carbon mob with a JETPACKTABLE.([mover.x], [mover.y], [mover.z]). Report to a coder.")
+			return
+		var/mob/living/carbon/C = mover
+		var/obj/item/weapon/tank/jetpack/jetpacktable = C.get_jetpack()
+		if(jetpacktable && jetpacktable.on)
+			return 1
 	if(mover.throwing)
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
