@@ -48,6 +48,7 @@
 #define PASSMOB			16
 #define LETPASSTHROW	32
 #define PASSDOOR		64
+#define JETPACKTABLE	128
 
 //flags for species
 
