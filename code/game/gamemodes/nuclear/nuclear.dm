@@ -30,7 +30,7 @@
 		n_agents = antag_candidates.len
 
 	while(n_agents > 0)
-		var/datum/mind/new_syndicate = pick(antag_candidates)
+		var/datum/mind/new_syndicate = pick_candidate()
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
 		n_agents--

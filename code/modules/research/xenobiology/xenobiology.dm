@@ -166,21 +166,9 @@
 	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
-	if(being_used || !ismob(M))
-		return
-	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
-		return ..()
-	if(M.stat)
-		user << "<span class='warning'>[M] is dead!</span>"
+	if(!do_checks(M, user))
 		return ..()
 	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != sentience_type)
-		user << "<span class='warning'>The potion won't work on [SM].</span>"
-		return ..()
-
-
-
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
@@ -189,7 +177,8 @@
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages |= HUMAN
+		SM.languages_spoken |= HUMAN
+		SM.languages_understood |= HUMAN
 		SM.faction = user.faction
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
@@ -200,6 +189,21 @@
 		user << "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
 		being_used = 0
 		..()
+
+/obj/item/slimepotion/sentience/proc/do_checks(mob/living/M, mob/user)
+	if(being_used || !ismob(M))
+		return 0
+	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
+		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
+		return 0
+	if(M.stat)
+		user << "<span class='warning'>[M] is dead!</span>"
+		return 0
+	var/mob/living/simple_animal/SM = M
+	if(SM.sentience_type != sentience_type)
+		user << "<span class='warning'>The potion won't work on [SM].</span>"
+		return 0
+	return 1
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
@@ -236,7 +240,8 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages = user.languages
+	SM.languages_spoken = user.languages_spoken
+	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()

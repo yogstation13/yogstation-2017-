@@ -35,6 +35,8 @@
 			return -1
 		if(target.mind in ticker.mode.revolutionaries)
 			ticker.mode.remove_revolutionary(target.mind)
+		if(ticker.mode.is_cyberman(target.mind))
+			target << "<span class='notice'>Your cyberman body silenty disables the Nanotrasen nanobots as they enter your bloodstream. You appear to be implanted, but the implant has no effect.</span>"
 		if((target.mind in ticker.mode.cult) || (target.mind in ticker.mode.blue_deity_prophets|ticker.mode.red_deity_prophets|ticker.mode.red_deity_followers|ticker.mode.blue_deity_followers))
 			target << "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>"
 		else

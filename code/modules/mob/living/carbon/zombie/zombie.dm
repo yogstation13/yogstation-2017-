@@ -18,7 +18,8 @@
 	icon_state = "zombie1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	//languages = ZOMBIE
+	//languages_spoken = ZOMBIE
+	//languages_understood = ZOMBIE
 	ventcrawler = 1
 
 /mob/living/carbon/human/zombie/New()

@@ -1,4 +1,3 @@
-
 //Preference toggles
 #define SOUND_ADMINHELP	1
 #define SOUND_MIDI		2
@@ -31,23 +30,3 @@
 #define CHAT_GHOSTRADIO 512
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO)
-
-//Antag toggles
-#define BE_TRAITOR		"role_traitor"
-#define BE_DOUBLEAGENT "role_doubleagent"
-#define BE_OPERATIVE	"role_operative"
-#define BE_CHANGELING	"role_changeling"
-#define BE_WIZARD		"role_wizard"
-#define BE_REV			"role_rev"
-#define BE_ALIEN		"role_alien"
-#define BE_PAI			"role_pai"
-#define BE_CULTIST		"role_cultist"
-#define BE_BLOB			"role_blob"
-#define BE_NINJA		"role_ninja"
-#define BE_MONKEY		"role_monkey"
-#define BE_GANG			"role_gang"
-#define BE_SHADOWLING	"role_shadowling"
-#define BE_ABDUCTOR		"role_abductor"
-#define BE_REVENANT		"role_revenant"
-#define BE_ZOMBIE		"role_zombie"
-#define BE_CYBERMAN		"role_cyberman"

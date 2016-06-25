@@ -103,7 +103,7 @@
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
 	l_pocket = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
-	r_pocket = /obj/item/weapon/bikehorn
+	r_pocket = /obj/item/device/assembly/bikehorn
 	id = /obj/item/weapon/card/id
 	r_hand = /obj/item/weapon/twohanded/fireaxe
 
@@ -384,6 +384,71 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/weapon/tank/internals/oxygen
 
+/datum/outfit/recovery_agent // THROWBACK TO .... 2014?
+	name = "Recovery Agent"
+	uniform = /obj/item/clothing/under/suit_jacket
+	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/HoS/beret/recovery
+	back = /obj/item/weapon/storage/backpack/satchel_sec
+	ears = /obj/item/device/radio/headset/headset_med
+	belt = /obj/item/weapon/storage/belt/utility/full
+	id = /obj/item/weapon/card/id
+	l_pocket = /obj/item/device/sensor_device
+	r_pocket = /obj/item/device/flashlight/flare
+
+	backpack_contents = list(/obj/item/weapon/storage/box/survival=1,\
+		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/storage/box/bodybags=1)
+
+/datum/outfit/recovery_agent/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
+	L.imp_in = H
+	L.implanted = 1
+	H.sec_hud_set_implants()
+
+	var/obj/item/weapon/card/id/W = H.wear_id
+	W.assignment = "Recovery Agent"
+	W.registered_name = H.real_name
+	W.update_label()
 
 
+	H << "<span class='alert'>You are NOT security. You are NOT a head of department. You will NOT challenge a head of department and nor will you meddle in securities affairs. You have a gun ONLY to defend your valuable all-access ID. If you see criminals, you MAY stun them, and take the body they are holding. Nothing more. You MAY report their location, Nothing more. You are NOT security. Your job is to recover bodies to the morgue to ensure more players get to play a fair game. ( for more information https://wiki.yogstation.net/index.php?title=Recovery_Agent_manual )</span>"
 
+
+/datum/outfit/recovery_throwback // for adminbuse.
+	name = "Recovery Agent Throwback"
+	shoes = /obj/item/clothing/shoes/combat/swat
+	glasses = /obj/item/clothing/glasses/sunglasses
+	head = /obj/item/clothing/head/helmet/space/beret
+	uniform = /obj/item/clothing/under/acj
+	suit = /obj/item/clothing/suit/space/officer
+	ears = /obj/item/device/radio/headset/headset_cent
+	gloves = /obj/item/clothing/gloves/combat
+	belt = /obj/item/weapon/storage/belt/utility/full
+	r_pocket = /obj/item/weapon/restraints/handcuffs
+	l_pocket = /obj/item/device/flashlight/flare
+	back = /obj/item/weapon/storage/backpack/holding
+	id = /obj/item/weapon/card/id
+
+	backpack_contents = list(/obj/item/weapon/storage/box/survival=1,\
+		/obj/item/weapon/gun/energy/gun/hos=1,\
+		/obj/item/weapon/shield/riot/tele=1)
+
+/datum/outfit/recovery_throwback/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/weapon/card/id/W = H.wear_id
+	W.assignment = "Recovery Agent"
+	W.registered_name = "[H.real_name] Throwback"
+	W.update_label()
+
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
+	L.imp_in = H
+	L.implanted = 1
+	H.sec_hud_set_implants()

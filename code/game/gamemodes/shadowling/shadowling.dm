@@ -89,7 +89,7 @@ Made by Xhuis
 
 
 	while(shadowlings)
-		var/datum/mind/shadow = pick(antag_candidates)
+		var/datum/mind/shadow = pick_candidate()
 		shadows += shadow
 		antag_candidates -= shadow
 		modePlayer += shadow

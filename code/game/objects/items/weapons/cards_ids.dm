@@ -177,6 +177,12 @@ update_label("John Doe", "Clowny")
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
+/obj/item/weapon/card/id/syndicate/abductor
+	name = "abductor agent card"
+	desc = "A card that can copy access from the IDs of abductees."
+	access = list()
+	origin_tech = "abductor=3"
+
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."

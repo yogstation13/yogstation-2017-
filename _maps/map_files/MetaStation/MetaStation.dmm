@@ -553,7 +553,7 @@
 	})
 "abj" = (
 /obj/item/weapon/soap/nanotrasen,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/machinery/shower{
 	dir = 4
 	},
@@ -6312,7 +6312,7 @@
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/weapon/mop,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 2;
 	name = "2maintenance loot spawner"
@@ -16296,7 +16296,7 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -34606,7 +34606,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/computer/communications{
+/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -38833,7 +38833,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /obj/machinery/light_switch{
 	pixel_x = -28;
 	pixel_y = 0
@@ -63016,7 +63016,7 @@
 	dir = 8
 	},
 /obj/item/clothing/mask/pig,
-/obj/item/weapon/bikehorn,
+/obj/item/device/assembly/bikehorn,
 /obj/structure/table/wood,
 /obj/structure/sign/poster{
 	pixel_x = -32;

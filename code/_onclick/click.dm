@@ -52,7 +52,7 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-	
+
 	if(client.prefs.afreeze)
 		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
@@ -203,6 +203,9 @@
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
+	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
+		next_click = world.time + 5
+		mind.cyberman.initiate_hack(A)
 	else
 		swap_hand()
 
@@ -253,6 +256,9 @@
 	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
+	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
+		next_click = world.time + 5
+		mind.cyberman.initiate_hack(A)
 	else
 		..()
 

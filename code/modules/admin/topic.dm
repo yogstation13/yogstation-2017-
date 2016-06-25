@@ -131,6 +131,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a shadowling.")
+			if("17")
+				if(src.makeCyberman())
+					message_admins("[key_name(usr)] created a cyberman.")
+					log_admin("[key_name(usr)] created a cyberman.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a cyberman. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a cyberman.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -2333,3 +2340,32 @@
 		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 
+	else if(href_list["cybermen"])
+		if(!check_rights(R_ADMIN))
+			return
+		switch(href_list["cybermen"])
+			if("1")//refresh
+				cybermen_panel()
+			if("2")//force complete objective
+				force_complete_cybermen_objective()
+			if("3")//set objective
+				set_cybermen_objective()
+			if("4")//display objective
+				cyberman_network.display_current_cybermen_objective()
+			if("5")//message all cybermen
+				cybermen_collective_broadcast()
+			if("6")//set random objective
+				reroll_cybermen_objective()
+			if("7")//initialize network
+				if(!cyberman_network)
+					message_admins("[key_name_admin(usr)] attempted to initialize a Cyberman Network without any Cybermen.")
+					new /datum/cyberman_network()
+			if("8")//broadcast log
+				cyberman_broadcast_log()
+			if("9")//hacking log
+				cyberman_hacking_log()
+			if("10")//varedit-y stuff
+				cyberman_varedit(href_list)
+			if("11")
+				set_cybermen_queued_objective()
+		cybermen_panel()//refresh the page.

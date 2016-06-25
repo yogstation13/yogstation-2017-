@@ -386,6 +386,7 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+	character.mind.quiet_round = character.client.prefs.toggles & QUIET_ROUND
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	var/D = pick(latejoin)
@@ -413,7 +414,7 @@
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists)
+	if(config.allow_latejoin_antagonists && !character.mind.quiet_round)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
 				ticker.mode.make_antag_chance(character)

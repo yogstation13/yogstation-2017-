@@ -61,7 +61,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gangs += G
 
 		//Now assign a boss for the gang
-		var/datum/mind/boss = pick(antag_candidates)
+		var/datum/mind/boss = pick_candidate()
 		antag_candidates -= boss
 		G.bosses += boss
 		boss.gang_datum = G

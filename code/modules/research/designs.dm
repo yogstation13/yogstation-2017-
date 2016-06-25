@@ -222,6 +222,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
+/datum/design/fannypack_holding
+	name = "Fannypack of Holding"
+	desc = "A Fannypack that opens into a localized pocket of Blue Space. But at what cost?"
+	id = "fannypack_holding"
+	req_tech = list("bluespace" = 3, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 3000, MAT_URANIUM = 250)
+	build_path = /obj/item/weapon/storage/belt/fannypack/holding
+	category = list("Bluespace Designs")
+
 /datum/design/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
 	desc = "A small blue crystal with mystical properties."
@@ -240,6 +250,26 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
 	build_path = /obj/item/device/gps
+	category = list("Bluespace Designs")
+
+/datum/design/tsbeacon
+	name = "Telescience Beacon"
+	desc = "A bluespace beacon that provides a target for the telepad."
+	id = "telesci_beacon"
+	req_tech = list("materials" = 2, "magnets" = 2, "bluespace" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
+	build_path = /obj/item/device/tsbeacon
+	category = list("Bluespace Designs")
+
+/datum/design/tsadvbeacon
+	name = "Advanced Telescience Beacon"
+	desc = "An advanced telescience beacon with higher operating range."
+	id = "telesci_advbeacon"
+	req_tech = list("materials" = 6, "bluespace" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_DIAMOND = 500, MAT_METAL = 500, MAT_GLASS = 1000)
+	build_path = /obj/item/device/tsbeacon/advanced
 	category = list("Bluespace Designs")
 
 /datum/design/miningsatchel_holding
@@ -361,7 +391,7 @@ datum/design/diagnostic_hud_night
 	req_tech = list("materials" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_BANANIUM = 1000)
-	build_path = /obj/item/weapon/bikehorn/airhorn
+	build_path = /obj/item/device/assembly/bikehorn/airhorn
 	category = list("Equipment")
 
 /datum/design/mesons

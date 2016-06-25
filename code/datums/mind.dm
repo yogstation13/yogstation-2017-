@@ -31,6 +31,7 @@
 
 /datum/mind
 	var/key
+	var/ckey
 	var/name				//replaces mob/var/original_name
 	var/mob/living/current
 	var/list/slime_bodies = list()
@@ -64,9 +65,11 @@
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+	var/quiet_round = 0 //Won't be picked as target in most cases
 
 /datum/mind/New(var/key)
 	src.key = key
+	ckey = ckey(key)
 	soulOwner = src
 
 
@@ -235,6 +238,8 @@
 		return
 
 	var/out = "<B>[name]</B>[(current&&(current.real_name!=name))?" (as [current.real_name])":""]<br>"
+	if(quiet_round)
+		out += "<font color=red><b>QUIET ROUND ACTIVE</b></font> (<a href='?src=\ref[src];quiet_override=1'>Override</a>)<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
 	out += "Assigned role: [assigned_role]. <a href='?src=\ref[src];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
@@ -247,6 +252,7 @@
 		"changeling",
 		"nuclear",
 		"traitor", // "traitorchan",
+		"cyberman",
 		"monkey",
 		"clockcult"
 	)
@@ -539,6 +545,23 @@
 		text += "|HOG Disabled in Prefs"
 
 	sections["follower"] = text
+
+	/** CYBERMAN **/
+	text = "cyberman"
+	if(ticker.mode.config_tag == "cybermen")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(ticker.mode.is_cyberman(src) )
+		text += "<b>CYBERMAN</b>|<a href='?src=\ref[src];cyberman=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];cyberman=cyberman'>cyberman</a>|<b>HUMAN</b>"
+
+	if(current && current.client && (ROLE_CYBERMAN in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["cyberman"] = text
 
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
@@ -1360,6 +1383,21 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
+	else if(href_list["cyberman"])
+		switch(href_list["cyberman"])
+			if("clear")
+				if(ticker.mode.is_cyberman(src))
+					ticker.mode.remove_cyberman(src ,"<span class='userdanger'>Your cyberman implants have dissolved! You are no longer a cyberman!</span>")
+					message_admins("[key_name_admin(usr)] has de-cyberman'ed [current].")
+					log_admin("[key_name(usr)] has de-cyberman'ed [current].")
+			if("cyberman")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.add_cyberman(src, "<span class='userdanger'>Suddenly, you feel new, digital senses in your mind. You are now a cyberman!</span>")
+				message_admins("[key_name_admin(usr)] has cyberman'ed [current].")
+				log_admin("[key_name(usr)] has cyberman'ed [current].")
+
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -1390,6 +1428,10 @@
 			current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
+	else if (href_list["quiet_override"])
+		quiet_round = 0
+		message_admins("[key_name_admin(usr)] has disabled [current]'s quiet round mode.")
+		log_admin("[key_name(usr)] has disabled [current]'s quiet round mode.")
 	edit_memory()
 
 /datum/mind/proc/find_syndicate_uplink()
@@ -1405,6 +1447,8 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.traitors))
 		ticker.mode.traitors += src
 		special_role = "traitor"
@@ -1413,6 +1457,8 @@
 		ticker.mode.greet_traitor(src)
 
 /datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0, telecrystals = TRUE)
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)
@@ -1445,6 +1491,8 @@
 			current.real_name = "[syndicate_name()] Operative #[ticker.mode.syndicates.len-1]"
 
 /datum/mind/proc/make_Changling()
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.changelings))
 		ticker.mode.changelings += src
 		current.make_changeling()
@@ -1454,6 +1502,8 @@
 		ticker.mode.update_changeling_icons_added(src)
 
 /datum/mind/proc/make_Wizard()
+	if(quiet_round)
+		return
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
 		special_role = "Wizard"
@@ -1575,10 +1625,12 @@
 	if(teleport=="Yes")
 		switch(role)
 			if("Agent")
+				special_role = "abductor agent"
 				S.agent = 1
 				L = agent_landmarks[team]
 				H.loc = L.loc
 			if("Scientist")
+				special_role = "abductor scientist"
 				S.scientist = 1
 				L = agent_landmarks[team]
 				H.loc = L.loc
@@ -1757,6 +1809,7 @@
 /mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key
+		mind.ckey = ckey
 
 	else
 		mind = new /datum/mind(key)
@@ -1765,7 +1818,8 @@
 		else
 			spawn(0)
 				throw EXCEPTION("mind_initialize(): No ticker ready")
-	if(!mind.name)	mind.name = real_name
+	if(!mind.name)
+		mind.name = real_name
 	mind.current = src
 
 //HUMAN

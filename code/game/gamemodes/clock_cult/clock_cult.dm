@@ -180,7 +180,7 @@ This file's folder contains:
 		restricted_jobs += "Assistant"
 	var/starter_servants = max(1, round(num_players() / 10)) //Guaranteed one cultist - otherwise, about one cultist for every ten players
 	while(starter_servants)
-		var/datum/mind/servant = pick(antag_candidates)
+		var/datum/mind/servant = pick_candidate()
 		servants_to_serve += servant
 		antag_candidates -= servant
 		modePlayer += servant

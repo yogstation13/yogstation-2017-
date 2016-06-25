@@ -85,6 +85,10 @@
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
 				stat("Absorbed DNA", mind.changeling.absorbedcount)
+			if(mind.cyberman)
+				stat("Hacking Module: [mind.cyberman.quickhack ? "Enabled" : "Disabled"] [mind.cyberman.emp_hit ? "%$&ERROR EMP DAMAGE [mind.cyberman.emp_hit]% #?@": ""]")
+				for(var/obj/status_obj in mind.cyberman.get_status_objs(src))
+					stat("", status_obj)
 
 
 	//NINJACODE
@@ -317,6 +321,13 @@
 			heart_attack = 0
 			if(stat == CONSCIOUS)
 				src << "<span class='notice'>You feel your heart beating again!</span>"
+	//CYBERMEN STUFF
+	//I'd prefer to have an event-listener setup. see emp_act in human_defense.
+	if(cyberman_network)
+		for(var/datum/cyberman_hack/human/H in cyberman_network.active_cybermen_hacks)
+			if(H.target == src)
+				H.electrocute_act()
+				break
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock)
 	if(.)
 		electrocution_animation(40)
