@@ -362,6 +362,10 @@
 	storage_slots = 3
 	max_w_class = 2
 
+/obj/item/weapon/storage/belt/fannypack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is putting on [src]! It looks like \he's trying to commit social suicide.</span>")
+	return(OXYLOSS)
+
 /obj/item/weapon/storage/belt/fannypack/holding
 	name = "fannypack of holding"
 	desc = "As dorky as this device looks, it's incredibly useful."
@@ -369,7 +373,7 @@
 	item_state = "fannypack_white"
 	origin_tech = "bluespace=4"
 	storage_slots = 28
-	max_w_class = 5
+	max_w_class = 3
 	max_combined_w_class = 35
 
 /obj/item/weapon/storage/belt/fannypack/holding/can_be_inserted(obj/item/I)
