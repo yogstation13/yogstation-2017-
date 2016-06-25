@@ -29,18 +29,11 @@
 /turf/open/space,
 /area/space)
 "aad" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 22;
-	id = "syndicate_nw";
-	name = "northwest of station";
-	turf_type = /turf/open/space;
-	width = 18
+/obj/structure/closet/secure_closet/collars,
+/turf/open/floor/plasteel{
+	icon_state = "dark"
 	},
-/turf/open/space,
-/area/space)
+/area/ai_monitored/security/armory)
 "aae" = (
 /obj/effect/landmark{
 	name = "carpspawn"
@@ -97343,7 +97336,7 @@ aaa
 aaa
 aaa
 abJ
-aci
+aad
 acO
 adk
 adP
