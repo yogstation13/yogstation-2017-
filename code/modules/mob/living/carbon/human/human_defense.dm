@@ -112,19 +112,17 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
-	var/informed = 0
-	for(var/obj/item/bodypart/L in src.bodyparts)
-		if(L.status == ORGAN_ROBOTIC)
-			if(!informed)
-				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
-				informed = 1
-			switch(severity)
-				if(1)
-					L.take_damage(0,10)
-					src.Stun(10)
-				if(2)
-					L.take_damage(0,5)
-					src.Stun(5)
+	if (dna)
+		dna.species.handle_emp(src, severity)
+	//CYBERMEN STUFF
+	//I'd prefer to have a event-listener system set up for this, but for now this will do.
+	if(ticker.mode.is_cyberman(src.mind))
+		src.mind.cyberman.emp_act(src, severity)
+	else
+		if(cyberman_network)
+			for(var/datum/cyberman_hack/human/H in cyberman_network.active_cybermen_hacks)
+				if(H.target == src)
+					H.emp_act(severity)
 	..()
 
 /mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
@@ -237,7 +235,6 @@
 		if(.)
 			damaged += .
 
-
 	//DAMAGE//
 	for(var/obj/item/bodypart/affecting in damaged)
 		affecting.take_damage(acidity, 2*acidity)
@@ -267,7 +264,6 @@
 	for(var/obj/item/I in inventory_items_to_kill)
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
-
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -349,7 +345,9 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
+			return ..()
+	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
@@ -360,7 +358,7 @@
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
-					I.add_blood(src)//it embedded itself in you, of course it's bloody!
+					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")

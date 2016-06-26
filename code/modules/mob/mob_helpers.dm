@@ -1,8 +1,8 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/loyalty/L in A)
+/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mindshield/L in A)
 		if(L && L.implanted)
 			return 1
 	return 0
@@ -216,6 +216,33 @@
 
 	return returntext
 
+/proc/Gibberish2(t, p)//made p have more of an impact, allowing the gibberish to scale with it more.
+	var/returntext = ""
+	for(var/i = 1, i <= length(t), i++)
+
+		var/letter = copytext(t, i, i+1)
+		if(prob(p))
+			if(prob(p*p/100))//as p approaches 100, the chance of removing a letter goes up greatly, up to 100% at p == 100.
+				letter = ""
+
+			for(var/j = 1, j <= rand(0, 2), j++)
+				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+
+		returntext += letter
+
+	return returntext
+
+/proc/binaryspeech(message)//replaces non-spaces with random 1s and 0s.
+	var/strippedMessage = html_decode(message)
+	var/counter = lentext(strippedMessage)
+	var/newMessage = ""
+	while(counter > 0)
+		var/newLetter = copytext(strippedMessage, counter, counter+1)
+		if(newLetter != " ")
+			newLetter = pick("1", "0")
+		newMessage = "[newLetter]" + newMessage
+		counter--
+	return newMessage
 
 /proc/ninjaspeak(n) //NINJACODE
 /*

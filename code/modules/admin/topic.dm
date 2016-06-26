@@ -11,8 +11,6 @@
 		var/client/C = locate(href_list["rejectadminhelp"])
 		if(!C)
 			return
-		if (deltimer(C.adminhelptimerid))
-			C.giveadminhelpverb()
 
 		C << 'sound/effects/adminhelp.ogg'
 
@@ -133,6 +131,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a shadowling.")
+			if("17")
+				if(src.makeCyberman())
+					message_admins("[key_name(usr)] created a cyberman.")
+					log_admin("[key_name(usr)] created a cyberman.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a cyberman. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a cyberman.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -157,8 +162,9 @@
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"])
 		var/adminckey = href_list["dbsearchadmin"]
 		var/playerckey = href_list["dbsearchckey"]
+		var/step = href_list["step"]
 
-		DB_ban_panel(playerckey, adminckey)
+		DB_ban_panel(playerckey, adminckey, step)
 		return
 
 	else if(href_list["dbbanedit"])
@@ -1580,6 +1586,14 @@
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
+	else if(href_list["adminticketview"])
+		for(var/i = tickets_list.len, i >= 1, i--)
+			var/datum/admin_ticket/T = tickets_list[i]
+			if(T.ticket_id == text2num(href_list["adminticketview"]))
+				T.view_log()
+				return
+		usr << "<span class='adminnotice'>There is no ticket with the ID of [href_list["adminticketview"]]!</span>"
+
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
@@ -1608,7 +1622,7 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
-	
+
 	else if(href_list["admincheckdevilinfo"])
 		output_devil_info()
 
@@ -1792,6 +1806,95 @@
 
 		var/mob/M = locate(href_list["jumpto"])
 		usr.client.jumptomob(M)
+
+	else if(href_list["afreeze"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["afreeze"])
+		if(istype(M))
+			M.toggleafreeze(usr)
+
+	else if(href_list["forceagree"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["forceagree"])
+		if(M && M.client && M.client.prefs)
+			M.client.prefs.agree = -1
+			M.client.prefs.save_preferences()
+			log_admin("[src.owner] forced the rules to appear every time for [key_name(M)].")
+			message_admins("[src.owner] forced the rules to appear every time for [key_name(M)].")
+
+	else if(href_list["resetagree"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["resetagree"])
+		if(M && M.client && M.client.prefs)
+			M.client.prefs.agree = 0
+			M.client.prefs.save_preferences()
+			log_admin("[src.owner] reset the rules popup for [key_name(M)].")
+			message_admins("[src.owner] reset the rules popup for [key_name(M)].")
+
+	else if(href_list["fixagree"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["fixagree"])
+		if(M && M.client && M.client.prefs)
+			M.client.prefs.agree = MAXAGREE
+			M.client.prefs.save_preferences()
+			log_admin("[src.owner] stopped forcing the rules popup for [key_name(M)].")
+			message_admins("[src.owner] stopped forcing the rules popup for [key_name(M)].")
+
+	else if(href_list["antag_token_increase"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/reason = input("","What reason are you giving an antag token?") as text
+		if(length(reason) < 5)
+			usr << "That reason isn't good enough! Cancelling."
+			return
+
+		var/mob/M = locate(href_list["antag_token_increase"])
+		var/tokens = antag_token_add(M)
+		var/msg = "ANTAGTOKENS [get_ckey(usr)] increased the antag token count for [get_ckey(M)]: [tokens] (reason: [reason])"
+		log_admin(msg)
+		for(var/client/X in admins)
+			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
+		show_player_panel(M)
+
+	else if(href_list["antag_token_decrease"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/reason = input("","What reason are you giving an antag token?") as text
+		if(length(reason) < 5)
+			usr << "That reason isn't good enough! Cancelling."
+			return
+
+		var/mob/M = locate(href_list["antag_token_decrease"])
+		var/tokens = antag_token_use(M)
+		var/msg = "ANTAGTOKENS [get_ckey(usr)] decreased the antag token count for [get_ckey(M)]: [tokens] (reason: [reason])"
+		log_admin(msg)
+		for(var/client/X in admins)
+			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
+		show_player_panel(M)
+
+	else if(href_list["toggle_whitelisted"])
+		if(!check_rights(R_PERMISSIONS))	return
+
+		var/mob/M = locate(href_list["toggle_whitelisted"])
+
+		var/reason = input("","What reason are you giving for toggling the whitelist for [get_ckey(M)]?") as text
+		if(length(reason) < 5)
+			usr << "That reason isn't good enough! Cancelling."
+			return
+
+		var/client/C = get_client(M)
+		C.is_whitelisted = !C.is_whitelisted
+		set_job_whitelisted(M, C.is_whitelisted)
+
+		var/msg = "WHITELISTED [get_ckey(usr)] toggled whitelist for [get_ckey(M)]: [C.is_whitelisted] (reason: [reason])"
+		log_admin(msg)
+		for(var/client/X in admins)
+			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
+		show_player_panel(M)
 
 	else if(href_list["getmob"])
 		if(!check_rights(R_ADMIN))
@@ -2229,3 +2332,33 @@
 
 		custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
+
+	else if(href_list["cybermen"])
+		if(!check_rights(R_ADMIN))
+			return
+		switch(href_list["cybermen"])
+			if("1")//refresh
+				cybermen_panel()
+			if("2")//force complete objective
+				force_complete_cybermen_objective()
+			if("3")//set objective
+				set_cybermen_objective()
+			if("4")//display objective
+				cyberman_network.display_current_cybermen_objective()
+			if("5")//message all cybermen
+				cybermen_collective_broadcast()
+			if("6")//set random objective
+				reroll_cybermen_objective()
+			if("7")//initialize network
+				if(!cyberman_network)
+					message_admins("[key_name_admin(usr)] attempted to initialize a Cyberman Network without any Cybermen.")
+					new /datum/cyberman_network()
+			if("8")//broadcast log
+				cyberman_broadcast_log()
+			if("9")//hacking log
+				cyberman_hacking_log()
+			if("10")//varedit-y stuff
+				cyberman_varedit(href_list)
+			if("11")
+				set_cybermen_queued_objective()
+		cybermen_panel()//refresh the page.

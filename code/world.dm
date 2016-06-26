@@ -1,3 +1,5 @@
+/var/yog_round_number = 0
+
 /world
 	mob = /mob/new_player
 	turf = /turf/open/space
@@ -23,10 +25,21 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
+	admindiary = file("data/logs/[date_string] Admin.log")
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	admindiary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
+
+	var/roundfile = file("data/roundcount.txt")
+	yog_round_number = text2num(file2text(roundfile))
+	if(yog_round_number == null || yog_round_number == "" || yog_round_number == 0)
+		yog_round_number = 1
+	else
+		yog_round_number++
+	fdel(roundfile)
+	text2file(num2text(yog_round_number), roundfile)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -36,9 +49,14 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
+	jobban_loadbanfile()
 	appearance_loadbanfile()
+	jobban_updatelegacybans()
 	LoadBans()
+	load_donators()
 	investigate_reset()
+
+	setup_pretty_filter()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		config.server_name += " #[(world.port % 1000) / 100]"
@@ -66,6 +84,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
+	config.Tickcomp = 0
+	world.fps = 20
 
 	return
 
@@ -91,15 +111,6 @@ var/last_irc_status = 0
 			if(M.client)
 				n++
 		return n
-
-	else if("ircstatus" in input)
-		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
-			return
-		var/list/adm = get_admin_counts()
-		var/status = "Admins: [Sum(adm)] (Active: [adm["admins"]] AFK: [adm["afkadmins"]] Stealth: [adm["stealthadmins"]] Skipped: [adm["noflagadmins"]]). "
-		status += "Players: [clients.len] (Active: [get_active_player_count()]). Mode: [master_mode]."
-		send2irc("Status", status)
-		last_irc_status = world.time
 
 	else if("status" in input)
 		var/list/s = list()
@@ -139,7 +150,16 @@ var/last_irc_status = 0
 
 		return list2params(s)
 
-	else if("announce" in input)
+	else if("adminwho" in input)
+		var/msg = "Current Admins:\n"
+		for(var/client/C in admins)
+			msg += "\t[C] is a [C.holder.rank]"
+			if(C.is_afk())
+				msg += " (AFK)"
+			msg += "\n"
+		return msg
+	
+	else if(copytext(T,1,9) == "announce")
 		if(!key_valid)
 			return "Bad Key"
 		else
@@ -148,13 +168,68 @@ var/last_irc_status = 0
 				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
 					C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
+	else if (copytext(T,1,5) == "asay")
+		//var/input[] = params2list(T)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				var/msg = "<span class='adminobserver'><span class='prefix'>DISCORD ADMIN:</span> <EM>[input["admin"]]</EM>: <span class='message'>[input["asay"]]</span></span>"
+				admins << msg
+	else if (copytext(T,1,4) == "ooc")
+		//var/input[] = params2list(T)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				for(var/client/C in clients)
+					//if(C.prefs.chat_toggles & CHAT_OOC) // Discord OOC should bypass preferences.
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>DISCORD OOC:</span> <EM>[input["admin"]]:</EM> <span class='message'>[input["ooc"]]</span></span></font>"
+	else if (copytext(T,1,7) == "reboot")
+		//var/input[] = params2list(T)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				Reboot(null, null, null, null, 1)
+	else if (copytext(T,1,7) == "ticket")
+		//var/input[] = params2list(T)
+		if(global.comms_allowed)
+			if(input["key"] != global.comms_key)
+				return "Bad Key"
+			else
+				var/action = input["action"]
+				var/msg = "Theres [total_unresolved_tickets()] unresolved tickets out of [tickets_list.len] tickets."
+				if(action == "list")
+					msg += "\nCurrent unresolved tickets:"
+					for(var/i = tickets_list.len, i >= 1, i--)
+						var/datum/admin_ticket/ticket = tickets_list[i]
+						if(!ticket.resolved)
+							msg += "\n    #[ticket.ticket_id]. Opened by: [ticket.owner_ckey] Title: \"[ticket.title]\""
+				if(action == "log")
+					var/datum/admin_ticket/ticket
+					for(var/i = tickets_list.len, i >= 1, i--)
+						var/datum/admin_ticket/ticket2 = tickets_list[i]
+						if(ticket2.ticket_id == text2num(input["id"]))
+							ticket = ticket2
+					if(!ticket)
+						return "Ticket not found"
+					msg += "\n Ticket #[ticket.ticket_id] log:"
+					if(ticket.ticket_id == text2num(input["id"]))
+						for(var/i = 1; i <= ticket.log.len; i++)
+							var/datum/ticket_log/item = ticket.log[i]
+							msg += "\n    [item.toSanitizedString()]"
+				if(action == "reply")
+					for(var/i = tickets_list.len, i >= 1, i--)
+						var/datum/admin_ticket/ticket = tickets_list[i]
+						if(ticket.ticket_id == text2num(input["id"]))
+							var/datum/ticket_log/log_item = null
+							log_item = new /datum/ticket_log(ticket, input["admin"], input["response"], 0)
+							ticket.log += log_item
+							ticket.owner << "<span class='ticket-header-recieved'>-- Administrator private message --</span>"
+							ticket.owner << "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>"
+				return msg
 
-	else if("crossmessage" in input)
-		if(!key_valid)
-			return
-		else
-			if(input["crossmessage"] == "Ahelp")
-				relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message"]]</b></span>")
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
@@ -227,6 +302,36 @@ var/inerror = 0
 	inerror = 0
 	return ..(e)
 
+/world/proc/manage_fps()
+	var/count = player_list.len
+
+	var/oldTC = config.Tickcomp
+	var/oldFPS = world.fps
+
+	if(count < 50)
+		config.Tickcomp = 0
+		world.fps = 22
+	else if(count < 60)
+		config.Tickcomp = 0
+		world.fps = 21
+	else if(count < 70)
+		config.Tickcomp = 0
+		world.fps = 20
+	else if(count < 80)
+		config.Tickcomp = 0
+		world.fps = 19
+	else if(count < 90)
+		config.Tickcomp = 0
+		world.fps = 18
+	else
+		config.Tickcomp = 1
+		world.fps = 16
+
+	if(world.fps != oldFPS || config.Tickcomp != oldTC)
+		var/msg = "WORLD has modified world.fps to [world.fps] and config.Tickcomp to [config.Tickcomp] (player count reached [count])"
+		log_admin(msg, 0)
+		message_admins(msg, 0)
+
 /world/proc/load_mode()
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
@@ -254,6 +359,41 @@ var/inerror = 0
 	// apply some settings from config..
 	abandon_allowed = config.respawn
 
+var/list/donators = list()
+
+/world/proc/load_donators()
+	var/ckey
+	var/datum/preferences/P
+	for(var/key in donators)
+		ckey = ckey(key)
+		P = preferences_datums[ckey]
+		if(P)
+			P.unlock_content &= 1
+	donators = list()
+	var/list/donatorskeys = list()
+	if(config.donator_legacy_system)
+		donatorskeys = file2list("config/donators.txt")
+	else
+		establish_db_connection()
+		if(!dbcon.IsConnected())
+			world.log << "Failed to connect to database in load_donators(). Reverting to legacy system."
+			diary << "Failed to connect to database in load_donators(). Reverting to legacy system."
+			config.donator_legacy_system = 1
+			load_donators()
+			return
+
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("donors")] WHERE (expiration_time > Now()) AND (revoked IS NULL)")
+		query.Execute()
+		while(query.NextRow())
+			ckey = query.item[1]
+			if(ckey)
+				donatorskeys |= ckey
+	for(var/key in donatorskeys)
+		ckey = ckey(key)
+		donators += ckey
+		P = preferences_datums[ckey]
+		if(P)
+			P.unlock_content |= 2
 
 /world/proc/update_status()
 	var/s = ""

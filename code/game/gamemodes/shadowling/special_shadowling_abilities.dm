@@ -17,7 +17,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	switch(hatch_or_no)
 		if("No")
 			H << "<span class='warning'>You decide against hatching for now."
-			charge_counter = charge_max
+			revert_cast()
 			return
 		if("Yes")
 			H.stunned = INFINITY //This is bad but hulks can't be stunned with the actual procs. I'm sorry.
@@ -79,6 +79,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.undershirt = "Nude"
 			H.socks = "Nude"
 			H.faction |= "faithless"
+			H.shadow_walk = TRUE
 
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(H), slot_w_uniform)
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(H), slot_shoes)
@@ -93,15 +94,13 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			sleep(10)
 			H << "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>"
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/glare(null))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/enthrall(null))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/glare(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/veil(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadow_walk(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/collective_mind(null))
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_regenarmor(null))
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_extend_shuttle(null))
-
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/shadowling_extend_shuttle(null))
 
 
 /obj/effect/proc_holder/spell/self/shadowling_ascend
@@ -120,7 +119,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 	switch(hatch_or_no)
 		if("No")
 			H << "<span class='warning'>You decide against ascending for now."
-			charge_counter = charge_max
+			revert_cast()
 			return
 		if("Yes")
 			H.notransform = 1
@@ -159,13 +158,15 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					A.overload_lighting()
 				var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(H.loc)
 				for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
-					if(S == src) continue
+					if(S == src)
+						continue
 					H.mind.RemoveSpell(S)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/annihilate(null))
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/hypnosis(null))
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/annihilate(null))
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/hypnosis(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_phase_shift(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/ascendant_storm(null))
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hivemind_ascendant(null))
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/ascendant_transmit(null))
 				H.mind.transfer_to(A)
 				A.name = H.real_name
 				if(A.real_name)

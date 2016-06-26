@@ -5495,7 +5495,7 @@
 "anl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/hand_tele,
-/obj/item/weapon/bikehorn/rubberducky{
+/obj/item/device/assembly/bikehorn/rubberducky{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -5746,7 +5746,7 @@
 /area/maintenance/fsmaint)
 "anQ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "anR" = (
@@ -7935,7 +7935,7 @@
 	icon_state = "shower";
 	dir = 8
 	},
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "asW" = (
@@ -10257,7 +10257,7 @@
 /area/crew_quarters/sleep)
 "ayR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "ayS" = (
@@ -20809,8 +20809,8 @@
 	icon_state = "parrot_sit";
 	name = "parrot plushie"
 	},
-/obj/item/weapon/bikehorn/rubberducky,
-/obj/item/weapon/bikehorn/airhorn,
+/obj/item/device/assembly/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/airhorn,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
 "aXN" = (

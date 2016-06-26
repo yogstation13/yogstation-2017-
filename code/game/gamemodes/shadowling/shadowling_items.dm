@@ -106,3 +106,21 @@
 			user << "<span class='notice'>You shift your night vision capabilities to see [new_dark_view] tiles away.</span>"
 	darkness_view = new_dark_view
 	user.update_sight()
+
+
+//Thrall organ that is responsible for person becoming/unbecoming a thrall
+/obj/item/organ/thrall_tumor
+	zone = "head"
+	slot = "tumor"
+	name = "black tumor"
+	icon_state = "blacktumor"
+
+// Surgery stuffs, and enthralling.
+/obj/item/organ/thrall_tumor/Remove(mob/living/carbon/M, special = 0, adminbus = 0)
+	ticker.mode.remove_thrall(M.mind,!adminbus && prob(30))
+	..()
+
+/obj/item/organ/thrall_tumor/Insert(mob/living/carbon/M, special = 0)
+	ticker.mode.add_thrall(M.mind)
+	M.mind.special_role = "thrall"
+	..()

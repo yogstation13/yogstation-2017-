@@ -73,7 +73,7 @@
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
 	can_hold_items = 1
-	valid_held_items = list(/obj/item/weapon/bikehorn)
+	valid_held_items = list(/obj/item/device/assembly/bikehorn)
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -162,3 +162,9 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	can_hold_items = 1
+
+/obj/item/clothing/shoes/fuzzy_slippers
+	name = "fuzzy bunny slippers"
+	desc = "No animals were harmed in the making of these fuzzy slippers"
+	icon_state = "fuzzyslippers"
+	item_state = "fuzzyslippers"

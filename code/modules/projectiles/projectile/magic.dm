@@ -54,9 +54,9 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(target.hellbound)
-		return
-	if(ismob(target))
+	if(isliving(target))
+		if(target.hellbound)
+			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
@@ -84,11 +84,11 @@
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
 		if(!stuff.anchored && stuff.loc)
-			teleammount++
-			do_teleport(stuff, stuff, 10)
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-			smoke.start()
+			if(do_teleport(stuff, stuff, 10))
+				teleammount++
+				var/datum/effect_system/smoke_spread/smoke = new
+				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				smoke.start()
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"
@@ -161,7 +161,8 @@
 			switch(randomize)
 				if("monkey")
 					new_mob = new /mob/living/carbon/monkey(M.loc)
-					new_mob.languages |= HUMAN
+					new_mob.languages_spoken |= HUMAN
+					new_mob.languages_understood |= HUMAN
 				if("robot")
 					var/robot = pick("cyborg","syndiborg","drone")
 					switch(robot)
@@ -180,20 +181,21 @@
 						var/mob/living/silicon/robot/Robot = new_mob
 						Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 					else
-						new_mob.languages |= HUMAN
+						new_mob.languages_spoken |= HUMAN
+						new_mob.languages_understood |= HUMAN
 				if("slime")
-					new_mob = new /mob/living/simple_animal/slime(M.loc)
-					var/mob/living/simple_animal/slime/slimey = new_mob
-					if(prob(50))
-						slimey.is_adult = 1
-					slimey.random_colour()
-					new_mob.languages |= HUMAN
+					var/mob/living/simple_animal/slime/random/slimey
+					slimey = new(get_turf(M), null, new_is_adult=prob(50))
+					new_mob = slimey
+					new_mob.languages_spoken |= HUMAN
+					new_mob.languages_understood |= HUMAN
 				if("xeno")
 					if(prob(50))
 						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					else
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-					new_mob.languages |= HUMAN
+					new_mob.languages_spoken |= HUMAN
+					new_mob.languages_understood |= HUMAN
 
 				if("animal")
 					if(prob(50))
@@ -250,7 +252,8 @@
 								new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							else
 								new_mob = new /mob/living/simple_animal/chick(M.loc)
-					new_mob.languages |= HUMAN
+					new_mob.languages_spoken |= HUMAN
+					new_mob.languages_understood |= HUMAN
 				if("humanoid")
 					new_mob = new /mob/living/carbon/human(M.loc)
 
