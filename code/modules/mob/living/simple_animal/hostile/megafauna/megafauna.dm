@@ -48,7 +48,7 @@
 /mob/living/simple_animal/hostile/megafauna/Life()
 	..()
 	if((loc.z != ZLEVEL_LAVALAND) && !alert_admins)
-		message_admins("SECOND VERSION AAAAAAH : A live legion has left the lavaland and is currently on an off z level. <A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
+		message_admins("A live [src] has left the lavaland and is currently on another z level. <A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
 		alert_admins = !alert_admins
-		spawn(3000)
+		spawn(3000) // a cooldown, so it'll alert the admins again if it's still off the z level.
 			alert_admins = !alert_admins
