@@ -13,6 +13,7 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
+	var/alert_admins
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
@@ -43,3 +44,11 @@
 		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
 		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
 		([newloc.x],[newloc.y],[newloc.z])")
+
+/mob/living/simple_animal/hostile/megafauna/Life()
+	..()
+	if((loc.z != ZLEVEL_LAVALAND) && !alert_admins)
+		message_admins("SECOND VERSION AAAAAAH : A live legion has left the lavaland and is currently on an off z level. <A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
+		alert_admins = !alert_admins
+		spawn(3000)
+			alert_admins = !alert_admins
