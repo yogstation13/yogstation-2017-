@@ -224,6 +224,12 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
+/datum/asset/simple/adware
+	assets = list(
+		"ad1.png" = 'icons/ads/ad1.png',
+		"ad2.png" = 'icons/ads/ad2.png',
+	)
+
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()

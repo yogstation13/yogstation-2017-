@@ -94,6 +94,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
+
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
+	assets.send(user)
+
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
+		return
+
+	user.set_machine(src)
+
 	if(software)
 		var/failUse = 0
 		for(var/V in software)
@@ -101,15 +111,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			failUse |= M.onActivate(user)
 		if(failUse)
 			return
-
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
-	assets.send(user)
-
-	user.set_machine(src)
-
-	if(hidden_uplink && hidden_uplink.active)
-		hidden_uplink.interact(user)
-		return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
