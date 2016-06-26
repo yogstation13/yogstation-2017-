@@ -61,75 +61,10 @@
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
-					var/OOC_tag
-				/*	if(is_donator(C))
-						OOC_tag = "\[Donator\]" */
-					for(C in admins)
-						switch(C.holder.rank.name)
-							if("AdminObserver")
-								C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-								return
-
-							if("CoderInitiate")
-								C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-								return
-
-							if("CouncilMember")
-								OOC_tag = "\[Council\]"
-
-							if("ModeratorV2")
-								OOC_tag = "\[Moderator\]"
-
-							if("Moderator")
-								OOC_tag = "\[Moderator\]"
-
-							if("Administrator")
-								OOC_tag = "\[Admin\]"
-
-							if("PrimaryAdmin")
-								OOC_tag = "\[PrimaryAdmin\]"
-
-							if("SeniorAdmin")
-								OOC_tag = "\[SeniorAdmin\]"
-
-							if("HeadCoder")
-								OOC_tag = "\[HeadCoder\]"
-
-							if("ModeratorOnProbation")
-								OOC_tag = "\[ModOnProbation\]"
-
-							if("ProbationAdmin")
-								OOC_tag = "\[AdminOnProbation\]"
-
-							if("NonPlayingAdmin")
-								OOC_tag = "\[Admin\]"
-
-							if("NonPlayingMod")
-								OOC_tag = "\[Moderator\]"
-
-							if("AdminOnVacation")
-								OOC_tag = "\[AdminOnVacation\]"
-
-							if("ModeratorOnVacation")
-								OOC_tag = "\[ModOnVacation\]"
-
-							if("SeniorCoder")
-								OOC_tag = "\[SeniorCoder\]"
-
-							if("Coder")
-								OOC_tag = "\[Coder\]"
-
-							if("Bot")
-								OOC_tag = "\[YogBot\]"
-
-							if("RetiredAdmin")
-								OOC_tag = "\[Retmin\]"
-
-						if(!OOC_tag)
-							OOC_tag = "\[Admin\]"
-						C << "<font color=[config.allow_admin_ooccolor && prefs.ooccolor ? prefs.ooccolor :"#b82e00" ]><b><span class='prefix'>[OOC_tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></b></font>"
-
-
+					if(check_rights_for(src, R_ADMIN))
+						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+					else
+						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
 			else if(!(key in C.prefs.ignoring))
