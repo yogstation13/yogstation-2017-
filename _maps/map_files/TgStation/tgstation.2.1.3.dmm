@@ -1025,11 +1025,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acb" = (
-/mob/living/simple_animal/hostile/honkbot,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/docking_port/stationary/random{
+	id = "pod_asteroid2";
+	name = "asteroid"
 	},
-/area/security/prison)
+/turf/open/space,
+/area/space)
 "acc" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/event_spawn,
@@ -20922,9 +20923,13 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aOE" = (
-/mob/living/simple_animal/hostile/honkbot,
-/turf/open/floor/wood,
-/area/crew_quarters/theatre)
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_asteroid4";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
 "aOF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -68859,13 +68864,7 @@
 /area/hallway/primary/port)
 "cFe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	external_pressure_bound = 0;
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	on = 1
 	},
 /turf/open/floor/plasteel{
 	dir = 1;
@@ -68995,21 +68994,6 @@
 	icon_state = "bot"
 	},
 /area/hallway/primary/central)
-"cFC" = (
-/obj/docking_port/stationary/random{
-	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
-	},
-/turf/open/space,
-/area/space)
-"cFB" = (
-/obj/docking_port/stationary/random{
-	id = "pod_asteroid2";
-	name = "asteroid"
-	},
-/turf/open/space,
-/area/space)
 "cFA" = (
 /obj/docking_port/stationary/random{
 	id = "pod_asteroid1";
@@ -79658,7 +79642,7 @@ aaa
 aaa
 aaa
 aaa
-cFB
+acb
 ase
 asL
 atx
@@ -103143,7 +103127,7 @@ aaa
 aaa
 aaa
 aaa
-cFC
+aOE
 aaa
 aaa
 ady
