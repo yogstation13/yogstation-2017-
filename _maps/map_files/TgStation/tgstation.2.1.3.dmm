@@ -68995,6 +68995,36 @@
 	icon_state = "bot"
 	},
 /area/hallway/primary/central)
+"cFC" = (
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_asteroid4";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
+"cFB" = (
+/obj/docking_port/stationary/random{
+	id = "pod_asteroid2";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
+"cFA" = (
+/obj/docking_port/stationary/random{
+	id = "pod_asteroid1";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
+"cFz" = (
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_asteroid3";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -78600,7 +78630,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cFA
 asb
 asJ
 atw
@@ -79628,7 +79658,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cFB
 ase
 asL
 atx
@@ -94509,7 +94539,7 @@ aaF
 aaF
 abu
 aaU
-acb
+aaU
 acF
 adc
 adK
@@ -103113,7 +103143,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cFC
 aaa
 aaa
 ady
@@ -103292,7 +103322,7 @@ aIz
 aCR
 aLr
 aNl
-aOE
+aNl
 aPK
 aRk
 aSK
@@ -104797,7 +104827,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cFz
 aaa
 aaa
 aaa

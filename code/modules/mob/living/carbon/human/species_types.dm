@@ -10,6 +10,7 @@
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
+	roundstart = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
@@ -99,6 +100,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
+	roundstart = 1
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time. Thick scales afford you protection from heat, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"

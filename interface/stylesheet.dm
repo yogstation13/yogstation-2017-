@@ -20,7 +20,7 @@ em						{font-style: normal;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
-.admin					{color: #386aff;	font-weight: bold;}
+.admin					{color: #996600;	font-weight: bold;}
 
 .name					{					font-weight: bold;}
 
