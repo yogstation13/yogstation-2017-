@@ -11,7 +11,8 @@ AI
 	selection_color = "#ccffcc"
 	supervisors = "your laws"
 	req_admin_notify = 1
-	minimal_player_age = 30
+	minimal_player_age = 20
+	whitelisted = 1
 
 /datum/job/ai/equip(mob/living/carbon/human/H)
 	if(!H)

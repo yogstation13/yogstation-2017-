@@ -47,6 +47,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		bleedsuppress = 1
 		spawn(amount)
 			bleedsuppress = 0
+			cauterized = 0
 			if(stat != DEAD && blood_max)
 				src << "<span class='warning'>The blood soaks through your bandage.</span>"
 

@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1, "duo" = 1)))
 		if("bloodyspai")
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/clothing/mask/chameleon(src)
@@ -102,6 +102,16 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			return
 
+		if("duo")
+			var/obj/item/weapon/implanter/imp = new /obj/item/weapon/implanter(src)
+			imp.imp = new /obj/item/weapon/implant/mindslave(imp)
+			new /obj/item/device/encryptionkey/syndicate(src)
+			new /obj/item/device/encryptionkey/syndicate(src)
+			//I feel like its needs something more than just this as the total TC value only adds up to 16 TC so for now im just putting 2 Emags in as i cant think of what else i could add.
+			new /obj/item/weapon/card/emag(src)
+			new /obj/item/weapon/card/emag(src)
+			return
+
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box"
@@ -115,6 +125,29 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/freedom(O)
 	O.update_icon()
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/imp_zombie
+	name = "boxed zombie implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_zombie/New()
+	..()
+	var/obj/item/weapon/implanter/O = new(src)
+	O.imp = new /obj/item/weapon/implant/zombie(O)
+	O.update_icon()
+	return
+
+/obj/item/weapon/storage/box/syndie_kit/imp_mindslave
+	name = "boxed mindslave implant (with injector)"
+
+/obj/item/weapon/storage/box/syndie_kit/imp_mindslave/New()
+	..()
+	var/obj/item/weapon/implanter/O = new(src)
+	var/obj/item/weapon/implant/mindslave/imp = new /obj/item/weapon/implant/mindslave(O)
+	O.imp = imp
+	O.update_icon()
+	var/obj/item/weapon/cartridge/slavemaster/slavemaster = new(src)
+	slavemaster.imp = imp
 	return
 
 /*/obj/item/weapon/storage/box/syndie_kit/imp_compress

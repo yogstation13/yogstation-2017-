@@ -74,6 +74,10 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
+/mob/living/simple_animal/construct/examine(mob/user)
+	. = ..()
+	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
+		user << "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>"
 
 
 /////////////////Juggernaut///////////////

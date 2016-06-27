@@ -44,7 +44,7 @@
 	for(var/j = 0, j < num_traitors, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/traitor = pick(antag_candidates)
+		var/datum/mind/traitor = pick_candidate()
 		traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
@@ -385,4 +385,3 @@
 	var/datum/atom_hud/antag/traitorhud = huds[ANTAG_HUD_TRAITOR]
 	traitorhud.leave_hud(traitor_mind.current)
 	set_antag_hud(traitor_mind.current, null)
-

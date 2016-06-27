@@ -1,7 +1,8 @@
 var/global/default_martial_art = new/datum/martial_art
 /mob/living/carbon/human
-	languages = HUMAN
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD)
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD,CYBERMEN_HACK_HUD)
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -44,7 +45,7 @@ var/global/default_martial_art = new/datum/martial_art
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
 
-	var/blood_max = 0 //how much are we bleeding
+	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/datum/martial_art/martial_art = null
@@ -55,3 +56,5 @@ var/global/default_martial_art = new/datum/martial_art
 
 	var/drunkenness = 0 //Overall drunkenness - check handle_alcohol() in life.dm for effects
 	var/datum/personal_crafting/handcrafting
+
+	var/cauterized // controls whether a wound is cauterized or not.

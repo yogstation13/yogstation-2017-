@@ -67,7 +67,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(antag_candidates.len>0)
 		for(var/i = 0, i < num_changelings, i++)
 			if(!antag_candidates.len) break
-			var/datum/mind/changeling = pick(antag_candidates)
+			var/datum/mind/changeling = pick_candidate()
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
@@ -351,10 +351,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
 			user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
-		return
-	if(has_dna(target.dna))
-		if(verbose)
-			user << "<span class='warning'>We already have this DNA in storage!</span>"
 		return
 	if(!target.has_dna())
 		if(verbose)

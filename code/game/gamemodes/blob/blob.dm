@@ -41,7 +41,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	for(var/j = 0, j < cores_to_spawn, j++)
 		if (!antag_candidates.len)
 			break
-		var/datum/mind/blob = pick(antag_candidates)
+		var/datum/mind/blob = pick_candidate()
 		blob_overminds += blob
 		blob.assigned_role = "Blob"
 		blob.special_role = "Blob"
