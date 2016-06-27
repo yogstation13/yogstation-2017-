@@ -47,21 +47,14 @@
 
 /obj/item/weapon/tank/jetpack/proc/turn_on(mob/user)
 	on = TRUE
-	var/mob/living/C = user
-
-	if(C.pass_flags & JETPACKTABLE) // a check to make sure we don't start with it again.
-		C.pass_flags &= ~JETPACKTABLE
-
-	if (!has_gravity(user))
-		C.pass_flags |= JETPACKTABLE
+	user.pass_flags |= JETPACKTABLE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 
 /obj/item/weapon/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
-	var/mob/living/C = user
-	if(C.pass_flags & JETPACKTABLE)
-		C.pass_flags &= ~JETPACKTABLE
+	if(user.pass_flags & JETPACKTABLE)
+		user.pass_flags &= ~JETPACKTABLE
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
