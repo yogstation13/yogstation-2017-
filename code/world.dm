@@ -46,6 +46,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_configuration()
 	load_mode()
 	load_motd()
+	refresh_admin_files()
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
@@ -158,7 +159,7 @@ var/last_irc_status = 0
 				msg += " (AFK)"
 			msg += "\n"
 		return msg
-	
+
 	else if(copytext(T,1,9) == "announce")
 		if(!key_valid)
 			return "Bad Key"
