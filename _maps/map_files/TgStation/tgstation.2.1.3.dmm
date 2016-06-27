@@ -33902,6 +33902,7 @@
 	name = "Paramedic Staging Area"
 	})
 "bqt" = (
+/obj/structure/closet/secure_closet/paramedic,
 /turf/open/floor/plasteel{
 	icon_state = "delivery";
 	name = "floor"
