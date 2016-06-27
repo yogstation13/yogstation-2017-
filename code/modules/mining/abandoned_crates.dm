@@ -123,7 +123,7 @@
 			new /obj/item/clothing/shoes/clown_shoes(src)
 			new /obj/item/device/pda/clown(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
-			new /obj/item/weapon/bikehorn(src)
+			new /obj/item/device/assembly/bikehorn(src)
 			new /obj/item/toy/crayon/rainbow(src)
 			new /obj/item/weapon/reagent_containers/spray/waterflower(src)
 		if(95)

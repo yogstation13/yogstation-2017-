@@ -3,14 +3,6 @@
 //DRONE SAY//
 /////////////
 //Drone speach
-//Drone hearing
-
-/mob/living/simple_animal/drone/lang_treat(atom/movable/speaker, message_langs, raw_message) //This is so drones can understand humans without being able to speak human
-	. = ..()
-	var/hear_override_langs = HUMAN
-	if(message_langs & hear_override_langs)
-		return ..(speaker, languages, raw_message)
-
 
 /mob/living/simple_animal/drone/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_BINARY)
@@ -26,7 +18,8 @@
 		if(istype(M) && M.stat != DEAD && faction_check(M)) //if it's a living drone with matching factions, it gets a message
 			M << msg
 		if(dead_can_hear && (M in dead_mob_list))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [msg]"
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)

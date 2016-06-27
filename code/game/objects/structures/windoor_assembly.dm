@@ -50,7 +50,7 @@
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
 /obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.checkpass(PASSDOOR) || mover.checkpass(PASSGLASS)))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
@@ -64,7 +64,7 @@
 		return 1
 
 /obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.checkpass(PASSDOOR) || mover.checkpass(PASSGLASS)))
 		return 1
 	if(get_dir(loc, target) == dir)
 		return !density

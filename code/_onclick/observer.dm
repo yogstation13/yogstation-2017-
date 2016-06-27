@@ -1,4 +1,7 @@
 /mob/dead/observer/DblClickOn(var/atom/A, var/params)
+	if(client.prefs.afreeze)
+		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return
@@ -17,7 +20,10 @@
 		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
-
+	if(client.prefs.afreeze)
+		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
+		
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return

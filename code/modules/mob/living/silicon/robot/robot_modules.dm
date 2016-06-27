@@ -160,7 +160,7 @@
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
-	emag = new /obj/item/weapon/reagent_containers/borghypo/hacked(src)
+	emag = new /obj/item/weapon/gun/syringe/rapidsyringe/borg(src)
 
 	fix_modules()
 
@@ -226,7 +226,6 @@
 
 /obj/item/weapon/robot_module/peacekeeper/New()
 	..()
-	modules += new /obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg(src)
 	modules += new /obj/item/weapon/cookiesynth(src)
 	modules += new /obj/item/device/harmalarm(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
@@ -235,17 +234,6 @@
 	modules += new /obj/item/weapon/extinguisher(src)
 
 	emag = new /obj/item/weapon/reagent_containers/borghypo/peace/hacked(src)
-
-/obj/item/weapon/robot_module/peacekeeper/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/T = locate(/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg) in get_usable_modules()
-	if(T)
-		if(T.power_supply.charge < T.power_supply.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.power_supply.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
@@ -323,6 +311,27 @@
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
+	fix_modules()
+
+
+/obj/item/weapon/robot_module/clown
+	name = "clown robot module"
+
+/obj/item/weapon/robot_module/clown/New()
+	..()
+	modules += new /obj/item/toy/crayon/rainbow(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/device/assembly/bikehorn(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/device/assembly/bikehorn/airhorn(src)
+	modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/device/instrument/violin(src)
+	modules += new /obj/item/device/instrument/guitar(src)
+	modules += new /obj/item/weapon/gun/magic/wand/(src)
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+	emag.reagents.add_reagent("lube", 250)
+	emag.name = "lube spray"
 	fix_modules()
 
 /obj/item/weapon/robot_module/syndicate

@@ -23656,7 +23656,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/computer/communications{
+/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -27196,7 +27196,7 @@
 /area/hallway/secondary/entry)
 "bcf" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high/plus,
 /turf/open/floor/plating,
 /area/storage/tech)
@@ -39054,7 +39054,7 @@
 "byo" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/coffee/robusta,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},

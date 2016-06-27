@@ -289,6 +289,76 @@
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
+// Function to pull an antag from our list of antag candidates
+/datum/game_mode/proc/pick_candidate()
+	// If the DB is connected, use the new function. Otherwise revert to legacy pick() selection
+	if(dbcon.IsConnected())
+		var/list/ckey_listed = list()
+		var/ckey_for_sql = ""
+
+		// Add all our antag candidates to a list()
+		for (var/datum/mind/player in antag_candidates)
+			ckey_listed += sanitizeSQL(get_ckey(player))
+
+		// Turn the list into a string that we will use to filter the player table
+		ckey_for_sql = jointext(ckey_listed, "', '")
+
+		// Find all antag candidate antag-weights
+		var/DBQuery/query_whitelist = dbcon.NewQuery("SELECT `ckey`, `antag_weight` FROM [format_table_name("player")] WHERE `ckey` IN ('[ckey_for_sql]')")
+
+		if(!query_whitelist.Execute())
+			return 0
+
+		var/list/output = list()
+
+		// Add all antag candidates weights to a list() and note the upper bound of the weight
+		var/total = 0
+		while(query_whitelist.NextRow())
+			var/ckey = query_whitelist.item[1]
+			var/weight = text2num(query_whitelist.item[2])
+			output[ckey] = weight
+			total += weight
+
+		// Find a number between 0 and our weight upper bound
+		var/R = rand(0, total)
+
+		var/cumulativeWeight = 0
+		var/datum/mind/final_candidate
+		// We will loop through each antag candidate until we find the point where the
+		// random number given intersects with a candidate. All other candidates will
+		// have their chance to be antag increased while the selected candidate will have
+		// their chance decreased
+		for(var/ckey in output)
+			var/weight = output[ckey]
+			cumulativeWeight += weight
+
+			if(R <= cumulativeWeight && !final_candidate)
+				// Lowest weight is 25.
+				weight = max(25, weight / 1.5)
+				var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
+				query.Execute()
+
+				for(var/datum/mind/candidate in antag_candidates)
+					if(lowertext(get_ckey(candidate)) == lowertext(ckey))
+						final_candidate = candidate
+						break
+			else
+				// Maximum weight is 400.
+				weight = min(400, weight * 1.5)
+				var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
+				query.Execute()
+
+		for(var/client/C in clients)
+			C.last_cached_weight = output[C.ckey]
+			C.last_cached_total_weight = total
+
+		// If after all this we still don't have a candidate, then use the legacy system
+		if(!final_candidate)
+			return pick(antag_candidates)
+		else
+			return final_candidate
+	else
+		return pick(antag_candidates)
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
@@ -300,6 +370,8 @@
 	for(var/mob/new_player/player in player_list)
 		if(player.client && player.ready)
 			players += player
+			if(player.client.prefs.toggles & QUIET_ROUND)
+				player.mind.quiet_round = 1
 
 	// Shuffling, the players list is now ping-independent!!!
 	// Goodbye antag dante
@@ -307,7 +379,7 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(role in player.client.prefs.be_special)
+			if(role in player.client.prefs.be_special && !(player.mind.quiet_round))
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
@@ -324,6 +396,9 @@
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
+						if(player.mind.quiet_round)
+							player << "<span class='userdanger'>There aren't enough antag volunteers, so your quiet round setting will not be considered!</span>"
+							player.mind.quiet_round = 0
 
 	if(restricted_jobs)
 		for(var/datum/mind/player in drafted)				// Remove people who can't be an antagonist

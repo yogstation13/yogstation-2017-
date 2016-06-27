@@ -51,15 +51,18 @@
 	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>", "<span class='notice'>We have absorbed [target].</span>")
 	target << "<span class='userdanger'>You are absorbed by the changeling!</span>"
 
-	if(!changeling.has_dna(target.dna))
-		changeling.add_new_profile(target, user)
+	if(changeling.has_dna(target.dna))
+		changeling.remove_profile(target)
+		changeling.absorbedcount--
+		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
+	changeling.add_new_profile(target, user)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
 
 	if(target.mind)//if the victim has got a mind
 
-		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.
 		//Recent as opposed to all because rounds tend to have a LOT of text.
@@ -108,7 +111,8 @@
 
 
 
-
+//BELOW IS DISABLED DUE TO COUNCIL VOTE, TOO MUCH GRIEF
+/*
 /obj/effect/proc_holder/changeling/swap_form
 	name = "Swap Forms"
 	desc = "We force ourselves into the body of another form, pushing their consciousness into the form we left behind."
@@ -160,3 +164,4 @@
 
 	user.Paralyse(2)
 	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"
+*/
