@@ -15870,9 +15870,7 @@
 	name = "Command EVA";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aEd" = (
 /obj/structure/grille,
@@ -16590,9 +16588,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aFA" = (
 /obj/machinery/light/small{
@@ -17293,11 +17289,11 @@
 	},
 /area/ai_monitored/storage/eva)
 "aGR" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
 	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aGS" = (
 /obj/machinery/door/firedoor/border_only,
@@ -24753,7 +24749,7 @@
 /area/crew_quarters/kitchen)
 "aXp" = (
 /obj/effect/landmark/start{
-	name = "Chef"
+	name = "Cook"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
@@ -24762,7 +24758,7 @@
 "aXq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start{
-	name = "Chef"
+	name = "Cook"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
@@ -42836,7 +42832,7 @@
 	},
 /area/crew_quarters/hor)
 "bGR" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
 	},
@@ -46555,7 +46551,7 @@
 /turf/closed/wall,
 /area/medical/cmo)
 "bNO" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
@@ -68994,6 +68990,16 @@
 	icon_state = "bot"
 	},
 /area/hallway/primary/central)
+"cFz" = (
+/obj/structure/table,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/turf/open/floor/plasteel,
+/area/ai_monitored/storage/eva)
 "cFA" = (
 /obj/docking_port/stationary/random{
 	id = "pod_asteroid1";
@@ -69001,7 +69007,7 @@
 	},
 /turf/open/space,
 /area/space)
-"cFz" = (
+"cFB" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
 	id = "pod_asteroid3";
@@ -96361,7 +96367,7 @@ aAt
 aBH
 aAt
 aEc
-aFy
+aAt
 aGR
 aEd
 aaa
@@ -96619,7 +96625,7 @@ aAt
 aAt
 aEd
 aFz
-aGR
+cFz
 aEd
 aaa
 aJQ
@@ -104811,7 +104817,7 @@ aaa
 aaa
 aaa
 aaa
-cFz
+cFB
 aaa
 aaa
 aaa
