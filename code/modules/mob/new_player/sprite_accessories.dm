@@ -60,7 +60,6 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
-	var/species = "human"
 
 //////////////////////
 // Hair Definitions //
@@ -493,17 +492,7 @@
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 
-/datum/sprite_accessory/hair/pclassic
-	name = "Classic leaves"
-	icon_state = "classic_m"
-	gender = MALE
-	specie = "phytosian"
 
-/datum/sprite_accessory/hair/pclassic
-	name = "Classic leaves"
-	icon_state = "classic_f"
-	gender = FEMALE
-	specie = "phytosian"
 
 
 /////////////////////////////
@@ -1419,3 +1408,16 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/leaves
+	icon = "mutan_bodypart"
+
+/datum/sprite_accessory/leaves/classic_male
+	name = "Classic"
+	icon_state = "m_leaves_classic
+	gender = MALE
+
+/datum/sprite_accessory/leaves/classic_female
+	name = "Classic"
+	icon_state = "f_leaves_classic"
+	gender = FEMALE
