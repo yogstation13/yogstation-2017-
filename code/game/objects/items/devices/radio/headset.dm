@@ -55,6 +55,13 @@
 	..()
 	make_syndie()
 
+
+/obj/item/device/radio/headset/syndicate/alt/abductor
+	name = "irregular headset"
+	desc = "A smooth, criminson white headset which clearly defines state of the art alien technology as much as you know, but in reality to the aliens it could be as useful as scrap metal. There are engraved symbols and hard to read letters across the surface of the device, for instance the eeire purple markings on the front of it."
+	icon_state = "alien"
+	item_state = "alien"
+
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
 /obj/item/device/radio/headset/binary/New()
