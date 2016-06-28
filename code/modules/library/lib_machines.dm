@@ -176,7 +176,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/print_busy = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/list/print_queue = list()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
@@ -334,8 +335,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if("5")
 				screenstate = 5
 			if("6")
-				if(!bibledelay)
-
+				if(!print_busy)
 					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
 					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
 						B.icon_state = ticker.Bible_icon_state
@@ -343,10 +343,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 						B.name = ticker.Bible_name
 						B.deity_name = ticker.Bible_deity_name
 
-					bibledelay = 1
-					spawn(60)
-						bibledelay = 0
-
+					print_busy = 1
+					spawn(40)
+						print_busy = 0
 				else
 					say("Bible printer currently unavailable, please wait a moment.")
 
@@ -414,16 +413,16 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				href_list["targetid"] = orderid
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
+		print_queue += sqlid
+		say("Book has been sent to the printing queue!")
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
-		if(bibledelay)
-			say("Printer unavailable. Please allow a short time before attempting to print.")
-		else
-			bibledelay = 1
-			spawn(30)
-				bibledelay = 0
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
+		if(!print_busy && print_queue.len)
+			print_busy = 1
+			spawn(40)
+				print_busy = 0
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[print_queue.Cut(1,2)] AND isnull(deleted)")
 			query.Execute()
 
 			while(query.NextRow())
@@ -436,7 +435,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,8)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				src.visible_message("[src]'s printer hums as it produces a complete copy of [title]. How did it do that?")
 				break
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
