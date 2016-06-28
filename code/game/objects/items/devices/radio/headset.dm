@@ -62,6 +62,10 @@
 	icon_state = "alien"
 	item_state = "alien"
 
+/obj/item/device/radio/headset/syndicate/alt/abductor/emp_act()
+	visible_message("[src]'s purple symbols begin to change shape and light up.")
+	return
+
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
 /obj/item/device/radio/headset/binary/New()
