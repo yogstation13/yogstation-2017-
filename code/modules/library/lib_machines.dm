@@ -421,7 +421,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
 			bibledelay = 1
-			spawn(60)
+			spawn(30)
 				bibledelay = 0
 			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
 			query.Execute()
@@ -531,7 +531,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = 1
-	sleep(rand(200,400))
+	sleep(rand(100,300))
 	busy = 0
 	if(P)
 		if(!stat)

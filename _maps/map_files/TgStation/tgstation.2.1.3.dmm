@@ -2459,7 +2459,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/device/radio,
+/obj/item/device/radio/security,
 /turf/open/floor/carpet,
 /area/security/hos)
 "aeE" = (
@@ -4942,7 +4942,7 @@
 "aiG" = (
 /obj/structure/table,
 /obj/item/device/assembly/flash/handheld,
-/obj/item/device/radio,
+/obj/item/device/radio/security,
 /turf/open/floor/plasteel,
 /area/security/main)
 "aiH" = (
@@ -6122,7 +6122,12 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/device/radio,
+/obj/item/device/radio/security{
+	pixel_x = -8
+	},
+/obj/item/device/radio{
+	pixel_x = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -28131,7 +28136,7 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bew" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 4
 	},
 /turf/open/floor/bluegrid,
@@ -28214,7 +28219,7 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "beC" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 8
 	},
 /turf/open/floor/bluegrid,
@@ -29886,7 +29891,12 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/obj/item/device/radio,
+/obj/item/device/radio{
+	pixel_x = -8
+	},
+/obj/item/device/radio/security{
+	pixel_x = 8
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bik" = (
@@ -33545,7 +33555,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads)
 "bpQ" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -33559,7 +33569,7 @@
 	},
 /area/turret_protected/ai_upload)
 "bpS" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -36643,7 +36653,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bvC" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -36673,7 +36683,7 @@
 	},
 /area/turret_protected/ai_upload)
 "bvF" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -38329,7 +38339,7 @@
 /area/turret_protected/ai_upload_foyer)
 "byp" = (
 /obj/machinery/turretid{
-	control_area = "\improper AI Upload Chamber";
+	control_area = "AI Upload Chamber";
 	name = "AI Upload turret control";
 	pixel_x = 0;
 	pixel_y = 24
@@ -68721,12 +68731,12 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/device/radio{
-	pixel_x = 8
-	},
-/obj/item/device/radio{
 	pixel_x = -8
 	},
 /obj/machinery/light,
+/obj/item/device/radio/security{
+	pixel_x = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "yellow"
 	},
