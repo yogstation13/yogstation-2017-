@@ -55,7 +55,7 @@ var/jobban_keylist[0]		//to store the keys & ranks
 		return 0
 
 	if(!M.client) //no cache. fallback to a DBQuery
-		var/DBQuery/query = dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND job = '[sanitizeSQL(rank)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND job = '[sanitizeSQL(rank)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND unbanned = 1")
 		if(!query.Execute())
 			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
 			return
@@ -76,7 +76,7 @@ var/jobban_keylist[0]		//to store the keys & ranks
 /proc/jobban_buildcache(client/C)
 	if(C && istype(C))
 		C.jobbancache = list()
-		var/DBQuery/query = dbcon.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned)")
+		var/DBQuery/query = dbcon.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND unbanned = 0")
 		if(!query.Execute())
 			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
 			return

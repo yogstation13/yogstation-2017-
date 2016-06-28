@@ -141,17 +141,3 @@
 	volume = 1
 	amount_per_transfer_from_this = 1
 	list_reagents = list("unstablemutationtoxin" = 1)
-
-/obj/item/weapon/reagent_containers/hypospray/mini
-	name = "minihypospray"
-	desc = "A modified, more portable air-needle autoinjector, used by mining personnel and space explorers to quickly heal injuries in hostile environments."
-	icon = 'icons/obj/syringe.dmi'
-	item_state = "minihypo"
-	icon_state = "minihypo"
-	amount_per_transfer_from_this = 5
-	volume = 20
-	possible_transfer_amounts = null
-	flags = OPENCONTAINER
-	slot_flags = SLOT_BELT
-	ignore_flags = 1
-	list_reagents = list("omnizine" = 20)

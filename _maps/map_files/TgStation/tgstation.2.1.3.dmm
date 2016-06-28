@@ -29,18 +29,11 @@
 /turf/open/space,
 /area/space)
 "aad" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 22;
-	id = "syndicate_nw";
-	name = "northwest of station";
-	turf_type = /turf/open/space;
-	width = 18
+/obj/structure/closet/secure_closet/collars,
+/turf/open/floor/plasteel{
+	icon_state = "dark"
 	},
-/turf/open/space,
-/area/space)
+/area/ai_monitored/security/armory)
 "aae" = (
 /obj/effect/landmark{
 	name = "carpspawn"
@@ -1032,11 +1025,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "acb" = (
-/mob/living/simple_animal/hostile/honkbot,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/docking_port/stationary/random{
+	id = "pod_asteroid2";
+	name = "asteroid"
 	},
-/area/security/prison)
+/turf/open/space,
+/area/space)
 "acc" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/event_spawn,
@@ -15876,9 +15870,7 @@
 	name = "Command EVA";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aEd" = (
 /obj/structure/grille,
@@ -16596,9 +16588,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aFA" = (
 /obj/machinery/light/small{
@@ -17299,11 +17289,11 @@
 	},
 /area/ai_monitored/storage/eva)
 "aGR" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
+/obj/structure/table,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
 	},
+/turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aGS" = (
 /obj/machinery/door/firedoor/border_only,
@@ -20929,9 +20919,13 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aOE" = (
-/mob/living/simple_animal/hostile/honkbot,
-/turf/open/floor/wood,
-/area/crew_quarters/theatre)
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_asteroid4";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
 "aOF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -22117,7 +22111,7 @@
 /area/crew_quarters/bar)
 "aRl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/chair/stool/bar,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -23315,7 +23309,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/chair/stool/bar,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -24006,7 +24000,7 @@
 	tag = "icon-manifold-r-f (WEST)";
 	dir = 8
 	},
-/obj/item/chair/stool/bar,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -24755,7 +24749,7 @@
 /area/crew_quarters/kitchen)
 "aXp" = (
 /obj/effect/landmark/start{
-	name = "Chef"
+	name = "Cook"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
@@ -24764,7 +24758,7 @@
 "aXq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/start{
-	name = "Chef"
+	name = "Cook"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
@@ -25716,7 +25710,7 @@
 	dir = 4;
 	initialize_directions = 11
 	},
-/obj/item/chair/stool/bar,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -26431,7 +26425,7 @@
 	},
 /area/crew_quarters/bar)
 "baG" = (
-/obj/item/chair/stool/bar,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -33909,6 +33903,7 @@
 	name = "Paramedic Staging Area"
 	})
 "bqt" = (
+/obj/structure/closet/secure_closet/paramedic,
 /turf/open/floor/plasteel{
 	icon_state = "delivery";
 	name = "floor"
@@ -42838,7 +42833,7 @@
 	},
 /area/crew_quarters/hor)
 "bGR" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
 	},
@@ -46557,7 +46552,7 @@
 /turf/closed/wall,
 /area/medical/cmo)
 "bNO" = (
-/obj/structure/filingcabinet/filingcabinet,
+/obj/machinery/suit_storage_unit/cmo,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
@@ -68866,13 +68861,7 @@
 /area/hallway/primary/port)
 "cFe" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	external_pressure_bound = 0;
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	on = 1
 	},
 /turf/open/floor/plasteel{
 	dir = 1;
@@ -68918,7 +68907,7 @@
 /area/hallway/secondary/exit)
 "cFn" = (
 /obj/effect/landmark/event_spawn,
-/obj/item/chair/stool/bar,
+/obj/structure/chair/stool/bar,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -69002,6 +68991,31 @@
 	icon_state = "bot"
 	},
 /area/hallway/primary/central)
+"cFz" = (
+/obj/structure/table,
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/turf/open/floor/plasteel,
+/area/ai_monitored/storage/eva)
+"cFA" = (
+/obj/docking_port/stationary/random{
+	id = "pod_asteroid1";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
+"cFB" = (
+/obj/docking_port/stationary/random{
+	dir = 4;
+	id = "pod_asteroid3";
+	name = "asteroid"
+	},
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aaa
@@ -78607,7 +78621,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cFA
 asb
 asJ
 atw
@@ -79635,7 +79649,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acb
 ase
 asL
 atx
@@ -94516,7 +94530,7 @@ aaF
 aaF
 abu
 aaU
-acb
+aaU
 acF
 adc
 adK
@@ -96354,7 +96368,7 @@ aAt
 aBH
 aAt
 aEc
-aFy
+aAt
 aGR
 aEd
 aaa
@@ -96612,7 +96626,7 @@ aAt
 aAt
 aEd
 aFz
-aGR
+cFz
 aEd
 aaa
 aJQ
@@ -97343,7 +97357,7 @@ aaa
 aaa
 aaa
 abJ
-aci
+aad
 acO
 adk
 adP
@@ -103120,7 +103134,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aOE
 aaa
 aaa
 ady
@@ -103299,7 +103313,7 @@ aIz
 aCR
 aLr
 aNl
-aOE
+aNl
 aPK
 aRk
 aSK
@@ -104804,7 +104818,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cFB
 aaa
 aaa
 aaa
@@ -105106,7 +105120,7 @@ aUl
 aVQ
 aXl
 aXl
-aRk
+baG
 bch
 aKh
 beO
