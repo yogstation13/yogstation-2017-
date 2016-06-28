@@ -2199,6 +2199,19 @@
 /area/centcom/control)
 "gF" = (
 /obj/structure/table,
+/obj/item/weapon/gun/energy/ionrifle,
+/obj/item/weapon/gun/energy/laser,
+/obj/item/weapon/gun/energy/lasercannon,
+/obj/item/weapon/gun/projectile/minigun,
+/obj/item/weapon/mop{
+	desc = "No one really knows why this is here in the centcom top-Notch weapon facility."
+	},
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
+"gG" = (
+/obj/structure/table,
 /obj/item/weapon/gun/energy/gun/hos,
 /obj/item/weapon/gun/energy/gun/nuclear,
 /obj/item/weapon/gun/energy/disabler,
@@ -2206,31 +2219,17 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
-"gG" = (
-/obj/structure/table,
-/obj/item/weapon/gun/energy/alien,
-/obj/item/weapon/gun/energy/decloner,
-/obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/gun/energy/gravity_gun,
-/obj/item/weapon/gun/energy/xray,
-/turf/open/floor/plasteel{
-	icon_state = "noslip"
-	},
-/area/centcom/control)
+/area/abuse)
 "gH" = (
-/obj/structure/table,
-/obj/item/weapon/airlock_painter,
-/obj/item/weapon/mounted_chainsaw,
-/turf/open/floor/plasteel{
-	icon_state = "noslip"
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
 	},
 /area/centcom/control)
 "gI" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/evac)
 "gJ" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 8
 	},
@@ -2239,7 +2238,6 @@
 /turf/open/floor/plasteel,
 /area/centcom/evac)
 "gL" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -2258,24 +2256,21 @@
 /area/centcom/control)
 "gO" = (
 /obj/structure/table,
+/obj/item/weapon/flamethrower,
+/obj/item/weapon/multisword,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
+"gP" = (
+/obj/structure/table,
 /obj/item/weapon/gun/syringe/syndicate,
 /obj/item/weapon/katana/energy,
 /obj/item/weapon/wingpotion,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
-"gP" = (
-/obj/structure/table,
-/obj/item/weapon/hand_tele,
-/obj/item/weapon/honkbox_mask{
-	name = "High-level defense unit"
-	},
-/obj/item/weapon/nullrod,
-/turf/open/floor/plasteel{
-	icon_state = "noslip"
-	},
-/area/centcom/control)
+/area/abuse)
 "gQ" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -2294,23 +2289,19 @@
 /area/centcom/control)
 "gT" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/ionrifle,
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/lasercannon,
-/obj/item/weapon/gun/projectile/minigun,
-/obj/item/weapon/mop{
-	desc = "No one really knows why this is here in the centcom top-Notch weapon facility."
-	},
+/obj/item/weapon/gun/energy/pulse,
+/obj/item/weapon/gun/energy/taser,
+/obj/item/weapon/gun/energy/wormhole_projector,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "gU" = (
 /obj/item/weapon/grown/bananapeel,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "gV" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Customs";
@@ -2360,17 +2351,10 @@
 	},
 /area/centcom/control)
 "hd" = (
-/obj/structure/table,
-/obj/item/weapon/spellbook,
-/obj/item/weapon/spellbook,
-/obj/item/weapon/reagent_containers/food/snacks/grown/tomato{
-	desc = "You feel retarted just by looking at it.";
-	name = "timato";
-	reagents = "impedrine"
-	},
-/obj/item/weapon/spellbook,
-/turf/open/floor/plasteel{
-	icon_state = "noslip"
+/turf/closed/indestructible/fakeglass{
+	color = "#008000";
+	dir = 4;
+	icon_state = "fakewindows"
 	},
 /area/centcom/control)
 "he" = (
@@ -2380,13 +2364,11 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
 "hf" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
 /area/centcom/evac)
 "hg" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/yellowsiding/corner{
 	dir = 1
 	},
@@ -2425,15 +2407,13 @@
 /area/centcom/supply)
 "hn" = (
 /obj/structure/table,
-/obj/item/weapon/guardiancreator/tech,
-/obj/item/weapon/pipe_dispenser,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd/combat,
-/obj/item/weapon/rapid_engineering_device,
+/obj/item/weapon/grenade/gluon,
+/obj/item/weapon/sord,
+/obj/item/weapon/melee/supermatter_sword,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "ho" = (
 /obj/machinery/button/door{
 	desc = "A remote control switch for port-side blast doors.";
@@ -2467,13 +2447,15 @@
 /area/centcom/control)
 "hr" = (
 /obj/structure/table,
-/obj/item/weapon/claymore,
-/obj/item/weapon/grenade/syndieminibomb,
-/obj/item/weapon/gun/medbeam,
+/obj/item/weapon/guardiancreator/tech,
+/obj/item/weapon/pipe_dispenser,
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd/combat,
+/obj/item/weapon/rapid_engineering_device,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "hs" = (
 /turf/open/floor/plating/asteroid/snow,
 /area/syndicate_mothership)
@@ -2509,16 +2491,21 @@
 /area/centcom/supply)
 "hA" = (
 /obj/structure/table,
-/obj/item/weapon/flamethrower,
-/obj/item/weapon/multisword,
+/obj/item/weapon/airlock_painter,
+/obj/item/weapon/mounted_chainsaw,
+/obj/item/clothing/head/helmet/space/chronos,
+/obj/item/clothing/suit/space/chronos,
+/obj/item/weapon/chrono_eraser,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "hB" = (
-/obj/item/nuke_core,
-/turf/open/space,
-/area/space)
+/obj/mecha/combat/marauder/mauler,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
 "hC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor{
@@ -2556,14 +2543,25 @@
 /area/centcom/supply)
 "hH" = (
 /obj/structure/table,
+/obj/item/weapon/hand_tele,
+/obj/item/weapon/honkbox_mask{
+	name = "High-level defense unit"
+	},
+/obj/item/weapon/nullrod,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
+"hI" = (
+/obj/structure/table,
 /obj/item/weapon/dragons_blood,
 /obj/item/weapon/gun/grenadelauncher,
 /obj/item/weapon/orion_ship,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
-"hI" = (
+/area/abuse)
+"hJ" = (
 /obj/structure/table,
 /obj/item/weapon/disk/nuclear,
 /obj/item/weapon/gun/magic/staff/healing,
@@ -2571,8 +2569,8 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
-"hJ" = (
+/area/abuse)
+"hK" = (
 /obj/structure/table,
 /obj/item/weapon/cookiesynth,
 /obj/item/weapon/grenade/clusterbuster/cleaner,
@@ -2580,17 +2578,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
-"hK" = (
-/obj/structure/table,
-/obj/item/weapon/c4,
-/obj/item/weapon/c4,
-/obj/item/weapon/c4,
-/obj/item/weapon/plasma_fist_scroll,
-/turf/open/floor/plasteel{
-	icon_state = "noslip"
-	},
-/area/centcom/control)
+/area/abuse)
 "hL" = (
 /obj/structure/cult/talisman{
 	desc = "A altar dedicated to the Wizard's Federation"
@@ -2610,20 +2598,19 @@
 /area/centcom/supply)
 "hO" = (
 /obj/structure/table,
-/obj/item/weapon/grenade/gluon,
-/obj/item/weapon/sord,
+/obj/item/weapon/spellbook,
+/obj/item/weapon/spellbook,
+/obj/item/weapon/spellbook,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "hP" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/clockwork,
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/obj/mecha/combat/phazon,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
 	},
-/area/centcom/evac)
+/area/abuse)
 "hQ" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -2636,15 +2623,15 @@
 /turf/open/space,
 /area/space)
 "hR" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/pen,
-/obj/item/clockwork,
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/obj/structure/table,
+/obj/item/weapon/claymore,
+/obj/item/weapon/grenade/syndieminibomb,
+/obj/item/weapon/gun/medbeam,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
 	},
-/area/centcom/evac)
+/area/abuse)
 "hS" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/corner{
 	dir = 8
 	},
@@ -2659,17 +2646,14 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
 /area/centcom/evac)
 "hV" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/yellowsiding,
 /area/centcom/evac)
 "hW" = (
-/obj/item/clockwork,
 /turf/open/floor/plasteel/yellowsiding/corner{
 	dir = 8
 	},
@@ -2684,16 +2668,17 @@
 	},
 /area/centcom/supply)
 "hZ" = (
-/obj/structure/chair/office/dark{
-	dir = 1
+/obj/mecha/combat/reticence,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
 	},
-/obj/item/clockwork,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
+/area/abuse)
 "ia" = (
-/obj/item/clockwork,
-/turf/open/floor/plasteel/green/side,
-/area/centcom/evac)
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 9
+	},
+/area/centcom/control)
 "ib" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -2713,7 +2698,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side{
 	dir = 5
 	},
@@ -2783,7 +2767,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
@@ -2913,7 +2896,6 @@
 /area/tdome/tdomeobserve)
 "iH" = (
 /obj/structure/flora/kirbyplants,
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
@@ -2922,7 +2904,6 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iJ" = (
@@ -2932,14 +2913,12 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 /obj/item/toy/katana,
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iL" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/crayons,
 /obj/item/toy/sword,
-/obj/item/clockwork,
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iM" = (
@@ -6026,24 +6005,50 @@
 	},
 /turf/open/floor/plasteel/delivery,
 /area/centcom/ferry)
-"sc" = (
+"sa" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/pulse,
-/obj/item/weapon/gun/energy/taser,
-/obj/item/weapon/gun/energy/wormhole_projector,
+/obj/item/weapon/c4,
+/obj/item/weapon/c4,
+/obj/item/weapon/c4,
+/obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/centcom/control)
+/area/abuse)
 "sb" = (
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
+/area/abuse)
+"sc" = (
+/obj/mecha/combat/gygax/dark,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
+"sd" = (
+/obj/structure/table,
+/obj/item/weapon/gun/energy/alien,
+/obj/item/weapon/gun/energy/decloner,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/gravity_gun,
+/obj/item/weapon/gun/energy/xray,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
+"se" = (
+/obj/mecha/combat/honker,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/abuse)
+"sf" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 8
+	},
 /area/centcom/control)
-"sa" = (
-/obj/item/clockwork,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -34989,7 +34994,7 @@ ab
 ab
 ab
 ab
-hB
+ab
 ab
 ab
 ab
@@ -37811,14 +37816,14 @@ gs
 gs
 gN
 sb
+sc
+se
+hB
 sb
-sb
-sb
-sb
-sb
-sb
-sb
-sb
+hP
+hZ
+sc
+sa
 ij
 iy
 iU
@@ -38068,13 +38073,13 @@ gt
 gs
 gr
 sb
-sc
 sb
-gH
 sb
-hd
 sb
-hH
+sb
+sb
+sb
+sb
 sb
 ij
 iz
@@ -39096,13 +39101,13 @@ gu
 gB
 gr
 sb
+sd
 sb
+hH
 sb
+hR
 sb
-sb
-sb
-sb
-sb
+sa
 sb
 ik
 iD
@@ -39615,7 +39620,7 @@ gN
 gr
 gW
 gW
-gu
+ia
 hc
 gB
 ij
@@ -39872,7 +39877,7 @@ gS
 gN
 gW
 gW
-gu
+hd
 gS
 gS
 ij
@@ -40125,7 +40130,7 @@ gr
 gr
 gW
 gW
-gN
+sf
 gW
 gW
 gW
@@ -40382,7 +40387,7 @@ ab
 gr
 gW
 gW
-gN
+gH
 gW
 gW
 gW
@@ -40639,7 +40644,7 @@ ab
 gr
 gW
 gW
-gN
+gH
 gW
 gW
 gW
@@ -40896,7 +40901,7 @@ ab
 gr
 gW
 gW
-gN
+gH
 gW
 gW
 gW
@@ -41153,7 +41158,7 @@ fN
 gr
 gW
 gW
-gN
+hd
 gW
 gW
 gW
@@ -41412,8 +41417,8 @@ gW
 gW
 gr
 gr
-sa
-sa
+gK
+gK
 hS
 hU
 hU
@@ -41669,12 +41674,12 @@ gW
 gW
 ho
 gN
-sa
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
+gK
 iI
 fN
 ab
@@ -41926,12 +41931,12 @@ gW
 gW
 hp
 hC
-sa
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
+gK
 iI
 fN
 ab
@@ -42183,12 +42188,12 @@ gX
 he
 hq
 gN
-sa
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
+gK
 iI
 fN
 ab
@@ -42440,13 +42445,13 @@ fN
 fN
 fN
 fN
-sa
-sa
-sa
-sa
-sa
-sa
-ia
+gK
+gK
+gK
+gK
+gK
+gK
+iJ
 fN
 ab
 ab
@@ -42695,14 +42700,14 @@ gD
 gW
 gY
 hf
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
 hV
-hP
-sa
+ib
+gK
 iK
 fN
 ab
@@ -42952,14 +42957,14 @@ gD
 gW
 gZ
 hf
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
 hV
-hR
-hZ
+ic
+in
 iL
 fN
 ab
@@ -43209,11 +43214,11 @@ gI
 gQ
 ha
 hf
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
 hV
 id
 io
@@ -43466,11 +43471,11 @@ gJ
 gJ
 gJ
 hg
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
 hW
 gJ
 gJ
@@ -43719,19 +43724,19 @@ gg
 gn
 gc
 gy
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
 gy
 gK
 jM
@@ -43976,19 +43981,19 @@ gh
 go
 gc
 gz
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
+gK
 iY
 gK
 ic
@@ -47419,7 +47424,7 @@ ab
 ab
 ab
 ab
-ab
+sb
 ab
 "}
 (162,1,1) = {"

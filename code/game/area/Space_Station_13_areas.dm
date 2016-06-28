@@ -95,6 +95,9 @@ var/list/teleportlocs = list()
 	name = "Admin room"
 	icon_state = "start"
 
+/area/abuse
+	name = "AB-use facility"
+
 /area/space
 	icon_state = "space"
 	requires_power = 1
