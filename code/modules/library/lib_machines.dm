@@ -300,6 +300,34 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_book(book_id)
+	if(!book_id)
+		return
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		alert("Connection to Archive has been severed. Aborting.")
+	print_busy = 1
+	spawn(40)
+		print_queue.Cut(1,2)
+		if(print_queue.len)
+			print_book(print_queue[1])
+		else
+			print_busy = 0
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[book_id] AND isnull(deleted)")
+	query.Execute()
+	while(query.NextRow())
+		var/author = query.item[2]
+		var/title = query.item[3]
+		var/content = query.item[4]
+		var/obj/item/weapon/book/B = new(src.loc)
+		B.name = "Book: [title]"
+		B.title = title
+		B.author = author
+		B.dat = content
+		B.icon_state = "book[rand(1,8)]"
+		src.visible_message("[src]'s printer hums as it produces a complete copy of [title]. How did it do that?")
+		break
+
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
@@ -415,28 +443,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		print_queue += sqlid
 		say("Book has been sent to the printing queue!")
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			alert("Connection to Archive has been severed. Aborting.")
 		if(!print_busy && print_queue.len)
-			print_busy = 1
-			spawn(40)
-				print_busy = 0
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[print_queue.Cut(1,2)] AND isnull(deleted)")
-			query.Execute()
-
-			while(query.NextRow())
-				var/author = query.item[2]
-				var/title = query.item[3]
-				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
-				B.name = "Book: [title]"
-				B.title = title
-				B.author = author
-				B.dat = content
-				B.icon_state = "book[rand(1,8)]"
-				src.visible_message("[src]'s printer hums as it produces a complete copy of [title]. How did it do that?")
-				break
+			print_book(print_queue[1])
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
