@@ -28131,7 +28131,7 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bew" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 4
 	},
 /turf/open/floor/bluegrid,
@@ -28214,7 +28214,7 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "beC" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 8
 	},
 /turf/open/floor/bluegrid,
@@ -33545,7 +33545,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads)
 "bpQ" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -33559,7 +33559,7 @@
 	},
 /area/turret_protected/ai_upload)
 "bpS" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 8
 	},
 /turf/open/floor/plasteel{
@@ -36643,7 +36643,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bvC" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -36673,7 +36673,7 @@
 	},
 /area/turret_protected/ai_upload)
 "bvF" = (
-/obj/machinery/porta_turret{
+/obj/machinery/porta_turret/ai{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -38329,7 +38329,7 @@
 /area/turret_protected/ai_upload_foyer)
 "byp" = (
 /obj/machinery/turretid{
-	control_area = "\improper AI Upload Chamber";
+	control_area = "AI Upload Chamber";
 	name = "AI Upload turret control";
 	pixel_x = 0;
 	pixel_y = 24
