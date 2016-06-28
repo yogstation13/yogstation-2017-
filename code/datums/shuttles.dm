@@ -37,6 +37,10 @@
 		shuttle.\n\
 		In case of emergency: Break glass."
 
+/datum/map_template/shuttle/emergency/asteroid
+	suffix = "asteroid"
+	name = "Asteroid emergency shuttle"
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
@@ -147,6 +151,10 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the \
 	wabbajack statue. It will likely not end well. There's a reason it's \
 	boarded up. Maybe they should have just left it alone."
+
+/datum/map_template/shuttle/emergency/yogstation
+	suffix = "yogstation"
+	name = "The Undying Classic"
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"

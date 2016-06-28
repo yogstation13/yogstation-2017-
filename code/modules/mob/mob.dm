@@ -25,6 +25,7 @@ var/next_mob_id = 0
 	..()
 
 /atom/proc/prepare_huds()
+	hud_list = list()
 	for(var/hud in hud_possible)
 		var/image/I = image('icons/mob/hud.dmi', src, "")
 		I.appearance_flags = RESET_COLOR
@@ -565,6 +566,23 @@ var/next_mob_id = 0
 		if (nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
+		stat(null, "Round: [yog_round_number]")
+
+		if(client && (client.holder || ticket_counter_visible_to_everyone))
+			var/tickets_unclaimed = 0
+			var/tickets_unresolved = 0
+			var/tickets_resolved = 0
+			var/tickets_total = 0
+			for(var/datum/admin_ticket/T in tickets_list)
+				tickets_total++
+				if(T.resolved)
+					tickets_resolved++
+				else if(!T.handling_admin)
+					tickets_unclaimed++
+				else
+					tickets_unresolved++
+			stat(null,"Tickets([tickets_total]):\t[tickets_unclaimed > 0 ? "Unclaimed([tickets_unclaimed])\t" : ""][tickets_resolved > 0 ? "Resolved([tickets_resolved])\t" : ""][tickets_unresolved > 0 ? "Unresolved([tickets_unresolved])\t" : ""]")
+
 		if(SSshuttle.emergency)
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
@@ -616,6 +634,8 @@ var/next_mob_id = 0
 		add_spells_to_statpanel(mind.spell_list)
 		if(mind.changeling)
 			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		if(mind.cyberman)
+			mind.cyberman.add_cyberman_abilities_to_statpanel(src)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -636,6 +656,8 @@ var/next_mob_id = 0
 
 // facing verbs
 /mob/proc/canface()
+	if(client.prefs.afreeze)
+		return 0
 	if(!canmove)
 		return 0
 	if(client.moving)
@@ -806,6 +828,19 @@ var/next_mob_id = 0
 //can the mob be unbuckled from something by default?
 /mob/proc/can_unbuckle()
 	return 1
+
+/mob/proc/toggleafreeze(mob/admin)
+	if(client)
+		if(client.prefs.afreeze)
+			client.prefs.afreeze = 0
+			client << "<span class='userdanger'>You have been unfrozen.</span>"
+			log_admin("[key_name(admin)] unfroze [key_name(src)].")
+			message_admins("[key_name(admin, admin.client)] unfroze [key_name(src, src.client)].")
+		else
+			client.prefs.afreeze = 1
+			client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+			log_admin("[key_name(admin)] froze [key_name(src)].")
+			message_admins("[key_name(admin, admin.client)] froze [key_name(src, src.client)].")
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()

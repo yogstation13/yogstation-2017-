@@ -21,6 +21,7 @@ RCD
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
+	var/abbreviated_name = "RCD"
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
@@ -62,14 +63,18 @@ RCD
 	var/deconairlockdelay = 50
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] sets the [abbreviated_name] to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"
 	set category = "Object"
 	set src in usr
+	show_menu(usr)
 
+/obj/item/weapon/rcd/proc/show_menu(mob/user)
+	if(!user)
+		return
 	if (!ishuman(usr) && !usr.has_unlimited_silicon_privilege)
 		return ..(usr)
 
@@ -79,14 +84,12 @@ RCD
 
 	var/t1 = text("")
 
-
-
 	if(use_one_access)
-		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>At least one access required</a><br>"
+		t1 += "Restriction Type: <a href='?src=\ref[src];device_type=RCD;access=one'>At least one access required</a><br>"
 	else
-		t1 += "Restriction Type: <a href='?src=\ref[src];access=one'>All accesses required</a><br>"
+		t1 += "Restriction Type: <a href='?src=\ref[src];device_type=RCD;access=one'>All accesses required</a><br>"
 
-	t1 += "<a href='?src=\ref[src];access=all'>Remove All</a><br>"
+	t1 += "<a href='?src=\ref[src];device_type=RCD;access=all'>Remove All</a><br>"
 
 	var/accesses = ""
 	accesses += "<div align='center'><b>Access</b></div>"
@@ -99,9 +102,9 @@ RCD
 		accesses += "<td style='width:14%' valign='top'>"
 		for(var/A in get_region_accesses(i))
 			if(A in conf_access)
-				accesses += "<a href='?src=\ref[src];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
+				accesses += "<a href='?src=\ref[src];device_type=RCD;access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
 			else
-				accesses += "<a href='?src=\ref[src];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
+				accesses += "<a href='?src=\ref[src];device_type=RCD;access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
 			accesses += "<br>"
 		accesses += "</td>"
 	accesses += "</tr></table>"
@@ -115,18 +118,25 @@ RCD
 	popup.open()
 	onclose(usr, "airlock")
 
+/obj/item/weapon/rcd/proc/handle_failed_topic(mob/user)
+	user << browse(null, "window=airlock_electronics")
+
 /obj/item/weapon/rcd/Topic(href, href_list)
 	..()
 	if (usr.stat || usr.restrained())
+		handle_failed_topic(usr)
 		return
+	handle_topic(href, href_list)
+
+/obj/item/weapon/rcd/proc/handle_topic(href, href_list)
 	if (href_list["close"])
-		usr << browse(null, "window=airlock")
+		handle_failed_topic(usr)
 		return
 
 	if (href_list["access"])
 		toggle_access(href_list["access"])
 
-	change_airlock_access()
+	show_menu(usr)
 
 /obj/item/weapon/rcd/proc/toggle_access(acc)
 	if (acc == "all")
@@ -227,11 +237,14 @@ RCD
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
 	if(isrobot(user))	//Make sure cyborgs can't load their RCDs
 		return
+	handle_load_matter(W, user)
+
+/obj/item/weapon/rcd/proc/handle_load_matter(W, mob/user)
 	var/loaded = 0
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > max_matter)
-			user << "<span class='warning'>The RCD can't hold any more matter-units!</span>"
+			user << "<span class='warning'>The [abbreviated_name] can't hold any more matter-units!</span>"
 			return
 		if(!user.unEquip(W))
 			return
@@ -244,7 +257,7 @@ RCD
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
 	if(loaded)
-		user << "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>"
+		user << "<span class='notice'>The [abbreviated_name] now holds [matter]/[max_matter] matter-units.</span>"
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
@@ -257,16 +270,16 @@ RCD
             S.use(maxsheets)
             matter += value*maxsheets
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RCD. </span>"
+            user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the [abbreviated_name]. </span>"
         else
             matter += value*(S.amount)
             user.unEquip()
             S.use(S.amount)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RCD. </span>"
+            user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the [abbreviated_name]. </span>"
 
         return 1
-    user << "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!"
+    user << "<span class='warning'>You can't insert any more [S.name] sheets into the [abbreviated_name]!"
     return 0
 
 /obj/item/weapon/rcd/attack_self(mob/user)
@@ -275,16 +288,16 @@ RCD
 	switch(mode)
 		if(1)
 			mode = 2
-			user << "<span class='notice'>You change RCD's mode to 'Airlock'.</span>"
+			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Airlock'.</span>"
 		if(2)
 			mode = 3
-			user << "<span class='notice'>You change RCD's mode to 'Deconstruct'.</span>"
+			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Deconstruct'.</span>"
 		if(3)
 			mode = 4
-			user << "<span class='notice'>You change RCD's mode to 'Grilles & Windows'.</span>"
+			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Grilles & Windows'.</span>"
 		if(4)
 			mode = 1
-			user << "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>"
+			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Floor & Walls'.</span>"
 
 	if(prob(20))
 		src.spark_system.start()

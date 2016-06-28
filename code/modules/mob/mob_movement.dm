@@ -15,16 +15,25 @@
 
 
 /client/Northeast()
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	swap_hand()
 	return
 
 
 /client/Southeast()
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	attack_self()
 	return
 
 
 /client/Southwest()
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
@@ -34,6 +43,9 @@
 
 
 /client/Northwest()
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(!usr.get_active_hand())
 		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
 		return
@@ -42,7 +54,9 @@
 //This gets called when you press the delete button.
 /client/verb/delete_key_pressed()
 	set hidden = 1
-
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(!usr.pulling)
 		usr << "<span class='notice'>You are not pulling anything.</span>"
 		return
@@ -51,12 +65,17 @@
 /client/verb/swap_hand()
 	set category = "IC"
 	set name = "Swap hands"
-
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(mob)
 		mob.swap_hand()
 
 /client/verb/attack_self()
 	set hidden = 1
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(mob)
 		mob.mode()
 	return
@@ -64,12 +83,18 @@
 
 /client/verb/drop_item()
 	set hidden = 1
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(!isrobot(mob))
 		mob.drop_item_v()
 	return
 
 
 /client/Center()
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(isobj(mob.loc))
 		var/obj/O = mob.loc
 		if(mob.canmove)
@@ -90,6 +115,9 @@
 
 
 /client/Move(n, direct)
+	if(prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
 	if(!mob || !mob.loc)
 		return 0
 	if(mob.notransform)
@@ -135,6 +163,12 @@
 
 	//We are now going to move
 	moving = 1
+
+	if(mob.shadow_walk)
+		if(Process_ShadowWalk(direct))
+			moving = 0
+			return
+
 	move_delay = mob.movement_delay() + world.time
 
 	if(mob.confused)
@@ -155,6 +189,36 @@
 
 	return .
 
+/client/proc/Process_ShadowWalk(direct)
+	var/turf/target = get_step(mob, direct)
+	var/turf/mobloc = get_turf(mob)
+
+	if (istype(mob.pulling))
+		var/doPull = 1
+		if (mob.pulling.anchored)
+			mob.stop_pulling()
+			doPull = 0
+		if (mob.pulling == mob.loc && mob.pulling.density)
+			mob.stop_pulling()
+			doPull = 0
+		if (istype(mob.pulling, /mob/))
+			var/mob/M = mob.pulling
+
+			M.stop_pulling()
+			if (M.buckled)
+				mob.stop_pulling()
+				doPull = 0
+		if (doPull)
+			var/turf/pullloc = get_turf(mob.pulling)
+
+			if(mobloc.get_lumcount()==null || mobloc.get_lumcount() <= 0.3 || pullloc.get_lumcount()==null || pullloc.get_lumcount() <= 0.3 || target.get_lumcount()==null || target.get_lumcount() <= 0.3)
+				mob.pulling.dir = get_dir(mob.pulling, mob)
+				mob.pulling.loc = mob.loc
+
+	if (target.get_lumcount() == null || target.get_lumcount() <= 0.3)
+		mob.loc = target
+		mob.dir = direct
+		return 1
 
 ///Process_Grab()
 ///Called by client/Move()

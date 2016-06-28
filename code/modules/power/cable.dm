@@ -144,7 +144,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			return
 		coil.cable_join(src, user)
 
-	else if(istype(W, /obj/item/device/multitool))
+	else if(is_power_meter(W))
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			user << "<span class='danger'>[powernet.avail]W in power network.</span>"
 		else

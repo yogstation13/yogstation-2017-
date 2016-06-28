@@ -3,69 +3,35 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
+	circuit = /obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
 	// VARIABLES //
-	var/teles_left	// How many teleports left until it becomes uncalibrated
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
-	var/power_off
-	var/rotation_off
-	//var/angle_off
-	var/last_target
-
-	var/rotation = 0
-	var/angle = 45
-	var/power = 5
+	var/obj/item/device/tsbeacon/selection
+	var/offset_x = 0
+	var/offset_y = 0
 
 	// Based on the power used
-	var/teleport_cooldown = 0 // every index requires a bluespace crystal
-	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
 	var/teleporting = 0
-	var/starting_crystals = 3
-	var/max_crystals = 4
-	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
-
-/obj/machinery/computer/telescience/New()
-	..()
-	recalibrate()
+	var/last_target
 
 /obj/machinery/computer/telescience/Destroy()
-	eject()
 	if(inserted_gps)
 		inserted_gps.loc = loc
 		inserted_gps = null
 	return ..()
-
-/obj/machinery/computer/telescience/examine(mob/user)
-	..()
-	user << "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots."
-
-/obj/machinery/computer/telescience/initialize()
-	..()
-	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
-		if(crystals.len >= max_crystals)
-			user << "<span class='warning'>There are not enough crystal slots.</span>"
-			return
-		if(!user.drop_item())
-			return
-		crystals += W
-		W.loc = null
-		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
-		updateDialog()
-	else if(istype(W, /obj/item/device/gps))
+	if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
 			user.unEquip(W)
@@ -75,6 +41,10 @@
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			telepad = M.buffer
+			z_co = 1
+			selection = telepad.beacon
+			offset_x = 0
+			offset_y = 0
 			M.buffer = null
 			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 	else
@@ -90,52 +60,82 @@
 
 /obj/machinery/computer/telescience/interact(mob/user)
 	var/t
+	if(inserted_gps)
+		t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
+		t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
+	else
+		t += "<span class='linkOff'>Eject GPS</span>"
+		t += "<span class='linkOff'>Set GPS memory</span>"
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
-		if(inserted_gps)
-			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
-			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
+		var/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console/CM = circuit
+		var/timeleft = CM.cooldownLeft()
+		if(timeleft)
+			temp_msg = "Telepad is recharging power.<BR>Please wait [round((timeleft) / 10)] seconds."
 		else
-			t += "<span class='linkOff'>Eject GPS</span>"
-			t += "<span class='linkOff'>Set GPS memory</span>"
+			temp_msg = "Telepad ready and operational."
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
-		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
-		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
-		t += "<span class='linkOn'>Set Power</span>"
-		t += "<div class='statusDisplay'>"
-
-		for(var/i = 1; i <= power_options.len; i++)
-			if(crystals.len + telepad.efficiency  < i)
-				t += "<span class='linkOff'>[power_options[i]]</span>"
-				continue
-			if(power == power_options[i])
-				t += "<span class='linkOn'>[power_options[i]]</span>"
-				continue
-			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
-		t += "</div>"
-
-		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
-		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
-
-		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
-		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
-		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
-
-		// Information about the last teleport
-		t += "<BR><div class='statusDisplay'>"
-		if(!last_tele_data)
-			t += "No teleport data found."
+		t += "Sector: "
+		for (var/i in 1 to ZLEVEL_SPACEMAX)
+			if(z_co == i)
+				t += "<span class='linkOn'>[i]</span>"
+			else if(i == ZLEVEL_CENTCOM)
+				t += "<span class='linkOff'>[i]</span>"
+			else
+				t += "<A href='?src=\ref[src];setz=[i]'>[i]</A>"
+		t += "<br>Selected beacon:<br>"
+		if(selection && selection.can_be_found(z_co))
+			var/turf/sloc = selection.get_loc()
+			var/locstring = "([sloc.x], [sloc.y]) [(sloc.z == ZLEVEL_STATION || sloc.z == ZLEVEL_MINING) ? get_area(sloc) : "???"]"
+			t += "<div class='statusDisplay'>[selection.name]<br>[locstring]</div><br>"
+			t += "<div class='statusDisplay'>x: "
+			for (var/i in -selection.range to selection.range)
+				if(offset_x == i)
+					t += "<span class='linkOn'>[i>0 ? "+" : ""][i]</span>"
+				else
+					t += "<A href='?src=\ref[src];offsetx=[i]'>[i>0 ? "+" : ""][i]</A>"
+			t += "<br>y: "
+			for (var/i in -selection.range to selection.range)
+				if(offset_y == i)
+					t += "<span class='linkOn'>[i>0 ? "+" : ""][i]</span>"
+				else
+					t += "<A href='?src=\ref[src];offsety=[i]'>[i>0 ? "+" : ""][i]</A>"
+			t += "<br><A href='?src=\ref[src];send=1'>Send</A>"
+			t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
+			if(selection.has_action)
+				if(selection.action_available)
+					t += " <A href='?src=\ref[src];beaconaction=1'>[selection.action_name]</A>"
+				else
+					t +=  "<span class='linkOff'>[selection.action_name]</span>"
+			t += "</div><br><A href='?src=\ref[src];deselect=1'>Deselect</A>"
+			t += " <A href='?src=\ref[src];rename=1'>Rename</A>"
+		else if(selection)
+			t += "<div class='statusDisplay'>[selection.name]<br><span class='bad'>No connection</span></div><br>"
+			t += "<div class='statusDisplay'>x: <span class='bad'>No connection</span><br>y: <span class='bad'>No connection</span><br>"
+			t += "<span class='linkOff'>Send</span> <span class='linkOff'>Receive</span></div><br>"
+			t += "<A href='?src=\ref[src];deselect=1'>Deselect</A>"
+			t += " <span class='linkOff'>Rename</span>"
 		else
-			t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-			//t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
-			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
-		t += "</div>"
-
-	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
+			t += "<div class='statusDisplay'>No beacon selected<br>Untargeted launch available</div><br>"
+			t += "<div class='statusDisplay'>x: <span class='average'>Untargeted</span><br>y: <span class='average'>Untargeted</span><br>"
+			t += "<A href='?src=\ref[src];randomsend=1'>Send</A> <A href='?src=\ref[src];randomrec=1'>Receive</A></div><br>"
+			t += "<span class='linkOff'>Deselect</span> <span class='linkOff'>Rename</span>"
+		// Information about the last teleport
+		t += "<br><br>"
+		for (var/B in tsbeacon_list)
+			var/obj/item/device/tsbeacon/TSB = B
+			if(!TSB || !TSB.can_be_found(z_co)) continue
+			var/turf/sloc = TSB.get_loc()
+			if(TSB == selection)
+				t += "<span class='linkOn'>Select</span>"
+			else
+				t += "<A href='?src=\ref[src];select=\ref[TSB]'>Select</A>"
+			var/locstring
+			locstring = "([sloc.x], [sloc.y]) [(sloc.z == ZLEVEL_STATION || sloc.z == ZLEVEL_MINING) ? get_area(sloc) : "???"]"
+			t += " [TSB.name] [locstring]<br>"
+	var/datum/browser/popup = new(user, "telesci", name, 600, 600)
 	popup.set_content(t)
 	popup.open()
 	return
@@ -153,10 +153,24 @@
 	visible_message("<span class='warning'>The telepad weakly fizzles.</span>")
 	return
 
-/obj/machinery/computer/telescience/proc/doteleport(mob/user)
+/obj/machinery/computer/telescience/proc/teleport(mob/user, random = 0)
+	if(z_co < 1 || z_co > ZLEVEL_SPACEMAX || z_co == ZLEVEL_CENTCOM)
+		temp_msg = "ERROR!<BR>Forbidden sector."
+		return
+	if(!random)
+		if(!selection || !selection.can_be_found(z))
+			temp_msg = "ERROR!<BR>Cannot locate beacon."
+			return
+		if(offset_x < -selection.range || offset_x > selection.range)
+			temp_msg = "ERROR!<BR>Impossible x offset."
+			return
+		if(offset_y < -selection.range || offset_y > selection.range)
+			temp_msg = "ERROR!<BR>Impossible y offset."
+			return
 
-	if(teleport_cooldown > world.time)
-		temp_msg = "Telepad is recharging power.<BR>Please wait [round((teleport_cooldown - world.time) / 10)] seconds."
+	var/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console/CM = circuit
+	var/timeleft = CM.cooldownLeft()
+	if(timeleft)
 		return
 
 	if(teleporting)
@@ -164,51 +178,46 @@
 		return
 
 	if(telepad)
-
-		var/truePower = Clamp(power + power_off, 1, 1000)
-		var/trueRotation = rotation + rotation_off
-		var/trueAngle = Clamp(angle, 1, 90)
-
-		var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
-		last_tele_data = proj_data
-
-		var/trueX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
-		var/trueY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
-		var/spawn_time = round(proj_data.time) * 10
-
-		var/turf/target = locate(trueX, trueY, z_co)
-		last_target = target
-		var/area/A = get_area(target)
+		var/spawn_time = 60/((telepad.efficiency + 1)*(telepad.efficiency + 1))
 		flick("pad-beam", telepad)
-
+		teleporting = 1
 		if(spawn_time > 15) // 1.5 seconds
 			playsound(telepad.loc, 'sound/weapons/flash.ogg', 25, 1)
 			// Wait depending on the time the projectile took to get there
-			teleporting = 1
 			temp_msg = "Powering up bluespace crystals.<BR>Please wait."
 
-
-		spawn(round(proj_data.time) * 10) // in seconds
+		spawn(spawn_time) // in seconds
 			if(!telepad)
 				return
 			if(telepad.stat & NOPOWER)
 				return
+			if(!random && (!selection || !selection.can_be_found(z)))
+				temp_msg = "ERROR!<BR>Beacon lock lost during power up sequence."
+				updateDialog()
+				return
+			var/turf/target
+			if(random)
+				target = random_accessible_turf(z_co)
+			else
+				target = selection.get_offset(offset_x, offset_y)
+			if(!target)
+				temp_msg = "ERROR!<BR>Bluespace instability. Please report this incident."
+				updateDialog()
+				return
+			last_target = target
+			var/area/A = get_area(target)
+
 			teleporting = 0
-			teleport_cooldown = world.time + (power * 2)
-			teles_left -= 1
+			CM.nextAllowedTime = world.time + spawn_time * 20
 
 			// use a lot of power
-			use_power(power * 10)
+			use_power(spawn_time * 20)
 
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(5, 1, get_turf(telepad))
 			s.start()
 
-			temp_msg = "Teleport successful.<BR>"
-			if(teles_left < 10)
-				temp_msg += "<BR>Calibration required soon."
-			else
-				temp_msg += "Data printed below."
+			temp_msg = "Teleport successful.<BR>Target: ([target.x], [target.y], [target.z])"
 
 			var/sparks = get_turf(target)
 			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
@@ -266,39 +275,9 @@
 				log_msg = dd_limittext(log_msg, length(log_msg) - 2)
 			else
 				log_msg += "nothing"
-			log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
+			log_msg += " [sending ? "to" : "from"] [target.x], [target.y], [target.z] ([A ? A.name : "null area"])"
 			investigate_log(log_msg, "telesci")
 			updateDialog()
-
-/obj/machinery/computer/telescience/proc/teleport(mob/user)
-	if(rotation == null || angle == null || z_co == null)
-		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
-		return
-	if(power <= 0)
-		telefail()
-		temp_msg = "ERROR!<BR>No power selected!"
-		return
-	if(angle < 1 || angle > 90)
-		telefail()
-		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
-		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
-		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
-		return
-	if(teles_left > 0)
-		doteleport(user)
-	else
-		telefail()
-		temp_msg = "ERROR!<BR>Calibration required."
-		return
-	return
-
-/obj/machinery/computer/telescience/proc/eject()
-	for(var/obj/item/I in crystals)
-		I.loc = src.loc
-		crystals -= I
-	power = 0
 
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(..())
@@ -307,34 +286,64 @@
 		updateDialog()
 		return
 	if(telepad.panel_open)
-		temp_msg = "Telepad undergoing physical maintenance operations."
-
-	if(href_list["setrotation"])
-		var/new_rot = input("Please input desired bearing in degrees.", name, rotation) as num
-		if(..()) // Check after we input a value, as they could've moved after they entered something
-			return
-		rotation = Clamp(new_rot, -900, 900)
-		rotation = round(rotation, 0.01)
-
-	if(href_list["setangle"])
-		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
-		if(..())
-			return
-		angle = Clamp(round(new_angle, 0.1), 1, 9999)
-
-	if(href_list["setpower"])
-		var/index = href_list["setpower"]
-		index = text2num(index)
-		if(index != null && power_options[index])
-			if(crystals.len + telepad.efficiency >= index)
-				power = power_options[index]
-
+		temp_msg = "ERROR!<BR>Telepad undergoing physical maintenance operations."
+	if(teleporting)
+		return
 	if(href_list["setz"])
-		var/new_z = input("Please input desired sector.", name, z_co) as num
-		if(..())
+		var/A = href_list["setz"]
+		A = text2num(A)
+		if(A < 1 || A > ZLEVEL_SPACEMAX || A == ZLEVEL_CENTCOM)
+			updateDialog()
 			return
-		z_co = Clamp(round(new_z), 1, 10)
+		z_co = A
+		selection = null
+		offset_x = 0
+		offset_y = 0
 
+	if(href_list["offsetx"])
+		var/A = href_list["offsetx"]
+		A = text2num(A)
+		if(!selection || !selection.can_be_found(z_co) || A < -selection.range || A > selection.range)
+			updateDialog()
+			return
+		offset_x = A
+
+	if(href_list["offsety"])
+		var/A = href_list["offsety"]
+		A = text2num(A)
+		if(!selection || !selection.can_be_found(z_co) || A < -selection.range || A > selection.range)
+			updateDialog()
+			return
+		offset_y = A
+
+	if(href_list["select"])
+		var/obj/item/device/tsbeacon/TSB = locate(href_list["select"])
+		if(!TSB || !TSB.can_be_found(z_co))
+			updateDialog()
+			return
+		selection = TSB
+		offset_x = Clamp(offset_x, -selection.range, selection.range)
+		offset_y = Clamp(offset_y, -selection.range, selection.range)
+
+	if(href_list["deselect"])
+		selection = null
+		offset_x = 0
+		offset_y = 0
+
+	if(href_list["rename"])
+		if(!selection || !selection.can_be_found(z_co))
+			updateDialog()
+			return
+		var/t = stripped_input(usr, "Enter new name", name, null, 20)
+		if(!t || !usr.canUseTopic(src) || !selection || !selection.can_be_found(z_co))
+			updateDialog()
+			return
+		selection.update_name(t)
+	if(href_list["beaconaction"])
+		if(!selection || !selection.can_be_found(z_co) || !selection.has_action || !selection.action_available)
+			updateDialog()
+			return
+		selection.beacon_action()
 	if(href_list["ejectGPS"])
 		if(inserted_gps)
 			inserted_gps.loc = loc
@@ -343,7 +352,7 @@
 	if(href_list["setMemory"])
 		if(last_target && inserted_gps)
 			inserted_gps.locked_location = last_target
-			temp_msg = "Location saved."
+			temp_msg = "SUCCESS!<BR>Location saved."
 		else
 			temp_msg = "ERROR!<BR>No data was stored."
 
@@ -355,19 +364,12 @@
 		sending = 0
 		teleport(usr)
 
-	if(href_list["recal"])
-		recalibrate()
-		sparks()
-		temp_msg = "NOTICE:<BR>Calibration successful."
+	if(href_list["randomsend"])
+		sending = 1
+		teleport(usr, 1)
 
-	if(href_list["eject"])
-		eject()
-		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
+	if(href_list["randomrec"])
+		sending = 0
+		teleport(usr, 1)
 
 	updateDialog()
-
-/obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(30, 40)
-	//angle_off = rand(-25, 25)
-	power_off = rand(-4, 0)
-	rotation_off = rand(-10, 10)

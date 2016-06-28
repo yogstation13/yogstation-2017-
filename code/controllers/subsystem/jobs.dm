@@ -100,6 +100,9 @@ var/datum/subsystem/job/SSjob
 		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
 			Debug("FOC non-human failed, Player: [player]")
 			continue
+		if(((job.title in command_positions) || (job.title in nonhuman_positions)) && (player.client.prefs.toggles & QUIET_ROUND))
+			Debug("FOC quiet check failed, Player: [player]")
+			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -154,7 +157,7 @@ var/datum/subsystem/job/SSjob
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/subsystem/job/proc/FillHeadPosition()
-	for(var/level = 1 to 3)
+	for(var/level = 1 to 4)
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
@@ -193,7 +196,7 @@ var/datum/subsystem/job/SSjob
 	if(!job)
 		return 0
 	for(var/i = job.total_positions, i > 0, i--)
-		for(var/level = 1 to 3)
+		for(var/level = 1 to 4)
 			var/list/candidates = list()
 			candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
@@ -249,7 +252,7 @@ var/datum/subsystem/job/SSjob
 	//People who wants to be assistants, sure, go on.
 	Debug("DO, Running Assistant Check 1")
 	var/datum/job/assist = new /datum/job/assistant()
-	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
+	var/list/assistant_candidates = FindOccupationCandidates(assist, 4)
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
@@ -277,7 +280,7 @@ var/datum/subsystem/job/SSjob
 
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)
-	for(var/level = 1 to 3)
+	for(var/level = 1 to 4)
 		//Check the head jobs first each level
 		CheckHeadPositions(level)
 
@@ -435,20 +438,21 @@ var/datum/subsystem/job/SSjob
 	for(var/datum/job/job in occupations)
 		var/tmp_str = "|[job.title]|"
 
-		var/level1 = 0 //high
-		var/level2 = 0 //medium
-		var/level3 = 0 //low
-		var/level4 = 0 //never
-		var/level5 = 0 //banned
-		var/level6 = 0 //account too young
+		var/level1 = 0 //ultra
+		var/level2 = 0 //high
+		var/level3 = 0 //medium
+		var/level4 = 0 //low
+		var/level5 = 0 //never
+		var/level6 = 0 //banned
+		var/level7 = 0 //account too young
 		for(var/mob/new_player/player in player_list)
 			if(!(player.ready && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
-				level5++
+				level6++
 				continue
 			if(!job.player_old_enough(player.client))
-				level6++
+				level7++
 				continue
 			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
 				level1++
@@ -456,9 +460,11 @@ var/datum/subsystem/job/SSjob
 				level2++
 			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
 				level3++
-			else level4++ //not selected
+			else if(player.client.prefs.GetJobDepartment(job, 4) & job.flag)
+				level4++
+			else level5++ //not selected
 
-		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
+		tmp_str += "ULTRA=[level1]|HIGH=[level2]|MEDIUM=[level3]|LOW=[level4]|NEVER=[level5]|BANNED=[level6]|YOUNG=[level7]|-"
 		feedback_add_details("job_preferences",tmp_str)
 
 /datum/subsystem/job/proc/PopcapReached()

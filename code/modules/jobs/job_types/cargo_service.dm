@@ -63,8 +63,8 @@ Shaft Miner
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
 
@@ -196,7 +196,7 @@ Botanist
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
-	suit_store = /obj/item/device/analyzer/plant_analyzer
+	suit_store = /obj/item/device/plant_analyzer
 
 	backpack = /obj/item/weapon/storage/backpack/botany
 	satchel = /obj/item/weapon/storage/backpack/satchel_hyd

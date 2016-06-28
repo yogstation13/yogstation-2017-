@@ -3,6 +3,7 @@
 /mob/new_player
 	var/ready = 0
 	var/spawning = 0//Referenced when you want to delete the new_player later on in the code.
+	var/joining_forbidden = 0
 
 	flags = NONE
 
@@ -28,14 +29,19 @@
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
 
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-		if(ready)
-			output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+		if(joining_forbidden)
+			output += "<p><span class='linkOff'>Ready</span> <span class='linkOff'>X</span></p>"
+		else if(ready)
+			output += "<p><span class='linkOn'><b>Ready</b></span> <a href='byond://?src=\ref[src];ready=0'>X</a></p>"
 		else
-			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
-
+			output += "<p><a href='byond://?src=\ref[src];ready=1'>Ready</a> <span class='linkOff'>X</span></p>"
+			
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
-		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+		if(joining_forbidden)
+			output += "<p><span class='linkOff'>Join Game!</span></p>"
+		else
+			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
 
 	output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
 
@@ -62,6 +68,70 @@
 
 	//src << browse(output,"window=playersetup;size=210x240;can_close=0")
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 220, 265)
+	popup.set_window_options("can_close=0")
+	popup.set_content(output)
+	popup.open(0)
+	return
+
+/mob/new_player/proc/disclaimer()
+	client.getFiles('html/rules.html')
+	var/brandnew = 0
+	var/window_height = 300 //So it's not mostly empty, in case there's no updates
+	if(client.player_age == -1)
+		brandnew = 1
+		joining_forbidden = 1
+		client.player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
+	var/current_agree = client.prefs.agree
+	var/output = ""
+	output += "Welcome [brandnew ? "" : "back "]to Yogstation!<br>"
+	if(brandnew)
+		output += "This appears to be your first time here. Please take a moment to read the server rules.<br>You will not be able to join this round. Take this time to acknowledge yourself with the map, rules, and playstyle.<br>Don't forget to set up your character preferences!<br>"
+	else if(current_agree == -1)
+		output += "Please read the server rules carefully. To stop receiving this popup, contact an administrator using Adminhelp (F1).<br>"
+
+	if(current_agree > 0)
+		output += "Even though you've been here before, there's been an update to the rules, which is why you're seeing this message.<br>"
+		output += "<br><b>There has been an update in the server rules:</b><br>"
+		if(current_agree < 2)
+			window_height += 30
+			output += "Wizard added to murderboning exception list.<br>\
+			Added rule 0.6 (Use proper IC language).<br>"
+		if(current_agree < 3)
+			window_height += 30
+			output += "Added rule 0.8 (Use common sense).<br>\
+			Added rule 1.3 (Do not act as antagonist when not).<br>\
+			Expanded rule 0.7 (Listen to admins).<br>\
+			Griefing and powergaming rules now mention critting as well as killing.<br>"
+		if(current_agree < 4)
+			window_height += 100
+			output += "Expanded rule 0.7 (Listen to admins).<br>\
+			Slightly expanded rules 1.3 (Do not act as antagonist when not), 1.4 (Do not powergame), and 1.5 (Do not metagame).<br>\
+			Added specific metagaming rules related to various antagonists:<br>\
+				1.5.1 (Nanotrasen standard procedure related to unknown alien organisms),<br>\
+				1.5.2 (Nanotrasen standard procedure related to unauthorized religious activity),<br>\
+				1.5.3 (Nanotrasen standard procedure related to widespread disregard for the chain of command).<br>\
+			This section will be expanded in the future.<br>\
+			Expanded rule 1.7 (Demonstrate clone memory disorder).<br>\
+			Noticeably relaxed rule 2.1.1 (Do not murderbone).<br>\
+			Updated rules 2.1.2 (Be active when playing a round defining antagonist) and 2.1.3 (Be a true revolutionary or gangster) to cover new gamemodes.<br>\
+			Expanded rule 2.3.2 (Know who is human).<br>\
+			Expanded rules 3.5.2 (Do not carry around harmful chemicals) and 3.5.3 (Do not misrepresent chemicals being given to people).<br>"
+		//Jump to 6 to standartize the number to which you compare it to - before this, we compared it to number that's 1 less than the "current rule revision" (defined as MAXAGREE). This is now fixed and consistent - you compare the current_agree with the exact number of MAXAGREE that you set in _compile_options.dm
+		if(current_agree < 6)
+			window_height += 20
+			output += "Reimplemented 2.1.1 (Do not murderbone), please read the full version of it via the Rules button on the top right panel.<br>"
+	else
+		output += "<br>Please familiarize yourself with the rules of our server before playing."
+		output += "<br>Violation of server rules can lead to a ban from certain roles, a temporary ban, or a permanent ban.<br>"
+		output += "If you have trouble understanding some of the game mechanics, check out the wiki.<br>"
+		output += "Any remaining questions can be resolved by using Adminhelp (F1).<br>"
+
+	output += "<p><center><a href='byond://?src=\ref[src];drules=1'>Server Rules</A>&nbsp\
+		<a href='byond://?src=\ref[src];dtgwiki=1'>Wiki</A>&nbsp<a href='byond://?src=\ref[src];dismiss=1'>Dismiss</A></center></p>"
+
+	window_height = min(window_height, 600) //Height still capped
+
+	var/datum/browser/popup = new(src, "disclaimer", "<div align='center'>IMPORTANT</div>", 700, window_height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
 	popup.open(0)
@@ -139,6 +209,30 @@
 
 			qdel(src)
 			return 1
+
+	if(href_list["drules"])
+		src << browse(file('html/rules.html'), "window=rules;size=700x700")
+		return
+
+	if(href_list["dtgwiki"])
+		src << link("http://tgstation13.org/wiki/Main_Page")
+		return
+
+	if(href_list["dismiss"])
+		var/eula = alert("I have read and understood the server rules and agree to abide by them.", "Security question", "Cancel", "Agree")
+		if(eula == "Agree")
+			if(!client)
+				return
+			if(client.prefs.agree == MAXAGREE)
+				return
+			if(client.prefs.agree != -1)
+				client.prefs.agree = MAXAGREE
+				client.prefs.save_preferences()
+			src << browse(null, "window=disclaimer")
+			if(joining_forbidden)
+				src << "Please spend this round observing the game to familiarise yourself with the map, rules, and general playstyle."
+			new_player_panel();
+		return
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
@@ -292,6 +386,7 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+	character.mind.quiet_round = character.client.prefs.toggles & QUIET_ROUND
 	SSjob.EquipRank(character, rank, 1)					//equips the human
 
 	var/D = pick(latejoin)
@@ -319,7 +414,7 @@
 
 	joined_player_list += character.ckey
 
-	if(config.allow_latejoin_antagonists)
+	if(config.allow_latejoin_antagonists && !character.mind.quiet_round)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
 				ticker.mode.make_antag_chance(character)

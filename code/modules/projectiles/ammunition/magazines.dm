@@ -42,7 +42,6 @@
 	for(var/i in 1 to rand(0, max_ammo*2))
 		rotate()
 
-
 /obj/item/ammo_box/magazine/internal/cylinder/give_round(obj/item/ammo_casing/R, replace_spent = 0)
 	if(!R || (caliber && R.caliber != caliber) || (!caliber && R.type != ammo_type))
 		return 0
@@ -233,6 +232,10 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 21
+
+/obj/item/ammo_box/magazine/smgm9mm/update_icon()
+	..()
+	icon_state = "smg9mm-[ammo_count() ? "42" : "0"]"
 
 /obj/item/ammo_box/magazine/smgm9mm/ap
 	name = "SMG magazine (Armour Piercing 9mm)"

@@ -15,7 +15,7 @@
 	var/list/territory_lost = list()
 	var/dom_timer = "OFFLINE"
 	var/dom_attempts = 2
-	var/points = 15
+	var/points = 25
 	var/datum/atom_hud/antag/ganghud
 
 /datum/gang/New(loc,gangname)
@@ -42,6 +42,8 @@
 
 	name = (gangname ? gangname : pick(gang_name_pool))
 	gang_name_pool -= name
+	if(name == "Sleeping Carp")
+		fighting_style = "martial"
 
 	ganghud = new()
 	log_game("The [name] Gang has been created. Their gang color is [color].")
@@ -97,7 +99,7 @@
 
 		if(outfit_path)
 			var/obj/item/clothing/outfit = new outfit_path(user.loc)
-			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0)
+			outfit.armor = list(melee = 20, bullet = 35, laser = 20, energy = 10, bomb = 20, bio = 0, rad = 0)
 			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = src
 			user.put_in_hands(outfit)
@@ -117,6 +119,8 @@
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
 				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
+				if(beep)
+					mob << sound('sound/machines/twobeep.ogg')
 			return
 
 
@@ -176,7 +180,7 @@
 			dom_timer = new_time
 		message += "<b>[dom_timer] seconds remain</b> in hostile takeover.<BR>"
 	else
-		var/points_new = min(999,points + 15 + (uniformed * 2) + territory.len)
+		var/points_new = min(999,points + 3 + (uniformed * 5) + (territory.len * 2))
 		if(points_new != points)
 			message += "Gang influence has increased by [points_new - points] for defending [territory.len] territories and [uniformed] uniformed gangsters.<BR>"
 		points = points_new

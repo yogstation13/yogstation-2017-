@@ -8,6 +8,7 @@ var/datum/subsystem/ticker/ticker
 
 	can_fire = 1 // This needs to fire before round start.
 
+	var/restart_timeout = 250	//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
 
@@ -45,14 +46,17 @@ var/datum/subsystem/ticker/ticker
 	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
 
 	var/obj/screen/cinematic = null			//used for station explosion cinematic
+	var/next_alert_time = 0
+	var/next_check_admin = 1
 
+	var/total_deaths = 0
 	var/maprotatechecked = 0
 
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 31, 'sound/ambience/title1.ogg' = 31, 'sound/ambience/title3.ogg' =31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 33, 'sound/ambience/title1.ogg' = 33, 'sound/ambience/title3.ogg' =33, 'sound/ambience/clown.ogg' = 1)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -105,15 +109,33 @@ var/datum/subsystem/ticker/ticker
 			check_queue()
 			check_maprotate()
 
+			if(world.time > next_alert_time && next_check_admin)
+				next_alert_time = world.time+1800 /* 6000 */
+
+				var/admins_online = total_admins_active()
+
+				if(!admins_online)
+					next_check_admin = 0
+
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
+				ticket_counter_visible_to_everyone = 1
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 				spawn(50)
-					if(mode.station_was_nuked)
-						world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+					var/admins_online = total_admins_active()
+					var/unresolved_tickets = total_unresolved_tickets()
+
+					if(unresolved_tickets && admins_online)
+						ticker.delay_end = 1
+						message_admins("Not all tickets have been resolved. Server restart delayed.")
+					else if(unresolved_tickets && !admins_online)
+						world.Reboot("Round ended, but there were still active tickets. Please submit a player complaint if you did not receive a response.", "end_proper", "ended with open tickets")
 					else
-						world.Reboot("Round ended.", "end_proper", "proper completion")
+						if(mode.station_was_nuked)
+							world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+						else
+							world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -231,7 +253,11 @@ var/datum/subsystem/ticker/ticker
 			if(M.stat != DEAD)
 				var/turf/T = get_turf(M)
 				if(T && T.z==1)
-					M.death(0) //no mercy
+					// The chef's meat locker is lead-lined to improve the taste of the meat
+					if (!istype(M.loc, /obj/structure/closet/secure_closet/freezer/meat))
+						M.death(0) //no mercy
+					else
+						M << "The freezer wobbles a bit, then stops. You let out a sigh of relief.";
 
 	//Now animate the cinematic
 	switch(station_missed)
@@ -326,7 +352,11 @@ var/datum/subsystem/ticker/ticker
 				player.create_character()
 				qdel(player)
 		else
-			player.new_player_panel()
+			if(player.client)
+				if(player.client.prefs.agree < MAXAGREE)
+					player.disclaimer()
+				else
+					player.new_player_panel()
 
 
 /datum/subsystem/ticker/proc/collect_minds()
@@ -455,7 +485,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-		
+
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return
