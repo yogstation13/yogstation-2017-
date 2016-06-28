@@ -184,7 +184,8 @@ Virologist
 
 /*
 Mining Medic
-*/
+To be preserved for a remake suiting lavaland.
+
 /datum/job/miningmedic
 	title = "Mining Medic"
 	flag = MMEDIC
@@ -200,7 +201,7 @@ Mining Medic
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_medical, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
-
+*/
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"

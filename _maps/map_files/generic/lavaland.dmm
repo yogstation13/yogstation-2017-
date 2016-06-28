@@ -643,7 +643,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/mine/eva)
+/area/lavaland/surface/outdoors)
 "bu" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Labor Camp Monitoring";
@@ -1683,8 +1683,9 @@
 	},
 /area/mine/living_quarters)
 "dq" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
-/turf/closed/mineral/random/volcanic,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/lavaland/surface/outdoors)
 "dr" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -1727,13 +1728,11 @@
 	},
 /area/mine/eva)
 "dw" = (
-/obj/machinery/suit_storage_unit/mining,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 5;
-	icon_state = "purple"
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/mine/eva)
+/area/lavaland/surface/outdoors)
 "dx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -1772,12 +1771,9 @@
 	},
 /area/mine/eva)
 "dA" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plasteel{
+	dir = 5;
 	icon_state = "brown"
 	},
 /area/mine/eva)
@@ -2127,35 +2123,19 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/turf/open/floor/plating{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/mine/living_quarters)
+/area/lavaland/surface/outdoors)
 "eo" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Mining External Airlock";
+	opacity = 0;
+	req_access_txt = "54"
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "purple"
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/production)
 "ep" = (
@@ -17728,7 +17708,7 @@ dx
 dH
 dR
 bP
-dx
+dI
 bh
 bh
 bh
@@ -17987,7 +17967,7 @@ dS
 dI
 bU
 eg
-eo
+dI
 dR
 eU
 fe
@@ -18748,7 +18728,7 @@ al
 af
 af
 al
-ab
+ds
 ds
 ds
 ds
@@ -19005,11 +18985,11 @@ al
 al
 al
 al
-ab
 ds
 du
 dy
 br
+dz
 dL
 dU
 ds
@@ -19262,9 +19242,9 @@ al
 al
 al
 ab
-ab
 dt
 dv
+dz
 dz
 dz
 dM
@@ -19519,9 +19499,9 @@ al
 al
 af
 af
-ab
 dt
 dv
+dz
 dz
 dD
 dN
@@ -19776,10 +19756,10 @@ al
 al
 af
 af
-ab
 ds
-dw
-dA
+dv
+dz
+dz
 dE
 dO
 dW
@@ -20033,9 +20013,9 @@ al
 al
 af
 af
-ab
-ds
-ds
+dt
+dv
+dz
 ds
 dt
 dP
@@ -20290,9 +20270,9 @@ al
 al
 af
 af
-ab
-ab
-ab
+dt
+dA
+dz
 ds
 dF
 dQ
@@ -20547,9 +20527,9 @@ al
 al
 al
 af
-af
-ab
-ab
+ds
+ds
+ds
 ds
 dG
 dO
