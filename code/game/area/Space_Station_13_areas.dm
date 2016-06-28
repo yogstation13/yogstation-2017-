@@ -95,8 +95,6 @@ var/list/teleportlocs = list()
 	name = "Admin room"
 	icon_state = "start"
 
-/area/abuse
-	name = "AB-use facility"
 
 /area/space
 	icon_state = "space"
@@ -201,6 +199,15 @@ var/list/teleportlocs = list()
 
 /area/centcom/holding
 	name = "Holding Facility"
+
+/area/abuse
+	name = "AB-use facility"
+	icon_state = "centcom"
+	requires_power = 0
+	has_gravity = 1
+	noteleport = 1
+	blob_allowed = 0
+
 
 //SYNDICATES
 
