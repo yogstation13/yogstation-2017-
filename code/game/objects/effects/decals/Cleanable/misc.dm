@@ -90,8 +90,7 @@
 /obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		switch(H.dna.species.id)
-			if("manfly", "unafly", "flytosian", "flyternis")
+		dd_hasprefix_case(H.dna.species.id, "manfly", "unafly", "flytosian", "flyternis")
 				playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 				H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 				if(reagents)
