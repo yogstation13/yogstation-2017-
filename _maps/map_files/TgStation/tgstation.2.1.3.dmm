@@ -2459,7 +2459,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/device/radio,
+/obj/item/device/radio/security,
 /turf/open/floor/carpet,
 /area/security/hos)
 "aeE" = (
@@ -4942,7 +4942,7 @@
 "aiG" = (
 /obj/structure/table,
 /obj/item/device/assembly/flash/handheld,
-/obj/item/device/radio,
+/obj/item/device/radio/security,
 /turf/open/floor/plasteel,
 /area/security/main)
 "aiH" = (
@@ -6122,7 +6122,12 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/device/radio,
+/obj/item/device/radio/security{
+	pixel_x = -8
+	},
+/obj/item/device/radio{
+	pixel_x = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -29886,7 +29891,12 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/obj/item/device/radio,
+/obj/item/device/radio{
+	pixel_x = -8
+	},
+/obj/item/device/radio/security{
+	pixel_x = 8
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bik" = (
@@ -68721,12 +68731,12 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/device/radio{
-	pixel_x = 8
-	},
-/obj/item/device/radio{
 	pixel_x = -8
 	},
 /obj/machinery/light,
+/obj/item/device/radio/security{
+	pixel_x = 8
+	},
 /turf/open/floor/plasteel{
 	icon_state = "yellow"
 	},
