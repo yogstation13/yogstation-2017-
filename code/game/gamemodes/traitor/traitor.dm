@@ -51,6 +51,7 @@
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
+	handle_AI_Traitors()
 
 	if(traitors.len < required_enemies)
 		return 0

@@ -83,6 +83,8 @@
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
+	handle_AI_Traitors()
+
 	return (cultists_to_cult.len>=required_enemies)
 
 
