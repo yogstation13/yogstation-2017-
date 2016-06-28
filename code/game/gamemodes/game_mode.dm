@@ -358,6 +358,10 @@
 		var/list/ckey_listed = list()
 		var/ckey_for_sql = ""
 
+		for(var/datum/mind/player in antag_candidates)
+			if(istype(player.current,/mob/living/silicon/ai))
+				antag_candidates.Remove(player) //All AI antag roles are handled seperately.  See handle_AI_Traitors()
+
 		// Add all our antag candidates to a list()
 		for (var/datum/mind/player in antag_candidates)
 			ckey_listed += sanitizeSQL(get_ckey(player))
