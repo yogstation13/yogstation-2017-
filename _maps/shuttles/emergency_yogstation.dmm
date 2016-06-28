@@ -27,7 +27,7 @@
 "aA" = (/obj/machinery/status_display,/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/escape)
 "aB" = (/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/escape)
 "aC" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
-"aD" = (/obj/machinery/flasher{id = "shuttlebrig"; step_y = 24},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"aD" = (/obj/machinery/flasher{id = "shuttlebrig"; pixel_y = 24},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
 "aE" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
 "aF" = (/obj/machinery/flasher{id = "cockpit_flasher"; pixel_y = 24},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "aG" = (/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
