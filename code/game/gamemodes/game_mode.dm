@@ -379,7 +379,7 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(role in player.client.prefs.be_special && !(player.mind.quiet_round))
+			if((role in player.client.prefs.be_special) && !(player.mind.quiet_round))
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
