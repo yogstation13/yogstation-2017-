@@ -138,7 +138,7 @@
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
 	set name = "Create Blobbernaut (40)"
-	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
+	set desc = "Create a powerful blobbernaut which will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
 	if(!B)
@@ -150,36 +150,17 @@
 	if(B.health < B.maxhealth * 0.5)
 		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
-	if(!can_buy(40))
+	if(!can_buy(20))
 		return
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	flick("blobbernaut_produce", blobber)
-	B.naut = blobber
-	blobber.factory = B
+	blobber.color = blob_reagent_datum.color
 	blobber.overmind = src
-	blobber.update_icons()
-	blobber.notransform = 1 //stop the naut from moving around
-	blobber.adjustHealth(blobber.maxHealth * 0.5)
-	blob_mobs += blobber
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
-	var/client/C = null
-	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
-		C = pick(candidates)
-		blobber.notransform = 0
-		blobber.key = C.key
-		blobber << 'sound/effects/blobattack.ogg'
-		blobber << 'sound/effects/attackblob.ogg'
-		blobber << "<b>You are a blobbernaut!</b>"
-		blobber << "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed."
-		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
-		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
-		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
-	else
-		blobber.notransform = 0 //otherwise, just let it move
+	blob_mobs.Add(blobber)
+
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
@@ -272,6 +253,33 @@
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
+/mob/camera/blob/verb/split_consciousness()
+	set category = "Blob"
+	set name = "Split consciousness (100) (One use)"
+	set desc = "Expend resources to attempt to produce another sentient overmind"
+
+	if(!blob_core)
+		src << "You do not have a core to split yourself."
+		return
+
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+
+	if(!B)
+		src << "<span class='warning'>You must be on a blob node!</span>"
+		return
+
+	if(!can_buy(100))
+		return
+
+	verbs -= /mob/camera/blob/verb/split_consciousness
+	new /obj/effect/blob/core/(get_turf(B), 200, null, blob_core.point_rate, "offspring")
+	qdel(B)
+	if(ticker && ticker.mode.name == "blob")
+		var/datum/game_mode/blob/BL = ticker.mode
+		BL.blobwincount = initial(BL.blobwincount) * 2
+
+
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"
 	set name = "Blob Broadcast"
@@ -322,7 +330,7 @@
 	src << "<i>Shield Blobs</i> are strong and expensive blobs which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires."
 	src << "<i>Resource Blobs</i> are blobs which produce more resources for you, build as many of these as possible to consume the station. This type of blob must be placed near node blobs or your core to work."
 	src << "<i>Factory Blobs</i> are blobs that spawn blob spores which will attack nearby enemies. This type of blob must be placed near node blobs or your core to work."
-	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores."
+	src << "<i>Blobbernauts</i> can be produced from factories for a cost, and are hard to kill and are capable of much more than your regular spores. The factory used to create one will become fragile and briefly unable to produce spores."
 	src << "<i>Node Blobs</i> are blobs which grow, like the core. Like the core it can activate resource and factory blobs."
 	src << "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>"
 	src << "<b>Shortcuts:</b> Click = Expand Blob <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Blob <b>|</b> Alt Click = Remove Blob"
