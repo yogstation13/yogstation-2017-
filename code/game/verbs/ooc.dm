@@ -69,7 +69,6 @@
 					if(check_rights_for(src, R_ADMIN))
 						if(src.holder.rank.name == ("AdminObserver"||"CoderInitiate"))
 							C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-							return
 						else
 							var/client_rank = find_admin_rank(src)
 							if(!client_rank)
