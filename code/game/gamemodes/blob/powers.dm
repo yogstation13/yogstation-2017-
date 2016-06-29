@@ -137,7 +137,7 @@
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
-	set name = "Create Blobbernaut (40)"
+	set name = "Create Blobbernaut (20)"
 	set desc = "Create a powerful blobbernaut which will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
