@@ -306,6 +306,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		alert("Connection to Archive has been severed. Aborting.")
+		return
 	print_busy = 1
 	spawn(40)
 		print_queue.Cut(1,2)
