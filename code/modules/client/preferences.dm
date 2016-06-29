@@ -327,6 +327,15 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
+				if("leaves" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Leaves</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=leaves;task=input'>[features["leaves"]]</a><BR>"
+
+					dat += "</td>"
+
 			if(config.mutant_humans)
 
 				if("tail_human" in pref_species.mutant_bodyparts)

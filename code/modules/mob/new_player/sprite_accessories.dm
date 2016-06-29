@@ -1412,12 +1412,31 @@
 /datum/sprite_accessory/leaves
 	icon = "mutan_bodypart"
 
+/datum/sprite_accessory/leaves/none
+	icon_state = "none"
+	locked = 1
+
 /datum/sprite_accessory/leaves/classic_male
 	name = "Classic"
-	icon_state = "m_leaves_classic
+	icon_state = "m_leaves_classic"
 	gender = MALE
 
 /datum/sprite_accessory/leaves/classic_female
 	name = "Classic"
 	icon_state = "f_leaves_classic"
 	gender = FEMALE
+
+/datum/sprite_accessory/leaves/flowerpink
+	name = "Pink Flower"
+	icon_state = "s_leaves_flower_1"
+	color_src = 0
+
+/datum/sprite_accessory/leaves/flowerblue
+	name = "Blue Flower"
+	icon_state = "s_leaves_flower_2"
+	color_src = 0
+
+/datum/sprite_accessory/leaves/flowerred
+	name = "Red Flower"
+	icon_state = "s_leaves_flower_3"
+	color_src = 0
