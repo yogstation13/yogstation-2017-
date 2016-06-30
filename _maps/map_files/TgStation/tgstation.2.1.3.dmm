@@ -63591,7 +63591,7 @@
 "cvC" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
-	req_access_txt = "63"
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
