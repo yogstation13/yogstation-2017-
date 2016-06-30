@@ -99,7 +99,14 @@
 	return src.attack_hand(user)
 
 
-/turf/closed/wall/attack_animal(mob/living/simple_animal/M)
+/turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
+	if(istype(M,/mob/living/simple_animal/construct/builder)||istype(M,/mob/living/simple_animal/construct/harvester))
+		if(istype(src, /turf/simulated/wall/cult))
+			return
+		src.ChangeTurf(/turf/simulated/wall/cult)
+		M <<"<span class='notice'>You transfer some of your corrupt energy into the wall, causing it to transform.</span>"
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
