@@ -45258,6 +45258,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bLL" = (
@@ -46001,10 +46002,6 @@
 /obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
-	},
-/obj/item/weapon/circuitboard/computer/cooldown_holder{
-	pixel_x = 5;
-	pixel_y = -5
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -58339,7 +58336,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "clm" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/securearea{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cln" = (
@@ -59508,7 +59507,7 @@
 /area/atmos)
 "cnH" = (
 /obj/machinery/computer/atmos_control/tank{
-	frequency = 1443;
+	frequency = 1441;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
@@ -69001,12 +69000,13 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "cFK" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_y = -24
+/obj/machinery/vending/gifts,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
+/area/gateway)
 "cFL" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/plasteel/shuttle/white,
@@ -91993,7 +91993,7 @@ ayV
 aAf
 aBt
 ayV
-aDR
+cFK
 aFr
 aGF
 aIl
