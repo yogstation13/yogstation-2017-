@@ -1069,6 +1069,29 @@
 	else if(href_list["addnoteempty"])
 		add_note()
 
+	else if(href_list["noteexport"])
+		var/target_ckey = href_list["noteexport"]
+		var/output = ""
+
+		var/target_sql_ckey = sanitizeSQL(target_ckey)
+		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id, timestamp, notetext, adminckey, last_editor, server FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
+		if(!query_get_notes.Execute())
+			var/err = query_get_notes.ErrorMsg()
+			log_game("SQL ERROR obtaining ckey, notetext, adminckey, last_editor, server from notes table. Error : \[[err]\]\n")
+			return
+
+		while(query_get_notes.NextRow())
+			//var/id = query_get_notes.item[1]
+			var/timestamp = query_get_notes.item[2]
+			var/notetext = query_get_notes.item[3]
+			//var/adminckey = query_get_notes.item[4]
+			//var/last_editor = query_get_notes.item[5]
+			var/server = query_get_notes.item[6]
+			output += "<p style='margin-bottom: 0px;'><b>[timestamp] | [server]</b><br />"
+			output += "<span style='margin-left: 16px; margin-top: 0px;'>[notetext]</span></p>"
+
+		usr << browse(output, "window=noteexport;size=800x650")
+	
 	else if(href_list["removenote"])
 		var/note_id = href_list["removenote"]
 		remove_note(note_id)
