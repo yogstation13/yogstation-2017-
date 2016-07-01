@@ -143,6 +143,19 @@
 	..()
 	. = 1
 
+/datum/reagent/drug/bolamine  //Anti-meth.  Slows you down, does very gradual stamina damage.
+	name = "Bolamine"
+	id = "bolamine"
+	description = "A thick, blue liquid that non-harmfully slows down the victim.  In large quantities, destroys one's stamina.  Naturally produced by certain monsters."
+	reagent_state = LIQUID
+	color = "#3399FF"
+
+/datum/reagent/drug/bolamine/on_mob_life(mob/living/M)
+	M.adjustStaminaLoss(1, 0)
+	M.status_flags |= SLOWDOWN
+	..()
+	. = 1
+
 /datum/reagent/drug/methamphetamine
 	name = "Methamphetamine"
 	id = "methamphetamine"
