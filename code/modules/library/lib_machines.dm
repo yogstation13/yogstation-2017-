@@ -178,6 +178,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/page = 1	//current page of the external archives
 	var/print_busy = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 	var/list/print_queue = list()
+	var/max_print_queue_len = 50;
+	var/clearprintqueue = 0;
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
@@ -213,13 +215,18 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			dat += "<A href='?src=\ref[src];switchscreen=4'>4. Connect to External Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=7'>7. Manage Printing Queue</A><BR>"
 			if(src.emagged)
-				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
+				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				new /obj/item/weapon/tome(src.loc)
 				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
+			if(src.clearprintqueue)
+				print_queue.Cut()
+				say("The Printing Queue has been cleared.")
+				src.clearprintqueue = 0
 		if(1)
 			// Inventory
 			dat += "<H3>Inventory</H3><BR>"
@@ -290,6 +297,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				dat += "<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
+			dat += "<h3>Manage Printing Queue</h3>?"
+			dat += "There are currently [print_queue.len]/[max_print_queue_len] books in the queue.<BR>"
+			dat += "<A href='?src=\ref[src];clearprintqueue=1'>(Clear Printing Queue)</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+		if(8)
 			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
 			dat += "Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
 			dat += "<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>"
@@ -378,9 +390,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 						print_busy = 0
 				else
 					say("Bible printer currently unavailable, please wait a moment.")
-
 			if("7")
 				screenstate = 7
+			if("8")
+				screenstate = 8
 	if(href_list["arccheckout"])
 		if(src.emagged)
 			src.arcanecheckout = 1
@@ -442,10 +455,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(isnum(orderid) && IsInteger(orderid))
 				href_list["targetid"] = orderid
 	if(href_list["targetid"])
-		print_queue += href_list["targetid"]
-		say("Book has been sent to the printing queue!")
-		if(!print_busy && print_queue.len)
-			print_book(print_queue[1])
+		if(print_queue.len<max_print_queue_len)
+			print_queue += href_list["targetid"]
+			say("Book has been sent to the printing queue!")
+			if(!print_busy && print_queue.len)
+				print_book(print_queue[1])
+		else
+			say("The printing queue is full!")
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
