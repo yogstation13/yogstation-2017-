@@ -185,7 +185,7 @@
 	else
 		bantype_sql = "bantype = '[bantype_str]'"
 
-	var/sql = "SELECT id FROM [format_table_name("ban")] WHERE ckey = '[ckey]' AND [bantype_sql] AND (unbanned is null OR unbanned = false)"
+	var/sql = "SELECT id FROM [format_table_name("ban")] WHERE ckey = '[ckey]' AND [bantype_sql] AND (unbanned = 0)"
 	if(job)
 		sql += " AND job = '[job]'"
 
@@ -432,7 +432,7 @@
 			var/expiration = select_query.item[7]
 			var/ckey = select_query.item[8]
 			var/ackey = select_query.item[9]
-			var/unbanned = select_query.item[10]
+			var/unbanned = text2num(select_query.item[10]) //Even in integer, we are text
 			var/unbanckey = select_query.item[11]
 			var/unbantime = select_query.item[12]
 			var/edits = select_query.item[13]
