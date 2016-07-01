@@ -18624,6 +18624,7 @@
 "aJn" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
+	pixel_x = 6;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -47658,9 +47659,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bPR" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
 "bPS" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -121810,7 +121815,7 @@ aCa
 aHR
 aJm
 cFG
-cFK
+bPR
 aNX
 aJn
 aKR
