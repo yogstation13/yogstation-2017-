@@ -304,6 +304,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(!book_id)
 		return
 	establish_db_connection()
+	book_id = sanitizeSQL(book_id)
 	if(!dbcon.IsConnected())
 		alert("Connection to Archive has been severed. Aborting.")
 		return
@@ -441,8 +442,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(isnum(orderid) && IsInteger(orderid))
 				href_list["targetid"] = orderid
 	if(href_list["targetid"])
-		var/sqlid = sanitizeSQL(href_list["targetid"])
-		print_queue += sqlid
+		print_queue += href_list["targetid"]
 		say("Book has been sent to the printing queue!")
 		if(!print_busy && print_queue.len)
 			print_book(print_queue[1])
