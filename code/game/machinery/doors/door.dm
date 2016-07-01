@@ -161,6 +161,8 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		try_to_weld(I, user)
 		return 1
+	else if(istype(I, /obj/item/weapon/katana/energy))
+		return ..()
 	else if(!(I.flags & NOBLUDGEON) && user.a_intent != "harm")
 		try_to_activate_door(user)
 		return 1
