@@ -443,6 +443,14 @@ var/const/INJECT = 5 //injection
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
 
+/datum/reagents/proc/check_slowdown(mob/M)  //SLOWDOWN is halfway in between GOTTAGOFAST and GOTTAGOREALLYFAST.  IGNORESLOWDOWN cancels it.
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("bolamine"))
+			return 1
+		else
+			M.status_flags &= ~SLOWDOWN
+
+
 /datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
