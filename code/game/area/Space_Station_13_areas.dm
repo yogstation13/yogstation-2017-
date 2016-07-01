@@ -200,7 +200,7 @@ var/list/teleportlocs = list()
 /area/centcom/holding
 	name = "Holding Facility"
 
-/area/abuse
+/area/centcom/abuse
 	name = "AB-use facility"
 	icon_state = "centcom"
 	requires_power = 0

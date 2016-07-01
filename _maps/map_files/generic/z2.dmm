@@ -2141,16 +2141,14 @@
 /turf/open/floor/grass,
 /area/centcom/control)
 "gu" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
-	},
-/area/centcom/control)
+/turf/closed/indestructible/riveted,
+/area/centcom/abuse)
 "gv" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 6
 	},
-/area/centcom/control)
+/area/centcom/abuse)
 "gw" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -2209,7 +2207,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "gG" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/gun/hos,
@@ -2219,7 +2217,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "gH" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
@@ -2261,7 +2259,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "gP" = (
 /obj/structure/table,
 /obj/item/weapon/gun/syringe/syndicate,
@@ -2270,7 +2268,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "gQ" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -2295,13 +2293,13 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "gU" = (
 /obj/item/weapon/grown/bananapeel,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "gV" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Customs";
@@ -2352,9 +2350,8 @@
 /area/centcom/control)
 "hd" = (
 /turf/closed/indestructible/fakeglass{
-	color = "#008000";
-	dir = 4;
-	icon_state = "fakewindows"
+	icon_state = "fakewindows";
+	dir = 4
 	},
 /area/centcom/control)
 "he" = (
@@ -2413,7 +2410,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "ho" = (
 /obj/machinery/button/door{
 	desc = "A remote control switch for port-side blast doors.";
@@ -2455,7 +2452,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hs" = (
 /turf/open/floor/plating/asteroid/snow,
 /area/syndicate_mothership)
@@ -2499,13 +2496,13 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hB" = (
 /obj/mecha/combat/marauder/mauler,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor{
@@ -2551,7 +2548,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hI" = (
 /obj/structure/table,
 /obj/item/weapon/dragons_blood,
@@ -2560,7 +2557,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hJ" = (
 /obj/structure/table,
 /obj/item/weapon/disk/nuclear,
@@ -2569,16 +2566,17 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hK" = (
 /obj/structure/table,
 /obj/item/weapon/cookiesynth,
 /obj/item/weapon/grenade/clusterbuster/cleaner,
 /obj/item/weapon/grenade/clusterbuster/clf3,
+/obj/item/weapon/grenade/flashbang/cluster,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hL" = (
 /obj/structure/cult/talisman{
 	desc = "A altar dedicated to the Wizard's Federation"
@@ -2604,13 +2602,13 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hP" = (
 /obj/mecha/combat/phazon,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hQ" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -2630,7 +2628,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "hS" = (
 /turf/open/floor/plasteel/green/corner{
 	dir = 8
@@ -2672,7 +2670,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "ia" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -6014,18 +6012,18 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "sb" = (
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "sc" = (
 /obj/mecha/combat/gygax/dark,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "sd" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/alien,
@@ -6036,13 +6034,13 @@
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "se" = (
 /obj/mecha/combat/honker,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
-/area/abuse)
+/area/centcom/abuse)
 "sf" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -37554,11 +37552,11 @@ fO
 ab
 ab
 ab
-eJ
-gr
-gr
-gr
-gr
+ab
+ab
+ab
+gu
+gu
 hb
 hb
 hb
@@ -37811,10 +37809,10 @@ fP
 fL
 ab
 ab
-eJ
-gs
-gs
-gN
+ab
+ab
+ab
+gv
 sb
 sc
 se
@@ -37823,7 +37821,7 @@ sb
 hP
 hZ
 sc
-sa
+sb
 ij
 iy
 iU
@@ -38068,10 +38066,10 @@ fQ
 fY
 gd
 ab
-eJ
-gt
-gs
-gr
+ab
+ab
+ab
+gu
 sb
 sb
 sb
@@ -38326,9 +38324,9 @@ fR
 fY
 gj
 eJ
-gs
-gs
-gN
+ab
+ab
+gv
 sb
 gT
 sb
@@ -38583,9 +38581,9 @@ eO
 eO
 eO
 eJ
+ab
+ab
 gu
-gB
-gr
 sb
 gF
 sb
@@ -38839,10 +38837,10 @@ eO
 eO
 eO
 eO
-gq
-gv
-gC
-im
+gr
+ab
+ab
+gu
 sb
 gG
 sb
@@ -39097,9 +39095,9 @@ eO
 ge
 fi
 eJ
+ab
+ab
 gu
-gB
-gr
 sb
 sd
 sb
@@ -39354,9 +39352,9 @@ fZ
 eJ
 eJ
 eJ
-gs
-gs
-gN
+ab
+ab
+gv
 sb
 sb
 sb
@@ -39611,8 +39609,8 @@ fk
 fk
 fk
 eJ
-gt
-gs
+ab
+ab
 gr
 gC
 gr
@@ -39868,8 +39866,8 @@ fk
 fk
 gk
 eJ
-gs
-gs
+ab
+ab
 gN
 gV
 gN
@@ -40125,8 +40123,8 @@ ga
 gf
 gl
 eJ
-gr
-gr
+ab
+ab
 gr
 gW
 gW
