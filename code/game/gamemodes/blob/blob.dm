@@ -50,7 +50,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	if(!blob_overminds.len)
 		return 0
-	handle_AI_Traitors()
+
 	return 1
 
 /datum/game_mode/blob/proc/get_blob_candidates()
