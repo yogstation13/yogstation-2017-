@@ -23,6 +23,14 @@
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
 
+/obj/item/device/taperecorder/AltClick()
+	..()
+	eject(usr)
+
+/obj/item/device/taperecorder/CtrlClick()
+	..()
+	play(usr)
+
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
