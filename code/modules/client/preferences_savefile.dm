@@ -206,7 +206,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["hotkeys"]			>> hotkeys
+	S["hotkeys"]			>> hotkey_preference
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 
@@ -238,7 +238,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative"), initial(UI_style))
-	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
+	hotkey_preference			= sanitize_integer(hotkey_preference, 0, 1, initial(hotkey_preference))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
@@ -265,7 +265,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["hotkeys"]			<< hotkeys
+	S["hotkeys"]			<< hotkey_preference
 	S["tgui_fancy"]			<< tgui_fancy
 	S["tgui_lock"]			<< tgui_lock
 	S["be_special"]			<< be_special

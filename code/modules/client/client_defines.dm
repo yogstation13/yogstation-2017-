@@ -57,3 +57,4 @@
 
 	var/last_cached_weight //For weight checking, prevents query spam
 	var/last_cached_total_weight //For weight checking, prevents query spam
+	var/hotkeys = FALSE

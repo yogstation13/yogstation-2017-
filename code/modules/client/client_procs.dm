@@ -221,6 +221,7 @@ var/next_external_rsc = 0
 		if(prefs.toggles & QUIET_ROUND)
 			prefs.toggles &= ~QUIET_ROUND
 			prefs.save_preferences()
+	hotkeys = prefs.hotkey_preference
 
 	. = ..()	//calls mob.Login()
 
