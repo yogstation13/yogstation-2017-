@@ -1,6 +1,6 @@
 /client/verb/togglehotkeys(notoggle = 0 as num)
 	set name = "Toggle Hotkey Mode"
-	set category = "IC"
+	set category = "OOC"
 	set desc = "Switches input mode betweeen regular and hotkey mode."
 
 	//fallback
