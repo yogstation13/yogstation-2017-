@@ -192,12 +192,14 @@
 	desc = "A special high-tech helmet for resource recovery in virtually any environment.  Has reinforced plating and heat shields effective to 35000 degrees."
 	icon_state = "hardsuit0-miningelite"
 	item_state = "hardsuit0-miningelite"
-	armor = list(melee = 45, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
+	armor = list(melee = 45, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 100) //radproof, because the desc says 'virtually any environment'
 
 /obj/item/clothing/suit/space/hardsuit/mining/elite
 	icon_state = "miningelite"
 	name = "elite mining hardsuit"
 	desc = "A special high-tech hardsuit, customized for heat and wildlife protection.  Effective against most kinds of wildlife, as well as ash storms and lava."
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining/elite
+	armor = list(melee = 45, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 100)
 	var/l_int = 0 //It's possible, if you're very robust, to get an intrinsic resistance to lava.  If this flag is checked, the suit won't take that away when removed.
 
 /obj/item/clothing/head/helmet/space/hardsuit/mining/elite/equipped(mob/user, slot)
@@ -205,7 +207,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		return //Nonhuman wearing the suit, don't bother checking (theoretically possible I guess?)
-	H.weather_immunities = list("lava","ash")
+	H.weather_immunities = list("lava","ash") //This bullshit with weather immunities is because I don't want to screw up how lava works and break a billion things in the process
 
 /obj/item/clothing/suit/space/hardsuit/mining/elite/equipped(mob/user, slot)
 	..()
