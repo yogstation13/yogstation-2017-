@@ -17026,10 +17026,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
-	step_x = 5;
-	step_y = -5
-	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "aDz" = (
