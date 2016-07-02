@@ -60,10 +60,7 @@
 
 	sync_mind()
 
-	if(client.hotkeys)
-		winset(src, null, "mainwindow.macro=[macro_hotkeys] mapwindow.map.focus=true input.background-color=#e0e0e0")
-	else
-		winset(src, null, "mainwindow.macro=[macro_default] input.focus=true input.background-color=#d3b5b5")
+	client.togglehotkeys(1) //notoggle = 1, we set, not toggle in this case - unification of hotkey handling
 
 	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
 		for(var/aakey in viewing_alternate_appearances)

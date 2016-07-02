@@ -1,4 +1,4 @@
-/client/verb/togglehotkeys()
+/client/verb/togglehotkeys(notoggle = 0 as num)
 	set name = "Toggle Hotkey Mode"
 	set category = "IC"
 	set desc = "Switches input mode betweeen regular and hotkey mode."
@@ -7,7 +7,8 @@
 	var/hotkey_default = "default"
 	var/hotkey_macro = "hotkeys"
 
-	hotkeys = !hotkeys
+	if(!notoggle)
+		hotkeys = !hotkeys
 	
 	if(mob)
 		hotkey_macro = mob.macro_hotkeys
