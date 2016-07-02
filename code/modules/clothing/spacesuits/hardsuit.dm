@@ -185,7 +185,55 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
 
+	//Elite mining hardsuit
 
+/obj/item/clothing/head/helmet/space/hardsuit/mining/elite
+	name = "elite mining hardsuit helmet"
+	desc = "A special high-tech helmet for resource recovery in virtually any environment.  Has reinforced plating and heat shields effective to 35000 degrees."
+	icon_state = "hardsuit0-miningelite"
+	item_state = "hardsuit0-miningelite"
+	armor = list(melee = 45, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 100) //radproof, because the desc says 'virtually any environment'
+
+/obj/item/clothing/suit/space/hardsuit/mining/elite
+	icon_state = "miningelite"
+	name = "elite mining hardsuit"
+	desc = "A special high-tech hardsuit, customized for heat and wildlife protection.  Effective against most kinds of wildlife, as well as ash storms and lava."
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining/elite
+	armor = list(melee = 45, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 100)
+	var/l_int = 0 //It's possible, if you're very robust, to get an intrinsic resistance to lava.  If this flag is checked, the suit won't take that away when removed.
+
+/obj/item/clothing/head/helmet/space/hardsuit/mining/elite/equipped(mob/user, slot)
+	..()
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return //Nonhuman wearing the suit, don't bother checking (theoretically possible I guess?)
+	H.weather_immunities = list("lava","ash") //This bullshit with weather immunities is because I don't want to screw up how lava works and break a billion things in the process
+
+/obj/item/clothing/suit/space/hardsuit/mining/elite/equipped(mob/user, slot)
+	..()
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return
+	if("lava" in H.weather_immunities)
+		l_int = 1
+
+/obj/item/clothing/head/helmet/space/hardsuit/mining/elite/dropped(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return ..()
+	if(H.wear_suit) //Bunch of precautionary measures in here to protect against admin fuckery causing runtimes.
+		var/obj/item/clothing/suit/space/hardsuit/mining/elite/M = H.wear_suit
+		if(istype(M))
+			if(M.l_int)
+				H.weather_immunities = list("lava") //They already had the lava resist intrinsic when they put on the suit (currently only from ash drake blood)
+				return
+
+		H.weather_immunities = list()
+	..()
+
+/obj/item/clothing/suit/space/hardsuit/mining/elite/dropped(mob/user)
+	..()
+	l_int = 0 //prevent duplication of lava resist
 
 	//Syndicate hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi
