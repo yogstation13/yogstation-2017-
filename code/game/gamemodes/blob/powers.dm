@@ -138,7 +138,7 @@
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
 	set name = "Create Blobbernaut (40)"
-	set desc = "Create a powerful blobbernaut which will attack enemies."
+	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
 	if(!B)
@@ -150,16 +150,36 @@
 	if(B.health < B.maxhealth * 0.5)
 		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
-	if(!can_buy(20))
+	if(!can_buy(40))
 		return
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
 	B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 	playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
-	blobber.color = blob_reagent_datum.color
+	flick("blobbernaut_produce", blobber)
+	B.naut = blobber
+	blobber.factory = B
 	blobber.overmind = src
-	blob_mobs.Add(blobber)
+	blobber.update_icons()
+	blobber.notransform = 1 //stop the naut from moving around
+	blobber.adjustHealth(blobber.maxHealth * 0.5)
+	blob_mobs += blobber
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
+	var/client/C = null
+	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+		C = pick(candidates)
+		blobber.notransform = 0
+		blobber.key = C.key
+		blobber << 'sound/effects/blobattack.ogg'
+		blobber << 'sound/effects/attackblob.ogg'
+		blobber << "<b>You are a blobbernaut!</b>"
+		blobber << "You are powerful, hard to kill, and slowly regenerate near nodes and cores, but will slowly die if not near the blob or if the factory that made you is killed."
+		blobber << "You can communicate with other blobbernauts and overminds via <b>:b</b>"
+		blobber << "Your overmind's blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
+		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
+	else
+		blobber.notransform = 0 //otherwise, just let it move
 
 
 /mob/camera/blob/verb/relocate_core()
