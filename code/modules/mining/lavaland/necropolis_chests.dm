@@ -33,7 +33,7 @@
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/heart/cursed(src)
+			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
