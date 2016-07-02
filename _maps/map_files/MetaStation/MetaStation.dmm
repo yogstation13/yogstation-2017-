@@ -34606,7 +34606,10 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/computer/cooldown_holder/communications,
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
