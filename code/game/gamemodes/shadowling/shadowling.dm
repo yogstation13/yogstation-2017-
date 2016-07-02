@@ -96,6 +96,8 @@ Made by Xhuis
 		shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
 		shadowlings--
+
+	handle_AI_Traitors()
 	return 1
 
 
