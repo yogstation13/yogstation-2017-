@@ -60,7 +60,7 @@
 
 	sync_mind()
 
-	client.togglehotkeys(1) //notoggle = 1, we set, not toggle in this case - unification of hotkey handling
+	client.sethotkeys() //set mob specific hotkeys
 
 	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
 		for(var/aakey in viewing_alternate_appearances)
