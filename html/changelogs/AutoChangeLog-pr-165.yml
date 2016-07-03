@@ -1,4 +1,0 @@
-author: MacHac
-delete-after: True
-changes: 
-  - tweak: "Traitor AIs can now spawn in most game modes, and should be significantly more common.  This is an experimental change, and is subject to removal at any time."
