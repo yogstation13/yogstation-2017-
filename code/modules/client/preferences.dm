@@ -1117,6 +1117,12 @@ var/list/preferences_datums = list()
 					if(new_frills)
 						features["frills"] = new_frills
 
+				if("leaves")
+					var/new_leaves
+					new_leaves = input(user, "Choose your character's leaves:", "Character Preference") as null|anything in leaves_list
+					if(new_leaves)
+						features["leaves"] = new_leaves
+
 				if("spines")
 					var/new_spines
 					new_spines = input(user, "Choose your character's spines:", "Character Preference") as null|anything in spines_list
