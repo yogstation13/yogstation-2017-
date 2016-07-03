@@ -45259,6 +45259,10 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bLL" = (
@@ -46002,10 +46006,6 @@
 /obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
-	},
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
 	},
 /obj/machinery/light/small{
 	dir = 8

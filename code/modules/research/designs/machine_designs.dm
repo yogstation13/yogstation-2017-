@@ -103,7 +103,7 @@
 	desc = "Allows for the construction of circuit boards used to build a telescience console."
 	id = "telesci_console"
 	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 4)
-	build_path = /obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console
+	build_path = /obj/item/weapon/circuitboard/computer/cooldown_holder/telesci_console
 	category = list("Teleportation Machinery")
 
 /datum/design/board/sleeper
