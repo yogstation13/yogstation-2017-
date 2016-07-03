@@ -91,7 +91,7 @@
 			else
 				expires = " The is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires].\n If you wish to appeal this ban please use the keyword 'assistantgreytide' to register an account on the forums."
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
 

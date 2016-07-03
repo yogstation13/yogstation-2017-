@@ -1091,7 +1091,7 @@
 			output += "<span style='margin-left: 16px; margin-top: 0px;'>[notetext]</span></p>"
 
 		usr << browse(output, "window=noteexport;size=800x650")
-	
+
 	else if(href_list["removenote"])
 		var/note_id = href_list["removenote"]
 		remove_note(note_id)
@@ -1155,7 +1155,7 @@
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
 				feedback_inc("ban_tmp_mins",mins)
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
+					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]. If you wish to appeal this ban please use the keyword 'assistantgreytide' to register an account on the forums.</span>"
 				else
 					M << "<span class='danger'>No ban appeals URL has been set.</span>"
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
@@ -1177,7 +1177,7 @@
 				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a permanent ban.</span>"
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
+					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]. If you wish to appeal this ban please use the keyword 'assistantgreytide' to register an account on the forums.</span>"
 				else
 					M << "<span class='danger'>No ban appeals URL has been set.</span>"
 				ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
