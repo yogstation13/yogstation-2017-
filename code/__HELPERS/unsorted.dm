@@ -1527,7 +1527,7 @@ proc/pick_closest_path(value)
 	var/old_color = C.color
 	C.color = "#960000"
 	spawn(0)
-		animate(C, color = initial(C.color), time = flash_time)
+		animate(C, color = old_color, time = 20)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
