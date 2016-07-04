@@ -626,6 +626,11 @@
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	if(!AM.invisibility)
 		visible_message("[AM] falls into [src]!")
+		if(istype(AM, /mob/living/silicon/robot)) //MMI deletion
+			var/mob/living/silicon/robot/BORGO = AM
+			if(BORGO.mmi)
+				qdel(BORGO.mmi)
+				BORGO.mmi = null
 		qdel(AM)
 
 /turf/closed/mineral/volcanic/lava_land_surface
