@@ -53,7 +53,7 @@ var/datum/subsystem/lighting/SSlighting
 		if(T.lighting_changed)
 			T.redraw_lighting()
 		if (MC_TICK_CHECK)
-			return
+			break
 
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
 //Does not loop. Should be run prior to process() being called for the first time.
