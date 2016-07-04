@@ -168,6 +168,68 @@
 /datum/game_mode/process()
 	return 0
 
+/datum/game_mode/proc/handle_AI_Traitors()
+	//Handles setting up traitor AIs seperately, because >tfw no datum antags
+	//Override this to change chances for AI traitors
+	var/prob_naughty_ai = 15
+	if(prob(100-prob_naughty_ai)) return //no AI traitor made
+
+	var/mob/living/silicon/ai/A
+	for(var/datum/mind/player in get_players_for_role(ROLE_TRAITOR))
+		if(istype(player.current,/mob/living/silicon/ai))
+			A = player.current
+
+	if(A.stat == 2 || !A.client || !A.mind) return
+	if(is_special_character(A)) return
+
+	ticker.mode.traitors += A.mind
+	A.mind.special_role = "traitor"
+
+	var/objective_count = 0
+
+	if(prob(30))
+		var/special_pick = rand(1,4)
+		switch(special_pick)
+			if(1)
+				var/datum/objective/block/block_objective = new
+				block_objective.owner = A.mind
+				A.mind.objectives += block_objective
+				objective_count++
+			if(2)
+				var/datum/objective/purge/purge_objective = new
+				purge_objective.owner = A.mind
+				A.mind.objectives += purge_objective
+				objective_count++
+			if(3)
+				var/datum/objective/robot_army/robot_objective = new
+				robot_objective.owner = A.mind
+				A.mind.objectives += robot_objective
+				objective_count++
+			if(4) //Protect and strand a target
+				var/datum/objective/protect/yandere_one = new
+				yandere_one.owner = A.mind
+				A.mind.objectives += yandere_one
+				yandere_one.find_target()
+				objective_count++
+				var/datum/objective/maroon/yandere_two = new
+				yandere_two.owner = A.mind
+				yandere_two.target = yandere_one.target
+				A.mind.objectives += yandere_two
+				objective_count++
+
+	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = A.mind
+		kill_objective.find_target()
+		A.mind.objectives += kill_objective
+
+	var/datum/objective/survive/survive_objective = new
+	survive_objective.owner = A.mind
+	A.mind.objectives += survive_objective
+
+	ticker.mode.greet_traitor(A.mind)
+	ticker.mode.finalize_traitor(A.mind)
+
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
@@ -296,6 +358,10 @@
 		var/list/ckey_listed = list()
 		var/ckey_for_sql = ""
 
+		for(var/datum/mind/player in antag_candidates)
+			if(istype(player.current,/mob/living/silicon/ai))
+				antag_candidates.Remove(player) //All AI antag roles are handled seperately.  See handle_AI_Traitors()
+
 		// Add all our antag candidates to a list()
 		for (var/datum/mind/player in antag_candidates)
 			ckey_listed += sanitizeSQL(get_ckey(player))
@@ -379,7 +445,7 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(role in player.client.prefs.be_special && !(player.mind.quiet_round))
+			if((role in player.client.prefs.be_special) && !(player.mind.quiet_round))
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round

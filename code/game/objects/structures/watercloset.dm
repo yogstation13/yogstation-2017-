@@ -332,6 +332,12 @@
 
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		var/thermal_protection = H.get_thermal_protection()
+		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
+			return
+
 	if(watertemp == "freezing")
 		C.bodytemperature = max(80, C.bodytemperature - 80)
 		C << "<span class='warning'>The water is freezing!</span>"

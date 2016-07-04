@@ -18624,6 +18624,7 @@
 "aJn" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
+	pixel_x = 6;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -45258,6 +45259,10 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bLL" = (
@@ -46001,10 +46006,6 @@
 /obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
-	},
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -47658,9 +47659,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bPR" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
 "bPS" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -58339,7 +58344,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "clm" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/securearea{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cln" = (
@@ -59508,7 +59515,7 @@
 /area/atmos)
 "cnH" = (
 /obj/machinery/computer/atmos_control/tank{
-	frequency = 1443;
+	frequency = 1441;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
@@ -63589,7 +63596,7 @@
 "cvC" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
-	req_access_txt = "63"
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -68955,16 +68962,41 @@
 	},
 /turf/open/space,
 /area/space)
-"cFL" = (
-/obj/machinery/computer/communications,
+"cFC" = (
+/obj/structure/table,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
-"cFK" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_y = -24
+"cFD" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"cFE" = (
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f5"
+	},
+/area/shuttle/escape)
+"cFF" = (
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"cFG" = (
+/obj/structure/chair/comfy/lime{
+	dir = 1
 	},
 /turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"cFH" = (
+/obj/machinery/computer/security,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"cFI" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFJ" = (
 /obj/structure/chair{
@@ -68975,40 +69007,16 @@
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
-"cFI" = (
-/obj/machinery/computer/crew,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFH" = (
-/obj/machinery/computer/security,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFG" = (
-/obj/structure/chair/comfy/lime{
-	dir = 1
+"cFK" = (
+/obj/machinery/vending/gifts,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
-"cFF" = (
-/obj/machinery/computer/atmos_alert,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFE" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f5"
-	},
-/area/shuttle/escape)
-"cFD" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4
-	},
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFC" = (
-/obj/structure/table,
+/area/gateway)
+"cFL" = (
+/obj/machinery/computer/communications,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 
@@ -91993,7 +92001,7 @@ ayV
 aAf
 aBt
 ayV
-aDR
+cFK
 aFr
 aGF
 aIl
@@ -121807,7 +121815,7 @@ aCa
 aHR
 aJm
 cFG
-cFK
+bPR
 aNX
 aJn
 aKR

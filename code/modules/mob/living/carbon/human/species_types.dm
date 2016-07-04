@@ -177,7 +177,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Preternis"
 	id = "android"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	say_mod = "intones"
 	roundstart = 1
 	attack_verb = "assault"

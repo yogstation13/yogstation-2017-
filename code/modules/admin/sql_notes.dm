@@ -127,7 +127,7 @@
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
 		if(!linkless)
-			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a></center>"
+			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a> <a href='?_src_=holder;noteexport=[target_ckey]'>\[Note Export\]</a></center>"
 		output += ruler
 		while(query_get_notes.NextRow())
 			var/id = query_get_notes.item[1]
