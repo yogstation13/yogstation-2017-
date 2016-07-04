@@ -1410,7 +1410,7 @@
 	icon_state = "aqua"
 
 /datum/sprite_accessory/leaves
-	icon = "mutan_bodypart"
+	icon = "icons/mob/mutant_bodyparts.dmi"
 
 /datum/sprite_accessory/leaves/none
 	icon_state = "none"
@@ -1419,12 +1419,12 @@
 /datum/sprite_accessory/leaves/classic_male
 	name = "Classic"
 	icon_state = "m_leaves_classic"
-	gender = MALE
+	gender_specific = MALE
 
 /datum/sprite_accessory/leaves/classic_female
 	name = "Classic"
 	icon_state = "f_leaves_classic"
-	gender = FEMALE
+	gender_specific = FEMALE
 
 /datum/sprite_accessory/leaves/flowerpink
 	name = "Pink Flower"
