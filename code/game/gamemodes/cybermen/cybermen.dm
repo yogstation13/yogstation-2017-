@@ -63,6 +63,9 @@ var/datum/cyberman_network/cyberman_network
 		cyberman.special_role = "Cyberman"
 		cyberman.restricted_roles = restricted_jobs
 		cybermen_num--
+
+	handle_AI_Traitors()
+
 	return 1
 
 /datum/game_mode/cybermen/post_setup()

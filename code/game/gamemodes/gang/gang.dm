@@ -72,6 +72,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
 
+	handle_AI_Traitors()
+
 	return 1
 
 

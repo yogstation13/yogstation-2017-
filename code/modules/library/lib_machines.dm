@@ -176,7 +176,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
 	var/list/libcomp_menu
 	var/page = 1	//current page of the external archives
-	var/bibledelay = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/print_busy = 0 // LOL NO SPAM (1 minute delay) -- Doohl
+	var/list/print_queue = list()
+	var/max_print_queue_len = 50;
+	var/clearprintqueue = 0;
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
 	if(libcomp_menu)
@@ -212,13 +215,18 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			dat += "<A href='?src=\ref[src];switchscreen=4'>4. Connect to External Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=7'>7. Manage Printing Queue</A><BR>"
 			if(src.emagged)
-				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
+				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				new /obj/item/weapon/tome(src.loc)
 				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
+			if(src.clearprintqueue)
+				print_queue.Cut()
+				say("The Printing Queue has been cleared.")
+				src.clearprintqueue = 0
 		if(1)
 			// Inventory
 			dat += "<H3>Inventory</H3><BR>"
@@ -289,6 +297,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				dat += "<A href='?src=\ref[src];upload=1'>\[Upload\]</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
 		if(7)
+			dat += "<h3>Manage Printing Queue</h3>?"
+			dat += "There are currently [print_queue.len]/[max_print_queue_len] books in the queue.<BR>"
+			dat += "<A href='?src=\ref[src];clearprintqueue=1'>(Clear Printing Queue)</A><BR>"
+			dat += "<A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+		if(8)
 			dat += "<h3>Accessing Forbidden Lore Vault v 1.3</h3>"
 			dat += "Are you absolutely sure you want to proceed? EldritchTomes Inc. takes no responsibilities for loss of sanity resulting from this action.<p>"
 			dat += "<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>"
@@ -298,6 +311,36 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_book(book_id)
+	if(!book_id)
+		return
+	establish_db_connection()
+	book_id = sanitizeSQL(book_id)
+	if(!dbcon.IsConnected())
+		alert("Connection to Archive has been severed. Aborting.")
+		return
+	print_busy = 1
+	spawn(40)
+		print_queue.Cut(1,2)
+		if(print_queue.len)
+			print_book(print_queue[1])
+		else
+			print_busy = 0
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[book_id] AND isnull(deleted)")
+	query.Execute()
+	while(query.NextRow())
+		var/author = query.item[2]
+		var/title = query.item[3]
+		var/content = query.item[4]
+		var/obj/item/weapon/book/B = new(src.loc)
+		B.name = "Book: [title]"
+		B.title = title
+		B.author = author
+		B.dat = content
+		B.icon_state = "book[rand(1,8)]"
+		src.visible_message("[src]'s printer hums as it produces a complete copy of [title]. How did it do that?")
+		break
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/barcodescanner))
@@ -334,8 +377,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if("5")
 				screenstate = 5
 			if("6")
-				if(!bibledelay)
-
+				if(!print_busy)
 					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
 					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
 						B.icon_state = ticker.Bible_icon_state
@@ -343,15 +385,15 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 						B.name = ticker.Bible_name
 						B.deity_name = ticker.Bible_deity_name
 
-					bibledelay = 1
-					spawn(60)
-						bibledelay = 0
-
+					print_busy = 1
+					spawn(40)
+						print_busy = 0
 				else
 					say("Bible printer currently unavailable, please wait a moment.")
-
 			if("7")
 				screenstate = 7
+			if("8")
+				screenstate = 8
 	if(href_list["arccheckout"])
 		if(src.emagged)
 			src.arcanecheckout = 1
@@ -413,31 +455,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(isnum(orderid) && IsInteger(orderid))
 				href_list["targetid"] = orderid
 	if(href_list["targetid"])
-		var/sqlid = sanitizeSQL(href_list["targetid"])
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			alert("Connection to Archive has been severed. Aborting.")
-		if(bibledelay)
-			say("Printer unavailable. Please allow a short time before attempting to print.")
+		if(print_queue.len<max_print_queue_len)
+			print_queue += href_list["targetid"]
+			say("Book has been sent to the printing queue!")
+			if(!print_busy && print_queue.len)
+				print_book(print_queue[1])
 		else
-			bibledelay = 1
-			spawn(60)
-				bibledelay = 0
-			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM [format_table_name("library")] WHERE id=[sqlid] AND isnull(deleted)")
-			query.Execute()
-
-			while(query.NextRow())
-				var/author = query.item[2]
-				var/title = query.item[3]
-				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(src.loc)
-				B.name = "Book: [title]"
-				B.title = title
-				B.author = author
-				B.dat = content
-				B.icon_state = "book[rand(1,8)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
-				break
+			say("The printing queue is full!")
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
@@ -531,7 +555,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 	audible_message("[src] begins to hum as it warms up its printing drums.")
 	busy = 1
-	sleep(rand(200,400))
+	sleep(rand(100,300))
 	busy = 0
 	if(P)
 		if(!stat)

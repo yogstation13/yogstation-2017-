@@ -184,7 +184,8 @@ Virologist
 
 /*
 Mining Medic
-*/
+To be preserved for a remake suiting lavaland.
+
 /datum/job/miningmedic
 	title = "Mining Medic"
 	flag = MMEDIC
@@ -200,13 +201,13 @@ Mining Medic
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_medical, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
-
+*/
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"
 
 
-	backpack_contents = list(/obj/item/weapon/reagent_containers/hypospray/mini, /obj/item/weapon/storage/firstaid/o2)
+	backpack_contents = list(/obj/item/weapon/storage/firstaid/o2)
 	belt = /obj/item/device/pda/medical
 	ears = /obj/item/device/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/sneakers/white

@@ -1,13 +1,8 @@
 /world
 
 	hub = "Exadv1.spacestation13"
-#ifdef PUTONHUB
 	hub_password = "kMZy3U5jJHSiBQjr"
-#else
-	hub_password = "SORRYNOPASSWORD"
-#endif
 	name = "/tg/ Station 13"
-
 /*
 This is for any host that would like their server to appear on the main SS13 hub.
 To use it, simply replace the password above with the password found below, and recompile, and it should work.

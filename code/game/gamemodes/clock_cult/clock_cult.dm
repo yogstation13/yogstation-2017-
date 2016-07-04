@@ -187,6 +187,8 @@ This file's folder contains:
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
 		starter_servants--
+
+	handle_AI_Traitors()
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
