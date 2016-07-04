@@ -1,4 +1,4 @@
-/*NOTES:
+ /*NOTES:
 These are general powers. Specific powers are stored under the appropriate alien creature type.
 */
 
@@ -11,7 +11,6 @@ Doesn't work on other aliens/AI.*/
 	panel = "Alien"
 	var/plasma_cost = 0
 	var/check_turf = 0
-
 	var/has_action = 1
 	var/datum/action/spell_action/alien/action = null
 	var/action_icon = 'icons/mob/actions.dmi'
@@ -189,31 +188,29 @@ Doesn't work on other aliens/AI.*/
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	action_icon_state = "alien_neurotoxin_0"
-	var/active = 0
+	active = FALSE
 
 /obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
+	var/message
 	if(active)
-		user.ranged_ability = null
-		to_chat(user, "<span class='notice'>You empty your neurotoxin gland.</span>")
-		active = 0
-	else if(user.ranged_ability && user.ranged_ability != src)
-		to_chat(user, "<span class='warning'>You already have another aimed ability readied! Cancel it first.")
-		return
+		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
+		remove_ranged_ability(user, message)
 	else
-		user.ranged_ability = src
-		active = 1
-		to_chat(user, "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>")
+		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
+		add_ranged_ability(user, message)
 
-	user.client.click_intercept = user.ranged_ability
+/obj/effect/proc_holder/alien/neurotoxin/update_icon()
 	action.button_icon_state = "alien_neurotoxin_[active]"
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+	if(..())
+		return
 	var/p_cost = 50
 	if(!iscarbon(user) || user.lying || user.stat)
+		remove_ranged_ability(user)
 		return
-	user.next_click = world.time + 6
-	user.face_atom(target)
+
 	if(user.getPlasma() < p_cost)
 		to_chat(user, "<span class='warning'>You need at least [p_cost] plasma to spit.</span>")
 		return
@@ -221,7 +218,7 @@ Doesn't work on other aliens/AI.*/
 	var/turf/T = user.loc
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
-		return 0
+		return FALSE
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
@@ -231,7 +228,7 @@ Doesn't work on other aliens/AI.*/
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
 
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	if(user.ranged_ability == src)
@@ -306,7 +303,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/sneak
 	name = "Sneak"
 	desc = "Blend into the shadows to stalk your prey."
-	var/active = 0
+	active = 0
 
 	action_icon_state = "alien_sneak"
 

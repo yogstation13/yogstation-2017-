@@ -450,10 +450,10 @@ var/krampusweak
 	krampus.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/naughty)
 	krampus.mind.AddSpell(new /obj/effect/proc_holder/spell/self/krampustele)
 	krampus.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/unholybells)
-	var/obj/effect/proc_holder/spell/dumbfire/fireball/hellish/H = new(src) // this is too fast.
+	var/obj/effect/proc_holder/spell/fireball/hellish/H = new(src) // this is too fast.
 	H.charge_max = 600
 	H.cooldown_min = 500
-	krampus.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish)
+	krampus.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish)
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/eth = new(krampus) // maybe the devils jaunt is better... hmmm
 	eth.clothes_req = 0
 	krampus.mind.AddSpell(eth)

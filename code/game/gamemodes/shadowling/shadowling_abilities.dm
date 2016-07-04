@@ -895,7 +895,6 @@
 	human_req = 1
 	clothes_req = 0
 	action_icon_state = "darksight"
-	var/active = 0
 
 /obj/effect/proc_holder/spell/self/thrall_vision/cast(mob/living/carbon/human/user)
 	active = !active
