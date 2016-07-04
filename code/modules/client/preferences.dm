@@ -61,7 +61,6 @@ var/list/preferences_datums = list()
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
-	var/secondary_language = "Cyborg"
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -95,10 +94,6 @@ var/list/preferences_datums = list()
 
 	var/list/ignoring = list()
 
-	var/donor_hat = null
-	var/donor_pda = null
-	var/quiet_round = 0
-
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
@@ -107,7 +102,7 @@ var/list/preferences_datums = list()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content |= C.IsByondMember()
+			unlock_content = C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 8
 			else if(is_donator(C))
@@ -165,18 +160,6 @@ var/list/preferences_datums = list()
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
-
-			if(is_donator(user.client))
-				dat += "<h2>Donator</h2>"
-				dat += "<b>Fancy Hat:</b> "
-				dat += "<a href='?_src_=prefs;preference=donor;task=hat'>Pick</a> [donor_hat ? "\"[donor_hat]\"" : "None selected"]<BR>"
-				dat += "<b>Fancy PDA:</b> "
-				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pda ? "Transparent PDA" : "Normal"]</a><BR>"
-			else
-				dat += "<h2>Donator</h2>"
-				dat += "<b>Fancy Hat:</b> "
-				dat += "Become a <a href='http://www.yogstation.net/index.php?do=donate'>donator for fancy hats and PDAs</a>!<BR>"
-
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(appearance_isbanned(user))
@@ -198,21 +181,12 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
 
+
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
 
 			dat += "</td></tr></table>"
-
-			dat += "<h2>Languages</h2>"
-			if(pref_species.name != "Phytosian")
-				dat += "<b>Primary:</b><BR> English "
-				dat += "<BR><b>Secondary:</b><BR> <a href='?_src_=prefs;preference=langauge;task=input'>[secondary_language]</a> "
-			else
-				dat += "<BR><b>Primary:</b><BR> English and Phytosian"
-				dat += "<BR><b>Secondary:</b><BR> None<BR>"
-
-
 
 			dat += "<h2>Body</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
@@ -365,6 +339,7 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
 					dat += "</td>"
+
 			dat += "</tr></table>"
 
 
@@ -459,13 +434,9 @@ var/list/preferences_datums = list()
 
 					if(days_remaining)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
-					else if(src.toggles & QUIET_ROUND)
-						dat += "<b>Be [capitalize(i)]:</b> <font color=blue><b>\[QUIET ROUND\]</b></font><br>"
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 
-			if(is_donator(user.client))
-				dat += "<b>Quiet round:</b> <a href='?_src_=prefs;preference=donor;task=quiet_round'>[(src.toggles & QUIET_ROUND) ? "Yes" : "No"]</a><br>"
 			dat += "</td></tr></table>"
 
 	dat += "<hr><center>"
@@ -536,9 +507,6 @@ var/list/preferences_datums = list()
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[MUTANT\]</b></font></td></tr>"
 			else
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
-			continue
-		if(((rank in command_positions) || (rank in nonhuman_positions)) && (src.toggles & QUIET_ROUND))
-			HTML += "<font color=blue>[rank]</font></td><td><font color=blue><b> \[QUIET\]</b></font></td></tr>"
 			continue
 		if((rank in command_positions) || (rank == "AI"))//Bold head jobs
 			HTML += "<b><span class='dark'>[rank]</span></b>"
@@ -793,83 +761,6 @@ var/list/preferences_datums = list()
 			text += ".</span>"
 			user << text
 		return
-	if(href_list["preference"] == "donor")
-		if(is_donator(user))
-			switch(href_list["task"])
-				if("hat")
-					var/list/items = list( \
-						/obj/item/clothing/head/beanie, \
-						/obj/item/clothing/head/bike, \
-						/obj/item/clothing/head/hardsuit_helm_clown, \
-						/obj/item/clothing/head/cowboy, \
-						/obj/item/clothing/head/crusader, \
-						/obj/item/clothing/head/cowboy_sheriff, \
-						/obj/item/clothing/head/dallas, \
-						/obj/item/clothing/head/drinking_hat, \
-						/obj/item/clothing/head/microwave, \
-						/obj/item/clothing/head/sith_hood, \
-						/obj/item/clothing/head/turban, \
-						/obj/item/clothing/head/collectable/petehat, \
-						/obj/item/clothing/head/collectable/slime, \
-						/obj/item/clothing/head/collectable/xenom, \
-						/obj/item/clothing/head/collectable/chef, \
-						/obj/item/clothing/head/collectable/paper, \
-						/obj/item/clothing/head/collectable/tophat, \
-						/obj/item/clothing/head/collectable/captain, \
-						/obj/item/clothing/head/collectable/police, \
-						/obj/item/clothing/head/collectable/welding, \
-						/obj/item/clothing/head/collectable/flatcap, \
-						/obj/item/clothing/head/collectable/pirate, \
-						/obj/item/clothing/head/collectable/kitty, \
-						/obj/item/clothing/head/collectable/rabbitears, \
-						/obj/item/clothing/head/collectable/wizard, \
-						/obj/item/clothing/head/collectable/hardhat, \
-						/obj/item/clothing/head/collectable/HoS, \
-						/obj/item/clothing/head/collectable/thunderdome, \
-						/obj/item/clothing/head/collectable/swat, \
-						/obj/item/clothing/head/hardhat/cakehat, \
-						/obj/item/clothing/head/ushanka, \
-						/obj/item/clothing/head/hardhat/pumpkinhead, \
-						/obj/item/clothing/head/kitty, \
-						/obj/item/clothing/head/hardhat/reindeer, \
-						/obj/item/clothing/head/powdered_wig, \
-						/obj/item/clothing/head/that, \
-						/obj/item/clothing/head/redcoat, \
-						/obj/item/clothing/head/mailman, \
-						/obj/item/clothing/head/plaguedoctorhat, \
-						/obj/item/clothing/head/hasturhood, \
-						/obj/item/clothing/head/nursehat, \
-						/obj/item/clothing/head/cardborg, \
-						/obj/item/clothing/head/justice, \
-						/obj/item/clothing/head/rabbitears, \
-						/obj/item/clothing/head/flatcap, \
-						/obj/item/clothing/head/pirate, \
-						/obj/item/clothing/head/hgpiratecap, \
-						/obj/item/clothing/head/bowler, \
-						/obj/item/clothing/head/witchwig, \
-						/obj/item/clothing/head/chicken, \
-						/obj/item/clothing/head/fedora, \
-						/obj/item/clothing/head/sombrero, \
-						/obj/item/clothing/head/sombrero/green, \
-						/obj/item/clothing/head/cone, \
-						/obj/item/clothing/head/collectable/beret, \
-						/obj/item/clothing/suit/cloak/sith_cloak, \
-						/obj/item/clothing/suit/armor/sith_suit, \
-						/obj/item/clothing/suit/armor/hardsuit_clown, \
-						/obj/item/clothing/shoes/fuzzy_slippers \
-						)
-
-					var/obj/item/clothing/item = input(usr, "What would you like to start with?","Donator fun","Nothing") as null|anything in items
-					if(item)
-						donor_hat = new item
-					else
-						donor_hat = null
-				if("quiet_round")
-					toggles ^= QUIET_ROUND
-				if("pda")
-					donor_pda = !donor_pda
-		else
-			message_admins("EXPLOIT \[donor\]: [user] tried to access donor only functions (as a non-donor). Attempt made on \"[href_list["preference"]]\" -> \"[href_list["task"]]\".")
 
 	if(href_list["preference"] == "job")
 		switch(href_list["task"])
@@ -921,7 +812,6 @@ var/list/preferences_datums = list()
 				if("all")
 					random_character()
 
-
 		if("input")
 			switch(href_list["preference"])
 				if("ghostform")
@@ -961,20 +851,7 @@ var/list/preferences_datums = list()
 						real_name = new_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
-				if("langauge")
-					// library of language. be sure to mention them in the dat variable above with the language section, and confirm it in copy_to defined at the bottom
-					var/list/lib_lang = list (
-					"Phytosian",
-					"Cyborg"
-					)
-					var/languages = input(usr, "Which langauge would you understand?","Language") as null|anything in lib_lang
-					if(languages)
-						if(languages == "Cyborg")
-							secondary_language = "Cyborg"
-							user << "<span class='notice'>You have chosen borg speak as your secondary language. You will now be able to understand cyborg beeps and boops, but as it is your secondary language you cannot speak it.</span>"
-						if(languages == "Phytosian")
-							secondary_language = "Phytosian"
-							user << "<span class='notice'>You have chosen phytosian as your secondary language. As a secondary language, you will be only able to understand it, rather than speaking it..</span>"
+
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
 					if(new_age)
@@ -1357,26 +1234,6 @@ var/list/preferences_datums = list()
 	character.eye_color = eye_color
 	character.hair_color = hair_color
 	character.facial_hair_color = facial_hair_color
-
-
-	if(pref_species.name == "Phytosian")
-		secondary_language = "Phytosian"
-	switch(secondary_language)
-		if("Cyborg")
-			character.languages_understood |= ROBOT
-
-			if(character.languages_understood & PHYTOSIAN)
-				character.languages_understood &= ~PHYTOSIAN
-		if("Phytosian")
-			character.languages_understood |= PHYTOSIAN
-
-			if(character.languages_understood & ROBOT)
-				character.languages_understood &= ~ROBOT
-
-			if(pref_species.name == "Phytosian") // phytosian checks
-				character.languages_spoken |= PHYTOSIAN // phytosians get primary
-				if(character.languages_understood & ROBOT) // just an extra check, incase we missed anything.
-					character.languages_understood &= ~ROBOT
 
 	character.skin_tone = skin_tone
 	character.hair_style = hair_style

@@ -17,7 +17,6 @@ var/list/department_radio_keys = list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
-	  ":p" = "phytosian",	"#p" = "phytosian",		".p" = "phytosian",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -37,25 +36,24 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
-	  ":P" = "phytosian",	"#P" = "phytosian",		".P" = "phytosian",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
-	  ":Ãª" = "right hand",	"#Ãª" = "right hand",	".Ãª" = "right hand",
-	  ":Ã¤" = "left hand",	"#Ã¤" = "left hand",		".Ã¤" = "left hand",
-	  ":Ã¸" = "intercom",	"#Ã¸" = "intercom",		".Ã¸" = "intercom",
-	  ":Ã°" = "department",	"#Ã°" = "department",	".Ã°" = "department",
-	  ":Ã±" = "Command",		"#Ã±" = "Command",		".Ã±" = "Command",
-	  ":Ã²" = "Science",		"#Ã²" = "Science",		".Ã²" = "Science",
-	  ":Ã¼" = "Medical",		"#Ã¼" = "Medical",		".Ã¼" = "Medical",
-	  ":Ã³" = "Engineering",	"#Ã³" = "Engineering",	".Ã³" = "Engineering",
-	  ":Ã»" = "Security",	"#Ã»" = "Security",		".Ã»" = "Security",
-	  ":Ã¶" = "whisper",		"#Ã¶" = "whisper",		".Ã¶" = "whisper",
-	  ":Ã¨" = "binary",		"#Ã¨" = "binary",		".Ã¨" = "binary",
-	  ":Ã´" = "alientalk",	"#Ã´" = "alientalk",		".Ã´" = "alientalk",
-	  ":Ã¥" = "Syndicate",	"#Ã¥" = "Syndicate",		".Ã¥" = "Syndicate",
-	  ":Ã©" = "Supply",		"#Ã©" = "Supply",		".Ã©" = "Supply",
-	  ":Ã¯" = "changeling",	"#Ã¯" = "changeling",	".Ã¯" = "changeling"
+	  ":ê" = "right hand",	"#ê" = "right hand",	".ê" = "right hand",
+	  ":ä" = "left hand",	"#ä" = "left hand",		".ä" = "left hand",
+	  ":ø" = "intercom",	"#ø" = "intercom",		".ø" = "intercom",
+	  ":ð" = "department",	"#ð" = "department",	".ð" = "department",
+	  ":ñ" = "Command",		"#ñ" = "Command",		".ñ" = "Command",
+	  ":ò" = "Science",		"#ò" = "Science",		".ò" = "Science",
+	  ":ü" = "Medical",		"#ü" = "Medical",		".ü" = "Medical",
+	  ":ó" = "Engineering",	"#ó" = "Engineering",	".ó" = "Engineering",
+	  ":û" = "Security",	"#û" = "Security",		".û" = "Security",
+	  ":ö" = "whisper",		"#ö" = "whisper",		".ö" = "whisper",
+	  ":è" = "binary",		"#è" = "binary",		".è" = "binary",
+	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
+	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
+	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
+	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
 )
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
@@ -245,17 +243,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
-			return 1
-
-	if(message_mode == MODE_PHYTOSIAN)
-		if(languages_spoken & PHYTOSIAN)
-			emote("speaks swiftly and softly as they sway back and forth")
-			log_say("[name]/[key] said : '[message]' in phytosian.")
-			for(var/mob/living/L in view(5, src))
-				if(L.languages_understood & PHYTOSIAN)
-					L << "<B>[real_name]</B> says, \"[message]\" <i>in Phytosian tounge</i>."
-				else
-					L << "<B>[real_name]</B> speaks in Phytosian tongue."
 			return 1
 	return 0
 
