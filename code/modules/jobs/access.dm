@@ -371,7 +371,7 @@
 		if(access_theatre)
 			return "Theatre"
 		if(access_manufacturing)
-			return "Manufacturing"
+			return "Gift Shop"
 		if(access_research)
 			return "Science"
 		if(access_mining)
