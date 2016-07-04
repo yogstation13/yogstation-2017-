@@ -45,6 +45,8 @@
 			H.restore_blood()
 			H.remove_all_embedded_objects()
 			var/list/missing = H.get_missing_limbs()
+			if(missing.len)
+				H.regenerate_limbs(1)
 			H.underwear = "Nude"
 			H.undershirt = "Nude"
 			H.socks = "Nude"
