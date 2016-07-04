@@ -312,6 +312,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='info'>Your physiology is similar, but fundamentally different to a normal carbon life form. The chlorophyll in your epidermis provides passive nourishment and regeneration in light, but your biological processes rely on some degree of light being present at all times.</span>"
 	H << "<span class='info'>Darkness is your greatest foe. Even the cold expanses of space are lit by neighbouring stars, but the darkest recesses of the station's interior may prove to be your greatest foe. Stripped of light, you will wither and die. Heat and flame are even greater foes, as your epidermis is combustible.</span>"
 	H << "<span class='info'>Be warned: you will perish quickly should you become so wounded that you lose consciousness in an area void of any meaningful light source.</span>"
+	H << "<span class='info'>Don't forget that you can soeak in phytosian to privately associate with other members of your species within earshot range. Be on the lookout however, for outsiders who may understand your distinct language! (Use :p or .p to speak phytosian.)</span>"
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")

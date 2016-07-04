@@ -10,6 +10,8 @@
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
+	languages_spoken = ROBOT
+	languages_understood = ROBOT | HUMAN
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
@@ -208,6 +210,10 @@
 					icon_state = "service_male"
 					animation_length=43
 			modtype = "Butler"
+			// serves as a translator borg for the roundstart races. needs an upgrade for more perhaps?
+			languages_spoken |= HUMAN
+			languages_spoken |= PHYTOSIAN
+			languages_understood |= PHYTOSIAN
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
