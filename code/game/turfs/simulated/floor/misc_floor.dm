@@ -140,6 +140,7 @@
 
 /turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
 	if(path != type)
+		STOP_PROCESSING(SSobj, src)
 		change_construction_value(-1)
 	return ..()
 
