@@ -254,10 +254,17 @@
 /atom/movable/light/Move()
 	return 0
 
+/atom/movable/light/dim
+	color = "#000" // Always half bright.
+	alpha = 0 // Only visible when the tile it's on is ~pure black.
+	invisibility = 0 // Never invisible. Might be a bit annoying for observers. Might.
+	layer = TURF_LAYER // Don't darken things on top of the turf.
+
 /turf
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
 	var/atom/movable/light/lighting_object //Will be null for space turfs and anything in a static lighting area
+	var/atom/movable/light/dim/light_dim  // Used for shadowlings and night vision and stuffs, to show pure black areas, but make them still visible... So to speak...
 	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
 
 /turf/ChangeTurf(path)
@@ -313,6 +320,8 @@
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
+		if(!light_dim)
+			light_dim = new (src)
 		redraw_lighting(1)
 
 /turf/open/space/init_lighting()
@@ -341,6 +350,7 @@
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0
+		light_dim.alpha = (get_lumcount() <= 0.3) * 128 // We're only visible if the lighting lumcount is less than what shadowlings can walk through.
 
 	lighting_changed = 0
 
