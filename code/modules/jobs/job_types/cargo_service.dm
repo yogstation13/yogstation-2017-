@@ -124,6 +124,10 @@ Bartender
 	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
+/datum/job/bartender/space
+	title = "Space Bartender"
+	minimal_access = list(access_bar, access_kitchen)
+
 /*
 Cook
 */
