@@ -71,11 +71,17 @@
 			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 			C.visible_message("<span class='warning'>Something clunks around inside of [C].</span>")
 
+/turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		change_construction_value(-5)
+	return ..()
+
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
-		if(!WT.isOn())
+		if(!WT.remove_fuel(0,user))
 			return 0
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
 		if(!do_after(user, 120 / WT.toolspeed, target = src))
 			return 0
