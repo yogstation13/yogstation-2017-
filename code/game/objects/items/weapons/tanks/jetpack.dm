@@ -35,22 +35,22 @@
 		return
 
 	if(!on)
-		turn_on(user)
+		turn_on()
 		user << "<span class='notice'>You turn the jetpack on.</span>"
 	else
-		turn_off(user)
+		turn_off()
 		user << "<span class='notice'>You turn the jetpack off.</span>"
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
 
-/obj/item/weapon/tank/jetpack/proc/turn_on(mob/user)
+/obj/item/weapon/tank/jetpack/proc/turn_on()
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 
-/obj/item/weapon/tank/jetpack/proc/turn_off(mob/user)
+/obj/item/weapon/tank/jetpack/proc/turn_off()
 	on = FALSE
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
@@ -60,12 +60,12 @@
 	if(!on)
 		return
 	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off(user)
+		turn_off()
 		return
 
 	var/datum/gas_mixture/removed = air_contents.remove(num)
 	if(removed.total_moles() < 0.005)
-		turn_off(user)
+		turn_off()
 		return
 
 	var/turf/T = get_turf(user)
