@@ -1440,3 +1440,23 @@
 	name = "Red Flower"
 	icon_state = "s_leaves_flower_3"
 	color_src = 0
+
+/datum/sprite_accessory/leaves/straw
+	name = "Straw"
+	icon_state = "m_leaves_straw"
+	gender = MALE
+
+/datum/sprite_accessory/leaves/long
+	name = "Long Leaves"
+	icon_state = "f_leaves_long"
+	gender = FEMALE
+
+/datum/sprite_accessory/leaves/short
+	name = "Short Leaves"
+	icon_state = "f_leaves_short"
+	gender = FEMALE
+
+/datum/sprite_accessory/leaves/budding
+	name = "Budding"
+	icon_state = "s_leaves_budding"
+
