@@ -98,6 +98,9 @@
 				sleep(131)
 				animate(src, transform = matrix() * 3, alpha = 0, time = 5)
 				sleep(5)
+				if(ratvar_awakens)
+					qdel(src)
+					return
 				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
 				qdel(src)
 
