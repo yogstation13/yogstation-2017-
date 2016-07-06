@@ -98,9 +98,7 @@
 				sleep(131)
 				animate(src, transform = matrix() * 3, alpha = 0, time = 5)
 				sleep(5)
-				var/machine_god = /obj/structure/clockwork/massive/ratvar
-				var/obj/him = locate(machine_god, SSobj.processing)
-				if(him) // a check to make sure rat'var doesn't already exist
+				if(ratvar_awakens)
 					qdel(src)
 					return
 				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
