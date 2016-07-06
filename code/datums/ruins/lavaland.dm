@@ -45,7 +45,7 @@
 		has crashed, waking the prisoners from their cryostasis, and setting \
 		them loose on the wastes. If they live long enough, that is."
 	suffix = "lavaland_surface_prisoner_crash.dmm"
-	cost = 15
+	cost = 20
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/seed_vault
