@@ -25,7 +25,7 @@
 "ay" = (/obj/machinery/door/airlock/highsecurity,/turf/open/floor/wood,/area/ruin/unpowered)
 "az" = (/turf/open/floor/wood{tag = "icon-wood-broken6"; icon_state = "wood-broken6"},/area/ruin/unpowered)
 "aA" = (/obj/machinery/door/airlock/highsecurity,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"aB" = (/obj/machinery/door/airlock/vault,/turf/open/floor/carpet,/area/ruin/unpowered)
+"aB" = (/obj/machinery/door/airlock/vault,/obj/structure/fans/tiny/invisible,/turf/open/floor/carpet,/area/ruin/unpowered)
 "aC" = (/obj/item/stack/rods,/turf/open/floor/wood,/area/ruin/unpowered)
 "aD" = (/obj/structure/toilet{layer = 3.5; pixel_x = 2; pixel_y = 5},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "aE" = (/turf/closed/wall,/area/ruin/unpowered)
@@ -35,14 +35,14 @@
 "aI" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "aJ" = (/turf/open/floor/plasteel,/area/ruin/unpowered)
 "aK" = (/obj/structure/table,/obj/item/weapon/restraints/handcuffs/cable,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"aL" = (/obj/structure/girder,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
+"aL" = (/obj/structure/girder,/obj/structure/fans/tiny/invisible,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
 "aM" = (/obj/structure/table/wood,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
 "aN" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/ruin/unpowered)
 "aO" = (/obj/structure/table/wood,/obj/item/device/flashlight/lamp,/turf/open/floor/wood,/area/ruin/unpowered)
 "aP" = (/obj/structure/table/wood,/obj/item/weapon/pickaxe/silver,/turf/open/floor/wood,/area/ruin/unpowered)
 "aQ" = (/turf/closed/wall/rust,/area/ruin/unpowered)
 "aR" = (/obj/structure/bed,/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"aS" = (/obj/item/stack/rods,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
+"aS" = (/obj/item/stack/rods,/obj/structure/fans/tiny/invisible,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
 "aT" = (/obj/item/stack/sheet/metal,/turf/open/floor/wood{tag = "icon-wood-broken6"; icon_state = "wood-broken6"},/area/ruin/unpowered)
 "aU" = (/obj/structure/chair/office/dark{dir = 1},/turf/open/floor/wood,/area/ruin/unpowered)
 "aV" = (/obj/structure/chair/office/dark{dir = 4},/turf/open/floor/wood{tag = "icon-wood-broken6"; icon_state = "wood-broken6"},/area/ruin/unpowered)
@@ -50,7 +50,7 @@
 "aX" = (/mob/living/simple_animal/pet/cat/mimekitty,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "aY" = (/obj/machinery/door/airlock/clown,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "aZ" = (/obj/structure/table,/obj/item/weapon/melee/energy/sword/cyborg/saw,/obj/item/weapon/scalpel,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"ba" = (/obj/item/stack/sheet/metal,/obj/item/stack/rods,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
+"ba" = (/obj/item/stack/sheet/metal,/obj/item/stack/rods,/obj/structure/fans/tiny/invisible,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/ruin/unpowered)
 "bb" = (/obj/structure/bed/pod,/obj/effect/mob_spawn/human/corpse/clown,/obj/item/weapon/bedsheet/clown,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "bc" = (/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "bd" = (/obj/structure/bed/pod,/obj/item/weapon/bedsheet/clown,/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel,/area/ruin/unpowered)
@@ -63,7 +63,7 @@
 "bk" = (/obj/structure/table,/obj/item/clothing/mask/gas/clown_hat{pixel_x = 0; pixel_y = 9},/obj/item/clothing/mask/gas/clown_hat{pixel_x = 0; pixel_y = 4},/turf/open/floor/plasteel/darkwarning,/area/ruin/unpowered)
 "bl" = (/obj/structure/table,/obj/item/weapon/cartridge/clown{pixel_x = 0; pixel_y = 8},/turf/open/floor/plasteel/darkwarning,/area/ruin/unpowered)
 "bm" = (/obj/structure/table,/obj/item/device/megaphone/clown{pixel_x = 0},/obj/item/device/megaphone/clown{pixel_x = 0},/turf/open/floor/plasteel/darkwarning,/area/ruin/unpowered)
-"bn" = (/obj/machinery/door/airlock/wood,/turf/open/floor/wood,/area/ruin/unpowered)
+"bn" = (/obj/machinery/door/airlock/wood,/obj/structure/fans/tiny/invisible,/turf/open/floor/wood,/area/ruin/unpowered)
 "bo" = (/obj/structure/bed/pod,/obj/effect/mob_spawn/human/corpse/clown,/obj/item/weapon/bedsheet/clown,/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "bp" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "bq" = (/obj/structure/bed/pod,/obj/effect/mob_spawn/human/corpse/clown,/obj/item/weapon/bedsheet/clown,/turf/open/floor/plasteel,/area/ruin/unpowered)
@@ -76,13 +76,14 @@
 "bx" = (/obj/item/weapon/paperplane,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
 "by" = (/obj/item/weapon/coin/clown,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
 "bz" = (/turf/open/floor/plasteel/darkwarning{dir = 8},/area/ruin/unpowered)
-"bA" = (/obj/item/weapon/coin/clown,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"bB" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/store/bread/banana,/turf/open/floor/plasteel,/area/ruin/unpowered)
-"bC" = (/obj/structure/table,/obj/item/mecha_parts/mecha_equipment/weapon/honker,/obj/item/weapon/pickaxe/drill,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
-"bD" = (/obj/structure/mecha_wreckage/honker,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
-"bE" = (/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
-"bF" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
-"bG" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/grown/banana{pixel_x = 0; pixel_y = 7},/obj/item/weapon/reagent_containers/food/snacks/grown/banana{pixel_x = 0; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bA" = (/obj/machinery/door/airlock/wood,/turf/open/floor/wood,/area/ruin/unpowered)
+"bB" = (/obj/item/weapon/coin/clown,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bC" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/store/bread/banana,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bD" = (/obj/structure/table,/obj/item/mecha_parts/mecha_equipment/weapon/honker,/obj/item/weapon/pickaxe/drill,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
+"bE" = (/obj/structure/mecha_wreckage/honker,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
+"bF" = (/obj/effect/decal/cleanable/robot_debris,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
+"bG" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plasteel/darkred,/area/ruin/unpowered)
+"bH" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/grown/banana{pixel_x = 0; pixel_y = 7},/obj/item/weapon/reagent_containers/food/snacks/grown/banana{pixel_x = 0; pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered)
 
 (1,1,1) = {"
 aaabaaaaabaaabacacacacacacacacacacacac
@@ -101,8 +102,8 @@ acbaauazauazauauaobbbcbdaEaEaEaJbeaJao
 acaoabaoaoaoabazabbfbgbbaEbhaHaIaIaJao
 acbibjbkblbmaobnaobobpbqaEaEaEaWaEaoao
 acaobrbsbrbrbtauaoaEbuaEaEaJaIaJbvabac
-acaobrbwbxbybzazbnaJaIaJaIbAaIaJbBabac
-acaobCbDbEbFbzauabaJbAaIaJaJaJaJbGaoac
+acaobrbwbxbybzazbAaJaIaJaIbBaIaJbCabac
+acaobDbEbFbGbzauabaJbBaIaJaJaJaJbHaoac
 acababaoaoaoabababaoaoaoaoaoaoabababac
 acacacacacacacacacacacacacacacacacacac
 "}

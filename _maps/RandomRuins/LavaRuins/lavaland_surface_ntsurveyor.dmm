@@ -7,7 +7,7 @@
 "g" = (/obj/effect/decal/cleanable/generic,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/molten_item,/obj/item/weapon/restraints/handcuffs,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/ruin/powered)
 "h" = (/obj/item/weapon/paper/crumpled{name = "Crumpled Note"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/ruin/powered)
 "i" = (/obj/effect/decal/cleanable/cobweb2,/obj/machinery/computer,/turf/open/floor/plasteel/yellowsiding{dir = 1},/area/ruin/powered)
-"j" = (/obj/machinery/door/airlock/glass_external,/turf/open/floor/plating,/area/ruin/powered)
+"j" = (/obj/machinery/door/airlock/glass_external,/obj/structure/fans/tiny/invisible,/turf/open/floor/plating,/area/ruin/powered)
 "k" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/warning{dir = 8},/area/ruin/powered)
 "l" = (/obj/item/trash/chips,/obj/effect/decal/cleanable/generic,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/neutral{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; initial_gas_mix = "o2=14;n2=23;TEMP=300"},/area/ruin/powered)
 "m" = (/obj/effect/decal/cleanable/vomit,/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/obj/effect/decal/cleanable/generic,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/neutral{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface; initial_gas_mix = "o2=14;n2=23;TEMP=300"},/area/ruin/powered)

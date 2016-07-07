@@ -15,7 +15,7 @@
 "o" = (/obj/machinery/door/airlock/silver,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
 "p" = (/obj/item/chair,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
 "q" = (/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
-"r" = (/obj/machinery/door/airlock/glass_external,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
+"r" = (/obj/machinery/door/airlock/glass_external,/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
 "s" = (/obj/item/weapon/storage/bag/ore,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "t" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich{pixel_y = 6},/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich{pixel_y = 6},/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "u" = (/obj/structure/girder,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
