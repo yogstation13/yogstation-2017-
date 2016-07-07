@@ -28,6 +28,32 @@
 	description = "WELCOME TO CLOWN PLANET! HONK HONK HONK etc.!"
 	suffix = "lavaland_biodome_clown_planet.dmm"
 
+/datum/map_template/ruin/lavaland/boss
+	cost = 0
+	allow_duplicates = FALSE
+	require_spawn = TRUE
+
+/datum/map_template/ruin/lavaland/boss/drake
+	name = "Ash Drake's Lair"
+	id = "boss-drake"
+	description = "Once home to a great king, a different variety of ruler reigns here now."
+	suffix = "lavaland_boss_drake.dmm"
+
+/datum/map_template/ruin/lavaland/boss/colossus
+	name = "Home of the Colossus"
+	id = "boss-colossus"
+	description = "A god from another dimension makes his home here.  The \
+	bones littered about are a testament to his harsh view of sinners."
+	suffix = "lavaland_boss_colossus.dmm"
+
+/datum/map_template/ruin/lavaland/boss/bubblegum
+	name = "The Throne of Bubblegum"
+	id = "boss-bubblegum"
+	description = "The king of the slaughter demons, historically known by the \
+	title of 'Bubblegum', holds his court in this great hall.  Yet another testament \
+	to the odd sense of humor that all slaughter demons posess."
+	suffix = "lavaland_boss_bubblegum.dmm"
+
 /datum/map_template/ruin/lavaland/cube
 	name = "The Wishgranter Cube"
 	id = "wishgranter-cube"
@@ -183,7 +209,7 @@
 	suffix = "lavaland_surface_tomb.dmm"
 	cost = 10
 
-/datum/map_template/ruin/lavaland/pizza
+/*/datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
 	id = "pizza"
 	description = "Little Timmy's birthday pizza-bash took a turn for the worse \
@@ -207,4 +233,4 @@
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 10 */

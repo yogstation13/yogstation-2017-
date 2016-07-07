@@ -1,0 +1,45 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/r_wall,/area/ruin)
+"c" = (/turf/closed/wall/r_wall{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin)
+"d" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"e" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin)
+"f" = (/mob/living/simple_animal/hostile/megafauna/colossus,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"g" = (/obj/effect/mob_spawn/human/corpse/damaged,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"h" = (/obj/effect/mob_spawn/human/corpse/syndicatecommando,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"i" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"j" = (/obj/effect/decal/remains/robot,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"k" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"l" = (/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+
+(1,1,1) = {"
+aaaaaabbbbbbbbbbbbbbbbbbaaaaaa
+aaaaaacccbbbbbbbbbbbbcccaaaaaa
+aaaacccddddddddddddddddcccaaaa
+aaaccebddddddddddddddddbeccaaa
+aacceebdddddddfddddddddbeeccaa
+aaceeebdgdddddddddddddhbeeecaa
+dcceeeiddddddddddddddddieeeccd
+dceeeeiddddddddddddddddieeeecd
+dceeeeiddddjdddddddddddieeeecd
+dceeeeiddddddddddddddddieeeecd
+dceeeeidddddddddddddgddieeeecd
+dccciiidddkddddddddddddiiiccck
+dddddddddddddddddddddddddddddd
+dddddddddddddddddddddddddddddd
+ddddddgddddgddddddddddjddddddd
+dddddddddddddddddgdddddddddddd
+dkdddddddddddddddddddddddkdddd
+dddddgdddddddddddddddddddddddd
+ddddddddddddddddddddjddddddddd
+dcccddddddddddddgdddddddddcccd
+dceedddddddddkddddddddddddeecd
+dceeddddddddddddddddddddkdeecd
+dceeddddddddjdddddldddddddeecd
+dcceedddldddddjddddddddddeeccd
+aaceedkddddddddddddgdddddeecaa
+aacceeedddddddlddddddddeeeccaa
+aaacceeeddddddddddddddeeeccaaa
+aaaaccceeeeeeeeeeeeeeeecccaaaa
+aaaaaaceeeeeeeeeeeeeeeecaaaaaa
+aaaaaaccccccccccccccccccaaaaaa
+"}

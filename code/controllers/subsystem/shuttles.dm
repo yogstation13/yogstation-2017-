@@ -18,6 +18,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
 
+		//mining shuttle stuff
+	var/mcooldown = 0 //1 when the shuttle has been moved in the last 30 seconds, to prevent spam.
+
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
@@ -201,6 +204,10 @@ var/datum/subsystem/shuttle/SSshuttle
 
 
 /datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
+	if(shuttleId == "mining")
+		if(SSshuttle.mcooldown)
+			return 2
+
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 
@@ -208,10 +215,10 @@ var/datum/subsystem/shuttle/SSshuttle
 		return 1
 	if(timed)
 		if(M.request(D))
-			return 2
+			return 3
 	else
 		if(M.dock(D))
-			return 2
+			return 3
 	return 0	//dock successful
 
 /datum/subsystem/shuttle/proc/initial_move()

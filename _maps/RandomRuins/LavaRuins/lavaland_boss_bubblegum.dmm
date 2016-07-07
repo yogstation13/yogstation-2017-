@@ -1,0 +1,48 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/indestructible/rock,/area/ruin)
+"c" = (/turf/open/floor/engine/cult,/area/ruin)
+"d" = (/turf/open/floor/plating/ash/rocky,/area/ruin)
+"e" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"f" = (/obj/structure/cult/pylon,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"g" = (/obj/item/weapon/gun/projectile/automatic/l6_saw{flags = 66},/turf/open/floor/plating/ash/rocky,/area/ruin)
+"h" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"i" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"j" = (/obj/effect/decal/cleanable/blood/gibs/old,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"k" = (/obj/item/weapon/katana/cursed{flags = 66},/turf/open/floor/plating/ash/rocky,/area/ruin)
+"l" = (/mob/living/simple_animal/hostile/megafauna/bubblegum,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"m" = (/obj/effect/decal/remains/robot,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"n" = (/obj/item/weapon/kitchen/knife/butcher,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"o" = (/obj/effect/decal/remains/xeno,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"p" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/ash/rocky,/area/ruin)
+"q" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"r" = (/obj/effect/decal/remains/xeno,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"s" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"t" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+
+(1,1,1) = {"
+aaaaabbbbbbbbbbaaaaa
+aaabbccccccccccbbaaa
+aabcccdedffdgdcccbaa
+abccddhdddidddddccba
+abcdhddddeddedhddcba
+bccddddddddddddddccb
+bcfidddjdddhddeddfcb
+bcdideddddddedddkdcb
+bcddddddddddddddddcb
+bcdddddddlddddhdddcb
+bcddedddeddddddhhdcb
+bcddddddddddhiddddcb
+bcdhdddmdhdddddeddcb
+bcddddndhdddjdddddcb
+bcdeddddddddodpdddcb
+bcdddddhdddddddeddcb
+bcqdqdrdddqqdqddqqcb
+bcdqqpqdqddqdqqrdqcb
+bcqdqqddrqqdqqqdqqcb
+bcqqqqqqqqqqqsqqqqcb
+bcqrqqqqqqqqqqqqqqcb
+bcqqqtrqqqqqqqqqqqcb
+bcqqqqqqqqqqqrqqqqcb
+bcqqqqqqqqqqqqqqqrcb
+bcqqqqrqqqqqqqqqqqcb
+"}

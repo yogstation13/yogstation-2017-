@@ -65,18 +65,52 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 /proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	var/overall_sanity = 100
 	var/ruins = potentialRuins.Copy()
+	var/sanity
+	var/placed = FALSE
 
 	world << "<span class='boldannounce'>Loading ruins...</span>"
 
+
+	for(var/datum/map_template/ruin/n_ruin in ruins) //Load required ruins (currently boss arenas for each of the three bosses)
+		if(!n_ruin.require_spawn)
+			continue
+		sanity = 100
+		while(sanity > 0)
+			sanity--
+			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
+			var/valid = TRUE
+
+			for(var/turf/check in n_ruin.get_affected_turfs(T,1))
+				var/area/new_area = get_area(check)
+				if(!(istype(new_area, whitelist)))
+					valid = FALSE
+					break
+
+			if(!valid)
+				continue
+
+			world.log << "Required ruin \"[n_ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			placed = TRUE
+
+			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
+			R.Load(ruins,n_ruin)
+			if(!n_ruin.allow_duplicates)
+				ruins -= n_ruin.name
+			break
+
+		if(!placed)
+			world.log << "Required ruin \"[n_ruin.name]\" could not be placed."
+
+
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
-		var/datum/map_template/ruin/ruin = ruins[pick(ruins)]
+		var/datum/map_template/ruin/ruin = pick(ruins)
 		// Can we afford it
 		if(ruin.cost > budget)
 			overall_sanity--
 			continue
 		// If so, try to place it
-		var/sanity = 100
+		sanity = 100
 		// And if we can't fit it anywhere, give up, try again
 
 		while(sanity > 0)
@@ -113,15 +147,16 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	invisibility = 0
 
 /obj/effect/ruin_loader/proc/Load(list/potentialRuins = space_ruins_templates, datum/map_template/template = null)
-	var/list/possible_ruins = list()
-	for(var/A in potentialRuins)
-		var/datum/map_template/T = potentialRuins[A]
-		if(!T.loaded)
-			possible_ruins += T
-	if(!template && possible_ruins.len)
-		template = safepick(possible_ruins)
 	if(!template)
-		return FALSE
+		var/list/possible_ruins = list()
+		for(var/datum/map_template/T in potentialRuins)
+			if(!T.loaded)
+				possible_ruins += T
+		if(possible_ruins.len)
+			template = safepick(possible_ruins)
+		if(!template)
+			return FALSE
+
 	for(var/i in template.get_affected_turfs(get_turf(src), 1))
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
