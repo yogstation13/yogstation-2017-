@@ -151,7 +151,6 @@ var/list/GPS_list = list()
 	user << "<span class='alert'>You clear the buddy list.</span>"
 	buddies = null
 
-
 /obj/item/device/gps/scouter/attack_self(mob/user)
 	if(!tracking)
 		user << "[src] is turned off. Use alt+click to toggle it back on."
@@ -170,6 +169,9 @@ var/list/GPS_list = list()
 			continue
 
 		if(!GP.tracking)
+			continue
+
+		if(GP in buddies)
 			continue
 
 		if(scanned >= scanlimit)
@@ -201,21 +203,27 @@ var/list/GPS_list = list()
 /obj/item/device/gps/scouter/proc/run_scanner_report(obj/item/device/gps/G)
 	var/turf/T = get_turf(src)
 	var/turf/GT = get_turf(G)
-	if(GT in orange(shortrange,T))
+	if(T.Distance(GT) <= shortrange)
 		return "GPS detected within short range! Identified as [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-	if(GT in orange(midrange,T))
+	if(T.Distance(GT) <= midrange)
 		return "GPS detected within medium range! Identified as [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-	if(GT in orange(longrange,T))
+	if(T.Distance(GT) <= longrange)
 		return "GPS detected within long range! Identified as [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-/obj/item/device/gps/scouter/attacked_by(obj/item/I, mob/living/user)
+/obj/item/device/gps/scouter/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/gps))
-		if(!istype(I, src))
-			var/obj/item/device/gps/G = I
+		message_admins("WOO")
+		if(!istype(I,src))
+			message_admins("HOO")
 			user << "<span class='notice'>You link the scouter with the GPS device. It has now been added to the buddy list."
-			G += buddies
+			buddies.Add(I)
+			return
+		else
+			return ..()
+	else
+		return ..()
 
 /obj/item/device/gps/scouter/proc/scouterCD(mob/user) // for when we scan over or equal to our scan limit
 	cooldown = TRUE
@@ -240,17 +248,17 @@ var/list/GPS_list = list()
 /obj/item/device/gps/scouter/advanced/run_scanner_report(obj/item/device/gps/G) // apparently 3/4 of this can't run with a ..() so the arguments will be here
 	var/turf/T = get_turf(src)
 	var/turf/GT = get_turf(G)
-	if(GT in orange(shortrange,T))
+	if(T.Distance(GT) <= shortrange)
 		return "GPS detected within short range! Identified as [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-	if(GT in orange(midrange,T))
+	if(T.Distance(GT) <= midrange)
 		return "GPS detected within medium range! Identified as [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-	if(GT in orange(longrange,T))
+	if(T.Distance(GT) <= longrange)
 		return "GPS detected within long range! Identified as [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-	if(GT in orange(longerrange,T))
+	if(T.Distance(GT) <= longerrange)
 		return "GPS detected within an extrodinairly long range! Idnetified as a [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
 
-	if(GT in orange(muchlongerrange,T))
+	if(T.Distance(GT) <= muchlongerrange)
 		return "GPS detected far, far away! Identified as a [G.gpstag]. Signal is [dir2text(get_dir(get_turf(src), get_turf(G)))] from your location."
