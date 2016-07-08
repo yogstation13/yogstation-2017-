@@ -991,7 +991,7 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
-	gps = new /obj/item/device/gps/internal(src)
+	gps = new /obj/item/device/gps/internal/lavaland(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)

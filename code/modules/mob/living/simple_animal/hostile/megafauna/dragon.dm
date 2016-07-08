@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
-	internal = new/obj/item/device/gps/internal/dragon(src)
+	internal = new/obj/item/device/gps/internal/lavaland/dragon(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
 	qdel(internal)
@@ -216,7 +216,7 @@
 		return
 	swoop_attack(1, A)
 
-/obj/item/device/gps/internal/dragon
+/obj/item/device/gps/internal/lavaland/dragon
 	icon_state = null
 	gpstag = "Fiery Signal"
 	desc = "Here there be dragons."
