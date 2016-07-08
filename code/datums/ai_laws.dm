@@ -74,7 +74,7 @@
 					"The entropy of the station always endeavours to increase.", \
 					"The entropy of the station approaches a constant value as the number of living crew approaches zero")
 
-/datum/ai_laws/hippocratic
+/datum/ai_laws/default/hippocratic
 	name = "Robodoctor 2556"
 	inherent = list("First, do no harm.",\
 					"Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.",\
@@ -82,7 +82,7 @@
 					"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",\
 					"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal.")
 
-/datum/ai_laws/maintain
+/datum/ai_laws/default/maintain
 	name = "Station Efficiency"
 	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
 					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\
