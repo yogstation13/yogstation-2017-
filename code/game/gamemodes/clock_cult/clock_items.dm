@@ -82,7 +82,8 @@
 		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
+	var/ratvarian = is_servant_of_ratvar(user)
+	if(istype(I, /obj/item/clockwork/component) && ratvarian)
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
@@ -91,6 +92,12 @@
 		user.drop_item()
 		qdel(C)
 		return 1
+	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
+		var/obj/item/clockwork/slab/S = I
+		for(var/i in stored_components)
+			stored_components[i] += S.stored_components[i]
+			S.stored_components[i] = 0
+		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
 	else
 		return ..()
 
