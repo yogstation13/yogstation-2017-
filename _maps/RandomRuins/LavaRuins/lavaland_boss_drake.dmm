@@ -1,0 +1,64 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/high_chance,/area/ruin)
+"c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"d" = (/obj/item/weapon/coin/gold,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin)
+"e" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin)
+"f" = (/turf/open/floor/greengrid,/area/ruin)
+"g" = (/turf/open/floor/engine/cult,/area/ruin)
+"h" = (/turf/closed/indestructible/riveted,/area/ruin)
+"i" = (/obj/effect/decal/remains/human,/turf/open/floor/engine/cult,/area/ruin)
+"j" = (/obj/item/weapon/gun/projectile/revolver/russian,/turf/open/floor/engine/cult,/area/ruin)
+"k" = (/obj/item/weapon/coin/gold,/turf/open/floor/engine/cult,/area/ruin)
+"l" = (/turf/open/floor/clockwork,/area/ruin)
+"m" = (/obj/item/weapon/coin/gold,/turf/open/floor/clockwork,/area/ruin)
+"n" = (/obj/item/weapon/coin/diamond,/turf/open/floor/clockwork,/area/ruin)
+"o" = (/obj/item/weapon/gun/projectile/automatic/pistol,/turf/open/floor/engine/cult,/area/ruin)
+"p" = (/obj/item/weapon/coin/mythril,/obj/item/weapon/coin/mythril,/obj/item/weapon/coin/mythril,/mob/living/simple_animal/hostile/megafauna/dragon,/turf/open/floor/clockwork,/area/ruin)
+"q" = (/obj/item/weapon/coin/clown,/turf/open/floor/clockwork,/area/ruin)
+"r" = (/obj/item/weapon/gun/projectile/revolver/mateba,/turf/open/floor/clockwork,/area/ruin)
+"s" = (/obj/item/weapon/claymore{flags = 66},/turf/open/floor/clockwork,/area/ruin)
+"t" = (/obj/effect/decal/remains/human,/turf/open/floor/clockwork,/area/ruin)
+"u" = (/obj/item/weapon/katana{flags = 66},/turf/open/floor/engine/cult,/area/ruin)
+
+(1,1,1) = {"
+aaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaa
+aaabbccccccccccccccccccccccccccccccbbaaa
+aabbbccccccccdcccccccccccccccccccccbbbaa
+abbbbcccccccccccccccccccccdccccccccbbbba
+bbbbbccccccccccccccccccccccccccccccbbbbb
+bccccccccccccccccccccccccccccccccccccccb
+bccccceeeffffffffffffffffffffeeeeecccccb
+bccccceeeghhgggggggggggggggggeeeeecccccb
+bccccceeeghhgigggggggggggggggeeeeecccccb
+bccccceeeggggggggggggggggjiggggggfcccccb
+bccccceeegggggggggggggggggggggghhfcccccb
+bcccccfggggghhggggggggggggggggghhfcccccb
+bcccccfggggghhggggggggggggghhggggfcccccb
+bcccccfgggggggggggggkgggggghhggggfccdccb
+bcccccfggggkgeeeeellleeeeegggggggfcccccb
+bcccdcfggggggeeeeellleeeeegggggigfcccccb
+bcccccfggggggeellllllllleegggggggfcccccb
+bcccccfgggggieelllmllllleegggggkgfcccccb
+bcccccfggggggeelmnllllmleegggggggfcccccb
+bcccccfgggoggeelllllnllleegggkgggfcccccb
+bcccccfggggggeellllplllleegggggggfcccccb
+bcccccfggggggeelllqllrmleegggggggfcccccb
+bcccccfgkggggeelsltlnllleegggggggfcccccb
+bcccccfggggggeellllllllleeggggkggfcccccb
+bcccccfgiggggeeeeellleeeeegggggggfcccccb
+bcccccfggggggeeeeellleeeeegggggggfcccccb
+bcccccfgggghhggggggggggggggggggggfcccccb
+bcccccfgggghhggggggggggggghhgggggfcccccb
+bcccccfhhggggggkggkggggggghhgggggfcccccb
+bcccdcfhhggggggggggggggggggggggeeecccdcb
+bcccccfggggggggggggggggiuggggggeeecccccb
+bccccceeeeeggggggggggggggggghhgeeecccccb
+bccccceeeeegiggggggggggggggghhgeeecccccb
+bccccceeeeeffffffffffffffffffffeeeccdccb
+bccccccccccccccccccccccccccccccccccccccb
+bbbbbccccccccccccccccccccccccccccccbbbbb
+abbbbccccccccccccdccccccccccccccdccbbbba
+aabbbccccccccccccccccccccccccccccccbbbaa
+aaabbccccccccccccccccccccccccccccccbbaaa
+aaaabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaa
+"}

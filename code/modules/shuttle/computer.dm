@@ -65,8 +65,13 @@
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
 				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+				SSshuttle.mcooldown = 1
+				spawn(600)
+					SSshuttle.mcooldown = 0
 			if(1)
 				usr << "<span class='warning'>Invalid shuttle requested.</span>"
+			if(2)
+				usr << "<span class='notice'>The shuttle's engines are still recharging, please wait.</span>"
 			else
 				usr << "<span class='notice'>Unable to comply.</span>"
 

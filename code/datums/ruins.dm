@@ -9,6 +9,7 @@
 
 	var/cost = null
 	var/allow_duplicates = TRUE
+	var/require_spawn = FALSE  //This means there will always be an attempt to place it, small chance of failure remains for sanity reasons
 
 	var/prefix = null
 	var/suffix = null
