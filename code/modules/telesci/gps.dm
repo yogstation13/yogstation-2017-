@@ -214,9 +214,7 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/scouter/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/gps))
-		message_admins("WOO")
 		if(!istype(I,src))
-			message_admins("HOO")
 			user << "<span class='notice'>You link the scouter with the GPS device. It has now been added to the buddy list."
 			buddies.Add(I)
 			return
