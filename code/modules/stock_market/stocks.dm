@@ -143,7 +143,7 @@
 
 	current_value += (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
 	if(current_value > value_cap)
-		current_value = 980000
+		current_value = 450000
 	if (current_value < 5)
 		current_value = 5
 
