@@ -68,8 +68,8 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 13
+	melee_damage_upper = 13
 	attacktext = "bites into"
 	a_intent = "harm"
 	speak_emote = list("chitters")
