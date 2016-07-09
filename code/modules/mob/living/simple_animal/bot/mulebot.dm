@@ -365,7 +365,7 @@ var/global/mulebot_count = 0
 		if(!load_mob(AM))
 			return
 	else
-		AM.loc = src
+		AM.forceMove(src)
 
 	load = AM
 	mode = BOT_IDLE
