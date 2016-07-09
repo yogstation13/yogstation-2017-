@@ -18624,6 +18624,7 @@
 "aJn" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
+	pixel_x = 6;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -45258,6 +45259,10 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bLL" = (
@@ -46001,10 +46006,6 @@
 /obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
-	},
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -47658,9 +47659,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bPR" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
 "bPS" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -63591,7 +63596,7 @@
 "cvC" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
-	req_access_txt = "63"
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -121810,7 +121815,7 @@ aCa
 aHR
 aJm
 cFG
-cFK
+bPR
 aNX
 aJn
 aKR

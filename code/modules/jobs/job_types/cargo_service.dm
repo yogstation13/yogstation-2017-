@@ -26,6 +26,7 @@ Quartermaster
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/weapon/clipboard
+	l_pocket = /obj/item/device/export_scanner
 
 /*
 Cargo Technician
@@ -52,6 +53,7 @@ Cargo Technician
 	belt = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
+	l_pocket = /obj/item/device/export_scanner
 
 
 /*
@@ -123,6 +125,10 @@ Bartender
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
+
+/datum/job/bartender/space
+	title = "Space Bartender"
+	minimal_access = list(access_bar, access_kitchen)
 
 /*
 Cook

@@ -1,0 +1,4 @@
+author: FluffySurvivor
+delete-after: True
+changes: 
+  - rscdel: "Detectives can no longer be traitors."
