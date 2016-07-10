@@ -252,7 +252,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(electrocute_mob(user, src, src))
+		if(user && electrocute_mob(user, src, src))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
