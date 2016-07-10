@@ -148,6 +148,12 @@
 	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
+	var/on_force = 10
+	var/on_throwforce = 8
+	var/on_throw_speed = 2
+	var/on_w_class = 4
+	var/clumsy_check = 1
+	var/icon_state_base = "eshield"
 
 /obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(active)
@@ -162,24 +168,24 @@
 	return (active)
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if((clumsy_check && (user.disabilities & CLUMSY)) && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
-	icon_state = "eshield[active]"
+	icon_state = "[icon_state_base][active]"
 
 	if(active)
-		force = 10
-		throwforce = 8
-		throw_speed = 2
-		w_class = 4
+		force = on_force
+		throwforce = on_throwforce
+		throw_speed = on_throw_speed
+		w_class = on_w_class
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = 3
-		throwforce = 3
-		throw_speed = 3
-		w_class = 1
+		force = initial(force)
+		throwforce = initial(throwforce)
+		throw_speed = initial(throw_speed)
+		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
