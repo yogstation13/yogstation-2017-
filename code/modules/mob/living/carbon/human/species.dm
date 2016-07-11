@@ -981,7 +981,7 @@
 
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, M, attack_type = UNARMED_ATTACK))
 		if(M.dna.check_mutation(HULK) && M.a_intent == "disarm")
 			H.check_shields(0, M.name, attack_type = HULK_ATTACK) // We check their shields twice since we are a hulk. Also triggers hitreactions for HULK_ATTACK
 			M.visible_message("<span class='danger'>[M]'s punch knocks the shield out of [H]'s hand.</span>", \
@@ -1188,7 +1188,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", user, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
 	var/hit_area
