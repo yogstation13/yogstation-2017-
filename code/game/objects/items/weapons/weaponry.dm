@@ -298,7 +298,7 @@
  	attack_verb = list("beat", "smacked")
  	w_class = 5
 
- /obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
  	. = ..()
  	var/atom/throw_target = get_edge_target_turf(target, user.dir)
  	target.throw_at(throw_target, rand(1,2), 7, user)
