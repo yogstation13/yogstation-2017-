@@ -779,6 +779,8 @@
 	loot = list()
 	poison_type = "venom"
 	attacktext = "bites"
+	health = 200
+	maxHealth = 200
 	vision_range = 10
 	melee_damage_lower = 18
 	melee_damage_upper = 18
