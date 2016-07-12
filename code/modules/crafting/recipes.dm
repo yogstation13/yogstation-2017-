@@ -413,3 +413,11 @@
 	reqs = list(/obj/item/stack/sheet/bone = 6,
 				 /obj/item/stack/sheet/sinew = 3)
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/sinew_tent
+	name = "Sinew Tent"
+	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 3,
+				 /obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
