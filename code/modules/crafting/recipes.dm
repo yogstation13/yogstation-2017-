@@ -416,7 +416,7 @@
 
 /datum/crafting_recipe/sinew_tent
 	name = "Sinew Tent"
-	result = /obj/item/weapon/twohanded/fireaxe/boneaxe
+	result = /obj/item/weapon/sinew_tent
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
 				 /obj/item/stack/sheet/sinew = 2)
