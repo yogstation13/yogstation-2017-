@@ -22,7 +22,7 @@
 		user << "<span class='danger'>The pulser is recharging!</span>"
 		return
 	user << "<span class='danger'>You trigger the pulser's creating a radio burst!</span>"
-	for(var/obj/item/device/radio/headset/attracted_radio in view(user, scanradius))
+	for(var/obj/item/device/radio/headset/attracted_radio in orange(user, scanradius))
 		user << "<span class='alert'> *-----------------------*</span>"
 		if(!attracted_radio)
 			user << "<span class='alert'>The pulser was unable to locate any headsets nearby.</span>"
@@ -46,6 +46,10 @@
 		user << "<span class='danger'>[dat]</span>"
 		user << "<span class='alert'> *-----------------------*</span>"
 		user << "<span class='alert'>Attempting to locate more radios . . .</span><BR>"
+		sleep(20)
+		user << "<span class='alert'>Locating another signal . . .</span>"
+		sleep(20)
+		user << "<span class='alert'>Adding signal to queue . . .</span>"
 	triggercooldown()
 
 /obj/item/device/pulse/proc/triggercooldown()
@@ -57,11 +61,11 @@
 	var/shortrange = scanradius / 5
 	var/midrange = scanradius / 2
 
-	if(target_radio in view(user, shortrange))
+	if(target_radio in orange(user, shortrange))
 		return "You are at a short distance from the nearby radio!"
-	if(target_radio in view(user, midrange))
+	if(target_radio in orange(user, midrange))
 		return "The are at a midway distance from the radio!"
-	if(target_radio in view(user, scanradius))
+	if(target_radio in orange(user, scanradius))
 		return "You are at a long-range distance away from the radio!"
 
 
