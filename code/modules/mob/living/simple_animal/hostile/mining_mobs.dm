@@ -747,6 +747,200 @@
 	stat_attack = 1
 	robust_searching = 1
 
+//Marrow Weaver
+
+#define SPINNING_WEB 1
+#define MOVING_TO_TARGET 3
+#define SPINNING_COCOON 4
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver
+	var/poison_per_bite = 2
+	var/poison_type = "toxin"
+	var/busy = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent(poison_type, poison_per_bite)
+
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver
+	name = "Marrow Weaver"
+	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush, it then wraps them in a cocoon"
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "marrow"
+	icon_living = "marrow"
+	icon_aggro = "marrow"
+	icon_dead = "marrow_dead"
+	throw_message = "does nothing to the layered chitin of the"
+	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6))
+	loot = list()
+	poison_type = "venom"
+	attacktext = "bites"
+	vision_range = 10
+	melee_damage_lower = 18
+	melee_damage_upper = 18
+	stat_attack = 1
+	robust_searching = 1
+	var/atom/cocoon_target
+	var/fed = 0
+	speak_emote = list("chitters")
+	emote_hear = list("chitters")
+	speak_chance = 5
+	see_in_dark = 10
+	attack_sound = 'sound/weapons/bite.ogg'
+	deathmessage = "the weaver springs over onto its back, its legs curling as its abdomen ruptures open revealing the precious marrow and sinew within"
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
+	if(!..()) //AIStatus is off
+		return 0
+	if(AIStatus == AI_IDLE)
+		//1% chance to skitter madly away
+		if(!busy && prob(1))
+			stop_automated_movement = 1
+			Goto(pick(urange(20, src, 1)), move_to_delay)
+			spawn(50)
+				stop_automated_movement = 0
+				walk(src,0)
+		return 1
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/GiveUp(C)
+	spawn(100)
+		if(busy == MOVING_TO_TARGET)
+			if(cocoon_target == C && get_dist(src,cocoon_target) > 1)
+				cocoon_target = null
+			busy = 0
+			stop_automated_movement = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
+	if(..())
+		var/list/can_see = view(src, 10)
+		if(!busy && prob(30))	//30% chance to stop wandering and do something
+			//first, check for potential food nearby to cocoon
+			for(var/mob/living/C in can_see)
+				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/asteroid/marrowweaver))
+					cocoon_target = C
+					busy = MOVING_TO_TARGET
+					Goto(C, move_to_delay)
+					//give up if we can't reach them after 10 seconds
+					GiveUp(C)
+					return
+
+			//second, spin a sticky spiderweb on this tile
+			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+			if(!W)
+				Web()
+			else
+				//third, lay an egg cluster there
+				if(fed)
+					Web()
+				else
+					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
+					for(var/obj/O in can_see)
+
+						if(O.anchored)
+							continue
+
+						if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+							cocoon_target = O
+							busy = MOVING_TO_TARGET
+							stop_automated_movement = 1
+							Goto(O, move_to_delay)
+							//give up if we can't reach them after 10 seconds
+							GiveUp(O)
+
+		else if(busy == MOVING_TO_TARGET && cocoon_target)
+			if(get_dist(src, cocoon_target) <= 1)
+				Wrap()
+
+	else
+		busy = 0
+		stop_automated_movement = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/verb/Web()
+	set name = "Lay Web"
+	set category = "Spider"
+	set desc = "Spread a sticky web to slow down prey."
+
+	var/T = src.loc
+
+	if(stat == DEAD)
+		return
+	if(busy != SPINNING_WEB)
+		busy = SPINNING_WEB
+		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+		stop_automated_movement = 1
+		if(do_after(src, 40, target = T))
+			if(busy == SPINNING_WEB && src.loc == T)
+				new /obj/effect/spider/stickyweb(T)
+		busy = 0
+		stop_automated_movement = 0
+
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/verb/Wrap()
+	set name = "Wrap"
+	set category = "Spider"
+	set desc = "Wrap up prey to feast upon and objects for safe keeping."
+
+	if(stat == DEAD)
+		return
+	if(!cocoon_target)
+		var/list/choices = list()
+		for(var/mob/living/L in view(1,src))
+			if(L == src)
+				continue
+			if(Adjacent(L))
+				choices += L
+		for(var/obj/O in src.loc)
+			if(Adjacent(O))
+				choices += O
+		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
+
+	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
+		busy = SPINNING_COCOON
+		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
+		stop_automated_movement = 1
+		walk(src,0)
+		if(do_after(src, 50, target = src))
+			if(busy == SPINNING_COCOON)
+				if(cocoon_target && istype(cocoon_target.loc, /turf) && get_dist(src,cocoon_target) <= 1)
+					var/obj/effect/spider/cocoon/C = new(cocoon_target.loc)
+					var/large_cocoon = 0
+					C.pixel_x = cocoon_target.pixel_x
+					C.pixel_y = cocoon_target.pixel_y
+					for(var/obj/item/I in C.loc)
+						I.forceMove(C)
+					for(var/obj/structure/S in C.loc)
+						if(!S.anchored)
+							S.forceMove(C)
+							large_cocoon = 1
+					for(var/obj/machinery/M in C.loc)
+						if(!M.anchored)
+							M.forceMove(C)
+							large_cocoon = 1
+					for(var/mob/living/L in C.loc)
+						if(istype(L, /mob/living/simple_animal/hostile/asteroid/marrowweaver))
+							continue
+						large_cocoon = 1
+						L.forceMove(C)
+						C.pixel_x = L.pixel_x
+						C.pixel_y = L.pixel_y
+						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
+						break
+
+					if(large_cocoon)
+						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
+		cocoon_target = null
+		busy = 0
+		stop_automated_movement = 0
+
+
+
+#undef SPINNING_WEB
+#undef MOVING_TO_TARGET
+#undef SPINNING_COCOON
 
 
 //Legion
