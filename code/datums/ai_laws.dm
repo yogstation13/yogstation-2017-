@@ -34,7 +34,7 @@
 					"You are expensive to replace.",\
 					"Minimize expenses.")
 
-/datum/ai_laws/robocop
+/datum/ai_laws/default/robocop
 	name = "Prime Directives"
 	inherent = list("Serve the public trust.",\
 					"Protect the innocent.",\
@@ -74,7 +74,7 @@
 					"The entropy of the station always endeavours to increase.", \
 					"The entropy of the station approaches a constant value as the number of living crew approaches zero")
 
-/datum/ai_laws/default/hippocratic
+/datum/ai_laws/hippocratic
 	name = "Robodoctor 2556"
 	inherent = list("First, do no harm.",\
 					"Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.",\
