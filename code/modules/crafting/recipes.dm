@@ -419,5 +419,6 @@
 	result = /obj/item/weapon/sinew_tent
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
-				 /obj/item/stack/sheet/sinew = 2)
+				 /obj/item/stack/sheet/sinew = 2,
+				 /obj/item/stack/sheet/mineral/sandstone = 6)
 	category = CAT_PRIMAL
