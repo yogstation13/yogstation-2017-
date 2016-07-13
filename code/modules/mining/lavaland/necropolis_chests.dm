@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25)
+	var/loot = rand(1,26)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -65,6 +65,8 @@
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+		if(26)
+			new /obj/item/organ/heart/cursed/wizard(src)
 
 
 
