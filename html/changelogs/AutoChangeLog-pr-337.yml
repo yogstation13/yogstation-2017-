@@ -1,0 +1,6 @@
+author: stealthkibbler
+delete-after: True
+changes: 
+  - tweak: "Improvised bandages and their counter parts are now dropped from 100-200 crafting ticks to 45, gauze is 55 from 400. In simple terms each bandage takes 6 seconds to craft, gauze takes 8."
+  - tweak: "bandage heal duration has been lowered drastically from 120 seconds to 40 seconds, bandages now heal 1 damage per second to account for their 40 total heal amount."
+  - tweak: "Medical kit bandages heal  duration is 40 seconds as-well but its worth mentioning that they heal a bit more, their heal amount being 65, meaning they are now viable meds when on the move."
