@@ -1,0 +1,5 @@
+author: MacHac
+delete-after: True
+changes: 
+  - bugfix: "Due to an error in the syndicate agent tracker, subverted AIs were mistakenly being assigned objectives intended for humans.  This has been fixed."
+  - tweak: "Syndicate AI subversion agents have taken an online course on subverting AIs, and can now do so slightly more consistently."
