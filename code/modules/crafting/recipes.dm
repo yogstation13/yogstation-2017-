@@ -467,7 +467,7 @@
 	reqs = list (/obj/item/stack/sheet/bone = 5,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
 				 /obj/item/stack/sheet/sinew = 3,
-				 /obj/item/stack/sheet/mineral/mythril = 1
+				 /obj/item/stack/sheet/mineral/mythril = 1,
 				 /obj/item/clothing/suit/armor/bone = 1)
 	category = CAT_PRIMAL
 
@@ -478,7 +478,7 @@
 	reqs = list (/obj/item/stack/sheet/bone = 3,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 1,
 				 /obj/item/stack/sheet/sinew = 1,
-				 /obj/item/stack/sheet/mineral/mythril = 1
+				 /obj/item/stack/sheet/mineral/mythril = 1,
 				 /obj/item/clothing/gloves/bracer = 1)
 	category = CAT_PRIMAL
 
