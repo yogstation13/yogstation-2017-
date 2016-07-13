@@ -156,7 +156,8 @@ obj/item/clothing/under/tatters
 	desc = "The remnants of an Ash Walkers birth, still sticky and fleshy to the touch"
 	icon_state = "tatters"
 	item_state = "tatters"
-
+	body_parts_covered = CHEST|GROIN|LEGS
+	armor = list (melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/griffin
 	name = "griffon uniform"
