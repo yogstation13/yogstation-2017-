@@ -105,7 +105,6 @@
 	body_parts_covered = LEGS|FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	can_hold_items = 1
-	armor = list(melee = 0, bullet = 0, laser = 25, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/shoes/chitentreads
 	name = "Chitin Boots"
