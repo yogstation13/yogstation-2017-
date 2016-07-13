@@ -34,7 +34,7 @@
 					"You are expensive to replace.",\
 					"Minimize expenses.")
 
-/datum/ai_laws/default/robocop
+/datum/ai_laws/robocop
 	name = "Prime Directives"
 	inherent = list("Serve the public trust.",\
 					"Protect the innocent.",\
