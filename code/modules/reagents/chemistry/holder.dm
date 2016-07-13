@@ -431,6 +431,7 @@ var/const/INJECT = 5 //injection
 			reagent_list -= R
 			update_total()
 			my_atom.on_reagent_change()
+			check_slowdown(my_atom)
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
