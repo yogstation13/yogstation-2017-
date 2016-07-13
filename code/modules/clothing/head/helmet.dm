@@ -218,9 +218,11 @@
 	desc = "Used by AshWalkers to travel long distances across lavalands perilous landscape."
 	icon_state = "pathhead"
 	item_state = "pathhead"
-	armor = list (melee = 10, bullet =10, laser = 65, energy = 10, bomb = 0, bio = 5, rad = 20)
+	armor = list (melee = 10, bullet =10, laser = 10, energy = 10, bomb = 0, bio = 5, rad = 20)
 	flags_cover = HEAD
 	burn_state = FIRE_PROOF
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMPT_PROTECT
 
 //LightToggle
 

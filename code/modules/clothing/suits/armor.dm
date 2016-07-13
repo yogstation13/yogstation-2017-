@@ -121,11 +121,11 @@ obj/item/clothing/suit/armor/pathfinder
 	desc = "A massive cloak that protects the wearer from concentrated burns with its layered sinew"
 	icon_state = "pathcloak"
 	item_state = "pathcloak"
-	armor = list (melee = 15, bullet = 15, laser = 70, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list (melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 	body_parts_covered =CHEST|GROIN|LEGS|FEET|ARMS
 	burn_state = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNTY_SUIT_MAX_TEMPT_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS|HANDS
-	cold_protection = CHEST|GROIN|LEGS|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"

@@ -429,12 +429,14 @@
 	time = 40
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/sinew = 3)
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindercloak
 	name = "Path Finders Cloak"
 	result = /obj/item/clothing/suit/armor/pathfinder
 	time = 60
 	reqs = list(/obj/item/stack/sheet/sinew = 6)
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfinderskasa
 	name = "Path Finders Kasa"
@@ -442,6 +444,7 @@
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				/obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/chitentreads
 	name = "Chiten Boots"
@@ -450,6 +453,7 @@
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
 				/obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/chitenarmor
 	name = "Chiten Plate Armor"
@@ -458,6 +462,7 @@
 	reqs = list (/obj/item/stack/sheet/bone = 5,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
 				 /obj/item/stack/sheet/sinew = 3)
+	category = CAT_PRIMAL
 
 /datum/crafting_recipe/heartprotector
 	name = "Heart Protector"
@@ -465,4 +470,5 @@
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
 
