@@ -25,7 +25,8 @@
 	var/new_name = input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.")  as text|null
 	if(new_name)
 		pending_name = new_name
-		user << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message on whether Central Command has approved your station's new name. Remember, you only get one chance. Message ends.\""
+		user << "You hear something crackle in your ears for a moment before a voice speaks.  \"Thank you for getting in touch with Central Command, one of our advisers will be with you shortly. You will now be put on hold. Message ends.\""
+		playsound(src,'sound/items/smoothelevator.ogg',40,1)
 
 		for(var/client/X in admins)
 			if(X.prefs.toggles & SOUND_ADMINHELP)
