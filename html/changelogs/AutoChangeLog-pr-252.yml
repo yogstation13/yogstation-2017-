@@ -1,0 +1,5 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "NanoTrasen has realized that their hardsuits could be put to better use in the newfound Lavaland, and they have adapted them with fireproof plating to weather the ash storms there. Note that NanoTrasen has not spared the expense to make them lavaproof. Its price has been adjusted accordingly."
+  - tweak: "The wizard variant of the cursed heart, that heals the user, now has a chance to spawn in necropolis chests along with the original that does not posses healing traits."
