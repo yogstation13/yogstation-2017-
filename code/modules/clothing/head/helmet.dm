@@ -221,9 +221,6 @@
 	armor = list (melee = 10, bullet =10, laser = 65, energy = 10, bomb = 0, bio = 5, rad = 20)
 	flags_cover = HEAD
 	burn_state = FIRE_PROOF
-	heat_protection = HEAD|EYES
-	cold_protection = HEAD|EYES
-
 
 //LightToggle
 

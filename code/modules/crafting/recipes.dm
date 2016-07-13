@@ -432,7 +432,7 @@
 
 /datum/crafting_recipe/pathfindercloak
 	name = "Path Finders Cloak"
-	result = obj/item/clothing/suit/armor/pathfinder
+	result = /obj/item/clothing/suit/armor/pathfinder
 	time = 60
 	reqs = list(/obj/item/stack/sheet/sinew = 6)
 
@@ -445,7 +445,7 @@
 
 /datum/crafting_recipe/chitentreads
 	name = "Chiten Boots"
-	result = obj/item/clothing/shoes/chitentreads
+	result = /obj/item/clothing/shoes/chitentreads
 	time = 40
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
@@ -461,7 +461,7 @@
 
 /datum/crafting_recipe/heartprotector
 	name = "Heart Protector"
-	result = /obj/item/under/clothing/heartprot
+	result = /obj/item/clothing/under/heartprot
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/sinew = 1)
