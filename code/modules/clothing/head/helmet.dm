@@ -222,7 +222,7 @@
 	flags_cover = HEAD
 	burn_state = FIRE_PROOF
 	heat_protection = HEAD
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMPT_PROTECT
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 
 //LightToggle
 
