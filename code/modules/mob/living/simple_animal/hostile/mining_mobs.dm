@@ -770,10 +770,10 @@
 	name = "Marrow Weaver"
 	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush, it then wraps them in a cocoon"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "marrow"
-	icon_living = "marrow"
-	icon_aggro = "marrow"
-	icon_dead = "marrow_dead"
+	icon_state = "weaver"
+	icon_living = "weaver"
+	icon_aggro = "weaver"
+	icon_dead = "weaver_dead"
 	throw_message = "does nothing to the layered chitin of the"
 	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6)
 	loot = list()
