@@ -420,7 +420,8 @@
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
 				 /obj/item/stack/sheet/sinew = 2,
-				 /obj/item/stack/sheet/mineral/sandstone = 6)
+				 /obj/item/stack/sheet/mineral/sandstone = 6,
+				 /obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindertreads
@@ -428,14 +429,16 @@
 	result = /obj/item/clothing/shoes/pathtreads
 	time = 40
 	reqs = list(/obj/item/stack/sheet/bone = 1,
-				/obj/item/stack/sheet/sinew = 3)
+				/obj/item/stack/sheet/sinew = 3,
+				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindercloak
 	name = "Path Finders Cloak"
 	result = /obj/item/clothing/suit/armor/pathfinder
 	time = 60
-	reqs = list(/obj/item/stack/sheet/sinew = 6)
+	reqs = list(/obj/item/stack/sheet/sinew = 6,
+				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfinderskasa
@@ -443,7 +446,8 @@
 	result = /obj/item/clothing/head/helmet/kasa
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 2,
-				/obj/item/stack/sheet/sinew = 2)
+				/obj/item/stack/sheet/sinew = 2,
+				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/chitentreads
@@ -452,7 +456,8 @@
 	time = 40
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
-				/obj/item/stack/sheet/sinew = 1)
+				/obj/item/stack/sheet/sinew = 1,
+				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/chitenarmor
@@ -461,7 +466,8 @@
 	time = 100
 	reqs = list (/obj/item/stack/sheet/bone = 5,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
-				 /obj/item/stack/sheet/sinew = 3)
+				 /obj/item/stack/sheet/sinew = 3,
+				 /obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/chitenhands
@@ -470,7 +476,8 @@
 	time = 30
 	reqs = list (/obj/item/stack/sheet/bone = 3,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 1,
-				 /obj/item/stack/sheet/sinew = 1)
+				 /obj/item/stack/sheet/sinew = 1,
+				 /obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/heartprotector
@@ -478,6 +485,7 @@
 	result = /obj/item/clothing/under/heartprot
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 1,
-				/obj/item/stack/sheet/sinew = 1)
+				/obj/item/stack/sheet/sinew = 1,
+				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
