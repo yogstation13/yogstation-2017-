@@ -144,7 +144,7 @@
 	can_adjust = 0
 	fitted = NO_FEMALE_UNIFORM
 	body_parts_covered = CHEST|GROIN|LEGS
-	armor = list (melee = 25, bullet = 20, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list (melee = 15, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
