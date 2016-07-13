@@ -55,7 +55,7 @@
 
 /obj/item/clothing/gloves/chitenhands
 	name = "Chitin Gauntlets"
-	desc = "The idea of badass sharp spikes sounded great in theory"
+	desc = "The idea of badass sharp spikes sticking out of your elbows sounded great in theory"
 	icon_state = "chitinhands"
 	item_state = "chitinhands"
 	transfer_prints = TRUE
