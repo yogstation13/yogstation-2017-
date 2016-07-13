@@ -138,9 +138,11 @@
 
 /obj/item/clothing/under/heartprot
 	name = "Heart Protector"
+	desc = "A crude piece of sinew and bone stitched together to protect ones vitals"
 	icon_state = "heartprot"
 	item_state = "heartprot"
-	desc = "A crude piece of sinew and bone stitched together to protect ones vitals"
+	can_adjust = 0
+	fitted = NO_FEMALE_UNIFORM
 	body_parts_covered = CHEST|GROIN|LEGS
 	armor = list (melee = 25, bullet = 20, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
@@ -156,6 +158,8 @@ obj/item/clothing/under/tatters
 	desc = "The remnants of an Ash Walkers birth, still sticky and fleshy to the touch"
 	icon_state = "tatters"
 	item_state = "tatters"
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = 0
 	body_parts_covered = CHEST|GROIN|LEGS
 	armor = list (melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
