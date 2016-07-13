@@ -1,0 +1,7 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Artificers and Harvesters can once again corrupt walls and floors."
+  - rscadd: "Artificers, Harvesters, and Wraiths can once again phase through cult walls."
+  - bugfix: "Wraiths can now see in the dark."
+  - tweak: "All Nar'siean constructs can see in the dark."
