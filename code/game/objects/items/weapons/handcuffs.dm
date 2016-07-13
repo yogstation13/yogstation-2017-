@@ -31,6 +31,7 @@
 
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2)
+			add_logs(user, C, "attempted to handcuff")
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 

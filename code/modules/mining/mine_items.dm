@@ -370,6 +370,12 @@
 	anchored = 1
 	density = 1
 	pixel_y = -32
+	channel = "lavaland"
+
+/obj/item/device/gps/computer/New()
+	..()
+	visible_message("[src] activates their tracking mechanism.")
+	tracking = TRUE
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
