@@ -464,6 +464,15 @@
 				 /obj/item/stack/sheet/sinew = 3)
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/chitenhands
+	name = "Chiten Gauntlets"
+	result = /obj/item/clothing/gloves/chitenhands
+	time = 30
+	reqs = list (/obj/item/stack/sheet/bone = 3,
+				 /obj/item/stack/sheet/animalhide/weaver_chitin = 1,
+				 /obj/item/stack/sheet/sinew = 1)
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/heartprotector
 	name = "Heart Protector"
 	result = /obj/item/clothing/under/heartprot
