@@ -1,0 +1,5 @@
+author: MacHac
+delete-after: True
+changes: 
+  - tweak: "While studying the biology of slain Watchers, a Nanotrasen scientist realized that it should be impossible to freeze to death in the middle of Lavaland.  Shortly thereafter, all Watchers in Lavaland switched to firing organic darts filled with a natural muscle relaxant."
+  - rscadd: "Bolamine can now be produced in chemistry by reacting Frost Oil with Space Drugs.  It slows down the user, and drains their stamina."
