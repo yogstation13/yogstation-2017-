@@ -775,7 +775,7 @@
 	icon_aggro = "marrow"
 	icon_dead = "marrow_dead"
 	throw_message = "does nothing to the layered chitin of the"
-	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6))
+	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6)
 	loot = list()
 	poison_type = "venom"
 	attacktext = "bites"
