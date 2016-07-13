@@ -966,6 +966,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/pulser
+	name = "Radio Detection Device"
+	desc = "The radio detection device is a small pulser which sends a 360 electromagnetic wave around the user to \
+			discover heat signatures. Once a heat signature is locating, most preferablly a human targets, it will \
+			locate a radio device and report back the information to the user."
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear)
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
