@@ -102,16 +102,21 @@
 	put_on_delay = 50
 	burn_state = FIRE_PROOF
 	heat_protection = FEET|LEGS
-	cold_protection = FEET|LEGS
+	body_parts_covered = LEGS|FEET
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	can_hold_items = 1
 	armor = list(melee = 0, bullet = 0, laser = 25, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/shoes/chitentreads
-	name = "Chiten Boots"
+	name = "Chitin Boots"
 	desc = "Compact boots crafted from a weavers chiten with interlacing sinew"
 	icon_state = "chitentreads"
 	item_state = "chitentreads"
 	strip_delay = 50
 	put_on_delay = 50
+	body_parts_covered = LEGS|FEET
+	burn_state = FIRE_PROOF
+	can_hold_items = 1
 	armor = list(melee = 35, bullet = 35, laser = 0, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 
