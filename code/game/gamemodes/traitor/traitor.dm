@@ -60,10 +60,11 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		forge_traitor_objectives(traitor)
-		spawn(rand(10,100))
-			finalize_traitor(traitor)
-			greet_traitor(traitor)
+		if(!istype(traitor.current,/mob/living/silicon)) //Don't finalize objectives for silicons, that's handled in proc/handle_AI_Traitors()
+			forge_traitor_objectives(traitor)
+			spawn(rand(10,100))
+				finalize_traitor(traitor)
+				greet_traitor(traitor)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors
