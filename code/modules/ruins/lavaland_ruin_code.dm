@@ -234,8 +234,7 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator
+	uniform = /obj/item/clothing/under/tatters
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0

@@ -93,6 +93,28 @@
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
 
+/obj/item/clothing/shoes/pathtreads
+	name = "Pathfinders Treads"
+	desc = "Massive boots crafted to protect the user from the hot ashes of lavaland"
+	icon_state = "pathtreads"
+	item_state = "pathtreads"
+	strip_delay = 50
+	put_on_delay = 50
+	burn_state = FIRE_PROOF
+	heat_protection = FEET|LEGS
+	cold_protection = FEET|LEGS
+	armor = list(melee = 0, bullet = 0, laser = 25, energy = 0, bomb = 0, bio = 0, rad = 0)
+
+/obj/item/clothing/shoes/chitentreads
+	name = "Chiten Boots"
+	desc = "Compact boots crafted from a weavers chiten with interlacing sinew"
+	icon_state = "chitentreads"
+	item_state = "chitentreads"
+	strip_delay = 50
+	put_on_delay = 50
+	armor = list(melee = 35, bullet = 35, laser = 0, energy = 10, bomb = 25, bio = 0, rad = 0)
+
+
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 

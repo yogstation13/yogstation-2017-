@@ -422,3 +422,47 @@
 				 /obj/item/stack/sheet/sinew = 2,
 				 /obj/item/stack/sheet/mineral/sandstone = 6)
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/pathfindertreads
+	name = "Path Finders treads"
+	result = /obj/item/clothing/shoes/pathtreads
+	time = 40
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				/obj/item/stack/sheet/sinew = 3)
+
+/datum/crafting_recipe/pathfindercloak
+	name = "Path Finders Cloak"
+	result = obj/item/clothing/suit/armor/pathfinder
+	time = 60
+	reqs = list(/obj/item/stack/sheet/sinew = 6)
+
+/datum/crafting_recipe/pathfinderskasa
+	name = "Path Finders Kasa"
+	result = /obj/item/clothing/head/helmet/kasa
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 2,
+				/obj/item/stack/sheet/sinew = 2)
+
+/datum/crafting_recipe/chitentreads
+	name = "Chiten Boots"
+	result = obj/item/clothing/shoes/chitentreads
+	time = 40
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
+				/obj/item/stack/sheet/sinew = 1)
+
+/datum/crafting_recipe/chitenarmor
+	name = "Chiten Plate Armor"
+	result = /obj/item/clothing/suit/armor/chitenplate
+	time = 100
+	reqs = list (/obj/item/stack/sheet/bone = 5,
+				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
+				 /obj/item/stack/sheet/sinew = 3)
+
+/datum/crafting_recipe/heartprotector
+	name = "Heart Protector"
+	result = /obj/item/under/clothing/heartprot
+	time = 20
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				/obj/item/stack/sheet/sinew = 1)
+

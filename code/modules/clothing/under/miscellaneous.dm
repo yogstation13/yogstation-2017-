@@ -136,12 +136,27 @@
 	can_adjust = 0
 	burn_state = FIRE_PROOF
 
+/obj/item/clothing/under/heartprot
+	name = "Heart Protector"
+	icon_state = "heartprot"
+	item_state = "heartprot"
+	desc = "A crude piece of sinew and bone stitched together to protect ones vitals"
+	body_parts_covered = CHEST|GROIN|LEGS
+	armor = list (melee = 25, bullet = 20, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/under/owl
 	name = "owl uniform"
 	desc = "A soft brown jumpsuit made of synthetic feathers and strong conviction."
 	icon_state = "owl"
 	item_color = "owl"
 	can_adjust = 0
+
+obj/item/clothing/under/tatters
+	name = "Sinew Tatters"
+	desc = "The remnants of an Ash Walkers birth, still sticky and fleshy to the touch"
+	icon_state = "tatters"
+	item_state = "tatters"
+
 
 /obj/item/clothing/under/griffin
 	name = "griffon uniform"
