@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "Ported Yogstation's ability for mobs with darkvision to see if tiles are completely dark."
