@@ -54,10 +54,10 @@
 	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
 
 /obj/item/clothing/gloves/chitenhands
-	name = "Chiten Gauntlets"
+	name = "Chitin Gauntlets"
 	desc = "The idea of badass sharp spikes sounded great in theory"
-	icon_state = "chitenhands"
-	item_state = "chitenhands"
+	icon_state = "chitinhands"
+	item_state = "chitinhands"
 	transfer_prints = TRUE
 	strip_delay = 40
 	put_on_delay = 20
