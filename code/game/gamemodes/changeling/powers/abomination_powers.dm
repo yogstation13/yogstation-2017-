@@ -1,12 +1,12 @@
-/obj/effect/proc_holder/spell/proc/abomination_check(mob/user)
-    if(!ishuman(user))
-        return 0
-    var/mob/living/carbon/human/H = user
-    if(H.dna.species.id == "abomination")
-        return 1
-    else
-        user << "You can't use this in your current form."
-        return 0
+/obj/effect/proc_holder/spell/proc/abomination_check(mob/usr)
+	if(!ishuman(usr))
+		return 0
+	var/mob/living/carbon/human/H = usr
+	if(H.dna.species.id == "abomination")
+		return 1
+	else
+		usr << "You can't use this in your current form."
+		return 0
 
 
 
@@ -19,15 +19,15 @@
 	clothes_req = 0
 	sound = 'sound/effects/creepyshriek.ogg'
 
-/obj/effect/proc_holder/spell/aoe_turf/abomination/screech/cast(list/targets)
-	if(!abomination_check(usr))
-		charge_counter = charge_max
+/obj/effect/proc_holder/spell/aoe_turf/abomination/screech/cast(list/targets,mob/user = usr)
+	if(!abomination_check(user))
+		revert_cast()
 		return
 	playMagSound()
-	usr.visible_message("<span class='warning'><b>[usr] opens their maw and releases a horrifying shriek!</span>")
+	user.visible_message("<span class='warning'><b>[usr] opens their maw and releases a horrifying shriek!</span>")
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/M in T.contents)
-			if(M == usr) //No message for the user, of course
+			if(M == user) //No message for the user, of course
 				continue
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
@@ -35,6 +35,12 @@
 				continue
 			M << "<span class='userdanger'>You freeze in terror, your blood turning cold from the sound of the scream!</span>"
 			M.Stun(5)
+		for(var/mob/living/silicon/M in T.contents)
+			M.Weaken(10)
+	for(var/obj/machinery/light/L in range(7, user))
+		L.on = 1
+		L.broken()
+
 
 /obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend
 	name = "Fleshmend"
@@ -45,20 +51,21 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend/cast(list/targets)
-	if(!abomination_check(usr))
+/obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend/cast(mob/living/carbon/human/user)
+	if(!abomination_check(user))
 		return
-	usr.visible_message("<span class='warning'>[usr]'s skin shifts and pulses, any damage rapidly vanishing!</span>")
+	user.visible_message("<span class='warning'>[usr]'s skin shifts and pulses, any damage rapidly vanishing!</span>")
 	spawn(0)
 		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
+			var/mob/living/carbon/human/H = user
 			H.restore_blood()
 			H.remove_all_embedded_objects()
-	var/mob/living/carbon/human/user = usr
+	var/mob/living/carbon/human/H = user
 	for(var/i = 0, i<10,i++) // old fleshmend, can be spammed, but it has a cooldown because spell
-		user.adjustBruteLoss(-10)
-		user.adjustOxyLoss(-10)
-		user.adjustFireLoss(-10)
+		H.adjustBruteLoss(-10)
+		H.adjustOxyLoss(-10)
+		H.adjustFireLoss(-10)
+		H.adjustToxLoss(-10)//no cyaniding the horrifying monster
 		sleep(10)
 
 
@@ -70,11 +77,11 @@
 	panel = "Abomination"
 	charge_max = 0
 	clothes_req = 0
-	range = 0
+	range = 1
 
 
 /obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets,mob/user)
-	if(!abomination_check(usr))
+	if(!abomination_check(user))
 		return
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
@@ -90,16 +97,13 @@
 	changeling.can_absorb_dna(user,target)
 
 	changeling.isabsorbing = 1
-	var/stage = 1
-	if(stage == 1)
-		user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
-		user.visible_message("<span class='warning'><b>[user] opens their mouth wide, lifting up [target]!</span>", "<span class='notice'>We prepare to devour [target].</span>")
+	user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
+	user.visible_message("<span class='warning'><b>[user] opens their mouth wide, lifting up [target]!</span>", "<span class='notice'>We prepare to devour [target].</span>")
 
-		feedback_add_details("changeling_powers","A[stage]")
-		if(!do_mob(user, target, 50))
-			user << "<span class='warning'>Our devouring of [target] has been interrupted!</span>"
-			changeling.isabsorbing = 0
-			return
+	if(!do_mob(user, target, 50))
+		user << "<span class='warning'>Our devouring of [target] has been interrupted!</span>"
+		changeling.isabsorbing = 0
+		return
 
 	user.visible_message("<span class='danger'>[user] devours [target], vomiting up some things!</span>", "<span class='notice'>We have devoured [target].</span>")
 	target << "<span class='userdanger'>You are eaten by the abomination!</span>"

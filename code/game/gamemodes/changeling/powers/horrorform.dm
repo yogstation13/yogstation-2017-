@@ -16,8 +16,11 @@
 	/*if(changeling.absorbedcount < 6)//you start with 1 DNA
 		user << "<span class='warning'>We must absorb five lifeforms before being able to use this ability.</span>"
 		return*/
-	if(user.health < 35)
+	if(user.health < 35)//amount of health that makes you revert
 		user << "<span class='warning'>We are too hurt to sustain such power.</span>"
+		return
+	if(H.dna.species.id == "abomination")//can't transform twice at once
+		user << "<span class='warning'>You're already transformed!</span>"
 		return
 	var/transform_or_no=alert(user,"Are you sure you want to transform?",,"Yes","No")
 	switch(transform_or_no)
@@ -95,7 +98,7 @@
 			HM.force_lose(H)
 		changeling.reverting = 1
 		changeling.geneticdamage += 50
-		user.Weaken(20)
+		user.Weaken(15)
 		user.apply_damage(10, CLONE)
 
 	if(changeling.chem_charges == 0)
@@ -107,7 +110,7 @@
 			HM.force_lose(H)
 		changeling.reverting = 1
 		changeling.geneticdamage += 20
-		user.Weaken(10)
+		user.Weaken(8)
 
 
 	if(changeling.reverting == 1)
@@ -118,7 +121,11 @@
 		for(var/obj/item/I in user) // removes the abomination armor
 			qdel(I)
 		changeling.chem_recharge_slowdown = 0
-		user.set_species(/datum/species/human)
+		var/mob/living/carbon/human/H = user
+		H.set_species(/datum/species/human)
+		H.update_body()
+		H.update_body_parts()
+		H.regenerate_icons()
 		for(var/spell in user.mind.spell_list)
 			if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
 				user.mind.spell_list -= spell
@@ -128,7 +135,6 @@
 		user.permanent_sight_flags &= ~SEE_MOBS
 		user.see_in_dark = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
-		user.update_body_parts()
 		changeling.reverting = 0
 
 
