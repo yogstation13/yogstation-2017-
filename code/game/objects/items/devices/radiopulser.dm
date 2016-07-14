@@ -17,6 +17,7 @@
 	var/scanning = FALSE
 	var/intensity = 3 // max 35, min 15. for people who want longer or closer ranges scanned
 	var/scanradius = 25 // default scan radius
+	var/freqhunt // none equals universal
 
 
 /obj/item/device/pulse/examine(mob/user)
@@ -24,6 +25,7 @@
 	user << "<span class='notice'>The intensity meter is aiming at a [intensity].</span>"
 	if(user.mind in ticker.mode.syndicates)
 		user << "<span class='notice'>You can tweak the intensity of the device by using CTRL+CLICK or ALT+CLICK</span>"
+		user << "<span class='notice'>Use CTRL+SHIFT+CLICK to make the pulser only focus on certain types of radios.</span>"
 
 /obj/item/device/pulse/attack_self(mob/living/carbon/human/user)
 	if(cooldown)
@@ -52,6 +54,9 @@
 				continue
 			if(attracted_radio.frequency == SYND_FREQ) // syndicate radios remain undetected!
 				continue
+			if(freqhunt)
+				if(!attracted_radio.keyslot.channels.Find(freqhunt))
+					continue
 			if(!scanning)
 				break
 			user << "<span class='notice'>*-------*</span>"
@@ -104,7 +109,6 @@
 
 
 /obj/item/device/pulse/AltClick(mob/user)
-
 	if(scanning)
 		user << "<span class='alert'>You can't tweak the intensity rating while it's scanning!</span>"
 		return
@@ -119,7 +123,6 @@
 	intensity--
 
 /obj/item/device/pulse/CtrlClick(mob/user)
-
 	if(scanning)
 		user << "<span class='alert'>You can't tweak the intensity rating while it's scanning!</span>"
 		return
@@ -133,7 +136,44 @@
 	scanradius = newradius
 	intensity++
 
+/obj/item/device/pulse/CtrlShiftClick(mob/user)
+	if(scanning || cooldown)
+		user << "<span class='alert'>The pulser is busy!</span>"
+		return
 
+	var/radioselect = input(user, "Pick your ping", "Frequency Chooser") as null|anything in list("Universal", "Command", "Security", "Science", "Engineering", "Supply", "Medical", "Service")
+	if(!radioselect)
+		return
+
+	switch(radioselect)
+		if("Universal")
+			freqhunt = null
+
+		if("Command")
+			freqhunt = "Command"
+
+		if("Security")
+			freqhunt = "Security"
+
+		if("Science")
+			freqhunt = "Science"
+
+		if("Engineering")
+			freqhunt = "Engineering"
+
+		if("Supply")
+			freqhunt = "Supply"
+
+		if("Medical")
+			freqhunt = "Medical"
+
+		if("Service")
+			freqhunt = "Service"
+
+	if(!freqhunt)
+		return
+
+	user << "<span class='notice'>The pulser will now only display radios with the [freqhunt] channel.</span>"
 
 /obj/item/device/pulse/proc/triggercooldown(mob/user)
 	cooldown = TRUE
