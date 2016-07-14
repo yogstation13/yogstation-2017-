@@ -64,31 +64,18 @@
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
-					if(check_rights_for(src, R_ADMIN))
-						if(src.holder.rank.name == ("AdminObserver"))
-							C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-						else
-							var/client_rank = find_admin_rank(src)
-							if(!client_rank)
-								client_rank = "\[Admin\]"
-							C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[client_rank] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+					var/tag = "[find_admin_rank(src)]"
+					if(check_rights_for(src, R_ADMIN) || holder.rank.name == ("SeniorCoder" || "Coder"))
+						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 					else
-						if(holder.rank.name == ("Coder" || "SeniorCoder"))
-							var/client_ranks = find_admin_rank(src)
-							if(client_ranks)
-								C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[client_ranks] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
-							else
-								C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-
-			else if(is_donator(src))
-				var/ooctag = "\[Donator\] OOC:"
-				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>[ooctag]</span> <EM>[keyname][holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
-
-			else
+						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+				else
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+			else if (is_donator(src))
+				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+			else if(!(key in C.prefs.ignoring))
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
-		else if(!(key in C.prefs.ignoring))
-			C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -197,6 +184,13 @@ var/global/normal_ooc_colour = OOC_COLOR
 
 /client/proc/find_admin_rank(client)
 	var/client/C = client
+
+	if(!holder)
+		if(is_donator(C))
+			return "\[Donator\]"
+		else
+			return
+
 	switch(C.holder.rank.name)
 		if("CouncilMember")
 			return "\[Council\]"
