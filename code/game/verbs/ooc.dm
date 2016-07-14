@@ -73,21 +73,22 @@
 								client_rank = "\[Admin\]"
 							C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[client_rank] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 					else
-						if(src.holder.rank.name == ("SeniorCoder"||"Coder"))
+						if(holder.rank.name == ("Coder" || "SeniorCoder"))
 							var/client_ranks = find_admin_rank(src)
 							if(client_ranks)
 								C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[client_ranks] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 							else
 								C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-						else
-							C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
-				else
-					var/ooctag = "OOC:"
-					if(is_donator(src))
-						ooctag = "\[Donator\] OOC:"
-						C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>[ooctag]</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
-			else if(!(key in C.prefs.ignoring))
+
+			else if(is_donator(src))
+				var/ooctag = "\[Donator\] OOC:"
+				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>[ooctag]</span> <EM>[keyname][holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+
+			else
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+
+		else if(!(key in C.prefs.ignoring))
+			C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
