@@ -1,0 +1,6 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Slaughter Demons can now use Ctrl + Click shortcut to quickly jaunt in and out of blood."
+  - rscdel: "Removed the Blood Crawl spell in favor of Ctrl + Click."
+  - tweak: "Slaughter Demons now instantly emerge from blood puddles."

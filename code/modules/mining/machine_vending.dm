@@ -32,7 +32,6 @@
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000),
-		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            2000),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		2000),
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		2500),
 		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		3000),
@@ -42,6 +41,7 @@
 		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_ugprade/health,      			   	       		400),
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000),
+		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            4000),
 		)
 
 /datum/data/mining_equipment/

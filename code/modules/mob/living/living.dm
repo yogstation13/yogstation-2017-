@@ -198,6 +198,8 @@ Sorry Giacom. Please don't be mad :(
 
 	if(istype(AM) && AM.Adjacent(src))
 		start_pulling(AM)
+	else if(bloodcrawl == BLOODCRAWL_EAT) //so demons can ctrl + click tiles to teleport to them
+		return
 	else
 		stop_pulling()
 

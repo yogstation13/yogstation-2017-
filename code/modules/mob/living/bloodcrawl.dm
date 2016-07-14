@@ -25,26 +25,28 @@
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		if(C.l_hand || C.r_hand)
-			//TODO make it toggleable to either forcedrop the items, or deny
-			//entry when holding them
-			// literally only an option for carbons though
-			C << "<span class='warning'>You may not hold items while blood crawling!</span>"
-			return 0
-		var/obj/item/weapon/bloodcrawl/B1 = new(C)
-		var/obj/item/weapon/bloodcrawl/B2 = new(C)
-		B1.icon_state = "bloodhand_left"
-		B2.icon_state = "bloodhand_right"
-		C.put_in_hands(B1)
-		C.put_in_hands(B2)
-		C.regenerate_icons()
-	src.notransform = TRUE
-	spawn(0)
-		bloodpool_sink(B)
-		src.notransform = FALSE
-	return 1
+	var/turf/bloodloc = get_turf(B.loc)
+	if(Adjacent(bloodloc))
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			if(C.l_hand || C.r_hand)
+				//TODO make it toggleable to either forcedrop the items, or deny
+				//entry when holding them
+				// literally only an option for carbons though
+				C << "<span class='warning'>You may not hold items while blood crawling!</span>"
+				return 0
+			var/obj/item/weapon/bloodcrawl/B1 = new(C)
+			var/obj/item/weapon/bloodcrawl/B2 = new(C)
+			B1.icon_state = "bloodhand_left"
+			B2.icon_state = "bloodhand_right"
+			C.put_in_hands(B1)
+			C.put_in_hands(B2)
+			C.regenerate_icons()
+		src.notransform = TRUE
+		spawn(0)
+			bloodpool_sink(B)
+			src.notransform = FALSE
+		return 1
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
@@ -159,11 +161,6 @@
 	if(src.notransform)
 		src << "<span class='warning'>Finish eating first!</span>"
 		return 0
-	B.visible_message("<span class='warning'>[B] starts to bubble...</span>")
-	if(!do_after(src, 20, target = B))
-		return
-	if(!B)
-		return
 	src.loc = B.loc
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
