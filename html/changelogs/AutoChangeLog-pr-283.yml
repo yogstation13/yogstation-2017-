@@ -1,0 +1,8 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Station Charters ARE BACK!"
+  - rscadd: "The new charter is now admin dependent, meaning that the names you make up as captain will be sent to them."
+  - rscadd: "Without any admins, the charter will not work.."
+  - rscadd: "Remember you only have one shot with your station name, so choose wisely."
+  - rscadd: "If you feel like an admin is being unfair and not letting you choose a PERFECTLY reasonable name, then clear it up with a complaint on the forums or something of the sort (like contacting the council)."
