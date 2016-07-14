@@ -276,10 +276,8 @@
 	..()
 	hitsound = "swing_hit"
 
-/obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, mob/M, mob/D)
+/obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)
-		if(!check_for_positions(D,M))
-			return
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/green/New()

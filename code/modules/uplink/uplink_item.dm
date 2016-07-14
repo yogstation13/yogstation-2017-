@@ -947,7 +947,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending \
 			against other attacks. Pair with an Energy Sword for a killer combination."
 	item = /obj/item/weapon/shield/energy
-	cost = 16
+	cost = 14
 	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 

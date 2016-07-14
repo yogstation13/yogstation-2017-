@@ -11,8 +11,19 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 "[WEST]" = list("[NORTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = PROPERBLOCK, "[WEST]" = IMPROPERBLOCK) )
 
 
+/obj/item/weapon
+/*
+	var/static/list/blockcheck = list(
+	"[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[NORTH]" = IMPROPERBLOCK),
+	"[EAST]" = list("[SOUTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = IMPROPERBLOCK, "[NORTH]" = PROPERBLOCK),
+	"[SOUTH]" = list("[NORTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = IMPROPERBLOCK),
+	"[WEST]" = list("[NORTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = PROPERBLOCK, "[WEST]" = IMPROPERBLOCK)
+	)
+*/
 /obj/item/weapon/proc/check_for_positions(mob/living/carbon/human/H, atom/movable/AM)
 	var/facing_hit = blockcheck["[H.dir]"]["[AM.dir]"]
+//	message_admins("This is [H] and his direction is [H.dir].") //break glass if needed -Super
+//	message_admins("This is [AM] and his direction is [AM.dir].")
 	return facing_hit
 
 /obj/item/weapon/shield
@@ -102,10 +113,27 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 				return 1
 			else
 				return 0
+		else
+			return 1
 
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 50 //This is to preserve the original thrown stuff block chance
-		return ..()
+	else if(attack_type == UNARMED_ATTACK)
+		if(!check_for_positions(owner,AT))
+			return 0
+		else
+			return 1
+
+
+	else if(attack_type == THROWN_PROJECTILE_ATTACK)
+		if(isitem(AT))
+			var/obj/item/O = AT
+			O.dir = O.thrower_dir
+			if(!check_for_positions(owner,O))
+				return 0
+			else
+				return 1
+		else
+			final_block_chance += 50
+			return ..()
 
 	else if(attack_type == PROJECTILE_ATTACK)
 		if(!check_for_positions(owner,AT))
@@ -120,7 +148,7 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 			target = get_step(target, pick(alldirs))
 		src.throw_at(target,7,1, spin = 0)
 		if(prob(final_block_chance))
-			owner.Weaken(2) // if it's not tossing the shield out of his hand, than it's knocking them down
+			owner.Weaken(2) // if it ain't tossin, they're takin the heat
 		return 0
 	else
 		return 1
@@ -168,12 +196,15 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 	w_class = 1
 	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
 	if(active)
 		if(attack_type == UNARMED_ATTACK)
-			return 1
+			if(!check_for_positions(owner,AT))
+				return 0
+			else
+				return 1
 		else
 			return 0
 	else
@@ -219,7 +250,7 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 	throw_range = 4
 	w_class = 3
 	shieldhealth = 95
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)

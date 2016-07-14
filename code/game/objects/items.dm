@@ -112,6 +112,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
+	//Need it for hit_reaction() and check_for_positions() calls.
+	var/thrower_dir
+
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
@@ -569,7 +572,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 
-/obj/item/throw_impact(atom/A)
+/obj/item/throw_impact(atom/A, tdir)
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
@@ -577,6 +580,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	thrownby = thrower
+	thrower_dir = thrower.dir
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 

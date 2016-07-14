@@ -66,16 +66,16 @@
 	return (..(P , def_zone))
 
 /mob/living/carbon/human/proc/check_reflect(def_zone, mob/living/shooter, mob/defense, previousdir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
-	var/mob/living/shooter2 = new /mob/living/carbon/human
-	shooter2.dir = previousdir
+	var/mob/living/newshooter = new /mob/living/carbon/human
+	newshooter.dir = previousdir
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone, shooter2, defense) == 1)
+		if(wear_suit.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	if(l_hand)
-		if(l_hand.IsReflect(def_zone, shooter2, defense) == 1)
+		if(l_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	if(r_hand)
-		if(r_hand.IsReflect(def_zone, shooter2, defense) == 1)
+		if(r_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	return 0
 
