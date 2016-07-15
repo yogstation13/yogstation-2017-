@@ -34,22 +34,66 @@
 	return amount
 
 
-/mob/living/carbon/human/adjustBruteLoss(amount)
+/mob/living/carbon/human/adjustBruteLoss(amount, updating_health, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		take_overall_damage(amount, 0, application)
 	else
-		heal_overall_damage(-amount, 0)
+		heal_overall_damage(-amount, 0, application)
 
-/mob/living/carbon/human/adjustFireLoss(amount)
+/mob/living/carbon/human/adjustFireLoss(amount, updating_health, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount, application)
 	else
-		heal_overall_damage(0, -amount)
+		heal_overall_damage(0, -amount, application)
+/*
+/mob/living/carbon/human/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(status_flags & GODMODE)
+		return 0
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
 
+/mob/living/carbon/human/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(status_flags & GODMODE)
+		return 0
+	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		amount *= dna.species.toxmod
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+	return amount
+
+/mob/living/carbon/human/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(status_flags & GODMODE)
+		return 0
+	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		amount *= dna.species.clonemod
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+
+/mob/living/carbon/human/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(status_flags & GODMODE)
+		return 0
+	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		amount *= dna.species.brainmod
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
+
+
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+	if(status_flags & GODMODE)
+		return 0
+	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		amount *= dna.species.staminamod
+	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
+	if(updating_stamina)
+		update_stamina()
+*/
 /mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head
@@ -83,30 +127,30 @@
 //Heals ONE external organ, organ gets randomly selected from damaged ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/heal_organ_damage(brute, burn)
+/mob/living/carbon/human/heal_organ_damage(brute, burn, application=DAMAGE_PHYSICAL)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.heal_damage(brute,burn,0))
+	if(picked.heal_damage(brute,burn,0,application))
 		update_damage_overlays(0)
 	updatehealth()
 
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(brute, burn)
+/mob/living/carbon/human/take_organ_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.take_damage(brute,burn))
+	if(picked.take_damage(brute, burn, application))
 		update_damage_overlays(0)
 	updatehealth()
 
 
 //Heal MANY bodyparts, in random order
-/mob/living/carbon/human/heal_overall_damage(brute, burn, updating_health=1)
+/mob/living/carbon/human/heal_overall_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 
 	var/update = 0
@@ -116,7 +160,7 @@
 		var/brute_was = picked.brute_dam
 		var/burn_was = picked.burn_dam
 
-		update |= picked.heal_damage(brute,burn,0)
+		update |= picked.heal_damage(brute, burn, 0, application)
 
 		brute -= (brute_was-picked.brute_dam)
 		burn -= (burn_was-picked.burn_dam)
@@ -128,10 +172,12 @@
 			update_damage_overlays(0)
 
 // damage MANY bodyparts, in random order
-/mob/living/carbon/human/take_overall_damage(brute, burn)
+/mob/living/carbon/human/take_overall_damage(brute, burn, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return	//godmode
-
+	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		brute *= dna.species.brutemod
+		burn *= dna.species.burnmod
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	var/update = 0
 	while(parts.len && (brute>0 || burn>0) )
@@ -143,7 +189,7 @@
 		var/burn_was = picked.burn_dam
 
 
-		update |= picked.take_damage(brute_per_part,burn_per_part)
+		update |= picked.take_damage(brute_per_part, burn_per_part, application)
 
 		brute	-= (picked.brute_dam - brute_was)
 		burn	-= (picked.burn_dam - burn_was)
@@ -156,6 +202,6 @@
 ////////////////////////////////////////////
 
 
-/mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
 	// depending on the species, it will run the corresponding apply_damage code there
-	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src)
+	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src, application)

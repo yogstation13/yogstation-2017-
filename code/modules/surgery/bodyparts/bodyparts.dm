@@ -73,9 +73,13 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/take_damage(brute, burn)
-	if(owner && (owner.status_flags & GODMODE))
-		return 0	//godmode
+/obj/item/bodypart/proc/take_damage(brute, burn, application=DAMAGE_PHYSICAL)
+	if(owner)
+		if(owner.status_flags & GODMODE)
+			return 0	//godmode
+		if(owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
+			brute *= owner.dna.species.brutemod
+			burn *= owner.dna.species.burnmod
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 
@@ -113,7 +117,7 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, robotic)
+/obj/item/bodypart/proc/heal_damage(brute, burn, robotic, application=DAMAGE_PHYSICAL)
 
 	if(robotic && status != ORGAN_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return

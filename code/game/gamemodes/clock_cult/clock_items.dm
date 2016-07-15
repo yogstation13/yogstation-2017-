@@ -513,7 +513,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			if(iscultist(L))
-				L.adjustFireLoss(10) //Cultists take extra damage
+				L.adjustFireLoss(10, 1, DAMAGE_MAGIC) //Cultists take extra damage
 		return ..()
 	visor.recharging = TRUE
 	visor.flame = null
@@ -784,11 +784,11 @@
 		var/mob/living/silicon/S = L
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(25)
+			S.adjustFireLoss(25, 1, DAMAGE_MAGIC)
 	else if(iscultist(L)) //Cultists take extra fire damage
 		var/mob/living/M = L
 		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
-		M.adjustFireLoss(10)
+		M.adjustFireLoss(10, 1, DAMAGE_MAGIC)
 	else
 		..()
 
