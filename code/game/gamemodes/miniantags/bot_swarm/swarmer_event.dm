@@ -1,9 +1,9 @@
 /datum/round_event_control/spawn_swarmer
 	name = "Spawn Swarmer Shell"
 	typepath = /datum/round_event/spawn_swarmer
-	weight = 7
+	weight = 1
 	max_occurrences = 1 //Only once okay fam
-	earliest_start = 18000 //30 minutes
+	earliest_start = 27000 //45 minutes
 	min_players = 15
 
 
@@ -19,7 +19,7 @@
 	if(!spawn_loc)
 		return 0
 	new /obj/item/device/unactivated_swarmer(spawn_loc)
-	if(prob(25)) //25% chance to announce it to the crew
+	if(prob(75)) //75% chance to announce it to the crew
 		var/swarmer_report = "<font size=3><b>[command_name()] High-Priority Update</b></span>"
 		swarmer_report += "<br><br>Our long-range sensors have detected an odd signal emanating from your station's gravity generator. We recommend immediate investigation of your gravity generator, as something may have come \
 		through." //Hey, it's magnets, noone knows how they work.
