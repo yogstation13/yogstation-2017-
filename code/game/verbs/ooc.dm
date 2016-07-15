@@ -187,12 +187,6 @@ var/global/normal_ooc_colour = OOC_COLOR
 /client/proc/find_admin_rank(client)
 	var/client/C = client
 
-	if(!holder)
-		if(is_donator(C))
-			return "\[Donator\]"
-		else
-			return
-
 	switch(C.holder.rank.name)
 		if("CouncilMember")
 			return "\[Council\]"
