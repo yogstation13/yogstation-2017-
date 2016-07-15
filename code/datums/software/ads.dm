@@ -2,7 +2,7 @@
 
 /proc/get_random_popup_ad(var/topic_ref)
 	var/datum/popup_ad/ad = null
-	var/list/ad_options = list(/datum/popup_ad/ad1, /datum/popup_ad/ad2, /datum/popup_ad/ad3, /datum/popup_ad/ad4, /datum/popup_ad/ad5, /datum/popup_ad/ad6, /datum/popup_ad/ad7)
+	var/list/ad_options = list(/datum/popup_ad/simple_image/ad1, /datum/popup_ad/simple_image/ad2, /datum/popup_ad/simple_image/ad3, /datum/popup_ad/simple_image/ad4, /datum/popup_ad/simple_image/ad5, /datum/popup_ad/simple_image/ad6, /datum/popup_ad/simple_image/ad7)
 	ad = pick(ad_options)
 	if(ad)
 		ad = new ad()
@@ -16,83 +16,44 @@
 /datum/popup_ad/proc/generate_content(var/topic_ref)
 	return ""
 
-/datum/popup_ad/ad1
-	size = "400x350"
+/datum/popup_ad/simple_image
+	var/image_ref = ""
 
-/datum/popup_ad/ad1/generate_content(var/topic_ref)
-	content = {"
+/datum/popup_ad/simple_image/generate_content(var/topic_ref)
+		content = {"
 <head><title>NT Product Ads</title></head>
 <a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad1.png>
+<img src=[image_ref]>
 </a>
 "}
 
+/datum/popup_ad/simple_image/ad1
+	size = "400x350"
+	image_ref = "ad1.png"
 
-/datum/popup_ad/ad2
+/datum/popup_ad/simple_image/ad2
 	size = "400x430"
+	image_ref = "ad2.png"
 
-/datum/popup_ad/ad2/generate_content(var/topic_ref)
-	content = {"
-<head><title>Click-o-Tron</title></head>
-<a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad2.png>
-</a>
-"}
-
-/datum/popup_ad/ad3
+/datum/popup_ad/simple_image/ad3
 	size = "390x400"
+	image_ref = "ad3.png"
 
-/datum/popup_ad/ad3/generate_content(var/topic_ref)
-	content = {"
-<head><title>Click-o-Tron</title></head>
-<a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad3.png>
-</a>
-"}
-
-/datum/popup_ad/ad4
+/datum/popup_ad/simple_image/ad4
 	size = "390x400"
+	image_ref = "ad4.png"
 
-/datum/popup_ad/ad4/generate_content(var/topic_ref)
-	content = {"
-<head><title>Click-o-Tron</title></head>
-<a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad4.png>
-</a>
-"}
-
-/datum/popup_ad/ad5
+/datum/popup_ad/simple_image/ad5
 	size = "390x400"
+	image_ref = "ad5.png"
 
-/datum/popup_ad/ad5/generate_content(var/topic_ref)
-	content = {"
-<head><title>Click-o-Tron</title></head>
-<a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad5.png>
-</a>
-"}
-
-/datum/popup_ad/ad6
+/datum/popup_ad/simple_image/ad6
 	size = "390x400"
+	image_ref = "ad6.png"
 
-/datum/popup_ad/ad6/generate_content(var/topic_ref)
-	content = {"
-<head><title>Click-o-Tron</title></head>
-<a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad6.png>
-</a>
-"}
-
-/datum/popup_ad/ad7
+/datum/popup_ad/simple_image/ad7
 	size = "390x400"
-
-/datum/popup_ad/ad7/generate_content(var/topic_ref)
-	content = {"
-<head><title>Click-o-Tron</title></head>
-<a href='byond://?src=\ref[topic_ref];ad_click=1'>
-<img src=ad7.png>
-</a>
-"}
+	image_ref = "ad7.png"
 
 /*
 /datum/popup_ad/ad3
