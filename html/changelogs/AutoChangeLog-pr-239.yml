@@ -1,5 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - rscadd: "GPS's now carry their own channel depending on the department they're coming from. So now they won't be as clustered as they use to be."
-  - rscadd: "QM's locker now carries a mining GPS."

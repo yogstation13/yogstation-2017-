@@ -41,10 +41,11 @@
 #define IGNORESLOWDOWN	16
 #define GOTTAGOFAST	32
 #define GOTTAGOREALLYFAST	64
-#define GODMODE		4096
+#define SLOWDOWN		128
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
 #define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
 #define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
+#define GODMODE		65536
 
 
 //Grab levels
