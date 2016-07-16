@@ -88,7 +88,7 @@
 		user << "<span class='warning'>We are already absorbing!</span>"
 		return
 	if(!user.pulling || !iscarbon(user.pulling))
-		user << "<span class='warning'>We must be grabbing a creature to devour them!</span>"
+		user << "<span class='warning'>We must be grabbing a valid creature to devour them!</span>"
 		return
 	if(user.grab_state < GRAB_AGGRESSIVE)
 		user << "<span class='warning'>We must have a tighter grip to devour this creature!</span>"
