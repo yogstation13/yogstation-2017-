@@ -2133,13 +2133,15 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "gs" = (
-/obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/grass,
-/area/centcom/control)
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel{
+	icon_state = "noslip"
+	},
+/area/centcom/abuse)
 "gt" = (
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/grass,
-/area/centcom/control)
+/obj/machinery/recharge_station,
+/turf/open/floor/plasteel/green/side,
+/area/centcom/evac)
 "gu" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/abuse)
@@ -2192,7 +2194,7 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
 "gE" = (
-/obj/structure/table/reinforced,
+/obj/machinery/recharge_station,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
 "gF" = (
@@ -37813,7 +37815,7 @@ ab
 ab
 ab
 gv
-sb
+gs
 sc
 se
 hB
@@ -37821,7 +37823,7 @@ sb
 hP
 hZ
 sc
-sb
+gs
 ij
 iy
 iU
@@ -42449,7 +42451,7 @@ gK
 gK
 gK
 gK
-iJ
+gt
 fN
 ab
 ab
