@@ -618,3 +618,19 @@
 	item_state = "mmedic_helm"
 	item_color = "mmedic"
 
+
+
+	//Heads of staff hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/heads
+	name = "command hardsuit helmet"
+	desc = "A sleek, white hardsuit helmet used by the heads of staff, the stitching is embossed with paper from last month's paycheck for the crew"
+	icon_state = "hardsuit0-heads"
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 30, bio = 100, rad = 50)
+	brightness_on = 4
+
+/obj/item/clothing/suit/space/hardsuit/heads
+	icon_state = "hardsuit_heads"
+	name = "command hardsuit"
+	desc = "A sleek, white hardsuit used by the heads of staff, the stitching is embossed with paper from last month's paycheck for the crew"
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 30, bio = 100, rad = 50)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/heads
