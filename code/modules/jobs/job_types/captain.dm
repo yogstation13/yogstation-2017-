@@ -14,6 +14,7 @@ Captain
 	req_admin_notify = 1
 	minimal_player_age = 20
 	whitelisted = 1
+	head = TRUE
 
 	outfit = /datum/outfit/job/captain
 
@@ -74,6 +75,7 @@ Head of Personnel
 	req_admin_notify = 1
 	minimal_player_age = 17
 	whitelisted = 1
+	head = TRUE
 
 	outfit = /datum/outfit/job/hop
 

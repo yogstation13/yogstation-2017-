@@ -44,6 +44,9 @@
 
 	var/outfit = null
 
+	// Whether these roles require you to play other jobs to earn.
+	var/head
+
 //Only override this proc
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
 
@@ -131,6 +134,146 @@
 	if(available_in_days(C) == 0)
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
+
+/datum/job/proc/player_exp_enough(client/C)
+	if(!head)
+		return 1
+
+	if(check_if_expempted(C, title)) // we check if they are already exempted from that role, and don't need experience
+		return 1
+
+
+	if(dbcon.IsConnected())
+
+		var/ckeygained = sanitizeSQL(get_ckey(C))
+		var/DBQuery/query_jexp = dbcon.NewQuery("SELECT * FROM [format_table_name("jobreq")] WHERE `ckey` = '[ckeygained]'")
+		if(!query_jexp.Execute())
+			return
+
+		while(query_jexp.NextRow()) // this next part is VERY CRUCICAL and the database NEEDS TO FOLLOW THIS ORDER.
+			var/hos = text2num(query_jexp.item[2])
+			var/cmo = text2num(query_jexp.item[3])
+			var/rd = text2num(query_jexp.item[4])
+			var/hop = text2num(query_jexp.item[5])
+			var/ce = text2num(query_jexp.item[6])
+			var/warden = text2num(query_jexp.item[7])
+			var/securityo = text2num(query_jexp.item[8])
+			var/lawyer = text2num(query_jexp.item[9])
+			var/scientist = text2num(query_jexp.item[10])
+			var/robo = text2num(query_jexp.item[11])
+			var/cargotech = text2num(query_jexp.item[12])
+			var/quarterm = text2num(query_jexp.item[13])
+			var/medicald = text2num(query_jexp.item[14])
+			var/chemist = text2num(query_jexp.item[15])
+			var/viro = text2num(query_jexp.item[16])
+			var/geneticist = text2num(query_jexp.item[17])
+			var/paramed = text2num(query_jexp.item[18])
+			var/statione = text2num(query_jexp.item[19])
+			var/atmotech = text2num(query_jexp.item[20])
+			if(title == "Head of Personnel")
+				if(quarterm < 10)
+					return 0
+
+				if(cargotech < 10)
+					return 0
+
+				else
+					return 1
+
+			if(title == "Captain")
+				if(hos < 3)
+					return 0
+
+				if(cmo < 3)
+					return 0
+
+				if(rd < 3)
+					return 0
+
+				if(hop < 3)
+					return 0
+
+				if(ce < 3)
+					return 0
+
+				else
+					return 1
+
+
+			if(title == "Head of Security")
+				if(warden < 10)
+					return 0
+
+				if(securityo < 30) // extra 10 from warden. so in total, a solid 30 rounds as security
+					return 0
+
+				if(lawyer < 15) //extra 2 rounds from lawyer
+					return 0
+
+				else
+					return 1
+
+
+			if(title == "Chief Medical Officer")
+				if(medicald < 10)
+					return 0
+
+				if(chemist < 10)
+					return 0
+
+				if(viro < 10)
+					return 0
+
+				if(geneticist < 10)
+					return 0
+
+				if(paramed < 10)
+					return 0
+
+				else
+					return 1
+
+
+			if(title == "Research Director")
+				if(scientist < 15)
+					return 0
+
+				if(robo < 15)
+					return 0
+
+				else
+					return 1
+
+
+			if(title == "Chief Engineer")
+				if(statione < 15)
+					return 0
+
+				if(atmotech < 15)
+					return 0
+
+				else
+					return 1
+
+
+			if(title == "Security Officer")
+				if(lawyer < 13)
+					return 0
+
+				else
+					return 1
+
+
+			if(title == "Warden")
+				if(securityo < 20)
+					return 0
+
+				else
+					return 1
+
+	else
+		message_admins("Error. Database is not set up for the Job Experience System.")
+		return 0 // rip... better hope someones exempted
 
 
 /datum/job/proc/available_in_days(client/C)
