@@ -209,7 +209,7 @@
 		remove_paddles(M)
 	. = ..()
 	update_icon()
-Fixed bug with defib. The stick wont stick in your hand when someone remove your back while you are holding the paddles.
+
 /obj/item/weapon/defibrillator/proc/deductcharge(chrgdeductamt)
 	if(bcell)
 		if(bcell.charge < (paddles.revivecost+chrgdeductamt))
