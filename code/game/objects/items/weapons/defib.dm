@@ -197,7 +197,7 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //Th rogue paddles wont stick anymore in the hands
+/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //The paddles wont be stick anymore in the hands when someone remvoe you the defib
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)
