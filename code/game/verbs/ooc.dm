@@ -44,7 +44,7 @@
 
 	var/raw_msg = msg
 
-	send_discord_message(DISCORD_OOC, "**[holder.fakekey ? holder.fakekey : key]: ** [msg]")
+	send_discord_message("ooc", "**[holder.fakekey ? holder.fakekey : key]: ** [msg]")
 
 	msg = emoji_parse(msg)
 

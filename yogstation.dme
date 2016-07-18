@@ -83,6 +83,7 @@
 #include "code\__PATH_COMPATIBILITY\path_compatibility.dm"
 #include "code\_globalvars\configuration.dm"
 #include "code\_globalvars\database.dm"
+#include "code\_globalvars\discord_channels.dm"
 #include "code\_globalvars\game_modes.dm"
 #include "code\_globalvars\genetics.dm"
 #include "code\_globalvars\logging.dm"
