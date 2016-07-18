@@ -515,6 +515,9 @@ var/list/preferences_datums = list()
 		if(jobban_isbanned(user, rank))
 			HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
 			continue
+		if(!job.player_exp_enough(user.client))
+			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[INEXPERIENCED\]</font></td></tr>"
+			continue
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
 			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"

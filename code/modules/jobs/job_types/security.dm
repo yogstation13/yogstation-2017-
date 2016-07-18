@@ -20,6 +20,7 @@ Head of Security
 	req_admin_notify = 1
 	minimal_player_age = 17
 	whitelisted = 1
+	head = TRUE
 
 	outfit = /datum/outfit/job/hos
 
@@ -80,6 +81,7 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	head = TRUE
 
 	outfit = /datum/outfit/job/warden
 
@@ -189,6 +191,7 @@ Security Officer
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	head = TRUE
 
 	outfit = /datum/outfit/job/security
 
