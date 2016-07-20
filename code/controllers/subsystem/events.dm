@@ -95,7 +95,7 @@ var/datum/subsystem/events/SSevent
 				if(world.time > PRESUMEDHOUR)
 					E.weight++
 					E.growth++
-					E.message_admins("Random event [E.name] could not spawn, so it's weight has grown to [E.weight].")
+					message_admins("Random event [E.name] could not spawn, so it's weight has grown to [E.weight].")
 			continue
 		sum_of_weights -= E.weight
 
