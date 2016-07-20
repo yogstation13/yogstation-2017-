@@ -41,12 +41,6 @@
 /datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
-	if(growth)
-		var/newtime = PRESUMEDHOUR * growth
-		if(world.time > PRESUMEDHOUR)
-			weight++
-			growth++
-			message_admins("Random event [name] could not spawn, so it's weight has grown to [weight].")
 	if(earliest_start >= world.time)
 		return FALSE
 	if(wizardevent != SSevent.wizardmode)

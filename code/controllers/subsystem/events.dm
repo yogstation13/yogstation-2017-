@@ -90,6 +90,12 @@ var/datum/subsystem/events/SSevent
 
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
+			if (E.growth)
+				var/newtime = PRESUMEDHOUR * growth
+				if(world.time > PRESUMEDHOUR)
+					weight++
+					growth++
+					message_admins("Random event [name] could not spawn, so it's weight has grown to [weight].")
 			continue
 		sum_of_weights -= E.weight
 
