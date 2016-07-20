@@ -1,11 +1,11 @@
 /datum/round_event_control/blob
 	name = "Blob"
 	typepath = /datum/round_event/blob
-	weight = 5
+	weight = 2
 	max_occurrences = 1
 
 	min_players = 20
-	earliest_start = 18000 //30 minutes
+	earliest_start = 36000 //60 minutes
 
 	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
