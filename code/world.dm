@@ -52,6 +52,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	if(config.usewhitelist)
 		load_whitelist()
 	load_all_exp_lists()
+	load_all_jexp_values()
 	jobban_loadbanfile()
 	appearance_loadbanfile()
 	jobban_updatelegacybans()
