@@ -17,13 +17,15 @@
 
 	var/holidayID = ""			//string which should be in the SSevents.holidays list if you wish this event to be holiday-specific
 								//anything with a (non-null) holidayID which does not match holiday, cannot run.
-	var/wizardevent = 0
+	var/wizardevent = FALSE
 
-	var/alertadmins = 1			//should we let the admins know this event is firing
+	var/alertadmins = TRUE			//should we let the admins know this event is firing
 								//should be disabled on events that fire a lot
 
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
+
+	var/growth = FALSE			// whether the events weight will grow bigger. take caution with this.
 
 /datum/round_event_control/New()
 	..()
@@ -32,7 +34,7 @@
 		min_players = Ceiling(min_players * config.events_min_players_mul)
 
 /datum/round_event_control/wizard
-	wizardevent = 1
+	wizardevent = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
@@ -40,6 +42,11 @@
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time)
+		if(growth)
+			weight++
+			var/newstart = earliest_start + 18000 // so another 30 minutes
+			earliest_start = newstart
+			message_admins("Random event [name] could not spawn, so it's weight has grown to [weight].")
 		return FALSE
 	if(wizardevent != SSevent.wizardmode)
 		return FALSE
