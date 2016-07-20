@@ -25,7 +25,7 @@
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
 
-	var/growth = FALSE			// whether the events weight will grow bigger. take caution with this.
+	var/growth = FALSE			// whether the events weight will grow bigger. treat with caution.
 
 /datum/round_event_control/New()
 	..()
@@ -41,12 +41,13 @@
 /datum/round_event_control/proc/canSpawnEvent(var/players_amt, var/gamemode)
 	if(occurrences >= max_occurrences)
 		return FALSE
-	if(earliest_start >= world.time)
-		if(growth)
+	if(growth)
+		var/newtime = PRESUMEDHOUR * growth
+		if(world.time > PRESUMEDHOUR)
 			weight++
-			var/newstart = earliest_start + 18000 // so another 30 minutes
-			earliest_start = newstart
+			growth++
 			message_admins("Random event [name] could not spawn, so it's weight has grown to [weight].")
+	if(earliest_start >= world.time)
 		return FALSE
 	if(wizardevent != SSevent.wizardmode)
 		return FALSE
