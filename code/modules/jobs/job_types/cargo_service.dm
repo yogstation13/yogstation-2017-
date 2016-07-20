@@ -128,6 +128,10 @@ Bartender
 
 /datum/job/bartender/space
 	title = "Space Bartender"
+	flag = null
+	faction = "A cold beer"
+	department_head = null
+	department_flag = null
 	minimal_access = list(access_bar, access_kitchen)
 	total_positions = 0
 	spawn_positions = 0

@@ -142,6 +142,9 @@
 	if(check_if_expempted(C, title)) // we check if they are already exempted from that role, and don't need experience
 		return 1
 
+	if(JEXP != TRUE) // oh god..
+		return 1
+
 
 	if(dbcon.IsConnected())
 
@@ -158,7 +161,7 @@
 			var/ce = text2num(query_jexp.item[6])
 			var/warden = text2num(query_jexp.item[7])
 			var/securityo = text2num(query_jexp.item[8])
-			var/lawyer = text2num(query_jexp.item[9])
+			var/deputy = text2num(query_jexp.item[9])
 			var/scientist = text2num(query_jexp.item[10])
 			var/robo = text2num(query_jexp.item[11])
 			var/cargotech = text2num(query_jexp.item[12])
@@ -170,6 +173,8 @@
 			var/paramed = text2num(query_jexp.item[18])
 			var/statione = text2num(query_jexp.item[19])
 			var/atmotech = text2num(query_jexp.item[20])
+
+			// IMPORTANT. If you ever change these values, change the values presented in "jexpstats" (inside of jobexp.dm) as well
 			if(title == "Head of Personnel")
 				if(quarterm < 10)
 					return 0
@@ -201,13 +206,10 @@
 
 
 			if(title == "Head of Security")
-				if(warden < 10)
+				if(warden < 15)
 					return 0
 
-				if(securityo < 30) // extra 10 from warden. so in total, a solid 30 rounds as security
-					return 0
-
-				if(lawyer < 15) //extra 2 rounds from lawyer
+				if(securityo < 35)
 					return 0
 
 				else
@@ -215,19 +217,19 @@
 
 
 			if(title == "Chief Medical Officer")
-				if(medicald < 10)
+				if(medicald < 6)
 					return 0
 
-				if(chemist < 10)
+				if(chemist < 6)
 					return 0
 
-				if(viro < 10)
+				if(viro < 6)
 					return 0
 
-				if(geneticist < 10)
+				if(geneticist < 6)
 					return 0
 
-				if(paramed < 10)
+				if(paramed < 6)
 					return 0
 
 				else
@@ -257,7 +259,7 @@
 
 
 			if(title == "Security Officer")
-				if(lawyer < 13)
+				if(deputy < 13)
 					return 0
 
 				else
@@ -272,7 +274,6 @@
 					return 1
 
 	else
-		message_admins("Error. Database is not set up for the Job Experience System.")
 		return 0 // rip... better hope someones exempted
 
 

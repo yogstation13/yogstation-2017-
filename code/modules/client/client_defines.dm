@@ -40,13 +40,30 @@
 	var/is_whitelisted = "Requires database"	//Used to determine if the player is whitelisted - gives access to Ultra preference for command jobs + AI
 
 
-	// jexp
-	var/captain = "Requires database"
-	var/head_sci = "Requires database"
-	var/head_sec = "Requires database"
-	var/head_med = "Requires database"
-	var/head_per = "Requires database"
-	var/head_eng = "Requires database"
+	// jexp. presents the last cached values. database is used to count your jexp, not this.
+	var/cachedjexp_captain = 0
+	var/cachedjexp_hos = 0
+	var/cachedjexp_hop = 0
+	var/cachedjexp_ce = 0
+	var/cachedjexp_cmo = 0
+	var/cachedjexp_rd = 0
+	var/cachedjexp_cargot = 0
+	var/cachedjexp_qm = 0
+	var/cachedjexp_securityo = 0
+	var/cachedjexp_lawyer = 0
+	var/cachedjexp_warden = 0
+	var/cachedjexp_statione = 0
+	var/cachedjexp_atmost = 0
+	var/cachedjexp_medicald = 0
+	var/cachedjexp_chem = 0
+	var/cachedjexp_viro = 0
+	var/cachedjexp_gene = 0
+	var/cachedjexp_para = 0
+	var/cachedjexp_science = 0
+	var/cachedjexp_robotics = 0
+	var/cachedjexp_deputy = 0
+
+	var/jexpworthy = TRUE
 
 	var/connection_number = 0
 

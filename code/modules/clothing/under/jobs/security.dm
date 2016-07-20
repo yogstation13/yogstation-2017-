@@ -1,6 +1,7 @@
 /*
  * Contains:
  *		Security
+ *		Deputy
  *		Detective
  *		Navy uniforms
  */
@@ -23,6 +24,13 @@
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
+
+/obj/item/clothing/under/rank/security/deputy
+	desc = "A special security jumpsuit made for the appointed deputies of the station."
+	icon_state = "deputy"
+	item_state = "deputy"
+	item_color = "deputy"
+
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
