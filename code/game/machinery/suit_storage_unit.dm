@@ -37,6 +37,12 @@
 	mask_type = /obj/item/clothing/mask/gas
 	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
 
+/obj/machinery/suit_storage_unit/command
+	suit_type = /obj/item/clothing/suit/space/heads
+	helmet_type = /obj/item/clothing/head/helmet/space/heads
+	mask_type = /obj/item/clothing/mask/breath
+
+
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
