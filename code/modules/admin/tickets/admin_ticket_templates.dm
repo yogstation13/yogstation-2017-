@@ -218,7 +218,7 @@
 				[css]
 				</style>
 
-				<script src="libraries.min.js"></script>
+				<script src="jquery.min.js"></script>
 				<script type='text/javascript'>
 					var nearBottom = true;
 
