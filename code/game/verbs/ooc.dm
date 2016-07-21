@@ -44,6 +44,8 @@
 
 	var/raw_msg = msg
 
+	send_discord_message(DISCORD_OOC, "**[holder.fakekey ? holder.fakekey : key]: ** [msg]")
+
 	msg = emoji_parse(msg)
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
