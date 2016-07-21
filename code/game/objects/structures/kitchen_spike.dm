@@ -77,7 +77,35 @@
 	else
 		..()
 
+/obj/structure/kitchenspike/MouseDrop_T(mob/living/target, mob/living/carbon/human/user)
+	if(!isliving(target) || buckled_mobs.len)
+		return
+	if(user.pulling != target)
+		return
+	if(user.a_intent != "grab")
+		return
 
+	var/mob/living/L = user.pulling
+	if(do_mob(user, src, 120))
+		if(has_buckled_mobs()) //to prevent spam/queing up attacks
+			return
+		if(target.buckled)
+			return
+		playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+		target.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+		target.loc = src.loc
+		target.emote("scream")
+		target.add_splatter_floor()
+		target.adjustBruteLoss(30)
+		target.buckled = src
+		target.dir = 2
+		buckle_mob(L, force=1)
+		var/matrix/m180 = matrix(target.transform)
+		m180.Turn(180)
+		animate(L, transform = m180, time = 3)
+		target.pixel_y = target.get_standard_pixel_y_offset(180)
+	else
+		return
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
