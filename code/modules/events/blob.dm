@@ -1,7 +1,7 @@
 /datum/round_event_control/blob
 	name = "Blob"
 	typepath = /datum/round_event/blob
-	weight = 2
+	weight = 5
 	max_occurrences = 1
 
 	min_players = 20
