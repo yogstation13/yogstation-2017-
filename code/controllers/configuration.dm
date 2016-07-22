@@ -624,7 +624,7 @@
 					MAX_EX_FLAME_RANGE = BombCap
 				else
 					diary << "Unknown setting in configuration: '[name]'"
-		else if(type == "discord_channels")
+		else if(type == "discord")
 			discord_channels[name] = value
 
 	fps = round(fps)
