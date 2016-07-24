@@ -430,7 +430,7 @@ var/next_external_rsc = 0
 		connection_number = text2num(query_getid.item[1])
 
 	// setting up jexp. check jobexp.dm for more information
-	var/DBQuery/jexp_insert = dbcon.NewQuery("INSERT INTO [format_table_name("jobreq")] (ckey) VALUES ('[sql_ckey]') ON DUPLICATE KEY INSERT NOTHING;")
+	var/DBQuery/jexp_insert = dbcon.NewQuery("INSERT INTO [format_table_name("jobreq")] (ckey) VALUES ('[sql_ckey]') ON DUPLICATE KEY INSERT NOTHING")
 	jexp_insert.Execute()
 
 

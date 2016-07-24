@@ -52,7 +52,6 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	if(config.usewhitelist)
 		load_whitelist()
 	load_all_exp_lists()
-	load_all_jexp_values()
 	jobban_loadbanfile()
 	appearance_loadbanfile()
 	jobban_updatelegacybans()
@@ -359,6 +358,7 @@ var/inerror = 0
 	config.loadsql("config/dbconfig.txt")
 	if (config.maprotation && SERVERTOOLS)
 		config.loadmaplist("config/maps.txt")
+	config.load("config/jexp.txt","jexp")
 
 	// apply some settings from config..
 	abandon_allowed = config.respawn

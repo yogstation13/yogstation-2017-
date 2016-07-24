@@ -31,6 +31,7 @@
 	world.update_status()
 	client.screen = list()				//remove hud items just in case
 	client.images = list()
+	client.my_jexpstats()
 
 	if(!hud_used)
 		create_mob_hud()
@@ -73,3 +74,4 @@
 
 	update_client_colour()
 	client.click_intercept = null
+

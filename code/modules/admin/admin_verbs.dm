@@ -26,7 +26,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
 	/client/proc/stop_sounds,
-	/client/proc/get_jexp
+	/client/proc/get_jexp,
+	/client/proc/reload_jexp
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -88,7 +89,7 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/revoke_jexp
+	/client/proc/revoke_jexp,
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -967,6 +968,20 @@ var/list/admin_verbs_hideable = list(
 
 
 
+/client/proc/reload_jexp()
+	set name = "Reload JEXP stats"
+	set category = "Debug"
+	set desc = "Reloads JEXP stats. Be careful with this one."
+
+	if(!holder)
+		return
+
+	load_all_jexp_values()
+	message_admins("[src.ckey] has reloaded JEXP stats.")
+	log_admin("[src.ckey] has reloaded JEXP stats.")
+
+
+
 /client/proc/togglejexp()
 	set name = "Kill JEXP"
 	set category = "Server"
@@ -989,6 +1004,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[src.ckey] has taken down the JEXP datum.</span>")
 		log_game("[src.ckey] has taken down the JEXP datum.</span>")
 
+
 /client/proc/get_jexp()
 	set name = "Get JEXP"
 	set category = "Admin"
@@ -1009,9 +1025,8 @@ var/list/admin_verbs_hideable = list(
 	var/client/C = selection
 
 
-	src << "<span class='boldnotice'>[C] has played [C.cachedjexp_captain] as Captain. </span>"
-	src << "<span class='boldnotice'>[C.cachedjexp_hos] times as HoS, [cachedjexp_lawyer] times as lawyer, [cachedjexp_warden] times as Warden, and [cachedjexp_securityo] times as a Security Officer.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp_hop] times as HoP, [C.cachedjexp_cargot] times as a cargo technician, and [C.cachedjexp_qm] times as the Quartermaster.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp_cmo] times as CMO, [C.cachedjexp_medicald] times as a medical doctor, [C.cachedjexp_chem] times as a chemist, [C.cachedjexp_viro] times as a virologist, [C.cachedjexp_gene] times a geneticist, [C.cachedjexp_para] times as a paramedic.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp_ce] times as CE, [C.cachedjexp_statione] times as a station engineer and [C.cachedjexp_atmost] times as an atmospheric technician.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp_rd] times as RD, [C.cachedjexp_science] times as a scientist, and [C.cachedjexp_robotics] times as a roboticist.</span>"
+	src << "<span class='boldnotice'>[C.cachedjexp["hos"]] times as HoS, [C.cachedjexp["deputy"]] times as lawyer, [cachedjexp["warden"]] times as Warden, and [cachedjexp["officer"]] times as a Security Officer.</span>"
+	src << "<span class='boldnotice'>[C.cachedjexp["hop"]] times as HoP, [C.cachedjexp["cargot"]] times as a cargo technician, and [C.cachedjexp["qm"]] times as the Quartermaster.</span>"
+	src << "<span class='boldnotice'>[C.cachedjexp["cmo"]] times as CMO, [C.cachedjexp["medicald"]] times as a medical doctor, [C.cachedjexp["chem"]] times as a chemist, [C.cachedjexp["viro"]] times as a virologist, [C.cachedjexp["gene"]] times a geneticist, [C.cachedjexp["para"]] times as a paramedic.</span>"
+	src << "<span class='boldnotice'>[C.cachedjexp["ce"]] times as CE, [C.cachedjexp["statione"]] times as a station engineer and [C.cachedjexp["atmost"]] times as an atmospheric technician.</span>"
+	src << "<span class='boldnotice'>[C.cachedjexp["rd"]] times as RD, [C.cachedjexp["science"]] times as a scientist, and [C.cachedjexp["robotics"]] times as a roboticist.</span>"

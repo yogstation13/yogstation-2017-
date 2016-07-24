@@ -88,6 +88,7 @@
 			send_intercept(0)
 	start_state = new /datum/station_state()
 	start_state.count(1)
+	load_all_jexp_values()
 	return 1
 
 ///make_antag_chance()

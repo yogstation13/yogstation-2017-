@@ -210,6 +210,9 @@
 
 	var/cross_name = "Other server"
 
+
+	var/list/jexpvalues = list()
+
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
 	for(var/T in L)
@@ -622,6 +625,36 @@
 					MAX_EX_FLAME_RANGE = BombCap
 				else
 					diary << "Unknown setting in configuration: '[name]'"
+		else if (type == "jexp")
+			switch(name)
+				if("requirement_command")
+					config.jexpvalues["requirement_command"]			= text2num(value)
+
+				if("requirement_cargo")
+					config.jexpvalues["requirement_cargo"]				= text2num(value)
+
+				if("requirement_hos_one")
+					config.jexpvalues["requirement_hos_one"]				= text2num(value)
+
+				if("requiement_hos_two")
+					config.jexpvalues["requirement_hos_two"]				= text2num(value)
+
+				if("requirement_medical")
+					config.jexpvalues["requirement_medical"]				= text2num(value)
+
+				if("requirement_science")
+					config.jexpvalues["requirement_science"]				= text2num(value)
+
+				if("requirement_engineering")
+					config.jexpvalues["requirement_engineering"]			= text2num(value)
+
+				if("requirement_officer")
+					config.jexpvalues["requirement_officer"]				= text2num(value)
+
+				if("requirement_warden")
+					config.jexpvalues["requirement_warden"]				= text2num(value)
+
+
 
 	fps = round(fps)
 	if(fps <= 0)
