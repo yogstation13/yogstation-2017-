@@ -9348,6 +9348,10 @@
 /obj/effect/landmark/start{
 	name = "Security Deputy"
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=EVA";
+	location = "Security"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aqH" = (
