@@ -17,7 +17,7 @@
 		if(2)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
-			new /obj/item/device/soulstone/anybody(src)
+			new /obj/item/device/necromantic_stone/lesser(src)
 		if(4)
 			new /obj/item/weapon/katana/cursed(src)
 		if(5)
@@ -444,10 +444,6 @@
 				src.used = TRUE
 
 
-
-
-
-
 ///Bosses
 
 
@@ -571,15 +567,10 @@
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
-		if(2)
-			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
-			H.set_species(/datum/species/skeleton)
-		if(3)
 			user << "<span class='danger'>You don't feel so good...</span>"
 			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
-		if(4)
+		if(2)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 			H.weather_immunities |= "lava"
 

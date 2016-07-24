@@ -195,7 +195,50 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
 	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 
+//Lesser Necromantic Stone - basically a nerfed necro stone that can handle only one soul and cannot be used to farm claymores, intended for necropolis chests.
+/obj/item/device/necromantic_stone/lesser
+	name = "lesser necromantic stone"
 
+/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+	if(!istype(M))
+		return ..()
+
+	if(!istype(user) || !user.canUseTopic(M,1))
+		return
+
+	if(M.stat != DEAD)
+		user << "<span class='warning'>This artifact can only affect the dead!</span>"
+		return
+
+	if(!M.mind || !M.client)
+		user << "<span class='warning'>There is no soul connected to this body...</span>"
+		return
+
+	check_spooky()//clean out/refresh the list
+	if(spooky_scaries.len >= 1 && !unlimited)
+		user << "<span class='warning'>This artifact can only affect one undead at a time!</span>"
+		return
+
+	M.set_species(/datum/species/skeleton, icon_update=0)
+	M.revive(full_heal = 1, admin_revive = 1)
+	spooky_scaries |= M
+	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
+	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
+
+	equip_roman_skeleton_lesser(M)
+
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/1 active thralls."]"
+
+/obj/item/device/necromantic_stone/proc/equip_roman_skeleton_lesser(mob/living/carbon/human/H)
+	for(var/obj/item/I in H)
+		H.unEquip(I)
+
+	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	H.equip_to_slot_or_del(new hat(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 
 /////////////////////Multiverse Blade////////////////////
 var/global/list/multiverse = list()
