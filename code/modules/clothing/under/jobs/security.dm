@@ -25,8 +25,8 @@
 	item_color = "security"
 
 /obj/item/clothing/under/rank/security/deputy
-	name = "deputy jumpsuit"
-	desc = "A sleek jumpsuit used by officers undergoing training."
+	name = "brig officer's jumpsuit"
+	desc = "A sleek jumpsuit worn by brig officers."
 	icon_state = "deputy"
 	item_state = "deputy"
 	item_color = "deputy"

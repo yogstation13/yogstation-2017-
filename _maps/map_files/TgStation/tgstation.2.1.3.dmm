@@ -9346,7 +9346,7 @@
 /area/hallway/primary/fore)
 "aqG" = (
 /obj/effect/landmark/start{
-	name = "Security Deputy"
+	name = "Prison Officer"
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=EVA";
@@ -69127,7 +69127,7 @@
 /area/shuttle/transport)
 "cGc" = (
 /obj/effect/landmark/start{
-	name = "Security Deputy"
+	name = "Prison Officer"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "redcorner";

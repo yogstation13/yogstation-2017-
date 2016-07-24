@@ -328,14 +328,14 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 //Deputies, original code by super3222, adapted by Kmc2000//
 
 /datum/job/secdeputy
- 	title = "Security Deputy"
+ 	title = "Prison Officer"
  	flag = DEPUTY
  	department_head = list("Head of Security")
  	department_flag = ENGSEC
  	faction = "Station"
  	total_positions = 2
  	spawn_positions = 2
- 	supervisors = "the head of security, the warden, and any security officer you come in contact with"
+ 	supervisors = "the warden, you must help them with anything they need and assist with brig triage"
  	selection_color = "#ffeeee"
  	minimal_player_age = 0
 
@@ -345,7 +345,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
  	minimal_access = list(access_security, access_sec_doors, access_weapons)
 
 /datum/outfit/job/deputy
- 	name = "Security Deputy"
+ 	name = "Brig Officer"
 
  	belt = /obj/item/device/pda/security
  	ears = /obj/item/device/radio/headset/headset_sec
