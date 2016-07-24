@@ -30,6 +30,7 @@
 	icon_state = "deputy"
 	item_state = "deputy"
 	item_color = "deputy"
+	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
