@@ -563,7 +563,7 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,4)
+	var/random = rand(1,2)
 
 	switch(random)
 		if(1)
