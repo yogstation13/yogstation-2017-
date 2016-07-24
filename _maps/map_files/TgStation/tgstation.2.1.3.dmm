@@ -69125,6 +69125,15 @@
 	dir = 2
 	},
 /area/shuttle/transport)
+"cGc" = (
+/obj/effect/landmark/start{
+	name = "Security Deputy"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "redcorner";
+	dir = 1
+	},
+/area/hallway/primary/fore)
 
 (1,1,1) = {"
 aaa
@@ -98002,7 +98011,7 @@ anP
 aot
 apc
 apy
-apS
+cGc
 aqj
 aqG
 arf
