@@ -24,6 +24,13 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/deputy
+	name = "deputy jumpsuit"
+	desc = "A sleek jumpsuit used by officers undergoing training."
+	icon_state = "deputy"
+	item_state = "deputy"
+	item_color = "deputy"
+
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
 	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
