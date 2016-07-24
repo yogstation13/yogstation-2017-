@@ -132,6 +132,7 @@
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
 	w_class = 1
+	var/max_spookies = 3
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -154,8 +155,8 @@
 		return
 
 	check_spooky()//clean out/refresh the list
-	if(spooky_scaries.len >= 3 && !unlimited)
-		user << "<span class='warning'>This artifact can only affect three undead at a time!</span>"
+	if(spooky_scaries.len >= max_spookies && !unlimited)
+		user << "<span class='warning'>This artifact can only affect [max_spookies] at a time!</span>"
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
@@ -166,7 +167,7 @@
 
 	equip_roman_skeleton(M)
 
-	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/[max_spookies]."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
@@ -198,36 +199,8 @@
 //Lesser Necromantic Stone - basically a nerfed necro stone that can handle only one soul and cannot be used to farm claymores, intended for necropolis chests.
 /obj/item/device/necromantic_stone/lesser
 	name = "lesser necromantic stone"
+	max_spookies = 1
 
-/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
-	if(!istype(M))
-		return ..()
-
-	if(!istype(user) || !user.canUseTopic(M,1))
-		return
-
-	if(M.stat != DEAD)
-		user << "<span class='warning'>This artifact can only affect the dead!</span>"
-		return
-
-	if(!M.mind || !M.client)
-		user << "<span class='warning'>There is no soul connected to this body...</span>"
-		return
-
-	check_spooky()//clean out/refresh the list
-	if(spooky_scaries.len >= 1 && !unlimited)
-		user << "<span class='warning'>This artifact can only affect one undead at a time!</span>"
-		return
-
-	M.set_species(/datum/species/skeleton, icon_update=0)
-	M.revive(full_heal = 1, admin_revive = 1)
-	spooky_scaries |= M
-	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
-	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
-
-	equip_roman_skeleton_lesser(M)
-
-	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/1 active thralls."]"
 
 /obj/item/device/necromantic_stone/proc/equip_roman_skeleton_lesser(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
