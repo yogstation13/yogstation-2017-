@@ -85,7 +85,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/toolspeed = 1
 
 	var/high_risk = 0 //if admins should be notified when this destoryed
-	
+
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
@@ -460,6 +460,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
+		if(H.dna.species.specflags & PROTECTEDEYES)
+			user << "<span class='danger'>This person's eyes are too strong to be gouged out!</span>"
 			return
 
 	if(ismonkey(M))

@@ -1,3 +1,5 @@
+#define STATUS_MESSAGE_COOLDOWN 900
+
 /*
  HUMANS
 */
@@ -45,8 +47,6 @@
 	if(H)
 		H.endTailWag()
 
-#define EATING_MESSAGE_COOLDOWN 1200
-
 /datum/species/human/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
 	name = "Manfly"
@@ -59,7 +59,7 @@
 	specflags = list()
 	roundstart = 0
 	limbs_id = "fly"
-	var/last_eat_message = -EATING_MESSAGE_COOLDOWN //I am here because flies
+	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 
 
 /datum/species/human/fly/handle_speech(message)
@@ -67,7 +67,7 @@
 
 /datum/species/human/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -90,7 +90,8 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,PROTECTEDEYES)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
 	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
@@ -100,7 +101,22 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
-	roundstart = 1
+	stamina_recover_normal = 0.66
+	siemens_coeff = 0.5
+	hazard_low_pressure = HAZARD_LOW_PRESSURE * 0.75
+	hazard_high_pressure = HAZARD_HIGH_PRESSURE * 1.2
+	invis_sight = INVISIBILITY_LIGHTING
+	cold_slowdown_factor = COLD_SLOWDOWN_FACTOR * 0.6
+	speedmod = 0.33
+
+	high_temp_level_1 = BODYTEMP_HEAT_DAMAGE_LEVEL_2
+	high_temp_level_2 = BODYTEMP_HEAT_DAMAGE_LEVEL_3
+	high_temp_level_3 = BODYTEMP_HEAT_DAMAGE_LEVEL_3 + 1
+	low_temp_level_1 = BODYTEMP_COLD_DAMAGE_LEVEL_1
+	low_temp_level_2 = BODYTEMP_COLD_DAMAGE_LEVEL_2
+	low_temp_level_3 = BODYTEMP_COLD_DAMAGE_LEVEL_3
+	highpressure_mod = 0.75
+	lowpressure_mod = 0.75
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time. Thick scales afford you protection from heat, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"
@@ -123,6 +139,24 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
+/datum/species/lizard/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, application=DAMAGE_PHYSICAL)
+	if(damagetype == STAMINA)
+		damage += 10
+	return ..(damage, damagetype, def_zone, blocked, H, application)
+
+/datum/species/lizard/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	..()
+	if(!environment)
+		return
+	if(H.bodytemperature < 70)
+		H.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
+		H.sleeping = max(8, H.sleeping)
+	if(H.bodytemperature < 180)
+		if(prob(75))
+			H.confused = max(10, H.confused)
+		if(H.nutrition >= 2)//lizards lose nutrition twice as fast as normal at low temperature
+			H.nutrition -= 2
+
 /*
  Lizard subspecies: ASHWALKERS
 */
@@ -138,15 +172,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
-	specflags = list(EYECOLOR,LIPS)
+	specflags = list(EYECOLOR,LIPS,PROTECTEDEYES)
 	roundstart = 0
-	var/last_eat_message = -EATING_MESSAGE_COOLDOWN //I am here because flies
+	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
 	default_color = "FFFFFF"
 
 /datum/species/lizard/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -177,26 +211,28 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Preternis"
 	id = "android"
 	default_color = "FFFFFF"
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS,RADIMMUNE,CONSUMEPOWER,EASYIMPLANTS)
 	say_mod = "intones"
 	roundstart = 1
 	attack_verb = "assault"
 	darksight = 2
-	brutemod = 0.95
-	burnmod = 1.05
-	heatmod = 1.05
+	brutemod = 1.5
+	heatmod = 2
+	siemens_coeff = 1.5
+	radiation_effect_mod = 0
+	radiation_faint_threshhold = 999
+	clonemod = 0
+	toxmod = 0
+	speedmod = -0.34
+	damage_immunities = list(DAMAGE_CHEMICAL)
+	heal_immunities = list(DAMAGE_CHEMICAL)
+	limb_default_status = ORGAN_SEMI_ROBOTIC
 	invis_sight = SEE_INVISIBLE_MINIMUM
-	var/last_eat_message = -EATING_MESSAGE_COOLDOWN
+	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 
-/datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if (istype(chem, /datum/reagent/consumable)) //paranoia paranoia type casting is coming to get me
-		var/datum/reagent/consumable/food = chem
-		if (food.nutriment_factor)
-			food.nutriment_factor = food.nutriment_factor * 0.2
-			if (world.time - last_eat_message > EATING_MESSAGE_COOLDOWN)
-				H << "<span class='info'>NOTICE: Digestive subroutines are inefficient. Seek sustenance via power-cell CONSUME induction.</span>"
-				last_eat_message = world.time
-		return 0
+/datum/species/android/spec_life(mob/living/carbon/human/H)
+	H.weakeyes = 1
+	..()
 
 /datum/species/android/handle_vision(mob/living/carbon/human/H)
 	//custom override because darksight APPARENTLY DOESN"T WORK LIKE THIS BY DEFAULT??
@@ -218,6 +254,44 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.see_in_dark = G.darkness_view
 			H.see_invisible = SEE_INVISIBLE_LIVING
 
+/datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	chem.metabolization_rate = 0
+
+	if(chem.current_cycle > 40)
+		H.reagents.remove_reagent(chem.id, chem.volume)
+		return 1
+
+	if(chem.id == "teslium")
+		H.status_flags |= GOTTAGOFAST
+		if(H.health < 50 && H.health > 0)
+			H.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+			H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+			H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.AdjustParalysis(-3)
+		H.AdjustStunned(-3)
+		H.AdjustWeakened(-3)
+		H.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.nutrition -= 5 * REAGENTS_METABOLISM
+		chem.current_cycle++
+		return 1
+	if(chem.id == "oil")
+		H.adjustFireLoss(-0.4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		chem.current_cycle++
+	if(chem.id == "welding_fuel")
+		H.adjustFireLoss(-0.2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		chem.current_cycle++
+	if (istype(chem, /datum/reagent/consumable)) //paranoia paranoia type casting is coming to get me
+		var/datum/reagent/consumable/food = chem
+		if (food.nutriment_factor)
+			food.nutriment_factor = initial(food.nutriment_factor) * 0.2
+			if (world.time - last_eat_message > STATUS_MESSAGE_COOLDOWN)
+				H << "<span class='info'>NOTICE: Digestive subroutines are inefficient. Seek sustenance via power-cell CONSUME induction.</span>"
+				last_eat_message = world.time
+		return 0
+
+/datum/species/android/spawn_gibs(mob/living/carbon/human/H)
+	robogibs(H.loc, H.viruses)
+
 /datum/species/android/fly
 	// androids turned into fly-like abominations in teleporter accidents.
 	name = "Flyternis"
@@ -225,13 +299,13 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	default_color = "FFFFFF"
-	specflags = list(NODISMEMBER)
+	specflags = list(RADIMMUNE,CONSUMEPOWER,EASYIMPLANTS)
 	roundstart = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 
 /datum/species/android/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -297,7 +371,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Phytosian"
 	id = "plant"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR)
+	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE)
 	attack_verb = "slice"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -305,7 +379,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	heatmod = 1.5
 	coldmod = 1.5
 	roundstart = 1
+	speedmod = 0.33
+	damage_immunities = list()
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
+	var/light_heal_multiplier = 1
+	var/dark_damage_multiplier = 1
+	var/last_light_level = 0
+	var/last_light_message = -STATUS_MESSAGE_COOLDOWN
+	var/last_plantbgone_message = -STATUS_MESSAGE_COOLDOWN
+
 
 /datum/species/plant/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='info'><b>You are a Phytosian.</b> Born on the core-worlds of G-D52, you are a distant relative of a vestige of humanity long discarded. Symbiotic plant-cells suffuse your skin and provide a protective layer that keeps you alive, and affords you regeneration unmatched by any other race.</span>"
@@ -315,116 +397,261 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		if (prob(5))
+		H.adjustToxLoss(3, 1, DAMAGE_CHEMICAL)
+		H.losebreath += 0.5
+		H.confused = max(H.confused, 1)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		if (world.time - last_plantbgone_message > STATUS_MESSAGE_COOLDOWN)
+			last_plantbgone_message = world.time
 			H << "<span class='warning'>Your skin rustles and wilts! You are dying!</span>"
 		return 1
+	if(chem.id == "saltpetre")
+		H.adjustFireLoss(-2.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 1
+	if(chem.id == "ammonia")
+		H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 1
+	if(chem.id == "robustharvestnutriment")
+		H.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		for(var/V in H.reagents.reagent_list)//slow down the processing of harmful reagents.
+			var/datum/reagent/R = V
+			if(istype(R, /datum/reagent/toxin) || istype(R, /datum/reagent/drug))
+				R.metabolization_rate = initial(R.metabolization_rate) * 0.5
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 1
+	if(chem.id == "left4zednutriment")
+		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		if(prob(10))
+			if(prob(95))
+				randmutb(H)
+			else
+				randmutg(H)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 1
+	if(chem.id == "eznutriment")
+		H.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustOxyLoss(-4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		if(H.health < -50)
+			H.adjustOxyLoss(-HUMAN_CRIT_MAX_OXYLOSS, 1, DAMAGE_CHEMICAL)
+		if(chem.volume >= 15 && !is_type_in_list(chem, H.reagents.addiction_list))
+			var/datum/reagent/new_reagent = new chem.type()
+			H.reagents.addiction_list.Add(new_reagent)
+		for(var/datum/reagent/addicted_reagent in H.reagents.addiction_list)
+			if(istype(chem, addicted_reagent))
+				addicted_reagent.addiction_stage = -15
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 1
+	if(chem.id == "diethylamine")
+		if(chem.overdosed)
+			return 0
+		if(chem.volume > 20)
+			chem.overdosed = 1
+			chem.overdose_start(H)
+			return 0
+		H.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustOxyLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 1
+	if(chem.id == "sugar")
+		if(chem.overdosed)
+			return 0
+		if(chem.volume > 40)
+			chem.overdosed = 1
+			chem.overdose_start(H)
+			return 0
+		light_heal_multiplier = 2
+		dark_damage_multiplier = 3
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		//removal is handled in /datum/reagent/sugar/on_mob_delete()
+		chem.current_cycle++
+		return 1
+	if(istype(chem, /datum/reagent/consumable/ethanol)) //istype so all alcohols work
+		var/datum/reagent/consumable/ethanol/ethanol = chem
+		H.adjustBrainLoss(2, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(0.4, 1, DAMAGE_CHEMICAL)
+		H.confused = max(H.confused, 1)
+		if(ethanol.boozepwr > 2 && chem.volume > 30)
+			if(chem.current_cycle > 50)
+				H.sleeping += 3
+			H.adjustToxLoss(4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
+		chem.current_cycle++
+		return 0 // still get all the normal effects.
+
 
 /datum/species/plant/on_hit(proj_type, mob/living/carbon/human/H)
 	switch(proj_type)
 		if(/obj/item/projectile/energy/floramut)
-			if(prob(15))
-				H.adjustToxLoss(5)
-				H.Weaken(5)
-				H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
-				if(prob(80))
-					randmutb(H)
-				else
-					randmutg(H)
+			H.rad_act(rand(20, 30))
+			H.adjustFireLoss(5, 1, DAMAGE_CHEMICAL)
+			H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
+			if(prob(80))
+				randmutb(H)
+				H.domutcheck()
 			else
-				H.adjustFireLoss(rand(5,15))
-				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
+				randmutg(H)
+				H.domutcheck()
+
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
 
 /datum/species/plant/spec_life(mob/living/carbon/human/H)
+	var/light_level = 0
+	var/light_msg //for sending "low light!" messages to the player.
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		var/area/A = H.loc.loc
 		if(A.murders_plants == 1)
 			if (H.mind)
 				if (H.mind.special_role == "thrall")
-					//thralled phytosians have their natural regeneration massively stunted, but their weakness to darkness removed
 					if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-						H.adjustToxLoss(-0.1)
-						H.adjustOxyLoss(-0.1)
-						H.heal_overall_damage(0.2, 0.2)
-						return
+						for(var/V in ticker.mode.shadows)
+							var/datum/mind/sling_mind = V
+							if(sling_mind.current && (sling_mind.current in view(3, H)) )
+								light_level = -2
+								light_msg = "<span class='warning'>Being in the presence of one of your masters revitalizes you.</span>"
+								H.adjustToxLoss(-1, 1)
+								H.adjustOxyLoss(-0.5, 1)
+								H.heal_overall_damage(1.5, 1.5)
+								break
+					return
 
 			if (T.lighting_lumcount)
 				switch (T.lighting_lumcount)
 					if (0.1 to 3)
 						//very low light
+						light_level = 1
+						light_msg = "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
 						H.nutrition -= T.lighting_lumcount/1.5
-						if (prob(10))
-							H << "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
-						H.adjustOxyLoss(3)
+						H.adjustOxyLoss(3 * dark_damage_multiplier, 1)
 					if (3.1 to 6)
 						//low light
+						light_level = 2
+						light_msg = "<span class='warning'>The ambient light levels are too low. Your breath is coming more slowly as your insides struggle to keep up on their own.</span>"
 						H.nutrition -= T.lighting_lumcount/2
-						if (prob(3))
-							H << "<span class='warning'>The ambient light levels are too low. Your breath is coming more slowly as your insides struggle to keep up on their own.</span>"
-							H.adjustOxyLoss(6)
+						H.adjustOxyLoss(6 * dark_damage_multiplier, 1)
 					if (6.1 to 10)
 						//medium, average, doing nothing for now
+						light_level = 3
 						H.nutrition += T.lighting_lumcount/10
 					if (10.1 to 22)
 						//high light, regen here
+						light_level = 4
 						H.nutrition += T.lighting_lumcount/6
 						if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-							H.adjustToxLoss(-0.5)
-							H.adjustOxyLoss(-0.5)
-							H.heal_overall_damage(1, 1)
+							H.adjustToxLoss(-0.5 * light_heal_multiplier, 1)
+							H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
+							H.heal_overall_damage(1 * light_heal_multiplier, 1 * light_heal_multiplier)
 					if (22.1 to INFINITY)
 						//super high light
+						light_level = 5
 						H.nutrition += T.lighting_lumcount/4
 						if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-							H.adjustToxLoss(-1)
-							H.adjustOxyLoss(-0.5)
-							H.heal_overall_damage(1.5, 1.5)
+							H.adjustToxLoss(-1 * light_heal_multiplier, 1)
+							H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
+							H.heal_overall_damage(1.5 * light_heal_multiplier, 1.5 * light_heal_multiplier)
 			else if(T.loc.luminosity == 1 || A.lighting_use_dynamic == 0)
+				light_level = 6
 				H.nutrition += 1.4
 				if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-					H.adjustToxLoss(-1)
-					H.adjustOxyLoss(-0.5)
-					H.heal_overall_damage(1.5, 1.5)
+					H.adjustToxLoss(-1 * light_heal_multiplier, 1)
+					H.adjustOxyLoss(-0.5* light_heal_multiplier, 1)
+					H.heal_overall_damage(1.5* light_heal_multiplier, 1.5* light_heal_multiplier)
 			else
 				//no light, this is baaaaaad
+				light_level = 0
+				light_msg = "<span class='userdanger'>Darkness! Your insides churn and your skin screams in pain!</span>"
 				H.nutrition -= 3
-				if (prob(8))
-					H << "<span class='userdanger'>Darkness! Your insides churn and your skin screams in pain!</span>"
-				H.adjustOxyLoss(3)
-				H.adjustToxLoss(1)
+				H.adjustOxyLoss(3 * dark_damage_multiplier, 1)
+				H.adjustToxLoss(1 * dark_damage_multiplier, 1)
 	else
-		if(H.loc != /obj/mecha)
+		if(!istype(H.loc, /obj/mecha))
 			//inside a container or something else, inflict low-level light degen
+			light_level = -1
+			light_msg = "<span class='warning'>There's not enough light reaching you in here. You start to feel very claustrophobic as your energy begins to drain away.</span>"
 			H.nutrition -= 1.5
-			if (prob(3))
-				H << "<span class='warning'>There's not enough light reaching you in here. You start to feel very claustrophobic as your energy begins to drain away.</span>"
-				H.adjustOxyLoss(9)
-				H.adjustToxLoss(3)
+			H.adjustOxyLoss(9 * dark_damage_multiplier, 1)
+			H.adjustToxLoss(3 * dark_damage_multiplier, 1)
+
+	if(light_level != last_light_level)
+		last_light_level = light_level
+		if(light_msg)
+			last_light_message = world.time
+			H << light_msg
+	else
+		if(world.time - last_light_message > STATUS_MESSAGE_COOLDOWN)
+			if(light_msg)
+				last_light_message = world.time
+				H << light_msg
 
 	if(H.nutrition > NUTRITION_LEVEL_FULL)
 		H.nutrition = NUTRITION_LEVEL_FULL
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-			if (prob(5))
+			if(light_level != last_light_level)
+				last_light_level = light_level
+				last_light_message = -STATUS_MESSAGE_COOLDOWN
 				H << "<span class='userdanger'>Your internal stores of light are depleted. Find a source to replenish your nourishment at once!</span>"
 			H.take_overall_damage(2,0)
+
+/datum/species/plant/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	..()
+	if(!environment)
+		return
+	if(H.bodytemperature < 150 || H.bodytemperature > 400)
+		heal_immunities = list(DAMAGE_CHEMICAL, DAMAGE_PHYSICAL)
+	else
+		heal_immunities = initial(heal_immunities)
+
+/datum/species/plant/handle_flash(mob/living/carbon/human/H, intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	H.adjustFireLoss(-5, 1)
+	H.adjustBruteLoss(-5, 1)
+	H.adjustCloneLoss(-5, 1)
+	H.adjustOxyLoss(-5, 1)
+	H.adjustToxLoss(-5, 1)
+	return 0
+
+/datum/species/plant/handle_inherent_channels(mob/living/carbon/human/H, message, message_mode)
+	if(H.stat)
+		return
+	if(message_mode == MODE_PHEROMONES)
+		for(var/mob/living/Hearer in get_hearers_in_view(7, H))
+			var/mob/living/carbon/human/human = Hearer
+			if(istype(human) && istype(human.dna.species, /datum/species/plant) )
+				human << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
+			else
+				if(get_dist(H, Hearer) <= 1)
+					Hearer.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
+				if(istype(Hearer, /mob/living/carbon) && Hearer.stat)
+					Hearer << "<span class='notice'>The room smells like leaves.</span>"
+		return 1
 
 /datum/species/plant/fly
 	// Phytosian turned into fly-like abominations in teleporter accidents.
 	name = "Flytosian"
 	id = "flytosian"
-	specflags = list()
+	specflags = list(THRALLAPPTITUDE)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	roundstart = 0
-	var/last_eat_message = -EATING_MESSAGE_COOLDOWN //I am here because flies
+	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
 	default_color = "000000"
 
@@ -433,7 +660,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/plant/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -449,7 +676,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()
 
-#undef EATING_MESSAGE_COOLDOWN
 /*
  PODPEOPLE
 */
@@ -488,7 +714,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -775,7 +1001,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -1295,3 +1521,5 @@ SYNDICATE BLACK OPS
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+
+#undef STATUS_MESSAGE_COOLDOWN

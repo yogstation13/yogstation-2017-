@@ -916,6 +916,7 @@
 		user << "<span class='warning'><b>As you attempt to commune with the others, an agonizing spike of pain drives itself into your head!</b></span>"
 		user.apply_damage(10, BRUTE, "head")
 		return
+	cooldownCheck(user)
 	var/text = stripped_input(user, "What do you want to say your masters and fellow thralls?.", "Lesser Commune", "")
 	if(!text)
 		return
@@ -927,6 +928,13 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [text]"
 	log_say("[user.real_name]/[user.key] : [text]")
+
+/obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/proc/cooldownCheck(mob/living/carbon/human/user)
+	if(istype(user) && (user.dna.species.specflags & THRALLAPPTITUDE))
+		charge_max = 0
+		charge_counter = 0
+	else
+		charge_max = initial(charge_max)
 
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //

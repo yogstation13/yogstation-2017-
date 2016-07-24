@@ -53,6 +53,8 @@
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
+		if(dna.species.specflags & CONSUMEPOWER)
+			nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))

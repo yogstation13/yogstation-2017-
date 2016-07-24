@@ -852,6 +852,15 @@
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
 
+/datum/reagent/diethylamine/overdose_start(mob/living/M) //only for plant people, no one else will overdose.
+	..()
+
+/datum/reagent/diethylamine/overdose_process(mob/living/M)
+	var/mob/living/carbon/C = M
+	if(istype(C))
+		C.adjustToxLoss(5, 1, DAMAGE_CHEMICAL)
+		C.adjustBrainLoss(2, 1, DAMAGE_CHEMICAL)
+
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
 	id = "co2"
@@ -952,6 +961,13 @@
 	description = "Cheap and extremely common type of plant nutriment."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 10
+
+/datum/reagent/plantnutriment/eznutriment/addiction_act_stage4(mob/M)//only for plant people.
+	..()
+	var/mob/living/L = M
+	if(istype(L))
+		L.adjustOxyLoss(2, 1, DAMAGE_CHEMICAL)
+	M.losebreath += 0.5
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"

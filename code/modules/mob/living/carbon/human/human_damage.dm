@@ -49,10 +49,17 @@
 		take_overall_damage(0, amount, application)
 	else
 		heal_overall_damage(0, -amount, application)
-/*
+
 /mob/living/carbon/human/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
+	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		if(amount > 0)
+			if(application in dna.species.damage_immunities)
+				return
+		else
+			if(application in dna.species.heal_immunities)
+				return
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
@@ -60,8 +67,14 @@
 /mob/living/carbon/human/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
-	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
-		amount *= dna.species.toxmod
+	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		if(amount > 0)
+			if(application in dna.species.damage_immunities)
+				return 0
+			amount *= dna.species.toxmod
+		else
+			if(application in dna.species.heal_immunities)
+				return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
@@ -70,8 +83,14 @@
 /mob/living/carbon/human/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
-	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
-		amount *= dna.species.clonemod
+	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		if(amount > 0)
+			if(application in dna.species.damage_immunities)
+				return 0
+			amount *= dna.species.clonemod
+		else
+			if(application in dna.species.heal_immunities)
+				return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
@@ -80,20 +99,32 @@
 /mob/living/carbon/human/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
-	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
-		amount *= dna.species.brainmod
+	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		if(amount > 0)
+			if(application in dna.species.damage_immunities)
+				return 0
+			amount *= dna.species.brainmod
+		else
+			if(application in dna.species.heal_immunities)
+				return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)
 		return 0
-	if(amount > 0 && dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
-		amount *= dna.species.staminamod
+	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+		if(amount > 0)
+			if(application in dna.species.damage_immunities)
+				return 0
+			amount *= dna.species.staminamod
+		else
+			if(application in dna.species.heal_immunities)
+				return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
 		update_stamina()
-*/
+
 /mob/living/carbon/human/proc/hat_fall_prob()
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head
