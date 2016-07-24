@@ -156,7 +156,7 @@
 
 	check_spooky()//clean out/refresh the list
 	if(spooky_scaries.len >= max_spookies && !unlimited)
-		user << "<span class='warning'>This artifact can only affect [max_spookies] at a time!</span>"
+		user << "<span class='warning'>This artifact can only affect [max_spookies] thralls at a time!</span>"
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
@@ -202,7 +202,7 @@
 	max_spookies = 1
 
 
-/obj/item/device/necromantic_stone/proc/equip_roman_skeleton_lesser(mob/living/carbon/human/H)
+/obj/item/device/necromantic_stone/lesser/equip_roman_skeleton/(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.unEquip(I)
 
