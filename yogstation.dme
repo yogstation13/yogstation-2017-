@@ -141,6 +141,7 @@
 #include "code\controllers\subsystem\fastprocess.dm"
 #include "code\controllers\subsystem\garbage.dm"
 #include "code\controllers\subsystem\icon_smooth.dm"
+#include "code\controllers\subsystem\jexp.dm"
 #include "code\controllers\subsystem\jobs.dm"
 #include "code\controllers\subsystem\lighting.dm"
 #include "code\controllers\subsystem\machines.dm"

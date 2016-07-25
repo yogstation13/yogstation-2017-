@@ -20,7 +20,7 @@ Head of Security
 	req_admin_notify = 1
 	minimal_player_age = 17
 	whitelisted = 1
-	head = TRUE
+	jexp_locked = TRUE
 
 	outfit = /datum/outfit/job/hos
 
@@ -81,7 +81,7 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
-	head = TRUE
+	jexp_locked = TRUE
 
 	outfit = /datum/outfit/job/warden
 
@@ -191,7 +191,7 @@ Security Officer
 	supervisors = "the head of security, and the head of your assigned department (if applicable)"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
-	head = TRUE
+	jexp_locked = TRUE
 
 	outfit = /datum/outfit/job/security
 
@@ -333,7 +333,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
 /*
 		SECURITY DEPUTIES
-	Yup, that's the level we're at
+
 
 */
 
@@ -348,7 +348,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	spawn_positions = 2
 	supervisors = "the head of security, the warden, and any security officer you come in contact with"
 	selection_color = "#ffeeee"
-	minimal_player_age = 5 // 2 days before you can play as an officer!
+	minimal_player_age = 2
 
 	outfit = /datum/outfit/job/deputy
 
@@ -361,7 +361,6 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	belt = /obj/item/device/pda/security
 	ears = /obj/item/device/radio/headset/headset_sec
 	uniform = /obj/item/clothing/under/rank/security/deputy
-	//head = /obj/item/clothing/head/deputy
 	shoes = /obj/item/clothing/shoes/jackboots
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses

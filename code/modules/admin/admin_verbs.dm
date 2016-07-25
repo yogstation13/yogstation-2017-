@@ -26,7 +26,6 @@ var/list/admin_verbs_default = list(
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
 	/client/proc/stop_sounds,
-	/client/proc/get_jexp,
 	/client/proc/reload_jexp
 	)
 var/list/admin_verbs_admin = list(
@@ -88,8 +87,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_restart_vote,	/* Moderator tool for toggling restart vote */
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
-	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/revoke_jexp,
+	/datum/admins/proc/toggle_ticket_counter_visibility	/* toggles all players being able to see tickets remaining */
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -171,8 +169,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/create_outfits,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
-	/client/proc/map_template_upload,
-	/client/proc/reload_jexp_exemption
+	/client/proc/map_template_upload
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -929,45 +926,6 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[src] revived [revive_count] mobs.")
 	log_admin("[src] revived [revive_count] mobs.")
 
-
-/client/proc/revoke_jexp(mob/M as mob)
-	set category = "Admin"
-	set name = "Remove JEXP"
-	set desc = "Allows you to toggle whether a player will recieve JEXP for the round."
-
-	if(!holder)
-		return
-
-	if(!get_client(M))
-		src << "Error: The mob requires a client"
-		return
-
-	M.client.jexpworthy = !M.client.jexpworthy
-
-	if(!M.client.jexpworthy)
-		M << "<span class ='boldnotice'>An admin has deactivated your JEXP gain for this shift.</span>"
-		log_admin("[src] has toggeled [M]'s JEXP gain off.")
-	else
-		M << "<span class='boldnotice'>An admin has activated your JEXP gain for this shift.</span>"
-		log_admin("[src] has toggeled [M]'s JEXP gain on.")
-
-	message_admins("[src.ckey] has toggeled [M] ([M.ckey])'s JEXP gain for the shift.")
-
-
-/client/proc/reload_jexp_exemption()
-	set name = "Reload JEXP exemption lists"
-	set category = "Debug"
-	set desc = "This will reload the lists which exempts players from needing to play a certain amount of rounds to unlock heads/security."
-
-	if(!holder)
-		return
-
-	load_all_exp_lists()
-	message_admins("[src.ckey] has reloaded JEXP's exemption lists.")
-	log_admin("[src.ckey] has reloaded JEXP's exemption lists.")
-
-
-
 /client/proc/reload_jexp()
 	set name = "Reload JEXP stats"
 	set category = "Debug"
@@ -976,7 +934,7 @@ var/list/admin_verbs_hideable = list(
 	if(!holder)
 		return
 
-	load_all_jexp_values()
+	SSjexp.load_jexp_values()
 	message_admins("[src.ckey] has reloaded JEXP stats.")
 	log_admin("[src.ckey] has reloaded JEXP stats.")
 
@@ -985,48 +943,19 @@ var/list/admin_verbs_hideable = list(
 /client/proc/togglejexp()
 	set name = "Kill JEXP"
 	set category = "Server"
-	set desc = "It was so innocent...so young.... so pure... oh? you're reading this? well... this'll kill the JEXP."
+	set desc = "This will disable JEXP checks, allowing players without cataloged experience to play any role."
 
 	if(!holder)
 		return
 
-	JEXP = !JEXP
+	SSjexp.jexpstatus = !SSjexp.jexpstatus
 
 
-	if(JEXP == TRUE)
-		world << "[src.ckey] has brought the JEXP datum back alive."
+	if(SSjexp.jexpstatus == TRUE)
 		message_admins("[src.ckey] has brought the JEXP datum back alive.")
 		log_admin("[src.ckey] has brought the JEXP datum back alive.")
 		log_game("[src.ckey] has brought the JEXP datum back alive.")
 	else
-		world << "<span class='bold'>[src.ckey] has killed the JEXP datum.</span>"
 		message_admins("ALERT! ALERT! [src.ckey] has taken down the JEXP datum.")
 		log_admin("[src.ckey] has taken down the JEXP datum.</span>")
 		log_game("[src.ckey] has taken down the JEXP datum.</span>")
-
-
-/client/proc/get_jexp()
-	set name = "Get JEXP"
-	set category = "Admin"
-
-	if(!holder)
-		return
-
-	var/list/keys = list() // copied from getkey
-	for(var/mob/M in player_list)
-		keys += M.client
-
-	var/selection = input("Select a character!", "Get JEXP", null, null) as null|anything in sortKey(keys)
-
-	if(!selection)
-		return
-
-
-	var/client/C = selection
-
-
-	src << "<span class='boldnotice'>[C.cachedjexp["hos"]] times as HoS, [C.cachedjexp["deputy"]] times as lawyer, [cachedjexp["warden"]] times as Warden, and [cachedjexp["officer"]] times as a Security Officer.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp["hop"]] times as HoP, [C.cachedjexp["cargot"]] times as a cargo technician, and [C.cachedjexp["qm"]] times as the Quartermaster.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp["cmo"]] times as CMO, [C.cachedjexp["medicald"]] times as a medical doctor, [C.cachedjexp["chem"]] times as a chemist, [C.cachedjexp["viro"]] times as a virologist, [C.cachedjexp["gene"]] times a geneticist, [C.cachedjexp["para"]] times as a paramedic.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp["ce"]] times as CE, [C.cachedjexp["statione"]] times as a station engineer and [C.cachedjexp["atmost"]] times as an atmospheric technician.</span>"
-	src << "<span class='boldnotice'>[C.cachedjexp["rd"]] times as RD, [C.cachedjexp["science"]] times as a scientist, and [C.cachedjexp["robotics"]] times as a roboticist.</span>"

@@ -515,9 +515,6 @@ var/list/preferences_datums = list()
 		if(jobban_isbanned(user, rank))
 			HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
 			continue
-		if(!job.player_exp_enough(user.client))
-			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[INEXPERIENCED\]</font></td></tr>"
-			continue
 		if(!job.player_old_enough(user.client))
 			var/available_in_days = job.available_in_days(user.client)
 			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
@@ -568,16 +565,24 @@ var/list/preferences_datums = list()
 		else if(GetJobDepartment(job, 4) & job.flag)
 			prefLevelLabel = "Low"
 			prefLevelColor = "orange"
-			prefUpperLevel = 3
+			if(job.player_exp_enough(user.client))
+				prefUpperLevel = 3
+			else
+				prefUpperLevel = 5
 			prefLowerLevel = 5
+
 		else
 			prefLevelLabel = "NEVER"
 			prefLevelColor = "red"
 			prefUpperLevel = 4
+
 			if(job.whitelisted && is_whitelisted(user))
 				prefLowerLevel = 1
 			else
-				prefLowerLevel = 2
+				if(job.player_exp_enough(user.client))
+					prefLowerLevel = 2
+				else
+					prefLowerLevel = 4
 
 		if(job.whitelisted && is_whitelisted(user))
 			prefLevelClass = "special"

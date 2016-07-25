@@ -43,8 +43,6 @@
 	// jexp. presents the last cached values. database is used to count your jexp, not this.
 	var/list/cachedjexp = list()
 
-	var/jexpworthy = TRUE
-
 	var/connection_number = 0
 
 	preload_rsc = PRELOAD_RSC

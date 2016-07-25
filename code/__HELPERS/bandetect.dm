@@ -1,7 +1,8 @@
 #define YOUNG 4
+#define OLD 56 // Roughly two months.
 
 
-/client/proc/join_date_check(y,m,d)
+/client/proc/join_date_check(y,m,d, onNew)
 	var/DBQuery/query = dbcon.NewQuery("SELECT DATEDIFF(Now(),'[y]-[m]-[d]')")
 
 	if(!query.Execute())
@@ -10,16 +11,24 @@
 
 	if(query.NextRow())
 		var/diff = text2num(query.item[1])
-		if(diff < YOUNG)
-			var/msg = "(IP: [address], ID: [computer_id]) is a new BYOND account made on [y]-[m]-[d]."
-			if(diff < 0)
-				msg += " They are also apparently from the future."
-			message_admins("[key_name_admin(src)] [msg]")
+		if(onNew) // if we are using these procs for new clients
+			if(diff < YOUNG)
+				var/msg = "(IP: [address], ID: [computer_id]) is a new BYOND account made on [y]-[m]-[d]."
+				if(diff < 0)
+					msg += " They are also apparently from the future."
+				message_admins("[key_name_admin(src)] [msg]")
+		else
+			if(diff > OLD) // If they are older then "old" then we return FALSE, otherwise we return TRUE
+				return FALSE
+
 	return TRUE
+
+
 #undef YOUNG
+#undef OLD
 
 
-/client/proc/findJoinDate()
+/client/proc/findJoinDate(newclient = TRUE)
 	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
 	if(!http)
 		world.log << "Failed to connect to byond age check for [src.ckey]"
@@ -33,4 +42,4 @@
 		var/y = R.group[1]
 		var/m = R.group[2]
 		var/d = R.group[3]
-		return join_date_check(y,m,d)
+		return join_date_check(y,m,d, onNew = newclient)

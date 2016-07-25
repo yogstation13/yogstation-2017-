@@ -45,7 +45,7 @@
 	var/outfit = null
 
 	// Whether these roles require you to play other jobs to earn.
-	var/head
+	var/jexp_locked
 
 //Only override this proc
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
@@ -136,68 +136,25 @@
 	return 0
 
 /datum/job/proc/player_exp_enough(client/C)
-	if(!head)
-		return 1
 
-	if(check_if_expempted(C, title))
-		return 1
 
-	if(!JEXP)
+//	if(!SSjexp.jexpstatus)
+//		return 1
+
+	if(!jexp_locked)
 		return 1
 
 	if(!dbcon.IsConnected())
-		return 0
+		return 1
 
-	var/ckeygained = sanitizeSQL(get_ckey(C))
-	var/DBQuery/query_jexp = dbcon.NewQuery("SELECT * FROM [format_table_name("jobreq")] WHERE `ckey` = '[ckeygained]'")
-	if(!query_jexp.Execute())
-		return
-
-	while(query_jexp.NextRow()) // this next part is VERY CRUCICAL and the database NEEDS TO FOLLOW THIS ORDER.
-		var/hos = text2num(query_jexp.item[2])
-		var/cmo = text2num(query_jexp.item[3])
-		var/rd = text2num(query_jexp.item[4])
-		var/hop = text2num(query_jexp.item[5])
-		var/ce = text2num(query_jexp.item[6])
-		var/warden = text2num(query_jexp.item[7])
-		var/securityo = text2num(query_jexp.item[8])
-		var/deputy = text2num(query_jexp.item[9])
-		var/scientist = text2num(query_jexp.item[10])
-		var/robo = text2num(query_jexp.item[11])
-		var/cargotech = text2num(query_jexp.item[12])
-		var/quarterm = text2num(query_jexp.item[13])
-		var/medicald = text2num(query_jexp.item[14])
-		var/chemist = text2num(query_jexp.item[15])
-		var/viro = text2num(query_jexp.item[16])
-		var/geneticist = text2num(query_jexp.item[17])
-		var/paramed = text2num(query_jexp.item[18])
-		var/statione = text2num(query_jexp.item[19])
-		var/atmotech = text2num(query_jexp.item[20])
+	if(!C.findJoinDate(newclient = FALSE)) // if your byond account is older then two months, you're exempted from this
+		return 1
 
 		if(title == "Head of Personnel")
-			if(quarterm < config.jexpvalues["requirement_cargo"])
+			if(C.cachedjexp["Quartermaster"] < config.jexpvalues["cargo"])
 				return 0
 
-			if(cargotech < config.jexpvalues["requirement_cargo"])
-				return 0
-
-			else
-				return 1
-
-		if(title == "Captain")
-			if(hos < config.jexpvalues["requirement_command"])
-				return 0
-
-			if(cmo < config.jexpvalues["requirement_command"])
-				return 0
-
-			if(rd < config.jexpvalues["requirement_command"])
-				return 0
-
-			if(hop < config.jexpvalues["requirement_command"])
-				return 0
-
-			if(ce < config.jexpvalues["requirement_command"])
+			if(C.cachedjexp["Cargo Technician"] < config.jexpvalues["cargo"])
 				return 0
 
 			else
@@ -205,10 +162,10 @@
 
 
 		if(title == "Head of Security")
-			if(warden < config.jexpvalues["requirement_hos_one"])
+			if(C.cachedjexp["Warden"] < config.jexpvalues["hos"])
 				return 0
 
-			if(securityo < config.jexpvalues["requirement_hos_two"])
+			if(C.cachedjexp["Security Officer"] < config.jexpvalues["hos"])
 				return 0
 
 			else
@@ -216,19 +173,14 @@
 
 
 		if(title == "Chief Medical Officer")
-			if(medicald < config.jexpvalues["requirement_medical"])
+			if(C.cachedjexp["Medical Doctor"] < config.jexpvalues["medical"])
 				return 0
 
-			if(chemist < config.jexpvalues["requirement_medical"])
+			if(C.cachedjexp["Chemist"] < config.jexpvalues["medical"])
 				return 0
 
-			if(viro < config.jexpvalues["requirement_medical"])
-				return 0
 
-			if(geneticist < config.jexpvalues["requirement_medical"])
-				return 0
-
-			if(paramed < config.jexpvalues["requirement_medical"])
+			if(C.cachedjexp["Geneticist"] < config.jexpvalues["medical"])
 				return 0
 
 			else
@@ -236,10 +188,10 @@
 
 
 		if(title == "Research Director")
-			if(scientist < config.jexpvalues["requirement_science"])
+			if(C.cachedjexp["Scientist"] < config.jexpvalues["science"])
 				return 0
 
-			if(robo < config.jexpvalues["requirement_science"])
+			if(C.cachedjexp["Roboticist"] < config.jexpvalues["science"])
 				return 0
 
 			else
@@ -247,10 +199,10 @@
 
 
 		if(title == "Chief Engineer")
-			if(statione < config.jexpvalues["requirement_engineering"])
+			if(C.cachedjexp["Station Engineer"] < config.jexpvalues["engineering"])
 				return 0
 
-			if(atmotech < config.jexpvalues["requirement_engineering"])
+			if(C.cachedjexp["Atmospheric Technician"] < config.jexpvalues["engineering"])
 				return 0
 
 			else
@@ -258,7 +210,7 @@
 
 
 		if(title == "Security Officer")
-			if(deputy < config.jexpvalues["requirement_officer"])
+			if(C.cachedjexp["Security Deputy"] < config.jexpvalues["officer"])
 				return 0
 
 			else
@@ -266,7 +218,7 @@
 
 
 		if(title == "Warden")
-			if(securityo < config.jexpvalues["requirement_warden"])
+			if(C.cachedjexp["Security Officer"] < config.jexpvalues["warden"])
 				return 0
 
 			else

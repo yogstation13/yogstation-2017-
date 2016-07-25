@@ -14,7 +14,7 @@ Chief Engineer
 	req_admin_notify = 1
 	minimal_player_age = 15
 	whitelisted = 1
-	head = TRUE
+	jexp_locked = TRUE
 
 	outfit = /datum/outfit/job/ce
 
