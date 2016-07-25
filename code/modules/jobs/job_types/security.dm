@@ -364,3 +364,14 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
  	box = /obj/item/weapon/storage/box/security
 
  	var/tie = /obj/item/clothing/tie/armband/deputy
+
+/datum/outfit/job/deputy/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
+	L.imp_in = H
+	L.implanted = 1
+	H.sec_hud_set_implants()
