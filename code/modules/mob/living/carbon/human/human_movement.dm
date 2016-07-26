@@ -34,6 +34,8 @@
 				if(!has_gravity(loc))
 					return
 				var/obj/item/clothing/shoes/S = shoes
+				if(S.flags & ABSTRACT)
+					return
 
 				//Bloody footprints
 				var/turf/T = get_turf(src)

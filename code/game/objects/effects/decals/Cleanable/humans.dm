@@ -178,8 +178,6 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			if(S.flags & ABSTRACT)
-				break
 			. += "some <B>[initial(S.name)]</B> \icon[S]\n"
 
 	user << .
