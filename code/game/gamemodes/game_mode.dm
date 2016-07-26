@@ -289,10 +289,10 @@
 	for(var/mob/M in player_list)
 		if(M.client)
 			clients++
+			M.client.gain_jexp(M, M.job)
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					M.client.gain_jexp(M, M.job)
 					if(M.z == 2)
 						escaped_humans++
 			if(!M.stat)

@@ -19,20 +19,12 @@
 	- The check works by looking inside of the database at an SQL table, and extracting the data of what is believed to be the amount of times a person has played a role
 	- If that role meets up to the specific expectations, then it'll pass. Otherwise, it will fail and that job will not be avaliable to them.
 
-	- Sometimes, the client can be exempted from a certain job. If their name is found on one of the "exemption" lists.
-	- There is an exemption list for each of the roles written above.
-	- There is also an "exempt all" list which is preferablly for testing only.
-
 	After a round ends, data is gained from the client. It will only work if they aren't dead, ghosted, or commit suicide.
 	That data is then sent to the database, to be stored for later use.
 	gain_jexp() is called in /datum/game_mode/declare_completion() inside of game_mode.dm
 
-	JEXP has a datum.
+	JEXP has a subsystem
 	It stores whether it's alive and the jobs which are recorded into it's DB table
-
-
-
-
 */
 
 /client/proc/gain_jexp(mob/M)
@@ -62,7 +54,7 @@
 		newcount = text2num(query_jexp.item[1])
 
 	if(M)
-		if(!M.key || !M.client || (M.client.is_afk(INACTIVITY_KICK)))
+		if(M.client.is_afk(INACTIVITY_KICK))
 			return
 
 	newcount++
