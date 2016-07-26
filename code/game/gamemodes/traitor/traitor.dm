@@ -10,7 +10,7 @@
 	config_tag = "traitor"
 	antag_flag = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer", "Warden", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -60,10 +60,11 @@
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		forge_traitor_objectives(traitor)
-		spawn(rand(10,100))
-			finalize_traitor(traitor)
-			greet_traitor(traitor)
+		if(!istype(traitor.current,/mob/living/silicon)) //Don't finalize objectives for silicons, that's handled in proc/handle_AI_Traitors()
+			forge_traitor_objectives(traitor)
+			spawn(rand(10,100))
+				finalize_traitor(traitor)
+				greet_traitor(traitor)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors

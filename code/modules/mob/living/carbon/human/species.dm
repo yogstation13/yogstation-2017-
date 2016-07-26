@@ -967,6 +967,9 @@
 				if(!leg_amount)
 					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
+			if(H.status_flags & SLOWDOWN) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
+				. += 3
+
 
 			. += speedmod
 
@@ -975,7 +978,8 @@
 //////////////////
 
 /datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
-
+	if(!istype(M))
+		return
 	CHECK_DNA_AND_SPECIES(M)
 	CHECK_DNA_AND_SPECIES(H)
 

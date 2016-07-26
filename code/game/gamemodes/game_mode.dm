@@ -171,7 +171,7 @@
 /datum/game_mode/proc/handle_AI_Traitors()
 	//Handles setting up traitor AIs seperately, because >tfw no datum antags
 	//Override this to change chances for AI traitors
-	var/prob_naughty_ai = 15
+	var/prob_naughty_ai = 19
 	if(prob(100-prob_naughty_ai)) return //no AI traitor made
 
 	var/mob/living/silicon/ai/A
