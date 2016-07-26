@@ -424,6 +424,9 @@
 				return
 
 		enthralling = 0
+		if(is_shadow_or_thrall(target))
+			user << "<span class='shadowling'><b>[target.real_name]</b> is already a thrall...</span>"
+ 			return
 		user << "<span class='shadowling'>You have enthralled <b>[target.real_name]</b>!</span>"
 		target.visible_message("<span class='big'>[target] looks to have experienced a revelation!</span>", \
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")
