@@ -138,8 +138,8 @@
 /datum/job/proc/player_exp_enough(client/C)
 
 
-//	if(!SSjexp.jexpstatus)
-//		return 1
+	if(!SSjexp.jexpstatus)
+		return 1
 
 	if(!jexp_locked)
 		return 1

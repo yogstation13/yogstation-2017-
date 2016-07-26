@@ -69031,27 +69031,64 @@
 /obj/machinery/computer/communications,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
-"cGb" = (
+"cFM" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_s6";
 	dir = 2
 	},
 /area/shuttle/transport)
-"cGa" = (
-/obj/structure/chair{
-	dir = 1
+"cFN" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
-/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
-"cFZ" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plasteel/shuttle/purple,
+"cFO" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/shuttle/transport)
-"cFY" = (
+"cFP" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"cFQ" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle/transport)
+"cFR" = (
 /turf/open/floor/plasteel/shuttle/purple,
 /turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f10"
+	icon_state = "swall_f9"
 	},
+/area/shuttle/transport)
+"cFS" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFT" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFU" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFV" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/transport)
+"cFW" = (
+/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -69063,62 +69100,25 @@
 	dir = 2
 	},
 /area/shuttle/transport)
-"cFW" = (
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFV" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/transport)
-"cFU" = (
-/obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFT" = (
-/obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFS" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFR" = (
+"cFY" = (
 /turf/open/floor/plasteel/shuttle/purple,
 /turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
+	icon_state = "swall_f10"
 	},
 /area/shuttle/transport)
-"cFQ" = (
+"cFZ" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cGa" = (
+/obj/effect/landmark/start{
+	name = "Security Deputy"
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
+"cGb" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/transport)
-"cFP" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"cFO" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"cFN" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/shuttle/transport)
-"cFM" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_s9";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -101073,7 +101073,7 @@ ahi
 aia
 aiG
 ajq
-akc
+cGa
 akO
 abK
 alN
@@ -102101,7 +102101,7 @@ ahm
 aie
 aiI
 ajt
-akf
+cGa
 akS
 abK
 alR

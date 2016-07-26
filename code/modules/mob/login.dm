@@ -73,5 +73,3 @@
 
 	update_client_colour()
 	client.click_intercept = null
-
-	client.my_jexpstats()

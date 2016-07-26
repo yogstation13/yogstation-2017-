@@ -76,7 +76,7 @@
 //////////////////////////
 
 /client/verb/jexpstats()
-	set name = "Job Stats"
+	set name = "check my jexp stats"
 	set category = "OOC"
 	set desc = "Shows how much progress you have made with obtainable ranks."
 
@@ -92,8 +92,8 @@
 
 	switch(notification)
 		if("Security")
-			src << "<span class='italics'>You have played as a Warden [cachedjexp["Warden"]]/[config.jexpvalues["hos_one"]] times, and as a Security Officer [cachedjexp["Security Officer"]]/[config.jexpvalues["warden"]] times to participate as a Warden.</span>"
-			src << "<span class='italics'>You have played as a Security Deputy [cachedjexp["Security Deputy"]]/[config.jexpvalues["officer"]] times. If this is completed, you could potentially start a shift as a full fledged officer.</span>"
+			src << "<span class='italics'>You have played as a Warden [cachedjexp["Warden"]]/[config.jexpvalues["hos_one"]] times, and as a Security Officer [cachedjexp["Security Officer"]]/[config.jexpvalues["warden"]] times .</span>"
+			src << "<span class='italics'>You have played as a Security Deputy [cachedjexp["Security Deputy"]]/[config.jexpvalues["officer"]] times.</span>"
 		if("Science")
 			src << "<span class='italics'>You have played as a Roboticist [cachedjexp["Roboticist"]]/[config.jexpvalues["science"]] times and as a Scientist [cachedjexp["Scientist"]]/[config.jexpvalues["science"]] times.</span>"
 		if("Engineering")
