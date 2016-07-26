@@ -1,7 +1,7 @@
 ##Yogstation
 
 [![Build Status](https://travis-ci.org/yogstation13/yogstation.svg?branch=master)](https://travis-ci.org/yogstation13/yogstation)
-Copyright (C) Yogstation 2013-2016
+Copyright (C) Yogstation 2013-2016.
 
 **Website:** https://yogstation.net <BR>
 **Code:** https://github.com/yogstation13/yogstation <BR>
