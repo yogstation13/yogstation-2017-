@@ -146,8 +146,8 @@
 	if(!istype(user) || !user.canUseTopic(M,1))
 		return
 
-	if(M.stat != DEAD)
-		user << "<span class='warning'>This artifact can only affect the dead!</span>"
+	if(M.stat == CONSCIOUS)
+		user << "<span class='warning'>Kill or maim the victim first!</span>"
 		return
 
 	if(!M.mind || !M.client)
@@ -211,7 +211,8 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
-	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/combat/bone(H), slot_r_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/bonespear(H), slot_back)
 
 /////////////////////Multiverse Blade////////////////////
 var/global/list/multiverse = list()
