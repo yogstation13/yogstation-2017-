@@ -210,9 +210,9 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 	else
 		return 0
 
-/obj/item/weapon/shield/energy/IsReflect(def_zone, mob/M, mob/D)
-	if(!check_for_positions(D,M))
-		return 0
+/obj/item/weapon/shield/energy/IsReflect(def_zone)
+//	if(!check_for_positions(D,M))
+//		return 0
 	return (active)
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
