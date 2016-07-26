@@ -1,7 +1,7 @@
 /datum/round_event_control/brand_intelligence
 	name = "Brand Intelligence"
 	typepath = /datum/round_event/brand_intelligence
-	weight = 5
+	weight = 3
 	growth = 1
 
 	min_players = 15
