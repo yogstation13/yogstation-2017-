@@ -279,7 +279,7 @@
 		/datum/reagent/consumable/flour = 15
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/dolphincereal
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/dolphinandchips
 	name = "Dolphin and chips"
