@@ -74,7 +74,7 @@ var/datum/subsystem/events/SSevent
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
 			if (E.growth)
-				var/estimatedtime = PREDICTEDHOUR * E.growth
+				var/estimatedtime = PREDICTEDHALFHOUR * E.growth
 				if(world.time > estimatedtime)
 					E.weight++
 					E.growth++
