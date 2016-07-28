@@ -116,7 +116,7 @@
 			M << 'sound/effects/pray.ogg'
 			M << "<h1 class='green'>[message]</span><br>"
 
-	log_game("[user] has sent a genesis member to [M] stating: [message]")
+	log_game("[user] has sent a genesis message to [M] stating: [message]")
 	cooldown = world.time
 	user << "Message delivered."
 
