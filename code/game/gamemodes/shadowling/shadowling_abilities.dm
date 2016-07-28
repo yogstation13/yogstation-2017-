@@ -367,9 +367,6 @@
 			user << "<span class='warning'>You can only enthrall humans!</span>"
 			revert_cast()
 			return
-		if(isloyal(target))
-			user << "<span class='warning'>The target's mind resists you!</span>"
-			return
 		if(enthralling)
 			user << "<span class='warning'>You are already enthralling!</span>"
 			revert_cast()
@@ -424,6 +421,8 @@
 				return
 
 		enthralling = 0
+		if(is_shadow_or_thrall(target))
+			return
 		user << "<span class='shadowling'>You have enthralled <b>[target.real_name]</b>!</span>"
 		target.visible_message("<span class='big'>[target] looks to have experienced a revelation!</span>", \
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")

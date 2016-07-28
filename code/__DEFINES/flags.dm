@@ -88,3 +88,6 @@
 
 // Flags for reagents
 #define REAGENT_NOREACT 1
+
+//Flags for station time.
+#define PRESUMEDHOUR 36000
