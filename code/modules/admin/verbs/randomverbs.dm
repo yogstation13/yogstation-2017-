@@ -29,11 +29,9 @@
 		src << "Only administrators may use this command."
 		return
 
-	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
 
 	if (!msg)
-		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
 		return
 	if(usr)
 		if (usr.client)
@@ -441,7 +439,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
 	ion.start()
-	
+
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)
