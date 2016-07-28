@@ -77,7 +77,7 @@
 	if(!diety)
 		desc = "It is the will of man that tells you to do these things, so you must!"
 		return
-	desc = "It is the plan of [diety] that allows me to tell you what to do, so do it!"
+	desc = "It is the plan of [diety] that gives me the power to tell you what to do, so do it!"
 	message = "Obey [diety]."
 
 
@@ -85,11 +85,12 @@
 	..()
 
 	var/genesis = input(usr, "Enter the message you want to deliever", "")
+
 	if(!genesis)
 		return
 
 	message = genesis
-	user << "<span class='alert'>Genesis will now deliever the message '[genesis]'</span>"
+	user << "<span class='alert'>Genesis will now deliever the message: [genesis]</span>"
 
 
 /obj/item/weapon/nullrod/genesis/attack(mob/M, mob/living/carbon/human/user)
@@ -109,8 +110,8 @@
 
 		if(DISARM || GRAB)
 			M << "<h1 class='red'>[message]</span><br>"
-			if(!M.dizziness)
-				M.Dizzy(500)
+			if(!M.jitteriness)
+				M.Jitter(15)
 
 		if(HELP)
 			M << 'sound/effects/pray.ogg'
