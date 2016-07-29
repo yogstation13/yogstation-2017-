@@ -415,6 +415,9 @@
 							return
 						src << "<span class='alert'>The target is out of range!</span>"
 
+	else
+		..()
+
 /mob/living/carbon/human/CtrlShiftClickOn(atom/A)
 	if(istype(A, /mob/living/carbon/human))
 		if(A == src)
@@ -463,6 +466,9 @@
 								counter++
 							R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access1, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
 							src << "<span class='notice'>Successfully added comment.</span>"
+
+	else
+		..()
 
 /*			FUTURE USE POSSIBLY??
 		if(istype(src.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
