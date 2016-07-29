@@ -178,14 +178,14 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
-	
+
 	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
 		var/datum/admin_rank/localhost_rank = new("!localhost!", R_MAXPERMISSION - 1 - R_NOJOIN)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)
-	
+
 	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -338,7 +338,7 @@ var/next_external_rsc = 0
 	for(var/datum/admin_ticket/T in tickets_list)
 		if(compare_ckey(T.owner_ckey, usr) && !T.resolved)
 			T.add_log(new /datum/ticket_log(T, src, "¤ Disconnected ¤", 1))
-	
+
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -428,6 +428,11 @@ var/next_external_rsc = 0
 	query_getid.Execute()
 	while (query_getid.NextRow())
 		connection_number = text2num(query_getid.item[1])
+
+	// setting up jexp. check jobexp.dm for more information
+	var/DBQuery/jexp_insert = dbcon.NewQuery("INSERT INTO [format_table_name("jobreq")] (ckey) VALUES ('[sql_ckey]') ON DUPLICATE KEY INSERT NOTHING;")
+	jexp_insert.Execute()
+
 
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)
