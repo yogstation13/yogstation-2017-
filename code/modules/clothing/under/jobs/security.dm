@@ -24,7 +24,7 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
-/obj/item/clothing/under/rank/security/deputy
+/obj/item/clothing/under/rank/security/brigofficer
 	name = "brig officer's jumpsuit"
 	desc = "A sleek jumpsuit worn by brig officers."
 	icon_state = "deputy"
