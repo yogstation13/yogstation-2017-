@@ -1868,6 +1868,7 @@
 			message_admins("[src.owner] stopped forcing the rules popup for [key_name(M)].")
 
 	else if(href_list["antag_token_increase"])
+		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
 		var/reason = input("","What reason are you giving an antag token?") as text
@@ -1884,6 +1885,7 @@
 		show_player_panel(M)
 
 	else if(href_list["antag_token_decrease"])
+		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
 		var/reason = input("","What reason are you giving an antag token?") as text
