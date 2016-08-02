@@ -89,7 +89,7 @@
 	if(!genesis)
 		return
 
-	if(length(genesis) > 35)
+	if(length(genesis) > 55)
 		user << "<span class='alert'>That message is too long! Genesis cannot deliever that!</span>"
 		return
 
@@ -98,7 +98,7 @@
 
 
 /obj/item/weapon/nullrod/genesis/attack(mob/M, mob/living/carbon/human/user)
-	if(cooldown > world.time - 15)
+	if(cooldown > world.time - 25)
 		if(user.a_intent == HELP)
 			user << "Genesis is not ready."
 			return
