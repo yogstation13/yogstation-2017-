@@ -69112,6 +69112,9 @@
 "cFZ" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/shuttle/purple,
+"cFZ" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGa" = (
 /obj/structure/chair{
@@ -69119,16 +69122,24 @@
 	},
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
+"cGa" = (
+/obj/structure/chair{
+	dir = 1
 "cGb" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall_s9";
 	dir = 2
 	},
+/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGc" = (
 /obj/effect/landmark/start{
 	name = "Prison Officer"
 	},
+"cGb" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s9";
+	dir = 2
 /turf/open/floor/plasteel{
 	icon_state = "redcorner";
 	dir = 1
@@ -93167,7 +93178,7 @@ bfA
 bgD
 bhZ
 bjt
-bkU
+bjt
 bej
 bnX
 bpH
@@ -109084,7 +109095,7 @@ aHs
 aIM
 aKq
 aLH
-aNB
+aLJ
 aKq
 aPX
 aRt
@@ -109597,7 +109608,7 @@ aFQ
 aHu
 aIO
 aKq
-aLJ
+aLK
 aND
 aKq
 aPZ
