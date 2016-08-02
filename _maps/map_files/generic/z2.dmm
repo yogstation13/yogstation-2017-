@@ -2202,7 +2202,7 @@
 /obj/item/weapon/gun/energy/ionrifle,
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/lasercannon,
-/obj/item/weapon/gun/projectile/minigun,
+/obj/item/weapon/minigunpack,
 /obj/item/weapon/mop{
 	desc = "No one really knows why this is here in the centcom top-Notch weapon facility."
 	},
