@@ -9345,9 +9345,6 @@
 	},
 /area/hallway/primary/fore)
 "aqG" = (
-/obj/effect/landmark/start{
-	name = "Prison Officer"
-	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=EVA";
 	location = "Security"
@@ -31081,13 +31078,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
-/turf/open/floor/plasteel{
-	icon_state = "arrival";
-	dir = 4
+/obj/effect/landmark/start{
+	name = "Prison Officer"
 	},
-/area/quartermaster/office)
+/turf/open/floor/plasteel{
+	icon_state = "redcorner";
+	dir = 1
+	},
+/area/hallway/primary/fore)
 "bkV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
@@ -69112,9 +69110,6 @@
 "cFZ" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/shuttle/purple,
-"cFZ" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGa" = (
 /obj/structure/chair{
@@ -69122,29 +69117,12 @@
 	},
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
-"cGa" = (
-/obj/structure/chair{
-	dir = 1
 "cGb" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall_s9";
 	dir = 2
 	},
-/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
-"cGc" = (
-/obj/effect/landmark/start{
-	name = "Prison Officer"
-	},
-"cGb" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/hallway/primary/fore)
 
 (1,1,1) = {"
 aaa
@@ -98022,7 +98000,7 @@ anP
 aot
 apc
 apy
-apS
+bkU
 aqj
 aqG
 arf
