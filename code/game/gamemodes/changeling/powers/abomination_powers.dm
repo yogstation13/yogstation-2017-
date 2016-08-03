@@ -100,7 +100,7 @@
 	user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
 	user.visible_message("<span class='warning'><b>[user] opens their mouth wide, lifting up [target]!</span>", "<span class='notice'>We prepare to devour [target].</span>")
 
-	if(!do_mob(user, target, 50))
+	if(!do_mob(user, target, 30))
 		user << "<span class='warning'>Our devouring of [target] has been interrupted!</span>"
 		changeling.isabsorbing = 0
 		return
@@ -186,12 +186,11 @@
 						user.mind.spell_list -= spell
 						qdel(spell)
 				return
-			user <<"<span class='notice'>You transform back into a humanoid form, leaving you exhausted!</span>"
+			user <<"<span class='notice'>You transform back into a humanoid form.</span>"
 			var/datum/mutation/human/HM = mutations_list[HULK]
 			if(H.dna && H.dna.mutations)
 				HM.force_lose(H)
 			changeling.reverting = 1
 			changeling.geneticdamage += 10
-			user.Stun(5)
 
 

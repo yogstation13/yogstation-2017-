@@ -64,6 +64,7 @@
 			user.equip_to_slot_or_del(new /obj/item/clothing/head/abomination(user), slot_head)
 			user.equip_to_slot_or_del(new /obj/item/clothing/gloves/abomination(user), slot_gloves)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/muzzle/abomination(user), slot_wear_mask)
+			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/abomination(user), slot_glasses)
 			H.set_species(/datum/species/abomination)
 			changeling.chem_recharge_slowdown = 6
 
@@ -123,9 +124,6 @@
 		changeling.chem_recharge_slowdown = 0
 		var/mob/living/carbon/human/H = user
 		H.set_species(/datum/species/human)
-		H.update_body()
-		H.update_body_parts()
-		H.regenerate_icons()
 		for(var/spell in user.mind.spell_list)
 			if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
 				user.mind.spell_list -= spell
