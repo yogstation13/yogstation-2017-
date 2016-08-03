@@ -39,7 +39,7 @@
 				dat += "<A href='?src=\ref[src];request=1]'>Request Authorization</A><br>"
 	dat += "<a href='?src=\ref[user];mach_close=computer'>Close</a>"
 
-	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 300)
+	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 200)
 	popup.set_content("<center>[dat]</center>")
 	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()

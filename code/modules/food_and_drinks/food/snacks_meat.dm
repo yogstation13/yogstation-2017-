@@ -92,8 +92,8 @@
 	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/faggot
-	name = "meatball"
-	desc = "Come on down to mr. meaties."
+	name = "faggot"
+	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"

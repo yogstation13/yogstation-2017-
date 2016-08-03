@@ -10,7 +10,6 @@
 	oneharvest = 1
 	potency = 20
 	growthstages = 3
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)

@@ -643,7 +643,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/area/mine/eva)
 "bu" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Labor Camp Monitoring";
@@ -1683,9 +1683,8 @@
 	},
 /area/mine/living_quarters)
 "dq" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors)
 "dr" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -1728,11 +1727,13 @@
 	},
 /area/mine/eva)
 "dw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/machinery/suit_storage_unit/mining,
+/turf/open/floor/plasteel/purple/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 5;
+	icon_state = "purple"
 	},
-/area/lavaland/surface/outdoors)
+/area/mine/eva)
 "dx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -1771,9 +1772,12 @@
 	},
 /area/mine/eva)
 "dA" = (
-/obj/machinery/suit_storage_unit/mining,
-/turf/open/floor/plasteel{
-	dir = 5;
+/obj/machinery/light_switch{
+	pixel_x = 27
+	},
+/turf/open/floor/plasteel/brown{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 4;
 	icon_state = "brown"
 	},
 /area/mine/eva)
@@ -2123,19 +2127,35 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/turf/open/floor/plasteel{
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
+/area/mine/living_quarters)
 "eo" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining External Airlock";
-	opacity = 0;
-	req_access_txt = "54"
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Mining Station Starboard Wing APC";
+	pixel_x = -27;
+	pixel_y = 2
 	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/purple/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 8;
+	icon_state = "purple"
 	},
 /area/mine/production)
 "ep" = (
@@ -17708,7 +17728,7 @@ dx
 dH
 dR
 bP
-dI
+dx
 bh
 bh
 bh
@@ -17967,7 +17987,7 @@ dS
 dI
 bU
 eg
-dI
+eo
 dR
 eU
 fe
@@ -18728,7 +18748,7 @@ al
 af
 af
 al
-ds
+ab
 ds
 ds
 ds
@@ -18985,11 +19005,11 @@ al
 al
 al
 al
+ab
 ds
 du
 dy
 br
-dz
 dL
 dU
 ds
@@ -19242,9 +19262,9 @@ al
 al
 al
 ab
+ab
 dt
 dv
-dz
 dz
 dz
 dM
@@ -19499,9 +19519,9 @@ al
 al
 af
 af
+ab
 dt
 dv
-dz
 dz
 dD
 dN
@@ -19756,10 +19776,10 @@ al
 al
 af
 af
+ab
 ds
-dv
-dz
-dz
+dw
+dA
 dE
 dO
 dW
@@ -20013,9 +20033,9 @@ al
 al
 af
 af
-dt
-dv
-dz
+ab
+ds
+ds
 ds
 dt
 dP
@@ -20270,9 +20290,9 @@ al
 al
 af
 af
-dt
-dA
-dz
+ab
+ab
+ab
 ds
 dF
 dQ
@@ -20527,9 +20547,9 @@ al
 al
 al
 af
-ds
-ds
-ds
+af
+ab
+ab
 ds
 dG
 dO

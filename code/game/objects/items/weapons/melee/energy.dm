@@ -30,7 +30,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
 	w_class = 3
 	w_class_on = 5
 	flags = CONDUCT

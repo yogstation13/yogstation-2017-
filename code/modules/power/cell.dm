@@ -98,7 +98,6 @@
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 				var/ischarging = 1
 				spark_system.set_up(5, 0, maybedroid.loc)
-				spark_system.attach(maybedroid)
 				maybedroid.visible_message("[maybedroid] deftly inserts [src] into a slot within their torso. A low hum begins to fill the air.", "<span class='info'>Extracutaneous implants detect viable power source in location: HANDS. Activating CONSUME protocol..</span>")
 				while (ischarging)
 					if (drain > charge)

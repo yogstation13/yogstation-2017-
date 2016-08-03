@@ -18,9 +18,9 @@ var/global/list/datum/stack_recipe/human_recipes = list( \
 	return ..()
 
 /obj/item/stack/sheet/animalhide/generic
-	name = "skin"
-	desc = "A piece of skin."
-	singular_name = "skin piece"
+	name = "generic skin"
+	desc = "A piece of generic skin."
+	singular_name = "generic skin piece"
 	icon_state = "sheet-hide"
 
 /obj/item/stack/sheet/animalhide/corgi

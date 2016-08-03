@@ -37,7 +37,7 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Prison Officer")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 24
 	required_enemies = 4
@@ -82,8 +82,6 @@
 		cultist.special_role = "Cultist"
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
-
-	handle_AI_Traitors()
 
 	return (cultists_to_cult.len>=required_enemies)
 

@@ -204,11 +204,10 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
 		var/obj/item/stack/sheet/animalhide/newskin = new typeofskin
 		newmeat.name = "[sourcename] [newmeat.name]"
-		if(istype(newmeat))
-			newmeat.subjectname = sourcename
-			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
-			if(sourcejob)
-				newmeat.subjectjob = sourcejob
+		newmeat.subjectname = sourcename
+		if(sourcejob)
+			newmeat.subjectjob = sourcejob
+		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
 		src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / meat_produced, 1)) // Transfer all the reagents from the
 		allmeat[i] = newmeat
 		allskin = newskin

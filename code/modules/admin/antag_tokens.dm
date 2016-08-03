@@ -26,8 +26,6 @@
 		NO_RESULT: No result, likely due to the current mob client key not having a row in the player database
 */
 /proc/antag_token_reload_from_db(mob/M)
-	if(!config.use_antag_tokens)
-		return 0
 	var/client/C = get_client(M)
 	if(!C || !istype(C, /client))
 		return BAD_CLIENT
@@ -61,8 +59,6 @@
 		NO_RESULT: No result, likely due to the current mob client key not having a row in the player database
 */
 /proc/antag_token_add(mob/M)
-	if(!config.use_antag_tokens)
-		return 0
 	var/currentTokens = antag_token_reload_from_db(M)
 
 	// If the current value is a negative, then there was a proper error we need to forward
@@ -93,8 +89,6 @@
 		NO_RESULT: No result, likely due to the current mob client key not having a row in the player database
 */
 /proc/antag_token_use(mob/M)
-	if(!config.use_antag_tokens)
-		return 0
 	var/currentTokens = antag_token_reload_from_db(M)
 
 	// If the current value is a negative, then there was a proper error we need to forward
@@ -130,8 +124,6 @@
 		QUERY_OK:
 */
 /proc/antag_token_set(mob/M, var/tokens)
-	if(!config.use_antag_tokens)
-		return NO_DB_CONNECTION
 	var/client/C = get_client(M)
 	if(!C || !istype(C, /client))
 		return BAD_CLIENT

@@ -401,12 +401,3 @@
 
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
-
-/obj/item/weapon/paper/bombcollars
-	name = "Bomb Collar User's Guide"
-	info = "<i>How to activate, apply, and control bomb collars without blowing yourself up.</i><br>\
-			<b>1.</b> Sync the collar to the detonator by hitting the detonator with the collar and giving the collar a unique identifier.<br>\
-			<b>2.</b> Apply the collar to the subject's head.<br>\
-			<b>3.</b> Use the remote detonator to periodically check status of all bomb collars to ensure they have not been removed.<br>\
-			<b>4.</b> If you feel it necessary, detonation of a collar will kill the person wearing it while also destroying the collar.<br>\
-			<i>Do not use bomb collars solely for executions! They are expensive and not easily replacable - use lethal injections instead.</i>"

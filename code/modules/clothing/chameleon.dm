@@ -75,7 +75,7 @@
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
 	chameleon_blacklist += target.type
-	var/list/temp_list = subtypesof(chameleon_type)
+	var/list/temp_list = typesof(chameleon_type)
 	for(var/V in temp_list - (chameleon_blacklist))
 		chameleon_list += V
 
@@ -131,17 +131,10 @@
 		var/obj/item/I = target
 		I.item_state = initial(picked_item.item_state)
 		I.item_color = initial(picked_item.item_color)
-		if(istype(target, /obj/item/clothing))
+		if(istype(I, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
 			CL.flags_cover = initial(PCL.flags_cover)
-			if(istype(target, /obj/item/clothing/under))
-				var/obj/item/clothing/under/UCL = target
-				var/obj/item/clothing/under/PUCL = picked_item
-				UCL.can_adjust = initial(PUCL.can_adjust)
-				if(!UCL.can_adjust && UCL.adjusted)
-					UCL.toggle_jumpsuit_adjust()
-					usr.update_inv_w_uniform()
 	target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/Trigger()
@@ -168,11 +161,6 @@
 	..()
 	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
-	chameleon_action.chameleon_blacklist = list(/obj/item/clothing/under/shadowling,
-		/obj/item/clothing/under/changeling,
-		/obj/item/clothing/under/color/random,
-		/obj/item/clothing/under/golem,
-		/obj/item/clothing/under/predator)
 	chameleon_action.chameleon_name = "Jumpsuit"
 	chameleon_action.initialize_disguises()
 

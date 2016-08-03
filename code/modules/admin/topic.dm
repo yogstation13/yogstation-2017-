@@ -1069,29 +1069,6 @@
 	else if(href_list["addnoteempty"])
 		add_note()
 
-	else if(href_list["noteexport"])
-		var/target_ckey = href_list["noteexport"]
-		var/output = ""
-
-		var/target_sql_ckey = sanitizeSQL(target_ckey)
-		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id, timestamp, notetext, adminckey, last_editor, server FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
-		if(!query_get_notes.Execute())
-			var/err = query_get_notes.ErrorMsg()
-			log_game("SQL ERROR obtaining ckey, notetext, adminckey, last_editor, server from notes table. Error : \[[err]\]\n")
-			return
-
-		while(query_get_notes.NextRow())
-			//var/id = query_get_notes.item[1]
-			var/timestamp = query_get_notes.item[2]
-			var/notetext = query_get_notes.item[3]
-			//var/adminckey = query_get_notes.item[4]
-			//var/last_editor = query_get_notes.item[5]
-			var/server = query_get_notes.item[6]
-			output += "<p style='margin-bottom: 0px;'><b>[timestamp] | [server]</b><br />"
-			output += "<span style='margin-left: 16px; margin-top: 0px;'>[notetext]</span></p>"
-
-		usr << browse(output, "window=noteexport;size=800x650")
-
 	else if(href_list["removenote"])
 		var/note_id = href_list["removenote"]
 		remove_note(note_id)
@@ -1155,7 +1132,7 @@
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
 				feedback_inc("ban_tmp_mins",mins)
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]. If you wish to appeal this ban please use the keyword 'assistantgreytide' to register an account on the forums.</span>"
+					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
 				else
 					M << "<span class='danger'>No ban appeals URL has been set.</span>"
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
@@ -1177,7 +1154,7 @@
 				M << "<span class='boldannounce'><BIG>You have been banned by [usr.client.ckey].\nReason: [reason]</BIG></span>"
 				M << "<span class='danger'>This is a permanent ban.</span>"
 				if(config.banappeals)
-					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]. If you wish to appeal this ban please use the keyword 'assistantgreytide' to register an account on the forums.</span>"
+					M << "<span class='danger'>To try to resolve this matter head to [config.banappeals]</span>"
 				else
 					M << "<span class='danger'>No ban appeals URL has been set.</span>"
 				ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
@@ -1868,7 +1845,6 @@
 			message_admins("[src.owner] stopped forcing the rules popup for [key_name(M)].")
 
 	else if(href_list["antag_token_increase"])
-		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
 		var/reason = input("","What reason are you giving an antag token?") as text
@@ -1885,7 +1861,6 @@
 		show_player_panel(M)
 
 	else if(href_list["antag_token_decrease"])
-		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
 		var/reason = input("","What reason are you giving an antag token?") as text

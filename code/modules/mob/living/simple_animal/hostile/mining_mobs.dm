@@ -57,7 +57,7 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/bullet/dart/basilisk
+	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
@@ -68,8 +68,8 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 13
-	melee_damage_upper = 13
+	melee_damage_lower = 12
+	melee_damage_upper = 12
 	attacktext = "bites into"
 	a_intent = "harm"
 	speak_emote = list("chitters")
@@ -80,14 +80,14 @@
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
-/obj/item/projectile/bullet/dart/basilisk
+/obj/item/projectile/temp/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
-
-/obj/item/projectile/bullet/dart/basilisk/New()
-	..()
-	reagents.add_reagent("bolamine",5)
+	damage = 0
+	damage_type = BURN
+	nodamage = 1
+	flag = "energy"
+	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -991,7 +991,7 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
-	gps = new /obj/item/device/gps/internal/lavaland(src)
+	gps = new /obj/item/device/gps/internal(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)

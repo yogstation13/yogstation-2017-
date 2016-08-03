@@ -17,7 +17,6 @@
 	var/desc = "A company that does not exist."
 	var/list/values = list()
 	var/current_value = 10
-	var/value_cap = 450000
 	var/last_value = 10
 	var/list/products = list()
 
@@ -142,8 +141,6 @@
 				speculation += rand(-4000, 0) / 1000 * speculation
 
 	current_value += (speculation / rand(25000, 50000) + performance / rand(100, 800)) * current_value
-	if(current_value > value_cap)
-		current_value = 450000
 	if (current_value < 5)
 		current_value = 5
 

@@ -34,5 +34,3 @@
 
 	var/list/bodyparts = list() //Gets filled up in the constructor (New() proc in human.dm and monkey.dm)
 	var/remote_view = 0
-
-	var/mob/living/simple_animal/borer/borer //Stores the borer inside someone, if one exists

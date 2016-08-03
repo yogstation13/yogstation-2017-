@@ -23,18 +23,10 @@
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
 
-/obj/item/device/taperecorder/AltClick()
-	eject(usr)
-
-/obj/item/device/taperecorder/CtrlClick()
-	play(usr)
-
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
 	user << "The wire panel is [open_panel ? "opened" : "closed"]."
-	user << "Hold ALT and click on the tape recorder to eject the tape."
-	user << "Hold CTRL and click on the tape recorder to p-p-p-play that shit."
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)

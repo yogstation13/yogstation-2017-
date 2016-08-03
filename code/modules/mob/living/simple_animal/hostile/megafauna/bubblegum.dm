@@ -30,7 +30,7 @@
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
-/obj/item/device/gps/internal/lavaland/bubblegum
+/obj/item/device/gps/internal/bubblegum
 	icon_state = null
 	gpstag = "Bloody Signal"
 	desc = "You're not quite sure how a signal can be bloody."
@@ -73,7 +73,7 @@
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1
-	new/obj/item/device/gps/internal/lavaland/bubblegum(src)
+	new/obj/item/device/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
 	if(charging)

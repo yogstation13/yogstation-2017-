@@ -2,10 +2,8 @@ var/datum/subsystem/mobs/SSmob
 
 /datum/subsystem/mobs
 	name = "Mobs"
-	init_order = 4
-	display_order = 4
-	priority = 100
-	flags = SS_KEEP_TIMING|SS_NO_INIT
+	priority = 4
+	display = 4
 
 	var/list/currentrun = list()
 
@@ -26,8 +24,8 @@ var/datum/subsystem/mobs/SSmob
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/mob/M = currentrun[currentrun.len]
-		currentrun.len--
+		var/mob/M = currentrun[1]
+		currentrun.Cut(1, 2)
 		if(M)
 			M.Life(seconds)
 		else

@@ -16,7 +16,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/secrets,
 	/client/proc/reload_admins,
 	/client/proc/adminwhotoggle,
-	// /client/proc/adminwho,
+	/client/proc/adminwho,
 	/client/proc/donor_ooc_admin,
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
@@ -44,7 +44,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
 	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
 	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
-	/datum/admins/proc/view_admin_log,
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
@@ -136,7 +135,6 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-	/client/proc/fix_air,
 #if SERVERTOOLS
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
@@ -199,7 +197,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/toggle_view_range,
 	/datum/admins/proc/view_txt_log,
 	/datum/admins/proc/view_atk_log,
-	/datum/admins/proc/view_admin_log,
 	/client/proc/cmd_admin_subtle_message,
 	/client/proc/cmd_admin_check_contents,
 	/datum/admins/proc/access_news_network,
@@ -322,7 +319,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/cfps,
+		/client/proc/fps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin

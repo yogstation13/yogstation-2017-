@@ -18,7 +18,6 @@
 	endurance = 50
 	yield = 4
 	potency = 15
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	mutatelist = list(/obj/item/seeds/orange)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
@@ -41,7 +40,6 @@
 	endurance = 50
 	yield = 5
 	potency = 20
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/lime)
@@ -65,7 +63,6 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/cash)
@@ -86,7 +83,6 @@
 	species = "cashtree"
 	plantname = "Money Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	lifespan = 55

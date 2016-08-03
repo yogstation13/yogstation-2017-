@@ -10,13 +10,13 @@ var/list/GPS_list = list()
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
-	var/tracking = FALSE
-	var/channel = "Common"
+	var/tracking = TRUE
 
 /obj/item/device/gps/New()
 	..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
+	overlays += "working"
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -67,15 +67,13 @@ var/list/GPS_list = list()
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag
-			if(channel != G.channel)
-				continue
 			if(G.emped == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else if(G.tracking)
 				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
 			else
 				continue
-	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 350))
+	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 800))
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -93,29 +91,22 @@ var/list/GPS_list = list()
 /obj/item/device/gps/science
 	icon_state = "gps-s"
 	gpstag = "SCI0"
-	channel = "science"
 
 /obj/item/device/gps/engineering
 	icon_state = "gps-e"
 	gpstag = "ENG0"
-	channel = "engine"
 
 /obj/item/device/gps/mining
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
-	channel = "lavaland"
 
 /obj/item/device/gps/internal
 	icon_state = null
 	flags = ABSTRACT
-	tracking = TRUE
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
-
-/obj/item/device/gps/internal/lavaland
-	channel = "lavaland"
 
 /obj/item/device/gps/mining/internal
 	icon_state = "gps-m"

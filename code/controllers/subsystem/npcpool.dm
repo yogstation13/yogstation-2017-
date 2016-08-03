@@ -2,10 +2,8 @@ var/datum/subsystem/npcpool/SSnpc
 
 /datum/subsystem/npcpool
 	name = "NPC Pool"
-	init_order = 17
-	display_order = 6
-	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_NO_TICK_CHECK
-	priority = 25
+	priority = 17
+	display = 6
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()
@@ -120,9 +118,3 @@ var/datum/subsystem/npcpool/SSnpc
 						candidate.eye_color = "yellow"
 						candidate.update_icons()
 			npcCount++
-
-/datum/subsystem/npcpool/Recover()
-	if (istype(SSnpc.botPool_l))
-		botPool_l = SSnpc.botPool_l
-	if (istype(SSnpc.botPool_l_non))
-		botPool_l_non = SSnpc.botPool_l_non

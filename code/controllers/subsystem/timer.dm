@@ -2,21 +2,17 @@ var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer
 	name = "Timer"
-	wait = 2 //SS_TICKER subsystem, so wait is in ticks
-	init_order = 1
-	display_order = 3
-	can_fire = 0 //start disabled
-	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_POST_FIRE_TIMING|SS_NO_INIT
+	wait = 5
+	priority = 1
+	display = 3
 
 	var/list/datum/timedevent/processing
 	var/list/hashes
 
-
 /datum/subsystem/timer/New()
+	NEW_SS_GLOBAL(SStimer)
 	processing = list()
 	hashes = list()
-	NEW_SS_GLOBAL(SStimer)
-
 
 /datum/subsystem/timer/stat_entry(msg)
 	..("P:[processing.len]")
@@ -31,16 +27,10 @@ var/datum/subsystem/timer/SStimer
 		if(event.timeToRun <= world.time)
 			runevent(event)
 			qdel(event)
-		if (MC_TICK_CHECK)
-			return
 
 /datum/subsystem/timer/proc/runevent(datum/timedevent/event)
 	set waitfor = 0
 	call(event.thingToCall, event.procToCall)(arglist(event.argList))
-
-/datum/subsystem/timer/Recover()
-	processing |= SStimer.processing
-	hashes |= SStimer.hashes
 
 /datum/timedevent
 	var/thingToCall
@@ -52,7 +42,8 @@ var/datum/subsystem/timer/SStimer
 	var/static/nextid = 1
 
 /datum/timedevent/New()
-	id = nextid++
+	id = nextid
+	nextid++
 
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
@@ -60,35 +51,29 @@ var/datum/subsystem/timer/SStimer
 	return QDEL_HINT_IWILLGC
 
 /proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
-	if (!thingToCall || !procToCall)
+	if (!SStimer) //can't run timers before the mc has been created
+		return
+	if (!thingToCall || !procToCall || wait <= 0)
 		return
 	if (!SStimer.can_fire)
 		SStimer.can_fire = 1
+		SStimer.next_fire = world.time + SStimer.wait
 
 	var/datum/timedevent/event = new()
 	event.thingToCall = thingToCall
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
-	var/hashlist = args.Copy()
-
-	hashlist[1] = "[thingToCall](\ref[thingToCall])"
 	event.hash = jointext(args, null)
 	if(args.len > 4)
 		event.argList = args.Copy(5)
 
 	// Check for dupes if unique = 1.
 	if(unique)
-		var/datum/timedevent/hash_event = SStimer.hashes[event.hash]
-		if(hash_event)
-			return hash_event.id
-	SStimer.hashes[event.hash] = event
-	if (wait <= 0)
-		SStimer.runevent(event)
-		SStimer.hashes -= event.hash
-		return
+		if(event.hash in SStimer.hashes)
+			return
 	// If we are unique (or we're not checking that), add the timer and return the id.
 	SStimer.processing += event
-
+	SStimer.hashes += event.hash
 	return event.id
 
 /proc/deltimer(id)

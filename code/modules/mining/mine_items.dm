@@ -370,12 +370,6 @@
 	anchored = 1
 	density = 1
 	pixel_y = -32
-	channel = "lavaland"
-
-/obj/item/device/gps/computer/New()
-	..()
-	visible_message("[src] activates their tracking mechanism.")
-	tracking = TRUE
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -399,9 +393,10 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
+	icon_state = "bedcomputer"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
-	icon_on = "smartfridge"
-	icon_off = "smartfridge"
+	icon_on = "donkvendor"
+	icon_off = "donkvendor"
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4

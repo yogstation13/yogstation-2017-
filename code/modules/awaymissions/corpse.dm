@@ -386,7 +386,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
-	id_access = "Space Bartender"
+	id_access = "Bartender"
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE

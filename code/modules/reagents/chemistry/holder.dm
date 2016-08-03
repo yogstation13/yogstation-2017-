@@ -431,7 +431,6 @@ var/const/INJECT = 5 //injection
 			reagent_list -= R
 			update_total()
 			my_atom.on_reagent_change()
-			check_slowdown(my_atom)
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
@@ -443,14 +442,6 @@ var/const/INJECT = 5 //injection
 			return 1
 		else
 			M.status_flags &= ~IGNORESLOWDOWN
-
-/datum/reagents/proc/check_slowdown(mob/M)  //SLOWDOWN is halfway in between GOTTAGOFAST and GOTTAGOREALLYFAST.  IGNORESLOWDOWN cancels it.
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("bolamine"))
-			return 1
-		else
-			M.status_flags &= ~SLOWDOWN
-
 
 /datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))

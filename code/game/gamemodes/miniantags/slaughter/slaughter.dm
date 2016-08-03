@@ -1,8 +1,8 @@
 //////////////////The Monster
 
 /mob/living/simple_animal/slaughter
-	name = "Slaughter Demon"
-	real_name = "Slaughter Demon"
+	name = "slaughter demon"
+	real_name = "slaughter demon"
 	desc = "A large, menacing creature covered in armored black scales."
 	speak_emote = list("gurgles")
 	emote_hear = list("wails","screeches")
@@ -35,7 +35,7 @@
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
-							You may use the \"Blood Crawl\" ability near blood pools or Ctrl+Clicking a tile that has blood on it to travel through them, appearing and disappearing from the station at will. \
+							You may use the \"Blood Crawl\" ability near blood pools to travel through them, appearing and disappearing from the station at will. \
 							Pulling a dead or unconscious mob while you enter a pool will pull them in with you, allowing you to feast and regain your health. \
 							You move quickly upon leaving a pool of blood, but the material world will soon sap your strength and leave you sluggish. </B>"
 
@@ -45,12 +45,12 @@
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
-/*/mob/living/simple_animal/slaughter/New()
+/mob/living/simple_animal/slaughter/New()
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
-		bloodspell.phased = 1*/
+		bloodspell.phased = 1
 
 /mob/living/simple_animal/slaughter/Life()
 	..()
@@ -88,10 +88,11 @@
 	user.visible_message("<span class='warning'>[user] raises [src] to their mouth and tears into it with their teeth!</span>", \
 						 "<span class='danger'>An unnatural hunger consumes you. You raise [src] your mouth and devour it!</span>")
 	playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
-	if(user.bloodcrawl == BLOODCRAWL)
-		user <<"<span class='warning'>...and you don't feel any different.</span>"
-		qdel(src)
-		return
+	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
+		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
+			user <<"<span class='warning'>...and you don't feel any different.</span>"
+			qdel(src)
+			return
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
 						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
 	user.drop_item()
@@ -99,11 +100,14 @@
 
 /obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
 	..()
-	M.bloodcrawl = BLOODCRAWL
+	if(M.mind)
+		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
 
 /obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
-	M.bloodcrawl = 0
+	if(M.mind)
+		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+
 /obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.
 

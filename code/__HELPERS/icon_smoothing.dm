@@ -374,8 +374,7 @@
 //SSicon_smooth
 /proc/queue_smooth(atom/A)
 	if(SSicon_smooth)
-		SSicon_smooth.smooth_queue[A] = A
-		SSicon_smooth.can_fire = 1
+		SSicon_smooth.smooth_queue |= A
 	else
 		smooth_icon(A)
 

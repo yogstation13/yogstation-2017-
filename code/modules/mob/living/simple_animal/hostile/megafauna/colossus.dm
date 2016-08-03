@@ -71,7 +71,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
 	..()
-	internal = new/obj/item/device/gps/internal/lavaland/colossus(src)
+	internal = new/obj/item/device/gps/internal/colossus(src)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	qdel(internal)
@@ -277,7 +277,7 @@
 		target.ex_act(2)
 
 
-/obj/item/device/gps/internal/lavaland/colossus
+/obj/item/device/gps/internal/colossus
 	icon_state = null
 	gpstag = "Angelic Signal"
 	desc = "Get in the fucking robot."

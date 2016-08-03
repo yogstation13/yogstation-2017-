@@ -31,8 +31,6 @@
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(wizardstart)
 
-	handle_AI_Traitors()
-
 	return 1
 
 

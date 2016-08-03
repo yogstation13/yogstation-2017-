@@ -10,7 +10,6 @@
 	production = 4
 	potency = 15
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "soybean-grow"
 	icon_dead = "soybean-dead"
 	mutatelist = list(/obj/item/seeds/soya/koi)

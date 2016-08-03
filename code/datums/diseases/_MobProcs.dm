@@ -25,26 +25,17 @@
 	return 1
 
 
-/mob/proc/ContractDisease(datum/disease/D, source = null)
+/mob/proc/ContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
-	AddDisease(D, source)
+	AddDisease(D)
 
 
-/mob/proc/AddDisease(datum/disease/D, source = null)
+/mob/proc/AddDisease(datum/disease/D)
 	var/datum/disease/DD = new D.type(1, D, 0)
-	var/log = "has contracted [DD.name]"
-	if(istype(DD, /datum/disease/advance))
-		var/datum/disease/advance/DDD = DD
-		log += " \[ symptoms: "
-		for(var/datum/symptom/S in DDD.symptoms)
-			log += "[S.name] "
-		log += "\]"
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
-	log += " from [ismob(source) ? key_name(source) : source]."
-	investigate_log(log, "viro")
 
 	//Copy properties over. This is so edited diseases persist.
 	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
@@ -60,7 +51,7 @@
 	DD.affected_mob.med_hud_set_status()
 
 
-/mob/living/carbon/ContractDisease(datum/disease/D, source = null)
+/mob/living/carbon/ContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
 
@@ -138,14 +129,14 @@
 		passed = (prob((50*D.permeability_mod) - 1))
 
 	if(passed)
-		AddDisease(D, source)
+		AddDisease(D)
 
 
 //Same as ContractDisease, except never overidden clothes checks
-/mob/proc/ForceContractDisease(datum/disease/D, source = null)
+/mob/proc/ForceContractDisease(datum/disease/D)
 	if(!CanContractDisease(D))
 		return 0
-	AddDisease(D, source)
+	AddDisease(D)
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)

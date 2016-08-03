@@ -100,13 +100,6 @@
 
 
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))
-		if(istype(src, /turf/closed/wall/mineral/cult))
-			return
-		src.ChangeTurf(/turf/closed/wall/mineral/cult)
-		M <<"<span class='notice'>You transfer some of your corrupt energy into the wall, causing it to transform.</span>"
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.environment_smash >= 2)
@@ -114,17 +107,6 @@
 		M << "<span class='notice'>You smash through the wall.</span>"
 		dismantle_wall(1)
 		return
-
-/turf/closed/wall/mineral/cult/Bumped(atom/movable/C as mob)
-	var/phasable=0
-	if(istype(C,/mob/living/simple_animal/hostile/construct/builder)||istype(C,/mob/living/simple_animal/hostile/construct/wraith)||istype(C,/mob/living/simple_animal/hostile/construct/harvester))
-		phasable = 2
-		while(phasable>0)
-			src.density = 0
-			sleep(10)
-			phasable--
-		src.density = 1
-	return
 
 /turf/closed/wall/attack_hulk(mob/user)
 	..(user, 1)

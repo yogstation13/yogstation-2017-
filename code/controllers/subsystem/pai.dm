@@ -2,8 +2,7 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	init_order = 20
-	flags = SS_NO_FIRE|SS_NO_INIT
+	priority = 20
 
 	var/askDelay = 600
 	var/const/NEVER_FOR_THIS_ROUND = -1

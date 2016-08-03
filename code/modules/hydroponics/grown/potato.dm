@@ -12,7 +12,6 @@
 	yield = 4
 	oneharvest = 1
 	growthstages = 4
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "potato-grow"
 	icon_dead = "potato-dead"
 	mutatelist = list(/obj/item/seeds/potato/sweet)

@@ -1,5 +1,5 @@
 //replaces the old Ticklag verb, fps is easier to understand
-/client/proc/cfps()
+/client/proc/fps()
 	set category = "Debug"
 	set name = "Set fps"
 	set desc = "Sets game speed in frames-per-second. Can potentially break the game"
