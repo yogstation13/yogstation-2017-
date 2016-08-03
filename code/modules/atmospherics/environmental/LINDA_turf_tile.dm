@@ -109,6 +109,8 @@
 
 /turf/open/proc/tile_graphic()
 	. = new /list
+	if(!air) //Tiles that block atmos don't have this var instantiated
+		return
 	var/list/gases = air.gases
 	for(var/id in gases)
 		var/gas = gases[id]
