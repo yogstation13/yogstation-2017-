@@ -330,57 +330,48 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
 
+//Deputies, original code by super3222, adapted by Kmc2000//
 
-/*
-		SECURITY DEPUTIES
+/datum/job/brigofficer
+ 	title = "Prison Officer"
+ 	flag = BRIG
+ 	department_head = list("Head of Security")
+ 	department_flag = ENGSEC
+ 	faction = "Station"
+ 	total_positions = 1
+ 	spawn_positions = 1
+ 	supervisors = "the warden, you must help them with anything they need and assist with brig triage"
+ 	selection_color = "#ffeeee"
+ 	minimal_player_age = 0
 
+ 	outfit = /datum/outfit/job/brigofficer
 
-*/
+ 	access = list(access_security, access_brig, access_sec_doors, access_brig, access_weapons)
+ 	minimal_access = list(access_security, access_sec_doors, access_weapons)
 
+/datum/outfit/job/brigofficer
+ 	name = "Brig Officer"
 
-/datum/job/secdeputy
-	title = "Security Deputy"
-	flag = DEPUTY
-	department_head = list("Head of Security")
-	department_flag = ENGSEC
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "the head of security, the warden, and any security officer you come in contact with"
-	selection_color = "#ffeeee"
-	minimal_player_age = 2
+ 	belt = /obj/item/device/pda/security
+ 	ears = /obj/item/device/radio/headset/headset_sec
+ 	uniform = /obj/item/clothing/under/rank/security/brigofficer
+ 	head = /obj/item/clothing/head/beret/sec
+ 	shoes = /obj/item/clothing/shoes/jackboots
+ 	gloves = /obj/item/clothing/gloves/color/black
+ 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+ 	r_pocket = /obj/item/device/assembly/flash/handheld
+ 	l_pocket = /obj/item/weapon/restraints/handcuffs
+ 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
-	outfit = /datum/outfit/job/deputy
+ 	backpack = /obj/item/weapon/storage/backpack/security
+ 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+ 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+ 	box = /obj/item/weapon/storage/box/security
 
-	access = list(access_security, access_brig, access_sec_doors, access_brig, access_weapons)
-	minimal_access = list(access_security, access_sec_doors, access_weapons)
-
-/datum/outfit/job/deputy
-	name = "Security Deputy"
-
-	belt = /obj/item/device/pda/security
-	ears = /obj/item/device/radio/headset/headset_sec
-	uniform = /obj/item/clothing/under/rank/security/deputy
-	shoes = /obj/item/clothing/shoes/jackboots
-	gloves = /obj/item/clothing/gloves/color/black
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	r_pocket = /obj/item/device/assembly/flash/handheld
-	l_pocket = /obj/item/weapon/restraints/handcuffs
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
-
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	box = /obj/item/weapon/storage/box/security
-
-	var/tie = /obj/item/clothing/tie/armband/deputy
+ 	var/tie = /obj/item/clothing/tie/armband/deputy
 
 /datum/outfit/job/deputy/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
-
-	var/obj/item/clothing/under/U = H.w_uniform
-	if(tie)
-		U.attachTie(new tie)
 
 	if(visualsOnly)
 		return

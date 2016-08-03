@@ -31078,13 +31078,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
-/turf/open/floor/plasteel{
-	icon_state = "arrival";
-	dir = 4
+/obj/effect/landmark/start{
+	name = "Prison Officer"
 	},
-/area/quartermaster/office)
+/turf/open/floor/plasteel{
+	icon_state = "redcorner";
+	dir = 1
+	},
+/area/hallway/primary/fore)
 "bkV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
@@ -69111,11 +69112,11 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGa" = (
-/obj/effect/landmark/start{
-	name = "Security Deputy"
+/obj/structure/chair{
+	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/security/main)
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
 "cGb" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall_s9";
@@ -93155,7 +93156,7 @@ bfA
 bgD
 bhZ
 bjt
-bkU
+bjt
 bej
 bnX
 bpH
@@ -97999,7 +98000,7 @@ anP
 aot
 apc
 apy
-apS
+bkU
 aqj
 aqG
 arf
@@ -101073,7 +101074,7 @@ ahi
 aia
 aiG
 ajq
-cGa
+akc
 akO
 abK
 alN
@@ -102101,7 +102102,7 @@ ahm
 aie
 aiI
 ajt
-cGa
+akf
 akS
 abK
 alR
@@ -109072,7 +109073,7 @@ aHs
 aIM
 aKq
 aLH
-aNB
+aLJ
 aKq
 aPX
 aRt
@@ -109585,7 +109586,7 @@ aFQ
 aHu
 aIO
 aKq
-aLJ
+aLK
 aND
 aKq
 aPZ
