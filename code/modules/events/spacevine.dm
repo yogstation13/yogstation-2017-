@@ -543,7 +543,7 @@
 	if(!has_buckled_mobs() && prob(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
-			if(buckled_mobs.len)
+			if(has_buckled_mobs())
 				break //only capture one mob at a time
 
 
