@@ -515,15 +515,17 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	name = "???"
 	id = "abomination"
 	specflags = list(NOBREATH,COLDRES,NOGUNS,VIRUSIMMUNE,PIERCEIMMUNE,RADIMMUNE,NODISMEMBER)
+	sexes = 0
 	speedmod = 4
 	armor = 0//has horror armor instead
 	punchdamagelow = 30
 	punchdamagehigh = 30
 	punchstunthreshold = 30 //100 % chance
-	no_equip = list(slot_w_uniform,slot_glasses, slot_back, slot_ears)
+	no_equip = list(slot_w_uniform, slot_back, slot_ears)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	heatmod = 1.5
+	blacklisted = 1
 
 /obj/item/clothing/suit/abomination
 	name = "fleshy hide"
@@ -581,3 +583,13 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	unacidable = 1
 	burn_state = -1
 	flags = ABSTRACT | NODROP
+
+/obj/item/clothing/glasses/thermal/abomination
+	name = "sunken pits"
+	desc = "Eye holes housing some kind of eyes. Something tells you you don't want to know what kind."
+	icon_state = "golem"
+	item_state = "golem"
+	flash_protect = -1
+
+/obj/item/clothing/glasses/thermal/abomination/emp_act(severity)
+	return
