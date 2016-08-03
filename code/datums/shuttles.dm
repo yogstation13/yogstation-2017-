@@ -152,6 +152,11 @@
 	wabbajack statue. It will likely not end well. There's a reason it's \
 	boarded up. Maybe they should have just left it alone."
 
+/datum/map_template/shuttle/emergency/yogstation
+	suffix = "yogstation"
+	name = "The Undying Classic"
+	description = "The old and faithful Yogstation shuttle."
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"

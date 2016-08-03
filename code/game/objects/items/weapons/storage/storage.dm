@@ -246,6 +246,9 @@
 			usr << "<span class='warning'>[src] is full, make some space!</span>"
 		return 0 //Storage item is full
 
+	if(src in W.contents)
+		return 0 // No, Please, Really don't.
+
 	if(can_hold.len)
 		var/ok = 0
 		for(var/A in can_hold)
@@ -278,7 +281,7 @@
 		return 0
 
 	if(W.w_class >= w_class && (istype(W, /obj/item/weapon/storage)))
-		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
+		if(!istype(src, /obj/item/weapon/storage/backpack/holding) && !istype(src, /obj/item/weapon/storage/belt/fannypack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
 				usr << "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>"
 			return 0 //To prevent the stacking of same sized storage items.
@@ -368,6 +371,10 @@
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
 	..()
+	if(istype(W, /obj/item/weapon/hand_labeler))
+		var/obj/item/weapon/hand_labeler/labeler = W
+		if(labeler.mode)
+			return 0
 	. = 1 //no afterattack
 	if(isrobot(user))
 		return	//Robots can't interact with storage items.

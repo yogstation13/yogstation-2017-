@@ -110,7 +110,6 @@
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/weapon/storage/firstaid/regular(src)
 	new /obj/item/weapon/storage/firstaid/o2(src)
-	new /obj/item/weapon/reagent_containers/hypospray/mini(src)
 	return
 
 /obj/structure/closet/secure_closet/paramedic
