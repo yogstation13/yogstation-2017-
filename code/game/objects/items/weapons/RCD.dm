@@ -539,12 +539,16 @@ RCD
 	if(!isrobot(user))
 		return 0
 	var/mob/living/silicon/robot/R = user
+	if(!R.cell)
+		return 0
 	return R.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	var/mob/living/silicon/robot/R = user
+	if(!R.cell)
+		return 0
 	return R.cell.charge >= (amount * 72)
 
 /obj/item/weapon/rcd/loaded
