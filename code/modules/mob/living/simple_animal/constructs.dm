@@ -13,7 +13,8 @@
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
-	see_in_dark = 7
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -96,8 +97,6 @@
 	attacktext = "smashes their armored gauntlet into"
 	speed = 3
 	environment_smash = 2
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = 0
 	mob_size = MOB_SIZE_LARGE
@@ -151,8 +150,6 @@
 	melee_damage_upper = 25
 	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
@@ -178,8 +175,6 @@
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
 	attacktext = "rams"
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
