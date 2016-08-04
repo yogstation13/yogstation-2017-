@@ -103,6 +103,8 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/device/flashlight/proc/fix_light()
+	broken = 0
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
