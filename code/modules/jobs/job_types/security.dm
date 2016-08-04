@@ -425,6 +425,5 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
+	L.implant(H)
 	H.sec_hud_set_implants()
