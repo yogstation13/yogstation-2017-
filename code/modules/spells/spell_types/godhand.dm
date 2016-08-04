@@ -57,7 +57,6 @@
 		M.gib()
 	else
 		M.death()
-		M.apply_damage(500, BRUTE)//defibs absolutely not allowed
 	..()
 
 /obj/item/weapon/melee/touch_attack/fleshtostone
