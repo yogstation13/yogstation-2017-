@@ -12,8 +12,8 @@ Oisin100	=	Head Coder
 Slovenian	=	Council Member
 George99	=	Council Member
 Thee_Flame_Prince	=	Council Member
-Xantam	=	Council Member
-AsV9	=	Council Member
+B1gb3ast	=	Council Member
+OliBomby	=	Council Member
  
 Kmc2000	=	SeniorAdmin
 CptAzure	=	SeniorAdmin

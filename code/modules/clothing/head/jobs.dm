@@ -83,20 +83,20 @@
 	name = "syndicate fedora"
 	icon_state = "syndicate_fedora"
 	desc = "A suspicious black fedora with a red band."
-	embed_chance = 100
-	sharpness = IS_SHARP
 	w_class = 4
+	throw_speed = 4
+	embed_chance = 0
+	embedded_pain_multiplier = 4
+	sharpness = IS_BLUNT
 	hitsound = 'sound/weapons/Genhit.ogg'
-	attack_verb = list("poked")
-	var/extended
+	attack_verb = list("poked", "tipped")
+	var/extended = 0
 
 /obj/item/clothing/head/det_hat/evil/attack_self(mob/user)
 	extended = !extended
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 15
-		embedded_pain_multiplier = 4
-		throw_speed = 4
 		throwforce = 40
 		embed_chance = 100
 		sharpness = IS_SHARP
@@ -106,6 +106,7 @@
 	else
 		force = 0
 		throwforce = 0
+		embed_chance = 0
 		sharpness = IS_BLUNT
 		icon_state = "syndicate_fedora"
 		attack_verb = list("poked", "tipped")
