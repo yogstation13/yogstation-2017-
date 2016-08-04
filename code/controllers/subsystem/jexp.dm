@@ -3,6 +3,7 @@ var/datum/subsystem/jexp/SSjexp
 /datum/subsystem/jexp
 	name = "JEXP"
 	priority = -6
+	flags = SS_NO_FIRE
 
 	var/jexpstatus = FALSE // for the first week and a half, it will be tuned off
 	var/list/jexpjobs = list ("Warden", "Security Officer", "Security Deputy", "Scientist", "Roboticist", "Cargo Technician", "Quartermaster", "Medical Doctor", "Chemist", "Geneticist", "Station Engineer", "Atmospheric Technician")

@@ -4537,7 +4537,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/window/southleft{
 	name = "Armory";
-	req_access_txt = "3"
+	req_access_txt = "68"
 	},
 /turf/open/floor/plasteel{
 	dir = 10;
@@ -4549,7 +4549,7 @@
 	base_state = "right";
 	icon_state = "right";
 	name = "Armory";
-	req_access_txt = "3"
+	req_access_txt = "68"
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -5585,7 +5585,7 @@
 "ajQ" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Brig Control";
-	req_access_txt = "3"
+	req_access_txt = "68"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
@@ -5687,7 +5687,7 @@
 "ajY" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Brig Control";
-	req_access_txt = "3"
+	req_access_txt = "68"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -7012,10 +7012,6 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "amo" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (NORTH)";
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "amp" = (
@@ -7199,9 +7195,8 @@
 /turf/closed/wall/r_wall,
 /area/security/processing)
 "amK" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
+/obj/effect/landmark/start{
+	name = "Prison Officer"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "warningcorner";
@@ -20473,14 +20468,9 @@
 	},
 /area/hydroponics)
 "aNB" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel{
-	icon_state = "hydrofloor"
-	},
-/area/hydroponics)
+/mob/living/simple_animal/dog/gshepherd/roxie,
+/turf/open/floor/carpet,
+/area/security/hos)
 "aNC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -31079,13 +31069,10 @@
 /area/quartermaster/office)
 "bkU" = (
 /obj/effect/landmark/start{
-	name = "Prison Officer"
+	name = "Security Deputy"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/hallway/primary/fore)
+/turf/open/floor/plasteel,
+/area/security/main)
 "bkV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
@@ -69123,6 +69110,12 @@
 	dir = 2
 	},
 /area/shuttle/transport)
+"cGc" = (
+/obj/effect/landmark/start{
+	name = "Prison Officer"
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
 
 (1,1,1) = {"
 aaa
@@ -98000,7 +97993,7 @@ anP
 aot
 apc
 apy
-bkU
+apS
 aqj
 aqG
 arf
@@ -101074,7 +101067,7 @@ ahi
 aia
 aiG
 ajq
-akc
+aib
 akO
 abK
 alN
@@ -101837,7 +101830,7 @@ aaA
 acT
 adw
 aea
-adZ
+aNB
 adZ
 afI
 acS
@@ -102102,7 +102095,7 @@ ahm
 aie
 aiI
 ajt
-akf
+bkU
 akS
 abK
 alR

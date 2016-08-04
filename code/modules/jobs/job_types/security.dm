@@ -27,11 +27,13 @@ Head of Security
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels,
+			            access_warden_office)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels,
+			            access_warden_office)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -85,8 +87,8 @@ Warden
 
 	outfit = /datum/outfit/job/warden
 
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons) //See /datum/job/warden/get_access()
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers, access_warden_office)
+	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons, access_warden_office) //See /datum/job/warden/get_access()
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -161,7 +163,7 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/reagent_containers/food/drinks/flask/det)
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -330,8 +332,6 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
 
-//Deputies, original code by super3222, adapted by Kmc2000//
-
 /datum/job/brigofficer
  	title = "Prison Officer"
  	flag = BRIG
@@ -340,17 +340,17 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
  	faction = "Station"
  	total_positions = 1
  	spawn_positions = 1
- 	supervisors = "the warden, you must help them with anything they need and assist with brig triage"
+ 	supervisors = "The Warden" // the assistant of the assistant...
  	selection_color = "#ffeeee"
- 	minimal_player_age = 0
+ 	minimal_player_age = 7
 
  	outfit = /datum/outfit/job/brigofficer
 
- 	access = list(access_security, access_brig, access_sec_doors, access_brig, access_weapons)
- 	minimal_access = list(access_security, access_sec_doors, access_weapons)
+ 	access = list(access_security, access_brig, access_sec_doors, access_brig, access_weapons, access_warden_office, access_brig, access_court)
+ 	minimal_access = list(access_security, access_sec_doors, access_weapons, access_warden_office)
 
 /datum/outfit/job/brigofficer
- 	name = "Brig Officer"
+ 	name = "Prison Officer"
 
  	belt = /obj/item/device/pda/security
  	ears = /obj/item/device/radio/headset/headset_sec
@@ -368,10 +368,58 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
  	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
  	box = /obj/item/weapon/storage/box/security
 
- 	var/tie = /obj/item/clothing/tie/armband/deputy
+/datum/outfit/job/brigofficer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
+	L.imp_in = H
+	L.implanted = 1
+	H.sec_hud_set_implants()
+
+
+/datum/job/secdeputy
+	title = "Security Deputy"
+	flag = DEPUTY
+	department_head = list("Head of Security")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of security, warden, and every officer"
+	selection_color = "#ffeeee"
+	minimal_player_age = 2 // 5 days before you can play as an officer!
+
+	outfit = /datum/outfit/job/deputy
+
+	access = list(access_brig, access_sec_doors, access_brig, access_weapons)
+	minimal_access = list(access_security, access_sec_doors, access_weapons)
+
+/datum/outfit/job/deputy
+	name = "Security Deputy"
+
+	belt = /obj/item/device/pda/security
+	ears = /obj/item/device/radio/headset/headset_sec
+	uniform = /obj/item/clothing/under/rank/security/deputy
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/color/black
+	l_pocket = /obj/item/weapon/restraints/handcuffs
+	//backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1) break glass if needed. -Super
+
+	backpack = /obj/item/weapon/storage/backpack/security
+	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+
+	var/tie = /obj/item/clothing/tie/armband/deputy
 
 /datum/outfit/job/deputy/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
+
+	var/obj/item/clothing/under/U = H.w_uniform
+	if(tie)
+		U.attachTie(new tie)
 
 	if(visualsOnly)
 		return
