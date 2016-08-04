@@ -78,7 +78,7 @@
 		</ui-section>
 		<ui-section label='Door Bolts'>
 			{{#if data.door_bolts_cut}}
-				<span class='bad'>Door bolts are cut!</span>
+				<span class='bad'>Door bolt control wires are cut!</span>
 			{{else}}
 				<ui-button icon='arrow-up' style='{{!data.bolts_lowered ? "selected" : null}}'
 				action='disable' params='{"device" : "bolts"}'>Up</ui-button>
