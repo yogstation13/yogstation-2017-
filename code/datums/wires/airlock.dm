@@ -76,7 +76,7 @@
 					else if(A.aiControlDisabled == 2)
 						A.aiControlDisabled = -1
 		if(WIRE_SHOCK) // Pulse to shock the door for 30 seconds.
-			if(!A.timeElectrified)
+			if(!A.isElectrified())
 				A.electrify(ELECTRIFY_TEMP, usr)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
