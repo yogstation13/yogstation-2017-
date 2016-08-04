@@ -1,0 +1,103 @@
+<ui-display>
+	{{#if data.has_power}}
+		<ui-section label='Main Power'>
+			<ui-button icon='exclamation-triangle' state='{{data.main_power_lost_time ? "disabled" : null}}'
+			action='disrupt' params='{"power" : "main"}'>Disrupt</ui-button>
+			{{#if data.main_power_lost_time}}
+				<span class='bad'>Main power offline</span>
+			{{else}}
+				<span class='good'>Online</span>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Backup Power'>
+			<ui-button icon='exclamation-triangle' state='{{data.backup_power_lost_time ? "disabled" : null}}'
+			action='disrupt' params='{"power" : "backup"}'>Disrupt</ui-button>
+			{{#if data.backup_power_lost_time}}
+				<span class='bad'>Backup power offline</span>
+			{{else}}
+				<span class='good'>Online</span>
+			{{/if}}
+		</ui-section>
+		<ui-section label='ID Scan'>
+			{{#if data.door_idscan_cut}}
+				<span class='bad'>ID Scan wire cut. ID Scan is disabled.</span>
+			{{else}}
+				<ui-button icon='power-off' style='{{!data.IDScan_disabled ? "selected" : null}}'
+				action='enable' params='{"device" : "idscan"}'>On</ui-button>
+				<ui-button icon='times' style='{{data.IDScan_disabled ? "selected" : null}}'
+				action='disable' params='{"device" : "idscan"}'>Off</ui-button>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Emergency Access'>
+			<ui-button icon='times' style='{{!data.emergency_override ? "selected" : null}}'
+			action='disable' params='{"device" : "emergency"}'>Off</ui-button>
+			<ui-button icon='power-off' style='{{data.emergency_override ? "selected" : null}}'
+			action='enable' params='{"device" : "emergency"}'>On</ui-button>
+		</ui-section>
+		<ui-section label='Door Lights'>
+			{{#if data.door_lights_cut}}
+				<span class='bad'>Door light control wire is cut!</span>
+			{{else}}
+				<ui-button icon='power-off' style='{{data.lights_enabled ? "selected" : null}}'
+				action='enable' params='{"device" : "lights"}'>On</ui-button>
+				<ui-button icon='times' style='{{!data.lights_enabled ? "selected" : null}}'
+				action='disable' params='{"device" : "lights"}'>Off</ui-button>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Door Safety Override'>
+			{{#if data.door_safety_cut}}
+				<span class='bad'>Door safety control wire is cut!</span>
+			{{else}}
+			<ui-button icon='times' style='{{data.safe ? "selected" : null}}'
+			action='enable' params='{"device" : "safeties"}'>Off</ui-button>
+			<ui-button icon='power-off' style='{{!data.safe ? "selected" : null}}'
+			action='disable' params='{"device" : "safeties"}'>On</ui-button>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Door Speed Override'>
+			{{#if data.door_timing_cut}}
+				<span class='bad'>Door timing control wire has been cut!</span>
+			{{else}}
+				<ui-button icon='times' style='{{data.speed_normal ? "selected" : null}}'
+				action='enable' params='{"device" : "normal_speed"}'>Off</ui-button>
+				<ui-button icon='power-off' style='{{!data.speed_normal ? "selected" : null}}'
+				action='disable' params='{"device" : "normal_speed"}'>On</ui-button>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Electrification'>
+			{{#if data.door_shock_cut}}
+				<span class='average'>Electrification wire cut...what a shame.</span>
+			{{else}}
+				<ui-button icon='times' style='{{data.electrified_time == 0 ? "selected" : null}}'
+				action='electrify' params='{"type" : "off"}'>Off</ui-button>
+				<ui-button icon='power-off' style='{{data.electrified_time == -1 ? "selected" : null}}' state='{{data.electrified_time > 0 ? "disabled" : null}}'
+				action='electrify' params='{"type" : "on"}'>On</ui-button>
+				<ui-button icon='power-off' style='{{data.electrified_time > 0 ? "selected" : null}}' state='{{data.electrified_time != 0 ? "disabled" : null}}'
+				action='electrify' params='{"type" : "temporary"}'>{{data.electrified_time > 0 ? data.electrified_time : "30"}}s</ui-button>
+			{{/if}}
+		</ui-section>
+		<ui-section label='Door Bolts'>
+			{{#if data.door_bolts_cut}}
+				<span class='bad'>Door bolts are cut!</span>
+			{{else}}
+				<ui-button icon='arrow-up' style='{{!data.bolts_lowered ? "selected" : null}}'
+				action='disable' params='{"device" : "bolts"}'>Up</ui-button>
+				<ui-button icon='arrow-down' style='{{data.bolts_lowered ? "selected" : null}}'
+				action='enable' params='{"device" : "bolts"}'>Down</ui-button>
+			{{/if}}
+		</ui-section>
+		<br>
+		<ui-section label='Door Controls'>
+			{{#if data.welded}}
+				<span class='bad'>Door is welded shut!</span>
+			{{else}}
+				<ui-button icon='ban' style='{{!data.door_open ? "selected" : null}}'
+				action='close'>Close</ui-button>
+				<ui-button icon='arrows-h' style='{{data.door_open ? "selected" : null}}'
+				action='open'>Open</ui-button>
+			{{/if}}
+		</ui-section>
+	{{else}}
+		<span class='bad'>Door is unpowered. Cannot establish connection.</span>
+	{{/if}}
+</ui-display>

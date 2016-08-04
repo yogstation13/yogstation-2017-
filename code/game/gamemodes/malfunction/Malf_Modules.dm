@@ -162,8 +162,7 @@
 					AL.safe = 0 //DOOR CRUSH
 					AL.close()
 					AL.bolt() //Bolt it!
-					AL.secondsElectrified = -1  //Shock it!
-					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
+					AL.electrify(ELECTRIFY_ON, src)
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
@@ -190,7 +189,7 @@
 				AL = D
 				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
 					AL.unbolt()
-					AL.secondsElectrified = 0
+					AL.unelectrify()
 					AL.open()
 					AL.safe = 1
 			else if(!D.stat) //Opens only powered doors.

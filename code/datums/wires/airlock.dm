@@ -75,18 +75,9 @@
 						A.aiControlDisabled = 0
 					else if(A.aiControlDisabled == 2)
 						A.aiControlDisabled = -1
-		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
-			if(!A.secondsElectrified)
-				A.secondsElectrified = 30
-				A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-				add_logs(usr, A, "electrified")
-				spawn(10)
-					if(A)
-						while (A.secondsElectrified > 0)
-							A.secondsElectrified -= 1
-							if(A.secondsElectrified < 0)
-								A.secondsElectrified = 0
-							sleep(10)
+		if(WIRE_SHOCK) // Pulse to shock the door for 30 seconds.
+			if(!A.timeElectrified)
+				A.electrify(ELECTRIFY_TEMP, usr)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
@@ -130,13 +121,10 @@
 					A.aiControlDisabled = 2
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
-				if(A.secondsElectrified)
-					A.secondsElectrified = 0
+				if(A.isElectrified())
+					A.unelectrify()
 			else
-				if(A.secondsElectrified != -1)
-					A.secondsElectrified = -1
-					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-					add_logs(usr, A, "electrified")
+				A.electrify(ELECTRIFY_ON, usr)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 		if(WIRE_TIMING) // Cut to disable auto-close, mend to re-enable.

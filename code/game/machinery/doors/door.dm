@@ -9,7 +9,8 @@
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 
-	var/secondsElectrified = 0
+	var/timeElectrified = 0
+	var/tempElectrificationTime = 0 //When did we electrify door temporarily? Helps us replace a sleep(10) based timing loop
 	var/shockedby = list()
 	var/visible = 1
 	var/operating = 0
@@ -194,14 +195,33 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
 		open()
 	if(prob(40/severity))
-		if(secondsElectrified == 0)
-			secondsElectrified = -1
-			shockedby += "\[[time_stamp()]\]EM Pulse"
-			addtimer(src, "unelectrify", 300)
+		if(!isElectrified())
+			electrify(ELECTRIFY_TEMP, "EM Pulse")
 	..()
 
+/obj/machinery/door/proc/electrify(mode, what = "unknown", time = 300)
+	if(ismob(what))
+		var/mob/the_user = what
+		shockedby += "\[[time_stamp()]\][the_user](ckey:[the_user.ckey])"
+		add_logs(the_user, src, "electrified")
+	else
+		shockedby += "\[[time_stamp()]\][what]"
+	
+	switch(mode)
+		if(ELECTRIFY_ON)
+			timeElectrified = -1
+		if(ELECTRIFY_TEMP)
+			timeElectrified = time
+			tempElectrificationTime = world.time
+			addtimer(src, "unelectrify", time)
+
+/obj/machinery/door/proc/isElectrified()
+	if(timeElectrified != 0)
+		return 1
+	return 0
+
 /obj/machinery/door/proc/unelectrify()
-	secondsElectrified = 0
+	timeElectrified = 0
 
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
