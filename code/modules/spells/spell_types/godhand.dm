@@ -53,7 +53,10 @@
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
 	sparks.start()
-	M.gib()
+	if(M.stat == DEAD)
+		M.gib()
+	else
+		M.death()
 	..()
 
 /obj/item/weapon/melee/touch_attack/fleshtostone
