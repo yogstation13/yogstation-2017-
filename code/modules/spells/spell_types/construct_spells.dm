@@ -132,12 +132,10 @@
 	invocation = "none"
 	invocation_type = "none"
 	proj_lifespan = 10
-	max_targets = 11
+	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
-	amt_weakened = 1
 
 /obj/effect/proc_holder/spell/targeted/smoke/disable
 	name = "Paralysing Smoke"
