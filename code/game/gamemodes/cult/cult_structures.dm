@@ -150,7 +150,7 @@
 		if(cooldowntime > world.time)
 			user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 			return
-		if(src && !qdeleted(src) && anchored && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		if(anchored && Adjacent(user) && cooldowntime <= world.time)
 			user <<"<span class='notice'>You hold [I] up to [src]. Hold still...</span>"
 			if(do_mob(user, user, 200))
 				S.current_charges = 3
