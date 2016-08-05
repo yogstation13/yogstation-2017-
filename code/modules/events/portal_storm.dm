@@ -4,6 +4,7 @@
 	weight = 0 //Set to 1 or 2 to enable, you monster
 	min_players = 666 //To make sure it never starts
 	earliest_start = 18000
+	max_occurences = 0 //This actually does something, probably
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
