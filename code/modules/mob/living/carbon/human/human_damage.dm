@@ -33,7 +33,7 @@
 		amount += BP.burn_dam
 	return amount
 
-//Set brute/burn damages to the amount specified. Cheats by distributing/healing limbs randomly
+//Set brute/burn damages to the amount specified.
 /mob/living/carbon/human/setBruteLoss(amount)
 	var/set_damage = max(0, amount)
 	var/current_damage = getBruteLoss()
