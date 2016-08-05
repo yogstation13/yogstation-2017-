@@ -2,7 +2,7 @@
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
 	weight = 0 //Set to 1 or 2 to enable, you monster
-	min_players = 15
+	min_players = 666 //To make sure it never starts
 	earliest_start = 18000
 
 /datum/round_event/portal_storm/syndicate_shocktroop
