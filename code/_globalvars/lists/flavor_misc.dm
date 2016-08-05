@@ -25,7 +25,8 @@ var/global/list/horns_list = list()
 var/global/list/frills_list = list()
 var/global/list/spines_list = list()
 var/global/list/animated_spines_list = list()
-
+	//phytosian leaves
+var/global/list/leaves_list = list()
 	//Mutant Human bits
 var/global/list/tails_list_human = list()
 var/global/list/animated_tails_list_human = list()
