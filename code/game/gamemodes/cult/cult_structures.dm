@@ -147,12 +147,15 @@
 		if(S.current_charges >= 3)
 			user <<"<span class='warning'>[I] is already fully charged!</span>"
 			return
-		user <<"<span class='notice'>You hold [I] up to [src]. Hold still...</span>"
-		if(do_mob(user, user, 200))
-			S.current_charges = 3
-			user <<"<span class='notice'>[I] is fully charged.</span>"
-	else
-		return ..()
+		if(cooldowntime > world.time)
+			user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+			return
+		if(src && !qdeleted(src) && anchored && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+			user <<"<span class='notice'>You hold [I] up to [src]. Hold still...</span>"
+			if(do_mob(user, user, 200))
+				S.current_charges = 3
+				user <<"<span class='notice'>[I] is fully charged.</span>"
+				cooldowntime = world.time + 1200
 
 /obj/structure/cult/tome
 	name = "archives"
