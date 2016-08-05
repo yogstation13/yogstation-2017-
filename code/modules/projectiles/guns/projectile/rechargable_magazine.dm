@@ -195,9 +195,9 @@
 	if(!ammo_pack)
 		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
 			ammo_pack = loc
+			..()
 		else
 			qdel(src)//No pack, no gun
-	..()
 
 /obj/item/weapon/gun/projectile/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)

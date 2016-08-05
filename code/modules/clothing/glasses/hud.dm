@@ -66,6 +66,11 @@
 	origin_tech = "magnets=3;combat=2"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 
+/obj/item/clothing/glasses/hud/security/examine(mob/user)
+	. = ..()
+	user << "<span class='notice'>To operate the criminal status of someone in range, hold CTRL + ALT and click on the target.</span>"
+	user << "<span class='notice'>To add crimes to a person, hold CTRL + SHIFT and click on the target</span>"
+
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chamleon Security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."

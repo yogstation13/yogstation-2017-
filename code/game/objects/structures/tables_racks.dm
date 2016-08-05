@@ -127,6 +127,13 @@
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(issilicon(mover))
+		return
+	if(iscarbon(mover))
+		var/mob/living/carbon/C = mover
+		var/obj/item/weapon/tank/jetpack/jetpacktable = C.get_jetpack()
+		if(jetpacktable && jetpacktable.on && !has_gravity(C))
+			return 1
 	if(mover.throwing)
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
