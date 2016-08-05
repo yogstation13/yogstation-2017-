@@ -115,35 +115,6 @@
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/mineral/cult/Bumped(atom/movable/C as mob)
-	var/phasable=0
-	if(istype(C,/mob/living/simple_animal/hostile/construct/builder)||istype(C,/mob/living/simple_animal/hostile/construct/wraith)||istype(C,/mob/living/simple_animal/hostile/construct/harvester))
-		phasable = 2
-		while(phasable>0)
-			src.density = 0
-			src.alpha = 60
-			src.opacity = 0
-			sleep(10)
-			phasable--
-		src.density = 1
-		src.alpha = initial(src.alpha)
-		src.opacity = 1
-	return
-
-/turf/closed/wall/mineral/cult/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/tome) && iscultist(user))
-		if(src.density == 1)
-			user <<"<span class='notice'>Your tome passes through the wall as if it's thin air.</span>"
-			src.alpha = 60
-			src.density = 0
-			src.opacity = 0
-		else
-			user <<"<span class='notice'>Your tome solidly connects with the wall.</span>"
-			src.alpha = initial(src.alpha)
-			src.density = 1
-			src.opacity = 1
-	return
-
 /turf/closed/wall/attack_hulk(mob/user)
 	..(user, 1)
 	if(prob(hardness))
