@@ -1410,7 +1410,7 @@
 	icon_state = "aqua"
 
 /datum/sprite_accessory/leaves
-	icon = "icons/mob/mutant_bodyparts.dmi"
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/leaves/none
 	icon_state = "none"
@@ -1418,45 +1418,45 @@
 
 /datum/sprite_accessory/leaves/classic_male
 	name = "Classic"
-	icon_state = "m_leaves_classic"
+	icon_state = "mclassic"
 	gender_specific = MALE
 
 /datum/sprite_accessory/leaves/classic_female
 	name = "Classic"
-	icon_state = "f_leaves_classic"
+	icon_state = "fclassic"
 	gender_specific = FEMALE
 
 /datum/sprite_accessory/leaves/flowerpink
 	name = "Pink Flower"
-	icon_state = "s_leaves_flower_1"
+	icon_state = "flowerpink"
 	color_src = 0
 
 /datum/sprite_accessory/leaves/flowerblue
 	name = "Blue Flower"
-	icon_state = "s_leaves_flower_2"
+	icon_state = "flowerblue"
 	color_src = 0
 
-/datum/sprite_accessory/leaves/flowerred
-	name = "Red Flower"
-	icon_state = "s_leaves_flower_3"
+/datum/sprite_accessory/leaves/flowerorange
+	name = "Orange Flower"
+	icon_state = "flowerorange"
 	color_src = 0
 
 /datum/sprite_accessory/leaves/straw
 	name = "Straw"
-	icon_state = "m_leaves_straw"
+	icon_state = "straw"
 	gender = MALE
 
 /datum/sprite_accessory/leaves/long
 	name = "Long Leaves"
-	icon_state = "f_leaves_long"
+	icon_state = "long"
 	gender = FEMALE
 
 /datum/sprite_accessory/leaves/short
 	name = "Short Leaves"
-	icon_state = "f_leaves_short"
+	icon_state = "short"
 	gender = FEMALE
 
 /datum/sprite_accessory/leaves/budding
 	name = "Budding"
-	icon_state = "s_leaves_budding"
+	icon_state = "budding"
 
