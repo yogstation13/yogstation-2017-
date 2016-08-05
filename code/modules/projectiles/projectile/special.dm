@@ -213,7 +213,7 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 5
+	damage = 4
 	range = 5
 
 /obj/item/projectile/plasma/New()

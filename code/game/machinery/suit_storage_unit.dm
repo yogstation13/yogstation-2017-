@@ -252,7 +252,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(electrocute_mob(user, src, src))
+		if(user && electrocute_mob(user, src, src))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
@@ -304,7 +304,7 @@
 				return
 			storage = I
 
-		I.loc = src
+		I.forceMove(src)
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return
@@ -367,7 +367,8 @@
 			else if(!helmet && !mask && !suit && !storage && !occupant)
 				return
 			else
-				occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
+				if(occupant)
+					occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
 				cook()
 				. = TRUE
 		if("dispense")

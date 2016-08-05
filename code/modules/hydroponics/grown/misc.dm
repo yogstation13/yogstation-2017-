@@ -7,6 +7,7 @@
 	plantname = "Starthistle"
 	lifespan = 100
 	endurance = 50 // damm pesky weeds
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	maturation = 5
 	production = 1
 	yield = -1

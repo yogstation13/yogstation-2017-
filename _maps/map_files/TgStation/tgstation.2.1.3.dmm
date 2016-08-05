@@ -18624,6 +18624,7 @@
 "aJn" = (
 /obj/machinery/flasher{
 	id = "cockpit_flasher";
+	pixel_x = 6;
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -25920,17 +25921,29 @@
 	},
 /area/hallway/secondary/exit)
 "aZH" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 2;
+	height = 12;
+	id = "ferry";
+	name = "ferry shuttle";
+	roundstart_move = "ferry_away";
+	timid = 0;
+	travelDir = 180;
+	width = 5
+	},
 /obj/docking_port/stationary{
 	dir = 8;
 	dwidth = 2;
 	height = 12;
 	id = "ferry_home";
-	name = "port bay 2";
+	name = "Space Station 13";
 	turf_type = /turf/open/space;
 	width = 5
 	},
-/turf/open/space,
-/area/space)
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/transport)
 "aZI" = (
 /obj/machinery/door/airlock/external{
 	id_tag = null;
@@ -31065,13 +31078,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
-/turf/open/floor/plasteel{
-	icon_state = "arrival";
-	dir = 4
+/obj/effect/landmark/start{
+	name = "Prison Officer"
 	},
-/area/quartermaster/office)
+/turf/open/floor/plasteel{
+	icon_state = "redcorner";
+	dir = 1
+	},
+/area/hallway/primary/fore)
 "bkV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
@@ -45258,6 +45272,10 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
+	pixel_x = 5;
+	pixel_y = -5
+	},
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bLL" = (
@@ -46001,10 +46019,6 @@
 /obj/item/weapon/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
-	},
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -47658,9 +47672,13 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bPR" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
 "bPS" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -58339,7 +58357,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "clm" = (
-/obj/structure/sign/securearea,
+/obj/structure/sign/securearea{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "cln" = (
@@ -59508,7 +59528,7 @@
 /area/atmos)
 "cnH" = (
 /obj/machinery/computer/atmos_control/tank{
-	frequency = 1443;
+	frequency = 1441;
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
@@ -63589,7 +63609,7 @@
 "cvC" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
-	req_access_txt = "63"
+	req_access_txt = "10"
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -68955,16 +68975,41 @@
 	},
 /turf/open/space,
 /area/space)
-"cFL" = (
-/obj/machinery/computer/communications,
+"cFC" = (
+/obj/structure/table,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
-"cFK" = (
-/obj/machinery/button/flasher{
-	id = "cockpit_flasher";
-	pixel_y = -24
+"cFD" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"cFE" = (
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f5"
+	},
+/area/shuttle/escape)
+"cFF" = (
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"cFG" = (
+/obj/structure/chair/comfy/lime{
+	dir = 1
 	},
 /turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"cFH" = (
+/obj/machinery/computer/security,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"cFI" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFJ" = (
 /obj/structure/chair{
@@ -68975,42 +69020,109 @@
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
-"cFI" = (
-/obj/machinery/computer/crew,
+"cFK" = (
+/obj/machinery/vending/gifts,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"cFL" = (
+/obj/machinery/computer/communications,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
-"cFH" = (
-/obj/machinery/computer/security,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFG" = (
-/obj/structure/chair/comfy/lime{
+"cFM" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
+/area/shuttle/transport)
+"cFN" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/shuttle/transport)
+"cFO" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"cFP" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"cFQ" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle/transport)
+"cFR" = (
+/turf/open/floor/plasteel/shuttle/purple,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f9"
+	},
+/area/shuttle/transport)
+"cFS" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFT" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFU" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFV" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/transport)
+"cFW" = (
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFX" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s5";
+	dir = 2
+	},
+/area/shuttle/transport)
+"cFY" = (
+/turf/open/floor/plasteel/shuttle/purple,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f10"
+	},
+/area/shuttle/transport)
+"cFZ" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cGa" = (
+/obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/escape)
-"cFF" = (
-/obj/machinery/computer/atmos_alert,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFE" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f5"
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cGb" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s9";
+	dir = 2
 	},
-/area/shuttle/escape)
-"cFD" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4
-	},
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"cFC" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
+/area/shuttle/transport)
 
 (1,1,1) = {"
 aaa
@@ -77357,11 +77469,11 @@ aaa
 aaa
 aaa
 aaA
-aaA
-aaA
-aaA
-aaA
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
 aaA
 aaa
 aaa
@@ -77615,9 +77727,9 @@ aaA
 aaa
 aaA
 aaa
-aaa
-aaa
-aaa
+cFM
+cFV
+cFX
 aaa
 aaA
 aaa
@@ -77871,11 +77983,11 @@ aaa
 aaA
 aaa
 aaA
-aaa
-aaa
-aaa
-aaa
-aaa
+cFM
+cFR
+cFW
+cFY
+cFX
 aaA
 aaa
 aaA
@@ -78128,11 +78240,11 @@ atv
 axl
 axl
 asH
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFS
+cFW
+cFZ
+cFN
 asH
 axl
 axl
@@ -78385,11 +78497,11 @@ axl
 aRU
 aTr
 asH
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFT
+cFW
+cFZ
+cFN
 asH
 axp
 ayB
@@ -78642,11 +78754,11 @@ azO
 ayC
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFO
+cFU
+cFW
+cGa
+cFO
 axl
 axo
 ayC
@@ -78899,11 +79011,11 @@ axl
 axm
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFU
+cFW
+cGa
+cFN
 axl
 axo
 ayB
@@ -79156,11 +79268,11 @@ aDu
 aQG
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFU
+cFW
+cGa
+cFN
 axl
 axo
 ayD
@@ -79413,11 +79525,11 @@ ayC
 ayC
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFU
+cFW
+cGa
+cFN
 axl
 axo
 ayC
@@ -79670,11 +79782,11 @@ ayC
 ayC
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFP
+cFU
+cFW
+cGa
+cFP
 axl
 axo
 cFg
@@ -79927,11 +80039,11 @@ bhw
 aRV
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFU
+cFW
+cGa
+cFN
 axl
 axo
 ayE
@@ -80184,11 +80296,11 @@ axl
 axm
 aTs
 axl
-aaa
-aaa
-aaa
-aaa
-aaa
+cFN
+cFU
+cFW
+cGa
+cFN
 axl
 axo
 ayB
@@ -80441,11 +80553,11 @@ azO
 ayC
 aTs
 axl
-aaa
-aaa
+cFQ
+cFO
 aZH
-aaa
-aaa
+cFO
+cGb
 axl
 axo
 ayC
@@ -91993,7 +92105,7 @@ ayV
 aAf
 aBt
 ayV
-aDR
+cFK
 aFr
 aGF
 aIl
@@ -93044,7 +93156,7 @@ bfA
 bgD
 bhZ
 bjt
-bkU
+bjt
 bej
 bnX
 bpH
@@ -97888,7 +98000,7 @@ anP
 aot
 apc
 apy
-apS
+bkU
 aqj
 aqG
 arf
@@ -108961,7 +109073,7 @@ aHs
 aIM
 aKq
 aLH
-aNB
+aLJ
 aKq
 aPX
 aRt
@@ -109474,7 +109586,7 @@ aFQ
 aHu
 aIO
 aKq
-aLJ
+aLK
 aND
 aKq
 aPZ
@@ -121807,7 +121919,7 @@ aCa
 aHR
 aJm
 cFG
-cFK
+bPR
 aNX
 aJn
 aKR

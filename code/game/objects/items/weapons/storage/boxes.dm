@@ -63,6 +63,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
 
 /obj/item/weapon/storage/box/survival/radio/New()
 	..()
@@ -74,6 +75,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
 
 /obj/item/weapon/storage/box/engineer/radio/New()
 	..()
@@ -84,6 +86,7 @@
 	..()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/device/flashlight/flare/security(src)
 
 // Security survival box
 /obj/item/weapon/storage/box/security/New()
@@ -91,6 +94,7 @@
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/security(src)
 
 /obj/item/weapon/storage/box/security/radio/New()
 	..()

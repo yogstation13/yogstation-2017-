@@ -3,7 +3,7 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console
+	circuit = /obj/item/weapon/circuitboard/computer/cooldown_holder/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -70,7 +70,7 @@
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
-		var/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console/CM = circuit
+		var/obj/item/weapon/circuitboard/computer/cooldown_holder/telesci_console/CM = circuit
 		var/timeleft = CM.cooldownLeft()
 		if(timeleft)
 			temp_msg = "Telepad is recharging power.<BR>Please wait [round((timeleft) / 10)] seconds."
@@ -158,7 +158,7 @@
 		temp_msg = "ERROR!<BR>Forbidden sector."
 		return
 	if(!random)
-		if(!selection || !selection.can_be_found(z))
+		if(!selection || !selection.can_be_found(z_co))
 			temp_msg = "ERROR!<BR>Cannot locate beacon."
 			return
 		if(offset_x < -selection.range || offset_x > selection.range)
@@ -168,7 +168,7 @@
 			temp_msg = "ERROR!<BR>Impossible y offset."
 			return
 
-	var/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console/CM = circuit
+	var/obj/item/weapon/circuitboard/computer/cooldown_holder/telesci_console/CM = circuit
 	var/timeleft = CM.cooldownLeft()
 	if(timeleft)
 		return
@@ -191,7 +191,7 @@
 				return
 			if(telepad.stat & NOPOWER)
 				return
-			if(!random && (!selection || !selection.can_be_found(z)))
+			if(!random && (!selection || !selection.can_be_found(z_co)))
 				temp_msg = "ERROR!<BR>Beacon lock lost during power up sequence."
 				updateDialog()
 				return

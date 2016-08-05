@@ -31,7 +31,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
-	new/obj/item/device/gps/internal/legion(src)
+	new/obj/item/device/gps/internal/lavaland/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
@@ -97,7 +97,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/obj/item/device/gps/internal/legion
+/obj/item/device/gps/internal/lavaland/legion
 	icon_state = null
 	gpstag = "Echoing Signal"
 	desc = "The message repeats."

@@ -53,22 +53,31 @@
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	var/keyname = key
-	if(prefs.unlock_content)
-		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+	if(prefs.unlock_content && (prefs.toggles & MEMBER_PUBLIC))
+		keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'>"
+		if(prefs.unlock_content & 1)
+			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>"
+		if(prefs.unlock_content & 2)
+			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
-					if(check_rights_for(src, R_ADMIN))
-						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+					var/tag = "[find_admin_rank(src)]"
+					if(check_rights_for(src, R_ADMIN) || holder.rank.name == ("SeniorCoder" || "Coder"))
+						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+
 			else if(!(key in C.prefs.ignoring))
-				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+				if(is_donator(src))
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+				else
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -174,3 +183,57 @@ var/global/normal_ooc_colour = OOC_COLOR
 		src << "You can't ignore yourself."
 		return
 	ignore_key(selection)
+
+/client/proc/find_admin_rank(client)
+	var/client/C = client
+
+	switch(C.holder.rank.name)
+		if("CouncilMember")
+			return "\[Council\]"
+
+		if("ModeratorV2")
+			return "\[Moderator\]"
+
+		if("Moderator")
+			return "\[Moderator\]"
+
+		if("Administrator")
+			return "\[Admin\]"
+
+		if("PrimaryAdmin")
+			return "\[PrimaryAdmin\]"
+
+		if("SeniorAdmin")
+			return "\[SeniorAdmin\]"
+
+		if("HeadCoder")
+			return "\[HeadCoder\]"
+
+		if("ModeratorOnProbation")
+			return "\[ModOnProbation\]"
+
+		if("ProbationAdmin")
+			return "\[AdminOnProbation\]"
+		if("NonPlayingAdmin")
+			return "\[Admin\]"
+
+		if("NonPlayingMod")
+			return "\[Moderator\]"
+
+		if("AdminOnVacation")
+			return "\[AdminOnVacation\]"
+
+		if("ModeratorOnVacation")
+			return "\[ModOnVacation\]"
+
+		if("SeniorCoder")
+			return "\[SeniorCoder\]"
+
+		if("Coder")
+			return "\[Coder\]"
+
+		if("Bot")
+			return "\[YogBot\]"
+
+		if("RetiredAdmin")
+			return "\[Retmin\]"
