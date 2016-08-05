@@ -1,5 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "The disinfect button of Suit Storage Units now works if there is not a living creature inside."
-  - bugfix: "Crates can no longer be dragged off mulebots after loading them."
