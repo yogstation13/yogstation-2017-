@@ -233,7 +233,7 @@
 
 	return 1
 
-/obj/item/borg/upgrade/ashplating
+/*/obj/item/borg/upgrade/ashplating
 	name = "mining cyborg ash storm plating"
 	desc = "An upgrade kit to apply specialized plating and internal weather stripping to mining cyborgs, enabling them to withstand the heaviest of ash storms."
 	icon_state = "ash_plating"
@@ -245,7 +245,7 @@
 	if(..())
 		return
 	R.weather_immunities += "ash"
-	R.icon_state = "ashborg"
+	R.icon_state = "ashborg"*/
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"

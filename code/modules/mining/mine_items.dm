@@ -468,10 +468,9 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
-	icon_state = "bedcomputer"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
-	icon_on = "donkvendor"
-	icon_off = "donkvendor"
+	icon_on = "smartfridge"
+	icon_off = "smartfridge"
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
