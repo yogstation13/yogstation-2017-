@@ -136,7 +136,7 @@
 			var/adminckey = query_get_notes.item[4]
 			var/last_editor = query_get_notes.item[5]
 			var/server = query_get_notes.item[6]
-			output += "<b>[timestamp] | [server] | [adminckey]</b>"
+			output += "<b>[timestamp] | [adminckey]</b>"
 			if(!linkless)
 				output += " <a href='?_src_=holder;removenote=[id]'>\[Remove Note\]</a> <a href='?_src_=holder;editnote=[id]'>\[Edit Note\]</a>"
 				if(last_editor)

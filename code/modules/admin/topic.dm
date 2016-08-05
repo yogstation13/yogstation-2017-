@@ -1087,7 +1087,7 @@
 			//var/adminckey = query_get_notes.item[4]
 			//var/last_editor = query_get_notes.item[5]
 			var/server = query_get_notes.item[6]
-			output += "<p style='margin-bottom: 0px;'><b>[timestamp] | [server]</b><br />"
+			output += "<p style='margin-bottom: 0px;'><b>[timestamp]</b><br />"
 			output += "<span style='margin-left: 16px; margin-top: 0px;'>[notetext]</span></p>"
 
 		usr << browse(output, "window=noteexport;size=800x650")
