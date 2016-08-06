@@ -585,7 +585,7 @@
 	var/on = FALSE // if it's
 	var/open = FALSE // if it's open we can operate maint. possibly fix missing wires??
 	var/max_fuel = 100
-	var/slicingduration = 60
+	var/slicingduration = 40
 
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 
