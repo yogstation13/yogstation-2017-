@@ -64761,7 +64761,6 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/weapon/heavy_saw,
 /turf/open/floor/plasteel{
 	dir = 2;
 	icon_state = "warning"
