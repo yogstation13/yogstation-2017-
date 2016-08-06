@@ -54,7 +54,7 @@
 
 	var/keyname
 	if(prefs.unlock_content && (prefs.toggles & MEMBER_PUBLIC))
-		keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'>[key]"
+		keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'>"
 		if(prefs.unlock_content & 1)
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>"
 		if(prefs.unlock_content & 2)
