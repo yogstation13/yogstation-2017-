@@ -566,7 +566,7 @@
 
 /obj/item/weapon/heavy_saw
 	name = "Industrial Saw"
-	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations"
+	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, it takes standard welding fuel to power the engine"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "heavysaw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -581,6 +581,9 @@
 	origin_tech = "engineering=4;combat=3"
 	attack_verb = list("attacked", "slashed", "eviscerated", "cut")
 	var/on = FALSE
+	var/max_fuel = 100
+	var/currentfuel = 100
+
 
 //When clicked, turns it on to make it sharp and allow use
 /obj/item/weapon/heavy_saw/attack_self(mob/user)
@@ -601,20 +604,69 @@
 /obj/item/weapon/heavy_saw/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
 	if(on)
-		playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
-		if(istype(target, /turf/open/floor))
-			user << "<span class='notice'>You start sawing through the floor plates</span>"
-			var/turf/open/floor/F = target
-			if(do_after(user, 50, target = target))
-				F.ChangeTurf(F.baseturf)
+		if(currentfuel > 0)
+			playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
+			if(istype(target, /turf/open/floor))
+				user << "<span class='notice'>You start sawing through the floor plates</span>"
+				var/turf/open/floor/F = target
+				if(do_after(user, 50, target = target))
+					F.ChangeTurf(F.baseturf)
+					remove_fuel(10)
+					currentfuel -= 10
 
-		else if(istype(target, /turf/closed/wall))
-			user << "<span class='notice'>You start sawing through the wall plates</span>"
-			var/turf/closed/wall/F = target
-			if(do_after(user, 100, target = target))
-				F.dismantle_wall()
+
+			else if(istype(target, /turf/closed/wall))
+				if(!istype(target, /turf/closed/wall/r_wall))
+					user << "<span class='notice'>You start sawing through the wall plates</span>"
+					var/turf/closed/wall/F = target
+					if(do_after(user, 100, target = target))
+						F.dismantle_wall()
+						remove_fuel(10)
+						currentfuel -= 10
+
+						//lets you refuel the thing when it's turned off//
+	if(!on)
+		if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
+			target.reagents.trans_to(src, max_fuel)
+			user << "<span class='notice'>[src] refueled.</span>"
+			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			currentfuel = 100
+			return
+	if(currentfuel == 0)
+		user <<"<span class='warning'>Error, not enough fuel</span>"
 
 /obj/item/weapon/heavy_saw/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is cutting into their skull with the [src.name]! It looks like they're trying to do it themselves!.</span>")
 	playsound(loc, 'sound/weapons/circsawhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+
+	//fuelstuff//
+
+	//shows fuel levels//
+
+/obj/item/weapon/heavy_saw/examine(mob/user)
+	..()
+	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+
+//adds fuel to the new created saw
+
+/obj/item/weapon/heavy_saw/New()
+	..()
+	create_reagents(max_fuel)
+	reagents.add_reagent("welding_fuel", max_fuel)
+	return
+
+
+//allows fuel to be removed
+
+/obj/item/weapon/heavy_saw/proc/remove_fuel(amount = 1, mob/living/M = null)
+	if(get_fuel() >= amount)
+		reagents.remove_reagent("welding_fuel", amount)
+	else
+		if(M)
+			M << "<span class='warning'>You need more welding fuel to complete this task!</span>"
+		return 0
+/obj/item/weapon/heavy_saw/proc/get_fuel()
+	return reagents.get_reagent_amount("welding_fuel")
