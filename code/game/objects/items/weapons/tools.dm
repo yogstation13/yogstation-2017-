@@ -561,3 +561,60 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	force = 10
 	toolspeed = 2
+
+//The king of engineering, the angle grinder//
+
+/obj/item/weapon/heavy_saw
+	name = "Industrial Saw"
+	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations"
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "heavysaw"
+	hitsound = 'sound/weapons/circsawhit.ogg'
+	throwhitsound =  'sound/weapons/pierce.ogg'
+	flags = CONDUCT
+	force = 5
+	w_class = 5
+	throwforce = 9
+	throw_speed = 2
+	throw_range = 5
+	materials = list(MAT_METAL=100)
+	origin_tech = "engineering=4;combat=3"
+	attack_verb = list("attacked", "slashed", "eviscerated", "cut")
+	var/on = FALSE
+
+//When clicked, turns it on to make it sharp and allow use
+/obj/item/weapon/heavy_saw/attack_self(mob/user)
+    playsound(user, 'sound/machines/click.ogg', 20, 1)
+    if(on)
+        user << "<span class='notice'>You turn the saw off.</span>"
+        icon_state = "heavysaw_off"
+        sharpness = IS_BLUNT
+        force = 5
+    else
+        user << "<span class='notice'>You turn on the saw.</span>"
+        icon_state = "heavysaw_on"
+        playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
+        sharpness = IS_SHARP
+        force = 15
+    on = !on
+
+/obj/item/weapon/heavy_saw/afterattack(atom/target, mob/user, proximity)
+	if(!proximity) return
+	if(on)
+		playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
+		if(istype(target, /turf/open/floor))
+			user << "<span class='notice'>You start sawing through the floor plates</span>"
+			var/turf/open/floor/F = target
+			if(do_after(user, 50, target = target))
+				F.ChangeTurf(F.baseturf)
+
+		else if(istype(target, /turf/closed/wall))
+			user << "<span class='notice'>You start sawing through the wall plates</span>"
+			var/turf/closed/wall/F = target
+			if(do_after(user, 100, target = target))
+				F.dismantle_wall()
+
+/obj/item/weapon/heavy_saw/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is cutting into their skull with the [src.name]! It looks like they're trying to do it themselves!.</span>")
+	playsound(loc, 'sound/weapons/circsawhit.ogg', 50, 1, -1)
+	return (BRUTELOSS)
