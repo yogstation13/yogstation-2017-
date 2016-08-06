@@ -362,3 +362,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_tgui_usage()
+	set name = "Toggle tgui"
+	set category = "Preferences"
+	set desc = "Toggles using tgui"
+	SStgui.close_user_uis(usr)
+	prefs.use_tgui = !prefs.use_tgui
+	src << "You will now [prefs.use_tgui ? "use" : "avoid using"] tgui whenever possible."
+	prefs.save_preferences()

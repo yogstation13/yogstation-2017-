@@ -33,6 +33,7 @@
 	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
 	var/datum/tgui/master_ui // The parent UI.
 	var/list/datum/tgui/children = list() // Children of this UI.
+	var/has_alt
 
  /**
   * public
@@ -51,11 +52,12 @@
   *
   * return datum/tgui The requested UI.
  **/
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state, has_alt = 0)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
 	src.window_id = "\ref[src_object]-[ui_key]"
+	src.has_alt = has_alt
 
 	set_interface(interface)
 
@@ -192,13 +194,16 @@
  **/
 /datum/tgui/proc/get_html(var/inline)
 	var/html
-	// Poplate HTML with JSON if we're supposed to inline.
-	if(inline)
-		html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
+	if(using_alt())
+		html = src_object.get_tgui_alt(user)
 	else
-		html = SStgui.basehtml
-	html = replacetextEx(html, "\[ref]", "\ref[src]")
-	html = replacetextEx(html, "\[style]", style)
+		// Poplate HTML with JSON if we're supposed to inline.
+		if(inline)
+			html = replacetextEx(SStgui.basehtml, "{}", get_json(initial_data))
+		else
+			html = SStgui.basehtml
+		html = replacetextEx(html, "\[ref]", "\ref[src]")
+		html = replacetextEx(html, "\[style]", style)
 	return html
 
  /**
@@ -313,14 +318,17 @@
   * optional force bool If the update should be sent regardless of state.
  **/
 /datum/tgui/proc/push_data(data, force = 0)
-	update_status(push = 0) // Update the window state.
-	if(!initialized)
-		return // Cannot update UI if it is not set up yet.
-	if(status <= UI_DISABLED && !force)
-		return // Cannot update UI, we have no visibility.
+	if(using_alt())
+		open()
+	else
+		update_status(push = 0) // Update the window state.
+		if(!initialized)
+			return // Cannot update UI if it is not set up yet.
+		if(status <= UI_DISABLED && !force)
+			return // Cannot update UI, we have no visibility.
 
-	// Send the new JSON to the update() Javascript function.
-	user << output(url_encode(get_json(data)), "[window_id].browser:update")
+		// Send the new JSON to the update() Javascript function.
+		user << output(url_encode(get_json(data)), "[window_id].browser:update")
 
  /**
   * private
@@ -367,3 +375,7 @@
 			src.status = status
 			if(status == UI_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
 				push_data(null, force = 1)
+
+/datum/tgui/proc/using_alt()
+	return has_alt && user && !user.client.prefs.use_tgui
+

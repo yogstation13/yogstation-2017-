@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	15
+#define SAVEFILE_VERSION_MAX	16
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -104,6 +104,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ignoring = list()
 	if(current_version < 15)
 		toggles |= SOUND_ANNOUNCEMENTS
+	if(current_version < 16)
+		use_tgui = TRUE
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -207,6 +209,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
 	S["hotkeys"]			>> hotkeys
+	S["tgui_use"]			>> use_tgui
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 
@@ -239,6 +242,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative"), initial(UI_style))
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
+	use_tgui		= sanitize_integer(use_tgui, 0, 1, initial(use_tgui))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
@@ -266,6 +270,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
 	S["hotkeys"]			<< hotkeys
+	S["tgui_use"]			<< use_tgui
 	S["tgui_fancy"]			<< tgui_fancy
 	S["tgui_lock"]			<< tgui_lock
 	S["be_special"]			<< be_special

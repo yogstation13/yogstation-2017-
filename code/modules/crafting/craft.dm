@@ -21,7 +21,7 @@
 				CAT_SPAGHETTI)
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
-
+	var/datum/tgui/ui
 
 
 
@@ -256,9 +256,9 @@
 /datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 600, 800, master_ui, state)
+		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 600, 800, master_ui, state, has_alt = 1)
 		ui.open()
-
+	src.ui = ui
 
 /datum/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
@@ -284,7 +284,7 @@
 	return data
 
 
-/datum/personal_crafting/ui_act(action, params)
+/datum/personal_crafting/ui_act(action, params, datum/tgui/ui)
 	if(..())
 		return
 	switch(action)
@@ -360,3 +360,94 @@
 	data["tool_text"] = tool_text
 
 	return data
+
+/datum/personal_crafting/get_tgui_alt(mob/user)
+	var/list/surroundings = get_surroundings(user)
+	user << browse_rsc('html/browser/common.css', "common")
+	var/dat = "<head><link rel='stylesheet' type='text/css' href='common.css'></head><div class='uiContent'><body>"
+	dat += "<h3>Crafting menu</h3>"
+	if(busy)
+		dat += "<div class='statusDisplay'>"
+		dat += "Crafting in progress...</div>"
+	else
+		dat += "<A href='?src=\ref[src];backwardCat=1'><--</A>"
+		dat += " [categories[prev_cat()]] |"
+		dat += " <B>[categories[viewing_category]]</B> "
+		dat += "| [categories[next_cat()]] "
+		dat += "<A href='?src=\ref[src];forwardCat=1'>--></A><BR><BR>"
+
+		dat += "<div>"
+
+		//Filter the recipes we can craft to the top
+		var/list/can_craft = list()
+		var/list/cant_craft = list()
+		for(var/V in crafting_recipes)
+			var/datum/crafting_recipe/R = V
+			if(R.category != categories[viewing_category])
+				continue
+			if(check_contents(R, surroundings))
+				can_craft += R
+			else
+				cant_craft += R
+
+		for(var/V in can_craft)
+			var/datum/crafting_recipe/R = V
+			dat += build_recipe_text(R, surroundings)
+		for(var/V in cant_craft)
+			var/datum/crafting_recipe/R = V
+			dat += build_recipe_text(R, surroundings)
+
+
+		dat += "</div>"
+	dat += "</body></div>"
+	return dat
+
+/datum/personal_crafting/proc/build_recipe_text(datum/crafting_recipe/R, list/surroundings)
+	. = ""
+	var/name_text = ""
+	var/req_text = ""
+	var/tool_text = ""
+	var/catalist_text = ""
+	if(check_contents(R, surroundings))
+		name_text ="<A href='?src=\ref[src];make=\ref[R]'>[R.name]</A>"
+
+	else
+		name_text = "<span class='linkOff'>[R.name]</span>"
+
+	if(name_text)
+		for(var/A in R.reqs)
+			if(ispath(A, /obj))
+				var/obj/O = new A
+				req_text += " [R.reqs[A]] [O.name]"
+				qdel(O)
+			if(ispath(A, /datum/reagent))
+				var/datum/reagent/RE = new A
+				req_text += " [R.reqs[A]] [RE.name]"
+				qdel(RE)
+
+		if(R.chem_catalysts.len)
+			catalist_text += ", Catalysts:"
+			for(var/C in R.chem_catalysts)
+				if(ispath(C, /datum/reagent))
+					var/datum/reagent/RE = new C
+					catalist_text += " [R.chem_catalysts[C]] [RE.name]"
+					qdel(RE)
+
+		if(R.tools.len)
+			tool_text += ", Tools:"
+			for(var/O in R.tools)
+				if(ispath(O, /obj))
+					var/obj/T = new O
+					tool_text += " [R.tools[O]] [T.name]"
+					qdel(T)
+
+		. = "[name_text][req_text][tool_text][catalist_text]<BR>"
+
+/datum/personal_crafting/Topic(href, list/href_list)
+	..()
+	if(href_list["make"])
+		ui_act("make", list("recipe" = href_list["make"]), ui)
+	if(href_list["forwardCat"])
+		ui_act("forwardCat", null, ui)
+	if(href_list["backwardCat"])
+		ui_act("backwardCat", null, ui)

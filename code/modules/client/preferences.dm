@@ -28,6 +28,7 @@ var/list/preferences_datums = list()
 
 	var/UI_style = "Midnight"
 	var/hotkeys = FALSE
+	var/use_tgui = TRUE
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
@@ -364,6 +365,7 @@ var/list/preferences_datums = list()
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>Use tgui:</b> <a href='?_src_=prefs;preference=tgui_use'>[(use_tgui) ? "Yes" : "No"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -1225,6 +1227,8 @@ var/list/preferences_datums = list()
 				if("hotkeys")
 					hotkeys = !hotkeys
 
+				if("tgui_use")
+					use_tgui = !use_tgui
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
 				if("tgui_lock")

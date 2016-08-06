@@ -23,6 +23,15 @@
  /**
   * public
   *
+  * Creates an alternate popup to tgui
+ **/
+
+/datum/proc/get_tgui_alt(mob/user)
+	return ""
+
+ /**
+  * public
+  *
   * Data to be sent to the UI.
   * This must be implemented for a UI to work.
   *
@@ -46,7 +55,7 @@
   * return bool If the UI should be updated or not.
  **/
 /datum/proc/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	if(!ui || ui.status != UI_INTERACTIVE)
+	if(!ui || (ui.status != UI_INTERACTIVE && !ui.using_alt()) )
 		return 1 // If UI is not interactive or usr calling Topic is not the UI user, bail.
 
 
