@@ -566,7 +566,7 @@
 
 /obj/item/weapon/heavy_saw
 	name = "Industrial Saw"
-	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, its internally stored tank takes normal welding fuel."
+	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, its internally stored tank takes oil as fuel."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "heavysaw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -583,7 +583,7 @@
 	var/on = FALSE
 	var/max_fuel = 100
 	var/currentfuel = 100
-	var/floordelay = 40
+	var/floordelay = 50
 	var/walldelay = 70
 	var/open = 0
 	slowdown = 2
@@ -599,14 +599,16 @@
 		icon_state = "heavysaw_off"
 		sharpness = IS_BLUNT
 		force = 9
+		hitsound = 'sound/weapons/Genhit.ogg'
 	else if (get_fuel() >=5)
 		if(open == 0)
 			user << "<span class='notice'>You turn on the saw.</span>"
 			icon_state = "heavysaw_on"
 			playsound(src.loc, 'sound/weapons/chainsawhit.ogg', 50, 1)
 			sharpness = IS_SHARP
-			force = 21
+			force = 19
 			remove_fuel(5)
+			hitsound = 'sound/weapons/circsawhit.ogg'
 	else if(get_fuel() < 5)
 		user << "<span class='notice'>Error, no fuel, cannot power saw.</span>"
 		return
@@ -646,17 +648,6 @@
 						remove_fuel(10)
 
 
-//allows refuelling when screwdrivered open//
-	if(!on)
-		if(open == 1)
-			if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
-				target.reagents.trans_to(src, max_fuel)
-				user << "<span class='notice'>[src] refueled.</span>"
-				playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-
-				return
-
-
 	else if(get_fuel() <= 0)
 		user <<"<span class='warning'>Error</span>"
 		return
@@ -680,7 +671,7 @@
 /obj/item/weapon/heavy_saw/New()
 	..()
 	create_reagents(max_fuel)
-	reagents.add_reagent("welding_fuel", max_fuel)
+	reagents.add_reagent("oil", max_fuel)
 	return
 
 
@@ -688,13 +679,13 @@
 
 /obj/item/weapon/heavy_saw/proc/remove_fuel(amount = 1, mob/living/M = null)
 	if(get_fuel() >= amount)
-		reagents.remove_reagent("welding_fuel", amount)
+		reagents.remove_reagent("oil", amount)
 	else
 		if(M)
 			M << "<span class='warning'>You need more welding fuel to complete this task!</span>"
 		return 0
 /obj/item/weapon/heavy_saw/proc/get_fuel()
-	return reagents.get_reagent_amount("welding_fuel")
+	return reagents.get_reagent_amount("oil")
 
 
 
@@ -710,5 +701,28 @@
 				user << "<span class='notice'>You close the cover on your [src].</span>"
 				icon_state = "heavysaw_off"
 				open = 0
+			if(istype(W, /obj/item/weapon/crowbar))
+				user << "<span class='notice'>You remove the fuel from the [src], emptying it onto the floor.</span>"
+				reagents.clear_reagents()
+				return
+			//allows refuelling when screwdrivered open//
+		if(!on)
+			if(istype(W, /obj/item/weapon/reagent_containers))
+				W.reagents.trans_to(src, max_fuel)
+				user << "<span class='notice'>[src] filled from container.</span>"
+				playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)//
 
-///Only allows refuel when open, and turned off///
+				return
+
+
+
+//	if(!on)
+//		if(open == 1)
+//			if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
+//				target.reagents.trans_to(src, max_fuel)
+//				user << "<span class='notice'>[src] refueled.</span>"
+//				playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+//
+//				return
+//
+//old process for refuel
