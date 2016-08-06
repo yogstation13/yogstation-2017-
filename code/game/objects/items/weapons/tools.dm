@@ -566,7 +566,7 @@
 
 /obj/item/weapon/heavy_saw
 	name = "Industrial Saw"
-	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, it takes standard welding fuel to power the engine"
+	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, it takes standard welding fuel to power the engine."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "heavysaw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -607,7 +607,7 @@
 		if(currentfuel > 0)
 			playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
 			if(istype(target, /turf/open/floor))
-				user << "<span class='notice'>You start sawing through the floor plates</span>"
+				user << "<span class='notice'>You start sawing through the floor plates.</span>"
 				var/turf/open/floor/F = target
 				if(do_after(user, 50, target = target))
 					F.ChangeTurf(F.baseturf)
@@ -617,7 +617,7 @@
 
 			else if(istype(target, /turf/closed/wall))
 				if(!istype(target, /turf/closed/wall/r_wall))
-					user << "<span class='notice'>You start sawing through the wall plates</span>"
+					user << "<span class='notice'>You start sawing through the wall plates.</span>"
 					var/turf/closed/wall/F = target
 					if(do_after(user, 100, target = target))
 						F.dismantle_wall()
