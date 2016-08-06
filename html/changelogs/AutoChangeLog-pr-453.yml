@@ -1,0 +1,6 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "RCDs now give feedback when they do not have enough ammo to complete an operation."
+  - bugfix: "Spamming an RCD to build the same wall multiple times on a tile will no longer drain all your ammo."
+  - bugfix: "RCDs can no longer build multiple grilles on the same tile."
