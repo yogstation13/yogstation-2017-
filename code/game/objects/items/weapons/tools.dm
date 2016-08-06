@@ -566,7 +566,7 @@
 
 /obj/item/weapon/heavy_saw
 	name = "Industrial Saw"
-	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, it takes standard welding fuel to power the engine."
+	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, its internally stored tank takes normal welding fuel."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "heavysaw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
@@ -583,60 +583,85 @@
 	var/on = FALSE
 	var/max_fuel = 100
 	var/currentfuel = 100
+	var/floordelay = 40
+	var/walldelay = 70
+	var/open = 0
+	slowdown = 2
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+
 
 
 //When clicked, turns it on to make it sharp and allow use
 /obj/item/weapon/heavy_saw/attack_self(mob/user)
-    playsound(user, 'sound/machines/click.ogg', 20, 1)
-    if(on)
-        user << "<span class='notice'>You turn the saw off.</span>"
-        icon_state = "heavysaw_off"
-        sharpness = IS_BLUNT
-        force = 5
-    else
-        user << "<span class='notice'>You turn on the saw.</span>"
-        icon_state = "heavysaw_on"
-        playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
-        sharpness = IS_SHARP
-        force = 15
-    on = !on
+	playsound(user, 'sound/machines/click.ogg', 20, 1)
+	if(on)
+		user << "<span class='notice'>You turn the saw off.</span>"
+		icon_state = "heavysaw_off"
+		sharpness = IS_BLUNT
+		force = 9
+	else if (get_fuel() >=5)
+		if(open == 0)
+			user << "<span class='notice'>You turn on the saw.</span>"
+			icon_state = "heavysaw_on"
+			playsound(src.loc, 'sound/weapons/chainsawhit.ogg', 50, 1)
+			sharpness = IS_SHARP
+			force = 21
+			remove_fuel(5)
+	else if(get_fuel() < 5)
+		user << "<span class='notice'>Error, no fuel, cannot power saw.</span>"
+		return
+	if(open == 1)
+		user << "<span class='something'>You can't operate the saw while it's open!</span>"
+		return
+
+
+
+	on = !on
 
 /obj/item/weapon/heavy_saw/afterattack(atom/target, mob/user, proximity)
 	if(!proximity) return
-	if(on)
-		if(currentfuel > 0)
-			playsound(src.loc, 'sound/weapons/circsawhit.ogg', 50, 1)
+	if(on || open == 0)
+		if(get_fuel() > 0)
+			playsound(src.loc, 'sound/weapons/metalgrind.ogg', 50, 1)
 			if(istype(target, /turf/open/floor))
 				user << "<span class='notice'>You start sawing through the floor plates.</span>"
+				sparks.set_up(1, 1, src)
+				sparks.start()
 				var/turf/open/floor/F = target
-				if(do_after(user, 50, target = target))
+				if(do_after(user, floordelay, target = target))
 					F.ChangeTurf(F.baseturf)
 					remove_fuel(10)
-					currentfuel -= 10
+
 
 
 			else if(istype(target, /turf/closed/wall))
 				if(!istype(target, /turf/closed/wall/r_wall))
 					user << "<span class='notice'>You start sawing through the wall plates.</span>"
-					var/turf/closed/wall/F = target
-					if(do_after(user, 100, target = target))
-						F.dismantle_wall()
+					playsound(src.loc, 'sound/weapons/metalgrind.ogg', 50, 1)
+					sparks.set_up(1, 1, src)
+					sparks.start()
+					var/turf/closed/wall/Z = target
+					if(do_after(user, walldelay, target = target))
+						Z.dismantle_wall()
 						remove_fuel(10)
-						currentfuel -= 10
 
-						//lets you refuel the thing when it's turned off//
+
+//allows refuelling when screwdrivered open//
 	if(!on)
-		if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
-			target.reagents.trans_to(src, max_fuel)
-			user << "<span class='notice'>[src] refueled.</span>"
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			currentfuel = 100
-			return
-	if(currentfuel == 0)
-		user <<"<span class='warning'>Error, not enough fuel</span>"
+		if(open == 1)
+			if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
+				target.reagents.trans_to(src, max_fuel)
+				user << "<span class='notice'>[src] refueled.</span>"
+				playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 
+				return
+
+
+	else if(get_fuel() <= 0)
+		user <<"<span class='warning'>Error</span>"
+		return
 /obj/item/weapon/heavy_saw/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting into their skull with the [src.name]! It looks like they're trying to do it themselves!.</span>")
+	user.visible_message("<span class='suicide'>[user] is cutting into their skull with the [src.name]! It looks like they're trying to do it themselves!</span>")
 	playsound(loc, 'sound/weapons/circsawhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -670,3 +695,20 @@
 		return 0
 /obj/item/weapon/heavy_saw/proc/get_fuel()
 	return reagents.get_reagent_amount("welding_fuel")
+
+
+
+/obj/item/weapon/heavy_saw/attackby(obj/item/W, mob/user, params)
+	if(!on)
+		if(open == 0)
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user << "<span class='notice'>You open the cover on your [src].</span>"
+				icon_state = "heavysaw_open"
+				open = 1
+		else if(open == 1)
+			if(istype(W, /obj/item/weapon/screwdriver))
+				user << "<span class='notice'>You close the cover on your [src].</span>"
+				icon_state = "heavysaw_off"
+				open = 0
+
+///Only allows refuel when open, and turned off///
