@@ -75,7 +75,7 @@
 		D.playDigSound()
 		qdel(src)
 
-	else if(istype(W, /obj/item/weapon/heavy_saw))
+	else if(istype(W, /obj/item/weapon/industrialsaw))
 		user << "<span class='notice'>You tear apart the girder with your saw!</span>"
 		new /obj/item/stack/sheet/metal(get_turf(src))
 		qdel(src)
