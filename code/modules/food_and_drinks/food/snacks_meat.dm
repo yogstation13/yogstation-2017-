@@ -94,7 +94,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatball
 	name = "meatball"
 	desc = "Come on down to mr. meaties."
-	icon_state = "faggot"
+	icon_state = "meatball"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"
 
