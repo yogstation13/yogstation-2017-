@@ -85,7 +85,6 @@
 	desc = "A suspicious black fedora with a red band."
 	w_class = 4
 	throw_speed = 4
-	embed_chance = 0
 	embedded_pain_multiplier = 4
 	sharpness = IS_BLUNT
 	hitsound = 'sound/weapons/Genhit.ogg'
