@@ -565,7 +565,7 @@
 //The King of Tools//
 
 /obj/item/weapon/industrialsaw
-	name = "Industrial Saw"
+	name = "industrial saw"
 	desc = "A heavy duty saw used for cutting through hull plates during search and rescue operations, its internally stored tank takes oil as fuel."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "heavysaw"
@@ -586,6 +586,7 @@
 	var/open = FALSE // if it's open we can operate maint. possibly fix missing wires??
 	var/max_fuel = 100
 	var/slicingduration = 40
+	var/inuse = 0
 
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 
@@ -629,24 +630,27 @@
 		return
 
 	if(on)
-		if(get_fuel() > 0)
-			playsound(src.loc, 'sound/weapons/metalgrind.ogg', 50, 1)
-
+		if(get_fuel() > 0 && inuse == 0)
 
 			if(istype(target, /turf/open/floor))
 				remove_fuel(5)
+				playsound(src.loc, 'sound/weapons/metalgrind.ogg', 50, 1)
 				user << "<span class='notice'>You start sawing through the floor plates.</span>"
+				inuse = 1
 				sparks.set_up(1, 1, src)
 				sparks.start()
 				var/turf/open/floor/F = target
 				if(do_after(user, F.slicingduration/toolspeed, target = target))
 					F.ChangeTurf(F.baseturf)
 					remove_fuel(5)
-
+					inuse = 0
+				else
+					inuse = 0
 
 			if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/r_wall))
 				remove_fuel(5)
 				user << "<span class='notice'>You start sawing through the wall plates.</span>"
+				inuse = 1
 				playsound(src.loc, 'sound/weapons/metalgrind.ogg', 50, 1)
 				sparks.set_up(1, 1, src)
 				sparks.start()
@@ -654,9 +658,15 @@
 				if(do_after(user, slicingduration/toolspeed, target = target))
 					Z.dismantle_wall()
 					remove_fuel(5)
+					inuse = 0
+				else
+					inuse = 0
+	else if(inuse <= 1)
+		user <<"<span class='warning'>Error! You cannot cut more than one thing at once.</span>"
+		return
 
 	else
-		user <<"<span class='warning'>Error! You cannot cut objects when the saw is off</span>"
+		user <<"<span class='warning'>Error! You cannot cut objects when the saw is off.</span>"
 
 
 /obj/item/weapon/industrialsaw/suicide_act(mob/user)
