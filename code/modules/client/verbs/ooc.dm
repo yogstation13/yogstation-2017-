@@ -52,13 +52,15 @@
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
 
-	var/keyname = key
+	var/keyname
 	if(prefs.unlock_content && (prefs.toggles & MEMBER_PUBLIC))
 		keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'>"
 		if(prefs.unlock_content & 1)
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>"
 		if(prefs.unlock_content & 2)
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
+
+	keyname += "[key]"
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
