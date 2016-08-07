@@ -176,26 +176,28 @@
 //Movable atoms with luminosity when they are constructed will create a light_source automatically
 /atom/movable/New()
 	..()
-	if(opacity)
-		UpdateAffectingLights()
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
 	if(luminosity)
 		light = new(src)
 
 //Objects with opacity will trigger nearby lights to update at next SSlighting fire
 /atom/movable/Destroy()
 	qdel(light)
-	if(opacity)
-		UpdateAffectingLights()
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
 	return ..()
 
 //Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
 /atom/movable/Moved(atom/OldLoc, Dir)
-	if(isturf(loc))
-		if(opacity)
+	if(opacity)
+		if (isturf(OldLoc))
 			OldLoc.UpdateAffectingLights()
-		else
-			if(light)
-				light.changed()
+		if (isturf(loc))
+			loc.UpdateAffectingLights()
+	else
+		if(light)
+			light.changed()
 	return ..()
 
 //Sets our luminosity.
@@ -254,10 +256,17 @@
 /atom/movable/light/Move()
 	return 0
 
+/atom/movable/light/dim
+	color = "#000" // Always half bright.
+	alpha = 0 // Only visible when the tile it's on is ~pure black.
+	invisibility = 0 // Never invisible. Might be a bit annoying for observers. Might.
+	layer = TURF_LAYER // Don't darken things on top of the turf.
+
 /turf
 	var/lighting_lumcount = 0
 	var/lighting_changed = 0
 	var/atom/movable/light/lighting_object //Will be null for space turfs and anything in a static lighting area
+	var/atom/movable/light/dim/light_dim  // Used for shadowlings and night vision and stuffs, to show pure black areas, but make them still visible... So to speak...
 	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
 
 /turf/ChangeTurf(path)
@@ -304,8 +313,9 @@
 
 /turf/proc/init_lighting()
 	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(A) || istype(src, /turf/open/space))
-		lighting_changed = 0
+	if(!IS_DYNAMIC_LIGHTING(A))
+		if(lighting_changed)
+			lighting_changed = 0
 		if(lighting_object)
 			lighting_object.alpha = 0
 			qdel(lighting_object)
@@ -313,11 +323,19 @@
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
+		if(!light_dim)
+			light_dim = new (src)
 		redraw_lighting(1)
+		for(var/turf/open/space/T in RANGE_TURFS(1,src))
+			T.update_starlight()
+
 
 /turf/open/space/init_lighting()
-	..()
-	update_starlight()
+	if(lighting_changed)
+		lighting_changed = 0
+	if(lighting_object)
+		lighting_object.alpha = 0
+		lighting_object = null
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
@@ -325,7 +343,6 @@
 		if(lighting_lumcount <= 0)
 			newalpha = 255
 		else
-			lighting_object.luminosity = 1
 			if(lighting_lumcount < LIGHTING_CAP)
 				var/num = Clamp(lighting_lumcount * LIGHTING_CAP_FRAC, 0, 255)
 				newalpha = 255-num
@@ -341,6 +358,10 @@
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0
+			else
+				luminosity = 1
+				lighting_object.luminosity = 1
+		light_dim.alpha = (get_lumcount() <= 0.3) * 128 // We're only visible if the lighting lumcount is less than what shadowlings can walk through.
 
 	lighting_changed = 0
 
@@ -389,7 +410,8 @@
 /turf/UpdateAffectingLights()
 	if(affecting_lights)
 		for(var/datum/light_source/thing in affecting_lights)
-			thing.changed()			//force it to update at next process()
+			if (!thing.changed)
+				thing.changed()			//force it to update at next process()
 
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.
