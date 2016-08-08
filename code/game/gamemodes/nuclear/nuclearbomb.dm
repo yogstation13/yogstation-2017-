@@ -210,7 +210,10 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
-		countdown.start()
+		if(countdown)
+			countdown.start()
+		else
+			countdown = new(src)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -222,7 +225,8 @@ var/bomb_set
 			if ((M.client && M.machine == src))
 				attack_hand(M)
 	else
-		countdown.stop()
+		if(countdown)
+			countdown.stop()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
