@@ -23,7 +23,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	name = "gang war"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Prison Officer")
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 2
@@ -71,6 +71,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
+
+	handle_AI_Traitors()
 
 	return 1
 

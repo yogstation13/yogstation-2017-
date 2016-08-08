@@ -205,7 +205,7 @@ Tourist
 	ears = /obj/item/device/radio/headset
 	belt = /obj/item/device/pda
 	backpack_contents = list(/obj/item/device/camera_film, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c20)
-	r_hand =  /obj/item/device/camera_film
+	r_hand =  /obj/item/device/camera 
 	l_pocket = /obj/item/device/camera_film
 	r_pocket = /obj/item/device/camera_film
 

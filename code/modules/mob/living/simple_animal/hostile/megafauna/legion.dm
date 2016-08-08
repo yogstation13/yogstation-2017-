@@ -31,7 +31,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
-	new/obj/item/device/gps/internal/legion(src)
+	new/obj/item/device/gps/internal/lavaland/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
@@ -42,7 +42,7 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='danger'>[src] charges!</span>")
+			visible_message("<span class='warning'><b>[src] charges!</b></span>")
 			SpinAnimation(speed = 20, loops = 5)
 			ranged = 0
 			retreat_distance = 0
@@ -81,7 +81,7 @@
 
 		L.target = target
 
-		visible_message("<span class='danger'>[src] splits!</span>")
+		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
@@ -97,7 +97,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/obj/item/device/gps/internal/legion
+/obj/item/device/gps/internal/lavaland/legion
 	icon_state = null
 	gpstag = "Echoing Signal"
 	desc = "The message repeats."

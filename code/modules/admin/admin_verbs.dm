@@ -16,7 +16,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/secrets,
 	/client/proc/reload_admins,
 	/client/proc/adminwhotoggle,
-	/client/proc/adminwho,
+	// /client/proc/adminwho,
 	/client/proc/donor_ooc_admin,
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
@@ -322,7 +322,7 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-		/client/proc/fps,
+		/client/proc/cfps,
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin

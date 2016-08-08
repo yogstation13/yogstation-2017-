@@ -17,7 +17,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain","Prison Officer")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -72,6 +72,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
+
+		handle_AI_Traitors()
 		return 1
 	else
 		return 0
@@ -344,7 +346,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return
 	if(!target)
 		return
-	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
+	if((target.disabilities & NOCLONE)/* || (target.disabilities & HUSK)*/)//Husk absorption, to prevent redtext due to people spacing themselves.
 		if(verbose)
 			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return

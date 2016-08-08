@@ -163,7 +163,7 @@ This file's folder contains:
 	required_enemies = 2
 	recommended_enemies = 4
 	enemy_minimum_age = 14
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
+	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
 	var/servants_to_serve = list()
 
@@ -187,6 +187,8 @@ This file's folder contains:
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
 		starter_servants--
+
+	handle_AI_Traitors()
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()

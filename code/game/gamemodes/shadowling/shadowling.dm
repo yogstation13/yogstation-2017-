@@ -72,7 +72,7 @@ Made by Xhuis
 	required_enemies = 2
 	recommended_enemies = 2
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
@@ -96,6 +96,8 @@ Made by Xhuis
 		shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
 		shadowlings--
+
+	handle_AI_Traitors()
 	return 1
 
 
@@ -258,6 +260,8 @@ Made by Xhuis
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,NODISMEMBER) //Can't use guns due to muzzle flash
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+	sight_mod = SEE_MOBS
+	invis_sight = 2
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)

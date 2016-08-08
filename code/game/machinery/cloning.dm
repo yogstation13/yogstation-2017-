@@ -27,6 +27,7 @@
 
 	var/datum/mind/clonemind
 	var/grab_ghost_when = CLONER_MATURE_CLONE
+	var/no_breath_mob = FALSE
 
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
@@ -123,6 +124,9 @@
 		return
 	if ((!isnull(occupant)) && (occupant.stat != DEAD))
 		user << "Current clone cycle is [round(get_completion())]% complete."
+		var/time_to_complete = (occupant.cloneloss - (100-heal_level)) / (speed_coeff/4) //Can you guess why I divide speed_coeff by 4 instead of 2?
+		var/seconds = time_to_complete % 60
+		user << "Estimated time until completion : [(time_to_complete-seconds)/60] minutes [(seconds)] seconds."
 	else if(mess)
 		user << "It's filled with blood and vicerea. You swear you can see \
 			it moving..."
@@ -204,6 +208,12 @@
 		H.set_cloned_appearance()
 
 		H.suiciding = FALSE
+
+		if(NOBREATH in H.dna.species.specflags)
+			no_breath_mob = TRUE
+		else
+			no_breath_mob = FALSE
+			
 	attempting = FALSE
 	return TRUE
 
@@ -227,19 +237,19 @@
 		else if(occupant.cloneloss > (100 - heal_level))
 			occupant.Paralyse(4)
 
-			 //Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-((speed_coeff/2)))
+			//Slowly get that clone healed and finished.
+			occupant.adjustCloneLoss(-(speed_coeff/2), 0)
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2)))
+			occupant.adjustBrainLoss(-(speed_coeff/2), 0)
 
-			//So clones don't die of oxyloss in a running pod.
-			if (occupant.reagents.get_reagent_amount("salbutamol") < 30)
-				occupant.reagents.add_reagent("salbutamol", 60)
-			// NOBREATH species will take brute damage in crit instead
-			// so heal that as well
-			if(occupant.reagents.get_reagent_amount("bicaridine") < 5)
-				occupant.reagents.add_reagent("bicaridine", 10)
+			// NOBREATH species will take brute damage in crit instead of oxyloss
+			if(no_breath_mob) 
+				occupant.setBruteLoss(0, 0)
+			else
+				occupant.setOxyLoss(0, 0)
+
+			occupant.updatehealth() //Update health only once we finish healing, instead of possibly 4 times during the proc
 
 			use_power(7500) //This might need tweaking.
 
