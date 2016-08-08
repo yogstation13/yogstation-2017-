@@ -1,0 +1,5 @@
+author: TehFlaminTaco
+delete-after: True
+changes: 
+  - bugfix: "Shadowlings made from various Magic Mirrors now work as they
+should."

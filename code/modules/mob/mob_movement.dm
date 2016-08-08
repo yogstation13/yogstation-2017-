@@ -164,7 +164,7 @@
 	//We are now going to move
 	moving = 1
 
-	if(mob.shadow_walk)
+	if(Can_ShadowWalk(mob))
 		if(Process_ShadowWalk(direct))
 			moving = 0
 			return
@@ -188,6 +188,15 @@
 		mob.throwing = 0
 
 	return .
+
+proc/Can_ShadowWalk(var/mob/mob)
+	if(mob.shadow_walk)
+		return 1
+	if(ishuman(mob))
+		var/mob/living/carbon/human/H = mob
+		if(istype(H.dna.species, /datum/species/shadow/ling))
+			return 1
+	return 0
 
 /client/proc/Process_ShadowWalk(direct)
 	var/turf/target = get_step(mob, direct)
