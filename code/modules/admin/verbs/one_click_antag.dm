@@ -516,7 +516,8 @@
 	return 1
 
 /datum/admins/proc/makeRevenant()
-	new /datum/round_event/ghost_role/revenant
+	new /datum/round_event/ghost_role/revenant(TRUE)
+	return 1
 
 //Shadowling
 /datum/admins/proc/makeShadowling()
