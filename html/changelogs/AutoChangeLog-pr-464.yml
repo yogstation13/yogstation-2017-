@@ -1,0 +1,8 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "Drone lights are now deactivated for one minute by shadowling veil."
+  - rscadd: "Minebots now have a flashlight"
+  - tweak: "Minebots will no longer pull away from you if you are dragging them, unless they were already actively chasing a target."
+  - bugfix: "Changing a minebot's mode will cause it to properly lose its target."
+  - rscadd: "Sentient minebots can now toggle meson vision, their flashlight, their mode, and drop their stored ore."
