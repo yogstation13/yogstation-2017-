@@ -57,6 +57,15 @@
 	time = 40
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/stunchucks
+	name = "Stunchucks"
+	result = /obj/item/weapon/twohanded/stunchucks
+	reqs = list(/obj/item/weapon/restraints/handcuffs = 2,
+				/obj/item/weapon/melee/baton = 2)
+	tools = list(/obj/item/weapon/weldingtool)
+	time = 60
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/teleprod
 	name = "Teleprod"
 	result = /obj/item/weapon/melee/baton/cattleprod/teleprod
