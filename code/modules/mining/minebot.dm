@@ -1,9 +1,9 @@
 /**********************Mining drone**********************/
 
-#define MINEDRONE_COLLECT 0
-#define MINEDRONE_ATTACK 1
-#define MINEDRONE_IDLE 2
-#define MINEDRONE_EMAGGED 3
+#define MINEDRONE_COLLECT 1
+#define MINEDRONE_ATTACK 2
+#define MINEDRONE_IDLE 3
+#define MINEDRONE_EMAGGED 4
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
@@ -19,6 +19,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	wander = 0
+	stop_automated_movement_when_pulled = 1
 	idle_vision_range = 5
 	move_to_delay = 10
 	retreat_distance = 1
@@ -43,12 +44,18 @@
 						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/glass)
 	healable = 0
 	var/mode = MINEDRONE_COLLECT
+	var/light_on = 0
+
+/mob/living/simple_animal/hostile/mining_drone/New()
+	..()
+	toggle_light()
+	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat && user.a_intent == "help")
-			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
+			if(mode != MINEDRONE_IDLE)
 				user << "<span class='info'>[src] is moving around too much to repair!</span>"
 				return
 			if(maxHealth == health)
@@ -57,7 +64,7 @@
 				adjustBruteLoss(-10)
 				user << "<span class='info'>You repair some of the armor on [src].</span>"
 			return
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
+	if(is_mining_scanner(I))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
 		DropOre()
 		return
@@ -67,7 +74,7 @@
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
-	DropOre()
+	DropOre(0)
 	qdel(src)
 	return
 
@@ -77,16 +84,16 @@
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
 	if(M.a_intent == "help")
+		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_IDLE)
-				SetCollectBehavior()
-				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
+				M << "<span class='info'>[src] has been set to idle. It can now be easily repaired.</span>"
 			if(MINEDRONE_COLLECT)
-				SetOffenseBehavior()
-				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
+				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
 			if(MINEDRONE_ATTACK)
-				SetInactiveBehavior()
-				M << "<span class='info'>[src] has been set to idle.</span>"
+				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
+			else
+				M << "<span class='warning'>[src] does not seem to be responding!</span>"
 		return
 	..()
 
@@ -94,7 +101,8 @@
 	if(mode == MINEDRONE_EMAGGED)
 		return
 	mode = MINEDRONE_COLLECT
-	AIStatus = AI_ON
+	LoseTarget()
+	AIStatus = ckey ? AI_OFF : AI_ON
 	idle_vision_range = 9
 	search_objects = 2
 	wander = 1
@@ -102,19 +110,22 @@
 	minimum_distance = 1
 	retreat_distance = null
 	icon_state = "mining_drone"
+	src << "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	if(mode == MINEDRONE_EMAGGED)
 		return
 	mode = MINEDRONE_ATTACK
-	AIStatus = AI_ON
+	LoseTarget()
+	AIStatus = ckey ? AI_OFF : AI_ON
 	idle_vision_range = 7
 	search_objects = 0
-	wander = 0
+	wander = 1
 	ranged = 1
 	retreat_distance = 1
 	minimum_distance = 2
 	icon_state = "mining_drone_offense"
+	src << "<span class='info'>You are set to attack mode. You can now attack from range.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetInactiveBehavior()
 	if(mode == MINEDRONE_EMAGGED)
@@ -129,6 +140,7 @@
 	minimum_distance = 0
 	retreat_distance = null
 	icon_state = "mining_drone_idle"
+	src << "<span class='info'>You are set to idle mode. You can now be repaired.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetEmagBehavior()
 	mode = MINEDRONE_EMAGGED
@@ -141,11 +153,15 @@
 	retreat_distance = 1
 	minimum_distance = 2
 	environment_smash = 1
+	stop_automated_movement_when_pulled = 0
 	projectiletype = /obj/item/projectile/kinetic/traitor //double the damage. Very lethal in space, mildly lethal otherwise
 	icon_state = "mining_drone_emag"
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)
-	if(mode == MINEDRONE_EMAGGED || ckey)
+	if(mode == MINEDRONE_EMAGGED)
+		return
+	if(ckey)
+		src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
 		return
 	if(user)
 		user << "<span class='notice'>The [src] buzzes and beeps.</span>"
@@ -161,7 +177,7 @@
 	return
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore))
+	if(istype(target, /obj/item/weapon/ore) && mode == MINEDRONE_COLLECT)
 		CollectOre()
 		return
 	..()
@@ -176,9 +192,13 @@
 			O.loc = src
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
+/mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
+		if(message)
+			src << "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>"
 		return
+	if(message)
+		src << "<span class='notice'>You dump your stored ore.</span>"
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
@@ -189,22 +209,78 @@
 		SetOffenseBehavior()
 	. = ..()
 
+/mob/living/simple_animal/hostile/mining_drone/sentience_act()
+	check_friendly_fire = 0
+	AIStatus = AI_OFF
+
+/mob/living/simple_animal/hostile/mining_drone/proc/fix_light()
+	light_on = 0
+
+//Verbs
+
+/mob/living/simple_animal/hostile/mining_drone/verb/toggle_light()
+	set category = "Minebot"
+	set name = "Toggle Minebot Light"
+
+	if(light_on == 2)
+		return
+
+	if(light_on)
+		AddLuminosity(-6)
+	else
+		AddLuminosity(6)
+	light_on = !light_on
+	src << "<span class='notice'>You toggle your light [light_on ? "on" : "off"].</span>"
+
+
+/mob/living/simple_animal/hostile/mining_drone/verb/toggle_meson_vision()
+	set category = "Minebot"
+	set name = "Toggle Meson Vision"
+	if(sight & SEE_TURFS)
+		sight &= ~SEE_TURFS
+		see_invisible = SEE_INVISIBLE_LIVING
+	else
+		sight |= SEE_TURFS
+		see_invisible = SEE_INVISIBLE_MINIMUM
+
+	src << "<span class='notice'>You toggle your meson vision [(sight & SEE_TURFS) ? "on" : "off"].</span>"
+
+/mob/living/simple_animal/hostile/mining_drone/verb/toggle_mode()
+	set category = "Minebot"
+	set name = "Toggle Mode"
+
+	switch(mode)
+		if(MINEDRONE_IDLE)
+			SetCollectBehavior()
+		if(MINEDRONE_COLLECT)
+			SetOffenseBehavior()
+		if(MINEDRONE_ATTACK)
+			SetInactiveBehavior()
+		else //This should never happen.
+			mode = MINEDRONE_COLLECT
+
+/mob/living/simple_animal/hostile/mining_drone/verb/dump_ore()
+	set category = "Minebot"
+	set name = "Dump Ore"
+
+	DropOre()
+
 /**********************Minebot Upgrades**********************/
 
 //Melee
 
-/obj/item/device/mine_bot_ugprade
+/obj/item/device/mine_bot_upgrade
 	name = "minebot melee upgrade"
 	desc = "A minebot upgrade."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 
-/obj/item/device/mine_bot_ugprade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
+/obj/item/device/mine_bot_upgrade/afterattack(mob/living/simple_animal/hostile/mining_drone/M, mob/user, proximity)
 	if(!istype(M) || !proximity)
 		return
 	upgrade_bot(M, user)
 
-/obj/item/device/mine_bot_ugprade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
 		user << "[src] already has a combat upgrade installed!"
 		return
@@ -214,10 +290,10 @@
 
 //Health
 
-/obj/item/device/mine_bot_ugprade/health
+/obj/item/device/mine_bot_upgrade/health
 	name = "minebot chassis upgrade"
 
-/obj/item/device/mine_bot_ugprade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
 		user << "[src] already has a reinforced chassis!"
 		return
@@ -227,10 +303,10 @@
 
 //Cooldown
 
-/obj/item/device/mine_bot_ugprade/cooldown
+/obj/item/device/mine_bot_upgrade/cooldown
 	name = "minebot cooldown upgrade"
 
-/obj/item/device/mine_bot_ugprade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
+/obj/item/device/mine_bot_upgrade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	name = "minebot cooldown upgrade"
 	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
 		user << "[src] already has a decreased weapon cooldown!"
