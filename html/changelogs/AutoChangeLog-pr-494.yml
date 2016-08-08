@@ -1,0 +1,4 @@
+author: Stealthkibbler
+delete-after: True
+changes: 
+  - bugfix: "syndicate pod no longer breaches lavaland"

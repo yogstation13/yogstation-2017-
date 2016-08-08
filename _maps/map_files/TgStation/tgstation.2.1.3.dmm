@@ -13430,6 +13430,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "azj" = (
@@ -16048,9 +16057,9 @@
 /area/maintenance/fsmaint2)
 "aEu" = (
 /obj/machinery/camera{
-	c_tag = "Labor Camp Vending";
+	c_tag = "Hyrdroponics Back Room";
 	dir = 1;
-	network = list("Labor")
+	network = list("SS13")
 	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -17297,10 +17306,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aGR" = (
-/obj/structure/table,
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
+/obj/machinery/suit_storage_unit/command,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aGS" = (
@@ -22732,9 +22738,9 @@
 	pixel_y = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Labor Camp Maintenance";
+	c_tag = "Kitchen";
 	dir = 2;
-	network = list("Labor")
+	network = list("SS13")
 	},
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel{
@@ -31078,13 +31084,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
-/turf/open/floor/plasteel{
-	icon_state = "arrival";
-	dir = 4
+/obj/effect/landmark/start{
+	name = "Prison Officer"
 	},
-/area/quartermaster/office)
+/turf/open/floor/plasteel{
+	icon_state = "redcorner";
+	dir = 1
+	},
+/area/hallway/primary/fore)
 "bkV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
@@ -47999,9 +48006,9 @@
 	pixel_x = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Labor Camp Mine";
+	c_tag = "CMO Office";
 	dir = 8;
-	network = list("Labor");
+	network = list("SS13");
 	pixel_x = 0;
 	pixel_y = -22
 	},
@@ -69031,27 +69038,64 @@
 /obj/machinery/computer/communications,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
-"cGb" = (
+"cFM" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 4
+	},
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_s6";
 	dir = 2
 	},
 /area/shuttle/transport)
-"cGa" = (
-/obj/structure/chair{
-	dir = 1
+"cFN" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
-/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
-"cFZ" = (
-/obj/structure/closet/crate,
-/turf/open/floor/plasteel/shuttle/purple,
+"cFO" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/plating,
 /area/shuttle/transport)
-"cFY" = (
+"cFP" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/transport)
+"cFQ" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle/transport)
+"cFR" = (
 /turf/open/floor/plasteel/shuttle/purple,
 /turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f10"
+	icon_state = "swall_f9"
 	},
+/area/shuttle/transport)
+"cFS" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFT" = (
+/obj/machinery/computer/shuttle/ferry/request,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFU" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cFV" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/transport)
+"cFW" = (
+/turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -69063,62 +69107,25 @@
 	dir = 2
 	},
 /area/shuttle/transport)
-"cFW" = (
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFV" = (
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle,
-/area/shuttle/transport)
-"cFU" = (
-/obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFT" = (
-/obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFS" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle/purple,
-/area/shuttle/transport)
-"cFR" = (
+"cFY" = (
 /turf/open/floor/plasteel/shuttle/purple,
 /turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
+	icon_state = "swall_f10"
 	},
 /area/shuttle/transport)
-"cFQ" = (
+"cFZ" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cGa" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/purple,
+/area/shuttle/transport)
+"cGb" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
-/area/shuttle/transport)
-"cFP" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"cFO" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/transport)
-"cFN" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/shuttle/transport)
-"cFM" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_s9";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -93155,7 +93162,7 @@ bfA
 bgD
 bhZ
 bjt
-bkU
+bjt
 bej
 bnX
 bpH
@@ -96732,7 +96739,7 @@ aAt
 aAt
 aEd
 aFz
-cFz
+aGR
 aEd
 aaa
 aJQ
@@ -97999,7 +98006,7 @@ anP
 aot
 apc
 apy
-apS
+bkU
 aqj
 aqG
 arf
@@ -109072,7 +109079,7 @@ aHs
 aIM
 aKq
 aLH
-aNB
+aLJ
 aKq
 aPX
 aRt
@@ -109585,7 +109592,7 @@ aFQ
 aHu
 aIO
 aKq
-aLJ
+aLK
 aND
 aKq
 aPZ

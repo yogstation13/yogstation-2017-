@@ -33,6 +33,24 @@
 		amount += BP.burn_dam
 	return amount
 
+//Set brute/burn damages to the amount specified.
+/mob/living/carbon/human/setBruteLoss(amount)
+	var/set_damage = max(0, amount)
+	var/current_damage = getBruteLoss()
+
+	if(current_damage > set_damage)
+		heal_overall_damage(current_damage - set_damage, 0)
+	else if(current_damage < set_damage)
+		take_overall_damage(set_damage - current_damage, 0)
+
+/mob/living/carbon/human/setFireLoss(amount)
+	var/set_damage = max(0, amount)
+	var/current_damage = getFireLoss()
+	
+	if(current_damage > set_damage)
+		heal_overall_damage(0, current_damage - set_damage)
+	else if(current_damage < set_damage)
+		take_overall_damage(0, set_damage - current_damage)
 
 /mob/living/carbon/human/adjustBruteLoss(amount, updating_health, application=DAMAGE_PHYSICAL)
 	if(status_flags & GODMODE)

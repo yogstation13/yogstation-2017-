@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Alien Infestation, Brand Intelligence (rogue vendors), Swarmer shells, and meteor events now have all had a drop of weight. To compensate, their weights now grow every passing hour."
+  - bugfix: "Bloody footprints from blood tails can no longer be \"identified\"."
+  - bugfix: "You can no longer get immune to shadowling conversions when two of them enthrall you at the same time."

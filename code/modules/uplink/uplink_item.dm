@@ -241,7 +241,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
-	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
+	desc = "A box that contains five EMP grenades and an EMP implant. Useful to disrupt communication, \
 			security's energy weapons, and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/weapon/storage/box/syndie_kit/emp
 	cost = 2
