@@ -16057,9 +16057,9 @@
 /area/maintenance/fsmaint2)
 "aEu" = (
 /obj/machinery/camera{
-	c_tag = "Labor Camp Vending";
+	c_tag = "Hyrdroponics Back Room";
 	dir = 1;
-	network = list("Labor")
+	network = list("SS13")
 	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -22738,9 +22738,9 @@
 	pixel_y = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Labor Camp Maintenance";
+	c_tag = "Kitchen";
 	dir = 2;
-	network = list("Labor")
+	network = list("SS13")
 	},
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel{
@@ -48006,9 +48006,9 @@
 	pixel_x = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Labor Camp Mine";
+	c_tag = "CMO Office";
 	dir = 8;
-	network = list("Labor");
+	network = list("SS13");
 	pixel_x = 0;
 	pixel_y = -22
 	},
