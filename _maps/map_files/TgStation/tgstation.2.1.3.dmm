@@ -13430,6 +13430,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "azj" = (
@@ -17297,10 +17306,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aGR" = (
-/obj/structure/table,
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
+/obj/machinery/suit_storage_unit/command,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aGS" = (
@@ -96733,7 +96739,7 @@ aAt
 aAt
 aEd
 aFz
-cFz
+aGR
 aEd
 aaa
 aJQ
