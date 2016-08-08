@@ -105,7 +105,15 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 5)
 	build_path = /obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty
-	category = list("initial", "Botany Chemicals")
+	category = list("initial","Botany Chemicals")
+
+/datum/design/mutagen
+	name = "Unstable Mutagen"
+	id = "unstable_mutagen"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 600)
+	build_path = /obj/item/weapon/reagent_containers/glass/bottle/mutagen
+	category = list("initial","Botany Chemicals")
 
 /datum/design/cloth
 	name = "Roll of cloth"

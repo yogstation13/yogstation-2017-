@@ -282,7 +282,6 @@
 				beaker.reagents.add_reagent(R, D.make_reagents[R])
 			. = 1
 			--i
-
 	menustat = "complete"
 	update_icon()
 	return .

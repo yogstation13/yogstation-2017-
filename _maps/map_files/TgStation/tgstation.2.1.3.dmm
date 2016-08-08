@@ -13430,6 +13430,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
+/obj/item/stack/sheet/rglass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "azj" = (
@@ -16048,9 +16057,9 @@
 /area/maintenance/fsmaint2)
 "aEu" = (
 /obj/machinery/camera{
-	c_tag = "Labor Camp Vending";
+	c_tag = "Hyrdroponics Back Room";
 	dir = 1;
-	network = list("Labor")
+	network = list("SS13")
 	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
@@ -17297,10 +17306,7 @@
 	},
 /area/ai_monitored/storage/eva)
 "aGR" = (
-/obj/structure/table,
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
+/obj/machinery/suit_storage_unit/command,
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva)
 "aGS" = (
@@ -22732,9 +22738,9 @@
 	pixel_y = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Labor Camp Maintenance";
+	c_tag = "Kitchen";
 	dir = 2;
-	network = list("Labor")
+	network = list("SS13")
 	},
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel{
@@ -31078,13 +31084,14 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkU" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/stockexchange,
-/turf/open/floor/plasteel{
-	icon_state = "arrival";
-	dir = 4
+/obj/effect/landmark/start{
+	name = "Prison Officer"
 	},
-/area/quartermaster/office)
+/turf/open/floor/plasteel{
+	icon_state = "redcorner";
+	dir = 1
+	},
+/area/hallway/primary/fore)
 "bkV" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
@@ -47999,9 +48006,9 @@
 	pixel_x = 25
 	},
 /obj/machinery/camera{
-	c_tag = "Labor Camp Mine";
+	c_tag = "CMO Office";
 	dir = 8;
-	network = list("Labor");
+	network = list("SS13");
 	pixel_x = 0;
 	pixel_y = -22
 	},
@@ -96732,7 +96739,7 @@ aAt
 aAt
 aEd
 aFz
-cFz
+aGR
 aEd
 aaa
 aJQ
@@ -97999,7 +98006,7 @@ anP
 aot
 apc
 apy
-apS
+bkU
 aqj
 aqG
 arf
