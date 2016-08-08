@@ -1,12 +1,28 @@
 
 //Harvest; activated ly clicking the target, will try to drain their essence.
+//CTRL+Clicking a living mob will quick-cast Transmit
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+	var/list/modifiers = params2list(params)
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
+		return
+
 	A.examine(src)
 	if(ishuman(A))
 		if(A in drained_mobs)
 			src << "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" //feedback at any range
 		else if(in_range(src, A))
 			Harvest(A)
+
+//Quick-cast transmit
+/mob/living/simple_animal/revenant/CtrlClickOn(atom/A, params)
+	if(!revtransmit)
+		return
+	if(istype(A, /mob/living))
+		var/mob/living/LM = A
+		var/list/targets = list()
+		targets += LM
+		revtransmit.cast(targets)
 
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
