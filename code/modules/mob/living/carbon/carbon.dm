@@ -129,6 +129,13 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
 						"<span class='notice'>You hug [src] to make them feel better!</span>")
+
+
+		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+
+		if(reagents.has_reagent("capilletum") && lying)
+			return
+
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
@@ -136,8 +143,6 @@
 		if(resting)
 			resting = 0
 			update_canmove()
-
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	. = ..()
