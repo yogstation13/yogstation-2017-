@@ -84,7 +84,7 @@
 		return ..()
 	else if(attack_type == PROJECTILE_ATTACK)
 		return ..()
-	else if(attack_type == MELEE_ATTACK && damage > block_limit)
+	else if(attack_type == MELEE_ATTACK && damage >= block_limit)
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		var/roll_for_shatter = check_shatter(owner, damage)
 		if(roll_for_shatter)
@@ -116,6 +116,7 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
+	block_limit = 15
 
 /obj/item/weapon/shield/riot/roman/prop
 	desc = "Made of cheap, lightweight plastic. Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
