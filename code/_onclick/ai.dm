@@ -138,47 +138,49 @@
 
 /* Airlocks */
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
-	if(emagged)
+	if(emagged || wires.is_cut(WIRE_BOLTS) || !hasPower())
 		return
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
+		unbolt()
 	else
-		Topic("aiDisable=4", list("aiDisable"="4"), 1)
+		bolt()
 	return
-/obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
-	if(emagged)
+
+/obj/machinery/door/airlock/AIAltClick() // Electrifies doors.
+	if(emagged || wires.is_cut(WIRE_SHOCK) || !hasPower())
 		return
-	if(!secondsElectrified)
-		// permenant shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+	if(timeElectrified == 0)
+		electrify(ELECTRIFY_ON, usr)
 	else
-		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-		Topic("aiDisable=5", list("aiDisable"="5"), 1)
+		unelectrify()
 	return
+
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(emagged)
 		return
 	if(density)
-		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
+		open()
 	else
-		Topic("aiDisable=7", list("aiDisable"="7"), 1)
+		close()
 	return
+
 /obj/machinery/door/airlock/AICtrlShiftClick()  // Sets/Unsets Emergency Access Override
-	if(emagged)
+	if(emagged || !hasPower())
 		return
 	if(!emergency)
-		Topic("aiEnable=11", list("aiEnable"="11"), 1) // 1 meaning no window (consistency!)
+		emergency = 1
 	else
-		Topic("aiDisable=11", list("aiDisable"="11"), 1)
+		emergency = 0
+	update_icon()
 	return
 
 /obj/machinery/door/airlock/AIShiftAltClick() //toggles speed override
-	if(emagged)
+	if(emagged || wires.is_cut(WIRE_TIMING) || !hasPower())
 		return
 	if(!normalspeed)
-		Topic("aiEnable=9", list("aiEnable"="9"), 1) // 1 meaning no window (consistency!)
+		normalspeed = 1
 	else
-		Topic("aiDisable=9", list("aiDisable"="9"), 1)
+		normalspeed = 0
 	return
 
 
@@ -191,6 +193,7 @@
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
 	toggle_lethal()
 	add_fingerprint(usr)
+
 /obj/machinery/turretid/AICtrlClick() //turns off/on Turrets
 	toggle_on()
 	add_fingerprint(usr)
