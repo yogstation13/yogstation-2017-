@@ -53999,13 +53999,14 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
+/obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plasteel,
@@ -57010,7 +57011,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "cim" = (
-/obj/machinery/space_heater,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -68957,15 +68958,9 @@
 	},
 /area/hallway/primary/central)
 "cFz" = (
-/obj/structure/table,
-/obj/item/stack/sheet/rglass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva)
+/area/atmos)
 "cFA" = (
 /obj/docking_port/stationary/random{
 	id = "pod_asteroid1";
@@ -101425,7 +101420,7 @@ cgy
 chx
 cik
 cjt
-bTW
+cFz
 bTW
 bWu
 cmB
@@ -101677,7 +101672,7 @@ cbk
 ccq
 bSo
 cep
-cfu
+cep
 cep
 bSo
 cil
