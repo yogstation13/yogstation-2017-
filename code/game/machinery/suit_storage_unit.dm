@@ -30,47 +30,56 @@
 	suit_type = /obj/item/clothing/suit/space/eva
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
 	mask_type = /obj/item/clothing/mask/breath
+	req_access = list(access_brig)
 
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/captain
 	mask_type = /obj/item/clothing/mask/gas
 	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+	req_access = list(access_captain)
 
 /obj/machinery/suit_storage_unit/command
 	suit_type = /obj/item/clothing/suit/space/heads
 	helmet_type = /obj/item/clothing/head/helmet/space/heads
 	mask_type = /obj/item/clothing/mask/breath
+	req_access = list(access_heads)
 
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/clothing/shoes/magboots
+	req_access = list(access_engine)
 
 /obj/machinery/suit_storage_unit/ce
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type= /obj/item/clothing/shoes/magboots/advance
+	req_access = list(access_ce)
 
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/clothing/shoes/magboots/security
+	req_access = list(access_armory)
 
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	storage_type = /obj/item/clothing/shoes/magboots/security
+	req_access = list(access_hos)
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
 	storage_type = /obj/item/weapon/watertank/atmos
+	req_access = list(access_atmospherics)
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
 	mask_type = /obj/item/clothing/mask/gas/explorer
+	req_access = list(access_mining)
 
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
@@ -79,10 +88,12 @@
 /obj/machinery/suit_storage_unit/cmo
 	suit_type = /obj/item/clothing/suit/space/hardsuit/medical
 	mask_type = /obj/item/clothing/mask/breath
+	req_access = list(access_cmo)
 
 /obj/machinery/suit_storage_unit/rd
 	suit_type = /obj/item/clothing/suit/space/hardsuit/rd
 	mask_type = /obj/item/clothing/mask/breath
+	req_access = list(access_rd)
 
 /obj/machinery/suit_storage_unit/syndicate
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
@@ -114,6 +125,7 @@
 /obj/machinery/suit_storage_unit/mmedic
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining/mmedic
 	mask_type = /obj/item/clothing/mask/breath
+	req_access = list(48)
 
 /obj/machinery/suit_storage_unit/New()
 	..()
@@ -326,6 +338,39 @@
 
 	return ..()
 
+/obj/machinery/suit_storage_unit/emag_act(mob/user)
+	if(locked) // under this case, it backfires.
+		if(!emagged)
+			emagged = TRUE
+		else
+			spawn(2)
+				user << "<span class='warning'>The suit storage is sealed shut!</span>"
+
+
+	else
+		if(!emagged)
+			emagged = TRUE
+			locked = FALSE
+
+	user << "<span class='warning'>You slide the device right down the suit storage unit.</span>"
+
+/obj/machinery/suit_storage_unit/attack_hand(mob/user)
+	if(locked)
+		if(emagged)
+			user << "<span class='warning'>The suit storage is sealed extra tight!</span>"
+			return
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_id)
+				var/obj/item/weapon/card/id/I = H.get_idcard()
+				if(I.access.Find(req_access))
+					..()
+					return
+
+	user << "<span class='warning'>The suit storage is locked! You cannot open it without the proper access levels!</span>"
+
+
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 										datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -365,6 +410,9 @@
 					dump_contents() // Dump out contents if someone is in there.
 			. = TRUE
 		if("lock")
+			if(emagged)
+				return
+
 			locked = !locked
 			. = TRUE
 		if("uv")
