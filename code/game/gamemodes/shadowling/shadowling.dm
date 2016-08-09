@@ -260,6 +260,8 @@ Made by Xhuis
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,NODISMEMBER) //Can't use guns due to muzzle flash
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+	sight_mod = SEE_MOBS
+	invis_sight = 2
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)

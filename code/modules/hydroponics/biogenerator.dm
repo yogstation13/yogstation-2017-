@@ -174,6 +174,7 @@
 			dat += "Weed Killer: <A href='?src=\ref[src];create=wk;amount=1'>Make</A><A href='?src=\ref[src];create=wk;amount=5'>x5</A> ([50/efficiency])<BR>"
 			dat += "Pest Killer: <A href='?src=\ref[src];create=pk;amount=1'>Make</A><A href='?src=\ref[src];create=pk;amount=5'>x5</A> ([50/efficiency])<BR>"
 			dat += "Empty bottle: <A href='?src=\ref[src];create=empty;amount=1'>Make</A><A href='?src=\ref[src];create=empty;amount=5'>x5</A> ([5/efficiency])<BR>"
+			dat += "Unstable Mutagen: <A href='?src=\ref[src];create=mutagen;amount=1'>Make</A><A href='?src=\ref[src];create=mutagen;amount=2'>x2</A><A href='?src=\ref[src];create=mutagen;amount=5'>x5</A> ([600/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Leather and Cloth:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -306,6 +307,10 @@
 			if (check_cost(5/efficiency))
 				return 0
 			else new/obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty(src.loc)
+		if("mutagen")
+			if (check_cost(600/efficiency))
+				return 0
+			else new/obj/item/weapon/reagent_containers/glass/bottle/mutagen(src.loc)
 		if("cloth")
 			if (check_cost(50/efficiency))
 				return 0

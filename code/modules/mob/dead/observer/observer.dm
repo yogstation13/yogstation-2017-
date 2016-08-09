@@ -323,6 +323,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.key = key
 	return 1
 
+/mob/dead/observer/verb/register_pai_candidate()
+	set category = "Ghost"
+	set name = "pAI Setup"
+	set desc = "Upload a fragment of your personality to the global pAI databanks."
+	
+	if(istype(usr, /mob/dead/observer))
+		if(SSpai)
+			SSpai.recruitWindow(client.mob)
+	else
+		usr << "Can't become a pAI candidate while not dead!"
+
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 	if(message)
 		src << "<span class='ghostalert'>[message]</span>"
