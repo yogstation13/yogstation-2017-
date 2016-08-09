@@ -116,7 +116,6 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
-	block_limit = 15
 
 /obj/item/weapon/shield/riot/roman/prop
 	desc = "Made of cheap, lightweight plastic. Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
@@ -135,6 +134,7 @@
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
 	burn_state = FLAMMABLE
+	block_limit = 15
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
