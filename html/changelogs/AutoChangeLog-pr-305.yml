@@ -1,8 +1,0 @@
-author: Stealthkibbler
-delete-after: True
-changes: 
-  - rscadd: "New Lavaland Ghost Role, Ports TGs Hermit along with their DMM for the Hermits hideout, only one hermit per round! Will you survive on your own and stand the test of time? Or will you crumble into the ashes and be forgotten by time itself?"
-  - rscadd: "More ruins and crash sites are beginning to crop up on Lavalands surface."
-  - tweak: "lavaland budget should be getting doubled from 60 to 125."
-  - rscadd: "Due to recent legal problems regarding staff safety and wellbeing Nanotrasen has fitted their interplanetary prisoner shuttles with more survival gear in the event of an emergency."
-  - tweak: "Crashed Prisoner Shuttle has more gear to encourage group-work but not enough for everyone..."

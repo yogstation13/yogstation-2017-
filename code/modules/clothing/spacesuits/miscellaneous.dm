@@ -236,6 +236,22 @@ Contains:
 	flash_protect = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 
+
+/obj/item/clothing/suit/space/heads
+	name = "Command EVA suit"
+	icon_state = "heads"
+	item_state = "heads"
+	desc = "A sleek modern suit with the ability to protect you whilst in space, the stitching is lined with plasteel alloy."
+	armor = list(melee = 10, bullet = 10, laser = 10,energy = 0, bomb = 0, bio = 100, rad = 20)
+
+/obj/item/clothing/head/helmet/space/heads
+	name = "Command EVA helmet"
+	icon_state = "heads"
+	item_state = "heads"
+	desc = "A sleek modern helmet with a slightly tinted visor."
+	flash_protect = 1
+	armor = list(melee = 10, bullet = 10, laser = 10,energy = 0, bomb = 0, bio = 100, rad = 20)
+
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."

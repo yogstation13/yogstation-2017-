@@ -78,6 +78,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
 	origin_tech = "combat=5;biotech=7"
+	decay_time = 0
 
 /obj/item/organ/heart/demon/update_icon()
 	return //always beating visually

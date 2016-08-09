@@ -56,6 +56,7 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
+	var/sight_mod = 0 //Add these flags to your mob's sight flag. For shadowlings and things to see people through walls.
 	var/darksight = 2
 
 	// species flags. these can be found in flags.dm
@@ -170,7 +171,6 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -836,11 +836,11 @@
 
 
 /datum/species/proc/update_sight(mob/living/carbon/human/H)
-	H.sight = initial(H.sight)
+	H.sight = initial(H.sight) | sight_mod
 	H.see_in_dark = darksight
 	H.see_invisible = invis_sight
 
-	if(H.client.eye != H)
+	if(H.client && H.client.eye != H)
 		var/atom/A = H.client.eye
 		if(A.update_remote_sight(H)) //returns 1 if we override all other sight updates.
 			return

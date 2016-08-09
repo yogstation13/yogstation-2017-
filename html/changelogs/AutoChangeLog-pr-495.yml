@@ -1,0 +1,6 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "The EMP kit no longer claims to contain two EMP grenades even though it actually contains five."
+  - bugfix: "Photo descriptions will now show creatures as being hurt when they are below 75% health, instead of below 75 health."
+  - bugfix: "Fixed a bug where the nuke would sometimes not count down."
