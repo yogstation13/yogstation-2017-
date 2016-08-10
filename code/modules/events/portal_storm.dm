@@ -1,14 +1,14 @@
-/datum/round_event_control/portal_storm_syndicate
+/* /datum/round_event_control/portal_storm_syndicate
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
-	weight = 2
-	min_players = 15
-	earliest_start = 18000
+	weight = 2 //Set to 1 or 2 to enable, you monster
+	min_players = 15 //To make sure it never starts
+	earliest_start = 18000 
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
 	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/noloot = 8,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2)
+						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2) */
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
