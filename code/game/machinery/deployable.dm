@@ -292,13 +292,13 @@
 							healthreport = 1
 							user << "<span class='notice'>You toggle on the barrier's functionality report. It will now report how much health it is has remaining.</span>"
 			else
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(2, 1, src)
 				s.start()
 				visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (istype(W, /obj/item/weapon/tool/wrench))
+	else if (istype(W, /obj/item/weapon/wrench))
 		if (health < src.maxhealth)
 			health = src.maxhealth
 			emagged = 0
@@ -312,7 +312,7 @@
 
 		src.req_access = list(access_security)
 
-	else if (istype(W, /obj/item/weapon/tool/screwdriver))
+	else if (istype(W, /obj/item/weapon/screwdriver))
 
 		if (src.locked == 1.0)
 			user << "<span class='danger'>You can't eject anything from the barrier while it's locked!</span>"
@@ -464,7 +464,7 @@
 		src.emagged = 1
 		src.req_access = null
 		user << "<span class='notice'>You break the ID authentication lock on \the [src].</span>"
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
 		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
@@ -472,7 +472,7 @@
 	else if (src.emagged == 1)
 		src.emagged = 2
 		user << "<span class='notice'>You short out the anchoring mechanism on \the [src].</span>"
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
 		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
@@ -519,7 +519,7 @@
 /*	var/obj/item/stack/rods/ =*/
 	new /obj/item/stack/rods(Tsec)
 
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
