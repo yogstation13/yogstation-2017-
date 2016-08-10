@@ -84,7 +84,7 @@
 		return ..()
 	else if(attack_type == PROJECTILE_ATTACK)
 		return ..()
-	else if(attack_type == MELEE_ATTACK && damage > block_limit)
+	else if(attack_type == MELEE_ATTACK && damage >= block_limit)
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		var/roll_for_shatter = check_shatter(owner, damage)
 		if(roll_for_shatter)
@@ -134,6 +134,7 @@
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
 	burn_state = FLAMMABLE
+	block_limit = 15
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
