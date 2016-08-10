@@ -35,7 +35,7 @@
             action='dispense' params='{"item": "shoes"}'>{{data.shoes || "Empty"}}</ui-button>
         </ui-section>
         {{#if data.extra_items}}
-          <ui-section label='Auxilary Storage'>
+          <ui-section label='Auxiliary Storage'>
           {{#each data.extra_items:i}}
             <ui-button icon='{{. ? "square" : "square-o"}}' state='{{. ? null : "disabled"}}'
             action='dispense' params='{"item": "extra_items", "item_num": {{i+1}} }'>{{. || "Empty"}}</ui-button>
