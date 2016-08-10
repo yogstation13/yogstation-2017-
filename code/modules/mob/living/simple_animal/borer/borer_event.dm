@@ -4,7 +4,7 @@
 	weight = 15
 	max_occurrences = 1
 
-	earliest_start = 36000 // an entire hour
+	earliest_start = 27000 // an entire hour
 
 /datum/round_event/borer
 	announceWhen = 3000 //Borers get 5 minutes till the crew tries to murder them.
@@ -18,7 +18,9 @@
 /datum/round_event/borer/start()
 
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in world)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
+		if(qdeleted(temp_vent))
+			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.parents["p1"]
 			if(temp_vent_parent.other_atmosmch.len > 20)
