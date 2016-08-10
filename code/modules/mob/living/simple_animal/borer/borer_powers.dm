@@ -350,7 +350,7 @@
 
 	switch(punishment) //Hardcoding this stuff.
 		if("Blindness")
-			victim.eye_blind = 20
+			victim.blind_eyes(2)
 		if("Deafness")
 			victim.ear_deaf = 20
 		if("Stun")
