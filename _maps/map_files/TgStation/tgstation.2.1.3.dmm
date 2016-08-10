@@ -43795,12 +43795,11 @@
 /obj/machinery/camera{
 	c_tag = "Custodial Closet"
 	},
-/obj/vehicle/janicart,
+/obj/structure/closet/l3closet/janitor,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bIN" = (
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/structure/closet/jcloset,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bIO" = (
@@ -45414,6 +45413,7 @@
 	pixel_y = -29
 	},
 /obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/weapon/storage/box/lights/mixed,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bLV" = (
@@ -68957,15 +68957,9 @@
 	},
 /area/hallway/primary/central)
 "cFz" = (
-/obj/structure/table,
-/obj/item/stack/sheet/rglass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/vehicle/janicart,
 /turf/open/floor/plasteel,
-/area/ai_monitored/storage/eva)
+/area/janitor)
 "cFA" = (
 /obj/docking_port/stationary/random{
 	id = "pod_asteroid1";
@@ -100374,7 +100368,7 @@ aMR
 aMR
 bFZ
 bHr
-bIP
+cFz
 bKA
 bLY
 bNn
