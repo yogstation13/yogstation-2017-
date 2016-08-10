@@ -137,7 +137,8 @@
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
-
+	if(wizard_mob.dna && wizard_mob.dna.species.dangerous_existence)
+		wizard_mob.set_species(/datum/species/human)
 	//So zards properly get their items when they are admin-made.
 	qdel(wizard_mob.wear_suit)
 	qdel(wizard_mob.head)
