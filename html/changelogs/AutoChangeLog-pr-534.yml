@@ -1,0 +1,4 @@
+author: X-TheDark
+delete-after: True
+changes: 
+  - bugfix: "Antagonist weights should be working properly now."
