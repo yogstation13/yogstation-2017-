@@ -1,5 +1,0 @@
-author: SKR6DarkVoid
-delete-after: True
-changes: 
-  - rscadd: "Two janitorial roles are now open, but we only have one set, I have added another set of lockers to accommodate for these issues."
-  - bugfix: "Fixes an Engineering Camera issue, apparently it was labeled wrong."

@@ -1,4 +1,0 @@
-author: X-TheDark
-delete-after: True
-changes: 
-  - bugfix: "Telescience console can now properly teleport objects on/off beacons that are on another zlevel"
