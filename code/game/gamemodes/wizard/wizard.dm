@@ -19,15 +19,20 @@
 	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 
 /datum/game_mode/wizard/pre_setup()
+	//Potential here, people. Magin' Rages Light
+	var/list/datum/mind/wizards = pick_candidate(amount = required_enemies)
+	update_not_chosen_candidates()
+	
+	for(var/v in wizards)
+		var/datum/mind/wizard = v
+		wizards += wizard
+		modePlayer += wizard
+		wizard.assigned_role = "Wizard"
+		wizard.special_role = "Wizard"
+		if(wizardstart.len == 0)
+			wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
+			return 0
 
-	var/datum/mind/wizard = pick_candidate()
-	wizards += wizard
-	modePlayer += wizard
-	wizard.assigned_role = "Wizard"
-	wizard.special_role = "Wizard"
-	if(wizardstart.len == 0)
-		wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
-		return 0
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(wizardstart)
 
