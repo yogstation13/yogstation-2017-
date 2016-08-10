@@ -38,15 +38,15 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
-	for(var/j = 0, j < cores_to_spawn, j++)
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/blob = pick_candidate()
+	var/list/datum/mind/infestators = pick_candidate(amount = cores_to_spawn)
+	update_not_chosen_candidates()
+
+	for(var/v in infestators)
+		var/datum/mind/blob = v
 		blob_overminds += blob
 		blob.assigned_role = "Blob"
 		blob.special_role = "Blob"
 		log_game("[blob.key] (ckey) has been selected as a Blob")
-		antag_candidates -= blob
 
 	if(!blob_overminds.len)
 		return 0
