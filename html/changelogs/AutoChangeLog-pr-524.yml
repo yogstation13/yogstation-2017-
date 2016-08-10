@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Weapons / Melee attacks that do 25 brute damage now breach riot shields."
+  - rscadd: "Wooden buckler block limits are reduced to 15."

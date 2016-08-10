@@ -87,15 +87,15 @@ Made by Xhuis
 
 	var/shadowlings = max(2, round(num_players()/10))
 
+	var/list/datum/mind/shadowmen = pick_candidate(amount = shadowlings)
+	update_not_chosen_candidates()
 
-	while(shadowlings)
-		var/datum/mind/shadow = pick_candidate()
+	for(var/v in shadowmen)
+		var/datum/mind/shadow = v
 		shadows += shadow
-		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
-		shadowlings--
 
 	handle_AI_Traitors()
 	return 1

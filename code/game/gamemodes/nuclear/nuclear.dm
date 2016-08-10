@@ -29,11 +29,12 @@
 	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
 		n_agents = antag_candidates.len
 
-	while(n_agents > 0)
+	var/list/datum/mind/new_cops = pick_candidate(amount = n_agents)
+	update_not_chosen_candidates()
+
+	for(var/v in new_cops)
 		var/datum/mind/new_syndicate = pick_candidate()
 		syndicates += new_syndicate
-		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		n_agents--
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "Syndicate"

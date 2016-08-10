@@ -72,20 +72,22 @@
 	//cult scaling goes here
 	recommended_enemies = 3 + round(num_players()/15)
 
+	var/list/datum/mind/cultists = pick_candidate(amount = recommended_enemies)
+	update_not_chosen_candidates()
 
-	for(var/cultists_number = 1 to recommended_enemies)
-		if(!antag_candidates.len)
-			break
-		var/datum/mind/cultist = pick_candidate()
-		antag_candidates -= cultist
+	for(var/v in cultists)
+		var/datum/mind/cultist = v
 		cultists_to_cult += cultist
 		cultist.special_role = "Cultist"
 		cultist.restricted_roles = restricted_jobs
 		log_game("[cultist.key] (ckey) has been selected as a cultist")
 
+	if(cultists_to_cult.len < required_enemies)
+		return 0
+	
 	handle_AI_Traitors()
 
-	return (cultists_to_cult.len>=required_enemies)
+	return 1
 
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
