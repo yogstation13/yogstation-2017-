@@ -198,3 +198,7 @@
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-genetics"
+
+/obj/item/device/pda/shiny
+	name = "Delux PDA"
+	icon_state = "pda-clear"

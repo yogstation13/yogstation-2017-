@@ -346,7 +346,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return
 	if(!target)
 		return
-	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
+	if((target.disabilities & NOCLONE)/* || (target.disabilities & HUSK)*/)//Husk absorption, to prevent redtext due to people spacing themselves.
 		if(verbose)
 			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return

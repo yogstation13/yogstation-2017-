@@ -87,15 +87,15 @@ Made by Xhuis
 
 	var/shadowlings = max(2, round(num_players()/10))
 
+	var/list/datum/mind/shadowmen = pick_candidate(amount = shadowlings)
+	update_not_chosen_candidates()
 
-	while(shadowlings)
-		var/datum/mind/shadow = pick_candidate()
+	for(var/v in shadowmen)
+		var/datum/mind/shadow = v
 		shadows += shadow
-		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
-		shadowlings--
 
 	handle_AI_Traitors()
 	return 1
@@ -260,6 +260,8 @@ Made by Xhuis
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,NODISMEMBER) //Can't use guns due to muzzle flash
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+	sight_mod = SEE_MOBS
+	invis_sight = 2
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)

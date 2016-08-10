@@ -77,6 +77,11 @@
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
+	for(var/mob/antag in mob_list)
+		if(antag.mind)
+			if(antag.mind.special_role)
+				antag.mind.show_memory(antag)
+
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
@@ -180,8 +185,10 @@
 		if(istype(player.current,/mob/living/silicon/ai))
 			A = player.current
 
-	if(A.stat == 2 || !A.client || !A.mind) return
-	if(is_special_character(A)) return
+	if(!A || A.stat == DEAD || !A.client || !A.mind)
+		return
+	if(is_special_character(A))
+		return
 
 	ticker.mode.traitors += A.mind
 	A.mind.special_role = "traitor"
@@ -353,19 +360,25 @@
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
-// Function to pull an antag from our list of antag candidates
-/datum/game_mode/proc/pick_candidate()
+// Function to pull an antag from our list of antag candidates, by default, use antag_candidates, but can specify
+// any list of minds (this is only useful for changelings at the moment)
+// Also needs to specify amount as to not screw over the antag_weights and if we remove the chosen candidate from the
+// global antag_candidates list (fucking changeling pick code, man)
+/datum/game_mode/proc/pick_candidate(list/datum/mind/candidates = antag_candidates, amount = 0, remove_from_antag_candidates = 0)
+	if(!amount)
+		return
+	var/list/datum/mind/chosen_ones = list()
 	// If the DB is connected, use the new function. Otherwise revert to legacy pick() selection
 	if(dbcon.IsConnected())
 		var/list/ckey_listed = list()
 		var/ckey_for_sql = ""
 
-		for(var/datum/mind/player in antag_candidates)
+		for(var/datum/mind/player in candidates)
 			if(istype(player.current,/mob/living/silicon/ai))
-				antag_candidates.Remove(player) //All AI antag roles are handled seperately.  See handle_AI_Traitors()
+				candidates.Remove(player) //All AI antag roles are handled seperately.  See handle_AI_Traitors()
 
 		// Add all our antag candidates to a list()
-		for (var/datum/mind/player in antag_candidates)
+		for (var/datum/mind/player in candidates)
 			ckey_listed += sanitizeSQL(get_ckey(player))
 
 		// Turn the list into a string that we will use to filter the player table
@@ -387,46 +400,75 @@
 			output[ckey] = weight
 			total += weight
 
-		// Find a number between 0 and our weight upper bound
-		var/R = rand(0, total)
-
-		var/cumulativeWeight = 0
-		var/datum/mind/final_candidate
-		// We will loop through each antag candidate until we find the point where the
-		// random number given intersects with a candidate. All other candidates will
-		// have their chance to be antag increased while the selected candidate will have
-		// their chance decreased
-		for(var/ckey in output)
-			var/weight = output[ckey]
-			cumulativeWeight += weight
-
-			if(R <= cumulativeWeight && !final_candidate)
-				// Lowest weight is 25.
-				weight = max(25, weight / 1.5)
-				var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
-				query.Execute()
-
-				for(var/datum/mind/candidate in antag_candidates)
-					if(lowertext(get_ckey(candidate)) == lowertext(ckey))
-						final_candidate = candidate
-						break
-			else
-				// Maximum weight is 400.
-				weight = min(400, weight * 1.5)
-				var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
-				query.Execute()
-
 		for(var/client/C in clients)
 			C.last_cached_weight = output[C.ckey]
-			C.last_cached_total_weight = total
 
-		// If after all this we still don't have a candidate, then use the legacy system
-		if(!final_candidate)
-			return pick(antag_candidates)
-		else
-			return final_candidate
+		for(var/i in 1 to amount)
+			if(!candidates.len)
+				break
+
+			// Find a number between 0 and our weight upper bound
+			var/R = rand(0, total)
+			var/cumulativeWeight = 0
+			var/datum/mind/final_candidate
+			// We will loop through each antag candidate until we find the point where the
+			// random number given intersects with a candidate. All other candidates will
+			// have their chance to be antag increased while the selected candidate will have
+			// their chance decreased
+			for(var/ckey in output)
+				var/weight = output[ckey]
+				cumulativeWeight += weight
+
+				if(R <= cumulativeWeight && !final_candidate)
+					// Lowest weight is 25.
+					weight = max(25, weight / 1.5)
+					var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
+					query.Execute()
+
+					for(var/datum/mind/candidate in candidates)
+						if(get_ckey(candidate) == ckey)
+							final_candidate = candidate
+							total -= output[ckey]
+							break
+			// If after all this we still don't have a candidate, then use the legacy system
+			if(!final_candidate)
+				final_candidate = pick(candidates)
+
+			chosen_ones += final_candidate
+
+			if(remove_from_antag_candidates)
+				antag_candidates -= final_candidate
+			candidates -= final_candidate
 	else
-		return pick(antag_candidates)
+		for(var/i in 1 to amount)
+			var/datum/mind/final_candidate = pick(candidates)
+			chosen_ones += final_candidate
+
+			if(remove_from_antag_candidates)
+				antag_candidates -= final_candidate
+			candidates -= final_candidate
+
+	return chosen_ones
+
+
+/datum/game_mode/proc/update_not_chosen_candidates(list/datum/mind/not_chosen = antag_candidates)
+	if(dbcon.IsConnected())
+		//Ok, we're cheating quite a bit here, since this is ASSUMED to always run after we pick candidates, we
+		//have cached antag weights saved on clients that were eligible via `last_cached_weight` variable
+		//no need to query DB again
+		for(var/v in not_chosen)
+			var/datum/mind/candidate = v
+
+			if(candidate.current && candidate.current.client)
+				var/client/C = candidate.current.client
+
+				if(C && C.last_cached_weight) //if it's not null, we've updated it during the picking stage
+					var/SQL_ckey = sanitizeSQL(ckey(C.ckey)) //Better safe than sorry
+					var/weight = C.last_cached_weight
+					weight = min(400, weight * 1.5)
+					var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[SQL_ckey]'")
+					query.Execute()
+					C.last_cached_weight = weight
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()

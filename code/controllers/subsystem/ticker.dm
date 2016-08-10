@@ -279,6 +279,11 @@ var/datum/subsystem/ticker/ticker
 					sleep(35)
 					world << sound('sound/items/bikehorn.ogg')
 					flick("summary_selfdes",cinematic)
+				if("HONK")
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					world << sound('sound/items/AirHorn.ogg')
+					flick("summary_selfdes",cinematic)
 				else
 					flick("intro_nuke",cinematic)
 					sleep(35)

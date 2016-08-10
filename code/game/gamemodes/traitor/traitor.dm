@@ -40,21 +40,22 @@
 		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*2))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff)) + num_modifier ))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
+		
+	var/list/datum/mind/backstabbers = pick_candidate(amount = num_traitors)
+	update_not_chosen_candidates()
 
-	for(var/j = 0, j < num_traitors, j++)
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/traitor = pick_candidate()
+	for(var/v in backstabbers)
+		var/datum/mind/traitor = v
 		traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
-		antag_candidates.Remove(traitor)
 
 	handle_AI_Traitors()
 
 	if(traitors.len < required_enemies)
 		return 0
+
 	return 1
 
 

@@ -179,22 +179,23 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= world.time)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) // Drifting
-			walk(src,0)
-			return 1
-		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
+		if(!(stop_automated_movement_when_pulled && pulledby))
+			if(!Process_Spacemove()) // Drifting
+				walk(src,0)
+				return 1
+			if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
+				if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+					walk_away(src,target,retreat_distance,move_to_delay)
+				else
+					Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
 			else
-				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
-		else
-			Goto(target,move_to_delay,minimum_distance)
+				Goto(target,move_to_delay,minimum_distance)
 		if(target)
 			if(isturf(targets_from.loc) && target.Adjacent(targets_from))	//If they're next to us, attack
 				AttackingTarget()
 			return 1
 		return 0
-	if(environment_smash)
+	if(environment_smash && !(stop_automated_movement_when_pulled && pulledby))
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)

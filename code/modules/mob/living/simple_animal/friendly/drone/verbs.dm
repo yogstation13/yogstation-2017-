@@ -15,6 +15,8 @@
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
+	if(light_on == 2)
+		return
 	if(light_on)
 		AddLuminosity(-8)
 	else

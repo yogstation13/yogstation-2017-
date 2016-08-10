@@ -49,10 +49,11 @@ var/global/list/global_handofgod_structuretypes = list()
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/F in 1 to recommended_enemies)
-		if(!antag_candidates.len)
-			break
-		var/datum/mind/follower = pick_n_take(antag_candidates)
+	var/list/datum/mind/hogs = pick_candidate(amount = recommended_enemies)
+	update_not_chosen_candidates()
+
+	for(var/F in hogs)
+		var/datum/mind/follower = F
 		unassigned_followers += follower
 		follower.restricted_roles = restricted_jobs
 		log_game("[follower.key] (ckey) has been selected as a follower, however teams have not been decided yet.")

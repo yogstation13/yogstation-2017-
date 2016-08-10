@@ -226,7 +226,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic)
+	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic, access_manufacturing)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -250,7 +250,7 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer)
+			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_manufacturing)
 		if(2) //security
 			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(3) //medbay
@@ -372,7 +372,7 @@
 		if(access_theatre)
 			return "Theatre"
 		if(access_manufacturing)
-			return "Manufacturing"
+			return "Gift Shop"
 		if(access_research)
 			return "Science"
 		if(access_mining)
