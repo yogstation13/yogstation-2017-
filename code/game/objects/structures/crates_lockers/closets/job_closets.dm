@@ -113,6 +113,7 @@
 	new /obj/item/clothing/suit/armor/riot/knight/templar(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
 	new /obj/item/weapon/storage/fancy/candle_box(src)
+	new /obj/item/clothing/under/burial
 	return
 
 /obj/structure/closet/coffin
