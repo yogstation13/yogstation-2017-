@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - tweak: "(buff) You can no longer help someone lying down, up on their feet if they have capilletum in their blood steam (zombie implant chemical)."
+  - tweak: "(buff) Zombie implant cost is dropped to 5 from 7. It is definitely in the same tier as freedom implants."
+  - tweak: "(nerf) Zombie implants drain a random amount of nutrients from the user while capilletum is in their blood."
