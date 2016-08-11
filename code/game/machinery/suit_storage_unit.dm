@@ -7,8 +7,8 @@
 	anchored = 1
 	density = 1
 
-	var/obj/item/clothing/suit/space/suit = null
-	var/obj/item/clothing/head/helmet/space/helmet = null
+	var/obj/item/clothing/suit/suit = null
+	var/obj/item/clothing/head/helmet = null
 	var/obj/item/clothing/mask/mask = null
 	var/obj/item/storage = null
 
@@ -109,8 +109,6 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/clothing/shoes/magboots/security
 
-///mining medic///
-
 /obj/machinery/suit_storage_unit/mmedic
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining/mmedic
 	mask_type = /obj/item/clothing/mask/breath
@@ -183,6 +181,7 @@
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
 		return
+
 	var/mob/living/target = A
 	if(!state_open)
 		user << "<span class='warning'>The unit's doors are shut!</span>"
@@ -190,24 +189,159 @@
 	if(!is_operational())
 		user << "<span class='warning'>The unit is not operational!</span>"
 		return
-	if(occupant || helmet || suit || storage)
+	if(occupant)
 		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 
-	if(target == user)
-		user.visible_message("<span class='warning'>[user] starts squeezing into [src]!</span>", "<span class='notice'>You start working your way into [src]...</span>")
-	else
+	var/enterdelay = 5
+
+	if(target != user)
+		enterdelay += 25
 		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 
-	if(do_mob(user, target, 30))
-		if(occupant || helmet || suit || storage)
-			return
+	if(do_mob(user, target, enterdelay))
 		if(target == user)
 			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
 		else
 			target.visible_message("<span class='warning'>[user] pushes [target] into [src] and shuts its door!<span>", "<span class='userdanger'>[user] shoves you into [src] and shuts the door!</span>")
 		close_machine(target)
+		cycle_clothes(target)
 		add_fingerprint(user)
+
+
+/obj/machinery/suit_storage_unit/proc/cycle_clothes(mob/user)
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
+	if(occupant && emagged)
+		cook()
+		return
+
+	if(!ishuman(user))
+		user << "<span class='warning'>[src] states your biological form is incompatiable with this suit storage unit's software!</span>"
+		return
+
+	var/mob/living/carbon/human/H = user
+	var/turf/T = get_turf(src)
+
+	locked = TRUE
+
+	if(suit)
+		var/obj/outfit = null
+
+		if(H.wear_suit)
+			outfit = H.wear_suit
+			H.unEquip(outfit)
+
+		if(outfit)
+			T.contents += suit
+
+		if(H.can_equip(suit, slot_wear_suit))
+			H.equip_to_slot_or_del(suit, slot_wear_suit)
+			suit = outfit
+		else
+			suit = null
+
+	if(helmet)
+		var/obj/oldhelm
+		if(H.head)
+			oldhelm = H.head
+			H.unEquip(oldhelm)
+
+		if(oldhelm)
+			T.contents += helmet
+
+		if(H.can_equip(helmet, slot_head))
+			H.equip_to_slot_or_del(helmet, slot_head)
+			helmet = oldhelm
+		else
+			helmet = null
+
+	if(mask)
+		var/obj/oldmask
+		if(H.wear_mask)
+			oldmask = H.wear_mask
+			H.unEquip(oldmask)
+
+		if(oldmask)
+			T.contents += mask
+
+		if(H.can_equip(mask, slot_wear_mask))
+			H.equip_to_slot_or_del(mask, slot_wear_mask)
+			mask = oldmask
+		else
+			mask = null
+
+
+	if(storage)
+		if(istype(storage, /obj/item/clothing/shoes))
+			var/obj/item/clothing/shoes/s = storage
+			var/obj/item/clothing/shoes/shoes
+			if(H.shoes)
+				shoes = H.shoes
+				H.unEquip(shoes)
+
+			if(s)
+				T.contents += s
+
+			if(H.can_equip(s, slot_shoes))
+				H.equip_to_slot_or_del(s, slot_shoes)
+				storage = shoes
+			else
+				storage = null
+
+		else if(istype(storage, /obj/item))
+			var/obj/item/I = storage
+			if(I.flags & SLOT_BACK) // checks for objects on your back.
+				var/obj/item/backpack
+				if(H.back)
+					backpack = H.back
+					H.unEquip(backpack)
+
+				if(I)
+					T.contents += I
+
+				if(H.can_equip(I, slot_back))
+					H.equip_to_slot_or_del(I, slot_back)
+					storage = backpack
+
+				else
+					storage = null
+			else // checks for objects in general
+				var/obj/O
+				if(H.s_store)
+					O = H.s_store
+					H.unEquip(O)
+
+				if(I)
+					T.contents += I
+
+				if(H.can_equip(I, slot_s_store))
+					H.equip_to_slot_or_del(I, slot_s_store)
+					storage = O
+				else
+					storage = null
+
+	locked = FALSE
+	open_machine(0)
+
+	H.loc = T
+	H.reset_perspective(null)
+	H.update_canmove()
+	occupant = null
+
+	spawn(10)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+
+/obj/machinery/suit_storage_unit/emag_act(mob/user)
+	if(emagged)
+		if(!uv_super)
+			uv_super = TRUE
+
+	else
+		emagged = TRUE
+		if(!uv_super)
+			uv_super = TRUE
+
+	user << "<span class='warning'>You activate the UV's super setting.</span>"
 
 /obj/machinery/suit_storage_unit/proc/cook()
 	if(uv_cycles)
@@ -281,14 +415,14 @@
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
-		if(istype(I, /obj/item/clothing/suit/space))
+		if(istype(I, /obj/item/clothing/suit))
 			if(suit)
 				user << "<span class='warning'>The unit already contains a suit!.</span>"
 				return
 			if(!user.drop_item())
 				return
 			suit = I
-		else if(istype(I, /obj/item/clothing/head/helmet))
+		else if(istype(I, /obj/item/clothing/head))
 			if(helmet)
 				user << "<span class='warning'>The unit already contains a helmet!</span>"
 				return
