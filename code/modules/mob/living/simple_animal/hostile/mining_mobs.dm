@@ -728,7 +728,7 @@
 	stat_attack = 1
 	robust_searching = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/bone = 2)
 
 //Goliath
 
@@ -742,11 +742,79 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 5)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
 
+
+//Marrow Weaver
+
+#define SPINNING_WEB 1
+#define MOVING_TO_TARGET 2
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver
+	name = "marrow weaver"
+	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "weaver"
+	icon_living = "weaver"
+	icon_aggro = "weaver"
+	icon_dead = "weaver_dead"
+	throw_message = "does nothing to the layered chitin of the"
+	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6)
+	loot = list()
+	attacktext = "bites"
+	health = 200
+	maxHealth = 200
+	vision_range = 10
+	move_to_delay = 6
+	melee_damage_lower = 18
+	melee_damage_upper = 18
+	stat_attack = 1
+	robust_searching = 1
+	see_in_dark = 10
+	attack_sound = 'sound/weapons/bite.ogg'
+	deathmessage = "the weaver springs over onto its back, its legs curling as its abdomen ruptures open revealing the precious marrow and sinew within"
+	var/poison_type = "venom"
+	var/poison_per_bite = 2
+	var/busy = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent(poison_type, poison_per_bite)
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
+	if(..())
+		if(!busy && prob(30))	//30% chance to spin webs
+			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+			if(!W)
+				Web()
+	else
+		busy = 0
+		stop_automated_movement = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/Web()
+	var/T = loc
+
+	if(stat == DEAD)
+		return
+
+	if(busy != SPINNING_WEB)
+		busy = SPINNING_WEB
+		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+		stop_automated_movement = 1
+		if(do_after(src, 40, target = T))
+			if(busy == SPINNING_WEB && src.loc == T)
+				new /obj/effect/spider/stickyweb(T)
+		busy = 0
+		stop_automated_movement = 0
+
+#undef SPINNING_WEB
+#undef MOVING_TO_TARGET
 
 
 //Legion
