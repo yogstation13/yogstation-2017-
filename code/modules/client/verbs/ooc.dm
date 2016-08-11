@@ -51,7 +51,7 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
-	send_discord_message("ooc", "**[holder.fakekey ? holder.fakekey : key]: ** [raw_msg]")
+	send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
 
 	var/keyname
 	if(prefs.unlock_content && (prefs.toggles & MEMBER_PUBLIC))
