@@ -989,11 +989,6 @@ var/list/airlock_overlays = list()
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-	if(autoclose && normalspeed)
-		addtimer(src, "autoclose", 150)
-	else if(autoclose && !normalspeed)
-		addtimer(src, "autoclose", 10)
-
 	if(!density)
 		return 1
 	if(!ticker || !ticker.mode)
@@ -1010,6 +1005,12 @@ var/list/airlock_overlays = list()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
+
+	if(autoclose && normalspeed)
+		addtimer(src, "autoclose", 150)
+	else if(autoclose && !normalspeed)
+		addtimer(src, "autoclose", 10)
+
 	return 1
 
 

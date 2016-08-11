@@ -268,3 +268,6 @@
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
+
+/mob/living/simple_animal/drone/proc/fix_light()
+	light_on = 0

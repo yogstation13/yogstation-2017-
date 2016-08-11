@@ -39,18 +39,19 @@
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
-	if(possible_changelings.len>0)
-		for(var/j = 0, j < num_changelings, j++)
-			if(!possible_changelings.len) break
-			var/datum/mind/changeling = pick(possible_changelings)
-			antag_candidates -= changeling
-			possible_changelings -= changeling
-			changelings += changeling
-			modePlayer += changelings
-			changeling.restricted_roles = restricted_jobs
-		return ..()
-	else
+	if(!possible_changelings.len)
 		return 0
+	
+	//THE ONLY PLACE IN ENTIRE GAMEMODE CODE I HAVE TO DO THIS IN FULL, JUST FUCKING FUCK
+	var/list/datum/mind/alien_mutants = pick_candidate(possible_changelings, num_changelings, 1)
+
+	for(var/v in alien_mutants)
+		var/datum/mind/changeling = v
+		changelings += changeling
+		modePlayer += changelings
+		changeling.restricted_roles = restricted_jobs
+
+	return ..()
 
 /datum/game_mode/traitor/changeling/post_setup()
 	for(var/datum/mind/changeling in changelings)
