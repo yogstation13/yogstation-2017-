@@ -1,0 +1,6 @@
+author: oisin100
+delete-after: True
+changes: 
+  - rscadd: "OOC And Asay are now sent to Discord."
+  - rscadd: "Admins are now alerted via discord when there are open tickets and no admins online."
+  - rscadd: "Round begin are now announced through discord."
