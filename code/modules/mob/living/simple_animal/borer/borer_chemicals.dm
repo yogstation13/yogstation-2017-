@@ -64,3 +64,8 @@
 	chemname = "ethanol"
 	chem_desc = "The most potent alcoholic 'beverage', with the fastest toxicity."
 	chemuse = 50
+
+/datum/borer_chem/rezadone
+	chemname = "rezadone"
+	chem_desc = "Heals your host's genetic damage."
+	chemuse = 75
