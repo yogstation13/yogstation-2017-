@@ -80,6 +80,13 @@
 /obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
 	return 0 //Nice try, Toxins!
 
+/obj/structure/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
+	. = "IMMINENT"
+	if(!health)
+		. = "DETONATING"
+	else if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
+		. = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)][s_on_time ? "S":""]"
+
 /obj/structure/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
 		for(var/M in mob_list)
@@ -126,10 +133,7 @@
 	..()
 	icon_state = initial(icon_state)
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		var/arrival_text = "IMMINENT"
-		if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
-			arrival_text = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)]"
-		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [arrival_text]s</span>"
+		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>"
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)
 				user << "<span class='heavy_brass'>It's still opening.</span>"
@@ -188,16 +192,11 @@
 
 
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
-	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Cogscarab", "Reclaimer", "No")
+	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No")
 	if(alertresult == "No" || !O)
 		return 0
-	var/mob/living/simple_animal/R
-	if(alertresult == "Cogscarab")
-		R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
-		R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
-	else
-		R = new/mob/living/simple_animal/hostile/clockwork/reclaimer(get_turf(src))
-		R.visible_message("<span class='heavy_brass'>[R] forms, and it emits a faint hum!</span>")
+	var/mob/living/simple_animal/drone/cogscarab/ratvar/R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
+	R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
 	R.key = O.key
 
 
