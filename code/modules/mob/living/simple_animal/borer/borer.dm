@@ -49,7 +49,7 @@ var/total_borer_hosts_needed = 10
 	borer_chems += /datum/borer_chem/perfluorodecalin
 	borer_chems += /datum/borer_chem/spacedrugs
 	borer_chems += /datum/borer_chem/mutadone
-	borer_chems += /datum/borer_chem/creagent
+	//borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
 
