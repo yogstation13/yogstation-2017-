@@ -113,9 +113,9 @@
 	icon_state = "chitenplate"
 	item_state = "chitenplate"
 	blood_overlay_type = "armor"
-	armor = list (melee = 65, bullet = 35, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
- 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
- 
+	armor = list(melee = 65, bullet = 35, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+
 /obj/item/clothing/suit/armor/pathfinder
 	name = "PathFinders Cloak"
 	desc = "A massive cloak that protects the wearer from concentrated burns with its layered sinew"
