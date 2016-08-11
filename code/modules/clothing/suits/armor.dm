@@ -107,9 +107,9 @@
 	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-/obj/item/clothing/suit/armor/chitenplate
-	name = "Chiten Plate"
-	desc = "A heavily protected and padded version of the bone armor, reinforced with chiten, sinew and bone"
+/obj/item/clothing/suit/armor/chitinplate
+	name = "chitin plate"
+	desc = "A heavily protected and padded version of the bone armor, reinforced with chitin, sinew and bone."
 	icon_state = "chitenplate"
 	item_state = "chitenplate"
 	blood_overlay_type = "armor"
@@ -117,8 +117,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /obj/item/clothing/suit/armor/pathfinder
-	name = "PathFinders Cloak"
-	desc = "A massive cloak that protects the wearer from concentrated burns with its layered sinew"
+	name = "pathfinder cloak"
+	desc = "A massive cloak that protects the wearer from concentrated burns with it's layered sinew."
 	icon_state = "pathcloak"
 	item_state = "pathcloak"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS

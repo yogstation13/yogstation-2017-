@@ -214,8 +214,8 @@
 	strip_delay = 100
 
 /obj/item/clothing/head/helmet/kasa
-	name = "Pathfinders Kasa"
-	desc = "Used by AshWalkers to travel long distances across lavalands perilous landscape."
+	name = "pathfinder kasa"
+	desc = "Used by ash walkers to travel long distances across lavaland's perilous landscape."
 	icon_state = "pathhead"
 	item_state = "pathhead"
 	flags_cover = HEAD

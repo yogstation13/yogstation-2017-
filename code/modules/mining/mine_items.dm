@@ -277,7 +277,7 @@
 
 /obj/item/weapon/sinew_tent
 	name = "sinew tent"
-	desc = "a small sinew and bone box with a spring loaded tent"
+	desc = "A small sinew and bone box with a spring loaded tent."
 	icon_state = "tent"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1

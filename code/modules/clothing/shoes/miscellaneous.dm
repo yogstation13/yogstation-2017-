@@ -83,8 +83,8 @@
 		footstep++
 
 /obj/item/clothing/shoes/pathtreads
-	name = "Pathfinders Treads"
-	desc = "Massive boots crafted to protect the user from the hot ashes of lavaland"
+	name = "pathfinder treads"
+	desc = "Massive boots crafted to protect the user from the hot ashes of lavaland."
 	icon_state = "pathtreads"
 	item_state = "pathtreads"
 	strip_delay = 50
@@ -95,9 +95,9 @@
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	can_hold_items = 1
 
-/obj/item/clothing/shoes/chitentreads
-	name = "Chitin Boots"
-	desc = "Compact boots crafted from a weavers chiten with interlacing sinew"
+/obj/item/clothing/shoes/chitintreads
+	name = "chitin boots"
+	desc = "Compact boots crafted from a weaver's chitin with interlacing sinew."
 	icon_state = "chitentreads"
 	item_state = "chitentreads"
 	strip_delay = 50

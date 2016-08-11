@@ -754,8 +754,8 @@
 #define MOVING_TO_TARGET 2
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver
-	name = "Marrow Weaver"
-	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush, it then wraps them in a cocoon"
+	name = "marrow weaver"
+	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "weaver"
 	icon_living = "weaver"

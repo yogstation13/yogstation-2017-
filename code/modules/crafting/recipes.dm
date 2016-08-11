@@ -425,7 +425,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindertreads
-	name = "Path Finders treads"
+	name = "Pathfinder Treads"
 	result = /obj/item/clothing/shoes/pathtreads
 	time = 40
 	reqs = list(/obj/item/stack/sheet/bone = 1,
@@ -434,15 +434,15 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindercloak
-	name = "Path Finders Cloak"
+	name = "Pathfinder Cloak"
 	result = /obj/item/clothing/suit/armor/pathfinder
 	time = 60
 	reqs = list(/obj/item/stack/sheet/sinew = 6,
 				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/pathfinderskasa
-	name = "Path Finders Kasa"
+/datum/crafting_recipe/pathfinderkasa
+	name = "Pathfinder Kasa"
 	result = /obj/item/clothing/head/helmet/kasa
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 2,
@@ -450,9 +450,9 @@
 				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/chitentreads
-	name = "Chiten Boots"
-	result = /obj/item/clothing/shoes/chitentreads
+/datum/crafting_recipe/chitintreads
+	name = "Chitin Boots"
+	result = /obj/item/clothing/shoes/chitintreads
 	time = 40
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
@@ -460,9 +460,9 @@
 				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/chitenarmor
-	name = "Chiten Plate Armor"
-	result = /obj/item/clothing/suit/armor/chitenplate
+/datum/crafting_recipe/chitinarmor
+	name = "Chitin Plate Armor"
+	result = /obj/item/clothing/suit/armor/chitinplate
 	time = 100
 	reqs = list (/obj/item/stack/sheet/bone = 5,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
@@ -471,9 +471,9 @@
 				 /obj/item/clothing/suit/armor/bone = 1)
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/chitenhands
-	name = "Chiten Gauntlets"
-	result = /obj/item/clothing/gloves/chitenhands
+/datum/crafting_recipe/chitinhands
+	name = "Chitin Gauntlets"
+	result = /obj/item/clothing/gloves/chitinhands
 	time = 30
 	reqs = list (/obj/item/stack/sheet/bone = 3,
 				 /obj/item/stack/sheet/animalhide/weaver_chitin = 1,

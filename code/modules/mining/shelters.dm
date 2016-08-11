@@ -44,7 +44,7 @@
 /datum/map_template/shelter/beta
 	name = "Shelter Beta"
 	shelter_id = "shelter_beta"
-	description = "Crafted from guts and bones of Lavaland Fauna to fit into a neat box"
+	description = "Crafted from guts and bones of Lavaland Fauna to fit into a neat box."
 	mappath = "_maps/templates/shelter_2.dmm"
 
 /datum/map_template/shelter/beta/New()

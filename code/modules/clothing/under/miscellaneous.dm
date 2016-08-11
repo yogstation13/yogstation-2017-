@@ -137,8 +137,8 @@
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/heartprot
-	name = "Heart Protector"
-	desc = "A crude piece of sinew and bone stitched together to protect ones vitals"
+	name = "heart protector"
+	desc = "A crude piece of sinew and bone stitched together to protect one's heart."
 	icon_state = "heartprot"
 	item_state = "heartprot"
 	can_adjust = 0
@@ -147,8 +147,8 @@
 	armor = list (melee = 15, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/tatters
-	name = "Sinew Tatters"
-	desc = "The remnants of an Ash Walkers birth, still sticky and fleshy to the touch"
+	name = "sinew tatters"
+	desc = "The remnants of an ash walker's birth, still sticky and fleshy to the touch."
 	icon_state = "tatters"
 	item_state = "tatters"
 	fitted = NO_FEMALE_UNIFORM
