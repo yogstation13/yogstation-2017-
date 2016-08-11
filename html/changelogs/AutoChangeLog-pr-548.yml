@@ -1,0 +1,4 @@
+author: X-TheDark
+delete-after: True
+changes: 
+  - bugfix: "Airlocks now work properly if their timing is changed."
