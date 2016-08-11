@@ -1,6 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - rscadd: "You can once again perform heart transplants to defibrillate people whose bodies have decayed."
-  - rscadd: "Organs once again decay when they are not inside a living body, unless the temperature is very low."
-  - rscadd: "Freezer crates and closets once again cool their contents down enough to preserve organs or dead bodies."

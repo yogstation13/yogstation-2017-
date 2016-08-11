@@ -1,7 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - rscadd: "all vending machines now have multiple categories for your browsing convenience."
-  - rscadd: "the clerk's vending machine now contains a much wider range of products."
-  - bugfix: "vending machine restocking units now work."
-  - bugfix: "gift shop access can now be given out by the HoP, and the captain can now access the gift shop."
