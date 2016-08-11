@@ -243,12 +243,18 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			if(istype(usr, /mob/living/silicon))
+			if(isaiorborg(usr))
 				src.active1 = null
 				src.active2 = null
 				src.authenticated = 1
 				src.rank = "AI"
 				src.screen = 1
+			else if(ispAI(usr))
+				active1 = null
+				active2 = null
+				authenticated = usr.name
+				rank = "pAI"
+				screen = 1
 			else if(IsAdminGhost(usr))
 				src.active1 = null
 				src.active2 = null
