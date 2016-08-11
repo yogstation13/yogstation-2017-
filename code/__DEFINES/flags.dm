@@ -85,7 +85,6 @@
 #define DRONE 32
 #define SWARMER 64
 #define PREDATOR 128
-#define RATVAR 256
 
 // Flags for reagents
 #define REAGENT_NOREACT 1

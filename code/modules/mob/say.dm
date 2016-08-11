@@ -10,10 +10,7 @@
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
-		return
-	say(message) //only carbons actually whisper, everything else just talks
+	return
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
