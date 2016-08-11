@@ -317,6 +317,8 @@ Class Procs:
 			else
 				user << "<span class='warning'>Access denied.</span>"
 				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
+	else
+		return ..()
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
