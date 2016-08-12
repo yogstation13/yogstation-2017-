@@ -1,0 +1,8 @@
+author: The Sad Fox
+delete-after: True
+changes: 
+  - tweak: "Ports some tweaks and bugfixes from TG. Credit to ChangelingRain for the stuff."
+  - bugfix: "Fixes Legion sometimes becoming extremely small."
+  - bugfix: "Bubblegums charge will now smash all objects in his path."
+  - tweak: "Legion and Bubblegum will now emit light, simmilar to Collossus and Drake."
+  - tweak: "Megafauna will now use ranged attacks when attacking someone in melee."
