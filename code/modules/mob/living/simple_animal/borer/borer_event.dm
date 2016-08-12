@@ -22,16 +22,13 @@
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(qdeleted(temp_vent))
-			message_admins("DEAD!")
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
-			message_admins("GOT A VENT!")
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 
 	if(!vents.len)
-		message_admins("DEAD")
 		return kill()
 
 	var/total_humans = 0
