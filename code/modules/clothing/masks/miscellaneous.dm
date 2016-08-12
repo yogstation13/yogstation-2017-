@@ -20,7 +20,7 @@
 
 /obj/item/clothing/mask/muzzle/cloth
 	name = "cloth muzzle"
-	desc = "A cloth gag for <strike>sex</strike> silencing your victim!"
+	desc = "A cloth gag for silencing your victim."
 	icon_state = "cloth_muzzle"
 	item_state = "cloth_muzzle"
 	put_on_delay = 16
