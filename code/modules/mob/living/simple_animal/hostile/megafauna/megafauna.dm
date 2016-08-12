@@ -6,6 +6,7 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
+	luminosity = 3
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
 	stat_attack = 1
@@ -33,6 +34,15 @@
 		return
 	else
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat != DEAD)
+			if(ranged && ranged_cooldown <= world.time)
+				OpenFire()
+
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
