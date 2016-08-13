@@ -20,10 +20,10 @@
 
 /datum/game_mode/wizard/pre_setup()
 	//Potential here, people. Magin' Rages Light
-	var/list/datum/mind/wizards = pick_candidate(amount = required_enemies)
+	var/list/datum/mind/selected_wizards = pick_candidate(amount = required_enemies)
 	update_not_chosen_candidates()
-	
-	for(var/v in wizards)
+
+	for(var/v in selected_wizards)
 		var/datum/mind/wizard = v
 		wizards += wizard
 		modePlayer += wizard

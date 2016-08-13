@@ -13,7 +13,6 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
@@ -46,10 +45,7 @@
 			double_spiral()
 		else
 			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
-			if(prob(50))
-				spiral_shoot()
-			else
-				spiral_shoot(1)
+			spiral_shoot(rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -60,13 +56,13 @@
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			diagonals()
+			dir_shots(diagonals)
 			sleep(10)
-			cardinals()
+			dir_shots(cardinal)
 			sleep(10)
-			diagonals()
+			dir_shots(diagonals)
 			sleep(10)
-			cardinals()
+			dir_shots(cardinal)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -113,44 +109,44 @@
 	spawn()
 		spiral_shoot(1)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	spawn()
-		var/counter = 1
+		var/counter = counter_start
 		var/turf/marker
 		for(var/i in 1 to 80)
 			switch(counter)
 				if(1)
-					marker = locate(x,y - 2,z)
+					marker = locate(x, y - 2, z)
 				if(2)
-					marker = locate(x - 1,y - 2,z)
+					marker = locate(x - 1,y - 2, z)
 				if(3)
-					marker = locate(x - 2, y - 2,z)
+					marker = locate(x - 2, y - 2, z)
 				if(4)
-					marker = locate(x - 2,y - 1,z)
+					marker = locate(x - 2, y - 1, z)
 				if(5)
-					marker = locate (x -2 ,y,z)
+					marker = locate (x - 2 , y, z)
 				if(6)
-					marker = locate(x - 2, y+1,z)
+					marker = locate(x - 2, y + 1, z)
 				if(7)
 					marker = locate(x - 2, y + 2, z)
 				if(8)
-					marker = locate(x - 1, y + 2,z)
+					marker = locate(x - 1, y + 2, z)
 				if(9)
-					marker = locate(x, y + 2,z)
+					marker = locate(x, y + 2, z)
 				if(10)
-					marker = locate(x + 1, y+2,z)
+					marker = locate(x + 1, y + 2, z)
 				if(11)
-					marker = locate(x+ 2, y + 2,z)
+					marker = locate(x + 2, y + 2, z)
 				if(12)
-					marker = locate(x+2,y+1,z)
+					marker = locate(x + 2, y + 1, z)
 				if(13)
-					marker = locate(x+2,y,z)
+					marker = locate(x + 2, y, z)
 				if(14)
-					marker = locate(x+2, y - 1, z)
+					marker = locate(x + 2, y - 1, z)
 				if(15)
-					marker = locate(x+2, y - 2, z)
+					marker = locate(x + 2, y - 2, z)
 				if(16)
-					marker = locate(x+1, y -2, z)
+					marker = locate(x + 1, y - 2, z)
 
 			if(negative)
 				counter--
@@ -164,6 +160,8 @@
 			sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
+	if(!marker)
+		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 100, 1)
@@ -172,7 +170,10 @@
 	P.firer = src
 	P.yo = marker.y - startloc.y
 	P.xo = marker.x - startloc.x
-	P.original = marker
+	if(target)
+		P.original = target
+	else
+		P.original = marker
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
@@ -185,20 +186,11 @@
 		for(var/turf/turf in range(1, target))
 			shoot_projectile(turf)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
-	var/turf/T = locate(x + 2, y + 2, z)
-	shoot_projectile(T)
-	T = locate(x + 2, y  -2, z)
-	shoot_projectile(T)
-	T = locate(x - 2, y + 2, z)
-	shoot_projectile(T)
-	T = locate(x - 2, y - 2, z)
-	shoot_projectile(T)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/cardinals()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	for(var/d in attack_dirs)
-		var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
+	if(!islist(dirs))
+		dirs = alldirs.Copy()
+	for(var/d in dirs)
+		var/turf/E = get_step(src, d)
 		shoot_projectile(E)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
