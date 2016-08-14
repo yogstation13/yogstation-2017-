@@ -13,7 +13,7 @@
 	action_background_icon_state = "bg_demon"
 	var/phased = 0
 
-/obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
+/*/obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
 	for(var/obj/effect/decal/cleanable/target in range(range, get_turf(user)))
 		if(target.can_bloodcrawl_in())
 			perform(target)
@@ -23,7 +23,7 @@
 
 /obj/effect/proc_holder/spell/bloodcrawl/perform(obj/effect/decal/cleanable/target, recharge = 1, mob/living/user = usr)
 	if(istype(user))
-		if(phased)
+		if(phased == 1)
 			if(user.phasein(target))
 				phased = 0
 		else
@@ -32,4 +32,37 @@
 		start_recharge()
 		return
 	revert_cast()
-	user << "<span class='warning'>You are unable to blood crawl!</span>"
+	user << "<span class='warning'>You are unable to blood crawl!</span>"*/
+
+/obj/effect/decal/cleanable/blood/CtrlClick(mob/living/user)
+	..()
+	if(user.bloodcrawl)
+		if(user.holder)
+			user.phasein(src)
+		else
+			user.phaseout(src)
+
+
+/obj/effect/decal/cleanable/trail_holder/CtrlClick(mob/living/user)
+	..()
+	if(user.bloodcrawl)
+		if(user.holder)
+			user.phasein(src)
+		else
+			user.phaseout(src)
+
+
+
+/turf/CtrlClick(var/mob/living/user)
+	if(!istype(user))
+		return
+	if(user.bloodcrawl)
+		for(var/obj/effect/decal/cleanable/B in src.contents)
+			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))
+				if(user.holder)
+					user.phasein(B)
+					break
+				else
+					user.phaseout(B)
+					break
+	..()

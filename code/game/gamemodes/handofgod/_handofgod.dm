@@ -27,7 +27,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	required_players = 25
 	required_enemies = 8
 	recommended_enemies = 8
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Prison Officer")
 
 
 /datum/game_mode/hand_of_god/announce()
@@ -49,10 +49,11 @@ var/global/list/global_handofgod_structuretypes = list()
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/F in 1 to recommended_enemies)
-		if(!antag_candidates.len)
-			break
-		var/datum/mind/follower = pick_n_take(antag_candidates)
+	var/list/datum/mind/hogs = pick_candidate(amount = recommended_enemies)
+	update_not_chosen_candidates()
+
+	for(var/F in hogs)
+		var/datum/mind/follower = F
 		unassigned_followers += follower
 		follower.restricted_roles = restricted_jobs
 		log_game("[follower.key] (ckey) has been selected as a follower, however teams have not been decided yet.")

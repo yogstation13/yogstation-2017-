@@ -122,10 +122,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-
 /*
  Lizard subspecies: ASHWALKERS
 */
+
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"

@@ -198,6 +198,8 @@ Sorry Giacom. Please don't be mad :(
 
 	if(istype(AM) && AM.Adjacent(src))
 		start_pulling(AM)
+	else if(bloodcrawl == BLOODCRAWL_EAT) //so demons can ctrl + click tiles to teleport to them
+		return
 	else
 		stop_pulling()
 
@@ -274,6 +276,13 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_health)
 		updatehealth()
 
+/mob/living/proc/setBruteLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	bruteloss = amount
+	if(updating_health)
+		updatehealth()
+
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
@@ -316,6 +325,13 @@ Sorry Giacom. Please don't be mad :(
 	if(status_flags & GODMODE)
 		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setFireLoss(amount, updating_health=1)
+	if(status_flags & GODMODE)
+		return 0
+	fireloss = amount
 	if(updating_health)
 		updatehealth()
 

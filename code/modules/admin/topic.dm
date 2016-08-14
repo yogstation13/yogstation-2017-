@@ -1086,8 +1086,8 @@
 			var/notetext = query_get_notes.item[3]
 			//var/adminckey = query_get_notes.item[4]
 			//var/last_editor = query_get_notes.item[5]
-			var/server = query_get_notes.item[6]
-			output += "<p style='margin-bottom: 0px;'><b>[timestamp] | [server]</b><br />"
+			//var/server = query_get_notes.item[6] //notice: this was removed because when you've got only 1 server, what is the point of displaying the long ass name that ends up being cut up anyway?
+			output += "<p style='margin-bottom: 0px;'><b>[timestamp]</b><br />"
 			output += "<span style='margin-left: 16px; margin-top: 0px;'>[notetext]</span></p>"
 
 		usr << browse(output, "window=noteexport;size=800x650")
@@ -1370,7 +1370,7 @@
 		M << "<span class='adminnotice'>You have been sent to Prison!</span>"
 
 		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] Prison!")
+		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to Prison!")
 
 	else if(href_list["sendbacktolobby"])
 		if(!check_rights(R_ADMIN))
@@ -1868,6 +1868,7 @@
 			message_admins("[src.owner] stopped forcing the rules popup for [key_name(M)].")
 
 	else if(href_list["antag_token_increase"])
+		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
 		var/reason = input("","What reason are you giving an antag token?") as text
@@ -1884,6 +1885,7 @@
 		show_player_panel(M)
 
 	else if(href_list["antag_token_decrease"])
+		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
 		var/reason = input("","What reason are you giving an antag token?") as text

@@ -10,7 +10,7 @@
 	config_tag = "traitor"
 	antag_flag = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Prison Officer")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -40,30 +40,32 @@
 		num_traitors = max(1, min( round(num_players()/(config.traitor_scaling_coeff*2))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff)) + num_modifier ))
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
+		
+	var/list/datum/mind/backstabbers = pick_candidate(amount = num_traitors)
+	update_not_chosen_candidates()
 
-	for(var/j = 0, j < num_traitors, j++)
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/traitor = pick_candidate()
+	for(var/v in backstabbers)
+		var/datum/mind/traitor = v
 		traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
-		antag_candidates.Remove(traitor)
 
 	handle_AI_Traitors()
 
 	if(traitors.len < required_enemies)
 		return 0
+
 	return 1
 
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
-		forge_traitor_objectives(traitor)
-		spawn(rand(10,100))
-			finalize_traitor(traitor)
-			greet_traitor(traitor)
+		if(!istype(traitor.current,/mob/living/silicon)) //Don't finalize objectives for silicons, that's handled in proc/handle_AI_Traitors()
+			forge_traitor_objectives(traitor)
+			spawn(rand(10,100))
+				finalize_traitor(traitor)
+				greet_traitor(traitor)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
 	modePlayer += traitors

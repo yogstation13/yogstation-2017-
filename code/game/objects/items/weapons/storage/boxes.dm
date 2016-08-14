@@ -63,6 +63,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
 
 /obj/item/weapon/storage/box/survival/radio/New()
 	..()
@@ -74,6 +75,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
 
 /obj/item/weapon/storage/box/engineer/radio/New()
 	..()
@@ -84,6 +86,7 @@
 	..()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/device/flashlight/flare/security(src)
 
 // Security survival box
 /obj/item/weapon/storage/box/security/New()
@@ -91,6 +94,7 @@
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/security(src)
 
 /obj/item/weapon/storage/box/security/radio/New()
 	..()
@@ -751,7 +755,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/weapon/storage/box/ingredients/vegetarian
 	item_state = "vegetarian"
@@ -786,7 +790,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 

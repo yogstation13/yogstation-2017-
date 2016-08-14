@@ -2,7 +2,8 @@ var/datum/subsystem/pai/SSpai
 
 /datum/subsystem/pai
 	name = "pAI"
-	priority = 20
+	init_order = 20
+	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/askDelay = 600
 	var/const/NEVER_FOR_THIS_ROUND = -1
@@ -34,6 +35,13 @@ var/datum/subsystem/pai/SSpai
 			ticker.mode.update_rev_icons_removed(card.pai.mind)
 
 			candidates -= candidate
+			
+			if(availableRecruitsCount() == 0)
+				for(var/obj/item/device/paicard/p in world)
+					if(p.looking_for_personality == 1)
+						p.overlays.Cut()
+						p.overlays += "pai-off"
+			
 			usr << browse(null, "window=findPai")
 
 	if(href_list["new"])
@@ -178,6 +186,14 @@ var/datum/subsystem/pai/SSpai
 	dat += "</table>"
 
 	user << browse(dat, "window=findPai")
+
+/datum/subsystem/pai/proc/availableRecruitsCount()
+	var/candidateCount = 0
+	for(var/datum/paiCandidate/c in SSpai.candidates)
+		for(var/mob/dead/observer/o in player_list)
+			if(o.key == c.key)
+				candidateCount += 1
+	return candidateCount
 
 /datum/subsystem/pai/proc/requestRecruits()
 	for(var/mob/dead/observer/O in player_list)

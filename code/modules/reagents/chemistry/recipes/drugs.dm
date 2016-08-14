@@ -46,3 +46,10 @@
 	result = "aranesp"
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/bolamine
+	name= "bolamine"
+	id = "bolamine"
+	result = "bolamine"
+	required_reagents = list("space_drugs" = 2, "frostoil" = 1)
+	result_amount = 2

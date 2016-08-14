@@ -18,9 +18,9 @@ var/global/list/datum/stack_recipe/human_recipes = list( \
 	return ..()
 
 /obj/item/stack/sheet/animalhide/generic
-	name = "generic skin"
-	desc = "A piece of generic skin."
-	singular_name = "generic skin piece"
+	name = "skin"
+	desc = "A piece of skin."
+	singular_name = "skin piece"
 	icon_state = "sheet-hide"
 
 /obj/item/stack/sheet/animalhide/corgi
@@ -144,6 +144,13 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 		/*
  * Plates
  		*/
+
+/obj/item/stack/sheet/animalhide/weaver_chitin
+	name = "weaver chitin"
+	desc = "A chunk of hardened and layered chitin from a marrow weaver's carapace."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "chitin"
+	singular_name = "chitin chunk"
 
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"

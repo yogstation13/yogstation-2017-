@@ -163,9 +163,9 @@ This file's folder contains:
 	required_enemies = 2
 	recommended_enemies = 4
 	enemy_minimum_age = 14
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
+	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
-	var/servants_to_serve = list()
+	var/list/servants_to_serve = list()
 
 /datum/game_mode/clockwork_cult/announce()
 	world << "<b>The game mode is: Clockwork Cult!</b>"
@@ -178,17 +178,23 @@ This file's folder contains:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = max(1, round(num_players() / 10)) //Guaranteed one cultist - otherwise, about one cultist for every ten players
-	while(starter_servants)
-		var/datum/mind/servant = pick_candidate()
+	var/starter_servants = max(required_enemies, round(num_players() / 10)) //Guaranteed <required_enemies> cultist(s) - otherwise, about one cultist for every ten players
+
+	var/list/datum/mind/followers_of_holy_light = pick_candidate(amount = starter_servants)
+	update_not_chosen_candidates()
+
+	for(var/v in followers_of_holy_light)
+		var/datum/mind/servant = v
 		servants_to_serve += servant
-		antag_candidates -= servant
 		modePlayer += servant
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
-		starter_servants--
 
+	if(servants_to_serve.len < required_enemies)
+		return 0
+	
 	handle_AI_Traitors()
+
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()

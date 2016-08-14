@@ -131,6 +131,20 @@ var/list/announcement_systems = list()
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
+	if(href_list["Revert"])
+		if(check_rights(R_ADMIN))
+			if(href_list["Revert"] == "arrival")
+				arrival = initial(arrival)
+				var/log = "[usr.key] reverted the automatic arrivals announcement to default."
+				message_admins(log)
+				log_admin(log)
+				investigate_log(log, "tcomms")
+			if(href_list["Revert"] == "head")
+				newhead = initial(newhead)
+				var/log = "[usr.key] reverted the automatic head arrival announcement to default."
+				message_admins(log)
+				log_admin(log)
+				investigate_log(log, "tcomms")
 	if(broken)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
@@ -142,12 +156,20 @@ var/list/announcement_systems = list()
 			return
 		if(NewMessage)
 			arrival = NewMessage
+			var/log = "[usr.real_name]([usr.key]) has changed the automatic arrivals announcement to \"[arrival]\""
+			message_admins(log + "<A href='?src=\ref[src];Revert=arrival'>(REVERT TO DEFAULT)</a>")
+			log_game(log)
+			investigate_log(log, "tcomms")
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
 		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
 			newhead = NewMessage
+			var/log = "[usr.real_name]([usr.key]) has changed the automatic head arrival announcement to \"[arrival]\""
+			message_admins(log + "<A href='?src=\ref[src];Revert=head'>(REVERT TO DEFAULT)</a>")
+			log_game(log)
+			investigate_log(log, "tcomms")
 
 	else if(href_list["NewheadT-Topic"])
 		newheadToggle = !newheadToggle

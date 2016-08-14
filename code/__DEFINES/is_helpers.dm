@@ -58,6 +58,8 @@
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
+#define isaiorborg(A) (istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
+
 #define isliving(A) (istype(A, /mob/living))
 
 #define isobserver(A) (istype(A, /mob/dead/observer))

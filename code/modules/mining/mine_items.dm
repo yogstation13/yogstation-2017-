@@ -272,6 +272,73 @@
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
 
+/*****************************Sinew Tent********************************/
+
+
+/obj/item/weapon/sinew_tent
+	name = "sinew tent"
+	desc = "A small sinew and bone box with a spring loaded tent."
+	icon_state = "tent"
+	icon = 'icons/obj/mining.dmi'
+	w_class = 1
+	origin_tech = "engineering=1"
+	var/template_id = "shelter_beta"
+	var/datum/map_template/shelter/template
+	var/used = FALSE
+
+/obj/item/weapon/sinew_tent/proc/get_template()
+	if(template)
+		return
+	template = shelter_templates[template_id]
+	if(!template)
+		throw EXCEPTION("Shelter template ([template_id]) not found!")
+		qdel(src)
+
+/obj/item/weapon/sinew_tent/Destroy()
+	template = null // without this, capsules would be one use. per round.
+	. = ..()
+
+/obj/item/weapon/sinew_tent/examine(mob/user)
+	. = ..()
+	get_template()
+	user << "This box has the [template.name] stored."
+	user << template.description
+
+/obj/item/weapon/sinew_tent/attack_self()
+	// Can't grab when capsule is New() because templates aren't loaded then
+	get_template()
+	if(used == FALSE)
+		src.loc.visible_message("<span class='warning'>\The [src] begins \
+			to shake. Stand back!</span>")
+		used = TRUE
+		sleep(50)
+		var/turf/deploy_location = get_turf(src)
+		var/status = template.check_deploy(deploy_location)
+		switch(status)
+			if(SHELTER_DEPLOY_BAD_AREA)
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				will not function in this area.</span>")
+			if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS)
+				var/width = template.width
+				var/height = template.height
+				src.loc.visible_message("<span class='warning'>\The [src] \
+				doesn't have room to deploy! You need to clear a \
+				[width]x[height] area!</span>")
+
+		if(status != SHELTER_DEPLOY_ALLOWED)
+			used = FALSE
+			return
+
+		playsound(get_turf(src), 'sound/effects/splat.ogg', 100, 1)
+
+		var/turf/T = deploy_location
+		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
+			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a sinew tent away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
+			log_admin("[key_name(usr)] activated a sinew tent away from the mining level at [T.x], [T.y], [T.z]")
+		template.load(deploy_location, centered = TRUE)
+		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
+		qdel(src)
+
 //Pod turfs and objects
 
 
@@ -399,10 +466,9 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
-	icon_state = "bedcomputer"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
-	icon_on = "donkvendor"
-	icon_off = "donkvendor"
+	icon_on = "smartfridge"
+	icon_off = "smartfridge"
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
