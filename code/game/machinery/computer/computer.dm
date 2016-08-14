@@ -14,6 +14,7 @@
 	var/icon_screen = "generic"
 	var/computer_health = 25
 	var/clockwork = FALSE
+	paiAllowed = 1
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -84,6 +85,8 @@
 		overlays += "[icon_state]_broken"
 	else
 		overlays += icon_screen
+	if(paired)
+		overlays += "paipaired"
 
 /obj/machinery/computer/power_change()
 	..()
@@ -138,6 +141,8 @@
 	if(circuit) //no circuit, no breaking
 		if(!computer_health && !(stat & BROKEN))
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+			if(paired)
+				paired.unpair(0)
 			stat |= BROKEN
 			update_icon()
 

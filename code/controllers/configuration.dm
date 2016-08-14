@@ -439,6 +439,8 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("discord_token")
+					discord_token = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
@@ -628,6 +630,8 @@
 					MAX_EX_FLAME_RANGE = BombCap
 				else
 					diary << "Unknown setting in configuration: '[name]'"
+		else if(type == "discord")
+			discord_channels[name] = value
 		else if (type == "jexp")
 			switch(name)
 
