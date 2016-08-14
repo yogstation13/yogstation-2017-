@@ -543,7 +543,9 @@ Sorry Giacom. Please don't be mad :(
 	fire_stacks = 0
 	updatehealth()
 	update_canmove()
-
+	disabilities = 0
+	status_flags &= ~DISFIGURED
+	regenerate_icons()
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
