@@ -1073,6 +1073,7 @@
 #include "code\modules\detectivework\evidence.dm"
 #include "code\modules\detectivework\footprints_and_rag.dm"
 #include "code\modules\detectivework\scanner.dm"
+#include "code\modules\donors\donor_items.dm"
 #include "code\modules\donors\donor_verbs.dm"
 #include "code\modules\emoji\emoji_parse.dm"
 #include "code\modules\events\_event.dm"
