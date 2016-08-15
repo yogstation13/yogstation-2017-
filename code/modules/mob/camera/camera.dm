@@ -4,7 +4,7 @@
 	name = "camera mob"
 	density = 0
 	anchored = 1
-	status_flags = GODMODE  // You can't damage it.
+	status_flags = list(GODMODE)  // You can't damage it.
 	mouse_opacity = 0
 	see_in_dark = 7
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us

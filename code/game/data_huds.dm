@@ -150,7 +150,7 @@
 
 /mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	if(status_flags & XENO_HOST)
+	if(XENO_HOST in status_flags)
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD)
 		holder.icon_state = "huddead"

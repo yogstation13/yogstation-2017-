@@ -113,11 +113,14 @@
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	M.status_flags ^= GODMODE
+	if(GODMODE in M.status_flags)
+		M.status_flags -= GODMODE
+	else
+		M.status_flags += GODMODE
 	usr << "<span class='adminnotice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>"
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
+	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -441,7 +444,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
 	ion.start()
-	
+
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)
