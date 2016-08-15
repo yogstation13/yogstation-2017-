@@ -55,7 +55,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"], signal.data["radio"],
 							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
-							  0, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
+							  0, signal.data["uuid"], signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
 							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
 
 
@@ -80,7 +80,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
+							  signal.data["realname"], 4, signal.data["uuid"], signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
 							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
 
 		if(!message_delay)

@@ -68647,6 +68647,9 @@
 "cEG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
+/obj/machinery/computer/telecomms/traffic{
+	network = "tcommsat"
+	},
 /area/tcommsat/computer)
 "cEH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
