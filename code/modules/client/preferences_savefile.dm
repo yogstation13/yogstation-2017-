@@ -230,6 +230,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_hud"]			>> ghost_hud
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 	S["agree"] 				>> agree
+	S["donor_pda"]			>> donor_pda
+	S["donor_hat"]			>> donor_hat
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -283,6 +285,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
 	S["agree"] 				<< agree
+	S["donor_pda"]			<< donor_pda
+	S["donor_hat"]			<< donor_hat
 
 	return 1
 

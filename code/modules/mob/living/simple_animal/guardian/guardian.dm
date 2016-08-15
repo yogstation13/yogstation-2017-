@@ -278,7 +278,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [my_message]"
 
-		log_say("[src.real_name]/[src.key] : [input]")
+		log_say("[src.real_name]/[src.key] (TO SUMMONER): [input]")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -300,7 +300,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		M << "[link] [my_message]"
 
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_say("[src.real_name]/[src.key] (TO GUARDIAN): [input]")
 
 //FORCE RECALL/RESET
 

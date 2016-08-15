@@ -2927,6 +2927,8 @@
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/machinery/deployable/barrier,
+/obj/machinery/deployable/barrier,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
@@ -2949,10 +2951,8 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/grenade/barrier,
-/obj/item/weapon/grenade/barrier,
-/obj/item/weapon/grenade/barrier,
 /obj/item/key/security,
+/obj/item/weapon/storage/box/barriers,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
@@ -3493,6 +3493,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/deployable/barrier,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
