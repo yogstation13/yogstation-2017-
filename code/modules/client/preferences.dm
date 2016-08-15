@@ -138,6 +138,7 @@ var/list/preferences_datums = list()
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> "
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Donator Preferences</a>"
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -164,18 +165,6 @@ var/list/preferences_datums = list()
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
-
-			if(is_donator(user.client))
-				dat += "<h2>Donator</h2>"
-				dat += "<b>Fancy Hat:</b> "
-				dat += "<a href='?_src_=prefs;preference=donor;task=hat'>Pick</a> [donor_hat ? "\"[donor_hat]\"" : "None selected"]<BR>"
-				dat += "<b>Fancy PDA:</b> "
-				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pda ? "Transparent PDA" : "Normal"]</a><BR>"
-			else
-				dat += "<h2>Donator</h2>"
-				dat += "<b>Fancy Hat:</b> "
-				dat += "Become a <a href='http://www.yogstation.net/index.php?do=donate'>donator for fancy hats and PDAs</a>!<BR>"
-
 			dat += "<h2>Identity</h2>"
 			dat += "<table width='100%'><tr><td width='75%' valign='top'>"
 			if(appearance_isbanned(user))
@@ -455,9 +444,22 @@ var/list/preferences_datums = list()
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
 
+
+			dat += "</td></tr></table>"
+		if (2) //Donator preferences
+			dat += "<table><tr><td width='500px' height='300px' valign='top'>"
+			dat += "<h2>Donator Preferences</h2>"
 			if(is_donator(user.client))
 				dat += "<b>Quiet round:</b> <a href='?_src_=prefs;preference=donor;task=quiet_round'>[(src.toggles & QUIET_ROUND) ? "Yes" : "No"]</a><br>"
-			dat += "</td></tr></table>"
+				dat += "<b>Fancy Hat:</b> "
+				dat += "<a href='?_src_=prefs;preference=donor;task=hat'>Pick</a> [donor_hat ? "\"[donor_hat]\"" : "None selected"]<BR>"
+				dat += "<b>Fancy PDA:</b> "
+				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pda ? "Transparent PDA" : "Normal"]</a><BR>"
+			else
+				dat += "<b><a href='http://www.yogstation.net/index.php?do=donate'>Donate here</b>"
+
+
+
 
 	dat += "<hr><center>"
 
