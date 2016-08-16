@@ -538,7 +538,7 @@
 
 		var/takes_crit_damage = (!(NOCRITDAMAGE in specflags))
 		if((H.health < config.health_threshold_crit) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+			H.adjustBruteLoss(1, 1, DAMAGE_NO_MULTIPLIER)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1271,7 +1271,7 @@
 			H.forcesay(hit_appends)	//forcesay checks stat already.
 		return
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, application=DAMAGE_PHYSICAL)
 	blocked = (100-(blocked+armor))/100
 	if(!damage || blocked <= 0)
 		return 0
@@ -1291,20 +1291,20 @@
 	switch(damagetype)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(damage*brutemod, 0))
+			if(organ.take_damage(damage, 0, application))
 				H.update_damage_overlays(0)
 		if(BURN)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(0, damage*burnmod))
+			if(organ.take_damage(0, damage, application))
 				H.update_damage_overlays(0)
 		if(TOX)
-			H.adjustToxLoss(damage)
+			H.adjustToxLoss(damage, 1, application)
 		if(OXY)
-			H.adjustOxyLoss(damage)
+			H.adjustOxyLoss(damage, 1, application)
 		if(CLONE)
-			H.adjustCloneLoss(damage)
+			H.adjustCloneLoss(damage, 1, application)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage)
+			H.adjustStaminaLoss(damage, 1, application)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
@@ -1560,27 +1560,27 @@
 		switch(H.bodytemperature)
 			if(360 to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 			if(400 to 460)
 				H.throw_alert("temp", /obj/screen/alert/hot, 2)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 			if(460 to INFINITY)
 				H.throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(H.on_fire)
-					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 				else
-					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
 			if(200 to 260)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 			if(120 to 200)
 				H.throw_alert("temp", /obj/screen/alert/cold, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 			if(-INFINITY to 120)
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN, application=DAMAGE_NO_MULTIPLIER)
 			else
 				H.clear_alert("temp")
 
@@ -1610,7 +1610,7 @@
 			if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
 				H.clear_alert("pressure")
 			else
-				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE)
 				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 //////////
