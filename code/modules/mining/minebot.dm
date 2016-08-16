@@ -11,7 +11,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
-	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	status_flags = list(CANSTUN, CANWEAKEN, CANPUSH)
 	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = list("neutral")

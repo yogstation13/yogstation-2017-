@@ -11,7 +11,7 @@
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -99,7 +99,7 @@
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	attack_sound = 'sound/weapons/punch3.ogg'
-	status_flags = 0
+	status_flags = list()
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)

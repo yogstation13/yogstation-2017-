@@ -13,7 +13,7 @@
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
-	status_flags = NONE //no default canpush
+	status_flags = list() //no default canpush
 
 	speak_emote = list("states")
 	bubble_icon = "machine"

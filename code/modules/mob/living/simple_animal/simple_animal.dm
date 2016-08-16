@@ -4,7 +4,7 @@
 	health = 20
 	maxHealth = 20
 
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
@@ -103,7 +103,7 @@
 		return 1
 
 /mob/living/simple_animal/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health <= 0)
@@ -274,7 +274,7 @@
 	return 0
 
 /mob/living/simple_animal/proc/adjustHealth(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
 	updatehealth()
