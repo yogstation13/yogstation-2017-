@@ -16952,9 +16952,7 @@
 	},
 /area/shuttle/arrival)
 "aGj" = (
-/mob/living/simple_animal/hostile/lizard{
-	name = "Gex"
-	},
+/mob/living/simple_animal/hostile/lizard/gex,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aGk" = (
