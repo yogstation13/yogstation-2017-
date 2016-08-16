@@ -156,7 +156,13 @@ var/list/ai_list = list()
 	ai_list -= src
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	qdel(holo_icon)
+	aiPDA = null
+	aiMulti = null
+	builtInCamera = null
+	eyeobj.ai = null
 	qdel(eyeobj) // No AI, no Eye
+	eyeobj = null
 	return ..()
 
 
