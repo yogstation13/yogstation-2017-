@@ -95,7 +95,7 @@ var/list/preferences_datums = list()
 	var/list/ignoring = list()
 
 	var/donor_hat = null
-	var/donor_pda = null
+	var/donor_pda = 1
 	var/quiet_round = 0
 
 /datum/preferences/New(client/C)
@@ -454,7 +454,7 @@ var/list/preferences_datums = list()
 				dat += "<b>Fancy Hat:</b> "
 				dat += "<a href='?_src_=prefs;preference=donor;task=hat'>Pick</a> [donor_hat ? "\"[donor_hat]\"" : "None selected"]<BR>"
 				dat += "<b>Fancy PDA:</b> "
-				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pda ? "Transparent PDA" : "Normal"]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pdas[donor_pda]]</a><BR>"
 			else
 				dat += "<b><a href='http://www.yogstation.net/index.php?do=donate'>Donate here</b>"
 
@@ -790,69 +790,7 @@ var/list/preferences_datums = list()
 		if(is_donator(user))
 			switch(href_list["task"])
 				if("hat")
-					var/list/items = list( \
-						/obj/item/clothing/head/beanie, \
-						/obj/item/clothing/head/bike, \
-						/obj/item/clothing/head/hardsuit_helm_clown, \
-						/obj/item/clothing/head/cowboy, \
-						/obj/item/clothing/head/crusader, \
-						/obj/item/clothing/head/cowboy_sheriff, \
-						/obj/item/clothing/head/dallas, \
-						/obj/item/clothing/head/drinking_hat, \
-						/obj/item/clothing/head/microwave, \
-						/obj/item/clothing/head/sith_hood, \
-						/obj/item/clothing/head/turban, \
-						/obj/item/clothing/head/collectable/petehat, \
-						/obj/item/clothing/head/collectable/slime, \
-						/obj/item/clothing/head/collectable/xenom, \
-						/obj/item/clothing/head/collectable/chef, \
-						/obj/item/clothing/head/collectable/paper, \
-						/obj/item/clothing/head/collectable/tophat, \
-						/obj/item/clothing/head/collectable/captain, \
-						/obj/item/clothing/head/collectable/police, \
-						/obj/item/clothing/head/collectable/welding, \
-						/obj/item/clothing/head/collectable/flatcap, \
-						/obj/item/clothing/head/collectable/pirate, \
-						/obj/item/clothing/head/collectable/kitty, \
-						/obj/item/clothing/head/collectable/rabbitears, \
-						/obj/item/clothing/head/collectable/wizard, \
-						/obj/item/clothing/head/collectable/hardhat, \
-						/obj/item/clothing/head/collectable/HoS, \
-						/obj/item/clothing/head/collectable/thunderdome, \
-						/obj/item/clothing/head/collectable/swat, \
-						/obj/item/clothing/head/hardhat/cakehat, \
-						/obj/item/clothing/head/ushanka, \
-						/obj/item/clothing/head/hardhat/pumpkinhead, \
-						/obj/item/clothing/head/kitty, \
-						/obj/item/clothing/head/hardhat/reindeer, \
-						/obj/item/clothing/head/powdered_wig, \
-						/obj/item/clothing/head/that, \
-						/obj/item/clothing/head/redcoat, \
-						/obj/item/clothing/head/mailman, \
-						/obj/item/clothing/head/plaguedoctorhat, \
-						/obj/item/clothing/head/hasturhood, \
-						/obj/item/clothing/head/nursehat, \
-						/obj/item/clothing/head/cardborg, \
-						/obj/item/clothing/head/justice, \
-						/obj/item/clothing/head/rabbitears, \
-						/obj/item/clothing/head/flatcap, \
-						/obj/item/clothing/head/pirate, \
-						/obj/item/clothing/head/hgpiratecap, \
-						/obj/item/clothing/head/bowler, \
-						/obj/item/clothing/head/witchwig, \
-						/obj/item/clothing/head/chicken, \
-						/obj/item/clothing/head/fedora, \
-						/obj/item/clothing/head/sombrero, \
-						/obj/item/clothing/head/sombrero/green, \
-						/obj/item/clothing/head/cone, \
-						/obj/item/clothing/head/collectable/beret, \
-						/obj/item/clothing/suit/cloak/sith_cloak, \
-						/obj/item/clothing/suit/armor/sith_suit, \
-						/obj/item/clothing/suit/armor/hardsuit_clown, \
-						/obj/item/clothing/shoes/fuzzy_slippers \
-						)
-
-					var/obj/item/clothing/item = input(usr, "What would you like to start with?","Donator fun","Nothing") as null|anything in items
+					var/obj/item/clothing/item = input(usr, "What would you like to start with?","Donator fun","Nothing") as null|anything in donor_start_items
 					if(item)
 						donor_hat = new item
 					else
@@ -860,7 +798,7 @@ var/list/preferences_datums = list()
 				if("quiet_round")
 					toggles ^= QUIET_ROUND
 				if("pda")
-					donor_pda = !donor_pda
+					donor_pda = donor_pda % donor_pdas.len + 1
 		else
 			message_admins("EXPLOIT \[donor\]: [user] tried to access donor only functions (as a non-donor). Attempt made on \"[href_list["preference"]]\" -> \"[href_list["task"]]\".")
 
