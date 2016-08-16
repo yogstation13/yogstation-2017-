@@ -66,6 +66,8 @@
 /datum/job/proc/give_donor_stuff(mob/living/carbon/human/H)
 	if(!is_donator(H))
 		return
+	if(H.client.prefs.purrbation)
+		H.purrbation()
 	if(H.client.prefs.donor_hat)
 		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
 			backpack.contents += H.client.prefs.donor_hat
