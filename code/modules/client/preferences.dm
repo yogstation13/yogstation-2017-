@@ -97,6 +97,7 @@ var/list/preferences_datums = list()
 	var/donor_hat = null
 	var/donor_pda = null
 	var/quiet_round = 0
+	var/purrbation = "No"
 
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
