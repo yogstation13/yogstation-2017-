@@ -52,18 +52,23 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
 	status_flags = 0
-	maxHealth = 170
-	health = 170
+	maxHealth = 130
+	health = 130
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-	if(prob(50))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			src.adjustHealth(Proj.damage)
-	else
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-	return 0
+    if(!Proj)
+        return
+    switch(Proj.damage_type)
+        if(BRUTE)
+            adjustHealth(Proj.damage)
+        if(STAMINA) //No disabler buff
+            visible_message("<span class='danger'>[src] seems unaffected by [Proj]!</span>")
+        else
+            if(prob(50))
+                adjustHealth(Proj.damage)
+            else
+                visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+    return 0
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
