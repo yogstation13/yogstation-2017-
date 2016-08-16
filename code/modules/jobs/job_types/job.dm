@@ -74,6 +74,8 @@
 		for(var/obj/item/device/pda/PDA in H.GetAllContents())
 			PDA.icon_state = "pda-clear"
 			break
+	if(H.client.prefs.purrbation)
+		H.purrbation()
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
