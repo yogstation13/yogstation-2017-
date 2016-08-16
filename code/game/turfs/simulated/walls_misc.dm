@@ -28,6 +28,22 @@
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
 
+/turf/closed/wall/mineral/cult/Bumped(atom/movable/C as mob)
+	var/phasable = 0
+	if(istype(C, /mob/living/simple_animal/hostile/construct))
+		var/mob/living/simple_animal/hostile/construct/construct = C
+		if(!construct.phaser)
+			return
+		phasable = 2
+		while(phasable > 0)
+			if(construct.pulling)
+				construct.stop_pulling()
+			density = 0
+			sleep(10)
+			phasable--
+		density = 1
+
+
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
