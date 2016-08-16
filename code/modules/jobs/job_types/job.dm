@@ -78,8 +78,7 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
 			PDA.icon_state = "pda-pipboy"
 			PDA.slot_flags |= SLOT_GLOVES
-	if(H.client.prefs.purrbation)
-		H.purrbation()
+
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
