@@ -3,7 +3,7 @@
 /atom/var/list/suit_fibers
 
 /atom/proc/add_fibers(mob/living/carbon/human/M)
-	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
+	if(istype(M.gloves, /obj/item/clothing))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
 			if(add_blood(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
@@ -26,7 +26,7 @@
 					//world.log << "Added fibertext: [fibertext]"
 					suit_fibers += fibertext
 		if(!(M.wear_suit.body_parts_covered & HANDS))
-			if(M.gloves)
+			if(istype(M.gloves, /obj/item/clothing))
 				fibertext = "Material from a pair of [M.gloves.name]."
 				if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
 					//world.log << "Added fibertext: [fibertext]"
@@ -36,12 +36,12 @@
 		if(prob(15*item_multiplier) && !(fibertext in suit_fibers))
 			// "Added fibertext: [fibertext]"
 			suit_fibers += fibertext
-		if(M.gloves)
+		if(istype(M.gloves, /obj/item/clothing))
 			fibertext = "Material from a pair of [M.gloves.name]."
 			if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
 				//world.log << "Added fibertext: [fibertext]"
 				suit_fibers += "Material from a pair of [M.gloves.name]."
-	else if(M.gloves)
+	else if(istype(M.gloves, /obj/item/clothing))
 		fibertext = "Material from a pair of [M.gloves.name]."
 		if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
 			//world.log << "Added fibertext: [fibertext]"
@@ -85,7 +85,7 @@
 
 		add_fibers(H)
 
-		if(H.gloves) //Check if the gloves (if any) hide fingerprints
+		if(istype(H.gloves, /obj/item/clothing/gloves)) //Check if the gloves (if any) hide fingerprints
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.transfer_prints)
 				ignoregloves = 1

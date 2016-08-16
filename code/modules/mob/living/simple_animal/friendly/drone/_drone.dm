@@ -32,7 +32,7 @@
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB | PASSDOOR
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
+	status_flags = list(CANPUSH, CANSTUN, CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")

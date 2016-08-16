@@ -233,7 +233,7 @@
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		spawn(100)
-			user.status_flags &= ~GODMODE
+			user.status_flags -= GODMODE
 			user.notransform = 0
 			user.forceMove(get_turf(Z))
 			user.visible_message("<span class='danger'>[user] pops back into reality!</span>")

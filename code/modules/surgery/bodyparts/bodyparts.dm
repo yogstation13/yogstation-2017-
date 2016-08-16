@@ -74,7 +74,7 @@
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
 /obj/item/bodypart/proc/take_damage(brute, burn)
-	if(owner && (owner.status_flags & GODMODE))
+	if(owner && (GODMODE in owner.status_flags))
 		return 0	//godmode
 	brute	= max(brute,0)
 	burn	= max(burn,0)

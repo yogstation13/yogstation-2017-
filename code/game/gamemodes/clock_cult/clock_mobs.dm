@@ -431,7 +431,7 @@
 	name = "imprisoned mind"
 	desc = "A helpless mind, imprisoned in its own body."
 	stat = 0
-	status_flags = GODMODE
+	status_flags = list(GODMODE)
 
 /mob/living/mind_control_holder/say()
 	return 0

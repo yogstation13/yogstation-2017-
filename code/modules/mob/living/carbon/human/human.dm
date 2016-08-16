@@ -9,7 +9,7 @@
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
+	status_flags = list(GODMODE, CANPUSH)
 
 
 

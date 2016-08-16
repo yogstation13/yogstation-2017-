@@ -174,7 +174,7 @@
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (status_flags & FAKEDEATH) || (reagents.has_reagent("capilletum") && lying))
+	if(stat == DEAD || (FAKEDEATH in status_flags) || (reagents.has_reagent("capilletum") && lying))
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
 			if(suiciding)

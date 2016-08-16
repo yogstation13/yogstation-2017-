@@ -16952,9 +16952,7 @@
 	},
 /area/shuttle/arrival)
 "aGj" = (
-/mob/living/simple_animal/hostile/lizard{
-	name = "Gex"
-	},
+/mob/living/simple_animal/hostile/lizard/gex,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aGk" = (
@@ -54005,12 +54003,13 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/magboots,
 /turf/open/floor/plasteel,
 /area/atmos)
 "cct" = (
@@ -57013,7 +57012,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "cim" = (
-/obj/machinery/space_heater,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -101422,7 +101421,7 @@ cgy
 chx
 cik
 cjt
-bTW
+cFz
 bTW
 bWu
 cmB
@@ -101674,7 +101673,7 @@ cbk
 ccq
 bSo
 cep
-cfu
+cep
 cep
 bSo
 cil

@@ -18,7 +18,7 @@ var/list/ai_list = list()
 	icon_state = "ai"
 	anchored = 1
 	density = 1
-	status_flags = CANSTUN|CANPUSH
+	status_flags = list(CANSTUN|CANPUSH)
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8
@@ -156,7 +156,13 @@ var/list/ai_list = list()
 	ai_list -= src
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
+	qdel(holo_icon)
+	aiPDA = null
+	aiMulti = null
+	builtInCamera = null
+	eyeobj.ai = null
 	qdel(eyeobj) // No AI, no Eye
+	eyeobj = null
 	return ..()
 
 

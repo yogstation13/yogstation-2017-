@@ -5,7 +5,7 @@
 /////////////////////////////////// STUNNED ////////////////////////////////////
 
 /mob/living/carbon/alien/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
+	if((CANSTUN in status_flags) || ignore_canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()

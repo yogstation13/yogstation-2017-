@@ -95,7 +95,7 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.status_flags & CANWEAKEN)
+		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
 			C.take_organ_damage(20, 0) //The process is extremely painful
 
