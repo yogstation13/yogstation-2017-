@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "The janitor's lizard will now occasionally eat trash, healing him and increasing his maximum health."

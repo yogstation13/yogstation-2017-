@@ -65,7 +65,7 @@
 	bubble_icon = "swarmer"
 	health = 40
 	maxHealth = 40
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	icon_state = "swarmer"
 	icon_living = "swarmer"
 	icon_dead = "swarmer_unactivated"

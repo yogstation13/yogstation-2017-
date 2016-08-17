@@ -156,7 +156,7 @@ Sorry Giacom. Please don't be mad :(
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
-	if(!(M.status_flags & CANPUSH))
+	if(!(CANPUSH in M.status_flags))
 		return 1
 	//anti-riot equipment is also anti-push
 	if(M.r_hand && (prob(M.r_hand.block_chance * 2)) && !istype(M.r_hand, /obj/item/clothing))
@@ -207,7 +207,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
 		return 0
-	if(src.status_flags & FAKEDEATH)
+	if(FAKEDEATH in src.status_flags)
 		return 0
 	if(!..())
 		return 0
@@ -232,7 +232,7 @@ Sorry Giacom. Please don't be mad :(
 	flash_eyes()
 
 /mob/living/proc/updatehealth()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
@@ -270,14 +270,14 @@ Sorry Giacom. Please don't be mad :(
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
 /mob/living/proc/setBruteLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	bruteloss = amount
 	if(updating_health)
@@ -287,14 +287,14 @@ Sorry Giacom. Please don't be mad :(
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
 /mob/living/proc/setOxyLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	oxyloss = amount
 	if(updating_health)
@@ -304,7 +304,7 @@ Sorry Giacom. Please don't be mad :(
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
@@ -312,7 +312,7 @@ Sorry Giacom. Please don't be mad :(
 	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	toxloss = amount
 	if(updating_health)
@@ -322,14 +322,14 @@ Sorry Giacom. Please don't be mad :(
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
 /mob/living/proc/setFireLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	fireloss = amount
 	if(updating_health)
@@ -339,14 +339,14 @@ Sorry Giacom. Please don't be mad :(
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
 /mob/living/proc/setCloneLoss(amount, updating_health=1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	cloneloss = amount
 	if(updating_health)
@@ -356,12 +356,12 @@ Sorry Giacom. Please don't be mad :(
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	brainloss = amount
 
@@ -372,7 +372,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
@@ -385,7 +385,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	staminaloss = amount
 	if(updating_stamina)
@@ -543,7 +543,10 @@ Sorry Giacom. Please don't be mad :(
 	fire_stacks = 0
 	updatehealth()
 	update_canmove()
-
+	if(admin_revive)
+		disabilities = 0
+		status_flags -= DISFIGURED
+		regenerate_icons()
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()

@@ -180,7 +180,7 @@
 		user.start_pulling(src, supress_message)
 		return
 
-	if(!(status_flags & CANPUSH))
+	if(!(CANPUSH in status_flags))
 		user << "<span class='warning'>[src] can't be grabbed more aggressively!</span>"
 		return 0
 	grippedby(user)

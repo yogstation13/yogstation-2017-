@@ -913,12 +913,12 @@
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
 
-	if(H.status_flags & GOTTAGOFAST)
+	if(GOTTAGOFAST in H.status_flags)
 		. -= 1
-	if(H.status_flags & GOTTAGOREALLYFAST)
+	if(GOTTAGOREALLYFAST in H.status_flags)
 		. -= 2
 
-	if(!(H.status_flags & IGNORESLOWDOWN))
+	if(!(IGNORESLOWDOWN in H.status_flags))
 		if(!has_gravity(H))
 			if(specflags & FLYING)
 				. += speedmod
@@ -967,7 +967,7 @@
 				if(!leg_amount)
 					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
-			if(H.status_flags & SLOWDOWN) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
+			if(SLOWDOWN in H.status_flags) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
 				. += 3
 
 
@@ -1326,7 +1326,7 @@
 		return TRUE
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	if((H.status_flags & GODMODE))
+	if((GODMODE in H.status_flags))
 		return
 
 	var/lungs = H.getorganslot("lungs")

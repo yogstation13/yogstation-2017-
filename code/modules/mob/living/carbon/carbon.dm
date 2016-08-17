@@ -721,13 +721,13 @@
 		hud_used.internals.icon_state = "internal[internal_state]"
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

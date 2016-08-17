@@ -421,7 +421,7 @@
 
 		if(istype(H))
 
-			if(H.gloves)
+			if(istype(H.gloves, /obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
 					prot = (G.max_heat_protection_temperature > 360)

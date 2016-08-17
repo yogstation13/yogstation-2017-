@@ -16,7 +16,7 @@
 	pass_flags =  0
 	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	languages_spoken = ALL //The devil speaks all languages meme
 	languages_understood = ALL
 	mob_size = MOB_SIZE_LARGE
