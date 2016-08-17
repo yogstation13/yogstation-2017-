@@ -29,6 +29,7 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
+	var/ratvar_portal = TRUE //if the gateway actually summons ratvar or just produces a hugeass conversion burst
 	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
@@ -124,9 +125,34 @@
 				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
-				sleep(5)
-				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
-				qdel(src)
+			var/turf/startpoint = get_turf(src)
+			sleep(3)
+			QDEL_IN(src, 3)
+			clockwork_gateway_activated = TRUE
+			if(ratvar_portal)
+				new/obj/structure/clockwork/massive/ratvar(startpoint)
+			else
+				world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
+				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
+				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>"
+				world << 'sound/magic/clockwork/invoke_general.ogg'
+				var/x0 = startpoint.x
+				var/y0 = startpoint.y
+				for(var/I in spiral_range_turfs(255, startpoint))
+					var/turf/T = I
+					if(!T)
+						continue
+					var/dist = cheap_hypotenuse(T.x, T.y, x0, y0)
+					if(dist < 60)
+						dist = TRUE
+					else
+						dist = FALSE
+					T.ratvar_act(dist)
+					CHECK_TICK
+				for(var/I in all_clockwork_mobs)
+					var/mob/M = I
+					if(M.stat == CONSCIOUS)
+						clockwork_say(M, text2ratvar(pick("Purge all untruths and honor Engine!", "All glory to Engine's light!", "Engine's power is unmatched!")))
 
 /obj/structure/clockwork/massive/celestial_gateway/examine(mob/user)
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon

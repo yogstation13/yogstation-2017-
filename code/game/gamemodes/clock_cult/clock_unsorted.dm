@@ -49,13 +49,10 @@
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
-<<<<<<< .mine
+
 	var/cooldown = 0
 	var/base_cooldown = 1800
-=======
 
-
->>>>>>> .theirs
 
 /datum/action/innate/function_call/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
