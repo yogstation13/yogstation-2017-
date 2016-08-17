@@ -455,16 +455,20 @@ var/list/rot13_lookup = list()
 
 		rot13_lookup[char] = translated_char
 
-/proc/rot13(t_in)
-	if(!rot13_lookup.len)
-		generate_rot13_lookup()
+#define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
 
-	var/t_out = ""
-
-	for(var/i in 1 to length(t_in))
-		if(i in rot13_lookup)
-			t_out += rot13_lookup[i]
-		else
-			t_out += i
-
-	return t_out
+/proc/rot13(text = "")
+	var/list/textlist = string2charlist(text)
+	var/list/result = list()
+	for(var/c in textlist)
+		var/ca = text2ascii(c)
+		if(ca >= text2ascii("a") && ca <= text2ascii("m"))
+			ca += 13
+		else if(ca >= text2ascii("n") && ca <= text2ascii("z"))
+			ca -= 13
+		else if(ca >= text2ascii("A") && ca <= text2ascii("M"))
+			ca += 13
+		else if(ca >= text2ascii("N") && ca <= text2ascii("Z"))
+			ca -= 13
+		result += ascii2text(ca)
+	return jointext(result, "")
