@@ -4126,7 +4126,6 @@
 	id = "Insanity Ward";
 	pixel_x = 6;
 	pixel_y = 24;
-	step_x = 31
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
