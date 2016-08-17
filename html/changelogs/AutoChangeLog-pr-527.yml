@@ -1,6 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - rscadd: "Added one pair of magboots to atmospherics. It's over a pile of gasmasks and hazard vests. It was never clear on why NT decided to put it there."
-  - tweak: "Buffed atmospheric's water tank a little: Volume has been increased from 200 to 250
-rscadd; Adds another atmospheric locker to atmospherics. We have 3 not 2"

@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Wizards will no longer suffocate to death if when they revert to human form after shapeshifting."
