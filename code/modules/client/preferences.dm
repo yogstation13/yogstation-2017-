@@ -95,6 +95,9 @@ var/list/preferences_datums = list()
 	var/list/ignoring = list()
 
 	var/donor_hat = null
+	var/donor_outfit = null
+	var/donor_suit = null
+	var/donor_shoes = null
 	var/donor_pda = 1
 	var/quiet_round = 0
 
@@ -452,9 +455,20 @@ var/list/preferences_datums = list()
 			if(is_donator(user.client))
 				dat += "<b>Quiet round:</b> <a href='?_src_=prefs;preference=donor;task=quiet_round'>[(src.toggles & QUIET_ROUND) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Fancy Hat:</b> "
-				dat += "<a href='?_src_=prefs;preference=donor;task=hat'>Pick</a> [donor_hat ? "\"[donor_hat]\"" : "None selected"]<BR>"
+				dat += "<a href='?_src_=prefs;preference=donor;task=clothing;accessory=hat'>Pick</a> [donor_hat ? "\"[donor_hat]\"" : "None selected"]<BR>"
+
+				dat += "<b>Fancy Outfit:</b> "
+				dat += "<a href='?_src_=prefs;preference=donor;task=clothing;accessory=outfit'>Pick</a>[donor_outfit ? "\"[donor_outfit]\"" : "None selected"]<BR>"
+
+				dat += "<b>Fancy Suits</b> "
+				dat += "<a href='?_src_=prefs;preference=donor;task=clothing;accessory=suit'>Pick</a>[donor_suit ? "\"[donor_suit]\"" : "None selected"]<BR> "
+
+				dat += "<b>Fancy Shoes:</b> "
+				dat += "<a href='?_src_=prefs;preference=donor;task=clothing;accessory=shoes'>Pick</a>[donor_shoes ? "\"[donor_shoes]\"" : "None selected"]<BR> "
+
 				dat += "<b>Fancy PDA:</b> "
 				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pdas[donor_pda]]</a><BR>"
+
 			else
 				dat += "<b><a href='http://www.yogstation.net/index.php?do=donate'>Donate here</b>"
 
@@ -789,12 +803,36 @@ var/list/preferences_datums = list()
 	if(href_list["preference"] == "donor")
 		if(is_donator(user))
 			switch(href_list["task"])
-				if("hat")
-					var/obj/item/clothing/item = input(usr, "What would you like to start with?","Donator fun","Nothing") as null|anything in donor_start_items
+				if("clothing")
+					var/accessory = "[href_list["accessory"]]"
+					var/obj/item/clothing/item = input(usr, "What would you like to start with?","Donator fun","Nothing") as null|anything in donor_start_items["[accessory]"]
 					if(item)
-						donor_hat = new item
+						switch(accessory)
+							if("outfit")
+								donor_outfit = new item
+
+							if("hat")
+								donor_hat = new item
+
+							if("shoes")
+								donor_shoes = new item
+
+							if("suit")
+								donor_suit = new item
 					else
-						donor_hat = null
+						switch(accessory)
+							if("outfit")
+								donor_outfit = null
+
+							if("hat")
+								donor_hat = null
+
+							if("shoes")
+								donor_shoes = null
+
+							if("suit")
+								donor_suit = null
+
 				if("quiet_round")
 					toggles ^= QUIET_ROUND
 				if("pda")
