@@ -23,7 +23,7 @@
 //Captain
 /obj/item/clothing/head/caphat
 	name = "captain's hat"
-	desc = "It's feels good to be king."
+	desc = "It feels good to be king."
 	icon_state = "captain"
 	item_state = "that"
 	flags_inv = 0
