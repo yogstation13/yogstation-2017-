@@ -949,7 +949,7 @@
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
 	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
-	H.status_flags &= ~FAKEDEATH
+	H.status_flags -= FAKEDEATH
 	brainmob.name = H.real_name
 	brainmob.real_name = H.real_name
 	brainmob.timeofhostdeath = H.timeofdeath

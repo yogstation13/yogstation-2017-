@@ -268,7 +268,7 @@
 	return ..() + fatiguedamage
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
 	update_fatigue()
