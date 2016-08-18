@@ -4126,6 +4126,7 @@
 	id = "Insanity Ward";
 	pixel_x = 6;
 	pixel_y = 24;
+	
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -69005,16 +69006,36 @@
 	dir = 2
 	},
 /area/shuttle/transport)
-"cGj" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/sparker{
-	id = "transferburn"
+"cGc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/closed/wall/r_wall,
 /area/security/transfer)
-"cGi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+"cGd" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 1;
+	initialize_directions = 11
+	},
 /turf/closed/wall/r_wall,
+/area/security/transfer)
+"cGe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/closed/wall/r_wall,
+/area/security/transfer)
+"cGf" = (
+/obj/machinery/door/poddoor{
+	id = "transferspaceblast"
+	},
+/turf/open/floor/plasteel/black,
+/area/security/transfer)
+"cGg" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
 /area/security/transfer)
 "cGh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -69027,34 +69048,14 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
-"cGg" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/black,
-/area/security/transfer)
-"cGf" = (
-/obj/machinery/door/poddoor{
-	id = "transferspaceblast"
-	},
-/turf/open/floor/plasteel/black,
-/area/security/transfer)
-"cGe" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
+"cGi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
 /area/security/transfer)
-"cGd" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	initialize_directions = 11
-	},
-/turf/closed/wall/r_wall,
-/area/security/transfer)
-"cGc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+"cGj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/sparker{
+	id = "transferburn"
 	},
 /turf/closed/wall/r_wall,
 /area/security/transfer)
