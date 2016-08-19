@@ -17,6 +17,7 @@
 	var/junkiness = 0  //for junk food. used to lower human satiety.
 	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
+	var/can_always_eat = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
@@ -78,14 +79,14 @@
 				M << "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>"
 			else if(fullness > 150 && fullness < 500)
 				M << "<span class='notice'>You [eatverb] \the [src].</span>"
-			else if(fullness > 500 && fullness < 600)
+			else if((fullness > 500 && fullness < 600) || can_always_eat)
 				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				M << "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>"
 				return 0
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
-				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
+				if((fullness <= (600 * (1 + M.overeatduration / 1000))) || can_always_eat)
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
 				else

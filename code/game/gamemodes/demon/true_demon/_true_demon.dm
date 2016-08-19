@@ -16,7 +16,7 @@
 	pass_flags =  0
 	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	languages_spoken = ALL //The devil speaks all languages meme
 	languages_understood = ALL
 	mob_size = MOB_SIZE_LARGE
@@ -91,9 +91,11 @@
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
 
-/mob/living/carbon/true_devil/canUseTopic()
-	if(stat)
-		return
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 /mob/living/carbon/true_devil/assess_threat()
@@ -122,6 +124,7 @@
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
+	return 1
 
 /mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
 	A.attack_hand(src)

@@ -123,7 +123,7 @@ MASS SPECTROMETER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.status_flags & FAKEDEATH)
+	if(FAKEDEATH in M.status_flags)
 		mob_status = "<span class='alert'>Deceased</span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -179,12 +179,8 @@ MASS SPECTROMETER
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+	if(M.tod && (M.stat == DEAD || (FAKEDEATH in M.status_flags)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
-		var/tdelta = round(world.time - M.timeofdeath)
-		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			user << "<span class='danger'>Subject died [tdelta / 10] seconds \
-				ago, defibrillation may be possible!</span>"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
@@ -217,6 +213,17 @@ MASS SPECTROMETER
 		if(implant_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
 			user << "<span class='notice'>[implant_detect]</span>"
+	//Organ Decay
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		for(var/obj/item/organ/O in C.internal_organs)
+			if(O.decay_time && O.decay)
+				if(O.decay >= O.decay_time)
+					user << "<span class='notice'>\The [O] of the subject has decayed past the point of no return.</span>"
+				else
+					user << "<span class='notice'>\The [O] of the subject is [round(O.decay / O.decay_time, 0.1)]% decayed.</span>"
+	if(!M.getorgan(/obj/item/organ/heart))
+		user << "<span class='warning'>Subject does not have a heart.</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))

@@ -25,18 +25,18 @@
 #define SHAME 16
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN		1
-#define CANWEAKEN	2
-#define CANPARALYSE	4
-#define CANPUSH		8
-#define IGNORESLOWDOWN	16
-#define GOTTAGOFAST	32
-#define GOTTAGOREALLYFAST	64
-#define SLOWDOWN		128
-#define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
-#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
-#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
-#define GODMODE		65536
+#define CANSTUN				1
+#define CANWEAKEN			2
+#define CANPARALYSE			3
+#define CANPUSH				4
+#define IGNORESLOWDOWN		5
+#define GOTTAGOFAST			6
+#define GOTTAGOREALLYFAST	7
+#define SLOWDOWN			8
+#define FAKEDEATH			9	//Replaces stuff like changeling.changeling_fakedeath
+#define DISFIGURED			10
+#define XENO_HOST			11	//Tracks whether we're gonna be a baby alien's mummy.
+#define GODMODE				12
 
 
 //Grab levels

@@ -28,7 +28,7 @@
 		var/mob/living/carbon/C = target
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		else if(C.status_flags & CANWEAKEN)
+		else if(CANWEAKEN in C.status_flags)
 			spawn(5)
 				C.do_jitter_animation(jitter)
 

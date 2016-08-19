@@ -9,7 +9,7 @@
 	var/spawn_time = 300 //30 seconds default
 	var/mob_type = /mob/living/simple_animal/hostile/carp
 	var/spawn_text = "emerges from"
-	status_flags = 0
+	status_flags = list()
 	anchored = 1
 	AIStatus = AI_OFF
 	a_intent = "harm"

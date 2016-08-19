@@ -56,6 +56,7 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
+	var/sight_mod = 0 //Add these flags to your mob's sight flag. For shadowlings and things to see people through walls.
 	var/darksight = 2
 
 	// species flags. these can be found in flags.dm
@@ -170,7 +171,6 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -836,11 +836,11 @@
 
 
 /datum/species/proc/update_sight(mob/living/carbon/human/H)
-	H.sight = initial(H.sight)
+	H.sight = initial(H.sight) | sight_mod
 	H.see_in_dark = darksight
 	H.see_invisible = invis_sight
 
-	if(H.client.eye != H)
+	if(H.client && H.client.eye != H)
 		var/atom/A = H.client.eye
 		if(A.update_remote_sight(H)) //returns 1 if we override all other sight updates.
 			return
@@ -913,12 +913,12 @@
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
 
-	if(H.status_flags & GOTTAGOFAST)
+	if(GOTTAGOFAST in H.status_flags)
 		. -= 1
-	if(H.status_flags & GOTTAGOREALLYFAST)
+	if(GOTTAGOREALLYFAST in H.status_flags)
 		. -= 2
 
-	if(!(H.status_flags & IGNORESLOWDOWN))
+	if(!(IGNORESLOWDOWN in H.status_flags))
 		if(!has_gravity(H))
 			if(specflags & FLYING)
 				. += speedmod
@@ -967,7 +967,7 @@
 				if(!leg_amount)
 					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
-			if(H.status_flags & SLOWDOWN) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
+			if(SLOWDOWN in H.status_flags) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
 				. += 3
 
 
@@ -1215,7 +1215,8 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(prob(I.get_dismemberment_chance(affecting)))
+	var/probability = I.get_dismemberment_chance(affecting)
+	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
@@ -1269,7 +1270,7 @@
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-		return
+	return 1
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
@@ -1325,7 +1326,7 @@
 		return TRUE
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	if((H.status_flags & GODMODE))
+	if((GODMODE in H.status_flags))
 		return
 
 	var/lungs = H.getorganslot("lungs")

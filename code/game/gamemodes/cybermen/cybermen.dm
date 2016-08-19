@@ -34,7 +34,7 @@ var/datum/cyberman_network/cyberman_network
 	#endif
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
 	//yogstat_name = "cybermen"
 
 /datum/game_mode/cybermen/announce()
@@ -55,14 +55,18 @@ var/datum/cyberman_network/cyberman_network
 	var/cybermen_num = max(3, round(num_players()/14))
 	#endif
 
-	while(cybermen_num)
-		var/datum/mind/cyberman = pick_candidate()
+	var/list/datum/mind/tinmen = pick_candidate(amount = cybermen_num)
+	update_not_chosen_candidates()
+
+	for(var/v in tinmen)
+		var/datum/mind/cyberman = v
 		cyberman_network.cybermen += cyberman
 		cyberman.cyberman = new /datum/cyberman_datum()
-		antag_candidates -= cyberman
 		cyberman.special_role = "Cyberman"
 		cyberman.restricted_roles = restricted_jobs
-		cybermen_num--
+
+	if(cyberman_network.cybermen.len < required_enemies)
+		return 0
 
 	handle_AI_Traitors()
 
