@@ -33,13 +33,11 @@
 	update_not_chosen_candidates()
 
 	for(var/v in new_cops)
-		var/datum/mind/new_syndicate = pick_candidate()
+		var/datum/mind/new_syndicate = v
 		syndicates += new_syndicate
-
-	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "Syndicate"
-		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
+		new_syndicate.assigned_role = "Syndicate"
+		new_syndicate.special_role = "Syndicate"//So they actually have a special role/N
+		log_game("[new_syndicate.key] (ckey) has been selected as a nuclear operative")
 
 	return 1
 
