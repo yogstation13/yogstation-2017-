@@ -91,9 +91,11 @@
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
 	return 1
 
-/mob/living/carbon/true_devil/canUseTopic()
-	if(stat)
-		return
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 /mob/living/carbon/true_devil/assess_threat()
@@ -122,6 +124,7 @@
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
+	return 1
 
 /mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
 	A.attack_hand(src)

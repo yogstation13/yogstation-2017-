@@ -29,7 +29,9 @@
 			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
-	if(mind.enslaved_to)
+	if(mind.enslaved_to && !iscultist(mind.enslaved_to))
+		return 0
+	if(is_servant_of_ratvar(mind.current))
 		return 0
 	return 1
 
@@ -178,7 +180,7 @@
 		var/datum/action/innate/cultcomm/C = new()
 		C.Grant(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has been converted to the cult!</span>"
+		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='cult'>Has been converted to the cult of Nar'Sie!</span>"
 	if(jobban_isbanned(cult_mind.current, ROLE_CULTIST))
 		replace_jobbaned_player(cult_mind.current, ROLE_CULTIST, ROLE_CULTIST)
 	return 1
@@ -202,7 +204,7 @@
 		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
-		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Has renounced the cult!</span>"
+		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='cult'>Has renounced the cult of Nar'Sie!</span>"
 		if(show_message)
 			for(var/mob/M in viewers(cult_mind.current))
 				M << "<span class='big'>[cult_mind.current] looks like they just reverted to their old faith!</span>"

@@ -196,9 +196,8 @@
 	color = "#7D1919"
 
 /obj/machinery/door/window/ratvar_act()
-	if(prob(20))
-		new/obj/machinery/door/window/clockwork(src.loc, dir)
-		qdel(src)
+	new/obj/machinery/door/window/clockwork(src.loc, dir)
+	qdel(src)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -353,6 +352,9 @@
 
 /obj/machinery/door/window/clockwork/ratvar_act()
 	health = initial(health)
+
+/obj/machinery/door/window/clockwork/hasPower()
+	return TRUE //yup that's power all right
 
 /obj/machinery/door/window/clockwork/narsie_act()
 	take_damage(rand(30, 60), BRUTE)

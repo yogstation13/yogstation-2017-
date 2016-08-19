@@ -1215,7 +1215,8 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(prob(I.get_dismemberment_chance(affecting)))
+	var/probability = I.get_dismemberment_chance(affecting)
+	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
@@ -1269,7 +1270,7 @@
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-		return
+	return 1
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
