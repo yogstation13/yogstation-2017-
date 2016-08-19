@@ -17,7 +17,7 @@
 	var/obj/item/weapon/card/id/auth = null
 	var/list/access_log = list()
 	var/process = 0
-	circuit = "/obj/item/weapon/circuitboard/comm_traffic"
+	circuit = /obj/item/weapon/circuitboard/computer/telecomms/comm_traffic
 
 	req_access = list(access_tcomsat)
 
@@ -145,7 +145,6 @@
 		if(auth)
 			id = "[auth.registered_name] ([auth.assignment])"
 		else
-			ERROR("There is a null auth while the user isn't a silicon! ([user.name], [user.type])")
 			return
 	access_log += "\[[get_timestamp()]\] [id] [entry]"
 
@@ -228,9 +227,10 @@
 					screen = 0
 
 			if("editcode")
-				if(editingcode == usr) return
-				if(usr in viewingcode) return
-
+				if(editingcode == usr)
+					return
+				if(usr in viewingcode)
+					return
 				if(!editingcode)
 					lasteditor = usr
 					editingcode = usr
