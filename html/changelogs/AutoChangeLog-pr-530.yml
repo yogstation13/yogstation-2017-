@@ -1,0 +1,7 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "You can now change the channel of your GPS by using a multitool on it."
+  - rscadd: "Medical GPS's can download information from crew monitors, allowing you to save the last location of anyone that has their suit sensors up. +1 to Paramedics."
+  - tweak: "Emagging a GPS will make it harder to operate. This cannot be undone. Watch out for sneaky miners emagging all the GPS's."
+  - tweak: "GPS's now start their lists with YOUR GPS. You can find it in bold letters when you use them."
