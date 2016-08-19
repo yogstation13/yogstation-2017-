@@ -83,8 +83,10 @@
 		animal.headset = new headset_type(animal)
 	for(var/V in newVars)
 		animal.vars[V] = newVars[V]
-
+	qdel(animal.hud_used)
 	animal.create_mob_hud()
+	if(animal.hud_used)
+		animal.hud_used.show_hud(HUD_STYLE_STANDARD)
 	return 1
 
 /obj/item/weapon/storage/tactical_harness/proc/remove_harness(var/unequip = 1)
@@ -112,7 +114,10 @@
 
 	wearer.harness = null
 
+	qdel(wearer.hud_used)
 	wearer.create_mob_hud()
+	if(wearer.hud_used)
+		wearer.hud_used.show_hud(HUD_STYLE_STANDARD)
 	return 1
 
 /obj/item/weapon/storage/tactical_harness/proc/attempt_remove_harness(mob/user)
@@ -296,7 +301,7 @@
 	icon_state_alive = "tactical_dolphin"
 	icon_state_dead = "tactical_dolphin_dead"
 	newVars = list("name" = "tactical dolphin", "desc" = "A highly trained space dolphin used by the syndicate to provide light fire support and space superiority for elite commando teams.", "speed" = -0.3, "melee_damage_lower" = 15, "melee_damage_upper" = 15)
-	ranged_attacks = list(list("laser", /obj/item/projectile/beam, 75, 2, 'sound/weapons/sear.ogg', 3))
+	ranged_attacks = list(list("laser", /obj/item/projectile/beam, 90, 20, 'sound/weapons/sear.ogg', 2))
 	req_access = list(access_syndicate)
 	headset_type = /obj/item/device/radio/headset/syndicate
 	id_type = /obj/item/weapon/card/id/syndicate
@@ -311,7 +316,7 @@
 	icon_state_alive = "tactical_carp"
 	icon_state_dead = "tactical_carp_dead"
 	newVars = list("name" = "tactical space carp", "desc" = "A highly trained space carp used by the syndicate to provide heavy fire support and space superiority for elite commando teams.", "melee_damage_lower" = 15, "melee_damage_upper" = 15)
-	ranged_attacks = list(list("heavy laser", /obj/item/projectile/beam/laser/heavylaser, 150, 2, 'sound/weapons/sear.ogg', 1))
+	ranged_attacks = list(list("heavy laser", /obj/item/projectile/beam/laser/heavylaser, 150, 20, 'sound/weapons/sear.ogg', 1))
 	new_health = 150
 	req_access = list(access_syndicate)
 	headset_type = /obj/item/device/radio/headset/syndicate

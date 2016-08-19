@@ -3,54 +3,68 @@
 	var/obj/screen/tac_harness/open_inv/inv_button
 	var/obj/screen/tac_harness/toggle_nightvision/toggle_nv_button
 
-/datum/hud/tactical/New(mob/living/simple_animal/owner)
+/datum/hud/tactical/New(mob/owner)
 	..()
 
-	if(!istype(owner) || !owner.harness)
-		return
-	var/obj/item/weapon/storage/tactical_harness/harness = owner.harness
-
 	toggle_emag_button = new /obj/screen/tac_harness/toggle_emag()
-	toggle_emag_button.update_button_icon(harness)
-	static_inventory += toggle_emag_button
 
 	inv_button = new /obj/screen/tac_harness/open_inv()
-	inv_button.update_button_icon(harness)
-	static_inventory += inv_button
 
 	toggle_nv_button = new /obj/screen/tac_harness/toggle_nightvision()
-	toggle_nv_button.update_button_icon(harness)
-	static_inventory += toggle_nv_button
 
 	//hud_elements += animal.pullin
 	//animal.pullin.update_icon(animal)
 
+/datum/hud/tactical/show_hud(version = 0)
+	var/mob/living/simple_animal/SA = mymob
+	if(!istype(SA) || !SA.harness)
+		return
+	var/obj/item/weapon/storage/tactical_harness/harness = SA.harness
+
+	toggle_emag_button.update_button_icon(harness)
+	static_inventory += toggle_emag_button
+
+	inv_button.update_button_icon(harness)
+	static_inventory += inv_button
+
+	toggle_nv_button.update_button_icon(harness)
+	static_inventory += toggle_nv_button
+	..()
 
 /datum/hud/tactical/syndicate
 	var/obj/screen/tac_harness/toggle_safety/toggle_safety_button
 
 /datum/hud/tactical/syndicate/New(mob/living/simple_animal/owner)
 	..()
-	if(!istype(owner) || !owner.harness)
-		return
-	var/obj/item/weapon/storage/tactical_harness/harness = owner.harness
-
 	toggle_safety_button = new /obj/screen/tac_harness/toggle_safety()
+
+/datum/hud/tactical/syndicate/show_hud(version = 0)
+	var/mob/living/simple_animal/SA = mymob
+	if(!istype(SA) || !SA.harness)
+		return
+	var/obj/item/weapon/storage/tactical_harness/harness = SA.harness
+
 	toggle_safety_button.update_button_icon(harness)
 	static_inventory += toggle_safety_button
+
+	..()
 
 /datum/hud/tactical/corgi
 	var/obj/screen/tac_harness/toggle_stun/toggle_stun_button
 
-/datum/hud/tactical/corgi/New(mob/living/simple_animal/owner)
+/datum/hud/tactical/corgi/New(mob/owner)
 	..()
-	if(!istype(owner) || !owner.harness)
-		return
-	var/obj/item/weapon/storage/tactical_harness/harness = owner.harness
-
 	toggle_stun_button = new /obj/screen/tac_harness/toggle_stun()
+
+/datum/hud/tactical/corgi/show_hud(version = 0)
+	var/mob/living/simple_animal/SA = mymob
+	if(!istype(SA) || !SA.harness)
+		return
+	var/obj/item/weapon/storage/tactical_harness/harness = SA.harness
+
 	toggle_stun_button.update_button_icon(harness)
 	static_inventory += toggle_stun_button
+	..()
 
 //SCREEN OBJECTS
 
