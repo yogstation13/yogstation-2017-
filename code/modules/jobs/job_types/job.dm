@@ -70,6 +70,22 @@
 		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
 			backpack.contents += H.client.prefs.donor_hat
 			break
+
+	if(H.client.prefs.donor_outfit)
+		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
+			backpack.contents += H.client.prefs.donor_outfit
+			break
+
+	if(H.client.prefs.donor_shoes)
+		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
+			backpack.contents += H.client.prefs.donor_shoes
+			break
+
+	if(H.client.prefs.donor_suit)
+		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
+			backpack.contents += H.client.prefs.donor_suit
+			break
+
 	switch(H.client.prefs.donor_pda)
 		if(2)//transparent
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()

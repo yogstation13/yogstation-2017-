@@ -23,7 +23,7 @@
 //Captain
 /obj/item/clothing/head/caphat
 	name = "captain's hat"
-	desc = "It's good being the king."
+	desc = "It feels good to be king."
 	icon_state = "captain"
 	item_state = "that"
 	flags_inv = 0
@@ -75,7 +75,7 @@
 			var/obj/item/weapon/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src)
 			M.put_in_hands(CC)
 			M << "You slip a candy corn from your hat."
-			candy_cooldown = world.time+1200
+			candy_cooldown = world.time+1200+candy_cooldown
 		else
 			M << "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."
 

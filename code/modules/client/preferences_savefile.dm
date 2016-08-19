@@ -232,6 +232,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["agree"] 				>> agree
 	S["donor_pda"]			>> donor_pda
 	S["donor_hat"]			>> donor_hat
+	S["donor_shoes"]		>> donor_shoes
+	S["donor_outfit"]		>> donor_outfit
+	S["donor_suit"]			>> donor_suit
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -254,6 +257,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	agree			= sanitize_integer(agree, -1, 65535, 0)
 	donor_pda		= sanitize_integer(agree, 1, donor_pdas.len, 1)
 	donor_hat		= sanitize_integer(agree, 1, donor_start_items.len, 1)
+	donor_shoes		= sanitize_integer(agree, 1, donor_start_items.len, 1)
+	donor_outfit	= sanitize_integer(agree, 1, donor_start_items.len, 1)
+	donor_suit		= sanitize_integer(agree, 1, donor_start_items.len, 1)
 
 	return 1
 
@@ -289,6 +295,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["agree"] 				<< agree
 	S["donor_pda"]			<< donor_pda
 	S["donor_hat"]			<< donor_hat
+	S["donor_shoes"]		<< donor_shoes
+	S["donor_outfit"]		<< donor_outfit
+	S["donor_suit"]			<< donor_suit
 
 	return 1
 
