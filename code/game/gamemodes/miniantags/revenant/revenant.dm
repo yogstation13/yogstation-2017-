@@ -35,7 +35,7 @@
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
 	friendly = "touches"
-	status_flags = 0
+	status_flags = list()
 	wander = 0
 	density = 0
 	flying = 1
@@ -60,6 +60,7 @@
 	var/list/drained_mobs = list() //Cannot harvest the same mob twice
 	var/perfectsouls = 0 //How many perfect, regen-cap increasing souls the revenant has. //TODO, add objective for getting a perfect soul(s?)
 	var/image/ghostimage = null //Visible to ghost with darkness off
+	var/obj/effect/proc_holder/spell/targeted/revenant_transmit/revtransmit //Need this for quick-casting transmit
 
 /mob/living/simple_animal/revenant/New()
 	..()
@@ -90,13 +91,13 @@
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
 			ticker.mode.traitors |= src.mind //Necessary for announcing
+		revtransmit = new(null)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
-		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
+		AddSpell(revtransmit)
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
-
 
 //Life, Stat, Hud Updates, and Say
 /mob/living/simple_animal/revenant/Life()
@@ -210,6 +211,7 @@
 	notransform = 1
 	revealed = 1
 	invisibility = 0
+	revtransmit = null
 	playsound(src, 'sound/effects/screech.ogg', 100, 1)
 	visible_message("<span class='warning'>[src] lets out a waning screech as violet mist swirls around its dissolving body!</span>")
 	icon_state = "revenant_draining"

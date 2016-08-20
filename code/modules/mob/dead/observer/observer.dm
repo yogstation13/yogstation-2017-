@@ -253,11 +253,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	if(mental_dominator)
-		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
-		if(mind_control_holder)
-			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
-		return 0
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -322,6 +317,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	mind.current.key = key
 	return 1
+
+/mob/dead/observer/verb/register_pai_candidate()
+	set category = "Ghost"
+	set name = "pAI Setup"
+	set desc = "Upload a fragment of your personality to the global pAI databanks."
+	
+	if(istype(usr, /mob/dead/observer))
+		if(SSpai)
+			SSpai.recruitWindow(client.mob)
+	else
+		usr << "Can't become a pAI candidate while not dead!"
 
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 	if(message)

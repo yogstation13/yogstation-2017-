@@ -61,11 +61,24 @@
 			reagents.reaction(target, TOUCH, fraction)
 			var/mob/M = target
 			var/R
+			var/viruslist = ""
 			if(reagents)
 				for(var/datum/reagent/A in src.reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
+					if(istype(A, /datum/reagent/blood))
+						var/datum/reagent/blood/RR = A
+						for(var/datum/disease/D in RR.data["viruses"])
+							viruslist += " [D.name]"
+							if(istype(D, /datum/disease/advance))
+								var/datum/disease/advance/DD = D
+								viruslist += " \[ symptoms: "
+								for(var/datum/symptom/S in DD.symptoms)
+									viruslist += "[S.name] "
+								viruslist += "\]"
 			add_logs(user, M, "squirted", R)
+			if(viruslist)
+				investigate_log("[user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]", "viro")
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution.</span>"

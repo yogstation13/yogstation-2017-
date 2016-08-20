@@ -257,6 +257,7 @@
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BANANIUM	"$bananium"
+#define MAT_BIOMASS		"$biomass"
 
 
 //check_target_facings() return defines
@@ -446,7 +447,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
 
-
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
 #define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
@@ -466,3 +466,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
+//debug printing macros
+#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
+#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"

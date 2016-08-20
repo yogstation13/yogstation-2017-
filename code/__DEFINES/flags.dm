@@ -70,6 +70,9 @@
 #define NOHUNGER		17
 #define NOCRITDAMAGE	18
 #define NOZOMBIE		19
+#define EASYDISMEMBER	20
+#define EASYLIMBATTACHMENT 21
+#define TOXINLOVER		22
 
 #define FLYING	65536
 
@@ -85,6 +88,7 @@
 #define DRONE 32
 #define SWARMER 64
 #define PREDATOR 128
+#define RATVAR 128
 
 // Flags for reagents
 #define REAGENT_NOREACT 1

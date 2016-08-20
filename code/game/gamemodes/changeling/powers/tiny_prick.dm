@@ -95,7 +95,7 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.status_flags & CANWEAKEN)
+		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
 			C.take_organ_damage(20, 0) //The process is extremely painful
 
@@ -186,7 +186,12 @@
 		user.mind.changeling.remove_profile(target)
 		user.mind.changeling.absorbedcount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
-	user.mind.changeling.add_new_profile(target, user)
+	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
+	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
+		if(ewi.target == target.mind)
+			protect = 1
+			break
+	user.mind.changeling.add_new_profile(target, user, protect)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 

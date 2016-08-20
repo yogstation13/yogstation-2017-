@@ -17,7 +17,7 @@
 		if(2)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
-			new /obj/item/device/soulstone/anybody(src)
+			new /obj/item/device/necromantic_stone/lesser(src)
 		if(4)
 			new /obj/item/weapon/katana/cursed(src)
 		if(5)
@@ -47,24 +47,24 @@
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/stack/sheet/runed_metal/fifty(src)
-		if(18)
 			new /obj/item/device/warp_cube/red(src)
-		if(19)
+		if(18)
 			new /obj/item/device/wisp_lantern(src)
-		if(20)
+		if(19)
 			new /obj/item/device/immortality_talisman(src)
-		if(21)
+		if(20)
 			new /obj/item/weapon/gun/magic/hook(src)
-		if(22)
+		if(21)
 			new /obj/item/voodoo(src)
-		if(23)
+		if(22)
 			new /obj/item/weapon/grenade/clusterbuster/inferno(src)
-		if(24)
+		if(23)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(25)
+		if(24)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+		if(25)
+			new /obj/item/organ/heart/cursed/wizard(src)
 
 
 
@@ -233,7 +233,7 @@
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		spawn(100)
-			user.status_flags &= ~GODMODE
+			user.status_flags -= GODMODE
 			user.notransform = 0
 			user.forceMove(get_turf(Z))
 			user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
@@ -430,7 +430,7 @@
 			if(C.wear_mask)
 				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
 			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
+				if(!ishumanbasic(C)) //implying xenoshumans are holy
 					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
 				else
 					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
@@ -440,10 +440,6 @@
 					C.emote("scream")
 				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
 				src.used = TRUE
-
-
-
-
 
 
 ///Bosses
@@ -565,19 +561,14 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,4)
+	var/random = rand(1,2)
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
-		if(2)
-			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
-			H.set_species(/datum/species/skeleton)
-		if(3)
 			user << "<span class='danger'>You don't feel so good...</span>"
 			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
-		if(4)
+		if(2)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 			H.weather_immunities |= "lava"
 

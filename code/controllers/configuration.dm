@@ -45,7 +45,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/fps = 10
+	var/fps = 20
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 	var/admin_who_blocked = 0	// log OOC channel
@@ -74,6 +74,7 @@
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
+	var/use_antag_tokens = 0 //Defines whether the server uses the antag tokens system. Requires database.
 	var/donator_legacy_system = 0
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
@@ -260,6 +261,8 @@
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")
 					config.ban_legacy_system = 1
+				if("use_antag_tokens")
+					config.use_antag_tokens = 1
 				if("donator_legacy_system")
 					config.donator_legacy_system = 1
 				if("use_age_restriction_for_jobs")
@@ -433,6 +436,8 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("discord_token")
+					discord_token = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
@@ -622,6 +627,8 @@
 					MAX_EX_FLAME_RANGE = BombCap
 				else
 					diary << "Unknown setting in configuration: '[name]'"
+		else if(type == "discord")
+			discord_channels[name] = value
 
 	fps = round(fps)
 	if(fps <= 0)
