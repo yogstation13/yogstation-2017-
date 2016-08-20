@@ -1,6 +1,7 @@
 
 var/list/donor_verbs_list = list(
-	/client/proc/donor_ooc
+	/client/proc/donor_ooc,
+	/client/proc/animal_respawn
 	)
 
 /client/proc/add_donor_verbs()
@@ -86,6 +87,31 @@ var/global/normal_donor_ooc_colour = "#333333"
 			else
 				C << "<font color='[normal_donor_ooc_colour]'><span class='ooc'><span class='prefix'>Donor:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 	return
+
+/client/proc/animal_respawn()
+	set category = "Ghost"
+	set name = "Animal Respawn"
+	set desc= "Respawn as an animal"
+	if(!istype(usr, /mob/dead/observer))
+		usr << "You must be dead to do this"
+		return
+	if(alert(usr, "Respawn as an animal? If you do this, any previous lives will be forgotten.", "Are you positive?", "Yes", "No") != "Yes")
+		return
+	if(!istype(usr, /mob/dead/observer))
+		return
+	var/options = list()
+	for(var/mob/living/simple_animal/pet/P in living_mob_list)
+		if(!P.ckey && !P.stat)
+			options += P
+	var/mob/living/selected = input("Select a pet to become:") as null|anything in options
+	if(!selected || qdeleted(selected) || !istype(usr, /mob/dead/observer))
+		return
+	selected.ckey = ckey
+	usr.ckey = null
+
+	selected.pass_flags &= ~PASSDOOR
+	selected.languages_spoken |= HUMAN
+	selected.languages_understood |= HUMAN
 
 /client/verb/donator_who()
 	set name = "Donator Who"
