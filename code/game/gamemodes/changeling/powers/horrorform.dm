@@ -50,6 +50,8 @@
 			var/list/missing = H.get_missing_limbs()
 			if(missing.len)
 				H.regenerate_limbs(1)
+			for(var/datum/reagent/R in H.reagents.reagent_list)
+				qdel(R)
 			H.underwear = "Nude"
 			H.undershirt = "Nude"
 			H.socks = "Nude"
