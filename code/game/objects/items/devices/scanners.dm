@@ -123,7 +123,7 @@ MASS SPECTROMETER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(FAKEDEATH in M.status_flags)
+	if(M.status_flags & FAKEDEATH)
 		mob_status = "<span class='alert'>Deceased</span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -179,7 +179,7 @@ MASS SPECTROMETER
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || (FAKEDEATH in M.status_flags)))
+	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
 
 	for(var/datum/disease/D in M.viruses)

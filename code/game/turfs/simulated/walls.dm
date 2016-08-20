@@ -21,8 +21,7 @@
 	/obj/structure/falsewall,
 	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
-	/turf/closed/wall/r_wall/rust,
-	/turf/closed/wall/clockwork)
+	/turf/closed/wall/r_wall/rust)
 	smooth = SMOOTH_TRUE
 
 /turf/closed/wall/New()
@@ -274,14 +273,9 @@
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
+/turf/closed/wall/ratvar_act()
+	if(prob(20))
 		ChangeTurf(/turf/closed/wall/clockwork)
-	for(var/I in src)
-		var/atom/A = I
-		if(ismob(A) || converted)
-			A.ratvar_act()
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0

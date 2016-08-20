@@ -69,7 +69,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"mobtype" = signal.data["mobtype"],
 			"realname" = signal.data["realname"],
 			"name" = signal.data["name"],
-			"uuid" = signal.data["uuid"],
 			"job" = signal.data["job"],
 			"key" = signal.data["key"],
 			"vmask" = signal.data["vmask"],

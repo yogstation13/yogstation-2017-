@@ -76,7 +76,7 @@
 			for(var/mob/dead/observer/G in player_list)
 				if(G.name == A.name) // to prevent whatever needs to be prevented.
 					attack_ghost(G)
-		A.status_flags -= GODMODE
+		A.status_flags &= ~GODMODE
 		A.canmove = 1
 		A.forceMove(get_turf(user))
 		A.cancel_camera()

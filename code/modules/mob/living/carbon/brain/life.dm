@@ -20,7 +20,7 @@
 	return
 
 /mob/living/carbon/brain/update_stat()
-	if(GODMODE in status_flags)
+	if(status_flags & GODMODE)
 		return
 	if(health <= config.health_threshold_dead)
 		if(stat != DEAD)

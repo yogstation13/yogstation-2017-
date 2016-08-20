@@ -103,7 +103,7 @@
 /datum/chemical_reaction/slimecrit/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
 	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 5, "Gold Slime")
 
 /datum/chemical_reaction/slimecritlesser
@@ -118,7 +118,7 @@
 /datum/chemical_reaction/slimecritlesser/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
 	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 3, "Lesser Gold Slime", "neutral")
 
 /datum/chemical_reaction/slimecritfriendly
@@ -133,8 +133,27 @@
 /datum/chemical_reaction/slimecritfriendly/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
+	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
 	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 1, "Friendly Gold Slime", "neutral")
+
+/datum/chemical_reaction/slimecritstrange
+	name = "Slime Crit Strange"
+	id = "m_tele5"
+	result = null
+	required_reagents = list("omnizine" = 3) //Grind those donk pockets
+	result_amount = 1
+	required_container = /obj/item/slime_extract/gold
+	required_other = 1
+
+/datum/chemical_reaction/slimecritstrange/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	if(prob(15))
+		var/turf/T = get_turf(holder.my_atom)
+		T.visible_message("<span class='danger'>The slime extract begins to vibrate gently!</span>")
+		addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 1, "Strange Gold Slime", "neutral")
+	else
+		for(var/mob/O in viewers(get_turf(holder.my_atom),null))
+			O.show_message(text("<span class='notice'>The slime extract seems to tense up for a moment, then relaxes.</span>"), 1)
 
 //Silver
 /datum/chemical_reaction/slimebork

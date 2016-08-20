@@ -303,7 +303,6 @@
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
-			"uuid" = real_name, // Used for tracking when $source is changed
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
@@ -327,7 +326,7 @@
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
-				  5, real_name, signal.data["compression"], list(position.z, 0), freq, spans,
+				  5, signal.data["compression"], list(position.z, 0), freq, spans,
 				  verb_say, verb_ask, verb_exclaim, verb_yell)
 		return
 
@@ -345,7 +344,6 @@
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
-			"uuid" = real_name,		// Used for tracking when $source is change
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
@@ -400,7 +398,6 @@
 		"mobtype" = M.type, 	// the mob's type
 		"realname" = real_name, // the mob's real name
 		"name" = voice,			// the mob's voice name
-		"uuid" = real_name, // Used for tracking when $source is changed
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
@@ -436,7 +433,7 @@
 		// Send a mundane broadcast with limited targets:
 		Broadcast_Message(M, voicemask,
 						  src, message, voice, jobname, real_name,
-						  filter_type, real_name, signal.data["compression"], list(position.z), freq, spans,
+						  filter_type, signal.data["compression"], list(position.z), freq, spans,
 						  verb_say, verb_ask, verb_exclaim, verb_yell)
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)

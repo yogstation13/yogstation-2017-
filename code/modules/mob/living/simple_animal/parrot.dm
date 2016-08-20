@@ -940,7 +940,7 @@
 	desc = "Doomed to squawk the earth."
 	color = "#FFFFFF77"
 	speak_chance = 20
-	status_flags = list(GODMODE)
+	status_flags = GODMODE
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 

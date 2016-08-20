@@ -64,14 +64,14 @@
 		if(SLUR)
 			slurring = max(slurring,(effect * blocked))
 		if(STUTTER)
-			if(CANSTUN in status_flags) // stun is usually associated with stutter
+			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))
 		if(EYE_BLUR)
 			blur_eyes(effect * blocked)
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
 		if(JITTER)
-			if(CANSTUN in status_flags)
+			if(status_flags & CANSTUN)
 				jitteriness = max(jitteriness,(effect * blocked))
 	return 1
 

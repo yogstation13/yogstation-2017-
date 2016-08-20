@@ -126,7 +126,8 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	owner.status_flags &= ~status
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -140,7 +141,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)

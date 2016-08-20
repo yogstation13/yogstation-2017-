@@ -98,10 +98,7 @@ var/global/posibrain_notif_cooldown = 0
 		candidate << "This brain has already been taken! Please try your possesion again later!"
 		return
 	notified = 0
-	if(candidate.mind && !isobserver(candidate))
-		candidate.mind.transfer_to(brainmob)
-	else
-		brainmob.ckey = candidate.ckey
+	brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
 	brainmob << welcome_message
 	brainmob.mind.assigned_role = new_role

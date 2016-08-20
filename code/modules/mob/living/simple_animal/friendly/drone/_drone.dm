@@ -9,7 +9,6 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
-#define CLOCKDRONE	"drone_clock"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
@@ -33,7 +32,7 @@
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB | PASSDOOR
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = list(CANPUSH, CANSTUN, CANWEAKEN)
+	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
@@ -84,11 +83,8 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	if(seeStatic)
-		var/datum/action/generic/drone/select_filter/SF = new(src)
-		SF.Grant(src)
-	else
-		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
+	var/datum/action/generic/drone/select_filter/SF = new(src)
+	SF.Grant(src)
 
 	handcrafting = new()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
@@ -200,11 +196,9 @@
 	return 1
 
 
-/mob/living/simple_animal/drone/canUseTopic(atom/movable/M, be_close = 0)
-	if(incapacitated())
-		return 0
-	if(be_close && !in_range(M, src))
-		return 0
+/mob/living/simple_animal/drone/canUseTopic()
+	if(stat)
+		return
 	return 1
 
 

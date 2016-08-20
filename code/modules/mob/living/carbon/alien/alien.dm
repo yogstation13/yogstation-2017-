@@ -24,7 +24,7 @@
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = list(CANPARALYSE|CANPUSH)
+	status_flags = CANPARALYSE|CANPUSH
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -153,7 +153,7 @@ Des: Gives the client of the alien an image on each infected mob.
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
 		for (var/mob/living/C in mob_list)
-			if(XENO_HOST in C.status_flags)
+			if(C.status_flags & XENO_HOST)
 				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")

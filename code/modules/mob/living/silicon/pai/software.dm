@@ -13,7 +13,6 @@
 															"security records" = 15,
 															//"camera jack" = 10,
 															"door jack" = 30,
-															"remote control" = 60,
 															"atmosphere sensor" = 5,
 															//"heartbeat sensor" = 10,
 															"security HUD" = 20,
@@ -63,8 +62,6 @@
 				left_part = src.medicalAnalysis()
 			if("doorjack")
 				left_part = src.softwareDoor()
-			if("remote")
-				left_part = src.remoteControl()
 			if("camerajack")
 				left_part = src.softwareCamera()
 			if("signaller")
@@ -259,17 +256,6 @@
 				var/on_already = ((languages_understood == ALL) && (languages_spoken == ALL))
 				languages_spoken = on_already ? (HUMAN | ROBOT) : ALL
 				languages_understood = on_already ? (HUMAN | ROBOT) : ALL
-		if("remote")
-			if(href_list["pair"])
-				pairing = 1
-			if(href_list["abort"])
-				pairing = 0
-			if(href_list["control"])
-				if(paired)
-					paired.attack_hand(src)
-			if(href_list["disconnect"])
-				unpair(1)
-				pairing = 0
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -332,8 +318,6 @@
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
 			dat += "<a href='byond://?src=\ref[src];software=camerajack;sub=0'>Camera Jack</a> <br>"
-		if(s == "remote control")
-			dat += "<a href='byond://?src=\ref[src];software=remote;sub=0'>Remote Control</a> <br>"
 		if(s == "door jack")
 			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
 	dat += "<br>"
@@ -582,26 +566,6 @@
 
 	if(!istype(machine, /obj/machinery/camera))
 		src << "DERP"
-	return dat
-
-// Computer remote control
-
-/mob/living/silicon/pai/proc/remoteControl()
-	var/dat = "<h3>Remote control</h3>"
-	dat += "Connection status: "
-	if(!paired)
-		if(!pairing)
-			dat += "<font color=$FF5555>Disconnected</font> <br>"
-			dat += "<a href='byond://?src=\ref[src];software=remote;pair=1;sub=0'>Initiate connection</a> <br>"
-			return dat
-		else
-			dat += "<font color=#FFFF55>Waiting for connection...</font> <br>"
-			dat += "<a href='byond://?src=\ref[src];software=remote;abort=1;sub=0'>Abort</a> <br>"
-			dat += "Request to be swiped near the computer's network card to begin remote control handshake.<br>"
-			return dat
-	dat += "<font color=#55FF55>Connected to [paired.name]</font> <br>"
-	dat += "<a href='byond://?src=\ref[src];software=remote;control=1;sub=0'>Access remote interface</a> <br>"
-	dat += "<a href='byond://?src=\ref[src];software=remote;disconnect=1;sub=0'>Disconnect</a> <br>"
 	return dat
 
 // Door Jack

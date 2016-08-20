@@ -178,14 +178,14 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
-
+	
 	var/localhost_addresses = list("127.0.0.1", "::1")
 	if(address && (address in localhost_addresses))
 		var/datum/admin_rank/localhost_rank = new("!localhost!", R_MAXPERMISSION - 1 - R_NOJOIN)
 		if(localhost_rank)
 			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
 			localhost_holder.associate(src)
-
+	
 	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -339,13 +339,11 @@ var/next_external_rsc = 0
 	for(var/datum/admin_ticket/T in tickets_list)
 		if(compare_ckey(T.owner_ckey, usr) && !T.resolved)
 			T.add_log(new /datum/ticket_log(T, src, "¤ Disconnected ¤", 1))
-
+	
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
 		admins -= src
-		if(!total_admins_active())
-			send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src

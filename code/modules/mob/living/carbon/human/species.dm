@@ -913,12 +913,12 @@
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
 
-	if(GOTTAGOFAST in H.status_flags)
+	if(H.status_flags & GOTTAGOFAST)
 		. -= 1
-	if(GOTTAGOREALLYFAST in H.status_flags)
+	if(H.status_flags & GOTTAGOREALLYFAST)
 		. -= 2
 
-	if(!(IGNORESLOWDOWN in H.status_flags))
+	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
 			if(specflags & FLYING)
 				. += speedmod
@@ -967,7 +967,7 @@
 				if(!leg_amount)
 					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
-			if(SLOWDOWN in H.status_flags) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
+			if(H.status_flags & SLOWDOWN) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
 				. += 3
 
 
@@ -1215,8 +1215,7 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	var/probability = I.get_dismemberment_chance(affecting)
-	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
+	if(prob(I.get_dismemberment_chance(affecting)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
@@ -1270,7 +1269,7 @@
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-	return 1
+		return
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
@@ -1326,7 +1325,7 @@
 		return TRUE
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	if((GODMODE in H.status_flags))
+	if((H.status_flags & GODMODE))
 		return
 
 	var/lungs = H.getorganslot("lungs")

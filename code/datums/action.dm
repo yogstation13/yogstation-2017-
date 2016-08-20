@@ -6,7 +6,6 @@
 
 /datum/action
 	var/name = "Generic Action"
-	var/desc
 	var/obj/target = null
 	var/check_flags = 0
 	var/processing = 0
@@ -183,19 +182,10 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
-/datum/action/item_action/clock
-	background_icon_state = "bg_clock"
-
-/datum/action/item_action/clock/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
-		return 0
-	return ..()
-
-/datum/action/item_action/clock/toggle_flame
+/datum/action/item_action/toggle_flame
 	name = "Summon/Dismiss Ratvar's Flame"
-	desc = "Allows you to summon a flame that can create stunning zones at any range."
 
-/datum/action/item_action/clock/toggle_flame/IsAvailable()
+/datum/action/item_action/toggle_flame/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
 		return 0
 	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
@@ -204,20 +194,6 @@
 			return 0
 	return ..()
 
-/datum/action/item_action/clock/hierophant
-	name = "Hierophant Network"
-	desc = "Allows you to communicate with other Servants."
-	button_icon_state = "hierophant_slab"
-
-/datum/action/item_action/clock/guvax
-	name = "Guvax"
-	desc = "Allows you to convert adjacent nonservants while holding the slab."
-	button_icon_state = "guvax_capacitor"
-
-/datum/action/item_action/clock/vanguard
-	name = "Vanguard"
-	desc = "Allows you to temporarily absorb stuns. All stuns absorbed will affect you when disabled."
-	button_icon_state = "vanguard_cogwheel"
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

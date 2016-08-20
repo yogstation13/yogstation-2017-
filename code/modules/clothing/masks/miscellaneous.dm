@@ -6,7 +6,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
-	put_on_delay = 12
+	put_on_delay = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -15,23 +15,6 @@
 			user << "<span class='warning'>You need help taking this off!</span>"
 			return
 	..()
-
-
-
-/obj/item/clothing/mask/muzzle/cloth
-	name = "cloth muzzle"
-	desc = "A cloth gag for silencing your victim."
-	icon_state = "cloth_muzzle"
-	item_state = "cloth_muzzle"
-	put_on_delay = 16
-
-/datum/crafting_recipe/cloth_muzzle
-	name = "cloth muzzle"
-	reqs = list(
-		/obj/item/clothing/torncloth
-	)
-	result = /obj/item/clothing/mask/muzzle/cloth
-	category = CAT_WEAPON
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"

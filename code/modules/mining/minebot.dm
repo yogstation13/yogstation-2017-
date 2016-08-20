@@ -11,7 +11,7 @@
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
-	status_flags = list(CANSTUN, CANWEAKEN, CANPUSH)
+	status_flags = CANSTUN|CANWEAKEN|CANPUSH
 	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = list("neutral")
@@ -46,22 +46,8 @@
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
 
-	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
-	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action
-	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
-	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
-
 /mob/living/simple_animal/hostile/mining_drone/New()
 	..()
-	toggle_light_action = new()
-	toggle_light_action.Grant(src)
-	toggle_meson_vision_action = new()
-	toggle_meson_vision_action.Grant(src)
-	toggle_mode_action = new()
-	toggle_mode_action.Grant(src)
-	dump_ore_action = new()
-	dump_ore_action.Grant(src)
-
 	toggle_light()
 	SetCollectBehavior()
 
@@ -230,19 +216,12 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/fix_light()
 	light_on = 0
 
-/mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
-	switch(mode)
-		if(MINEDRONE_IDLE)
-			SetCollectBehavior()
-		if(MINEDRONE_COLLECT)
-			SetOffenseBehavior()
-		if(MINEDRONE_ATTACK)
-			SetInactiveBehavior()
-		else //This should never happen.
-			mode = MINEDRONE_COLLECT
-			SetCollectBehavior()
+//Verbs
 
-/mob/living/simple_animal/hostile/mining_drone/proc/toggle_light()
+/mob/living/simple_animal/hostile/mining_drone/verb/toggle_light()
+	set category = "Minebot"
+	set name = "Toggle Minebot Light"
+
 	if(light_on == 2)
 		return
 
@@ -253,53 +232,38 @@
 	light_on = !light_on
 	src << "<span class='notice'>You toggle your light [light_on ? "on" : "off"].</span>"
 
-//Actions
 
-/datum/action/innate/minedrone
-	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_default"
-
-/datum/action/innate/minedrone/toggle_light
-	name = "Toggle Light"
-	button_icon_state = "mech_lights_off"
-
-/datum/action/innate/minedrone/toggle_light/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
-	user.toggle_light()
-
-/datum/action/innate/minedrone/toggle_meson_vision
-	name = "Toggle Meson Vision"
-	button_icon_state = "meson"
-
-/datum/action/innate/minedrone/toggle_meson_vision/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
-	if(user.sight & SEE_TURFS)
-		user.sight &= ~SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_LIVING
+/mob/living/simple_animal/hostile/mining_drone/verb/toggle_meson_vision()
+	set category = "Minebot"
+	set name = "Toggle Meson Vision"
+	if(sight & SEE_TURFS)
+		sight &= ~SEE_TURFS
+		see_invisible = SEE_INVISIBLE_LIVING
 	else
-		user.sight |= SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
+		sight |= SEE_TURFS
+		see_invisible = SEE_INVISIBLE_MINIMUM
 
-	user << "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>"
+	src << "<span class='notice'>You toggle your meson vision [(sight & SEE_TURFS) ? "on" : "off"].</span>"
 
-/datum/action/innate/minedrone/toggle_mode
-	name = "Toggle Mode"
-	button_icon_state = "mech_cycle_equip_off"
+/mob/living/simple_animal/hostile/mining_drone/verb/toggle_mode()
+	set category = "Minebot"
+	set name = "Toggle Mode"
 
-/datum/action/innate/minedrone/toggle_mode/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-	user.toggle_mode()
+	switch(mode)
+		if(MINEDRONE_IDLE)
+			SetCollectBehavior()
+		if(MINEDRONE_COLLECT)
+			SetOffenseBehavior()
+		if(MINEDRONE_ATTACK)
+			SetInactiveBehavior()
+		else //This should never happen.
+			mode = MINEDRONE_COLLECT
 
-/datum/action/innate/minedrone/dump_ore
-	name = "Dump Ore"
-	button_icon_state = "mech_eject"
+/mob/living/simple_animal/hostile/mining_drone/verb/dump_ore()
+	set category = "Minebot"
+	set name = "Dump Ore"
 
-/datum/action/innate/minedrone/dump_ore/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-	user.DropOre()
-
+	DropOre()
 
 /**********************Minebot Upgrades**********************/
 

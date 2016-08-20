@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	16
+#define SAVEFILE_VERSION_MAX	15
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -104,8 +104,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ignoring = list()
 	if(current_version < 15)
 		toggles |= SOUND_ANNOUNCEMENTS
-	if(current_version < 16)
-		donor_pda = 1
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -230,8 +228,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_hud"]			>> ghost_hud
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 	S["agree"] 				>> agree
-	S["donor_pda"]			>> donor_pda
-	S["donor_hat"]			>> donor_hat
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -252,8 +248,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	agree			= sanitize_integer(agree, -1, 65535, 0)
-	donor_pda		= sanitize_integer(agree, 1, donor_pdas.len, 1)
-	donor_hat		= sanitize_integer(agree, 1, donor_start_items.len, 1)
 
 	return 1
 
@@ -287,8 +281,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
 	S["agree"] 				<< agree
-	S["donor_pda"]			<< donor_pda
-	S["donor_hat"]			<< donor_hat
 
 	return 1
 

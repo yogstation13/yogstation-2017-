@@ -15,7 +15,7 @@
 	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	status_flags = list(CANPUSH)
+	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	var/feast_sound = 'sound/magic/Demon_consume.ogg'
 	death_sound = 'sound/magic/demon_dies.ogg'

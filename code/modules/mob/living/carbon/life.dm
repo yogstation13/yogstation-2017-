@@ -92,7 +92,7 @@
 
 //Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
-	if((GODMODE in status_flags))
+	if((status_flags & GODMODE))
 		return
 
 	var/lungs = getorganslot("lungs")
@@ -294,7 +294,7 @@
 				qdel(M)
 				continue
 			if(SSmob.times_fired%3==1)
-				if(!(GODMODE in M.status_flags))
+				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
 				nutrition += 10
 

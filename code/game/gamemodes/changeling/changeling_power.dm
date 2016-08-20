@@ -65,7 +65,7 @@
 	if(req_stat < user.stat)
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
-	if((FAKEDEATH in user.status_flags) && name != "Regenerate")
+	if((user.status_flags & FAKEDEATH) && name != "Regenerate")
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
 	if(c.geneticdamage > max_genetic_damage)

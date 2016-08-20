@@ -1,6 +1,6 @@
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/human/updatehealth()
-	if(GODMODE in status_flags)
+	if(status_flags & GODMODE)
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
@@ -46,14 +46,14 @@
 /mob/living/carbon/human/setFireLoss(amount)
 	var/set_damage = max(0, amount)
 	var/current_damage = getFireLoss()
-
+	
 	if(current_damage > set_damage)
 		heal_overall_damage(0, current_damage - set_damage)
 	else if(current_damage < set_damage)
 		take_overall_damage(0, set_damage - current_damage)
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
-	if(GODMODE in status_flags)
+	if(status_flags & GODMODE)
 		return 0
 	if(amount > 0)
 		take_overall_damage(amount, 0)
@@ -61,7 +61,7 @@
 		heal_overall_damage(-amount, 0)
 
 /mob/living/carbon/human/adjustFireLoss(amount)
-	if(GODMODE in status_flags)
+	if(status_flags & GODMODE)
 		return 0
 	if(amount > 0)
 		take_overall_damage(0, amount)
@@ -72,7 +72,7 @@
 	var/multiplier = 1
 	var/obj/item/clothing/head/H = head
 	var/loose = 40
-	if(stat || (FAKEDEATH in status_flags))
+	if(stat || (status_flags & FAKEDEATH))
 		multiplier = 2
 	if(H.flags_cover & (HEADCOVERSEYES | HEADCOVERSMOUTH) || H.flags_inv & (HIDEEYES | HIDEFACE))
 		loose = 0
@@ -147,7 +147,7 @@
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/human/take_overall_damage(brute, burn)
-	if(GODMODE in status_flags)
+	if(status_flags & GODMODE)
 		return	//godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()

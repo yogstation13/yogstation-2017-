@@ -44,8 +44,6 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
-#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
-
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
@@ -59,8 +57,6 @@
 #define iscarbon(A) (istype(A, /mob/living/carbon))
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
-
-#define isaiorborg(A) (istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
 
 #define isliving(A) (istype(A, /mob/living))
 

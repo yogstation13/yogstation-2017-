@@ -20,7 +20,6 @@
 	var/strength = 0
 	var/powered = 0
 	mouse_opacity = 2
-	paiAllowed = 1
 
 /obj/machinery/particle_accelerator/control_box/New()
 	wires = new /datum/wires/particle_accelerator/control_box(src)
@@ -41,13 +40,11 @@
 /obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
 	if(construction_state == PA_CONSTRUCTION_COMPLETE)
 		interact(user)
-	else if(construction_state == PA_CONSTRUCTION_PANEL_OPEN && (get_dist(src, user) <= 1))
+	else if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
 		wires.interact(user)
 
 /obj/machinery/particle_accelerator/control_box/proc/update_state()
 	if(construction_state < PA_CONSTRUCTION_COMPLETE)
-		if(paired)
-			paired.unpair()
 		use_power = 0
 		assembled = 0
 		active = 0
@@ -80,8 +77,6 @@
 					icon_state = "control_boxw"
 				else
 					icon_state = "control_boxc"
-	if(paired)
-		overlays += image('icons/obj/computer.dmi', "paipaired")
 
 /obj/machinery/particle_accelerator/control_box/Topic(href, href_list)
 	if(..())
@@ -142,8 +137,6 @@
 /obj/machinery/particle_accelerator/control_box/power_change()
 	..()
 	if(stat & NOPOWER)
-		if(paired)
-			paired.unpair()
 		active = 0
 		use_power = 0
 	else if(!stat && construction_state == PA_CONSTRUCTION_COMPLETE)

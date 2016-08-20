@@ -35,7 +35,7 @@
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
 	friendly = "touches"
-	status_flags = list()
+	status_flags = 0
 	wander = 0
 	density = 0
 	flying = 1

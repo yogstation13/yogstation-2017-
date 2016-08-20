@@ -119,8 +119,6 @@ Class Procs:
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
-	var/mob/living/silicon/pai/paired
-	var/paiAllowed = 0
 
 /obj/machinery/New()
 	..()
@@ -132,8 +130,6 @@ Class Procs:
 	power_change()
 
 /obj/machinery/Destroy()
-	if(paired)
-		paired.unpair(0)
 	machines.Remove(src)
 	if(!speed_process)
 		SSmachine.processing -= src
@@ -305,20 +301,6 @@ Class Procs:
 	else
 		return attack_hand(user)
 
-/obj/machinery/attackby(I as obj, user as mob)
-	if(istype(I, /obj/item/device/paicard))
-		var/obj/item/device/paicard/C = I
-		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
-			if(allowed(user))
-				if(paiAllowed)
-					C.pai.pair(src)
-				else
-					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
-			else
-				user << "<span class='warning'>Access denied.</span>"
-				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
-	else
-		return ..()
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)

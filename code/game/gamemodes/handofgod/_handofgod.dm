@@ -224,12 +224,11 @@ var/global/list/global_handofgod_structuretypes = list()
 //////////////////
 
 /datum/game_mode/proc/remove_hog_follower(datum/mind/follower_mind, announce = 1)//deconverts both
-	if(follower_mind.current)
-		if(is_handofgod_cultist(follower_mind.current) || is_handofgod_prophet(follower_mind.current))
-			follower_mind.remove_hog_follower_prophet()
-			update_hog_icons_removed(follower_mind,"red")
-			update_hog_icons_removed(follower_mind,"blue")
+	follower_mind.remove_hog_follower_prophet()
+	update_hog_icons_removed(follower_mind,"red")
+	update_hog_icons_removed(follower_mind,"blue")
 
+	if(follower_mind.current)
 		var/mob/living/carbon/human/H = follower_mind.current
 		H.faction -= "red god"
 		H.faction -= "blue god"

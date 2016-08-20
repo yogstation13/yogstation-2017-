@@ -38,10 +38,8 @@
 	return null
 
 /mob/camera/aiEye/Destroy()
-	if(ai)
-		return
-	else
-		return ..()
+	ai = null
+	return ..()
 
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))

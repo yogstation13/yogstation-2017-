@@ -977,13 +977,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
-/datum/uplink_item/implants/zombie
-	name = "Zombie Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
-	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
-	cost = 5
-
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a separate uplink \
@@ -1023,6 +1016,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/implants/zombie
+	name = "Zombie Implant"
+	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
+	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
+	cost = 7
 
 /datum/uplink_item/implants/mindslave
 	name = "Mindslave Implant"
@@ -1103,12 +1103,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 1
-
-/datum/uplink_item/badass/syndiefedora
-	name = "Syndicate Fedora"
-	desc = "This Syndicate Fedora of micro-woven adamantium silk is sure to prove your style!"
-	item = /obj/item/clothing/head/det_hat/evil
-	cost = 3
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"

@@ -6,6 +6,7 @@
 
 /datum/action/cyberman
 	var/panel = "Cyberman"
+	var/desc
 	button_icon = 'icons/mob/actions.dmi'
 	button_icon_state = "cyberman"
 	background_icon_state = "bg_default"

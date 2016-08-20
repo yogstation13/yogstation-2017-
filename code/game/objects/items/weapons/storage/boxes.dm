@@ -16,7 +16,6 @@
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
  *		Various paper bags.
- *		Barrier Grenade boxes
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -834,18 +833,3 @@
 	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
 	new /obj/item/weapon/circuitboard/computer/rdconsole(src)
-
-/obj/item/weapon/storage/box/barriers
-	name = "box of barrier grenades"
-	icon_state = "flashbang"
-	desc = "Tactical grenades here to solve your tactical problems. It is recommended to not go crazy with these."
-
-/obj/item/weapon/storage/box/barriers/New()
-	..()
-	new /obj/item/weapon/grenade/barrier(src)
-	new /obj/item/weapon/grenade/barrier(src)
-	new /obj/item/weapon/grenade/barrier(src)
-	new /obj/item/weapon/grenade/barrier(src)
-	new /obj/item/weapon/grenade/barrier(src)
-	new /obj/item/weapon/grenade/barrier(src)
-	new /obj/item/weapon/grenade/barrier(src)
