@@ -1,0 +1,5 @@
+author: The Sad Fox
+delete-after: True
+changes: 
+  - bugfix: "Fixes Caks missing an icon."
+  - bugfix: "Fixes botany wintercoat hood using normal coats icon."
