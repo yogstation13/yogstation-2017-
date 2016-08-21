@@ -67,9 +67,11 @@
 	if(!is_donator(H))
 		return
 	if(H.client.prefs.donor_hat)
-		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
-			backpack.contents += H.client.prefs.donor_hat
-			break
+		var/obj/item/weapon/storage/backpack/BP = locate(/obj/item/weapon/storage/backpack) in H.GetAllContents()
+		if(BP)
+			var/type = donor_start_items[H.client.prefs.donor_hat]
+			var/obj/hat = new type()
+			hat.forceMove(BP)
 	switch(H.client.prefs.donor_pda)
 		if(2)//transparent
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
