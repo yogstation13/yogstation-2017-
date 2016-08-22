@@ -232,6 +232,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["agree"] 				>> agree
 	S["donor_pda"]			>> donor_pda
 	S["donor_hat"]			>> donor_hat
+	S["purrbation"]         >> purrbation
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -254,6 +255,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	agree			= sanitize_integer(agree, -1, 65535, 0)
 	donor_pda		= sanitize_integer(agree, 1, donor_pdas.len, 1)
 	donor_hat		= sanitize_integer(agree, 1, donor_start_items.len, 1)
+	purrbation 		= sanitize_integer(purrbation, 0, 1, initial(purrbation))
 
 	return 1
 
@@ -289,6 +291,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["agree"] 				<< agree
 	S["donor_pda"]			<< donor_pda
 	S["donor_hat"]			<< donor_hat
+	S["purrbation"]			<< purrbation
+
 
 	return 1
 
@@ -343,7 +347,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			>> undershirt
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
-	S["purrbation"]			>> purrbation
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -463,7 +466,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			<< undershirt
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
-	S["purrbation"]			<< purrbation
 	S["species"]			<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
