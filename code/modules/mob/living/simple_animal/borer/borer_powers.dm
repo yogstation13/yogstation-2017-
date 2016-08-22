@@ -254,7 +254,7 @@
 		return
 
 	if(world.time - used_control < control_cooldown)
-		src << "<span class='warning'>Its too soon to use that again!</span>"
+		src << "<span class='warning'>It's too soon to use that!</span>"
 		return
 
 /*	if(influence < 50)
