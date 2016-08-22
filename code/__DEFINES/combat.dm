@@ -80,3 +80,9 @@
  #define WEAPON_LIGHT 0
  #define WEAPON_MEDIUM 1
  #define WEAPON_HEAVY 2
+
+ // Intent stuff
+ #define HARM "harm"
+ #define DISARM "disarm"
+ #define GRAB "grab"
+ #define HELP "help"
