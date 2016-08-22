@@ -250,6 +250,11 @@
 	if(stat & BROKEN)
 		return
 
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onMachineTick()
+
 	//store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
 	var/last_chrg = inputting

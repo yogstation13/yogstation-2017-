@@ -2358,6 +2358,13 @@
 		custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
 
+	else if(href_list["del_all_stuxnet"])
+		if(alert(usr, "Are you sure you would like to delete all instances of the stuxnet virus?", "Delete Stuxnet", "Yes", "No") == "Yes")
+			for(var/datum/software/malware/stuxnet/virus in active_software)
+				qdel(virus)
+		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
+		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
+
 	else if(href_list["cybermen"])
 		if(!check_rights(R_ADMIN))
 			return
