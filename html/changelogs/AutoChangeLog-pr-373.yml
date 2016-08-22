@@ -1,6 +1,4 @@
 author: IgnisCorvus
 delete-after: True
 changes: 
-  - : ""
-  - : ":bugfix: the paddle wont stick in your hands anymore when you are using the defib"
-  - : ""
+  - bugfix: "The paddle wont stick in your hands anymore when you are using the defib"
