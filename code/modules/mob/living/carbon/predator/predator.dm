@@ -2,34 +2,31 @@
 	name = "predator"
 	voice_name = "predator"
 	verb_say = "clicks"
-	icon = 'icons/mob/predators.dmi'
 	base_icon_state = "pred_s"
 	icon_state = "pred_s"
 	languages_spoken = PREDATOR
 	languages_understood = HUMAN | PREDATOR
 	gender = NEUTER
-	ventcrawler = 0
+	maxHealth = 125
+	health = 125
 
 /mob/living/carbon/human/predator/New()
 	..()
-
+	set_species(/datum/species/predator)
 	name = text("predator ([rand(1, 1000)])")
 	real_name = name
 	hair_color = "000"
 	hair_style = "Bald"
 	facial_hair_color = "000"
 	facial_hair_style = "Shaved"
-	set_species(/datum/species/predator)
-	if(icon_state != "pred_s")
-		icon_state = "pred_s"
 	update_icons()
 	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/hardsuit/predator, slot_wear_suit)
 	equip_to_slot_if_possible(new /obj/item/clothing/under/predator, slot_w_uniform)
 	equip_to_slot_if_possible(new /obj/item/weapon/shuriken, slot_l_store)
 	equip_to_slot_if_possible(new /obj/item/weapon/twohanded/spear/combistick, slot_r_store)
-	equip_to_slot_if_possible(new /obj/item/clothing/gloves/combat/predator, slot_gloves)
+	equip_to_slot_if_possible(new /obj/item/clothing/shoes/predator, slot_shoes)
+	equip_to_slot_if_possible(new /obj/item/weapon/storage/belt/mining/yautija, slot_belt)
 
-	AddSpell(new /obj/effect/proc_holder/spell/self/remove_skull(null))
 
 /mob/living/carbon/human/predator/Stat()
 	..()
