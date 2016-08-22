@@ -67,6 +67,8 @@
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
 
+	var/saveme = SG_REVIVE
+
 /datum/mind/New(var/key)
 	src.key = key
 	ckey = ckey(key)

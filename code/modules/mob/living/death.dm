@@ -53,9 +53,6 @@
 			message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
-	living_mob_list -= src
-	if(!gibbed)
-		dead_mob_list += src
 	else if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	paralysis = 0
@@ -72,3 +69,17 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+	living_mob_list -= src
+	if(!gibbed && !suiciding && client && client.prefs && client.prefs.spacegems > 0)
+		var/pay = askuser(src, "Die?", "Save me!", "Yes", "No ([mind.saveme] SG)", Timeout = 300)
+		if(pay == 2)
+			if(client.try_sg_purchase(mind.saveme))
+				mind.saveme *= SG_REVIVE_MULT
+				if(revive(1, 0))
+					visible_message("<span class='boldwarning'>But wait... [src]'s body begins to glow! [src] looks much better!</span>", "<span class='game deadsay'>Okay, so you don't die.</span>\n<span class='boldwarning'>But wait... Your body begins to glow! You feel much better!</span>")
+					message_admins("[key_name_admin(src)] revived themselves with Space Gems!")
+					return
+				else
+					src << "<span class='game deadsay'>Okay, so you don't die.</span>\n<span class='game deadsay'>Unfortunately your brain is still gone.</span>\n<span class='game deadsay'>Your brainless body stiffens for a moment and goes limp once again.</span>"
+	if(!gibbed)
+		dead_mob_list += src

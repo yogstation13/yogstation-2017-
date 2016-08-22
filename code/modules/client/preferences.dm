@@ -98,6 +98,11 @@ var/list/preferences_datums = list()
 	var/donor_pda = 1
 	var/quiet_round = 0
 
+	var/spacegems = 0
+	var/lastspacegemincome = 0
+	var/energy = 100
+	var/lastenergyincome = 0
+
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)

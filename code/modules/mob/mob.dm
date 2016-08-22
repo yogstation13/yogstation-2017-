@@ -587,7 +587,9 @@ var/next_mob_id = 0
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
-
+		if(client && client.prefs)
+			if(client.prefs.spacegems > 0)
+				stat(null, "Space Gems: [client.prefs.spacegems]")
 
 	if(client && client.holder)
 		if(statpanel("MC"))

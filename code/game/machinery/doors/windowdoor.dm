@@ -62,6 +62,7 @@
 				open_and_close()
 			else
 				do_animate("deny")
+				unlock_check(mecha.occupant)
 		return
 	if (!( ticker ))
 		return
@@ -81,6 +82,7 @@
 		open_and_close()
 	else
 		do_animate("deny")
+		unlock_check(user)
 	return
 
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
