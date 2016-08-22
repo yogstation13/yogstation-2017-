@@ -60,3 +60,4 @@
 		spawned = 1
 		spawncount--
 		log_game("[borer]/([borer.ckey]) was spawned as a cortical borer.")
+		message_admins("[borer]/[borer.ckey] was spawned as a cortical borer.")
