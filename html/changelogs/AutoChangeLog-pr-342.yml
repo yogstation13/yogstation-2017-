@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - tweak: "Riot Shields and their telescopic versions now have blindspots where projectiles/attacks/thrown items will land on them from directly behind"
