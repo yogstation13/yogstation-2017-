@@ -20,7 +20,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	var/size = 10
+	var/size = 5
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
@@ -42,7 +42,7 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='danger'>[src] charges!</span>")
+			visible_message("<span class='warning'><b>[src] charges!</b></span>")
 			SpinAnimation(speed = 20, loops = 5)
 			ranged = 0
 			retreat_distance = 0
@@ -59,29 +59,29 @@
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)
 		return
-	if(size > 2)
+	if(size > 1)
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
-		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
+		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 
 		L.maxHealth = maxHealth * 0.6
 		maxHealth = L.maxHealth
 
 		L.health = L.maxHealth
-		health = L.health
+		health = maxHealth
 
-		L.size = size - 2
-		size = L.size
+		size--
+		L.size = size
 
-		var/size_multiplier = L.size * 0.08
-		L.resize = size_multiplier
-		resize = L.resize
+		L.resize = L.size * 0.2
+		transform = initial(transform)
+		resize = size * 0.2
 
 		L.update_transform()
 		update_transform()
 
-		L.target = target
+		L.GiveTarget(target)
 
-		visible_message("<span class='danger'>[src] splits!</span>")
+		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
@@ -89,9 +89,9 @@
 				last_legion = FALSE
 				break
 		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff_of_storms)
+			loot = list(/obj/item/weapon/staff_of_storms)
 		else if(prob(5))
-			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
+			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)

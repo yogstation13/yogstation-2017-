@@ -14,13 +14,14 @@
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
+	var/clumsy_check = 1 //1 means clumsy people drop it, 0 means no one drops it, 2 means non-clumsy people drop it.
 
 /obj/item/weapon/grenade/burn()
 	prime()
 	..()
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if( ( ((user.disabilities & CLUMSY) && clumsy_check == 1) || (!(user.disabilities & CLUMSY) && clumsy_check == 2) ) && prob(50))
 		user << "<span class='warning'>Huh? How does this thing work?</span>"
 		active = 1
 		icon_state = initial(icon_state) + "_active"

@@ -54,7 +54,7 @@
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
-	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !buckled_mobs.len)
+	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
@@ -78,7 +78,7 @@
 		..()
 
 /obj/structure/kitchenspike/MouseDrop_T(mob/living/target, mob/living/carbon/human/user)
-	if(!isliving(target) || buckled_mobs.len)
+	if(!isliving(target) || has_buckled_mobs())
 		return
 	if(user.pulling != target)
 		return

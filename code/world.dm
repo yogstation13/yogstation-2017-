@@ -86,6 +86,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
+	send_discord_message("public", "A new round is about to begin! Join with this address https://yogstation.net/play.php ! The current round number is **[yog_round_number]** and the chosen map is **[map_name]**")
+
 	config.Tickcomp = 0
 	world.fps = 20
 
@@ -354,6 +356,7 @@ var/inerror = 0
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
+	config.load("config/discord.txt","discord")
 	config.loadsql("config/dbconfig.txt")
 	if (config.maprotation && SERVERTOOLS)
 		config.loadmaplist("config/maps.txt")
@@ -405,9 +408,9 @@ var/list/donators = list()
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"https://www.yogstation.net\">" //Change this to wherever you want the hub to link to.
 //	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "Yogstation.net"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 

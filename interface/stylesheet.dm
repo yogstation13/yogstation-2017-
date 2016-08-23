@@ -50,9 +50,13 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
+.genesisgreen			{color: #03ff39		font-weight: bold; font-size: 5;}
+.genesisred				{color: #FF0000; 	font-weight: bold; font-size: 5;}
+
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
+.boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
 .announce 				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
 .greenannounce			{color: #00ff00;	font-weight: bold;}
@@ -77,6 +81,7 @@ h1.alert, h2.alert		{color: #000000;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
 .large_brass			{color: #BE8700; font-size: 3;}
 .big_brass				{color: #BE8700; font-size: 3; font-weight: bold; font-style: italic;}
+.ratvar					{color: #BE8700; font-size: 6; font-weight: bold; font-style: italic;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
 .large_alloy			{color: #42474D; font-size: 3;}

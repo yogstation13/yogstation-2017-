@@ -11,7 +11,7 @@
 	weather_immunities = list("ash")
 
 	var/ram = 100	// Used as currency to purchase different abilities
-	var/list/software = list()
+	var/list/pai_software = list()
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 
@@ -49,6 +49,8 @@
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
 
+	var/obj/machinery/paired
+	var/pairing = 0
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
@@ -152,6 +154,52 @@
 // See software.dm for Topic()
 
 /mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
+	return
+
+/mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
+	if(!C)
+		src.unset_machine()
+		src.reset_perspective(null)
+		return 0
+	if(stat == DEAD || !C.status || !(src.network in C.network))
+		return 0
+	
+	set_machine(src)
+	current = C
+	reset_perspective(C)
+	return 1 
+
+/mob/living/silicon/pai/proc/unpair(var/silent = 0)
+	if(!paired)
+		return
+	if(paired.paired != src)
+		return
+	src.unset_machine()
+	paired.paired = null
+	paired.update_icon()
+	if(!silent)
+		src << "<span class='warning'><b>\[ERROR\]</b> Network timeout. Remote control connection to [paired.name] severed.</span>"
+	paired = null
+	return
+
+/mob/living/silicon/pai/proc/pair(var/obj/machinery/P)
+	if(!pairing)
+		return
+	if(!P)
+		return
+	if(P.stat & (BROKEN|NOPOWER))
+		src << "<span class='warning'><b>\[ERROR\]</b> Remote device not responding to remote control handshake. Cannot establish connection.</span>"
+		return
+	if(!P.paiAllowed)
+		src << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+		return
+	if(P.paired && (P.paired != src))
+		P.paired.unpair(0)
+	P.paired = src
+	paired = P
+	paired.update_icon()
+	pairing = 0
+	src << "<span class='info'>Handshake complete. Remote control connection established.</span>"
 	return
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)

@@ -114,6 +114,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
+	/client/proc/reset_all_tcs,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
@@ -246,6 +247,7 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/reload_admins,
 	/client/proc/panicbunker,
 	/client/proc/admin_change_sec_level,
+	/client/proc/reset_all_tcs,
 	/client/proc/toggle_nuke,
 	/client/proc/cmd_display_del_log,
 	/client/proc/toggle_antag_hud,
@@ -346,7 +348,10 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 
 	remove_admin_verbs()
+	verbs += /client/proc/adminwho
+	verbs += /client/proc/cmd_admin_say
 	verbs += /client/proc/show_verbs
+	verbs += /client/proc/dsay
 
 	src << "<span class='interface'>Almost all of your adminverbs have been hidden.</span>"
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

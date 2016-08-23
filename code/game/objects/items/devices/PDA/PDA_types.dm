@@ -24,15 +24,8 @@
 	fon = 0
 	detonate = 0
 
-/obj/item/device/pda/ai/attack_self(mob/user)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
-		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
-	return
-
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
-
 
 
 /obj/item/device/pda/medical
@@ -198,3 +191,7 @@
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-genetics"
+
+/obj/item/device/pda/shiny
+	name = "Delux PDA"
+	icon_state = "pda-clear"

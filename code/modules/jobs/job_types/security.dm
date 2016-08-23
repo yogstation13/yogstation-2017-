@@ -159,7 +159,8 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/reagent_containers/food/drinks/flask/det)
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1,\
+		/obj/item/device/flashlight/seclite=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -365,13 +366,12 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 
  	var/tie = /obj/item/clothing/tie/armband/deputy
 
-/datum/outfit/job/deputy/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/brigofficer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
 	if(visualsOnly)
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
+	L.implant(H)
 	H.sec_hud_set_implants()

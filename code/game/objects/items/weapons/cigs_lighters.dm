@@ -509,7 +509,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				var/prot = 0
 				if(istype(user, /mob/living/carbon/human))
 					var/obj/item/clothing/gloves/G = H.gloves
-					if(H.gloves && G.max_heat_protection_temperature)
+					if(istype(G) && G.max_heat_protection_temperature)
 						prot = (G.max_heat_protection_temperature > 360) // lazy code. nothing else seemed to work as properly as this though
 
 				if(!istype(src, /obj/item/weapon/lighter/greyscale))

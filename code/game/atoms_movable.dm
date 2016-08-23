@@ -8,6 +8,7 @@
 	var/mob/pulledby = null
 	var/languages_spoken = 0 //For say() and Hear()
 	var/languages_understood = 0
+	var/identifier = null //Only used for AI tracking.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"

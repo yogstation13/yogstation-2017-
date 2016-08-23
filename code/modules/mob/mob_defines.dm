@@ -121,7 +121,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 
-	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
+	var/list/status_flags = list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?
