@@ -114,10 +114,9 @@
 	src << "<b>Objectives:</b>"
 	if(creator)
 		src << "1. Serve the one who created you at any cost."
-	else
-		src << "1. Consume resources and replicate until there are no more resources left."
- 		src << "2. Ensure that this location is fit for invasion at a later date; do not perform actions that would render it dangerous or inhospitable."
- 		src << "3. Biological resources will be harvested at a later date; do not harm them."
+	src << "[(creator ? "2." : "1.")] Consume resources and replicate until there are no more resources left."
+	src << "[(creator ? "3." : "2.")] Ensure that the station is fit for invasion at a later date, do not perform actions that would render it dangerous or inhospitable."
+	src << "[(creator ? "4." : "3.")] Biological resources will be harvested at a later date, do not harm them."
 
 /mob/living/simple_animal/hostile/swarmer/New()
 	..()
