@@ -30,7 +30,7 @@
 	result = "inacusiate"
 	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
 	result_amount = 2
-	mix_message = "The mixture rapidly turns into a gross, thick liquid.""
+	mix_message = "The mixture rapidly turns into a gross, thick liquid."
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
