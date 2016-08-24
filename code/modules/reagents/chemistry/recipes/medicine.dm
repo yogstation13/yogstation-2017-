@@ -27,6 +27,7 @@
 	result = "inacusiate"
 	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
 	result_amount = 2
+	mix_message = The mixture rapidly turns into a gross, thick liquid.
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
@@ -34,6 +35,7 @@
 	result = "synaptizine"
 	required_reagents = list("sugar" = 1, "lithium" = 1, "water" = 1)
 	result_amount = 3
+	mix_message = The mixture turns a pale green and smells of pine trees.
 
 /datum/chemical_reaction/charcoal
 	name = "Charcoal"
@@ -50,6 +52,7 @@
 	result = "silver_sulfadiazine"
 	required_reagents = list("ammonia" = 1, "silver" = 1, "sulfur" = 1, "oxygen" = 1, "chlorine" = 1)
 	result_amount = 5
+	mix_message = The mixture turns into a foul smelling white cream.
 
 /datum/chemical_reaction/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -57,6 +60,7 @@
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
+	mix_message = The mixture turns a shimmery pale blue.
 
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
@@ -64,6 +68,7 @@
 	result = "mine_salve"
 	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
 	result_amount = 3
+	mix_message = The mixture bubbles unpleasantly.
 
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
@@ -71,6 +76,7 @@
 	result = "mine_salve"
 	required_reagents = list("plasma" = 5, "iron" = 5, "sugar" = 1) // A sheet of plasma, a twinkie and a sheet of metal makes four of these
 	result_amount = 15
+	mix_message = The mixture bubbles agressively.
 
 /datum/chemical_reaction/synthflesh
 	name = "Synthflesh"
@@ -78,6 +84,7 @@
 	result = "synthflesh"
 	required_reagents = list("blood" = 1, "carbon" = 1, "styptic_powder" = 1)
 	result_amount = 3
+	mix_message = The stypic powder and blood bond into gross, fleshy tendrils.
 
 /datum/chemical_reaction/styptic_powder
 	name = "Styptic Powder"
@@ -94,6 +101,7 @@
 	required_reagents = list("mercury" = 1, "chlorine" = 1)
 	result_amount = 2
 	required_temp = 374
+	mix_message = The mixture yields a purgative solution.
 
 /datum/chemical_reaction/potass_iodide
 	name = "Potassium Iodide"
@@ -101,6 +109,7 @@
 	result = "potass_iodide"
 	required_reagents = list("potassium" = 1, "iodine" = 1)
 	result_amount = 2
+	mix_message = The mixture turns a pale pink.
 
 /datum/chemical_reaction/pen_acid
 	name = "Pentetic Acid"
@@ -108,6 +117,7 @@
 	result = "pen_acid"
 	required_reagents = list("welding_fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
 	result_amount = 6
+	mix_message = The mixture hisses unpleasantly and releases toxic fumes before settling.
 
 /datum/chemical_reaction/sal_acid
 	name = "Salicyclic Acid"
@@ -115,6 +125,7 @@
 	result = "sal_acid"
 	required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "sacid" = 1)
 	result_amount = 5
+	mix_message = The mixture hisses unpleasantly and turns thick.
 
 /datum/chemical_reaction/oxandrolone
 	name = "Oxandrolone"
@@ -122,6 +133,7 @@
 	result = "oxandrolone"
 	required_reagents = list("carbon" = 3, "phenol" = 1, "hydrogen" = 1, "oxygen" = 1)
 	result_amount = 6
+	mix_message = The mixture smells vaguely of aloe and barbecue.
 
 /datum/chemical_reaction/salbutamol
 	name = "Salbutamol"
@@ -129,6 +141,7 @@
 	result = "salbutamol"
 	required_reagents = list("sal_acid" = 1, "lithium" = 1, "aluminium" = 1, "bromine" = 1, "ammonia" = 1)
 	result_amount = 5
+	mix_message = The mixture thins and turns a pale white.
 
 /datum/chemical_reaction/perfluorodecalin
 	name = "Perfluorodecalin"
@@ -169,6 +182,7 @@
 	result = "atropine"
 	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, "sacid" = 1)
 	result_amount = 5
+	mix_message = The mixture congeals into an unpleasant solution.
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
@@ -176,6 +190,7 @@
 	result = "epinephrine"
 	required_reagents = list("phenol" = 1, "acetone" = 1, "diethylamine" = 1, "oxygen" = 1, "chlorine" = 1, "hydrogen" = 1)
 	result_amount = 6
+	mix_message = The mixture bubbles and releases sweet fumes.
 
 /datum/chemical_reaction/strange_reagent
 	name = "Strange Reagent"
@@ -183,6 +198,7 @@
 	result = "strange_reagent"
 	required_reagents = list("omnizine" = 1, "holywater" = 1, "mutagen" = 1)
 	result_amount = 3
+	mix_message = The mixture screams at the top of it's lungs. What the fuck?
 
 /datum/chemical_reaction/mannitol
 	name = "Mannitol"
@@ -198,6 +214,7 @@
 	result = "mutadone"
 	required_reagents = list("mutagen" = 1, "acetone" = 1, "bromine" = 1)
 	result_amount = 3
+	mix_message = The solution calms it's unceasing bubbling and turns a pleasant green.
 
 /datum/chemical_reaction/antihol
 	name = "antihol"
@@ -205,6 +222,7 @@
 	result = "antihol"
 	required_reagents = list("ethanol" = 1, "charcoal" = 1, "copper" = 1)
 	result_amount = 3
+	mix_message = The solution turns a pale brown.
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
@@ -212,6 +230,7 @@
 	result = "cryoxadone"
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 	result_amount = 3
+	mix_message = The mixture turns a frigid blue and smells of peppermint.
 
 /datum/chemical_reaction/haloperidol
 	name = "Haloperidol"
@@ -219,6 +238,7 @@
 	result = "haloperidol"
 	required_reagents = list("chlorine" = 1, "fluorine" = 1, "aluminium" = 1, "potass_iodide" = 1, "oil" = 1)
 	result_amount = 5
+	mix_message = The mixture smells of oil and cleaning fluid.
 
 /datum/chemical_reaction/bicaridine
 	name = "Bicaridine"
@@ -226,6 +246,7 @@
 	result = "bicaridine"
 	required_reagents = list("carbon" = 1, "oxygen" = 1, "sugar" = 1)
 	result_amount = 3
+	mix_message = The solution bonds together into an orange cream.
 
 /datum/chemical_reaction/kelotane
 	name = "Kelotane"
@@ -233,6 +254,7 @@
 	result = "kelotane"
 	required_reagents = list("carbon" = 1, "silicon" = 1)
 	result_amount = 2
+	mix_message = The solution hisses and congeals.
 
 
 /datum/chemical_reaction/antitoxin
@@ -241,6 +263,7 @@
 	result = "antitoxin"
 	required_reagents = list("nitrogen" = 1, "silicon" = 1, "potassium" = 1)
 	result_amount = 3
+	mix_message = The mixture bonds into a purgative green fluid.
 
 /datum/chemical_reaction/tricordrazine
 	name = "Tricordrazine"
@@ -248,3 +271,4 @@
 	result = "tricordrazine"
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
 	result_amount = 3
+	mix_message = The mixture congeals into a shimmery, rainbow fluid and smells of mango.
