@@ -1,0 +1,6 @@
+author: Groxic
+delete-after: True
+changes: 
+  - bugfix: "Paranormal activities have decreased in relation to meatspikes, no longer will you see floating bodies."
+  - rscadd: "Meatspike frames can be deconstructed with a screwdriver."
+  - bugfix: "Whoever designed the meatspikes decided it was time that you should no longer be forced to watch meat rot forever."
