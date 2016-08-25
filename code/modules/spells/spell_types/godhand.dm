@@ -91,9 +91,9 @@
 	if(isitem(target))
 		var/obj/effect/overlay/temp/heal/B = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(target))
 		B.color = "FFFF00"
-		user.visible_message("<font color = #FFBF00>[user] blesses the [target]!</font>")
-		if(!cmptext("Blessed",copytext(target.name,1,8)))
-			target.name = "Blessed [target.name]"
+		user.visible_message("<span class='notice'>[user] blesses [target]!</span>")
+		if(!cmptext("blessed",copytext(target.name,1,8)))
+			target.name = "blessed [target.name]"
 			..()
 			return
 		..()
@@ -101,6 +101,6 @@
 	if(iscarbon(target))
 		var/obj/effect/overlay/temp/heal/B = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(target))
 		B.color = "FFFF00"
-		user.visible_message("<font color = #FFBF00>[user] blesses [target]!</font>")
+		user.visible_message("<span class= 'notice'>[user] blesses [target]!</span>")
 		..()
 		return
