@@ -56,7 +56,7 @@ var/total_borer_hosts_needed = 10
 	borers += src
 
 /mob/living/simple_animal/borer/attack_ghost(mob/user)
-	if(src.ckey)
+	if(ckey)
 		return
 	if(stat != CONSCIOUS)
 		return
@@ -188,9 +188,9 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>[victim] does not posess the vital systems needed to support us.</span>"
 		return
 
-	src.victim = victim
+	victim = victim
 	victim.borer = src
-	src.loc = victim
+	loc = victim
 
 	log_game("[src]/([src.ckey]) has infected [victim]/([victim.ckey]")
 
@@ -200,7 +200,7 @@ var/total_borer_hosts_needed = 10
 	if(controlling)
 		detatch()
 
-	src.loc = get_turf(victim)
+	loc = get_turf(victim)
 
 	victim.borer = null
 	victim = null
@@ -214,10 +214,10 @@ var/total_borer_hosts_needed = 10
 	M.transfer_to(src)
 
 	candidate.mob = src
-	src.ckey = candidate.ckey
+	ckey = candidate.ckey
 
-	if(src.mind)
-		src.mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
+	if(mind)
+		mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
 	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
@@ -245,15 +245,15 @@ var/total_borer_hosts_needed = 10
 		victim.computer_id = null
 		victim.lastKnownIP = null
 
-		src.ckey = victim.ckey
-		src.mind = victim.mind
+		ckey = victim.ckey
+		mind = victim.mind
 
 
-		if(!src.computer_id)
-			src.computer_id = h2s_id
+		if(!computer_id)
+			computer_id = h2s_id
 
 		if(!host_brain.lastKnownIP)
-			src.lastKnownIP = h2s_ip
+			lastKnownIP = h2s_ip
 
 		// brain -> host
 		var/b2h_id = host_brain.computer_id
