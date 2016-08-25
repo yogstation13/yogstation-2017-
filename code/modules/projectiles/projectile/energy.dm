@@ -167,6 +167,8 @@ obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
+		if(C.confused)//if they've already been shot
+			C.silent = 3 // if you can't hit another shot in 3 seconds you don't deserve the mute
 		C.confused = 3
 
 /obj/item/projectile/energy/bolt/large

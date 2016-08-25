@@ -1455,6 +1455,7 @@
 #include "code\modules\mob\living\simple_animal\borer\borer.dm"
 #include "code\modules\mob\living\simple_animal\borer\borer_captive.dm"
 #include "code\modules\mob\living\simple_animal\borer\borer_chemicals.dm"
+#include "code\modules\mob\living\simple_animal\borer\borer_event.dm"
 #include "code\modules\mob\living\simple_animal\borer\borer_html.dm"
 #include "code\modules\mob\living\simple_animal\borer\borer_powers.dm"
 #include "code\modules\mob\living\simple_animal\borer\borer_topic.dm"
