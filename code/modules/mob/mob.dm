@@ -311,6 +311,7 @@ var/next_mob_id = 0
 		return
 
 	AM.add_fingerprint(src)
+	add_logs(src, AM, "grabbed")
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)

@@ -113,6 +113,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		lastspacegemincome = 0
 		energy = 100
 		lastenergyincome = 0
+		purrbation = 0
+
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
@@ -238,6 +240,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["agree"] 				>> agree
 	S["donor_pda"]			>> donor_pda
 	S["donor_hat"]			>> donor_hat
+	S["purrbation"]         >> purrbation
 	S["spacegems"]			>> spacegems
 	S["lastspacegemincome"]	>> lastspacegemincome
 	S["energy"]				>> energy
@@ -264,9 +267,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	agree			= sanitize_integer(agree, -1, 65535, 0)
 	donor_pda		= sanitize_integer(agree, 1, donor_pdas.len, 1)
 	donor_hat		= sanitize_integer(agree, 1, donor_start_items.len, 1)
+	purrbation 		= sanitize_integer(purrbation, 0, 1, initial(purrbation))
 	spacegems		= sanitize_integer(spacegems, 0, 65535, 0)
 	energy			= sanitize_integer(energy, 0, 100, 100)
-	return
+
+	return 1
 
 /datum/preferences/proc/save_preferences()
 	if(!path)
@@ -300,10 +305,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["agree"] 				<< agree
 	S["donor_pda"]			<< donor_pda
 	S["donor_hat"]			<< donor_hat
+	S["purrbation"]			<< purrbation
 	S["spacegems"]			<< spacegems
 	S["lastspacegemincome"]	<< lastspacegemincome
 	S["energy"]				<< energy
 	S["lastenergyincome"]	<< lastenergyincome
+
 	return 1
 
 /datum/preferences/proc/load_character(slot)

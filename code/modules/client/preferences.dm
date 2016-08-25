@@ -97,6 +97,7 @@ var/list/preferences_datums = list()
 	var/donor_hat = null
 	var/donor_pda = 1
 	var/quiet_round = 0
+	var/purrbation = null
 
 	var/spacegems = 0
 	var/lastspacegemincome = 0
@@ -464,6 +465,8 @@ var/list/preferences_datums = list()
 					qdel(temp_hat)
 				dat += "<b>Fancy PDA:</b> "
 				dat += "<a href='?_src_=prefs;preference=donor;task=pda'>[donor_pdas[donor_pda]]</a><BR>"
+				dat += "<b>Purrbation (Humans only)</b> "
+				dat += "<a href='?_src_=prefs;preference=donor;task=purrbation'>[purrbation ? "Yes" : "No"]</a><BR>"
 			else
 				dat += "<b><a href='http://www.yogstation.net/index.php?do=donate'>Donate here</b>"
 
@@ -808,6 +811,8 @@ var/list/preferences_datums = list()
 					toggles ^= QUIET_ROUND
 				if("pda")
 					donor_pda = donor_pda % donor_pdas.len + 1
+				if("purrbation")
+					purrbation = !purrbation
 		else
 			message_admins("EXPLOIT \[donor\]: [user] tried to access donor only functions (as a non-donor). Attempt made on \"[href_list["preference"]]\" -> \"[href_list["task"]]\".")
 

@@ -241,6 +241,7 @@ var/last_irc_status = 0
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
+		ticker.server_reboot_in_progress = 1
 		return ..(1)
 	var/delay
 	if(time)
@@ -251,11 +252,13 @@ var/last_irc_status = 0
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	ticker.server_reboot_in_progress = 1
 	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		ticker.server_reboot_in_progress = 0
 		return
 	if(mapchanging)
 		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
