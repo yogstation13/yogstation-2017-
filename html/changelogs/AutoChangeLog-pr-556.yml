@@ -1,0 +1,5 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "The radiation crossbow now mutes its victims"
+  - tweak: "The radiation crossbow now costs 11 TC, down from 12"

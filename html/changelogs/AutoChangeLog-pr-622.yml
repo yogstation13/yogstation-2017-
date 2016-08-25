@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "Thrown items (from explosions) hopefully won't have anymore runtime errors!"
