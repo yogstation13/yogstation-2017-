@@ -210,12 +210,14 @@
 				drop_l_hand()
 				stop_pulling()
 			if(GRAB_NECK)
+				add_logs(user, src, "grabbed", addition="by the neck")
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
 								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
+				add_logs(user, src, "strangled")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
 								"<span class='userdanger'>[user] is strangling you!</span>")
 				update_canmove() //we fall down
