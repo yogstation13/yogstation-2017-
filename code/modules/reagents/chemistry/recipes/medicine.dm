@@ -6,7 +6,7 @@
 	required_reagents = list("silicon" = 1, "copper" = 1)
 	required_catalysts = list("plasma" = 5)
 	result_amount = 2
-	mix_message = "The mixture turns a gross, cool purple."
+	mix_message = "The mixture congeals into a purple goo. Gross."
 
 /datum/chemical_reaction/rezadone
 	name = "Rezadone"
@@ -30,7 +30,7 @@
 	result = "inacusiate"
 	required_reagents = list("water" = 1, "carbon" = 1, "charcoal" = 1)
 	result_amount = 2
-	mix_message = "The mixture rapidly turns into a gross, thick liquid."
+	mix_message = "The mixture rapidly swirls into a blackish watery substance."
 
 /datum/chemical_reaction/synaptizine
 	name = "Synaptizine"
@@ -128,7 +128,7 @@
 	result = "sal_acid"
 	required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "sacid" = 1)
 	result_amount = 5
-	mix_message = "Jesus christ, it smells like the clown's BO in here."
+	mix_message = "Jesus christ, it smells like the clown's body odor in here."
 
 /datum/chemical_reaction/oxandrolone
 	name = "Oxandrolone"
@@ -185,7 +185,7 @@
 	result = "atropine"
 	required_reagents = list("ethanol" = 1, "acetone" = 1, "diethylamine" = 1, "phenol" = 1, "sacid" = 1)
 	result_amount = 5
-	mix_message = "The mixture congeals into an unpleasant solution."
+	mix_message = "The mixture thins out into a clear fluid."
 
 /datum/chemical_reaction/epinephrine
 	name = "Epinephrine"
@@ -225,7 +225,7 @@
 	result = "antihol"
 	required_reagents = list("ethanol" = 1, "charcoal" = 1, "copper" = 1)
 	result_amount = 3
-	mix_message = "The solution turns a pale brown and smells like the morning after."
+	mix_message = "The solution turns a pale brown. Jesus christ, what is that stench?"
 
 /datum/chemical_reaction/cryoxadone
 	name = "Cryoxadone"
