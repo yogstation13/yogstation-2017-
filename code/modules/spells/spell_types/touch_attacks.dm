@@ -68,3 +68,14 @@
 
 	action_icon_state = "statue"
 	sound = "sound/magic/FleshToStone.ogg"
+
+/obj/effect/proc_holder/spell/targeted/touch/bless
+	name = "Bless"
+	desc = "Hallelujah!"
+
+	hand_path = "/obj/item/weapon/melee/touch_attack/bless"
+	action_icon_state = "bless"
+	invocation_type = "none"
+	charge_max = 60
+	clothes_req = 0
+	cooldown_min = 30
