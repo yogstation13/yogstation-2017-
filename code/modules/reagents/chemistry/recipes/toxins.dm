@@ -65,7 +65,7 @@
 	result = "mutagen"
 	required_reagents = list("radium" = 1, "phosphorus" = 1, "chlorine" = 1)
 	result_amount = 3
-	mix_message ="The mixture begins to froth angrily and turns uranium green."
+	mix_message ="The mixture begins to froth angrily and turns a brilliant green."
 
 /datum/chemical_reaction/lexorin
 	name = "Lexorin"
