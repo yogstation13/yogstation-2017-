@@ -1,0 +1,5 @@
+author: AshCorr
+delete-after: True
+changes: 
+  - bugfix: "SSU's now accept their original contents when emptied."
+  - bugfix: "Survival Suits can now be placed in Lavalands SSU's"
