@@ -7,8 +7,8 @@
 	anchored = 1
 	density = 1
 
-	var/obj/item/clothing/suit/space/suit = null
-	var/obj/item/clothing/head/helmet/space/helmet = null
+	var/obj/item/clothing/suit/suit = null
+	var/obj/item/clothing/head/helmet = null
 	var/obj/item/clothing/mask/mask = null
 	var/obj/item/clothing/shoes/shoes = null
 	var/list/extra_items = null
@@ -296,28 +296,28 @@
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
-		if(istype(I, /obj/item/clothing/suit/space))
+		if(istype(I, suit_type) || istype(I, /obj/item/clothing/suit/space))
 			if(suit)
 				user << "<span class='warning'>The unit already contains a suit!.</span>"
 				return
 			if(!user.drop_item())
 				return
 			suit = I
-		else if(istype(I, /obj/item/clothing/head/helmet))
+		else if(istype(I, helmet_type) || istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
 				user << "<span class='warning'>The unit already contains a helmet!</span>"
 				return
 			if(!user.drop_item())
 				return
 			helmet = I
-		else if(istype(I, /obj/item/clothing/mask))
+		else if(istype(I, mask_type) || istype(I, /obj/item/clothing/mask))
 			if(mask)
 				user << "<span class='warning'>The unit already contains a mask!</span>"
 				return
 			if(!user.drop_item())
 				return
 			mask = I
-		else if(istype(I, /obj/item/clothing/shoes))
+		else if(istype(I, shoes_type) || istype(I, /obj/item/clothing/shoes))
 			if(shoes)
 				user << "<span class='warning'>The unit already contains a pair of shoes!</span>"
 				return
@@ -331,6 +331,9 @@
 			if(!user.drop_item())
 				return
 			extra_items += I
+		else
+			user << "<span class='notice'>[I] doesn't fit into [src]</span>"
+			return
 
 		I.forceMove(src)
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
