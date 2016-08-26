@@ -1,4 +1,0 @@
-author: X-TheDark
-delete-after: True
-changes: 
-  - bugfix: "Hand tele no longer create infinite duration portals."
