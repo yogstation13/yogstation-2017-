@@ -89,8 +89,8 @@
 	if(user.lying || user.handcuffed)
 		return
 	if(isitem(target))
-		var/obj/effect/overlay/temp/heal/B = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(target))
-		B.color = "FFFF00"
+		var/obj/effect/overlay/temp/bless/B = PoolOrNew(/obj/effect/overlay/temp/bless, target.loc)
+		B.color = "#FFFF00"
 		user.visible_message("<span class='notice'>[user] blesses [target]!</span>")
 		if(!cmptext("blessed",copytext(target.name,1,8)))
 			target.name = "blessed [target.name]"
@@ -99,8 +99,8 @@
 		..()
 		return
 	if(iscarbon(target))
-		var/obj/effect/overlay/temp/heal/B = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(target))
-		B.color = "FFFF00"
+		var/obj/effect/overlay/temp/bless/B = PoolOrNew(/obj/effect/overlay/temp/bless, target.loc)
+		B.color = "#FFFF00"
 		user.visible_message("<span class= 'notice'>[user] blesses [target]!</span>")
 		..()
 		return
