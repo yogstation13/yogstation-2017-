@@ -584,12 +584,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	burn_state = -1
 	flags = ABSTRACT | NODROP
 
-/obj/item/clothing/glasses/thermal/abomination
+/obj/item/clothing/glasses/night/shadowling/abomination
 	name = "sunken pits"
-	desc = "Eye holes housing some kind of eyes. Something tells you you don't want to know what kind."
+	desc = "Eye holes housing some sort of eyes. Something tells you you don't want to know what kind."
 	icon_state = "golem"
 	item_state = "golem"
-	flash_protect = -1
+	actions_types = null
 
-/obj/item/clothing/glasses/thermal/abomination/emp_act(severity)
-	return

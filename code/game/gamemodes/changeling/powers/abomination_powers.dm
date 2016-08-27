@@ -30,7 +30,7 @@
 			if(M == user) //No message for the user, of course
 				continue
 			var/mob/living/carbon/human/H = M
-			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
+			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))//only the true power of earmuffs may block the power of the screech
 				H.Stun(2)
 				continue
 			M << "<span class='userdanger'>You freeze in terror, your blood turning cold from the sound of the scream!</span>"
@@ -106,7 +106,7 @@
 		return
 
 	user.visible_message("<span class='danger'>[user] devours [target], vomiting up some things!</span>", "<span class='notice'>We have devoured [target].</span>")
-	target << "<span class='userdanger'>You are eaten by the abomination!</span>"
+	target << "<span class='userdanger'>You are devoured by the abomination!</span>"
 
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)

@@ -66,16 +66,9 @@
 			user.equip_to_slot_or_del(new /obj/item/clothing/head/abomination(user), slot_head)
 			user.equip_to_slot_or_del(new /obj/item/clothing/gloves/abomination(user), slot_gloves)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/muzzle/abomination(user), slot_wear_mask)
-			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/abomination(user), slot_glasses)
+			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling/abomination(user), slot_glasses)
 			H.set_species(/datum/species/abomination)
 			changeling.chem_recharge_slowdown = 6
-
-//horrorform vision
-			H.weakeyes = 1
-			H.sight |= SEE_MOBS
-			H.permanent_sight_flags |= SEE_MOBS
-			H.see_in_dark = 8
-			H.dna.species.invis_sight = SEE_INVISIBLE_MINIMUM
 
 //hulk
 			var/datum/mutation/human/HM = mutations_list[HULK]
@@ -117,23 +110,19 @@
 
 
 	if(changeling.reverting == 1)
-		var/newNameId = "Unknown"
-		user.real_name = newNameId
+		changeling.chem_recharge_slowdown = 0
 		for(var/obj/item/I in user) // removes any item, the only thing I can think of is cuffs
 			user.unEquip(I)
 		for(var/obj/item/I in user) // removes the abomination armor
 			qdel(I)
-		changeling.chem_recharge_slowdown = 0
 		var/mob/living/carbon/human/H = user
 		H.set_species(/datum/species/human)
+		var/newNameId = "deformed humanoid" //makes it more obvious that they were an abomination
+		user.real_name = newNameId
 		for(var/spell in user.mind.spell_list)
 			if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
 				user.mind.spell_list -= spell
 				qdel(spell)
-		user.weakeyes = 0
-		user.sight &= ~SEE_MOBS
-		user.permanent_sight_flags &= ~SEE_MOBS
-		user.see_in_dark = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
 		changeling.reverting = 0
 
