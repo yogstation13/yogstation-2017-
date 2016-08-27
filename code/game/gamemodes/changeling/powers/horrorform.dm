@@ -127,12 +127,5 @@
 		changeling.reverting = 0
 
 
-
-
-
-
-
-
-
 	feedback_add_details("changeling_powers","HF")
 	return 1
