@@ -30,8 +30,19 @@
 		reagents.reaction(M, INJECT, fraction)
 		if(M.reagents)
 			var/list/injected = list()
+			var/viruslist = ""
 			for(var/datum/reagent/R in reagents.reagent_list)
 				injected += R.name
+				if(istype(R, /datum/reagent/blood))
+					var/datum/reagent/blood/RR = R
+					for(var/datum/disease/D in RR.data["viruses"])
+						viruslist += " [D.name]"
+						if(istype(D, /datum/disease/advance))
+							var/datum/disease/advance/DD = D
+							viruslist += " \[ symptoms: "
+							for(var/datum/symptom/S in DD.symptoms)
+								viruslist += "[S.name] "
+							viruslist += "\]"
 			var/trans = 0
 			if(!infinite)
 				trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -43,6 +54,9 @@
 			var/contained = english_list(injected)
 
 			add_logs(user, M, "injected", src, "([contained])")
+
+			if(viruslist)
+				investigate_log("[user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]", "viro")
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
@@ -141,17 +155,3 @@
 	volume = 1
 	amount_per_transfer_from_this = 1
 	list_reagents = list("unstablemutationtoxin" = 1)
-
-/obj/item/weapon/reagent_containers/hypospray/mini
-	name = "minihypospray"
-	desc = "A modified, more portable air-needle autoinjector, used by mining personnel and space explorers to quickly heal injuries in hostile environments."
-	icon = 'icons/obj/syringe.dmi'
-	item_state = "minihypo"
-	icon_state = "minihypo"
-	amount_per_transfer_from_this = 5
-	volume = 20
-	possible_transfer_amounts = null
-	flags = OPENCONTAINER
-	slot_flags = SLOT_BELT
-	ignore_flags = 1
-	list_reagents = list("omnizine" = 20)

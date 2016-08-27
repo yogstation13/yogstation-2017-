@@ -200,6 +200,7 @@
 			H.update_hair()
 			H.update_body_parts()
 			H.update_mutations_overlay() // no hulk lizard
+			H.dna.species.on_species_gain(H)
 
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy

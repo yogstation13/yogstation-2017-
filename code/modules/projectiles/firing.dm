@@ -25,6 +25,7 @@
 		return
 	BB.original = target
 	BB.firer = user
+	BB.previous_dir = user.dir
 	if (zone_override)
 		BB.def_zone = zone_override
 	else

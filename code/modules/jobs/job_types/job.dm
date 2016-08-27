@@ -66,14 +66,23 @@
 /datum/job/proc/give_donor_stuff(mob/living/carbon/human/H)
 	if(!is_donator(H))
 		return
+	if(H.client.prefs.purrbation)
+		H.purrbation()
 	if(H.client.prefs.donor_hat)
-		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
-			backpack.contents += H.client.prefs.donor_hat
-			break
-	if(H.client.prefs.donor_pda)
-		for(var/obj/item/device/pda/PDA in H.GetAllContents())
+		var/obj/item/weapon/storage/backpack/BP = locate(/obj/item/weapon/storage/backpack) in H.GetAllContents()
+		if(BP)
+			var/type = donor_start_items[H.client.prefs.donor_hat]
+			var/obj/hat = new type()
+			hat.forceMove(BP)
+	switch(H.client.prefs.donor_pda)
+		if(2)//transparent
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
 			PDA.icon_state = "pda-clear"
-			break
+		if(3)//pip-boy
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
+			PDA.icon_state = "pda-pipboy"
+			PDA.slot_flags |= SLOT_GLOVES
+
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -182,7 +191,9 @@
 		else
 			back = backpack //Department backpack
 
-	backpack_contents[box] = 1
+	if(box)
+		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
+		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

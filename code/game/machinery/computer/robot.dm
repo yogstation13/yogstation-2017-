@@ -9,6 +9,7 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
+	paiAllowed = 0 //Sorry, no powergaming the borgs
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))

@@ -14,6 +14,7 @@
 	var/icon_screen = "generic"
 	var/computer_health = 25
 	var/clockwork = FALSE
+	paiAllowed = 1
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
@@ -30,6 +31,10 @@
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onMachineTick()
 	return 1
 
 /obj/machinery/computer/emp_act(severity)
@@ -55,7 +60,7 @@
 			take_damage(rand(10,30), BRUTE, 0)
 
 /obj/machinery/computer/ratvar_act()
-	if(!clockwork && prob(20))
+	if(!clockwork)
 		clockwork = TRUE
 		icon_screen = "ratvar[rand(1, 4)]"
 		icon_keyboard = "ratvar_key[rand(1, 6)]"
@@ -84,6 +89,8 @@
 		overlays += "[icon_state]_broken"
 	else
 		overlays += icon_screen
+	if(paired)
+		overlays += "paipaired"
 
 /obj/machinery/computer/power_change()
 	..()
@@ -138,6 +145,8 @@
 	if(circuit) //no circuit, no breaking
 		if(!computer_health && !(stat & BROKEN))
 			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+			if(paired)
+				paired.unpair(0)
 			stat |= BROKEN
 			update_icon()
 

@@ -44,6 +44,8 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
+#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
@@ -57,6 +59,8 @@
 #define iscarbon(A) (istype(A, /mob/living/carbon))
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
+
+#define isaiorborg(A) (istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
 
 #define isliving(A) (istype(A, /mob/living))
 
@@ -79,6 +83,8 @@
 #define ismovableatom(A) (istype(A, /atom/movable))
 
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
+
+#define isitem(A) istype(A, /obj/item)
 
 #define ispredator(A) (istype(A, /mob/living/carbon/human/predator))
 

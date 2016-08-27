@@ -61,6 +61,10 @@
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
 		if(density)
+			if(mecha.occupant)
+				if(world.time - mecha.occupant.last_bumped <= 10)
+					return
+				mecha.occupant.last_bumped = world.time
 			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
@@ -161,6 +165,8 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		try_to_weld(I, user)
 		return 1
+	else if(istype(I, /obj/item/weapon/katana/energy))
+		return ..()
 	else if(!(I.flags & NOBLUDGEON) && user.a_intent != "harm")
 		try_to_activate_door(user)
 		return 1

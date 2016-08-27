@@ -26,6 +26,7 @@ Quartermaster
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/weapon/clipboard
+	l_pocket = /obj/item/device/export_scanner
 
 /*
 Cargo Technician
@@ -52,6 +53,7 @@ Cargo Technician
 	belt = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
+	l_pocket = /obj/item/device/export_scanner
 
 
 /*
@@ -63,8 +65,8 @@ Shaft Miner
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
 
@@ -110,7 +112,7 @@ Bartender
 	outfit = /datum/outfit/job/bartender
 
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons)
-	minimal_access = list(access_bar)
+	minimal_access = list(access_bar, access_weapons)
 
 
 /datum/outfit/job/bartender
@@ -124,6 +126,17 @@ Bartender
 	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
+/datum/job/bartender/space
+	title = "Space Bartender"
+	flag = null
+	faction = "A cold beer and the outstreched depths of space"
+	department_head = null
+	department_flag = null
+	minimal_access = list(access_bar, access_kitchen)
+	total_positions = 0
+	spawn_positions = 0
+	department_head = null
+	department_flag = null
 /*
 Cook
 */

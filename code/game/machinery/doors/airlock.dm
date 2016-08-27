@@ -119,12 +119,11 @@ var/list/airlock_overlays = list()
 		qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	if(prob(20))
-		if(glass)
-			new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
-		else
-			new/obj/machinery/door/airlock/clockwork(get_turf(src))
-		qdel(src)
+	if(glass)
+		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+	else
+		new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
@@ -150,9 +149,6 @@ var/list/airlock_overlays = list()
 			user.staminaloss += 50
 			user.stunned += 5
 			return
-	..()
-
-/obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -992,11 +988,6 @@ var/list/airlock_overlays = list()
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-	if(autoclose && normalspeed)
-		addtimer(src, "autoclose", 150)
-	else if(autoclose && !normalspeed)
-		addtimer(src, "autoclose", 10)
-
 	if(!density)
 		return 1
 	if(!ticker || !ticker.mode)
@@ -1013,6 +1004,12 @@ var/list/airlock_overlays = list()
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
+
+	if(autoclose && normalspeed)
+		addtimer(src, "autoclose", 150)
+	else if(autoclose && !normalspeed)
+		addtimer(src, "autoclose", 10)
+
 	return 1
 
 

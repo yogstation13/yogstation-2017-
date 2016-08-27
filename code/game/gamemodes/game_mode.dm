@@ -77,6 +77,11 @@
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
+	for(var/mob/antag in mob_list)
+		if(antag.mind)
+			if(antag.mind.special_role)
+				antag.mind.show_memory(antag)
+
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
@@ -167,6 +172,70 @@
 ///Called by the gameticker
 /datum/game_mode/process()
 	return 0
+
+/datum/game_mode/proc/handle_AI_Traitors()
+	//Handles setting up traitor AIs seperately, because >tfw no datum antags
+	//Override this to change chances for AI traitors
+	var/prob_naughty_ai = 19
+	if(prob(100-prob_naughty_ai)) return //no AI traitor made
+
+	var/mob/living/silicon/ai/A
+	for(var/datum/mind/player in get_players_for_role(ROLE_TRAITOR))
+		if(istype(player.current,/mob/living/silicon/ai))
+			A = player.current
+
+	if(!A || A.stat == DEAD || !A.client || !A.mind)
+		return
+	if(is_special_character(A))
+		return
+
+	ticker.mode.traitors += A.mind
+	A.mind.special_role = "traitor"
+
+	var/objective_count = 0
+
+	if(prob(30))
+		var/special_pick = rand(1,4)
+		switch(special_pick)
+			if(1)
+				var/datum/objective/block/block_objective = new
+				block_objective.owner = A.mind
+				A.mind.objectives += block_objective
+				objective_count++
+			if(2)
+				var/datum/objective/purge/purge_objective = new
+				purge_objective.owner = A.mind
+				A.mind.objectives += purge_objective
+				objective_count++
+			if(3)
+				var/datum/objective/robot_army/robot_objective = new
+				robot_objective.owner = A.mind
+				A.mind.objectives += robot_objective
+				objective_count++
+			if(4) //Protect and strand a target
+				var/datum/objective/protect/yandere_one = new
+				yandere_one.owner = A.mind
+				A.mind.objectives += yandere_one
+				yandere_one.find_target()
+				objective_count++
+				var/datum/objective/maroon/yandere_two = new
+				yandere_two.owner = A.mind
+				yandere_two.target = yandere_one.target
+				A.mind.objectives += yandere_two
+				objective_count++
+
+	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = A.mind
+		kill_objective.find_target()
+		A.mind.objectives += kill_objective
+
+	var/datum/objective/survive/survive_objective = new
+	survive_objective.owner = A.mind
+	A.mind.objectives += survive_objective
+
+	ticker.mode.greet_traitor(A.mind)
+	ticker.mode.finalize_traitor(A.mind)
 
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
@@ -289,15 +358,25 @@
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
-// Function to pull an antag from our list of antag candidates
-/datum/game_mode/proc/pick_candidate()
+// Function to pull an antag from our list of antag candidates, by default, use antag_candidates, but can specify
+// any list of minds (this is only useful for changelings at the moment)
+// Also needs to specify amount as to not screw over the antag_weights and if we remove the chosen candidate from the
+// global antag_candidates list (fucking changeling pick code, man)
+/datum/game_mode/proc/pick_candidate(list/datum/mind/candidates = antag_candidates, amount = 0, remove_from_antag_candidates = 0)
+	if(!amount)
+		return
+	var/list/datum/mind/chosen_ones = list()
 	// If the DB is connected, use the new function. Otherwise revert to legacy pick() selection
 	if(dbcon.IsConnected())
 		var/list/ckey_listed = list()
 		var/ckey_for_sql = ""
 
+		for(var/datum/mind/player in candidates)
+			if(istype(player.current,/mob/living/silicon/ai))
+				candidates.Remove(player) //All AI antag roles are handled seperately.  See handle_AI_Traitors()
+
 		// Add all our antag candidates to a list()
-		for (var/datum/mind/player in antag_candidates)
+		for (var/datum/mind/player in candidates)
 			ckey_listed += sanitizeSQL(get_ckey(player))
 
 		// Turn the list into a string that we will use to filter the player table
@@ -319,46 +398,75 @@
 			output[ckey] = weight
 			total += weight
 
-		// Find a number between 0 and our weight upper bound
-		var/R = rand(0, total)
-
-		var/cumulativeWeight = 0
-		var/datum/mind/final_candidate
-		// We will loop through each antag candidate until we find the point where the
-		// random number given intersects with a candidate. All other candidates will
-		// have their chance to be antag increased while the selected candidate will have
-		// their chance decreased
-		for(var/ckey in output)
-			var/weight = output[ckey]
-			cumulativeWeight += weight
-
-			if(R <= cumulativeWeight && !final_candidate)
-				// Lowest weight is 25.
-				weight = max(25, weight / 1.5)
-				var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
-				query.Execute()
-
-				for(var/datum/mind/candidate in antag_candidates)
-					if(lowertext(get_ckey(candidate)) == lowertext(ckey))
-						final_candidate = candidate
-						break
-			else
-				// Maximum weight is 400.
-				weight = min(400, weight * 1.5)
-				var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
-				query.Execute()
-
 		for(var/client/C in clients)
 			C.last_cached_weight = output[C.ckey]
-			C.last_cached_total_weight = total
 
-		// If after all this we still don't have a candidate, then use the legacy system
-		if(!final_candidate)
-			return pick(antag_candidates)
-		else
-			return final_candidate
+		for(var/i in 1 to amount)
+			if(!candidates.len)
+				break
+
+			// Find a number between 0 and our weight upper bound
+			var/R = rand(0, total)
+			var/cumulativeWeight = 0
+			var/datum/mind/final_candidate
+			// We will loop through each antag candidate until we find the point where the
+			// random number given intersects with a candidate. All other candidates will
+			// have their chance to be antag increased while the selected candidate will have
+			// their chance decreased
+			for(var/ckey in output)
+				var/weight = output[ckey]
+				cumulativeWeight += weight
+
+				if(R <= cumulativeWeight && !final_candidate)
+					// Lowest weight is 25.
+					weight = max(25, weight / 1.5)
+					var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[ckey]'")
+					query.Execute()
+
+					for(var/datum/mind/candidate in candidates)
+						if(get_ckey(candidate) == ckey)
+							final_candidate = candidate
+							total -= output[ckey]
+							break
+			// If after all this we still don't have a candidate, then use the legacy system
+			if(!final_candidate)
+				final_candidate = pick(candidates)
+
+			chosen_ones += final_candidate
+
+			if(remove_from_antag_candidates)
+				antag_candidates -= final_candidate
+			candidates -= final_candidate
 	else
-		return pick(antag_candidates)
+		for(var/i in 1 to amount)
+			var/datum/mind/final_candidate = pick(candidates)
+			chosen_ones += final_candidate
+
+			if(remove_from_antag_candidates)
+				antag_candidates -= final_candidate
+			candidates -= final_candidate
+
+	return chosen_ones
+
+
+/datum/game_mode/proc/update_not_chosen_candidates(list/datum/mind/not_chosen = antag_candidates)
+	if(dbcon.IsConnected())
+		//Ok, we're cheating quite a bit here, since this is ASSUMED to always run after we pick candidates, we
+		//have cached antag weights saved on clients that were eligible via `last_cached_weight` variable
+		//no need to query DB again
+		for(var/v in not_chosen)
+			var/datum/mind/candidate = v
+
+			if(candidate.current && candidate.current.client)
+				var/client/C = candidate.current.client
+
+				if(C && C.last_cached_weight) //if it's not null, we've updated it during the picking stage
+					var/SQL_ckey = sanitizeSQL(ckey(C.ckey)) //Better safe than sorry
+					var/weight = C.last_cached_weight
+					weight = min(400, weight * 1.5)
+					var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[SQL_ckey]'")
+					query.Execute()
+					C.last_cached_weight = weight
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
@@ -379,7 +487,7 @@
 
 	for(var/mob/new_player/player in players)
 		if(player.client && player.ready)
-			if(role in player.client.prefs.be_special && !(player.mind.quiet_round))
+			if((role in player.client.prefs.be_special) && !(player.mind.quiet_round))
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
@@ -611,3 +719,4 @@
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
+	remove_servant_of_ratvar(newborgie.current, TRUE)

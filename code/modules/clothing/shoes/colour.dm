@@ -1,5 +1,17 @@
 /obj/item/clothing/shoes/sneakers
 
+/obj/item/clothing/shoes/sneakers/random
+	name = "random sneakers"
+
+/obj/item/clothing/shoes/sneakers/random/New()
+	..()
+	var/obj/item/clothing/shoes/sneakers/C = pick(subtypesof(/obj/item/clothing/shoes/sneakers) - /obj/item/clothing/shoes/sneakers/random)
+	name = initial(C.name)
+	icon_state = initial(C.icon_state)
+	item_state = initial(C.item_state)
+	item_color = initial(C.item_color)
+	desc = initial(C.desc)
+
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	icon_state = "black"

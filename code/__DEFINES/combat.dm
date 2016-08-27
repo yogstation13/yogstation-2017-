@@ -25,17 +25,18 @@
 #define SHAME 16
 
 //Bitflags defining which status effects could be or are inflicted on a mob
-#define CANSTUN		1
-#define CANWEAKEN	2
-#define CANPARALYSE	4
-#define CANPUSH		8
-#define IGNORESLOWDOWN	16
-#define GOTTAGOFAST	32
-#define GOTTAGOREALLYFAST	64
-#define GODMODE		4096
-#define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath
-#define DISFIGURED	16384	//I'll probably move this elsewhere if I ever get wround to writing a bitflag mob-damage system
-#define XENO_HOST	32768	//Tracks whether we're gonna be a baby alien's mummy.
+#define CANSTUN				1
+#define CANWEAKEN			2
+#define CANPARALYSE			3
+#define CANPUSH				4
+#define IGNORESLOWDOWN		5
+#define GOTTAGOFAST			6
+#define GOTTAGOREALLYFAST	7
+#define SLOWDOWN			8
+#define FAKEDEATH			9	//Replaces stuff like changeling.changeling_fakedeath
+#define DISFIGURED			10
+#define XENO_HOST			11	//Tracks whether we're gonna be a baby alien's mummy.
+#define GODMODE				12
 
 
 //Grab levels
@@ -69,7 +70,6 @@
 #define UNARMED_ATTACK 2
 #define PROJECTILE_ATTACK 3
 #define THROWN_PROJECTILE_ATTACK 4
-#define THROWN_PROJECTILE_ATTACK 4
 #define HULK_ATTACK 5
 
 
@@ -80,3 +80,9 @@
  #define WEAPON_LIGHT 0
  #define WEAPON_MEDIUM 1
  #define WEAPON_HEAVY 2
+
+ // Intent stuff
+ #define HARM "harm"
+ #define DISARM "disarm"
+ #define GRAB "grab"
+ #define HELP "help"

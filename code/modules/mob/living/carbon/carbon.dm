@@ -121,6 +121,10 @@
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
 
+	if(reagents.has_reagent("capilletum") && lying)
+		M << "<span class='warning'>[src] is dead!</span>"
+		return
+
 	if(health >= 0)
 
 		if(lying)
@@ -129,6 +133,7 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
 						"<span class='notice'>You hug [src] to make them feel better!</span>")
+
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
@@ -716,13 +721,13 @@
 		hud_used.internals.icon_state = "internal[internal_state]"
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -787,4 +792,11 @@
 	..()
 
 
-
+/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
+	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(amount > 0)
+			blood_volume -= 5*amount
+		else
+			blood_volume -= amount
+	return ..()

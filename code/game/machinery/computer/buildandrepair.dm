@@ -133,17 +133,17 @@
 	w_class = 2
 	var/build_path = null
 
-/obj/item/weapon/circuitboard/cooldown_holder
+/obj/item/weapon/circuitboard/computer/cooldown_holder
 	var/nextAllowedTime = 0
 
-/obj/item/weapon/circuitboard/cooldown_holder/proc/cooldownLeft()
+/obj/item/weapon/circuitboard/computer/cooldown_holder/proc/cooldownLeft()
 	return max(nextAllowedTime - world.time, 0)
 
 /obj/item/weapon/circuitboard/computer/turbine_computer
 	name = "circuit board (Turbine Computer)"
 	build_path = /obj/machinery/computer/turbine_computer
 	origin_tech = "programming=4;engineering=4;powerstorage=4"
-/obj/item/weapon/circuitboard/cooldown_holder/computer/telesci_console
+/obj/item/weapon/circuitboard/computer/cooldown_holder/telesci_console
 	name = "circuit board (Telescience Console)"
 	build_path = /obj/machinery/computer/telescience
 	origin_tech = "programming=3;bluespace=3;plasmatech=4"
@@ -176,7 +176,7 @@
 	name = "circuit board (DNA Machine)"
 	build_path = /obj/machinery/computer/scan_consolenew
 	origin_tech = "programming=2;biotech=2"
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications
 	name = "circuit board (Communications)"
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=3;magnets=3"
@@ -349,6 +349,10 @@
 /obj/item/weapon/circuitboard/computer/comm_server
 	name = "circuit board (Telecommunications Server Monitor)"
 	build_path = /obj/machinery/computer/telecomms/server
+	origin_tech = "programming=3;magnets=3;bluespace=2"
+/obj/item/weapon/circuitboard/computer/telecomms/comm_traffic
+	name = "circuit board (Telecommunications Traffic Control)"
+	build_path = /obj/machinery/computer/telecomms/traffic
 	origin_tech = "programming=3;magnets=3;bluespace=2"
 
 /obj/item/weapon/circuitboard/computer/shuttle

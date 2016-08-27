@@ -6,6 +6,7 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = 1
 	slot_flags = SLOT_BELT
+	layer = BELOW_MOB_LAYER
 	origin_tech = "bluespace=4;materials=5"
 	var/usability = 0
 
@@ -76,7 +77,7 @@
 			for(var/mob/dead/observer/G in player_list)
 				if(G.name == A.name) // to prevent whatever needs to be prevented.
 					attack_ghost(G)
-		A.status_flags &= ~GODMODE
+		A.status_flags -= GODMODE
 		A.canmove = 1
 		A.forceMove(get_turf(user))
 		A.cancel_camera()

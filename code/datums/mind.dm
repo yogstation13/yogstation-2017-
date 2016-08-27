@@ -175,8 +175,8 @@
 
 
 /datum/mind/proc/remove_gang()
-		ticker.mode.remove_gangster(src,0,1,1)
-		remove_objectives()
+	ticker.mode.remove_gangster(src,0,1,1)
+	remove_objectives()
 
 /datum/mind/proc/remove_hog_follower_prophet()
 	ticker.mode.red_deity_followers -= src
@@ -212,7 +212,8 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)

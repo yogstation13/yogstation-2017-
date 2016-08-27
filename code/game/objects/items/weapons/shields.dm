@@ -2,6 +2,20 @@
 #define SHIELD_CRACKED 1
 #define SHIELD_BREAKING 2
 
+#define IMPROPERBLOCK 0
+#define PROPERBLOCK 1
+
+var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[NORTH]" = IMPROPERBLOCK),
+"[EAST]" = list("[SOUTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = IMPROPERBLOCK, "[NORTH]" = PROPERBLOCK),
+"[SOUTH]" = list("[NORTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = IMPROPERBLOCK ),
+"[WEST]" = list("[NORTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = PROPERBLOCK, "[WEST]" = IMPROPERBLOCK) )
+
+/obj/item/weapon/proc/check_for_positions(mob/living/carbon/human/H, atom/movable/AM)
+	var/facing_hit = blockcheck["[H.dir]"]["[AM.dir]"]
+//	message_admins("This is [H] and his direction is [H.dir].") //break glass if needed -Super
+//	message_admins("This is [AM] and his direction is [AM.dir].")
+	return facing_hit
+
 /obj/item/weapon/shield
 	name = "shield"
 	icon = 'icons/obj/weapons.dmi'
@@ -78,19 +92,45 @@
 	else
 		return ..()
 
-/obj/item/weapon/shield/riot/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 50 //This is to preserve the original thrown stuff block chance
-		return ..()
-	else if(attack_type == PROJECTILE_ATTACK)
-		return ..()
-	else if(attack_type == MELEE_ATTACK && damage > block_limit)
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		var/roll_for_shatter = check_shatter(owner, damage)
-		if(roll_for_shatter)
-			return 1
-		else
+/obj/item/weapon/shield/riot/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
+	if(attack_type == MELEE_ATTACK)
+		if(!check_for_positions(owner,AT))
 			return 0
+		if(damage > block_limit)
+			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			var/roll_for_shatter = check_shatter(owner, damage)
+			if(roll_for_shatter)
+				return 1
+			else
+				return 0
+		else
+			return 1
+
+	else if(attack_type == UNARMED_ATTACK)
+		if(!check_for_positions(owner,AT))
+			return 0
+		else
+			return 1
+
+
+	else if(attack_type == THROWN_PROJECTILE_ATTACK)
+		if(isitem(AT))
+			var/obj/item/O = AT
+			if(O.thrower_dir)
+				O.dir = O.thrower_dir
+			if(!check_for_positions(owner,O))
+				return 0
+			else
+				return 1
+		else
+			final_block_chance += 50
+			return ..()
+
+	else if(attack_type == PROJECTILE_ATTACK)
+		if(!check_for_positions(owner,AT))
+			return 0
+		return ..()
+
 	else if (attack_type == HULK_ATTACK) // trying to block a hulk backfires.
 		playsound(src, 'sound/effects/bang.ogg', 100, 1)
 		owner.unEquip(src)
@@ -99,7 +139,7 @@
 			target = get_step(target, pick(alldirs))
 		src.throw_at(target,7,1, spin = 0)
 		if(prob(final_block_chance))
-			owner.Weaken(2) // if it's not tossing the shield out of his hand, than it's knocking them down
+			owner.Weaken(2) // if it ain't tossin, they're takin the heat
 		return 0
 	else
 		return 1
@@ -134,6 +174,7 @@
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
 	burn_state = FLAMMABLE
+	block_limit = 15
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
@@ -147,39 +188,50 @@
 	w_class = 1
 	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
-	var/active = 0
+	var/active = FALSE
+	var/on_force = 10
+	var/on_throwforce = 8
+	var/on_throw_speed = 2
+	var/on_w_class = 4
+	var/clumsy_check = 1
+	var/icon_state_base = "eshield"
 
-/obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+/obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
 	if(active)
 		if(attack_type == UNARMED_ATTACK)
-			return 1
+			if(!check_for_positions(owner,AT))
+				return 0
+			else
+				return 1
 		else
 			return 0
 	else
 		return 0
 
-/obj/item/weapon/shield/energy/IsReflect()
+/obj/item/weapon/shield/energy/IsReflect(def_zone)
+//	if(!check_for_positions(D,M))
+//		return 0
 	return (active)
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if((clumsy_check && (user.disabilities & CLUMSY)) && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
-	icon_state = "eshield[active]"
+	icon_state = "[icon_state_base][active]"
 
 	if(active)
-		force = 10
-		throwforce = 8
-		throw_speed = 2
-		w_class = 4
+		force = on_force
+		throwforce = on_throwforce
+		throw_speed = on_throw_speed
+		w_class = on_w_class
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = 3
-		throwforce = 3
-		throw_speed = 3
-		w_class = 1
+		force = initial(force)
+		throwforce = initial(throwforce)
+		throw_speed = initial(throw_speed)
+		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
@@ -196,7 +248,7 @@
 	throw_range = 4
 	w_class = 3
 	shieldhealth = 95
-	var/active = 0
+	var/active = FALSE
 
 /obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)

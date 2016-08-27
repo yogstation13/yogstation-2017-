@@ -9,7 +9,6 @@
 	languages_understood = HUMAN | PREDATOR
 	gender = NEUTER
 	ventcrawler = 0
-	var/datum/action/innate/predator_remove_skull/skull = new
 
 /mob/living/carbon/human/predator/New()
 	..()
@@ -30,7 +29,7 @@
 	equip_to_slot_if_possible(new /obj/item/weapon/twohanded/spear/combistick, slot_r_store)
 	equip_to_slot_if_possible(new /obj/item/clothing/gloves/combat/predator, slot_gloves)
 
-	skull.Grant(src)
+	AddSpell(new /obj/effect/proc_holder/spell/self/remove_skull(null))
 
 /mob/living/carbon/human/predator/Stat()
 	..()
@@ -54,13 +53,11 @@
 /mob/living/carbon/human/predator/say_quote(var/text)
 	return "[verb_say], \"[text]\"";
 
-
-
 /datum/species/predator
 	name = "Predator"
 	id = "pred"
 	say_mod = "clicks"
 	default_color = "59CE00"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE)
+	specflags = list(VIRUSIMMUNE)
 	skinned_type = /obj/item/stack/sheet/animalhide/human

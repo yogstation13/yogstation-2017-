@@ -16,6 +16,9 @@ ADMIN_LEGACY_SYSTEM
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 #BAN_LEGACY_SYSTEM
 
+## Unhash this entry in order to use the antag token system. This system requires a new column `antag_tokens` in the table `player` of the datatype INT length 2
+#USE_ANTAG_TOKENS
+
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
@@ -110,6 +113,10 @@ HOSTEDBY Yogstation13-bot
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
+
+## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
 
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
@@ -254,3 +261,5 @@ ANNOUNCE_ADMIN_LOGOUT
 #CLIENT_WARN_MESSAGE Byond is really close to releasing 510 beta as the stable release, please take this time to try it out. Reports are that the client preforms better then the version you are using, and also handles network lag better. Shortly after it's release we will end up using 510 client features and you will be forced to update.
 #CLIENT_ERROR_VERSION 509
 #CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+
+#DISCORD_TOKEN nodiscord

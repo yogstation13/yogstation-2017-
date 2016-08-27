@@ -98,11 +98,10 @@
 
 
 /obj/item/weapon/twohanded/spear/combistick/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first)
-	if(ispredator(thrower))
-		embed_chance = 100
-	else
+	if(!ispredator(thrower))
 		audible_message("[src] flops mid-air from the incredibly weak throw!")
 		return
+	..()
 
 
 // --- HELMET ---  --- HELMET ---  --- HELMET ---
@@ -115,43 +114,30 @@
 	//icon = 'icons/mob/predators.dmi'
 	icon_state = "hardsuit0-pred"
 	item_state = "hardsuit0-pred"
-	armor = list(melee = 10, bullet = 45, laser = 5, energy = 10, bomb = 45, bio = 100, rad = 75)
-	//basestate = "helmet"
-	brightness_on = 0 //luminosity when on
+	armor = list(melee = 45, bullet = 5, laser = 5, energy = 10, bomb = 5, bio = 100, rad = 75)
+	brightness_on = 0 // a predator remains undetected.
 	on = 0
-	blockTracking = 1
-	item_color = "pred" //Determines used sprites: hardsuit[on]-[color] and hardsuit[on]-[color]2 (lying down sprite)
+	blockTracking = 1 // via the last comment
+	item_color = "pred"
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-	var/predator_eyes
+	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 
 
-/obj/item/clothing/head/helmet/space/hardsuit/predator/New()
-	..()
-	verbs += /obj/item/clothing/head/helmet/space/hardsuit/predator/proc/pactivate_system
-
-/obj/item/clothing/head/helmet/space/hardsuit/predator/proc/pactivate_system()
-	set name = "Activate Helmet"
-	set desc = "Boots up the Yautja Bio-masks's thermal systems."
-	set category = "Predator"
-
-	activate_system()
-
-/obj/item/clothing/head/helmet/space/hardsuit/predator/proc/activate_system(mob/living/carbon/human/predator/user = loc)
+/obj/item/clothing/head/helmet/space/hardsuit/predator/attack_self(mob/user)
 	if(!ispredator(user))
 		return
-	if(!predator_eyes)
+
+	on = !on
+	if(on)
 		user.sight = SEE_MOBS
 		user.see_invisible = SEE_INVISIBLE_MINIMUM
-		predator_eyes = 1
 		user << "<span class='danger'>You activate your helmets thermal imaging and low-light amplification systems</span>"
 
 	else
 		user.see_invisible = SEE_INVISIBLE_LIVING
 		user.sight &= ~SEE_MOBS
-		predator_eyes = 0
 		user << "<span class='danger'>You deactivate your helmets functions.</span>"
-	return
 
 // --- SUIT ---  --- SUIT ---  --- SUIT ---
 // --- SUIT ---  --- SUIT ---  --- SUIT ---
@@ -160,15 +146,12 @@
 /obj/item/clothing/suit/space/hardsuit/predator
 	name = "yautja plate armour"
 	desc = "A special multi-layer suit capable of resisting all forms of damage. It is extremely light and is composed of unknown materials."
-	//icon = 'icons/mob/predators.dmi'
 	icon_state = "hardsuit_pred"
 	item_state = "hardsuit_pred"
 	slowdown = 0
 	armor = list(melee = 17, bullet = 10, laser = 5, energy = 10, bomb = 45, bio = 100, rad = 75)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/device/t_scanner, /obj/item/weapon/rcd)
-	//var/obj/item/clothing/head/helmet/space/hardsuit/helmet
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/twohanded/spear/combistick, /obj/item/weapon/shuriken)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/predator
-	//var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 	flags = NODROP
 
 /obj/item/clothing/under/predator
@@ -192,34 +175,25 @@
 	name = "yautja gloves"
 	desc = "Gloves made out of very special fabric that prevents the predator from being shocked and prevents them from being burnt, along comes with retractable wristblades."
 	var/retracted = 0 // controls whether call_blades() needs to recall the blades or not.
-	flags = NODROP
+	actions_types = list(/datum/action/item_action/toggle)
 
-/obj/item/clothing/gloves/combat/predator/attack_hand(mob/user)
-	if(ispredator(user))
-		call_blades(user)
-		return
-
-	else
+/obj/item/clothing/gloves/combat/predator/attack_self(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(istype(H.l_hand, src) || istype(H.r_hand, src))
 		..()
+		return
+	call_blades(user)
 
 /obj/item/clothing/gloves/combat/predator/proc/call_blades(mob/user)
-
 	var/gethand = user.get_active_hand()
-	if(!retracted)
-		if(!gethand)
-			var/SSHNG = get_turf(user.loc)
-			var/obj/item/weapon/kitchen/knife/predator/glove = new /obj/item/weapon/kitchen/knife/predator(SSHNG)
-			glove.wrist = src
-			user.put_in_active_hand(glove)
-			retracted = 1
-		else
-			user << "<span class='danger'>There's already something in your hand!</span>"
+	if(!gethand)
+		var/SSHNG = get_turf(user.loc)
+		var/obj/item/weapon/kitchen/knife/predator/glove = new /obj/item/weapon/kitchen/knife/predator(SSHNG)
+		glove.wrist = src
+		user.put_in_active_hand(glove)
+		user << "<span class='notice'>You retract your wrist blade! (Use Z to retract the wristblades a second time.)</span>"
 	else
-		gethand = user.get_inactive_hand()
-		var/obj/item/weapon/kitchen/knife/predator/P
-		if(gethand == P)
-			retracted = !retracted
-			qdel(gethand)
+		user << "<span class='danger'>There's already something in your hand!</span>"
 
 /obj/item/clothing/gloves/combat/predator/attackby(obj/item/I, mob/living/user, params)
 	..()
@@ -238,3 +212,16 @@
 	flags = NODROP
 	force = 20
 	var/wrist = null // this will store which gloves the wristblades belong to.
+
+
+/obj/item/weapon/kitchen/knife/predator/attack_self(mob/user)
+	if(wrist)
+		user << "<span class='notice'>You retract your wrist blades!</span>"
+		qdel(src)
+	else
+		..()
+
+/obj/item/weapon/kitchen/knife/predator/process()
+	..()
+	if(!wrist)
+		qdel(src)

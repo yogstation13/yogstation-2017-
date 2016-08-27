@@ -79,6 +79,38 @@
 		else
 			M << "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."
 
+/obj/item/clothing/head/det_hat/evil
+	name = "syndicate fedora"
+	icon_state = "syndicate_fedora"
+	desc = "A suspicious black fedora with a red band."
+	w_class = 4
+	throw_speed = 4
+	embedded_pain_multiplier = 4
+	sharpness = IS_BLUNT
+	hitsound = 'sound/weapons/Genhit.ogg'
+	attack_verb = list("poked", "tipped")
+	var/extended = 0
+
+/obj/item/clothing/head/det_hat/evil/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	if(extended)
+		force = 15
+		throwforce = 40
+		embed_chance = 100
+		sharpness = IS_SHARP
+		icon_state = "syndicate_fedora_sharp"
+		attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut", "tipped")
+		hitsound = 'sound/weapons/bladeslice.ogg'
+	else
+		force = 0
+		throwforce = 0
+		embed_chance = 0
+		sharpness = IS_BLUNT
+		icon_state = "syndicate_fedora"
+		attack_verb = list("poked", "tipped")
+		hitsound = 'sound/weapons/Genhit.ogg'
+
 
 //Mime
 /obj/item/clothing/head/beret
@@ -102,6 +134,11 @@
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+
+/obj/item/clothing/head/HoS/beret/recovery
+	name = "recovery beret"
+	desc = "A pretty robust beret for Recovery Agents. Given that it's in pretty old fashion, and envy's paramedics."
+	icon_state = "wardenberet"
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"

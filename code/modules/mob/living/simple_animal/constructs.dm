@@ -11,9 +11,10 @@
 	speed = 0
 	a_intent = "harm"
 	stop_automated_movement = 1
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	attack_sound = 'sound/weapons/punch1.ogg'
-	see_in_dark = 7
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -29,6 +30,7 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/phaser = FALSE
 
 
 /mob/living/simple_animal/hostile/construct/New()
@@ -37,7 +39,7 @@
 		AddSpell(new spell(null))
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
 		if (src.health >= src.maxHealth/2)
@@ -97,7 +99,7 @@
 	speed = 3
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch3.ogg'
-	status_flags = 0
+	status_flags = list()
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 11
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
@@ -152,6 +154,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
+	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -165,8 +168,8 @@
 	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar-Sie's armies."
 	icon_state = "artificer"
 	icon_living = "artificer"
-	maxHealth = 50
-	health = 50
+	maxHealth = 55
+	health = 55
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
 	melee_damage_lower = 5
@@ -181,10 +184,12 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
 							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
-	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
-						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
-						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
-						and shells to place those soulstones into.</b>"
+	playstyle_string = "<B>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
+						corrupt areas (click on floors and walls to corrupt them and allow you to phase through them), \
+						use magic missile, repair allied constructs (by clicking on them), \
+						</B><I>and most important of all create new constructs</I><B> \
+						(Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
+	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
@@ -257,6 +262,7 @@
 							/obj/effect/proc_holder/spell/targeted/smoke/disable)
 	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON

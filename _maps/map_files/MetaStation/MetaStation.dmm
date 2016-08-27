@@ -34606,7 +34606,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},

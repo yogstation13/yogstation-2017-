@@ -34,7 +34,8 @@ other types of metals and chemistry for reagents).
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
-	var/build_path = ""					//The file path of the object that gets created
+	var/build_path = null				//The file path of the object that gets created
+	var/list/make_reagents = list()		//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
 	var/maxstack = 1
@@ -220,6 +221,16 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
 	build_path = /obj/item/weapon/storage/backpack/holding
+	category = list("Bluespace Designs")
+
+/datum/design/fannypack_holding
+	name = "Fannypack of Holding"
+	desc = "A Fannypack that opens into a localized pocket of Blue Space. But at what cost?"
+	id = "fannypack_holding"
+	req_tech = list("bluespace" = 3, "materials" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_GOLD = 3000, MAT_URANIUM = 250)
+	build_path = /obj/item/weapon/storage/belt/fannypack/holding
 	category = list("Bluespace Designs")
 
 /datum/design/bluespace_crystal

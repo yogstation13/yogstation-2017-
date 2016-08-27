@@ -7,6 +7,7 @@
 	plantname = "Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	maturation = 8
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash)
@@ -139,4 +140,6 @@
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 			if(user)
 				user.unEquip(src)
+				user.attack_log += "\[[time_stamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
+				K.spawnedBy = "[user.real_name]([user.ckey])"
 			qdel(src)

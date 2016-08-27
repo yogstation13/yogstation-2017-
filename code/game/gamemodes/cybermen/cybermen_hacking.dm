@@ -189,8 +189,8 @@
 	if(target)
 		if(!target.hud_list)
 			target.hud_list = list()
-		target.hud_list |= CYBERMEN_HACK_HUD
-		target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
+		if(!target.hud_list[CYBERMEN_HACK_HUD])
+			target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
 	var/datum/atom_hud/data/cybermen/hud = huds[DATA_HUD_CYBERMEN_HACK]
 	hud.add_to_hud(target)
 
@@ -221,6 +221,10 @@
 	maintained = 0
 
 	if(target)
+		if(!target.hud_list)
+			target.hud_list = list()
+		if(!target.hud_list[CYBERMEN_HACK_HUD])
+			target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
 		var/image/hud_icon = target.hud_list[CYBERMEN_HACK_HUD]
 		hud_icon.icon_state = "cybermenhack[round(progress/cost*100, 25)]"
 
@@ -375,7 +379,7 @@
 	var/datum/cyberman_hack/multiple_vector/new_multiple_vector_hack = new multi_vector_hack_type(multi_vector_hack_target)
 	return new_multiple_vector_hack.start(src)
 
-/datum/cyberman_hack/multiple_vector/
+/datum/cyberman_hack/multiple_vector
 	var/list/datum/cyberman_hack/component_hacks = list()//please please please do not add to this list directly, use add_component_hack().
 	required_type = null
 	//tick vars
@@ -393,6 +397,11 @@
 		if(istype(H, src.type) && H.target == target)
 			drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")//this should never happen, because whatever started this should have checked to see if it could join H before starting this one.
 			return 0
+	if(target)
+		if(!target.hud_list)
+			target.hud_list = list()
+		if(!target.hud_list[CYBERMEN_HACK_HUD])
+			target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
 	component_hacks += first_component_hack
 	cyberman_network.active_cybermen_hacks += src
 	return 1
@@ -410,6 +419,13 @@
 			continue
 		if(H.progress > 0)
 			progress += H.progress
+		if(H.target)
+			if(!H.target.hud_list)
+				H.target.hud_list = list()
+			if(!H.target.hud_list[CYBERMEN_HACK_HUD])
+				H.target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
+		var/image/hud_icon = H.target.hud_list[CYBERMEN_HACK_HUD]
+		hud_icon.icon_state = "cybermenhack[round(progress/cost*100, 25)]"
 		H.progress = 0
 	if(progress < 0)
 		drop("<span class='warning'>[display_verb] of \the [target_name] has failed, all hack vectors were unmaintained.</span>")
@@ -456,6 +472,11 @@
 		if(hack.target == H.target)
 			H.drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")
 			return 0
+	if(H.target)
+		if(!H.target.hud_list)
+			H.target.hud_list = list()
+		if(!target.hud_list[CYBERMEN_HACK_HUD])
+			target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
 	component_hacks += H
 	usr << "<span class='notice'>You join the ongoing [display_verb] of \the [target_name] through \the [H.target_name].</span>"
 	return 1

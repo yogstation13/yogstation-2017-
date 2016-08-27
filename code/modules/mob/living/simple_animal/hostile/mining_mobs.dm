@@ -9,7 +9,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
-	status_flags = 0
+	status_flags = list()
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
@@ -57,7 +57,7 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/temp/basilisk
+	projectiletype = /obj/item/projectile/bullet/dart/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
@@ -68,8 +68,8 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
+	melee_damage_lower = 13
+	melee_damage_upper = 13
 	attacktext = "bites into"
 	a_intent = "harm"
 	speak_emote = list("chitters")
@@ -80,14 +80,14 @@
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
-/obj/item/projectile/temp/basilisk
+/obj/item/projectile/bullet/dart/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
-	damage = 0
-	damage_type = BURN
-	nodamage = 1
-	flag = "energy"
-	temperature = 50
+	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
+
+/obj/item/projectile/bullet/dart/basilisk/New()
+	..()
+	reagents.add_reagent("bolamine",5)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -128,7 +128,7 @@
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	deathmessage = "spits up the contents of its stomach before dying!"
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
@@ -711,7 +711,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
-	desc = "Its stare causes victims to freeze from the inside."
+	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
 	icon = 'icons/mob/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
@@ -721,20 +721,20 @@
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "stares into the soul of"
+	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = 1
 	robust_searching = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/bone = 2)
 
 //Goliath
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
@@ -742,11 +742,79 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 5)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
 
+
+//Marrow Weaver
+
+#define SPINNING_WEB 1
+#define MOVING_TO_TARGET 2
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver
+	name = "marrow weaver"
+	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "weaver"
+	icon_living = "weaver"
+	icon_aggro = "weaver"
+	icon_dead = "weaver_dead"
+	throw_message = "does nothing to the layered chitin of the"
+	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6)
+	loot = list()
+	attacktext = "bites"
+	health = 200
+	maxHealth = 200
+	vision_range = 10
+	move_to_delay = 6
+	melee_damage_lower = 18
+	melee_damage_upper = 18
+	stat_attack = 1
+	robust_searching = 1
+	see_in_dark = 10
+	attack_sound = 'sound/weapons/bite.ogg'
+	deathmessage = "the weaver springs over onto its back, its legs curling as its abdomen ruptures open revealing the precious marrow and sinew within"
+	var/poison_type = "venom"
+	var/poison_per_bite = 2
+	var/busy = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.reagents)
+			L.reagents.add_reagent(poison_type, poison_per_bite)
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
+	if(..())
+		if(!busy && prob(30))	//30% chance to spin webs
+			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
+			if(!W)
+				Web()
+	else
+		busy = 0
+		stop_automated_movement = 0
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/Web()
+	var/T = loc
+
+	if(stat == DEAD)
+		return
+
+	if(busy != SPINNING_WEB)
+		busy = SPINNING_WEB
+		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+		stop_automated_movement = 1
+		if(do_after(src, 40, target = T))
+			if(busy == SPINNING_WEB && src.loc == T)
+				new /obj/effect/spider/stickyweb(T)
+		busy = 0
+		stop_automated_movement = 0
+
+#undef SPINNING_WEB
+#undef MOVING_TO_TARGET
 
 
 //Legion
@@ -774,7 +842,7 @@
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
+	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
 		stored_mob.loc = get_turf(src)
 		stored_mob.adjustBruteLoss(1000)
@@ -991,7 +1059,7 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
-	gps = new /obj/item/device/gps/internal(src)
+	gps = new /obj/item/device/gps/internal/lavaland(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)
@@ -1007,14 +1075,14 @@
 
 /obj/effect/collapse/New()
 	..()
-	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
-	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
+	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
 		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
-		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
 				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)
