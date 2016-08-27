@@ -29,6 +29,12 @@
 	usr.client.debug_variables(target)
 	message_admins("Admin [key_name_admin(usr)] is debugging the [target] [class].")
 
+/obj/effect/statclick/shuttle
+
+/obj/effect/statclick/shuttle/Click()
+	if(!usr || !usr.client || !usr.client.prefs || usr.client.prefs.spacegems <= 0)
+		return
+	SSshuttle.emergency.try_skip_timer(usr)
 
 // Debug verbs.
 /client/proc/restart_controller(controller in list("Master", "Failsafe"))

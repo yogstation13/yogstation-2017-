@@ -188,7 +188,10 @@
 			if(supply_display)
 				mode = 4
 
-
+/obj/machinery/status_display/interact(mob/user)
+	if(mode != 1 || !user || !user.client || !user.client.prefs || user.client.prefs.spacegems <= 0)
+		return
+	SSshuttle.emergency.try_skip_timer(user)
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'

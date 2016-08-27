@@ -473,7 +473,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Donator stuff
 #define SG_DELAY			6048000
-#define SG_INCOME			10
+#define SG_INCOME			50
 #define ENERGY_DELAY		21600
 #define ENERGY_INCOME		1
 #define ENERGY_SPAWN		20
@@ -481,3 +481,4 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SG_RECHARGE			2
 #define SG_REVIVE			4
 #define SG_REVIVE_MULT		2
+#define SG_SHUTTLE_MINUTE	1
