@@ -31,7 +31,7 @@
 	if(!holder)
 		return
 	switch(subject)
-		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "kudzu", "viro", "tcomms", "pda", "viro", "ntsl", "chemistry") //general one-round-only stuff
+		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "kudzu", "viro", "tcomms", "pda", "ntsl", "chemistry") //general one-round-only stuff
 			var/F = investigate_subject2file(subject)
 			if(!F)
 				src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
