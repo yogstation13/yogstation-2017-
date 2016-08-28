@@ -28,7 +28,7 @@
 		var/mob/living/carbon/C = target
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		else if(C.status_flags & CANWEAKEN)
+		else if(CANWEAKEN in C.status_flags)
 			spawn(5)
 				C.do_jitter_animation(jitter)
 
@@ -167,6 +167,8 @@ obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
+		if(C.confused)//if they've already been shot
+			C.silent = 3 // if you can't hit another shot in 3 seconds you don't deserve the mute
 		C.confused = 3
 
 /obj/item/projectile/energy/bolt/large

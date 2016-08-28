@@ -2927,6 +2927,8 @@
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/machinery/deployable/barrier,
+/obj/machinery/deployable/barrier,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
@@ -2949,10 +2951,8 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/grenade/barrier,
-/obj/item/weapon/grenade/barrier,
-/obj/item/weapon/grenade/barrier,
 /obj/item/key/security,
+/obj/item/weapon/storage/box/barriers,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
@@ -3493,6 +3493,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
+/obj/machinery/deployable/barrier,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
@@ -16946,9 +16947,7 @@
 	},
 /area/shuttle/arrival)
 "aGj" = (
-/mob/living/simple_animal/hostile/lizard{
-	name = "Gex"
-	},
+/mob/living/simple_animal/hostile/lizard/gex,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aGk" = (
@@ -50456,7 +50455,7 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -50975,7 +50974,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel{
@@ -53991,12 +53990,13 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/shoes/magboots,
 /turf/open/floor/plasteel,
 /area/atmos)
 "cct" = (
@@ -56999,7 +56999,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "cim" = (
-/obj/machinery/space_heater,
+/obj/machinery/suit_storage_unit/atmos,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -68633,6 +68633,9 @@
 /area/tcommsat/computer)
 "cEG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/computer/telecomms/traffic{
+	network = "tcommsat"
+	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cEH" = (
@@ -101414,7 +101417,7 @@ cgy
 chx
 cik
 cjt
-bTW
+cFz
 bTW
 bWu
 cmB
@@ -101666,7 +101669,7 @@ cbk
 ccq
 bSo
 cep
-cfu
+cep
 cep
 bSo
 cil

@@ -913,12 +913,12 @@
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0
 
-	if(H.status_flags & GOTTAGOFAST)
+	if(GOTTAGOFAST in H.status_flags)
 		. -= 1
-	if(H.status_flags & GOTTAGOREALLYFAST)
+	if(GOTTAGOREALLYFAST in H.status_flags)
 		. -= 2
 
-	if(!(H.status_flags & IGNORESLOWDOWN))
+	if(!(IGNORESLOWDOWN in H.status_flags))
 		if(!has_gravity(H))
 			if(specflags & FLYING)
 				. += speedmod
@@ -967,7 +967,7 @@
 				if(!leg_amount)
 					. += 6 - 3*H.get_num_arms() //crawling is harder with fewer arms
 
-			if(H.status_flags & SLOWDOWN) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
+			if(SLOWDOWN in H.status_flags) //From bolamine, intended to replicate the slowdown of a 50K freeze blast.
 				. += 3
 
 
@@ -985,7 +985,7 @@
 
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, M, attack_type = UNARMED_ATTACK))
 		if(M.dna.check_mutation(HULK) && M.a_intent == "disarm")
 			H.check_shields(0, M.name, attack_type = HULK_ATTACK) // We check their shields twice since we are a hulk. Also triggers hitreactions for HULK_ATTACK
 			M.visible_message("<span class='danger'>[M]'s punch knocks the shield out of [H]'s hand.</span>", \
@@ -1192,7 +1192,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", user, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
 	var/hit_area
@@ -1215,7 +1215,8 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(prob(I.get_dismemberment_chance(affecting)))
+	var/probability = I.get_dismemberment_chance(affecting)
+	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
@@ -1269,7 +1270,7 @@
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-		return
+	return 1
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
@@ -1325,7 +1326,7 @@
 		return TRUE
 
 /datum/species/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	if((H.status_flags & GODMODE))
+	if((GODMODE in H.status_flags))
 		return
 
 	var/lungs = H.getorganslot("lungs")

@@ -31,6 +31,10 @@
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onMachineTick()
 	return 1
 
 /obj/machinery/computer/emp_act(severity)
@@ -56,7 +60,7 @@
 			take_damage(rand(10,30), BRUTE, 0)
 
 /obj/machinery/computer/ratvar_act()
-	if(!clockwork && prob(20))
+	if(!clockwork)
 		clockwork = TRUE
 		icon_screen = "ratvar[rand(1, 4)]"
 		icon_keyboard = "ratvar_key[rand(1, 6)]"

@@ -159,7 +159,7 @@
 	. = 1
 
 /datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	M.status_flags &= ~FAKEDEATH
+	M.status_flags -= FAKEDEATH
 	..()
 
 /datum/reagent/toxin/mindbreaker

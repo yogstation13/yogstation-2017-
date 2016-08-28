@@ -53,7 +53,7 @@
 	var/mob/living/carbon/C = user
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = C
-		if(H.gloves)
+		if(istype(H.gloves, /obj/item/clothing))
 			return 0
 		var/organ = ((H.hand ? "l_":"r_") + "arm")
 		var/obj/item/bodypart/affecting = H.get_bodypart(organ)

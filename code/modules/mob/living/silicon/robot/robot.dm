@@ -237,7 +237,7 @@
 				else
 					icon_state = "mediborg"
 					animation_length = 34
-			status_flags &= ~CANPUSH
+			status_flags -= CANPUSH
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
@@ -247,7 +247,7 @@
 			animation_length = 28
 			modtype = "Sec"
 			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
-			status_flags &= ~CANPUSH
+			status_flags -= CANPUSH
 			feedback_inc("cyborg_security",1)
 
 		if("Peacekeeper")
@@ -257,7 +257,7 @@
 			animation_length = 54
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
-			status_flags &= ~CANPUSH
+			status_flags -= CANPUSH
 			feedback_inc("cyborg_peacekeeper",1)
 
 		if("Engineering")
@@ -675,7 +675,7 @@
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	..()
+	return ..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -1325,7 +1325,7 @@
 		see_invisible = see_override
 
 /mob/living/silicon/robot/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health <= -maxHealth) //die only once
