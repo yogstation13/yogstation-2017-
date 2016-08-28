@@ -7,12 +7,10 @@
 	desc = "A thrown Yautja weapon which is constructed with six retractable blades"
 	icon_state = "dread_frisbee"
 	item_state = "dread_frisbee"
-	force = 12
-	throwforce = 120
-	throw_speed = 6
-	w_class = 4
-	embed_chance = 100
-	embedded_fall_chance = 0
+	force = 3
+	throwforce = 5
+	throw_speed = 2
+	w_class = 1
 
 /obj/item/weapon/shuriken/attack_self(mob/user)
 	if(icon_state == "dread_frisbee")
@@ -31,7 +29,7 @@
 		icon_state = "dread_frisbee"
 		item_state = "dread_frisbee"
 		force = 3
-		throwforce = 30
+		throwforce = 5
 		throw_speed = 2
 		w_class = 1
 		embed_chance = 0
@@ -46,7 +44,8 @@
 	name = "yautja combistick"
 	desc = "The Combistick is telescopic, making it relatively small and easy to store when not in use \
 	but extending to its full length when required in combat. It is made of incredibly light, sharp, thin \
-	but strong material. It can be used both as a close-quarters hand-to-hand weapon and thrown like a spear"
+	but strong material. It can be used both as a close-quarters hand-to-hand weapon usually when your primary \
+	weapon is unavaiable. It is recommended to use this as a spear."
 	icon_state = "pred_spear_off"
 	item_state = "pred_spear_off"
 	force = 3
@@ -60,9 +59,8 @@
 /obj/item/weapon/twohanded/spear/combistick/pickup(mob/living/user)
 	..()
 	if(!ispredator(user))
-		user.adjustBruteLoss(rand(3,9))
-		user << "<span class='danger'>The spear expands as you pick it up and cuts into you! It'd be best to leave it alone.</span>"
-		user.drop_item()
+		if(icon_state == "pred_spear_on")
+			attack_self(user)
 
 /obj/item/weapon/twohanded/spear/combistick/attack_self(mob/user)
 	if(!ispredator(user))
@@ -73,13 +71,14 @@
 		icon_state = "pred_spear_on"
 		item_state = "pred_spear_on"
 		force = 15
-		w_class = 4
+		w_class = 5
 		slot_flags = SLOT_BACK
-		force_unwielded = 20
-		force_wielded = 40
-		throwforce = 150
-		throw_speed = 4
+		force_unwielded = 15
+		force_wielded = 15
+		throwforce = 25
+		throw_speed = 7
 		embedded_impact_pain_multiplier = 3
+		embed_chance = 100
 	else
 		icon_state = "pred_spear_off"
 		item_state = "pred_spear_off"
@@ -87,19 +86,11 @@
 		w_class = 1
 		slot_flags = SLOT_BELT
 		force_unwielded = 3
-		force_wielded = 7
+		force_wielded = 3
 		throwforce = 3
 		throw_speed = 1
 		embedded_impact_pain_multiplier = 0
-
-
-
-
-/obj/item/weapon/twohanded/spear/combistick/throw_at(atom/target, range, speed, mob/thrower, spin, diagonals_first)
-	if(!ispredator(thrower))
-		audible_message("[src] flops mid-air from the incredibly weak throw!")
-		return
-	..()
+		embed_chance = 0
 
 
 // --- HELMET ---  --- HELMET ---  --- HELMET ---
@@ -143,11 +134,12 @@
 /obj/item/clothing/suit/space/hardsuit/predator
 	name = "yautja plate armour"
 	desc = "A special multi-layer suit capable of resisting all forms of damage. \
-	It is extremely light and is composed of unknown materials."
+	It is extremely light and is composed of unknown materials. Comes equipped with a plasma \
+	gun attached to the back of the outer plate."
 	icon_state = "hardsuit_pred"
 	item_state = "hardsuit_pred"
 	slowdown = 0
-	armor = list(melee = 17, bullet = 10, laser = 5, energy = 10, bomb = 45, bio = 100, rad = 75)
+	armor = list(melee = 15, bullet = 10, laser = 5, energy = 10, bomb = 45, bio = 100, rad = 75)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/twohanded/spear/combistick, /obj/item/weapon/shuriken)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/predator
 
@@ -157,8 +149,7 @@
 	name = "yautja skinsuit"
 	icon_state = "pred-armour"
 	item_state = "pred-armour"
-	armor = list(melee = 3, bullet = 3, laser = 0, energy = 3, bomb = 3, bio = 3, rad = 5)
-	slowdown = -2
+	armor = list(melee = 5, bullet = 5, laser = 0, energy = 10, bomb = 0, bio = 0, rad = 0)
 	has_sensor = 0
 	random_sensor = 0
 	can_adjust = 0
@@ -182,6 +173,13 @@
 			PT.owner = src
 			L.put_in_active_hand(PT)
 			user << "<span class='notice'>You retract your wrist blade!</span>"
+
+		else if(istype(gethand, obj/item/weapon/kitchen/knife/predator))
+			var/obj/item/weapon/kitchen/knife/predator/wristblade = gethand
+			if(wristblade.owner == src)
+				qdel(wristblade)
+				user << "<span class='notice'>You retract your wristblade!</span>"
+
 		else
 			user << "<span class='danger'>There is something in your hand! You cannot extend your blades.</span>"
 
@@ -220,7 +218,7 @@
 
 /obj/item/clothing/shoes/predator
 	name = "predator feet"
-	desc = "these look really odd"
+	desc = "these look really odd... wait, how the hell are you reading this?"
 	icon_state = null
 	item_state = null
 	flags = NODROP | NOSLIP | ABSTRACT

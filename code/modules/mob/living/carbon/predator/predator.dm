@@ -20,13 +20,18 @@
 	facial_hair_color = "000"
 	facial_hair_style = "Shaved"
 	update_icons()
+
+	// the clothes
 	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/hardsuit/predator, slot_wear_suit)
 	equip_to_slot_if_possible(new /obj/item/clothing/under/predator, slot_w_uniform)
-	equip_to_slot_if_possible(new /obj/item/weapon/shuriken, slot_l_store)
-	equip_to_slot_if_possible(new /obj/item/weapon/twohanded/spear/combistick, slot_r_store)
-	equip_to_slot_if_possible(new /obj/item/clothing/shoes/predator, slot_shoes)
-	equip_to_slot_if_possible(new /obj/item/weapon/storage/belt/mining/yautija, slot_belt)
 
+	// the weaponry
+	equip_to_slot_if_possible(new /obj/item/weapon/twohanded/spear/combistick, slot_r_store)
+	equip_to_slot_if_possible(new /obj/item/weapon/storage/belt/mining/yautija, slot_belt)
+	equip_to_slot_if_possible(new /obj/item/weapon/shuriken, slot_l_store)
+
+	// abstract objects
+	equip_to_slot_if_possible(new /obj/item/clothing/shoes/predator, slot_shoes)
 
 /mob/living/carbon/human/predator/Stat()
 	..()
@@ -44,7 +49,8 @@
 /mob/living/carbon/human/predator/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
 
 /mob/living/carbon/human/predator/say(message, bubble_type)
-	playsound(src.loc, 'sound/predators/predator_clicking.ogg', 100, 1)
+	var/randomclick = pick("sound/predators/predator_clicking1.ogg", "sound/predators/predator_clicking2.ogg", "sound/predators/predator_clicking3.ogg", "sound/predators/predator_clicking4.ogg)"
+	playsound(src.loc, randomclick, rand(25,100), 1)
 	return ..(message, bubble_type)
 
 /mob/living/carbon/human/predator/say_quote(var/text)
@@ -56,5 +62,8 @@
 	say_mod = "clicks"
 	default_color = "59CE00"
 	sexes = 0
+	speedmod = -1
+	armor = 5
 	specflags = list(VIRUSIMMUNE)
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	no_equip = list(slot_shoes)
