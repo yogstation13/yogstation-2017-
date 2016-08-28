@@ -58,6 +58,8 @@
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
 					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
 				attach_limb(C)
+				user.drop_item()
+				qdel()
 				return
 	..()
 
