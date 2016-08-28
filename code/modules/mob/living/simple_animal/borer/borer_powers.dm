@@ -267,6 +267,9 @@
 
 		if(!victim || !src || controlling || victim.stat == DEAD)
 			return
+		if(docile)
+			src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
+			return
 		else
 
 
