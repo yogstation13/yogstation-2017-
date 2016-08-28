@@ -183,7 +183,7 @@
 				user << "<span class='warning'>You're already reverted!</span>"
 				for(var/spell in user.mind.spell_list)
 					if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
-						user.mind.spell_list -= spell
+						user.mind.RemoveSpell(spell)
 						qdel(spell)
 				return
 			user <<"<span class='notice'>You transform back into a humanoid form.</span>"
