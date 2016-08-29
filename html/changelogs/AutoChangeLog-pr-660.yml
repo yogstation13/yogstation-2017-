@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "NTSL logging fixed."
+  - bugfix: "Chemistry logs back."
