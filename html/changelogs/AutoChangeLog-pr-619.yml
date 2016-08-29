@@ -1,0 +1,8 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Cortical Borers have returned to xenobio."
+  - rscadd: "Borers and swarmers can be gotten via a secret reaction with a gold slime extract."
+  - rscadd: "Borers can now create Rezadone in their hosts to heal cellular damage."
+  - rscdel: "Removed Colorful Reagent from borers."
+  - tweak: "Made the secret reaction chemical a bit less annoying to get."
