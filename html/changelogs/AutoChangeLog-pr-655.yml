@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "slimepeople can now properly split when they attain enough mass."
