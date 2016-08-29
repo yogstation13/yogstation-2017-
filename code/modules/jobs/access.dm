@@ -440,10 +440,13 @@
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
 				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Mining Medic", "Paramedic", "Psychiatrist", "Clerk", "Tourist")
+				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Mining Medic", "Paramedic", "Psychiatrist", "Clerk", "Tourist", "Prison Officer", "Space Bartender")
 
 /proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
+
+/proc/get_all_job_fluff()
+	return list ("Boxer","Fighter","Fireman","Fire Fighter","Deputy","Bodyguard","Security Deputy", "Animal Control", "Zoo Keeper", "Captain's Assistant")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
@@ -454,6 +457,8 @@
 		return
 	var/jobName = I.assignment
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
+		return jobName
+	if(jobName in get_all_job_fluff()) //Check if the job has a hud icon
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"
