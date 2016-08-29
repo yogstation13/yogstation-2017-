@@ -1,0 +1,4 @@
+author: Nar'Sie
+delete-after: True
+changes: 
+  - rscadd: "The clockwork slab for Rat'var's followers is now visible in the hands, no more stealth."
