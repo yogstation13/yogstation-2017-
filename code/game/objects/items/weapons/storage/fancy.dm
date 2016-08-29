@@ -50,6 +50,29 @@
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
 	spawn_type = /obj/item/weapon/reagent_containers/food/snacks/donut
+	var/foldable = /obj/item/stack/sheet/cardboard
+
+/obj/item/weapon/storage/fancy/donut_box/attack_self(mob/user)
+	..()
+
+	if(!foldable)
+		return
+	if(contents.len)
+		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+		return
+	if(!ispath(foldable))
+		return
+
+	//Close any open UI windows first
+	close_all()
+
+	user << "<span class='notice'>You fold [src] flat.</span>"
+	var/obj/item/I = new foldable(get_turf(src))
+	user.drop_item()
+	user.put_in_hands(I)
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
+	qdel(src)
 
 /*
  * Egg Box

@@ -262,6 +262,7 @@ Made by Xhuis
 	heatmod = 1.5
 	sight_mod = SEE_MOBS
 	invis_sight = 2
+	blacklisted = 1
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
@@ -289,7 +290,7 @@ Made by Xhuis
 	name = "Lesser Shadowling"
 	id = "l_shadowling"
 	say_mod = "chitters"
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NODISMEMBER)
 	burnmod = 1.1
 	heatmod = 1.1
 

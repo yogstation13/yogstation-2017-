@@ -54,13 +54,18 @@
 	chem_desc = "Heals your genetic mutations."
 	chemuse = 100
 
-/datum/borer_chem/creagent
+/*/datum/borer_chem/creagent
 	chemname = "colorful_reagent"
 	chem_desc = "Change the colour of your host."
 	//needed_influence = 100
-	chemuse = 50
+	chemuse = 50*/
 
 /datum/borer_chem/ethanol
 	chemname = "ethanol"
 	chem_desc = "The most potent alcoholic 'beverage', with the fastest toxicity."
 	chemuse = 50
+
+/datum/borer_chem/rezadone
+	chemname = "rezadone"
+	chem_desc = "Heals your host's cellular damage."
+	chemuse = 75
