@@ -254,7 +254,7 @@
 		return
 
 	if(world.time - used_control < control_cooldown)
-		src << "<span class='warning'>Its too soon to use that again!</span>"
+		src << "<span class='warning'>It's too soon to use that!</span>"
 		return
 
 /*	if(influence < 50)
@@ -266,6 +266,9 @@
 	spawn(100+(victim.brainloss*5))
 
 		if(!victim || !src || controlling || victim.stat == DEAD)
+			return
+		if(docile)
+			src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
 			return
 		else
 

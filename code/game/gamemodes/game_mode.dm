@@ -400,6 +400,7 @@
 
 		for(var/client/C in clients)
 			C.last_cached_weight = output[C.ckey]
+			C.last_cached_total_weight = total
 
 		for(var/i in 1 to amount)
 			if(!candidates.len)
