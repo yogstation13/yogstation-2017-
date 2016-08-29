@@ -1,0 +1,6 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - tweak: "Shadowpeople and lesser shadowlings can no longer be dismembered."
+  - bugfix: "Makes lesser shadowlings, jelly people, and slime people all visible again."
+  - bugfix: "Shadow people(not lesser shadowlings) are back in xenobio."
