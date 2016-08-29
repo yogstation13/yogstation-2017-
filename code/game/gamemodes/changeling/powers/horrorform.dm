@@ -116,7 +116,7 @@
 		for(var/obj/item/I in user) // removes the abomination armor
 			qdel(I)
 		var/mob/living/carbon/human/H = user
-		H.set_species(/datum/species/human)
+		H.set_species(/datum/species/golem)//human doesn't work due to a bug with set_species, humans are invisible
 		var/newNameId = "deformed humanoid" //makes it more obvious that they were an abomination
 		user.real_name = newNameId
 		for(var/spell in user.mind.spell_list)

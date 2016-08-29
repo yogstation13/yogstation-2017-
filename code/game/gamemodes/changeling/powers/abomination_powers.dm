@@ -31,7 +31,6 @@
 				continue
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))//only the true power of earmuffs may block the power of the screech
-				H.Stun(2)
 				continue
 			M << "<span class='userdanger'>You freeze in terror, your blood turning cold from the sound of the scream!</span>"
 			M.Stun(5)
