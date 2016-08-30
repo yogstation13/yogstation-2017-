@@ -188,7 +188,7 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>[victim] does not posess the vital systems needed to support us.</span>"
 		return
 
-	victim = victim
+	src.victim = victim
 	victim.borer = src
 	loc = victim
 

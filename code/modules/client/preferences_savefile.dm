@@ -255,8 +255,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	agree			= sanitize_integer(agree, -1, 65535, 0)
-	donor_pda		= sanitize_integer(agree, 1, donor_pdas.len, 1)
-	donor_hat		= sanitize_integer(agree, 1, donor_start_items.len, 1)
+	donor_pda		= sanitize_integer(donor_pda, 1, donor_pdas.len, 1)
+	donor_hat		= sanitize_integer(donor_hat, 0, donor_start_items.len, 0)
 	purrbation 		= sanitize_integer(purrbation, 0, 1, initial(purrbation))
 
 	return 1
