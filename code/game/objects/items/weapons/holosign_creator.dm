@@ -231,14 +231,14 @@
 	density = 1
 	holo_integrity = 1
 
-/obj/effect/overlay/holograph/barrier/CanPass()
-	return 0
-
 /obj/effect/overlay/holograph/barrier/cyborg/hacked
 	name = "Charged Energy Field"
 	desc = "A powerful energy field that blocks movement. Energy arcs off it"
 	holo_integrity = 3
 	var/shockcd = 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	return 0
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/attack_hand(mob/living/user)
 	if(!shockcd)

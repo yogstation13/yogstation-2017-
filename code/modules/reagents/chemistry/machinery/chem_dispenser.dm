@@ -145,6 +145,7 @@
 
 				R.add_reagent(reagent, actual)
 				energy = max(energy - actual / 10, 0)
+				investigate_log("Dispensed <b><font color='red'>[actual]x [reagent]</font></b> by <b>[key_name(usr)]</b> energy=[energy]","chemistry")
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
@@ -153,9 +154,13 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
+				var/datum/reagents/R = beaker.reagents
 				beaker.loc = loc
 				beaker = null
 				overlays.Cut()
+				investigate_log("Beaker ejected <b><font color='red'><a href='?_src_=vars;Vars=\ref[beaker]'>\ref[beaker]</a></font></b> by <b>[key_name(usr)]</b>","chemistry")
+				for(var/datum/reagent/RE in R.reagent_list)
+					investigate_log("<b><font color='blue'> ¤ [RE.volume]x [RE.name] ([RE.id])</font></b>","chemistry")
 				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
