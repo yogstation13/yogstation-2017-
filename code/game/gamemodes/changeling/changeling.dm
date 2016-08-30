@@ -529,6 +529,13 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	heatmod = 1.5
 	blacklisted = 1
 
+/datum/species/deformed //what you get from abomination reversion
+	name = "???"
+	id = "husk"
+	say_mod = "gasps"
+	sexes = 0
+	roundstart = 0
+
 /obj/item/clothing/suit/abomination
 	name = "fleshy hide"
 	desc = "A huge chunk of flesh. It seems to be shifting around itself."
