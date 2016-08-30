@@ -1,5 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - rscadd: "Hey guys, I rebased /tg/'s most up to date clockwork version 9 days ago. Keep me posted on any bugs, tweaks, or suggestions on our github."
-  - rscadd: "Clockwork logs no longer spam after a scripture is unlocked."
