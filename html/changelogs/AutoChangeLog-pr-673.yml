@@ -1,0 +1,10 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "Fixed being able to place ambrosia gaia into a tray from range."
+  - bugfix: "Fixed crafted food not containing the items it should (Fortune cookies now contain the fortunes they were crafted with)."
+  - bugfix: "Fixed donor items not saving properly."
+  - bugfix: "Fixed being unable to walk through holosigns."
+  - bugfix: "Fixed being able to manipulate tape recorders from range with modclicks."
+  - tweak: "You can now cancel your input to the spirit board."
+  - bugfix: "Fixed cortical borers being unable to infect their victims."
