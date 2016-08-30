@@ -633,35 +633,35 @@
 	category = list("hacked", "Security")
 
 /datum/design/a357
-	name = "Ammo box (.357)"
+	name = "Ammo cylinder (.357)"
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/a357
+	build_path = /obj/item/ammo_box/magazine/internal/cylinder
 	category = list("hacked", "Security")
 
 /datum/design/c10mm
-	name = "Ammo box (10mm)"
+	name = "Ammo magazine (10mm)"
 	id = "c10mm"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/c10mm
+	build_path = /obj/item/ammo_box/magazine/m10mm
 	category = list("hacked", "Security")
 
 /datum/design/c45
-	name = "Ammo box (.45)"
+	name = "Ammo magazine (.45)"
 	id = "c45"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/c45
+	build_path = /obj/item/ammo_box/magazine/smgm45
 	category = list("hacked", "Security")
 
 /datum/design/c9mm
-	name = "Ammo box (9mm)"
+	name = "Ammo magazine (9mm)"
 	id = "c9mm"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
-	build_path = /obj/item/ammo_box/c9mm
+	build_path = /obj/item/ammo_box/magazine/pistolm9mm
 	category = list("hacked", "Security")
 
 /datum/design/cleaver
