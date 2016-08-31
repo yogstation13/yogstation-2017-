@@ -1,4 +1,0 @@
-author: X-TheDark
-delete-after: True
-changes: 
-  - bugfix: "Turfs/Tiles now actually apply their slowdown to mob movement speed."

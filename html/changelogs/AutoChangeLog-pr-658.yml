@@ -1,6 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen scientists find that the mysterious entities known as Changelings appear to be exhibiting signs of rapid genetic distortion. Previous reports show that this could be hazardous to the workplace. Remember to check fellow crewmates for signs of inhuman behavior."
-  - tweak: "Hulk no longer penetrates all armor and hits every limb."
-  - rscadd: "Changelings now absorb faster depending on how many lifeforms they've already absorbed."

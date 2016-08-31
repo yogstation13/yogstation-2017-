@@ -1,7 +1,0 @@
-author: timkoster1
-delete-after: True
-changes: 
-  - rscadd: "Adds purrbation"
-  - rscadd: "Adds a donor tab"
-  - tweak: "Moved the old donor features to the donor tab
-rscfix: Fixes missing bulletproof flashlight sprite"
