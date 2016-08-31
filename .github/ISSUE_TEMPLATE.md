@@ -1,13 +1,3 @@
-### Expected Behaviour
+[Note]: # (State what the issue is from a "whats wrong" prospective. Issue reports should clearly allow maintainers to understand whats wrong and how to test/reproduce if that is not obvious. Avoid ambiguity. Start your issue report below both of these lines (or remove them))
 
-Type here what you expect to happen.
-
-### Actual Behaviour
-
-Type here what actually happens.
-
-### Steps to reproduce the problem
-
-1. Type step 1 here.
-2. Type step 2 here.
-3. Type step 3 here.
+[Admins]: # (If you are reporting a bug that occured AFTER you used varedit/admin buttons to alter an object out of normal operating conditions, please verify that you can re-create the bug without the varedit usage/admin buttons before reporting the issue.)
