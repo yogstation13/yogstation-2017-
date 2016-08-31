@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "Hostile simple animals will now attack turrets."
