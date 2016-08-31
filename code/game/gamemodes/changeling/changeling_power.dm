@@ -71,6 +71,11 @@
 	if(c.geneticdamage > max_genetic_damage)
 		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user //it only works with H for some reason
+		if(H.dna.species.id == "abomination")
+			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
+			return 0
 	return 1
 
 //used in /mob/Stat()
