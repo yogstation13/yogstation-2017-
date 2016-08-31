@@ -35,6 +35,7 @@
 //(in game days played) to play that role
 var/global/list/special_roles = list(
 	ROLE_TRAITOR = /datum/game_mode/traitor,
+	ROLE_DOUBLEAGENT = /datum/game_mode/traitor/double_agents,
 	ROLE_OPERATIVE = /datum/game_mode/nuclear,
 	ROLE_CHANGELING = /datum/game_mode/changeling,
 	ROLE_WIZARD = /datum/game_mode/wizard,

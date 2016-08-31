@@ -44,6 +44,11 @@
 		sting_feedback(user,target)
 		take_chemical_cost(user.mind.changeling)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user //it only works with H for some reason
+		if(H.dna.species.id == "abomination")
+			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
+			return
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
