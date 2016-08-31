@@ -105,7 +105,10 @@ Please contact me on #coderbus IRC. ~Carnie x
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
 	icon_render_key = generate_icon_render_key()
-	if(oldkey == icon_render_key)
+
+	//Skip bodypart generation if keys match if and only if we actually have the bodypart overlay as well
+	//If we changed our species from NODISMEMBER to one without that, we WON'T have the bodypart overlays, even if the rendering keys will match
+	if((oldkey == icon_render_key) && overlays_standing[BODYPARTS_LAYER])
 		return
 
 	remove_overlay(BODYPARTS_LAYER)
