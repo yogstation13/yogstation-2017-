@@ -1,0 +1,4 @@
+author: ahamedx
+delete-after: True
+changes: 
+  - bugfix: "Fixed being unable to eat with adjusted riot helmet."
