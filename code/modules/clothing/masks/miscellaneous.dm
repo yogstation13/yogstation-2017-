@@ -28,7 +28,7 @@
 /datum/crafting_recipe/cloth_muzzle
 	name = "cloth muzzle"
 	reqs = list(
-		/obj/item/clothing/torncloth
+		/obj/item/clothing/torncloth = 1
 	)
 	result = /obj/item/clothing/mask/muzzle/cloth
 	category = CAT_WEAPON
