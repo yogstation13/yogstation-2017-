@@ -165,6 +165,7 @@ This file's folder contains:
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
+	prob_traitor_ai = 18
 	var/list/servants_to_serve = list()
 	var/roundstart_player_count
 
@@ -195,8 +196,6 @@ This file's folder contains:
 
 	if(servants_to_serve.len < required_enemies)
 		return 0
-
-	handle_AI_Traitors()
 
 	return 1
 

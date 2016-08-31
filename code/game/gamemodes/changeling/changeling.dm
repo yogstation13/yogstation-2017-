@@ -22,6 +22,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
+	prob_traitor_ai = 18
 
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
@@ -73,7 +74,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
 
-		handle_AI_Traitors()
 		return 1
 	else
 		return 0
