@@ -31,8 +31,8 @@
 	var/datum/changeling/changeling = user.mind.changeling
 	var/mob/living/carbon/human/target = user.pulling
 	var/absorbtimer = (16 - changeling.absorbedcount) * 10 //the more people you eat, the faster you can absorb
-	if(absorbtimer < 5)
-		absorbtimer = 5 //lowest you can get it is 5 seconds
+	if(absorbtimer < 50)
+		absorbtimer = 50 //lowest you can get it is 5 seconds
 	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
