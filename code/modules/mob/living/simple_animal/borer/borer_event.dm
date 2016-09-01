@@ -2,7 +2,7 @@
 	name = "Borer"
 	typepath = /datum/round_event/borer
 	weight = 15
-	max_occurrences = 1
+	max_occurrences = 0
 
 	earliest_start = 12000
 
