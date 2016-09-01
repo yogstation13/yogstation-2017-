@@ -189,7 +189,6 @@ var/total_borer_hosts_needed = 10
 
 	victim.borer = null
 	victim = null
-//	influence = 0
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 	if(!candidate || !candidate.mob)

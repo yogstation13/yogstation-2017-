@@ -30,14 +30,8 @@
 		src << "<span class='userdanger'>You squirt a measure of [C.chemname] from your reservoirs into [victim]'s bloodstream.</span>"
 		victim.reagents.add_reagent(C.chemname, C.quantity)
 		chemicals -= C.chemuse
-/*		influence += C.influence_change
-		if(influence > 100)
-			influence = 100
-		if(influence < 0)
-			influence = 0*/
 		log_game("[src]/([src.ckey]) has injected [C.chemname] into their host [victim]/([victim.ckey])")
 
 		B << output(chemicals, "ViewBorer\ref[B]Chems.browser:update_chemicals")
-//		B << output(influence, "ViewBorer\ref[B]Chems.browser:update_influence")
 
 	..()

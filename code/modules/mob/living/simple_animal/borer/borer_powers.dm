@@ -254,9 +254,6 @@
 		src << "<span class='warning'>It's too soon to use that!</span>"
 		return
 
-/*	if(influence < 50)
-		src << "<span class='warning'>You need atleast 50% influence to do this!</span>"
-		return*/
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
@@ -360,9 +357,6 @@
 
 	chemicals -= 75
 
-	/*influence -= 15
-	if(influence < 0)
-		influence = 0*/
 
 mob/living/carbon/proc/release_control()
 
