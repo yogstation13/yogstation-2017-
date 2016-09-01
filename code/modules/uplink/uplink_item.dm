@@ -648,6 +648,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 4
 
+/datum/uplink_item/stealthy_tools/chambox
+	name = "Chameleon Box"
+	desc = "A versatile box that can be disguised as any other box (match box etc) to avoid security searching it."
+	item = /obj/item/weapon/storage/box/chameleon
+	cost = 1
+
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \

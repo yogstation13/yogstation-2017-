@@ -22,6 +22,7 @@
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
+			new /obj/item/weapon/storage/box/chameleon(src)
 			return
 
 		if("bond")
