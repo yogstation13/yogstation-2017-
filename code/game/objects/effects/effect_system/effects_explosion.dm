@@ -55,3 +55,8 @@
 		var/datum/effect_system/smoke_spread/S = new
 		S.set_up(2, location)
 		S.start()
+
+/obj/effect/explosion/alt
+	..()
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "explosion"
