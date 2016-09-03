@@ -315,20 +315,20 @@
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
 /obj/item/weapon/paper/talisman/construction
 	cultist_name = "Talisman of Construction"
-	cultist_desc = "Use this talisman on at least twenty-five metal sheets to create an empty construct shell"
+	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 25 sheets of reinforced glass will create a soulstone."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
-		user << "<span class='warning'>To use this talisman, place it upon a stack of metal sheets.</span>"
+		user << "<span class='warning'>To use this talisman, place it upon a stack of metal sheets, plasteel, or reinforced glass.</span>"
 	else
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
 
 /obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
-		user << "<span class='cultitalic'>This talisman will only work on a stack of metal sheets!</span>"
+		user << "<span class='cultitalic'>This talisman will only work on metal, plasteel, and reinforced glass!</span>"
 		log_game("Construct talisman failed - not a valid target")
 
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
@@ -349,8 +349,15 @@
 			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
 			user << sound('sound/effects/magic.ogg',0,1,25)
 			qdel(src)
+		if(istype(target, /obj/item/stack/sheet/rglass))
+			var/turf/T = get_turf(target)
+			if(target.use(25))
+				new /obj/item/device/soulstone(T)
+				user <<"<span class='warning'>The talisman clings to the glass, forcing it to contract and twist, turning a bloody red!</span>"
+				user << sound('sound/effects/magic.ogg',0,1,25)
+				qdel(src)
 		else
-			user << "<span class='warning'>The talisman must be used on metal or plasteel!</span>"
+			user << "<span class='warning'>The talisman must be used on metal, plasteel, or reinforced glass!</span>"
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
