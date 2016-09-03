@@ -866,7 +866,7 @@
 /obj/item/weapon/storage/box/chameleon/examine(mob/user)
 	..()
 	if(user.mind in ticker.mode.traitors)
-		user << "<span class='notice'>Activate to chamouflage the [src.name]</span>"
+		user << "<span class='notice'>Activate to camouflage the [src.name]</span>"
 
 /obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
 	return
