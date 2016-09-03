@@ -127,6 +127,12 @@
 	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
+	if(!stunned && !eye_blind && !eye_blurry)
+		src << "<span class='alienwarning'>Your sensitive eyes cannot concentrate with the flames on you!</span>"
+		var/flashstun = 5
+		if(nightvision)
+			flashstun = flashstun * 2
+		flash_eyes(flashstun)
 	return
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents

@@ -225,7 +225,7 @@
 //Weed nodes
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
-	desc = "Blue bioluminescence shines from beneath the surface."
+	desc = "Blue bioluminescence shines from beneath the surface. It's origin is unknown but, it seems to be sponging off of the station."
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
@@ -233,6 +233,13 @@
 
 /obj/structure/alien/weeds/node/New()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
+	if(ticker && ticker.mode && istype(ticker.mode, datum/game_mode/xenomorph/X)) // xenomorph domination? predators? only in the actual game mode.
+		var/datum/game_mode/xenomorph/X = ticker.mode
+		var/area/xenospread = get_area(loc)
+		if(xenospread.infestation_allowed) //Is this area allowed for winning as blob?
+			X.alien_weed_control_count += src
+
+
 	..(loc, src)
 
 #undef NODERANGE

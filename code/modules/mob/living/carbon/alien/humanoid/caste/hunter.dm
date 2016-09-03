@@ -4,15 +4,18 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "alienh_s"
+	tackle_chance = 4
 	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
+	AddAbility(new/obj/effect/proc_holder/alien/sneak)
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	. = -1		//hunters are sanic
-	. += ..()	//but they still need to slow down on stun
+	if(prob(25))
+		. = -1
+	. += ..()
 
 
 //Hunter verbs
@@ -48,6 +51,10 @@
 	if(!has_gravity(src) || !has_gravity(A))
 		src << "<span class='alertalien'>It is unsafe to leap without gravity!</span>"
 		//It's also extremely buggy visually, so it's balance+bugfix
+		return
+
+	if(on_fire)
+		src << "<span class='alertalien'>You can't leap while on fire!</span>"
 		return
 
 	else //Maybe uses plasma in the future, although that wouldn't make any sense...

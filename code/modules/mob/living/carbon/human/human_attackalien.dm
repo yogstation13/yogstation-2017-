@@ -21,7 +21,7 @@
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (prob(30))
+			if (prob(20))
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
@@ -30,9 +30,12 @@
 
 		if(M.a_intent == "disarm")
 			var/randn = rand(1, 100)
-			if (randn <= 80)
+			if (randn <= 60)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(5)
+				var/successfultackle = M.tackle_chance
+				if(weakened < 2)
+					successfultackle = round(successfultackle / 2)
+				Weaken(successfultackle)
 				add_logs(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")

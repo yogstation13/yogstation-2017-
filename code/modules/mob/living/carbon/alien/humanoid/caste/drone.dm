@@ -4,6 +4,7 @@
 	maxHealth = 125
 	health = 125
 	icon_state = "aliend_s"
+	tackle_chance = 3
 
 
 /mob/living/carbon/alien/humanoid/drone/New()

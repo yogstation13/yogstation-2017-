@@ -87,6 +87,7 @@
 			owner.adjustFireLoss(-heal_amt)
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
+			owner.adjust_eye_damage(-heal_amt)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()

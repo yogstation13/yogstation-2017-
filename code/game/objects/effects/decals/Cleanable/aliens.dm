@@ -31,6 +31,10 @@
 					var/datum/disease/ND = D.Copy(1)
 					b.viruses += ND
 					ND.holder = b
+
+			if(prob(5))
+				src.visible_message("<span class='warning'>[src] begins to seep through and dissolve the [get_turf(src)]!</span class>")
+				new /obj/effect/acid(get_turf(src), get_turf(src))
 			if (step_to(src, get_step(src, direction), 0))
 				break
 
