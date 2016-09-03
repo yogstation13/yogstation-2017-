@@ -2120,9 +2120,15 @@
 	},
 /area/centcom/evac)
 "gq" = (
-/obj/item/weapon/banner,
-/turf/open/floor/plasteel/black,
-/area/centcom/control)
+/obj/machinery/door/airlock/centcom{
+	name = "Transport Shuttle";
+	opacity = 1;
+	req_access_txt = "101"
+	},
+/turf/open/floor/plasteel/darkgreen/side{
+	dir = 2
+	},
+/area/centcom/ferry)
 "gr" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
@@ -2252,7 +2258,6 @@
 /obj/structure/table,
 /obj/item/weapon/flamethrower,
 /obj/item/weapon/multisword,
-/obj/item/weapon/gun/magic/hook,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -2403,8 +2408,7 @@
 /obj/structure/table,
 /obj/item/weapon/grenade/gluon,
 /obj/item/weapon/sord,
-/obj/item/weapon/melee/energy/axe,
-/obj/item/weapon/lava_staff,
+/obj/item/weapon/melee/supermatter_sword,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -2528,11 +2532,14 @@
 /turf/open/floor/plasteel/delivery,
 /area/centcom/supply)
 "hG" = (
-/obj/vehicle/space/speedbike/red,
-/turf/open/floor/plasteel{
-	icon_state = "noslip"
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Supply";
+	req_access_txt = "106"
 	},
-/area/centcom/abuse)
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/centcom/supply)
 "hH" = (
 /obj/structure/table,
 /obj/item/weapon/hand_tele,
@@ -2547,8 +2554,8 @@
 "hI" = (
 /obj/structure/table,
 /obj/item/weapon/dragons_blood,
+/obj/item/weapon/gun/grenadelauncher,
 /obj/item/weapon/orion_ship,
-/obj/item/weapon/banhammer,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -2558,8 +2565,6 @@
 /obj/item/weapon/disk/nuclear,
 /obj/item/weapon/gun/magic/staff/healing,
 /obj/item/weapon/gun/projectile/shotgun/toy,
-/obj/item/weapon/gun/magic/staff/change,
-/obj/item/weapon/gun/magic/staff/honk,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -2568,10 +2573,8 @@
 /obj/structure/table,
 /obj/item/weapon/cookiesynth,
 /obj/item/weapon/grenade/clusterbuster/cleaner,
-/obj/item/weapon/grenade/clusterbuster,
-/obj/item/weapon/grenade/spawnergrenade/syndiesoap,
-/obj/item/weapon/grenade/spawnergrenade,
-/obj/item/weapon/grenade/syndieminibomb/concussion,
+/obj/item/weapon/grenade/clusterbuster/clf3,
+/obj/item/weapon/grenade/flashbang/cluster,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -2598,7 +2601,6 @@
 /obj/item/weapon/spellbook,
 /obj/item/weapon/spellbook,
 /obj/item/weapon/spellbook,
-/obj/item/weapon/melee/arm_blade,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -6009,8 +6011,6 @@
 /obj/item/weapon/c4,
 /obj/item/weapon/c4,
 /obj/item/weapon/plasma_fist_scroll,
-/obj/item/weapon/melee/touch_attack/disintegrate,
-/obj/item/weapon/melee/touch_attack/fleshtostone,
 /turf/open/floor/plasteel{
 	icon_state = "noslip"
 	},
@@ -6049,20 +6049,6 @@
 	dir = 8
 	},
 /area/centcom/control)
-"si" = (
-/mob/living/simple_animal/slaughter/laughter,
-/turf/open/floor/grass,
-/area/centcom/control)
-"sh" = (
-/obj/item/weapon/banner,
-/turf/open/floor/plasteel/yellowsiding{
-	dir = 1
-	},
-/area/centcom/evac)
-"sg" = (
-/obj/item/weapon/banner,
-/turf/open/floor/plasteel,
-/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -37576,7 +37562,7 @@ gu
 hb
 hb
 hb
-hb
+hG
 hb
 hb
 hb
@@ -37833,11 +37819,11 @@ gs
 sc
 se
 hB
-sc
+sb
 hP
 hZ
-sb
-hG
+sc
+gs
 ij
 iy
 iU
@@ -39887,12 +39873,12 @@ ab
 gN
 gV
 gN
-si
+gS
 gN
 gW
 gW
 hd
-si
+gS
 gS
 ij
 iG
@@ -40145,7 +40131,7 @@ gr
 gW
 gW
 sf
-gq
+gW
 gW
 gW
 gr
@@ -41173,7 +41159,7 @@ gr
 gW
 gW
 hd
-gq
+gW
 gW
 gW
 fN
@@ -43227,7 +43213,7 @@ gw
 gI
 gQ
 ha
-sh
+hf
 gK
 gK
 gK
@@ -43738,7 +43724,6 @@ gg
 gn
 gc
 gy
-sg
 gK
 gK
 gK
@@ -43750,7 +43735,8 @@ gK
 gK
 gK
 gK
-sg
+gK
+gK
 gy
 gK
 jM
