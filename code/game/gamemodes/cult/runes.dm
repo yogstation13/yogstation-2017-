@@ -890,7 +890,7 @@ var/list/teleport_runes = list()
 			ghosts_on_rune |= O
 	var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
 	for(var/obj/item/device/soulstone/S in get_turf(src))
-		user <<"<span class='warning'>You absorb the manifested soul of [ghost_to_spawn] through [S]!</span>"
+		user <<"<span class='warning'>You attempt to absorb the manifested soul of [ghost_to_spawn] through [S]!</span>"
 		add_logs(user, ghost_to_spawn, "captured [ghost_to_spawn.name]'s soul", S)
 		S.transfer_soul("VICTIM", ghost_to_spawn, user)
 		return
