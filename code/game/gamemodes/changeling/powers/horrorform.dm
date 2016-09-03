@@ -50,15 +50,18 @@
 			var/list/missing = H.get_missing_limbs()
 			if(missing.len)
 				H.regenerate_limbs(1)
-			for(var/datum/reagent/R in H.reagents.reagent_list)
-				qdel(R)
 			H.underwear = "Nude"
 			H.undershirt = "Nude"
 			H.socks = "Nude"
 			var/newNameId = "Shambling Abomination"
 			user.real_name = newNameId
 			user.name = usr.real_name
+			user.SetParalysis(0)
 			user.SetStunned(0)
+			user.SetWeakened(0)
+			user.reagents.clear_reagents()
+			for(var/obj/item/I in user) //cuffing while permastunned was a shit oversight
+				user.unEquip(I)
 			for(var/obj/item/I in user) //in case any weird stuff happens with flesh clothing
 				qdel(I)
 			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/abomination(user), slot_shoes)
@@ -95,7 +98,7 @@
 		changeling.reverting = 1
 		changeling.geneticdamage += 50
 		user.Weaken(15)
-		user.apply_damage(10, CLONE)
+		user.apply_damage(30, CLONE)
 
 	if(changeling.chem_charges == 0)
 		user.visible_message("<span class='warning'>[user] suddenly shrinks back down to a normal size.</span>")
@@ -106,7 +109,7 @@
 			HM.force_lose(H)
 		changeling.reverting = 1
 		changeling.geneticdamage += 20
-		user.Weaken(8)
+		user.Weaken(5)
 
 
 	if(changeling.reverting == 1)
