@@ -239,6 +239,13 @@
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
 	for(var/thing in contents)
+		if(istype(thing, /mob))
+			var/mob/M = thing
+			if(istype(M, /mob/living/simple_animal/bot))
+				new /obj/effect/explosion/mushroom(M.loc)
+				playsound(src,'sound/effects/explosion1.ogg',30,1)
+				qdel(M)
+
 		if(istype(thing, /obj))
 			var/obj/O = thing
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever

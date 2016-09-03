@@ -55,3 +55,9 @@
 		var/datum/effect_system/smoke_spread/S = new
 		S.set_up(2, location)
 		S.start()
+
+/obj/effect/explosion/mushroom
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "explosion"
+	pixel_x = 0
+	pixel_y = 0
