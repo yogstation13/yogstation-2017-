@@ -56,7 +56,8 @@
 		S.set_up(2, location)
 		S.start()
 
-/obj/effect/explosion/alt
-	..()
+/obj/effect/explosion/mushroom
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "explosion"
+	pixel_x = 0
+	pixel_y = 0

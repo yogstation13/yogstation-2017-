@@ -242,7 +242,7 @@
 		if(istype(thing, /mob))
 			var/mob/M = thing
 			if(istype(M, /mob/living/simple_animal/bot))
-				new /obj/effect/explosion/alt(src.loc)
+				new /obj/effect/explosion/mushroom(M.loc)
 				playsound(src,'sound/effects/explosion1.ogg',30,1)
 				qdel(M)
 
