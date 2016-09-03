@@ -281,10 +281,10 @@
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon
+/obj/item/weapon/storage/box/chameleon
 	name = "chameleon kit"
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon/New()
+/obj/item/weapon/storage/box/chameleon/New()
 	..()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)
