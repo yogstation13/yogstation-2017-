@@ -39,12 +39,12 @@
 	countdown = new(src)
 	countdown.start()
 	SSshuttle.emergencyNoEscape = TRUE
-	START_PROCESSING(SSobj, src)
+	SSobj.processing += src
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.processing -= src
 	if(SSshuttle.emergencyNoEscape)
 		SSshuttle.emergencyNoEscape = FALSE
 	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
@@ -213,7 +213,7 @@
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	SSobj.processing -= src
 	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	ratvar_awakens = FALSE
 	..()
