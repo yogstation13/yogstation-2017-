@@ -123,8 +123,9 @@
 			sleep(3)
 			QDEL_IN(src, 3)
 			clockwork_gateway_activated = TRUE
-			if(ratvar_portal && !ratvar_awakens)
-				new/obj/structure/clockwork/massive/ratvar(startpoint)
+			if(ratvar_portal)
+				if(!ratvar_awakens)
+					new/obj/structure/clockwork/massive/ratvar(startpoint)
 			else
 				world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
