@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "the rev flash now blinks when it is on cooldown"
