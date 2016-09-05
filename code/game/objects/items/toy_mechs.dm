@@ -31,6 +31,17 @@
 		return 0
 	return 1
 
+/obj/item/device/toy_mech_remote/proc/rangecheck()
+	if(!mecha)
+		return 0
+	var/T1 = get_turf(src)
+	var/T2 = get_turf(mecha)
+	if(T1.z != T2.z)
+		return 0
+	if(get_dist(mecha, src) > range)
+		return 0
+	return 1
+
 /obj/item/device/toy_mech_remote/proc/update_dialogue(mob/user)
 	if(!user && !popup)
 		return
@@ -51,7 +62,7 @@
 	var/dat = ""
 	if(mecha)
 		dat += "Mech: [mecha]<br>"
-		if(get_dist(src, mecha) > range)
+		if(!rangecheck())
 			dat += "<center><h2><font color=red>Signal Lost</font></center></h2><br>"
 		else
 			var/color = "green"
@@ -86,7 +97,7 @@
 	if(!mecha)
 		update_dialogue()
 		return
-	if(get_dist(src, mecha) > range)
+	if(!rangecheck())
 		update_dialogue()
 		return
 	switch(href_list["input"])
