@@ -662,9 +662,9 @@
 		if(1)
 			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
 		if(2)
-			new /obj/item/mayhem(src)
+			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
-			new /obj/item/blood_contract(src)
+			new /obj/item/bloodvial/unlucky(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -704,4 +704,31 @@
 			H << "<span class='userdanger'>You have an overwhelming desire to kill [L]. They have been marked red! Go kill them!</span>"
 			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
 
+	qdel(src)
+
+/obj/item/bloodvial//parent typing for identical looking loot
+	name = "vial of blood" //aestetically identical to the demon spawner
+	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+
+/obj/item/bloodvial/bloodcrawl
+
+/obj/item/bloodvial/bloodcrawl/attack_self(mob/user)
+	user <<"<span class='warning'>You break [src], feeling immense power overcome you.../span>"
+	user.bloodcrawl = BLOODCRAWL
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
+
+
+/obj/item/bloodvial/unlucky
+
+/obj/item/bloodvial/unlucky/attack_self(mob/user)
+	user <<"<span class='warning'>You break [src], feeling... a thick coating of blood splatter onto you.</span>"
+	user.visible_message("<span class='danger'>[user] is drenched in blood!</span>")
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	playsound(user.loc,'sound/effects/splat.ogg', 100, 1, -1)
+	user.color = "FF0000"
+	new /obj/effect/decal/cleanable/blood(get_turf(user))
 	qdel(src)
