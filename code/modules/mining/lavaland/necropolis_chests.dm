@@ -664,7 +664,7 @@
 		if(2)
 			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
-			new /obj/item/bloodvial/unlucky(src)
+			new /obj/item/weapon/nullrod/chainsaw/bubblegum(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -715,20 +715,18 @@
 
 /obj/item/bloodvial/bloodcrawl
 
-/obj/item/bloodvial/bloodcrawl/attack_self(mob/user)
+/obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
+	if(user.z != 1) //so you can't see if it's demon spawner on lavaland
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
 	user <<"<span class='warning'>You break [src], feeling immense power overcome you.../span>"
 	user.bloodcrawl = BLOODCRAWL
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 	qdel(src)
 
 
-/obj/item/bloodvial/unlucky
-
-/obj/item/bloodvial/unlucky/attack_self(mob/user)
-	user <<"<span class='warning'>You break [src], feeling... a thick coating of blood splatter onto you.</span>"
-	user.visible_message("<span class='danger'>[user] is drenched in blood!</span>")
-	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
-	playsound(user.loc,'sound/effects/splat.ogg', 100, 1, -1)
-	user.color = "FF0000"
-	new /obj/effect/decal/cleanable/blood(get_turf(user))
-	qdel(src)
+/obj/item/weapon/nullrod/chainsaw/bubblegum
+	name = "demonic chainsaw"
+	desc = "You almost regret picking this up."
+	force = 25
+	color = "#FF0000"
