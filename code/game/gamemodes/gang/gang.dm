@@ -28,6 +28,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	prob_traitor_ai = 18
 
 ///////////////////////////
 //Announces the game type//
@@ -70,8 +71,6 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
-
-	handle_AI_Traitors()
 
 	return 1
 

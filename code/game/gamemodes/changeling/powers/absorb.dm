@@ -30,6 +30,9 @@
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/mob/living/carbon/human/target = user.pulling
+	var/absorbtimer = (16 - changeling.absorbedcount) * 10 //the more people you eat, the faster you can absorb
+	if(absorbtimer < 50)
+		absorbtimer = 50 //lowest you can get it is 5 seconds
 	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
@@ -43,7 +46,7 @@
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
-		if(!do_mob(user, target, 150))
+		if(!do_mob(user, target, absorbtimer))
 			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
 			changeling.isabsorbing = 0
 			return

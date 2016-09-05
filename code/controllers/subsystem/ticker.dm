@@ -12,6 +12,7 @@ var/datum/subsystem/ticker/ticker
 	var/restart_timeout = 250	//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
+	var/server_reboot_in_progress = 0
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -132,7 +133,7 @@ var/datum/subsystem/ticker/ticker
 					var/unresolved_tickets = total_unresolved_tickets()
 
 					if(unresolved_tickets && admins_online)
-						ticker.delay_end = 1
+						delay_end = 1
 						message_admins("Not all tickets have been resolved. Server restart delayed.")
 					else if(unresolved_tickets && !admins_online)
 						world.Reboot("Round ended, but there were still active tickets. Please submit a player complaint if you did not receive a response.", "end_proper", "ended with open tickets")
@@ -141,6 +142,13 @@ var/datum/subsystem/ticker/ticker
 							world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 						else
 							world.Reboot("Round ended.", "end_proper", "proper completion")
+
+		if(GAME_STATE_FINISHED)
+			if(!server_reboot_in_progress && !delay_end)
+				var/unresolved_tickets = total_unresolved_tickets()
+				if(!unresolved_tickets)
+					world.Reboot("No unresolved tickets, restarting round.", "end_proper", "proper completion")
+
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode

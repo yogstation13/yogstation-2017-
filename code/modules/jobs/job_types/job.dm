@@ -66,6 +66,8 @@
 /datum/job/proc/give_donor_stuff(mob/living/carbon/human/H)
 	if(!is_donator(H))
 		return
+	if(H.client.prefs.purrbation)
+		H.purrbation()
 	if(H.client.prefs.donor_hat)
 		var/obj/item/weapon/storage/backpack/BP = locate(/obj/item/weapon/storage/backpack) in H.GetAllContents()
 		if(BP)
@@ -80,6 +82,7 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
 			PDA.icon_state = "pda-pipboy"
 			PDA.slot_flags |= SLOT_GLOVES
+
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))

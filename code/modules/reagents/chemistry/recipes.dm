@@ -23,6 +23,7 @@
 
 var/list/chemical_mob_spawn_meancritters = list() // list of possible hostile mobs
 var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
+var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device/unactivated_swarmer)  //Speshul mobs for speshul reactions
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_faction = "chemicalsummon")
 	if(holder && holder.my_atom)
 		if (chemical_mob_spawn_meancritters.len <= 0 || chemical_mob_spawn_nicecritters.len <= 0)
@@ -55,6 +56,39 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 			var/chosen
 			if (reaction_name == "Friendly Gold Slime")
 				chosen = pick(chemical_mob_spawn_nicecritters)
+			else if(reaction_name == "Strange Gold Slime")  //Sooper Sekrit, don't tell anyone!
+				chosen = pick(specialcritters)
+				switch(chosen)
+					if(/mob/living/simple_animal/borer)
+						//Spawn and populate a borer
+						var/mob/living/simple_animal/borer/B = new
+						B.loc = get_turf(holder.my_atom)
+						if(prob(50))
+							for(var/j = 1, j <= rand(1, 3), j++)
+								step(B, pick(NORTH,SOUTH,EAST,WEST))
+						for(var/mob/O in viewers(get_turf(holder.my_atom),null))
+							O.show_message(text("<span class='notice'>Some sort of alien slug has crawled out of the slime extract!</span>"), 1)
+
+						var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
+						if(!candidates.len)
+							//Spawn a non player controlled borer, animatable with light pink slime potion
+							for(var/mob/O in viewers(get_turf(holder.my_atom),null))
+								O.show_message(text("<span class='notice'>You get a vague feeling that something is missing.</span>"), 1)  //Alert bystanders that their borer is braindead
+						else
+							B.transfer_personality(pick(candidates))
+							B << "<span class='warning'>You realize that you are self aware!</span>"
+							B << "<span class='userdanger'>You owe the person who gave you life a great debt.</span>"
+							B << "<span class='userdanger'>Serve your creator, and help them accomplish their goals at all costs.</span>"
+
+					if(/obj/item/device/unactivated_swarmer)
+						var/obj/item/device/unactivated_swarmer/U = new
+						U.loc = get_turf(holder.my_atom)
+						U.creator = 1
+						if(prob(50))
+							for(var/j = 1, j <= rand(1, 3), j++)
+								step(U, pick(NORTH,SOUTH,EAST,WEST))
+						for(var/mob/O in viewers(get_turf(holder.my_atom),null))
+							O.show_message(text("<span class='notice'>The slime extract shudders, then forms some sort of alien machine!</span>"), 1)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
 			var/mob/living/simple_animal/C = new chosen

@@ -217,7 +217,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	cost = 12
+	cost = 11
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 

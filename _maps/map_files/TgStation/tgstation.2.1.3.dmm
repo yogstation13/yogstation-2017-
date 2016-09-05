@@ -2380,21 +2380,6 @@
 	icon_state = "dark"
 	},
 /area/ai_monitored/security/armory)
-"aey" = (
-/obj/item/weapon/gun/projectile/shotgun/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/guncase/shotgun,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/security/armory)
 "aez" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/chemimp{
@@ -8008,15 +7993,6 @@
 	icon_state = "solarpanel"
 	},
 /area/solar/auxport)
-"aof" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/shuttle/labor)
 "aog" = (
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
@@ -17668,19 +17644,6 @@
 	},
 /turf/closed/wall,
 /area/hydroponics/backroom)
-"aHt" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/airlock/maintenance{
-	name = "Hydroponics Maintenance";
-	req_access_txt = "35"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/hydroponics/backroom)
 "aHu" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall,
@@ -20473,15 +20436,6 @@
 /obj/item/weapon/wrench,
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel{
-	icon_state = "hydrofloor"
-	},
-/area/hydroponics)
-"aNB" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /turf/open/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
@@ -32407,17 +32361,6 @@
 	icon_state = "white"
 	},
 /area/toxins/lab)
-"bnx" = (
-/obj/item/device/radio/intercom{
-	freerange = 0;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = 29
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/toxins/lab)
 "bny" = (
 /turf/closed/wall,
 /area/maintenance/asmaint2)
@@ -43113,14 +43056,6 @@
 /obj/item/weapon/defibrillator/loaded,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
-"bHB" = (
-/obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/reagent_containers/dropper,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/medical/surgery)
 "bHC" = (
 /turf/open/floor/bluegrid,
 /area/toxins/xenobiology)
@@ -50468,7 +50403,7 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	frequency = 1441;
-	id_tag = "mix_in";
+	id_tag = "mix_out";
 	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
@@ -50987,7 +50922,7 @@
 	frequency = 1441;
 	input_tag = "mix_in";
 	name = "Gas Mix Tank Control";
-	output_tag = "mix_in";
+	output_tag = "mix_out";
 	sensors = list("mix_sensor" = "Tank")
 	},
 /turf/open/floor/plasteel{
@@ -55177,23 +55112,6 @@
 	icon_state = "white"
 	},
 /area/medical/virology)
-"ceF" = (
-/obj/structure/grille,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio2";
-	name = "containment blast door"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/engine,
-/area/toxins/xenobiology)
 "ceG" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -55570,13 +55488,6 @@
 	dir = 4
 	},
 /area/security/checkpoint/engineering)
-"cfu" = (
-/obj/machinery/suit_storage_unit/atmos,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "warning"
-	},
-/area/atmos)
 "cfv" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/wall,
@@ -59654,17 +59565,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
-"cnT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/asmaint)
 "cnU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -60476,13 +60376,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
-"cps" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/mob/living/simple_animal/mouse,
-/turf/open/floor/plating,
-/area/maintenance/asmaint)
 "cpt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -60882,10 +60775,6 @@
 /area/maintenance/asmaint)
 "cqk" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/maintenance/asmaint)
-"cql" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "cqm" = (
@@ -63516,12 +63405,6 @@
 	},
 /turf/open/space,
 /area/space)
-"cvs" = (
-/obj/structure/grille,
-/obj/structure/disposalpipe/segment,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/maintenance/incinerator)
 "cvt" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel{
@@ -68647,10 +68530,10 @@
 /area/tcommsat/computer)
 "cEG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
 /obj/machinery/computer/telecomms/traffic{
 	network = "tcommsat"
 	},
+/turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cEH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -69129,6 +69012,115 @@
 	dir = 2
 	},
 /area/shuttle/transport)
+"icO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"luc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"snF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Hydroponics Maintenance";
+	req_access_txt = "35"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/hydroponics/backroom)
+"wHN" = (
+/obj/item/weapon/gun/projectile/shotgun/riot{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/weapon/gun/projectile/shotgun/riot,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/guncase/shotgun,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "vault";
+	dir = 8
+	},
+/area/ai_monitored/security/armory)
+"MyD" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/mob/living/simple_animal/mouse,
+/turf/open/floor/plating,
+/area/maintenance/asmaint)
+"Sup" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/incinerator)
+"VbF" = (
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = 29
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/toxins/lab)
+"WDZ" = (
+/obj/structure/grille,
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio2";
+	name = "containment blast door"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/engine,
+/area/toxins/xenobiology)
+"XXK" = (
+/obj/structure/table,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/reagent_containers/dropper,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
 
 (1,1,1) = {"
 aaa
@@ -90807,10 +90799,10 @@ aaa
 aaa
 amG
 anv
-aof
+amH
 anv
 anv
-aof
+amH
 anv
 anv
 aqU
@@ -98759,7 +98751,7 @@ acn
 aci
 adn
 adT
-aey
+wHN
 aeZ
 afB
 agr
@@ -101425,7 +101417,7 @@ cgy
 chx
 cik
 cjt
-cFz
+bTW
 bTW
 bWu
 cmB
@@ -104485,7 +104477,7 @@ bBz
 bDf
 bEH
 bGk
-bHB
+XXK
 bIY
 bKL
 bMj
@@ -106063,7 +106055,7 @@ crO
 cqS
 cqS
 cqS
-cvs
+Sup
 cqS
 cqS
 aaa
@@ -109108,7 +109100,7 @@ bxE
 byO
 bAu
 bBO
-bAu
+byO
 bxE
 bxE
 bxE
@@ -109332,7 +109324,7 @@ aBT
 aCY
 aEw
 aEw
-aHt
+snF
 aIN
 aKr
 aLI
@@ -109396,9 +109388,9 @@ bZh
 cld
 clS
 cmK
-cnT
-cps
-cql
+icO
+MyD
+luc
 cqW
 csa
 cta
@@ -112213,7 +112205,7 @@ cat
 bPp
 ccI
 cdJ
-ceF
+WDZ
 bPp
 cgQ
 chH
@@ -116332,7 +116324,7 @@ cbU
 cbU
 cbU
 cbU
-cok
+cvB
 bny
 bny
 bny
@@ -117321,7 +117313,7 @@ bhr
 biO
 bkv
 blO
-bnx
+VbF
 bpc
 bqI
 bsf

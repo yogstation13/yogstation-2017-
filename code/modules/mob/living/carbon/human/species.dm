@@ -752,7 +752,7 @@
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == exotic_blood)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-		H.reagents.remove_reagent(chem.id)
+		H.reagents.remove_reagent(chem.id, chem.volume)
 		return 1
 	return 0
 
@@ -766,7 +766,7 @@
 /datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	return 0
 
-////////
+	////////
 	//LIFE//
 	////////
 

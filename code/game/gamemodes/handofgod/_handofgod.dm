@@ -29,6 +29,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	recommended_enemies = 8
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Prison Officer")
 
+	prob_traitor_ai = 18
 
 /datum/game_mode/hand_of_god/announce()
 	world << "<B>The current game mode is - Hand of God!</B>"
@@ -65,8 +66,6 @@ var/global/list/global_handofgod_structuretypes = list()
 	while(unassigned_followers.len)
 		var/datum/mind/chosen = pick_n_take(unassigned_followers)
 		add_hog_follower(chosen,"blue")
-
-	handle_AI_Traitors()
 
 	return 1
 
