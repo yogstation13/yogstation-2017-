@@ -28,7 +28,7 @@
 			output += "[input[index]][comma_text]"
 			index++
 
-		return "[output][and_text][input[index]]"
+		return "[output][comma_text][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)

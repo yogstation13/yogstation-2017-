@@ -69066,6 +69066,22 @@
 	dir = 8
 	},
 /area/ai_monitored/security/armory)
+"ABd" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/toy_mech,
+/obj/item/device/toy_mech_remote{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -92619,8 +92635,8 @@ ayV
 aDT
 aDR
 aGH
-aGH
-aGH
+ABd
+ABd
 ayV
 aMF
 aOr
