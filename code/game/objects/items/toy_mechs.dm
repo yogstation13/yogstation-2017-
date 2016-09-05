@@ -15,6 +15,12 @@
 	var/range = 8
 	var/datum/browser/popup = null
 
+/obj/item/device/toy_mech_remote/Destroy()
+	if(mecha)
+		mecha.remote = null
+		mecha = null
+	return ..()
+
 /obj/item/device/toy_mech_remote/attack_self(mob/user)
 	update_dialogue(user)
 
@@ -212,7 +218,7 @@
 	health = Clamp(health-amount, 0, maxhealth)
 	if(health == 0)
 		on = 0
-		visible_message("<span class='danger'>[src] lets out a defeated beep and slumps over.</span>")
+		visible_message("<span class='boldwarning'>[src] lets out a defeated beep and slumps over.</span>")
 	if(remote)
 		remote.update_dialogue()
 
@@ -228,6 +234,7 @@
 /obj/item/toy/toy_mech/Destroy()
 	if(remote)
 		remote.mecha = null
+		remote = null
 	return ..()
 
 //subtypes
@@ -258,6 +265,7 @@
 	var/chargeTime = 0
 
 /obj/item/toy/toy_mech/ranged/New()
+	..()
 	if(chargeTime)
 		SSobj.processing |= src
 
@@ -493,6 +501,7 @@
 		toggle_phasing()
 
 /obj/item/toy/toy_mech/ranged/phazon/equipped(mob/user, slot)
+	..()
 	if(phasing)
 		toggle_phasing()
 
@@ -575,6 +584,7 @@
 		toggle_stealth()
 
 /obj/item/toy/toy_mech/ranged/reticence/equipped(mob/user, slot)
+	..()
 	if(stealthed)
 		toggle_stealth()
 
