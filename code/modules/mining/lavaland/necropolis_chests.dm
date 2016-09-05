@@ -734,5 +734,6 @@
 
 /obj/item/weapon/nullrod/chainsaw/bubblegum/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [src.name]! It looks like \he's trying to join Bubblegum!</span>")
-	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)'sound/magic/Demon_consume.ogg'
+	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
+	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
 	qdel(user)
