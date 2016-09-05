@@ -34,8 +34,8 @@
 /obj/item/device/toy_mech_remote/proc/rangecheck()
 	if(!mecha)
 		return 0
-	var/T1 = get_turf(src)
-	var/T2 = get_turf(mecha)
+	var/turf/T1 = get_turf(src)
+	var/turf/T2 = get_turf(mecha)
 	if(T1.z != T2.z)
 		return 0
 	if(get_dist(mecha, src) > range)
