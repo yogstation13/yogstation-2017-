@@ -664,7 +664,7 @@
 		if(2)
 			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
-			new /obj/item/weapon/nullrod/chainsaw/bubblegum(src)
+			new /obj/item/weapon/chainsaw_bubblegum(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -729,15 +729,28 @@
 	qdel(src)
 
 
-/obj/item/weapon/nullrod/chainsaw/bubblegum
+/obj/item/weapon/chainsaw_bubblegum
 	name = "demonic chainsaw"
 	desc = "You almost regret picking this up."
 	force = 25
+	icon_state = "chainsaw_on"
+	item_state = "mounted_chainsaw"
+	w_class = 5
+	flags = NODROP | ABSTRACT
+	sharpness = IS_SHARP
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced","eviscerated")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
 	armour_penetration = 30
 	color = "#FF0000"
 
+/obj/item/weapon/chainsaw_bubblegum/pickup(mob/living/user)
+	..()
+	user.visible_message(
+		"<span class='danger'>[user] looks visibly angrier as they pick up [src]!</span>",
+		"<span class='warning'>You feel intense rage build up within you as you pick up [src]!</span>")
+	user.color = "#FF0000"
 
-/obj/item/weapon/nullrod/chainsaw/bubblegum/suicide_act(mob/user)
+/obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [src.name]! It looks like \he's trying to join Bubblegum!</span>")
 	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
 	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
