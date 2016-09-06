@@ -20440,6 +20440,18 @@
 	icon_state = "hydrofloor"
 	},
 /area/hydroponics)
+"aNB" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/toy/gamechild,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "aNC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -92618,7 +92630,7 @@ aBu
 ayV
 aDT
 aDR
-aGH
+aNB
 aGH
 aGH
 ayV
