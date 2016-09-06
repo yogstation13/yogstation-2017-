@@ -39,7 +39,7 @@
 	countdown = new(src)
 	countdown.start()
 	SSshuttle.emergencyNoEscape = TRUE
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
@@ -50,7 +50,7 @@
 		SSshuttle.emergency.timer = world.time
 		if(!purpose_fulfilled)
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
@@ -199,7 +199,7 @@
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	ratvar_awakens = TRUE
@@ -211,7 +211,7 @@
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	ratvar_awakens = FALSE
 	..()

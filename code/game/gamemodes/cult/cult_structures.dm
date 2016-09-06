@@ -103,11 +103,11 @@
 	var/last_corrupt = 0
 
 /obj/structure/cult/pylon/New()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	..()
 
 /obj/structure/cult/pylon/Destroy()
-	SSfastprocess.processing.Remove(src)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/cult/pylon/process()
