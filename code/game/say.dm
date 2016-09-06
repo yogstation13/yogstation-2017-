@@ -86,12 +86,16 @@ var/list/freqtospan = list(
 			return AM.say_quote(raw_message, spans)
 		else
 			return speaker.say_quote(raw_message, spans)
-	else if(message_langs & HUMAN)
+	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
 		var/atom/movable/AM = speaker.GetSource()
+		if(message_langs & HUMAN)
+			raw_message = stars(raw_message)
+		if(message_langs & RATVAR)
+			raw_message = text2ratvar(raw_message)
 		if(AM)
-			return AM.say_quote(stars(raw_message), spans)
+			return AM.say_quote(raw_message, spans)
 		else
-			return speaker.say_quote(stars(raw_message), spans)
+			return speaker.say_quote(raw_message, spans)
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
@@ -100,6 +104,8 @@ var/list/freqtospan = list(
 		return "beeps rapidly."
 	else if(message_langs & DRONE)
 		return "chitters."
+	else if(message_langs & SWARMER)
+		return "hums."
 	else
 		return "makes a strange sound."
 

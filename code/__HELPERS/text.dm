@@ -425,3 +425,50 @@ var/list/binary = list("0","1")
 	. = list()
 	for(var/x in 1 to length(t))
 		. += copytext(t,x,x+1)
+
+var/list/rot13_lookup = list()
+
+/proc/generate_rot13_lookup()
+	var/letters = alphabet.Copy()
+	for(var/c in alphabet)
+		letters += uppertext(c)
+
+	for(var/char in letters)
+		var/ascii_char = text2ascii(char, 1)
+
+		var/index
+
+		switch(ascii_char)
+			// A - Z
+			if(65 to 90)
+				index = 65
+			// a - z
+			if(97 to 122)
+				index = 97
+
+		var/d = ascii_char - index
+		d += 13
+		if(d >= 26)
+			d -= 26
+		ascii_char = index + d
+		var/translated_char = ascii2text(ascii_char)
+
+		rot13_lookup[char] = translated_char
+
+#define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
+
+/proc/rot13(text = "")
+	var/list/textlist = string2charlist(text)
+	var/list/result = list()
+	for(var/c in textlist)
+		var/ca = text2ascii(c)
+		if(ca >= text2ascii("a") && ca <= text2ascii("m"))
+			ca += 13
+		else if(ca >= text2ascii("n") && ca <= text2ascii("z"))
+			ca -= 13
+		else if(ca >= text2ascii("A") && ca <= text2ascii("M"))
+			ca += 13
+		else if(ca >= text2ascii("N") && ca <= text2ascii("Z"))
+			ca -= 13
+		result += ascii2text(ca)
+	return jointext(result, "")

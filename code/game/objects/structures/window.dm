@@ -74,12 +74,11 @@
 		shard.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/window/ratvar_act()
-	if(prob(20))
-		if(!fulltile)
-			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
-		else
-			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
-		qdel(src)
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+	qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -520,6 +519,11 @@
 		debris -= I
 		qdel(I)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+	change_construction_value(fulltile ? 3 : 2)
+
+/obj/structure/window/reinforced/clockwork/Destroy()
+	change_construction_value(fulltile ? -3 : -2)
+	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	health = maxhealth

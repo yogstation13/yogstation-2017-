@@ -25,7 +25,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list("alien")
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	minbodytemp = 0
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
@@ -86,7 +86,7 @@
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
-	status_flags = 0
+	status_flags = list()
 	unique_name = 0
 	var/sterile = 1
 	var/plants_off = 0

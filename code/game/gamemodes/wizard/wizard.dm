@@ -11,6 +11,7 @@
 	recommended_enemies = 1
 	enemy_minimum_age = 14
 	round_ends_with_antag_death = 1
+	prob_traitor_ai = 18
 	var/use_huds = 0
 	var/finished = 0
 
@@ -19,19 +20,22 @@
 	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 
 /datum/game_mode/wizard/pre_setup()
+	//Potential here, people. Magin' Rages Light
+	var/list/datum/mind/selected_wizards = pick_candidate(amount = required_enemies)
+	update_not_chosen_candidates()
 
-	var/datum/mind/wizard = pick_candidate()
-	wizards += wizard
-	modePlayer += wizard
-	wizard.assigned_role = "Wizard"
-	wizard.special_role = "Wizard"
-	if(wizardstart.len == 0)
-		wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
-		return 0
+	for(var/v in selected_wizards)
+		var/datum/mind/wizard = v
+		wizards += wizard
+		modePlayer += wizard
+		wizard.assigned_role = "Wizard"
+		wizard.special_role = "Wizard"
+		if(wizardstart.len == 0)
+			wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
+			return 0
+
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(wizardstart)
-
-	handle_AI_Traitors()
 
 	return 1
 
@@ -137,7 +141,8 @@
 /datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
-
+	if(wizard_mob.dna && wizard_mob.dna.species.dangerous_existence)
+		wizard_mob.set_species(/datum/species/human)
 	//So zards properly get their items when they are admin-made.
 	qdel(wizard_mob.wear_suit)
 	qdel(wizard_mob.head)

@@ -1,6 +1,6 @@
 
 /mob/living/carbon/alien/check_breath(datum/gas_mixture/breath)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 
 	if(!breath || (breath.total_moles() == 0))

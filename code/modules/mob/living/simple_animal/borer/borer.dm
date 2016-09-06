@@ -30,7 +30,6 @@ var/total_borer_hosts_needed = 10
 	var/chemicals = 50
 	var/used_dominate
 	var/used_control
-//	var/influence = 0
 	var/borer_chems = list()
 	var/dominate_cooldown = 150
 	var/control_cooldown = 3000
@@ -49,13 +48,16 @@ var/total_borer_hosts_needed = 10
 	borer_chems += /datum/borer_chem/perfluorodecalin
 	borer_chems += /datum/borer_chem/spacedrugs
 	borer_chems += /datum/borer_chem/mutadone
-	borer_chems += /datum/borer_chem/creagent
+	//borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
+	borer_chems += /datum/borer_chem/rezadone
 
 	borers += src
 
 /mob/living/simple_animal/borer/attack_ghost(mob/user)
-	if(src.ckey)
+	if(ckey)
+		return
+	if(stat != CONSCIOUS)
 		return
 	var/be_swarmer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_swarmer == "No")
@@ -67,11 +69,8 @@ var/total_borer_hosts_needed = 10
 
 	if(statpanel("Status"))
 		stat(null, "Chemicals: [chemicals]")
-		/*if(victim)
-			stat(null, "Influence: [influence]%")*/
 
 	src << output(chemicals, "ViewBorer\ref[src]Chems.browser:update_chemicals")
-	//src << output(influence, "ViewBorer\ref[src]Chems.browser:update_influence")
 
 /mob/living/simple_animal/borer/Life()
 
@@ -88,17 +87,14 @@ var/total_borer_hosts_needed = 10
 
 	if(victim)
 		if(stat != DEAD)
-			if(chemicals < 250)
+			if(victim.stat == DEAD)
+				chemicals++
+			else if(chemicals < 250)
 				chemicals+=2
-/*			if(influence < 100)
-				influence += 0.5
-				if(influence == 100)
-					src << "<span class='boldnotice'>You are one with [victim] you both aid eachother in their needs and establish a mutally beneficial relationship.</span>"
-					victim << "<span class='boldnotice'>You are one with [src] you both aid eachother in their needs and establish a mutally beneficial relationship.</span>"
-				if(influence == 80)
-					victim << "<span class='boldnotice'>You feel [src]'s power grow to extreme levels. You beging to feel unbeatable.</span>"
-				if(influence == 50)
-					victim << "<span class='danger'>You don't feel like yourself.</span>"*/
+			if (chemicals > 250)
+				chemicals = 250 //to prevent 251 chemical bug from +2 per tick
+
+
 		if(stat != DEAD && victim.stat != DEAD)
 
 			if(victim.reagents.has_reagent("sugar"))
@@ -108,7 +104,6 @@ var/total_borer_hosts_needed = 10
 					else
 						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					docile = 1
-					//influence -= 1
 			else
 				if(docile)
 					if(controlling)
@@ -144,19 +139,12 @@ var/total_borer_hosts_needed = 10
 		message = copytext(message,2)
 		victim.say(message)
 		return
-	//if(influence > 80)
-		//victim << "<span class='green'><b>[name] telepathically shouts... </b></span><span class='userdanger'>[message]</span>"
-		//src << "<span class='green'><b>[name] telepathically shouts... </b></span><span class='userdanger'>[message]</span>"
-	//else if(influence > 40)
 	if(message == "")
 		return
 	var/message2 = ""
 	message2 = addtext(uppertext(copytext(message, 1, 2)), copytext(message, 2) )
 	victim << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
 	src << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
-	//else
-		//victim << "<span class='green'><b>[name] telepathically whispers... </b></span><i>[message]</i>"
-		//src << "<span class='green'><b>[name] telepathically whispers... </b></span><i>[message]</i>"
 
 /mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
 	healthscan(usr, M)
@@ -187,7 +175,7 @@ var/total_borer_hosts_needed = 10
 
 	src.victim = victim
 	victim.borer = src
-	src.loc = victim
+	loc = victim
 
 	log_game("[src]/([src.ckey]) has infected [victim]/([victim.ckey]")
 
@@ -197,11 +185,11 @@ var/total_borer_hosts_needed = 10
 	if(controlling)
 		detatch()
 
-	src.loc = get_turf(victim)
+	loc = get_turf(victim)
 
 	victim.borer = null
 	victim = null
-//	influence = 0
+	reset_perspective(null)
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 	if(!candidate || !candidate.mob)
@@ -211,10 +199,10 @@ var/total_borer_hosts_needed = 10
 	M.transfer_to(src)
 
 	candidate.mob = src
-	src.ckey = candidate.ckey
+	ckey = candidate.ckey
 
-	if(src.mind)
-		src.mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
+	if(mind)
+		mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
 	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
 	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
@@ -242,15 +230,15 @@ var/total_borer_hosts_needed = 10
 		victim.computer_id = null
 		victim.lastKnownIP = null
 
-		src.ckey = victim.ckey
-		src.mind = victim.mind
+		ckey = victim.ckey
+		mind = victim.mind
 
 
-		if(!src.computer_id)
-			src.computer_id = h2s_id
+		if(!computer_id)
+			computer_id = h2s_id
 
 		if(!host_brain.lastKnownIP)
-			src.lastKnownIP = h2s_ip
+			lastKnownIP = h2s_ip
 
 		// brain -> host
 		var/b2h_id = host_brain.computer_id

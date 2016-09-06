@@ -167,5 +167,5 @@
 	victim << "<span class='notice'>You feel fast!</span>"
 	victim.status_flags |= GOTTAGOREALLYFAST
 	sleep(duration)
-	victim.status_flags &= ~GOTTAGOREALLYFAST
+	victim.status_flags -= GOTTAGOREALLYFAST
 	victim << "<span class='notice'>You slow down.</span>"

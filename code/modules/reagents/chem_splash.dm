@@ -10,11 +10,17 @@ proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactan
 		return
 	var/has_reagents
 	var/total_reagents
+	var/log_contents = list()
 	for(var/datum/reagents/R in reactants)
 		if(R.total_volume)
 			has_reagents = 1
 			total_reagents += R.total_volume
-
+		for(var/datum/reagent/R2 in R.reagent_list)
+			log_contents += "[R2.name]([R2.volume])"
+	log_contents = english_list(log_contents)
+	var/log = "Chemical reation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[epicenter.x];Y=[epicenter.y];Z=[epicenter.z]'>[epicenter.x], [epicenter.y], [epicenter.z]</a> containing [log_contents]"
+	log_game(log)
+	message_admins(log)
 	if(!has_reagents)
 		return
 
