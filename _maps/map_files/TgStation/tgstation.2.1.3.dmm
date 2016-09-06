@@ -20473,14 +20473,17 @@
 	},
 /area/hydroponics)
 "aNB" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/item/toy/gamechild,
 /turf/open/floor/plasteel{
-	icon_state = "hydrofloor"
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
 	},
-/area/hydroponics)
+/area/gateway)
 "aNC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -92621,7 +92624,7 @@ aBu
 ayV
 aDT
 aDR
-aGH
+aNB
 aGH
 aGH
 ayV
