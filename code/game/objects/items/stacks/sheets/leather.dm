@@ -145,6 +145,13 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
  * Plates
  		*/
 
+/obj/item/stack/sheet/animalhide/weaver_chitin
+	name = "weaver chitin"
+	desc = "A chunk of hardened and layered chitin from a marrow weaver's carapace."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "chitin"
+	singular_name = "chitin chunk"
+
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
 	desc = "Pieces of a goliath's rocky hide, these might be able to make your suit a bit more durable to attack from the local fauna."

@@ -17,6 +17,7 @@
 	var/junkiness = 0  //for junk food. used to lower human satiety.
 	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
+	var/can_always_eat = 0
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
@@ -73,14 +74,14 @@
 				M << "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>"
 			else if(fullness > 150 && fullness < 500)
 				M << "<span class='notice'>You [eatverb] \the [src].</span>"
-			else if(fullness > 500 && fullness < 600)
+			else if((fullness > 500 && fullness < 600) || can_always_eat)
 				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				M << "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>"
 				return 0
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
-				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
+				if((fullness <= (600 * (1 + M.overeatduration / 1000))) || can_always_eat)
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
 										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
 				else
@@ -154,17 +155,18 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)
 	..()
 	reagents.reagent_list.Cut()
 	for(var/obj/item/weapon/reagent_containers/RC in contents)
 		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
-	contents_loop:
-		for(var/A in contents)
-			for(var/B in initial(R.parts))
-				if(istype(A, B))
-					continue contents_loop
-			qdel(A)
+	if(istype(R))
+		contents_loop:
+			for(var/A in contents)
+				for(var/B in R.real_parts)
+					if(istype(A, B))
+						continue contents_loop
+				qdel(A)
 	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)

@@ -1,6 +1,7 @@
 /mob/living/silicon/pai/death(gibbed)
 	if(stat == DEAD)
 		return
+	unpair(1)
 	stat = DEAD
 	canmove = 0
 	update_sight()

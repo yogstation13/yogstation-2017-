@@ -25,7 +25,7 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
-	if(user.status_flags & FAKEDEATH)
+	if(FAKEDEATH in user.status_flags)
 		user << "<span class='warning'>We are already regenerating.</span>"
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death

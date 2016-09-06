@@ -73,6 +73,11 @@ var/datum/subsystem/events/SSevent
 	var/sum_of_weights = 0
 	for(var/datum/round_event_control/E in control)
 		if(!E.canSpawnEvent(players_amt, gamemode))
+			if (E.growth)
+				var/estimatedtime = PREDICTEDHALFHOUR * E.growth
+				if(world.time > estimatedtime)
+					E.weight++
+					E.growth++
 			continue
 		if(E.weight < 0)						//for round-start events etc.
 			if(E.runEvent() == PROCESS_KILL)

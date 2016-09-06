@@ -120,7 +120,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "abomination")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -200,6 +200,7 @@
 			H.update_hair()
 			H.update_body_parts()
 			H.update_mutations_overlay() // no hulk lizard
+			H.dna.species.on_species_gain(H)
 
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy

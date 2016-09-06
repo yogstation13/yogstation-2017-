@@ -141,6 +141,22 @@
 		else
 			last_corrupt = world.time + corrupt_delay*2
 
+/obj/structure/cult/pylon/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/suit/hooded/cultrobes/cult_shield) && iscultist(user))
+		var/obj/item/clothing/suit/hooded/cultrobes/cult_shield/S = I
+		if(S.current_charges >= 3)
+			user <<"<span class='warning'>[I] is already fully charged!</span>"
+			return
+		if(cooldowntime > world.time)
+			user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+			return
+		if(anchored && Adjacent(user) && cooldowntime <= world.time)
+			user <<"<span class='notice'>You hold [I] up to [src]. Hold still...</span>"
+			if(do_mob(user, user, 200))
+				S.current_charges = 3
+				user <<"<span class='notice'>[I] is fully charged.</span>"
+				cooldowntime = world.time + 1200
+
 /obj/structure/cult/tome
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."

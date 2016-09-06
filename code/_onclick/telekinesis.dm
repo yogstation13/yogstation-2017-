@@ -40,6 +40,7 @@ var/const/tk_maxrange = 15
 	user.put_in_active_hand(O)
 	O.host = user
 	O.focus_object(src)
+	add_hiddenprint(user)
 	return
 
 /obj/item/attack_tk(mob/user)
@@ -49,6 +50,7 @@ var/const/tk_maxrange = 15
 	user.put_in_active_hand(O)
 	O.host = user
 	O.focus_object(src)
+	add_hiddenprint(user)
 	return
 
 

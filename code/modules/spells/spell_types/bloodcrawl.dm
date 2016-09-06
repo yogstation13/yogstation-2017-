@@ -54,6 +54,8 @@
 
 
 /turf/CtrlClick(var/mob/living/user)
+	if(!istype(user))
+		return
 	if(user.bloodcrawl)
 		for(var/obj/effect/decal/cleanable/B in src.contents)
 			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))

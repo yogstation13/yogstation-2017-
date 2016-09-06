@@ -53,3 +53,14 @@
 	burn_state = FIRE_PROOF
 	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
 
+/obj/item/clothing/gloves/chitinhands
+	name = "chitin gauntlets"
+	desc = "The idea of badass sharp spikes sticking out of your elbows sounded great in theory."
+	icon_state = "chitinhands"
+	item_state = "chitinhands"
+	transfer_prints = TRUE
+	strip_delay = 40
+	put_on_delay = 20
+	body_parts_covered = ARMS
+	burn_state = FIRE_PROOF
+	armor = list(melee = 35, bullet = 50, laser = 45, energy = 30, bomb = 50, bio = 50, rad = 40)

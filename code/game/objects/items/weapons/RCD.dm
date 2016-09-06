@@ -4,6 +4,7 @@
 CONTAINS:
 RCD
 */
+
 /obj/item/weapon/rcd
 	name = "rapid-construction-device (RCD)"
 	desc = "A device used to rapidly build and deconstruct walls and floors."
@@ -61,6 +62,12 @@ RCD
 	var/decongrilledelay = null //as rapid as wirecutters
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
+
+	var/no_ammo_message = ""
+
+/obj/item/weapon/rcd/New()
+	..()
+	no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \the [src] blinks yellow.</span>"
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the [abbreviated_name] to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
@@ -331,10 +338,14 @@ RCD
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
-						if(!useResource(wallcost, user)) return 0
+						if(!istype(F, /turf/open/floor)) //The turf might have changed during the do_after
+							return 0
+						if(!useResource(wallcost, user))
+							return 0
 						activate()
 						F.ChangeTurf(/turf/closed/wall)
 						return 1
+					return 0
 				return 0
 
 		if(2)
@@ -350,7 +361,8 @@ RCD
 						user << "<span class='notice'>You start building airlock...</span>"
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
-							if(!useResource(airlockcost, user)) return 0
+							if(!useResource(airlockcost, user))
+								return 0
 							activate()
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 
@@ -386,10 +398,12 @@ RCD
 					user << "<span class='notice'>You start deconstructing wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwalldelay, target = A))
-						if(!useResource(deconwallcost, user)) return 0
+						if(!useResource(deconwallcost, user))
+							return 0
 						activate()
 						W.ChangeTurf(/turf/open/floor/plating)
 						return 1
+					return 0
 				return 0
 
 			if(istype(A, /turf/open/floor))
@@ -403,10 +417,12 @@ RCD
 					user << "<span class='notice'>You start deconstructing floor...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconfloordelay, target = A))
-						if(!useResource(deconfloorcost, user)) return 0
+						if(!useResource(deconfloorcost, user))
+							return 0
 						activate()
 						F.ChangeTurf(F.baseturf)
 						return 1
+					return 0
 				return 0
 
 			if(istype(A, /obj/machinery/door/airlock))
@@ -414,10 +430,12 @@ RCD
 					user << "<span class='notice'>You start deconstructing airlock...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconairlockdelay, target = A))
-						if(!useResource(deconairlockcost, user)) return 0
+						if(!useResource(deconairlockcost, user))
+							return 0
 						activate()
 						qdel(A)
 						return 1
+					return 0
 				return	0
 
 			if(istype(A, /obj/structure/window))
@@ -425,10 +443,12 @@ RCD
 					user << "<span class='notice'>You start deconstructing the window...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwindowdelay, target = A))
-						if(!useResource(deconwindowcost, user)) return 0
+						if(!useResource(deconwindowcost, user))
+							return 0
 						activate()
 						qdel(A)
 						return 1
+					return 0
 				return	0
 
 			if(istype(A, /obj/structure/grille))
@@ -445,13 +465,16 @@ RCD
 		if (4)
 			if(istype(A, /turf/open/floor))
 				if(checkResource(grillecost, user))
-					for(var/obj/structure/grille/GRILLE in A)
+					if(locate(/obj/structure/grille) in A)
 						user << "<span class='warning'>There is already a grille there!</span>"
 						return 0
 					user << "<span class='notice'>You start building a grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, grilledelay, target = A))
-						if(!useResource(grillecost, user)) return 0
+						if(locate(/obj/structure/grille) in A)
+							return 0
+						if(!useResource(grillecost, user))
+							return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
 						G.anchored = 1
@@ -464,7 +487,8 @@ RCD
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, windowdelay, target = A))
 						if(locate(/obj/structure/window) in A.loc) return 0
-						if(!useResource(windowcost, user)) return 0
+						if(!useResource(windowcost, user))
+							return 0
 						activate()
 						var/obj/structure/window/WD = new/obj/structure/window/fulltile(A.loc)
 						WD.anchored = 1
@@ -478,27 +502,51 @@ RCD
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
+		if(user)
+			user << no_ammo_message
 		return 0
 	matter -= amount
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
-	return matter >= amount
-/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
-	if(!isrobot(user))
-		return 0
-	return user:cell:use(amount * 72) //borgs get 1.3x the use of their RCDs
+	. = (matter >= amount)
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
-/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
-	if(!isrobot(user))
-		return 0
-	return user:cell:charge >= (amount * 72)
+/obj/item/weapon/rcd/borg/New()
+	..()
+	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 
 /obj/item/weapon/rcd/borg/New()
 	..()
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = 1
+
+/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
+	if(!isrobot(user))
+		return 0
+	var/mob/living/silicon/robot/R = user
+	if(!R.cell)
+		user << no_ammo_message
+		return 0
+	. = R.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	if(!. && user)
+		user << no_ammo_message
+	return .
+
+/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
+	if(!isrobot(user))
+		return 0
+	var/mob/living/silicon/robot/R = user
+	if(!R.cell)
+		user << no_ammo_message
+		return 0
+	. = (R.cell.charge >= (amount * 72))
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
 /obj/item/weapon/rcd/loaded
 	matter = 160

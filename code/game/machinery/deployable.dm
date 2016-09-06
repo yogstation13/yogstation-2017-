@@ -199,6 +199,8 @@
 	toggle_mode(user)
 
 
+
+
 #undef SINGLE
 #undef VERTICAL
 #undef HORIZONTAL
@@ -206,3 +208,322 @@
 #undef METAL
 #undef WOOD
 #undef SAND
+
+
+/obj/machinery/deployable
+	name = "deployable"
+	desc = "deployable"
+	icon = 'icons/obj/objects.dmi'
+	req_access = list(access_security)
+
+/obj/machinery/deployable/barrier
+	name = "deployable barrier"
+	desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
+	icon = 'icons/obj/objects.dmi'
+	anchored = 0.0
+	density = 1.0
+	icon_state = "barrier0"
+	var/health = 100.0
+	var/maxhealth = 100.0
+	var/locked = 0.0
+	var/obj/item/device/radio/attachedradio = null
+	var/obj/item/device/encryptionkey/installedkey = null
+	var/radio_freq
+	var/initialdesc
+	var/healthreport
+	var/round_start_intialize = 0
+
+	var/obj/item/device/assembly/signaler/SIGNALLER = null
+
+/obj/machinery/deployable/barrier/New()
+	..()
+
+	icon_state = "barrier[src.locked]"
+	attachedradio = new /obj/item/device/radio(src)
+	attachedradio.listening = 0
+	initialdesc = desc
+	installedkey = new /obj/item/device/encryptionkey/headset_sec
+
+/obj/machinery/deployable/barrier/process()
+	if(ticker && ticker.current_state == GAME_STATE_PREGAME)
+		return
+	if(!round_start_intialize)
+		setup_round_start_intialize()
+	return
+
+/obj/machinery/deployable/barrier/proc/setup_round_start_intialize()
+	if(ticker && ticker.current_state > GAME_STATE_PREGAME)
+		attachedradio.set_frequency(SEC_FREQ)
+		radio_freq = SEC_FREQ
+		round_start_intialize = 1
+
+/obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user, params)
+	if (W.GetID())
+		if (allowed(user))
+			if	(emagged < 2.0)
+				switch(alert("Selection Prompt","Barrier Uplink", "Lock","Rename", "Toggle Functionality Report","Cancel"))
+					if("Lock")
+						locked = !locked
+						anchored = !anchored
+						icon_state = "barrier[src.locked]"
+						if ((locked == 1.0) && (emagged < 2.0))
+							user << "Barrier lock toggled on."
+							return
+						else if ((locked == 0.0) && (emagged < 2.0))
+							user << "Barrier lock toggled off."
+							return
+					if("Rename")
+						var/new_name = reject_bad_name(input(usr, "Enter the barriers new designated name", "Barrier Uplink", name),1)
+						if(!in_range(src, usr) && loc != usr)
+							return
+						if(new_name)
+							message_admins("[user] ([user.ckey]) is changing [name] to [new_name]. ([loc.x],[loc.y],[loc.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)")
+							log_game("[user] ([user.ckey]) has changed [name] to [new_name].")
+							var/randomdigit = "([rand(50,1000)])"
+							name = new_name
+							name += " - Barrier [randomdigit]"
+						else
+							return
+					if("Toggle Functionality Report")
+						if(healthreport)
+							healthreport = !healthreport
+							user << "<span class='notice'>You toggle off the barrier's functionality report. It will no longer report how much health it is has remaining.</span>"
+						else
+							healthreport = 1
+							user << "<span class='notice'>You toggle on the barrier's functionality report. It will now report how much health it is has remaining.</span>"
+			else
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+				s.set_up(2, 1, src)
+				s.start()
+				visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
+				return
+		return
+	else if (istype(W, /obj/item/weapon/wrench))
+		if (health < src.maxhealth)
+			health = src.maxhealth
+			emagged = 0
+			req_access = list(access_security)
+			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
+			return
+		else if (src.emagged > 0)
+			src.emagged = 0
+			src.req_access = list(access_security)
+			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
+
+		src.req_access = list(access_security)
+
+	else if (istype(W, /obj/item/weapon/screwdriver))
+
+		if (src.locked == 1.0)
+			user << "<span class='danger'>You can't eject anything from the barrier while it's locked!</span>"
+			return
+
+		if (SIGNALLER)
+			new /obj/item/device/assembly/signaler(src.loc)
+			SIGNALLER = null
+			desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
+			initialdesc = desc
+			desc_report() //puts the cherry ontop of our... codey sundae
+			user.visible_message( \
+						"[user] deattaches the signaler from the barrier.", \
+						"<span class='notice'>You unscrew the signaler from the barrier.</span>")
+			return
+
+		if (installedkey)
+			var/turf/T = get_turf(src.loc)
+			if(T)
+				installedkey.loc = T
+				installedkey = null
+			attachedradio.frequency = 0
+			user.visible_message("[user] unscrews the encryption key from the barrier.")
+			return
+
+
+		if (!installedkey && !SIGNALLER)
+			user << "<span class='danger'>[src] doesn't have anything to eject.</span>"
+			return
+
+	else if (istype(W, /obj/item/device/encryptionkey))
+
+		if (src.locked == 1.0)
+			user << "<span class='danger'>You can't install anything while the barrier is locked!</span>"
+			return
+
+		var/initialkey = installedkey
+
+		if(installedkey)
+			user << "[src] already has an encryption key installed!"
+			return
+
+		installedkey = W
+
+		if(installedkey.channels.Find("Security"))
+			visible_message("[src] swallows the encryption key and vibrates happily!")
+			attachedradio.set_frequency(SEC_FREQ)
+			radio_freq = SEC_FREQ
+			user.unEquip(W)
+			W.loc = src
+			return
+
+		else
+			visible_message("[src] rejects the encryption key and vibrates angrily!")
+			installedkey = initialkey
+			return
+
+	else if(issignaler(W))
+
+		if(SIGNALLER)
+			user << "<span class='notice'>There's a signaler attatched to the barrier!</span>"
+			return
+
+		SIGNALLER = W
+
+		if(SIGNALLER.secured)
+			user <<"<span class='danger'>The device is secured.</span>"
+			SIGNALLER = null
+			return
+
+		if(!radio_freq)
+			user << "<span class='danger'>There isn't an encryption key associated with the barrier to attach the signaler to!</span>"
+			SIGNALLER = null
+			return
+
+		else
+			user.visible_message( \
+						"[user] attaches the signaler to the barrier.", \
+						"<span class='notice'>You attach the signaler to the barrier.</span>")
+			desc = "[src.desc] It also appears to have a remote signaling device attatched to it."
+			initialdesc = desc
+			qdel(W)
+		return
+
+	else
+		user.changeNext_move(CLICK_CD_MELEE)
+		switch(W.damtype)
+			if("fire")
+				src.health -= W.force * 0.75
+			if("brute")
+				src.health -= W.force * 0.5
+			else
+
+		// examine damage notifiers.
+		if (src.health <= 99)
+			desc_report()
+
+
+		if (src.health <= 0)
+			attachedradio.talk_into(src, "Losing signal with the security channel!",radio_freq)
+			src.explode()
+		..()
+
+		// This will send a message to the security channel if the barrier's radio is connected to it's frequency
+
+		if (((attachedradio.frequency == SEC_FREQ || attachedradio.frequency == 1359)) && !src.emagged) // security currently. emagging will disable this.
+			if(!W.force)
+				return
+
+			var/thebarrier = "A deployable barrier"
+
+			if(SIGNALLER)
+				var/detectedarea = get_area(src)
+				thebarrier = thebarrier + " located in [detectedarea]"
+
+			var/damagereport
+			if(W.force <= 5 && W.force != 0) // less or equal to 5
+				damagereport = "a small amount of damage"
+			if(W.force > 5 && W.force <= 15) // in the 5-15 range, but greater than 5
+				damagereport = "a moderate amount of damage"
+			if(W.force > 15) //greater than 15
+				damagereport = "a large amount of damage"
+			else if (!damagereport)
+				return
+
+			if(src.health <= 95 && src.health > 50 || src.health <= 50 && src.health > 25 || src.health <= 25 && src.health > 0)
+				var/attack_report = "Alert! This barrier's systems are suffering [damagereport]"
+				if(healthreport)
+					attack_report += ". The barriers rate of functionality is at [health]%"
+				attachedradio.talk_into(src, "[attack_report]!!",radio_freq)
+
+/obj/machinery/deployable/barrier/proc/desc_report() // something to update the description of the barrier.
+
+	if (src.health >= 61)
+		desc = "[initialdesc] <span class='danger'>The barrier is slightly damaged.</span>"
+		return
+
+	if (src.health <= 60 && src.health >= 31)
+		desc = "[initialdesc] <span class='danger'>The barrier seems to have taken a multitude of strong blows.</span>"
+		return
+
+	if (src.health <= 30 && src.health > 1)
+		desc = "[initialdesc] <span class='danger'>The barrier appears to be severely damanged and in need of repair. </span>"
+		return
+
+
+/obj/machinery/deployable/emag_act(mob/user)
+	if (src.emagged == 0)
+		src.emagged = 1
+		src.req_access = null
+		user << "<span class='notice'>You break the ID authentication lock on \the [src].</span>"
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
+		return
+	else if (src.emagged == 1)
+		src.emagged = 2
+		user << "<span class='notice'>You short out the anchoring mechanism on \the [src].</span>"
+		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		s.set_up(2, 1, src)
+		s.start()
+		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
+		return
+
+/obj/machinery/deployable/barrier/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			src.explode()
+			return
+		if(2.0)
+			src.health -= 25
+			if (src.health <= 0)
+				src.explode()
+			return
+
+/obj/machinery/deployable/barrier/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(prob(50/severity))
+		locked = !locked
+		anchored = !anchored
+		icon_state = "barrier[src.locked]"
+
+/obj/machinery/deployable/barrier/blob_act()
+	src.health -= 25
+	if (src.health <= 0)
+		src.explode()
+	return
+
+/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
+	if(height==0)
+		return 1
+	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return 1
+	else
+		return 0
+
+/obj/machinery/deployable/barrier/proc/explode()
+
+	visible_message("<span class='danger'>[src] blows apart!</span>")
+	var/turf/Tsec = get_turf(src)
+
+/*	var/obj/item/stack/rods/ =*/
+	new /obj/item/stack/rods(Tsec)
+
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+
+	explosion(src.loc,-1,-1,0)
+	playsound(src.loc, 'sound/effects/Explosion1.ogg',100,1)
+	if(src)
+		qdel(src)

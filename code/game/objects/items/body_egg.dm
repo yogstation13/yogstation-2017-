@@ -26,7 +26,7 @@
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
 	SSobj.processing.Remove(src)
 	if(owner)
-		owner.status_flags &= ~(XENO_HOST)
+		owner.status_flags -= XENO_HOST
 		owner.med_hud_set_status()
 		spawn(0)
 			RemoveInfectionImages(owner)

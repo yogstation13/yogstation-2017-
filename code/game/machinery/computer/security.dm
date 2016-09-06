@@ -315,12 +315,18 @@ What a mess.*/
 				active2 = null
 
 			if("Log In")
-				if(istype(usr, /mob/living/silicon))
+				if(isaiorborg(usr))
 					var/mob/living/silicon/borg = usr
 					active1 = null
 					active2 = null
 					authenticated = borg.name
 					rank = "AI"
+					screen = 1
+				else if(ispAI(usr))
+					active1 = null
+					active2 = null
+					authenticated = usr.name
+					rank = "pAI"
 					screen = 1
 				else if(IsAdminGhost(usr))
 					active1 = null

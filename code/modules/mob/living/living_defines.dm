@@ -66,11 +66,7 @@
 
 	var/list/weather_immunities = list()
 
-	var/stun_absorption = FALSE //If all incoming stuns are being absorbed
-	var/stun_absorption_count = 0 //How many seconds of stun that have been absorbed
-
-	var/mob/living/mental_dominator //The person controlling the mind of this person, if applicable
-	var/mob/living/mind_control_holder/mind_control_holder //If the mob is being mind controlled, where their old mind is stored (check clock_mobs.dm)
+	var/stun_absorption = null //converted to a list of stun absorption sources this mob has when one is added
 
 	var/blood_volume = 0 //how much blood the mob has
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
