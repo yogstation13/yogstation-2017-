@@ -719,6 +719,10 @@
 	if(user.z != 1) //so you can't see if it's demon spawner on lavaland
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
+	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
+		user <<"<span class='warning'>You break [src], but nothing happens.../span>"
+		qdel(src)
+		return
 	user <<"<span class='warning'>You break [src], feeling immense power overcome you.../span>"
 	user.bloodcrawl = BLOODCRAWL
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
@@ -729,6 +733,7 @@
 	name = "demonic chainsaw"
 	desc = "You almost regret picking this up."
 	force = 25
+	armour_penetration = 30
 	color = "#FF0000"
 
 
