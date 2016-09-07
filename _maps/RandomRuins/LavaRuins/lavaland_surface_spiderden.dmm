@@ -1,0 +1,35 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"d" = (/obj/effect/spider/stickyweb,/mob/living/simple_animal/hostile/asteroid/marrowweaver/den,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"j" = (/obj/effect/spider/stickyweb,/obj/item/stack/sheet/bone{amount = 2},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"z" = (/obj/effect/landmark/weaver_den,/obj/effect/spider/stickyweb,/obj/effect/spider/stickyweb,/obj/item/stack/sheet/animalhide/weaver_chitin{amount = 6},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"D" = (/obj/effect/spider/stickyweb,/obj/effect/spider/stickyweb,/obj/item/stack/sheet/mineral/mythril{amount = 56},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"I" = (/obj/effect/spider/stickyweb,/obj/effect/spider/stickyweb,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"J" = (/obj/effect/spider/stickyweb,/obj/effect/spider/stickyweb,/mob/living/simple_animal/hostile/asteroid/marrowweaver/den,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"N" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"U" = (/obj/effect/spider/stickyweb,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"V" = (/obj/effect/spider/stickyweb,/obj/effect/spider/stickyweb,/obj/item/stack/sheet/mineral/mythril{amount = 42},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"Z" = (/obj/effect/spider/stickyweb,/obj/item/stack/sheet/mineral/mythril{amount = 39},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaNaaaaaa
+aaaaaaaaaaaaaNNaaaaa
+aaaaNNNaaaaaaNNaaaaa
+aaaNNNNNNNNaNNNaaaaa
+aaaUUNNNUNNNNUUNaaaa
+aaaNUNNUUUNNUUNNaaaa
+aaNNUUUUUUUUUUNNaaaa
+aNNNNUjUUUUdjUNNNaaa
+NNNNUUUUIUUUUUNNNaaa
+NNNNUUUdIIDUUUNNNNaa
+NNNNUUUIVzJIjUUUNNNN
+aNNUUUUUIIIUUUNUUNNN
+aNNNUUUjUIZUUUNNNaaa
+aNNNNUUUUdUUUUNNNaaa
+aaNNUUjUUUUUUUNNNaaa
+aaaNNUUNUUUUUZUNNaaa
+aaaNNNUNNUUNNUUNNaaa
+aaaaNNNNNNNNNNNNaaaa
+aaaaaaNNNNNNNNNNaaaa
+aaaaaaaNNNNaaaaaaaaa
+"}
+

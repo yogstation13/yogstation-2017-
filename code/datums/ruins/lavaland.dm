@@ -269,3 +269,11 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/spider_den
+	name = "Marrow Weaver Den"
+	id = "spiderden"
+	description = "The massive web of a group of spiders who banded together as the rest of their kin were driven from lavaland."
+	suffix = "lavaland_surface_spiderden.dmm"
+	allow_duplicates = FALSE
+	cost = 5
