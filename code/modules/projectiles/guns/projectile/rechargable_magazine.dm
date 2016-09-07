@@ -156,7 +156,7 @@
 	icon_state = "minigun_spin"
 	item_state = "minigun"
 	origin_tech = "combat=6;powerstorage=5;magnets=4"
-	flags = CONDUCT | HANDSLOW | NODROP
+	flags = CONDUCT | HANDSLOW
 	slowdown = 1
 	slot_flags = null
 	w_class = 5
