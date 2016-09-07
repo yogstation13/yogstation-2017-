@@ -775,7 +775,7 @@
 	see_in_dark = 10
 	attack_sound = 'sound/weapons/bite.ogg'
 	deathmessage = "the weaver springs over onto its back, its legs curling as its abdomen ruptures open revealing the precious marrow and sinew within"
-	var/poison_type = "venom"
+	var/poison_type = "toxin"
 	var/poison_per_bite = 2
 	var/busy = 0
 
