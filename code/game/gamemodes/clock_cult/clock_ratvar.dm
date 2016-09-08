@@ -45,7 +45,6 @@
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	SSobj.processing -= src
 	if(SSshuttle.emergencyNoEscape)
 		SSshuttle.emergencyNoEscape = FALSE
 	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
