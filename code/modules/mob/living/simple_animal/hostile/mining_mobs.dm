@@ -789,6 +789,8 @@
 	pass_flags = PASSTABLE
 	attack_sound = 'sound/weapons/bite.ogg'
 	deathmessage = "the weaver rolls over, frothing at the mouth before stilling."
+	/mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
+	. = ..()
 	if(health < (maxhealth/3))  //He's REALLY mad.
 		speak_emote = ("chitters angrily")
 		emote_hear = ("chitters furiously")
@@ -796,15 +798,17 @@
 		move_to_delay = 14
 		melee_damage_lower = 15
 		melee_damage_upper = 20
-		var/poison_type = "cyanide"
-		var/poison_per_bite = 5
+		poison_type = "cyanide"
+		poison_per_bite = 5
 		desc = "A big, angry, toxic spider. It looks really, REALLY unhappy. It's badly wounded."
 	else
-		var/poison_type = "toxin"
-		var/poison_per_bite = 5
+		poison_type = "toxin"
+		poison_per_bite = 5
 	speak_chance = 5
 	speak_emote = "clacks", "chitters", "hisses"
-	var/busy = 0
+	busy = 0
+	poison_type = "toxin"
+	poison_per_bite = 5
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
