@@ -37,7 +37,7 @@
 	unsuitable_atmos_damage = 15
 	faction = list("syndicate")
 	check_friendly_fire = 1
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	del_on_death = 1
 
 ///////////////Sword and shield////////////
@@ -51,7 +51,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
-	status_flags = 0
+	status_flags = list()
 	maxHealth = 170
 	health = 170
 

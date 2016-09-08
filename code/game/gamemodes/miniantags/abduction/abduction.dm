@@ -11,6 +11,7 @@
 	required_players = 15
 	var/max_teams = 4
 	abductor_teams = 1
+	prob_traitor_ai = 18
 	var/list/datum/mind/scientists = list()
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()

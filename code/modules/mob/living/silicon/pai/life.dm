@@ -13,7 +13,7 @@
 			src << "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>"
 
 /mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	health = maxHealth - getBruteLoss() - getFireLoss()
 	update_stat()

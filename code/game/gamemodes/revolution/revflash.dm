@@ -84,6 +84,8 @@
 			M.confused += power
 
 	rev_cooldown = 1
+	icon_state = "memorizer2"
 	spawn(REVPEN_COOLDOWN)
+		icon_state = initial(icon_state)
 		rev_cooldown = 0
 		src.visible_message("<span class='notice'>[src] vibrates.</span>")

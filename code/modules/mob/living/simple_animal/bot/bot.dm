@@ -13,7 +13,7 @@
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
-	status_flags = NONE //no default canpush
+	status_flags = list() //no default canpush
 
 	speak_emote = list("states")
 	bubble_icon = "machine"
@@ -746,7 +746,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	dat = get_controls(M)
 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
 	popup.set_content(dat)
-	popup.open()
+	popup.open(0)
 	onclose(M,window_id,ref=src)
 	return
 

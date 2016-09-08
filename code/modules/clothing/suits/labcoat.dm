@@ -46,3 +46,19 @@
 	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox"
+
+/obj/item/clothing/suit/toggle/labcoat/random
+	name = "random labcoat"
+
+/obj/item/clothing/suit/toggle/labcoat/random/New()
+	..()
+	var/obj/item/clothing/suit/toggle/labcoat/L = pick(/obj/item/clothing/suit/toggle/labcoat/emt,
+														/obj/item/clothing/suit/toggle/labcoat/mad,
+														/obj/item/clothing/suit/toggle/labcoat/genetics,
+														/obj/item/clothing/suit/toggle/labcoat/chemist,
+														/obj/item/clothing/suit/toggle/labcoat/virologist,
+														/obj/item/clothing/suit/toggle/labcoat/science)
+	name = initial(L.name)
+	desc = initial(L.desc)
+	icon_state = initial(L.icon_state)
+	item_state = initial(L.item_state)

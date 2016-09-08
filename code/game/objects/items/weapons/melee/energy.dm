@@ -7,6 +7,7 @@
 	w_class = 2
 	var/w_class_on = 4
 	heat = 3500
+	var/clumsy_check = 1
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
@@ -70,7 +71,7 @@
 	return 0
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(clumsy_check && (user.disabilities & CLUMSY) && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
 		user.take_organ_damage(5,5)
 	active = !active

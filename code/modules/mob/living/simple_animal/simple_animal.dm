@@ -4,7 +4,7 @@
 	health = 20
 	maxHealth = 20
 
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
@@ -103,7 +103,7 @@
 		return 1
 
 /mob/living/simple_animal/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health <= 0)
@@ -274,7 +274,7 @@
 	return 0
 
 /mob/living/simple_animal/proc/adjustHealth(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
 	updatehealth()
@@ -317,6 +317,14 @@
 
 		if("harm", "disarm")
 			M.do_attack_animation(src)
+			if(M.dna.species.id == "abomination")//so abominations don't do 5 damage to things
+				visible_message("<span class='danger'>[M] tears into [src]!</span>", \
+								"<span class='userdanger'>[M] tears into [src]!</span>")
+				playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+				attack_threshold_check(40)
+				add_logs(M, src, "attacked")
+				updatehealth()
+				return 1
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)

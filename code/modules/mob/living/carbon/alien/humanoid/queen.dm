@@ -1,7 +1,7 @@
 /mob/living/carbon/alien/humanoid/royal
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
-	status_flags = 0
+	status_flags = list()
 	ventcrawler = 0 //pull over that ass too fat
 	unique_name = 0
 	pixel_x = -16

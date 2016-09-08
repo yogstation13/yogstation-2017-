@@ -2434,7 +2434,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "afX" = (
-/obj/machinery/telecomms/server/presets/common/birdstation,
+/obj/machinery/telecomms/server/presets/common,
 /turf/open/floor/bluegrid,
 /area/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"

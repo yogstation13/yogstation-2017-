@@ -24,8 +24,7 @@
 	if(CanInfect(H))
 		src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
 		src.layer = MOB_LAYER
-		//H << "<span class='userdanger'>You feel something trying to enter your ear...</span>"
-		if(!do_after(src, 30, 5, 0, H))
+		if(!do_mob(src, H, 30))
 			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 			return
 
@@ -41,9 +40,6 @@
 		src << "<span class='warning'>I must be conscious to do this...</span>"
 		return 0
 
-/*	if(H.stat == DEAD)
-		src << "<span class='warning'>This subject does not have a strong enough life energy...</span>"
-		return 0*/
 	return 1
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
@@ -64,13 +60,12 @@
 
 	var content = ""
 	content += "<p>Chemicals: <span id='chemicals'>[chemicals]</span></p>"
-	/*content += "<p>Influence: <span id='influence'>[influence]</span>%</p>"*/
 
 	content += "<table>"
 
 	for(var/datum in typesof(/datum/borer_chem))
 		var/datum/borer_chem/C = new datum()
-		if(C.chemname)//&& C.needed_influence < influence)
+		if(C.chemname)
 			content += "<tr><td><a class='chem-select' href='?_src_=\ref[src];src=\ref[src];borer_use_chem=[C.chemname]'>[C.chemname] ([C.chemuse])</a><p>[C.chem_desc]</p></td></tr>"
 
 	content += "</table>"
@@ -231,6 +226,8 @@
 		log_game("[src]/([src.ckey]) has revived [victim]/([victim.ckey]")
 		chemicals -= 250
 		src << "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>"
+		victim.grab_ghost(force = TRUE) //brings the host back, no eggscape
+		victim <<"<span class='notice'>You bolt upright, gasping for breath!</span>"
 
 /mob/living/simple_animal/borer/verb/bond_brain()
 	set category = "Borer"
@@ -254,18 +251,18 @@
 		return
 
 	if(world.time - used_control < control_cooldown)
-		src << "<span class='warning'>Its too soon to use that again!</span>"
+		src << "<span class='warning'>It's too soon to use that!</span>"
 		return
 
-/*	if(influence < 50)
-		src << "<span class='warning'>You need atleast 50% influence to do this!</span>"
-		return*/
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
 	spawn(100+(victim.brainloss*5))
 
 		if(!victim || !src || controlling || victim.stat == DEAD)
+			return
+		if(docile)
+			src <<"<span class='warning'>You are feeling far too docile to do that.</span>"
 			return
 		else
 
@@ -350,7 +347,7 @@
 
 	switch(punishment) //Hardcoding this stuff.
 		if("Blindness")
-			victim.eye_blind = 20
+			victim.blind_eyes(2)
 		if("Deafness")
 			victim.ear_deaf = 20
 		if("Stun")
@@ -360,9 +357,6 @@
 
 	chemicals -= 75
 
-	/*influence -= 15
-	if(influence < 0)
-		influence = 0*/
 
 mob/living/carbon/proc/release_control()
 

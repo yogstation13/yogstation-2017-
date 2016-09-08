@@ -9,13 +9,14 @@
 	name = "traitor"
 	config_tag = "traitor"
 	antag_flag = ROLE_TRAITOR
-	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
+	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Prison Officer")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
 	enemy_minimum_age = 0
+	prob_traitor_ai = 18
 
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
@@ -41,20 +42,19 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	for(var/j = 0, j < num_traitors, j++)
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/traitor = pick_candidate()
+	var/list/datum/mind/backstabbers = pick_candidate(amount = num_traitors)
+	update_not_chosen_candidates()
+
+	for(var/v in backstabbers)
+		var/datum/mind/traitor = v
 		traitors += traitor
 		traitor.special_role = traitor_name
 		traitor.restricted_roles = restricted_jobs
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
-		antag_candidates.Remove(traitor)
-
-	handle_AI_Traitors()
 
 	if(traitors.len < required_enemies)
 		return 0
+
 	return 1
 
 

@@ -162,3 +162,27 @@
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
 	allowed = list(/obj/item/weapon/scalpel, /obj/item/weapon/surgical_drapes, /obj/item/weapon/cautery, /obj/item/weapon/hemostat, /obj/item/weapon/retractor)
+
+/obj/item/clothing/suit/random
+	name = "random jacket"
+
+/obj/item/clothing/suit/random/New()
+	..()
+	var/obj/item/clothing/suit/S = pick(/obj/item/clothing/suit/apron,
+										/obj/item/clothing/suit/apron/surgical,
+										/obj/item/clothing/suit/toggle/lawyer,
+										/obj/item/clothing/suit/toggle/lawyer/purple,
+										/obj/item/clothing/suit/toggle/lawyer/black,
+										/obj/item/clothing/suit/security/officer)
+	name = initial(S.name)
+	desc = initial(S.desc)
+	icon_state = initial(S.icon_state)
+	item_state = initial(S.item_state)
+	blood_overlay_type = initial(S.blood_overlay_type)
+	body_parts_covered = initial(S.body_parts_covered)
+	allowed = initial(S.allowed)
+	burn_state = initial(S.burn_state)
+	flags_inv = initial(S.flags_inv)
+	armor = initial(S.armor)
+	cold_protection = initial(S.cold_protection)
+	heat_protection = initial(S.heat_protection)

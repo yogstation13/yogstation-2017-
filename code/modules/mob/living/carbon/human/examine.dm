@@ -174,7 +174,7 @@
 			msg += "[t_He] has a strange masculine quality to [t_him].\n"
 
 	var/appears_dead = 0
-	if(stat == DEAD || (status_flags & FAKEDEATH) || (reagents.has_reagent("capilletum") && lying))
+	if(stat == DEAD || (FAKEDEATH in status_flags) || (reagents.has_reagent("capilletum") && lying))
 		appears_dead = 1
 		if(getorgan(/obj/item/organ/brain))//Only perform these checks if there is no brain
 			if(suiciding)
@@ -338,8 +338,10 @@
 	if(reagents.has_reagent("teslium"))
 		msg += "[t_He] is emitting a gentle blue glow!\n"
 
-	if(stun_absorption)
-		msg += "[t_He] is radiating with a soft yellow light!\n" //Used by Vanguard
+	if(islist(stun_absorption))
+		for(var/i in stun_absorption)
+			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
+				msg += "[t_He][stun_absorption[i]["examine_message"]]\n"
 
 	if(drunkenness && !skipface && stat != DEAD) //Drunkenness
 		switch(drunkenness)

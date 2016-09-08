@@ -134,8 +134,9 @@
 			A.set_zeroth_law("")
 			A.show_laws()
 			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-			A.malf_picker.remove_verbs(A)
-			qdel(A.malf_picker)
+			if(A.malf_picker)
+				A.malf_picker.remove_verbs(A)
+				qdel(A.malf_picker)
 	special_role = null
 	remove_antag_equip()
 	ticker.mode.update_traitor_icons_removed(src)
@@ -175,8 +176,8 @@
 
 
 /datum/mind/proc/remove_gang()
-		ticker.mode.remove_gangster(src,0,1,1)
-		remove_objectives()
+	ticker.mode.remove_gangster(src,0,1,1)
+	remove_objectives()
 
 /datum/mind/proc/remove_hog_follower_prophet()
 	ticker.mode.red_deity_followers -= src
@@ -212,7 +213,8 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)

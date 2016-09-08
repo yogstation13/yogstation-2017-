@@ -45,3 +45,6 @@
 	if(istype(special_device) && special_device.mode == RED_AIRLOCK_PAINTER_MODE)
 		return special_device.painter
 	return null
+
+/proc/is_mining_scanner(obj/O)
+	return istype(O, /obj/item/device/mining_scanner) || istype(O, /obj/item/device/t_scanner/adv_mining_scanner)

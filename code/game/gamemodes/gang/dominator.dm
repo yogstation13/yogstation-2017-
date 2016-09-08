@@ -195,7 +195,7 @@
 		operating = 1
 		icon_state = "dominator-[gang.color]"
 
-		countdown.text_color = gang.color_hex
+		countdown.color = gang.color_hex
 		countdown.start()
 
 		SetLuminosity(3)

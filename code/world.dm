@@ -86,6 +86,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
+	send_discord_message("public", "A new round is about to begin! Join with this address https://yogstation.net/play.php ! The current round number is **[yog_round_number]** and the chosen map is **[map_name]**")
+
 	config.Tickcomp = 0
 	world.fps = 20
 
@@ -239,6 +241,7 @@ var/last_irc_status = 0
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
+		ticker.server_reboot_in_progress = 1
 		return ..(1)
 	var/delay
 	if(time)
@@ -249,11 +252,13 @@ var/last_irc_status = 0
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	ticker.server_reboot_in_progress = 1
 	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
+		ticker.server_reboot_in_progress = 0
 		return
 	if(mapchanging)
 		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
@@ -354,6 +359,7 @@ var/inerror = 0
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
+	config.load("config/discord.txt","discord")
 	config.loadsql("config/dbconfig.txt")
 	if (config.maprotation && SERVERTOOLS)
 		config.loadmaplist("config/maps.txt")
@@ -405,9 +411,9 @@ var/list/donators = list()
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"https://www.yogstation.net\">" //Change this to wherever you want the hub to link to.
 //	s += "[game_version]"
-	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "Yogstation.net"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 

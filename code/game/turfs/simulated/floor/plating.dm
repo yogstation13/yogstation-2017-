@@ -218,9 +218,7 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
-	burn_stuff()
-	if(!processing)
-		processing = 1
+	if(burn_stuff(AM))
 		SSobj.processing |= src
 
 /turf/open/floor/plating/lava/process()
@@ -236,11 +234,16 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
-/turf/open/floor/plating/lava/proc/burn_stuff()
+/turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
-	for(var/thing in contents)
-		if(istype(thing, /obj))
+	var/thing_to_check = src
+	if (AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
+		if(isobj(thing))
 			var/obj/O = thing
+			if(O.burn_state == LAVA_PROOF || O.throwing)
+				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -251,7 +254,7 @@
 			O.fire_act()
 
 
-		else if (istype(thing, /mob/living))
+		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
@@ -270,7 +273,6 @@
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
 				L.IgniteMob()
-
 
 /turf/open/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return
