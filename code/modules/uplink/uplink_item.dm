@@ -1039,7 +1039,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(findtext(item, /obj/item/organ/cyberimp))
+		if(ispath(item, /obj/item/organ/cyberimp))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1073,7 +1073,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
 			They must be implanted via surgery."
-	item = /obj/item/weapon/storage/box/cyber_implants
+	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
 
 // Pointless
