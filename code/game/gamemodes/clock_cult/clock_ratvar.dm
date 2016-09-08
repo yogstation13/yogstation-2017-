@@ -44,13 +44,14 @@
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	SSshuttle.emergencyNoEscape = FALSE
+	SSobj.processing -= src
+	if(SSshuttle.emergencyNoEscape)
+		SSshuttle.emergencyNoEscape = FALSE
 	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 		SSshuttle.emergency.mode = SHUTTLE_DOCKED
 		SSshuttle.emergency.timer = world.time
 		if(!purpose_fulfilled)
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-	SSobj.processing -= src
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
@@ -130,7 +131,8 @@
 			QDEL_IN(src, 3)
 			clockwork_gateway_activated = TRUE
 			if(ratvar_portal)
-				new/obj/structure/clockwork/massive/ratvar(startpoint)
+				if(!ratvar_awakens)
+					new/obj/structure/clockwork/massive/ratvar(startpoint)
 			else
 				world << "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
