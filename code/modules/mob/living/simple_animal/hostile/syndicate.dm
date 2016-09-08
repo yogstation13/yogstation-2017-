@@ -37,7 +37,7 @@
 	unsuitable_atmos_damage = 15
 	faction = list("syndicate")
 	check_friendly_fire = 1
-	status_flags = list(CANPUSH)
+	status_flags =	list(CANPUSH)
 	del_on_death = 1
 
 ///////////////Sword and shield////////////
@@ -51,24 +51,24 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 28
-	status_flags = list()
+	status_flags =	list()
 	maxHealth = 130
 	health = 130
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-    if(!Proj)
-        return
-    switch(Proj.damage_type)
-        if(BRUTE)
-            adjustHealth(Proj.damage)
-        if(STAMINA) //No disabler buff
-            visible_message("<span class='danger'>[src] seems unaffected by [Proj]!</span>")
-        else
-            if(prob(50))
-                adjustHealth(Proj.damage)
-            else
-                visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-    return 0
+	if(!Proj)
+	return
+switch(Proj.damage_type)
+	if(BRUTE)
+		adjustHealth(Proj.damage)
+	if(STAMINA) //No disabler buff
+		visible_message("<span class='danger'>[src] seems unaffected by [Proj]!</span>")
+	else
+		if(prob(50))
+			adjustHealth(Proj.damage)
+		else
+		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+	return 0
 
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
