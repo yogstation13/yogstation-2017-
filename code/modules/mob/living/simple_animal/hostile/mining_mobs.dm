@@ -810,7 +810,8 @@
 		poison_type = "toxin"
 		poison_per_bite = 5
 	speak_chance = 5
-	speak_emote = "clacks", "chitters", "hisses"
+	speak_emote = list("clacks", "chitters", "hisses")
+	emote_hear = list("clacks", "chitters", "hisses")
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
@@ -822,7 +823,7 @@
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
 	if(..())
 		var/list/can_see = view(src, 10)
-		if(!busy && prob(30))	//30% chance to stop wandering and do something
+		if(!busy && prob(20))	//30% chance to stop wandering and do something
 			//first, check for potential food nearby to cocoon
 			for(var/mob/living/C in can_see)
 				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))
