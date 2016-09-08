@@ -86,7 +86,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_restart_vote,	/* Moderator tool for toggling restart vote */
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
-	/datum/admins/proc/toggle_ticket_counter_visibility	/* toggles all players being able to see tickets remaining */
+	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
+	/client/proc/check_ruins
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -169,7 +170,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/create_outfits,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
-	/client/proc/map_template_upload
+	/client/proc/map_template_upload,
+	/client/proc/check_ruins
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -257,7 +259,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/toggleSNPC,
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
-	/datum/admins/proc/toggle_ticket_counter_visibility	/* toggles all players being able to see tickets remaining */
+	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
+	/client/proc/check_ruins
 	)
 
 /client/proc/add_admin_verbs()
@@ -929,3 +932,13 @@ var/list/admin_verbs_hideable = list(
 	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
 	message_admins("[src] revived [revive_count] mobs.")
 	log_admin("[src] revived [revive_count] mobs.")
+
+/client/proc/check_ruins()
+	set name = "Check Ruins"
+	set category = "Debug"
+	set desc = "Check all loaded ruins."
+	var/dat = "<center><b>Ruins</b></center><br>"
+	for(var/V in ruinAreas)
+		var/list/L = V
+		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
+	usr << browse(dat, "window=checkruin;size=350x500")
