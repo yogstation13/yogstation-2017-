@@ -800,8 +800,8 @@
 		var/poison_per_bite = 5
 		desc = "A big, angry, toxic spider. It looks really, REALLY unhappy. It's badly wounded."
 	else
-	var/poison_type = "toxin"
-	var/poison_per_bite = 5
+		var/poison_type = "toxin"
+		var/poison_per_bite = 5
 	speak_chance = 5
 	speak_emote = "clacks", "chitters", "hisses"
 	var/busy = 0
