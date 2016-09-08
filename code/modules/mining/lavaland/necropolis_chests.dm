@@ -664,7 +664,7 @@
 		if(2)
 			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
-			new /obj/item/weapon/chainsaw_bubblegum(src)
+			new /obj/item/bloodvial/saw(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -728,6 +728,18 @@
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 	qdel(src)
 
+/obj/item/bloodvial/saw
+
+/obj/item/bloodvial/saw/attack_self(mob/living/carbon/user)
+	if(user.z != 1) //so you can't see if it's demon spawner on lavaland
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	user.unEquip(src)
+	var/obj/item/weapon/chainsaw_bubblegum/C = new
+	user.put_in_active_hand(C)
+	qdel(src)
+
 
 /obj/item/weapon/chainsaw_bubblegum
 	name = "demonic chainsaw"
@@ -743,11 +755,11 @@
 	armour_penetration = 30
 	color = "#FF0000"
 
-/obj/item/weapon/chainsaw_bubblegum/pickup(mob/living/user)
+/obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
 	..()
 	user.visible_message(
 		"<span class='danger'>[user] looks visibly angrier as they pick up [src]!</span>",
-		"<span class='warning'>You feel intense rage build up within you as you pick up [src]!</span>")
+		"<span class='warning'><b>You feel intense rage build up within you as you pick up [src]!</b></span>")
 	user.color = "#FF0000"
 
 /obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
