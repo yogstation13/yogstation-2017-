@@ -1050,7 +1050,7 @@
 	if(prob(45))
 		reagents.add_reagent("salglu_solution", rand(2,5))
 	if(prob(5))
-		reagents.add_reagent("omnizine"), rand(2,5))
+		reagents.add_reagent("omnizine", rand(2,5))
 
 
 //Male gutlunch. They're smaller and more colorful!
