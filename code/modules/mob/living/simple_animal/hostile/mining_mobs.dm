@@ -728,7 +728,7 @@
 	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
-	hear_emote = pick("wails", "telepathically whispers") //watchers aren't actually agressive they're just really sad and irritated all the time because the dust keeps blowing in their eyes, which fucked up their vision
+	emote_hear = pick("wails", "telepathically whispers") //watchers aren't actually agressive they're just really sad and irritated all the time because the dust keeps blowing in their eyes, which fucked up their vision
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	flying = TRUE
 	stat_attack = 1
@@ -760,7 +760,6 @@
 
 #define SPINNING_WEB 1
 #define MOVING_TO_TARGET 2
-#define SPINNING_COCOON 3
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver
 	name = "marrow weaver"
@@ -770,7 +769,7 @@
 	icon_living = "weaver"
 	icon_aggro = "weaver"
 	icon_dead = "weaver_dead"
-	throw_message = "does nothing to the layered chitin of the"
+	throw_message = "bounces harmlessly off the"
 	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 3)
 	loot = list()
 	attacktext = "bites"
@@ -795,7 +794,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
 	. = ..()
-	if(health < (maxhealth/3))  //He's REALLY mad.
+	if(health < (maxHealth/3))  //He's REALLY mad.
 		speak_emote = ("chitters angrily")
 		emote_hear = ("chitters furiously")
 		speak_chance = 5
@@ -824,17 +823,6 @@
 	if(..())
 		var/list/can_see = view(src, 10)
 		if(!busy && prob(20))	//30% chance to stop wandering and do something
-			//first, check for potential food nearby to cocoon
-			for(var/mob/living/C in can_see)
-				if(C.stat && !istype(C,/mob/living/simple_animal/hostile/poison/giant_spider))
-					cocoon_target = C
-					busy = MOVING_TO_TARGET
-					Goto(C, move_to_delay)
-					//give up if we can't reach them after 10 seconds
-					GiveUp(C)
-					return
-
-			//second, spin a sticky spiderweb on this tile
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
 				Web()
@@ -845,7 +833,7 @@
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/Web()
 	var/T = loc
 
-	if(stat == DEAD)
+	if(stat == DEAD) //no webbing when corpse
 		return
 
 	if(busy != SPINNING_WEB)
@@ -860,7 +848,6 @@
 
 #undef SPINNING_WEB
 #undef MOVING_TO_TARGET
-#undef SPINNING_COCOON
 
 //Legion
 
