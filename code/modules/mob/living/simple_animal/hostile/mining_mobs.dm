@@ -824,7 +824,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
 	if(..())
-		var/list/can_see = view(src, 10)
 		if(!busy && prob(20))	//20% chance to stop wandering and do something
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
