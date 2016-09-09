@@ -728,7 +728,7 @@
 	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
-	emote_hear = pick("wails", "telepathically whispers") //watchers aren't actually agressive they're just really sad and irritated all the time because the dust keeps blowing in their eyes, which fucked up their vision
+	emote_hear = list("wails", "telepathically whispers") //watchers aren't actually agressive they're just really sad and irritated all the time because the dust keeps blowing in their eyes, which fucked up their vision
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	flying = TRUE
 	stat_attack = 1
@@ -788,16 +788,20 @@
 	pass_flags = PASSTABLE
 	attack_sound = 'sound/weapons/bite.ogg'
 	deathmessage = "the weaver rolls over, frothing at the mouth before stilling."
+	speak_chance = 5
 	var/busy = 0
 	var/poison_type = "toxin"
 	var/poison_per_bite = 5
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/New()
+	..()
+	adjustHealth(0) //sets up speak_emote and emote_hear 
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
 	. = ..()
 	if(health < (maxHealth/3))  //He's REALLY mad.
 		speak_emote = ("chitters angrily")
 		emote_hear = ("chitters furiously")
-		speak_chance = 5
 		move_to_delay = 0
 		speed = 1
 		melee_damage_lower = 15
@@ -806,11 +810,10 @@
 		poison_per_bite = 5
 		desc = "A big, angry, toxic spider. It looks really, REALLY unhappy. It's badly wounded."
 	else
-		poison_type = "toxin"
-		poison_per_bite = 5
-	speak_chance = 5
-	speak_emote = list("clacks", "chitters", "hisses")
-	emote_hear = list("clacks", "chitters", "hisses")
+		poison_type = initial(poison_type)
+		poison_per_bite = initial(poison_per_bite)
+		speak_emote = list("clacks", "chitters", "hisses") //initial does not work on lists
+		emote_hear = list("clacks", "chitters", "hisses")
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
@@ -822,7 +825,7 @@
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
 	if(..())
 		var/list/can_see = view(src, 10)
-		if(!busy && prob(20))	//30% chance to stop wandering and do something
+		if(!busy && prob(20))	//20% chance to stop wandering and do something
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
 				Web()
