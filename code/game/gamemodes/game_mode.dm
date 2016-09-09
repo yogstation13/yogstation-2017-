@@ -583,7 +583,7 @@
 			var/turf/T = get_turf(applicant)
 			if(T.z != ZLEVEL_STATION)
 				continue
-		if(jobban_isbanned(applicant, role) || jobban_isbanned(applicant, "Syndicate") || !age_check(applicant))
+		if(jobban_isbanned(applicant, role) || jobban_isbanned(applicant, "Syndicate") || !age_check(applicant.client))
 			continue
 		if(restricted_jobs_for && (applicant.job in restricted_jobs_for))
 			continue
