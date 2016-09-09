@@ -573,7 +573,9 @@
 			crewmembers += H
 	for(var/V in crewmembers)
 		var/mob/living/carbon/human/applicant = V
-		if(!(role in applicant.client.prefs.be_special))
+		if(!applicant.client.prefs.allow_midround_antag)
+			continue
+		if(role && !(role in applicant.client.prefs.be_special))
 			continue
 		if(applicant.stat != CONSCIOUS || !applicant.mind || applicant.mind.special_role)
 			continue
@@ -581,7 +583,7 @@
 			var/turf/T = get_turf(applicant)
 			if(T.z != ZLEVEL_STATION)
 				continue
-		if(jobban_isbanned(applicant, role) || jobban_isbanned(applicant, "Syndicate") || !age_check(applicant.client))
+		if(jobban_isbanned(applicant, role) || jobban_isbanned(applicant, "Syndicate") || !age_check(applicant))
 			continue
 		if(restricted_jobs_for && (applicant.job in restricted_jobs_for))
 			continue
