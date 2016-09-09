@@ -35,6 +35,7 @@ var/datum/cyberman_network/cyberman_network
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
+	prob_traitor_ai = 18
 	//yogstat_name = "cybermen"
 
 /datum/game_mode/cybermen/announce()
@@ -67,8 +68,6 @@ var/datum/cyberman_network/cyberman_network
 
 	if(cyberman_network.cybermen.len < required_enemies)
 		return 0
-
-	handle_AI_Traitors()
 
 	return 1
 

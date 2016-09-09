@@ -323,6 +323,14 @@
 
 		if("harm", "disarm")
 			M.do_attack_animation(src)
+			if(M.dna.species.id == "abomination")//so abominations don't do 5 damage to things
+				visible_message("<span class='danger'>[M] tears into [src]!</span>", \
+								"<span class='userdanger'>[M] tears into [src]!</span>")
+				playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+				attack_threshold_check(40)
+				add_logs(M, src, "attacked")
+				updatehealth()
+				return 1
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)

@@ -114,6 +114,10 @@ HOSTEDBY Yogstation13-bot
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
+
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
 

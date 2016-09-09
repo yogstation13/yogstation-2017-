@@ -15,8 +15,9 @@
 	var/decay = 0
 
 /obj/item/organ/New()
+	..()
 	if(decay_time)
-		SSobj.processing += src
+		SSobj.processing |= src
 
 /obj/item/organ/process()
 	handle_decay()

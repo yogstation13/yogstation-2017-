@@ -50,6 +50,9 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
+.genesisgreen			{color: #03ff39		font-weight: bold; font-size: 5;}
+.genesisred				{color: #FF0000; 	font-weight: bold; font-size: 5;}
+
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}

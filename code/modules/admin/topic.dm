@@ -2358,6 +2358,13 @@
 		custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
 
+	else if(href_list["del_all_stuxnet"])
+		if(alert(usr, "Are you sure you would like to delete all instances of the stuxnet virus?", "Delete Stuxnet", "Yes", "No") == "Yes")
+			for(var/datum/software/malware/stuxnet/virus in active_software)
+				qdel(virus)
+		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
+		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
+
 	else if(href_list["cybermen"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2387,3 +2394,16 @@
 			if("11")
 				set_cybermen_queued_objective()
 		cybermen_panel()//refresh the page.
+	
+	else if(href_list["adminserverrestart"])
+		if(!check_rights(R_TICKET))
+			usr << "Clients without ticket administration rights cannot use this command. Get out of here, coder!"
+			return
+		if(ticker.current_state != GAME_STATE_FINISHED)
+			usr << "The round has not yet ended. You cannot restart the server using this option at this time."
+			return
+		if(ticker.server_reboot_in_progress)
+			usr << "A server reboot is already in progress."
+			return
+		ticker.delay_end = 0
+		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)

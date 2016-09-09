@@ -11,7 +11,7 @@
 	weather_immunities = list("ash")
 
 	var/ram = 100	// Used as currency to purchase different abilities
-	var/list/software = list()
+	var/list/pai_software = list()
 	var/userDNA		// The DNA string of our assigned user
 	var/obj/item/device/paicard/card	// The card we inhabit
 

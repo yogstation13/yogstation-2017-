@@ -165,7 +165,9 @@ This file's folder contains:
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
+	prob_traitor_ai = 18
 	var/list/servants_to_serve = list()
+	var/roundstart_player_count
 
 /datum/game_mode/clockwork_cult/announce()
 	world << "<b>The game mode is: Clockwork Cult!</b>"
@@ -180,6 +182,8 @@ This file's folder contains:
 		restricted_jobs += "Assistant"
 	var/starter_servants = max(required_enemies, round(num_players() / 10)) //Guaranteed <required_enemies> cultist(s) - otherwise, about one cultist for every ten players
 
+	roundstart_player_count = num_players()
+
 	var/list/datum/mind/followers_of_holy_light = pick_candidate(amount = starter_servants)
 	update_not_chosen_candidates()
 
@@ -192,8 +196,6 @@ This file's folder contains:
 
 	if(servants_to_serve.len < required_enemies)
 		return 0
-	
-	handle_AI_Traitors()
 
 	return 1
 
@@ -219,7 +221,7 @@ This file's folder contains:
 	clockwork_objective = pick(possible_objectives)
 	switch(clockwork_objective)
 		if("escape")
-			required_escapees = max(1, num_players() / 3) //33% of the player count must be cultists
+			required_escapees = max(1, roundstart_player_count / 3) //33% of the player count must be cultists
 			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]."
 		if("gateway")
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
