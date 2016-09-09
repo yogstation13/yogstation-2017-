@@ -158,9 +158,8 @@
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 	bot_access_flags = MULE_BOT|CLEAN_BOT
-	functions = PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -337,20 +336,20 @@
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
-<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
-Frequency:
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(S.frequency)]
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
-<br>
-Code:
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[S.code]
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
+					<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
+					Frequency:
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
+					[format_frequency(S.frequency)]
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
+					<br>
+					Code:
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
+					[S.code]
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
@@ -500,12 +499,12 @@ Code:
 				menu += text("<BR>\nMinor Crimes:")
 
 				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
+						<tr>
+						<th>Crime</th>
+						<th>Details</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						</tr>"}
 				for(var/datum/data/crime/c in active3.fields["mi_crim"])
 					menu += "<tr><td>[c.crimeName]</td>"
 					menu += "<td>[c.crimeDetails]</td>"
