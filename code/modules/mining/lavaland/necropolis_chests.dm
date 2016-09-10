@@ -716,7 +716,7 @@
 /obj/item/bloodvial/bloodcrawl
 
 /obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
-	if(user.z != 1) //so you can't see if it's demon spawner on lavaland
+	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
 	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
@@ -731,7 +731,7 @@
 /obj/item/bloodvial/saw
 
 /obj/item/bloodvial/saw/attack_self(mob/living/carbon/user)
-	if(user.z != 1) //so you can't see if it's demon spawner on lavaland
+	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)

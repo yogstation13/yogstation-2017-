@@ -238,7 +238,7 @@
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
 	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
-	if(user.z != 1)
+	if(user.z != ZLEVEL_STATION)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
 	if(demon_candidates.len > 0)
