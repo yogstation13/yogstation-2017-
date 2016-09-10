@@ -409,4 +409,5 @@
 			<b>2.</b> Apply the collar to the subject's head.<br>\
 			<b>3.</b> Use the remote detonator to periodically check status of all bomb collars to ensure they have not been removed.<br>\
 			<b>4.</b> If you feel it necessary, detonation of a collar will kill the person wearing it while also destroying the collar.<br>\
+			<b>5.</b> The implant is the same as the detonator, with the exception of having an extra feature, wich will detonate someone if you die, or act like you do.<br>\
 			<i>Do not use bomb collars solely for executions! They are expensive and not easily replacable - use lethal injections instead.</i>"
