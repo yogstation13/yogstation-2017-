@@ -3,4 +3,4 @@
 		return
 	var/json_message = "{ \"content\" : \"[message]\" }"
 
-	call("ByondPOST.dll", "send_post_request")("https://discordapp.com/api/channels/[discord_channels[channel]]/messages", json_message, "Authorization: [discord_token]", "Content-Type: application/json")
+	call("ByondPOST.dll", "send_post_request")("https://discordapp.com/api/channels/[discord_channels[channel]]/messages", json_message, "Authorization: Bot [discord_token]", "Content-Type: application/json")
