@@ -16,6 +16,7 @@
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
+	var/heatblock = 0
 	var/mob/camera/blob/overmind
 
 
@@ -63,7 +64,7 @@
 	return !atmosblock
 
 /obj/effect/blob/BlockSuperconductivity()
-	return atmosblock
+	return heatblock
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
@@ -340,6 +341,7 @@
 	maxhealth = 25
 	health_regen = 1
 	brute_resist = 0.25
+	atmosblock = 1
 
 /obj/effect/blob/normal/scannerreport()
 	if(health <= 10)
