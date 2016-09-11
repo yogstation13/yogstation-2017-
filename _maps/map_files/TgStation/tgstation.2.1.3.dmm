@@ -24473,7 +24473,6 @@
 /turf/open/floor/plasteel,
 /area/bridge)
 "aWY" = (
-/obj/machinery/hologram/holopad,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -24483,6 +24482,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/displaycase/royalp,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aWZ" = (
@@ -25334,6 +25334,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/hologram/holopad,
 /turf/open/floor/plasteel{
 	dir = 0;
 	icon_state = "blue"
