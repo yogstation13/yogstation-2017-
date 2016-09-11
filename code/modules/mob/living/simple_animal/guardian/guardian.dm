@@ -321,10 +321,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	set desc = "Re-rolls which ghost will control your Guardian."
 
 	var/list/guardians = hasparasites()
-	for(var/para in guardians)
-		var/mob/living/simple_animal/hostile/guardian/P = para
-		if(P.reset)
-			guardians -= P //clear out guardians that are already reset
 	if(guardians.len)
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)

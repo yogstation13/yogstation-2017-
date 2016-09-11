@@ -125,7 +125,8 @@
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
 
-	for(var/mob/living/simple_animal/hostile/guardian/protector/G in src)//if they've got a protector holo inside them
+	if(locate(/mob/living/simple_animal/hostile/guardian/protector) in src)//if they've got a protector holo inside them
+		var/mob/living/simple_animal/hostile/guardian/protector/G = locate(/mob/living/simple_animal/hostile/guardian/protector)
 		if(severity == 1 && G.toggle)//can't think of a better way to do this since ex_act only works if the holo is actually hit with the explosion, which it isn't
 			apply_damage(20,BRUTE)
 		else
