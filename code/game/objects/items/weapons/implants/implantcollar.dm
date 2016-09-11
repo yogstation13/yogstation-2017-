@@ -1,93 +1,43 @@
 /obj/item/weapon/implant/bombcollar
 	name = "collar console implant"
 	desc = "You die with me."
-	origin_tech = "materials=4;magnets=4;programming=4;biotech=4;syndicate=5;bluespace=5"
+	origin_tech = "programming=5;biotech=3;bluespace=3"
 	var/list/linkedCollars = list()
 	var/info
 	var/list/boundCollars = list()
 
 /obj/item/weapon/implant/bombcollar/activate(mob/user as mob)
-	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Other"))
-		if("Locks")
-			var/choice = input(user, "Select collar to change.", "Locking Control") in linkedCollars
-			var/obj/item/clothing/head/bombCollar/collarToLock = choice
-			if(!collarToLock)
+	switch(alert("Select an option.","Bomb Collar Control","Status","Bind","Exit"))
+		if("Status")
+			imp_in << "<span class='notice'><b>Bomb Collar Status Report:</b></span>"
+			for(var/obj/item/clothing/head/bombCollar/C in linkedCollars)
+				var/turf/T = get_turf(C)
+				imp_in << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
+			return
+		if("Bind")
+			var/choice = input(user, "Select collar to bind.", "Binding Control") in linkedCollars
+			var/obj/item/clothing/head/bombCollar/collarToBind = choice
+			if(!collarToBind)
 				return
-			if(!iscarbon(collarToLock.loc))
+			if(!iscarbon(collarToBind.loc))
 				imp_in << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
 				return
-			var/mob/living/carbon/C = collarToLock.loc
-			if(C.head != collarToLock)
+			var/mob/living/carbon/C = collarToBind.loc
+			if(C.head != collarToBind)
 				imp_in << "<span class='warning'>That collar isn't around someone's neck.</span>"
 				return
-			collarToLock.audible_message("<span class='warning'>[collarToLock] softly clicks.</span>")
-			switch(collarToLock.locked)
-				if(0)
-					collarToLock.locked = 1
-					collarToLock.flags |= NODROP
-					C << "<span class='boldannounce'>[collarToLock] tightens and locks around your neck.</span>"
-					message_admins("[imp_in] locked bomb collar worn by [C]")
-				if(1)
-					collarToLock.locked = 0
-					collarToLock.flags &= ~NODROP
-					C << "<span class='boldannounce'>[collarToLock] loosens around your neck.</span>"
-					message_admins("[imp_in] unlocked bomb collar worn by [C]")
-			imp_in << "<span class='notice'>You [collarToLock.locked ? "" : "dis"]engage [collarToLock]'s locks.</span>"
-			return
-		if("Detonation")
-			var/choice = input(user, "Select collar to detonate.", "Detonation Control") in linkedCollars
-			var/obj/item/clothing/head/bombCollar/collarToDetonate = choice
-			if(!collarToDetonate)
+			for(var/obj/item/clothing/head/bombCollar in boundCollars)
+				boundCollars -= collarToBind
+				imp_in << "You unbind [collarToBind] to you, once you die, they wont."
+				message_admins("[imp_in] unbound [collarToBind]")
 				return
-			if(!iscarbon(collarToDetonate.loc))
-				imp_in << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
-				return
-			var/mob/living/carbon/C = collarToDetonate.loc
-			if(C.head != collarToDetonate)
-				imp_in << "<span class='warning'>That collar isn't around someone's neck.</span>"
-				return
-			switch(alert("Are you sure about this?","Bomb Collar Detonation","Proceed","Exit"))
-				if("Proceed")
-					if(!collarToDetonate.locked)
-						imp_in << "<span class='warning'>That collar isn't locked.</span>"
-						return
-					imp_in << "<span class='notice'>Detonation signal sent.</span>"
-					linkedCollars.Remove(collarToDetonate)
-					collarToDetonate.detonate()
-					message_admins("[imp_in] detonated bomb collar worn by [C]")
-				if("Exit")
-					return
-			return
 
-		if("Other")
-			switch(alert("Select an option", "Collar console","Status","Bind"))
-				if("Status")
-					imp_in << "<span class='notice'><b>Bomb Collar Status Report:</b></span>"
-					for(var/obj/item/clothing/head/bombCollar/C in linkedCollars)
-						var/turf/T = get_turf(C)
-						imp_in << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
-					return
-				if("Bind")
-					imp_in << "<span class='warning'>Bind a collar to your implant, if you die, they die with you"
-					var/choice = input(user, "Select collar to bind.", "Binding Control") in linkedCollars
-					var/obj/item/clothing/head/bombCollar/collarToBind = choice
-					if(!collarToBind)
-						return
-					if(!iscarbon(collarToBind.loc))
-						imp_in << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
-						return
-					var/mob/living/carbon/C = collarToBind.loc
-					if(C.head != collarToBind)
-						imp_in << "<span class='warning'>That collar isn't around someone's neck.</span>"
-						return
-					switch(alert("Select an option","Collar console","Bind","Unbind"))
-						if("Bind")
-							boundCollars += collarToBind
-							imp_in << "You bind [collarToBind] to you, once you die, their collar will detonate."
-						if("Unbind")
-							boundCollars -= collarToBind
-							imp_in << "You unbind [collarToBind], if you die, they wont suffer the same fate."
-					return
+			boundCollars += collarToBind
+			imp_in << "You bind [collarToBind] to you, once you die, they die with you."
+			message_admins("[collarToBind] has been been bound to [imp_in], if [imp_in] dies, so does [collarToBind]")
+			return
+		if("Exit")
+			return
 
 /obj/item/weapon/implant/bombcollar/trigger(emote)
 	if(emote == "deathgasp")
