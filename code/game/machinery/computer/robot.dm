@@ -129,7 +129,7 @@
 				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 		else
-			message_admins("EXPLOIT: [usr] attempted to dominate a emag a bot using robotics console without having the right to do so.")
+			message_admins("EXPLOIT: [usr] attempted to emag a bot using robotics console without having the right to do so.")
 
 	src.updateUsrDialog()
 	return
