@@ -187,7 +187,7 @@
 		)
 	blocked |= typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)
 
-	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked += /obj/item/weapon/guardiancreator/carp //holo fishsticks are food too ;^)
+	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked + /obj/item/weapon/guardiancreator/carp //holo fishsticks are food too ;^)
 	// BORK BORK BORK
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
