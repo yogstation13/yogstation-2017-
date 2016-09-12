@@ -369,7 +369,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
 		M.heal_organ_damage(1,1, 0)
 		. = 1
-	..()
+	return . || ..()
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
