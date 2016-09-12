@@ -1,5 +1,0 @@
-author: timkoster1
-delete-after: True
-changes: 
-  - rscadd: "Adds a bomb collar implant that has the status feature from the detonator, and can bind people to you, so that if you die, they die with you."
-  - rscadd: "The above is added to the security locker. weeeeee changelog."

@@ -1,5 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - tweak: "Blob structures now block atmos."
-  - tweak: "Plasmafire is once again effective against blobs."
