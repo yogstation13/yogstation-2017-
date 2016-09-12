@@ -362,14 +362,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "beepskysmash"
 	description = "Drink this and prepare for the LAW."
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 95 //THE FIST OF THE LAW IS STRONG AND HARD
+	boozepwr = 90 //THE FIST OF THE LAW IS STRONG AND HARD
 	metabolization_rate = 0.8
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
-		M.heal_organ_damage(1,1, 0)
-		. = 1
-	return . || ..()
+	M.Stun(2, 0)
+	return ..()
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
