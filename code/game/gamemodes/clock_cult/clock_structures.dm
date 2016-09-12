@@ -235,10 +235,10 @@
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
-	SSfastprocess.processing += src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/clockwork/ocular_warden/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)

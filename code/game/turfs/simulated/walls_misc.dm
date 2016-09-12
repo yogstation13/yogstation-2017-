@@ -87,11 +87,11 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_construction_value += 5
 
 /turf/closed/wall/clockwork/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_construction_value -= 5
 	..()
 
