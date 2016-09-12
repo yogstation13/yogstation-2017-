@@ -278,9 +278,13 @@
 		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
 		if(affecting)
 			if(M.melee_damage_type == BRUTE && M.candismember == TRUE && dam_zone != "chest")
-				if(damage >= 25)
-					if(prob(damage)) //higher damage means higher chance of dismember
-						affecting.dismember()
+				if(damage >= 25 || M.forcedismember == TRUE)//for stuff that does low damage to still have a chance of dismember, like viscerators
+					if(damage >= 25)
+						if(prob(damage)) //higher damage means higher chance of dismember
+							affecting.dismember()
+					else
+						if(prob(15)) //for forcedismember we just use a flat 15% for your 1 damage dismember needs
+							affecting.dismember()
 		updatehealth()
 
 

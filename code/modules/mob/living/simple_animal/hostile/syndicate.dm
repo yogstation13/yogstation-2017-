@@ -154,6 +154,8 @@
 	maxHealth = 15
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	candismember = TRUE
+	forcedismember = TRUE
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")
