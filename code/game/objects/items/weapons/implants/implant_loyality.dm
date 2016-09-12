@@ -42,7 +42,7 @@
 			target << "<span class='warning'>We feel some primitive technology attempt to control our minds, but we quash it's effects quickly."
 		if(target.mind in ticker.mode.wizards)
 			target << "<span class='warning'>You feel the vile corporate tendrils of Nanotrasen try to influence your mind, before the nanobots violently self destruct out of confusion and fear. Seems like they don't much like your choice in comic books."
-			target.visible_message("<span class='warning'>[target] seems to be immune to the effects of the implant! Seems like magic trumps technology...</span>"
+			target.visible_message("<span class='warning'>[target] seems to be immune to the effects of the implant! Seems like magic trumps technology...</span>")
 			removed(target, 1)
 			qdel(src)
 			return -1
