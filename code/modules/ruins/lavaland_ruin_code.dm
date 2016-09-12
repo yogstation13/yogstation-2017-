@@ -107,3 +107,6 @@
 				user << "You need at least ten sheets to finish a golem."
 		else
 			user << "You can't build a golem out of this kind of material."
+
+/obj/effect/landmark/weaver_den
+	name = "Weaver Nest Center"

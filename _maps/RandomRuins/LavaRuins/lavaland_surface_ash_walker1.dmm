@@ -34,7 +34,7 @@
 "H" = (/obj/structure/table/optable,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "I" = (/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "J" = (/obj/item/device/flashlight,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"K" = (/obj/structure/closet/crate/necropolis,/obj/item/stack/sheet/mineral/mythril{amount = 50},/obj/item/stack/sheet/mineral/mythril{amount = 50},/obj/item/stack/sheet/mineral/mythril{amount = 50},/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"K" = (/obj/structure/closet/crate/necropolis,/obj/item/stack/sheet/mineral/mythril{amount = 50},/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "L" = (/obj/structure/closet/crate/miningcar,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "M" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "N" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)

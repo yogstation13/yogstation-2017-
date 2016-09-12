@@ -751,7 +751,6 @@
 //Marrow Weaver
 
 #define SPINNING_WEB 1
-#define MOVING_TO_TARGET 2
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver
 	name = "marrow weaver"
@@ -776,7 +775,7 @@
 	see_in_dark = 10
 	attack_sound = 'sound/weapons/bite.ogg'
 	deathmessage = "the weaver springs over onto its back, its legs curling as its abdomen ruptures open revealing the precious marrow and sinew within"
-	var/poison_type = "venom"
+	var/poison_type = "toxin"
 	var/poison_per_bite = 2
 	var/busy = 0
 
@@ -790,12 +789,16 @@
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
 	if(..())
 		if(!busy && prob(30))	//30% chance to spin webs
-			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
-			if(!W)
-				Web()
+			var/turf/T = get_turf(src)
+			if(!istype(T, /turf/open/floor/plating/lava))
+				var/obj/effect/spider/stickyweb/W = locate() in T
+				if(!W)
+					Web()
+		return 1
 	else
 		busy = 0
 		stop_automated_movement = 0
+		return 0
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/Web()
 	var/T = loc
@@ -813,8 +816,29 @@
 		busy = 0
 		stop_automated_movement = 0
 
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/den
+	var/max_den_dist = 8
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/den/handle_automated_action()
+	if(!..())
+		return 0
+	if(AIStatus == AI_IDLE && !busy)
+		//check if we are too far from the nearest den
+		var/turf/myturf = get_turf(src)
+		var/best_dist = INFINITY
+		var/obj/effect/landmark/weaver_den/best_den = null
+		for(var/obj/effect/landmark/weaver_den/den in landmarks_list)
+			var/turf/T = get_turf(den)
+			if(T.z == myturf.z)
+				var/dist = get_dist(myturf, T)
+				if(dist < best_dist)
+					best_dist = dist
+					best_den = den
+		if(best_den && best_dist > max_den_dist)
+			Goto(best_den, move_to_delay, max_den_dist - rand(1, round(max_den_dist/8 * rand(1, 8)) ) )
+	return 1
+
 #undef SPINNING_WEB
-#undef MOVING_TO_TARGET
 
 
 //Legion
