@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "Fixed some PDA cartridge functions being indented more that they should have been"
+  - bugfix: "The HoP now properly gets the crew manifest and status display functions on his PDA"
