@@ -8,6 +8,7 @@
 	health_regen = 3
 	point_return = 25
 	atmosblock = 1
+	heatblock = 1
 
 
 /obj/effect/blob/node/New(loc, var/h = 100)
