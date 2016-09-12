@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "RnD can now print telecommunications traffic console boards."
