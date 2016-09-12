@@ -167,7 +167,7 @@ var/next_mob_id = 0
 
 /mob/proc/movement_delay()
 	. = 0
-	if(isturf(loc))
+	if(istype(loc, /turf/open))
 		var/turf/open/current_loc = loc
 		. += current_loc.slowdown
 	return .
