@@ -234,7 +234,8 @@
 	id = "comm_traffic"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	materials = list(MAT_GLASS = 1000)
+	reagents = list("sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/computer/telecomms/comm_traffic
 	category = list("Computer Boards")
 
