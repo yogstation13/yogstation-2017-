@@ -39,6 +39,15 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/put_in_l_hand(obj/item/W)
+	if(!locate(/obj/item/bodypart/l_arm) in bodyparts)
+		return 0
+	return ..()
+
+/mob/living/carbon/human/put_in_r_hand(obj/item/W)
+	if(!locate(/obj/item/bodypart/r_arm) in bodyparts)
+		return 0
+	return ..()
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/W)
