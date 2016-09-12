@@ -27,7 +27,7 @@
 /obj/item/device/toy_mech_remote/proc/can_use(mob/user)
 	if(!user)
 		return 0
-	if(user.get_active_hand() != src)
+	if(user.get_active_hand() != src && user.get_inactive_hand() != src)
 		return 0
 	return 1
 
@@ -204,6 +204,10 @@
 		return 0
 	lastmove = world.time
 	if(src.dir == dir)
+		var/turf/going_to = get_step(src, dir)
+		for(var/obj/item/toy/toy_mech/in_the_way in going_to)
+			if(in_the_way.on)
+				return 0
 		if(!has_gravity(src))
 			return 0
 		if(!quiet)
@@ -229,6 +233,7 @@
 	health = Clamp(health-amount, 0, maxhealth)
 	if(health == 0)
 		on = 0
+		layer -= 0.01
 		visible_message("<span class='boldwarning'>[src] lets out a defeated beep and slumps over.</span>")
 	if(remote)
 		remote.update_dialogue()
@@ -239,6 +244,7 @@
 	lastmove = 0
 	lastattack = 0
 	health = maxhealth
+	layer = initial(layer)
 	if(remote)
 		remote.update_dialogue()
 
@@ -255,7 +261,7 @@
 	attack_cd = 15
 
 /obj/item/toy/toy_mech/melee/mech_attack()
-	var/obj/item/toy/toy_mech/target = locate(/obj/item/toy/toy_mech) in get_step(src, dir)
+	var/obj/item/toy/toy_mech/target = get_living_toy_mech(get_step(src, dir))
 	if(!target)
 		return
 	if(!mech_can_attack())
@@ -750,7 +756,7 @@
 
 /obj/item/projectile/toy_mech/Move()
 	if(loc != starting)
-		var/obj/item/toy/toy_mech/target = locate(/obj/item/toy/toy_mech) in loc
+		var/obj/item/toy/toy_mech/target = get_living_toy_mech(loc)
 		if(target)
 			target.visible_message("<span class='warning'>[target] is hit by \a [src]!</span>")
 			target.mech_take_damage(damage)
@@ -778,6 +784,19 @@
 	name = "toy bullet"
 	icon_state = "bullet"
 	damage = 25
+
+/*
+ * Helper procs
+ */
+
+/proc/get_living_toy_mech(turf/turf)
+	if(!turf)
+		return null
+	var/obj/item/toy/toy_mech/highest = null
+	for(var/obj/item/toy/toy_mech/mech in turf)
+		if(mech.on)
+			highest = mech
+	return highest
 
 /*
  * Spawner
