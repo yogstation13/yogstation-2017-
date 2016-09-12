@@ -72,6 +72,8 @@
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
 
+	var/check_randomizer = 0
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_antag_tokens = 0 //Defines whether the server uses the antag tokens system. Requires database.
@@ -438,6 +440,8 @@
 					config.client_error_message = value
 				if("discord_token")
 					discord_token = value
+				if("check_randomizer")
+					config.check_randomizer = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

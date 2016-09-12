@@ -1,0 +1,4 @@
+author: timkoster1
+delete-after: True
+changes: 
+  - rscadd: "The cameleon kit now spawns in a cameleon box."

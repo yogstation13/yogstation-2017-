@@ -123,11 +123,11 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_construction_value++
 
 /turf/open/floor/clockwork/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_construction_value--
 	..()
 
@@ -140,17 +140,17 @@
 
 /turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
 	if(path != type)
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 		change_construction_value(-1)
 	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/clockwork/process()
 	if(!healservants())
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)

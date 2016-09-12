@@ -1,0 +1,4 @@
+author: ahamedx
+delete-after: True
+changes: 
+  - rscadd: "Chaplain can bless items and people"

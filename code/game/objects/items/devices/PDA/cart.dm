@@ -158,9 +158,8 @@
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 	bot_access_flags = MULE_BOT|CLEAN_BOT
-	functions = PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -218,6 +217,12 @@
 	name = "\improper Slavemaster-2000 cartridge"
 	icon_state = "cart"
 	var/obj/item/weapon/implant/mindslave/imp = null
+
+/obj/item/weapon/cartridge/softwaremaster //This is for debugging, do not give this out in game!
+	name = "\improper H4XMAST3R cartridge"
+	desc = "A pda cartridge used by centcomm for nefarious purposes."
+	functions = PDA_ADMIN_FUNCTIONS
+	icon_state = "cart"
 
 /obj/item/weapon/cartridge/proc/unlock()
 	if (!istype(loc, /obj/item/device/pda))
@@ -331,20 +336,20 @@
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
-<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
-Frequency:
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(S.frequency)]
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
-<br>
-Code:
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[S.code]
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
+					<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
+					Frequency:
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
+					[format_frequency(S.frequency)]
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
+					<br>
+					Code:
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
+					[S.code]
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
@@ -494,12 +499,12 @@ Code:
 				menu += text("<BR>\nMinor Crimes:")
 
 				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
+						<tr>
+						<th>Crime</th>
+						<th>Details</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						</tr>"}
 				for(var/datum/data/crime/c in active3.fields["mi_crim"])
 					menu += "<tr><td>[c.crimeName]</td>"
 					menu += "<td>[c.crimeDetails]</td>"
@@ -734,6 +739,17 @@ Code:
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
 
+		if(55) // Admin stuff
+			menu = "<h4><img src=pda_signaler.png>Software Viewer</h4><br>\
+			<A href='byond://?src=\ref[src];choice=del_software;target=all'>\[Delete All Software\]</a><br>\
+			<A href='byond://?src=\ref[src];choice=del_software;target=all_malware'>\[Delete All Malware\]</a><br>\
+			<br>Active Software:<ul>"
+			listclearnulls(active_software)
+			for(var/V in active_software)
+				var/datum/software/M = V
+				menu += "<li>[M] in [M.host] <A href='byond://?src=\ref[src];choice=del_software;target=\ref[M]'>\[Delete\]</a></li>"
+			menu += "</ul>"
+
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
@@ -843,6 +859,29 @@ Code:
 							var/mob/detonated = src:imp.loc
 							log_game("[detonator.ckey]/([detonator] has detonated [detonated.ckey]/([detonated]) with a mindslave implant");
 					src:imp.activate()
+
+		if("del_software")
+			if(functions & PDA_ADMIN_FUNCTIONS)
+				var/target = href_list["target"]
+				if(target)
+					if(target == "all")
+						if("Yes" == alert(usr, "Delete all software?", "Delete Software", "Yes", "No"))
+							for(var/V in active_software)
+								qdel(V)
+							usr << "<span class='warning'>All software deleted.</span>"
+					else if(target == "all_malware")
+						if("Yes" == alert(usr, "Delete all malware?", "Delete Malware", "Yes", "No"))
+							for(var/datum/software/malware/M in active_software)
+								qdel(M)
+							usr << "<span class='warning'>All malware deleted.</span>"
+					else
+						var/datum/software/S = locate(target)
+						if(istype(S))
+							qdel(S)
+							usr << "<span class='warning'>Software deleted.</span>"
+						else
+							usr << "<span class='warning'>Error: software has already been deleted.</span>"
+				pda.Topic(null,list("choice"=num2text(mode)))
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])

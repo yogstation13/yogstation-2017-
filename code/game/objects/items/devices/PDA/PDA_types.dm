@@ -24,15 +24,8 @@
 	fon = 0
 	detonate = 0
 
-/obj/item/device/pda/ai/attack_self(mob/user)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
-		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
-	return
-
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
-
 
 
 /obj/item/device/pda/medical

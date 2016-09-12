@@ -752,7 +752,7 @@
 /datum/species/proc/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == exotic_blood)
 		H.blood_volume = min(H.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-		H.reagents.remove_reagent(chem.id)
+		H.reagents.remove_reagent(chem.id, chem.volume)
 		return 1
 	return 0
 
@@ -766,7 +766,7 @@
 /datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	return 0
 
-////////
+	////////
 	//LIFE//
 	////////
 
@@ -985,7 +985,7 @@
 
 	if(!istype(M)) //sanity check for drones.
 		return
-	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, attack_type = UNARMED_ATTACK))
+	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, M, attack_type = UNARMED_ATTACK))
 		if(M.dna.check_mutation(HULK) && M.a_intent == "disarm")
 			H.check_shields(0, M.name, attack_type = HULK_ATTACK) // We check their shields twice since we are a hulk. Also triggers hitreactions for HULK_ATTACK
 			M.visible_message("<span class='danger'>[M]'s punch knocks the shield out of [H]'s hand.</span>", \
@@ -1192,7 +1192,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-		if(H.check_shields(I.force, "the [I.name]", I, MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", user, MELEE_ATTACK, I.armour_penetration))
 			return 0
 
 	var/hit_area

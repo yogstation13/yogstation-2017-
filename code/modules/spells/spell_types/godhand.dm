@@ -74,3 +74,31 @@
 	M.Stun(2)
 	M.petrify()
 	..()
+
+/obj/item/weapon/melee/touch_attack/bless
+	name = "\improper bless"
+	desc = "Hallelujah!"
+	catchphrase = ""
+	on_use_sound = "sound/effects/pray.ogg"
+	icon_state = "bless"
+	item_state = "bless"
+
+/obj/item/weapon/melee/touch_attack/bless/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(user.lying || user.handcuffed)
+		return
+	if(isitem(target))
+		PoolOrNew(/obj/effect/overlay/temp/bless, target.loc)
+		user.visible_message("<span class='notice'>[user] blesses [target]!</span>")
+		if(!cmptext("blessed",copytext(target.name,1,8)))
+			target.name = "blessed [target.name]"
+			..()
+			return
+		..()
+		return
+	if(iscarbon(target))
+		PoolOrNew(/obj/effect/overlay/temp/bless, target.loc)
+		user.visible_message("<span class= 'notice'>[user] blesses [target]!</span>")
+		..()
+		return

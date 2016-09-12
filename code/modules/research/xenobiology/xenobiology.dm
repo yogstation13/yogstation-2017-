@@ -172,7 +172,7 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -458,7 +458,7 @@
 
 /obj/effect/golemrune/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost

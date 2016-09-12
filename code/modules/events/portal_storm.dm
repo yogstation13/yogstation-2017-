@@ -1,14 +1,14 @@
 /datum/round_event_control/portal_storm_syndicate
 	name = "Portal Storm: Syndicate Shocktroops"
 	typepath = /datum/round_event/portal_storm/syndicate_shocktroop
-	weight = 2
-	min_players = 15
+	weight = 1
+	min_players = 20
 	earliest_start = 18000
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
-	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/noloot = 8,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2)
+	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
+						/mob/living/simple_animal/hostile/syndicate/ranged/space = 2)
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
@@ -68,11 +68,11 @@
 
 /datum/round_event/portal_storm/announce()
 	set waitfor = 0
-	playsound_global('sound/magic/lightning_chargeup.ogg', repeat=0, channel=1, volume=100)
+	playsound_global('sound/magic/lightning_chargeup.ogg', repeat=0, channel=1, volume=75)
 	sleep(80)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
 	sleep(20)
-	playsound_global('sound/magic/lightningbolt.ogg', repeat=0, channel=1, volume=100)
+	playsound_global('sound/magic/lightningbolt.ogg', repeat=0, channel=1, volume=75)
 
 /datum/round_event/portal_storm/tick()
 	spawn_effects()

@@ -1,8 +1,10 @@
 var/datum/subsystem/objects/SSobj
 
+/datum/var/isprocessing = 0
+
 /datum/proc/process()
 	set waitfor = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return 0
 
 /datum/subsystem/objects
@@ -50,7 +52,9 @@ var/datum/subsystem/objects/SSobj
 		if(thing)
 			thing.process(wait)
 		else
-			SSobj.processing.Remove(thing)
+			SSobj.processing -= thing
+			if (thing)
+				thing.isprocessing = 0
 		if (MC_TICK_CHECK)
 			return
 
