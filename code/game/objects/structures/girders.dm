@@ -75,6 +75,11 @@
 		D.playDigSound()
 		qdel(src)
 
+	else if(istype(W, /obj/item/weapon/industrialsaw))
+		user << "<span class='notice'>You tear apart the girder with your saw!</span>"
+		new /obj/item/stack/sheet/metal(get_turf(src))
+		qdel(src)
+
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == GIRDER_REINF_STRUTS)
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user << "<span class='notice'>You start removing support struts...</span>"
