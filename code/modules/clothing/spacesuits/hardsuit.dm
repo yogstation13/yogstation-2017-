@@ -616,7 +616,6 @@
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 
 
-
 ////mining medic///
 
 /obj/item/clothing/suit/space/hardsuit/mining/mmedic
