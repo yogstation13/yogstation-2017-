@@ -166,6 +166,10 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
+	
+/obj/item/clothing/suit/space/hardsuit/engine/New()
+ +	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+ +	..()
 
 
 	//Mining hardsuit
@@ -463,6 +467,10 @@
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
+	
+/obj/item/clothing/suit/space/hardsuit/engine/New()
+ +	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+ +	..()
 
 
 
@@ -606,6 +614,10 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+
+/obj/item/clothing/suit/space/hardsuit/engine/New()
+ +	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+ +	..()
 
 
 ////mining medic///
