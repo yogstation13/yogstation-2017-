@@ -167,7 +167,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	
-/obj/item/clothing/suit/space/hardsuit/engine/New()
+/obj/item/clothing/suit/space/hardsuit/engine/elite/New()
  +	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
  +	..()
 
