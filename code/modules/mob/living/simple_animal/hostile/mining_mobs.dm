@@ -428,8 +428,6 @@
 	ranged = 1
 	ranged_cooldown_time = 120
 	friendly = "wails at"
-	speak_emote = list("bellows")
-	emote_hear = list("bellows")
 	speak_chance = 5
 	vision_range = 4
 	speed = 3
@@ -727,8 +725,6 @@
 	melee_damage_upper = 13
 	attacktext = "impales"
 	a_intent = "harm"
-	speak_emote = list("telepathically cries")
-	emote_hear = list("wails", "telepathically whispers") //watchers aren't actually agressive they're just really sad and irritated all the time because the dust keeps blowing in their eyes, which fucked up their vision
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	flying = TRUE
 	stat_attack = 1
@@ -770,7 +766,7 @@
 	icon_aggro = "weaver"
 	icon_dead = "weaver_dead"
 	throw_message = "bounces harmlessly off the"
-	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 3)
+	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
 	loot = list()
 	attacktext = "bites"
 	gold_core_spawnable = 1
@@ -790,7 +786,7 @@
 	deathmessage = "the weaver rolls over, frothing at the mouth before stilling."
 	speak_chance = 5
 	var/busy = 0
-	var/poison_type = "toxin"
+	var/poison_type = "????"
 	var/poison_per_bite = 5
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/New()
@@ -803,17 +799,15 @@
 		speak_emote = ("chitters angrily")
 		emote_hear = ("chitters furiously")
 		move_to_delay = 0
-		speed = 1
+		speed = 3
 		melee_damage_lower = 15
 		melee_damage_upper = 20
-		poison_type = "cyanide"
-		poison_per_bite = 5
+		poison_type = "spore"
+		poison_per_bite = 3
 		desc = "A big, angry, toxic spider. It looks really, REALLY unhappy. It's badly wounded."
 	else
 		poison_type = initial(poison_type)
 		poison_per_bite = initial(poison_per_bite)
-		speak_emote = list("clacks", "chitters", "hisses") //initial does not work on lists
-		emote_hear = list("clacks", "chitters", "hisses")
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
@@ -822,33 +816,6 @@
 		if(L.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
 
-/mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
-	if(..())
-		if(!busy && prob(20))	//20% chance to stop wandering and do something
-			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
-			if(!W)
-				Web()
-	else
-		busy = 0
-		stop_automated_movement = 0
-
-/mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/Web()
-	var/T = loc
-
-	if(stat == DEAD) //no webbing when corpse
-		return
-
-	if(busy != SPINNING_WEB)
-		busy = SPINNING_WEB
-		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
-		stop_automated_movement = 1
-		if(do_after(src, 70, target = T))
-			if(busy == SPINNING_WEB && src.loc == T)
-				new /obj/effect/spider/stickyweb(T)
-		busy = 0
-		stop_automated_movement = 0
-
-#undef SPINNING_WEB
 #undef MOVING_TO_TARGET
 
 //Legion
