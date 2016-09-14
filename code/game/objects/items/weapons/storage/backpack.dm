@@ -341,8 +341,8 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/lightreplacer(src)
 	new /obj/item/weapon/soap/syndie(src)
-	new /obj/item/weapon/rcd/rcd
-	new /obj/item/weapon/pipe_dispenser/rpd
+	new /obj/item/weapon/rcd/rcd(src)
+	new /obj/item/weapon/pipe_dispenser/rpd(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/clown
 	name = "clown's dufflebag"
