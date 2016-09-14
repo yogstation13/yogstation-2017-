@@ -36,7 +36,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
 		if(prob(75))
-			/mob/living/simple_animal/hostile/asteroid/hivelord/legion = new(src.loc)
+			var/mob/living/simple_animal/hostile/asteroid/hivelord/legion = new(src.loc)
 			A.GiveTarget(target)
 			A.friends = friends
 			A.faction = faction
