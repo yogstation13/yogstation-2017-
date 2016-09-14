@@ -24,7 +24,7 @@
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
-	loot = list(/obj/item/stack/sheet/bone = 6) (/obj/item/stack/sheet/mineral/mythril = 4)
+	loot = list(/obj/item/stack/sheet/bone = 6, /obj/item/stack/sheet/mineral/mythril = 4)
 	vision_range = 18
 	aggro_vision_range = 22
 	idle_vision_range = 18
@@ -36,7 +36,7 @@
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
 		if(prob(75))
-			var/mob/living/simple_animal/hostile/asteroid/hivelord/legion = new(src.loc)
+			var/mob/living/simple_animal/hostile/asteroid/hivelord/A = new(src.loc)
 			A.GiveTarget(target)
 			A.friends = friends
 			A.faction = faction
