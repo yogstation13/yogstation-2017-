@@ -726,6 +726,7 @@
 #include "code\game\objects\items\weapons\implants\implant_zombie.dm"
 #include "code\game\objects\items\weapons\implants\implantcase.dm"
 #include "code\game\objects\items\weapons\implants\implantchair.dm"
+#include "code\game\objects\items\weapons\implants\implantcollar.dm"
 #include "code\game\objects\items\weapons\implants\implanter.dm"
 #include "code\game\objects\items\weapons\implants\implantpad.dm"
 #include "code\game\objects\items\weapons\implants\implantuplink.dm"

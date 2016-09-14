@@ -849,3 +849,26 @@
 	new /obj/item/weapon/grenade/barrier(src)
 	new /obj/item/weapon/grenade/barrier(src)
 	new /obj/item/weapon/grenade/barrier(src)
+
+/obj/item/weapon/storage/box/chameleon
+	name = "chameleon box"
+	desc = "An eerie box with the label 'syndicate (TM)'"
+	icon_state = "box_of_doom"
+
+/obj/item/weapon/storage/box/chameleon/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/weapon/storage/box
+	chameleon_action.chameleon_name = "Box"
+	chameleon_action.initialize_disguises()
+
+
+/obj/item/weapon/storage/box/chameleon/examine(mob/user)
+	..()
+	if(user.mind in ticker.mode.traitors)
+		user << "<span class='notice'>Activate to camouflage the [src.name]</span>"
+
+/obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
+	return
+
+

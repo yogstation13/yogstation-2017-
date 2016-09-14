@@ -236,7 +236,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/New()
 	cyberman_network = src
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	generate_cybermen_objective(1)//there must always be an objective or it will cause runtimes.
 	message_admins("The Cyberman Network has been initialized.")
 

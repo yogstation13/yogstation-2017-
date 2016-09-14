@@ -68,26 +68,28 @@
 	maxHealth = 200
 	health = 200
 	harm_intent_damage = 5
-	melee_damage_lower = 13
-	melee_damage_upper = 13
+	melee_damage_lower = 12
+	melee_damage_upper = 12
 	attacktext = "bites into"
 	a_intent = "harm"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	aggro_vision_range = 9
+	aggro_vision_range = 5
 	idle_vision_range = 2
 	turns_per_move = 5
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/bullet/dart/basilisk
-	name = "freezing blast"
+	name = "freezing dart"
 	icon_state = "ice_2"
 	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
 
 /obj/item/projectile/bullet/dart/basilisk/New()
 	..()
 	reagents.add_reagent("bolamine",5)
+	reagents.add_reagent("cryptobiolin",2)
+	reagents.add_reagent("frostoil", 1)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -289,7 +291,7 @@
 			return
 
 		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume += 2 // Fast blood regen
+			H.blood_volume += 3 // Fast blood regen
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -427,6 +429,8 @@
 	ranged_cooldown_time = 120
 	friendly = "wails at"
 	speak_emote = list("bellows")
+	emote_hear = list("bellows")
+	speak_chance = 5
 	vision_range = 4
 	speed = 3
 	maxHealth = 300
@@ -558,9 +562,9 @@
 			if(D.hides < 3)
 				D.hides++
 				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.1
+				damage_absorption["fire"] = damage_absorption["fire"] - 0.1
+				damage_absorption["laser"] = damage_absorption["laser"] - 0.1
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)
@@ -719,16 +723,19 @@
 	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 13
+	melee_damage_upper = 13
 	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
+	emote_hear = list("wails", "telepathically whispers") //watchers aren't actually agressive they're just really sad and irritated all the time because the dust keeps blowing in their eyes, which fucked up their vision
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	flying = TRUE
 	stat_attack = 1
 	robust_searching = 1
+	gold_core_spawnable = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 3, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/bone = 3)
 
 //Goliath
 
@@ -742,10 +749,11 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 5)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 3, /obj/item/stack/sheet/bone = 5)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+	gold_core_spawnable = 1
 
 
 //Marrow Weaver
@@ -755,30 +763,57 @@
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver
 	name = "marrow weaver"
-	desc = "A menacing mutation of the space arachnid, it injects a deadly venom into its victim which destroys their organs turning them into slush."
+	desc = "A big, angry, poisonous spider. It likes to snack on bone marrow. Its preferred food source is you."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "weaver"
 	icon_living = "weaver"
 	icon_aggro = "weaver"
 	icon_dead = "weaver_dead"
-	throw_message = "does nothing to the layered chitin of the"
-	butcher_results = list(/obj/item/stack/sheet/bone = 7, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/animalhide/weaver_chitin = 6)
+	throw_message = "bounces harmlessly off the"
+	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 3)
 	loot = list()
 	attacktext = "bites"
-	health = 200
-	maxHealth = 200
-	vision_range = 10
-	move_to_delay = 6
-	melee_damage_lower = 18
-	melee_damage_upper = 18
+	gold_core_spawnable = 1
+	health = 220
+	maxHealth = 220
+	vision_range = 8
+	move_to_delay = 16
+	speed = 3
+	melee_damage_lower = 13
+	melee_damage_upper = 16
 	stat_attack = 1
 	robust_searching = 1
-	see_in_dark = 10
+	see_in_dark = 7
+	ventcrawler = 2
+	pass_flags = PASSTABLE
 	attack_sound = 'sound/weapons/bite.ogg'
-	deathmessage = "the weaver springs over onto its back, its legs curling as its abdomen ruptures open revealing the precious marrow and sinew within"
-	var/poison_type = "venom"
-	var/poison_per_bite = 2
+	deathmessage = "the weaver rolls over, frothing at the mouth before stilling."
+	speak_chance = 5
 	var/busy = 0
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/New()
+	..()
+	adjustHealth(0) //sets up speak_emote and emote_hear 
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
+	. = ..()
+	if(health < (maxHealth/3))  //He's REALLY mad.
+		speak_emote = ("chitters angrily")
+		emote_hear = ("chitters furiously")
+		move_to_delay = 0
+		speed = 1
+		melee_damage_lower = 15
+		melee_damage_upper = 20
+		poison_type = "cyanide"
+		poison_per_bite = 5
+		desc = "A big, angry, toxic spider. It looks really, REALLY unhappy. It's badly wounded."
+	else
+		poison_type = initial(poison_type)
+		poison_per_bite = initial(poison_per_bite)
+		speak_emote = list("clacks", "chitters", "hisses") //initial does not work on lists
+		emote_hear = list("clacks", "chitters", "hisses")
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
@@ -789,7 +824,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/handle_automated_action()
 	if(..())
-		if(!busy && prob(30))	//30% chance to spin webs
+		if(!busy && prob(20))	//20% chance to stop wandering and do something
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
 				Web()
@@ -800,14 +835,14 @@
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/proc/Web()
 	var/T = loc
 
-	if(stat == DEAD)
+	if(stat == DEAD) //no webbing when corpse
 		return
 
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
 		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 		stop_automated_movement = 1
-		if(do_after(src, 40, target = T))
+		if(do_after(src, 70, target = T))
 			if(busy == SPINNING_WEB && src.loc == T)
 				new /obj/effect/spider/stickyweb(T)
 		busy = 0
@@ -815,7 +850,6 @@
 
 #undef SPINNING_WEB
 #undef MOVING_TO_TARGET
-
 
 //Legion
 
@@ -864,12 +898,12 @@
 	maxHealth = 1
 	health = 5
 	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attacktext = "bites"
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
-	throw_message = "is shrugged off by"
+	throw_message = "is knocked away by"
 	pass_flags = PASSTABLE
 	del_on_death = 1
 	stat_attack = 1
@@ -1000,10 +1034,12 @@
 	reagents.my_atom = src
 
 /obj/item/udder/gutlunch/generateMilk()
-	if(prob(60))
+	if(prob(50))
 		reagents.add_reagent("cream", rand(2, 5))
 	if(prob(45))
 		reagents.add_reagent("salglu_solution", rand(2,5))
+	if(prob(5))
+		reagents.add_reagent("omnizine", rand(2,5))
 
 
 //Male gutlunch. They're smaller and more colorful!
