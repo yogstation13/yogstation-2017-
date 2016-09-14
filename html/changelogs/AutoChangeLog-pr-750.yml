@@ -1,0 +1,9 @@
+author: Hirohiko Araki
+delete-after: True
+changes: 
+  - rscadd: "Protector holoparasites protect their host from explosions while inside them."
+  - rscadd: "Lightning holoparasites now disarm people they attack."
+  - rscadd: "Assassin holoparasites can dismember, provided they are stealthed."
+  - rscadd: "Viscerators can now dismember."
+  - tweak: "Chaos holoparasites ignite on-hit, rather than on-bump. They now hallucinate on-bump."
+  - tweak: "Increased silver slime extract's reaction food list."
