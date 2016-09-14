@@ -1,0 +1,6 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Goliath drops have been reduced to one hide based on the feedback of uncultured plebians."
+  - rscadd: "Goliaths hit slightly harder."
+  - rscadd: "Goliath tentacles no longer randomly choose a brute value to smack you with. Now they just hurt."
