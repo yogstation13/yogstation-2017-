@@ -89,7 +89,7 @@
 	..()
 	reagents.add_reagent("bolamine",5)
 	reagents.add_reagent("cryptobiolin",2)
-	reagents.add_reagent("frostoil", 1)
+	reagents.add_reagent("frostoil", 2)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -434,8 +434,8 @@
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 28
+	melee_damage_upper = 28
 	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
@@ -525,7 +525,7 @@
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 		M.Stun(5)
-		M.adjustBruteLoss(rand(10,15))
+		M.adjustBruteLoss(15)
 		latched = 1
 	if(!latched)
 		qdel(src)
@@ -745,7 +745,7 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 3, /obj/item/stack/sheet/bone = 5)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 5)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
