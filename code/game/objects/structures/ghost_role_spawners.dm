@@ -24,7 +24,7 @@
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
 	uniform = /obj/item/clothing/under/rank/hydroponics
-	pocket1 = /obj/item/weapons/tank/internals/emergency_oxygen
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
 	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
 
