@@ -179,14 +179,15 @@
 
 	if(user.a_intent != "harm" && !(I.flags & ABSTRACT))
 		if(user.drop_item())
-			I.Move(loc)
-			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-				return
-			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			if(I.loc == user.loc) //some items move or delete themselves on drop, and we don't want to touch those
+				I.Move(loc)
+				var/list/click_params = params2list(params)
+				//Center the icon where the user clicked.
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return
+				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+				I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			return 1
 	else
 		return ..()
