@@ -1,7 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "Weavers have unfortunately broken all of their legs simultaneously chasing their targets when heavily wounded, and now move at a more moderate pace."
-  - rscadd: "Weavers now inject weaker toxins and drop a bottle of antitoxin when killed, pending a rename to 'antivenom sac'."
-  - rscadd: "Lavaland mobs have realized they are no longer re-enacting 'singin' in the ash' and have stopped mindlessly screeching at the sky."
-  - rscadd: "Weavers no longer constantly shit out webs."
