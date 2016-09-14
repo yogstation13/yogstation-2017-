@@ -884,7 +884,7 @@
 				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 				H.death()
 				L.stored_mob = H
-				H.loc = L
+				H.forceMove(L)
 				qdel(src)
 	..()
 

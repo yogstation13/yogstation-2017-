@@ -129,9 +129,18 @@
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
-						Move(get_step(src, anydir), anydir)
+						if(turf_is_safe(get_step(src, anydir)) )
+							Move(get_step(src, anydir), anydir)
+						else
+							dir = anydir
 						turns_since_move = 0
+
 			return 1
+
+/mob/living/simple_animal/proc/turf_is_safe(turf)
+	if("lava" in weather_immunities)
+		return 1
+	return !istype(turf, /turf/open/floor/plating/lava)
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	if(speak_chance)
