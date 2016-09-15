@@ -791,7 +791,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/New()
 	..()
-	adjustHealth(0) //sets up speak_emote and emote_hear 
+	adjustHealth(0) //sets up speak_emote and emote_hear
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
 	. = ..()
@@ -845,7 +845,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
-		stored_mob.loc = get_turf(src)
+		stored_mob.forceMove(get_turf(src))
 		stored_mob.adjustBruteLoss(1000)
 	else
 		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
@@ -886,7 +886,6 @@
 				H.death()
 				L.stored_mob = H
 				H.forceMove(L)
-				qdel(src)
 	..()
 
 /obj/item/organ/hivelord_core/legion
