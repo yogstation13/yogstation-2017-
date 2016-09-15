@@ -8,6 +8,7 @@
 	var/possible_destinations = ""
 	var/admin_controlled
 	var/no_destination_swap = 0
+	var/call_cooldown = 0 //time between moving the shuttle in deciseconds
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
 	..()
@@ -54,7 +55,11 @@
 		return
 
 	if(href_list["move"])
+		var/dock_id = href_list["move"]
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+		var/obj/docking_port/stationary/D = SSshuttle.getDock(dock_id)
+		if(!D)
+			return
 		if(M.launch_status == ENDGAME_LAUNCHED)
 			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
 			return
@@ -62,9 +67,19 @@
 			if(M.mode != SHUTTLE_IDLE)
 				usr << "<span class='warning'>Shuttle already in transit.</span>"
 				return
-		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
+		if(M.canDock(D) == SHUTTLE_ALREADY_DOCKED)
+			usr << "<span class='notice'>Shuttle already docked at destination.</span>"
+			updateUsrDialog()
+			return
+		var/obj/item/weapon/circuitboard/computer/cooldown_holder/mining_shuttle/MS = circuit
+		if(MS.cooldownLeft())
+			usr << "<span class='notice'>It's too soon to move the shuttle, wait [round(MS.cooldownLeft()/10)] more seconds.</span>"
+			return
+		switch(SSshuttle.moveShuttle(shuttleId, dock_id, 1))
 			if(0)
 				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+				MS.nextAllowedTime = world.time + call_cooldown + M.callTime
+				updateUsrDialog()
 			if(1)
 				usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else

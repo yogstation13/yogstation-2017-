@@ -383,7 +383,7 @@
 /obj/item/weapon/circuitboard/computer/ferry/request
 	name = "circuit board (Transport Ferry Console)"
 	build_path = /obj/machinery/computer/shuttle/ferry/request
-/obj/item/weapon/circuitboard/computer/mining_shuttle
+/obj/item/weapon/circuitboard/computer/cooldown_holder/mining_shuttle
 	name = "circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
 /obj/item/weapon/circuitboard/computer/white_ship
