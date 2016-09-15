@@ -798,7 +798,7 @@
 	if(health < (maxHealth/3))  //He's REALLY mad.
 		speak_emote = ("chitters angrily")
 		emote_hear = ("chitters furiously")
-		move_to_delay = 0
+		move_to_delay = 8
 		speed = 3
 		melee_damage_lower = 15
 		melee_damage_upper = 20
