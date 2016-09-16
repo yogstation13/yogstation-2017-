@@ -68,7 +68,7 @@
 		if(24)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(25)
-			new /obj/item/organ/heart/cursed/wizard(src) //god help us all
+			new /obj/item/organ/heart/cursed/wizard(src)
 
 
 
