@@ -68,7 +68,7 @@
 		if(24)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(25)
-			new /obj/item/weapon/veilrender/honkrender(src) //god help us all
+			new /obj/item/organ/heart/cursed/wizard(src) //god help us all
 
 
 
@@ -90,7 +90,7 @@
 			bob around your head.</span>"
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
-		wisp.orbit(user, 60)
+		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
