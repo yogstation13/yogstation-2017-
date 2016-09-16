@@ -30,7 +30,6 @@ var/total_borer_hosts_needed = 10
 	var/chemicals = 50
 	var/used_dominate
 	var/used_control
-//	var/influence = 0
 	var/borer_chems = list()
 	var/dominate_cooldown = 150
 	var/control_cooldown = 3000
@@ -70,11 +69,8 @@ var/total_borer_hosts_needed = 10
 
 	if(statpanel("Status"))
 		stat(null, "Chemicals: [chemicals]")
-		/*if(victim)
-			stat(null, "Influence: [influence]%")*/
 
 	src << output(chemicals, "ViewBorer\ref[src]Chems.browser:update_chemicals")
-	//src << output(influence, "ViewBorer\ref[src]Chems.browser:update_influence")
 
 /mob/living/simple_animal/borer/Life()
 
@@ -91,17 +87,14 @@ var/total_borer_hosts_needed = 10
 
 	if(victim)
 		if(stat != DEAD)
-			if(chemicals < 250)
+			if(victim.stat == DEAD)
+				chemicals++
+			else if(chemicals < 250)
 				chemicals+=2
-/*			if(influence < 100)
-				influence += 0.5
-				if(influence == 100)
-					src << "<span class='boldnotice'>You are one with [victim] you both aid eachother in their needs and establish a mutally beneficial relationship.</span>"
-					victim << "<span class='boldnotice'>You are one with [src] you both aid eachother in their needs and establish a mutally beneficial relationship.</span>"
-				if(influence == 80)
-					victim << "<span class='boldnotice'>You feel [src]'s power grow to extreme levels. You beging to feel unbeatable.</span>"
-				if(influence == 50)
-					victim << "<span class='danger'>You don't feel like yourself.</span>"*/
+			if (chemicals > 250)
+				chemicals = 250 //to prevent 251 chemical bug from +2 per tick
+
+
 		if(stat != DEAD && victim.stat != DEAD)
 
 			if(victim.reagents.has_reagent("sugar"))
@@ -111,7 +104,6 @@ var/total_borer_hosts_needed = 10
 					else
 						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
 					docile = 1
-					//influence -= 1
 			else
 				if(docile)
 					if(controlling)
@@ -147,19 +139,12 @@ var/total_borer_hosts_needed = 10
 		message = copytext(message,2)
 		victim.say(message)
 		return
-	//if(influence > 80)
-		//victim << "<span class='green'><b>[name] telepathically shouts... </b></span><span class='userdanger'>[message]</span>"
-		//src << "<span class='green'><b>[name] telepathically shouts... </b></span><span class='userdanger'>[message]</span>"
-	//else if(influence > 40)
 	if(message == "")
 		return
 	var/message2 = ""
 	message2 = addtext(uppertext(copytext(message, 1, 2)), copytext(message, 2) )
 	victim << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
 	src << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
-	//else
-		//victim << "<span class='green'><b>[name] telepathically whispers... </b></span><i>[message]</i>"
-		//src << "<span class='green'><b>[name] telepathically whispers... </b></span><i>[message]</i>"
 
 /mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
 	healthscan(usr, M)
@@ -204,7 +189,7 @@ var/total_borer_hosts_needed = 10
 
 	victim.borer = null
 	victim = null
-//	influence = 0
+	reset_perspective(null)
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
 	if(!candidate || !candidate.mob)

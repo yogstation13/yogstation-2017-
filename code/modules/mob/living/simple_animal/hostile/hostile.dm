@@ -137,6 +137,8 @@
 		return 0
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
+	if(stop_automated_movement_when_pulled && pulledby && !ranged && !Adjacent(the_target))
+		return 0
 	if(search_objects < 2)
 		if(istype(the_target, /obj/mecha))
 			var/obj/mecha/M = the_target

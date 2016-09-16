@@ -45,6 +45,7 @@
 	var/melee_damage_upper = 0
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	var/candismember = FALSE //if the animal can chop off limbs on hit, see human_defense for the dismemberment stuff
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
 	var/attacktext = "attacks"
 	var/attack_sound = null
@@ -129,9 +130,18 @@
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
-						Move(get_step(src, anydir), anydir)
+						if(turf_is_safe(get_step(src, anydir)) )
+							Move(get_step(src, anydir), anydir)
+						else
+							dir = anydir
 						turns_since_move = 0
+
 			return 1
+
+/mob/living/simple_animal/proc/turf_is_safe(turf)
+	if("lava" in weather_immunities)
+		return 1
+	return !istype(turf, /turf/open/floor/plating/lava)
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	if(speak_chance)

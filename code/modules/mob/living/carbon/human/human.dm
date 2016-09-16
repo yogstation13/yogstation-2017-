@@ -125,6 +125,23 @@
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
 
+	if(locate(/mob/living/simple_animal/hostile/guardian/protector) in src)//if they've got a protector holo inside them
+		var/mob/living/simple_animal/hostile/guardian/protector/G = locate(/mob/living/simple_animal/hostile/guardian/protector)
+		if(severity == 1 && G.toggle)//can't think of a better way to do this since ex_act only works if the holo is actually hit with the explosion, which it isn't
+			apply_damage(20,BRUTE)
+		else
+			if(G.toggle && severity > 1)
+				visible_message("<span class='notice'><i>[src] glows in a <font color=\"[G.namedatum.colour]\">strange light </font>and is protected from the explosion!<i></span>")
+				return
+			else
+				if(severity == 1)
+					apply_damage(200,BRUTE)
+				if(severity == 2)
+					apply_damage(60,BRUTE)
+				if(severity == 3)
+					apply_damage(30,BRUTE)
+		visible_message("<span class='notice'><i>[src] glows in a <font color=\"[G.namedatum.colour]\">strange light </font>and is protected from the explosion!<i></span>")
+		return
 	switch (severity)
 		if (1)
 			b_loss += 500

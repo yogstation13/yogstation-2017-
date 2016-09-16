@@ -15,7 +15,8 @@
 	var/pulse_timestamp = 0 //we got pulsed/healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = 0 //if the blob blocks atmos and heat spread
+	var/atmosblock = 0 //if the blob blocks atmos
+	var/heatblock = 0 // if the blob blocks heatspread
 	var/mob/camera/blob/overmind
 
 
@@ -62,8 +63,8 @@
 /obj/effect/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
-/obj/effect/blob/BlockSuperconductivity()
-	return atmosblock
+/obj/effect/blob/BlockSuperconductivity() // returns 1 if it does block heat, returns 0 if it doesn't.
+	return heatblock
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
@@ -340,6 +341,7 @@
 	maxhealth = 25
 	health_regen = 1
 	brute_resist = 0.25
+	atmosblock = 1
 
 /obj/effect/blob/normal/scannerreport()
 	if(health <= 10)
@@ -358,3 +360,11 @@
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
 		brute_resist = 0.25
+
+/obj/effect/blob/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(heatblock)
+		return ..()
+
+	if(exposed_temperature > T0C + 80)
+		take_damage(round(exposed_volume/1.2), BURN)
+	..()
