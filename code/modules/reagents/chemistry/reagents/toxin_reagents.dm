@@ -676,14 +676,15 @@
 /datum/reagent/toxin/capilletum
 	name = "Capilletum"
 	id = "capilletum"
-	description = "A powerful toxin that exemplifies the patterns of punctured skin, matching their pigments and shapes, and then expands them across the body. Unlike other toxins, it does not have any negative effects."
+	description = "A powerful toxin that mimicks the patterns of punctured skin, matching their pigments and shapes, and spreading it around the body. Unlike other toxins, it only has short side effects like possible hunger. Easy now, it doesn't make them have a crutch for brains."
 	color = "#FFB9D2"
 	metabolization_rate = 0.3
 	toxpwr = 0 // the only side effect is loss of nutrition
 
 
 /datum/reagent/toxin/capilletum/on_mob_life(mob/living/M)
-	M.nutrition -= rand(20,45)
+	if(prob(5)) // effects are not meant to happen, ever
+		M.nutrition -= rand(1,8)
 	..()
 
 //ACID
