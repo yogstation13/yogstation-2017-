@@ -1,3 +1,5 @@
+#define ALIEN_HAUL_ASS 1
+
 /mob/living/simple_animal/hostile/alien
 	name = "alien hunter"
 	desc = "A toothy, musclebound predator."
@@ -25,6 +27,7 @@
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	unsuitable_atmos_damage = 15
 	faction = list("alien")
 	status_flags = list(CANPUSH)
@@ -37,8 +40,7 @@
 	candismember = TRUE
 	force_threshold = 3
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
-
-#define HAUL_ASS
+	var/alien_state
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -47,15 +49,17 @@
 	icon_living = "aliend_s"
 	icon_dead = "aliend_dead"
 	health = 100
-	maxhealth = 100
+	maxHealth = 100
 	melee_damage_lower = 10
 	melee_damage_upper = 10
+	retreat_distance = 2
+	minimum_distance = 2
 	var/plant_cooldown = 30
 	var/plants_off = 0
 	ranged = 1
 	candismember = FALSE //weak drones
 	projectiletype = /obj/item/projectile/neurotox/superlight
-	
+
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/alien/plasmavessel/small = 1,
@@ -74,19 +78,19 @@
 /mob/living/simple_animal/hostile/alien/drone/adjustHealth(amount)
 	. = ..()
 	if(health < (maxHealth/3))
-		var/alien_state = HAUL_ASS
+		alien_state = ALIEN_HAUL_ASS
 	else
-		return
+		alien_state = 0
 
-if(alien_state == (HAUL_ASS)
-	retreat_distance = 9
-	minimum_distance = 9
-	if(!isliving(target)) //Sanity
-            target = null
-            return
-        else
-        	retreat_distance = 2
-        	minimum_distance = 2
+/mob/living/simple_animal/hostile/alien/drone/Life()
+	. = ..()
+	if(.)
+		if(alien_state == ALIEN_HAUL_ASS)
+			retreat_distance = 9
+			minimum_distance = 9
+		else
+			retreat_distance = initial(retreat_distance)
+			minimum_distance = initial(minimum_distance)
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
@@ -109,7 +113,7 @@ if(alien_state == (HAUL_ASS)
 							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1)
-	
+
 
 
 /mob/living/simple_animal/hostile/alien/queen
@@ -138,24 +142,6 @@ if(alien_state == (HAUL_ASS)
 	var/plant_cooldown = 30
 	environment_smash = 2
 
-/mob/living/simple_animal/hostile/alien/queen/handle_automated_action()
-	if(!..()) //AIStatus is off
-		return
-	egg_cooldown--
-	plant_cooldown--
-	if(AIStatus == AI_IDLE)
-		if(!plants_off && prob(10) && plant_cooldown<=0)
-			plant_cooldown = initial(plant_cooldown)
-			SpreadPlants()
-		if(!sterile && prob(10) && egg_cooldown<=0)
-			egg_cooldown = initial(egg_cooldown)
-			LayEggs()
-		if(health < maxhealth/3)) && prob (20) && (AIStatus == AI_ON)
-			if(bitchslap.cast_check(0,src)) //spams the shit out of tailslap to get them to fuck off
-			bitchslap.choose_targets(src)
-			next_cast = world.time + 10
-			return
-
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
 	if(!isturf(loc) || istype(loc, /turf/open/space))
 		return
@@ -171,12 +157,6 @@ if(alien_state == (HAUL_ASS)
 		return
 	visible_message("<span class='alertalien'>[src] has laid an egg!</span>")
 	new /obj/structure/alien/egg(loc)
-
-/mob/living/simple_animal/hostile/alien/proc/New()
-	..()
-	bitchslap = new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno
-	AddSpell(bitchslap)
-
 
 /mob/living/simple_animal/hostile/alien/queen/large
 	name = "alien empress"
@@ -203,15 +183,47 @@ if(alien_state == (HAUL_ASS)
 	gold_core_spawnable = 0
 	candismember = TRUE
 	force_threshold = 8
-	/mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
+	var/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob/bitchslap
+
+/mob/living/simple_animal/hostile/alien/queen/large/New()
+	..()
+	bitchslap = new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob()
+	AddSpell(bitchslap)
+
+/mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	. = ..()
 	if(health < (maxHealth/3))
 		summon_backup(30)
-		visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>"
+		visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>")
 		playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
-		var/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/bitchslap
+		if(bitchslap)
+			if(bitchslap.cast_check(0, src))
+				bitchslap.choose_targets(src)
 	else
 		return
+
+/mob/living/simple_animal/hostile/alien/queen/large/handle_automated_action()
+	if(!..()) //AIStatus is off
+		return
+	egg_cooldown--
+	plant_cooldown--
+	if(AIStatus == AI_IDLE)
+		if(!plants_off && prob(10) && plant_cooldown<=0)
+			plant_cooldown = initial(plant_cooldown)
+			SpreadPlants()
+		if(!sterile && prob(10) && egg_cooldown<=0)
+			egg_cooldown = initial(egg_cooldown)
+			LayEggs()
+	if(AIStatus == AI_ON)
+		if(health < (maxHealth/3) && prob (20))
+			if(bitchslap.cast_check(0, src))
+				bitchslap.choose_targets(src)
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob
+	charge_max = 100
+	cooldown_min = 100
+	player_lock = 0
+
 
 /mob/living/simple_animal/hostile/alien/praetorian
 	name = "alien praetorian"
@@ -226,18 +238,18 @@ if(alien_state == (HAUL_ASS)
 	environment_smash = 2
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
-							/obj/item/organ/alien/plasmavessel/medium = 1,
+							/obj/item/organ/alien/plasmavessel = 1,
 							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/resinspinner = 1,
 							/obj/item/organ/alien/acid = 1,
-							/obj/item/organ/alien/neurotoxin = 1,
+							/obj/item/organ/alien/neurotoxin = 1)
 	projectilesound = 'sound/weapons/pierce.ogg'
 	projectiletype = /obj/item/projectile/neurotox/heavy
 	status_flags = list()
 	ranged = 1
 	retreat_distance = 1
-	
-/obj/item/projectile/neurotox //base format, 
+
+/obj/item/projectile/neurotox //base format,
 	name = "neurotoxin"
 	damage = 30
 	icon_state = "toxin"
@@ -265,14 +277,6 @@ if(alien_state == (HAUL_ASS)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
 
-/mob/living/simple_animal/hostile/alien/adjustFireLoss(amount) //hot on the other hand
-	if(amount > 0)
-		..(amount * 2)
-	else
-		..(amount)
-	return
-
-
 /mob/living/simple_animal/hostile/alien/maid
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
@@ -289,7 +293,7 @@ if(alien_state == (HAUL_ASS)
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/brain/alien = 1, //alien maids are also really smart as well, but the economic downturn is hard on everyone. 5 years at xeno college and a masters in egg laying for a part time job cleaning floors.
 							/obj/item/weapon/reagent_containers/glass/rag = 1)
-	
+
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
 	if(istype(target, /atom/movable))
@@ -300,3 +304,12 @@ if(alien_state == (HAUL_ASS)
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
+
+/mob/living/simple_animal/hostile/alien/maid/adjustHealth(amount)
+	. = ..()
+	if(stat == DEAD)
+		desc = "Rest in peace, lusty xenomorph. It only ever wanted to polish the captain's laser."
+	else
+		desc = initial(desc)
+
+#undef ALIEN_HAUL_ASS
