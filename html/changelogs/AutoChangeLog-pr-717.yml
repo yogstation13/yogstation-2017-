@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "The toy mechs from arcade machines are now remote controllable."
