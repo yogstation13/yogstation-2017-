@@ -164,7 +164,7 @@
 /obj/item/device/assembly/bikehorn/airhorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] puts the air horn in his mouth and presses the button! It looks like they're trying to become MLG!</span>")
 	playsound(get_turf(src), honksound, 50, 1)
-	return (BRUTELOSS)
+	setBruteLoss(40000000)
 		BP.body_zone = "head"
 		BP.dismember()
 
