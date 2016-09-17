@@ -24482,7 +24482,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/displaycase/royalp,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aWZ" = (
