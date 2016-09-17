@@ -139,6 +139,12 @@ MASS SPECTROMETER
 					if(hack.target == H)
 						user << "<span class='danger'>Unknown harmful microscopic machines detected in subject's bloodstream: Recommend treatment via Electro Magnetic Pulse or Strong Electric Shock immediately!</span>"
 						break
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.borer)
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions

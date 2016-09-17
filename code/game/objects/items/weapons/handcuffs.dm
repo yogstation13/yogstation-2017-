@@ -29,6 +29,10 @@
 		apply_cuffs(user,user)
 		return
 
+	if(C.dna.species.id == "abomination")
+		user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
+		return
+
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2)
 			add_logs(user, C, "attempted to handcuff")
@@ -37,6 +41,9 @@
 
 			playsound(loc, cuffsound, 30, 1, -2)
 			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+				if(C.dna.species.id == "abomination")
+					user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
+					return
 				apply_cuffs(C,user)
 				user << "<span class='notice'>You handcuff [C].</span>"
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
