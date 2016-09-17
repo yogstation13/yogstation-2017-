@@ -39679,6 +39679,7 @@
 	},
 /area/crew_quarters/hor)
 "bAT" = (
+/obj/structure/displaycase/royalp,
 /turf/open/floor/plasteel{
 	icon_state = "warnwhite";
 	dir = 5
