@@ -681,12 +681,6 @@
 	metabolization_rate = 0.3
 	toxpwr = 0 // the only side effect is loss of nutrition
 
-
-/datum/reagent/toxin/capilletum/on_mob_life(mob/living/M)
-	if(prob(5)) // effects are not meant to happen, ever
-		M.nutrition -= rand(1,8)
-	..()
-
 //ACID
 
 
