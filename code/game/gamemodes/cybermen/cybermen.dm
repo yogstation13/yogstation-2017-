@@ -34,12 +34,8 @@ var/datum/cyberman_network/cyberman_network
 	#endif
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
-<<<<<<< HEAD
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer", "Security Deputy")
-=======
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
 	prob_traitor_ai = 18
->>>>>>> 92870f52f0d2d7e5b7b9f7d9564da61df9e5cb8d
 	//yogstat_name = "cybermen"
 
 /datum/game_mode/cybermen/announce()
