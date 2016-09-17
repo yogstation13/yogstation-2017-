@@ -136,6 +136,12 @@
 
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/glasses/sunglasses/cheap
+	name = "cheap sunglasses"
+	desc = "Nice and cheap, just the way Nanotrasen likes it."
+	darkness_view = 0
+	flash_protect = 0
+
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
