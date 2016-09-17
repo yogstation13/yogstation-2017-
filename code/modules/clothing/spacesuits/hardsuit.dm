@@ -168,7 +168,6 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	
 
-
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
 	name = "mining hardsuit helmet"
