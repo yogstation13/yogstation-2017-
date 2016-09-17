@@ -25,7 +25,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
@@ -38,7 +38,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	scan()
 
@@ -139,6 +139,12 @@ MASS SPECTROMETER
 					if(hack.target == H)
 						user << "<span class='danger'>Unknown harmful microscopic machines detected in subject's bloodstream: Recommend treatment via Electro Magnetic Pulse or Strong Electric Shock immediately!</span>"
 						break
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.borer)
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions

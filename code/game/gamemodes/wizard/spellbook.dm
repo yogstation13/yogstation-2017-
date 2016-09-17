@@ -343,7 +343,7 @@
 
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
-	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
+	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side. Requires a willing ghost, which there probably is."
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 	category = "Assistance"
@@ -383,16 +383,16 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
-/datum/spellbook_entry/item/cursed_heart
-	name = "Cursed Heart"
-	desc = "A heart that has been revived by dark magicks, the user must \
+// /datum/spellbook_entry/item/cursed_heart
+//	name = "Cursed Heart"
+//	desc = "A heart that has been revived by dark magicks, the user must \
 	concentrate to ensure the heart beats, but every beat heals them. It \
 	must beat every 6 seconds. The heart is fickle, and will not work for a \
 	lich."
-	item_path = /obj/item/organ/heart/cursed/wizard
-	log_name = "CH"
-	cost = 1
-	category = "Defensive"
+//	item_path = /obj/item/organ/heart/cursed/wizard
+//	log_name = "CH"
+//	cost = 1
+//	category = "Defensive" // Badly balanced, disabling until reworked since it literally just shouts DIE ASSHOLE and you die if you misclick/are stunned
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -437,7 +437,7 @@
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
 	category = "Challenges"
-	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
+	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time. Make the gods cry."
 	cost = 0
 	log_name = "SU"
 

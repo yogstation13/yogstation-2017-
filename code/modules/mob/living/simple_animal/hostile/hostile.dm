@@ -70,19 +70,20 @@
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
-
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	. = list()
 	if(!search_objects)
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 		. += Mobs
-		for(var/M in mechas_list)
-			if(get_dist(M, targets_from) <= vision_range && can_see(targets_from, M, vision_range))
-				. += M
+
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
+
+		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
+			if(can_see(targets_from, HM, vision_range))
+				. += HM
 	else
 		var/list/Objects = oview(vision_range, targets_from)
 		. += Objects
-
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -135,6 +136,8 @@
 	if(!the_target)
 		return 0
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
+		return 0
+	if(stop_automated_movement_when_pulled && pulledby && !ranged && !Adjacent(the_target))
 		return 0
 	if(search_objects < 2)
 		if(istype(the_target, /obj/mecha))

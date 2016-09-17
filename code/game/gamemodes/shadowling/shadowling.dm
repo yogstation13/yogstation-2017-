@@ -72,7 +72,12 @@ Made by Xhuis
 	required_enemies = 2
 	recommended_enemies = 2
 	restricted_jobs = list("AI", "Cyborg")
+<<<<<<< HEAD
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer", "Security Deputy")
+=======
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
+	prob_traitor_ai = 18
+>>>>>>> 92870f52f0d2d7e5b7b9f7d9564da61df9e5cb8d
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
@@ -97,7 +102,6 @@ Made by Xhuis
 		shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
 
-	handle_AI_Traitors()
 	return 1
 
 
@@ -262,6 +266,7 @@ Made by Xhuis
 	heatmod = 1.5
 	sight_mod = SEE_MOBS
 	invis_sight = 2
+	blacklisted = 1
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
@@ -289,7 +294,7 @@ Made by Xhuis
 	name = "Lesser Shadowling"
 	id = "l_shadowling"
 	say_mod = "chitters"
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NODISMEMBER)
 	burnmod = 1.1
 	heatmod = 1.1
 

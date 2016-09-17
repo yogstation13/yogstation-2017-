@@ -22,6 +22,7 @@
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
+			new /obj/item/weapon/storage/box/chameleon(src)
 			return
 
 		if("bond")
@@ -280,10 +281,10 @@
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon
+/obj/item/weapon/storage/box/chameleon
 	name = "chameleon kit"
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon/New()
+/obj/item/weapon/storage/box/chameleon/New()
 	..()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)

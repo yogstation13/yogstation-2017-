@@ -484,14 +484,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -662,9 +662,9 @@
 		if(1)
 			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
 		if(2)
-			new /obj/item/mayhem(src)
+			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
-			new /obj/item/blood_contract(src)
+			new /obj/item/bloodvial/saw(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -705,3 +705,65 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
 
 	qdel(src)
+
+/obj/item/bloodvial//parent typing for identical looking loot
+	name = "vial of blood" //aestetically identical to the demon spawner
+	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+
+/obj/item/bloodvial/bloodcrawl
+
+/obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
+	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
+	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
+		user <<"<span class='warning'>You break [src], but nothing happens.../span>"
+		qdel(src)
+		return
+	user <<"<span class='warning'>You break [src], feeling immense power overcome you.../span>"
+	user.bloodcrawl = BLOODCRAWL
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
+
+/obj/item/bloodvial/saw
+
+/obj/item/bloodvial/saw/attack_self(mob/living/carbon/user)
+	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	user.unEquip(src)
+	var/obj/item/weapon/chainsaw_bubblegum/C = new
+	user.put_in_active_hand(C)
+	qdel(src)
+
+
+/obj/item/weapon/chainsaw_bubblegum
+	name = "demonic chainsaw"
+	desc = "You almost regret picking this up."
+	force = 25
+	icon_state = "chainsaw_on"
+	item_state = "mounted_chainsaw"
+	w_class = 5
+	flags = NODROP | ABSTRACT
+	sharpness = IS_SHARP
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced","eviscerated")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
+	armour_penetration = 30
+	color = "#FF0000"
+
+/obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
+	..()
+	user.visible_message(
+		"<span class='danger'>[user] looks visibly angrier as they pick up [src]!</span>",
+		"<span class='warning'><b>You feel intense rage build up within you as you pick up [src]!</b></span>")
+	user.color = "#FF0000"
+
+/obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [src.name]! It looks like \he's trying to join Bubblegum!</span>")
+	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
+	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
+	qdel(user)

@@ -94,7 +94,7 @@ var/list/preferences_datums = list()
 
 	var/list/ignoring = list()
 
-	var/donor_hat = null
+	var/donor_hat = 0
 	var/donor_pda = 1
 	var/quiet_round = 0
 	var/purrbation = null

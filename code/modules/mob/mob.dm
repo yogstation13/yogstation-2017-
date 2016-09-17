@@ -166,7 +166,11 @@ var/next_mob_id = 0
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/movement_delay()
-	return 0
+	. = 0
+	if(istype(loc, /turf/open))
+		var/turf/open/current_loc = loc
+		. += current_loc.slowdown
+	return .
 
 /mob/proc/Life()
 	set waitfor = 0

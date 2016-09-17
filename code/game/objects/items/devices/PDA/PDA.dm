@@ -157,10 +157,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.functions & PDA_STATUS_DISPLAY_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
-						dat += "</ul>"
 					if (istype(cartridge, /obj/item/weapon/cartridge/slavemaster))
 						dat += "<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_signaler.png> Slavemaster 2000</a></li>"
-						dat += "</ul>"
+
+					dat += "</ul>"
+
 					if ((cartridge.functions & PDA_ENGINE_FUNCTIONS) || (cartridge.alert_flags & PDA_POWER_ALERT))
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
@@ -213,7 +214,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
 						dat += "</ul>"
-				dat += "</ul>"
+				else
+					dat += "</ul>"
 
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"

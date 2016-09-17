@@ -134,8 +134,9 @@
 			A.set_zeroth_law("")
 			A.show_laws()
 			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-			A.malf_picker.remove_verbs(A)
-			qdel(A.malf_picker)
+			if(A.malf_picker)
+				A.malf_picker.remove_verbs(A)
+				qdel(A.malf_picker)
 	special_role = null
 	remove_antag_equip()
 	ticker.mode.update_traitor_icons_removed(src)

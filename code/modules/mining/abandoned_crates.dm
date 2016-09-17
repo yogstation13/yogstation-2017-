@@ -60,8 +60,21 @@
 		if(53 to 54)
 			new /obj/item/toy/balloon(src)
 		if(55 to 56)
-			var/newitem = pick(subtypesof(/obj/item/toy/prize))
+			var/newitem = pick(
+				/obj/item/toy/toy_mech/melee/ripley,
+				/obj/item/toy/toy_mech/melee/deathripley,
+				/obj/item/toy/toy_mech/ranged/gygax,
+				/obj/item/toy/toy_mech/ranged/marauder,
+				/obj/item/toy/toy_mech/ranged/mauler,
+				/obj/item/toy/toy_mech/ranged/seraph,
+				/obj/item/toy/toy_mech/ranged/durand,
+				/obj/item/toy/toy_mech/ranged/phazon,
+				/obj/item/toy/toy_mech/ranged/reticence,
+				/obj/item/toy/toy_mech/odysseus,
+				/obj/item/toy/toy_mech/fireripley,
+				/obj/item/toy/toy_mech/honk)
 			new newitem(src)
+			new /obj/item/device/toy_mech_remote(src)
 		if(57 to 58)
 			new /obj/item/toy/syndicateballoon(src)
 		if(59 to 60)
