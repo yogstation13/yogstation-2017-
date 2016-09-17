@@ -437,8 +437,16 @@
 	return 0
 
 // CENTCOM RESPONSE TEAM
-/datum/admins/proc/makeEmergencyresponseteam()
-	var/alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+/datum/admins/proc/makeEmergencyresponseteam(var/AI = FALSE, alertlevel, squadnumber, objective)
+
+	var/alert
+	var/teamsize
+	var/mission
+
+	if(!AI)
+		alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+	else
+		alert = alertlevel
 	if(!alert)
 		return
 	switch(alert)
@@ -452,8 +460,19 @@
 			alert = "Blue"
 		if("Green: Centcom Official")
 			return makeOfficial()
-	var/teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
-	var/mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
+
+	if(!AI)
+		teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
+		mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
+	else
+		teamsize = squadnumber
+		mission = objective
+
+	if(!teamsize)
+		teamsize = rand(1,7)
+
+	if(!mission)
+		mission = "Assist the station."
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)
 	var/teamSpawned = 0
 

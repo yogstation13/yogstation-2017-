@@ -166,6 +166,7 @@
 	icon_state = "weeds"
 	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
+	var/growth
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
 
@@ -202,7 +203,13 @@
 		qdel(src)
 		return
 
+	growth++
+
 	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
+
+	if(growth <= 500)
+		Life()
 		return
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
@@ -229,18 +236,22 @@
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
+	health = 30
+	growth = 500
 
 
 /obj/structure/alien/weeds/node/New()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	if(ticker && ticker.mode && istype(ticker.mode, datum/game_mode/xenomorph/X)) // xenomorph domination? predators? only in the actual game mode.
-		var/datum/game_mode/xenomorph/X = ticker.mode
+	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph)) // xenomorph domination? predators? only in the actual game mode.
 		var/area/xenospread = get_area(loc)
 		if(xenospread.infestation_allowed) //Is this area allowed for winning as blob?
-			X.alien_weed_control_count += src
-
-
+			xenomorphweeds += src
 	..(loc, src)
+
+
+/obj/structure/alien/weeds/node/Destroy()
+	xenomorphweeds -= src
+	return ..()
 
 #undef NODERANGE
 

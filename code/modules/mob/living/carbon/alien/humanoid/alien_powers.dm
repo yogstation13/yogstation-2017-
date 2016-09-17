@@ -63,11 +63,11 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_plant"
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
-	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
+	if(locate(/obj/structure/alien/weeds) in get_turf(user))
 		src << "There's already a weed node here."
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
-	new/obj/structure/alien/weeds/node(user.loc)
+	new/obj/structure/alien/weeds(user.loc)
 	return 1
 
 /obj/effect/proc_holder/alien/whisper

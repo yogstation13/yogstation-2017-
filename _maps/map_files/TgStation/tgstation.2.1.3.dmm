@@ -11896,6 +11896,10 @@
 	on = 1;
 	scrub_Toxins = 0
 	},
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/open/floor/plating,
 /area/maintenance/electrical)
 "awf" = (
@@ -20478,14 +20482,11 @@
 	},
 /area/hydroponics)
 "aNB" = (
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/effect/landmark{
+	name = "xeno-spawn"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "hydrofloor"
-	},
-/area/hydroponics)
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
 "aNC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -55571,12 +55572,19 @@
 	},
 /area/security/checkpoint/engineering)
 "cfu" = (
-/obj/machinery/suit_storage_unit/atmos,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "warning"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/area/atmos)
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/space,
+/area/solar/starboard)
 "cfv" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/wall,
@@ -56395,7 +56403,10 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "chb" = (
-/obj/structure/chair/stool,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "chc" = (
@@ -68646,10 +68657,10 @@
 /area/tcommsat/computer)
 "cEG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
 /obj/machinery/computer/telecomms/traffic{
 	network = "tcommsat"
 	},
+/turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cEH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -69128,6 +69139,40 @@
 	dir = 2
 	},
 /area/shuttle/transport)
+"cGf" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/lattice/catwalk,
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/space,
+/area/solar/port)
+"cGe" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
+"cGd" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
+"cGc" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/fpmaint)
 
 (1,1,1) = {"
 aaa
@@ -83397,7 +83442,7 @@ bhG
 biZ
 bkD
 blZ
-bnI
+cGe
 bpp
 bhB
 aaa
@@ -83696,7 +83741,7 @@ aaa
 aaA
 aaa
 aaa
-cou
+cGf
 aaa
 aaa
 aaA
@@ -93128,7 +93173,7 @@ aqz
 alW
 arw
 asj
-ask
+cGc
 atE
 ask
 avz
@@ -107528,7 +107573,7 @@ avf
 avf
 asA
 aAN
-aAN
+cGd
 aAN
 aEq
 auh
@@ -115319,7 +115364,7 @@ bny
 bny
 bny
 bUI
-bUI
+aNB
 bUI
 cdS
 aaa
@@ -119187,7 +119232,7 @@ cBj
 cxm
 cBJ
 cxm
-cxm
+cfu
 cxm
 cDv
 aaA

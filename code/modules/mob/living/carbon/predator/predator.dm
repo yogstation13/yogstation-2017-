@@ -49,7 +49,7 @@
 /mob/living/carbon/human/predator/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
 
 /mob/living/carbon/human/predator/say(message, bubble_type)
-	var/randomclick = pick("sound/predators/predator_clicking1.ogg", "sound/predators/predator_clicking2.ogg", "sound/predators/predator_clicking3.ogg", "sound/predators/predator_clicking4.ogg)"
+	var/randomclick = pick("sound/predators/predator_clicking1.ogg", "sound/predators/predator_clicking2.ogg", "sound/predators/predator_clicking3.ogg", "sound/predators/predator_clicking4.ogg")
 	playsound(src.loc, randomclick, rand(25,100), 1)
 	return ..(message, bubble_type)
 

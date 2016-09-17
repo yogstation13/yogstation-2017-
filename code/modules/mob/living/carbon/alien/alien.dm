@@ -127,8 +127,7 @@
 	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
-	if(!stunned && !eye_blind && !eye_blurry)
-		src << "<span class='alienwarning'>Your sensitive eyes cannot concentrate with the flames on you!</span>"
+	if(!stunned && !eye_blurry)
 		var/flashstun = 5
 		if(nightvision)
 			flashstun = flashstun * 2

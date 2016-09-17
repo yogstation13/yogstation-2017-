@@ -174,7 +174,7 @@
 			L.put_in_active_hand(PT)
 			user << "<span class='notice'>You retract your wrist blade!</span>"
 
-		else if(istype(gethand, obj/item/weapon/kitchen/knife/predator))
+		else if(istype(gethand, /obj/item/weapon/kitchen/knife/predator))
 			var/obj/item/weapon/kitchen/knife/predator/wristblade = gethand
 			if(wristblade.owner == src)
 				qdel(wristblade)
@@ -211,7 +211,7 @@
 
 /obj/item/weapon/storage/belt/mining/yautija
 	name = "yautija trophy sac"
-	desc = "If you don't have the stomach... don't even fucking peek..."
+	desc = "If you don't have the stomach... don't even peek..."
 	max_w_class = 5
 	can_hold = list(/obj/item/bodypart/head)
 

@@ -65,7 +65,7 @@
 		var/mob/living/carbon/H
 		if(H.has_dna())
 			if(H.dna.check_mutation(HULK))
-				user << "<span class='warning'>Your fat, meaty fingers cannot operate a flamethrower!</span>"
+				user << "<span class='warning'>Your fat, meaty fingers cannot operate [src]!</span>"
 				return
 
 	// Make sure our user is still holding us
@@ -135,10 +135,10 @@
 	if(!ptank)
 		user << "<span class='notice'>Attach a plasma tank first!</span>"
 		return
-	if(istype(carbon))
+	if(istype(user, /mob/living/carbon))
 		var/mob/living/carbon/C = user
 		if(C.dna.check_mutation(HULK))
-			user << "<span class='warning'>Your fat, meaty fingers can't operate a flamethrower!</span>"
+			user << "<span class='warning'>Your fat, meaty fingers can't operate [src]!</span>"
 			return
 
 	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove plasmatank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
