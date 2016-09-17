@@ -83,6 +83,7 @@ var/list/turf/xenomorphweeds = list()
 		if(prob(hunt_guard_diff_prob))
 			hunter_sentinel_ticker++
 			xenomorphs["HUNTERS"] += alive_xenomorph
+			xenomorphs += alive_xenomorph
 			alive_xenomorph.assigned_role = "xeno hunter"
 			alive_xenomorph.special_role = "xeno hunter"
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno hunter")
@@ -91,6 +92,7 @@ var/list/turf/xenomorphweeds = list()
 
 		if(prob(hunt_guard_diff_prob + 40)) // 90% chance if you aren't being a hunter, 10% chance for drone. 140% chance (for sentinel) if a hunter hasn't been chosen.
 			xenomorphs["SENTINELS"] += alive_xenomorph
+			xenomorphs += alive_xenomorph
 			alive_xenomorph.assigned_role = "xeno sentinel"
 			alive_xenomorph.special_role = "xeno sentinel"
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno sentinel")
@@ -99,6 +101,7 @@ var/list/turf/xenomorphweeds = list()
 		else if(!drone_chosen)
 			drone_chosen = TRUE
 			xenomorphs["DRONES"] += alive_xenomorph
+			xenomorphs += alive_xenomorph
 			alive_xenomorph.assigned_role = "xeno drone"
 			alive_xenomorph.special_role = "xeno drone"
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno drone")
@@ -200,8 +203,10 @@ var/list/turf/xenomorphweeds = list()
 
 	if(predstatus <= PREDATORS_UNKNOWN || predstatus == PREDATORS_DEAD)
 		if(!calculateXenos())
+			message_admins("Calc didn't work. whoo!")
 			return 0
 		else
+			message_admins("funny")
 			return 1
 
 	if(predstatus == PREDATORS_ALIVE)
@@ -236,6 +241,8 @@ var/list/turf/xenomorphweeds = list()
 		ai_admin.makeEmergencyresponseteam(AI = TRUE, "Amber: Full ERT (Armoury Access)", 7, "Assist the crew, call the emergency shuttle, collect and report casualities, and exterminate the xenomorphs")
 		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/shuttledock.ogg', "Alert - Nanotrasen")
 		ERTlaunch = TRUE
+
+	message_admins("END!")
 
 	..()
 
