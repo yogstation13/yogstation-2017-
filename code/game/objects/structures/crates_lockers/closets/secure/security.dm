@@ -314,7 +314,7 @@
 /obj/structure/closet/secure_closet/gulag/examine(mob/user)
 	..()
 	if(savedcard)
-		user << "<span class='notice'>The locker is assigned to [P.registered_name].</span>"
+		user << "<span class='notice'>The locker is assigned to [savedcard.registered_name].</span>"
 	else
 		user << "<span class='notice'>The locker hasn't been assigned yet.</span>"
 
@@ -328,7 +328,7 @@
 				user << "<span class='warning'>[W] already has a synced locker!</span>"
 				return
 
-			user << "<span class='notice'>The locker scans and saves the card into it's database. Once the card reaches it's goal, it will open.</span>"
+			user << "<span class='notice'>The locker successfully scans the card. Once the card reaches it's goal, it will open.</span>"
 			savedcard = W
 			P.savedlocker = src
 
