@@ -113,7 +113,7 @@
 		new_coil.amount = 15
 		qdel(src)
 		usr.put_in_hands(new_coil)
-		usr.visible_message("<span class='notice'>[user.name] unties the knot that holds together [src].</span>")
+		usr.visible_message("<span class='notice'>[user.name] unties the knot holding together [src].</span>")
 
 /obj/item/weapon/restraints/handcuffs/cable
 
