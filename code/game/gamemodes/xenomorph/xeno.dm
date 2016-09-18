@@ -15,13 +15,6 @@ var/list/turf/xenomorphweeds = list()
 	"DRONES" = list ()
 	)
 
-	/*
-	var/list/datum/mind/queens = list()
-	var/list/datum/mind/hunters = list()
-	var/list/datum/mind/senitels = list()
-	var/list/datum/mind/drones = list()
-	*/
-
 	var/list/datum/mind/predators = list()
 	var/predstatus = PREDATORS_UNKNOWN
 
@@ -70,6 +63,7 @@ var/list/turf/xenomorphweeds = list()
 		if(!queen_chosen)
 			queen_chosen = TRUE
 			xenomorphs["QUEEN"] += alive_xenomorph
+			xenomorphs += alive_xenomorph
 			alive_xenomorph.assigned_role = "xeno queen"
 			alive_xenomorph.special_role = "xeno queen"
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno queen")
@@ -168,7 +162,6 @@ var/list/turf/xenomorphweeds = list()
 		var/datum/objective/weedconquer/W = new
 		W.owner = l
 		l.mind.objectives += W
-		xenomorphs["QUEEN"] += l.mind // FOR TESTING
 		l << "<span class='alertalien'>You are a <B>[role]</B>!</span>"
 		l << "<B><span class='alien'>Objective #1</B>: [W.explanation_text]</span>"
 	else
@@ -188,10 +181,8 @@ var/list/turf/xenomorphweeds = list()
 /datum/game_mode/xenomorph/check_finished()
 	if(!alien_weed_control_count)
 		alien_weed_control_count = rand(950,1250)
-		message_admins("AA")
 		return 0
 
-	message_admins("FUCK")
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		return 1
 
@@ -203,10 +194,10 @@ var/list/turf/xenomorphweeds = list()
 
 	if(predstatus <= PREDATORS_UNKNOWN || predstatus == PREDATORS_DEAD)
 		if(!calculateXenos())
-			message_admins("Calc didn't work. whoo!")
+			message_admins("{ISSS!!")
 			return 0
 		else
-			message_admins("funny")
+			message_admins("10/10")
 			return 1
 
 	if(predstatus == PREDATORS_ALIVE)
@@ -242,7 +233,6 @@ var/list/turf/xenomorphweeds = list()
 		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/shuttledock.ogg', "Alert - Nanotrasen")
 		ERTlaunch = TRUE
 
-	message_admins("END!")
 
 	..()
 
@@ -255,7 +245,7 @@ var/list/turf/xenomorphweeds = list()
 		else
 			feedback_set_details("round_end_result","win - xenomorphs took over, even after death")
 			world << "<FONT size = 5><B>Xenomorphs Minor Win!</B></FONT>"
-			world << "<B>The entire station was taken over by alien weeds but, the xenomorphs were still exterminated.</B>"
+			world << "<B>The station was taken over by alien weeds but, the xenomorphs were still exterminated.</B>"
 
 	else if (!calculateXenos() && alien_weed_control_count > xenomorphweeds.len)
 		feedback_set_details("round_end_result","lose - the xenomorphs were exterminated")
@@ -265,11 +255,11 @@ var/list/turf/xenomorphweeds = list()
 
 		else if (predstatus == PREDATORS_DEAD)
 			world << "<FONT size = 5><B>Crew Minor Win!</B></FONT>"
-			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak but, has gotten the attention of many more Yautija Warriors!</B>"
+			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak but, has gotten the attention of even more Yautija Warriors!</B>"
 
 		else if(predstatus == PREDATORS_ALIVE)
 			world << "<FONT size = 5><B>Crew Minor Win!</B></FONT>"
-			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak but, Yautija Warriors are more aware of their presence.!</B>"
+			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak but, Yautija Warriors are interested in hunting more crewmembers!</B>"
 
 	else if(station_was_nuked)
 		feedback_set_details("round_end_result", "neutral win")
@@ -302,39 +292,35 @@ var/list/turf/xenomorphweeds = list()
 	return
 
 /datum/game_mode/xenomorph/proc/calculateXenos() //length
-/*	var/totalxenos
-	var/totalqueens
-
-	for(var/datum/mind/M in queens)
-		totalxenos ++
-		totalqueens++
-
-	for(var/datum/mind/M
-*/
+	var/queen
+	var/knights
+	var/hunters
+	var/brewers
 
 	for(var/datum/mind/M in xenomorphs)
-		message_admins("WE IN!")
-		if(xenomorphs.len["QUEEN"])
-			message_admins("QUEEN WORKED")
-			return 0
+		if(M.assigned_role == "xeno queen")
+			if(M.current.stat != DEAD)
+				message_admins("AAA")
+				queen = M.current
+				return 0
 
-		if(xenomorphs["SENTINELS"] || xenomorphs["HUNTERS"] || xenomorphs["DRONES"])
-			message_admins("HIVE WORKD")
-			return 0
+		if(M.assigned_role == "xeno hunters")
+			if(M.current.stat != DEAD)
+				hunters++
 
-		if(xenomorphs["QUEEN"])
-			message_admins("SECOND ONE WORKED")
-			return 0
+		if(M.assigned_role == "xeno sentinels")
+			if(M.current.stat != DEAD)
+				knights++
 
-		else
-			message_admins("IT DIDN'T WORK, SHIT")
-			return 1
+		if(M.assigned_role == "xeno drone")
+			if(M.current.stat != DEAD)
+				brewers++
 
-
-/*	if(queens.len || hunters.len || senitels.len || drones.len)
+	if(!queen && !knights && !hunters && !brewers)
+		message_admins("AAAKAAAA")
 		return 1
 	else
+		message_admins("SAD TIMES!")
 		return 0
-*/
 
 /datum/game_mode/xenomorph/proc/callPredators()
