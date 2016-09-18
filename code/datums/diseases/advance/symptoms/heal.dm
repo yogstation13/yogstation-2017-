@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/heal
 
 	name = "Toxic Filter"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -4
+	stealth = -6
+	resistance = -6
+	stage_speed = -6
+	transmittable = -6
 	level = 6
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
@@ -35,7 +35,7 @@ Bonus
 
 /datum/symptom/heal/proc/Heal(mob/living/M, datum/disease/advance/A)
 	var/get_damage = (sqrt(20+A.totalStageSpeed())*(1+rand()))
-	M.adjustToxLoss(-get_damage)
+	M.adjustToxLoss(-get_damage * 0.3)
 	return 1
 
 /*
