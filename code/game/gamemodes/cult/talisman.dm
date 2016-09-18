@@ -322,7 +322,7 @@
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
 /obj/item/weapon/paper/talisman/construction
 	cultist_name = "Talisman of Construction"
-	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 25 sheets of reinforced glass will create a soulstone."
+	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 10 sheets of reinforced glass will create a soulstone."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
 
@@ -358,7 +358,7 @@
 			qdel(src)
 		if(istype(target, /obj/item/stack/sheet/rglass))
 			var/turf/T = get_turf(target)
-			if(target.use(25))
+			if(target.use(10))
 				new /obj/item/device/soulstone(T)
 				user <<"<span class='warning'>The talisman clings to the glass, forcing it to contract and twist, turning a bloody red!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
