@@ -934,7 +934,7 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[src] revived [revive_count] mobs.")
 	log_admin("[src] revived [revive_count] mobs.")
 
-<<<<<<< HEAD
+
 /client/proc/reload_jexp()
 	set name = "Reload JEXP stats"
 	set category = "Debug"
@@ -968,7 +968,7 @@ var/list/admin_verbs_hideable = list(
 		message_admins("ALERT! ALERT! [src.ckey] has taken down the JEXP datum.")
 		log_admin("[src.ckey] has taken down the JEXP datum.</span>")
 		log_game("[src.ckey] has taken down the JEXP datum.</span>")
-=======
+
 /client/proc/check_ruins()
 	set name = "Check Ruins"
 	set category = "Debug"
@@ -978,4 +978,3 @@ var/list/admin_verbs_hideable = list(
 		var/list/L = V
 		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
 	usr << browse(dat, "window=checkruin;size=350x500")
->>>>>>> 92870f52f0d2d7e5b7b9f7d9564da61df9e5cb8d
