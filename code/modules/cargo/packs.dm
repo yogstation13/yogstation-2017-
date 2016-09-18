@@ -157,6 +157,13 @@
 					/obj/item/weapon/storage/box/handcuffs)
 	crate_name = "security supply crate"
 
+/datum/supply_pack/security/supplies
+	name = "Prisoner ID Crate"
+	cost = 1000
+	contains = list(/obj/item/weapon/storage/box/bprisoner,
+					/obj/item/weapon/storage/box/bprisoner)
+	crate_name = "prisoner id crate"
+
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
 	cost = 1000

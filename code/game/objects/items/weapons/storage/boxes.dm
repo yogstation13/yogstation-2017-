@@ -387,6 +387,23 @@
 	new /obj/item/weapon/card/id/prisoner/six(src)
 	new /obj/item/weapon/card/id/prisoner/seven(src)
 
+
+/obj/item/weapon/storage/box/bprisoner
+	name = "box of unnumbered prisoner IDs"
+	desc = "These ID's don't have numbers and require you to fill them in yourself."
+	icon_state = "id"
+
+/obj/item/weapon/storage/box/bprisoner/New()
+	..()
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+	new /obj/item/weapon/card/id/prisoner/basic(src)
+
+
 /obj/item/weapon/storage/box/seccarts
 	name = "box of PDA security cartridges"
 	desc = "A box full of PDA cartridges used by Security."

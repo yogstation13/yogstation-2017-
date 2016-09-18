@@ -299,3 +299,60 @@
 	new /obj/item/weapon/paper/bombcollars(src)
 	new /obj/item/weapon/implantcase/bombcollar(src)
 	new /obj/item/weapon/implanter(src)
+
+/obj/structure/closet/secure_closet/gulag
+	name = "gulag prisoner locker"
+	req_access = list(access_security)
+	icon_state = "sec"
+	var/obj/item/weapon/card/id/prisoner/savedcard = null
+
+/obj/structure/closet/secure_closet/gulag/New()
+	..()
+	new /obj/item/clothing/under/rank/prisoner(src)
+	new /obj/item/clothing/shoes/sneakers/orange(src)
+
+/obj/structure/closet/secure_closet/gulag/examine(mob/user)
+	..()
+	if(savedcard)
+		user << "<span class='notice'>The locker is assigned to [P.registered_name].</span>"
+	else
+		user << "<span class='notice'>The locker hasn't been assigned yet.</span>"
+
+	user << "<span class='notice'>Use shift+alt to wipe the locker memory.</span>"
+
+/obj/structure/closet/secure_closet/gulag/attackby(obj/item/weapon/W, mob/living/user, params)
+	if(istype(W, /obj/item/weapon/card/id/prisoner))
+		if(!savedcard)
+			var/obj/item/weapon/card/id/prisoner/P = W
+			if(P.savedlocker)
+				user << "<span class='warning'>[W] already has a synced locker!</span>"
+				return
+
+			user << "<span class='notice'>The locker scans and saves the card into it's database. Once the card reaches it's goal, it will open.</span>"
+			savedcard = W
+			P.savedlocker = src
+
+		else
+			user << "<span class='alert'>The locker has already been synced!</span>"
+	else
+		return ..()
+
+/obj/structure/closet/secure_closet/gulag/allowed(mob/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.get_idcard(), /obj/item/weapon/card/id/prisoner))
+			var/obj/item/weapon/card/id/prisoner/P = H.get_idcard()
+			if(P == savedcard)
+				if(P.points >= P.goal)
+					return 1
+	return ..()
+
+/obj/structure/closet/secure_closet/gulag/ShiftAltClick(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(istype(H.get_idcard(), /obj/item/weapon/card/id/prisoner))
+			return
+	if(allowed(user))
+		user << "<span class='alert'>You wipe the locker's memory.</span>"
+		savedcard.savedlocker = null
+		savedcard = null
