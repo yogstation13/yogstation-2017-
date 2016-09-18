@@ -44,6 +44,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
+/obj/item/clothing/glasses/meson/gar/cheap
+	name = "cheap gar mesons"
+	desc = "Do the impossible, see the inv- ... hold on a second."
+	force = 0
+	throwforce = 0
+	sharpness = null
+
 /obj/item/clothing/glasses/science
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
