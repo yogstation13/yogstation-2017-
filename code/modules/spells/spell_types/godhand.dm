@@ -57,7 +57,11 @@
 		M.gib()
 	else
 		M.death()
-		M.apply_damage(500, BRUTE)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/bodypart/B in H.bodyparts)
+				if(B.body_zone != "head" && B.body_zone != "chest")
+					B.dismember()
 	..()
 
 /obj/item/weapon/melee/touch_attack/fleshtostone
