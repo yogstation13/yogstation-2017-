@@ -65,6 +65,7 @@
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_paramedic = 67
+/var/const/access_warden_office = 68 // for the wardens office, seperating it from armory.
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

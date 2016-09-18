@@ -25,7 +25,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
-	/client/proc/stop_sounds
+	/client/proc/stop_sounds,
+	/client/proc/reload_jexp
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -134,6 +135,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggleaban,
 	/client/proc/toggle_log_hrefs,
 	/client/proc/everyone_random,
+	/client/proc/togglejexp, 		/* 	Toggles the use of JEXP		*/
 	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
@@ -144,7 +146,6 @@ var/list/admin_verbs_server = list(
 	/client/proc/adminchangemap,
 #endif
 	/client/proc/panicbunker
-
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/restart_controller,
@@ -932,6 +933,41 @@ var/list/admin_verbs_hideable = list(
 	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
 	message_admins("[src] revived [revive_count] mobs.")
 	log_admin("[src] revived [revive_count] mobs.")
+
+
+/client/proc/reload_jexp()
+	set name = "Reload JEXP stats"
+	set category = "Debug"
+	set desc = "Reloads JEXP stats. Be careful with this one."
+
+	if(!holder)
+		return
+
+	SSjexp.load_jexp_values()
+	message_admins("[src.ckey] has reloaded JEXP stats.")
+	log_admin("[src.ckey] has reloaded JEXP stats.")
+
+
+
+/client/proc/togglejexp()
+	set name = "Kill JEXP"
+	set category = "Server"
+	set desc = "This will disable JEXP checks, allowing players without cataloged experience to play any role."
+
+	if(!holder)
+		return
+
+	SSjexp.jexpstatus = !SSjexp.jexpstatus
+
+
+	if(SSjexp.jexpstatus == TRUE)
+		message_admins("[src.ckey] has brought the JEXP datum back alive.")
+		log_admin("[src.ckey] has brought the JEXP datum back alive.")
+		log_game("[src.ckey] has brought the JEXP datum back alive.")
+	else
+		message_admins("ALERT! ALERT! [src.ckey] has taken down the JEXP datum.")
+		log_admin("[src.ckey] has taken down the JEXP datum.</span>")
+		log_game("[src.ckey] has taken down the JEXP datum.</span>")
 
 /client/proc/check_ruins()
 	set name = "Check Ruins"

@@ -14,6 +14,7 @@ Research Director
 	req_admin_notify = 1
 	minimal_player_age = 15
 	whitelisted = 1
+	jexp_locked = TRUE
 
 	outfit = /datum/outfit/job/rd
 

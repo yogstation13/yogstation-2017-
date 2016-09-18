@@ -574,16 +574,24 @@ var/list/preferences_datums = list()
 		else if(GetJobDepartment(job, 4) & job.flag)
 			prefLevelLabel = "Low"
 			prefLevelColor = "orange"
-			prefUpperLevel = 3
+			if(job.player_exp_enough(user.client))
+				prefUpperLevel = 3
+			else
+				prefUpperLevel = 5
 			prefLowerLevel = 5
+
 		else
 			prefLevelLabel = "NEVER"
 			prefLevelColor = "red"
 			prefUpperLevel = 4
+
 			if(job.whitelisted && is_whitelisted(user))
 				prefLowerLevel = 1
 			else
-				prefLowerLevel = 2
+				if(job.player_exp_enough(user.client))
+					prefLowerLevel = 2
+				else
+					prefLowerLevel = 4
 
 		if(job.whitelisted && is_whitelisted(user))
 			prefLevelClass = "special"

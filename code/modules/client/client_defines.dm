@@ -39,6 +39,10 @@
 	var/related_accounts_cid = "Requires database"	//So admins know why it isn't working - Used to determine what other accounts previously logged in from this computer id
 	var/is_whitelisted = "Requires database"	//Used to determine if the player is whitelisted - gives access to Ultra preference for command jobs + AI
 
+
+	// jexp. presents the last cached values. database is used to count your jexp, not this.
+	var/list/cachedjexp = list()
+
 	var/connection_number = 0
 
 	preload_rsc = PRELOAD_RSC

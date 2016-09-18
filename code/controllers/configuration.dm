@@ -213,6 +213,9 @@
 
 	var/cross_name = "Other server"
 
+
+	var/list/jexpvalues = list()
+
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
 	for(var/T in L)
@@ -633,6 +636,33 @@
 					diary << "Unknown setting in configuration: '[name]'"
 		else if(type == "discord")
 			discord_channels[name] = value
+		else if (type == "jexp")
+			switch(name)
+
+				if("requirement_cargo")
+					config.jexpvalues["cargo"]				= text2num(value)
+
+				if("requirement_hos_one")
+					config.jexpvalues["hos"]				= text2num(value)
+
+				if("requirement_medical")
+					config.jexpvalues["medical"]				= text2num(value)
+
+				if("requirement_science")
+					config.jexpvalues["science"]				= text2num(value)
+
+				if("requirement_engineering")
+					config.jexpvalues["engineering"]			= text2num(value)
+
+				if("requirement_officer")
+					config.jexpvalues["officer"]				= text2num(value)
+
+				if("requirement_warden")
+					config.jexpvalues["warden"]				= text2num(value)
+
+				if("jexp_alive")
+					SSjexp.jexpstatus											= text2num(value)
+
 
 	fps = round(fps)
 	if(fps <= 0)

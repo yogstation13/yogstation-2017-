@@ -96,6 +96,7 @@
 			send_intercept(0)
 	start_state = new /datum/station_state()
 	start_state.count(1)
+	SSjexp.load_jexp_values()
 	return 1
 
 ///make_antag_chance()
@@ -306,6 +307,7 @@
 	for(var/mob/M in player_list)
 		if(M.client)
 			clients++
+			M.client.gain_jexp(M, M.job)
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++

@@ -27,10 +27,17 @@
 /obj/item/clothing/under/rank/security/brigofficer
 	name = "brig officer's jumpsuit"
 	desc = "A sleek jumpsuit worn by brig officers."
+	icon_state = "brigo"
+	item_state = "brigo"
+	item_color = "brigo"
+
+
+/obj/item/clothing/under/rank/security/deputy
+	name = "deputy jumpsuit"
+	desc = "A tactical security jumpsuit for deputies in training."
 	icon_state = "deputy"
 	item_state = "deputy"
 	item_color = "deputy"
-	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"

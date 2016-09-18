@@ -35,7 +35,7 @@
 			output += "<p><span class='linkOn'><b>Ready</b></span> <a href='byond://?src=\ref[src];ready=0'>X</a></p>"
 		else
 			output += "<p><a href='byond://?src=\ref[src];ready=1'>Ready</a> <span class='linkOff'>X</span></p>"
-			
+
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		if(joining_forbidden)
@@ -367,6 +367,8 @@
 			return 0
 	if(jobban_isbanned(src,rank))
 		return 0
+	if(job.player_exp_enough(src.client))
+		return 1
 	if(!job.player_old_enough(src.client))
 		return 0
 	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))

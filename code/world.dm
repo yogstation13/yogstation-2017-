@@ -363,6 +363,7 @@ var/inerror = 0
 	config.loadsql("config/dbconfig.txt")
 	if (config.maprotation && SERVERTOOLS)
 		config.loadmaplist("config/maps.txt")
+	config.load("config/jexp.txt","jexp")
 
 	// apply some settings from config..
 	abandon_allowed = config.respawn

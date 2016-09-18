@@ -40,3 +40,4 @@
 	spawn(40)
 		if(client)
 			client.playtitlemusic()
+	client.my_jexpstats()

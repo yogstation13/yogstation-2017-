@@ -44,6 +44,9 @@
 
 	var/outfit = null
 
+	// Whether these roles require you to play other jobs to earn.
+	var/jexp_locked
+
 //Only override this proc
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
 
@@ -140,6 +143,95 @@
 	if(available_in_days(C) == 0)
 		return 1	//Available in 0 days = available right now = player is old enough to play.
 	return 0
+
+/datum/job/proc/player_exp_enough(client/C)
+
+
+	if(!SSjexp.jexpstatus)
+		return 1
+
+	if(!jexp_locked)
+		return 1
+
+	if(!dbcon.IsConnected())
+		return 1
+
+	if(!C.findJoinDate(newclient = FALSE)) // if your byond account is older then two months, you're exempted from this
+		return 1
+
+		if(title == "Head of Personnel")
+			if(C.cachedjexp["Quartermaster"] < config.jexpvalues["cargo"])
+				return 0
+
+			if(C.cachedjexp["Cargo Technician"] < config.jexpvalues["cargo"])
+				return 0
+
+			else
+				return 1
+
+
+		if(title == "Head of Security")
+			if(C.cachedjexp["Warden"] < config.jexpvalues["hos"])
+				return 0
+
+			if(C.cachedjexp["Security Officer"] < config.jexpvalues["hos"])
+				return 0
+
+			else
+				return 1
+
+
+		if(title == "Chief Medical Officer")
+			if(C.cachedjexp["Medical Doctor"] < config.jexpvalues["medical"])
+				return 0
+
+			if(C.cachedjexp["Chemist"] < config.jexpvalues["medical"])
+				return 0
+
+
+			if(C.cachedjexp["Geneticist"] < config.jexpvalues["medical"])
+				return 0
+
+			else
+				return 1
+
+
+		if(title == "Research Director")
+			if(C.cachedjexp["Scientist"] < config.jexpvalues["science"])
+				return 0
+
+			if(C.cachedjexp["Roboticist"] < config.jexpvalues["science"])
+				return 0
+
+			else
+				return 1
+
+
+		if(title == "Chief Engineer")
+			if(C.cachedjexp["Station Engineer"] < config.jexpvalues["engineering"])
+				return 0
+
+			if(C.cachedjexp["Atmospheric Technician"] < config.jexpvalues["engineering"])
+				return 0
+
+			else
+				return 1
+
+
+		if(title == "Security Officer")
+			if(C.cachedjexp["Security Deputy"] < config.jexpvalues["officer"])
+				return 0
+
+			else
+				return 1
+
+
+		if(title == "Warden")
+			if(C.cachedjexp["Security Officer"] < config.jexpvalues["warden"])
+				return 0
+
+			else
+				return 1
 
 
 /datum/job/proc/available_in_days(client/C)
