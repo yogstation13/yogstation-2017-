@@ -7,19 +7,19 @@
 /////////////////////////////////// STUNNED ////////////////////////////////////
 
 /mob/proc/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
+	if((CANSTUN in status_flags) || ignore_canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
 
 /mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN || ignore_canstun)
+	if((CANSTUN in status_flags) || ignore_canstun)
 		stunned = max(amount,0)
 		if(updating)
 			update_canmove()
 
 /mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
-	if(status_flags & CANSTUN || ignore_canstun)
+	if((CANSTUN in status_flags) || ignore_canstun)
 		stunned = max(stunned + amount,0)
 		if(updating)
 			update_canmove()
@@ -27,19 +27,19 @@
 /////////////////////////////////// WEAKENED ////////////////////////////////////
 
 /mob/proc/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
+	if((CANWEAKEN in status_flags) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
 
 /mob/proc/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if(status_flags & CANWEAKEN)
+	if(CANWEAKEN in status_flags)
 		weakened = max(amount,0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
 
 /mob/proc/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
+	if((CANWEAKEN in status_flags) || ignore_canweaken)
 		weakened = max(weakened + amount,0)
 		if(updating)
 			update_canmove()	//updates lying, canmove and icons
@@ -47,7 +47,7 @@
 /////////////////////////////////// PARALYSIS ////////////////////////////////////
 
 /mob/proc/Paralyse(amount, updating = 1)
-	if(status_flags & CANPARALYSE)
+	if(CANPARALYSE in status_flags)
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
@@ -55,7 +55,7 @@
 				update_stat()
 
 /mob/proc/SetParalysis(amount, updating = 1)
-	if(status_flags & CANPARALYSE)
+	if(CANPARALYSE in status_flags)
 		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
@@ -63,7 +63,7 @@
 				update_stat()
 
 /mob/proc/AdjustParalysis(amount, updating = 1)
-	if(status_flags & CANPARALYSE)
+	if(CANPARALYSE in status_flags)
 		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))

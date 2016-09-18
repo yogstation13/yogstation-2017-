@@ -103,6 +103,8 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/device/flashlight/proc/fix_light()
+	broken = 0
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -120,7 +122,7 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/medical_holosign, list(T,user)) //produce a holographic glow
+			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
@@ -131,7 +133,7 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/medical_holosign/New(loc, creator)
+/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
 	..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
@@ -213,7 +215,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -247,7 +249,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
-		SSobj.processing += src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/is_hot()
 	return on * heat
@@ -304,10 +306,10 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 /obj/item/device/flashlight/emp/process()

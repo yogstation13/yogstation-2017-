@@ -178,7 +178,10 @@
 		. += "You recognise the footprints as belonging to:\n"
 		for(var/shoe in shoe_types)
 			var/obj/item/clothing/shoes/S = shoe
-			. += "some <B>[initial(S.name)]</B> \icon[S]\n"
+			if(S.flags & ABSTRACT)
+				. += "an unidentifiable footprint"
+			else
+				. += "some <B>[initial(S.name)]</B> \icon[S]\n"
 
 	user << .
 

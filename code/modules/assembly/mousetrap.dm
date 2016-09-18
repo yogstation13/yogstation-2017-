@@ -55,7 +55,7 @@
 					affecting = H.get_bodypart(pick("l_leg", "r_leg"))
 					H.Weaken(3)
 			if("l_hand", "r_hand")
-				if(!H.gloves)
+				if(!istype(H.gloves, /obj/item/clothing))
 					affecting = H.get_bodypart(type)
 					H.Stun(3)
 		if(affecting)

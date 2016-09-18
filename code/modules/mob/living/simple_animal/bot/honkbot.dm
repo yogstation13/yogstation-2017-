@@ -24,13 +24,13 @@
 	var/created_name = "Honkbot"
 
 //Honkbot Definition
-/mob/living/simple_animal/hostile/honkbot/
+/mob/living/simple_animal/hostile/honkbot
 	name = "honkbot"
 	desc = "A fusion of clown magic and science. An object of personified annoyance."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "honkbot"
 	icon_living = "honkbot"
-	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	status_flags = list(CANSTUN, CANWEAKEN, CANPUSH)
 	stop_automated_movement_when_pulled = 0
 	mouse_opacity = 1
 	faction = list("honkbot")

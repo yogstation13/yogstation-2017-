@@ -47,7 +47,7 @@
 	return !T || !A || ((!A.master.power_equip || istype(T, /turf/open/space)) && !is_type_in_list(src.loc, list(/obj/item, /obj/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
 	if(!fire_res_on_core)
@@ -56,7 +56,7 @@
 	diag_hud_set_health()
 
 /mob/living/silicon/ai/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health <= config.health_threshold_dead)

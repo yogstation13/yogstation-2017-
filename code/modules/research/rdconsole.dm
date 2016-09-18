@@ -341,6 +341,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/datum/design/being_built = files.known_designs[href_list["build"]]
 		var/amount = text2num(href_list["amount"])
 
+		if(being_built.make_reagents.len)
+			return 0
+
 		if(!linked_lathe || !being_built || !amount)
 			updateUsrDialog()
 			return
@@ -680,6 +683,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					if(b_type & PROTOLATHE) dat += "Protolathe<BR>"
 					if(b_type & AUTOLATHE) dat += "Autolathe<BR>"
 					if(b_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
+					if(b_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 				dat += "Required Materials:<BR>"
 				var/all_mats = d_disk.blueprint.materials + d_disk.blueprint.reagents
 				for(var/M in all_mats)
@@ -837,13 +841,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/temp_material
 				var/c = 50
 				var/t
-				for(var/M in D.materials)
+				var/all_materials = D.materials + D.reagents
+				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
 					if (t < 1)
-						temp_material += "<span class='bad'>[D.materials[M]*coeff] [CallMaterialName(M)]</span>"
+						temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_material += " [D.materials[M]*coeff] [CallMaterialName(M)]"
+						temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
 					c = min(c,t)
 
 				if (c >= 1)
@@ -947,13 +952,14 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
-				for(var/M in D.materials)
+				var/all_materials = D.materials + D.reagents
+				for(var/M in all_materials)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))
 						check_materials = 0
-						temp_materials += " <span class='bad'>[D.materials[M]/coeff] [CallMaterialName(M)]</span>"
+						temp_materials += " <span class='bad'>[all_materials[M]/coeff] [CallMaterialName(M)]</span>"
 					else
-						temp_materials += " [D.materials[M]/coeff] [CallMaterialName(M)]"
+						temp_materials += " [all_materials[M]/coeff] [CallMaterialName(M)]"
 				if (check_materials)
 					dat += "<A href='?src=\ref[src];imprint=[D.id]'>[D.name]</A>[temp_materials]<BR>"
 				else

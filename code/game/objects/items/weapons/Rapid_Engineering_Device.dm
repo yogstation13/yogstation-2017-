@@ -1,6 +1,6 @@
 
 /obj/item/weapon/rapid_engineering_device
-	name = "Rapid Engineering Device (RED)"
+	name = "\improper Rapid Engineering Device (RED)"
 	desc = "A device used to rapidly build, paint, and deconstruct pipes, walls, floors, and doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "HT_RCD"
@@ -35,6 +35,7 @@
 	rcd.max_matter = 200
 	rcd.name = name
 	rcd.abbreviated_name = "RED"
+	rcd.no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \the [src] blinks yellow.</span>"
 
 	painter = new /obj/item/weapon/airlock_painter(src)
 	painter.name = name

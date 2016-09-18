@@ -9,6 +9,7 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
+	paiAllowed = 0 //Sorry, no powergaming the borgs
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
@@ -127,6 +128,8 @@
 				R.SetEmagged(1)
 				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+		else
+			message_admins("EXPLOIT: [usr] attempted to emag a bot using robotics console without having the right to do so.")
 
 	src.updateUsrDialog()
 	return

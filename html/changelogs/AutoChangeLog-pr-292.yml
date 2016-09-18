@@ -1,5 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - bugfix: "Paladin is no longer a default lawset"
-  - rscadd: "Station Efficiency is now a considered default lawset."

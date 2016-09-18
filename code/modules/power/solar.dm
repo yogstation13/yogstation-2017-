@@ -19,6 +19,7 @@
 	var/ndir = SOUTH // target dir
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
+	paiAllowed = 1
 
 /obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc)
@@ -524,6 +525,8 @@
 
 
 /obj/machinery/power/solar_control/proc/set_broken()
+	if(paired)
+		paired.unpair()
 	stat |= BROKEN
 	update_icon()
 

@@ -39,11 +39,11 @@ Borg Hypospray
 		modes[R] = iteration
 		iteration++
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/reagent_containers/borghypo/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -91,7 +91,7 @@ Borg Hypospray
 		return
 	if(!istype(M))
 		return
-	if(R.total_volume && M.can_inject(user, 1, bypass_protection))
+	if(R.total_volume && (bypass_protection || M.can_inject(user, 1)))
 		M << "<span class='warning'>You feel a tiny prick!</span>"
 		user << "<span class='notice'>You inject [M] with the injector.</span>"
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
@@ -99,8 +99,8 @@ Borg Hypospray
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
-	var/contained = english_list(R)
-	add_logs(user, M, "injected", src, "(CHEMICALS: [contained])")
+			var/datum/reagent/injected = chemical_reagents_list[reagent_ids[mode]]
+			add_logs(user, M, "injected", src, "(CHEMICALS: [injected.name])")
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
 	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]

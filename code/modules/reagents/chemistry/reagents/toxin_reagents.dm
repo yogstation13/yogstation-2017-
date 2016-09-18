@@ -159,7 +159,7 @@
 	. = 1
 
 /datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
-	M.status_flags &= ~FAKEDEATH
+	M.status_flags -= FAKEDEATH
 	..()
 
 /datum/reagent/toxin/mindbreaker
@@ -678,8 +678,13 @@
 	id = "capilletum"
 	description = "A powerful toxin that exemplifies the patterns of punctured skin, matching their pigments and shapes, and then expands them across the body. Unlike other toxins, it does not have any negative effects."
 	color = "#FFB9D2"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 0 // no side effects
+	metabolization_rate = 0.3
+	toxpwr = 0 // the only side effect is loss of nutrition
+
+
+/datum/reagent/toxin/capilletum/on_mob_life(mob/living/M)
+	M.nutrition -= rand(20,45)
+	..()
 
 //ACID
 

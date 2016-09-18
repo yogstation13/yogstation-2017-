@@ -16,6 +16,7 @@
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
  *		Various paper bags.
+ *		Barrier Grenade boxes
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -755,7 +756,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/weapon/storage/box/ingredients/vegetarian
 	item_state = "vegetarian"
@@ -790,7 +791,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 
@@ -833,3 +834,41 @@
 	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
 	new /obj/item/weapon/circuitboard/computer/rdconsole(src)
+
+/obj/item/weapon/storage/box/barriers
+	name = "box of barrier grenades"
+	icon_state = "flashbang"
+	desc = "Tactical grenades here to solve your tactical problems. It is recommended to not go crazy with these."
+
+/obj/item/weapon/storage/box/barriers/New()
+	..()
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+
+/obj/item/weapon/storage/box/chameleon
+	name = "chameleon box"
+	desc = "An eerie box with the label 'syndicate (TM)'"
+	icon_state = "box_of_doom"
+
+/obj/item/weapon/storage/box/chameleon/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/weapon/storage/box
+	chameleon_action.chameleon_name = "Box"
+	chameleon_action.initialize_disguises()
+
+
+/obj/item/weapon/storage/box/chameleon/examine(mob/user)
+	..()
+	if(user.mind in ticker.mode.traitors)
+		user << "<span class='notice'>Activate to camouflage the [src.name]</span>"
+
+/obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
+	return
+
+

@@ -40,7 +40,7 @@
 			lastbrutetype = "bullet"
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			lastburntype = "laser"
-			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+			if(check_reflect(def_zone, P.firer, src, P.previous_dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
@@ -65,15 +65,17 @@
 			return 2
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/proc/check_reflect(def_zone, mob/living/shooter, mob/defense, previousdir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+	var/mob/living/newshooter = new /mob/living/carbon/human
+	newshooter.dir = previousdir
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone) == 1)
+		if(wear_suit.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	if(l_hand)
-		if(l_hand.IsReflect(def_zone) == 1)
+		if(l_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	if(r_hand)
-		if(r_hand.IsReflect(def_zone) == 1)
+		if(r_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	return 0
 
@@ -82,19 +84,19 @@
 
 	if(l_hand && !istype(l_hand, /obj/item/clothing))
 		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-		if(l_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(l_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(r_hand && !istype(r_hand, /obj/item/clothing))
 		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
-		if(r_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(r_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(w_uniform)
 		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	return 0
 
@@ -274,6 +276,14 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
+		if(affecting)
+			if(M.melee_damage_type == BRUTE && M.candismember == TRUE && dam_zone != "chest")
+				if(damage >= 25)
+					if(prob(damage)) //higher damage means higher chance of dismember
+						affecting.dismember()
+				else
+					if(prob(15)) //if it's below 25 just use a flat 15% for your 1 damage dismember needs
+						affecting.dismember()
 		updatehealth()
 
 

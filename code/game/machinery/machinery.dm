@@ -119,23 +119,30 @@ Class Procs:
 	var/interact_open = 0 // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
+	var/list/software = null
+	var/mob/living/silicon/pai/paired
+	var/paiAllowed = 0
 
 /obj/machinery/New()
 	..()
 	machines += src
 	if(!speed_process)
-		SSmachine.processing += src
+		START_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing += src
+		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
 /obj/machinery/Destroy()
+	if(paired)
+		paired.unpair(0)
 	machines.Remove(src)
 	if(!speed_process)
-		SSmachine.processing -= src
+		STOP_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
+	for(var/V in software)
+		qdel(V)
 	return ..()
 
 /obj/machinery/proc/locate_machinery()
@@ -148,6 +155,11 @@ Class Procs:
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onEMP()
+
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
@@ -218,6 +230,13 @@ Class Procs:
 
 /obj/machinery/interact(mob/user)
 	add_fingerprint(user)
+	if(software)
+		var/failUse = 0
+		for(var/V in software)
+			var/datum/software/M = V
+			failUse |= M.onActivate(user)
+		if(failUse)
+			return
 	ui_interact(user)
 
 /obj/machinery/ui_status(mob/user)
@@ -301,6 +320,20 @@ Class Procs:
 	else
 		return attack_hand(user)
 
+/obj/machinery/attackby(I as obj, user as mob)
+	if(istype(I, /obj/item/device/paicard))
+		var/obj/item/device/paicard/C = I
+		if(C.pai && (C.pai.stat != DEAD) && C.pai.pairing)
+			if(allowed(user))
+				if(paiAllowed)
+					C.pai.pair(src)
+				else
+					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
+				C.pai << "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>"
+	else
+		return ..()
 
 //set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user, check_power = 1, set_machine = 1)
@@ -472,3 +505,8 @@ Class Procs:
 		ex_act(2)
 	else
 		ex_act(1)
+
+/obj/machinery/get_software_list()
+	if(!software)
+		software = list()
+	return software

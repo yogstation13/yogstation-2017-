@@ -46,6 +46,22 @@
 		owner = null
 	return ..()
 
+/obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
+			if(!H.get_bodypart(body_zone))
+				if(H == user)
+					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
+					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
+				else
+					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
+					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
+				user.drop_item()
+				attach_limb(C)
+				return
+	..()
+
 /obj/item/bodypart/attackby(obj/item/W, mob/user, params)
 	if(W.sharpness)
 		add_fingerprint(user)
@@ -74,7 +90,7 @@
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
 /obj/item/bodypart/proc/take_damage(brute, burn)
-	if(owner && (owner.status_flags & GODMODE))
+	if(owner && (GODMODE in owner.status_flags))
 		return 0	//godmode
 	brute	= max(brute,0)
 	burn	= max(burn,0)

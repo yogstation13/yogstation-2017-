@@ -64,10 +64,10 @@
 
 /obj/structure/table/abductor/wabbajack/New()
 	. = ..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/structure/table/abductor/wabbajack/process()
@@ -132,7 +132,7 @@
 		3. Don't get messed up in their affairs."
 	languages_spoken = ALL
 	languages_understood = ALL
-	status_flags = GODMODE // Please don't punch the barkeeper
+	status_flags = list(GODMODE) // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 
 /mob/living/simple_animal/drone/snowflake/bardrone/New()
@@ -144,7 +144,7 @@
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
-	status_flags = GODMODE
+	status_flags = list(GODMODE)
 	languages_spoken = ALL
 	languages_understood = ALL
 	unique_name = FALSE

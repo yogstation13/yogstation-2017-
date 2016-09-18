@@ -1,5 +1,16 @@
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
+	var/target_temp = T0C - 40
+	var/cooling_power = 40
+
+/obj/structure/closet/secure_closet/freezer/return_air()
+	var/datum/gas_mixture/gas = ..()
+	if(!gas)
+		return null
+	var/datum/gas_mixture/newgas = gas.copy()
+	if(newgas.temperature > target_temp)
+		newgas.temperature = max(target_temp, newgas.temperature - cooling_power)
+	return newgas
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"

@@ -257,6 +257,7 @@
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BANANIUM	"$bananium"
+#define MAT_BIOMASS		"$biomass"
 
 
 //check_target_facings() return defines
@@ -322,6 +323,9 @@ var/list/bloody_footprints_cache = list()
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+//Gets the turf this atom inhabits
+#define get_turf(A) (get_step(A, 0))
 
 //Bot types
 #define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s

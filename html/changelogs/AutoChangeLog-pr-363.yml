@@ -1,5 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - rscdel: "Space Bartenders no longer exist."
-  - bugfix: "OOC tags work again."

@@ -124,8 +124,8 @@
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
 	/obj/item/toy/foamblade,
-	/obj/item/toy/prize/ripley,
-	/obj/item/toy/prize/honk,
+	/obj/item/toy/toy_mech/melee/ripley,
+	/obj/item/toy/toy_mech/honk,
 	/obj/item/toy/carpplushie,
 	/obj/item/toy/redbutton,
 	/obj/item/clothing/head/collectable/rabbitears)
@@ -199,7 +199,7 @@
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
+		/obj/item/weapon/reagent_containers/food/snacks/meatball = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
 	category = CAT_MISCFOOD

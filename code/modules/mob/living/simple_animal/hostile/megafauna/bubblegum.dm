@@ -52,8 +52,8 @@
 
 	else if(prob(5+anger_modifier/2))
 		slaughterlings()
-	else
-		if(health > maxHealth/2 && !client && !charging)
+	else if(!charging)
+		if(health > maxHealth/2 && !client)
 			charge()
 		else
 			charge()
@@ -75,7 +75,17 @@
 		bloodspell.phased = 1
 	new/obj/item/device/gps/internal/lavaland/bubblegum(src)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
+	if(charging)
+		return
+	..()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+	if(charging)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(charging)
 		return
 	..()
@@ -85,13 +95,14 @@
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	if(charging)
 		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
-		for(var/turf/T in range(src, 1))
-			T.singularity_pull(src, 7)
+		DestroySurroundings()
 	. = ..()
-
+	if(charging)
+		DestroySurroundings()
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
 	charging = 1
+	DestroySurroundings()
 	new/obj/effect/overlay/temp/dragon_swoop(T)
 	sleep(5)
 	throw_at(T, 7, 1, src, 0)
@@ -102,7 +113,8 @@
 	if(charging)
 		if(istype(A, /turf) || istype(A, /obj) && A.density)
 			A.ex_act(2)
-		..()
+		DestroySurroundings()
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
 	if(!charging)
@@ -123,18 +135,25 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	var/found_bloodpool = FALSE
+	var/obj/effect/decal/cleanable/blood/found_bloodpool
+	var/list/pools = list()
+	var/can_jaunt = FALSE
 	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
-		found_bloodpool = TRUE
+		can_jaunt = TRUE
+		break
+	if(!can_jaunt)
+		return
+	for(var/obj/effect/decal/cleanable/blood/nearby in view(get_turf(target),2))
+		pools += nearby
+	if(pools.len)
+		shuffle(pools)
+		found_bloodpool = pick(pools)
 	if(found_bloodpool)
-		for(var/obj/effect/decal/cleanable/blood/H in view(target,2))
-			visible_message("<span class='danger'>[src] sinks into the blood...</span>")
-			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-			forceMove(get_turf(H))
-			playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-			visible_message("<span class='danger'>And springs back out!</span>")
-			break
-
+		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
+		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+		forceMove(get_turf(found_bloodpool))
+		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+		visible_message("<span class='danger'>And springs back out!</span>")
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
