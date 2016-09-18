@@ -21,7 +21,7 @@ BONUS
 	stealth = 3
 	resistance = 4
 	stage_speed = 4
-	transmittable = -4
+	transmittable = 5
 	level = 5
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
