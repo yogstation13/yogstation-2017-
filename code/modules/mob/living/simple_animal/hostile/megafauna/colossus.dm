@@ -13,7 +13,7 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = 100
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
@@ -208,7 +208,7 @@
 	name ="death bolt"
 	icon_state= "chronobolt"
 	damage = 25
-	armour_penetration = 100
+	armour_penetration = 50
 	speed = 2
 	eyeblur = 0
 	damage_type = BRUTE
