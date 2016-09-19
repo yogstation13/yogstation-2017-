@@ -855,7 +855,7 @@ var/list/teleport_runes = list()
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Manifest Spirit"
-	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
+	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit. Placing a soulstone on the rune will capture the soul of the manifested spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	construct_invoke = 0
@@ -889,6 +889,11 @@ var/list/teleport_runes = list()
 		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 			ghosts_on_rune |= O
 	var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
+	for(var/obj/item/device/soulstone/S in get_turf(src))
+		user <<"<span class='warning'>You attempt to absorb the manifested soul of [ghost_to_spawn] through [S]!</span>"
+		add_logs(user, ghost_to_spawn, "captured [ghost_to_spawn.name]'s soul", S)
+		S.transfer_soul("VICTIM", ghost_to_spawn, user)
+		return
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent

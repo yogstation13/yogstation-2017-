@@ -9,6 +9,7 @@
 	explosion_block = 3
 	point_return = 4
 	atmosblock = 1
+	heatblock = 1
 
 
 /obj/effect/blob/shield/scannerreport()

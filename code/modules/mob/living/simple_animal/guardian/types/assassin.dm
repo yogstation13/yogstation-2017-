@@ -2,6 +2,7 @@
 /mob/living/simple_animal/hostile/guardian/assassin
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+	candismember = TRUE
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

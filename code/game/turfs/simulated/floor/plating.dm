@@ -219,12 +219,12 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	if(burn_stuff(AM))
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
 		processing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
