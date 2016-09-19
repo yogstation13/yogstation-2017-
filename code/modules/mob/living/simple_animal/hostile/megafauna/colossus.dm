@@ -14,8 +14,8 @@
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
 	armour_penetration = 100
-	melee_damage_lower = 40
-	melee_damage_upper = 40
+	melee_damage_lower = 100
+	melee_damage_upper = 100
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
