@@ -13,8 +13,8 @@
 	var/maxhealth = 30
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed/healed when?
-	var/brute_resist = 0.5 //multiplies brute damage by this
-	var/fire_resist = 1 //multiplies burn damage by this
+	var/brute_resist = 0.8 //multiplies brute damage by this
+	var/fire_resist = 2 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos
 	var/heatblock = 0 // if the blob blocks heatspread
 	var/mob/camera/blob/overmind
@@ -103,7 +103,7 @@
 /obj/effect/blob/proc/Life()
 	return
 
-/obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+/obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 2, expand_range = 1)
 	src.Be_Pulsed()
 	if(claim_range)
 		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
@@ -114,10 +114,10 @@
 		for(var/obj/effect/blob/B in orange(pulse_range, src))
 			B.Be_Pulsed()
 	if(expand_range)
-		if(prob(85))
+		if(prob(60))
 			src.expand()
 		for(var/obj/effect/blob/B in orange(expand_range, src))
-			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 4, 1))) //expand falls off with range but is faster near the blob causing the expansion
+			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 3, 1))) //expand falls off with range but is faster near the blob causing the expansion
 				B.expand()
 	return
 
@@ -126,7 +126,7 @@
 		ConsumeTile()
 		health = min(maxhealth, health+health_regen)
 		update_icon()
-		pulse_timestamp = world.time + 10
+		pulse_timestamp = world.time + 20
 		return 1 //we did it, we were pulsed!
 	return 0 //oh no we failed
 
@@ -283,7 +283,7 @@
 	M.do_attack_animation(src)
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
-	var/damage = rand(15, 30)
+	var/damage = rand(35,50)
 	take_damage(damage, BRUTE, M)
 	return
 
@@ -337,8 +337,8 @@
 	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
-	health = 21
-	maxhealth = 25
+	health = 20
+	maxhealth = 20
 	health_regen = 1
 	brute_resist = 0.25
 	atmosblock = 1
@@ -366,5 +366,5 @@
 		return ..()
 
 	if(exposed_temperature > T0C + 80)
-		take_damage(round(exposed_volume/1.2), BURN)
+		take_damage(round(exposed_volume/0.8), BURN)
 	..()
