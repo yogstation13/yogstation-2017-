@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "Miner's salve and Beepsky Smash now only stun if they are drunk."
+  - tweak: "Security officers, the detective, the warden, and the HoS are now slightly healed by drinking Beepsky Smash."
