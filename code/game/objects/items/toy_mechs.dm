@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/item/device/toy_mech_remote/attack_self(mob/user)
-	update_dialogue(user)
+	update_dialogue(user, 1)
 
 /obj/item/device/toy_mech_remote/proc/can_use(mob/user)
 	if(!user)
@@ -42,7 +42,10 @@
 		return 0
 	return 1
 
-/obj/item/device/toy_mech_remote/proc/update_dialogue(mob/user)
+/obj/item/device/toy_mech_remote/proc/update_dialogue(mob/user, open_new = 0)
+	if(!open_new && !popup)
+		return
+
 	if(!user && !popup)
 		return
 
@@ -53,7 +56,7 @@
 		if(popup)
 			popup.close()
 			qdel(popup)
-		popup = new(user, "mech_remote", "Toy Mecha Remote", 200, 300, src)
+		popup = new(user, "mech_remote", "Toy Mecha Remote", 230, 300, src)
 
 	if(!can_use(popup.user))
 		popup.close()
@@ -244,7 +247,6 @@
 	lastmove = 0
 	lastattack = 0
 	health = maxhealth
-	layer = initial(layer)
 	if(remote)
 		remote.update_dialogue()
 
