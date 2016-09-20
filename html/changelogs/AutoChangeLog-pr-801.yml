@@ -1,0 +1,7 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Xenomorph simplemobs are significantly more robust and intelligent, while also being capable of basic communication, report Nanotrasen scientists shortly before being devoured by xenomorphs."
+  - rscadd: "Butchering xenomorph simplemobs will yield nice presents."
+  - rscadd: "The Hive xenomorph ruin now is worth exploring-and significantly deadlier."
+  - rscadd: "Check github for an exact list of what was updated-too many to list."
