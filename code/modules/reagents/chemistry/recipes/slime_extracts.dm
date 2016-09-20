@@ -186,6 +186,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom,
 		)
 	blocked |= typesof(/obj/item/weapon/reagent_containers/food/snacks/customizable)
+	blocked |= /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bombanana
 
 	var/list/borks = typesof(/obj/item/weapon/reagent_containers/food/snacks) - blocked + /obj/item/weapon/guardiancreator/carp //holo fishsticks are food too ;^)
 	// BORK BORK BORK
