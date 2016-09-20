@@ -1,0 +1,4 @@
+author: ahamedx
+delete-after: True
+changes: 
+  - bugfix: "fixed tail not showing after attachement surgery."
