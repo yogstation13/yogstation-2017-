@@ -300,7 +300,7 @@
 
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
+		if(method == INGEST)
 			M.Stun(4)
 			M.Weaken(4)
 			if(show_message)
