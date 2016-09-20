@@ -17,12 +17,16 @@
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	"Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper", "Cannabis")
 	new_spawn.real_name = plant_name
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
+	uniform = /obj/item/clothing/under/rank/hydroponics
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
+	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
@@ -218,6 +222,7 @@
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	pocket2 = /obj/item/device/flashlight
 	roundstart = FALSE
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
@@ -231,7 +236,7 @@
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
 	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
-	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
+	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")] by whatever means necessary.</b>."
 	..()
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
