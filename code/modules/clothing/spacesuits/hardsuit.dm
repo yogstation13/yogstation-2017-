@@ -119,6 +119,10 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 
+/obj/item/clothing/suit/space/hardsuit/engine/New()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+	..()
+
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit helmet"
@@ -162,7 +166,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
-
+	
 
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
@@ -444,6 +448,10 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
+
+/obj/item/clothing/suit/space/hardsuit/security/New()
+ 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+ 	..()
 
 /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	name = "head of security's hardsuit helmet"
