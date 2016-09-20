@@ -1,5 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - tweak: "Ei Nath now instantly kills its victim instead of gibbing upon use, but using it on someone who is dead will gib them normally."
-  - tweak: "Slime people are more easily dismembered but can reattach their limbs"

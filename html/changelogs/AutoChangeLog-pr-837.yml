@@ -1,5 +1,0 @@
-author: ahamedx
-delete-after: True
-changes: 
-  - imageadd: "Added sprites for heart protector and tatters clothing"
-  - bugfix: "Fixed analyzer not showing Bz and n2o percentages when scanning canisters"

@@ -1,7 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen has equipped medical doctor lockers with syringe guns once again."
-  - rscadd: "Chemistry lockers now start stocked with a couple beakers of mildly dangerous chemicals."
-  - rscadd: "Nanotrasen managers noticed that medical lockers were full of useless small beakers, and have elected to replace them with reserve tanks of healing chemicals instead."
-  - rscadd: "The CMO now starts with a box of chemical implants in his locker."
