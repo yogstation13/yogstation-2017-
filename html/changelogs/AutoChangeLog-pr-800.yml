@@ -1,0 +1,6 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "The prison officer job has been removed and the NT manager who added it has been fired. Out of a cannon. Into the sun."
+  - rscadd: "Officers assigned to cargo will now actually have access to cargo."
+  - rscadd: "The head of security's ID will now allow him to enter the main cargo bay instead of knocking politely on the windows in the lobby asking to be let in, or more likely, going apeshit that the QM didn't hear his whispered request to open please and smashing the window down, beating the QM to death and shitting on his corpse while hooting like a chimp."
