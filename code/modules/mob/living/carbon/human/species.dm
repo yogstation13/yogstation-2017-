@@ -1239,7 +1239,7 @@
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked senseless!</span>", \
  										"<span class='userdanger'>[H] has been knocked senseless!</span>")
-						H.confused = max(H.confused, 20)
+						H.confused = min(H.confused, 20)
  						H.adjust_blurriness(10)
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						ticker.mode.remove_revolutionary(H.mind)
@@ -1259,9 +1259,9 @@
 			if("chest")	//Easier to score a stun but lasts less time
 				if("chest")
 					if(H.stat == CONSCIOUS && armor_block < 30)
-					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", "<span class='userdanger'>[H] has been knocked down!</span>")
-						H.apply_effect(5, WEAKEN, armor_block)
+						if(prob(I.force))
+							H.visible_message("<span class='danger'>[H] has been knocked down!</span>", "<span class='userdanger'>[H] has been knocked down!</span>")
+							H.apply_effect(5, WEAKEN, armor_block)
 
 				if(bloody)
 					if(H.wear_suit)
