@@ -6,6 +6,10 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	range = 21 //gives it some freedom to scout while invisible
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
+	sight = SEE_MOBS
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
@@ -36,6 +40,9 @@
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	if(..())
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.Weaken(3)//so the assassin can actually secure kills on people it sneak attacks
 			ToggleMode(1)
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount)
@@ -53,6 +60,8 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		armour_penetration = initial(armour_penetration)
 		environment_smash = initial(environment_smash)
+		pass_flags &= ~PASSMOB
+		pass_flags &= ~PASSTABLE
 		alpha = initial(alpha)
 		if(!forced)
 			src << "<span class='danger'><B>You exit stealth.</span></B>"
@@ -72,6 +81,7 @@
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15
+		pass_flags = PASSTABLE | PASSMOB
 		if(!forced)
 			src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
 		updatestealthalert()
