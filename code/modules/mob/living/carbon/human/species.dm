@@ -1260,7 +1260,7 @@
 				if("chest")
 					if(H.stat == CONSCIOUS && armor_block < 30)
 					if(prob(I.force))
-						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \"<span class='userdanger'>[H] has been knocked down!</span>")
+						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", "<span class='userdanger'>[H] has been knocked down!</span>")
 						H.apply_effect(5, WEAKEN, armor_block)
 
 				if(bloody)
