@@ -192,7 +192,7 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	. = ..()
-	if(health < (maxHealth/3))
+	if((stat != DEAD) && health < (maxHealth/3))
 		summon_backup(30)
 		visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>")
 		playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
@@ -207,6 +207,8 @@
 		return
 	egg_cooldown--
 	plant_cooldown--
+	if(stat == DEAD)
+		return
 	if(AIStatus == AI_IDLE)
 		if(!plants_off && prob(10) && plant_cooldown<=0)
 			plant_cooldown = initial(plant_cooldown)
