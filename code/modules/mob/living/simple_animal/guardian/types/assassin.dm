@@ -42,7 +42,7 @@
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
-				H.Weaken(3)//so the assassin can actually secure kills on people it sneak attacks
+				H.adjustStaminaLoss(35)//so the assassin can actually secure kills on people it sneak attacks
 			ToggleMode(1)
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount)
