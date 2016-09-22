@@ -29,6 +29,7 @@
 	H.face_atom(A)
 	H.visible_message("<span class='warning'>[H] starts placing their hands on [A]...</span>", "<span class='warning'>You start placing your hands on [A]...</span>")
 	if(!do_after(H, 20, target = A))
+		H << "<span class='info'>CONSUME protocol aborted.</span>"
 		return 1
 
 	H << "<span class='info'>Extracutaneous implants detect viable power source. Initiating CONSUME protocol.</span>"
@@ -135,9 +136,9 @@
 //MECH//
 /obj/mecha/can_consume_power_from()
 	if(!cell)
-		return "<span class='info'>APC cell absent, CONSUME protocol halted.</span>"
+		return "<span class='info'>Mech power cell absent, CONSUME protocol halted.</span>"
 	if(cell.charge < MIN_DRAINABLE_POWER)
-		return "<span class='info'>APC cell depleted, CONSUME protocol halted.</span>"
+		return "<span class='info'>Mech power cell depleted, CONSUME protocol halted.</span>"
 	return 1
 
 /obj/mecha/consume_power_from(amount)
@@ -150,9 +151,9 @@
 //BORG//
 /mob/living/silicon/robot/can_consume_power_from()
 	if(!cell)
-		return "<span class='info'>APC cell absent, CONSUME protocol halted.</span>"
+		return "<span class='info'>Cyborg power cell absent, CONSUME protocol halted.</span>"
 	if(cell.charge < MIN_DRAINABLE_POWER)
-		return "<span class='info'>APC cell depleted, CONSUME protocol halted.</span>"
+		return "<span class='info'>Cyborg power cell depleted, CONSUME protocol halted.</span>"
 	return 1
 
 /mob/living/silicon/robot/consume_power_from(amount)

@@ -148,6 +148,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	..()
 	if(!environment)
 		return
+	if(H.bodytemperature > 320)
+		speedmod = -0.34
+	else
+		speedmod = initial(speedmod)
+
 	if(H.bodytemperature < 70)
 		H.adjustToxLoss(0.5*REAGENTS_EFFECT_MULTIPLIER)
 		H.sleeping = max(8, H.sleeping)
@@ -231,7 +236,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 
 /datum/species/android/spec_life(mob/living/carbon/human/H)
-	H.weakeyes = 1
+	if(!H.weakeyes)
+		H.weakeyes = 1
 	..()
 
 /datum/species/android/handle_vision(mob/living/carbon/human/H)
@@ -255,6 +261,14 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.see_invisible = SEE_INVISIBLE_LIVING
 
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "oil")
+		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		return 1
+
+	if(chem.id == "welding_fuel")
+		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		return 1
+
 	chem.metabolization_rate = 0
 
 	if(chem.current_cycle > 40)
@@ -273,14 +287,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		H.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
 		H.nutrition -= 5 * REAGENTS_METABOLISM
 		chem.current_cycle++
-		return 1
-	if(chem.id == "oil")
-		H.adjustFireLoss(-0.4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
-		chem.current_cycle++
-	if(chem.id == "welding_fuel")
-		H.adjustFireLoss(-0.2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
-		chem.current_cycle++
-	if (istype(chem, /datum/reagent/consumable)) //paranoia paranoia type casting is coming to get me
+
+	if (istype(chem, /datum/reagent/consumable))
 		var/datum/reagent/consumable/food = chem
 		if (food.nutriment_factor)
 			food.nutriment_factor = initial(food.nutriment_factor) * 0.2
