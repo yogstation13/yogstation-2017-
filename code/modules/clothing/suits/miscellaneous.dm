@@ -486,7 +486,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	name = "atmospherics winter coat"
 	icon_state = "coatatmos"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/weapon/rpd,/obj/item/device/analyzer,/obj/item/device/geiger_counter)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/weapon/pipe_dispenser,/obj/item/device/analyzer,/obj/item/device/geiger_counter)
 	hoodtype = /obj/item/clothing/head/winterhood/engineering/atmos
 
 /obj/item/clothing/head/winterhood/engineering/atmos
