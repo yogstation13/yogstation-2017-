@@ -108,6 +108,8 @@
 	invis_sight = INVISIBILITY_LIGHTING
 	cold_slowdown_factor = COLD_SLOWDOWN_FACTOR * 0.6
 	speedmod = 0.33
+	radiation_faint_threshhold = 80
+	radiation_effect_mod = 2
 
 	high_temp_level_1 = BODYTEMP_HEAT_DAMAGE_LEVEL_2
 	high_temp_level_2 = BODYTEMP_HEAT_DAMAGE_LEVEL_3
@@ -223,7 +225,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	attack_verb = "assault"
 	darksight = 2
 	brutemod = 1.5
-	heatmod = 2
+	heatmod = 1.5
+	coldmod = 1.5
 	siemens_coeff = 1.5
 	radiation_effect_mod = 0
 	radiation_faint_threshhold = 999
@@ -234,6 +237,14 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	heal_immunities = list(DAMAGE_CHEMICAL)
 	limb_default_status = ORGAN_SEMI_ROBOTIC
 	invis_sight = SEE_INVISIBLE_MINIMUM
+
+	high_temp_level_1 = 340
+	high_temp_level_2 = 370
+	high_temp_level_3 = 410
+	low_temp_level_1 = 280
+	low_temp_level_2 = 250
+	low_temp_level_3 = 190
+
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 
 /datum/species/android/spec_life(mob/living/carbon/human/H)
@@ -384,9 +395,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	attack_verb = "slice"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	burnmod = 1.5
+	burnmod = 2
 	heatmod = 1.5
 	coldmod = 1.5
+	acidmod = 2
 	roundstart = 1
 	speedmod = 0.33
 	damage_immunities = list()
@@ -531,7 +543,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 					if (H.stat != UNCONSCIOUS && H.stat != DEAD)
 						for(var/V in ticker.mode.shadows)
 							var/datum/mind/sling_mind = V
-							if(sling_mind.current && (sling_mind.current in view(3, H)) )
+							if(sling_mind.current && (get_dist(sling_mind.current, H) < 3))
 								light_level = -2
 								light_msg = "<span class='warning'>Being in the presence of one of your masters revitalizes you.</span>"
 								H.adjustToxLoss(-1, 1)
