@@ -729,6 +729,8 @@
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
+				if(reagents.get_reagent_amount("stimulants") > 1) //uncrittable boi
+					return
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()

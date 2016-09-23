@@ -1334,6 +1334,8 @@
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
+		if(H.reagents.get_reagent_amount("stimulants") > 1) //stimpacks make you uncrittable
+			return
 		if(H.health >= config.health_threshold_crit)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			if(!lungs)
