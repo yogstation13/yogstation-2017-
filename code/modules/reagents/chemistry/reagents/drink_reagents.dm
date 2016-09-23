@@ -547,7 +547,6 @@
 	color = "#2E2E61" // rgb: 46, 46, 97
 
 /datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Weaken(3, 1, 0)
 	M.dizziness +=6
 	switch(current_cycle)
 		if(15 to 45)
@@ -557,6 +556,7 @@
 		if(45 to 55)
 			if(prob(50))
 				M.confused = max(M.confused+3,0)
+				M.Sleeping(2, 0)
 		if(55 to 200)
 			M.set_drugginess(55)
 		if(200 to INFINITY)

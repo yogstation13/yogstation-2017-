@@ -649,7 +649,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_hyperka
-	name = "Cyborg (Hyper-Kinetic Accelerator)"
+	name = "Cyborg Upgrade(Hyper-Kinetic Accelerator)"
 	id = "borg_upgrade_hyperka"
 	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
 	build_type = MECHFAB //Reqs same as human Hyper KA
@@ -658,7 +658,7 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_ashplating
+/*/datum/design/borg_upgrade_ashplating
 	name = "Cyborg Upgrade (Ash Storm Plating)"
 	id = "borg_upgrade_ashplating"
 	build_type = MECHFAB
@@ -666,7 +666,7 @@
 	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
 	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Modules")*/
 
 /datum/design/borg_syndicate_module
 	name = "Cyborg Upgrade (Illegal Modules)"

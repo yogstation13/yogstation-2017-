@@ -152,10 +152,6 @@ Doesn't work on other aliens/AI.*/
 		// TURF CHECK
 		else if(istype(target, /turf))
 			var/turf/T = target
-			// R WALL
-			if(istype(T, /turf/closed/wall/r_wall))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
 			// R FLOOR
 			if(istype(T, /turf/open/floor/engine))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"

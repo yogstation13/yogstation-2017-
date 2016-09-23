@@ -13,11 +13,11 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 6
+	see_in_dark = 8
 	ventcrawler = 2
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
-	minbodytemp = 200
+	minbodytemp = TCMB //he hangs out in cryo, so
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
 	animal_species = /mob/living/simple_animal/pet/cat
@@ -74,67 +74,67 @@
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/Runtime
 	name = "Runtime"
-	desc = "GCAT"
+	desc = "GCAT."
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
 	var/list/family = list()
-	var/cats_deployed = 0
-	var/memory_saved = 0
+	//var/cats_deployed = 0
+	//var/memory_saved = 0
+// If you're from 500 years in the future and wondering why this is commented out-One, go play a better game. Two, runtime literally did not stop fucking other cats until admins had to delete them over and over.
+///mob/living/simple_animal/pet/cat/Runtime/New()
+//	if(prob(5))
+//		icon_state = "original"
+//		icon_living = "original"
+//		icon_dead = "original_dead"
+	//Read_Memory()
+//	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/New()
-	if(prob(5))
-		icon_state = "original"
-		icon_living = "original"
-		icon_dead = "original_dead"
-	Read_Memory()
-	..()
+///mob/living/simple_animal/pet/cat/Runtime/Life()
+//	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
+//		Deploy_The_Cats()
+//	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+//		Write_Memory()
+//	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/Life()
-	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
-		Deploy_The_Cats()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory()
-	..()
+//mob/living/simple_animal/pet/cat/Runtime/death()
+//	if(!memory_saved)
+//		Write_Memory(1)
+//	..()
 
-/mob/living/simple_animal/pet/cat/Runtime/death()
-	if(!memory_saved)
-		Write_Memory(1)
-	..()
+//mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
+//	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+//	S["family"] 			>> family
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	S["family"] 			>> family
+//	if(isnull(family))
+//		family = list()
 
-	if(isnull(family))
-		family = list()
+///mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
+//	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
+//	family = list()
+//	if(!dead)
+//		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+//			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
+//				continue
+//			if(C.type in family)
+//				family[C.type] += 1
+//			else
+//				family[C.type] = 1
+//	S["family"]				<< family
+//	memory_saved = 1
 
-/mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-	family = list()
-	if(!dead)
-		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
-				continue
-			if(C.type in family)
-				family[C.type] += 1
-			else
-				family[C.type] = 1
-	S["family"]				<< family
-	memory_saved = 1
-
-/mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
-	cats_deployed = 1
-	for(var/cat_type in family)
-		if(family[cat_type] > 0)
-			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
-				new cat_type(loc)
+///mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
+//	cats_deployed = 1
+//	for(var/cat_type in family)
+//		if(family[cat_type] > 0)
+//			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
+//				new cat_type(loc)
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
-	gold_core_spawnable = 0
+	gold_core_spawnable = 2 
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
@@ -213,6 +213,54 @@
 			if(M && stat != DEAD)
 				emote("me", 1, "hisses!")
 
+/mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
+	name = "Keeki"
+	desc = "It's a cat made out of cake."
+	icon_state = "cak"
+	icon_living = "cak"
+	icon_dead = "cak_dead"
+	health = 50
+	maxHealth = 50
+	harm_intent_damage = 10
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
+	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	response_harm = "takes a bite out of"
+	deathmessage = "loses its false life and collapses!"
+	death_sound = "bodyfall"
+
+/mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
+	..()
+	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
+	if(!B || !B.brainmob || !B.brainmob.mind)
+		return
+	B.brainmob.mind.transfer_to(src)
+	src << "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
+	free cake to the station!</b>"
+	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
+	if(new_name)
+		src << "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>"
+		name = new_name
+
+/mob/living/simple_animal/pet/cat/cak/Life()
+	..()
+	if(stat)
+		return
+	if(health < maxHealth)
+		adjustBruteLoss(-8) //Fast life regen
+	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+		if(D.icon_state != "donut2")
+			D.name = "frosted donut"
+			D.icon_state = "donut2"
+			D.reagents.add_reagent("sprinkles", 2)
+			D.bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
+			D.filling_color = "#FF69B4"
+
+/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
+	..()
+	if(L.a_intent == "harm" && L.reagents && !stat)
+		L.reagents.add_reagent("nutriment", 0.4)
+		L.reagents.add_reagent("vitamin", 0.4)
 
 
 /mob/living/simple_animal/pet/cat/mimekitty
@@ -252,3 +300,4 @@
 
 /mob/living/simple_animal/pet/cat/mimekitty/say()
 	return //MIME kitty. Not SPEAK kitty.
+

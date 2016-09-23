@@ -127,12 +127,26 @@
 									"<span class='userdanger'>[user] injects [L] with the syringe!")
 
 				var/list/rinject = list()
+				var/viruslist = ""
 				for(var/datum/reagent/R in reagents.reagent_list)
+					if(istype(R, /datum/reagent/blood))
+						var/datum/reagent/blood/RR = R
+						for(var/datum/disease/D in RR.data["viruses"])
+							viruslist += " [D.name]"
+							if(istype(D, /datum/disease/advance))
+								var/datum/disease/advance/DD = D
+								viruslist += " \[ symptoms: "
+								for(var/datum/symptom/S in DD.symptoms)
+									viruslist += "[S.name] "
+								viruslist += "\]"
 					rinject += R.name
 				var/contained = english_list(rinject)
 
+				if(viruslist)
+					investigate_log("[user.real_name] ([user.ckey]) injected [L.real_name] ([L.ckey]) with [viruslist]", "viro")
+
 				if(L != user)
-					add_logs(user, L, "injected", src, addition="which had [contained]")
+					add_logs(user, L, "injected", src, addition=" which had [contained]")
 				else
 					log_attack("<font color='red'>[user.name] ([user.ckey]) injected [L.name] ([L.ckey]) with [src.name], which had [contained] (INTENT: [uppertext(user.a_intent)])</font>")
 					L.attack_log += "\[[time_stamp()]\] <font color='orange'>Injected themselves ([contained]) with [src.name].</font>"

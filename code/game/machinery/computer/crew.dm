@@ -8,6 +8,38 @@
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/computer/crew
 
+/obj/machinery/computer/crew/attacked_by(obj/item/I, mob/living/user)
+	..()
+	if(istype(I, /obj/item/device/gps/))
+		var/obj/item/device/gps/G = I
+		if(G.channel != "medical")
+			user << "<span class='warning'>Your GPS has an incompatiable channel!"
+			return
+
+		var/list/trackedmobs = list()
+
+		for(var/mob/living/carbon/human/H in mob_list)
+			if(H.z == z)
+				var/obj/item/clothing/under/U = H.w_uniform
+				if (U.has_sensor && U.sensor_mode)
+					if(H.name == "Unknown")
+						continue
+
+					trackedmobs += H
+
+
+		var/selection2 = input(user, "Medical GPS Interface", name) as anything in trackedmobs
+		if(!selection2)
+			return
+		if(G.emagged)
+			return
+
+		var/mob/M = selection2
+		var/turf/pos = get_turf(M)
+
+		G.savedlocation = "([pos.x], [pos.y], [pos.z])"
+		user << "<span class='notice'>Your GPS has saved the last position of [M.name].</span>"
+
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
 		return

@@ -407,5 +407,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	else
 		..()
 
+/mob/living/carbon/human/proc/purrbation()
+	if(("tail_human" in dna.species.mutant_bodyparts) && ("ears" in dna.species.mutant_bodyparts))
+		if(dna.features["tail_human"] == "None" || dna.features["ears"] == "None")
+			dna.features["tail_human"] = "Cat"
+			dna.features["ears"] = "Cat"
+		else
+			dna.features["tail_human"] = "None"
+			dna.features["ears"] = "None"
+		regenerate_icons()
+
+		return
 
 #undef HUMAN_MAX_OXYLOSS

@@ -164,8 +164,7 @@
 				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
 			F.on = 0
 			F.broken = 1
-			spawn(100)
-				F.broken = 0
+			addtimer(F, "fix_light", 100)
 			F.update_brightness()
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
@@ -175,6 +174,16 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(mob/living/H)
 	var/blacklistLuminosity = 0
+	if(istype(H, /mob/living/simple_animal/drone))
+		var/mob/living/simple_animal/drone/D = H
+		D.light_on = 2
+		blacklistLuminosity -= D.luminosity
+		addtimer(D, "fix_light", 600)
+	else if(istype(H, /mob/living/simple_animal/hostile/mining_drone))
+		var/mob/living/simple_animal/hostile/mining_drone/D = H
+		D.light_on = 2
+		blacklistLuminosity -= D.luminosity
+		addtimer(D, "fix_light", 600)
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
 	H.SetLuminosity(blacklistLuminosity) //I hate lightcode for making me do it this way
@@ -424,6 +433,9 @@
 				return
 
 		enthralling = 0
+		if(is_shadow_or_thrall(target))
+			user << "<span class='shadowling'><b>[target.real_name]</b> is already a thrall...</span>"
+			return
 		user << "<span class='shadowling'>You have enthralled <b>[target.real_name]</b>!</span>"
 		target.visible_message("<span class='big'>[target] looks to have experienced a revelation!</span>", \
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")

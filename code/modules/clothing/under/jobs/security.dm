@@ -24,6 +24,14 @@
 	item_state = "gy_suit"
 	item_color = "security"
 
+/obj/item/clothing/under/rank/security/brigofficer
+	name = "brig officer's jumpsuit"
+	desc = "A sleek jumpsuit worn by brig officers."
+	icon_state = "deputy"
+	item_state = "deputy"
+	item_color = "deputy"
+	alt_covers_chest = 1
+
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
 	desc = "A formal security suit for officers complete with nanotrasen belt buckle."

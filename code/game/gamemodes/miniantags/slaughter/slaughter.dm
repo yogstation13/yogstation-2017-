@@ -15,7 +15,7 @@
 	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	var/feast_sound = 'sound/magic/Demon_consume.ogg'
 	death_sound = 'sound/magic/demon_dies.ogg'
@@ -30,6 +30,7 @@
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	candismember = TRUE
 	see_in_dark = 8
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT
@@ -78,6 +79,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
 	origin_tech = "combat=5;biotech=7"
+	decay_time = 0
 
 /obj/item/organ/heart/demon/update_icon()
 	return //always beating visually

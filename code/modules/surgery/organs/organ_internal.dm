@@ -11,7 +11,34 @@
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
 	var/vital = 0
+	var/decay_time = 0
+	var/decay = 0
 
+/obj/item/organ/New()
+	..()
+	if(decay_time)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/organ/process()
+	handle_decay()
+
+/obj/item/organ/proc/handle_decay()
+	if(owner && !(owner.stat & DEAD))
+		decay = max(0, decay-1)
+	else
+		var/temperature
+		if(owner)
+			temperature = owner.bodytemperature
+		else
+			var/datum/gas_mixture/air = return_air()
+			if(!air)
+				return
+			temperature = air.temperature
+
+		if(temperature > T0C - 10)
+			decay = min(decay_time, decay + 1)
+	if(decay >= decay_time)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0)
 	if(!iscarbon(M) || owner == M)
@@ -94,6 +121,20 @@
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
 
+/obj/item/organ/attackby(obj/item/I, mob/user, proximity_flag)
+	if(!proximity_flag)
+		return 0
+	if(is_health_analyzer(I))
+		if(decay_time)
+			if(decay >= decay_time)
+				user << "<span class='notice'>\The [src] has decayed beyond the point of no return.</span>"
+			else
+				user << "<span class='notice'>\The [src] is [round(decay / decay_time, 0.1)]% decayed.</span>"
+		else
+			user << "<span class='notice'>\The [src] will not decay.</span>"
+		return 1
+	return 0
+
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
@@ -108,6 +149,7 @@
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
+	decay_time = DEFIB_TIME_LIMIT
 
 /obj/item/organ/heart/update_icon()
 	if(beating)
@@ -134,10 +176,11 @@
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
-		visible_message("<span class='notice'>[user] squeezes [src] to \
-			make it beat again!</span>")
-		Restart()
-		addtimer(src, "stop_if_unowned", 80)
+		if(Restart())
+			user.visible_message("<span class='notice'>[user] squeezes [src] to make it beat again!</span>")
+			addtimer(src, "stop_if_unowned", 80)
+		else
+			user.visible_message("<span class='warning'>[user] squeezes [src], but it does not start to beat.</span>")
 
 /obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -153,9 +196,16 @@
 	return 1
 
 /obj/item/organ/heart/proc/Restart()
+	if(decay_time && decay >= decay_time)
+		return 0
 	beating = 1
 	update_icon()
 	return 1
+
+/obj/item/organ/heart/handle_decay()
+	..()
+	if(decay_time && decay >= decay_time)
+		Stop()
 
 /obj/item/organ/heart/prepare_eat()
 	var/obj/S = ..()
@@ -170,6 +220,7 @@
 	icon_base = "cursedheart"
 	origin_tech = "biotech=6"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
+	decay_time = 0
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
 	var/pump_delay = 30 //you can pump 1 second early, for lag, but no more (otherwise you could spam heal)
@@ -446,10 +497,10 @@
 
 /obj/item/organ/shadowtumor/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/shadowtumor/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/organ/shadowtumor/process()

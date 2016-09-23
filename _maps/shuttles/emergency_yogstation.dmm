@@ -46,7 +46,7 @@
 "aT" = (/obj/structure/window/reinforced,/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "aU" = (/obj/machinery/status_display,/turf/closed/wall/shuttle{icon_state = "swallc4"; dir = 2},/area/shuttle/escape)
 "aV" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/chair,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
-"aW" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{name = "The Undying Classic"; timid = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aW" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dwidth = 12; height = 13; name = "The Undying Classic"; timid = 1; width = 27},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aX" = (/obj/structure/extinguisher_cabinet{pixel_x = 24},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aY" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "aZ" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
@@ -88,9 +88,9 @@ aQaJaJaJaRaSamaTaTaTamaMac
 avaxacacaxaUamaVaVaVamaMaB
 aWamamamamamamamamamamaXaB
 aBaYamaTaTaTamaTaTaTamaMaB
-acaYamaVaVaVamaVaVaVamamaZ
-acaYamamamamamamamamamamaZ
-acaYamaTaTaTamaTaTaTamamaZ
+acaYamaVaVaVamaVaVaVamamac
+acaYamamamamamamamamamamac
+acaYamaTaTaTamaTaTaTamamac
 aBaYamaVaVaVamaVaVaVamaMaB
 aZamamamamamamamamamamaXaB
 avacbaaGacaxbbamambcbdbeaB

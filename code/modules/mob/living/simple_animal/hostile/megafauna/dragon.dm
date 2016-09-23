@@ -13,7 +13,6 @@
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
@@ -86,7 +85,7 @@
 	name = "certain death"
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "landing"
+	icon_state = "rune_large"
 	layer = BELOW_MOB_LAYER
 	pixel_x = -32
 	pixel_y = -32

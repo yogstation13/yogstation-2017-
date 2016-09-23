@@ -35,8 +35,10 @@
 		else
 			total = last_cached_total_weight
 
+		var/nextantag = round(100/((weight/total)*280))
+
 		src << "You account for [(weight/total)*100]% of the antagonist weight on the server right now."
-		src << "You will likely be an antagonist within the next [round(100/((weight/total)*280))] rounds." //5.6 being the average number of antagonists in a round
+		src << "You will likely be an antagonist within the next [nextantag] [nextantag > 1 ? "rounds" : "round"]." //5.6 being the average number of antagonists in a round
 		//as determined by about 5 seconds of shitty math on a napkin
 		src << "(Some statistics are cached for performance purposes, and may be slightly inaccurate.)"
 	else

@@ -7,23 +7,24 @@
 "g" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
 "h" = (/turf/closed/indestructible/opshuttle,/area/ruin/unpowered)
 "i" = (/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/lavaland/surface/outdoors)
-"j" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/device/flashlight/lantern,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"j" = (/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/weapon/pickaxe,/obj/item/device/flashlight/lantern,/obj/structure/closet/crate/engineering{name = "Mining Supplies"},/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "k" = (/obj/effect/mob_spawn/human/prisoner_transport,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"l" = (/obj/item/weapon/shard,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/ruin/unpowered)
-"m" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/obj/item/device/flashlight/seclite,/obj/effect/light_emitter,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"n" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"o" = (/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"p" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"q" = (/obj/item/weapon/shard,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/lavaland/surface/outdoors)
-"r" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/ruin/unpowered)
-"s" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/ruin/unpowered)
-"t" = (/obj/structure/closet/crate/internals,/obj/item/weapon/crowbar/large,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"u" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"v" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"w" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"x" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"y" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"z" = (/obj/effect/decal/cleanable/blood,/obj/item/device/flashlight/seclite,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"l" = (/obj/machinery/suit_storage_unit/ert/security,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"m" = (/obj/structure/closet/wardrobe/red{desc = "The Pilot won't be needing any of this...."; name = "Pilots Belongings"},/obj/item/ammo_box/c45,/obj/item/weapon/tank/internals/emergency_oxygen/double,/obj/item/toy/figure/secofficer,/obj/item/weapon/tank/internals/oxygen/red,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"n" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/obj/item/device/flashlight/seclite,/obj/effect/light_emitter,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"o" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"p" = (/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"q" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"r" = (/obj/item/weapon/shard,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/lavaland/surface/outdoors)
+"s" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/ruin/unpowered)
+"t" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/item/weapon/gun/projectile/automatic/pistol/m1911{desc = "A classic .45 handgun with a small magazine capacity, this one has a name engraved on it that reads 'Samantha'"; name = "Samantha"},/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=16;n2=23"},/area/ruin/unpowered)
+"u" = (/obj/structure/closet/crate/internals{desc = "An emergency supply crate with the NT logo attached to it, it has a small reading below which seems to signify that you probably shouldn't open this incase of an emergency. It also says only for security personell"},/obj/item/weapon/storage/toolbox/mechanical,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/gauze,/obj/item/stack/medical/ointment,/turf/open/floor/plasteel/shuttle/red{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"v" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"w" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"x" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"y" = (/obj/item/weapon/gun/projectile/automatic/pistol/m1911,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"z" = (/obj/effect/mob_spawn/human/nanotrasensoldier,/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"A" = (/obj/effect/decal/cleanable/blood,/obj/item/device/flashlight/seclite,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 abbbbbbabbaabbbbbbbb
@@ -35,15 +36,15 @@ baabbbbbbbbbbaaaaaaa
 baaabbbbbbbbbaaaaaaa
 bbbbbebaaaabaaaaaaaa
 bbbbbfeaaaabbaaaaaaa
-bbbghhhhhhheiihheaaa
-bbbhhjkkkkhiiihlaaaa
-bbbghmnooopiqirsaaaa
-bbbhhtkkkkhiiieaaeaa
-bbbghhhhhhhuuieeeabb
+bbbghhhhhhheiihhhaaa
+bbbhhjkkkkhiiihlmaaa
+bbbghnopppqiristpaaa
+bbbhhukkkkhiiieaaeaa
+bbbghhhhhhhvvieeeabb
 bbbbbfebbbbbbbbbbabb
 bbbbbebbbbbbbbbbbbbb
-bbbbbbbvvbbbbbbbbaab
-bbbwxbvvvbbbcbbbbaab
-babbbyzbbaaaaaaaaaaa
+bbbbbbbwwbbbbbbbbaab
+bbbxybwwwbbbcbbbbaab
+babbbzAbbaaaaaaaaaaa
 bbabbbbbbaaaaaaaaaaa
 "}

@@ -314,7 +314,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
+		if(!istype(H.gloves, /obj/item/clothing) && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/bodypart/affecting = H.get_bodypart(organ)

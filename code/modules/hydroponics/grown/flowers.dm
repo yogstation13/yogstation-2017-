@@ -197,6 +197,6 @@
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
-	if(!user.gloves)
+	if(!istype(user.gloves, /obj/item/clothing))
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))

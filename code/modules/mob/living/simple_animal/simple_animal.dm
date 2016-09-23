@@ -4,7 +4,7 @@
 	health = 20
 	maxHealth = 20
 
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 
 	var/icon_living = ""
 	var/icon_dead = "" //icon when the animal is dead. Don't use animated icons for this.
@@ -45,6 +45,7 @@
 	var/melee_damage_upper = 0
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
 	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	var/candismember = FALSE //if the animal can chop off limbs on hit, see human_defense for the dismemberment stuff
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
 	var/attacktext = "attacks"
 	var/attack_sound = null
@@ -103,7 +104,7 @@
 		return 1
 
 /mob/living/simple_animal/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health <= 0)
@@ -129,9 +130,18 @@
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
 					var/anydir = pick(cardinal)
 					if(Process_Spacemove(anydir))
-						Move(get_step(src, anydir), anydir)
+						if(turf_is_safe(get_step(src, anydir)) )
+							Move(get_step(src, anydir), anydir)
+						else
+							dir = anydir
 						turns_since_move = 0
+
 			return 1
+
+/mob/living/simple_animal/proc/turf_is_safe(turf)
+	if("lava" in weather_immunities)
+		return 1
+	return !istype(turf, /turf/open/floor/plating/lava)
 
 /mob/living/simple_animal/proc/handle_automated_speech(var/override)
 	if(speak_chance)
@@ -274,7 +284,7 @@
 	return 0
 
 /mob/living/simple_animal/proc/adjustHealth(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
 	updatehealth()
@@ -317,6 +327,14 @@
 
 		if("harm", "disarm")
 			M.do_attack_animation(src)
+			if(M.dna.species.id == "abomination")//so abominations don't do 5 damage to things
+				visible_message("<span class='danger'>[M] tears into [src]!</span>", \
+								"<span class='userdanger'>[M] tears into [src]!</span>")
+				playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+				attack_threshold_check(40)
+				add_logs(M, src, "attacked")
+				updatehealth()
+				return 1
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)

@@ -42,7 +42,7 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = 1
-	status_flags = GODMODE // Cannot push also
+	status_flags = list(GODMODE) // Cannot push also
 
 	shadow_walk = 1
 

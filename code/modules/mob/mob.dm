@@ -166,7 +166,11 @@ var/next_mob_id = 0
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/movement_delay()
-	return 0
+	. = 0
+	if(istype(loc, /turf/open))
+		var/turf/open/current_loc = loc
+		. += current_loc.slowdown
+	return .
 
 /mob/proc/Life()
 	set waitfor = 0
@@ -208,7 +212,7 @@ var/next_mob_id = 0
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
-	if(!W.mob_can_equip(src, slot, disable_warning))
+	if(!W.mob_can_equip(src, null, slot, disable_warning))
 		if(qdel_on_fail)
 			qdel(W)
 		else
@@ -311,6 +315,7 @@ var/next_mob_id = 0
 		return
 
 	AM.add_fingerprint(src)
+	add_logs(src, AM, "grabbed")
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
@@ -605,7 +610,6 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -678,7 +682,7 @@ var/next_mob_id = 0
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/ko = weakened || paralysis || stat || (FAKEDEATH in status_flags)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()

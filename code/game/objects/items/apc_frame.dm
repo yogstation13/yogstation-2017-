@@ -106,3 +106,4 @@
 	w_class = 2
 	origin_tech = "engineering=2;programming=1"
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
+	var/list/software = null

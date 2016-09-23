@@ -14,7 +14,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	config_tag = "blob"
 	antag_flag = ROLE_BLOB
 
-	required_players = 25
+	required_players = 30
 	required_enemies = 1
 	recommended_enemies = 1
 
@@ -23,10 +23,10 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/burst = 0
 
 	var/cores_to_spawn = 1
-	var/players_per_core = 25
+	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	var/blobwincount = 350
+	var/blobwincount = 400
 
 	var/messagedelay_low = 2400 //in deciseconds
 	var/messagedelay_high = 3600 //blob report will be sent after a random value between these (minimum 4 minutes, maximum 6 minutes)
@@ -38,15 +38,15 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
-	for(var/j = 0, j < cores_to_spawn, j++)
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/blob = pick_candidate()
+	var/list/datum/mind/infestators = pick_candidate(amount = cores_to_spawn)
+	update_not_chosen_candidates()
+
+	for(var/v in infestators)
+		var/datum/mind/blob = v
 		blob_overminds += blob
 		blob.assigned_role = "Blob"
 		blob.special_role = "Blob"
 		log_game("[blob.key] (ckey) has been selected as a Blob")
-		antag_candidates -= blob
 
 	if(!blob_overminds.len)
 		return 0

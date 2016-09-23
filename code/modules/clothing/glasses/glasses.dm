@@ -44,6 +44,13 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
+/obj/item/clothing/glasses/meson/gar/cheap
+	name = "cheap gar mesons"
+	desc = "Do the impossible, see the inv- ... hold on a second."
+	force = 0
+	throwforce = 0
+	sharpness = null
+
 /obj/item/clothing/glasses/science
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
@@ -135,6 +142,12 @@
 	tint = 1
 
 	dog_fashion = /datum/dog_fashion/head
+
+/obj/item/clothing/glasses/sunglasses/cheap
+	name = "cheap sunglasses"
+	desc = "Nice and cheap, just the way Nanotrasen likes it."
+	darkness_view = 0
+	flash_protect = 0
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"

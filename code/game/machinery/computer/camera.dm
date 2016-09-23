@@ -104,6 +104,9 @@
 			var/mob/living/silicon/ai/A = user
 			A.eyeobj.setLoc(get_turf(C))
 			A.client.eye = A.eyeobj
+		else if(ispAI(user))
+			var/mob/living/silicon/pai/A = user
+			A.switchCamera(C)
 		else
 			user.reset_perspective(C)
 		watchers[user] = C

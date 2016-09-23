@@ -87,7 +87,8 @@
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
-
+		if(paired)
+			paired.unpair(0)
 		stat |= NOPOWER
 	return
 
@@ -281,7 +282,7 @@
 		return 0	//feckin mechs are dumb
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if(H.gloves)
+		if(istype(H.gloves, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
 				return 0		//to avoid spamming with insulated glvoes on

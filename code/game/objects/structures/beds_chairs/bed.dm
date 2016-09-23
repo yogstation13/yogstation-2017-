@@ -69,7 +69,7 @@
 	if(over_object == usr && Adjacent(usr))
 		if(!ishuman(usr))
 			return 0
-		if(buckled_mobs.len)
+		if(has_buckled_mobs())
 			return 0
 		if(usr.incapacitated())
 			usr << "<span class='warning'>You can't do that right now!</span>"
@@ -95,7 +95,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = 4 // Can't be put in backpacks.
+	w_class = 3 // QUALITY OF LIFE
 
 
 /obj/item/roller/attack_self(mob/user)

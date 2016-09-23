@@ -44,11 +44,11 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for (var/i=1 to max_headrevs)
-		if (antag_candidates.len==0)
-			break
-		var/datum/mind/lenin = pick_candidate()
-		antag_candidates -= lenin
+	var/list/datum/mind/communists = pick_candidate(amount = max_headrevs)
+	update_not_chosen_candidates()
+
+	for(var/v in communists)
+		var/datum/mind/lenin = v
 		head_revolutionaries += lenin
 		lenin.restricted_roles = restricted_jobs
 

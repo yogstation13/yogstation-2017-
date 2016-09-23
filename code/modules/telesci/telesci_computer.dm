@@ -158,7 +158,7 @@
 		temp_msg = "ERROR!<BR>Forbidden sector."
 		return
 	if(!random)
-		if(!selection || !selection.can_be_found(z))
+		if(!selection || !selection.can_be_found(z_co))
 			temp_msg = "ERROR!<BR>Cannot locate beacon."
 			return
 		if(offset_x < -selection.range || offset_x > selection.range)
@@ -191,7 +191,7 @@
 				return
 			if(telepad.stat & NOPOWER)
 				return
-			if(!random && (!selection || !selection.can_be_found(z)))
+			if(!random && (!selection || !selection.can_be_found(z_co)))
 				temp_msg = "ERROR!<BR>Beacon lock lost during power up sequence."
 				updateDialog()
 				return

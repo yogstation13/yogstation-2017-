@@ -165,6 +165,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /*
  Lizard subspecies: ASHWALKERS
 */
+
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"
@@ -756,10 +757,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	darksight = 8
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	sexes = 0
-	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,NODISMEMBER)
 	dangerous_existence = 1
 	speedmod = 4
 
@@ -785,9 +785,22 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	default_color = "00FF90"
 	say_mod = "chirps"
 	eyes = "jelleyes"
-	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,NODISMEMBER)
+	specflags = list(MUTCOLORS,EYECOLOR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
+	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+
+
+/datum/species/jelly/on_species_loss(mob/living/carbon/C)
+	if(regenerate_limbs)
+		regenerate_limbs.Remove(C)
+	..()
+
+/datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		regenerate_limbs = new
+		regenerate_limbs.Grant(C)
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
@@ -805,7 +818,60 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		if(prob(5))
 			H << "<span class='danger'>You feel drained!</span>"
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
+		Cannibalize_Body(H)
+	H.update_action_buttons_icon()
+
+/datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
+	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
+	var/obj/item/bodypart/consumed_limb
+	if(!limbs_to_consume.len)
 		H.losebreath++
+		return
+	if(H.get_num_legs()) //Legs go before arms
+		limbs_to_consume -= list("r_arm", "l_arm")
+	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+	consumed_limb.drop_limb()
+	H << "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>"
+	qdel(consumed_limb)
+	H.blood_volume += 20
+
+/datum/action/innate/regenerate_limbs
+	name = "Regenerate Limbs"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "slimeheal"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/regenerate_limbs/IsAvailable()
+	if(..())
+		var/mob/living/carbon/human/H = owner
+		var/list/limbs_to_heal = H.get_missing_limbs()
+		if(limbs_to_heal.len < 1)
+			return 0
+		if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+			return 1
+		return 0
+
+/datum/action/innate/regenerate_limbs/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/list/limbs_to_heal = H.get_missing_limbs()
+	if(limbs_to_heal.len < 1)
+		H << "<span class='notice'>You feel intact enough as it is.</span>"
+		return
+	H << "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>"
+	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
+		H.regenerate_limbs()
+		H.blood_volume -= 40*limbs_to_heal.len
+		H << "<span class='notice'>...and after a moment you finish reforming!</span>"
+		return
+	else if(H.blood_volume >= 40)//We can partially heal some limbs
+		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+			var/healed_limb = pick(limbs_to_heal)
+			H.regenerate_limb(healed_limb)
+			limbs_to_heal -= healed_limb
+			H.blood_volume -= 40
+		H << "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>"
+		return
+	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>"
 
 /*
  SLIMEPEOPLE
@@ -817,7 +883,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	id = "slime"
 	default_color = "00FFFF"
 	darksight = 3
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE,NODISMEMBER)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE,TOXINLOVER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
@@ -855,6 +921,14 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 	..()
 
+
+/datum/action/innate/split_body/IsAvailable()
+	if(..())
+		var/mob/living/carbon/human/H = owner
+		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+			return 1
+		return 0
+
 /datum/action/innate/split_body
 	name = "Split Body"
 	check_flags = AB_CHECK_CONSCIOUS
@@ -865,31 +939,30 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/mob/living/carbon/human/H = owner
 	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
 	H.notransform = 1
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume >= 200)
-			var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
-			spare.underwear = "Nude"
-			H.dna.transfer_identity(spare, transfer_SE=1)
-			H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-			var/rand_num = rand(1, 999)
-			spare.real_name = "[spare.dna.real_name] ([rand_num])"
-			spare.name = "[spare.dna.real_name] ([rand_num])"
-			spare.updateappearance(mutcolor_update=1)
-			spare.domutcheck()
-			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
-			S.volume = 80
-			H.notransform = 0
-			var/datum/species/jelly/slime/SS = H.dna.species
-			if(!H.mind.slime_bodies.len) //if this is our first time splitting add current body
-				SS.body_swap = new
-				SS.body_swap.Grant(H)
-				H.mind.slime_bodies += H
-			H.mind.slime_bodies += spare
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
+		spare.underwear = "Nude"
+		H.dna.transfer_identity(spare, transfer_SE=1)
+		H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+		var/rand_num = rand(1, 999)
+		spare.real_name = "[spare.dna.real_name] ([rand_num])"
+		spare.name = "[spare.dna.real_name] ([rand_num])"
+		spare.updateappearance(mutcolor_update=1)
+		spare.domutcheck()
+		spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
+		H.blood_volume = BLOOD_VOLUME_SAFE
+		H.notransform = 0
+		var/datum/species/jelly/slime/SS = H.dna.species
+		if(!H.mind.slime_bodies.len) //if this is our first time splitting add current body
 			SS.body_swap = new
-			SS.body_swap.Grant(spare)
-			H.mind.transfer_to(spare)
-			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
-			return
+			SS.body_swap.Grant(H)
+			H.mind.slime_bodies += H
+		H.mind.slime_bodies += spare
+		SS.body_swap = new
+		SS.body_swap.Grant(spare)
+		H.mind.transfer_to(spare)
+		spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+		return
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
 	H.notransform = 0
 
@@ -1037,7 +1110,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 
 /*
@@ -1052,7 +1125,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
 

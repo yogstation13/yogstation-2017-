@@ -237,7 +237,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
-	force = 12
+	force = 15
 	sharpness = IS_SHARP
 	can_charge = 0
 	heat = 3800
@@ -267,7 +267,7 @@
 	name = "advanced plasma cutter"
 	icon_state = "adv_plasmacutter"
 	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=4;engineering=2"
-	force = 15
+	force = 18
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
 /obj/item/weapon/gun/energy/wormhole_projector
@@ -333,14 +333,14 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/energy/printer/process()
 	charge_tick++
 	if(charge_tick < charge_delay)
 		return 0
 	charge_tick = 0
-	if(!power_supply) 
+	if(!power_supply)
 		return 0
 	if(power_supply.charge < power_supply.maxcharge)
 		robocharge()

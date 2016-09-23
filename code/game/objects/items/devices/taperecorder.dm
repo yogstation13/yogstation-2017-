@@ -24,11 +24,12 @@
 	update_icon()
 
 /obj/item/device/taperecorder/AltClick()
-	eject(usr)
+	if(Adjacent(usr))
+		eject(usr)
 
 /obj/item/device/taperecorder/CtrlClick()
-	play(usr)
-
+	if(Adjacent(usr))
+		play(usr)
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
@@ -266,7 +267,8 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	overlays += "ribbonoverlay"
+	if(!ruined)
+		overlays += "ribbonoverlay"
 	ruined = 1
 
 

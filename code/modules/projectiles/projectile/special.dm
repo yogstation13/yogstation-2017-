@@ -93,6 +93,16 @@
 	nodamage = 1
 	flag = "energy"
 
+/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(C.dna.species.id == "pod")
+			randmuti(C)
+			randmut(C)
+			C.updateappearance()
+			C.domutcheck()
+
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
 	icon_state = "energy2"
@@ -213,7 +223,7 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 5
+	damage = 4
 	range = 5
 
 /obj/item/projectile/plasma/New()

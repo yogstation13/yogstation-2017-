@@ -71,12 +71,13 @@
 
 /obj/item/weapon/minigunpack/New()
 	gun = new(src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/minigunpack/Destroy()
-	SSobj.processing -= src
-	..()
+	STOP_PROCESSING(SSobj, src)
+	qdel(gun)
+	return ..()
 
 /obj/item/weapon/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
@@ -169,39 +170,44 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/minigun
 	var/obj/item/weapon/minigunpack/ammo_pack
 
+/obj/item/weapon/gun/projectile/minigun/New()
+	if(!ammo_pack)
+		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
+			ammo_pack = loc
+			..()
+		else
+			qdel(src)//No pack, no gun
+
+/obj/item/weapon/gun/projectile/minigun/Destroy()
+	qdel(ammo_pack)
+	return ..()
+
 /obj/item/weapon/gun/projectile/minigun/attack_self(mob/living/user)
 	return
 
 /obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
+	..()
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
 
 /obj/item/weapon/gun/projectile/minigun/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
-	if(ammo_pack)
-		if(ammo_pack.overheat < ammo_pack.overheat_max)
-			. = ..()
-			ammo_pack.overheat++
-		else
-			user << "The gun's heat sensor locked the trigger to prevent lens damage."
+	. = ..()
+	ammo_pack.overheat++
 
-/obj/item/weapon/gun/projectile/minigun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/weapon/gun/projectile/minigun/can_shoot()
+	if(!ammo_pack || ammo_pack.loc != loc)
+		return 0
+	if(ammo_pack.overheat >= ammo_pack.overheat_max)
+		return 0
+	return 1
+
+/obj/item/weapon/gun/projectile/minigun/shoot_with_empty_chamber(mob/living/user)
 	if(!ammo_pack || ammo_pack.loc != user)
 		user << "You need the backpack power source to fire the gun!"
-	..()
-
-/obj/item/weapon/gun/projectile/minigun/New()
-	if(!ammo_pack)
-		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
-			ammo_pack = loc
-		else
-			qdel(src)//No pack, no gun
-	..()
-
-/obj/item/weapon/gun/projectile/minigun/dropped(mob/living/user)
-	ammo_pack.attach_gun(user)
-	return
+	else if(ammo_pack.overheat >= ammo_pack.overheat_max)
+		user << "The gun's heat sensor has locked the trigger to prevent lens damage."
 
 /obj/item/weapon/gun/projectile/minigun/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()

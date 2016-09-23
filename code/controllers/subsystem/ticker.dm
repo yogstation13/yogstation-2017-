@@ -4,13 +4,15 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	priority = 0
+	init_order = 0
 
-	can_fire = 1 // This needs to fire before round start.
+	priority = 200
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
 
 	var/restart_timeout = 250	//delay when restarting server
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
+	var/server_reboot_in_progress = 0
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -31,6 +33,11 @@ var/datum/subsystem/ticker/ticker
 	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
 	var/list/factions = list()				//list of all factions
 	var/list/availablefactions = list()		//list of factions with openings
+	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
+	SCRIPTURE_SCRIPT = FALSE, \
+	SCRIPTURE_APPLICATION = FALSE, \
+	SCRIPTURE_REVENANT = FALSE, \
+	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
@@ -60,9 +67,7 @@ var/datum/subsystem/ticker/ticker
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-/datum/subsystem/ticker/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -108,6 +113,7 @@ var/datum/subsystem/ticker/ticker
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
+			scripture_states = scripture_unlock_alert(scripture_states)
 
 			if(world.time > next_alert_time && next_check_admin)
 				next_alert_time = world.time+1800 /* 6000 */
@@ -127,7 +133,7 @@ var/datum/subsystem/ticker/ticker
 					var/unresolved_tickets = total_unresolved_tickets()
 
 					if(unresolved_tickets && admins_online)
-						ticker.delay_end = 1
+						delay_end = 1
 						message_admins("Not all tickets have been resolved. Server restart delayed.")
 					else if(unresolved_tickets && !admins_online)
 						world.Reboot("Round ended, but there were still active tickets. Please submit a player complaint if you did not receive a response.", "end_proper", "ended with open tickets")
@@ -136,6 +142,13 @@ var/datum/subsystem/ticker/ticker
 							world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
 						else
 							world.Reboot("Round ended.", "end_proper", "proper completion")
+
+		if(GAME_STATE_FINISHED)
+			if(!server_reboot_in_progress && !delay_end)
+				var/unresolved_tickets = total_unresolved_tickets()
+				if(!unresolved_tickets)
+					world.Reboot("No unresolved tickets, restarting round.", "end_proper", "proper completion")
+
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -279,6 +292,11 @@ var/datum/subsystem/ticker/ticker
 					flick("intro_nuke",cinematic)
 					sleep(35)
 					world << sound('sound/items/bikehorn.ogg')
+					flick("summary_selfdes",cinematic)
+				if("HONK")
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					world << sound('sound/items/AirHorn.ogg')
 					flick("summary_selfdes",cinematic)
 				else
 					flick("intro_nuke",cinematic)
@@ -523,3 +541,46 @@ var/datum/subsystem/ticker/ticker
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
 		maprotate()
+
+
+/world/proc/has_round_started()
+	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+		return TRUE
+	return FALSE
+
+/datum/subsystem/ticker/Recover()
+	current_state = ticker.current_state
+	force_ending = ticker.force_ending
+	hide_mode = ticker.hide_mode
+	mode = ticker.mode
+	event_time = ticker.event_time
+	event = ticker.event
+
+	login_music = ticker.login_music
+	round_end_sound = ticker.round_end_sound
+
+	minds = ticker.minds
+
+	Bible_icon_state = ticker.Bible_icon_state
+	Bible_item_state = ticker.Bible_item_state
+	Bible_name = ticker.Bible_name
+	Bible_deity_name = ticker.Bible_deity_name
+
+	syndicate_coalition = ticker.syndicate_coalition
+	factions = ticker.factions
+	availablefactions = ticker.availablefactions
+
+	delay_end = ticker.delay_end
+
+	triai = ticker.triai
+	tipped = ticker.tipped
+
+	timeLeft = ticker.timeLeft
+
+	totalPlayers = ticker.totalPlayers
+	totalPlayersReady = ticker.totalPlayersReady
+
+	queue_delay = ticker.queue_delay
+	queued_players = ticker.queued_players
+	cinematic = ticker.cinematic
+	maprotatechecked = ticker.maprotatechecked

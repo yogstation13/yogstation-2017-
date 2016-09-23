@@ -26,6 +26,12 @@
 	dir = pick(alldirs)
 	update_icon()
 
+/obj/item/ammo_casing/Destroy()
+	if(BB)
+		qdel(BB)
+		BB = null
+	return ..()
+
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"

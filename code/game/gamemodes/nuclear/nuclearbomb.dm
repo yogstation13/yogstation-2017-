@@ -18,6 +18,8 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
 	density = 1
+	var/icon_state_timing = "nuclearbomb_timing"
+	var/icon_state_exploding = "nuclearbomb_exploding"
 
 	var/timeleft = 60
 	var/timing = 0
@@ -40,7 +42,7 @@ var/bomb_set
 	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
-	SSobj.processing -= core
+	STOP_PROCESSING(SSobj, core)
 	update_icon()
 	poi_list |= src
 	previous_level = get_security_level()
@@ -118,7 +120,7 @@ var/bomb_set
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
-					SSobj.processing += core
+					START_PROCESSING(SSobj, core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -141,7 +143,7 @@ var/bomb_set
 						if(M.use(20))
 							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
-							SSobj.processing -= core
+							STOP_PROCESSING(SSobj, core)
 							update_icon()
 						else
 							user << "<span class='warning'>You need more metal to do that!</span>"
@@ -164,17 +166,17 @@ var/bomb_set
 	if(deconstruction_state == NUKESTATE_INTACT)
 		switch(get_nuke_state())
 			if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
-				icon_state = "nuclearbomb_base"
+				icon_state = initial(icon_state)
 				update_icon_interior()
 				update_icon_lights()
 			if(NUKE_ON_TIMING)
 				overlays.Cut()
-				icon_state = "nuclearbomb_timing"
+				icon_state = icon_state_timing
 			if(NUKE_ON_EXPLODING)
 				overlays.Cut()
-				icon_state = "nuclearbomb_exploding"
+				icon_state = icon_state_exploding
 	else
-		icon_state = "nuclearbomb_base"
+		icon_state = initial(icon_state)
 		update_icon_interior()
 		update_icon_lights()
 
@@ -210,7 +212,10 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
-		countdown.start()
+		if(countdown)
+			countdown.start()
+		else
+			countdown = new(src)
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -222,7 +227,8 @@ var/bomb_set
 			if ((M.client && M.machine == src))
 				attack_hand(M)
 	else
-		countdown.stop()
+		if(countdown)
+			countdown.stop()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
@@ -380,13 +386,15 @@ var/bomb_set
 
 	if(ticker.mode && ticker.mode.name == "nuclear emergency")
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		ticker.mode:syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		ticker.mode:nuke_off_station = off_station
+		var/datum/game_mode/nuclear/GM = ticker.mode
+		GM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		GM.nuke_off_station = off_station
 	ticker.station_explosion_cinematic(off_station,null)
 	if(ticker.mode)
 		ticker.mode.explosion_in_progress = 0
 		if(ticker.mode.name == "nuclear emergency")
-			ticker.mode:nukes_left --
+			var/datum/game_mode/nuclear/GM = ticker.mode
+			GM.nukes_left --
 		else
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
 		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
@@ -419,6 +427,92 @@ This is here to make the tiles around the station mininuke change when it's arme
 	..()
 	SetTurfs()
 
+/obj/machinery/nuclearbomb/bananium
+	name = "bananium fission explosive"
+	desc = "You're not sure how dangerous this actually is, but you probably shouldn't risk finding out."
+	icon = 'icons/obj/machines/nuke.dmi'
+	icon_state = "bananiumbomb_base"
+	icon_state_timing = "bananiumbomb_timing"
+	icon_state_exploding = "bananiumbomb_exploding"
+
+/obj/machinery/nuclearbomb/bananium/explode()
+	if (safety)
+		timing = 0
+		return
+
+	timing = -1
+	yes_code = 0
+	safety = 1
+	update_icon()
+	for(var/mob/M in player_list)
+		M << 'sound/machines/Alarm.ogg'
+	if (ticker && ticker.mode)
+		ticker.mode.explosion_in_progress = 1
+	sleep(100)
+
+	if(!core)
+		ticker.station_explosion_cinematic(3,"no_core")
+		ticker.mode.explosion_in_progress = 0
+		return
+
+	enter_allowed = 0
+
+	var/off_station = 0
+	var/turf/bomb_location = get_turf(src)
+	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
+		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
+			off_station = 1
+	else
+		off_station = 2
+
+	if(ticker.mode && ticker.mode.name == "nuclear emergency")
+		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
+		var/datum/game_mode/nuclear/GM = ticker.mode
+		GM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		GM.nuke_off_station = off_station
+	if(!off_station)
+		ticker.station_explosion_cinematic(1, "HONK")
+	for(var/V in mob_list)
+		var/mob.M = V
+		var/turf/mob_turf = get_turf(M)
+		if(!M || !mob_turf || mob_turf.z != bomb_location.z)
+			continue
+		M.Stun(2)
+		M.Weaken(2)
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && (!H.mind || !(H.mind.assigned_role == "Clown" || H.mind.assigned_role == "Mime")) )
+			var/obj/item/clothing/C
+			H.unEquip(H.w_uniform, 1)
+			C = new /obj/item/clothing/under/rank/clown(H)
+			C.flags |= NODROP //mwahaha
+			H.equip_to_slot_or_del(C, slot_w_uniform)
+
+			H.unEquip(H.shoes, 1)
+			C = new /obj/item/clothing/shoes/clown_shoes(H)
+			C.flags |= NODROP
+			H.equip_to_slot_or_del(C, slot_shoes)
+
+			H.unEquip(H.wear_mask, 1)
+			C = new /obj/item/clothing/mask/gas/clown_hat(H)
+			C.flags |= NODROP
+			H.equip_to_slot_or_del(C, slot_wear_mask)
+
+			H.dna.add_mutation(CLOWNMUT)
+			H.adjustBrainLoss(60)
+	if(ticker.mode)
+		ticker.mode.explosion_in_progress = 0
+		if(ticker.mode.name == "nuclear emergency")
+			var/datum/game_mode/nuclear/GM = ticker.mode
+			GM.nukes_left --
+		else
+			world << "<B>The station was honked by the bananium blast!</B>"
+		ticker.mode.station_was_nuked = (off_station<2)
+		if(!ticker.mode.check_finished())
+			world.Reboot("Station honked by Bananium Bomb.", "end_error", "clown nuke - unhandled ending")
+			return
+	return
+
+
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/module.dmi'
@@ -434,7 +528,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)

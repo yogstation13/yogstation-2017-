@@ -124,8 +124,8 @@
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
 	/obj/item/toy/foamblade,
-	/obj/item/toy/prize/ripley,
-	/obj/item/toy/prize/honk,
+	/obj/item/toy/toy_mech/melee/ripley,
+	/obj/item/toy/toy_mech/honk,
 	/obj/item/toy/carpplushie,
 	/obj/item/toy/redbutton,
 	/obj/item/clothing/head/collectable/rabbitears)
@@ -158,7 +158,7 @@
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/hotcrossbun
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
@@ -182,7 +182,7 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brioche
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/scotchegg
 	name = "scotch egg"
@@ -199,10 +199,10 @@
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
+		/obj/item/weapon/reagent_containers/food/snacks/meatball = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/scotchegg
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
 	name = "Mammi"
@@ -219,7 +219,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	category = CAT_FOOD
+	category = CAT_MISCFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
 	name = "chocolate bunny"
@@ -236,4 +236,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/chocolatebunny
-	category = CAT_FOOD
+	category = CAT_MISCFOOD

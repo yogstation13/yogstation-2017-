@@ -130,6 +130,7 @@
 		hitsound = 'sound/weapons/blade1.ogg'
 		embed_chance = 100 //rule of cool
 		throwforce = 35
+		sharpness = IS_SHARP
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
 		user << "<span class='warning'>[src] is now active.</span>"
 	update_icon()

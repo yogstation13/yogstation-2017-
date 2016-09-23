@@ -33,8 +33,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
 	var/lock_code = "" // Lockcode to unlock uplink
-	var/honkamt = 0 //How many honks left when infected with honk.exe
-	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
 	var/notehtml = ""
 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
@@ -49,6 +47,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	var/image/photo = null //Scanned photo
+	var/list/software = null
 
 
 /obj/item/device/pda/pickup(mob/user)
@@ -95,14 +94,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
-
-	user.set_machine(src)
 
 	if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.interact(user)
 		return
+
+	user.set_machine(src)
+
+	if(software)
+		var/failUse = 0
+		for(var/V in software)
+			var/datum/software/M = V
+			failUse |= M.onActivate(user)
+		if(failUse)
+			return
 
 	var/dat = "<html><head><title>Personal Data Assistant</title></head><body bgcolor=\"#808000\"><style>a, a:link, a:visited, a:active, a:hover { color: #000000; }img {border-style:none;}</style>"
 
@@ -130,7 +138,12 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
 
 				dat += "<br><br>"
-
+				if(cartridge && cartridge.functions & PDA_ADMIN_FUNCTIONS)
+					dat += "<h4>Centcomm Administration Functions</h4>"
+					dat += "<ul>"
+					dat += "<li><a href='byond://?src=\ref[src];choice=create_virus'><img src=pda_signaler.png>Create Software</a></li>"
+					dat += "<li><a href='byond://?src=\ref[src];choice=55'><img src=pda_signaler.png>View Software</a></li>"
+					dat += "</ul>"
 				dat += "<h4>General Functions</h4>"
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
@@ -144,10 +157,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.functions & PDA_STATUS_DISPLAY_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
-						dat += "</ul>"
 					if (istype(cartridge, /obj/item/weapon/cartridge/slavemaster))
 						dat += "<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_signaler.png> Slavemaster 2000</a></li>"
-						dat += "</ul>"
+
+					dat += "</ul>"
+
 					if ((cartridge.functions & PDA_ENGINE_FUNCTIONS) || (cartridge.alert_flags & PDA_POWER_ALERT))
 						dat += "<h4>Engineering Functions</h4>"
 						dat += "<ul>"
@@ -200,7 +214,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<ul>"
 						dat += "<li><a href='byond://?src=\ref[src];choice=49'><img src=pda_bucket.png> Custodial Locator</a></li>"
 						dat += "</ul>"
-				dat += "</ul>"
+				else
+					dat += "</ul>"
 
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"
@@ -312,6 +327,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Topic(href, href_list)
 	..()
+	if(software)
+		var/failTopic = 0
+		for(var/V in software)
+			var/datum/software/M = V
+			failTopic |= M.onTopicCall(href, href_list)
+		if(failTopic)
+			return
+
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
@@ -364,7 +387,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
-
 
 //MAIN FUNCTIONS===================================
 
@@ -478,12 +500,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if("Send Honk")//Honk virus
 				if(istype(cartridge, /obj/item/weapon/cartridge/clown))//Cartridge checks are kind of unnecessary since everything is done through switch.
+					var/obj/item/weapon/cartridge/clown/cart = cartridge
 					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
 					if(!isnull(P))
 						if (!P.toff && cartridge:honk_charges > 0)
-							cartridge:honk_charges--
-							U.show_message("<span class='notice'>Virus sent!</span>", 1)
-							P.honkamt = (rand(15,20))
+							var/datum/software/malware/honkvirus/virus = new /datum/software/malware/honkvirus()
+							if(virus.infect(P))
+								cart.honk_charges--
+								U.show_message("<span class='notice'>Virus sent!</span>", 1)
+							else
+								U.show_message("<span class='warning'>Virus sending failed!</span>", 1)
 					else
 						U << "PDA not found."
 				else
@@ -491,13 +517,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					return
 			if("Send Silence")//Silent virus
 				if(istype(cartridge, /obj/item/weapon/cartridge/mime))
+					var/obj/item/weapon/cartridge/mime/cart = cartridge
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!isnull(P))
 						if (!P.toff && cartridge:mime_charges > 0)
-							cartridge:mime_charges--
-							U.show_message("<span class='notice'>Virus sent!</span>", 1)
-							P.silent = 1
-							P.ttone = "silence"
+							var/datum/software/malware/mimevirus/virus = new /datum/software/malware/mimevirus()
+							if(virus.infect(P))
+								cart.mime_charges--
+								U.show_message("<span class='notice'>Virus sent!</span>", 1)
+							else
+								U.show_message("<span class='warning'>Virus sending failed!</span>", 1)
 					else
 						U << "PDA not found."
 				else
@@ -517,12 +546,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 			if("Detonate")//Detonate PDA
 				if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+					var/obj/item/weapon/cartridge/syndicate/cart = cartridge
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!isnull(P))
 						if (!P.toff && cartridge:shock_charges > 0)
-							cartridge:shock_charges--
-							U.show_message("<span class='notice'>Success!</span>", 1)
-							P.explode()
+							var/datum/software/malware/detomatix/virus = new /datum/software/malware/detomatix()
+							if(virus.infect(P))
+								cart.shock_charges--
+								U.show_message("<span class='notice'>Success!</span>", 1)
+							else
+								U.show_message("<span class='warning'>Failure!</span>", 1)
 
 					else
 						U << "PDA not found."
@@ -541,6 +574,33 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if(T)
 							pai.loc = T
 
+//DEBUG/ADMIN FUNCTIONS===================================
+			if("create_virus")
+				if((!isnull(cartridge)) && (cartridge.functions & PDA_ADMIN_FUNCTIONS))
+					var/list/viruses = list()
+					for(var/V in (typesof(/datum/software) - ABSTRACT_SOFTWARE))
+						viruses += new V()
+					var/datum/software/virus_selected = input(U, "Please select a piece of software to create.") as null|anything in viruses
+					for(var/V in viruses)
+						if(V != virus_selected)
+							qdel(V)
+					if(!virus_selected)
+						return
+					var/virus_target
+					if(istype(virus_selected, /datum/software/malware/stuxnet))
+						var/list/infect_options = machines
+						virus_target = input(U, "Please select a machine to send [virus_selected] to.") as null|anything in infect_options
+					else
+						var/list/infect_options = PDAs
+						virus_target = input(U, "Please select a PDA to send [virus_selected] to.") as null|anything in infect_options
+					if(!virus_target)
+						qdel(virus_selected)
+						return
+					if(virus_selected.infect(virus_target))
+						U << "<span class='warning'>[virus_selected] sent to [virus_target].</span>"
+					else
+						U << "<span class='warning'>Failed to send [virus_selected] to [virus_target].</span>"
+
 //LINK FUNCTIONS===================================
 
 			else//Cartridge menu linking
@@ -557,10 +617,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	if (mode == 2||mode == 21)//To clear message overlays.
 		overlays.Cut()
-
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
-		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 
 	if(U.machine == src && href_list["skiprefresh"]!="1")//Final safety.
 		attack_self(U)//It auto-closes the menu prior if the user is not in range and so on.
@@ -610,6 +666,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		MS = can_send(P)
 		if(MS)
 			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
+			for(var/V in software)
+				var/datum/software/M = V
+				M.attempt_infect(P)
 			if(msg)
 				last_sucessful_msg = msg
 			if(!multiple)
@@ -617,7 +676,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
+				log_pda("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to [P.name]")
+				investigate_log("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to [P.name]", "pda")
 		else
 			if(!multiple)
 				user << "<span class='notice'>ERROR: Server isn't responding.</span>"
@@ -627,7 +687,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
 		show_to_ghosts(user,last_sucessful_msg,1)
-		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
+		log_pda("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to Everyone")
+		investigate_log("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to Everyone", "pda")
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
@@ -909,6 +970,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
+	for(var/V in software)
+		qdel(V)
 	return ..()
 
 //AI verb and proc for sending PDA messages.
@@ -1012,11 +1075,21 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 // Pass along the pulse to atoms in contents, largely added so pAIs are vulnerable to EMP
 /obj/item/device/pda/emp_act(severity)
+	if(software)
+		for(var/V in software)
+			var/datum/software/S = V
+			S.onEMP()
+
 	for(var/atom/A in src)
 		A.emp_act(severity)
 	emped += 1
 	spawn(200 * severity)
 		emped -= 1
+
+/obj/item/device/pda/get_software_list()
+	if(!software)
+		software = list()
+	return software
 
 /proc/get_viewable_pdas()
 	. = list()

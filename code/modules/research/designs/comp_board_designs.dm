@@ -228,6 +228,14 @@
 	build_path = /obj/item/weapon/circuitboard/computer/comm_server
 	category = list("Computer Boards")
 
+/datum/design/board/comm_traffic
+	name = "Computer Design (Telecommunications Traffic Control Console)"
+	desc = "Allows for the construction of circuit boards used to build a telecommunications traffic control console."
+	id = "comm_traffic"
+	req_tech = list("programming" = 3)
+	build_path = /obj/item/weapon/circuitboard/computer/telecomms/comm_traffic
+	category = list("Computer Boards")
+
 /datum/design/board/message_monitor
 	name = "Computer Design (Messaging Monitor Console)"
 	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."

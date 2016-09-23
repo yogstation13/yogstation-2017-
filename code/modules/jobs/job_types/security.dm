@@ -25,12 +25,12 @@ Head of Security
 
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
+			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting, access_cargo,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels, access_cargo)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -159,7 +159,8 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/reagent_containers/food/drinks/flask/det)
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1,\
+		/obj/item/device/flashlight/seclite=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -238,7 +239,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		switch(department)
 			if("supply")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-				dep_access = list(access_mailsorting, access_mining, access_mining_station)
+				dep_access = list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo)
 				destination = /area/security/checkpoint/supply
 				spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/cargo

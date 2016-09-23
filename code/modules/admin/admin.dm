@@ -50,7 +50,8 @@ var/global/BSACooldown = 0
 
 	var/client/C = get_client(M)
 	if(C)
-		body += "<b>Antag Tokens</b> = [C.antag_tokens] \[ <a href='?_src_=holder;antag_token_decrease=\ref[M]'>- Less -</a> | <a href='?_src_=holder;antag_token_increase=\ref[M]'>+ More +</a> \]<br>"
+		if(config.use_antag_tokens)
+			body += "<b>Antag Tokens</b> = [C.antag_tokens] \[ <a href='?_src_=holder;antag_token_decrease=\ref[M]'>- Less -</a> | <a href='?_src_=holder;antag_token_increase=\ref[M]'>+ More +</a> \]<br>"
 
 		if(check_rights(R_PERMISSIONS))
 			body += "<b>Whitelisted</b> = [C.is_whitelisted ? "Yes" : "No"] \[ <a href='?_src_=holder;toggle_whitelisted=\ref[M]'>Toggle</a> \]<br>"
@@ -604,6 +605,7 @@ var/global/BSACooldown = 0
 		if(newtime < 0)
 			world << "<b>The game start has been delayed.</b>"
 			log_admin("[key_name(usr)] delayed the round start.")
+
 		else
 			world << "<b>The game will start in [newtime] seconds.</b>"
 			world << 'sound/ai/attention.ogg'

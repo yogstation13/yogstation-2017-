@@ -197,11 +197,10 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
-	var/mob/living/carbon/human/M = user
-	if(paddles in get_both_hands(M))
+/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //The paddles wont be stick anymore in the hands when someone remvoe you the defib
+	if(ismob(paddles.loc))
+		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)
-	update_icon()
 	return
 
 /obj/item/weapon/defibrillator/Destroy()
@@ -505,15 +504,16 @@
 				total_burn	= H.getFireLoss()
 
 				var/failed = null
+				var/obj/item/organ/heart/heart = H.getorgan(/obj/item/organ/heart)
 
 				if (H.suiciding || (H.disabilities & NOCLONE))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existance.  Further attempts futile.</span>"
-				else if (tplus > tlimit)
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
-				else if (!H.getorgan(/obj/item/organ/heart))
+				else if (!heart)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
+				else if (heart.decay_time && heart.decay >= heart.decay_time)
+					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart tissue has decayed for too long. Further attempts futile.</span>"
 				else if(total_burn >= 180 || total_brute >= 180)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 				else if(H.get_ghost())
@@ -552,7 +552,7 @@
 					defib.cooldowncheck(user)
 				else
 					recharge(60)
-			else if(H.heart_attack)
+			else if(H.heart_attack && H.getorgan(/obj/item/organ/heart))
 				H.heart_attack = 0
 				user.visible_message("<span class='notice'>[req_defib ? "[defib]" : "[src]"] pings: Patient's heart is now beating again.</span>")
 				playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)

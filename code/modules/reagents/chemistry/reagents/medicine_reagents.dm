@@ -126,7 +126,7 @@
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-7, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-9, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-5, 0, DAMAGE_CHEMICAL)
@@ -134,7 +134,7 @@
 			M.adjustToxLoss(-5, 0, DAMAGE_CHEMICAL)
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-2, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-7, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-3, 0, DAMAGE_CHEMICAL)
@@ -142,7 +142,7 @@
 			M.adjustToxLoss(-3, 0, DAMAGE_CHEMICAL)
 			. = 1
 		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-1, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-5, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-1, 0, DAMAGE_CHEMICAL)
@@ -163,7 +163,7 @@
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
 	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_organ_damage(1,1, 0)
-	M.status_flags &= ~DISFIGURED
+	M.status_flags -= DISFIGURED
 	..()
 	. = 1
 
@@ -300,7 +300,7 @@
 
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
+		if(method == INGEST)
 			M.Stun(4)
 			M.Weaken(4)
 			if(show_message)

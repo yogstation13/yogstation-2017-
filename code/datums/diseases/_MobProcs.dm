@@ -25,17 +25,26 @@
 	return 1
 
 
-/mob/proc/ContractDisease(datum/disease/D)
+/mob/proc/ContractDisease(datum/disease/D, source = null)
 	if(!CanContractDisease(D))
 		return 0
-	AddDisease(D)
+	AddDisease(D, source)
 
 
-/mob/proc/AddDisease(datum/disease/D)
+/mob/proc/AddDisease(datum/disease/D, source = null)
 	var/datum/disease/DD = new D.type(1, D, 0)
+	var/log = "has contracted [DD.name]"
+	if(istype(DD, /datum/disease/advance))
+		var/datum/disease/advance/DDD = DD
+		log += " \[ symptoms: "
+		for(var/datum/symptom/S in DDD.symptoms)
+			log += "[S.name] "
+		log += "\]"
 	viruses += DD
 	DD.affected_mob = src
 	DD.holder = src
+	log += " from [ismob(source) ? key_name(source) : source]."
+	investigate_log(log, "viro")
 
 	//Copy properties over. This is so edited diseases persist.
 	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
@@ -51,7 +60,7 @@
 	DD.affected_mob.med_hud_set_status()
 
 
-/mob/living/carbon/ContractDisease(datum/disease/D)
+/mob/living/carbon/ContractDisease(datum/disease/D, source = null)
 	if(!CanContractDisease(D))
 		return 0
 
@@ -87,33 +96,33 @@
 
 		switch(target_zone)
 			if(1)
-				if(isobj(H.head) && !istype(H.head, /obj/item/weapon/paper))
+				if(istype(H.head, /obj/item/clothing))
 					Cl = H.head
 					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(H.wear_mask))
+				if(passed && istype(H.wear_mask, /obj/item/clothing))
 					Cl = H.wear_mask
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(2)
-				if(isobj(H.wear_suit))
+				if(istype(H.wear_suit, /obj/item/clothing))
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(slot_w_uniform))
 					Cl = slot_w_uniform
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(3)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&HANDS)
+				if(istype(H.wear_suit, /obj/item/clothing) && H.wear_suit.body_parts_covered & HANDS)
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
-				if(passed && isobj(H.gloves))
+				if(passed && istype(H.gloves, /obj/item/clothing))
 					Cl = H.gloves
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(4)
-				if(isobj(H.wear_suit) && H.wear_suit.body_parts_covered&FEET)
+				if(istype(H.wear_suit, /obj/item/clothing) && H.wear_suit.body_parts_covered & FEET)
 					Cl = H.wear_suit
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
-				if(passed && isobj(H.shoes))
+				if(passed && istype(H.shoes, /obj/item/clothing))
 					Cl = H.shoes
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
@@ -129,14 +138,14 @@
 		passed = (prob((50*D.permeability_mod) - 1))
 
 	if(passed)
-		AddDisease(D)
+		AddDisease(D, source)
 
 
 //Same as ContractDisease, except never overidden clothes checks
-/mob/proc/ForceContractDisease(datum/disease/D)
+/mob/proc/ForceContractDisease(datum/disease/D, source = null)
 	if(!CanContractDisease(D))
 		return 0
-	AddDisease(D)
+	AddDisease(D, source)
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)

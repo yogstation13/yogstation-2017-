@@ -45,7 +45,7 @@
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
 	src.spawn_fast = spawn_fast
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/effect/rend/process()
@@ -132,6 +132,7 @@
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
 	w_class = 1
+	var/max_spookies = 3
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -145,8 +146,8 @@
 	if(!istype(user) || !user.canUseTopic(M,1))
 		return
 
-	if(M.stat != DEAD)
-		user << "<span class='warning'>This artifact can only affect the dead!</span>"
+	if(M.stat == CONSCIOUS)
+		user << "<span class='warning'>Kill or maim the victim first!</span>"
 		return
 
 	if(!M.mind || !M.client)
@@ -154,8 +155,8 @@
 		return
 
 	check_spooky()//clean out/refresh the list
-	if(spooky_scaries.len >= 3 && !unlimited)
-		user << "<span class='warning'>This artifact can only affect three undead at a time!</span>"
+	if(spooky_scaries.len >= max_spookies && !unlimited)
+		user << "<span class='warning'>This artifact can only affect [max_spookies] thralls at a time!</span>"
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
@@ -166,7 +167,7 @@
 
 	equip_roman_skeleton(M)
 
-	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/[max_spookies]."]"
 
 /obj/item/device/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
@@ -195,7 +196,23 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
 	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 
+//Lesser Necromantic Stone - basically a nerfed necro stone that can handle only one soul and cannot be used to farm claymores, intended for necropolis chests.
+/obj/item/device/necromantic_stone/lesser
+	name = "lesser necromantic stone"
+	max_spookies = 1
 
+
+/obj/item/device/necromantic_stone/lesser/equip_roman_skeleton/(mob/living/carbon/human/H)
+	for(var/obj/item/I in H)
+		H.unEquip(I)
+
+	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
+	H.equip_to_slot_or_del(new hat(H), slot_head)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/combat/bone(H), slot_r_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/bonespear(H), slot_back)
 
 /////////////////////Multiverse Blade////////////////////
 var/global/list/multiverse = list()

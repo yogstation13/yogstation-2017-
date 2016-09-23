@@ -23,7 +23,7 @@ var/const/INJECT = 5 //injection
 	maximum_volume = maximum
 
 	if(!(flags & REAGENT_NOREACT))
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
@@ -60,7 +60,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/Destroy()
 	. = ..()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
@@ -293,7 +293,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/process()
 	if(flags & REAGENT_NOREACT)
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	for(var/reagent in reagent_list)
@@ -305,9 +305,9 @@ var/const/INJECT = 5 //injection
 		// Order is important, process() can remove from processing if
 		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -442,14 +442,14 @@ var/const/INJECT = 5 //injection
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
-			M.status_flags &= ~IGNORESLOWDOWN
+			M.status_flags -= IGNORESLOWDOWN
 
 /datum/reagents/proc/check_slowdown(mob/M)  //SLOWDOWN is halfway in between GOTTAGOFAST and GOTTAGOREALLYFAST.  IGNORESLOWDOWN cancels it.
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("bolamine"))
 			return 1
 		else
-			M.status_flags &= ~SLOWDOWN
+			M.status_flags -= SLOWDOWN
 
 
 /datum/reagents/proc/check_gofast(mob/M)
@@ -457,14 +457,14 @@ var/const/INJECT = 5 //injection
 		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
 			return 1
 		else
-			M.status_flags &= ~GOTTAGOFAST
+			M.status_flags -= GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
+			M.status_flags -= GOTTAGOREALLYFAST
 
 /datum/reagents/proc/update_total()
 	total_volume = 0

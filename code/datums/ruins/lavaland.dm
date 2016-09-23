@@ -34,7 +34,7 @@
 	description = "Nothing good can come from this. Learn from their mistakes \
 		and turn around."
 	suffix = "lavaland_surface_cube.dmm"
-	cost = 10
+	cost = 15
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/prisoners
@@ -45,7 +45,7 @@
 		has crashed, waking the prisoners from their cryostasis, and setting \
 		them loose on the wastes. If they live long enough, that is."
 	suffix = "lavaland_surface_prisoner_crash.dmm"
-	cost = 15
+	cost = 20
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/seed_vault
@@ -57,6 +57,7 @@
 		grow drugs and guns."
 	suffix = "lavaland_surface_seed_vault.dmm"
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ash_walker
 	name = "Ash Walker Nest"
@@ -66,7 +67,7 @@
 		reproducing by something involving tentacles? Probably best to \
 		stay clear."
 	suffix = "lavaland_surface_ash_walker1.dmm"
-	cost = 20
+	cost = 10
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/free_golem
@@ -76,7 +77,7 @@
 		inside this ship. They frequently leave to mine more minerals, \
 		which they somehow turn into more of them. Seem very intent on \
 		research and individual liberty, and also geology based naming?"
-	cost = 20
+	cost = 10
 	suffix = "lavaland_surface_golem_ship.dmm"
 	allow_duplicates = FALSE
 
@@ -85,7 +86,7 @@
 	id = "animal-hospital"
 	description = "Rats with cancer do not live very long. And the ones that \
 		wake up from cryostasis seem to commit suicide out of boredom."
-	cost = 5
+	cost = 10
 	suffix = "lavaland_surface_animal_hospital.dmm"
 	allow_duplicates = FALSE
 
@@ -149,6 +150,7 @@
 		this anymore."
 	suffix = "lavaland_surface_ww_vault.dmm"
 	cost = 20
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/xeno_nest
 	name = "Xenomorph Nest"
@@ -158,6 +160,7 @@
 		hellscape to focus on what's really important in life. Quality memes."
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/fountain
 	name = "Fountain Hall"
@@ -166,6 +169,7 @@
 		undeclared side effects that only become obvious when implemented."
 	suffix = "lavaland_surface_fountain_hall.dmm"
 	cost = 5
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
@@ -182,6 +186,7 @@
 		lived here before. You swear you hear rattling coming from the inside."
 	suffix = "lavaland_surface_tomb.dmm"
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/pizza
 	name = "Ruined Pizza Party"
@@ -207,4 +212,60 @@
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/syndicatepod
+	name = "Syndicate Pod"
+	id = "syndicatepod"
+	description = "The Syndicate would pay handsomely for its contents"
+	suffix = "lavaland_surface_syndicatepod.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/clownfacility
+	name = "Clown Facility"
+	id = "clownfacility"
+	description = "They went searching for madness, instead it found them."
+	suffix = "lavaland_surface_clownfacility.dmm"
+	allow_duplicates = FALSE
+	cost = 20
+
+/datum/map_template/ruin/lavaland/mimingdrill
+	name = "Miming Drill"
+	id = "mimingdrill"
+	description = "A silent mining operation, its workers died as they lived."
+	suffix = "lavaland_surface_mimingdrill.dmm"
+	allow_duplicates = FALSE
 	cost = 10
+
+/datum/map_template/ruin/lavaland/ntsurveyor
+	name = "Nanotrasen Surveyor"
+	id = "ntsurveyo"
+	description = "The most tragic part about it all is the ship didnt even have any donuts"
+	suffix = "lavaland_surface_ntsurveyor.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/researchoutpost
+	name = "Research Outpost"
+	id = "researchoutpost"
+	description = "While mystery enshrouds as to why this place is here, the real question is should you wear the carp hardsuit..or the engineering one?"
+	suffix = "lavaland_surface_researchoutpost.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/cugganscove
+	name = "Cuggans Cove"
+	id = "cugganscove"
+	description = "BEHOLD THE TERRIFYING LAIR OF THE INFAMOUS CAPTAIN CUGGAN!"
+	suffix = "lavaland_surface_cugganscove.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/hermit
+	name = "Makeshift Shelter"
+	id = "hermitcave"
+	description = "A place of shelter for a lone hermit, scraping by to live another day."
+	suffix = "lavaland_surface_hermit.dmm"
+	allow_duplicates = FALSE
+	cost = 5

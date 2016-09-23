@@ -49,11 +49,19 @@
 /obj/item/weapon/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
-	var/mob/M = target
+	var/mob/living/M = target
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
 	sparks.start()
-	M.gib()
+	if(M.stat == DEAD)
+		M.gib()
+	else
+		M.death()
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			for(var/obj/item/bodypart/B in H.bodyparts)
+				if(B.body_zone != "head" && B.body_zone != "chest")
+					B.dismember()
 	..()
 
 /obj/item/weapon/melee/touch_attack/fleshtostone
@@ -74,3 +82,31 @@
 	M.Stun(2)
 	M.petrify()
 	..()
+
+/obj/item/weapon/melee/touch_attack/bless
+	name = "\improper bless"
+	desc = "Hallelujah!"
+	catchphrase = ""
+	on_use_sound = "sound/effects/pray.ogg"
+	icon_state = "bless"
+	item_state = "bless"
+
+/obj/item/weapon/melee/touch_attack/bless/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(user.lying || user.handcuffed)
+		return
+	if(isitem(target))
+		PoolOrNew(/obj/effect/overlay/temp/bless, target.loc)
+		user.visible_message("<span class='notice'>[user] blesses [target]!</span>")
+		if(!cmptext("blessed",copytext(target.name,1,8)))
+			target.name = "blessed [target.name]"
+			..()
+			return
+		..()
+		return
+	if(iscarbon(target))
+		PoolOrNew(/obj/effect/overlay/temp/bless, target.loc)
+		user.visible_message("<span class= 'notice'>[user] blesses [target]!</span>")
+		..()
+		return

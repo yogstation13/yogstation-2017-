@@ -68,7 +68,7 @@
 
 /obj/item/clothing/glasses/hud/security/examine(mob/user)
 	. = ..()
-	user << "<span class='notice'>To operate the criminal status of someone in range, hold CTRL + ALT and click on the target.</span>"
+	user << "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>"
 	user << "<span class='notice'>To add crimes to a person, hold CTRL + SHIFT and click on the target</span>"
 
 /obj/item/clothing/glasses/hud/security/chameleon

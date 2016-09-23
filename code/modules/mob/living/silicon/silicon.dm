@@ -10,6 +10,8 @@
 	verb_yell = "alarms"
 	see_in_dark = 8
 	bubble_icon = "machine"
+	weather_immunities = list("ash")
+
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -443,6 +445,13 @@
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
+		if(user.dna.species.id == "abomination")//snowflake abomination hulk damage
+			visible_message("<span class='danger'>[user] has torn into [src], damaging it significantly!</span>", \
+							"<span class='userdanger'>[user] has torn into [src], damaging it significantly!</span>")
+			playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+			playsound(loc, 'sound/effects/bang.ogg', 10, 1)
+			adjustBruteLoss(30)//metal is harder than skin, so less damage
+			return 1
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \

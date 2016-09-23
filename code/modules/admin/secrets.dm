@@ -51,6 +51,7 @@
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=\ref[src];secrets=traitorAI'>Force traitor AI (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
 			<A href='?src=\ref[src];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
@@ -284,7 +285,20 @@
 			usr.client.triple_ai()
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","TriAI")
-
+		if("traitorAI")
+			if(!check_rights(R_FUN))
+				return
+			if(ticker && ticker.mode)
+				alert(usr, "The game has already started.", null, null, null, null)
+				return
+			if(force_traitor_ai)
+				force_traitor_ai = 0
+				log_admin("[key_name_admin(usr)] set the traitor AI prob to normal.")
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the traitor AI prob to normal.</span>")
+			else
+				force_traitor_ai = 1
+				log_admin("[key_name_admin(usr)] set the traitor AI prob to 100%.")
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the traitor AI prob to 100%.</span>")
 		if("power")
 			if(!check_rights(R_FUN))
 				return
