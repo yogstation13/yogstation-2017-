@@ -850,7 +850,7 @@
 	if(C.stat == DEAD)
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
-	if(reagents.get_reagent_amount("stimulants") > 1) //stimpacks make you uncrittable
+	if(STIMS in C.status_flags)//no crit when you're stimmed
 		return
 	if(is_mouth_covered())
 		src << "<span class='warning'>Remove your mask first!</span>"
