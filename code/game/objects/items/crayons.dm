@@ -707,7 +707,7 @@
 
 	pre_noise = FALSE
 	post_noise = FALSE
-	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
+	
 
 /obj/item/toy/crayon/spraycan/clowncan
 	name = "clown's spraycan"
