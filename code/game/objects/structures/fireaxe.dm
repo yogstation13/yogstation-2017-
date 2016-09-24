@@ -44,7 +44,7 @@
 	if(open)
 		return
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(health <= 0)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
@@ -73,9 +73,9 @@
 				fireaxe.loc = src.loc
 				qdel(src)
 			else
-				take_damage(rand(30,70), BRUTE, 0)
+				take_damage(rand(30,70), BLUNT, 0)
 		if(3)
-			take_damage(rand(10,30), BRUTE, 0)
+			take_damage(rand(10,30), BLUNT, 0)
 
 /obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/P)
 	. = ..()

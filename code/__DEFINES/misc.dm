@@ -234,7 +234,7 @@
 #define FUZZY_CHANCE_LOW 50
 #define CHANCE_TALK 1
 
-#define SNPC_BRUTE 1
+#define SNPC_BLUNT 1
 #define SNPC_STEALTH 2
 #define SNPC_MARTYR 3
 #define SNPC_PSYCHO 4

@@ -21,7 +21,7 @@
 		if(1)
 			qdel(src)
 		else
-			take_damage(rand(5,10), BRUTE, 0)
+			take_damage(rand(5,10), BLUNT, 0)
 
 /obj/structure/grille/ratvar_act()
 	if(destroyed)
@@ -77,7 +77,7 @@
 
 /obj/structure/grille/attack_animal(var/mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
-	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BLUNT && M.melee_damage_type != BURN))
 		return
 	M.do_attack_animation(src)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
@@ -196,12 +196,12 @@
 	..()
 	take_damage(I.force * 0.3, I.damtype)
 
-/obj/structure/grille/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/grille/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
 				playsound(loc, 'sound/items/welder.ogg', 80, 1)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -294,7 +294,7 @@
 	return ..()
 
 /obj/structure/grille/ratvar/narsie_act()
-	take_damage(rand(1, 3), BRUTE)
+	take_damage(rand(1, 3), BLUNT)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"

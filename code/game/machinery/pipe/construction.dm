@@ -249,7 +249,7 @@ var/global/list/pipeID2State = list(
 				C.vomit(0,1,0,4,0)
 				sleep(5)
 			C.blood_volume = 0
-		return(OXYLOSS|BRUTELOSS)
+		return(OXYLOSS|BLUNTLOSS)
 	else
 		return ..()
 

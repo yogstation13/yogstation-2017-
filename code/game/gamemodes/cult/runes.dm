@@ -166,7 +166,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/M in invokers)
 		var/mob/living/L = M
 		L << "<span class='cultitalic'><b>You feel your life force draining. The Geometer is displeased.</b></span>"
-		L.apply_damage(30, BRUTE)
+		L.apply_damage(30, BLUNT)
 	qdel(src)
 
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
@@ -709,7 +709,7 @@ var/list/teleport_runes = list()
 			affecting = null //In case it's assigned to a number or something
 			rune_in_use = 0
 			return
-		affecting.apply_damage(1, BRUTE)
+		affecting.apply_damage(1, BLUNT)
 		if(!(user in T.contents))
 			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them back to the rune!</span>")
 			Beam(user,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=2)
@@ -768,7 +768,7 @@ var/list/teleport_runes = list()
 		overlays.Cut()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
+		C.apply_damage(2, BLUNT, pick("l_arm", "r_arm"))
 
 
 //Rite of Joined Souls: Summons a single cultist.
@@ -814,7 +814,7 @@ var/list/teleport_runes = list()
 									  "<span class='cultitalic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifes into [cultist_to_summon]!</span>")
-	user.apply_damage(10, BRUTE, "head")
+	user.apply_damage(10, BLUNT, "head")
 	cultist_to_summon.forceMove(get_turf(src))
 	qdel(src)
 
@@ -846,7 +846,7 @@ var/list/teleport_runes = list()
 				C.adjustStaminaLoss(30)
 	for(var/M in invokers)
 		var/mob/living/L = M
-		L.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))
+		L.apply_damage(15, BLUNT, pick("l_arm", "r_arm"))
 		L << "<span class='cultitalic'>[src] saps your strength!</span>"
 	qdel(src)
 	explosion(T, -1, 0, 1, 5)
@@ -964,7 +964,7 @@ var/list/teleport_runes = list()
 	while(user in get_turf(src))
 		if(user.stat)
 			break
-		user.apply_damage(0.1, BRUTE)
+		user.apply_damage(0.1, BLUNT)
 		sleep(3)
 
 	qdel(N)

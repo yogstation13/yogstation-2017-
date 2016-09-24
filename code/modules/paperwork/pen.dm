@@ -27,7 +27,7 @@
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."

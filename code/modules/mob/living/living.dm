@@ -291,7 +291,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustSharpLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
-	sharp = Clamp(sharploss + amount, 0, maxHealth*2)
+	sharploss = Clamp(sharploss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 

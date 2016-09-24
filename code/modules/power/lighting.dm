@@ -342,9 +342,9 @@
 			if(prob(12))
 				electrocute_mob(user, get_area(src), src, 0.3)
 
-/obj/machinery/light/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/light/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				switch(status)
 					if(LIGHT_EMPTY)

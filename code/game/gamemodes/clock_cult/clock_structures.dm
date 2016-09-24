@@ -53,7 +53,7 @@
 		take_damage(rand(50, 100), BURN)
 
 /obj/structure/clockwork/proc/take_damage(amount, damage_type)
-	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
+	if(!amount || !damage_type || !damage_type in list(BLUNT, BURN))
 		return 0
 	if(takes_damage)
 		health = max(0, health - amount)
@@ -63,7 +63,7 @@
 	return 0
 
 /obj/structure/clockwork/narsie_act()
-	if(take_damage(rand(25, 50), BRUTE) && src) //if we still exist
+	if(take_damage(rand(25, 50), BLUNT) && src) //if we still exist
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
@@ -78,7 +78,7 @@
 		if(3)
 			damage = max_health * rand(0.1, 0.3) //10-30% max health lost
 	if(damage)
-		take_damage(damage, BRUTE)
+		take_damage(damage, BLUNT)
 
 /obj/structure/clockwork/examine(mob/user)
 	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
@@ -107,7 +107,7 @@
 	. = ..()
 	take_damage(P.damage, P.damage_type)
 
-/obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
+/obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BLUNT) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")

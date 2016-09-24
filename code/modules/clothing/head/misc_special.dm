@@ -78,7 +78,7 @@
 	..()
 	force = 0
 	throwforce = 0
-	damtype = BRUTE
+	damtype = BLUNT
 	hitsound = 'sound/weapons/tap.ogg'
 	STOP_PROCESSING(SSobj, src)
 

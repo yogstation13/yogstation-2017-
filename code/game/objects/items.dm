@@ -168,7 +168,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
-//BRUTELOSS = 1
+//BLUNTLOSS = 1
 //FIRELOSS = 2
 //TOXLOSS = 4
 //OXYLOSS = 8

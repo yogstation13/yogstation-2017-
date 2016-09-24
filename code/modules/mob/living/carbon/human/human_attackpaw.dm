@@ -10,6 +10,6 @@
 		if(..()) //successful monkey bite, this handles disease contraction.
 			var/damage = rand(1, 3)
 			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+				apply_damage(damage, BLUNT, affecting, run_armor_check(affecting, "melee"))
 				updatehealth()
 		return 1

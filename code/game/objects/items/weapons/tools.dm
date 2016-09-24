@@ -32,7 +32,7 @@
 /obj/item/weapon/wrench/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
@@ -107,7 +107,7 @@
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
 	..()
@@ -184,7 +184,7 @@
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/wirecutters/brass
 	name = "brass wirecutters"
@@ -560,7 +560,7 @@
 /obj/item/weapon/crowbar/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"

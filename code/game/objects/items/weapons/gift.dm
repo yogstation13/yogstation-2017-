@@ -23,7 +23,7 @@
 
 /obj/item/weapon/a_gift/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] peeks inside the [src.name] and cries \himself to death! It looks like they were on the naughty list...</span>")
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
 	if(M && M.mind && M.mind.special_role == "Santa")

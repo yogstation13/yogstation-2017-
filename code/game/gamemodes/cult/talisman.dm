@@ -30,7 +30,7 @@
 			user.whisper(invocation)
 		if(health_cost && iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.apply_damage(health_cost, BRUTE, pick("l_arm", "r_arm"))
+			C.apply_damage(health_cost, BLUNT, pick("l_arm", "r_arm"))
 
 //Malformed Talisman: If something goes wrong.
 /obj/item/weapon/paper/talisman/malformed
@@ -42,7 +42,7 @@
 	user << "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>"
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.apply_damage(10, BRUTE, "head")
+		C.apply_damage(10, BLUNT, "head")
 
 //Supply Talisman: Has a few unique effects. Granted only to starter cultists.
 /obj/item/weapon/paper/talisman/supply

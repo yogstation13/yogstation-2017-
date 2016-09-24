@@ -156,7 +156,7 @@
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
 	if(active)
 		prime()
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/grenade/syndieminibomb/bombanana_peel/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))

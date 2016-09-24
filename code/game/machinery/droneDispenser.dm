@@ -304,14 +304,14 @@
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/take_damage(damage, damage_type = BRUTE,
+/obj/machinery/droneDispenser/take_damage(damage, damage_type = BLUNT,
 	sound_effect = TRUE)
 	// But why would you hurt the dispenser?
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)

@@ -20,7 +20,7 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BLUNT, affecting, armor_block)
 			if (prob(30))
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")

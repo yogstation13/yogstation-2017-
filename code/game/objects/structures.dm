@@ -32,7 +32,7 @@
 
 /obj/structure/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
-	if(M.damtype == BRUTE || M.damtype == BURN)
+	if(M.damtype == BLUNT || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		return 1
 	return 0

@@ -1133,7 +1133,7 @@ var/global/list/synth_flesh_disguises = list()
 
 
 
-/datum/species/synth/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+/datum/species/synth/apply_damage(damage, damagetype = BLUNT, def_zone = null, blocked, mob/living/carbon/human/H)
 	. = ..()
 	handle_disguise(H)
 

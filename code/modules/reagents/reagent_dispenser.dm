@@ -98,7 +98,7 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
-	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE)))
+	if(istype(Proj) && !Proj.nodamage && ((Proj.damage_type == BURN) || (Proj.damage_type == BLUNT)))
 		message_admins("[key_name_admin(Proj.firer)] triggered a fueltank explosion.")
 		log_game("[key_name(Proj.firer)] triggered a fueltank explosion.")
 		boom()

@@ -7,13 +7,13 @@
 		if(user.dna.species.id == "abomination")//snowflake abomination hulk damage
 			visible_message("<span class='danger'>[user] has torn into [src]!</span>", \
 							"<span class='userdanger'>[user] has torn into [src]!</span>")
-			apply_damage(40, BRUTE, affecting, armor_block)
+			apply_damage(40, BLUNT, affecting, armor_block)
 			apply_effect(3, WEAKEN, armor_block)
 			return 1
 		var/hulk_verb = pick("smash","pummel")
 		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", \
 								"<span class='userdanger'>[user] has [hulk_verb]ed [src]!</span>")
-		apply_damage(15, BRUTE, affecting, armor_block)
+		apply_damage(15, BLUNT, affecting, armor_block)
 		return 1
 
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)

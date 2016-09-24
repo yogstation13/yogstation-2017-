@@ -288,7 +288,7 @@
 /obj/item/weapon/shard/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the shard of glass! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 
 /obj/item/weapon/shard/New()
@@ -354,7 +354,7 @@
 			if(!istype(O))
 				return
 			if(!H.shoes)
-				H.apply_damage(5, BRUTE, picked_def_zone)
+				H.apply_damage(5, BLUNT, picked_def_zone)
 				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
 					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \

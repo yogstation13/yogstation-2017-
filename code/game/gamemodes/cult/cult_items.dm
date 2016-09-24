@@ -20,7 +20,7 @@
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(rand(force/2, force), BRUTE, pick("l_arm", "r_arm"))
+			H.apply_damage(rand(force/2, force), BLUNT, pick("l_arm", "r_arm"))
 		else
 			user.adjustBruteLoss(rand(force/2,force))
 		return
@@ -37,7 +37,7 @@
 			user << "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.gender == FEMALE ? "s" : ""]he shouldn't. Cute.\"</span>"
 			user << "<span class='userdanger'>A horrible force yanks at your arm!</span>"
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.apply_damage(30, BLUNT, pick("l_arm", "r_arm"))
 			user.unEquip(src)
 
 /obj/item/weapon/melee/cultblade/dagger

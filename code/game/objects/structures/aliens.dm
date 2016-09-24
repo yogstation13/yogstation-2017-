@@ -15,7 +15,7 @@
 	..()
 	var/damage = I.force
 	switch(I.damtype)
-		if(BRUTE)
+		if(BLUNT)
 			damage *= 0.25
 		if(BURN)
 			damage *= 2
@@ -23,9 +23,9 @@
 			damage = 0 //stamina damage does no damage
 	take_damage(damage, I.damtype)
 
-/obj/structure/alien/proc/take_damage(amount, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/alien/proc/take_damage(amount, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)
@@ -104,14 +104,14 @@
 /obj/structure/alien/resin/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			take_damage(150, BRUTE, 0)
+			take_damage(150, BLUNT, 0)
 		if(2)
-			take_damage(100, BRUTE, 0)
+			take_damage(100, BLUNT, 0)
 		if(3)
-			take_damage(50, BRUTE, 0)
+			take_damage(50, BLUNT, 0)
 
 /obj/structure/alien/blob_act(obj/effect/blob/B)
-	take_damage(50, BRUTE, 0)
+	take_damage(50, BLUNT, 0)
 
 /obj/structure/alien/resin/hitby(atom/movable/AM)
 	..()

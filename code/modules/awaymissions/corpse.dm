@@ -16,7 +16,8 @@
 	var/random = FALSE		//Don't set a name or gender, just go random
 	var/objectives = null
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
-	var/brute_damage = 0
+	var/blunt_damage = 0
+	var/sharp_damage = 0
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
@@ -73,7 +74,8 @@
 		M.death(1) //Kills the new mob
 
 	M.adjustOxyLoss(oxy_damage)
-	M.adjustBruteLoss(brute_damage)
+	M.adjustBluntLoss(blunt_damage)
+	M.adjustSharpLoss(sharp_damage)
 	equip(M)
 
 	if(ckey)
@@ -183,7 +185,7 @@
 	instant = TRUE
 
 /obj/effect/mob_spawn/human/corpse/damaged
-	brute_damage = 1000
+	blunt_damage = 1000
 
 /obj/effect/mob_spawn/human/alive
 	icon = 'icons/obj/Cryogenic2.dmi'

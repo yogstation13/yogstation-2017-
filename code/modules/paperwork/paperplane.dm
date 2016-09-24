@@ -32,7 +32,7 @@
 	user.adjust_blurriness(6)
 	user.adjust_eye_damage(rand(6,8))
 	sleep(10)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/paperplane/update_icon()
 	overlays.Cut()

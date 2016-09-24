@@ -632,7 +632,7 @@
 			user << "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>"
 			user << "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>"
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, "head")
+			user.apply_damage(30, BLUNT, "head")
 			user.adjustBrainLoss(30)
 		addtimer(user, "unEquip", 1, FALSE, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
 
@@ -707,8 +707,8 @@
 			user << "<span class='heavy_brass'>\"Did you like having arms?\"</span>"
 			user << "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>"
 			user.emote("scream")
-			user.apply_damage(7, BRUTE, "l_arm")
-			user.apply_damage(7, BRUTE, "r_arm")
+			user.apply_damage(7, BLUNT, "l_arm")
+			user.apply_damage(7, BLUNT, "r_arm")
 		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 /obj/item/clothing/shoes/clockwork

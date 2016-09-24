@@ -16,7 +16,7 @@
 /obj/item/weapon/gavelhammer/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] has sentenced \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/gavelblock
 	name = "gavel block"

@@ -158,9 +158,9 @@
 	src.operating = 0
 	return 1
 
-/obj/machinery/door/window/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/door/window/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
@@ -188,9 +188,9 @@
 			if(prob(25))
 				shatter()
 			else
-				take_damage(120, BRUTE, 0)
+				take_damage(120, BLUNT, 0)
 		if(3)
-			take_damage(60, BRUTE, 0)
+			take_damage(60, BLUNT, 0)
 
 /obj/machinery/door/window/narsie_act()
 	color = "#7D1919"
@@ -357,7 +357,7 @@
 	return TRUE //yup that's power all right
 
 /obj/machinery/door/window/clockwork/narsie_act()
-	take_damage(rand(30, 60), BRUTE)
+	take_damage(rand(30, 60), BLUNT)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"

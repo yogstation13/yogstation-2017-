@@ -28,7 +28,7 @@
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P)//Reduces damage from most projectiles to curb off-screen kills
 	if(!stat)
 		Aggro()
-	if(P.damage < 30 && P.damage_type != BRUTE)
+	if(P.damage < 30 && P.damage_type != BLUNT)
 		P.damage = (P.damage / 3)
 		visible_message("<span class='danger'>[P] has a reduced effect on [src]!</span>")
 	..()

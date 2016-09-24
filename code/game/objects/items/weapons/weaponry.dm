@@ -14,7 +14,7 @@
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
 		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>")
-		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
+		return (BLUNTLOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
 	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
@@ -54,7 +54,7 @@
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/weapon/katana
 	name = "katana"
@@ -76,7 +76,7 @@
 
 /obj/item/weapon/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/weapon/wirerod
 	name = "wired rod"
@@ -172,7 +172,7 @@
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/phone
 	name = "red phone"

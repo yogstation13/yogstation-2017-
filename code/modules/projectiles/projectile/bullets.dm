@@ -2,7 +2,7 @@
 	name = "bullet"
 	icon_state = "bullet"
 	damage = 60
-	damage_type = BRUTE
+	damage_type = BLUNT
 	nodamage = 0
 	flag = "bullet"
 	hitsound_wall = "ricochet"

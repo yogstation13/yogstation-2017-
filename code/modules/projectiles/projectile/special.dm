@@ -68,7 +68,7 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "small1"
 	damage = 0
-	damage_type = BRUTE
+	damage_type = BLUNT
 	nodamage = 1
 	flag = "bullet"
 
@@ -125,7 +125,7 @@
 	name = "kinetic force"
 	icon_state = null
 	damage = 10
-	damage_type = BRUTE
+	damage_type = BLUNT
 	flag = "bomb"
 	range = 3
 	var/splash = 0
@@ -222,7 +222,7 @@
 /obj/item/projectile/plasma
 	name = "plasma blast"
 	icon_state = "plasmacutter"
-	damage_type = BRUTE
+	damage_type = BLUNT
 	damage = 4
 	range = 5
 
@@ -262,7 +262,7 @@
 	icon_state = "chronofield"
 	hitsound = "sound/weapons/wave.ogg"
 	damage = 0
-	damage_type = BRUTE
+	damage_type = BLUNT
 	nodamage = 1
 	color = "#33CCFF"
 	var/turf/T

@@ -144,7 +144,7 @@
 
 /obj/structure/academy_wizard_spawner/bullet_act(obj/item/projectile/Proj)
 	if(!broken)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		if((Proj.damage_type == BLUNT || Proj.damage_type == BURN))
 			health -= Proj.damage
 			update_status()
 	..()

@@ -40,18 +40,18 @@
 /obj/machinery/shield/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			take_damage(rand(180,260), BRUTE, 0)
+			take_damage(rand(180,260), BLUNT, 0)
 		if(2)
-			take_damage(rand(150,230), BRUTE, 0)
+			take_damage(rand(150,230), BLUNT, 0)
 		if(3)
-			take_damage(rand(80,150), BRUTE, 0)
+			take_damage(rand(80,150), BLUNT, 0)
 
 /obj/machinery/shield/emp_act(severity)
 	switch(severity)
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, 0)
+			take_damage(50, BLUNT, 0)
 
 /obj/machinery/shield/blob_act(obj/effect/blob/B)
 	qdel(src)
@@ -67,12 +67,12 @@
 	..()
 	take_damage(tforce)
 
-/obj/machinery/shield/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/shield/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
 		else
@@ -137,9 +137,9 @@
 			qdel(pick(deployed_shields))
 
 
-/obj/machinery/shieldgen/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/shieldgen/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
@@ -163,9 +163,9 @@
 			if(prob(33))
 				qdel(src)
 			else
-				take_damage(rand(80,120), BRUTE, 0)
+				take_damage(rand(80,120), BLUNT, 0)
 		if(3)
-			take_damage(rand(40,80), BRUTE, 0)
+			take_damage(rand(40,80), BLUNT, 0)
 
 /obj/machinery/shieldgen/emp_act(severity)
 	switch(severity)
@@ -175,7 +175,7 @@
 			locked = pick(0,1)
 			update_icon()
 		if(2)
-			take_damage(rand(80,120), BRUTE, 0)
+			take_damage(rand(80,120), BLUNT, 0)
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)

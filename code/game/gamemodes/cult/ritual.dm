@@ -247,7 +247,7 @@ This file contains the arcane tome files.
 			return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
-	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
+	user.apply_damage(initial(rune_to_scribe.scribe_damage), BLUNT, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/machinery/shield/S = V

@@ -277,7 +277,7 @@
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
 		if(affecting)
-			if(M.melee_damage_type == BRUTE && M.candismember == TRUE && dam_zone != "chest")
+			if(M.melee_damage_type == BLUNT && M.candismember == TRUE && dam_zone != "chest")
 				if(damage >= 25)
 					if(prob(damage)) //higher damage means higher chance of dismember
 						affecting.dismember()
@@ -297,7 +297,7 @@
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
 			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 			var/armor_block = run_armor_check(affecting, "melee")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BLUNT, affecting, armor_block)
 			updatehealth()
 
 
@@ -314,7 +314,7 @@
 
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor_block)
+		apply_damage(damage, BLUNT, affecting, armor_block)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 

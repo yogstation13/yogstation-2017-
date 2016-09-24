@@ -976,7 +976,7 @@ var/list/airlock_overlays = list()
 			H.Paralyse(8)
 			H.adjust_fire_stacks(1)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
-			H.apply_damage(20, BRUTE, "chest")
+			H.apply_damage(20, BLUNT, "chest")
 		return
 	if(forced < 2)
 		if(emagged)

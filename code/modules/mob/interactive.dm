@@ -224,7 +224,7 @@
 					T.updateappearance(mutcolor_update=1)
 					T.domutcheck()
 				if(prob(25))
-					var/cType = pick(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
+					var/cType = pick(list(SNPC_BLUNT,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
 					T.makeTraitor(cType)
 				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
 			if(choice == "Custom")
@@ -256,7 +256,7 @@
 				var/doTrait = input("Do you want the SNPC to be a traitor?") as null|anything in list("Yes","No")
 				if(doTrait)
 					if(doTrait == "Yes")
-						var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
+						var/list/tType = list("Brute" = SNPC_BLUNT, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
 						var/cType = input("Choose the traitor personality.") as null|anything in tType
 						if(cType)
 							var/value = tType[cType]
@@ -365,7 +365,7 @@
 	traitorType = inPers
 
 	switch(traitorType)
-		if(SNPC_BRUTE) // SMASH KILL RAAARGH
+		if(SNPC_BLUNT) // SMASH KILL RAAARGH
 			traitorTarget = pick(mob_list)
 		if(SNPC_STEALTH) // Shhh we is sneekies
 			var/A = pick(typesof(/datum/objective_item/steal) - /datum/objective_item/steal)
@@ -952,7 +952,7 @@
 			tryWalk(get_turf(traitorTarget))
 		else
 			switch(traitorType)
-				if(SNPC_BRUTE)
+				if(SNPC_BLUNT)
 					retal = 1
 					retal_target = traitorTarget
 				if(SNPC_STEALTH)

@@ -256,9 +256,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 			if(prob(50))
 				qdel(src)
 			else
-				take_damage(rand(40,80), BRUTE, 0)
+				take_damage(rand(40,80), BLUNT, 0)
 		else
-			take_damage(rand(20,40), BRUTE, 0)
+			take_damage(rand(20,40), BLUNT, 0)
 
 /obj/machinery/newscaster/attack_ai(mob/user)
 	return attack_hand(user)
@@ -753,9 +753,9 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	else
 		return ..()
 
-/obj/machinery/newscaster/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/newscaster/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(stat & BROKEN)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, 1)

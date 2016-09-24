@@ -8,7 +8,7 @@
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BLUNT = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
@@ -304,7 +304,7 @@
 			..()
 
 /mob/living/simple_animal/bot/bullet_act(obj/item/projectile/Proj)
-	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+	if(Proj && (Proj.damage_type == BLUNT || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(5, 1, src)

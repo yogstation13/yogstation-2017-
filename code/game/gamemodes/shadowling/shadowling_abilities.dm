@@ -926,7 +926,7 @@
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/cast(mob/living/carbon/human/user)
 	if(!is_shadow_or_thrall(user))
 		user << "<span class='warning'><b>As you attempt to commune with the others, an agonizing spike of pain drives itself into your head!</b></span>"
-		user.apply_damage(10, BRUTE, "head")
+		user.apply_damage(10, BLUNT, "head")
 		return
 	var/text = stripped_input(user, "What do you want to say your masters and fellow thralls?.", "Lesser Commune", "")
 	if(!text)

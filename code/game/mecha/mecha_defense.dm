@@ -115,7 +115,7 @@
 			dam_coeff = B.damage_coeff
 			break
 
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+	if((Proj.damage_type == BLUNT || Proj.damage_type == BURN))
 		take_damage(Proj.damage*dam_coeff,Proj.flag, Proj.dir, deflection, dam_coeff)
 		visible_message("<span class='danger'>[name] is hit by [Proj].</span>")
 		check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))

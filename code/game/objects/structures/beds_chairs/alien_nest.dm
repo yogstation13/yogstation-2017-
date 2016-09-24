@@ -85,9 +85,9 @@
 	..()
 	take_damage(I.force, I.damtype)
 
-/obj/structure/bed/nest/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/bed/nest/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 		if(BURN)

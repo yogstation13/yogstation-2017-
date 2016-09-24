@@ -441,19 +441,19 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 						alert_overlay.layer = FLOAT_LAYER
 						A.overlays += alert_overlay
 
-/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
+/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, blunt, sharp, burn)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	var/dam //changes repair text based on how much brute/burn was supplied
 
-	if(brute > burn)
+	if(blunt + sharp > burn)
 		dam = 1
 	else
 		dam = 0
 
 	if(affecting && affecting.status == ORGAN_ROBOTIC)
-		if((brute > 0 && affecting.brute_dam > 0) || (burn > 0 && affecting.burn_dam > 0))
-			affecting.heal_damage(brute,burn,1)
+		if(((blunt + sharp) > 0 && (affecting.blunt_dam + affecting.sharp_dam) > 0) || (burn > 0 && affecting.burn_dam > 0))
+			affecting.heal_damage(blunt,sharp,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")

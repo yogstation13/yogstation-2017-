@@ -74,7 +74,7 @@ In all, this is a lot like the monkey code. /N
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		switch(M.melee_damage_type)
-			if(BRUTE)
+			if(BLUNT)
 				adjustBruteLoss(damage)
 			if(BURN)
 				adjustFireLoss(damage)
