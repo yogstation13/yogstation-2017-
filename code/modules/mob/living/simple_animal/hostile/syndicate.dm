@@ -59,7 +59,7 @@
 	if(!Proj)
 		return
 	switch(Proj.damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			adjustHealth(Proj.damage)
 		if(STAMINA) //No disabler buff
 			visible_message("<span class='danger'>[src] seems unaffected by [Proj]!</span>")

@@ -71,7 +71,7 @@ RCD
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the [abbreviated_name] to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"

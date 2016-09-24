@@ -7,7 +7,7 @@
 	var/throwforce = 0
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
-	var/damtype = "brute"
+	var/damtype = "blunt"
 	var/force = 0
 
 	var/burn_state = FIRE_PROOF // LAVA_PROOF | FIRE_PROOF | FLAMMABLE | ON_FIRE
@@ -20,7 +20,6 @@
 
 /obj/New()
 	..()
-
 	if(on_blueprints && isturf(loc))
 		var/turf/T = loc
 		if(force_blueprints)

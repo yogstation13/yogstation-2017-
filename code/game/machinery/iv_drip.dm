@@ -102,7 +102,7 @@
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		attached << "<span class='userdanger'>The IV drip needle is ripped out of you!</span>"
-		attached.apply_damage(3, BRUTE, pick("r_arm", "l_arm"))
+		attached.apply_damage(3, BLUNT, pick("r_arm", "l_arm"))
 		attached = null
 		update_icon()
 		return PROCESS_KILL

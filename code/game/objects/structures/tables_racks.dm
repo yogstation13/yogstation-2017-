@@ -49,9 +49,9 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(rand(80,120), BRUTE, 0)
+			take_damage(rand(80,120), BLUNT, 0)
 		if(3)
-			take_damage(rand(40,80), BRUTE, 0)
+			take_damage(rand(40,80), BLUNT, 0)
 
 /obj/structure/table/blob_act(obj/effect/blob/B)
 	if(prob(75))
@@ -74,7 +74,7 @@
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] slices [src]!</span>")
-	take_damage(100, BRUTE, 0)
+	take_damage(100, BLUNT, 0)
 
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
@@ -97,7 +97,7 @@
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 	visible_message("<span class='danger'>[user] smashes [src]!</span>")
 	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-	take_damage(rand(180,280), BRUTE, 0)
+	take_damage(rand(180,280), BLUNT, 0)
 	return 1
 
 /obj/structure/table/attack_hand(mob/living/user)
@@ -196,9 +196,9 @@
 	..()
 	take_damage(I.force, I.damtype)
 
-/obj/structure/table/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/table/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
@@ -388,7 +388,7 @@
 	qdel(src)
 
 /obj/structure/table/reinforced/brass/narsie_act()
-	take_damage(rand(15, 45), BRUTE)
+	take_damage(rand(15, 45), BLUNT)
 	if(src) //do we still exist?
 		var/previouscolor = color
 		color = "#960000"
@@ -464,7 +464,7 @@
 			else
 				qdel(src)
 		if(3)
-			take_damage(rand(5,25), BRUTE, 0)
+			take_damage(rand(5,25), BLUNT, 0)
 
 /obj/structure/rack/blob_act(obj/effect/blob/B)
 	if(prob(75))
@@ -529,7 +529,7 @@
 	user.do_attack_animation(src)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='danger'>You kick [src].</span>")
-	take_damage(rand(4,8), BRUTE)
+	take_damage(rand(4,8), BLUNT)
 
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -558,9 +558,9 @@
 	. = ..()
 	take_damage(P.damage, P.damage_type, 0)
 
-/obj/structure/rack/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/rack/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/items/dodgeball.ogg', 80, 1)

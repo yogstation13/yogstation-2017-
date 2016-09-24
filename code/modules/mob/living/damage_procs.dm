@@ -8,13 +8,15 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BLUNT, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))
 		return 0
 	switch(damagetype)
-		if(BRUTE)
-			adjustBruteLoss(damage * blocked)
+		if(BLUNT)
+			adjustBluntLoss(damage * blocked)
+		if(SHARP)
+			adjustSharpLoss(damage * blocked)
 		if(BURN)
 			adjustFireLoss(damage * blocked)
 		if(TOX)
@@ -28,12 +30,17 @@
 	updatehealth()
 	return 1
 
+/mob/living/apply_damage(damage = 0,damagetype = SHARP, def_zone = null, blocked = 0)
+	..()
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
+
+/mob/living/proc/apply_damages(blunt = 0, sharp = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
 	if(blocked >= 100)
 		return 0
-	if(brute)
-		apply_damage(brute, BRUTE, def_zone, blocked)
+	if(blunt)
+		apply_damage(blunt, BLUNT, def_zone, blocked)
+	if(sharp)
+		apply_damage(sharp, SHARP, def_zone, blocked)
 	if(burn)
 		apply_damage(burn, BURN, def_zone, blocked)
 	if(tox)

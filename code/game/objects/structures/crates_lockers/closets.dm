@@ -197,7 +197,7 @@
 
 /obj/structure/closet/bullet_act(obj/item/projectile/P)
 	..()
-	if(P.damage_type == BRUTE || P.damage_type == BURN)
+	if(P.damage_type == BLUNT || P.damage_type == BURN)
 		health -= P.damage
 		if(health <= 0)
 			qdel(src)

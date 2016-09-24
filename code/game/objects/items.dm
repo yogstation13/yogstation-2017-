@@ -83,6 +83,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/heat = 0
 	var/sharpness = IS_BLUNT
 	var/toolspeed = 1
+	var/auto_sharpen = 1 //Automaticly makes objects do sharp damage if they're sharp. Disable in-case you want to make a sharp weapon that does blunt damage.
 
 	var/high_risk = 0 //if admins should be notified when this destoryed
 
@@ -127,6 +128,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/New()
 	..()
+	check_sharpness()
 	for(var/path in actions_types)
 		new path(src)
 
@@ -168,7 +170,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
-//BRUTELOSS = 1
+//BLUNTLOSS = 1
 //FIRELOSS = 2
 //TOXLOSS = 4
 //OXYLOSS = 8
@@ -601,6 +603,12 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/proc/is_sharp()
 	return sharpness
+
+obj/item/proc/check_sharpness() //Automaticly makes sharp objects do sharp damage
+	if(damtype == "blunt" && auto_sharpen)
+		if(sharpness != IS_BLUNT)
+			damtype = "sharp"
+
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))

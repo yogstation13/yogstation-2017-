@@ -21,9 +21,9 @@
 	var/debris_type
 
 
-/obj/structure/barricade/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/barricade/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
@@ -44,7 +44,7 @@
 /obj/structure/barricade/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BRUTE && M.melee_damage_type != BURN))
+	if(M.melee_damage_upper == 0 || (M.melee_damage_type != BLUNT && M.melee_damage_type != BURN))
 		return
 	visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>")
 	add_logs(M, src, "attacked")
@@ -77,10 +77,10 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(25, BRUTE, 0)
+			take_damage(25, BLUNT, 0)
 
 /obj/structure/barricade/blob_act(obj/effect/blob/B)
-	take_damage(25, BRUTE, 0)
+	take_damage(25, BLUNT, 0)
 
 /obj/structure/barricade/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)

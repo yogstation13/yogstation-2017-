@@ -551,7 +551,7 @@
 	else
 		return ..()
 
-/obj/machinery/power/apc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/power/apc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	..()
 	if((malfhack || (stat & BROKEN)) && !opened)
 		if(damage < 10)

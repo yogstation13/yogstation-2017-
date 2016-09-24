@@ -128,18 +128,18 @@
 	if(locate(/mob/living/simple_animal/hostile/guardian/protector) in src)//if they've got a protector holo inside them
 		var/mob/living/simple_animal/hostile/guardian/protector/G = locate(/mob/living/simple_animal/hostile/guardian/protector)
 		if(severity == 1 && G.toggle)//can't think of a better way to do this since ex_act only works if the holo is actually hit with the explosion, which it isn't
-			apply_damage(20,BRUTE)
+			apply_damage(20,BLUNT)
 		else
 			if(G.toggle && severity > 1)
 				visible_message("<span class='notice'><i>[src] glows in a <font color=\"[G.namedatum.colour]\">strange light </font>and is protected from the explosion!<i></span>")
 				return
 			else
 				if(severity == 1)
-					apply_damage(200,BRUTE)
+					apply_damage(200,BLUNT)
 				if(severity == 2)
-					apply_damage(60,BRUTE)
+					apply_damage(60,BLUNT)
 				if(severity == 3)
-					apply_damage(30,BRUTE)
+					apply_damage(30,BLUNT)
 		visible_message("<span class='notice'><i>[src] glows in a <font color=\"[G.namedatum.colour]\">strange light </font>and is protected from the explosion!<i></span>")
 		return
 	switch (severity)
@@ -185,7 +185,8 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
-				BP.brute_dam = BP.max_damage
+				BP.sharp_dam = BP.max_damage/2
+				BP.blunt_dam = BP.max_damage/2
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)
@@ -198,7 +199,7 @@
 	show_message("<span class='userdanger'>The blob attacks you!</span>")
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
+	apply_damage(5, BLUNT, affecting, run_armor_check(affecting, "melee"))
 	return
 
 /mob/living/carbon/human/bullet_act()
@@ -469,7 +470,8 @@
 								usr << "<b>Physical trauma analysis:</b>"
 								for(var/X in bodyparts)
 									var/obj/item/bodypart/BP = X
-									var/brutedamage = BP.brute_dam
+									var/brutedamage = BP.blunt_dam + BP.sharp_dam
+
 									if(brutedamage > 0)
 										status = "received minor physical injuries."
 										span = "notice"
@@ -795,7 +797,7 @@
 				var/obj/item/bodypart/LB = X
 				missing -= LB.body_zone
 				var/status = ""
-				var/brutedamage = LB.brute_dam
+				var/brutedamage = LB.blunt_dam + LB.sharp_dam
 				var/burndamage = LB.burn_dam
 				if(hallucination)
 					if(prob(30))
@@ -1010,7 +1012,7 @@
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
 				for(var/X in bodyparts)
 					var/obj/item/bodypart/BP = X
-					var/damage = BP.burn_dam + BP.brute_dam
+					var/damage = BP.burn_dam + BP.blunt_dam + BP.sharp_dam
 					var/comparison = (BP.max_damage/5)
 					var/icon_num = 0
 					if(damage)

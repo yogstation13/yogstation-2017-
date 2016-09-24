@@ -39,9 +39,9 @@
 
 /obj/machinery/computer/emp_act(severity)
 	if(severity == 1)
-		take_damage(rand(15,30), BRUTE, 0)
+		take_damage(rand(15,30), BLUNT, 0)
 	else
-		take_damage(rand(15,25), BRUTE, 0)
+		take_damage(rand(15,25), BLUNT, 0)
 	..()
 
 /obj/machinery/computer/ex_act(severity, target)
@@ -55,9 +55,9 @@
 			if(prob(25))
 				qdel(src)
 			else
-				take_damage(rand(20,30), BRUTE, 0)
+				take_damage(rand(20,30), BLUNT, 0)
 		if(3)
-			take_damage(rand(10,30), BRUTE, 0)
+			take_damage(rand(10,30), BLUNT, 0)
 
 /obj/machinery/computer/ratvar_act()
 	if(!clockwork)
@@ -128,9 +128,9 @@
 	else
 		return ..()
 
-/obj/machinery/computer/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/computer/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(stat & BROKEN)
 					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)

@@ -203,7 +203,7 @@
 /obj/effect/blob/ex_act(severity, target)
 	..()
 	var/damage = 150 - 20 * severity
-	take_damage(damage, BRUTE)
+	take_damage(damage, BLUNT)
 
 /obj/effect/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -284,12 +284,12 @@
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
 	var/damage = rand(35,50)
-	take_damage(damage, BRUTE, M)
+	take_damage(damage, BLUNT, M)
 	return
 
 /obj/effect/blob/proc/take_damage(damage, damage_type, cause = null, overmind_reagent_trigger = 1)
 	switch(damage_type) //blobs only take brute and burn damage
-		if(BRUTE)
+		if(BLUNT)
 			damage = max(damage * brute_resist, 0)
 		if(BURN)
 			damage = max(damage * fire_resist, 0)

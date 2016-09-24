@@ -27,9 +27,9 @@
 			dump()
 			qdel(src)
 		if (2)
-			take_damage(rand(10,20), BRUTE, 0)
+			take_damage(rand(10,20), BLUNT, 0)
 		if (3)
-			take_damage(5, BRUTE, 0)
+			take_damage(5, BLUNT, 0)
 
 /obj/structure/displaycase/examine(mob/user)
 	..()
@@ -60,9 +60,9 @@
 		var/obj/item/I = AM
 		take_damage(I.throwforce * 0.2)
 
-/obj/structure/displaycase/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/displaycase/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
@@ -172,7 +172,7 @@
 	user.do_attack_animation(src)
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(20, BRUTE, 0)
+	take_damage(20, BLUNT, 0)
 
 /obj/structure/displaycase/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)

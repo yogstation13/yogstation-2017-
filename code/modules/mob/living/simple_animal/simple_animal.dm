@@ -44,9 +44,9 @@
 	var/melee_damage_lower = 0
 	var/melee_damage_upper = 0
 	var/armour_penetration = 0 //How much armour they ignore, as a flat reduction from the targets armour value
-	var/melee_damage_type = BRUTE //Damage type of a simple mob's melee attack, should it do damage.
+	var/melee_damage_type = BLUNT //Damage type of a simple mob's melee attack, should it do damage. Default to blunt since it's most common.
 	var/candismember = FALSE //if the animal can chop off limbs on hit, see human_defense for the dismemberment stuff
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
+	var/list/damage_coeff = list(BLUNT = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) // 1 for full damage , 0 for none , -1 for 1:1 heal from that source
 	var/attacktext = "attacks"
 	var/attack_sound = null
 	var/friendly = "nuzzles" //If the mob does no damage with it's attack
@@ -286,13 +286,18 @@
 /mob/living/simple_animal/proc/adjustHealth(amount)
 	if(GODMODE in status_flags)
 		return 0
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
+	sharploss = Clamp(sharploss + amount/2, 0, maxHealth)
+	bluntloss = Clamp(bluntloss + amount/2, 0, maxHealth)
 	updatehealth()
 	return amount
 
-/mob/living/simple_animal/adjustBruteLoss(amount)
-	if(damage_coeff[BRUTE])
-		. = adjustHealth(amount*damage_coeff[BRUTE])
+/mob/living/simple_animal/adjustBluntLoss(amount)
+	if(damage_coeff[BLUNT])
+		. = adjustHealth(amount*damage_coeff[BLUNT])
+
+/mob/living/simple_animal/adjustSharpLoss(amount)
+	if(damage_coeff[SHARP])
+		. = adjustHealth(amount*damage_coeff[SHARP])
 
 /mob/living/simple_animal/adjustFireLoss(amount)
 	if(damage_coeff[BURN])
@@ -387,7 +392,7 @@
 		attack_threshold_check(damage)
 		return 1
 
-/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE)
+/mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BLUNT)
 	if(damage <= force_threshold || !damage_coeff[damagetype])
 		visible_message("<span class='warning'>[src] looks unharmed.</span>")
 	else

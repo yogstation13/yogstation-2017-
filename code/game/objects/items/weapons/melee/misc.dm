@@ -42,7 +42,7 @@
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				H.apply_damage(2*force, BRUTE, "head")
+				H.apply_damage(2*force, BLUNT, "head")
 			else
 				user.take_organ_damage(2*force)
 			return
@@ -107,7 +107,7 @@
 			H.internal_organs -= B
 			qdel(B)
 		gibs(H.loc, H.viruses, H.dna)
-		return (BRUTELOSS)
+		return (BLUNTLOSS)
 	return
 
 /obj/item/weapon/melee/classic_baton/telescopic/attack_self(mob/user)

@@ -84,9 +84,9 @@
 		tforce = I.throwforce
 	take_damage(tforce)
 
-/obj/machinery/power/solar/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/power/solar/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(stat & BROKEN)
 					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
@@ -162,9 +162,9 @@
 	if(!qdeleted(src))
 		switch(severity)
 			if(2)
-				take_damage(rand(10,20), BRUTE, 0)
+				take_damage(rand(10,20), BLUNT, 0)
 			if(3)
-				take_damage(rand(5,15), BRUTE, 0)
+				take_damage(rand(5,15), BLUNT, 0)
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -473,9 +473,9 @@
 	. = ..()
 	take_damage(P.damage, P.damage_type)
 
-/obj/machinery/power/solar_control/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/power/solar_control/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(stat & BROKEN)
 					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -536,9 +536,9 @@
 	if(!qdeleted(src))
 		switch(severity)
 			if(2)
-				take_damage(rand(20,30), BRUTE, 0)
+				take_damage(rand(20,30), BLUNT, 0)
 			if(3)
-				take_damage(rand(10,20), BRUTE, 0)
+				take_damage(rand(10,20), BLUNT, 0)
 
 /obj/machinery/power/solar_control/blob_act(obj/effect/blob/B)
 	if (prob(75))

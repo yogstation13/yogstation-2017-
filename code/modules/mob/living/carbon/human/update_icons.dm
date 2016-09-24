@@ -68,8 +68,8 @@ Please contact me on #coderbus IRC. ~Carnie x
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(BP.brutestate)
-			standing.overlays	+= "[BP.icon_state]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
+		if(BP.bluntstate + BP.sharpstate) //TODO: Add sprites for both blunt and sharp damage
+			standing.overlays	+= "[BP.icon_state]_[BP.sharpstate + BP.burnstate]0"	//we're adding icon_states of the base image as overlays
 		if(BP.burnstate)
 			standing.overlays	+= "[BP.icon_state]_0[BP.burnstate]"
 

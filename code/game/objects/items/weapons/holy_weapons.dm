@@ -12,7 +12,7 @@
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [src.name]! It looks like \he's trying to get closer to god!</span>")
-	return (BRUTELOSS|FIRELOSS)
+	return (BLUNTLOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
 	if(reskinned)
@@ -168,7 +168,7 @@
 	playsound(loc, 'sound/effects/splat.ogg', 110, 1)
 	sleep(15)
 	user.say("Wynken, Blynken, and Nod")
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 
 /obj/item/weapon/nullrod/staff

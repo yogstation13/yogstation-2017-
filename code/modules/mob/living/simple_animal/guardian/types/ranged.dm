@@ -3,7 +3,7 @@
 	name = "crystal spray"
 	icon_state = "guardian"
 	damage = 5
-	damage_type = BRUTE
+	damage_type = BLUNT
 	armour_penetration = 100
 
 /mob/living/simple_animal/hostile/guardian/ranged
@@ -11,7 +11,7 @@
 	friendly = "quietly assesses"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
+	damage_coeff = list(BLUNT = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
 	projectiletype = /obj/item/projectile/guardian
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'

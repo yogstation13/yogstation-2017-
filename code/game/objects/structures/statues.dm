@@ -95,9 +95,9 @@
 	. = ..()
 	take_damage(P.damage, P.damage_type, 0)
 
-/obj/structure/statue/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/statue/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
@@ -138,9 +138,9 @@
 		if(1)
 			Dismantle(1)
 		if(2)
-			take_damage(rand(60,110), BRUTE, 0)
+			take_damage(rand(60,110), BLUNT, 0)
 		if(3)
-			take_damage(10, BRUTE, 0)
+			take_damage(10, BLUNT, 0)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////

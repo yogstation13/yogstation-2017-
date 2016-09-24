@@ -171,7 +171,7 @@ var/global/list/RPD_recipes=list(
 	user.visible_message("<span class='suicide'>[user] points the end of the [abbreviated_name] down \his throat and presses a button! It looks like \he's trying to commit suicide...</span>")
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/weapon/pipe_dispenser/proc/render_dir_img(_dir,pic,title,flipped=0)
 	var/selected=" class=\"imglink\""

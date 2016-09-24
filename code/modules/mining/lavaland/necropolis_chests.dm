@@ -191,7 +191,7 @@
 	pass_flags = PASSTABLE
 	damage = 25
 	armour_penetration = 100
-	damage_type = BRUTE
+	damage_type = BLUNT
 	hitsound = 'sound/effects/splat.ogg'
 	weaken = 3
 	var/chain

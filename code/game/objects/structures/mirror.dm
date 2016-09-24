@@ -87,9 +87,9 @@
 			if(prob(75))
 				take_damage(5)
 
-/obj/structure/mirror/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/mirror/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 		if(BURN)
 		else
 			return

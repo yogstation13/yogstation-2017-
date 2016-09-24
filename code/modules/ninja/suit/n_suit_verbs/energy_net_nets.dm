@@ -20,9 +20,9 @@ It is possible to destroy the net by the occupant or someone else.
 
 
 
-/obj/effect/energy_net/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/effect/energy_net/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 		if(BURN)
@@ -119,7 +119,7 @@ It is possible to destroy the net by the occupant or someone else.
 		if(2)
 			qdel(src)
 		if(3)
-			take_damage(rand(10,25), BRUTE, 0)
+			take_damage(rand(10,25), BLUNT, 0)
 
 /obj/effect/energy_net/blob_act(obj/effect/blob/B)
 	qdel(src)

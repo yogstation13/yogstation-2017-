@@ -7,5 +7,5 @@
 	if(!hitsound)
 		if(damtype == "fire")
 			hitsound = 'sound/items/welder.ogg'
-		if(damtype == "brute")
+		if(damtype == "blunt")
 			hitsound = "swing_hit"

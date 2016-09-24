@@ -3,7 +3,7 @@
 	a_intent = "harm"
 	friendly = "heals"
 	speed = 0
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+	damage_coeff = list(BLUNT = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = "<span class='holoparasite'>As a <b>support</b> type, you may toggle your basic attacks to a healing mode. In addition, Alt-Clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.</span>"
@@ -48,7 +48,7 @@
 		if(toggle)
 			a_intent = "harm"
 			speed = 0
-			damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
+			damage_coeff = list(BLUNT = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
 			melee_damage_lower = 15
 			melee_damage_upper = 15
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
@@ -56,7 +56,7 @@
 		else
 			a_intent = "help"
 			speed = 1
-			damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+			damage_coeff = list(BLUNT = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 			melee_damage_lower = 0
 			melee_damage_upper = 0
 			src << "<span class='danger'><B>You switch to healing mode.</span></B>"

@@ -262,7 +262,7 @@ Class Procs:
 
 /obj/machinery/mech_melee_attack(obj/mecha/M)
 	M.do_attack_animation(src)
-	if(M.damtype == BRUTE || M.damtype == BURN)
+	if(M.damtype == BLUNT || M.damtype == BURN)
 		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 		take_damage(M.force*2, M.damtype) // multiplied by 2 so we can hit machines hard but not be overpowered against mobs.
 		return 1
@@ -272,9 +272,9 @@ Class Procs:
 	..()
 	take_damage(I.force, I.damtype, 1)
 
-/obj/machinery/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
@@ -290,7 +290,7 @@ Class Procs:
 	add_hiddenprint(user)
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-	take_damage(20, BRUTE, 0)
+	take_damage(20, BLUNT, 0)
 
 /obj/machinery/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -309,7 +309,7 @@ Class Procs:
 		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>",\
 		"<span class='danger'>You smash against the [src.name] with your paws.</span>")
-		take_damage(4, BRUTE, 1)
+		take_damage(4, BLUNT, 1)
 
 
 /obj/machinery/attack_ai(mob/user)

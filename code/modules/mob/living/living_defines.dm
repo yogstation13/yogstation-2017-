@@ -11,7 +11,8 @@
 	var/health = 100 	//A mob's health
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
-	var/bruteloss = 0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
+	var/sharploss = 0	//This blows of your arm and makes you bleed. Combined with blunt this makes brute
+	var/bluntloss = 0   //This breaks/fractures your bones. Combined with sharp this makes brute
 	var/oxyloss = 0		//Oxygen depravation damage (no air in lungs)
 	var/toxloss = 0		//Toxic damage caused by being poisoned or radiated
 	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.

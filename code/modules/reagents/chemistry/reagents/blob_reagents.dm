@@ -79,11 +79,11 @@
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.5*reac_volume, BRUTE)
+	M.apply_damage(0.5*reac_volume, BLUNT)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	var/effectivedamage = damage
-	if(damage_type == BRUTE)
+	if(damage_type == BLUNT)
 		effectivedamage = damage * 2
 	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(50))
 		var/obj/effect/blob/newB = B.expand(null, null, 0)
@@ -110,7 +110,7 @@
 
 /datum/reagent/blob/shifting_fragments/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.6*reac_volume, BRUTE)
+	M.apply_damage(0.6*reac_volume, BLUNT)
 
 /datum/reagent/blob/shifting_fragments/expand_reaction(obj/effect/blob/B, obj/effect/blob/newB, turf/T)
 	if(istype(B, /obj/effect/blob/normal) || (istype(B, /obj/effect/blob/shield) && prob(20)))
@@ -354,7 +354,7 @@
 /datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.losebreath += round(0.2*reac_volume)
-	M.apply_damage(0.2*reac_volume, BRUTE)
+	M.apply_damage(0.2*reac_volume, BLUNT)
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
 
@@ -379,15 +379,15 @@
 		for(var/mob/living/L in orange(M, 1))
 			if("blob" in L.faction) //no friendly fire
 				continue
-			L.apply_damage(0.6*reac_volume, BRUTE)
+			L.apply_damage(0.6*reac_volume, BLUNT)
 		if(M)
-			M.apply_damage(0.6*reac_volume, BRUTE)
+			M.apply_damage(0.6*reac_volume, BLUNT)
 	else
-		M.apply_damage(0.8*reac_volume, BRUTE)
+		M.apply_damage(0.8*reac_volume, BLUNT)
 
 /datum/reagent/blob/explosive_lattice/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(isnull(cause))
-		if(damage_type == BRUTE)
+		if(damage_type == BLUNT)
 			return 0 //no-sell the explosion we do not take damage
 		if(damage_type == BURN)
 			return damage * 1.5 //take more from fire, tesla, and flashbangs
@@ -409,10 +409,10 @@
 /datum/reagent/blob/reactive_gelatin/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	var/damage = rand(5, 35)/25
-	M.apply_damage(damage*reac_volume, BRUTE)
+	M.apply_damage(damage*reac_volume, BLUNT)
 
 /datum/reagent/blob/reactive_gelatin/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage && damage_type == BRUTE && original_health - damage > 0) //is there any damage, is it brute, and will we be alive
+	if(damage && damage_type == BLUNT && original_health - damage > 0) //is there any damage, is it brute, and will we be alive
 		if(isliving(cause))
 			B.visible_message("<span class='warning'><b>The blob retaliates, lashing out!</b></span>")
 		for(var/atom/A in range(1, B))
@@ -462,7 +462,7 @@
 		M.apply_damage(0.6*reac_volume, BURN)
 
 /datum/reagent/blob/electromagnetic_web/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
-	if(damage_type == BRUTE) //take full brute
+	if(damage_type == BLUNT) //take full brute
 		switch(B.brute_resist)
 			if(0.5)
 				return damage * 2
@@ -491,12 +491,12 @@
 
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.1*reac_volume, BRUTE)
+	M.apply_damage(0.1*reac_volume, BLUNT)
 	if(M && reac_volume)
 		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
 				B.blob_attack_animation(M) //show them they're getting a bad time
-				M.apply_damage(0.3*reac_volume, BRUTE)
+				M.apply_damage(0.3*reac_volume, BLUNT)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
@@ -545,7 +545,7 @@
 		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
 		M.death()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.6*reac_volume, BLUNT)
 
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
@@ -568,7 +568,7 @@
 		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
-	M.apply_damage(0.4*reac_volume, BRUTE)
+	M.apply_damage(0.4*reac_volume, BLUNT)
 	if(M)
 		M.apply_damage(0.4*reac_volume, OXY)
 
@@ -605,7 +605,7 @@
 /datum/reagent/blob/dark_matter/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	reagent_vortex(M, 0, reac_volume)
-	M.apply_damage(0.3*reac_volume, BRUTE)
+	M.apply_damage(0.3*reac_volume, BLUNT)
 
 //does brute damage and throws or pushes nearby objects away from the target
 /datum/reagent/blob/b_sorium
@@ -620,7 +620,7 @@
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	reagent_vortex(M, 1, reac_volume)
-	M.apply_damage(0.3*reac_volume, BRUTE)
+	M.apply_damage(0.3*reac_volume, BLUNT)
 
 /datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
 	if(M && reac_volume)

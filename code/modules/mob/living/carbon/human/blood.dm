@@ -114,17 +114,17 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		blood_max = 0
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
-			var/brutedamage = BP.brute_dam
+			var/sharpdamage = BP.sharp_dam
 
 			//We want an accurate reading of .len
 			listclearnulls(BP.embedded_objects)
 			blood_max += 0.5*BP.embedded_objects.len
 
-			if(brutedamage > 30)
+			if(sharpdamage > 30)
 				blood_max += 0.5
-			if(brutedamage > 50)
+			if(sharpdamage > 50)
 				blood_max += 1
-			if(brutedamage > 70)
+			if(sharpdamage > 70)
 				blood_max += 2
 		if(bleedsuppress)
 			blood_max = 0

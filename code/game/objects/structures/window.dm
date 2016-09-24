@@ -63,7 +63,7 @@
 		if(2)
 			shatter()
 		if(3)
-			take_damage(rand(25,75), BRUTE, 0)
+			take_damage(rand(25,75), BLUNT, 0)
 
 /obj/structure/window/blob_act(obj/effect/blob/B)
 	shatter()
@@ -144,7 +144,7 @@
 	return attack_hand(user)
 
 
-/obj/structure/window/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)	//used by attack_alien, attack_animal, and attack_slime
+/obj/structure/window/proc/attack_generic(mob/user, damage = 0, damage_type = BLUNT)	//used by attack_alien, attack_animal, and attack_slime
 	if(!can_be_reached(user))
 		return
 	user.do_attack_animation(src)
@@ -267,11 +267,11 @@
 					return 0
 	return 1
 
-/obj/structure/window/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/structure/window/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	if(reinf)
 		damage *= 0.5
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
@@ -531,7 +531,7 @@
 	return 0
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
-	take_damage(rand(25, 75), BRUTE)
+	take_damage(rand(25, 75), BLUNT)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"

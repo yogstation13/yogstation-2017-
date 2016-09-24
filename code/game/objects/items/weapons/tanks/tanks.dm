@@ -117,7 +117,7 @@
 		gibs(H.loc, H.viruses, H.dna)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)

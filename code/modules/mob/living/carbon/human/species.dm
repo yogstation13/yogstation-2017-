@@ -45,7 +45,8 @@
 	var/list/mutant_organs = list(/obj/item/organ/tongue)		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
-	var/brutemod = 1	// multiplier for brute damage
+	var/bluntmod = 1 //Multiplied for blunt damage
+	var/sharpmod = 1 //Multiplied for sharp damage, what is the purpose of this comment? We repeated this 100 times!
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
@@ -1056,7 +1057,7 @@
 				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
-				H.apply_damage(damage, BRUTE, affecting, armor_block)
+				H.apply_damage(damage, BLUNT, affecting, armor_block)
 				add_logs(M, H, "punched")
 				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
@@ -1222,7 +1223,7 @@
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
 	var/bloody = 0
-	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
+	if(((I.damtype == BLUNT) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == ORGAN_ORGANIC)
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
@@ -1240,7 +1241,7 @@
 						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
 										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
 						H.apply_effect(20, PARALYZE, armor_block)
-					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BRUTE)
+					if(prob(I.force + ((100 - H.health)/2)) && H != user && I.damtype == BLUNT)
 						ticker.mode.remove_revolutionary(H.mind)
 
 				if(bloody)	//Apply blood
@@ -1272,7 +1273,7 @@
 			H.forcesay(hit_appends)	//forcesay checks stat already.
 	return 1
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(damage, damagetype = BLUNT, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
 	if(!damage || blocked <= 0)
 		return 0
@@ -1290,9 +1291,13 @@
 	damage = (damage * blocked)
 
 	switch(damagetype)
-		if(BRUTE)
+		if(BLUNT)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(damage*brutemod, 0))
+			if(organ.take_damage(damage*bluntmod, 0))
+				H.update_damage_overlays(0)
+		if(SHARP)
+			H.damageoverlaytemp = 20
+			if(organ.take_damage(damage*sharpmod, 0))
 				H.update_damage_overlays(0)
 		if(BURN)
 			H.damageoverlaytemp = 20

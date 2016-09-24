@@ -51,7 +51,7 @@
 /obj/item/weapon/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 
 // Mimana - invisible sprites are totally a feature!

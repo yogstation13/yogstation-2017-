@@ -21,7 +21,7 @@
 	name = "bolt of fireball"
 	icon_state = "fireball"
 	damage = 10
-	damage_type = BRUTE
+	damage_type = BLUNT
 	nodamage = 0
 
 /obj/item/projectile/magic/fireball/Range()

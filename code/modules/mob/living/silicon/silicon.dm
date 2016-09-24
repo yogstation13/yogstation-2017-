@@ -152,12 +152,12 @@
 	flash_eyes(affect_silicon = 1)
 	..()
 
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BLUNT, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))
 		return 0
 	switch(damagetype)
-		if(BRUTE)
+		if(BLUNT)
 			adjustBruteLoss(damage * blocked)
 		if(BURN)
 			adjustFireLoss(damage * blocked)
@@ -178,7 +178,7 @@
 	return 1
 
 /mob/living/silicon/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+	if((Proj.damage_type == BLUNT || Proj.damage_type == BURN))
 		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src)
 	return 2
@@ -420,7 +420,7 @@
 	if(..())
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		switch(M.melee_damage_type)
-			if(BRUTE)
+			if(BLUNT)
 				adjustBruteLoss(damage)
 			if(BURN)
 				adjustFireLoss(damage)

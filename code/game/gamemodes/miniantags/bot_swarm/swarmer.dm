@@ -81,7 +81,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	melee_damage_type = STAMINA
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BLUNT = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
 	languages_spoken = SWARMER
 	languages_understood = SWARMER
@@ -429,9 +429,9 @@
 	mouse_opacity = 1
 	var/health = 30
 
-/obj/effect/swarmer/destructible/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/effect/swarmer/destructible/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		if(BURN)

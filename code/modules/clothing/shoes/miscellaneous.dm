@@ -5,7 +5,7 @@
 	for(var/i = 0, i < 3, i++)
 		sleep(3)
 		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"

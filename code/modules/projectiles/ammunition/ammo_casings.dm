@@ -303,7 +303,7 @@
 	var/obj/item/projectile/bullet/reusable/foam_dart/FD = BB
 	if (istype(A, /obj/item/weapon/screwdriver) && !modified)
 		modified = 1
-		FD.damage_type = BRUTE
+		FD.damage_type = BLUNT
 		update_icon()
 	else if ((istype(A, /obj/item/weapon/pen)) && modified && !FD.pen)
 		if(!user.unEquip(A))

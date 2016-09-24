@@ -169,9 +169,9 @@
 						 "<span class='danger'>You hit [src].</span>" )
 	take_damage(damage_amount)
 
-/obj/effect/overlay/holograph/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/effect/overlay/holograph/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(damage && sound_effect)
 				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		if(BURN)

@@ -28,13 +28,13 @@
 	. = ..()
 	take_damage(P.damage, P.damage_type, 0)
 
-/obj/effect/spider/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/effect/spider/proc/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
 		if(BURN)
 			damage *= 2
 			if(sound_effect)
 				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-		if(BRUTE)//the stickiness of the web mutes all attack sounds except fire damage type
+		if(BLUNT)//the stickiness of the web mutes all attack sounds except fire damage type
 			damage *= 0.25
 		else
 			return

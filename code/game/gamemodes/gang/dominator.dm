@@ -57,12 +57,12 @@
 		else
 			STOP_PROCESSING(SSmachine, src)
 
-/obj/machinery/dominator/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/dominator/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(src, 'sound/effects/bang.ogg', 50, 1)
@@ -140,9 +140,9 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(120, BRUTE, 0)
+			take_damage(120, BLUNT, 0)
 		if(3)
-			take_damage(30, BRUTE, 0)
+			take_damage(30, BLUNT, 0)
 	return
 
 /obj/machinery/dominator/bullet_act(obj/item/projectile/P)
@@ -156,7 +156,7 @@
 
 
 /obj/machinery/dominator/blob_act(obj/effect/blob/B)
-	take_damage(110, BRUTE, 0)
+	take_damage(110, BLUNT, 0)
 
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating || (stat & BROKEN))

@@ -81,9 +81,9 @@
 	else
 		return ..()
 
-/obj/machinery/pdapainter/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/pdapainter/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)

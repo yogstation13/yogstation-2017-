@@ -19,7 +19,7 @@ var/global/mulebot_count = 0
 	animate_movement=1
 	health = 50
 	maxHealth = 50
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BLUNT = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	a_intent = "harm" //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
@@ -649,18 +649,18 @@ var/global/mulebot_count = 0
 // called from mob/living/carbon/human/Crossed()
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/RunOver(mob/living/carbon/human/H)
-	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BRUTE)])")
+	add_logs(src, H, "run over", null, "(DAMTYPE: [uppertext(BLUNT)])")
 	H.visible_message("<span class='danger'>[src] drives over [H]!</span>", \
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 	var/damage = rand(5,6)
-	H.apply_damage(0.5*damage, BRUTE, "head", run_armor_check("head", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_leg", run_armor_check("r_leg", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
-	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
+	H.apply_damage(0.5*damage, BLUNT, "head", run_armor_check("head", "melee"))
+	H.apply_damage(0.5*damage, BLUNT, "chest", run_armor_check("chest", "melee"))
+	H.apply_damage(0.5*damage, BLUNT, "l_leg", run_armor_check("l_leg", "melee"))
+	H.apply_damage(0.5*damage, BLUNT, "r_leg", run_armor_check("r_leg", "melee"))
+	H.apply_damage(0.5*damage, BLUNT, "l_arm", run_armor_check("l_arm", "melee"))
+	H.apply_damage(0.5*damage, BLUNT, "r_arm", run_armor_check("r_arm", "melee"))
 
 	var/turf/T = get_turf(src)
 	T.add_mob_blood(H)

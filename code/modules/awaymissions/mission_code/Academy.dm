@@ -144,7 +144,7 @@
 
 /obj/structure/academy_wizard_spawner/bullet_act(obj/item/projectile/Proj)
 	if(!broken)
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		if((Proj.damage_type == BLUNT || Proj.damage_type == BURN))
 			health -= Proj.damage
 			update_status()
 	..()
@@ -288,7 +288,8 @@
 			//Instrinct Resistance
 			user << "<span class='notice'>You feel robust.</span>"
 			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
+			S.bluntmod *= 0.5
+			S.sharpmod *= 0.5
 			S.burnmod *= 0.5
 			S.coldmod *= 0.5
 		if(20)

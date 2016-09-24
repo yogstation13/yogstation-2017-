@@ -850,7 +850,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.notransform = FALSE
 		invoker.Stun(5)
 		invoker.Weaken(5)
-		invoker.apply_damage(10, BRUTE, "head")
+		invoker.apply_damage(10, BLUNT, "head")
 		slab.busy = null
 		return 0
 	invoker.notransform = FALSE
@@ -906,7 +906,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			target.visible_message("<span class='warning'>Blood sprays from a sudden wound on [target]'s head!</span>", \
 			"<span class='heavy_brass'>\"If you like wasting your own blood so much, pig, why don't you bathe in it?\"</span>\n\
 			<span class='userdanger'>An unbearable pain invades your mind, rupturing your head and wiping all thought.</span>")
-			target.apply_damage(rand(20, 30), BRUTE, "head")
+			target.apply_damage(rand(20, 30), BLUNT, "head")
 		else
 			target.visible_message("<span class='warning'>[target]'s face falls lax, their eyes dimming.</span>", \
 			"<span class='heavy_brass'>\"I don't think you need that brain. Not like you use it anyway.\"</span>\n\

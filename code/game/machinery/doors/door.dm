@@ -113,7 +113,7 @@
 	else
 		attack_generic(user, 5)
 
-/obj/machinery/door/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE)
+/obj/machinery/door/proc/attack_generic(mob/user, damage = 0, damage_type = BLUNT)
 	if(operating)
 		return
 	user.do_attack_animation(src)
@@ -173,9 +173,9 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	else
 		return ..()
 
-/obj/machinery/door/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/door/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(glass)
 					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)

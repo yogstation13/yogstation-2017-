@@ -1,6 +1,7 @@
 //Damage things	//TODO: merge these down to reduce on defines
-//Way to waste perfectly good damagetype names (BRUTE) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
-#define BRUTE		"brute"
+//Way to waste perfectly good damagetype names on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
+#define BLUNT       "blunt"
+#define SHARP       "sharp"
 #define BURN		"fire"
 #define TOX			"tox"
 #define OXY			"oxy"
@@ -18,11 +19,12 @@
 #define JITTER		"jitter"
 
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
-#define BRUTELOSS 1
-#define FIRELOSS 2
-#define TOXLOSS 4
-#define OXYLOSS 8
-#define SHAME 16
+#define BLUNTLOSS 1
+#define SHARPLOSS 2
+#define FIRELOSS 4
+#define TOXLOSS 8
+#define OXYLOSS 16
+#define SHAME 32
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN				1

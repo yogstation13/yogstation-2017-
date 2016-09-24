@@ -21,11 +21,11 @@
 	if(storedcutter)
 		user.visible_message("<span class='suicide'>[user] is beheading \himself with [src.name]! It looks like \he's trying to commit suicide.</span>")
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-		return (BRUTELOSS)
+		return (BLUNTLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against \his head! It looks like \he's trying to commit suicide.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
-		return (BRUTELOSS)
+		return (BLUNTLOSS)
 
 
 /obj/item/weapon/papercutter/update_icon()

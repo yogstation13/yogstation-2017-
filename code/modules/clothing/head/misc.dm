@@ -185,7 +185,7 @@
 	user.say("M'lady.")
 	sleep(10)
 	H.facial_hair_style = "Neckbeard"
-	return(BRUTELOSS)
+	return(BLUNTLOSS)
 
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
@@ -295,7 +295,7 @@
 			playsound(src, "sound/machines/defib_failed.ogg", 50, 0)
 			return
 		explosion(H, -1, -1, 1, 1)
-		H.apply_damage(200, BRUTE, "head")
+		H.apply_damage(200, BLUNT, "head")
 		H.apply_damage(200, BURN, "head")
 		if(ishuman(H))
 			var/mob/living/carbon/human/HH = H

@@ -115,9 +115,9 @@
 		if(1)
 			qdel(src)
 		if(2)
-			take_damage(50, BRUTE, 0)
+			take_damage(50, BLUNT, 0)
 		else
-			take_damage(rand(30,60), BRUTE, 0)
+			take_damage(rand(30,60), BLUNT, 0)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
@@ -243,9 +243,9 @@
 
 	return ..()
 
-/obj/machinery/camera/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/camera/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(src, 'sound/weapons/smash.ogg', 50, 1)

@@ -3,13 +3,13 @@
 	. = (get_damage() >= (max_damage - I.armour_penetration/2))
 
 //Dismember a limb
-/obj/item/bodypart/proc/dismember(dam_type = BRUTE)
+/obj/item/bodypart/proc/dismember(dam_type = BLUNT)
 	var/mob/living/carbon/human/H = owner
 	if(!istype(H) || (NODISMEMBER in H.dna.species.specflags)) // species don't allow dismemberment
 		return 0
 
 	var/obj/item/bodypart/affecting = H.get_bodypart("chest")
-	affecting.take_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
+	affecting.take_damage(Clamp(sharp_dam/2, 15, 50), Clamp(blunt_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
 	H.visible_message("<span class='danger'><B>[H]'s [src.name] has been violently dismembered!</B></span>")
 	H.emote("scream")
 	drop_limb()
@@ -312,7 +312,8 @@
 	L = newBodyPart(limb_zone, 0, 0, src)
 	if(L)
 		if(!noheal)
-			L.brute_dam = 0
+			L.blunt_dam = 0
+			L.sharp_dam = 0
 			L.burn_dam = 0
 			L.burn_state = 0
 

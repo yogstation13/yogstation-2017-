@@ -7,7 +7,7 @@
 	anchored = 0
 	health = 100
 	maxHealth = 100
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BLUNT = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 
 	environment_smash = 2 //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE
@@ -186,7 +186,7 @@ Auto Patrol[]"},
 
 /mob/living/simple_animal/bot/ed209/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam/laser)||istype(Proj,/obj/item/projectile/bullet))
-		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
+		if((Proj.damage_type == BURN) || (Proj.damage_type == BLUNT))
 			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
 	..()

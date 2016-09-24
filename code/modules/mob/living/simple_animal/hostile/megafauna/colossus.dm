@@ -30,7 +30,7 @@
 
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BLUNT = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 
@@ -211,7 +211,7 @@
 	armour_penetration = 100
 	speed = 2
 	eyeblur = 0
-	damage_type = BRUTE
+	damage_type = BLUNT
 	pass_flags = PASSTABLE
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = 0)

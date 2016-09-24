@@ -21,6 +21,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	damtype = "sharp"
 	materials = list(MAT_METAL=80)
 	flags = CONDUCT
 	attack_verb = list("attacked", "stabbed", "poked")
@@ -77,7 +78,7 @@
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>"))
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/kitchen/knife/ritual
 	name = "ritual knife"

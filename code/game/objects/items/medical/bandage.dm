@@ -22,7 +22,7 @@
 			var/success = 0
 			switch (healtype)
 				if ("brute")
-					if (healing_limb.brute_dam)
+					if (healing_limb.blunt_dam || healing_limb.sharp_dam)
 						success = healing_limb.heal_damage(healamount/src.duration, 0, 0)
 					else
 						H << "<span class='notice'>The wounds on your [src.healing_limb.getDisplayName()] have stopped bleeding and appear to be healed.</span>"

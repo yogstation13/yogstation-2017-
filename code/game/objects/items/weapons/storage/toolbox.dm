@@ -16,7 +16,7 @@
 
 /obj/item/weapon/storage/toolbox/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] robusts \himself with [src]! It looks like \he's trying to commit suicide..</span>")
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"

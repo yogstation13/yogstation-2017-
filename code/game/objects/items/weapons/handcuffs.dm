@@ -268,7 +268,7 @@
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return (BRUTELOSS)
+	return (BLUNTLOSS)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/attack_self(mob/user)
 	..()
@@ -303,7 +303,7 @@
 				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
-				L.apply_damage(trap_damage,BRUTE, def_zone)
+				L.apply_damage(trap_damage,BLUNT, def_zone)
 	..()
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy

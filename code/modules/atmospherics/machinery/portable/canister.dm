@@ -155,11 +155,11 @@
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
-		take_damage(5, BRUTE, 0)
+		take_damage(5, BLUNT, 0)
 
-/obj/machinery/portable_atmospherics/canister/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+/obj/machinery/portable_atmospherics/canister/take_damage(damage, damage_type = BLUNT, sound_effect = 1)
 	switch(damage_type)
-		if(BRUTE)
+		if(BLUNT)
 			if(sound_effect)
 				if(damage)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
@@ -210,7 +210,7 @@
 	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/blob_act(obj/effect/blob/B)
-	take_damage(100, BRUTE, 0)
+	take_damage(100, BLUNT, 0)
 
 /obj/machinery/portable_atmospherics/canister/burn()
 	take_damage(health, BURN, 1)
@@ -226,14 +226,14 @@
 			if((stat & BROKEN) || prob(30))
 				qdel(src)
 			else
-				take_damage(100, BRUTE, 0)
+				take_damage(100, BLUNT, 0)
 		if(2)
 			if(stat & BROKEN)
 				qdel(src)
 			else
-				take_damage(rand(40, 110), BRUTE, 0)
+				take_damage(rand(40, 110), BLUNT, 0)
 		if(3)
-			take_damage(rand(15, 40), BRUTE, 0)
+			take_damage(rand(15, 40), BLUNT, 0)
 
 /obj/machinery/portable_atmospherics/canister/attacked_by(obj/item/I, mob/user)
 	if(I.force)

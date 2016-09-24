@@ -19,12 +19,12 @@
 					suiciding = 0
 					return
 				var/damage_mod = 0
-				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
+				for(var/T in list(BLUNTLOSS, FIRELOSS, TOXLOSS, OXYLOSS))
 					damage_mod += (T & damagetype) ? 1 : 0
 				damage_mod = max(1, damage_mod)
 
 				//Do 200 damage divided by the number of damage types applied.
-				if(damagetype & BRUTELOSS)
+				if(damagetype & BLUNTLOSS)
 					adjustBruteLoss(200/damage_mod)
 
 				if(damagetype & FIRELOSS)
@@ -37,7 +37,7 @@
 					adjustOxyLoss(200/damage_mod)
 
 				//If something went wrong, just do normal oxyloss
-				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
+				if(!(damagetype & (BLUNTLOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 
 				death(0)

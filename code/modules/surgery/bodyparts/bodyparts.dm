@@ -8,9 +8,11 @@
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
 	var/body_part = null //bitflag used to check which clothes cover this bodypart
-	var/brutestate = 0
+	var/bluntstate = 0
+	var/sharpstate = 0
 	var/burnstate = 0
-	var/brute_dam = 0
+	var/blunt_dam = 0
+	var/sharp_dam = 0
 	var/burn_dam = 0
 	var/max_damage = 0
 	var/can_be_bandaged = 1
@@ -34,8 +36,10 @@
 
 /obj/item/bodypart/examine(mob/user)
 	..()
-	if(brute_dam > 0)
-		user << "<span class='warning'>This limb has [brute_dam > 30 ? "severe" : "minor"] bruising.</span>"
+	if(sharp_dam > 0)
+		user << "<span class='warning'>This limb has [sharp_dam > 30 ? "severe" : "minor"] cuts.</span>"
+	if(blunt_dam > 0)
+		user << "<span class='warning'>This limb has [blunt_dam > 30 ? "severe" : "minor"] bruises.</span>"
 	if(burn_dam > 0)
 		user << "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
@@ -89,33 +93,44 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/take_damage(brute, burn)
+/obj/item/bodypart/proc/take_damage(blunt, sharp, burn)
 	if(owner && (GODMODE in owner.status_flags))
 		return 0	//godmode
-	brute	= max(brute,0)
+	blunt	= max(blunt,0)
+	sharp	= max(sharp,0)
 	burn	= max(burn,0)
 
 
 	if(status == ORGAN_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
-		brute = max(0, brute - 5)
+		blunt = max(0, blunt - 5)
 		burn = max(0, burn - 4)
 
-	var/can_inflict = max_damage - (brute_dam + burn_dam)
+	var/can_inflict = max_damage - (blunt_dam + sharp_dam + burn_dam)
 	if(!can_inflict)
 		return 0
 
-	if((brute + burn) < can_inflict)
-		brute_dam	+= brute
+	if((blunt + burn + sharp) < can_inflict)
+		blunt_dam	+= blunt
 		burn_dam	+= burn
+		sharp_dam   += sharp
 	else
-		if(brute > 0)
+		if(blunt > 0)
 			if(burn > 0)
-				brute	= round( (brute/(brute+burn)) * can_inflict, 1 )
-				burn	= can_inflict - brute	//gets whatever damage is left over
-				brute_dam	+= brute
+				blunt	= round( (blunt/(blunt+burn)) * can_inflict, 1 )
+				burn	= can_inflict - blunt	//gets whatever damage is left over
+				blunt_dam	+= blunt
 				burn_dam	+= burn
 			else
-				brute_dam	+= can_inflict
+				blunt_dam	+= can_inflict
+
+		if(sharp > 0)
+			if(burn > 0)
+				sharp	= round( (sharp/(sharp+burn)) * can_inflict, 1 )
+				sharp	= can_inflict - sharp	//gets whatever damage is left over
+				sharp_dam	+= sharp
+				burn_dam	+= burn
+			else
+				sharp_dam   += can_inflict
 		else
 			if(burn > 0)
 				burn_dam	+= can_inflict
@@ -129,7 +144,7 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, robotic)
+/obj/item/bodypart/proc/heal_damage(blunt,sharp, burn, robotic)
 
 	if(robotic && status != ORGAN_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
@@ -137,7 +152,8 @@
 	if(!robotic && status == ORGAN_ROBOTIC) //This makes robolimbs not healable by chems.
 		return
 
-	brute_dam	= max(brute_dam - brute, 0)
+	blunt_dam	= max(blunt_dam - blunt, 0)
+	sharp_dam	= max(sharp_dam - sharp, 0)
 	burn_dam	= max(burn_dam - burn, 0)
 	if(owner)
 		owner.updatehealth()
@@ -146,17 +162,19 @@
 
 //Returns total damage...kinda pointless really
 /obj/item/bodypart/proc/get_damage()
-	return brute_dam + burn_dam
+	return blunt_dam + sharp_dam + burn_dam
 
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	if(status == ORGAN_ORGANIC) //Robotic limbs show no damage - RR
-		var/tbrute	= round( (brute_dam/max_damage)*3, 1 )
+		var/tblunt	= round( (blunt_dam/max_damage)*3, 1 ) //TODO: give sharp and blunt different overlays
+		var/tsharp	= round( (sharp_dam/max_damage)*3, 1 )
 		var/tburn	= round( (burn_dam/max_damage)*3, 1 )
-		if((tbrute != brutestate) || (tburn != burnstate))
-			brutestate = tbrute
+		if((tblunt != bluntstate) || (tburn != burnstate) || (tsharp != sharpstate))
+			bluntstate = tblunt
+			sharpstate = tsharp
 			burnstate = tburn
 			return 1
 		return 0
@@ -168,8 +186,8 @@
 	status = new_limb_status
 	if(heal_limb)
 		burn_dam = 0
-		brute_dam = 0
-		brutestate = 0
+		sharp_dam = 0
+		blunt_dam = 0
 		burnstate = 0
 	if(owner)
 		owner.updatehealth()

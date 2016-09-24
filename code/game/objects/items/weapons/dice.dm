@@ -137,7 +137,7 @@
 		if(PIERCEIMMUNE in H.dna.species.specflags)
 			return 0
 		H << "<span class='userdanger'>You step on the D4!</span>"
-		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
+		H.apply_damage(4,BLUNT,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
 
 /obj/item/weapon/dice/update_icon()
