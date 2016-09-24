@@ -147,12 +147,12 @@
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(brute, burn)
+/mob/living/carbon/human/take_organ_damage(blunt,sharp , burn)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.take_damage(brute,burn))
+	if(picked.take_damage(blunt, sharp, burn))
 		update_damage_overlays(0)
 	updatehealth()
 

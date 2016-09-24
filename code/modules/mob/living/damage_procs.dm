@@ -30,6 +30,9 @@
 	updatehealth()
 	return 1
 
+/mob/living/apply_damage(damage = 0,damagetype = SHARP, def_zone = null, blocked = 0)
+	..()
+
 
 /mob/living/proc/apply_damages(blunt = 0, sharp = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
 	if(blocked >= 100)

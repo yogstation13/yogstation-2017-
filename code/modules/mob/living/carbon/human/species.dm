@@ -45,7 +45,8 @@
 	var/list/mutant_organs = list(/obj/item/organ/tongue)		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
-	var/brutemod = 1	// multiplier for brute damage
+	var/bluntmod = 1 //Multiplied for blunt damage
+	var/sharpmod = 1 //Multiplied for sharp damage, what is the purpose of this comment? We repeated this 100 times!
 	var/burnmod = 1		// multiplier for burn damage
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
@@ -1292,7 +1293,11 @@
 	switch(damagetype)
 		if(BLUNT)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(damage*brutemod, 0))
+			if(organ.take_damage(damage*bluntmod, 0))
+				H.update_damage_overlays(0)
+		if(SHARP)
+			H.damageoverlaytemp = 20
+			if(organ.take_damage(damage*sharpmod, 0))
 				H.update_damage_overlays(0)
 		if(BURN)
 			H.damageoverlaytemp = 20

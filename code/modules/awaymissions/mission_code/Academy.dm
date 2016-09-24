@@ -288,7 +288,8 @@
 			//Instrinct Resistance
 			user << "<span class='notice'>You feel robust.</span>"
 			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
+			S.bluntmod *= 0.5
+			S.sharpmod *= 0.5
 			S.burnmod *= 0.5
 			S.coldmod *= 0.5
 		if(20)

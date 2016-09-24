@@ -93,7 +93,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/take_damage(blunt,sharp, burn)
+/obj/item/bodypart/proc/take_damage(blunt, sharp, burn)
 	if(owner && (GODMODE in owner.status_flags))
 		return 0	//godmode
 	blunt	= max(blunt,0)
@@ -122,11 +122,18 @@
 				burn_dam	+= burn
 			else
 				blunt_dam	+= can_inflict
+
+		if(sharp > 0)
+			if(burn > 0)
+				sharp	= round( (sharp/(sharp+burn)) * can_inflict, 1 )
+				sharp	= can_inflict - sharp	//gets whatever damage is left over
+				sharp_dam	+= sharp
+				burn_dam	+= burn
+			else
+				sharp_dam   += can_inflict
 		else
 			if(burn > 0)
 				burn_dam	+= can_inflict
-			if(sharp > 0)
-				sharp_dam   += can_inflict
 			else
 				return 0
 	if(owner)

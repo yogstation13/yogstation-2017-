@@ -1,5 +1,5 @@
 //Damage things	//TODO: merge these down to reduce on defines
-//Way to waste perfectly good damagetype names (BLUNT) on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
+//Way to waste perfectly good damagetype names on this... If you were really worried about case sensitivity, you could have just used lowertext(damagetype) in the proc...
 #define BLUNT       "blunt"
 #define SHARP       "sharp"
 #define BURN		"fire"

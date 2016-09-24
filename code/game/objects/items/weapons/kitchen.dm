@@ -21,6 +21,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	damtype = "sharp"
 	materials = list(MAT_METAL=80)
 	flags = CONDUCT
 	attack_verb = list("attacked", "stabbed", "poked")

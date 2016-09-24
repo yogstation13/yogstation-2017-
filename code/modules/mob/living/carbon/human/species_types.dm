@@ -182,7 +182,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	roundstart = 1
 	attack_verb = "assault"
 	darksight = 2
-	brutemod = 0.95
+	bluntmod = 0.80
+	sharpmod = 1.10
 	burnmod = 1.05
 	heatmod = 1.05
 	invis_sight = SEE_INVISIBLE_MINIMUM
@@ -1210,7 +1211,8 @@ SYNDICATE BLACK OPS
 	hair_alpha = 0
 	say_mod = "declares"
 	speedmod = -2//Fast
-	brutemod = 0.7//Tough against firearms
+	bluntmod = 0.6//Tough against firearms
+	sharpmod = 0.9
 	burnmod = 0.65//Tough against lasers
 	coldmod = 0
 	heatmod = 0.5//it's a little tough to burn them to death not as hard though.

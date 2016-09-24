@@ -20,7 +20,6 @@
 
 /obj/New()
 	..()
-
 	if(on_blueprints && isturf(loc))
 		var/turf/T = loc
 		if(force_blueprints)
