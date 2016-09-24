@@ -1,6 +1,6 @@
 /mob/living/silicon/pai
 	name = "pAI"
-	icon = 'icons/obj/status_display.dmi' //invisibility!
+	icon = 'icons/mob/pai.dmi'
 	mouse_opacity = 1
 	density = 0
 	luminosity = 0
@@ -61,6 +61,8 @@
 
 	//HOLOFORM VARS
 	/*MOBILITY VARS*/
+
+	var/obj/item/weapon/card/id/access_card = null //yes pai require one of these now OR ELSE THEY CAN WALK FUCKING EVERYWHERE
 
 	var/chassis = "mouse"
 	var/global/list/possible_chassis = list(
@@ -407,7 +409,6 @@
 	card.setPersonality(pai)
 
 //PAI MOVEMENT/HOLOGRAPHIC FORM
-
 /mob/living/silicon/pai/verb/fold_out()
 	set category = "pAI Commands"
 	set name = "Assume Holographic Form"
@@ -438,14 +439,16 @@
 
 	src.client.perspective = EYE_PERSPECTIVE
 	src.client.eye = src
-	src.forceMove(get_turf(card))
+	var/turf/T = get_turf(card.loc)
+	card.loc = T
+	src.loc = T
+	src.forceMove(T)
 
 	card.forceMove(src)
 	card.screen_loc = null
 
 	src.SetLuminosity(2)
 
-	var/turf/T = get_turf(src)
 	icon_state = "[chassis]"
 	if(istype(T)) T.visible_message("With a faint hum, <b>[src]</b> levitates briefly on the spot before adopting its holographic form in a flash of green light.")
 
@@ -469,10 +472,10 @@
 		src.client.eye = card
 
 	//This seems redundant but not including the forced loc setting messes the behavior up.
+	card.loc = T
+	card.forceMove(T)
 	src.loc = card
-	card.loc = get_turf(card)
 	src.forceMove(card)
-	card.forceMove(card.loc)
 	canmove = 0
 	density = 0
 	src.SetLuminosity(0)
