@@ -810,7 +810,7 @@
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
-	if(M.health < 100)//once you start dropping below crit it's obvious you're on stims
+	if(M.health < 0)//once you start dropping below crit it's obvious you're on stims
 		M.Jitter(5)
 		if(prob(10))
 			M.emote(pick("gasp","twitch"))
