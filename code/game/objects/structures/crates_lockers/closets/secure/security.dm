@@ -348,6 +348,8 @@
 	return ..()
 
 /obj/structure/closet/secure_closet/gulag/ShiftAltClick(mob/user)
+	if(!Adjacent(user))
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(istype(H.get_idcard(), /obj/item/weapon/card/id/prisoner))
