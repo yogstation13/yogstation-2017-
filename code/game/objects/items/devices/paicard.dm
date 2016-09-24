@@ -55,6 +55,13 @@
 	onclose(user, "paicard")
 	return
 
+/obj/item/device/paicard/attackby(obj/item/P, mob/user, params)
+	if (pai)
+		pai.attackby(P, user, params) //forward event to pai handle
+		return
+	else
+		return ..()
+
 /obj/item/device/paicard/Topic(href, href_list)
 
 	if(!usr || usr.stat)
