@@ -3,12 +3,14 @@
 	if(GODMODE in status_flags)
 		return
 	var/total_burn	= 0
-	var/total_brute	= 0
+	var/total_blunt = 0
+	var/total_sharp = 0
 	for(var/X in bodyparts)	//hardcoded to streamline things a bit
 		var/obj/item/bodypart/BP = X
-		total_brute	+= BP.brute_dam
+		total_blunt	+= BP.blunt_dam
+		total_sharp += BP.sharp_dam
 		total_burn	+= BP.burn_dam
-	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
+	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_blunt - total_sharp
 	update_stat()
 	if(((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD )
 		ChangeToHusk()
@@ -19,12 +21,27 @@
 
 
 //These procs fetch a cumulative total damage from all bodyparts
+/mob/living/carbon/human/getBluntLoss()
+	var/amount = 0
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		amount += BP.blunt_dam
+	return amount
+
+/mob/living/carbon/human/getSharpLoss()
+	var/amount = 0
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		amount += BP.sharp_dam
+	return amount
+
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		amount += BP.brute_dam
+		amount += (BP.blunt_dam + BP.sharp_dam)
 	return amount
+
 
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0

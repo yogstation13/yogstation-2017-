@@ -267,19 +267,55 @@ Sorry Giacom. Please don't be mad :(
 
 // MOB PROCS
 /mob/living/proc/getBruteLoss()
-	return bruteloss
+	return (sharploss + bluntloss)
 
 /mob/living/proc/adjustBruteLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
+	bluntloss = Clamp(bluntloss + amount/2, 0, maxHealth*2)
+	sharploss = Clamp(sharploss + amount/2, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
 /mob/living/proc/setBruteLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
-	bruteloss = amount
+	bluntloss = amount/2
+	sharploss = amount/2
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getSharpLoss()
+	return sharploss
+
+/mob/living/proc/adjustSharpLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	sharp = Clamp(sharploss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setSharpLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	sharploss = amount
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getBluntLoss()
+	return bluntloss
+
+/mob/living/proc/adjustBluntLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	bluntloss = Clamp(bluntloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setBluntLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	bluntloss = amount
 	if(updating_health)
 		updatehealth()
 
