@@ -30,6 +30,7 @@
 						if(L != src && L != summoner)
 							L.apply_damage(15, BRUTE)
 					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
+					playsound(get_turf(M),'sound/effects/Explosion2.ogg', 200, 1)
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -41,11 +42,11 @@
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 200
+			bomb_cooldown = world.time + 300
 			B.spawner = src
 			B.disguise(A)
 		else
-			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
+			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 30 seconds between bombs.</span></B>"
 
 /obj/item/weapon/guardian_bomb
 	name = "bomb"
@@ -61,7 +62,7 @@
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
-	spawn(600)
+	spawn(1000)
 		stored_obj.loc = get_turf(src.loc)
 		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
 		qdel(src)
