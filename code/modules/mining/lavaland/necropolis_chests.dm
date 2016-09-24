@@ -25,21 +25,23 @@
 		if(6)
 			new /obj/item/weapon/wingpotion(src)
 		if(7)
-			new /obj/item/weapon/pickaxe/diamond(src)
+			new /obj/item/weapon/pickaxe/drill/jackhammer(src)
 		if(8)
-			new /obj/item/clothing/head/culthood(src)
-			new /obj/item/clothing/suit/cultrobes(src)
+			new /obj/item/weapon/melee/cultblade/dagger(src)
+			new /obj/item/weapon/restraints/legcuffs/bola/cult(src)
 			new /obj/item/weapon/bedsheet/cult(src)
+			new /obj/item/clothing/suit/magusred(src)
+			new /obj/item/clothing/head/magus(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/heart/cursed(src)
+			new /obj/item/weapon/implant/sad_trombone(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/weapon/sord(src)
+			new /obj/item/clothing/suit/space/freedom(src)  //lavaland is actually america after trump was elected
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
@@ -57,7 +59,9 @@
 		if(21)
 			new /obj/item/voodoo(src)
 		if(22)
-			new /obj/item/weapon/grenade/clusterbuster/inferno(src)
+			new /obj/item/weapon/melee/energy/sword/pirate(src)
+			new /obj/item/clothing/suit/space/pirate(src)
+			new /obj/item/clothing/head/helmet/space/pirate(src)
 		if(23)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
@@ -125,7 +129,7 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	luminosity = 7
+	luminosity = 9
 	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/device/warp_cube

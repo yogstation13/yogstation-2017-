@@ -56,6 +56,7 @@
 	dat += "Please choose the chant to be imbued into the fabric of reality.<BR>"
 	dat += "<HR>"
 	dat += "<A href='?src=\ref[src];rune=newtome'>N'ath reth sh'yro eth d'raggathnor!</A> - Summons an arcane tome, used to scribe runes and communicate with other cultists.<BR>"
+	dat += "<A href='?src=\ref[src];rune=metal'>Ar'Tee ess!</A> - Provides 5 runed metal.<BR>"
 	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
 	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
@@ -76,6 +77,11 @@
 				if("newtome")
 					var/obj/item/weapon/tome/T = new(usr)
 					usr.put_in_hands(T)
+				if("metal")
+					if(istype(src, /obj/item/weapon/paper/talisman/supply/weak))
+						usr <<"<span class='cultitalic'>Lesser supply talismans lack the strength to materialize runed metal!</span>"
+						return
+					new /obj/item/stack/sheet/runed_metal(get_turf(usr),5)
 				if("teleport")
 					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
 					usr.put_in_hands(T)
@@ -102,6 +108,7 @@
 				qdel(src)
 
 /obj/item/weapon/paper/talisman/supply/weak
+	cultist_name = "Lesser Supply Talisman"
 	uses = 2
 
 //Rite of Translocation: Same as rune
@@ -315,7 +322,7 @@
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
 /obj/item/weapon/paper/talisman/construction
 	cultist_name = "Talisman of Construction"
-	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 25 sheets of reinforced glass will create a soulstone."
+	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 10 sheets of reinforced glass will create a soulstone."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
 
@@ -351,7 +358,7 @@
 			qdel(src)
 		if(istype(target, /obj/item/stack/sheet/rglass))
 			var/turf/T = get_turf(target)
-			if(target.use(25))
+			if(target.use(10))
 				new /obj/item/device/soulstone(T)
 				user <<"<span class='warning'>The talisman clings to the glass, forcing it to contract and twist, turning a bloody red!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)

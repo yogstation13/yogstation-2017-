@@ -11,9 +11,9 @@ var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
 var/list/advance_cures = 	list(
-									"sodiumchloride", "sugar", "orangejuice",
-									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
+									"sodiumchloride", "spaceacillin", "iron",
+									"synaptizine", "salglu_solution", "ethanol",
+									"leporazine", "haloperidol", "lipolicide",
 									"silver", "gold"
 								)
 
@@ -182,7 +182,7 @@ var/list/advance_cures = 	list(
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	var/list/properties = list("resistance" = 1, "stealth" = 1, "stage_rate" = 1, "transmittable" = 1, "severity" = 0)
+	var/list/properties = list("resistance" = 2, "stealth" = 0, "stage_rate" = 2, "transmittable" = 2, "severity" = 1)
 
 	for(var/datum/symptom/S in symptoms)
 

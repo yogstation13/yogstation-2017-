@@ -55,8 +55,8 @@
 	ranged_message = "honks at"
 	var/last_honk = 6
 	var/honk_rate = 6
-	var/last_banana = 10
-	var/banana_rate = 10
+	var/last_banana = 8
+	var/banana_rate = 8
 
 
 /obj/item/weapon/storage/firstaid/attackby(var/obj/item/device/assembly/bikehorn/S, mob/user as mob)
@@ -118,12 +118,33 @@
 
 /obj/item/projectile/clownblast
 	name = "honk"
-	icon_state = ""
+	icon_state = "banana"
 	hitsound = 'sound/items/bikehorn.ogg'
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+
+
+/obj/item/projectile/clownblast/syndicate
+	name = "loud honk"
+	icon_state = "banana"
+	hitsound = 'sound/items/AirHorn.ogg'
+	damage = 0
+	damage_type = 1
+	stun = 6
+	weaken = 6
+	stutter = 6
+	jitter = 20
+	flag = "energy"
+
+/obj/item/projectile/clownblast/syndicate/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjustEarDamage(0, 30)
+		M << "<font color='red' size='7'>HONK</font>"
+		M.SetSleeping(0)
 
 
 /mob/living/simple_animal/hostile/honkbot/proc/Emag(mob/user as mob)
@@ -133,7 +154,7 @@
 	s.set_up(5, 1, src)
 	s.start()
 	icon_state = "honkbot_emag"
-	honk_rate = 3
+	honk_rate = 5
 	return
 
 
@@ -151,8 +172,9 @@
 	if(emagged == 2)
 		last_banana--
 		if(last_banana <= 0)
-			new /obj/item/weapon/grown/bananapeel(src.loc,65)
+			new /obj/item/weapon/grown/bananapeel(src.loc,100)
 			last_banana = banana_rate
+		projectiletype = /obj/item/projectile/clownblast/syndicate
 
 /mob/living/simple_animal/hostile/honkbot/death(gibbed)
  	visible_message("<span class='danger'>[src] is destroyed!</span>")
