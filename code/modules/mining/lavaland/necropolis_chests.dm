@@ -774,7 +774,7 @@
 
 
 /obj/item/weapon/chainsaw_bubblegum/attack_self(mob/user, forced)
-	if(!virgin || forced)
+	if(virgin || forced)
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/bubblegumchainsaw(src))
 		user << "<span class='genesisred'>OH HELL YEAH! THIS PRETTY, LITTLE BIRDIE'S CALLING OUT TO YA, AND IT WANTS THE BLOOD OF YOUR ENEMIES SPLATTERED ALL OVER IT'S SAW!</span>"
 		taker = user
