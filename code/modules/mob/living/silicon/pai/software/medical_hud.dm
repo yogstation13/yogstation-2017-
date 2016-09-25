@@ -3,7 +3,13 @@
 	description = "Grants a holographic HUD which displays an approximate state of organic vitals within camera range, and a biometrics scanning suite."
 	category = "Medical"
 	sid = "medicalhud"
+	hrefline = 1
 	ram = 15
+
+/datum/pai/software/medical_hud/action_hrefline(mob/living/silicon/pai/user)
+	var/dat = ""
+	dat = "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Medical Analysis Suite</a>[(user.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+	return dat
 
 /datum/pai/software/medical_hud/action_menu(mob/living/silicon/pai/user)
 	var/dat = ""
@@ -12,9 +18,9 @@
 				 <h4>Visual Status Overlay</h4><br>
 					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
 					The suite is currently [ (user.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
-					<a href='byond://?src=\ref[user];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
+					<a href='byond://?src=\ref[user];software=[sid];sub=0;toggle=1'>Toggle Suite</a><br>
 					<br>
-					<a href='byond://?src=\ref[user];software=medicalhud;sub=1'>Host Bioscan</a><br>
+					<a href='byond://?src=\ref[user];software=[sid];sub=1'>Host Bioscan</a><br>
 					"}
 	if(user.subscreen == 1)
 		dat += {"<h3>Medical Analysis Suite</h3><br>
@@ -44,7 +50,7 @@
 					 Stage: [D.stage]/[D.max_stages]<br>
 					 Possible Cure: [D.cure_text]<br>
 					"}
-		dat += "<a href='byond://?src=\ref[user];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
+		dat += "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Visual Status Overlay</a><br>"
 	return dat
 
 /datum/pai/software/medical_hud/action_use(mob/living/silicon/pai/user, var/args)

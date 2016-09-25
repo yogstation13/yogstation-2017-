@@ -21,7 +21,7 @@
 			. += "<h3>Security Records</h3><HR>"
 			if(data_core.general)
 				for(var/datum/data/record/R in sortRecord(data_core.general))
-					. += "<A href='?src=\ref[src];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+					. += "<A href='?src=\ref[src];sec_rec=[R.fields["id"]];software=[sid];sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<h3>Security Record</h3>"
 			if(user.securityActive1 in data_core.general)
@@ -45,5 +45,5 @@
 				<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"}
 			else
 				. += "<pre>Requested security record not found,</pre><BR>"
-			. += text("<BR>\n<A href='?src=\ref[];software=securityrecord;sub=0'>Back</A><BR>", src)
+			. += text("<BR>\n<A href='?src=\ref[];software=[sid];sub=0'>Back</A><BR>", src)
 	return .
