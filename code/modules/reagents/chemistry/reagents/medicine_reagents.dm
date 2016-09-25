@@ -485,51 +485,54 @@
 	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 45
-	addiction_threshold = 30
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	addiction_threshold = 10
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-1*REM, 0)
+	M.AdjustParalysis(-0.5, 0)
+	M.AdjustStunned(-0.5, 0)
+	M.AdjustWeakened(-0.5, 0)
+	M.adjustStaminaLoss(-2*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM, 0)
+	if(prob(44))
+		M.adjustToxLoss(2*REM, 0)
 		M.losebreath++
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
+		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
+		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
+		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
