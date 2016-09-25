@@ -95,7 +95,13 @@
 		return 1
 	if(istype(M, /mob/living/silicon))
 		//AI can do whatever he wants
-		return 1
+		//UNLESS THEY'RE FILTHY PAI SCUM IN WHICH CASE THEY TAKE THE PLEB DOORS LIKE EVERYONE ELSE
+		if (istype(M, /mob/living/silicon/pai))
+			var/mob/living/silicon/pai/P = M
+			if (check_access(P.access_card))
+				return 1
+		else
+			return 1
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return 1
