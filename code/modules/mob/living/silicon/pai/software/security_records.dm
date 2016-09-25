@@ -21,7 +21,7 @@
 			. += "<h3>Security Records</h3><HR>"
 			if(data_core.general)
 				for(var/datum/data/record/R in sortRecord(data_core.general))
-					. += "<A href='?src=\ref[src];sec_rec=[R.fields["id"]];software=[sid];sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+					. += "<A href='?src=\ref[user];sec_rec=[R.fields["id"]];software=[sid];sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
 		if(1)
 			. += "<h3>Security Record</h3>"
 			if(user.securityActive1 in data_core.general)
