@@ -113,7 +113,7 @@
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/false_armblade
 	name = "False Armblade Sting"
 	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
@@ -158,9 +158,9 @@
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
-*/
 
-/*
+
+
 /obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
@@ -171,7 +171,7 @@
 	qdel(blade)
 	target.update_inv_l_hand()
 	target.update_inv_r_hand()
-*/
+
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -249,7 +249,7 @@
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
@@ -264,4 +264,3 @@
 		target.reagents.add_reagent("frostoil", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1
-*/
