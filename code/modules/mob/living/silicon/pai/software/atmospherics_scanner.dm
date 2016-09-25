@@ -3,7 +3,7 @@
 	description = "Allows access to basic atmospherics data of surrounding environment through use of optical-sensory approximation."
 	category = "Basic"
 	sid = "atmosphericsscanner"
-	ram = 15
+	ram = 5
 
 /datum/pai/software/atmospherics_scanner/action_menu(mob/living/silicon/pai/user)
 	var/dat = "<h3>Atmospheric Sensor</h4>"

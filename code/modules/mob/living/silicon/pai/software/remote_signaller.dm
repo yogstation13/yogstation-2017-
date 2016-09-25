@@ -3,7 +3,7 @@
 	description = "Provides ad-hoc broadcasting of radio signalling protocols. Useful for triggering things remotely."
 	category = "Basic"
 	sid = "signaller"
-	ram = 15
+	ram = 5
 
 /datum/pai/software/signaller/action_menu(mob/living/silicon/pai/user)
 	var/dat = ""

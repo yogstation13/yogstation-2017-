@@ -5,9 +5,6 @@
 	sid = "medicalrecords"
 	ram = 15
 
-/datum/pai/software/medical_records/action_purchased(mob/living/silicon/pai/user)
-	user << "Medical Records software purchased!"
-
 /datum/pai/software/medical_records/action_use(mob/living/silicon/pai/user, var/args)
 	user.medicalActive1 = find_record("id", args["med_rec"], data_core.general)
 	if(user.medicalActive1)

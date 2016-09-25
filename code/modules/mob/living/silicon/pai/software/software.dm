@@ -11,8 +11,9 @@
 	//thrown when the user accesses the software via the side menu once they've purchased it
 	return
 
-/datum/pai/software/proc/action_purchased(mob/user)
+/datum/pai/software/proc/action_installed(mob/user)
 	//thrown when the user purchases the software for the first time
+	//use this to add things like verbs, hud displays, etc
 	return
 
 /datum/pai/software/proc/action_menu(mob/user)

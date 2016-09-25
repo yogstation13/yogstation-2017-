@@ -3,20 +3,20 @@
 	description = "Clandestine brute-forcing tool for subverting airlock authorization locks. Definitely not legal in most stations. RAM intensive."
 	category = "Advanced"
 	sid = "doorjack"
-	ram = 60
+	ram = 30
 
 /datum/pai/software/doorjack/action_use(mob/living/silicon/pai/user, var/args)
 	if(args["jack"])
 		if(user.cable && user.cable.machine)
 			user.hackdoor = user.cable.machine
 			hackloop(user)
-			if(args["cancel"])
-				user.hackdoor = null
-			if(args["cable"])
-				var/turf/T = get_turf(user.loc)
-				user.cable = new /obj/item/weapon/pai_cable(T)
-				T.visible_message("<span class='warning'>A port on [user] opens to reveal [user.cable], which promptly falls to the floor.</span>",
-				"<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+	if(args["cancel"])
+		user.hackdoor = null
+	if(args["cable"])
+		var/turf/T = get_turf(user.loc)
+		user.cable = new /obj/item/weapon/pai_cable(T)
+		T.visible_message("<span class='warning'>A port on [user] opens to reveal [user.cable], which promptly falls to the floor.</span>",
+			"<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 
 /datum/pai/software/doorjack/proc/hackloop(mob/living/silicon/pai/user)
 	var/turf/T = get_turf(user.loc)

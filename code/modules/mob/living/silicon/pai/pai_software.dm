@@ -125,6 +125,7 @@
 					if(src.ram >= cost)
 						src.ram -= cost
 						src.pai_software.Add(T)
+						T.action_installed(src) //throw installed event to allow huds to be attached, etc
 					else
 						src.temp = "Insufficient RAM available."
 				else
@@ -215,7 +216,7 @@
 
 	for (var/key in available_software) //generate the list of available software
 		var/datum/pai/software/S = available_software[key]
-		if (S.ram == 0 || S in pai_software) //software with "0" ram is innate and doesn't need to be shown, same with stuff we've already purchased
+		if (S in pai_software || !S.ram) //software with "0" ram is innate and doesn't need to be shown, same with stuff we've already purchased
 			continue
 
 		dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[S.sid]'>[S.name]</a> ([S.ram])<br>"

@@ -4,7 +4,7 @@
 	category = "Basic"
 	sid = "universaltranslator"
 	hrefline = 1
-	ram = 15
+	ram = 5
 
 /datum/pai/software/universal_translator/action_hrefline(mob/living/silicon/pai/user)
 	var/dat = ""
