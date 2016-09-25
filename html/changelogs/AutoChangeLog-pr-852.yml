@@ -1,0 +1,7 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Stimulant Virus Nerf"
+  - rscdel: "Stimulant Virus no longer uses ephedrine"
+  - tweak: "Stimulant Virus now uses lesser ephedrine, which only makes you run faster."
+  - tweak: "The virus will not subject lesser ephedrine to users that are stunned or weakened."
