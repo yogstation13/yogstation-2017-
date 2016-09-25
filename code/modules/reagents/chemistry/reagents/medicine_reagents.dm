@@ -533,6 +533,21 @@
 		. = 1
 	..()
 
+
+/datum/reagent/medicine/lesserephedrine
+	name = "Lesser Ephedrine"
+	id = "lesserephedrine"
+	description = "Increases movement speed."
+	reagent_state = LIQUID
+	color = "#D2FFFA"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+
+
+/datum/reagent/medicine/lesserephedrine/on_mob_life(mob/living/M)
+	M.status_flags |= GOTTAGOFAST
+	..()
+	. = 1
+
 /datum/reagent/medicine/diphenhydramine
 	name = "Diphenhydramine"
 	id = "diphenhydramine"
