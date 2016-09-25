@@ -801,7 +801,7 @@
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
 	M.status_flags |= IGNORESLOWDOWN
-	M.status_flags |= STIMS
+	M.status_flags |= NOCRIT
 	M.adjustOxyLoss(-1*REM, 0)
 	M.adjustToxLoss(-1*REM, 0)
 	M.adjustBruteLoss(-1*REM, 0)

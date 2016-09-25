@@ -729,7 +729,7 @@
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
-				if(STIMS in status_flags)//no crit when you're stimmed
+				if(NOCRIT in status_flags)//no crit when you're stimmed
 					return
 				stat = UNCONSCIOUS
 				blind_eyes(1)
