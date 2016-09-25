@@ -748,7 +748,7 @@
 /obj/item/weapon/chainsaw_bubblegum
 	name = "demonic chainsaw"
 	desc = "You almost regret picking this up."
-	force = 27
+	force = 28
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	w_class = 5
