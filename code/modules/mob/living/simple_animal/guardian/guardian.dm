@@ -197,10 +197,14 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(summoner)
 		if(loc == summoner)
 			return 0
-		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
+			if(amount < 10)
+				for(var/mob/living/carbon/M in viewers(3, src))
+					M <<"<span class='warning'>[summoner] winces as small bruises appear on their skin.</span>"
+			else
+				summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner]!</B></span>")
+			summoner.adjustBruteLoss(amount)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
-			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
 			if(summoner.stat == UNCONSCIOUS)
 				summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
 				summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
