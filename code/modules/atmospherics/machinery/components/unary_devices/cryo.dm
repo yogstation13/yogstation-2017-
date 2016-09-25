@@ -79,7 +79,7 @@
 		if(occupant.stat == DEAD) // We don't bother with dead people.
 			return
 
-		if(occupant.bodytemperature < T40C) // Sleepytime. Why? More cryo magic.
+		if(occupant.bodytemperature < T0C + 40) // Sleepytime. Why? More cryo magic.
 			occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
 			occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
 
@@ -219,7 +219,7 @@
 
 	
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	var beakerContents = list()
+	
 	return data
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_act(action, params)
