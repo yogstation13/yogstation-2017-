@@ -32,6 +32,8 @@
 		dat += "Prime directive: <br>[pai.laws.zeroth]<br>"
 		for(var/slaws in pai.laws.supplied)
 			dat += "Additional directives: <br>[slaws]<br>"
+		dat += {"Holographic emitter support: <b><a href='byond://?src=\ref[src];allowholo=[pai.canholo ? "no" : "yes"]'>[pai.canholo ? "Enabled" : "Disabled"]</a></b>
+				<br><i>Giving your pAI the ability to use their emitters will make them able to move around on their own.</i><br>"}
 		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
 		dat += "<br>"
 		dat += "<h3>Device Settings</h3><br>"
@@ -82,6 +84,13 @@
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
 				pai << "<span class='notice'>You have been bound to a new master.</span>"
+		if (href_list["allowholo"])
+			if (href_list["allowholo"] == "yes")
+				pai.canholo = 1
+				pai << "<span class='notice'>Your holographic emitters have been enabled by the person holding your card.</span>"
+			else
+				pai.canholo = 0
+				pai << "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>"
 		if(href_list["wipe"])
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")

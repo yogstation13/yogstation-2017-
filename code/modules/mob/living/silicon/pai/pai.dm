@@ -61,6 +61,8 @@
 	var/obj/machinery/paired
 	var/pairing = 0
 
+	var/canholo = 0 //can't enable holoform without master permission
+
 	//HOLOFORM VARS
 	/*MOBILITY VARS*/
 
@@ -423,6 +425,10 @@
 	set name = "Assume Holographic Form"
 
 	if(stat || sleeping || paralysis || weakened)
+		return
+
+	if (!canholo)
+		src << "\red Your master has not enabled your external holographic emitters! Ask nicely!"
 		return
 
 	if(src.loc != card)
