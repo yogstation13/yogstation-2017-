@@ -17,6 +17,8 @@
 
 	weather_immunities = list("ash")
 
+	var/static/list/available_software
+
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/pai_software = list()
 	var/userDNA		// The DNA string of our assigned user
@@ -98,6 +100,13 @@
 		if(!card.radio)
 			card.radio = new /obj/item/device/radio(card)
 		radio = card.radio
+
+	//populate static instance list of pai software
+	if (!available_software)
+		available_software = list()
+		for(var/path in subtypesof(/datum/pai/software))
+			var/datum/pai/software/S = new path
+			available_software[S.sid] = S
 
 	//PDA
 	pda = new(src)
@@ -513,7 +522,8 @@
 		finalized = alert("Look at your sprite. Is this what you wish to use?",,"No","Yes")
 
 	chassis = possible_chassis[choice]
-	verbs -= /mob/living/silicon/pai/proc/choose_chassis
+	if (choice)
+		verbs -= /mob/living/silicon/pai/proc/choose_chassis
 
 /mob/living/silicon/pai/proc/rest_protocol()
 	set name = "Activate R.E.S.T Protocol"

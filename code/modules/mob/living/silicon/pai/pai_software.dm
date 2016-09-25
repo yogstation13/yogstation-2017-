@@ -6,8 +6,7 @@
 //  - Put cable in user's hand instead of on the ground
 //  - Camera jack
 
-
-/mob/living/silicon/pai/var/list/available_software = list(
+/*list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
 															"medical records" = 15,
@@ -22,7 +21,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
-															)
+															)*/
 
 /mob/living/silicon/pai/verb/paiInterface()
 	set category = "pAI Commands"
@@ -39,6 +38,12 @@
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
+		for (var/S in src.pai_software)
+			var/datum/pai/software/SW = S
+
+			if (screen == SW.sid) //we have a screen set with software we have active, so lets display it:
+				left_part = SW.action_menu(src)
+
 		switch(src.screen)							// Determine which interface to show here
 			if("main")
 				left_part = ""
@@ -50,7 +55,7 @@
 				left_part = downloadSoftware()
 			if("manifest")
 				left_part = src.softwareManifest()
-			if("medicalrecord")
+			/*if("medicalrecord")
 				left_part = src.softwareMedicalRecord()
 			if("securityrecord")
 				left_part = src.softwareSecurityRecord()
@@ -69,7 +74,7 @@
 			if("camerajack")
 				left_part = src.softwareCamera()
 			if("signaller")
-				left_part = src.softwareSignal()
+				left_part = src.softwareSignal()*/
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -126,20 +131,28 @@
 		src.screen = soft
 	if(sub)
 		src.subscreen = text2num(sub)
+
+	for (var/S in src.pai_software)
+		var/datum/pai/software/SW = S
+
+		if (soft == SW.sid) //if we've got a matching href tag, refer it to the software datum's use event
+			SW.action_use(src, href_list)
+
 	switch(soft)
 		// Purchasing new software
 		if("buy")
 			if(src.subscreen == 1)
-				var/target = href_list["buy"]
-				if(available_software.Find(target))
-					var/cost = src.available_software[target]
+				var/datum/pai/software/T = available_software[href_list["buy"]]
+
+				if(istype(T, /datum/pai/software))
+					var/cost = T.ram
 					if(src.ram >= cost)
 						src.ram -= cost
-						src.pai_software.Add(target)
+						src.pai_software.Add(T)
 					else
 						src.temp = "Insufficient RAM available."
 				else
-					src.temp = "Trunk <TT> \"[target]\"</TT> not found."
+					src.temp = "Trunk <TT> \"[T]\"</TT> not found."
 
 		// Configuring onboard radio
 		if("radio")
@@ -172,6 +185,7 @@
 					pID = 10
 			src.card.setEmotion(pID)
 
+		/*
 		if("signaller")
 
 			if(href_list["send"])
@@ -282,6 +296,7 @@
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+	*/
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -299,7 +314,12 @@
 	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
-	// Basic
+	for (var/S in pai_software)
+		var/datum/pai/software/SW = S
+
+		dat += "<a href='byond://?src=\ref[src];software=[SW.sid];sub=0'>[SW.name]</a> <br>"
+
+	/*
 	dat += "<b>Basic</b> <br>"
 	for(var/s in src.pai_software)
 		if(s == "digital messenger")
@@ -314,6 +334,7 @@
 			dat += "<a href='byond://?src=\ref[src];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
+
 	dat += "<br>"
 
 	// Advanced
@@ -338,7 +359,8 @@
 		if(s == "door jack")
 			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
 	dat += "<br>"
-	dat += "<br>"
+	dat += "<br>"*/
+
 	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
 	return dat
 
@@ -351,14 +373,21 @@
 	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
-	for(var/s in available_software)
+	/*for(var/s in available_software)
 		if(!pai_software.Find(s))
 			var/cost = src.available_software[s]
 			var/displayName = uppertext(s)
 			dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[s]'>[displayName]</a> ([cost]) <br>"
 		else
 			var/displayName = lowertext(s)
-			dat += "[displayName] (Download Complete) <br>"
+			dat += "[displayName] (Download Complete) <br>"*/
+	for (var/key in available_software) //generate the list of available software
+		var/datum/pai/software/S = available_software[key]
+		if (S.ram == 0 || S in pai_software) //software with "0" ram is innate and doesn't need to be shown, same with stuff we've already purchased
+			continue
+
+		dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[S.sid]'>[S.name]</a> ([S.ram])<br>"
+
 	dat += "</p>"
 	return dat
 
