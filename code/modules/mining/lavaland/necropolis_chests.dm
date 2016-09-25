@@ -742,22 +742,26 @@
 	user.unEquip(src)
 	var/obj/item/weapon/chainsaw_bubblegum/C = new
 	user.put_in_active_hand(C)
+	user << "<span class='genesisred'>You hear a low hum coming from the saw... it's calling out to you... it wants you to start it up.</span>"
 	qdel(src)
 
 
 /obj/item/weapon/chainsaw_bubblegum
 	name = "demonic chainsaw"
-	desc = "You almost regret picking this up."
+	desc = "As you stare into the abyss, you can see the tortured spirits floating amoungst the scratches leading to the core of the chainsaw pleading out for mercy and salvation."
 	force = 25
+	throwforce = 20
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	w_class = 5
-	flags = NODROP | ABSTRACT
+	flags = ABSTRACT
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced","eviscerated")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	armour_penetration = 30
 	color = "#FF0000"
+	var/virgin = TRUE
+	var/mob/living/carbon/taker
 
 /obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
 	..()
@@ -771,3 +775,47 @@
 	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
 	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
 	qdel(user)
+
+
+/obj/item/weapon/chainsaw_bubblegum/attack_self(mob/user, forced)
+	if(virgin || forced)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/bubblegumchainsaw(src))
+		user << "<span class='genesisred'>OH HELL YEAH! THIS PRETTY, LITTLE BIRDIE'S CALLING OUT TO YA, AND IT WANTS THE BLOOD OF YOUR ENEMIES SPLATTERED ALL OVER IT'S SAW!</span>"
+		taker = user
+		virgin = FALSE
+	else
+		user << "<span class='warning'>The chainsaw already has an attached master!</span>"
+		if(taker.stat == DEAD)
+			visible_message("<span class='genesisred'>[src] cries out in sheer agony! It has lost it's master but, has designated you as a replacement!</span>")
+			attack_self(taker, TRUE)
+
+
+/obj/effect/proc_holder/spell/targeted/bubblegumchainsaw
+	name = "Summon Chainsaw"
+	school = "transmutation"
+	charge_max = 100
+	clothes_req = 0
+	action_icon_state = "phaseshift"
+	invocation = "Follow"
+	range = -1
+	level_max = 0
+	cooldown_min = 100
+	include_user = 1
+
+	var/obj/item/weapon/chainsaw_bubblegum = null
+
+
+/obj/effect/proc_holder/spell/targeted/bubblegumchainsaw/New(linkedchainsaw)
+	..()
+	if(linkedchainsaw)
+		chainsaw_bubblegum = linkedchainsaw
+	else
+		qdel(src)
+
+/obj/effect/proc_holder/spell/targeted/bubblegumchainsaw/cast(list/targets, mob/user = usr)
+	..()
+	if(chainsaw_bubblegum)
+		chainsaw_bubblegum.visible_message("[src] bubbles and dissolve into a puddle of blood!")
+		chainsaw_bubblegum.loc = user
+		user.put_in_hands(chainsaw_bubblegum)
+		chainsaw_bubblegum.visible_message("[src] appears within [user]'s hand instantly!")
