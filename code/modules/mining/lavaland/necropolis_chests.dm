@@ -757,7 +757,7 @@
 	armour_penetration = 30
 	color = "#FF0000"
 	var/virgin = TRUE
-	var/mob/living/carbon/master
+	var/mob/living/carbon/taker
 
 /obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
 	..()
@@ -776,14 +776,14 @@
 /obj/item/weapon/chainsaw_bubblegum/attack_self(mob/user, forced)
 	if(!virgin || forced)
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/bubblegumchainsaw(src))
-		user << "<span class='genesisred'>OH HELL YEAH! THIS PRETTY LITTLE BIRDIE'S IS CALLING OUT TO YA, AND IT WANTS THE BLOOD OF YOUR ENEMIES SPLATTERED ALL OVER IT'S SAW!</span>"
-		master = user
+		user << "<span class='genesisred'>OH HELL YEAH! THIS PRETTY, LITTLE BIRDIE'S CALLING OUT TO YA, AND IT WANTS THE BLOOD OF YOUR ENEMIES SPLATTERED ALL OVER IT'S SAW!</span>"
+		taker = user
 		virgin = FALSE
 	else
 		user << "<span class='warning'>The chainsaw already has an attached master!</span>"
-		if(master.stat == DEAD)
-			visible_message("[src] cries out in sheer agony! It has lost it's master but, has designated you as a replacement!</span>"
-			attack_self(user, TRUE)
+		if(taker.stat == DEAD)
+			visible_message("<span class='genesisred'>[src] cries out in sheer agony! It has lost it's master but, has designated you as a replacement!</span>")
+			attack_self(taker, TRUE)
 
 
 /obj/effect/proc_holder/spell/targeted/bubblegumchainsaw
@@ -791,7 +791,7 @@
 	school = "transmutation"
 	charge_max = 100
 	clothes_req = 0
-	action_icon_state = "summons"
+	action_icon_state = "phaseshift"
 	invocation = "Follow"
 	range = -1
 	level_max = 0
