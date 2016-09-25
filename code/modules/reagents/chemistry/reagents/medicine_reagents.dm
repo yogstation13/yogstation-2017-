@@ -161,16 +161,16 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
-	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
+	M.adjustCloneLoss(-15, 0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_organ_damage(1,1, 0)
 	M.status_flags -= DISFIGURED
 	..()
 	. = 1
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M)
-	M.adjustToxLoss(1, 0)
-	M.Dizzy(5)
-	M.Jitter(5)
+	M.adjustToxLoss(3, 0)
+	M.Dizzy(10)
+	M.Jitter(10)
 	..()
 	. = 1
 
