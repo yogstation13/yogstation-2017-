@@ -117,6 +117,8 @@
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
+	verbs += /mob/living/silicon/pai/proc/choose_chassis
+
 	..()
 
 /mob/living/silicon/pai/make_laws()
@@ -516,6 +518,10 @@
 /mob/living/silicon/pai/proc/choose_chassis()
 	set category = "pAI Commands"
 	set name = "Choose Holographic Projection"
+
+	if (src.loc == card)
+		src << "\red You must be in your holographic form to choose your projection shape!"
+		return
 
 	var/choice
 	var/finalized = "No"

@@ -14,7 +14,7 @@
 	<A href='byond://?src=\ref[user];software=[sid];freq=-2'>-</A>
 	[format_frequency(user.sradio.frequency)]
 	<A href='byond://?src=\ref[user];software=[sid];freq=2'>+</A>
-	<A href='byond://?src=\ref[user];software=signaller;freq=10'>+</A><BR>
+	<A href='byond://?src=\ref[user];software=[sid];freq=10'>+</A><BR>
 
 	Code:
 	<A href='byond://?src=\ref[user];software=[sid];code=-5'>-</A>
@@ -30,14 +30,13 @@
 	if(args["send"])
 		user.sradio.send_signal("ACTIVATE")
 		user.audible_message("\icon[user] *beep* *beep*")
-
-		if(args["freq"])
-			var/new_frequency = (user.sradio.frequency + text2num(args["freq"]))
-			if(new_frequency < 1200 || new_frequency > 1600)
-				new_frequency = sanitize_frequency(new_frequency)
+	if(args["freq"])
+		var/new_frequency = (user.sradio.frequency + text2num(args["freq"]))
+		if(new_frequency < 1200 || new_frequency > 1600)
+			new_frequency = sanitize_frequency(new_frequency)
 			user.sradio.set_frequency(new_frequency)
-		if(args["code"])
-			user.sradio.code += text2num(args["code"])
-			user.sradio.code = round(user.sradio.code)
-			user.sradio.code = min(100, user.sradio.code)
-			user.sradio.code = max(1, user.sradio.code)
+	if(args["code"])
+		user.sradio.code += text2num(args["code"])
+		user.sradio.code = round(user.sradio.code)
+		user.sradio.code = min(100, user.sradio.code)
+		user.sradio.code = max(1, user.sradio.code)
