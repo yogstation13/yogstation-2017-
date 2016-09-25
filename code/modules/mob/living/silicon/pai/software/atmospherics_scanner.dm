@@ -26,7 +26,7 @@
 				if(gas_level > 0.01)
 					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
-	dat += "<a href='byond://?src=\ref[user];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
+	dat += "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
 	return dat
 

@@ -47,7 +47,7 @@
 	dat += "Cable status : "
 	if(!user.cable)
 		dat += "<font color=#FF5555>Retracted</font> <br>"
-		dat += "<a href='byond://?src=\ref[user];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
+		dat += "<a href='byond://?src=\ref[user];software=[sid];cable=1;sub=0'>Extend Cable</a> <br>"
 		return dat
 	if(!user.cable.machine)
 		dat += "<font color=#FFFF55>Extended</font> <br>"
@@ -60,8 +60,8 @@
 		return dat
 
 	if(!user.hackdoor)
-		dat += "<a href='byond://?src=\ref[user];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
+		dat += "<a href='byond://?src=\ref[user];software=[sid];jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
 	else
 		dat += "Jack in progress... [user.hackprogress]% complete.<br>"
-		dat += "<a href='byond://?src=\ref[user];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
+		dat += "<a href='byond://?src=\ref[user];software=[sid];cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
 	return dat

@@ -51,5 +51,5 @@
 				<CENTER><B>Comments/Log</B></CENTER><BR>"}
 			else
 				. += "<pre>Requested medical record not found.</pre><BR>"
-			. += "<BR>\n<A href='?src=\ref[user];software=medicalrecord;sub=0'>Back</A><BR>"
+			. += "<BR>\n<A href='?src=\ref[user];software=[sid];sub=0'>Back</A><BR>"
 	return .
