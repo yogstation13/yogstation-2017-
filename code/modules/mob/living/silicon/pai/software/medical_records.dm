@@ -1,7 +1,7 @@
 /datum/pai/software/medical_records
 	name = "Medical Records Register"
 	description = "Allows access to NT crew medical records in a limited read-only capacity."
-	category = "Basic"
+	category = "Medical"
 	sid = "medicalrecords"
 	ram = 15
 
