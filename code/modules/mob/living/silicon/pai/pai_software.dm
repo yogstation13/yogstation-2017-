@@ -50,7 +50,9 @@
 			if("directives")
 				left_part = src.directives()
 			if("buy")
-				left_part = downloadSoftware()
+				left_part = src.downloadSoftware()
+			if("radio")
+				left_part = src.radioMenu()
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
 
@@ -137,12 +139,24 @@
 
 		// Configuring onboard radio
 		if("radio")
-			src.card.radio.attack_self(src)
+			//src.card.radio.attack_self(src)
+			//src.card.radio.interact(src)
+			if (href_list["togglemic"])
+				src.card.radio.broadcasting = !src.card.radio.broadcasting
+			if (href_list["togglespeaker"])
+				src.card.radio.listening = !src.card.radio.listening
+			if (href_list["rfreq"])
+				var/new_frequency = (src.card.radio.frequency + text2num(href_list["rfreq"]))
+
+				if (!src.card.radio.freerange || (src.card.radio.frequency < 1200 || src.card.radio.frequency > 1600))
+					new_frequency = sanitize_frequency(new_frequency)
+
+				src.card.radio.set_frequency(new_frequency)
+
 
 		if("image")
 			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
 			var/pID = 1
-
 			switch(newImage)
 				if("Happy")
 					pID = 1
@@ -186,6 +200,19 @@
 
 // MENUS
 
+/mob/living/silicon/pai/proc/radioMenu()
+	var/dat = ""
+	dat += {"<b>Radio settings:</b><br>
+			Microphone: <a href='?src=\ref[src];software=radio;togglemic=1'><span id="rmicstate">[src.card.radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
+			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[src.card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
+			Frequency:
+			<a href='?src=\ref[src];software=radio;rfreq=-10'>-</a>
+			<a href='?src=\ref[src];software-radio;rfreq=-2'>-</a>
+			<span id="rfreq">[format_frequency(src.card.radio.frequency)]</span>
+			<a href='?src=\ref[src];software=radio;rfreq=2'>+</a>
+			<a href='?src=\ref[src];software=radio;rfreq=10'>+</a><br>"}
+	return dat
+
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
 	var/dat = ""
 
@@ -206,7 +233,6 @@
 		else
 			dat += "<a href='byond://?src=\ref[src];software=[SW.sid];sub=0'>[SW.name]</a> <br>"
 
-	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
 	dat += "<br><a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
 	return dat
 
