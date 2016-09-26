@@ -77,7 +77,7 @@
 	if(!usr || usr.stat)
 		return
 
-	if (!usr.contents.Find(src) || loc != usr)
+	if (loc != usr)
 		usr.unset_machine()
 		return
 
@@ -104,7 +104,7 @@
 				pai.canholo = 0
 				pai << "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>"
 		if(href_list["wipe"])
-			if (!usr.contents.Find(src) || loc != usr)
+			if (loc != usr)
 				usr.unset_machine() //check this shit to make sure people aren't keeping the dialog open
 				return
 			if (pai && pai.wiped)
@@ -129,7 +129,7 @@
 				if ("receive")
 					radio.wires.cut(WIRE_RX)
 		if(href_list["setlaws"])
-			if (!usr.contents.Find(src) || loc != usr)
+			if  (loc != usr)
 				usr.unset_machine() //and again
 				return
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
