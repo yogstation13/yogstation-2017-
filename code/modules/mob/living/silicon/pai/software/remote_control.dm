@@ -20,6 +20,8 @@
 			return dat
 	dat += "<font color=#55FF55>Connected to [user.paired.name]</font> <br>"
 	dat += "<a href='byond://?src=\ref[user];software=[sid];control=1;sub=0'>Access remote interface</a> <br>"
+	if (istype(user.paired, /obj/machinery/computer/security))
+		dat += "<a href='byond://?src=\ref[user];software=[sid];resetcamera=1;sub=0'>Release camera perspective</a> <br>"
 	dat += "<a href='byond://?src=\ref[user];software=[sid];disconnect=1;sub=0'>Disconnect</a> <br>"
 	return dat
 
@@ -30,8 +32,11 @@
 		user.pairing = 0
 	if(args["control"])
 		if(user.paired)
-			user.set_machine(user.paired)
 			user.paired.attack_hand(user)
+	if(args["resetcamera"]) //manual camera override to fix camera viewing issues
+		if (user.paired && istype(user.paired, /obj/machinery/computer/security))
+			user.machine = user.paired
+			user.unset_machine()
 	if(args["disconnect"])
 		user.unpair(1)
 		user.pairing = 0
