@@ -1,0 +1,9 @@
+author: Ephemeralis
+delete-after: True
+changes: 
+  - rscadd: "pAI have discovered how to use their holographic emitters once more, without RAM cost."
+  - rscdel: "pAI require their masters permission explicitly set via the pAI card itself in order to use their holographic form at all."
+  - bugfix: "Massive numbers of bugs with existing pAI software suites have been fixed, including the inability to change radio settings from within the pAI interface. Refreshing is now consistent across all software types, and Remote Control functions properly with camera suites of all kinds."
+  - tweak: "RAM costs for some pAI software suites have been adjusted to better reflect their usefulness."
+  - tweak: "Some pAI software suites no longer use generic names, and are instead shipped to the pAI core repo with their long names intact."
+  - tweak: "Intrepid pAI personality cores have discovered how to resist the effects of external wiping, though not forever."
