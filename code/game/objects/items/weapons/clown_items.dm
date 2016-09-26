@@ -41,6 +41,15 @@
 	icon_state = "soapsyndie"
 	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
 
+/obj/item/weapon/soap/dronesoap
+	desc = "A super-efficient, non-slippery soap issued to drones. Incapable of cleaning magical blood runes."
+	icon_state = "soapdeluxe"
+	cleanspeed = 1
+	name = "drone soap"
+	throw_range = 0
+	
+	
+
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
 	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
@@ -48,9 +57,12 @@
 	return (TOXLOSS)
 
 /obj/item/weapon/soap/Crossed(AM as mob|obj)
-	if (istype(AM, /mob/living/carbon))
-		var/mob/living/carbon/M = AM
-		M.slip(4, 2, src)
+	if (istype(/obj/item/weapon/soap/dronesoap))
+		return
+	else 
+		if (istype(AM, /mob/living/carbon))
+			var/mob/living/carbon/M = AM
+			M.slip(4, 2, src)
 
 /obj/item/weapon/soap/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))
@@ -59,11 +71,14 @@
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && (target in user.client.screen))
 		user << "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>"
-	else if(istype(target,/obj/effect/decal/cleanable))
-		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
-			qdel(target)
+	else if(istype(target,/obj/effect/decal/cleanable)
+		if (istype(target,/obj/effect/decal/cleanable/crayon/gang)) //no drones cleaning gang tags
+			user << "<span class='warning'>Can't clean up the [target.name] with this.</span>"
+		else
+			user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
+			if(do_after(user, src.cleanspeed, target = target))
+				user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+				qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
@@ -73,6 +88,9 @@
 			user << "<span class='notice'>You clean \the [target.name].</span>"
 			target.color = initial(target.color)
 			target.SetOpacity(initial(target.opacity))
+	else if
+		istype(target, /obj/effect/rune) //no drones cleaning runes
+			user << "<span class='warning'>Can't clean up the [target.name] with this.</span>"
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
@@ -106,7 +124,7 @@
 	var/cooldowntime = 20
 
 /obj/item/device/assembly/bikehorn/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] solemnly points the horn at \his temple! It looks like \he's trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] solemnly points the horn at \his temple! It looks like \he's trying to commit HONKicide..</span>")
 	playsound(get_turf(src), honksound, 50, 1)
 	return (BRUTELOSS)
 
@@ -142,13 +160,26 @@
 	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
 	origin_tech = "materials=4;engineering=4"
+	
+/obj/item/device/assembly/bikehorn/airhorn/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] puts the air horn in his mouth and presses the button! It looks like they're trying to become MLG!</span>")
+	playsound(get_turf(src), honksound, 50, 1)
+	setBruteLoss(40000000)
+		BP.body_zone = "head"
+		BP.dismember()
 
 /obj/item/device/assembly/bikehorn/golden
 	name = "golden bike horn"
-	desc = "Golden? Clearly, its made with bananium! Honk!"
+	desc = "Golden? Clearly, it's made with bananium! Honk!" //For you fucking illiterates-It's = It is. Its is a possessive. Use it's where you'd use it is, and use its where a possessive is needed. God fucking damn it.
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
-
+	
+/obj/item/device/assembly/bikehorn/golden/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] holds up the golden bike horn to their temple solemnly. It looks like they're trying to become one with the HONKmother.</span>")
+	playsound(get_turf(src), honksound, 50, 1)
+		gib()
+	return
+	
 /obj/item/device/assembly/bikehorn/golden/attack()
 	flip_mobs()
 	return ..()
