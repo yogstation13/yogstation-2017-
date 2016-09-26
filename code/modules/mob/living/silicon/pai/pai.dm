@@ -62,6 +62,7 @@
 	var/pairing = 0
 
 	var/canholo = 0 //can't enable holoform without master permission
+	var/did_suicide = 0
 
 	//HOLOFORM VARS
 	/*MOBILITY VARS*/
@@ -115,6 +116,7 @@
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
 	verbs += /mob/living/silicon/pai/proc/choose_chassis
+	did_suicide = 0
 
 	..()
 
