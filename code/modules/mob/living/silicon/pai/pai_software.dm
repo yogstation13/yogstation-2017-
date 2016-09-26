@@ -102,8 +102,12 @@
 	..()
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
+
 	if(soft)
-		src.screen = soft
+		if (soft == "refresh") //irritating but handles refresh functionality innately this way
+			soft = src.screen
+		else
+			src.screen = soft
 	if(sub)
 		src.subscreen = text2num(sub)
 
