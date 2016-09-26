@@ -41,7 +41,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/clothing/suit/space/freedom(src)  //lavaland is actually america after trump was elected
+			new /obj/item/clothing/suit/space/hardsuit/freedom(src)  //lavaland is actually america after trump was elected
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
