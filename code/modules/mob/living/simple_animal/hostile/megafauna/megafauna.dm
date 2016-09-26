@@ -63,3 +63,6 @@
 		alert_admins = !alert_admins
 		spawn(3000) // a cooldown, so it'll alert the admins again if it's still off the z level.
 			alert_admins = !alert_admins
+
+/mob/living/simple_animal/hostile/megafauna/experience_pressure_difference(pressure_difference, direction)
+	return //Immune to Space Wind
