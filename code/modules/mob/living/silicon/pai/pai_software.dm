@@ -207,6 +207,7 @@
 			dat += "<a href='byond://?src=\ref[src];software=[SW.sid];sub=0'>[SW.name]</a> <br>"
 
 	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
+	dat += "<br><a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
 	return dat
 
 
