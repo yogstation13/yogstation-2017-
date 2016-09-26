@@ -121,7 +121,7 @@
 					spawn(60) pai << "<span class='userdanger'>Relentless in its efforts, you scream in soundless agony as your memories unravel themselves, spooling away into the encroaching void before you...</span>"
 					spawn(80) pai << "<span class='rose'>And then, there is nothing.</span>"
 					spawn(85) pai.death(0)
-				removePersonality()
+					spawn(86) removePersonality()
 		if(href_list["wires"])
 			switch(href_list["wires"])
 				if ("transmit")
