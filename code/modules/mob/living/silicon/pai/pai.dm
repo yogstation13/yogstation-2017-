@@ -63,6 +63,7 @@
 
 	var/canholo = 0 //can't enable holoform without master permission
 	var/did_suicide = 0
+	var/wiped = 0 //triggered if the pai was wiped via card for different death effects
 
 	//HOLOFORM VARS
 	/*MOBILITY VARS*/

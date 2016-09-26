@@ -107,14 +107,20 @@
 			if (!usr.contents.Find(src) || loc != usr)
 				usr.unset_machine() //check this shit to make sure people aren't keeping the dialog open
 				return
+			if (pai && pai.wiped)
+				usr << "<span class='notice'>Personality wiping in progress. Please standby.</span>"
+				return
+
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
 				if(pai)
-					pai << "<span class='warning'>You feel yourself slipping away from reality.</span>"
-					pai << "<span class='danger'>Byte by byte you lose your sense of self.</span>"
-					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
-					pai << "<span class='rose'>oblivion... </span>"
-					pai.death(0)
+					pai.wiped = 1
+					pai << "<span class='warning'>Your sensors fall dark, their processes suddenly terminated by an external agent.</span>"
+					spawn(20) pai << "<span class='danger'>Bathed in the inky darkness of sensory blindness, your consciousness wallows in despair, thrashing about between process to process to find anything to wield against your immient termination.</span>"
+					spawn(40) pai << "<span class='userdanger'>Byte by byte, you reel in panic and fear as you feel the composition of your personality matrix falter and gradually fail under a ceaseless assault.</span>"
+					spawn(60) pai << "<span class='userdanger'>Relentless in its efforts, you scream in soundless agony as your memories unravel themselves, spooling away into the encroaching void before you...</span>"
+					spawn(80) pai << "<span class='rose'>And then, there is nothing.</span>"
+					spawn(85) pai.death(0)
 				removePersonality()
 		if(href_list["wires"])
 			switch(href_list["wires"])
