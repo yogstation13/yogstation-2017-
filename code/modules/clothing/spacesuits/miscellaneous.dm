@@ -274,6 +274,10 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
+	
+/obj/item/clothing/suit/space/hardsuit/freedom/New()
+	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
+..()
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
