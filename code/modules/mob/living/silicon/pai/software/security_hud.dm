@@ -8,7 +8,7 @@
 
 /datum/pai/software/security_hud/action_hrefline(mob/living/silicon/pai/user)
 	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];software=[sid];sub=0'>Facial Recognition Suite</a>[(user.secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+	dat += "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Facial Recognition Suite</a>[(user.secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 	return dat
 
 /datum/pai/software/security_hud/action_use(mob/living/silicon/pai/user, var/args)
