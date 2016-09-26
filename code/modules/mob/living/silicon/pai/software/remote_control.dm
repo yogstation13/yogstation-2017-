@@ -30,7 +30,8 @@
 		user.pairing = 0
 	if(args["control"])
 		if(user.paired)
-			user.paired.attack_hand(src)
+			user.set_machine(user.paired)
+			user.paired.attack_hand(user)
 	if(args["disconnect"])
 		user.unpair(1)
 		user.pairing = 0
