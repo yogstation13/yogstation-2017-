@@ -1,5 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - bugfix: "Explosive holoparasite's bomb trap now actually works."
-  - tweak: "Increases the duration of the explosive holoparasite's bomb trap, as well as the cooldown between bomb traps set."
