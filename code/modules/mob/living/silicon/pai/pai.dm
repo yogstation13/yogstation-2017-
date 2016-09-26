@@ -75,9 +75,6 @@
 		"Monkey" = "monkey",
 		"Corgi" = "corgi",
 		"Fox" = "fox",
-		"Alien" = "alien",
-		"Chicken" = "chicken",
-		"Carp" = "carp"
 		)
 
 	var/cooldowncap = 1 //how many hits per second it can take
