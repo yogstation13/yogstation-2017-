@@ -127,6 +127,10 @@
 					H.emp_act(severity)
 	..()
 
+/mob/living/carbon/human/emag_act(mob/user)
+	if(dna && dna.species)
+		dna.species.emag_act(src, user)
+
 /mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()

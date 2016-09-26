@@ -443,7 +443,7 @@
 			target << "<span class='boldannounce'>You suddenly understand. This is the natural order of things. The light must be shunned. Your insides shift and twist as the influence of the Other takes effect. Darkness is no longer lethal to you.</span>"
 		target.setOxyLoss(0) //In case the shadowling was choking them out
 		var/obj/item/organ/thrall_tumor/T = new/obj/item/organ/thrall_tumor(target)
-		T.Insert(target)
+		T.Insert(target, 1)
 
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind //Lets a shadowling talk to its allies

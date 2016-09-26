@@ -11,9 +11,9 @@
 	..()
 
 /obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
-	..()
-	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.AddAbility(P)
+	if(..())
+		for(var/obj/effect/proc_holder/alien/P in alien_powers)
+			M.AddAbility(P)
 
 
 /obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
@@ -89,10 +89,10 @@
 			owner.adjustCloneLoss(-heal_amt)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
-		A.updatePlasmaDisplay()
+	if(..())
+		if(isalien(M))
+			var/mob/living/carbon/alien/A = M
+			A.updatePlasmaDisplay()
 
 /obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -112,8 +112,8 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
-	..()
-	M.faction |= "alien"
+	if(..())
+		M.faction |= "alien"
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= "alien"

@@ -70,6 +70,7 @@
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/sight_mod = 0 //Add these flags to your mob's sight flag. For shadowlings and things to see people through walls.
 	var/darksight = 2
+	var/disease_resist = 0
 
 	// species flags. these can be found in flags.dm
 	var/list/specflags = list()
@@ -182,25 +183,25 @@
 		qdel(heart)
 	else if((!(NOBLOOD in specflags)) && (!heart))
 		heart = new()
-		heart.Insert(C)
+		heart.Insert(C, 1)
 
 	if((NOBREATH in specflags) && lungs)
 		lungs.Remove(C)
 		qdel(lungs)
 	else if((!(NOBREATH in specflags)) && (!lungs))
 		lungs = new()
-		lungs.Insert(C)
+		lungs.Insert(C, 1)
 
 	if((NOHUNGER in specflags) && appendix)
 		appendix.Remove(C)
 		qdel(appendix)
 	else if((!(NOHUNGER in specflags)) && (!appendix))
 		appendix = new()
-		appendix.Insert(C)
+		appendix.Insert(C, 1)
 
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
-		I.Insert(C)
+		I.Insert(C, 1)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -808,6 +809,10 @@
 
 /datum/species/proc/handle_flash(mob/living/carbon/human/H, intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	return 0 //returning 1 will cancel all normal flash effects.
+
+/datum/species/proc/on_gain_disease(mob/living/carbon/human/H, datum/disease/D)
+	return
+
 	////////
 	//LIFE//
 	////////
@@ -1653,6 +1658,12 @@
 		else
 			H.apply_damage(LOW_PRESSURE_DAMAGE * highpressure_mod, BRUTE)
 			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+
+/datum/species/proc/can_accept_organ(mob/living/carbon/human/H, obj/item/organ/O)
+	return 1
+
+/datum/species/proc/emag_act(mob/user)
+	return 0
 
 //////////
 // FIRE //

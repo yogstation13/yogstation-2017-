@@ -213,7 +213,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/android
 	//augmented half-silicon, half-human hybrids
-	//ocular augmentations (they never asked for this) give them slightly improved nightsight (and permanent meson effect)
+	//ocular augmentations (they never asked for this) give them slightly improved nightsight
 	//take additional damage from emp
 	//can metabolize power cells
 	name = "Preternis"
@@ -223,6 +223,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "intones"
 	roundstart = 1
 	attack_verb = "assault"
+	meat = /obj/item/stack/sheet/metal
 	darksight = 2
 	brutemod = 1.5
 	heatmod = 1.5
@@ -237,6 +238,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	heal_immunities = list(DAMAGE_CHEMICAL)
 	limb_default_status = ORGAN_SEMI_ROBOTIC
 	invis_sight = SEE_INVISIBLE_MINIMUM
+	disease_resist = 60
 
 	high_temp_level_1 = 340
 	high_temp_level_2 = 370
@@ -246,6 +248,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	low_temp_level_3 = 190
 
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
+	var/emagged = 0
 
 /datum/species/android/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes)
@@ -312,6 +315,74 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/android/spawn_gibs(mob/living/carbon/human/H)
 	robogibs(H.loc, H.viruses)
 
+/datum/species/android/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H << "<span class='info'><b>You are a Preternis.</b> Half-human, half-silicon, you lie in the nebulous between of the two lifeforms, neither one, nor the other.</span>"
+	H << "<span class='info'>Powerful ocular implants afford you greater vision in the darkness, but draw large amounts of power from your biological body. Should your stores run out, they will deactivate and leave you blind.</span>"
+	H << "<span class='info'>Normal food is worth only a fraction of its normal sustenance to you. You must instead draw your nourishment from power cells, tapping into the energy contained within. Beware electromagnetic pulses, for they would do grevious damage to your internal organs..</span>"
+	return ..()
+
+/datum/species/android/handle_emp(mob/living/carbon/human/H, severity)
+	..()
+	H.lastburntype = "electric"
+	switch(severity)
+		if(1)
+			H.adjustBruteLoss(10)
+			H.adjustFireLoss(10)
+			H.Stun(5)
+			H.nutrition = H.nutrition * 0.4
+			H.visible_message("<span class='danger'>Electricity ripples over [H]'s subdermal implants, smoking profusely.</span>", \
+							"<span class='userdanger'>A surge of searing pain erupts throughout your very being! As the pain subsides, a terrible sensation of emptiness is left in its wake.</span>")
+			H.attack_log += "Was hit with a severity 3(severe) EMP as an android. Lost 20 health."
+			if(prob(10))
+				emag_act(H)
+		if(2)
+			H.adjustBruteLoss(5)
+			H.adjustFireLoss(5)
+			H.Stun(2)
+			H.nutrition = H.nutrition * 0.6
+			H.visible_message("<span class='danger'>A faint fizzling emanates from [H].</span>", \
+							"<span class='userdanger'>A fit of twitching overtakes you as your subdermal implants convulse violently from the electromagnetic disruption. Your sustenance reserves have been partially depleted from the blast.</span>")
+			H.emote("twitch")
+			H.attack_log += "Was hit with a severity 2(medium) EMP as an android. Lost 10 health."
+			if(prob(5))
+				emag_act(H)
+		if(3)
+			H.adjustFireLoss(2)
+			H.adjustBruteLoss(3)
+			H.Stun(1)
+			H.nutrition = H.nutrition * 0.8
+			H.emote("scream")
+			H.attack_log += "Was hit with a severity 3(light) EMP as an android. Lost 5 health."
+
+/datum/species/android/get_spans()
+	return SPAN_ROBOT
+
+/datum/species/android/can_accept_organ(mob/living/carbon/human/H, obj/item/organ/O)
+	var/static/list/acceptable = list(/obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix, /obj/item/organ/cyberimp)
+	return (O.status != ORGAN_ORGANIC || is_type_in_list(O, acceptable))
+
+/datum/species/android/on_gain_disease(mob/living/carbon/human/H, datum/disease/D)
+	D.spread_flags |= AIRBORNE
+
+/datum/species/android/emag_act(mob/living/carbon/human/H, mob/user)
+	if(emagged == 0)
+		emagged = 1
+		if(user)
+			user << "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>"
+		H << "<span class='danger'>You suddenly feel stupid.</span>"
+		H.adjustBrainLoss(30)
+		return 1
+	else if(emagged == 1)
+		emagged = 2
+		if(user)
+			user << "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>"
+		H << "<span class='danger'>You suddenly feel very stupid, but look at the pretty colors!</span>"
+		H.overlays += image('icons/mob/eyes.dmi', "rainbow", layer = UNDER_GLASSES_LAYER)
+		H.adjustBrainLoss(40)
+		return 1
+	return 0
+
+
 /datum/species/android/fly
 	// androids turned into fly-like abominations in teleporter accidents.
 	name = "Flyternis"
@@ -343,44 +414,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/android/fly/handle_speech(message)
 	return replacetext(message, "z", stutter("zz"))
-
-/datum/species/android/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='info'><b>You are a Preternis.</b> Half-human, half-silicon, you lie in the nebulous between of the two lifeforms, neither one, nor the other.</span>"
-	H << "<span class='info'>Powerful ocular implants afford you greater vision in the darkness, but draw large amounts of power from your biological body. Should your stores run out, they will deactivate and leave you blind.</span>"
-	H << "<span class='info'>Normal food is worth only a fraction of its normal sustenance to you. You must instead draw your nourishment from power cells, tapping into the energy contained within. Beware electromagnetic pulses, for they would do grevious damage to your internal organs..</span>"
-	return ..()
-
-/datum/species/android/handle_emp(mob/living/carbon/human/H, severity)
-	..()
-	H.lastburntype = "electric"
-	switch(severity)
-		if(1)
-			H.adjustBruteLoss(10)
-			H.adjustFireLoss(10)
-			H.Stun(5)
-			H.nutrition = H.nutrition * 0.4
-			H.visible_message("<span class='danger'>Electricity ripples over [H]'s subdermal implants, smoking profusely.</span>", \
-							"<span class='userdanger'>A surge of searing pain erupts throughout your very being! As the pain subsides, a terrible sensation of emptiness is left in its wake.</span>")
-			H.attack_log += "Was hit with a severity 3(severe) EMP as an android. Lost 20 health."
-		if(2)
-			H.adjustBruteLoss(5)
-			H.adjustFireLoss(5)
-			H.Stun(2)
-			H.nutrition = H.nutrition * 0.6
-			H.visible_message("<span class='danger'>A faint fizzling emanates from [H].</span>", \
-							"<span class='userdanger'>A fit of twitching overtakes you as your subdermal implants convulse violently from the electromagnetic disruption. Your sustenance reserves have been partially depleted from the blast.</span>")
-			H.emote("twitch")
-			H.attack_log += "Was hit with a severity 2(medium) EMP as an android. Lost 10 health."
-		if(3)
-			H.adjustFireLoss(2)
-			H.adjustBruteLoss(3)
-			H.Stun(1)
-			H.nutrition = H.nutrition * 0.8
-			H.emote("scream")
-			H.attack_log += "Was hit with a severity 3(light) EMP as an android. Lost 5 health."
-
-/datum/species/android/get_spans()
-	return SPAN_ROBOT
 
 /*
  PLANTPEOPLE
@@ -505,7 +538,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		H.adjustBrainLoss(2, 1, DAMAGE_CHEMICAL)
 		H.adjustToxLoss(0.4, 1, DAMAGE_CHEMICAL)
 		H.confused = max(H.confused, 1)
-		if(ethanol.boozepwr > 2 && chem.volume > 30)
+		if(ethanol.boozepwr > 80 && chem.volume > 30)
 			if(chem.current_cycle > 50)
 				H.sleeping += 3
 			H.adjustToxLoss(4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
