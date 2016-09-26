@@ -7,7 +7,8 @@
 
 /datum/pai/software/pda_messenger/action_menu(mob/living/silicon/pai/user)
 	var/dat = "<h3>Digital Messenger</h3>"
-	dat += "<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[user];software=[sid];toggler=1'>[(user.pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=[sid];ringer=1'>[(user.pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"
+	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[user];software=[sid];toggler=1'>[(user.pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
+	<b>Ringer Status:</b> <A href='byond://?src=\ref[user];software=[sid];ringer=1'>[(user.pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!user.pda.toff)
 		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
