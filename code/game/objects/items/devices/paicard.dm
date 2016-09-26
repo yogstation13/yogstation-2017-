@@ -77,6 +77,10 @@
 	if(!usr || usr.stat)
 		return
 
+	if (!usr.contents.Find(src) || loc != usr)
+		usr.unset_machine()
+		return
+
 	if(href_list["request"])
 		src.looking_for_personality = 1
 		SSpai.findPAI(src, usr)
@@ -100,6 +104,9 @@
 				pai.canholo = 0
 				pai << "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>"
 		if(href_list["wipe"])
+			if (!usr.contents.Find(src) || loc != usr)
+				usr.unset_machine() //check this shit to make sure people aren't keeping the dialog open
+				return
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
 				if(pai)
@@ -116,7 +123,11 @@
 				if ("receive")
 					radio.wires.cut(WIRE_RX)
 		if(href_list["setlaws"])
+			if (!usr.contents.Find(src) || loc != usr)
+				usr.unset_machine() //and again
+				return
 			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
+			//also check this shit again before doing it
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
 				pai << "Your supplemental directives have been updated. Your new directives are:"
