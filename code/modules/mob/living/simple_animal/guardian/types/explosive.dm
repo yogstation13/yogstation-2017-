@@ -80,7 +80,8 @@
 /obj/item/weapon/guardian_bomb/Bumped(mob/user)
 	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
 		detonate(user)
-	return
+	else
+		..()
 
 /obj/item/weapon/guardian_bomb/attackby(obj/item/C, mob/user)
 	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
