@@ -1,4 +1,5 @@
 /mob/living/silicon/pai/Life()
+	updatehealth()
 	if (src.stat == DEAD)
 		return
 	if (src.selfrepair == 1 && src.health < 100)
