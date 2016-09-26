@@ -64,6 +64,14 @@
 	else
 		return ..()
 
+/obj/item/device/paicard/examine(mob/user)
+	if (pai)
+		//forward event to pai examining
+		pai.examine()
+		return
+	else
+		return ..()
+
 /obj/item/device/paicard/Topic(href, href_list)
 
 	if(!usr || usr.stat)
