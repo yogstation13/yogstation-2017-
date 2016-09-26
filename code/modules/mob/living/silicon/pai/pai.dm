@@ -116,6 +116,7 @@
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
 	verbs += /mob/living/silicon/pai/proc/choose_chassis
+	verbs += /mob/living/silicon/pai/proc/rest_protocol
 	did_suicide = 0
 
 	..()
