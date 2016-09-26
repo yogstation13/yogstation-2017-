@@ -647,6 +647,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/chameleon
 	cost = 4
+	exclude_modes = list(/datum/game_mode/traitor/double_agents)//being able to completely change your appearance infinitely when you have an assassin is dumb
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
