@@ -11,6 +11,15 @@
 	dat = "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Medical Analysis Suite</a>[(user.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 	return dat
 
+/datum/pai/software/medical_hud/action_use(mob/living/silicon/pai/user, var/args)
+	if(args["toggle"])
+		user.medHUD = !user.medHUD
+		if(user.medHUD)
+			user.add_med_hud()
+		else
+			var/datum/atom_hud/med = huds[user.med_hud]
+			med.remove_hud_from(user)
+
 /datum/pai/software/medical_hud/action_menu(mob/living/silicon/pai/user)
 	var/dat = ""
 	if(user.subscreen == 0)
@@ -53,11 +62,3 @@
 		dat += "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Visual Status Overlay</a><br>"
 	return dat
 
-/datum/pai/software/medical_hud/action_use(mob/living/silicon/pai/user, var/args)
-	if(args["toggle"])
-		user.medHUD = !user.medHUD
-		if(user.medHUD)
-			user.add_med_hud()
-		else
-			var/datum/atom_hud/med = huds[user.med_hud]
-			med.remove_hud_from(user)
