@@ -8,7 +8,7 @@
 
 /datum/pai/software/universal_translator/action_hrefline(mob/living/silicon/pai/user)
 	var/dat = ""
-	dat += "<a href='byond://?src=\ref[src];software=[sid];sub=0'>Universal Translator</a>[((user.languages_understood == ALL) && (user.languages_spoken == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+	dat += "<a href='byond://?src=\ref[user];software=[sid];sub=0'>Universal Translator</a>[((user.languages_understood == ALL) && (user.languages_spoken == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 	return dat
 
 /datum/pai/software/universal_translator/action_menu(mob/user)
