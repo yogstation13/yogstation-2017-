@@ -62,32 +62,41 @@
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
-	spawn(1000)
-		stored_obj.loc = get_turf(src.loc)
-		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
-		qdel(src)
+	addtimer(src,"vanish", 1000)
+
+/obj/item/weapon/guardian_bomb/proc/vanish(var/obj/A)
+	stored_obj.loc = get_turf(src.loc)
+	spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
+	qdel(src)
 
 /obj/item/weapon/guardian_bomb/proc/detonate(var/mob/living/user)
-	user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
+	user << "<span class='danger'><B>[src] was boobytrapped!</span></B>"
 	spawner << "<span class='danger'><B>Success! Your trap caught [user]</span></B>"
 	stored_obj.loc = get_turf(src.loc)
 	playsound(get_turf(src),'sound/effects/Explosion2.ogg', 200, 1)
 	user.ex_act(2)
 	qdel(src)
 
-/obj/item/weapon/guardian_bomb/Bump(atom/A)
-	if(isliving(A) && A != spawner && A != spawner.summoner && !spawner.hasmatchingsummoner(A))
-		detonate(A)
+/obj/item/weapon/guardian_bomb/attackby(obj/item/C, mob/user)
+	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
+		detonate(user)
 	else
-		..()
-
-/obj/item/weapon/guardian_bomb/attackby(mob/living/user)
-	detonate(user)
+		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
 	return
 
 /obj/item/weapon/guardian_bomb/pickup(mob/living/user)
 	..()
-	detonate(user)
+	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
+		detonate(user)
+	else
+		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
+	return
+
+/obj/item/weapon/guardian_bomb/attack_hand(mob/user)
+	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
+		detonate(user)
+	else
+		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
 	return
 
 /obj/item/weapon/guardian_bomb/examine(mob/user)
