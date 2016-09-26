@@ -1,0 +1,5 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Cryogenics machines have had the autoeject feature disabled, Nanotrasen accounting citing 'expenses' as the reason.
+rescadd: Beakers no longer display their reagents inside the cryogenics tube."
