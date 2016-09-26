@@ -382,6 +382,7 @@
 		return
 	if(paired.paired != src)
 		return
+	machine = paired
 	src.unset_machine()
 	paired.paired = null
 	paired.update_icon()
