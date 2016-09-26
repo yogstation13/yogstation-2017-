@@ -540,6 +540,7 @@
 
 	if(src && istype(src.loc,/obj/item/device/paicard))
 		resting = 0
+		src << "\blue You spool down the clock on your internal processor for a moment. Ahhh. T h a t ' s  t h e  s t u f f."
 	else
 		resting = !resting
 		icon_state = resting ? "[chassis]_rest" : "[chassis]"
