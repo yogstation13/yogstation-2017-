@@ -255,13 +255,13 @@ Contains:
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
-	flash_protect = 1
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
 	armor = list(melee = 20, bullet = 40, laser = 30, energy = 25, bomb = 100, bio = 100, rad = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
+	flash_protect = 1
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"
