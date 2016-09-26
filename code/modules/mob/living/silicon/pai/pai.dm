@@ -466,6 +466,7 @@
 	card.screen_loc = null
 
 	src.SetLuminosity(2)
+	weather_immunities = list() //remove ash immunity in holoform
 
 	icon_state = "[chassis]"
 	if(istype(T)) T.visible_message("With a faint hum, <b>[src]</b> levitates briefly on the spot before adopting its holographic form in a flash of green light.")
@@ -496,6 +497,7 @@
 	src.forceMove(card)
 	canmove = 0
 	density = 0
+	weather_immunities = list("ash")
 	src.SetLuminosity(0)
 	icon_state = "[chassis]"
 
