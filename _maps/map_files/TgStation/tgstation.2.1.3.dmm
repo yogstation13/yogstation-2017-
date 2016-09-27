@@ -62287,9 +62287,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/storage/toolbox/electrical,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -62301,9 +62298,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/flashlight,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "yellow"
@@ -65216,6 +65210,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cyC" = (
@@ -65304,6 +65299,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cyO" = (
@@ -69134,19 +69130,6 @@
 	icon_state = "white"
 	},
 /area/medical/sleeper)
-"YoW" = (
-/obj/structure/closet/emcloset,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "yellow"
-	},
-/area/engine/engineering)
 "YoX" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -95553,8 +95536,8 @@ cnp
 cnp
 cuY
 cvQ
-cnw
-cxx
+cwL
+cxv
 coS
 cyB
 cnp
@@ -97862,7 +97845,7 @@ cpT
 cqH
 crv
 csy
-YoW
+ctx
 cuo
 cvg
 cwa
@@ -98119,7 +98102,7 @@ cpP
 cnw
 crv
 csy
-YoW
+ctx
 cup
 cvf
 cwb
