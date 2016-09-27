@@ -9,7 +9,6 @@
 	range = 21 //gives it some freedom to scout while invisible
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
-	sight = SEE_MOBS
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
