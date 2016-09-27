@@ -431,6 +431,10 @@
 	if(stat || sleeping || paralysis || weakened)
 		return
 
+	if (wiped)
+		src << "\red Your holographic control processes were the first to be deleted! You can't move!"
+		return
+
 	if (!canholo)
 		src << "\red Your master has not enabled your external holographic emitters! Ask nicely!"
 		return
