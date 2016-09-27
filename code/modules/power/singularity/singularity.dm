@@ -24,6 +24,7 @@
 	var/event_chance = 15 //Prob for event each tick
 	var/target = null //its target. moves towards the target if it has one
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
+	var/favored_dir = 0 //The direction with the most objects to eat. Due to the nature of get_dist(), this is heavily weighted toward diagonals.
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
 	burn_state = LAVA_PROOF
@@ -237,12 +238,20 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
+
+	var/list/favored_dirs = list()
+	for(var/D in alldirs)
+		favored_dirs["[D]"] = 0
+
 	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
 		var/turf/T = tile
+		var/dir_to = get_dir(src, T)
 		if(!T || !isturf(loc))
 			continue
 		if(get_dist(T, src) > consume_range)
 			T.singularity_pull(src, current_size)
+			if(dir_to)
+				favored_dirs["[dir_to]"] += T.contents.len + (istype(T, /turf/open/space) ? 0 : 2)
 		else
 			consume(T)
 		for(var/thing in T)
@@ -253,8 +262,14 @@
 				else
 					consume(X)
 			CHECK_TICK
-	return
 
+	var/bestDir = 0
+	var/bestDirWeight = 0
+	for(var/D in favored_dirs)
+		if(favored_dirs[D] > bestDirWeight)
+			bestDir = text2num(D)
+			bestDirWeight = favored_dirs[D]
+	favored_dir = bestDir
 
 /obj/singularity/proc/consume(atom/A)
 	var/gain = A.singularity_act(current_size, src)
@@ -275,6 +290,8 @@
 
 	if(force_move)
 		movement_dir = force_move
+	else if(favored_dir && favored_dir != last_failed_movement && prob(60))
+		movement_dir = favored_dir
 
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
