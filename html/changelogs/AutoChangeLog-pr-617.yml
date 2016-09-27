@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "fixed minebot meson vision action button not having an icon."
+  - rscadd: "minebots now have a supply radio, unique names, and can eject their AI upgrade to ghost."

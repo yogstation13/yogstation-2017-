@@ -824,15 +824,24 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	if(M.health < 50 && M.health > 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
+	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= NOCRIT
+	M.adjustOxyLoss(-1*REM, 0)
+	M.adjustToxLoss(-1*REM, 0)
+	M.adjustBruteLoss(-1*REM, 0)
+	M.adjustFireLoss(-1*REM, 0)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
+	if(M.health < 0)//once you start dropping below crit it's obvious you're on stims
+		M.Jitter(5)
+		if(prob(10))
+			M.emote(pick("gasp","twitch"))
+		if(prob(20))
+			M.say(pick("I'm unstoppable!","ARRGH!","Immortality!", "Time's moving a bit slower... maybe I need some coffee.", "The curtains are closing...","FOR THE SYNDICATE!!","The Syndicate sends their regards.","See you all in hell, bastards!","I've been ready for this since day one","DEATH TO NANOTRASEN!"))
+		else if(prob(1))
+			M.say(pick("AAAAAAAAAAAAAAAAAAAA!!!","Shit, did I leave the oven on?","I'm beginning to see space angels.. and they're singing ground control to Major Tom.", "Ashes to Ashes, Funk to Funky, now you'll know my heart's been jumpy.","Something's wrong... Did I forget to lotion up?"))
 	..()
 	. = 1
 
