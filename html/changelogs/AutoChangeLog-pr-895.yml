@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Chameleon items now respect the flags_inv of the items they are disguised as, so you cannot hide your face with a chameleon cigarette."
