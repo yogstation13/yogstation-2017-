@@ -207,7 +207,7 @@
 			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[src.card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
 			Frequency:
 			<a href='?src=\ref[src];software=radio;rfreq=-10'>-</a>
-			<a href='?src=\ref[src];software-radio;rfreq=-2'>-</a>
+			<a href='?src=\ref[src];software=radio;rfreq=-2'>-</a>
 			<span id="rfreq">[format_frequency(src.card.radio.frequency)]</span>
 			<a href='?src=\ref[src];software=radio;rfreq=2'>+</a>
 			<a href='?src=\ref[src];software=radio;rfreq=10'>+</a><br>"}
