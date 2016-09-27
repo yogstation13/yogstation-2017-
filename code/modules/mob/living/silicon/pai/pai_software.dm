@@ -252,7 +252,8 @@
 		if (S in pai_software) //software with "0" ram is innate or otherwise hidden and doesn't need to be shown, same with stuff we've already purchased
 			continue
 
-		dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[S.sid]'>[S.name]</a> ([S.ram])<br>"
+		dat += "<b><a href='byond://?src=\ref[src];software=buy;sub=1;buy=[S.sid]'>[S.name]</a></b> ([S.ram])<br>"
+		dat += "<i><small>[S.description]</small></i><br><br>"
 
 	dat += "</p>"
 	return dat
