@@ -686,8 +686,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Chameleon Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment. This one can be disguised to imitate many of the standard belts found around the station."
 	item = /obj/item/weapon/storage/belt/military/chameleon
-	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear)
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear) //should be  in the cham box but w/e
 
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
@@ -791,7 +791,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
-	cost = 6
+	cost = 8
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/gang)
 
