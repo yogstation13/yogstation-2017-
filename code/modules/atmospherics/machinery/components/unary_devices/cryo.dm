@@ -140,7 +140,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
 	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 2 minutes.)</span>"
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
-	if(do_after(user, 1200))
+	if(do_after(user, 600)) //ugh fine you whiny shits
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
