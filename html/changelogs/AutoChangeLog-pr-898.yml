@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "You can now toggle the lock on a locker by hitting it with your PDA if your PDA has an ID in it."
