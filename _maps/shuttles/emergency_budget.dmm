@@ -27,9 +27,9 @@
 "A" = (/obj/machinery/door/window/southright,/turf/open/floor/plasteel/sepia,/area/shuttle/escape)
 "B" = (/obj/structure/chair{dir = 8},/obj/structure/window,/turf/open/floor/plasteel/grimy,/area/shuttle/escape)
 "C" = (/obj/machinery/door/window/southleft,/turf/open/floor/plasteel/sepia,/area/shuttle/escape)
-"D" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8; step_x = 31},/turf/open/floor/sepia,/area/shuttle/escape)
+"D" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8; pixel_x = 31},/turf/open/floor/sepia,/area/shuttle/escape)
 "E" = (/turf/open/floor/sepia,/area/shuttle/escape)
-"F" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8; step_x = 29},/turf/open/floor/sepia,/area/shuttle/escape)
+"F" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8; pixel_x = 29},/turf/open/floor/sepia,/area/shuttle/escape)
 "G" = (/obj/structure/window/shuttle/survival_pod,/obj/structure/grille,/turf/open/floor/plasteel/sepia,/area/shuttle/escape)
 "H" = (/obj/structure/shuttle/engine/propulsion,/turf/open/space,/area/shuttle/escape)
 
