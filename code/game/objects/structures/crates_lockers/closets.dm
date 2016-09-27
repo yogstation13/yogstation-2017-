@@ -252,7 +252,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
+	else if(user.a_intent != "harm")
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
