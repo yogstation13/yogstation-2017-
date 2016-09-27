@@ -253,6 +253,7 @@
 		if (W.force)
 			user.visible_message("<span class='warning'>[user.name] slams [W] into [src]'s card, damaging it severely!</span>")
 			src.adjustBruteLoss(20)
+			src.adjustFireLoss(20)
 		else
 			user.visible_message("<span class='info'>[user.name] taps [W] against [src]'s screen.</span>")
 		..()
