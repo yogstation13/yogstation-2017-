@@ -155,10 +155,9 @@
 	if(W.is_hot() > 300) //hot weapon? burn the wood
 		WoodRoast()
 
-/turf/closed/wall/mineral/plasma/proc/WoodRoast()
+/turf/closed/wall/mineral/wood/proc/WoodRoast()
 	new /obj/structure/girder(src)
-	src.ChangeTurf(/turf/open/floor/plasteel)
-	var/turf/open/T = src
+	ChangeTurf(/turf/open/floor/plasteel)
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
