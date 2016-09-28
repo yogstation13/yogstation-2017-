@@ -1,0 +1,4 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Alt+click a dual esword to toggle flipping while attacking."
