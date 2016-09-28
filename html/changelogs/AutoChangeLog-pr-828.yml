@@ -1,4 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "Blob gamemode now occurs at 30 players instead of 25."
