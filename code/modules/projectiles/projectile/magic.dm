@@ -202,7 +202,7 @@
 
 				if("animal")
 					if(prob(50))
-						var/beast = pick("carp","bear","statue","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp","construct")
+						var/beast = pick("carp","bear","statue","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
 						switch(beast)
 							if("carp")
 								new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
@@ -222,13 +222,6 @@
 								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")
 								new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
-							if("construct")
-								if(prob(33))
-									new_mob = new /mob/living/simple_animal/hostile/construct/armored(M.loc)
-								else if(prob(33))
-									new_mob = new /mob/living/simple_animal/hostile/construct/builder(M.loc)
-								else
-									new_mob = new /mob/living/simple_animal/hostile/construct/wraith(M.loc)
 					else
 						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","bat","goat","mushroom","honkbot")
 						switch(animal)
