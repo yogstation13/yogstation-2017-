@@ -733,4 +733,4 @@
 	else
 		if(hud_used && istype(hud_used, /datum/hud/tactical))
 			qdel(hud_used)
-			..()
+		..()
