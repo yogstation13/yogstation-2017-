@@ -1,5 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Fixed being unable to emag lockers except on harm intent."
-  - bugfix: "Fixed being unable to wrap lockers."

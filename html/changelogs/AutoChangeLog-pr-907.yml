@@ -1,5 +1,0 @@
-author: Ephemeralis
-delete-after: True
-changes: 
-  - bugfix: "pAI descriptions are now visible on both the card and in their holographic forms once more. When making your personality, remember that the \"Description\" column is shown for the world to see!"
-  - tweak: "pAI are now generally more vulnerable in holographic form to all types of damage, and especially explosions."

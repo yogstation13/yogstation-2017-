@@ -1,5 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - tweak: "Ambrosia Gaia no longer prompts if you are sure that you want to add it to a hydroponics tray"
-  - tweak: "The way reagents are added to plants on harvest has been slightly changed. All reagent gene values have been doubled, but the amount of reagents per plant should be the same as it used to be. Omega weed and plants with many reagent genes spliced in will now always produce all the reagents they should."
