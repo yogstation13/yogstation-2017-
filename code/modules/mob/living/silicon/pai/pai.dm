@@ -83,9 +83,10 @@
 	var/cooldown = 0
 	var/emittersFailing = 0
 
-	//REPAIR SOFTWARE VARS
+	//SOFTWARE VARS
 	var/selfrepair = 0
 	var/updating = 0
+	var/emitter_OD = 0
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
 	make_laws()
@@ -524,6 +525,10 @@
 	if(world.time <= last_special)
 		src << "\red You must wait before returning to your card form!"
 		return
+
+	if (emitter_OD)
+		var/datum/pai/software/beacon_overcharge/S = new /datum/pai/software/beacon_overcharge
+		S.take_overload_damage(src)
 
 	close_up()
 

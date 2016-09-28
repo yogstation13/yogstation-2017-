@@ -1442,6 +1442,7 @@
 #include "code\modules\mob\living\silicon\pai\personality.dm"
 #include "code\modules\mob\living\silicon\pai\say.dm"
 #include "code\modules\mob\living\silicon\pai\software\atmospherics_scanner.dm"
+#include "code\modules\mob\living\silicon\pai\software\beacon_overcharge.dm"
 #include "code\modules\mob\living\silicon\pai\software\camera_jack.dm"
 #include "code\modules\mob\living\silicon\pai\software\crew_manifest.dm"
 #include "code\modules\mob\living\silicon\pai\software\doorjack.dm"
