@@ -248,7 +248,7 @@
 	name = "tactical animal harness"
 	desc = "A harness for a Syndicate tactical animal. This one will mold itself to the first valid animal it is placed on."
 	wearable_by = list(/mob/living/simple_animal/hostile/retaliate/dolphin, /mob/living/simple_animal/hostile/carp/tactical)
-	wearable_by_exact = list(/mob/living/simple_animal/hostile/carp)
+	wearable_by_exact = list(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/carp/cayenne)
 	var/refund_TC = 0
 	var/failed_to_find_player = -1 //-1 means it hasn't tried to find a player yet, 1 means it has tried to find a player and failed, 0 means it has tried to find a player and succeeded. Here to prevent the creation of infinite sentient animals.
 
@@ -312,7 +312,7 @@
 	name = "tactical carp harness"
 	desc = "A harness for a Syndicate tactical carp."
 	wearable_by = list(/mob/living/simple_animal/hostile/carp/tactical)
-	wearable_by_exact = list(/mob/living/simple_animal/hostile/carp)
+	wearable_by_exact = list(/mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/carp/cayenne)
 	icon_state_alive = "tactical_carp"
 	icon_state_dead = "tactical_carp_dead"
 	newVars = list("name" = "tactical space carp", "desc" = "A highly trained space carp used by the syndicate to provide heavy fire support and space superiority for elite commando teams.", "melee_damage_lower" = 15, "melee_damage_upper" = 15)
