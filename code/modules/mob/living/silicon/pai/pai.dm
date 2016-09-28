@@ -331,7 +331,7 @@
 	spawn(dur)
 		visible_message("<span class='danger'>[src]'s holographic field flickers out of existence!</span>")
 		src.emittersFailing = 0
-		close_up()
+		close_up(1)
 
 /mob/living/silicon/pai/Bump(AM as mob|obj) //can open doors on touch but doesn't affect anything else
 	if (istype(AM, /obj/machinery/door))
@@ -480,9 +480,9 @@
 	icon_state = "[chassis]"
 	if(istype(T)) T.visible_message("With a faint hum, <b>[src]</b> levitates briefly on the spot before adopting its holographic form in a flash of green light.")
 
-/mob/living/silicon/pai/proc/close_up()
+/mob/living/silicon/pai/proc/close_up(var/force = 0)
 
-	if (health < 5)
+	if (health < 5 && !force)
 		src << "<span class='warning'><b>Your holographic emitters are too damaged to function!</b></span>"
 		return
 
