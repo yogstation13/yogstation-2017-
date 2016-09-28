@@ -154,7 +154,7 @@
 	var/total_volume = 0
 	for(var/reagent_id in reagents_add)
 		total_volume += max(1, reagents_add[reagent_id] * potency)
-	var/sanity_multiplier = min(1, T.reagents.maximum_volume / total_volume)
+	var/sanity_multiplier = total_volume ? min(1, T.reagents.maximum_volume / total_volume) : 1
 
 	for(var/reagent_id in reagents_add)
 		var/add_amount = sanity_multiplier * max(1, reagents_add[reagent_id] * potency )
