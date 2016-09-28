@@ -48,7 +48,7 @@
 		"morphine",
 		"mutetoxin",
 		"mine_salve",
-		"toxin"
+		"toxin",
 		"polonium"
 	)
 
@@ -355,7 +355,7 @@
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb"
+		"atomicbomb",
 		"bacchus_blessing"
 	)
 
