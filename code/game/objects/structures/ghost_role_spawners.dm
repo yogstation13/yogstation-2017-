@@ -27,10 +27,6 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
-	uniform = /obj/item/clothing/under/rank/hydroponics
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
-	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
