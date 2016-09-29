@@ -222,7 +222,7 @@
 	id = "alienpistol"
 	build_type = PROTOLATHE
 	build_path = /obj/item/weapon/gun/energy/alien
-	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 7, "abductor" = 4
+	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 7, "abductor" = 4)
 	materials = list(MAT_URANIUM = 4000, MAT_METAL = 10000, MAT_PLASMA = 10000)
 	category = list("Weapons")
 	
@@ -232,7 +232,7 @@
 	id = "aliensilencer"
 	build_type = PROTOLATHE
 	build_path = /obj/item/device/abductor/silencer
-	req_tech = list("combat" = 5, "magnets" = 6, "biotech" = 7, "abductor" = 6, "engineering" = 6
+	req_tech = list("combat" = 5, "magnets" = 6, "biotech" = 7, "abductor" = 6, "engineering" = 6)
 	materials = list(MAT_URANIUM = 6000, MAT_METAL = 15000, MAT_PLASMA = 10000, MAT_DIAMOND = 1000)
 	category = list("Weapons")
 
@@ -242,7 +242,7 @@
 	id = "alienhelmet"
 	build_type = PROTOLATHE
 	build_path = /obj/item/clothing/head/helmet/abductor
-	req_tech = list("combat" = 3, "magnets" = 6, "biotech" = 5, "abductor" = 3, "engineering" = 4
+	req_tech = list("combat" = 3, "magnets" = 6, "biotech" = 5, "abductor" = 3, "engineering" = 4)
 	materials = list(MAT_METAL = 5000, MAT_PLASMA = 500, MAT_GOLD = 500)
 	category = list("Weapons")
 
