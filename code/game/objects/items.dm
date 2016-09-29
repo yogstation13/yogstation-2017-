@@ -127,6 +127,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/New()
 	..()
+	if(ispath(module_holder_type, /obj/item/module_holder))
+		module_holder = new module_holder_type(src)
 	for(var/path in actions_types)
 		new path(src)
 
@@ -142,6 +144,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		m.unEquip(src, 1)
 	for(var/X in actions)
 		qdel(X)
+	if(module_holder)
+		qdel(module_holder)
+		module_holder = null
 	return ..()
 
 /obj/item/on_z_level_change()
@@ -365,7 +370,25 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-
+	
+	if(ismodule(W))
+		if(!module_holder)
+			user << "<span class='warning'>This equipment doesn't support modules.</span>"
+			return
+		var/obj/item/module/module = W
+		var/return_value = module_holder.install(module, user)
+		if(return_value != 1) //1 if success, otherwise message
+			user << "<span class='warning'>[return_value]</span>"
+		else
+			user << "<span class='notice'>You successfully install \the [module.name] into [src]."
+	
+	if(ismodholder(W))
+		if(module_holder)
+			user << "<span class='notice'>There's already a module holder installed!</span>"
+			return
+		var/obj/item/module_holder/holder = W
+		if(holder.install_holder(src, user))
+			user << "<span class='notice>You install the module holder into [src].</span>"
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 

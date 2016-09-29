@@ -4,6 +4,10 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
+#define ismodholder(O) (istype(O, /obj/item/module_holder))
+
+#define ismodule(O) (istype(O, /obj/item/module))
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
