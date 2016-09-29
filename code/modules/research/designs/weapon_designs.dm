@@ -260,7 +260,7 @@
 	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
 	id = "reciever"
-	req_tech = list("combat" = 1, "materials" = 1)
+	req_tech = list("combat" = 2, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/weaponcrafting/reciever
