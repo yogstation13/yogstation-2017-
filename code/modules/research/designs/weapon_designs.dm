@@ -28,7 +28,7 @@
 	id = "pin_alien"
 	build_type = PROTOLATHE
 	materials = list(MAT_PLASMA = 600, MAT_DIAMOND = 100, MAT_URANIUM = 200)
-	req_tech = list("combat" = 4, "materials" = 4, "abductor" = 2
+	req_tech = list("combat" = 4, "materials" = 4, "abductor" = 2)
 	category = list("Firing Pins")
 
 /datum/design/pin_clown
