@@ -369,6 +369,7 @@
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
 	modules += new /obj/item/weapon/pinpointer/operative(src)
 	modules += new /obj/item/weapon/gun/medbeam(src)
+	modules += new /obj/item/weapon/gun/syringe/rapidsyringe/borg(src)
 	emag = null
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
