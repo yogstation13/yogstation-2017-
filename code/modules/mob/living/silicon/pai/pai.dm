@@ -192,11 +192,12 @@
 				adjustFireLoss(100)
 		if(2.0)
 			if (src.stat != 2)
-				adjustBruteLoss(30)
+				adjustBruteLoss(60)
 				adjustFireLoss(30)
 		if(3.0)
 			if (src.stat != 2)
-				adjustBruteLoss(15)
+				adjustBruteLoss(30)
+				adjustFireLoss(15)
 	src << "<span class='danger'><b>A warning chime fires at the back of your consciousness process, heralding the unexpected shutdown of your holographic emitter. You're defenseless!</b></span>"
 	close_up()
 	return
@@ -248,17 +249,20 @@
 	return
 
 /mob/living/silicon/pai/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
-	if (!canmove) //card has been hit
+	if (loc == card) //card has been hit
 		if (W.force)
 			user.visible_message("<span class='warning'>[user.name] slams [W] into [src]'s card, damaging it severely!</span>")
 			src.adjustBruteLoss(20)
+			src.adjustFireLoss(20)
 		else
 			user.visible_message("<span class='info'>[user.name] taps [W] against [src]'s screen.</span>")
 		..()
 		return
 	if (cooldown >= cooldowncap)
 		return
+
 	user.do_attack_animation(src)
+
 	if(!W.force)
 		visible_message("<span class='info'>[user.name] strikes [src] harmlessly with [W], passing clean through its holographic projection.</span>")
 	else
@@ -429,6 +433,10 @@
 	set name = "Assume Holographic Form"
 
 	if(stat || sleeping || paralysis || weakened)
+		return
+
+	if (wiped)
+		src << "\red Your holographic control processes were the first to be deleted! You can't move!"
 		return
 
 	if (!canholo)
