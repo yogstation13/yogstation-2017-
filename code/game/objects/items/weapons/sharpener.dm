@@ -58,6 +58,6 @@
 	desc = "A block that makes things very sharp."
 	increment = 10
 	max = 30
-	prefix = "very-sharpened"
+	prefix = "very-sharp"
 	requires_sharpness = 1
 
