@@ -14,7 +14,7 @@
 	var/dat = ""
 	dat += {"
 		<h3>Lumix 'Beacon' Overcharge Suite</h3>
-		When activated, holographic core emitters will be erratically overclocked to a maximum of 900% of normal operating efficiency.<br>
+		When activated, holographic core emitters will be erratically overclocked to a maximum of 700% of normal operating efficiency.<br>
 		This will massively tax internal containment fields and may result in permanent damage to the card unit.<br><br>
 
 		<b>WARNING:</b> There have been reports of this software causing catastrophic emitter failure. Use only in emergencies.<br><br>
