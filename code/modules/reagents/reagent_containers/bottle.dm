@@ -342,11 +342,11 @@
 /obj/item/weapon/reagent_containers/glass/bottle/self_fill
 	name = "self-refilling bottle"
 	desc = "You can say with certainty that this is half-full."
-	var/randomchem = null
+	var/randomchem = pick("synaptizine","oxandrolone","pen_acid","blood","antitoxin","ephedrine","earthsblood","sal_acid","amatoxin","toxin","tirizene","neurotoxin2","morphine","heparin")
+	var/fillrate = 1
 
 /obj/item/weapon/reagent_containers/glass/bottle/self_fill/New()
 	..()
-	randomchem = pick("synaptizine","oxandrolone","pen_acid","blood","antitoxin","ephedrine","earthsblood","sal_acid","amatoxin","toxin","tirizene","neurotoxin2","morphine","heparin")
 	reagents.add_reagent(randomchem, volume)//the bottle starts filled with the reagent
 	START_PROCESSING(SSobj, src)
 
@@ -356,6 +356,6 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/self_fill/process()
 	if(reagents.total_volume <= volume)
-		reagents.add_reagent(randomchem, 1)
+		reagents.add_reagent(randomchem, fillrate)
 		update_icon()
 	return 1
