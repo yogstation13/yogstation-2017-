@@ -46,6 +46,7 @@
 #define DISFIGURED			10
 #define XENO_HOST			11	//Tracks whether we're gonna be a baby alien's mummy.
 #define GODMODE				12
+#define NOCRIT				13	//if they're immune to crit, currently only used with stimulants reagent
 
 
 //Grab levels

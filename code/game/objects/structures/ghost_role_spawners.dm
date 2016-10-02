@@ -11,6 +11,10 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/pod
+	uniform = /obj/item/clothing/under/rank/hydroponics
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
+	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a sentient ecosystem - an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
 	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
@@ -23,10 +27,6 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
-	uniform = /obj/item/clothing/under/rank/hydroponics
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
-	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
