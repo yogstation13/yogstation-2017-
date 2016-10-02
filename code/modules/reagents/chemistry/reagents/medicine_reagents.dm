@@ -491,80 +491,48 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-<<<<<<< HEAD
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-=======
 	M.AdjustParalysis(-0.5, 0)
 	M.AdjustStunned(-0.5, 0)
 	M.AdjustWeakened(-0.5, 0)
-	M.adjustStaminaLoss(-2*REM, 0)
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
+	M.adjustStaminaLoss(-2*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-<<<<<<< HEAD
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
-=======
 	if(prob(44))
-		M.adjustToxLoss(2*REM, 0)
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
+		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
 		M.losebreath++
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
-<<<<<<< HEAD
-	if(prob(33))
-		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
-=======
 	if(prob(44))
-		M.adjustToxLoss(2*REM, 0)
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
+		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
-<<<<<<< HEAD
-	if(prob(33))
-		M.adjustToxLoss(3*REM, 0, DAMAGE_CHEMICAL)
-=======
 	if(prob(44))
-		M.adjustToxLoss(3*REM, 0)
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
+		M.adjustToxLoss(3*REM, 0, DAMAGE_CHEMICAL)
 		M.losebreath += 3
 		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
-<<<<<<< HEAD
-	if(prob(33))
-		M.adjustToxLoss(4*REM, 0, DAMAGE_CHEMICAL)
-=======
 	if(prob(44))
-		M.adjustToxLoss(4*REM, 0)
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
+		M.adjustToxLoss(4*REM, 0, DAMAGE_CHEMICAL)
 		M.losebreath += 4
-		M.adjustStaminaLoss(2.5*REM, 0)
+		M.adjustStaminaLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
-<<<<<<< HEAD
-	if(prob(33))
-		M.adjustToxLoss(5*REM, 0, DAMAGE_CHEMICAL)
-=======
 	if(prob(44))
-		M.adjustToxLoss(5*REM, 0)
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
+		M.adjustToxLoss(5*REM, 0, DAMAGE_CHEMICAL)
 		M.losebreath += 5
-		M.adjustStaminaLoss(2.5*REM, 0)
+		M.adjustStaminaLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	..()
 /datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/M) //when it runs out
@@ -856,27 +824,16 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-<<<<<<< HEAD
-	if(M.health < 50 && M.health > 0)
-		M.adjustOxyLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustToxLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustBruteLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-1*REM, 0, DAMAGE_CHEMICAL)
+	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= NOCRIT
+	M.adjustOxyLoss(-1*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-1*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(-1*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(-1*REM, 0, DAMAGE_CHEMICAL)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0, DAMAGE_CHEMICAL)
-=======
-	M.status_flags |= IGNORESLOWDOWN
-	M.status_flags |= NOCRIT
-	M.adjustOxyLoss(-1*REM, 0)
-	M.adjustToxLoss(-1*REM, 0)
-	M.adjustBruteLoss(-1*REM, 0)
-	M.adjustFireLoss(-1*REM, 0)
-	M.AdjustParalysis(-3, 0)
-	M.AdjustStunned(-3, 0)
-	M.AdjustWeakened(-3, 0)
-	M.adjustStaminaLoss(-5*REM, 0)
 	if(M.health < 0)//once you start dropping below crit it's obvious you're on stims
 		M.Jitter(5)
 		if(prob(10))
@@ -885,7 +842,6 @@
 			M.say(pick("I'm unstoppable!","ARRGH!","Immortality!", "Time's moving a bit slower... maybe I need some coffee.", "The curtains are closing...","FOR THE SYNDICATE!!","The Syndicate sends their regards.","See you all in hell, bastards!","I've been ready for this since day one","DEATH TO NANOTRASEN!"))
 		else if(prob(1))
 			M.say(pick("AAAAAAAAAAAAAAAAAAAA!!!","Shit, did I leave the oven on?","I'm beginning to see space angels.. and they're singing ground control to Major Tom.", "Ashes to Ashes, Funk to Funky, now you'll know my heart's been jumpy.","Something's wrong... Did I forget to lotion up?"))
->>>>>>> 06eee45feb1043b22d92289b77520c46b0c8bf7a
 	..()
 	. = 1
 
