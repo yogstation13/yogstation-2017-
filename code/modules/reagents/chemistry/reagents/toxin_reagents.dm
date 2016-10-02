@@ -117,10 +117,10 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
 	if(prob(50))
 		M << "<span class='danger'>Your insides are burning!</span>"
-		M.adjustToxLoss(50)*REM, 0)
+		M.adjustToxLoss(50)*REM, 0
 		. = 1
 	else if(prob(50))
-		M.adjustCloneLoss(50)*REM, 0)
+		M.adjustCloneLoss(50)*REM, 0
 		M << "<span class='danger'>You're melting away!</span>"
 		. = 1
 	..()
