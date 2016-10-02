@@ -344,10 +344,11 @@
 	desc = "You can say with certainty that this is half-full."
 	var/randomchem = null
 	var/fillrate = 1
+	var/pickable_chems = list("synaptizine","oxandrolone","pen_acid","blood","antitoxin","ephedrine","earthsblood","sal_acid","amatoxin","toxin","tirizene","neurotoxin2","morphine","heparin")
 
 /obj/item/weapon/reagent_containers/glass/bottle/self_fill/New()
 	..()
-	randomchem = pick("synaptizine","oxandrolone","pen_acid","blood","antitoxin","ephedrine","earthsblood","sal_acid","amatoxin","toxin","tirizene","neurotoxin2","morphine","heparin")
+	randomchem = pick(pickable_chems)
 	reagents.add_reagent(randomchem, volume)//the bottle starts filled with the reagent
 	START_PROCESSING(SSobj, src)
 
