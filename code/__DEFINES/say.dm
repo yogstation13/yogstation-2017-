@@ -16,6 +16,7 @@
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
 #define MODE_PHEROMONES "pheromones"
+#define MODE_SPOKEN_BINARY "spokenbinary"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"

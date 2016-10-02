@@ -250,10 +250,24 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 	var/emagged = 0
 
+/datum/species/android/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.languages_understood |= ROBOT
+
+/datum/species/android/on_species_loss(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.languages_understood &= ~ROBOT
+
 /datum/species/android/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes)
 		H.weakeyes = 1
 	..()
+
+/datum/species/android/handle_inherent_channels(mob/living/carbon/human/H, message, message_mode)
+	if(message_mode == MODE_SPOKEN_BINARY)
+		H.say(message, , list("robot"), ROBOT)
+		return 1
+	return ..()
 
 /datum/species/android/handle_vision(mob/living/carbon/human/H)
 	//custom override because darksight APPARENTLY DOESN"T WORK LIKE THIS BY DEFAULT??
@@ -695,6 +709,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 				if(istype(Hearer, /mob/living/carbon) && Hearer.stat)
 					Hearer << "<span class='notice'>The room smells like leaves.</span>"
 		return 1
+	return ..()
 
 /datum/species/plant/fly
 	// Phytosian turned into fly-like abominations in teleporter accidents.

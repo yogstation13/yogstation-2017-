@@ -199,8 +199,10 @@
 	return message
 
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(t, p, list/randchars)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
+	if(!randchars)
+		randchars = list("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
 
@@ -210,7 +212,7 @@
 				letter = ""
 
 			for(var/j = 1, j <= rand(0, 2), j++)
-				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+				letter += pick(randchars)
 
 		returntext += letter
 
