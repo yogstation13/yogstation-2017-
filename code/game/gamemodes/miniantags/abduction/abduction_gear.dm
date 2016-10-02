@@ -496,19 +496,19 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
 
-		if(L.mind && L.mind.special_role = "Servant of Ratvar")
-			species = "<span class='warning'>Connections to the elder god, Ratvar detected.</span>"
+		if(L.mind && L.mind.special_role == "Servant of Ratvar")
+			species = "<span class='warning'>Lifeform has connections to the elder god, Ratvar.</span>"
 
-		if(L.mind && L.special_role = "Cultist")
-			species = "<span class='warning'>Connections to the elder god, Nairse detected.</span>"
+		if(L.mind && L.mind.special_role == "Cultist")
+			species = "<span class='warning'>Lifeform has connections to the elder god, Nairse.</span>"
 
 		if(L.mind && L.mind.special_role == "thrall")
 			species = "<span class='warning'>Shadowling possessed lifeform</span>"
 
-		if(L.mind && L.mind.special_role = "Shadowling")
+		if(L.mind && L.mind.special_role == "Shadowling")
 			species = "<span class='warning'>Shadowling lifeform</span>"
 
-		if(L.mind && L.special_role = "Cyberman")
+		if(L.mind && L.mind.special_role == "Cyberman")
 			species = "<span class='warning'>Lifeform has a multitude of neurally connected submicrolevel binary particles.</span>"
 
 		var/obj/item/organ/gland/temp = locate() in H.internal_organs
