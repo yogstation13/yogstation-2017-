@@ -747,7 +747,7 @@
 			L.decay += 5
 			if(L.decay >= 100)
 				L.Remove(M)
-    				qdel(L)
+				qdel(L)
 		M.Weaken(3, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
