@@ -133,7 +133,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(M.nutrition = min(M.nutrition + 100, NUTRITION_LEVEL_FULL)
+	if(M.nutrition >= NUTRITION_LEVEL_FULL)
 		M.gib()
 	return ..()
 
@@ -491,7 +491,7 @@
 		holder.add_reagent("replitium", pick(2,5)) //random small amounts, but since every bit counts...
 	if(holder.has_reagent("calomel"))
 		holder.remove_reagent("replitium", 600*REM) //calomel treats this otherwise awful abomination
-	
+
 /datum/reagent/toxin/hemoharrigium
 	name = "Hemoharragium"
 	id = "hemoharragium"
@@ -507,7 +507,8 @@
 		if(H.vessel)
 			H.vessel.remove_reagent("blood",rand(1, 3))
 	..()
-
+	
+/* This bugs graphics horribly for any client and ruins smoothing/etc
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
 	id = "rotatium"
@@ -532,7 +533,8 @@
 /datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
 	M.client.dir = NORTH
 	..()
-	
+*/
+
 /datum/reagent/toxin/maloculin
 	name = "Maloculin"
 	id = "maloculin"
@@ -740,11 +742,12 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
-		var /obj/item/organ/lungs/L = M.getorganslot("lungs")
+		var/obj/item/organ/lungs/L = M.getorganslot("lungs")
 		if(L)
 			L.decay += 5
 			if(L.decay >= 100)
-    			qdel(L)
+				L.Remove(M)
+    				qdel(L)
 		M.Weaken(3, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
@@ -759,15 +762,13 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = M
-					if(H.heart_attack)
-						H.heart_attack = 0 // treats myocardial infarction
+/datum/reagent/toxin/heparin/on_mob_life(mob/living/M)			
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
 		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
+		if(H.heart_attack)
+			H.heart_attack = 0 // treats myocardial infarction
 		. = 1
 	return ..() || .
 
@@ -848,19 +849,16 @@
 	..() // Pleased to meet you, hope you guess my name
 	
 /datum/reagent/toxin/acid/flaacid
-	name = Floroantimonic Acid
-	id = flacid
+	name = "Floroantimonic Acid"
+	id = "flacid"
 	description = "A highly illegal, dangerous substance, floroantimonic acid is an incredible superacid, capable of melting even glass and plastic."
 	color = "#79726C"
 	toxpwr = 0
 	acidpwr = 300 //it's a superacid, do you people know this shit
 
 /datum/reagent/toxin/acid/flaacid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
-	reac_volume = round(reac_volume,0.1)
-	if(method == INGEST)
-		C.adjustFireLoss(5*REM, 0)
-		return
-	if(method == INJECT)
+	reac_volume = round(reac_volume, 0.1)
+	if((method == INGEST) || (method == INJECT))
 		C.adjustFireLoss(5*REM, 0)
 		return
 
@@ -872,27 +870,29 @@
 	if(method == INGEST)
 		if(prob(20))
 			var/obj/item/organ/tongue/T = M.getorganslot("tongue")
-				qdel(tongue)
-			var /obj/item/organ/lungs/L = M.getorganslot("lungs")
-				if(L)
-					L.decay += 8
-					if(L.decay >= 100)
-    					qdel(L)
+			if(T)
+				T.Remove(M)
+				qdel(T)
+			var/obj/item/organ/lungs/L = M.getorganslot("lungs")
+			if(L)
+				L.decay += 8
+				if(L.decay >= 100)
+					L.Remove(M)
+					qdel(L)
 			M << "Your insides are melting away!."
-		..()
 	if(method == INJECT)
 		. = TRUE
-			var/mob/living/carbon/C
-			if(iscarbon(M))
-				C = M
-				CHECK_DNA_AND_SPECIES(C)
-				if(NOBLOOD in C.dna.species.specflags)
-					. = FALSE
-				if(BLOOD_VOLUME_SURVIVE to 0) //they have no blood in them/low enough not to matter
-					. = FALSE
-		if(.)
-			M << "Your blood boils away!."
-			H.blood_volume = max(H.blood_volume - 50, 0)
+		var/mob/living/carbon/C
+		if(iscarbon(M))
+			C = M
+			CHECK_DNA_AND_SPECIES(C)
+			if(NOBLOOD in C.dna.species.specflags)
+				. = FALSE
+			if(BLOOD_VOLUME_SURVIVE to 0) //they have no blood in them/low enough not to matter
+				. = FALSE
+	if(.)
+		M << "<span class='userwarning'>Your blood boils away!</span>"
+		H.blood_volume = max(H.blood_volume - 50, 0)
 				
 			
 		
