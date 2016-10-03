@@ -361,9 +361,9 @@ Congratulations! You are now trained for xenobiology research!"}
 	force = 7
 	w_class = 3
 	actions_types = list(/datum/action/item_action/toggle_mode)
-	var/stunstrength = 7
-	var/sleepstrength = 60
-	var/cuffstrength = 30 // this is used for time. the less the better
+	var/stuntime = 7
+	var/sleeptime = 60
+	var/cufftime = 30 // operates the amount of time put into cuffing someone.
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
@@ -434,9 +434,9 @@ Congratulations! You are now trained for xenobiology research!"}
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Stun(stunstrength)
-	L.Weaken(stunstrength)
-	L.apply_effect(STUTTER, stunstrength)
+	L.Stun(stuntime)
+	L.Weaken(stuntime)
+	L.apply_effect(STUTTER, stuntime)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
@@ -454,7 +454,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-		L.Sleeping(sleepstrength)
+		L.Sleeping(sleeptime)
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
@@ -472,7 +472,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, cuffstrength) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, cufftime) && C.get_num_arms() >= 2)
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
@@ -500,7 +500,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			species = "<span class='warning'>Lifeform has connections to the elder god, Ratvar.</span>"
 
 		if(L.mind && L.mind.special_role == "Cultist")
-			species = "<span class='warning'>Lifeform has connections to the elder god, Nairse.</span>"
+			species = "<span class='warning'>Lifeform has connections to the elder god, Narsie.</span>"
 
 		if(L.mind && L.mind.special_role == "thrall")
 			species = "<span class='warning'>Shadowling possessed lifeform</span>"
