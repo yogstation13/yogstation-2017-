@@ -562,12 +562,12 @@
 				M << "<span class='userdanger'>Your feel a stabbing pain in your eyes!</span>"
 		if(30 to 60)
 			M.blur_eyes(20)
-				M.adjust_eye_damage(5)
-				if(M.eye_damage >= 30)
-					M.become_nearsighted()
-					if(prob(M.eye_damage - 10 + 1))
-						if(M.become_blind())
-							M << "<span class='userdanger'>You go blind!</span>"
+			M.adjust_eye_damage(5)
+			if(M.eye_damage >= 30)
+				M.become_nearsighted()
+				if(prob(M.eye_damage - 10 + 1))
+					if(M.become_blind())
+						M << "<span class='userdanger'>You go blind!</span>"
 		if(60 to INFINITY)
 			M.become_blind()
 	
@@ -762,7 +762,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	toxpwr = 0
 
-/datum/reagent/toxin/heparin/on_mob_life(mob/living/M)			
+/datum/reagent/toxin/heparin/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
