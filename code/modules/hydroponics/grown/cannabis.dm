@@ -17,7 +17,7 @@
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,
 						/obj/item/seeds/cannabis/ultimate)
-	reagents_add = list("space_drugs" = 0.3, "lipolicide" = 0.7) // gives u the munchies
+	reagents_add = list("space_drugs" = 0.15, "lipolicide" = 0.35) // gives u the munchies
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -28,7 +28,7 @@
 	plantname = "Rainbow Weed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/rainbow
 	mutatelist = list()
-	reagents_add = list("mindbreaker" = 0.3, "lipolicide" = 0.7)
+	reagents_add = list("mindbreaker" = 0.15, "lipolicide" = 0.35)
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -39,7 +39,7 @@
 	plantname = "Deathweed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/death
 	mutatelist = list()
-	reagents_add = list("cyanide" = 0.6, "space_drugs" = 0.2, "lipolicide" = 0.2)
+	reagents_add = list("cyanide" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
 	rarity = 40
 
 /obj/item/seeds/cannabis/white
@@ -50,7 +50,7 @@
 	plantname = "Lifeweed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
-	reagents_add = list("omnizine" = 0.6, "space_drugs" = 0.2, "lipolicide" = 0.2)
+	reagents_add = list("omnizine" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
 	rarity = 40
 
 
@@ -62,21 +62,21 @@
 	plantname = "Omega Weed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/ultimate
 	mutatelist = list()
-	reagents_add = list("space_drugs" = 0.1,
-						"mindbreaker" = 0.1,
-						"mercury" = 0.05,
-						"lithium" = 0.05,
-						"atropine" = 0.05,
-						"haloperidol" = 0.05,
-						"methamphetamine" = 0.05,
-						"capsaicin" = 0.05,
-						"barbers_aid" = 0.05,
-						"bath_salts" = 0.05,
-						"itching_powder" = 0.05,
-						"crank" = 0.05,
-						"krokodil" = 0.05,
-						"histamine" = 0.05,
-						"lipolicide" = 0.05)
+	reagents_add = list("space_drugs" = 0.3,
+						"mindbreaker" = 0.3,
+						"mercury" = 0.15,
+						"lithium" = 0.15,
+						"atropine" = 0.15,
+						"haloperidol" = 0.15,
+						"methamphetamine" = 0.15,
+						"capsaicin" = 0.15,
+						"barbers_aid" = 0.15,
+						"bath_salts" = 0.15,
+						"itching_powder" = 0.15,
+						"crank" = 0.15,
+						"krokodil" = 0.15,
+						"histamine" = 0.15,
+						"lipolicide" = 0.15)
 	rarity = 69
 
 

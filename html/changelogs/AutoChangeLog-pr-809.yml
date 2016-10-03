@@ -1,0 +1,6 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Cultists can now create runed metal from supply talismans."
+  - rscadd: "Blood Drain has returned from wherever it had gone."
+  - tweak: "Lowered soulstone construction glass requirement to 10, from 25."

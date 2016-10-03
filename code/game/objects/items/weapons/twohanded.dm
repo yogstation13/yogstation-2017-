@@ -209,7 +209,6 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
 	var/hacked = 0
-	var/flip = FALSE
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	item_color = pick("red", "blue", "green", "purple")
@@ -221,23 +220,6 @@
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 	return
-
-/obj/item/weapon/twohanded/dualsaber/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, be_close=TRUE))
-		return
-	else
-		if(flip)
-			user << "<span class='notice'>You will no longer flip while using [src].</span>"
-			flip = FALSE
-			return
-		user << "<span class='notice'>You will now flip while using [src].</span>"
-		flip = TRUE
-
-/obj/item/weapon/twohanded/dualsaber/examine(mob/user)
-	..()
-	user << "<span class='notice'>Alt-click [src] to toggle flipping while attacking.</span>"
-
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -253,7 +235,7 @@
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
-				if(i == 8 && flip)
+				if(i == 8)
 					user.emote("flip")
 				sleep(1)
 

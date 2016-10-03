@@ -429,15 +429,16 @@
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	summon_guns(user, 25)
+	rightandwrong(0, user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
-	category = "Rituals"
+	category = "Challenges"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time. Make the gods cry."
+	cost = 0
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
@@ -447,9 +448,11 @@
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	summon_magic(user, 25)
+	rightandwrong(1, user, 0)
+	book.uses += 1
+	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon magic!</span>"
+	user << "<span class='notice'>You have cast summon magic and gained an extra charge for your spellbook.</span>"
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -560,6 +563,9 @@
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
+		if("Challenges")
+			dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
+			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
 		if("Rituals")
 			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
 	return dat

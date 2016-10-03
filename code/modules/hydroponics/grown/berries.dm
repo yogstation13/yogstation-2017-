@@ -14,7 +14,7 @@
 	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "berry-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries
 	seed = /obj/item/seeds/berry
@@ -34,7 +34,7 @@
 	plantname = "Poison-Berry Bush"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
 	mutatelist = list(/obj/item/seeds/berry/death)
-	reagents_add = list("cyanide" = 0.3, "tirizene" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("cyanide" = 0.15, "tirizene" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 10 // Mildly poisonous berries are common in reality
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison
@@ -55,7 +55,7 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
-	reagents_add = list("coniine" = 0.16, "tirizene" = 0.2, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/death
@@ -77,7 +77,7 @@
 	endurance = 25
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/glow/berry)
-	reagents_add = list("uranium" = 0.4, "iodine" = 0.3, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("uranium" = 0.25, "iodine" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
@@ -105,7 +105,7 @@
 	icon_grow = "cherry-grow"
 	icon_dead = "cherry-dead"
 	mutatelist = list(/obj/item/seeds/cherry/blue)
-	reagents_add = list("nutriment" = 0.14, "sugar" = 0.14)
+	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherries
 	seed = /obj/item/seeds/cherry
@@ -125,7 +125,7 @@
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
 	mutatelist = list(/obj/item/seeds/cherry/bomb)
-	reagents_add = list("nutriment" = 0.14, "sugar" = 0.14)
+	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 	rarity = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
@@ -145,7 +145,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb
 	mutatelist = list()
-	reagents_add = list("nutriment" = 0.2, "sugar" = 0.2, "blackpowder" = 0.2)
+	reagents_add = list("nutriment" = 0.1, "sugar" = 0.1, "blackpowder" = 0.1)
 	rarity = 25
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb
@@ -198,7 +198,7 @@
 	icon_grow = "grape-grow"
 	icon_dead = "grape-dead"
 	mutatelist = list(/obj/item/seeds/grape/green)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2, "sugar" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
 	seed = /obj/item/seeds/grape
@@ -217,7 +217,7 @@
 	species = "greengrape"
 	plantname = "Green-Grape Vine"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green
-	reagents_add = list("kelotane" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2, "sugar" = 0.2)
+	reagents_add = list("kelotane" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 	// No rarity: technically it's a beneficial mutant, but it's not exactly "new"...
 	mutatelist = list()
 

@@ -28,10 +28,6 @@
 	..()
 	LoseTarget()
 
-/obj/item/weapon/gun/medbeam/attack_self(mob/user)
-	user <<"<span class='notice'>You disable the beam.</span>"
-	LoseTarget()
-
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
 	if(active)
 		qdel(current_beam)

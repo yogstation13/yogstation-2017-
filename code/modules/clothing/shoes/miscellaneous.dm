@@ -73,7 +73,7 @@
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
 	can_hold_items = 1
-	valid_held_items = list(/obj/item/device/assembly/bikehorn,/obj/item/weapon/nullrod/clown)
+	valid_held_items = list(/obj/item/device/assembly/bikehorn)
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)

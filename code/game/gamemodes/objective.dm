@@ -726,19 +726,6 @@ var/global/list/possible_items_special = list()
 		return 0
 	return 0
 
-/datum/objective/summon_magic
-	explanation_text = "Be the last living, human adept on the station."
-
-/datum/objective/summon_magic/check_completion()
-	if(!ishuman(owner.current) || (owner.current.stat & DEAD))
-		return 0
-	for(var/V in ticker.mode.traitors - owner)
-		var/datum/mind/M = V
-		if(M.special_role == "adept" && ishuman(M.current) && !(M.current.stat & DEAD))
-			var/turf/T = get_turf(M.current)
-			if(T && T.z == ZLEVEL_STATION)
-				return 0
-	return 1
 
 
 ////////////////////////////////

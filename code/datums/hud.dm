@@ -24,7 +24,6 @@ var/datum/atom_hud/huds = list( \
 	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),\
 	ANTAG_HUD_CYBERMEN = new/datum/atom_hud/antag(),\
 	DATA_HUD_CYBERMEN_HACK = new/datum/atom_hud/data/cybermen(),\
-	ANTAG_HUD_SUMMON_MAGIC = new/datum/atom_hud/antag()
 	)
 
 /datum/atom_hud

@@ -14,7 +14,7 @@
 	icon_grow = "soybean-grow"
 	icon_dead = "soybean-dead"
 	mutatelist = list(/obj/item/seeds/soya/koi)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = /obj/item/seeds/soya
@@ -35,7 +35,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans
 	potency = 10
 	mutatelist = list()
-	reagents_add = list("carpotoxin" = 0.2, "vitamin" = 0.08, "nutriment" = 0.1)
+	reagents_add = list("carpotoxin" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/koibeans

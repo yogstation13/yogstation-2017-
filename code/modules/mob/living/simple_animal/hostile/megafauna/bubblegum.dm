@@ -29,7 +29,6 @@
 	var/charging = 0
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
-	bloodcrawl = BLOODCRAWL_EAT
 
 /obj/item/device/gps/internal/lavaland/bubblegum
 	icon_state = null
@@ -39,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = Clamp(round((health/maxHealth) * 6), 5, 10)
+	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -70,10 +69,10 @@
 		if(B != src)
 			qdel(src) //There can be only one
 			break
-	/*var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new // commented out because we use ctrl+click rather than the spell
+	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
-		bloodspell.phased = 1*/
+		bloodspell.phased = 1
 	new/obj/item/device/gps/internal/lavaland/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
@@ -160,7 +159,7 @@
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
 	spawn(0)
 		var/turf/E = get_edge_target_turf(src, src.dir)
-		var/range = 25
+		var/range = 10
 		for(var/turf/open/J in getline(src,E))
 			if(!range)
 				break

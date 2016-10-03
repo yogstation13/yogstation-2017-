@@ -1,0 +1,5 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Blobs are significantly weaker to fire and burn damage."
+  - rscadd: "Blobs expand less quickly, to give crew a fighting chance."

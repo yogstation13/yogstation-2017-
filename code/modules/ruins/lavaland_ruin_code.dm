@@ -51,12 +51,11 @@
 	name = "Golem Creation Disk"
 	desc = "A gift from the Liberator."
 	icon_state = "datadisk1"
-	max_blueprints = 1
 
 /obj/item/weapon/disk/design_disk/golem_shell/New()
 	..()
 	var/datum/design/golem_shell/G = new
-	blueprints[1] = G
+	blueprint = G
 
 /datum/design/golem_shell
 	name = "Golem Shell Construction"

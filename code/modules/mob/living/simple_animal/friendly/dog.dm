@@ -55,9 +55,6 @@
 
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
 	user.set_machine(src)
-	if(harness)
-		..()
-		return
 	if(user.stat) return
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"

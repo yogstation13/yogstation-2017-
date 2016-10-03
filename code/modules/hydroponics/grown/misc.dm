@@ -33,7 +33,7 @@
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/replicapod)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cabbage
 	seed = /obj/item/seeds/cabbage
@@ -57,7 +57,7 @@
 	maturation = 3
 	yield = 4
 	growthstages = 3
-	reagents_add = list("sugar" = 0.5)
+	reagents_add = list("sugar" = 0.25)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
 	seed = /obj/item/seeds/sugarcane
@@ -85,7 +85,7 @@
 	growthstages = 2
 	rarity = 60 // Obtainable only with xenobio+superluck.
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-	reagents_add = list("sulfur" = 0.2, "carbon" = 0.2, "nitrogen" = 0.14, "potassium" = 0.1)
+	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
 	seed = /obj/item/seeds/gatfruit

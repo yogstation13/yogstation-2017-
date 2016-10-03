@@ -13,7 +13,7 @@
 	icon_grow = "apple-grow"
 	icon_dead = "apple-dead"
 	mutatelist = list(/obj/item/seeds/apple/gold)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
@@ -27,7 +27,7 @@
 /obj/item/seeds/apple/poisoned
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
 	mutatelist = list()
-	reagents_add = list("zombiepowder" = 0.9, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("zombiepowder" = 0.5, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 50 // Source of cyanide, and hard (almost impossible) to obtain normally.
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned
@@ -44,7 +44,7 @@
 	maturation = 10
 	production = 10
 	mutatelist = list()
-	reagents_add = list("gold" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("gold" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 40 // Alchemy!
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold

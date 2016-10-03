@@ -13,7 +13,7 @@
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
-	reagents_add = list("oculine" = 0.5, "vitamin" = 0.08, "nutriment" = 0.1)
+	reagents_add = list("oculine" = 0.25, "vitamin" = 0.04, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
 	seed = /obj/item/seeds/carrot
@@ -44,7 +44,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	icon_dead = "carrot-dead"
 	mutatelist = list()
-	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
 	seed = /obj/item/seeds/carrot/parsnip
@@ -69,7 +69,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
-	reagents_add = list("vitamin" = 0.08, "sugar" = 0.4, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
 	seed = /obj/item/seeds/whitebeet
@@ -93,7 +93,7 @@
 	oneharvest = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
-	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
 	seed = /obj/item/seeds/redbeet

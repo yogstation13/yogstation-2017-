@@ -9,7 +9,6 @@
 	luminosity = 3
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
-	ranged_ignores_vision = TRUE
 	stat_attack = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -64,6 +63,3 @@
 		alert_admins = !alert_admins
 		spawn(3000) // a cooldown, so it'll alert the admins again if it's still off the z level.
 			alert_admins = !alert_admins
-
-/mob/living/simple_animal/hostile/megafauna/experience_pressure_difference(pressure_difference, direction)
-	return //Immune to Space Wind

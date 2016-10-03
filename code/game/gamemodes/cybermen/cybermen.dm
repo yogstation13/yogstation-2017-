@@ -34,7 +34,7 @@ var/datum/cyberman_network/cyberman_network
 	#endif
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
 	prob_traitor_ai = 18
 	//yogstat_name = "cybermen"
 

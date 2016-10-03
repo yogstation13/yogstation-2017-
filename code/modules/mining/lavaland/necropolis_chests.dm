@@ -41,7 +41,7 @@
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/clothing/suit/space/hardsuit/freedom(src)  //lavaland is actually america after trump was elected
+			new /obj/item/clothing/suit/space/freedom(src)  //lavaland is actually america after trump was elected
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
@@ -748,7 +748,7 @@
 /obj/item/weapon/chainsaw_bubblegum
 	name = "demonic chainsaw"
 	desc = "You almost regret picking this up."
-	force = 28
+	force = 25
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
 	w_class = 5
@@ -758,56 +758,16 @@
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 	armour_penetration = 30
 	color = "#FF0000"
-	block_chance = 30
-	var/recalled = FALSE
 
 /obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
 	..()
-	for(var/obj/effect/proc_holder/spell/targeted/summonsaw/spell in user.mind.spell_list)
-		qdel(spell)//removes summon spell if they got it before
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonsaw(src))
+	user.visible_message(
+		"<span class='danger'>[user] looks visibly angrier as they pick up [src]!</span>",
+		"<span class='warning'><b>You feel intense rage build up within you as you pick up [src]!</b></span>")
+	user.color = "#FF0000"
 
 /obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [src.name]! It looks like \he's trying to join Bubblegum!</span>")
 	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
 	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
 	qdel(user)
-
-/obj/item/weapon/chainsaw_bubblegum/afterattack(mob/living/target, mob/living/user)
-	..()
-	if(ishuman(target))
-		if(target.stat != DEAD)
-			user.adjustBruteLoss(-(force / 2))
-			user << "<span class='notice'>[src] absorbs the strength of [target] and rejuvenates you!</span>"
-
-/obj/effect/proc_holder/spell/targeted/summonsaw
-	name = "Summon Chainsaw"
-	desc = "Summon Bubblegum's Chainsaw."
-	action_icon_state = "bloodcrawl"
-	charge_max = 10
-	clothes_req = 0
-	range = -1
-	level_max = 0
-	include_user = 1
-
-
-/obj/effect/proc_holder/spell/targeted/summonsaw/cast(mob/living/carbon/human/user)
-	if(locate(/obj/item/weapon/chainsaw_bubblegum) in user)
-		var/obj/item/weapon/chainsaw_bubblegum/S = locate(/obj/item/weapon/chainsaw_bubblegum)
-		if(S.recalled == FALSE)
-			S.flags &= ~NODROP
-			user.unEquip(S)
-			S.loc = user
-			user.visible_message("<span class='warning'><b>[S] assimilates itself into [usr]'s body!</b></span>")
-			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-			S.recalled = TRUE
-		else
-			S.flags |= NODROP
-			user.put_in_active_hand(S)
-			user.visible_message("<span class='warning'><b>[user]'s arm is suddenly engulfed in blood, which molds itself into [S]!</b></span>")
-			playsound(get_turf(user), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-			playsound(get_turf(user),'sound/effects/splat.ogg', 100, 1, -1)
-			S.recalled = FALSE
-	else
-		qdel(src)
-

@@ -1334,8 +1334,6 @@
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(H.reagents.has_reagent("epinephrine") && lungs)
 			return
-		if(NOCRIT in H.status_flags)
-			return
 		if(H.health >= config.health_threshold_crit)
 			H.adjustOxyLoss(HUMAN_MAX_OXYLOSS)
 			if(!lungs)

@@ -1,0 +1,4 @@
+author: pseudo
+delete-after: True
+changes: 
+  - rscdel: "Removed bomb bananas from xenobio silver slime pool"

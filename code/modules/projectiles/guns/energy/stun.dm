@@ -31,26 +31,10 @@
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_flashlight = 0
 	can_charge = 0
-	var/recharge_time = 10
 
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
+/obj/item/weapon/gun/energy/gun/advtaser/cyborg/newshot()
 	..()
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
 	robocharge()
-
-	update_icon()
 
 /obj/item/weapon/gun/energy/disabler
 	name = "disabler"
@@ -64,25 +48,7 @@
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = 0
-	var/recharge_time = 4
 
-
-/obj/item/weapon/gun/energy/disabler/cyborg/New()
+/obj/item/weapon/gun/energy/disabler/cyborg/newshot()
 	..()
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
 	robocharge()
-
-	update_icon()
-

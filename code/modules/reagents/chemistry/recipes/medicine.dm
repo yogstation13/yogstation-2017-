@@ -12,9 +12,9 @@
 	name = "Rezadone"
 	id = "rezadone"
 	result = "rezadone"
-	required_reagents = list("capsaicin" = 1, "cryptobiolin" = 1, "copper" = 1)
+	required_reagents = list("carpotoxin" = 1, "cryptobiolin" = 1, "copper" = 1)
 	result_amount = 3
-	mix_message = "The mixture smells of hot sauce and death."
+	mix_message = "The mixture smells of carp and death."
 
 /datum/chemical_reaction/spaceacillin
 	name = "Spaceacillin"

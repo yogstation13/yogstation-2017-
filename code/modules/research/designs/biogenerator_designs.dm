@@ -218,11 +218,3 @@
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/clothing/head/rice_hat
 	category = list("initial","Leather and Cloth")
-
-/datum/design/cardboard
-	name = "Cardboard sheet"
-	id = "cardboard_sheet"
-	build_type = BIOGENERATOR
-	materials = list(MAT_BIOMASS = 400)
-	build_path = /obj/item/stack/sheet/cardboard
-	category = list("initial","Leather and Cloth")

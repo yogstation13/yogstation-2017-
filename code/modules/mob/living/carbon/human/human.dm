@@ -850,8 +850,6 @@
 	if(C.stat == DEAD)
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
-	if(NOCRIT in C.status_flags)//no crit when you're stimmed
-		return
 	if(is_mouth_covered())
 		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0

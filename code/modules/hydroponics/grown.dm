@@ -16,7 +16,6 @@
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	burn_state = FLAMMABLE
 	origin_tech = "biotech=1"
-	volume = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
 	..()

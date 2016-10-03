@@ -31,11 +31,6 @@
 		var/list/viewing = viewers(src)
 		if(!viewing.Find(user))
 			user.unset_machine()
-	else if(ispAI(user))
-		var/mob/living/silicon/pai/P = user
-		if(P in watchers && P.paired != src)
-			P.machine = src
-			user.unset_machine()
 
 /obj/machinery/computer/security/on_unset_machine(mob/user)
 	watchers.Remove(user)
@@ -78,7 +73,7 @@
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
 	var/list/camera_list = get_available_cameras()
 	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
-	if(user.machine != src && !ispAI(user)) //while we were choosing we got disconnected from our computer or are using another machine.
+	if(user.machine != src) //while we were choosing we got disconnected from our computer or are using another machine.
 		return
 	if(!t)
 		user.unset_machine()
@@ -91,9 +86,7 @@
 		return
 	if(C)
 		var/camera_fail = 0
-		if (!ispAI(user) && user.machine != src)
-			camera_fail = 1
-		if(!C.can_use() || user.eye_blind || user.incapacitated())
+		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
 			camera_fail = 1
 		else if(isrobot(user))
 			var/list/viewing = viewers(src)

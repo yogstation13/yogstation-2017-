@@ -6,8 +6,8 @@
 
 /obj/structure/closet/secure_closet/medical1/New()
 	..()
-	new /obj/item/weapon/reagent_containers/glass/beaker/large/styptic(src)
-	new /obj/item/weapon/reagent_containers/glass/beaker/large/silver_sulfadiazine(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	new /obj/item/weapon/reagent_containers/glass/beaker(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
 	new /obj/item/weapon/storage/belt/medical(src)
@@ -15,10 +15,11 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/toxin(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/morphine(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/glass/beaker/large/charcoal(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/glass/bottle/epinephrine(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/glass/bottle/charcoal(src)
 	new /obj/item/weapon/storage/box/rxglasses(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/salglu_solution(src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"
@@ -31,8 +32,6 @@
 		new /obj/item/weapon/tank/internals/anesthetic(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/breath/medical(src)
-	for(var/i in 1 to 2)
-		new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate
 
 /obj/structure/closet/secure_closet/medical3
 	name = "medical doctor's locker"
@@ -46,7 +45,6 @@
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/clothing/glasses/hud/health(src)
-	new /obj/item/weapon/gun/syringe(src)
 	return
 
 /obj/structure/closet/secure_closet/CMO
@@ -73,7 +71,6 @@
 	new /obj/item/weapon/reagent_containers/hypospray/CMO(src)
 	new /obj/item/device/autoimplanter/cmo(src)
 	new /obj/item/weapon/door_remote/chief_medical_officer(src)
-	new /obj/item/weapon/storage/box/chemimp(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
@@ -94,10 +91,6 @@
 	..()
 	new /obj/item/weapon/storage/box/pillbottles(src)
 	new /obj/item/weapon/storage/box/pillbottles(src)
-	new /obj/item/weapon/reagent_containers/glass/beaker/sulphuric(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/facid(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/capsaicin(src)
-	new /obj/item/weapon/reagent_containers/glass/bottle/mutagen(src)
 
 /obj/structure/closet/secure_closet/mmedical
 	name = "mining medic's locker"

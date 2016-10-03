@@ -10,7 +10,7 @@
 	config_tag = "traitor"
 	antag_flag = ROLE_TRAITOR
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Prison Officer")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4

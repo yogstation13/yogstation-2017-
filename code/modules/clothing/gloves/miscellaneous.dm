@@ -37,10 +37,6 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
 
-/obj/item/clothing/gloves/combat/stealth
-	name = "black gloves"
-	desc = "These gloves seem a bit more rubbery than normal."
-
 /obj/item/clothing/gloves/bracer
 	name = "bone bracers"
 	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."

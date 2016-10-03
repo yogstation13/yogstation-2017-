@@ -12,7 +12,7 @@
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
 	mutatelist = list(/obj/item/seeds/eggplant/eggy)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	seed = /obj/item/seeds/eggplant
@@ -31,7 +31,7 @@
 	lifespan = 75
 	production = 12
 	mutatelist = list()
-	reagents_add = list("nutriment" = 0.2)
+	reagents_add = list("nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/eggy
 	seed = /obj/item/seeds/eggplant/eggy

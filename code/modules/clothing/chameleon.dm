@@ -135,7 +135,6 @@
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
 			CL.flags_cover = initial(PCL.flags_cover)
-			CL.flags_inv = initial(PCL.flags_inv)
 			if(istype(target, /obj/item/clothing/under))
 				var/obj/item/clothing/under/UCL = target
 				var/obj/item/clothing/under/PUCL = picked_item

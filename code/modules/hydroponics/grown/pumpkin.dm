@@ -13,7 +13,7 @@
 	icon_grow = "pumpkin-grow"
 	icon_dead = "pumpkin-dead"
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkin
@@ -40,7 +40,7 @@
 	plantname = "Blumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	mutatelist = list()
-	reagents_add = list("ammonia" = 0.4, "chlorine" = 0.4, "nutriment" = 0.4)
+	reagents_add = list("ammonia" = 0.2, "chlorine" = 0.2, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin

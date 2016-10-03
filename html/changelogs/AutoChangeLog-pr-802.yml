@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "Toy mechs no longer hide under the hand icon when you reset them"
+  - bugfix: "The toy mech controller menu no longer pops up in your face after you have closed it."

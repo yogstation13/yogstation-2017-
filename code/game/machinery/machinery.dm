@@ -327,7 +327,6 @@ Class Procs:
 			if(allowed(user))
 				if(paiAllowed)
 					C.pai.pair(src)
-					user << "<span class='notice'>A cheerful blip emanates from [C.pai] as it successfully interfaces with [src].</span>"
 				else
 					C.pai << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
 			else

@@ -13,7 +13,7 @@
 	growthstages = 5
 	icon_dead = "tea-dead"
 	mutatelist = list(/obj/item/seeds/tea/astra)
-	reagents_add = list("vitamin" = 0.08, "teapowder" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "teapowder" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea
 	seed = /obj/item/seeds/tea
@@ -30,7 +30,7 @@
 	plantname = "Tea Astra Plant"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
 	mutatelist = list()
-	reagents_add = list("synaptizine" = 0.2, "vitamin" = 0.08, "teapowder" = 0.2)
+	reagents_add = list("synaptizine" = 0.1, "vitamin" = 0.04, "teapowder" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra
@@ -56,7 +56,7 @@
 	growthstages = 5
 	icon_dead = "coffee-dead"
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
-	reagents_add = list("vitamin" = 0.08, "coffeepowder" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "coffeepowder" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/coffee
 	seed = /obj/item/seeds/coffee
@@ -75,7 +75,7 @@
 	plantname = "Coffee Robusta Bush"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta
 	mutatelist = list()
-	reagents_add = list("ephedrine" = 0.2, "vitamin" = 0.08, "coffeepowder" = 0.2)
+	reagents_add = list("ephedrine" = 0.1, "vitamin" = 0.04, "coffeepowder" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta

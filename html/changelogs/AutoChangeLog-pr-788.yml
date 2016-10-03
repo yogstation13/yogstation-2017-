@@ -1,0 +1,6 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Necropolis tendrils have begun dropping more valuable loot."
+  - rscadd: "Cursed hearts are gone. Admin-only. Thank the lord. Or in this case, me."
+  - rscadd: "The friendly wisp is now more luminous and likes to orbit you longer."

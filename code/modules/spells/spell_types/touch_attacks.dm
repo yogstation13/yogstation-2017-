@@ -46,7 +46,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 	name = "Disintegrate"
-	desc = "This spell charges your hand with vile energy that, on using on the living, will instantly kill them, while use on the dead will violently explode them."
+	desc = "This spell charges your hand with vile energy that can be used to violently explode victims."
 	hand_path = "/obj/item/weapon/melee/touch_attack/disintegrate"
 
 	school = "evocation"

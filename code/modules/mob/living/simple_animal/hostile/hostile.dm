@@ -16,7 +16,6 @@
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
-	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
@@ -201,8 +200,6 @@
 		return 0
 	if(environment_smash && !(stop_automated_movement_when_pulled && pulledby))
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
-			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
-				OpenFire(target)
 			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
@@ -228,8 +225,8 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
-/mob/living/simple_animal/hostile/AttackingTarget(atom/T = target) //this override does do something, it sets the default to target
-	..(T)
+/mob/living/simple_animal/hostile/proc/AttackingTarget()
+	target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -297,22 +294,19 @@
 		casing.fire(targeted_atom, src, zone_override = ran_zone())
 		casing.loc = startloc
 	else if(projectiletype)
-		return FireProjectile(projectiletype, projectilesound, targeted_atom, startloc)
+		var/obj/item/projectile/P = new projectiletype(startloc)
+		playsound(src, projectilesound, 100, 1)
+		P.current = startloc
+		P.starting = startloc
+		P.firer = src
+		P.yo = targeted_atom.y - startloc.y
+		P.xo = targeted_atom.x - startloc.x
+		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
+			newtonian_move(get_dir(targeted_atom, targets_from))
+		P.original = targeted_atom
+		P.fire()
+		return P
 
-/mob/living/simple_animal/hostile/proc/FireProjectile(projectiletype, sound, atom/targeted_atom, turf/startloc)
-	var/obj/item/projectile/P = new projectiletype(startloc)
-	if(sound)
-		playsound(src, sound, 100, 1)
-	P.current = startloc
-	P.starting = startloc
-	P.firer = src
-	P.yo = targeted_atom.y - startloc.y
-	P.xo = targeted_atom.x - startloc.x
-	if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
-		newtonian_move(get_dir(targeted_atom, targets_from))
-	P.original = targeted_atom
-	P.fire()
-	return P
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
@@ -346,8 +340,6 @@
 		return 1
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
-	if(harness && harness.on_ranged_attack(src, A, params))
-		return
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)

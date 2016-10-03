@@ -1,7 +1,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/sniper_rifle
 	name = "sniper rifle"
-	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
+	desc = "The kind of gun that will leave you crying for mummy before you even realise your leg's missing"
 	icon_state = "sniper"
 	item_state = "sniper"
 	recoil = 2
@@ -28,7 +28,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
-	desc = "An illegally modified .50 cal sniper rifle with supression compatibility. Quickscoping still doesn't work."
+	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
 
@@ -130,7 +130,7 @@
 /obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0, hit_zone)
 	if((blocked != 100) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.bleed(300)
+		C.bleed(100)
 
 	return ..()
 

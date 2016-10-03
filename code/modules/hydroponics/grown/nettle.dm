@@ -11,7 +11,7 @@
 	growthstages = 5
 	plant_type = PLANT_WEED
 	mutatelist = list(/obj/item/seeds/nettle/death)
-	reagents_add = list("sacid" = 1)
+	reagents_add = list("sacid" = 0.5)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"

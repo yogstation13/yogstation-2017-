@@ -17,7 +17,7 @@ Bonus
 
 /datum/symptom/stimulant
 
-	name = "Artificial Stimulant"
+	name = "Stimulant"
 	stealth = -1
 	resistance = -3
 	stage_speed = -2
@@ -30,10 +30,9 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(5)
-				if(!M.stunned && !M.weakened)
-					if (M.reagents.get_reagent_amount("lesserephedrine") < 10)
-						M.reagents.add_reagent("lesserephedrine", 10)
+				if (M.reagents.get_reagent_amount("ephedrine") < 10)
+					M.reagents.add_reagent("ephedrine", 10)
 			else
 				if(prob(SYMPTOM_ACTIVATION_PROB * 5))
-					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.", "You feel like you could dodge a bullet", "You feel like taking a run outside the skirts of the station.", "You feel like time is moving slowly every time you take a step.")]</span>"
+					M << "<span class='notice'>[pick("You feel restless.", "You feel like running laps around the station.")]</span>"
 	return

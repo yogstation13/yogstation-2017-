@@ -25,7 +25,6 @@ var/datum/subsystem/pai/SSpai
 				pai.name = pick(ninja_names)
 			else
 				pai.name = candidate.name
-			pai.description = candidate.description
 			pai.real_name = pai.name
 			pai.key = candidate.key
 
@@ -36,13 +35,13 @@ var/datum/subsystem/pai/SSpai
 			ticker.mode.update_rev_icons_removed(card.pai.mind)
 
 			candidates -= candidate
-
+			
 			if(availableRecruitsCount() == 0)
 				for(var/obj/item/device/paicard/p in world)
 					if(p.looking_for_personality == 1)
 						p.overlays.Cut()
 						p.overlays += "pai-off"
-
+			
 			usr << browse(null, "window=findPai")
 
 	if(href_list["new"])

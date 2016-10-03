@@ -573,9 +573,7 @@
 			crewmembers += H
 	for(var/V in crewmembers)
 		var/mob/living/carbon/human/applicant = V
-		if(!applicant.client.prefs.allow_midround_antag)
-			continue
-		if(role && !(role in applicant.client.prefs.be_special))
+		if(!(role in applicant.client.prefs.be_special))
 			continue
 		if(applicant.stat != CONSCIOUS || !applicant.mind || applicant.mind.special_role)
 			continue

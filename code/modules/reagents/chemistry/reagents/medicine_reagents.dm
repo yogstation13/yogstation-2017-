@@ -155,22 +155,22 @@
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
 	id = "rezadone"
-	description = "A powder derived from something hot. Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
+	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
-	M.adjustCloneLoss(-15, 0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
+	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_organ_damage(1,1, 0)
 	M.status_flags -= DISFIGURED
 	..()
 	. = 1
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M)
-	M.adjustToxLoss(3, 0)
-	M.Dizzy(10)
-	M.Jitter(10)
+	M.adjustToxLoss(1, 0)
+	M.Dizzy(5)
+	M.Jitter(5)
 	..()
 	. = 1
 
@@ -485,77 +485,53 @@
 	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
-	metabolization_rate = 0.75 * REAGENTS_METABOLISM
-	overdose_threshold = 20
-	addiction_threshold = 20
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 45
+	addiction_threshold = 30
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-0.5, 0)
-	M.AdjustStunned(-0.5, 0)
-	M.AdjustWeakened(-0.5, 0)
-	M.adjustStaminaLoss(-2*REM, 0)
+	M.AdjustParalysis(-1, 0)
+	M.AdjustStunned(-1, 0)
+	M.AdjustWeakened(-1, 0)
+	M.adjustStaminaLoss(-1*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(44))
-		M.adjustToxLoss(2*REM, 0)
+	if(prob(33))
+		M.adjustToxLoss(0.5*REM, 0)
 		M.losebreath++
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
-	if(prob(44))
+	if(prob(33))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
-	if(prob(44))
+	if(prob(33))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
-		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
-	if(prob(44))
+	if(prob(33))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
-		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
-	if(prob(44))
+	if(prob(33))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
-		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
-/datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/M) //when it runs out
-	if(current_cycle >= 15)
-		M.visible_message("<span class='danger'>[M] suddenly runs out of breath!</span>")
-		M.adjustStaminaLoss(50*REM)
-	else
-		M.adjustStaminaLoss(current_cycle*5*REM)
-
-
-/datum/reagent/medicine/lesserephedrine
-	name = "Lesser Ephedrine"
-	id = "lesserephedrine"
-	description = "Increases movement speed."
-	reagent_state = LIQUID
-	color = "#D2FFFA"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-
-
-/datum/reagent/medicine/lesserephedrine/on_mob_life(mob/living/M)
-	M.status_flags |= GOTTAGOFAST
-	..()
-	. = 1
 
 /datum/reagent/medicine/diphenhydramine
 	name = "Diphenhydramine"
@@ -824,24 +800,15 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.status_flags |= IGNORESLOWDOWN
-	M.status_flags |= NOCRIT
-	M.adjustOxyLoss(-1*REM, 0)
-	M.adjustToxLoss(-1*REM, 0)
-	M.adjustBruteLoss(-1*REM, 0)
-	M.adjustFireLoss(-1*REM, 0)
+	if(M.health < 50 && M.health > 0)
+		M.adjustOxyLoss(-1*REM, 0)
+		M.adjustToxLoss(-1*REM, 0)
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
-	if(M.health < 0)//once you start dropping below crit it's obvious you're on stims
-		M.Jitter(5)
-		if(prob(10))
-			M.emote(pick("gasp","twitch"))
-		if(prob(20))
-			M.say(pick("I'm unstoppable!","ARRGH!","Immortality!", "Time's moving a bit slower... maybe I need some coffee.", "The curtains are closing...","FOR THE SYNDICATE!!","The Syndicate sends their regards.","See you all in hell, bastards!","I've been ready for this since day one","DEATH TO NANOTRASEN!"))
-		else if(prob(1))
-			M.say(pick("AAAAAAAAAAAAAAAAAAAA!!!","Shit, did I leave the oven on?","I'm beginning to see space angels.. and they're singing ground control to Major Tom.", "Ashes to Ashes, Funk to Funky, now you'll know my heart's been jumpy.","Something's wrong... Did I forget to lotion up?"))
 	..()
 	. = 1
 

@@ -43,16 +43,13 @@
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
 						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/glass)
 	healable = 0
-	unique_name = 1
 	var/mode = MINEDRONE_COLLECT
 	var/light_on = 0
-	var/obj/item/device/radio/radio
 
 	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
 	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action
 	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
 	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
-	var/datum/action/innate/minedrone/give_up_sentience/give_up_sentience_action
 
 /mob/living/simple_animal/hostile/mining_drone/New()
 	..()
@@ -64,22 +61,9 @@
 	toggle_mode_action.Grant(src)
 	dump_ore_action = new()
 	dump_ore_action.Grant(src)
-	give_up_sentience_action = new()
-	give_up_sentience_action.Grant(src)
-
-	radio = new /obj/item/device/radio(src)
-	radio.keyslot = new /obj/item/device/encryptionkey/headset_cargo()
-	radio.subspace_transmission = 1
-	radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
-	radio.recalculateChannels()
 
 	toggle_light()
 	SetCollectBehavior()
-
-/mob/living/simple_animal/hostile/mining_drone/Life()
-	if(!radio.on && !radio.emped)
-		radio.on = 1
-	..()
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -269,27 +253,6 @@
 	light_on = !light_on
 	src << "<span class='notice'>You toggle your light [light_on ? "on" : "off"].</span>"
 
-/mob/living/simple_animal/hostile/mining_drone/radio(message, message_mode, list/spans)
-	. = ..()
-	if(. != 0)
-		return .
-
-	switch(message_mode)
-		if(MODE_HEADSET)
-			if(radio)
-				radio.talk_into(src, message, , spans)
-			return REDUCE_RANGE
-
-		if(MODE_DEPARTMENT)
-			if (radio)
-				radio.talk_into(src, message, message_mode, spans)
-			return REDUCE_RANGE
-
-	if(message_mode in radiochannels)
-		if(radio)
-			radio.talk_into(src, message, message_mode, spans)
-			return REDUCE_RANGE
-
 //Actions
 
 /datum/action/innate/minedrone
@@ -337,17 +300,6 @@
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
 	user.DropOre()
 
-/datum/action/innate/minedrone/give_up_sentience
-	name = "Give up Sentience"
-	button_icon_state = "sentience_loss"
-
-/datum/action/innate/minedrone/give_up_sentience/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-	if(alert(user, "Are you sure you wish to give up your sentience? This cannot be undone.",, "Yes", "No") != "Yes")
-		return
-	var/obj/item/slimepotion/sentience/mining/upgrade = new(user.loc)
-	user.visible_message("<span class='notice'>\The [upgrade] pops out of a slot on [user], and its gaze becomes dim and lifeless once again.</span>")
-	user.ghostize(0)
 
 /**********************Minebot Upgrades**********************/
 

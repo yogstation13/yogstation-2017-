@@ -128,9 +128,8 @@
 		busy = 1
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
-			for(var/B in D.blueprints)
-				if(B)
-					files.AddDesign2Known(B)
+			files.AddDesign2Known(D.blueprint)
+
 		busy = 0
 		return 1
 

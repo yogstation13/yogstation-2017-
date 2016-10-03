@@ -15,7 +15,7 @@
 	icon_grow = "cocoapod-grow"
 	icon_dead = "cocoapod-dead"
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod)
-	reagents_add = list("cocoa" = 0.5, "nutriment" = 0.2)
+	reagents_add = list("cocoa" = 0.25, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
 	seed = /obj/item/seeds/cocoapod
@@ -34,7 +34,7 @@
 	plantname = "Vanilla Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod
 	mutatelist = list()
-	reagents_add = list("vanilla" = 0.5, "nutriment" = 0.2)
+	reagents_add = list("vanilla" = 0.25, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/vanillapod
 	seed = /obj/item/seeds/cocoapod/vanillapod

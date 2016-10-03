@@ -11,7 +11,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "watermelon-dead"
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed = /obj/item/seeds/watermelon
@@ -34,7 +34,7 @@
 	plantname = "Holy Melon Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon
 	mutatelist = list()
-	reagents_add = list("holywater" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/holymelon

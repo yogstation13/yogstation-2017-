@@ -26,12 +26,12 @@
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
-	if(can_eat_thing(the_target))
+	if(can_eat(the_target))
 		return 1
 	return 0
 
 /mob/living/simple_animal/hostile/lizard/AttackingTarget()
-	if(can_eat_thing(target))
+	if(can_eat(target))
 		visible_message("[name] consumes [target] in a single gulp", "<span class='notice'>You consume [target] in a single gulp</span>")
 		qdel(target) //Nom
 		LoseTarget()
@@ -39,7 +39,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/lizard/proc/can_eat_thing(obj/item/I)
+/mob/living/simple_animal/hostile/lizard/proc/can_eat(obj/item/I)
 	return is_type_in_list(I, edibles)
 
 /mob/living/simple_animal/hostile/lizard/gex
@@ -58,7 +58,7 @@
 		search_objects = 0
 	..()
 
-/mob/living/simple_animal/hostile/lizard/gex/can_eat_thing(obj/item/I)
+/mob/living/simple_animal/hostile/lizard/gex/can_eat(obj/item/I)
 	if(..())
 		return 1 //he'll always eat bugs
 	if(world.time - last_health_increase < health_increase_cooldown)
@@ -66,7 +66,7 @@
 	return is_type_in_list(I, wanted_objects)
 
 /mob/living/simple_animal/hostile/lizard/gex/AttackingTarget()
-	if(can_eat_thing(target))
+	if(can_eat(target))
 		visible_message("<span class='notice'>[name] consumes [target] in a single gulp.</span>", "<span class='notice'>You consume [target] in a single gulp.</span>")
 		qdel(target)
 		LoseTarget()

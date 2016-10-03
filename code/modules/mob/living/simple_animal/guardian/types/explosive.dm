@@ -30,7 +30,6 @@
 						if(L != src && L != summoner)
 							L.apply_damage(15, BRUTE)
 					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
-					playsound(get_turf(M),'sound/effects/Explosion2.ogg', 200, 1)
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -42,11 +41,11 @@
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 300
+			bomb_cooldown = world.time + 200
 			B.spawner = src
 			B.disguise(A)
 		else
-			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 30 seconds between bombs.</span></B>"
+			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>"
 
 /obj/item/weapon/guardian_bomb
 	name = "bomb"
@@ -62,47 +61,32 @@
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
-	addtimer(src,"vanish", 1000)
-
-/obj/item/weapon/guardian_bomb/proc/vanish(var/obj/A)
-	stored_obj.loc = get_turf(src.loc)
-	spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
-	qdel(src)
+	spawn(600)
+		stored_obj.loc = get_turf(src.loc)
+		spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
+		qdel(src)
 
 /obj/item/weapon/guardian_bomb/proc/detonate(var/mob/living/user)
-	user << "<span class='danger'><B>[src] was boobytrapped!</span></B>"
+	user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
 	spawner << "<span class='danger'><B>Success! Your trap caught [user]</span></B>"
 	stored_obj.loc = get_turf(src.loc)
 	playsound(get_turf(src),'sound/effects/Explosion2.ogg', 200, 1)
 	user.ex_act(2)
 	qdel(src)
 
-/obj/item/weapon/guardian_bomb/Bumped(mob/user)
-	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-		detonate(user)
+/obj/item/weapon/guardian_bomb/Bump(atom/A)
+	if(isliving(A) && A != spawner && A != spawner.summoner && !spawner.hasmatchingsummoner(A))
+		detonate(A)
 	else
 		..()
 
-/obj/item/weapon/guardian_bomb/attackby(obj/item/C, mob/user)
-	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-		detonate(user)
-	else
-		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
+/obj/item/weapon/guardian_bomb/attackby(mob/living/user)
+	detonate(user)
 	return
 
 /obj/item/weapon/guardian_bomb/pickup(mob/living/user)
 	..()
-	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-		detonate(user)
-	else
-		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
-	return
-
-/obj/item/weapon/guardian_bomb/attack_hand(mob/user)
-	if(isliving(user) && user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
-		detonate(user)
-	else
-		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
+	detonate(user)
 	return
 
 /obj/item/weapon/guardian_bomb/examine(mob/user)

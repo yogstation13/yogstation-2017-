@@ -466,13 +466,6 @@ var/const/INJECT = 5 //injection
 		else
 			M.status_flags -= GOTTAGOREALLYFAST
 
-/datum/reagents/proc/check_nocrit(mob/M)
-	if(istype(M, /mob))
-		if(M.reagents.has_reagent("stimulants"))
-			return 1
-		else
-			M.status_flags -= NOCRIT
-
 /datum/reagents/proc/update_total()
 	total_volume = 0
 	for(var/reagent in reagent_list)

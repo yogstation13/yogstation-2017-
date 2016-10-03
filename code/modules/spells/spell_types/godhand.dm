@@ -49,19 +49,11 @@
 /obj/item/weapon/melee/touch_attack/disintegrate/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !ismob(target) || !iscarbon(user) || user.lying || user.handcuffed) //exploding after touching yourself would be bad
 		return
-	var/mob/living/M = target
+	var/mob/M = target
 	var/datum/effect_system/spark_spread/sparks = new
 	sparks.set_up(4, 0, M.loc) //no idea what the 0 is
 	sparks.start()
-	if(M.stat == DEAD)
-		M.gib()
-	else
-		M.death()
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			for(var/obj/item/bodypart/B in H.bodyparts)
-				if(B.body_zone != "head" && B.body_zone != "chest")
-					B.dismember()
+	M.gib()
 	..()
 
 /obj/item/weapon/melee/touch_attack/fleshtostone

@@ -6,7 +6,8 @@
 //  - Put cable in user's hand instead of on the ground
 //  - Camera jack
 
-/*list(
+
+/mob/living/silicon/pai/var/list/available_software = list(
 															"crew manifest" = 5,
 															"digital messenger" = 5,
 															"medical records" = 15,
@@ -21,7 +22,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
-															)*/
+															)
 
 /mob/living/silicon/pai/verb/paiInterface()
 	set category = "pAI Commands"
@@ -38,25 +39,42 @@
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
-		for (var/S in src.pai_software)
-			var/datum/pai/software/SW = S
-
-			if (screen == SW.sid) //we have a screen set with software we have active, so lets display it:
-				left_part = SW.action_menu(src)
-
 		switch(src.screen)							// Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
 				left_part = src.directives()
+			if("pdamessage")
+				left_part = src.pdamessage()
 			if("buy")
-				left_part = src.downloadSoftware()
-			if("radio")
-				left_part = src.radioMenu()
+				left_part = downloadSoftware()
+			if("manifest")
+				left_part = src.softwareManifest()
+			if("medicalrecord")
+				left_part = src.softwareMedicalRecord()
+			if("securityrecord")
+				left_part = src.softwareSecurityRecord()
+			if("translator")
+				left_part = src.softwareTranslator()
+			if("atmosensor")
+				left_part = src.softwareAtmo()
+			if("securityhud")
+				left_part = src.facialRecognition()
+			if("medicalhud")
+				left_part = src.medicalAnalysis()
+			if("doorjack")
+				left_part = src.softwareDoor()
+			if("remote")
+				left_part = src.remoteControl()
+			if("camerajack")
+				left_part = src.softwareCamera()
+			if("signaller")
+				left_part = src.softwareSignal()
+
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
 
-	// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
+												// Declaring a doctype is necessary to enable BYOND's crappy browser's more advanced CSS functionality
 	dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 			<html>
 			<head>
@@ -104,59 +122,33 @@
 	..()
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
-
 	if(soft)
-		if (soft == "refresh") //irritating but handles refresh functionality innately this way
-			soft = src.screen
-		else
-			src.screen = soft
+		src.screen = soft
 	if(sub)
 		src.subscreen = text2num(sub)
-
-	for (var/S in src.pai_software)
-		var/datum/pai/software/SW = S
-
-		if (soft == SW.sid) //if we've got a matching href tag, refer it to the software datum's use event
-			SW.action_use(src, href_list)
-
-	//LEGACY COMMANDS FROM OLD SOFTWARE SYSTEM, NEW SOFTWARE IS HANDLED AUTOMATICALLY IN /datum/pai/software
 	switch(soft)
 		// Purchasing new software
 		if("buy")
 			if(src.subscreen == 1)
-				var/datum/pai/software/T = available_software[href_list["buy"]]
-
-				if(istype(T, /datum/pai/software))
-					var/cost = T.ram
+				var/target = href_list["buy"]
+				if(available_software.Find(target))
+					var/cost = src.available_software[target]
 					if(src.ram >= cost)
 						src.ram -= cost
-						src.pai_software.Add(T)
-						T.action_installed(src) //throw installed event to allow huds to be attached, etc
+						src.pai_software.Add(target)
 					else
 						src.temp = "Insufficient RAM available."
 				else
-					src.temp = "Trunk <TT> \"[T]\"</TT> not found."
+					src.temp = "Trunk <TT> \"[target]\"</TT> not found."
 
 		// Configuring onboard radio
 		if("radio")
-			//src.card.radio.attack_self(src)
-			//src.card.radio.interact(src)
-			if (href_list["togglemic"])
-				src.card.radio.broadcasting = !src.card.radio.broadcasting
-			if (href_list["togglespeaker"])
-				src.card.radio.listening = !src.card.radio.listening
-			if (href_list["rfreq"])
-				var/new_frequency = (src.card.radio.frequency + text2num(href_list["rfreq"]))
-
-				if (!src.card.radio.freerange || (src.card.radio.frequency < 1200 || src.card.radio.frequency > 1600))
-					new_frequency = sanitize_frequency(new_frequency)
-
-				src.card.radio.set_frequency(new_frequency)
-
+			src.card.radio.attack_self(src)
 
 		if("image")
 			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
 			var/pID = 1
+
 			switch(newImage)
 				if("Happy")
 					pID = 1
@@ -180,6 +172,29 @@
 					pID = 10
 			src.card.setEmotion(pID)
 
+		if("signaller")
+
+			if(href_list["send"])
+
+				sradio.send_signal("ACTIVATE")
+				audible_message("\icon[src] *beep* *beep*")
+
+			if(href_list["freq"])
+
+				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
+				if(new_frequency < 1200 || new_frequency > 1600)
+					new_frequency = sanitize_frequency(new_frequency)
+				sradio.set_frequency(new_frequency)
+
+			if(href_list["code"])
+
+				sradio.code += text2num(href_list["code"])
+				sradio.code = round(sradio.code)
+				sradio.code = min(100, sradio.code)
+				sradio.code = max(1, sradio.code)
+
+
+
 		if("directive")
 			if(href_list["getdna"])
 				var/mob/living/M = card.loc
@@ -193,47 +208,138 @@
 						return 0
 				spawn CheckDNA(M, src)
 
+		if("pdamessage")
+			if(!isnull(pda))
+				if(href_list["toggler"])
+					pda.toff = !pda.toff
+				else if(href_list["ringer"])
+					pda.silent = !pda.silent
+				else if(href_list["target"])
+					if(silence_time)
+						return alert("Communications circuits remain unitialized.")
 
+					var/target = locate(href_list["target"])
+					pda.create_message(src, target)
+
+		// Accessing medical records
+		if("medicalrecord")
+			if(subscreen == 1)
+				medicalActive1 = find_record("id", href_list["med_rec"], data_core.general)
+				if(medicalActive1)
+					medicalActive2 = find_record("id", href_list["med_rec"], data_core.medical)
+				if(!medicalActive2)
+					medicalActive1 = null
+					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
+
+		if("securityrecord")
+			if(subscreen == 1)
+				securityActive1 = find_record("id", href_list["sec_rec"], data_core.general)
+				if(securityActive1)
+					securityActive2 = find_record("id", href_list["sec_rec"], data_core.security)
+				if(!securityActive2)
+					securityActive1 = null
+					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
+		if("securityhud")
+			if(href_list["toggle"])
+				secHUD = !secHUD
+				if(secHUD)
+					add_sec_hud()
+				else
+					var/datum/atom_hud/sec = huds[sec_hud]
+					sec.remove_hud_from(src)
+		if("medicalhud")
+			if(href_list["toggle"])
+				medHUD = !medHUD
+				if(medHUD)
+					add_med_hud()
+				else
+					var/datum/atom_hud/med = huds[med_hud]
+					med.remove_hud_from(src)
+		if("translator")
+			if(href_list["toggle"])
+				var/on_already = ((languages_understood == ALL) && (languages_spoken == ALL))
+				languages_spoken = on_already ? (HUMAN | ROBOT) : ALL
+				languages_understood = on_already ? (HUMAN | ROBOT) : ALL
+		if("remote")
+			if(href_list["pair"])
+				pairing = 1
+			if(href_list["abort"])
+				pairing = 0
+			if(href_list["control"])
+				if(paired)
+					paired.attack_hand(src)
+			if(href_list["disconnect"])
+				unpair(1)
+				pairing = 0
+		if("doorjack")
+			if(href_list["jack"])
+				if(src.cable && src.cable.machine)
+					src.hackdoor = src.cable.machine
+					src.hackloop()
+			if(href_list["cancel"])
+				src.hackdoor = null
+			if(href_list["cable"])
+				var/turf/T = get_turf(src.loc)
+				src.cable = new /obj/item/weapon/pai_cable(T)
+				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
 
 // MENUS
 
-/mob/living/silicon/pai/proc/radioMenu()
-	var/dat = ""
-	dat += {"<b>Radio settings:</b><br>
-			Microphone: <a href='?src=\ref[src];software=radio;togglemic=1'><span id="rmicstate">[src.card.radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
-			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[src.card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
-			Frequency:
-			<a href='?src=\ref[src];software=radio;rfreq=-10'>-</a>
-			<a href='?src=\ref[src];software=radio;rfreq=-2'>-</a>
-			<span id="rfreq">[format_frequency(src.card.radio.frequency)]</span>
-			<a href='?src=\ref[src];software=radio;rfreq=2'>+</a>
-			<a href='?src=\ref[src];software=radio;rfreq=10'>+</a><br>"}
-	return dat
-
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
 	var/dat = ""
 
 	dat += "<A href='byond://?src=\ref[src];software=refresh'>Refresh</A><br>"
-
-	// Built-in LEGACY SOFTWARE
+	// Built-in
 	dat += "<A href='byond://?src=\ref[src];software=directives'>Directives</A><br>"
 	dat += "<A href='byond://?src=\ref[src];software=radio;sub=0'>Radio Configuration</A><br>"
 	dat += "<A href='byond://?src=\ref[src];software=image'>Screen Display</A><br>"
+	//dat += "Text Messaging <br>"
 	dat += "<br>"
 
-	//PURCHASED SOFTWARE LISTING
-	for (var/S in pai_software)
-		var/datum/pai/software/SW = S
+	// Basic
+	dat += "<b>Basic</b> <br>"
+	for(var/s in src.pai_software)
+		if(s == "digital messenger")
+			dat += "<a href='byond://?src=\ref[src];software=pdamessage;sub=0'>Digital Messenger</a> <br>"
+		if(s == "crew manifest")
+			dat += "<a href='byond://?src=\ref[src];software=manifest;sub=0'>Crew Manifest</a> <br>"
+		if(s == "medical records")
+			dat += "<a href='byond://?src=\ref[src];software=medicalrecord;sub=0'>Medical Records</a> <br>"
+		if(s == "security records")
+			dat += "<a href='byond://?src=\ref[src];software=securityrecord;sub=0'>Security Records</a> <br>"
+		if(s == "camera")
+			dat += "<a href='byond://?src=\ref[src];software=[s]'>Camera Jack</a> <br>"
+		if(s == "remote signaller")
+			dat += "<a href='byond://?src=\ref[src];software=signaller;sub=0'>Remote Signaller</a> <br>"
+	dat += "<br>"
 
-		if (SW.hrefline)
-			dat += SW.action_hrefline(src)
-		else
-			dat += "<a href='byond://?src=\ref[src];software=[SW.sid];sub=0'>[SW.name]</a> <br>"
-
-	dat += "<br><a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
+	// Advanced
+	dat += "<b>Advanced</b> <br>"
+	for(var/s in src.pai_software)
+		if(s == "atmosphere sensor")
+			dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Atmospheric Sensor</a> <br>"
+		if(s == "heartbeat sensor")
+			dat += "<a href='byond://?src=\ref[src];software=[s]'>Heartbeat Sensor</a> <br>"
+		if(s == "security HUD")
+			dat += "<a href='byond://?src=\ref[src];software=securityhud;sub=0'>Facial Recognition Suite</a>[(src.secHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+		if(s == "medical HUD")
+			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+		if(s == "universal translator")
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[((languages_understood == ALL) && (languages_spoken == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+		if(s == "projection array")
+			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
+		if(s == "camera jack")
+			dat += "<a href='byond://?src=\ref[src];software=camerajack;sub=0'>Camera Jack</a> <br>"
+		if(s == "remote control")
+			dat += "<a href='byond://?src=\ref[src];software=remote;sub=0'>Remote Control</a> <br>"
+		if(s == "door jack")
+			dat += "<a href='byond://?src=\ref[src];software=doorjack;sub=0'>Door Jack</a> <br>"
+	dat += "<br>"
+	dat += "<br>"
+	dat += "<a href='byond://?src=\ref[src];software=buy;sub=0'>Download additional software</a>"
 	return dat
 
 
@@ -245,16 +351,14 @@
 	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
-	for (var/key in available_software) //generate the list of available software
-		var/datum/pai/software/S = available_software[key]
-		if (S.ram == 0 || !S.ram || S.ram <= 0)
-			continue
-		if (S in pai_software) //software with "0" ram is innate or otherwise hidden and doesn't need to be shown, same with stuff we've already purchased
-			continue
-
-		dat += "<b><a href='byond://?src=\ref[src];software=buy;sub=1;buy=[S.sid]'>[S.name]</a></b> ([S.ram])<br>"
-		dat += "<i><small>[S.description]</small></i><br><br>"
-
+	for(var/s in available_software)
+		if(!pai_software.Find(s))
+			var/cost = src.available_software[s]
+			var/displayName = uppertext(s)
+			dat += "<a href='byond://?src=\ref[src];software=buy;sub=1;buy=[s]'>[displayName]</a> ([cost]) <br>"
+		else
+			var/displayName = lowertext(s)
+			dat += "[displayName] (Download Complete) <br>"
 	dat += "</p>"
 	return dat
 
@@ -298,3 +402,278 @@
 			P << "<b>DNA does not match stored Master DNA.</b>"
 	else
 		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+
+// -=-=-=-= Software =-=-=-=-=- //
+
+//Remote Signaller
+/mob/living/silicon/pai/proc/softwareSignal()
+	var/dat = ""
+	dat += "<h3>Remote Signaller</h3><br><br>"
+	dat += {"<B>Frequency/Code</B> for signaler:<BR>
+	Frequency:
+	<A href='byond://?src=\ref[src];software=signaller;freq=-10;'>-</A>
+	<A href='byond://?src=\ref[src];software=signaller;freq=-2'>-</A>
+	[format_frequency(src.sradio.frequency)]
+	<A href='byond://?src=\ref[src];software=signaller;freq=2'>+</A>
+	<A href='byond://?src=\ref[src];software=signaller;freq=10'>+</A><BR>
+
+	Code:
+	<A href='byond://?src=\ref[src];software=signaller;code=-5'>-</A>
+	<A href='byond://?src=\ref[src];software=signaller;code=-1'>-</A>
+	[src.sradio.code]
+	<A href='byond://?src=\ref[src];software=signaller;code=1'>+</A>
+	<A href='byond://?src=\ref[src];software=signaller;code=5'>+</A><BR>
+
+	<A href='byond://?src=\ref[src];software=signaller;send=1'>Send Signal</A><BR>"}
+	return dat
+
+// Crew Manifest
+/mob/living/silicon/pai/proc/softwareManifest()
+	. += "<h2>Crew Manifest</h2><br><br>"
+	if(data_core.general)
+		for(var/datum/data/record/t in sortRecord(data_core.general))
+			. += "[t.fields["name"]] - [t.fields["rank"]]<BR>"
+	. += "</body></html>"
+	return .
+
+// Medical Records
+/mob/living/silicon/pai/proc/softwareMedicalRecord()
+	switch(subscreen)
+		if(0)
+			. += "<h3>Medical Records</h3><HR>"
+			if(data_core.general)
+				for(var/datum/data/record/R in sortRecord(data_core.general))
+					. += "<A href='?src=\ref[src];med_rec=[R.fields["id"]];software=medicalrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+		if(1)
+			. += "<CENTER><B>Medical Record</B></CENTER><BR>"
+			if(medicalActive1 in data_core.general)
+				. += "Name: [medicalActive1.fields["name"]] ID: [medicalActive1.fields["id"]]<BR>\nSex: [medicalActive1.fields["sex"]]<BR>\nAge: [medicalActive1.fields["age"]]<BR>\nFingerprint: [medicalActive1.fields["fingerprint"]]<BR>\nPhysical Status: [medicalActive1.fields["p_stat"]]<BR>\nMental Status: [medicalActive1.fields["m_stat"]]<BR>"
+			else
+				. += "<pre>Requested medical record not found.</pre><BR>"
+			if(medicalActive2 in data_core.medical)
+				. += "<BR>\n<CENTER><B>Medical Data</B></CENTER><BR>\nBlood Type: <A href='?src=\ref[src];field=blood_type'>[medicalActive2.fields["blood_type"]]</A><BR>\nDNA: <A href='?src=\ref[src];field=b_dna'>[medicalActive2.fields["b_dna"]]</A><BR>\n<BR>\nMinor Disabilities: <A href='?src=\ref[src];field=mi_dis'>[medicalActive2.fields["mi_dis"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_dis_d'>[medicalActive2.fields["mi_dis_d"]]</A><BR>\n<BR>\nMajor Disabilities: <A href='?src=\ref[src];field=ma_dis'>[medicalActive2.fields["ma_dis"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_dis_d'>[medicalActive2.fields["ma_dis_d"]]</A><BR>\n<BR>\nAllergies: <A href='?src=\ref[src];field=alg'>[medicalActive2.fields["alg"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=alg_d'>[medicalActive2.fields["alg_d"]]</A><BR>\n<BR>\nCurrent Diseases: <A href='?src=\ref[src];field=cdi'>[medicalActive2.fields["cdi"]]</A> (per disease info placed in log/comment section)<BR>\nDetails: <A href='?src=\ref[src];field=cdi_d'>[medicalActive2.fields["cdi_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[medicalActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+			else
+				. += "<pre>Requested medical record not found.</pre><BR>"
+			. += "<BR>\n<A href='?src=\ref[src];software=medicalrecord;sub=0'>Back</A><BR>"
+	return .
+
+// Security Records
+/mob/living/silicon/pai/proc/softwareSecurityRecord()
+	. = ""
+	switch(subscreen)
+		if(0)
+			. += "<h3>Security Records</h3><HR>"
+			if(data_core.general)
+				for(var/datum/data/record/R in sortRecord(data_core.general))
+					. += "<A href='?src=\ref[src];sec_rec=[R.fields["id"]];software=securityrecord;sub=1'>[R.fields["id"]]: [R.fields["name"]]<BR>"
+		if(1)
+			. += "<h3>Security Record</h3>"
+			if(securityActive1 in data_core.general)
+				. += "Name: <A href='?src=\ref[src];field=name'>[securityActive1.fields["name"]]</A> ID: <A href='?src=\ref[src];field=id'>[securityActive1.fields["id"]]</A><BR>\nSex: <A href='?src=\ref[src];field=sex'>[securityActive1.fields["sex"]]</A><BR>\nAge: <A href='?src=\ref[src];field=age'>[securityActive1.fields["age"]]</A><BR>\nRank: <A href='?src=\ref[src];field=rank'>[securityActive1.fields["rank"]]</A><BR>\nFingerprint: <A href='?src=\ref[src];field=fingerprint'>[securityActive1.fields["fingerprint"]]</A><BR>\nPhysical Status: [securityActive1.fields["p_stat"]]<BR>\nMental Status: [securityActive1.fields["m_stat"]]<BR>"
+			else
+				. += "<pre>Requested security record not found,</pre><BR>"
+			if(securityActive2 in data_core.security)
+				. += "<BR>\nSecurity Data<BR>\nCriminal Status: [securityActive2.fields["criminal"]]<BR>\n<BR>\nMinor Crimes: <A href='?src=\ref[src];field=mi_crim'>[securityActive2.fields["mi_crim"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=mi_crim_d'>[securityActive2.fields["mi_crim_d"]]</A><BR>\n<BR>\nMajor Crimes: <A href='?src=\ref[src];field=ma_crim'>[securityActive2.fields["ma_crim"]]</A><BR>\nDetails: <A href='?src=\ref[src];field=ma_crim_d'>[securityActive2.fields["ma_crim_d"]]</A><BR>\n<BR>\nImportant Notes:<BR>\n\t<A href='?src=\ref[src];field=notes'>[securityActive2.fields["notes"]]</A><BR>\n<BR>\n<CENTER><B>Comments/Log</B></CENTER><BR>"
+			else
+				. += "<pre>Requested security record not found,</pre><BR>"
+			. += text("<BR>\n<A href='?src=\ref[];software=securityrecord;sub=0'>Back</A><BR>", src)
+	return .
+
+// Universal Translator
+/mob/living/silicon/pai/proc/softwareTranslator()
+	. = {"<h3>Universal Translator</h3><br>
+				When enabled, this device will automatically convert all spoken and written language into a format that any known recipient can understand.<br><br>
+				The device is currently [ ((languages_understood == ALL) && (languages_spoken == ALL)) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+				<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Toggle Device</a><br>
+				"}
+	return .
+
+// Security HUD
+/mob/living/silicon/pai/proc/facialRecognition()
+	var/dat = {"<h3>Facial Recognition Suite</h3><br>
+				When enabled, this package will scan all viewable faces and compare them against the known criminal database, providing real-time graphical data about any detected persons of interest.<br><br>
+				The package is currently [ (src.secHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+				<a href='byond://?src=\ref[src];software=securityhud;sub=0;toggle=1'>Toggle Package</a><br>
+				"}
+	return dat
+
+// Medical HUD
+/mob/living/silicon/pai/proc/medicalAnalysis()
+	var/dat = ""
+	if(src.subscreen == 0)
+		dat += {"<h3>Medical Analysis Suite</h3><br>
+				 <h4>Visual Status Overlay</h4><br>
+					When enabled, this package will scan all nearby crewmembers' vitals and provide real-time graphical data about their state of health.<br><br>
+					The suite is currently [ (src.medHUD) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+					<a href='byond://?src=\ref[src];software=medicalhud;sub=0;toggle=1'>Toggle Suite</a><br>
+					<br>
+					<a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Host Bioscan</a><br>
+					"}
+	if(src.subscreen == 1)
+		dat += {"<h3>Medical Analysis Suite</h3><br>
+				 <h4>Host Bioscan</h4><br>
+				"}
+		var/mob/living/M = card.loc
+		if(!istype(M, /mob/living))
+			while (!istype(M, /mob/living))
+				if(istype(M, /turf))
+					src.temp = "Error: No biological host found. <br>"
+					src.subscreen = 0
+					return dat
+				M = M.loc
+		dat += {"Bioscan Results for [M]: <br>"
+		Overall Status: [M.stat > 1 ? "dead" : "[M.health]% healthy"] <br>
+		Scan Breakdown: <br>
+		Respiratory: [M.getOxyLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getOxyLoss()]</font><br>
+		Toxicology: [M.getToxLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getToxLoss()]</font><br>
+		Burns: [M.getFireLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getFireLoss()]</font><br>
+		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>" : "<font color=#55FF55>"][M.getBruteLoss()]</font><br>
+		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
+		"}
+		for(var/datum/disease/D in M.viruses)
+			dat += {"<h4>Infection Detected.</h4><br>
+					 Name: [D.name]<br>
+					 Type: [D.spread_text]<br>
+					 Stage: [D.stage]/[D.max_stages]<br>
+					 Possible Cure: [D.cure_text]<br>
+					"}
+		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
+	return dat
+
+// Atmospheric Scanner
+/mob/living/silicon/pai/proc/softwareAtmo()
+	var/dat = "<h3>Atmospheric Sensor</h4>"
+
+	var/turf/T = get_turf(src.loc)
+	if (isnull(T))
+		dat += "Unable to obtain a reading.<br>"
+	else
+		var/datum/gas_mixture/environment = T.return_air()
+		var/list/env_gases = environment.gases
+
+		var/pressure = environment.return_pressure()
+		var/total_moles = environment.total_moles()
+
+		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
+
+		if (total_moles)
+			for(var/id in env_gases)
+				var/gas_level = env_gases[id][MOLES]/total_moles
+				if(gas_level > 0.01)
+					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
+		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
+	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
+	dat += "<br>"
+	return dat
+
+// Camera Jack - Clearly not finished
+/mob/living/silicon/pai/proc/softwareCamera()
+	var/dat = "<h3>Camera Jack</h3>"
+	dat += "Cable status : "
+
+	if(!src.cable)
+		dat += "<font color=#FF5555>Retracted</font> <br>"
+		return dat
+	if(!src.cable.machine)
+		dat += "<font color=#FFFF55>Extended</font> <br>"
+		return dat
+
+	var/obj/machinery/machine = src.cable.machine
+	dat += "<font color=#55FF55>Connected</font> <br>"
+
+	if(!istype(machine, /obj/machinery/camera))
+		src << "DERP"
+	return dat
+
+// Computer remote control
+
+/mob/living/silicon/pai/proc/remoteControl()
+	var/dat = "<h3>Remote control</h3>"
+	dat += "Connection status: "
+	if(!paired)
+		if(!pairing)
+			dat += "<font color=$FF5555>Disconnected</font> <br>"
+			dat += "<a href='byond://?src=\ref[src];software=remote;pair=1;sub=0'>Initiate connection</a> <br>"
+			return dat
+		else
+			dat += "<font color=#FFFF55>Waiting for connection...</font> <br>"
+			dat += "<a href='byond://?src=\ref[src];software=remote;abort=1;sub=0'>Abort</a> <br>"
+			dat += "Request to be swiped near the computer's network card to begin remote control handshake.<br>"
+			return dat
+	dat += "<font color=#55FF55>Connected to [paired.name]</font> <br>"
+	dat += "<a href='byond://?src=\ref[src];software=remote;control=1;sub=0'>Access remote interface</a> <br>"
+	dat += "<a href='byond://?src=\ref[src];software=remote;disconnect=1;sub=0'>Disconnect</a> <br>"
+	return dat
+
+// Door Jack
+/mob/living/silicon/pai/proc/softwareDoor()
+	var/dat = "<h3>Airlock Jack</h3>"
+	dat += "Cable status : "
+	if(!src.cable)
+		dat += "<font color=#FF5555>Retracted</font> <br>"
+		dat += "<a href='byond://?src=\ref[src];software=doorjack;cable=1;sub=0'>Extend Cable</a> <br>"
+		return dat
+	if(!src.cable.machine)
+		dat += "<font color=#FFFF55>Extended</font> <br>"
+		return dat
+
+	var/obj/machinery/machine = src.cable.machine
+	dat += "<font color=#55FF55>Connected</font> <br>"
+	if(!istype(machine, /obj/machinery/door))
+		dat += "Connected device's firmware does not appear to be compatible with Airlock Jack protocols.<br>"
+		return dat
+//	var/obj/machinery/airlock/door = machine
+
+	if(!src.hackdoor)
+		dat += "<a href='byond://?src=\ref[src];software=doorjack;jack=1;sub=0'>Begin Airlock Jacking</a> <br>"
+	else
+		dat += "Jack in progress... [src.hackprogress]% complete.<br>"
+		dat += "<a href='byond://?src=\ref[src];software=doorjack;cancel=1;sub=0'>Cancel Airlock Jack</a> <br>"
+	//src.hackdoor = machine
+	//src.hackloop()
+	return dat
+
+// Door Jack - supporting proc
+/mob/living/silicon/pai/proc/hackloop()
+	var/turf/T = get_turf(src.loc)
+	for(var/mob/living/silicon/ai/AI in player_list)
+		if(T.loc)
+			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+		else
+			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+	while(src.hackprogress < 100)
+		if(src.cable && src.cable.machine && istype(src.cable.machine, /obj/machinery/door) && src.cable.machine == src.hackdoor && get_dist(src, src.hackdoor) <= 1)
+			hackprogress += rand(1, 10)
+		else
+			src.temp = "Door Jack: Connection to airlock has been lost. Hack aborted."
+			hackprogress = 0
+			src.hackdoor = null
+			return
+		if(hackprogress >= 100)		// This is clunky, but works. We need to make sure we don't ever display a progress greater than 100,
+			hackprogress = 100		// but we also need to reset the progress AFTER it's been displayed
+		if(src.screen == "doorjack" && src.subscreen == 0) // Update our view, if appropriate
+			src.paiInterface()
+		if(hackprogress >= 100)
+			src.hackprogress = 0
+			src.cable.machine:open()
+		sleep(50)			// Update every 5 seconds
+
+// Digital Messenger
+/mob/living/silicon/pai/proc/pdamessage()
+
+	var/dat = "<h3>Digital Messenger</h3>"
+	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
+	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
+	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
+	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
+	dat += "<ul>"
+	if(!pda.toff)
+		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
+			if (P == src.pda)
+				continue
+			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
+			dat += "</li>"
+	dat += "</ul>"
+	dat += "<br><br>"
+	dat += "Messages: <hr> [pda.tnote]"
+	return dat

@@ -116,10 +116,11 @@
 	set category = "pAI Commands"
 	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
 	set name = "pAI Suicide"
-	var/answer = input("REALLY turn off your own life processes? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
+	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
 		card.removePersonality()
-		did_suicide = 1
+		var/turf/T = get_turf(src.loc)
+		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
 		death(0)
 	else
 		src << "Aborting suicide attempt."

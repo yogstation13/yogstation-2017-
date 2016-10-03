@@ -25,12 +25,12 @@ Head of Security
 
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting, access_cargo,
+			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
 	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels, access_cargo)
+			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -239,7 +239,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 		switch(department)
 			if("supply")
 				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-				dep_access = list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo)
+				dep_access = list(access_mailsorting, access_mining, access_mining_station)
 				destination = /area/security/checkpoint/supply
 				spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
 				tie = /obj/item/clothing/tie/armband/cargo
@@ -325,3 +325,53 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 /obj/item/device/radio/headset/headset_sec/alt/department/sci
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+
+//Deputies, original code by super3222, adapted by Kmc2000//
+
+/datum/job/brigofficer
+ 	title = "Prison Officer"
+ 	flag = BRIG
+ 	department_head = list("Head of Security")
+ 	department_flag = ENGSEC
+ 	faction = "Station"
+ 	total_positions = 1
+ 	spawn_positions = 1
+ 	supervisors = "the warden, you must help them with anything they need and assist with brig triage"
+ 	selection_color = "#ffeeee"
+ 	minimal_player_age = 0
+
+ 	outfit = /datum/outfit/job/brigofficer
+
+ 	access = list(access_security, access_brig, access_sec_doors, access_brig, access_weapons)
+ 	minimal_access = list(access_security, access_sec_doors, access_weapons)
+
+/datum/outfit/job/brigofficer
+ 	name = "Brig Officer"
+
+ 	belt = /obj/item/device/pda/security
+ 	ears = /obj/item/device/radio/headset/headset_sec
+ 	uniform = /obj/item/clothing/under/rank/security/brigofficer
+ 	head = /obj/item/clothing/head/beret/sec
+ 	shoes = /obj/item/clothing/shoes/jackboots
+ 	gloves = /obj/item/clothing/gloves/color/black
+ 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+ 	r_pocket = /obj/item/device/assembly/flash/handheld
+ 	l_pocket = /obj/item/weapon/restraints/handcuffs
+ 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+
+ 	backpack = /obj/item/weapon/storage/backpack/security
+ 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+ 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+ 	box = /obj/item/weapon/storage/box/security
+
+ 	var/tie = /obj/item/clothing/tie/armband/deputy
+
+/datum/outfit/job/brigofficer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
+	L.implant(H)
+	H.sec_hud_set_implants()

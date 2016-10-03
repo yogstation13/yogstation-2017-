@@ -30,18 +30,13 @@
 		if(trash)
 			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
 				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
-				var/obj/item/TrashItem = new trash(usr.loc, G.seed)
-				if(usr.can_equip(TrashItem, slot_l_hand) || usr.can_equip(TrashItem, slot_r_hand))
-					usr.put_in_hands(TrashItem)
+				var/obj/item/TrashItem = new trash(usr, G.seed)
+				usr.put_in_hands(TrashItem)
 			else if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr.loc)
-				if(usr.can_equip(TrashItem, slot_l_hand) || usr.can_equip(TrashItem, slot_r_hand))
-					usr.put_in_hands(TrashItem)
+				var/obj/item/TrashItem = new trash(usr)
+				usr.put_in_hands(TrashItem)
 			else if(istype(trash,/obj/item))
-				var/obj/item/I = trash
-				I.forceMove(usr.loc)
-				if(usr.can_equip(I, slot_l_hand) || usr.can_equip(I, slot_r_hand))
-					usr.put_in_hands(I)
+				usr.put_in_hands(trash)
 		qdel(src)
 	return
 
