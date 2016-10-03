@@ -353,7 +353,10 @@
 		OpenFire(A)
 	..()
 
-
+/mob/living/simple_animal/hostile/on_pulledby(mob/new_pulledby, supress_message)
+	..()
+	if(stop_automated_movement_when_pulled)
+		walk_to(src, 0)
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)

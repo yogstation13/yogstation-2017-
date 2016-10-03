@@ -331,18 +331,18 @@ var/next_mob_id = 0
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
-	AM.pulledby = src
+	AM.on_pulledby(src, supress_message)
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
-	if(ismob(AM))
-		var/mob/M = AM
-		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
+/mob/on_pulledby(mob/new_pulledby, supress_message)
+	..()
+	if(!supress_message)
+		visible_message("<span class='warning'>[new_pulledby] has grabbed [src] passively!</span>")
+	if(!iscarbon(new_pulledby))
+		LAssailant = null
+	else
+		LAssailant = new_pulledby
 
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
