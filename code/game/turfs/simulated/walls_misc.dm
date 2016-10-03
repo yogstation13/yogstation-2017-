@@ -76,7 +76,7 @@
 			density = 1
 			opacity = 1
 	else if(istype(W,/obj/item/weapon/weldingtool) && iscultist(user))
-		var/obj/item/weapon/weldingtool/WT = I
+		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0,user))
 			return 0
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
