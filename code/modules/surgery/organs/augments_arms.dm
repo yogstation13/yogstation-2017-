@@ -193,7 +193,7 @@
 /obj/item/organ/cyberimp/arm/surgical/l/zone = "l_arm"
 
 /obj/item/organ/cyberimp/arm/surgical/emag_act()
-	if(!(locate(/obj/item/weapon/kitchen/knife/combat/cyborg) in items_list))
+        if(!(locate/obj/item/weapon/reagent_containers/syringe/lethal/choral) in items_list))
 		usr << "<span class='notice'>You unlock [src]'s patient pacification functions!</span>"
 		items_list += new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 		return 1
