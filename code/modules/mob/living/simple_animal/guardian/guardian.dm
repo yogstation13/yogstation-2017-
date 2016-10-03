@@ -199,8 +199,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			return 0
 		if(amount > 0)
 			if(amount < 10)
-				for(var/mob/living/carbon/M in viewers(3, src))
-					M <<"<span class='warning'>[summoner] winces as small bruises appear on their skin.</span>"
+				summoner.visible_message("<span class='warning'>[summoner] winces as small bruises appear on their skin.</span>", , 3)
 			else
 				summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner]!</B></span>")
 			summoner.adjustBruteLoss(amount)
