@@ -7,6 +7,7 @@
 	w_class = 3
 	force = 5
 	flags = NOBLUDGEON
+	origin_tech = "magnets=7;arcane=1"
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
