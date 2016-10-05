@@ -6,6 +6,7 @@
 	icon_state = "clockwork_proselytizer"
 	w_class = 3
 	force = 5
+	origin_tech = "magnets=7;arcane=1"
 	flags = NOBLUDGEON
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
