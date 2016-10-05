@@ -255,6 +255,16 @@
 		else
 			return 0
 
+
+/obj/structure/girder/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	visible_message("[user] swings at [src]!")
+	take_damage(user.melee_damage_upper, user.melee_damage_type, 1)
+
+	if(user.environment_smash)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
 	if(ismovableatom(caller))
