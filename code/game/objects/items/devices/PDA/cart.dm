@@ -679,7 +679,7 @@
 				menu += "<td>[S.available_shares]</td>"
 
 				menu += "</tr>"
-			menu += "</table><br><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors DELUX PLUS for full remote stock buying and selling.</font?"
+			menu += "</table><br><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors DELUX PLUS for full remote stock buying and selling.</font>"
 		if (48) //Slavermaster 2000 //Whoever came up with the idea of making menu choices numerical is a idiot.
 			menu = "<h4><img src=pda_signaler.png> Slave Controller</h4>"
 
