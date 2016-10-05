@@ -152,7 +152,17 @@
 					new_frequency = sanitize_frequency(new_frequency)
 
 				src.card.radio.set_frequency(new_frequency)
-
+			if(href_list["e_key"])
+				if(radio && radio.keyslot)
+					var/turf/T = get_turf(src)
+					radio.keyslot.loc = T //just in case we are in nullspace for some reason
+					radio.keyslot.forceMove(T)
+					radio.keyslot = null
+					radio.recalculateChannels()
+			if(href_list["channel"])
+				var/channel = href_list["channel"]
+				if(channel in radio.channels)
+					radio.channels[channel] ^= radio.FREQ_LISTENING
 
 		if("image")
 			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
@@ -203,6 +213,8 @@
 /mob/living/silicon/pai/proc/radioMenu()
 	var/dat = ""
 	dat += {"<b>Radio settings:</b><br>
+			[radio.wires.is_cut(WIRE_TX) ? "<i><font color=red>Radio transmit disabled by user</font></i><br>" : ""]
+			[radio.wires.is_cut(WIRE_RX) ? "<i><font color=red>Radio receiving disabled by user</font></i><br>" : ""]
 			Microphone: <a href='?src=\ref[src];software=radio;togglemic=1'><span id="rmicstate">[src.card.radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
 			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[src.card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
 			Frequency:
@@ -211,6 +223,14 @@
 			<span id="rfreq">[format_frequency(src.card.radio.frequency)]</span>
 			<a href='?src=\ref[src];software=radio;rfreq=2'>+</a>
 			<a href='?src=\ref[src];software=radio;rfreq=10'>+</a><br>"}
+	if(radio && radio.keyslot)
+		dat += "[radio.keyslot]: <a href='?src=\ref[src];software=radio;e_key=1'>\[Eject\]</a><br>Channels:"
+		dat += "<ul>"
+		for(var/channel in radio.channels)
+			dat += "<li>[channel]\t<a href='?src=\ref[src];software=radio;channel=[channel]'>\[[radio.channels[channel] ? "On" : "Off"]\]</a></li>"
+		dat += "</ul><br>"
+	else
+		dat += "<i>no encryption key inserted</i><br>"
 	return dat
 
 /mob/living/silicon/pai/proc/softwareMenu()			// Populate the right menu
