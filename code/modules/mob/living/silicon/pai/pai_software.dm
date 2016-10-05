@@ -159,6 +159,11 @@
 					radio.keyslot.forceMove(T)
 					radio.keyslot = null
 					radio.recalculateChannels()
+			if(href_list["range"])
+				if(radio)
+					var/newrange = input("Set radio/microphone range", "Radio Range", 3) in list(0, 1, 2, 3, 4)
+					if(radio)
+						radio.canhear_range = newrange
 			if(href_list["channel"])
 				var/channel = href_list["channel"]
 				if(channel in radio.channels)
@@ -211,12 +216,15 @@
 // MENUS
 
 /mob/living/silicon/pai/proc/radioMenu()
+	if(!radio)
+		return "<b>No radio installed</b><br>"
 	var/dat = ""
 	dat += {"<b>Radio settings:</b><br>
 			[radio.wires.is_cut(WIRE_TX) ? "<i><font color=red>Radio transmit disabled by user</font></i><br>" : ""]
 			[radio.wires.is_cut(WIRE_RX) ? "<i><font color=red>Radio receiving disabled by user</font></i><br>" : ""]
 			Microphone: <a href='?src=\ref[src];software=radio;togglemic=1'><span id="rmicstate">[src.card.radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
 			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[src.card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
+			Microphone/Speaker range: <a href='?src=\ref[src];software=radio;range=1'>[radio.canhear_range]</a><br>
 			Frequency:
 			<a href='?src=\ref[src];software=radio;rfreq=-10'>-</a>
 			<a href='?src=\ref[src];software=radio;rfreq=-2'>-</a>
