@@ -49,6 +49,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/image/photo = null //Scanned photo
 	var/list/software = null
 
+	var/clownthres
+
 
 /obj/item/device/pda/pickup(mob/user)
 	..()
@@ -232,6 +234,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Door'><img src=pda_rdoor.png> Toggle Remote Door</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=3'><img src=pda_atmos.png> Atmospheric Scan</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=Light'><img src=pda_flashlight.png> [fon ? "Disable" : "Enable"] Flashlight</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=clowns'><img src=pda_honk.png> Report a Clown Sighting</a></li>"
 				if (pai)
 					if(pai.loc != src)
 						pai = null
@@ -403,6 +406,19 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U.AddLuminosity(f_lum)
 					else
 						SetLuminosity(f_lum)
+
+			if("clowns")
+				if(clownthres)
+					visible_message("[src] buzzes. It's unable to spread anymore hysteria at this moment.")
+					playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+					return
+
+				var/area/A = get_area(src.loc)
+				priority_announce("Reported clown sightings from [A.name] have just came in. Residents beware!", "Really, Real Clown Sighting")
+				clownthres = TRUE
+				spawn(PDA_CLOWN_SIGHTING_THRES)
+					clownthres = FALSE
+
 			if("Medical Scan")
 				if(scanmode == PDA_SCAN_MEDICAL)
 					scanmode = 0
