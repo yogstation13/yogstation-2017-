@@ -1,0 +1,7 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Added a new item to lavaland chests: The self-refilling bottle. It slowly regenerates the chemical it starts with. However, the contents of the bottle might not be as useful as expected!"
+  - rscdel: "Removes the armblade nullrod from lavaland chests."
+  - tweak: "Buffs Salicyclic Acid."
+  - tweak: "Buffs Oxandrolone."
