@@ -261,11 +261,12 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	visible_message("[user] swings at [src]!")
-	var/dmg = health - user.meele_damage_type
+	var/dmg = health - melee_damage_upper
 	health = dmg
 
 	if(health <= 0)
 		var/obj/item/stack/sheet/metal/M = new (loc, 2)
+		M.visible_message("[src] shatters into [M]!")
 		qdel(src)
 
 	if(user.environment_smash)
