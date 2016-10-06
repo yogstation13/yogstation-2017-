@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "You can no longer use telekinesis to teleport items with an evidence bag or teleport a box to your hand."
