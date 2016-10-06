@@ -261,7 +261,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	visible_message("[user] swings at [src]!")
-	var/dmg = health - melee_damage_upper
+	var/dmg = health - user.melee_damage_upper
 	health = dmg
 
 	if(health <= 0)
