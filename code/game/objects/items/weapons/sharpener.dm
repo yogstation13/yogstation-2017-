@@ -52,3 +52,12 @@
 	max = 200
 	prefix = "super-sharpened"
 	requires_sharpness = 0
+	
+/obj/item/weapon/sharpener/quality 
+	name = "high quality whetstone"
+	desc = "A block that makes things very sharp."
+	increment = 10
+	max = 30
+	prefix = "very-sharp"
+	requires_sharpness = 1
+

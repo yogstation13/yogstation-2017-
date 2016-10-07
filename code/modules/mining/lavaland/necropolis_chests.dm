@@ -35,7 +35,7 @@
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/weapon/implant/sad_trombone(src)
+			new /obj/item/weapon/sharpener/quality(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
