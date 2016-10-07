@@ -225,9 +225,6 @@
 		msg = AM.compose_message(src, ALL, msg, , get_spans()) //everyone gets the numbers for free (because math is the universal language)
 		AM.Hear(msg, src, ALL, msg, , spans)
 
-/obj/item/device/taperecorder/proc/timestamp_to_header(time)
-	return
-
 /obj/item/device/taperecorder/attack_self(mob/user)
 	if(!mytape || mytape.ruined)
 		return
@@ -266,8 +263,9 @@
 
 //empty tape recorders
 /obj/item/device/taperecorder/empty/New()
-	return
-
+	..()
+	qdel(mytape)
+	mytape = null
 
 /obj/item/device/tape
 	name = "tape"
