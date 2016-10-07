@@ -22,7 +22,7 @@
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 #define SUPERNOSLIP 2048	//prevents slipping on space lube
 
-#define DROPDEL			8192 // When dropped, it calls qdel on itself
+#define DROPDEL			16384 // When dropped, it calls qdel on itself
 
 #define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
