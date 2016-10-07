@@ -21,6 +21,35 @@
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
 	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
+	
+/datum/design/pin_alien
+	name = "alien firing pin"
+	desc = "An exact replica of alien firing pins. What possible reason could you have to make this?"
+	id = "pin_alien"
+	build_type = PROTOLATHE
+	materials = list(MAT_PLASMA = 600, MAT_DIAMOND = 100, MAT_URANIUM = 200)
+	req_tech = list("combat" = 4, "materials" = 4, "abductor" = 2)
+	category = list("Firing Pins")
+
+/datum/design/pin_clown
+	name = "hilarious firing pin"
+	desc = "Glory to clown planet! HONK!"
+	id = "pin_clown"
+	req_tech = list("combat" = 1, "materials" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 400, MAT_BANANIUM = 1000)
+	build_path = /obj/item/device/firing_pin/clown
+	category = list("Firing Pins")
+
+/datum/design/pin_clownbomb
+	name = "PRICELESS firing pin"
+	desc = "This pin violently explodes if used by a non-clown. GLORY TO THE CLOWNDICATE!"
+	id = "pin_clownbomb"
+	req_tech = list("combat" = 5, "materials" = 5, "syndicate" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_BANANIUM = 2000)
+	/obj/item/device/firing_pin/clown/ultra/selfdestruct
+	category = list("Firing Pins")
 
 /datum/design/stunrevolver
 	name = "Tesla Revolver"
@@ -159,7 +188,7 @@
 
 /datum/design/xray
 	name = "Xray Laser Gun"
-	desc = "Not quite as menacing as it sounds"
+	desc = "Not quite as menacing as it sounds."
 	id = "xray"
 	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE
@@ -177,6 +206,46 @@
 	build_path = /obj/item/weapon/gun/energy/ionrifle/carbine
 	category = list("Weapons")
 
+/datum/design/advbaton
+	name = "Advanced Baton"
+	desc = "Shitcurity-Future edition!"
+	id = "advancedbaton"
+	build_type = PROTOLATHE
+	req_tech = list("combat" = 6, "magnets" = 4, "biotech" = 6, "abductor" = 3)
+	materials = list(MAT_SILVER = 4000, MAT_METAL = 10000, MAT_PLASMA = 5000)
+	build_path = /obj/item/weapon/abductor_baton
+	category = list("Weapons")
+	
+/datum/design/alienpistol
+	name = "Alien Pistol"
+	desc = "An experimental gun that emits radiation blasts, based off recovered alien technology. We aren't sure how to make it without the pin yet-it will need to be removed."
+	id = "alienpistol"
+	build_type = PROTOLATHE
+	build_path = /obj/item/weapon/gun/energy/alien
+	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 7, "abductor" = 4)
+	materials = list(MAT_URANIUM = 4000, MAT_METAL = 10000, MAT_PLASMA = 10000)
+	category = list("Weapons")
+	
+/datum/design/aliensilencer
+	name = "Radio Interference Tool"
+	desc = "A nearly identical copy of the alien silencer used by aliens to abduct unwitting humans."
+	id = "aliensilencer"
+	build_type = PROTOLATHE
+	build_path = /obj/item/device/abductor/silencer
+	req_tech = list("combat" = 5, "magnets" = 6, "biotech" = 7, "abductor" = 6, "engineering" = 6)
+	materials = list(MAT_URANIUM = 6000, MAT_METAL = 15000, MAT_PLASMA = 10000, MAT_DIAMOND = 1000)
+	category = list("Weapons")
+
+/datum/design/alienhelmet
+	name = "Alien Helmet"
+	desc = "Based off a rough estimation of abductor helmet capabilities, this helmet will block tracking and provide armor."
+	id = "alienhelmet"
+	build_type = PROTOLATHE
+	build_path = /obj/item/clothing/head/helmet/abductor
+	req_tech = list("combat" = 3, "magnets" = 6, "biotech" = 5, "abductor" = 3, "engineering" = 4)
+	materials = list(MAT_METAL = 5000, MAT_PLASMA = 500, MAT_GOLD = 500)
+	category = list("Weapons")
+
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
@@ -191,9 +260,9 @@
 	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
 	id = "reciever"
-	req_tech = list("combat" = 4, "materials" = 4)
+	req_tech = list("combat" = 2, "materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6500, MAT_SILVER = 500)
+	materials = list(MAT_METAL = 4000)
 	build_path = /obj/item/weaponcrafting/reciever
 	category = list("Weapons")
 
