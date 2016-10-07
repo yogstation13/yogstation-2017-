@@ -393,3 +393,7 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+/proc/add_list_to_list(list/L, list/E)
+	L += null
+	L[L.len] = E
