@@ -504,8 +504,8 @@
 /datum/reagent/toxin/hemoharragium/on_mob_life(mob/living/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.vessel)
-			H.vessel.remove_reagent("blood",rand(1, 3))
+		if(H.blood_volume > 0)
+			H.blood_volume -= rand(1, 3)
 	..()
 	
 /* This bugs graphics horribly for any client and ruins smoothing/etc
@@ -891,8 +891,10 @@
 			if(BLOOD_VOLUME_SURVIVE to 0) //they have no blood in them/low enough not to matter
 				. = FALSE
 	if(.)
-		M << "<span class='userwarning'>Your blood boils away!</span>"
-		H.blood_volume = max(H.blood_volume - 50, 0)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H << "<span class='userwarning'>Your blood boils away!</span>"
+			H.blood_volume = max(H.blood_volume - 50, 0)
 				
 			
 		
