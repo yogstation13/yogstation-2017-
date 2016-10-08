@@ -110,6 +110,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			haemorrhage magazine, a soporific knockout magazine, a free surplus supressor, and a worn out suit and tie."
 	item = /obj/item/weapon/storage/briefcase/sniperbundle
 	cost = 20 // normally 26
+	surplus = 5
 
 /datum/uplink_item/nukeoffer/chemical
 	name = "Bioterror bundle"
@@ -139,7 +140,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
-	cost = 11
+	cost = 13
 	surplus = 50
 
 /datum/uplink_item/dangerous/shotgun
@@ -148,7 +149,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			quarter anti-personel engagements."
 	item = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
 	cost = 8
-	surplus = 40
+	surplus = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg
@@ -157,7 +158,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			20-round magazine and is compatible with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 13
-	surplus = 40
+	surplus = 10
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/smg/unrestricted
@@ -179,7 +180,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/belt/grenade/full
 	include_modes = list(/datum/game_mode/nuclear)
 	cost = 22
-	surplus = 0
+	surplus = 10
 
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
@@ -187,7 +188,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/projectile/automatic/m90
 	cost = 15
 	include_modes = list(/datum/game_mode/nuclear)
-	surplus = 50
+	surplus = 15
 
 /datum/uplink_item/dangerous/carbine/unrestricted
 	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
@@ -198,7 +199,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
 	item = /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
 	cost = 16
-	surplus = 25
+	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/bolt_action
@@ -206,14 +207,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
 	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
 	cost = 2
+	surplus = 50 //lel
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Radiation Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to \
 		fit into a pocket or slip into a bag unnoticed. It will synthesize \
-		and fire bolts tipped with a debilitating toxin that will stun \
-		targets and cause them to slur as if inebriated. It can produce an \
+		and fire bolts tipped with a debilitating toxin that will briefly stun \
+		targets and cause them to slur as if inebriated, while doing significant toxin and radiation damage. It can produce an \
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
@@ -226,7 +228,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
 			stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/weapon/flamethrower/full/tank
-	cost = 7
+	cost = 4
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
@@ -276,7 +278,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 5
-	surplus = 35
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/bioterrorfoam
@@ -286,7 +288,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			using additional spore toxin. Ensure suit is sealed before use."
 	item = /obj/item/weapon/grenade/chem_grenade/bioterrorfoam
 	cost = 5
-	surplus = 35
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/bioterror
@@ -306,7 +308,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			the BVAK solution."
 	item = /obj/item/weapon/storage/box/syndie_kit/tuberculosisgrenade
 	cost = 12
-	surplus = 35
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/guardian
@@ -315,8 +317,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			organic host as a home base and source of fuel."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-	player_minimum = 25
+	exclude_modes = list(/datum/game_mode/gang)
+	player_minimum = 30
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -341,7 +343,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toploader Magazine - 5.56"
 	desc = "An additional 30-round 5.56 magazine for use in the M-90gl carbine. These bullets don't have the punch to knock most targets down, but dish out higher overall damage."
 	item = /obj/item/ammo_box/magazine/m556
-	cost = 2
+	cost = 1
 	include_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
 
 /datum/uplink_item/ammo/a40mm
@@ -356,10 +358,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
 			For when you really need a lot of things dead."
 	item = /obj/item/ammo_box/a357
-	cost = 2
+	cost = 1
 
 /datum/uplink_item/ammo/shotgun
-	cost = 2
+	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/buck
@@ -371,7 +373,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "12g Slug Drum"
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 			Now 8 times less likely to shoot your pals."
-	cost = 3
+	cost = 2
 	item = /obj/item/ammo_box/magazine/m12g/slug
 
 /datum/uplink_item/ammo/shotgun/stun
@@ -399,7 +401,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "12g Ammo Duffelbag"
 	desc = "A duffelbag filled with enough 12g ammo to supply an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
-	cost = 12
+	cost = 7
 
 /datum/uplink_item/ammo/smg
 	name = ".45 SMG Magazine"
@@ -452,7 +454,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/ammo_box/magazine/mm556x45/incen
 
 /datum/uplink_item/ammo/sniper
-	cost = 4
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/sniper/basic
@@ -493,6 +495,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/bioterror
 	cost = 6
 	include_modes = list(/datum/game_mode/nuclear)
+	surplus = 50
 
 //Support and Mechs
 /datum/uplink_item/support
@@ -512,7 +515,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Syndicate Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel."
 	item = /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
-	cost = 80
+	cost = 60
 
 /datum/uplink_item/support/gygax
 	name = "Gygax Exosuit"
@@ -520,7 +523,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			for hit-and-run style attacks. This model lacks a method of space propulsion, and therefore it is \
 			advised to utilize the drop pod if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark/loaded
-	cost = 80
+	cost = 70
 
 /datum/uplink_item/support/mauler
 	name = "Mauler Exosuit"
@@ -544,7 +547,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Energy Dagger"
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/weapon/pen/edagger
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun with Riot Darts"
@@ -552,7 +555,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			darts effective at incapacitating a target."
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
 	cost = 3
-	surplus = 10
+	surplus = 20
 	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
@@ -562,8 +565,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			The pen holds one dose of the mixture, and cannot be refilled. Note that before the target \
 			falls asleep, they will be able to move and act."
 	item = /obj/item/weapon/pen/sleepy
-	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear,/datum/game_mode/gang)
+	cost = 6
+	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -605,7 +608,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			shots of the weapon for increased stealth and superior ambushing capability."
 	item = /obj/item/weapon/suppressor
 	cost = 2
-	surplus = 10
+	surplus = 40
 
 /datum/uplink_item/stealthy_weapons/pizza_bomb
 	name = "Pizza Bomb"
@@ -613,7 +616,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			opening the box again will trigger the detonation after the timer has elapsed. Comes with free pizza, for you or your target!"
 	item = /obj/item/pizzabox/bomb
 	cost = 5
-	surplus = 8
+	surplus = 20
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -621,12 +624,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			your hand before use so it knows not to kill you."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 1
+	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
 	name = "Slipocalypse Clusterbang"
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/weapon/grenade/clusterbuster/soap
-	cost = 6
+	cost = 5 
+	surplus = 60
 
 /datum/uplink_item/stealthy_weapons/door_charge
 	name = "Explosive Airlock Charge"
@@ -635,7 +640,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			the airlock maintenance panel."
 	item = /obj/item/device/doorCharge
 	cost = 2
-	surplus = 10
+	surplus = 40
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 // Stealth Items
@@ -647,6 +652,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/chameleon
 	cost = 4
+	surplus = 30
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -680,8 +686,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Chameleon Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment. This one can be disguised to imitate many of the standard belts found around the station."
 	item = /obj/item/weapon/storage/belt/military/chameleon
-	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear)
+	cost = 1
+	exclude_modes = list(/datum/game_mode/nuclear) //should be  in the cham box but w/e
 
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
@@ -689,7 +695,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Projects an image across a user, disguising them as an object scanned with it, as long as they don't \
 			move the projector from their hand. Disguised users move slowly, and projectiles pass over them."
 	item = /obj/item/device/chameleon
-	cost = 5
+	cost = 4
 	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_tools/camera_bug
@@ -698,14 +704,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			to disable them remotely."
 	item = /obj/item/device/camera_bug
 	cost = 1
-	surplus = 90
+	surplus = 70
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
 			your stolen goods. Comes with a crowbar and a floor tile inside."
 	item = /obj/item/weapon/storage/backpack/satchel_flat
-	cost = 2
+	cost = 1
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/stimpack
@@ -772,6 +778,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
 	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
 	cost = 30
+	surplus = 5
 	include_modes = list(/datum/game_mode/nuclear)
 	exclude_modes = list()
 
@@ -785,6 +792,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
 	item = /obj/item/weapon/card/emag
 	cost = 8
+	surplus = 50
 	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/toolbox
@@ -799,13 +807,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The Syndicate surgery dufflebag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	cost = 3
+	cost = 2
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
-	cost = 3
+	cost = 1 
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
 
 /datum/uplink_item/device_tools/medkit
@@ -814,7 +822,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			for rapid healing, a medical HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
 	item = /obj/item/weapon/storage/firstaid/tactical
-	cost = 4
+	cost = 3
+	surplus = 50
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/thermal
@@ -824,6 +833,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
 			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
+	surplus = 50
 	cost = 5
 
 /datum/uplink_item/device_tools/binary
@@ -832,7 +842,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/device/encryptionkey/binary
-	cost = 4
+	cost = 2 //why is this more expensive ffs
 	surplus = 75
 
 /datum/uplink_item/device_tools/encryptionkey
@@ -848,6 +858,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
 			holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/device/multitool/ai_detect
+	surplus = 90
 	cost = 1
 
 /datum/uplink_item/device_tools/hacked_module
@@ -855,6 +866,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
+	surplus = 30
 	cost = 9
 
 /datum/uplink_item/device_tools/magboots
@@ -873,6 +885,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			minimum setting of 10 seconds."
 	item = /obj/item/weapon/grenade/plastic/c4
 	cost = 1
+	surplus = 30
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
@@ -893,7 +906,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			load on the grid, causing a stationwide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes."
 	item = /obj/item/device/powersink
-	cost = 6
+	surplus = 40
+	cost = 7
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -902,7 +916,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/device/sbeacondrop
-	cost = 14
+	cost = 15
+	surplus = 20
 	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/syndicate_bomb
@@ -913,7 +928,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/device/sbeacondrop/bomb
-	cost = 11
+	cost = 13
+	surplus = 20
 
 /datum/uplink_item/device_tools/syndicate_detonator
 	name = "Syndicate Detonator"
@@ -922,7 +938,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of \
 			the blast radius before using the detonator."
 	item = /obj/item/device/syndicatedetonator
-	cost = 3
+	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/rad_laser
@@ -938,7 +954,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Assault Pod Targetting Device"
 	desc = "Use to select the landing zone of your assault pod."
 	item = /obj/item/device/assault_pod
-	cost = 30
+	cost = 25
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -948,7 +964,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			against other attacks. Pair with an Energy Sword for a killer combination."
 	item = /obj/item/weapon/shield/energy
 	cost = 16
-	surplus = 20
+	surplus = 5
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/medgun
@@ -957,6 +973,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			operatives in the fight, even while under fire."
 	item = /obj/item/weapon/gun/medbeam
 	cost = 15
+	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/potion
@@ -982,14 +999,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
 	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
-	cost = 5
+	cost = 3 
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a separate uplink \
 			with 10 telecrystals. Undetectable, and excellent for escaping confinement."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	cost = 14
+	cost = 10
 	surplus = 0
 
 /datum/uplink_item/implants/adrenal
@@ -1014,7 +1031,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			This will permanently destroy your body, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
 	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
+	surplus = 40
 
 /datum/uplink_item/implants/macrobomb
 	name = "Macrobomb Implant"
@@ -1022,6 +1039,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Upon death, releases a massive explosion that will wipe out everything nearby."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
+	surplus = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/implants/mindslave
@@ -1054,14 +1072,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. They must be implanted via surgery."
 	item = /obj/item/organ/cyberimp/eyes/xray
-	cost = 10
+	cost = 8
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. \
 			It must be implanted via surgery."
 	item = /obj/item/organ/cyberimp/brain/anti_stun
-	cost = 12
+	cost = 10
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
@@ -1074,7 +1092,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
 			They must be implanted via surgery."
 	item = /obj/item/weapon/storage/box/cyber_implants/bundle
-	cost = 40
+	cost = 30
 
 // Pointless
 /datum/uplink_item/badass
@@ -1116,6 +1134,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Can blow the deepest of covers."
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
+	surplus = 20 //ain't i a stinker
 
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
