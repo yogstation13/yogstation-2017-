@@ -122,6 +122,11 @@
 	new /obj/item/device/healthanalyzer(src)
 	return
 	
+/obj/item/weapon/storage/firstaid/genetic
+	name = "genetic trauma medical kit"
+	desc = "A first aid kit for genetic and radiation damage."
+	icon_state = "antitoxfirstaid2"
+	item_state = "firstaid-toxin"
 
 /obj/item/weapon/storage/firstaid/genetic/New()
 	..()
