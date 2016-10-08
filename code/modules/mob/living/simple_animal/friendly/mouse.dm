@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = 2
-	var/chew_probability = 1
+//	var/chew_probability = 0
 
 /mob/living/simple_animal/mouse/New()
 	..()
@@ -60,19 +60,19 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(prob(chew_probability))
+	if(prob(5))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
 			var/obj/structure/cable/C = locate() in F
-			if(C && prob(15))
-				if(C.avail())
-					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
-					playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
-					C.Deconstruct()
-					death(toast=1)
-				else
-					C.Deconstruct()
-					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+				if(C && prob(5))
+					if(C.avail())
+						visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")
+						playsound(src, 'sound/effects/sparks2.ogg', 100, 1)
+						C.Deconstruct()
+						death(toast=1)
+					else
+						C.Deconstruct()
+						visible_message("<span class='warning'>[src] chews through the [C].</span>")
 
 /*
  * Mouse types
