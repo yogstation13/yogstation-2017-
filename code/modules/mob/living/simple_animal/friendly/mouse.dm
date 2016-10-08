@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = 2
-	var/chew_probability = 1
+//	var/chew_probability = 0
 
 /mob/living/simple_animal/mouse/New()
 	..()
@@ -59,6 +59,7 @@
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 
+/*
 /mob/living/simple_animal/mouse/handle_automated_action()
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
@@ -73,10 +74,11 @@
 				else
 					C.Deconstruct()
 					visible_message("<span class='warning'>[src] chews through the [C].</span>")
+*/
 
-/*
- * Mouse types
- */
+
+//Mouse types
+
 
 /mob/living/simple_animal/mouse/white
 	body_color = "white"
