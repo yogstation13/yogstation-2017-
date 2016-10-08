@@ -23,7 +23,7 @@
 	mob_size = MOB_SIZE_TINY
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = 2
-	var/chew_probability = 1
+	var/chew_probability = 0
 
 /mob/living/simple_animal/mouse/New()
 	..()
