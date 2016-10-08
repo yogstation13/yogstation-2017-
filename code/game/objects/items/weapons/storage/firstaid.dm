@@ -96,7 +96,7 @@
 	if(empty) return
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/medical/bandage/quality(src)
