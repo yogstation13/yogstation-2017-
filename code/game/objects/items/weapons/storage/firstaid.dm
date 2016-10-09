@@ -135,7 +135,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/pill/mutadone(src)
 	for(var/i in 1 to 3)
-		/obj/item/weapon/reagent_containers/pill/mannitol(src)
+		new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 	return
 
 
