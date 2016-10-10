@@ -84,11 +84,11 @@ var/next_mob_id = 0
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(message, self_message, blind_message)
+/mob/visible_message(message, self_message, blind_message, range = 7)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
 		var/msg = message
@@ -114,11 +114,11 @@ var/next_mob_id = 0
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/atom/proc/visible_message(message, blind_message)
+/atom/proc/visible_message(message, blind_message, range = 7)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
 		var/msg = message
