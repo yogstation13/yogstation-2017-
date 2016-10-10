@@ -57,8 +57,10 @@
 		update_icon()
 
 /obj/item/device/taperecorder/fire_act()
-	mytape.ruin() //Fires destroy the tape
-	return()
+	if(mytape)
+		mytape.ruin() //Fires destroy the tape
+		mytape.erase()
+	return ..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
@@ -192,7 +194,6 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		//if we speak any of the languages the speaker spoke, translate to all languages we know
 		sayRecorded(i)
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
@@ -302,6 +303,15 @@
 /obj/item/device/tape/proc/fix()
 	overlays -= "ribbonoverlay"
 	ruined = 0
+
+/obj/item/device/tape/proc/erase()
+	used_capacity = 0
+	storedinfo = list()
+	timestamp = list()
+	storedspans = list()
+	for(var/s in stored_speakers)
+		qdel(s)
+	stored_speakers = list()
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
