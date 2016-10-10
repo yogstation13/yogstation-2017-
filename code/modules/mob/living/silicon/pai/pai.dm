@@ -425,12 +425,12 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return 1
 
-// Debug command - Maybe should be added to admin verbs later
+/*// Debug command - Maybe should be added to admin verbs later
 mob/verb/makePAI(var/turf/t in view())
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key
-	card.setPersonality(pai)
+	card.setPersonality(pai)*/
 
 //PAI MOVEMENT/HOLOGRAPHIC FORM
 /mob/living/silicon/pai/verb/fold_out()
