@@ -950,6 +950,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	contraband = list("Tools" = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/color/fyellow = 2))
 	premium = list("Tools" = list(/obj/item/clothing/gloves/color/yellow = 1))
 
+/obj/machinery/vending/tool/public
+	name = "\improper Public YouTool"
+	desc = "Tools for tools. This machine in particular has been stocked for public use."
+	icon_state = "tool"
+	products = list("Tools" = list(/obj/item/stack/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
+					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5))
+	contraband = list("Tools" = list(/obj/item/weapon/weldingtool/largetank = 2,/obj/item/clothing/gloves/color/fyellow = 2))
+	premium = list("Engineering Gear" = list(/obj/item/weapon/storage/belt/utility = 3,/obj/item/device/multitool = 4))
+
 /obj/machinery/vending/engivend
 	name = "\improper Engi-Vend"
 	desc = "Spare tool vending. What? Did you expect some witty description?"
@@ -958,7 +967,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	req_access_txt = "11" //Engineering Equipment access
 	products = list("Engineering Gear" = list(/obj/item/clothing/glasses/meson/engine = 2,/obj/item/device/multitool = 4,/obj/item/weapon/electronics/airlock = 10,/obj/item/weapon/electronics/apc = 10,/obj/item/weapon/electronics/airalarm = 10,/obj/item/weapon/stock_parts/cell/high = 10, /obj/item/weapon/rcd/loaded = 3, /obj/item/device/geiger_counter = 5))
 	contraband = list("Engineering Gear" = list(/obj/item/weapon/stock_parts/cell/potato = 3))
-	premium = list("Engineering Gear" = list(/obj/item/weapon/storage/belt/utility = 3))
+	premium = list("Engineering Gear" = list(/obj/item/weapon/storage/belt/utility = 4))
 
 //This one's from bay12
 /obj/machinery/vending/engineering
