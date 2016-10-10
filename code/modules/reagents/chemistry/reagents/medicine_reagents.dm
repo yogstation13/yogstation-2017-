@@ -275,10 +275,12 @@
 	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
 		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
-			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
-			efficiency = min(0.75,efficiency)
-			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
+			//The lower the blood of the patient, the better it is as a blood substitute.
+			var/const/hundred_point = BLOOD_VOLUME_NORMAL * 0.5 //100% efficiency at 50% blood level
+			var/const/zero_point = BLOOD_VOLUME_NORMAL * 1.5 //0% efficiency at 150% blood level
+			var/efficiency = 1 - (H.blood_volume - hundred_point) * (1 / (zero_point - hundred_point))
+			efficiency = max(0.25, min(1, efficiency)) //clamp it and change it from a percent to a decimal
+			H.blood_volume += round(efficiency * min(2.5, reac_volume), 0.1)//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
 	..()
 
 /datum/reagent/medicine/mine_salve

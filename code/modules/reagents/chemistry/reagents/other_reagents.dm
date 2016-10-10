@@ -626,7 +626,7 @@
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-			C.blood_volume += 0.5
+			C.blood_volume += REAGENTS_METABOLISM * 0.5
 	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
