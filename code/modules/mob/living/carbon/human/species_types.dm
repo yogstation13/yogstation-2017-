@@ -187,7 +187,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
 	if(adjusted_pressure < 40)
-		speedmod = min(speedmod, 0) //normal speed at lavaland pressure
+		speedmod = max(speedmod, 0) //normal speed at lavaland pressure
 
 /datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
