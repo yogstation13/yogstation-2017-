@@ -65,9 +65,9 @@
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim, and the process will damage our genomes."
 	sting_icon = "sting_transform"
-	chemical_cost = 40
-	dna_cost = 3
-	genetic_damage = 100
+	chemical_cost = 30
+	dna_cost = 2
+	genetic_damage = 80
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -113,7 +113,7 @@
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/false_armblade
 	name = "False Armblade Sting"
 	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
@@ -158,9 +158,8 @@
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
-*/
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
@@ -171,8 +170,8 @@
 	qdel(blade)
 	target.update_inv_l_hand()
 	target.update_inv_r_hand()
-*/
 
+/*
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA."
@@ -185,7 +184,7 @@
 	if(..())
 		return user.mind.changeling.can_absorb_dna(user, target)
 
-/obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
+ /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
 	if((user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.remove_profile(target)
@@ -194,11 +193,12 @@
 	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
 	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
 		if(ewi.target == target.mind)
-			protect = 1
+		protect = 1
 			break
-	user.mind.changeling.add_new_profile(target, user, protect)
+			user.mind.changeling.add_new_profile(target, user, protect)
 	feedback_add_details("changeling_powers","ED")
 	return 1
+*/
 
 /obj/effect/proc_holder/changeling/sting/mute
 	name = "Mute Sting"
