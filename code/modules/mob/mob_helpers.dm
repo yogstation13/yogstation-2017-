@@ -446,22 +446,18 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute = 0, burn = 0, brain = 0)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	var/dam //changes repair text based on how much brute/burn was supplied
 	var/msg1
 	var/msg2
 
-	if(brute > burn)
-		dam = 1
 	if(brain)
-		msg1 = "<span class='notice'>[user] has recalibrated some of the screws on [H]'s [affecting].</span>"
-		msg2 = "<span class='notice'>You has recalibrate some of the screws on [H]'s [affecting].</span>"
+		msg1 = "<span class='notice'>[user] has recalibrated some of the screws on [H]'s [affecting.name].</span>"
+		msg2 = "<span class='notice'>You have recalibrated some of the screws on [H]'s [affecting.name].</span>"
 	else if(brute > burn)
-		msg1 = "<span class='notice'>[user] has fixed some of the dents on [H]'s [affecting].</span>"
-		msg2 = "<span class='notice'>You fix some of the dents on [H]'s [affecting].</span>"
+		msg1 = "<span class='notice'>[user] has fixed some of the dents on [H]'s [affecting.name].</span>"
+		msg2 = "<span class='notice'>You fix some of the dents on [H]'s [affecting.name].</span>"
 	else
-		dam = 0
-		msg1 = "<span class='notice'>[user] has fixed some of the burnt wires in [H]'s [affecting]</span>."
-		msg2 = "<span class='notice'>You fix some of the burnt wires in [H]'s [affecting].</span>"
+		msg1 = "<span class='notice'>[user] has fixed some of the burnt wires in [H]'s [affecting.name]</span>."
+		msg2 = "<span class='notice'>You fix some of the burnt wires in [H]'s [affecting.name].</span>"
 
 	if(affecting && (affecting.status == ORGAN_ROBOTIC || affecting.status == ORGAN_SEMI_ROBOTIC))
 		if((brute > 0 && affecting.brute_dam > 0) || (burn > 0 && affecting.burn_dam > 0) || (brain > 0 && H.brainloss > 0))
@@ -469,7 +465,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			affecting.heal_damage(brute,burn,1)
 			H.update_damage_overlays(0)
 			H.updatehealth()
-			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
 			user.visible_message(msg1, msg2)
 			return
 		else

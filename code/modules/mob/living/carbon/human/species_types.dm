@@ -110,6 +110,8 @@
 	speedmod = 0.33
 	radiation_faint_threshhold = 80
 	radiation_effect_mod = 2
+	punchdamagelow = 4
+	punchdamagehigh = 9
 
 	high_temp_level_1 = BODYTEMP_HEAT_DAMAGE_LEVEL_2
 	high_temp_level_2 = BODYTEMP_HEAT_DAMAGE_LEVEL_3
@@ -121,9 +123,11 @@
 	lowpressure_mod = 0.75
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time. Thick scales afford you protection from heat, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"
+	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time.</span>"
+	H << "<span class='notice'>Thick scales afford you protection from heat and pressure, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"
 	H << "<span class='notice'>You possess sharp claws that rend flesh easily, though NT obviously does not sanction their use against the crew.</span>"
 	H << "<span class='notice'>Beware all things cold, for your metabolism cannot mitigate their effects as well as other warm-blooded creatures.</span>"
+	H << "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Unathi</span>"
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -142,7 +146,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		H.endTailWag()
 
 /datum/species/lizard/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, application=DAMAGE_PHYSICAL)
-	if(damagetype == STAMINA)
+	if((damagetype == STAMINA) && (application == DAMAGE_PHYSICAL) && (damage > 5))
 		damage += 10
 	return ..(damage, damagetype, def_zone, blocked, H, application)
 
@@ -152,6 +156,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		return
 	if(H.bodytemperature > 320)
 		speedmod = -0.34
+	else if(H.bodytemperature > 310)
+		speedmod = 0
 	else
 		speedmod = initial(speedmod)
 
@@ -172,6 +178,19 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Ash Walker"
 	id = "lizard"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	warning_low_pressure = 35 //no pressure warning on lavaland
+
+/datum/species/lizard/ashwalker/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	..()
+	if(!environment)
+		return
+	var/pressure = environment.return_pressure()
+	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
+	if(adjusted_pressure < 40)
+		speedmod = min(speedmod, 0) //normal speed at lavaland pressure
+
+/datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+	return
 
 /datum/species/lizard/fly
 	// lizards turned into fly-like abominations in teleporter accidents.
@@ -202,8 +221,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
 						"<span class='userdanger'>You throw up on the floor!</span>")
-
-
 
 
 /*
@@ -249,6 +266,14 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 	var/emagged = 0
+	var/image/emag_eyes = null
+
+/datum/species/android/before_equip_job(datum/job/J, mob/living/carbon/human/H)
+	H << "<span class='info'><b>You are a Preternis.</b> Half-human, half-silicon, you lie in the nebulous area between the two lifeforms, neither one, nor the other.</span>"
+	H << "<span class='info'>Powerful ocular implants afford you greater vision in the darkness, but in turn make your eyes weak to bright light.</span>"
+	H << "<span class='info'>Normal food is worth only a fraction of its normal sustenance to you. You must instead draw your nourishment from power cells, APCs, and other sources by <b>alt-clicking</b> on them.</span>"
+	H << "<span class='info'>Beware electromagnetic pulses, for they would do grevious damage to your internal organs. You can communicate with silicons and other preternis with <b>:d.</b></span>"
+	H << "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Preternis</span>"
 
 /datum/species/android/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -257,6 +282,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/android/on_species_loss(mob/living/carbon/C, datum/species/old_species)
 	..()
 	C.languages_understood &= ~ROBOT
+	if(emag_eyes)
+		C.overlays -= emag_eyes
+		emag_eyes = null
 
 /datum/species/android/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes)
@@ -292,10 +320,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "oil")
 		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		return 1
 
 	if(chem.id == "welding_fuel")
 		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		return 1
 
 	chem.metabolization_rate = 0
@@ -314,8 +344,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		H.AdjustStunned(-3)
 		H.AdjustWeakened(-3)
 		H.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
-		H.nutrition -= 5 * REAGENTS_METABOLISM
+		H.nutrition = max(H.nutrition + 5 * REAGENTS_METABOLISM, 0)
 		chem.current_cycle++
+		return 1
 
 	if (istype(chem, /datum/reagent/consumable))
 		var/datum/reagent/consumable/food = chem
@@ -325,15 +356,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 				H << "<span class='info'>NOTICE: Digestive subroutines are inefficient. Seek sustenance via power-cell CONSUME induction.</span>"
 				last_eat_message = world.time
 		return 0
+	return 0
 
 /datum/species/android/spawn_gibs(mob/living/carbon/human/H)
 	robogibs(H.loc, H.viruses)
-
-/datum/species/android/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='info'><b>You are a Preternis.</b> Half-human, half-silicon, you lie in the nebulous between of the two lifeforms, neither one, nor the other.</span>"
-	H << "<span class='info'>Powerful ocular implants afford you greater vision in the darkness, but draw large amounts of power from your biological body. Should your stores run out, they will deactivate and leave you blind.</span>"
-	H << "<span class='info'>Normal food is worth only a fraction of its normal sustenance to you. You must instead draw your nourishment from power cells, tapping into the energy contained within. Beware electromagnetic pulses, for they would do grevious damage to your internal organs..</span>"
-	return ..()
 
 /datum/species/android/handle_emp(mob/living/carbon/human/H, severity)
 	..()
@@ -391,10 +417,18 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		if(user)
 			user << "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>"
 		H << "<span class='danger'>You suddenly feel very stupid, but look at the pretty colors!</span>"
-		H.overlays += image('icons/mob/eyes.dmi', "rainbow", layer = UNDER_GLASSES_LAYER)
+		emag_eyes = image('icons/mob/eyes.dmi', "rainbow", layer = UNDER_GLASSES_LAYER)
+		H.overlays += emag_eyes
 		H.adjustBrainLoss(40)
 		return 1
 	return 0
+
+/datum/species/android/spec_death(gibbed, mob/living/carbon/human/H)
+	if(emag_eyes)
+		H.overlays -= emag_eyes
+		emag_eyes = null
+		emagged = 1
+	..()
 
 
 /datum/species/android/fly
@@ -458,10 +492,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 
 /datum/species/plant/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='info'><b>You are a Phytosian.</b> Born on the core-worlds of G-D52, you are a distant relative of a vestige of humanity long discarded. Symbiotic plant-cells suffuse your skin and provide a protective layer that keeps you alive, and affords you regeneration unmatched by any other race.</span>"
-	H << "<span class='info'>Your physiology is similar, but fundamentally different to a normal carbon life form. The chlorophyll in your epidermis provides passive nourishment and regeneration in light, but your biological processes rely on some degree of light being present at all times.</span>"
-	H << "<span class='info'>Darkness is your greatest foe. Even the cold expanses of space are lit by neighbouring stars, but the darkest recesses of the station's interior may prove to be your greatest foe. Stripped of light, you will wither and die. Heat and flame are even greater foes, as your epidermis is combustible.</span>"
-	H << "<span class='info'>Be warned: you will perish quickly should you become so wounded that you lose consciousness in an area void of any meaningful light source.</span>"
+	H << "<span class='info'><b>You are a Phytosian.</b> Born on the core-worlds of G-D52, you are a distant relative of a vestige of humanity long discarded.</span>"
+	H << "<span class='info'>Symbiotic plant-cells suffuse your skin and provide a protective layer that keeps you alive, and affords you regeneration unmatched by any other race.</span>"
+	H << "<span class='info'>Darkness is your greatest foe. Even the cold expanses of space are lit by neighbouring stars, but the darkest recesses of the station's interior may prove to be your greatest foe.</span>"
+	H << "<span class='info'>Heat and cold will damage your epidermis far faster than your natural regeneration can match. You can communicate with other phytosians use <b>:P</b>.</span>"
+	H << "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Phytosian</span>"
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
@@ -685,7 +720,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(H.bodytemperature < 150 || H.bodytemperature > 400)
 		heal_immunities = list(DAMAGE_CHEMICAL, DAMAGE_PHYSICAL)
 	else
-		heal_immunities = initial(heal_immunities)
+		heal_immunities = list()
 
 /datum/species/plant/handle_flash(mob/living/carbon/human/H, intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	H.adjustFireLoss(-5, 1)
@@ -1289,7 +1324,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.r_hand
 	H.update_internals_hud_icon(1)
-	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
 	if(rank in security_positions)

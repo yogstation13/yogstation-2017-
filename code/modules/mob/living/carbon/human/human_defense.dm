@@ -248,7 +248,7 @@
 
 		if(affecting.name == "head")
 			if(prob(min(acidpwr*damagemod*acid_volume/10, 90))) //Applies disfigurement
-				affecting.take_damage(acidity*damagemod*damagemod, 2*acidity*damagemod*damagemod)
+				affecting.take_damage(acidity*damagemod, 2*acidity*damagemod)
 				emote("scream")
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"
