@@ -49,7 +49,7 @@
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
-	attack_verb = list("emagged", "hacked", "glitched")
+	// attack_verb = list("emagged", "hacked", "glitched") //might cause some problems with trying to emag borgs, will be excluded until someone resolves it
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
