@@ -49,6 +49,7 @@
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
+	attack_verb = list("emagged", "hacked", "glitched")
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
@@ -77,6 +78,7 @@
 	icon_state = "id"
 	item_state = "card-id"
 	slot_flags = SLOT_ID
+	attack_verb = list("identified", "slapped")
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
@@ -118,12 +120,14 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/silver
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
+	attack_verb = list("promoted", "slapped", "identified")
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
+	attack_verb = list("promoted", "honored", "identified", "slapped")
 	icon_state = "gold"
 	item_state = "gold_id"
 
@@ -186,6 +190,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
+	attack_verb = list("spared", "promoted", "honored", "identified", "slapped")
 	icon_state = "gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
@@ -199,6 +204,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
 	desc = "An ID straight from Cent. Com."
+	attack_verb = list("inspected", "identified", "slapped")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -211,6 +217,7 @@ update_label("John Doe", "Clowny")
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
+	attack_verb = list("responded to","identified", "slapped")
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
@@ -241,6 +248,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
+	attack_verb = list("arrested", "cuffed", "took freedom from", "imprisoned", "identified", "slapped")
 	icon_state = "orange"
 	item_state = "orange-id"
 	assignment = "Prisoner"
