@@ -1247,3 +1247,29 @@ datum/reagent/romerol
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
+	
+/datum/reagent/laughter
+	name = "liquid laughter"
+	id = "laughter"
+	description = "A chemical that causes happiness in the subject. Honk!"
+	color = "#FFFF00" // Eye searingly yellow - RGB (255, 255, 0)
+	overdose_threshold = 30
+
+/datum/reagent/laughter/reaction_mob(mob/living/M)
+	if(!M.reagents.has_reagent("laughter"))
+		M << "<span class='notice'>You suddenly feel very happy!</span>"
+	..()
+
+/datum/reagent/laughter/on_mob_life(mob/living/M)
+	if(prob(25))
+		M.emote(pick(list("laugh","giggle","smile","chuckle")))
+	..()
+
+/datum/reagent/laughter/on_mob_delete(mob/living/M)
+	M << "<span class='notice'>Everything is terrible again...</span>"
+
+/datum/reagent/laughter/overdose_start(mob/living/M)
+	M << "<span class='userdanger'>You start laughing hysterically!</span>"
+
+/datum/reagent/laughter/overdose_process(mob/living/M)
+	M.emote(pick(list("laugh","giggle")))
