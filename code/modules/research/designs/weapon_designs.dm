@@ -3,7 +3,7 @@
 /////////////////////////////////////////
 // firing pins 
 
-datum/design/pin_alien
+ /datum/design/pin_alien
  	name = "alien firing pin"
  	desc = "An exact replica of alien firing pins. What possible reason could you have to make this?"
  	id = "pin_alien"
