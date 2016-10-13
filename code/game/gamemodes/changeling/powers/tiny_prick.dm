@@ -153,7 +153,7 @@
 	feedback_add_details("changeling_powers","AS")
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade)
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms their [blade.name] into an arm!</span>",
