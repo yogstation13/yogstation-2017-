@@ -1,4 +1,4 @@
-ar/const/SAFETY_COOLDOWN = 100
+var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler
 	name = "recycler"
