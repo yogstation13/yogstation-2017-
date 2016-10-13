@@ -51,6 +51,7 @@ datum/design/pin_alien
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
 	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
+
 //guns n shit
 
 /datum/design/stunrevolver
@@ -97,7 +98,7 @@ datum/design/pin_alien
 	name = "Decloner"
 	desc = "Your opponent will bubble into a messy pile of goop."
 	id = "decloner"
-	req_tech = list("combat" = 5, "materials" = 5, "biotech" = 6, "plasmatech" = 7)
+	req_tech = list("combat" = 6, "magnets" = 5, "biotech" = 7, "abductor" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
 	reagents = list("mutagen" = 40)
@@ -147,8 +148,6 @@ datum/design/pin_alien
 
 //alien shit
 
-//alien shit
-
 /datum/design/advbaton //if this gets merged i'll make  separate item that doesn't have sleep or probe modes, or at least a shitty ver of sleep
  	name = "Advanced Baton"
  	desc = "Shitcurity-Future edition!"
@@ -158,17 +157,7 @@ datum/design/pin_alien
  	materials = list(MAT_SILVER = 4000, MAT_METAL = 10000, MAT_PLASMA = 5000)
  	build_path = /obj/item/weapon/abductor_baton
  	category = list("Weapons")
- 	
- /datum/design/alienpistol
- 	name = "Alien Pistol"
- 	desc = "An experimental gun that emits radiation blasts, based off recovered alien technology. We aren't sure how to make it without the pin yet-it will need to be removed."
- 	id = "alienpistol"
- 	build_type = PROTOLATHE
- 	build_path = /obj/item/weapon/gun/energy/alien
- 	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 7, "abductor" = 4)
- 	materials = list(MAT_URANIUM = 4000, MAT_METAL = 10000, MAT_PLASMA = 10000)
- 	category = list("Weapons")
- 	
+ 
  /datum/design/aliensilencer
  	name = "Radio Interference Tool"
  	desc = "A nearly identical copy of the alien silencer used by aliens to abduct unwitting humans."
