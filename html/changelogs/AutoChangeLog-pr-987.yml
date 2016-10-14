@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "The charge spell will no longer permanently ruin energy guns or kinetic accelerators."
