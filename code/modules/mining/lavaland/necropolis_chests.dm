@@ -45,7 +45,7 @@
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
-			new /obj/item/weapon/nullrod/armblade(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
