@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "implant cases will no longer delete themselves when you take them out of their lockbox"
