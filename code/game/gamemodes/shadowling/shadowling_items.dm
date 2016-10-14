@@ -100,6 +100,6 @@
 	..()
 
 /obj/item/organ/thrall_tumor/Insert(mob/living/carbon/M, special = 0)
-	ticker.mode.add_thrall(M.mind)
-	M.mind.special_role = "thrall"
-	..()
+	if(..())
+		ticker.mode.add_thrall(M.mind)
+		M.mind.special_role = "thrall"

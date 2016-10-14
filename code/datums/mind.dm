@@ -1255,7 +1255,7 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				var/obj/item/organ/thrall_tumor/T = new/obj/item/organ/thrall_tumor(current)
-				T.Insert(current)
+				T.Insert(current, 1)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 

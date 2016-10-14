@@ -152,15 +152,15 @@
 	flash_eyes(affect_silicon = 1)
 	..()
 
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))
 		return 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked)
+			adjustBruteLoss(damage * blocked, 1, application)
 		if(BURN)
-			adjustFireLoss(damage * blocked)
+			adjustFireLoss(damage * blocked, 1, application)
 		else
 			return 1
 	updatehealth()

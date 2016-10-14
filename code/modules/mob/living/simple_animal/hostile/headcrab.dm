@@ -24,7 +24,7 @@
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
-	egg.Insert(victim)
+	egg.Insert(victim, 1)
 	if(origin)
 		egg.origin = origin
 	else if(mind) // Let's make this a feature
