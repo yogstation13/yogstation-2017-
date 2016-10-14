@@ -14116,6 +14116,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/closet/golf,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "neutral"
@@ -29807,12 +29808,19 @@
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/stamp/captain,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/golfclub,
+/obj/item/golfclub,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bil" = (
 /obj/structure/table/wood,
 /obj/item/weapon/hand_tele,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/golfball,
+/obj/item/golfball,
+/obj/item/golfball,
+/obj/item/golfball,
+/obj/item/golfball,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bim" = (
@@ -46497,6 +46505,7 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "bNU" = (
@@ -62293,6 +62302,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/weapon/storage/toolbox/electrical,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -62304,6 +62316,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/flashlight,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "yellow"
@@ -65216,7 +65231,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cyC" = (
@@ -65305,7 +65319,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cyO" = (
@@ -69112,6 +69125,39 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"XXH" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/spawner/lootdrop/toy_mech,
+/obj/item/device/toy_mech_remote{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"XXI" = (
+/obj/machinery/golfhole/puttinggreen,
+/turf/open/floor/wood,
+/area/crew_quarters/captain)
+"XXJ" = (
+/obj/structure/closet/emcloset,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/engine/engineering)
 "XXK" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
@@ -92619,8 +92665,8 @@ ayV
 aDT
 aDR
 aGH
-aGH
-aGH
+XXH
+XXH
 ayV
 aMF
 aOr
@@ -95519,8 +95565,8 @@ cnp
 cnp
 cuY
 cvQ
-cwL
-cxv
+cnw
+cxx
 coS
 cyB
 cnp
@@ -97828,7 +97874,7 @@ cpT
 cqH
 crv
 csy
-ctx
+XXJ
 cuo
 cvg
 cwa
@@ -98085,7 +98131,7 @@ cpP
 cnw
 crv
 csy
-ctx
+XXJ
 cup
 cvf
 cwb
@@ -101373,7 +101419,7 @@ baD
 bbX
 bdE
 beJ
-bdE
+XXI
 bgW
 bip
 bjL
