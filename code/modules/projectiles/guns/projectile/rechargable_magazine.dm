@@ -212,6 +212,7 @@
 /obj/item/weapon/gun/projectile/minigun/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()
 
+
 /obj/item/ammo_box/magazine/internal/minigun
 	name = "gatling gun fusion core"
 	ammo_type = /obj/item/ammo_casing/caseless/laser/gatling

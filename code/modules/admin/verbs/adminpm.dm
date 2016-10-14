@@ -140,7 +140,8 @@
 				msg = replacetext(msg, "&#39;", "�")
 				T.add_log(msg, get_client(src))
 
-				if(holder && !C.holder && T.force_popup)
+				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
+				if(holder && !C.holder && config.popup_admin_pm)
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key

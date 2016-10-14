@@ -61,8 +61,10 @@
 	A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	if(..())
+		return 1
 	target = A
-	..()
+	AttackingTarget()
 
 /atom/proc/attack_animal(mob/user)
 	return

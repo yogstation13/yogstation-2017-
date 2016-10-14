@@ -13,7 +13,6 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
-	var/health = 100
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -256,22 +255,6 @@
 		else
 			return 0
 
-
-/obj/structure/girder/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	visible_message("[user] swings at [src]!")
-	var/dmg = health - user.melee_damage_upper
-	health = dmg
-
-	if(health <= 0)
-		var/obj/item/stack/sheet/metal/M = new (loc, 2)
-		M.visible_message("[src] shatters into [M]!")
-		qdel(src)
-
-	if(user.environment_smash)
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
-
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
 	if(ismovableatom(caller))
@@ -314,7 +297,6 @@
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
-	health = 200
 
 /obj/structure/girder/reinforced/ex_act(severity, target)
 	switch(severity)

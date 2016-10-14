@@ -13,7 +13,7 @@ Slovenian	=	Council Member
 George99	=	Council Member
 Thee_Flame_Prince	=	Council Member
 Xantam	=	Council Member
-ShadowDeath6	=	Council Member
+AsV9	=	Council Member
  
 Kmc2000	=	SeniorAdmin
 CptAzure	=	SeniorAdmin
@@ -35,6 +35,7 @@ TehFlaminTaco	=	Senior Coder
 Super3222	=	Senior Coder
 Ephemeralis	=	Senior Coder
 Cruix	=	Senior Coder
+ShadowDeath6	=	Coder Initiate
 Utahclock	=	Coder Initiate
 B1gb3ast	=	Coder Initiate
 Nirnael	=	Coder Initiate

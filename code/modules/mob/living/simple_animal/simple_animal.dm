@@ -623,35 +623,32 @@
 
 /mob/living/simple_animal/UnarmedAttack(atom/A, proximity_flag)
 	if(stat)
-		..()
-		return
+		return ..()
 	if(can_eat(A) && isturf(A.loc))
 		eat_snack(A)
-		return
+		return 1
 	else
 		if(harness && (A.loc == harness))
 			harness.remove_from_storage(A, loc)
-			return
+			return 1
 		if(istype(A, /obj/item/weapon/storage/tactical_harness))
 			var/obj/item/weapon/storage/tactical_harness/the_harness = A
 			if(the_harness.canWear(src))
 				if(harness)
 					usr << "<span class='warning'>You are already wearing a harness!</span>"
-					return
+					return 1
 				else
 					visible_message("<span class='danger'>\The [src] begins to wriggle into \the [A].</span>", "<span class='warning'>You begin to wriggle into \the [A]. You must stay still.</span>")
 					if(do_after(usr, 80, target = A))
 						the_harness.add_harness(src, src)
-					return
+					return 1
 			else
 				usr << "<span class='warning'>You can't wear that type of harness.</span>"
-				return
-	AttackingTarget(A)
-
-/mob/living/simple_animal/proc/AttackingTarget(atom/T)
-	if(harness && harness.on_melee_attack(src, T, 1))
-		return
-	T.attack_animal(src)
+				return 1
+		if(harness)
+			if(harness.on_melee_attack(src, A, proximity_flag))
+				return 1
+	return ..()
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
 	if(harness && harness.on_ranged_attack(src, A, params))

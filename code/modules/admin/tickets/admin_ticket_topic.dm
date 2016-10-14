@@ -47,7 +47,8 @@
 		if(logtext)
 			T.add_log(new /datum/ticket_log(src, C, logtext, (!compare_ckey(usr, T.handling_admin) && !compare_ckey(usr, T.owner_ckey)) ? 1 : 0), M)
 
-			if(C.holder && T.owner && !T.owner.holder && compare_ckey(usr, T.handling_admin) && T.force_popup)
+		//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
+			if(C.holder && T.owner && !T.owner.holder && compare_ckey(usr, T.handling_admin) && config.popup_admin_pm)
 				spawn()	//so we don't hold the caller proc up
 					var/sender = C
 					var/sendername = C.key
@@ -70,19 +71,6 @@
 			return
 
 		T.toggle_monitor()
-	else if(href_list["action"] == "toggle_popup")
-		var/datum/admin_ticket/T = locate(href_list["ticket"])
-		if(!istype(T, /datum/admin_ticket))
-			message_admins("EXPLOIT \[admin_ticket\]: [M] attempted to toggle popups on a ticket, the ref supplied was not a ticket.")
-			return
-
-		if(!C.holder)
-			message_admins("EXPLOIT \[admin_ticket\]: [M] attempted to toggle popups on a ticket, but the user is not an admin.")
-			return
-
-		T.force_popup = !T.force_popup
-		T.view_log(C)
-
 	else if(href_list["action"] == "administer_admin_ticket")
 		var/datum/admin_ticket/T = locate(href_list["ticket"])
 		if(!istype(T, /datum/admin_ticket))

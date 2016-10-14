@@ -54,7 +54,6 @@ var/ticket_counter_visible_to_everyone = 0
 	var/client/pm_started_user = null
 	var/pm_started_flag = 0
 	var/error = 0
-	var/force_popup = 0
 	//var/log_file
 	var/admin_started_ticket = 0
 
@@ -108,7 +107,8 @@ var/ticket_counter_visible_to_everyone = 0
 		if(has_pref(owner, SOUND_ADMINHELP))
 			owner << 'sound/effects/adminhelp.ogg'
 
-	if(usr.client.holder && owner && !owner.holder && compare_ckey(usr, handling_admin) && force_popup)
+	//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
+	if(usr.client.holder && owner && !owner.holder && compare_ckey(usr, handling_admin) && config.popup_admin_pm)
 		spawn()	//so we don't hold the caller proc up
 			var/sender = usr.client
 			var/sendername = usr.client.key
