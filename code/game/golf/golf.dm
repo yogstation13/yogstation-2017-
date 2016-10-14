@@ -201,7 +201,7 @@
 	name = "golf supplies closet"
 	desc = "This unit contains all the supplies for golf."
 	icon = 'icons/obj/closet.dmi'
-	icon_state = "generic"
+	icon_state = "golf"
 
 /obj/structure/closet/golf/New()
 	..()
