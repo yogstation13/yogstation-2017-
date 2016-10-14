@@ -277,7 +277,7 @@ Contains:
 	
 /obj/item/clothing/suit/space/hardsuit/freedom/New()
 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-..()
+	..()
 
 //Carpsuit, bestsuit, lovesuit
 /obj/item/clothing/head/helmet/space/hardsuit/carp
