@@ -16,10 +16,12 @@
 	if(imp)
 		icon_state = "implantcase-[imp.item_color]"
 		origin_tech = imp.origin_tech
+		flags = (imp.flags & ~DROPDEL)
 		reagents = imp.reagents
 	else
 		icon_state = "implantcase-0"
 		origin_tech = initial(origin_tech)
+		flags = initial(flags)
 		reagents = null
 
 
