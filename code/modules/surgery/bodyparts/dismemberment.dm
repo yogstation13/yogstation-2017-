@@ -47,7 +47,6 @@
 		if(O.zone != "chest")
 			continue
 		O.Remove(owner)
-		O.loc = T
 		organ_spilled = 1
 	if(cavity_item)
 		cavity_item.loc = T

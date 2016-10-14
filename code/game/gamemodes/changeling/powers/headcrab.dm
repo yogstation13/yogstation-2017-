@@ -11,7 +11,7 @@
 	var/list/organs = user.getorganszone("head", 1)
 
 	for(var/obj/item/organ/I in organs)
-		I.Remove(user, 1)
+		I.Remove(user, 1, 1)
 
 	explosion(get_turf(user),0,0,2,0,silent=1)
 	for(var/mob/living/carbon/human/H in range(2,user))

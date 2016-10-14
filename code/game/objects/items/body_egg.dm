@@ -23,7 +23,7 @@
 		spawn(0)
 			AddInfectionImages(owner)
 
-/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0, del_after = 0)
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		owner.status_flags -= XENO_HOST

@@ -95,7 +95,7 @@
 	icon_state = "blacktumor"
 
 // Surgery stuffs, and enthralling.
-/obj/item/organ/thrall_tumor/Remove(mob/living/carbon/M, special = 0, adminbus = 0)
+/obj/item/organ/thrall_tumor/Remove(mob/living/carbon/M, special = 0, del_after = 0, adminbus = 0)
 	ticker.mode.remove_thrall(M.mind,!adminbus && prob(30))
 	..()
 

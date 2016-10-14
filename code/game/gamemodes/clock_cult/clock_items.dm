@@ -957,8 +957,7 @@
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
 	"<span class='brass'>You extract [H]'s consciousness from their body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
-	B.Remove(H)
-	qdel(B)
+	B.Remove(H, 1, 1)
 	H.update_hair()
 
 /obj/item/clockwork/daemon_shell

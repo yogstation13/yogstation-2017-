@@ -179,15 +179,13 @@
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 
 	if((NOBLOOD in specflags) && heart)
-		heart.Remove(C)
-		qdel(heart)
+		heart.Remove(C, 1, 1)
 	else if((!(NOBLOOD in specflags)) && (!heart))
 		heart = new()
 		heart.Insert(C, 1)
 
 	if((NOBREATH in specflags) && lungs)
-		lungs.Remove(C)
-		qdel(lungs)
+		lungs.Remove(C, 1, 1)
 	else if((!(NOBREATH in specflags)) && (!lungs))
 		lungs = new()
 		lungs.Insert(C, 1)

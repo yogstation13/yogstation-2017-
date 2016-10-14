@@ -27,8 +27,7 @@
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user)
 	var/obj/item/organ/cyberimp/eyes/O = user.getorganslot("eye_ling")
 	if(O)
-		O.Remove(user)
-		qdel(O)
+		O.Remove(user, 1, 1)
 
 
 /obj/item/organ/cyberimp/eyes/shield/ling

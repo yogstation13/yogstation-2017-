@@ -1232,8 +1232,7 @@
 					var/safty = 0
 					var/mob/living/carbon/human/H = current
 					for(var/obj/item/organ/thrall_tumor/T in H.internal_organs)
-						T.Remove(current,0,1)
-						qdel(T)
+						T.Remove(current,0,1,1)
 						safty = 1
 					if(!safty)
 						ticker.mode.remove_thrall(current,0)

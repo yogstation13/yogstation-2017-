@@ -67,7 +67,7 @@
 	return 1
 
 
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0, del_after = 1)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0, del_after = 0)
 	owner = null
 	if(M)
 		M.internal_organs -= src

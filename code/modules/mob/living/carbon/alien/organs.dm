@@ -16,7 +16,7 @@
 			M.AddAbility(P)
 
 
-/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0, del_after = 0)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.RemoveAbility(P)
 	..()
