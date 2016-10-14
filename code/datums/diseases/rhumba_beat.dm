@@ -20,7 +20,7 @@
 			if(affected_mob.ckey == "rosham")
 				src.cure()
 			if(prob(45))
-				affected_mob.adjustToxLoss(5)
+				affected_mob.adjustToxLoss(5, 1, DAMAGE_DISEASE)
 				affected_mob.updatehealth()
 			if(prob(1))
 				affected_mob << "<span class='danger'>You feel strange...</span>"
@@ -40,7 +40,7 @@
 				affected_mob.emote("gasp")
 				affected_mob << "<span class='danger'>You feel a burning beat inside...</span>"
 			if(prob(20))
-				affected_mob.adjustToxLoss(5)
+				affected_mob.adjustToxLoss(5, 1, DAMAGE_DISEASE)
 				affected_mob.updatehealth()
 		if(5)
 			if(affected_mob.ckey == "rosham")

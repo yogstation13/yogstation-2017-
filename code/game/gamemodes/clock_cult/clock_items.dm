@@ -809,12 +809,12 @@
 		var/mob/living/silicon/S = target
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(25)
+			S.adjustFireLoss(25, 1, DAMAGE_MAGIC)
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
 		if(M.stat != DEAD)
 			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
-			M.adjustFireLoss(10)
+			M.adjustFireLoss(10, 1, DAMAGE_MAGIC)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)

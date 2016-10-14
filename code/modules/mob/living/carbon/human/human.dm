@@ -47,7 +47,7 @@
 	//Note: Additional organs are generated/replaced on the dna.species level
 
 	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+		I.Insert(src, 1)
 
 	martial_art = default_martial_art
 
@@ -1042,11 +1042,11 @@
 
 		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
 			var/obj/item/organ/lungs/L = new()
-			L.Insert(src)
+			L.Insert(src, 1)
 
 		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
 			var/obj/item/organ/heart/H = new()
-			H.Insert(src)
+			H.Insert(src, 1)
 
 		if(!getorganslot("tongue"))
 			var/obj/item/organ/tongue/T
@@ -1054,12 +1054,12 @@
 			for(var/tongue_type in dna.species.mutant_organs)
 				if(ispath(tongue_type, /obj/item/organ/tongue))
 					T = new tongue_type()
-					T.Insert(src)
+					T.Insert(src, 1)
 
 			// if they have no mutant tongues, give them a regular one
 			if(!T)
 				T = new()
-				T.Insert(src)
+				T.Insert(src, 1)
 
 	remove_all_embedded_objects()
 	drunkenness = 0
@@ -1112,3 +1112,8 @@
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
 	..()
+
+/mob/living/carbon/human/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(dna && dna.species && dna.species.handle_flash(src, intensity, override_blindness_check, affect_silicon, visual))
+		return 0
+	return ..()

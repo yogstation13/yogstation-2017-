@@ -47,13 +47,13 @@ Bonus
 
 		for(var/obj/item/bodypart/L in parts)
 			L.heal_damage(get_damage, get_damage, 0)
-		M.adjustToxLoss(get_damage*parts.len)
+		M.adjustToxLoss(get_damage*parts.len, 1, DAMAGE_DISEASE)
 
 	else
 		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
-			M.adjustFireLoss(-get_damage)
-			M.adjustBruteLoss(-get_damage)
-			M.adjustToxLoss(get_damage)
+			M.adjustFireLoss(-get_damage, 1, DAMAGE_DISEASE)
+			M.adjustBruteLoss(-get_damage, 1, DAMAGE_DISEASE)
+			M.adjustToxLoss(get_damage, 1, DAMAGE_DISEASE)
 		else
 			return
 
