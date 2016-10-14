@@ -86,7 +86,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
-				if(!(istype(new_area, whitelist)))
+				if(!(istype(new_area, whitelist)) || new_area.mapgen_protected)
 					valid = FALSE
 					break
 

@@ -41,6 +41,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/mapgen_protected = 0 //If the area is protected from ruins/lava rivers/etc generating on top of it
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -108,6 +109,9 @@ var/list/teleportlocs = list()
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+
+/area/space/mapgen_protected
+	mapgen_protected = 1
 
 /area/space/nearstation
 	icon_state = "space_near"

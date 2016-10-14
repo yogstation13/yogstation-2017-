@@ -1,8 +1,8 @@
 "a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
 "b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
 "c" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"v" = (/turf/closed/indestructible/riveted,/area/ruin/unpowered)
-"I" = (/obj/machinery/wish_granter,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"X" = (/turf/closed/indestructible/riveted,/area/lavaland/surface/outdoors/mapgen_protected)
+"Z" = (/obj/machinery/wish_granter,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
 
 (1,1,1) = {"
 aaaaabbaaaaaaaaaaaaaaaaaabbbbb
@@ -16,11 +16,11 @@ aaaaaaaaaaabbbbbcbbbbbbbbbaaaa
 aaaaaaaaaaaabcbbbbbcbbbbbbaaaa
 aaaaaaaaaaaabbbcbbbbbbbbbbaaaa
 aaaaaabbbaacbcbbcbbbbabbbcaaaa
-aaaaaabbbaabbvvvvvcbbbbbbbbbba
-aaaaaabbbbabcvvvvvbcbbbbbbcbba
-bbaaabbbbbbbcvvIvvcbcbbbbbbbba
-aabbabbbcbbbbvvvvvcbbbbcbbbbba
-bbababbbbbbbcvvvvvbbbbbbbbabba
+aaaaaabbbaabbXXXXXcbbbbbbbbbba
+aaaaaabbbbabcXXXXXbcbbbbbbcbba
+bbaaabbbbbbbcXXZXXcbcbbbbbbbba
+aabbabbbcbbbbXXXXXcbbbbcbbbbba
+bbababbbbbbbcXXXXXbbbbbbbbabba
 bbbbbbbbbbbccbbbcbcbbbcbaabbba
 bcbabbcbbcbbbbcbccbbbbbbaabbba
 bbbabbbbbbbcbbbaabbabbbbaabbba

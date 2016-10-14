@@ -2,20 +2,6 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ab" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"ac" = (
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"ad" = (
-/obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 "ae" = (
 /turf/closed/wall/shuttle/smooth{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -150,17 +136,6 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"ax" = (
-/obj/structure/closet/crate/trashcart,
-/obj/item/weapon/storage/bag/trash,
-/obj/item/trash/cheesie,
-/obj/item/weapon/reagent_containers/syringe/antiviral,
-/obj/item/bodybag,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 "ay" = (
 /obj/structure/sink{
 	icon_state = "sink";
@@ -242,11 +217,6 @@
 "aI" = (
 /turf/closed/wall/shuttle/smooth,
 /area/ruin/powered)
-"aJ" = (
-/turf/open/floor/plasteel/grimy{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 "aK" = (
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
@@ -661,20 +631,6 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"bL" = (
-/obj/vehicle/scooter/skateboard{
-	dir = 4
-	},
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"bM" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 "bN" = (
 /obj/effect/mob_spawn/cow{
 	dir = 4;
@@ -685,12 +641,6 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"bO" = (
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 "bP" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -731,60 +681,6 @@
 	dir = 6
 	},
 /area/ruin/powered)
-"bT" = (
-/obj/item/weapon/pickaxe,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"bU" = (
-/obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"bV" = (
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"bW" = (
-/turf/open/floor/grass,
-/area/lavaland/surface/outdoors)
-"bX" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"bY" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 1
-	},
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"bZ" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"ca" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 4
-	},
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"cb" = (
-/obj/machinery/atmospherics/components/binary/valve,
-/turf/open/floor/grass{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 "cc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/closed/wall/shuttle/smooth{
@@ -815,35 +711,19 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cm" = (
+"cg" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Tool Storage"
+	name = "Break Room"
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cl" = (
+"ch" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Safety Supplies"
+	name = "Emergency Care"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"ck" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Medical Supplies"
-	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"cj" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Morgue"
-	},
-/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -856,22 +736,142 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"ch" = (
+"cj" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Emergency Care"
+	name = "Morgue"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"ck" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Medical Supplies"
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cg" = (
+"cl" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Break Room"
+	name = "Safety Supplies"
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
+"cm" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Tool Storage"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"gG" = (
+/obj/vehicle/scooter/skateboard{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"pi" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"uX" = (
+/obj/structure/closet/crate/trashcart,
+/obj/item/weapon/storage/bag/trash,
+/obj/item/trash/cheesie,
+/obj/item/weapon/reagent_containers/syringe/antiviral,
+/obj/item/bodybag,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"vC" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/mapgen_protected)
+"wS" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"xL" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"zi" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Aw" = (
+/obj/item/weapon/pickaxe,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Co" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Cv" = (
+/obj/machinery/atmospherics/components/binary/valve,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Fd" = (
+/turf/open/floor/grass,
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Hr" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Hv" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/mapgen_protected)
+"HT" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/mapgen_protected)
+"Po" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"PI" = (
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
+"UD" = (
+/turf/open/floor/plasteel/grimy{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors/mapgen_protected)
 
 (1,1,1) = {"
 aa
@@ -882,11 +882,11 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+vC
+vC
+vC
 aa
-ab
+vC
 aa
 aa
 aa
@@ -911,13 +911,13 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+vC
+vC
+vC
+vC
+vC
+vC
+vC
 aa
 aa
 aa
@@ -927,9 +927,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+vC
+vC
+vC
 aa
 aa
 "}
@@ -939,15 +939,15 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-aJ
-ab
-ab
-ac
-ab
+vC
+vC
+vC
+vC
+UD
+vC
+vC
+PI
+vC
 aa
 aa
 aa
@@ -955,13 +955,13 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-bU
-bV
-ab
-ab
+vC
+vC
+vC
+Hv
+HT
+vC
+vC
 "}
 (4,1,1) = {"
 aa
@@ -969,12 +969,12 @@ aa
 aa
 aa
 aa
-ab
-ab
-ax
-ac
-aJ
-ac
+vC
+vC
+uX
+PI
+UD
+PI
 ae
 ae
 ae
@@ -984,14 +984,14 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-bT
-ab
-ab
-ab
-ab
+vC
+vC
+vC
+Aw
+vC
+vC
+vC
+vC
 "}
 (5,1,1) = {"
 aa
@@ -1015,19 +1015,19 @@ ae
 ae
 ae
 ae
-ac
-ab
-ab
-ab
-ab
-ab
-ab
+PI
+vC
+vC
+vC
+vC
+vC
+vC
 "}
 (6,1,1) = {"
 aa
 aa
 aa
-ab
+vC
 ae
 ag
 ag
@@ -1045,19 +1045,19 @@ bp
 by
 bF
 ae
-ac
-ac
-ab
-ab
-ab
-ab
-ab
+PI
+PI
+vC
+vC
+vC
+vC
+vC
 "}
 (7,1,1) = {"
 aa
-ab
-ab
-ab
+vC
+vC
+vC
 ae
 ah
 ag
@@ -1075,19 +1075,19 @@ bq
 bz
 aP
 af
-ad
-ac
-ac
-ab
-ab
-bW
-bW
+xL
+PI
+PI
+vC
+vC
+Fd
+Fd
 "}
 (8,1,1) = {"
 aa
-ab
-ab
-ac
+vC
+vC
+PI
 ae
 ae
 ae
@@ -1105,19 +1105,19 @@ br
 bA
 aP
 af
-bL
-ac
-ac
-ac
-ab
-ab
-ab
+gG
+PI
+PI
+PI
+vC
+vC
+vC
 "}
 (9,1,1) = {"
-ab
-ab
-ac
-ac
+vC
+vC
+PI
+PI
 ae
 ai
 as
@@ -1135,19 +1135,19 @@ bs
 bB
 aP
 bI
-bM
-ac
-ab
-ab
-ab
-ab
-ab
+wS
+PI
+vC
+vC
+vC
+vC
+vC
 "}
 (10,1,1) = {"
-ab
-ab
-ab
-ac
+vC
+vC
+vC
+PI
 af
 aj
 at
@@ -1165,19 +1165,19 @@ aK
 aK
 aK
 bJ
-aJ
-aJ
-aJ
-ab
-ab
-ab
-ab
+UD
+UD
+UD
+vC
+vC
+vC
+vC
 "}
 (11,1,1) = {"
-ab
-ac
-ac
-ac
+vC
+PI
+PI
+PI
 af
 ak
 as
@@ -1195,19 +1195,19 @@ bt
 aK
 aK
 aK
-aJ
-aJ
-ab
-ab
-bW
-ab
-ab
+UD
+UD
+vC
+vC
+Fd
+vC
+vC
 "}
 (12,1,1) = {"
-ab
-ac
-ac
-ad
+vC
+PI
+PI
+xL
 af
 al
 au
@@ -1225,19 +1225,19 @@ aK
 aK
 aP
 ae
-bM
-ac
-ac
-ab
-ab
-ab
-ab
+wS
+PI
+PI
+vC
+vC
+vC
+vC
 "}
 (13,1,1) = {"
-ab
-ab
-ac
-ac
+vC
+vC
+PI
+PI
 ae
 am
 as
@@ -1255,19 +1255,19 @@ bu
 bu
 bG
 ae
-ac
-bO
-ac
-ab
-ab
-ab
-ab
+PI
+Po
+PI
+vC
+vC
+vC
+vC
 "}
 (14,1,1) = {"
-ab
-ac
-bX
-ca
+vC
+PI
+Co
+Hr
 ae
 ae
 ae
@@ -1288,16 +1288,16 @@ ae
 ae
 ae
 ae
-ab
-ab
+vC
+vC
 aa
 aa
 "}
 (15,1,1) = {"
-ab
-ab
-bY
-ca
+vC
+vC
+zi
+Hr
 ae
 cd
 an
@@ -1318,16 +1318,16 @@ bn
 bN
 bP
 ae
-ab
-ab
+vC
+vC
 aa
 aa
 "}
 (16,1,1) = {"
 aa
-ab
-bZ
-cb
+vC
+pi
+Cv
 cc
 ce
 ao
@@ -1348,16 +1348,16 @@ bK
 ao
 bQ
 ae
-ab
+vC
 aa
 aa
 aa
 "}
 (17,1,1) = {"
 aa
-ab
-ab
-ac
+vC
+vC
+PI
 ae
 ap
 ao
@@ -1386,8 +1386,8 @@ aa
 (18,1,1) = {"
 aa
 aa
-ab
-ac
+vC
+PI
 ae
 aq
 ao
@@ -1416,8 +1416,8 @@ aa
 (19,1,1) = {"
 aa
 aa
-ab
-ab
+vC
+vC
 ae
 ar
 aw
@@ -1447,7 +1447,7 @@ aa
 aa
 aa
 aa
-ab
+vC
 ae
 ae
 ae
