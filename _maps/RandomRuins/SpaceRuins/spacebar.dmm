@@ -17,29 +17,38 @@
 /turf/closed/wall,
 /area/ruin/unpowered)
 "af" = (
-/turf/open/floor/plating/asteroid,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
 /area/ruin/powered)
 "ag" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"ah" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
-"ah" = (
+"ai" = (
 /turf/closed/mineral,
 /area/ruin/powered)
-"ai" = (
+"aj" = (
+/obj/item/weapon/circuitboard/machine/chem_dispenser,
+/turf/closed/mineral,
+/area/ruin/powered)
+"ak" = (
 /turf/open/floor/plating/asteroid,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/ruin/powered)
-"aj" = (
+"al" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"ak" = (
+"am" = (
 /turf/open/floor/plating/asteroid,
 /turf/closed/wall/shuttle{
 	dir = 2;
@@ -47,22 +56,24 @@
 	layer = 2
 	},
 /area/ruin/powered)
-"al" = (
+"an" = (
 /turf/closed/wall,
-/area/ruin/powered)
-"am" = (
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"ao" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall3";
 	dir = 2
 	},
 /area/ruin/powered)
-"an" = (
+"ap" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/ruin/powered)
-"ao" = (
+"aq" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer{
 	emagged = 1;
@@ -72,7 +83,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"ap" = (
+"ar" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
 	emagged = 1;
@@ -82,7 +93,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aq" = (
+"as" = (
 /obj/structure/table,
 /obj/machinery/light/small{
 	dir = 1
@@ -94,12 +105,13 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"ar" = (
+"at" = (
+/obj/machinery/autolathe,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"as" = (
+"au" = (
 /obj/structure/table,
 /obj/item/toy/figure/bartender,
 /obj/item/weapon/gun/projectile/revolver/doublebarrel,
@@ -108,29 +120,34 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"at" = (
+"av" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"au" = (
+"aw" = (
 /obj/effect/mob_spawn/human/bartender/alive,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"av" = (
+"ax" = (
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"ay" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aw" = (
+"az" = (
 /turf/open/floor/plasteel/shuttle,
 /area/ruin/powered)
-"ax" = (
+"aA" = (
 /obj/machinery/door/airlock{
 	name = "Bar Storage";
 	req_access_txt = "25"
@@ -139,14 +156,14 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"ay" = (
+"aB" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"az" = (
+"aC" = (
 /turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/shuttle{
@@ -154,13 +171,13 @@
 	dir = 2
 	},
 /area/ruin/powered)
-"aA" = (
+"aD" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Escape Pod Airlock"
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/ruin/powered)
-"aB" = (
+"aE" = (
 /turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/shuttle{
@@ -168,7 +185,7 @@
 	dir = 2
 	},
 /area/ruin/powered)
-"aC" = (
+"aF" = (
 /obj/machinery/button/door{
 	id = "spacebardock";
 	name = "pod dock door cycle";
@@ -178,13 +195,19 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aD" = (
+"aG" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aE" = (
+"aH" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"aI" = (
 /obj/machinery/light/small,
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -192,7 +215,13 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aF" = (
+"aJ" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"aK" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/rcd,
 /obj/item/weapon/rcd_ammo,
@@ -203,13 +232,16 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aG" = (
+"aL" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"aM" = (
 /obj/structure/table,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aH" = (
+"aN" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/beer,
 /obj/item/weapon/reagent_containers/glass/rag,
@@ -217,7 +249,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aI" = (
+"aO" = (
 /obj/machinery/door/airlock{
 	name = "Bar Storage";
 	req_access_txt = "25"
@@ -228,18 +260,18 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aJ" = (
+"aP" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aK" = (
+"aQ" = (
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aL" = (
+"aR" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -247,26 +279,38 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aM" = (
+"aS" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"aT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ruin/powered)
-"aN" = (
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"aU" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/closed/wall,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aO" = (
+"aV" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/powered)
-"aP" = (
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"aW" = (
 /turf/open/floor/plating,
-/area/ruin/powered)
-"aQ" = (
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"aX" = (
 /obj/structure/chair{
 	tag = "icon-chair (EAST)";
 	icon_state = "chair";
@@ -276,13 +320,13 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aR" = (
+"aY" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aS" = (
+"aZ" = (
 /obj/structure/chair{
 	tag = "icon-chair (WEST)";
 	icon_state = "chair";
@@ -292,7 +336,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aT" = (
+"ba" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
@@ -301,38 +345,44 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aU" = (
+"bb" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aV" = (
+"bc" = (
+/obj/item/device/radio/beacon,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bd" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aW" = (
+"be" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aX" = (
+"bf" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aY" = (
+"bg" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"aZ" = (
+"bh" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -340,7 +390,13 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"ba" = (
+"bi" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bj" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Bathroom"
 	},
@@ -348,7 +404,13 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bb" = (
+"bk" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bl" = (
 /obj/structure/urinal{
 	pixel_x = -32
 	},
@@ -356,12 +418,12 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bc" = (
+"bm" = (
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bd" = (
+"bn" = (
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
@@ -375,7 +437,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"be" = (
+"bo" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -385,7 +447,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bf" = (
+"bp" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -393,7 +455,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bg" = (
+"bq" = (
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -404,7 +466,7 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bh" = (
+"br" = (
 /obj/machinery/door/airlock{
 	name = "Toilet"
 	},
@@ -412,88 +474,38 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bi" = (
+"bs" = (
 /obj/effect/glowshroom/single,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bj" = (
+"bt" = (
+/obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bk" = (
-/obj/item/device/radio/beacon,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bl" = (
+/area/ruin/powered)
+"bu" = (
+/turf/open/floor/plating,
+/area/ruin/powered)
+"bv" = (
 /turf/open/floor/plating{
 	icon_plating = "warnplate";
 	icon_state = "warnplate"
 	},
 /area/ruin/powered)
-"bm" = (
+"bw" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "spacebardock";
 	name = "airlock dock"
 	},
 /turf/open/floor/plating,
 /area/ruin/powered)
-"bn" = (
+"bx" = (
 /obj/machinery/door/poddoor{
 	id = "spacebardock";
 	name = "airlock dock"
 	},
 /turf/open/floor/plating,
-/area/ruin/powered)
-"bo" = (
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bp" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bq" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"br" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bs" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bv" = (
-/obj/machinery/vending/dinnerware,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bu" = (
-/obj/machinery/autolathe,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bt" = (
-/obj/item/weapon/circuitboard/machine/chem_dispenser,
-/turf/closed/mineral,
 /area/ruin/powered)
 
 (1,1,1) = {"
@@ -762,23 +774,23 @@ aa
 aa
 ac
 ac
-aM
-aM
-al
-aM
+af
+af
+aL
+af
 ac
 ac
 ac
-aM
-aM
-aM
-aM
-aM
+af
+af
+af
+af
+af
 ac
 ac
-al
-aO
-al
+aL
+bt
+aL
 ac
 ac
 ab
@@ -804,23 +816,23 @@ aa
 ac
 ac
 ac
-aM
 af
+ag
+ag
 af
-aM
 ac
-aM
-aM
 af
 af
+ag
+ag
+ag
+ag
+ag
 af
 af
-af
-aM
-aM
-al
-aP
-al
+aL
+bu
+aL
 ac
 ab
 ab
@@ -845,27 +857,27 @@ aa
 ac
 ac
 ac
-aM
 af
+ag
+ag
+ag
+ag
 af
-af
-af
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-aP
-al
-al
-al
-al
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+aL
+bu
+aL
+aL
+aL
+aL
 ab
 ab
 aa
@@ -886,28 +898,28 @@ aa
 ac
 ac
 ac
-aM
 af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-aO
-al
-af
-af
-al
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+aL
+bt
+aL
+ag
+ag
+aL
 ab
 ab
 aa
@@ -927,34 +939,34 @@ aa
 ac
 ac
 ac
-aM
 af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-al
-al
-al
-al
-al
-al
-al
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
 aa
 aa
 "}
@@ -968,34 +980,34 @@ aa
 ac
 ac
 ac
-aM
 af
-ai
-am
-am
-az
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-bl
-bm
-aP
-aP
-aP
-aP
-bn
+ag
+ak
+ao
+ao
+aC
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bv
+bw
+bu
+bu
+bu
+bu
+bx
 aa
 aa
 aa
@@ -1009,35 +1021,35 @@ aa
 aa
 ac
 ac
-aM
 af
-af
-aj
-an
-aw
-aA
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-bl
-bm
-aP
-aP
-aP
-aP
-bn
+ag
+ag
+al
+ap
+az
+aD
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bv
+bw
+bu
+bu
+bu
+bu
+bx
 aa
 aa
 aa
@@ -1051,35 +1063,35 @@ aa
 ac
 ac
 ac
-aM
 af
-af
-ak
+ag
+ag
 am
-am
-aB
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-bl
-bm
-aP
-aP
-aP
-aP
-bn
+ao
+ao
+aE
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bv
+bw
+bu
+bu
+bu
+bu
+bx
 aa
 aa
 aa
@@ -1093,35 +1105,35 @@ aa
 ac
 ac
 ac
-aM
 af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-bl
-bm
-aP
-aP
-aP
-aP
-bn
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bv
+bw
+bu
+bu
+bu
+bu
+bx
 aa
 aa
 aa
@@ -1135,35 +1147,35 @@ ac
 ac
 ac
 ad
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ai
-am
-am
-az
-af
-af
-af
-bl
-bm
-aP
-aP
-aP
-aP
-bn
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ak
+ao
+ao
+aC
+ag
+ag
+ag
+bv
+bw
+bu
+bu
+bu
+bu
+bx
 aa
 aa
 aa
@@ -1177,35 +1189,35 @@ ac
 ac
 ac
 ad
-af
-af
-af
-ah
-ah
-ah
-af
-af
-af
-bo
-bs
-bo
-af
-af
-af
-aj
+ag
+ag
+ag
+ai
+ai
+ai
+ag
+ag
+ag
 an
-aw
-aA
-af
-af
-af
-bl
-bm
-aP
-aP
-aP
-aP
-bn
+aV
+an
+ag
+ag
+ag
+al
+ap
+az
+aD
+ag
+ag
+ag
+bv
+bw
+bu
+bu
+bu
+bu
+bx
 aa
 aa
 aa
@@ -1219,36 +1231,36 @@ ac
 ac
 ac
 ae
-af
-af
-ah
-ah
-ah
-ah
-ah
-af
-af
-br
-bj
-br
-af
-af
-af
-ak
+ag
+ag
+ai
+ai
+ai
+ai
+ai
+ag
+ag
+aT
+aW
+aT
+ag
+ag
+ag
 am
-am
-aB
-af
-af
-af
-al
-al
-al
-al
-al
-al
-al
-al
+ao
+ao
+aE
+ag
+ag
+ag
+aL
+aL
+aL
+aL
+aL
+aL
+aL
+aL
 aa
 aa
 "}
@@ -1261,31 +1273,31 @@ ac
 ac
 ac
 ad
-af
-ah
-bt
-ah
-ah
-ah
-ah
-af
-af
-aN
-bj
-br
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
+ag
+ai
+aj
+ai
+ai
+ai
+ai
+ag
+ag
+aU
+aW
+aT
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+aL
 ac
 ac
 ac
@@ -1303,31 +1315,31 @@ ac
 ac
 ac
 ad
-af
-ah
-ah
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bs
-bo
-bo
-bo
-bo
-bo
-br
-af
-af
-af
-af
-ah
-af
-af
-al
+ag
+ai
+ai
+an
+an
+an
+an
+an
+an
+an
+aV
+an
+an
+an
+an
+an
+aT
+ag
+ag
+ag
+ag
+ai
+ag
+ag
+aL
 ac
 ac
 ac
@@ -1345,31 +1357,31 @@ ab
 ac
 ac
 ac
+af
+ag
+ai
+an
+aq
+ax
+aF
 aM
-af
-ah
-bo
-ao
-ar
-aC
-aG
-aJ
-aK
-aK
+aP
+aQ
+aQ
+ba
+bb
+aY
+bh
+aQ
+aQ
 aT
-aU
-aR
-aZ
-aK
-aK
-br
-af
-af
-ah
-ah
-ah
-af
-al
+ag
+ag
+ai
+ai
+ai
+ag
+aL
 ac
 ac
 ac
@@ -1387,31 +1399,31 @@ ab
 ac
 ac
 ac
-aM
 af
-af
-bo
-ap
+ag
+ag
+an
 ar
-ar
-aG
-aJ
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-br
-af
-ah
-ah
-af
-af
+ax
+ax
 aM
+aP
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aT
+ag
+ai
+ai
+ag
+ag
+af
 ac
 ac
 ac
@@ -1430,30 +1442,30 @@ ab
 ac
 ac
 ac
-aM
 af
-bo
-aq
-ar
-ar
-aH
-aJ
-aK
-aK
+ag
+an
+as
+ax
+ax
+aN
+aP
 aQ
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-br
+aQ
+aX
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aT
+ag
+ag
+ag
+ag
 af
-af
-af
-af
-aM
 ac
 ac
 aa
@@ -1472,30 +1484,30 @@ ab
 ac
 ac
 ac
+af
+ag
+an
+at
+ax
+ax
 aM
-af
+aP
+aQ
+aQ
+aY
+aQ
+aQ
+bi
+bk
+bb
 bo
-bu
-ar
-ar
-aG
-aJ
-aK
-aK
-aR
-aK
-aK
-aK
-aK
-aU
-be
-aZ
-bo
+bh
+an
+ag
+ag
+ag
+ag
 af
-af
-af
-af
-aM
 ac
 ac
 aa
@@ -1513,31 +1525,31 @@ aa
 ac
 ac
 ac
-aM
 af
+ag
+ag
+an
+an
+aA
+aG
+an
+aQ
+aQ
+aQ
+aZ
+aQ
+bd
+an
+an
+an
+an
+an
+an
+ag
+ag
+ag
+ag
 af
-bo
-bo
-ax
-aD
-bo
-aK
-aK
-aK
-aS
-aK
-aV
-bo
-bo
-bo
-bo
-bo
-bo
-af
-af
-af
-af
-aM
 ac
 ac
 aa
@@ -1555,31 +1567,31 @@ aa
 ac
 ac
 ac
-aM
 af
+ag
+ag
+an
+au
+ax
+aH
+an
+aQ
+aQ
+aQ
+aQ
+bc
+be
+an
+bl
+bl
+an
+bq
+an
+ai
+ag
+ag
+ag
 af
-bo
-as
-ar
-bp
-bo
-aK
-aK
-aK
-aK
-bk
-aW
-bo
-bb
-bb
-bo
-bg
-bo
-ah
-af
-af
-af
-aM
 ac
 ac
 ac
@@ -1597,31 +1609,31 @@ aa
 ac
 ac
 ac
-aM
 af
-af
-bo
-at
-ar
-aE
-bo
-aL
-aK
+ag
+ag
+an
+av
+ax
+aI
+an
+aR
 aQ
-aK
-aK
 aX
-bo
-bc
-bc
-bo
-bh
-bo
-ah
+aQ
+aQ
+bf
+an
+bm
+bm
+an
+br
+an
+ai
+ag
+ag
+ag
 af
-af
-af
-aM
 ac
 ab
 ac
@@ -1639,31 +1651,31 @@ aa
 ac
 ac
 ac
-aM
 af
-af
-bo
-au
-ar
-bq
-bo
-aK
-aK
-aR
-aK
-aK
+ag
+ag
+an
+aw
+ax
+aJ
+an
+aQ
+aQ
 aY
-bo
-bc
-bc
-bf
-bc
-bo
-ah
-ah
+aQ
+aQ
+bg
+an
+bm
+bm
+bp
+bm
+an
+ai
+ai
+ag
+ag
 af
-af
-aM
 ac
 ac
 ac
@@ -1681,31 +1693,31 @@ aa
 ac
 ac
 ac
-aM
 af
+ag
+ag
+an
+ax
+ax
+ax
+aO
+aQ
+aQ
+aZ
+aQ
+aQ
+aQ
+an
+bm
+bm
+bm
+bs
+an
+ai
+ai
+ag
+ag
 af
-bo
-ar
-ar
-ar
-aI
-aK
-aK
-aS
-aK
-aK
-aK
-bo
-bc
-bc
-bc
-bi
-bo
-ah
-ah
-af
-af
-aM
 ac
 ac
 ab
@@ -1723,31 +1735,31 @@ aa
 aa
 ac
 ac
-aM
 af
-af
-bo
-av
+ag
+ag
+an
 ay
-aF
-bo
-bv
+aB
 aK
-aK
-aK
-aK
-aK
-ba
-bc
-bd
-bd
-bc
-bo
-ah
-ah
-ah
+an
+aS
+aQ
+aQ
+aQ
+aQ
+aQ
+bj
+bm
+bn
+bn
+bm
+an
+ai
+ai
+ai
+ag
 af
-aM
 ac
 ac
 ab
@@ -1765,31 +1777,31 @@ aa
 aa
 ac
 ac
+ah
+ag
+ag
+an
+an
+an
+an
+an
+an
+aT
+aT
+aT
+aT
+an
+an
+an
+an
+an
+an
+an
+ai
+ai
+ai
 ag
 af
-af
-bo
-bo
-bo
-bo
-bo
-bo
-br
-br
-br
-br
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-ah
-ah
-ah
-af
-aM
 ac
 ac
 aa
@@ -1808,30 +1820,30 @@ aa
 aa
 ac
 ac
-aM
 af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-af
-al
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ag
+aL
 ac
 ac
 aa
@@ -1850,29 +1862,29 @@ aa
 aa
 ac
 ac
-aM
 af
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ai
+ai
+ai
+ai
+ai
+ai
+ag
 af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ah
-ah
-ah
-ah
-ah
-ah
-af
-aM
 ac
 ac
 ac
@@ -1893,28 +1905,28 @@ aa
 aa
 ac
 ac
-aM
-aM
-aM
 af
 af
 af
-af
-aM
-aM
-aM
-aM
-aM
+ag
+ag
+ag
+ag
 af
 af
 af
 af
 af
+ag
+ag
+ag
+ag
+ag
+ag
+ag
 af
 af
-aM
-aM
-al
+aL
 ac
 ac
 aa
@@ -1938,22 +1950,22 @@ ac
 ac
 ac
 ac
-aM
-aM
-al
-aM
-ac
-ac
-ac
-ac
-ac
-aM
 af
 af
+aL
+af
+ac
+ac
+ac
+ac
+ac
+af
+ag
+ag
+ag
+ag
 af
 af
-aM
-aM
 ac
 ac
 ac
@@ -1990,10 +2002,10 @@ ac
 ac
 ac
 ac
-aM
-aM
-aM
-aM
+af
+af
+af
+af
 ac
 ac
 ac
