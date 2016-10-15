@@ -2,7 +2,7 @@
 /obj/machinery/golfhole
 	desc = "A hole for the game of golf. Try to score a hole in one."
 	name = "golf hole"
-	icon = 'code/game/utah.dmi'
+	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state = "redgolfhole_u"
 	anchored = 0
 	var/holestate = 0
@@ -35,11 +35,11 @@
 		var/obj/item/golfball = mover
 		if(prob(75))
 			golfball.loc = src
-			visible_message("<span class='notice'>The [golfball] lands in the [src].</span>")
+			visible_message("<span class='notice'>The golfball lands in the [src].</span>")
 
 			update_icon()
 		else
-			visible_message("<span class='notice'>The [golfball] bounces out of the [src]!</span>")
+			visible_message("<span class='notice'>The golfball bounces out of the [src]!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
@@ -56,13 +56,13 @@
 
 /obj/machinery/golfhole/proc/hole_place_item_in(obj/item/golfball, mob/user)
 	golfball.loc = src
-	user.visible_message("[user.name] knocks the [golfball] into the [src].", \
-						"<span class='notice'>You knock the [golfball] into the [src].</span>")
+	user.visible_message("[user.name] knocks the golfball into the [src].", \
+						"<span class='notice'>You knock the golfball into the [src].</span>")
 
 /obj/machinery/golfhole/blue
 	desc = "A hole for the game of golf. Try to score a hole in one."
 	name = "golf hole"
-	icon = 'code/game/utah.dmi'
+	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state = "bluegolfhole_u"
 	anchored = 0
 
@@ -94,11 +94,11 @@
 		var/obj/item/golfball = mover
 		if(prob(75))
 			golfball.loc = src
-			visible_message("<span class='notice'>The [golfball] lands in the [src].</span>")
+			visible_message("<span class='notice'>The golfball lands in the [src].</span>")
 
 			update_icon()
 		else
-			visible_message("<span class='notice'>The [golfball] bounces out of the [src]!</span>")
+			visible_message("<span class='notice'>The golfball bounces out of the [src]!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
@@ -115,13 +115,13 @@
 
 /obj/machinery/golfhole/blue/proc/blue_place_item_in(obj/item/golfball, mob/user)
 	golfball.loc = src
-	user.visible_message("[user.name] knocks the [golfball] into the [src].", \
-						"<span class='notice'>You knock the [golfball] into the [src].</span>")
+	user.visible_message("[user.name] knocks the golfball into the [src].", \
+						"<span class='notice'>You knock the golfball into the [src].</span>")
 
 /obj/machinery/golfhole/puttinggreen
 	desc = "The captain's putting green for the game of golf. Try to score a hole in one."
 	name = "Captain's putting green"
-	icon = 'code/game/utah.dmi'
+	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state = "puttinggreen"
 	anchored = 1
 
@@ -153,11 +153,11 @@
 		var/obj/item/golfball = mover
 		if(prob(75))
 			golfball.loc = src
-			visible_message("<span class='notice'>The [golfball] lands in the [src].</span>")
+			visible_message("<span class='notice'>The golfball lands in the [src].</span>")
 
 			update_icon()
 		else
-			visible_message("<span class='notice'>The [golfball] bounces out of the [src]!</span>")
+			visible_message("<span class='notice'>The golfball bounces out of the [src]!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
@@ -173,13 +173,13 @@
 
 /obj/machinery/golfhole/puttinggreen/proc/pgreen_place_item_in(obj/item/golfball, mob/user)
 	golfball.loc = src
-	user.visible_message("[user.name] knocks the [golfball] into the [src].", \
-						"<span class='notice'>You knock the [golfball] into the [src].</span>")
+	user.visible_message("[user.name] knocks the golfball into the [src].", \
+						"<span class='notice'>You knock the golfball into the [src].</span>")
 
 /obj/item/golfball
 	desc = "A ball for the game of golf."
 	name = "golfball"
-	icon = 'code/game/utah.dmi'
+	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state ="golfball"
 	throwforce = 12
 	attack_verb = list("hit")
@@ -192,7 +192,7 @@
 /obj/item/golfclub
 	desc = "A club for the game of golf."
 	name = "golfclub"
-	icon = 'code/game/utah.dmi'
+	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state ="golfclub"
 	force = 8
 	attack_verb = list("smacked", "struck")
