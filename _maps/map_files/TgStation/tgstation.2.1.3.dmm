@@ -1561,6 +1561,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/entertainment,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -84134,7 +84135,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
@@ -89290,7 +89291,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
@@ -91082,7 +91083,7 @@ agI
 ahw
 ain
 aaF
-aae
+aaa
 aaa
 aaA
 aaa
@@ -92857,7 +92858,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
@@ -95680,7 +95681,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
@@ -98765,7 +98766,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
@@ -101855,7 +101856,7 @@ aaa
 aaa
 aaa
 aaa
-aae
+aaa
 aaa
 aaa
 aaa
