@@ -12,9 +12,10 @@
 
 
 /mob/living/carbon/alien/death(gibbed)
-	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph))
+/*	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph))
 		ticker.mode.xenomorphs["QUEEN"] -= mind
 		ticker.mode.xenomorphs["HUNTERS"] -= mind
 		ticker.mode.xenomorphs["SENITELS"] -= mind
 		ticker.mode.xenomorphs["DRONES"] -= mind
+*/
 	..()

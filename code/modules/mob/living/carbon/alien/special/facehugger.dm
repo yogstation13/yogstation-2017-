@@ -29,6 +29,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 	var/attached = 0
 
+	var/colony_suffix = null
+
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
 	sterile = 1
@@ -183,7 +185,10 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
 		if((!LC || LC.status != ORGAN_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			new /obj/item/organ/body_egg/alien_embryo(target)
+			var/obj/item/organ/body_egg/alien_embryo/alien_embryo
+
+			alien_embryo = new /obj/item/organ/body_egg/alien_embryo(target)
+			alien_embryo.colony = colony_suffix
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target

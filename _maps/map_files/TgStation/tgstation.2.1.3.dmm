@@ -19177,10 +19177,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -25977,10 +25973,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
-	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -36696,10 +36688,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /turf/open/floor/plasteel,
 /area/teleporter)
 "bvM" = (
@@ -41902,10 +41890,6 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /turf/open/floor/engine,
 /area/toxins/explab)
 "bFm" = (
@@ -45672,10 +45656,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -48802,10 +48782,6 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bSb" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /obj/machinery/button/massdriver{
 	dir = 2;
 	id = "toxinsdriver";
@@ -54443,7 +54419,7 @@
 "cdj" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark{
-	name = "xeno_spawn";
+	name = "xeno-spawn";
 	pixel_x = -1
 	},
 /turf/open/floor/wood,
@@ -54907,10 +54883,6 @@
 "cef" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ceg" = (
@@ -55820,10 +55792,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
 /turf/open/floor/plasteel{
 	icon_state = "warningcorner";
 	dir = 1
@@ -56404,7 +56372,7 @@
 /area/maintenance/asmaint2)
 "chb" = (
 /obj/effect/landmark{
-	name = "xeno_spawn";
+	name = "xeno-spawn";
 	pixel_x = -1
 	},
 /turf/open/floor/plating,
@@ -57401,7 +57369,7 @@
 /area/engine/gravity_generator)
 "cjc" = (
 /obj/effect/landmark{
-	name = "xeno_spawn";
+	name = "xeno-spawn";
 	pixel_x = -1
 	},
 /turf/open/floor/plasteel{
@@ -63553,7 +63521,7 @@
 	dir = 4
 	},
 /obj/effect/landmark{
-	name = "xeno_spawn";
+	name = "xeno-spawn";
 	pixel_x = -1
 	},
 /turf/open/floor/plasteel{
@@ -69139,6 +69107,27 @@
 	dir = 2
 	},
 /area/shuttle/transport)
+"cGc" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/fpmaint)
+"cGd" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
+"cGe" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "cGf" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -69147,32 +69136,11 @@
 	},
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark{
-	name = "xeno_spawn";
+	name = "xeno-spawn";
 	pixel_x = -1
 	},
 /turf/open/space,
 /area/solar/port)
-"cGe" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"cGd" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
-"cGc" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint)
 
 (1,1,1) = {"
 aaa
@@ -83442,7 +83410,7 @@ bhG
 biZ
 bkD
 blZ
-cGe
+bnI
 bpp
 bhB
 aaa
@@ -95795,7 +95763,7 @@ bHn
 bIz
 bKo
 bKo
-bNe
+bNd
 bKo
 bKo
 bQY
@@ -96830,7 +96798,7 @@ bRb
 bHn
 bTE
 bTE
-bWb
+bTC
 bXs
 bYP
 bXu
@@ -100148,7 +100116,7 @@ bjI
 blc
 bgT
 boo
-bpU
+brx
 brx
 bsS
 buq
@@ -103534,7 +103502,7 @@ cph
 cqc
 cqQ
 crL
-csN
+csP
 csP
 bUb
 aaA
@@ -105575,7 +105543,7 @@ cai
 cbu
 cai
 bUb
-cew
+cev
 cfA
 cev
 bUb
@@ -106039,7 +106007,7 @@ aHl
 aIG
 aKj
 aKj
-aNt
+aKj
 aKj
 aPQ
 aRp
@@ -115364,7 +115332,7 @@ bny
 bny
 bny
 bUI
-aNB
+chb
 bUI
 cdS
 aaa

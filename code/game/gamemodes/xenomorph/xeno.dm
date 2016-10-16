@@ -1,13 +1,12 @@
+/*
 #define PREDATORS_UNKNOWN 0
 #define PREDATORS_ALIVE 1
 #define PREDATORS_DEAD 2
 
+*/
 var/list/turf/xenomorphweeds = list()
 
 /datum/game_mode
-
-	// we use these lists to balance out the hive
-	// xenomorphs["QUEEN"]
 	var/list/datum/mind/xenomorphs = list(
 	"QUEEN" = list (),
 	"HUNTERS" = list (),
@@ -16,10 +15,37 @@ var/list/turf/xenomorphweeds = list()
 	)
 
 	var/list/datum/mind/predators = list()
-	var/predstatus = PREDATORS_UNKNOWN
+
+	var/queensuffix
+
+/datum/game_mode/proc/checkHive()
+	var/hcount = xenomorphs.len["HUNTERS"]
+	var/scount = xenomorphs.len["SENITELS"]
+	var/dcount = xenomorphs.len["DRONES"]
+
+	if(!hcount || !scount || !dcount)
+		return 0 //"anything"
+
+
+	if(hcount == (scount && dcount))
+		return 0
+
+	if(hcount > scount)
+		if(scount > dcount)
+			return "drone"
+
+		else
+			return "senitel"
+
+	else
+		if(hcount > dcount)
+			return "drone"
+
+		else
+			return "hunter"
 
 /datum/game_mode/xenomorph
-	name = "alien" //infestation
+	name = "alien"
 	config_tag = "alien"
 	antag_flag = ROLE_ALIEN
 	/*
@@ -33,19 +59,86 @@ var/list/turf/xenomorphweeds = list()
 	recommended_enemies = 1
 
 	var/alien_weed_control_count
-	var/yautijalaunch
-	var/ERTlaunch
+	var/yautijalaunch = FALSE
+	var/ERTlaunch = FALSE
 
 
 /datum/game_mode/xenomorph/announce()
 	world << "<B>The current gamemode is - Alien Infestation!</B>"
 	world << "A transportation shuttle mysteriously dissapered while carrying live xenomorphs from a determined \
 	uninhabitable planet. Nanotrasen has identified the same creatures to be inhabitating SS13 but, was too late \
-	to cancel the next shift.\n<B>Xenomorphs</B>: Restore the Queen's glory and make turn the station into your \
+	to cancel the next shift.\n<B>Xenomorphs</B>: Restore the Queen's glory and take over the station! Turn it into your \
 	own colony! Planting weeds increases the growth of her colony, however make sure to use strategy to outsmart \
-	the puny meatbags! Always listen to the queen. You may never disobey her.\n<B>Personnel</B> : Stop the xenomorphs \
-	and save SS13! Make sure to eradicated any sort of alien weeds when you see them because they'll use those to \
-	take over!</B>"
+	the puny meatbags! Always listen to the queen. You may never disobey her.\n<B>Personnel</B> : Stop the xenomorphs at \
+	all costs! Burn down their weeds and stop the takeover!</B>"
+
+/datum/game_mode/proc/Xregister(var/datum/mind/M)
+	if(!M)
+		return FALSE
+
+	if(ticker && ticker.current_state == GAME_STATE_FINISHED)
+		return FALSE
+
+	else
+		return TRUE
+
+
+/datum/game_mode/xenomorph/proc/AddXenomorph(var/datum/mind/M)
+	if(!M)	return
+	if(!M.current)	return
+
+	if(istype(M.current, /mob/living/carbon/alien/humanoid/hunter))
+		AddHunter(M)
+
+	if(istype(M.current, /mob/living/carbon/alien/humanoid/sentinel))
+		AddSenitel(M)
+
+	if(istype(M.current, /mob/living/carbon/alien/humanoid/drone))
+		AddDrone(M)
+
+/datum/game_mode/xenomorph/proc/AddQueen(var/datum/mind/M)
+	if(!Xregister(M))
+		return
+
+	xenomorphs["QUEEN"] += M
+	xenomorphs += M
+	M.assigned_role = "xeno queen"
+	M.special_role = "xeno queen"
+
+
+/datum/game_mode/xenomorph/proc/AddHunter(var/datum/mind/M)
+	if(!Xregister(M))
+		return
+
+	xenomorphs["HUNTERS"] += M
+	xenomorphs += M
+	M.assigned_role = "xeno hunter"
+	M.special_role = "xeno hunter"
+
+
+/datum/game_mode/xenomorph/proc/AddSenitel(var/datum/mind/M)
+	if(!Xregister(M))
+		return
+
+	xenomorphs["SENITELS"] += M
+	xenomorphs += M
+	M.assigned_role = "xeno sentinel"
+	M.special_role = "xeno sentinel"
+
+
+/datum/game_mode/xenomorph/proc/AddDrone(var/datum/mind/M)
+	if(!Xregister(M))
+		return
+
+	xenomorphs["DRONES"] += M
+	xenomorphs += M
+	M.assigned_role = "xeno drone"
+	M.special_role = "xeno drone"
+
+// queen is always chosen.
+// than a 50/50 shot at hunter or sentinel
+// drone can only be chosen when a hunter or sentinel has already been
+
 
 /datum/game_mode/xenomorph/pre_setup()
 	var/player_count = num_players()
@@ -60,12 +153,11 @@ var/list/turf/xenomorphweeds = list()
 
 	for(var/a in hive)
 		var/datum/mind/alive_xenomorph = a
+
+
 		if(!queen_chosen)
 			queen_chosen = TRUE
-			xenomorphs["QUEEN"] += alive_xenomorph
-			xenomorphs += alive_xenomorph
-			alive_xenomorph.assigned_role = "xeno queen"
-			alive_xenomorph.special_role = "xeno queen"
+			AddQueen(alive_xenomorph)
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno queen")
 			continue
 
@@ -76,28 +168,19 @@ var/list/turf/xenomorphweeds = list()
 
 		if(prob(hunt_guard_diff_prob))
 			hunter_sentinel_ticker++
-			xenomorphs["HUNTERS"] += alive_xenomorph
-			xenomorphs += alive_xenomorph
-			alive_xenomorph.assigned_role = "xeno hunter"
-			alive_xenomorph.special_role = "xeno hunter"
+			AddHunter(alive_xenomorph)
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno hunter")
 			continue
 
 
-		if(prob(hunt_guard_diff_prob + 40)) // 90% chance if you aren't being a hunter, 10% chance for drone. 140% chance (for sentinel) if a hunter hasn't been chosen.
-			xenomorphs["SENTINELS"] += alive_xenomorph
-			xenomorphs += alive_xenomorph
-			alive_xenomorph.assigned_role = "xeno sentinel"
-			alive_xenomorph.special_role = "xeno sentinel"
+		if(prob(hunt_guard_diff_prob))
+			AddSenitel(alive_xenomorph)
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno sentinel")
 			continue
 
 		else if(!drone_chosen)
 			drone_chosen = TRUE
-			xenomorphs["DRONES"] += alive_xenomorph
-			xenomorphs += alive_xenomorph
-			alive_xenomorph.assigned_role = "xeno drone"
-			alive_xenomorph.special_role = "xeno drone"
+			AddDrone(alive_xenomorph)
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno drone")
 			continue
 
@@ -108,7 +191,8 @@ var/list/turf/xenomorphweeds = list()
 
 /datum/game_mode/xenomorph/post_setup()
 
-	var/obj/effect/landmark/alien_spawn
+	alien_weed_control_count = rand(950,1250)
+
 	var/list/spawns = list()
 
 	for(var/obj/effect/landmark/A in landmarks_list)
@@ -116,11 +200,10 @@ var/list/turf/xenomorphweeds = list()
 			spawns += A
 
 	var/RNGspawn = pick(spawns)
-	alien_spawn = RNGspawn
 
 	for(var/datum/mind/alien_brethern in xenomorphs)
 		var/greeted_forged_moved
-		for(var/turf/open/floor/F in orange(1, alien_spawn))
+		for(var/turf/open/floor/F in orange(1, RNGspawn))
 			if(greeted_forged_moved)
 				continue
 			var/list/turf/floors = list()
@@ -131,86 +214,69 @@ var/list/turf/xenomorphweeds = list()
 			greet_xeno_and_transform(alien_brethern, alien_brethern.assigned_role)
 			greeted_forged_moved = TRUE
 
-	var/shuffle_universe_luck = rand(2570,3000) // this at least gives time for the queen to prepare. I don't want to make anyone anxious - Super
-
+	var/shuffle_universe_luck = rand(3000,4500)
 	spawn(shuffle_universe_luck)
 		priority_announce("Xenomorphic lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation. All personel are instructed to assist in the extermination of this species. This is not a drill.", "CRITICAL: Biohazard Alert", 'sound/machines/Alarm.ogg')
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+
+	var/colony
+
+	for(var/mob/living/carbon/alien/A in xenomorphs)
+		if(A.mind.assigned_role == "xeno queen")
+			colony = A.HD.colony_suffix
+			queensuffix = A.HD.colony_suffix
+
+	if(colony)
+		for(var/mob/living/carbon/alien/aliens in xenomorphs)
+			if(colony)
+				aliens.HD.colony_suffix = colony
+
+	else
+		message_admins("ERROR: Queen failed to configure a colony suffix.")
+
 	return ..()
 
 /datum/game_mode/xenomorph/proc/greet_xeno_and_transform(datum/mind/hbrain, role)
 	if(!role)
 		return
-	var/mob/living/M = hbrain.current
 	var/mob/living/l
+	var/mob/living/M = hbrain.current
 
 	switch(role)
 		if("xeno hunter")
-			l = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+			l = new /mob/living/carbon/alien/humanoid/hunter(hbrain.current.loc)
 
 		if("xeno sentinel")
-			l = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+			l = new /mob/living/carbon/alien/humanoid/sentinel(hbrain.current.loc)
 
 		if("xeno queen")
-			l = new /mob/living/carbon/alien/humanoid/royal/queen(M.loc)
+			l = new /mob/living/carbon/alien/humanoid/royal/queen(hbrain.current.loc)
 
 		if("xeno drone")
-			l = new /mob/living/carbon/alien/humanoid/drone(M.loc)
+			l = new /mob/living/carbon/alien/humanoid/drone(hbrain.current.loc)
 
 	if(hbrain)
 		hbrain.transfer_to(l)
 		var/datum/objective/weedconquer/W = new
 		W.owner = l
 		l.mind.objectives += W
+		l.mind.special_role = hbrain.special_role
+		l.mind.assigned_role = hbrain.assigned_role
 		l << "<span class='alertalien'>You are a <B>[role]</B>!</span>"
 		l << "<B><span class='alien'>Objective #1</B>: [W.explanation_text]</span>"
+		var/mob/living/carbon/alien/A = l
+		if(hbrain.special_role != "xeno queen")
+			A.HD = new /datum/huggerdatum/default(origin = l)
+		qdel(M)
 	else
-		message_admins("ERROR: [ticker.mode] has failed to greet and transform [M] / [M.ckey]. Contact a coder!")
-	qdel(M)
-
-/datum/objective/weedconquer
-	explanation_text = "Take over the station with your alien weeds!"
-
-/datum/objective/weedconquer/check_completion()
-	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph))
-		var/datum/game_mode/xenomorph/X = ticker.mode
-		if(X.alien_weed_control_count <= xenomorphweeds.len)
-			return 1
-	return 0
+		message_admins("ERROR: [ticker.mode] has failed to greet and transform [hbrain.current] / [hbrain.current.ckey]. Contact a coder!")
 
 /datum/game_mode/xenomorph/check_finished()
-	if(!alien_weed_control_count)
-		alien_weed_control_count = rand(950,1250)
-		return 0
-
 	if(alien_weed_control_count <= xenomorphweeds.len)
-		return 1
+		return TRUE
 
-	var/predatorcount
-	if(yautijalaunch)
-		for(var/datum/mind/M in predators.len)
-			if(M.current && M.current.stat != DEAD)
-				predatorcount++
-
-	if(predstatus <= PREDATORS_UNKNOWN || predstatus == PREDATORS_DEAD)
-		if(!calculateXenos())
-			message_admins("{ISSS!!")
-			return 0
-		else
-			message_admins("10/10")
-			return 1
-
-	if(predstatus == PREDATORS_ALIVE)
-		if(!predatorcount)
-			predstatus = PREDATORS_DEAD
-
-	var/predators_vs_aliens = (alien_weed_control_count *  2/3) - 100 // around 3/6's
-	if(predators_vs_aliens < 0)
-		message_admins("ERROR: Predatorsinterested value has fallen under a zeorth value.") // fucking rotten tomato again
-		return
-
-	if(xenomorphweeds.len >= predators_vs_aliens)
-		callPredators()
+	if(calculateXenos(justqueen = TRUE) == 2)
+		SSshuttle.emergency.mode = SHUTTLE_IDLE
 
 	if(ERTlaunch)
 		..()
@@ -218,109 +284,123 @@ var/list/turf/xenomorphweeds = list()
 
 	var/totalcrew
 	var/deadcrew
+	var/alivecrew
 	for(var/mob/living/carbon/human/M in mob_list)
 		if(M.get_assignment())
 			totalcrew++
 			if(M.stat == DEAD)
 				deadcrew++
+			else
+				alivecrew++
 
 	var/centcommexpectation = totalcrew * 1/8
-	if(totalcrew <= centcommexpectation)
-		message_admins("An AI admin is automatically assembling an ERT squad due to the crew's casualty rate: [deadcrew]/[totalcrew]")
+	if(alivecrew >= centcommexpectation)
+		message_admins("An AI admin is automatically assembling an ERT squad due to the crew's casualty rate: [deadcrew]/[totalcrew] crewmembers dead.")
 		var/datum/admins/ai_admin = new /datum/admins
 
 		ai_admin.makeEmergencyresponseteam(AI = TRUE, "Amber: Full ERT (Armoury Access)", 7, "Assist the crew, call the emergency shuttle, collect and report casualities, and exterminate the xenomorphs")
 		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/shuttledock.ogg', "Alert - Nanotrasen")
 		ERTlaunch = TRUE
 
+	if(!calculateXenos())
+		return FALSE
+	else
+		return TRUE
 
 	..()
 
 /datum/game_mode/xenomorph/declare_completion()
 	if(alien_weed_control_count <= xenomorphweeds.len)
-		if(calculateXenos())
+		if(!calculateXenos())
 			feedback_set_details("round_end_result","win - xenomorphs took over")
 			world << "<FONT size = 5><B>Xenomorphs Major Win!</B></FONT>"
 			world << "<B>The entire station was taken over by alien weeds.</B>"
 		else
 			feedback_set_details("round_end_result","win - xenomorphs took over, even after death")
 			world << "<FONT size = 5><B>Xenomorphs Minor Win!</B></FONT>"
-			world << "<B>The station was taken over by alien weeds but, the xenomorphs were still exterminated.</B>"
+			world << "<B>The station was taken over by alien weeds but, the xenomorphs were exterminated.</B>"
 
-	else if (!calculateXenos() && alien_weed_control_count > xenomorphweeds.len)
-		feedback_set_details("round_end_result","lose - the xenomorphs were exterminated")
-		if(predstatus == PREDATORS_UNKNOWN)
+	else if (alien_weed_control_count > xenomorphweeds.len)
+		if(!calculateXenos())
+			feedback_set_details("round_end_result","lose - xenomorphs were defeated")
+			world << "<FONT size = 5><B>Unknwon Win</B></FONT>"
+			world << "<B>The station and xenomorphs were at war... and the round suddenly ended. This is not suppose to happen.</B>"
+		else
+			feedback_set_details("round_end_result","lose - the xenomorphs were exterminated")
 			world << "<FONT size = 5><B>Crew Major Win!</B></FONT>"
 			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak!</B>"
 
-		else if (predstatus == PREDATORS_DEAD)
-			world << "<FONT size = 5><B>Crew Minor Win!</B></FONT>"
-			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak but, has gotten the attention of even more Yautija Warriors!</B>"
-
-		else if(predstatus == PREDATORS_ALIVE)
-			world << "<FONT size = 5><B>Crew Minor Win!</B></FONT>"
-			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak but, Yautija Warriors are interested in hunting more crewmembers!</B>"
-
 	else if(station_was_nuked)
-		feedback_set_details("round_end_result", "neutral win")
-		world << "<FONT size = 5><B>Neutral Win!</B></FONT>"
 		if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+			feedback_set_details("round_end_result", "neutral win - nuked xenos")
+			world << "<FONT size = 5><B>Nuclear Win!</B></FONT>"
 			world << "<B>The crew evacuated but, had to nuke their station to get rid of the xenomorphs.</B>"
 		else
+			feedback_set_details("round_end_result", "neutral win - nuked themselves")
+			world << "<FONT size = 5><B>Neutral Win!</B></FONT>"
 			world << "<B>The crew nuked the station without evacuating to get rid of the xenomorphs!</B>"
-
-	for(var/datum/mind/M in xenomorphs["QUEEN"])
-		if(M.current)
-			if(!M.current.stat)
-				if(!SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-					feedback_set_details("round_end_result", "interrupted - A")
-					world << "<FONT size = 5><B>Unknown Win</B></FONT>"
-					world << "<B>The game was interrupted.</B>"
-				else
-					feedback_set_details("round_end_result", "xenomorphs averted")
-					world << "<FONT size = 5><B>Neutral Win!</B></FONT>"
-					world << "<B>The crew evacuated after the xenomorph queen died, leaving her hive on the station.</B>"
-			else
-				feedback_set_details("round_end_result", "interrupted - B")
-				world << "<FONT size = 5><B>Unknwon Win</B></FONT>"
-				world << "<B>The game was interrupted.</B>"
-		else
-			feedback_set_details("round_end_result", "interrupted - C")
-			world << "<FONT size = 5><B>Server Win</B></FONT>"
-			world << "<FONT size = 5><B>Uhm... the game ended, and the queens still alive.</B></FONT>"
 	..()
 	return
 
-/datum/game_mode/xenomorph/proc/calculateXenos() //length
-	var/queen
-	var/knights
-	var/hunters
-	var/brewers
+//helpers
 
-	for(var/datum/mind/M in xenomorphs)
-		if(M.assigned_role == "xeno queen")
+/datum/game_mode/xenomorph/proc/calculateXenos(var/justqueen) // are the hive alive? 0 - yes, 1 - no
+	var/hive
+	var/datum/mind/M = findQueen(1)
+
+	if(M)
+		if(justqueen)
+			return M.current
+		if(M.current)
 			if(M.current.stat != DEAD)
-				message_admins("AAA")
-				queen = M.current
-				return 0
-
-		if(M.assigned_role == "xeno hunters")
-			if(M.current.stat != DEAD)
-				hunters++
-
-		if(M.assigned_role == "xeno sentinels")
-			if(M.current.stat != DEAD)
-				knights++
-
-		if(M.assigned_role == "xeno drone")
-			if(M.current.stat != DEAD)
-				brewers++
-
-	if(!queen && !knights && !hunters && !brewers)
-		message_admins("AAAKAAAA")
-		return 1
+				return FALSE // false if queens alive. however, if not than it's up to the hiv
 	else
-		message_admins("SAD TIMES!")
-		return 0
+		return TRUE
 
-/datum/game_mode/xenomorph/proc/callPredators()
+	for(var/datum/mind/minds in xenomorphs)
+		if(minds.assigned_role != "xeno queen")
+			if(minds.current.stat != DEAD && minds.current.stat > DEAD)
+				hive++
+
+	if(!hive)
+		return TRUE
+	else
+		return FALSE
+
+
+
+/datum/game_mode/xenomorph/proc/findQueen(var/mind) // 1 yes, 0 no
+	var/queen
+	for(var/datum/mind/M in xenomorphs["QUEEN"])
+		if(mind)
+			queen = M
+		else
+			queen = M.current
+
+	return queen
+
+
+/datum/objective/weedconquer
+	explanation_text = "Take over the station by planting alien weeds!"
+
+/datum/objective/weedconquer/check_completion()
+	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph))
+		var/datum/game_mode/xenomorph/X = ticker.mode
+		if(X.alien_weed_control_count <= xenomorphweeds.len)
+			return TRUE
+	return FALSE
+
+
+/proc/compareAlienSuffix(var/suffix1, var/suffix2)
+	if(suffix1 == suffix2)
+		return TRUE
+	else
+		return FALSE
+
+/*
+/proc/compareHD(var/datum/huggerdatum/H1, var/datum/huggerdatum/H2)
+	if(H1.colony_suffix == H2.colony_suffix)
+		return TRUE
+	else
+		return FALSE
+*/

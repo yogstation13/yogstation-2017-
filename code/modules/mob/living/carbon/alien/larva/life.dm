@@ -13,6 +13,7 @@
 			update_icons()
 
 
+
 /mob/living/carbon/alien/larva/update_stat()
 	if(GODMODE in status_flags)
 		return

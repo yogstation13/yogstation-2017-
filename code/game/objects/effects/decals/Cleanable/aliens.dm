@@ -33,8 +33,9 @@
 					ND.holder = b
 
 			if(prob(5))
-				src.visible_message("<span class='warning'>[src] begins to seep through and dissolve the [get_turf(src)]!</span class>")
-				new /obj/effect/acid(get_turf(src), get_turf(src))
+				var/turf/T = get_turf(src)
+				src.visible_message("<span class='warning'>[src] begins splases onto [T.name]!</span class>")
+				new /obj/effect/acid(loc, T)
 			if (step_to(src, get_step(src, direction), 0))
 				break
 

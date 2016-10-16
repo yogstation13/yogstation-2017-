@@ -40,6 +40,7 @@
 	var/max_plasma = 250
 	var/heal_rate = 5
 	var/plasma_rate = 10
+	var/regen_rate
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
@@ -57,6 +58,7 @@
 /obj/item/organ/alien/plasmavessel/large/queen
 	origin_tech = "biotech=6;plasmatech=4"
 	plasma_rate = 20
+	regen_rate = 2
 
 /obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
@@ -88,6 +90,9 @@
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
 			owner.adjust_eye_damage(-heal_amt)
+
+	if(regen_rate)
+		owner.adjustPlasma(regen_rate)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()

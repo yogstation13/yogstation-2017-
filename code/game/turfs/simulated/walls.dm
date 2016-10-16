@@ -99,27 +99,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return src.attack_hand(user)
 
-/turf/closed/wall/attack_alien(mob/living/carbon/alien/M)
-	..()
-	if(istype(M, /mob/living/carbon/alien/humanoid/royal))
-		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1)
-		M << "<span class='warning'>You begin to push against the wall...</span>"
-		var/dismantletime = 50
-
-		if(istype(src, /turf/closed/wall/r_wall) || istype(src, /turf/closed/wall/mineral/gold))
-			dismantletime += 100
-
-		else if(istype(src, /turf/closed/wall/mineral/cult) || istype(src, /turf/closed/wall/clockwork) || istype(src, /turf/closed/wall/mineral/diamond))
-			dismantletime += 200
-
-		else if(istype(src, /turf/closed/wall/mineral/abductor)) // how? I have no idea.
-			dismantletime += 500
-
-		if(do_after(M, dismantletime, target = src))
-			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
-			visible_message("<span class='danger'>[M] breaks through the wall with brute strength!</span>")
-			dismantle_wall(1)
-
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))
 		if(istype(src, /turf/closed/wall/mineral/cult))

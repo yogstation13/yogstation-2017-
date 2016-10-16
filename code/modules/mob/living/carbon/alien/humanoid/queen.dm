@@ -8,7 +8,7 @@
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-//	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
+	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 	tackle_chance = 5
 
@@ -37,6 +37,8 @@
 			break
 
 	real_name = src.name
+	HD = new /datum/huggerdatum/queen
+	HD.assemble(src)
 
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
 	internal_organs += new /obj/item/organ/alien/resinspinner
@@ -49,7 +51,7 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
 	. = ..()
-	. += 5
+	. += 3
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
@@ -64,7 +66,12 @@
 		user << "There's already an egg here."
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
-	new /obj/structure/alien/egg(user.loc)
+	var/grabbedcosuff
+	if(isalien(user))
+		var/mob/living/carbon/alien/A = user
+		grabbedcosuff = A.HD.colony_suffix
+
+	new /obj/structure/alien/egg(user.loc, suffix = grabbedcosuff)
 	return 1
 
 //Button to let queen choose her praetorian.

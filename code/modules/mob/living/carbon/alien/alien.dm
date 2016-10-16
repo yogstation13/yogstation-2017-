@@ -33,6 +33,8 @@
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
+	var/datum/huggerdatum/HD = null
+
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -192,6 +194,8 @@ Des: Removes all infected images from the alien.
 		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
+	if(HD.colony_suffix)
+		new_xeno.HD.colony_suffix = HD.colony_suffix
 	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1

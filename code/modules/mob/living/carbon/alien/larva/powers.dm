@@ -46,6 +46,32 @@
 		if(user.incapacitated()) //something happened to us while we were choosing.
 			return
 
+		if(!alien_caste)
+			return
+
+		var/registerAntag // whether we'll register this into the xenomorph mode or not.
+
+		if(L.HD.colony_suffix) // dirty checks, but hey what can you do
+			if(ticker && istype(ticker.mode, /datum/game_mode/xenomorph))
+				if(compareAlienSuffix(L.HD.colony_suffix, ticker.mode.queensuffix))
+					registerAntag = TRUE
+					var/decision = ticker.mode.checkHive()
+
+					if(decision) // passing 0 equates to all
+						user << "<span class='alertalien'>The hive has too many [alien_caste]'s!"
+						switch(decision)
+							if("drone")
+								user << "<span class='alertalien'>You rapidly mutate into a drone!</span>"
+								alien_caste = "Drone"
+
+							if("senitel")
+								user << "<span class='alertalien'>You rapidly mutate into a senitel!</span>"
+								alien_caste = "Sentinel"
+
+							if("hunter")
+								user << "<span class='alertalien'>You rapidly mutate into a hunter!</span>"
+								alien_caste = "Hunter"
+
 		var/mob/living/carbon/alien/humanoid/new_xeno
 		switch(alien_caste)
 			if("Hunter")
@@ -56,6 +82,10 @@
 				new_xeno = new /mob/living/carbon/alien/humanoid/drone(L.loc)
 
 		L.alien_evolve(new_xeno)
+		if(registerAntag)
+			var/datum/game_mode/xenomorph/X = ticker.mode // to register antag, it HAS to be xeno mode.
+			X.AddXenomorph(new_xeno.mind)
+
 		return 0
 	else
 		user << "<span class='danger'>You are not fully grown.</span>"

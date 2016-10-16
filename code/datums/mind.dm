@@ -1838,6 +1838,7 @@
 	mind.special_role = "slime"
 	mind.assigned_role = "slime"
 
+/*
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
@@ -1867,6 +1868,8 @@
 /mob/living/carbon/alien/larva/mind_initialize()
 	..()
 	mind.special_role = "Larva"
+
+*/
 
 //AI
 /mob/living/silicon/ai/mind_initialize()

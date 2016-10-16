@@ -166,12 +166,11 @@
 	icon_state = "weeds"
 	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
-	var/growth
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
 
 
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/New(pos, node, created)
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
 	..()
@@ -188,8 +187,11 @@
 		qdel(src)
 		return
 	spawn(rand(150, 200))
-		if(src)
+		if(src && created)
 			Life()
+			var/area/xenospread = get_area(loc)
+			if(xenospread.infestation_allowed)
+				xenomorphweeds += src
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -203,13 +205,7 @@
 		qdel(src)
 		return
 
-	growth++
-
 	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
-		return
-
-	if(growth <= 500)
-		Life()
 		return
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
@@ -217,7 +213,7 @@
 		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/open/space))
 			continue
 
-		new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node, created = TRUE)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
@@ -232,21 +228,16 @@
 //Weed nodes
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
-	desc = "Blue bioluminescence shines from beneath the surface. It's origin is unknown but, it seems to be sponging off of the station."
+	desc = "Blue bioluminescence shines from beneath the surface. It's origin is unknown but, it seems to be sponging off of some sort of energy in the area."
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
 	health = 30
-	growth = 500
 
 
-/obj/structure/alien/weeds/node/New()
+/obj/structure/alien/weeds/node/New(pos, node, created)
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph)) // xenomorph domination? predators? only in the actual game mode.
-		var/area/xenospread = get_area(loc)
-		if(xenospread.infestation_allowed) //Is this area allowed for winning as blob?
-			xenomorphweeds += src
-	..(loc, src)
+	..(loc, src, created)
 
 
 /obj/structure/alien/weeds/node/Destroy()
@@ -279,8 +270,12 @@
 	layer = MOB_LAYER
 
 
-/obj/structure/alien/egg/New()
-	new /obj/item/clothing/mask/facehugger(src)
+/obj/structure/alien/egg/New(suffix)
+	var/obj/item/clothing/mask/facehugger/FH
+	FH = new(src)
+	if(suffix)
+		FH.colony_suffix = suffix
+
 	..()
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()
