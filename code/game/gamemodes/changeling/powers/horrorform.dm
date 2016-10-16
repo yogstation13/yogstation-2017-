@@ -44,7 +44,10 @@
 
 			playsound(user.loc, 'sound/effects/creepyshriek.ogg', 100, 1, extrarange = 30)
 			user.visible_message("<span class='warning'><b>[user] lets out an abhorrent screech as their height suddenly increases, their body parts splitting and deforming horribly!</span>")
-			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals extremely quickly. Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable. Check the 'Abomination' spell tab to use your abilities.</span>"
+			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly. Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable. Check the 'Abomination' spell tab to use your abilities. Remember, you can maintain this form by using your 'Devour' ability whilst grabbing a humanoid to devour them and gain chemicals!</span>"
+			user <<"<span class='notice'>You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly.
+			user <<"<span class='notice'>Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable.</span>".
+			user <<"<span class='notice'>Check the 'Abomination' spell tab to use your abilities. The 'Devour' ability will allow you to eat a grabbed humanoid and gain chemicals from them!</span>"
 			H.restore_blood()
 			H.remove_all_embedded_objects()
 			var/list/missing = H.get_missing_limbs()
@@ -94,7 +97,7 @@
 		H.adjustOxyLoss(-10)
 		H.adjustToxLoss(-10)
 		if(prob(25))
-			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, quickly healing its wounds.</span>")
+			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
 
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)
