@@ -66,10 +66,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors)
 "am" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/laborcamp)
 "an" = (
 /turf/closed/wall{
@@ -279,18 +276,14 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/laborcamp)
 "aL" = (
 /obj/machinery/mineral/processing_unit_console{
 	dir = 2;
 	machinedir = 4
 	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/laborcamp)
 "aM" = (
 /obj/machinery/light/small{
@@ -503,9 +496,8 @@
 	},
 /area/mine/living_quarters)
 "bh" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/obj/structure/falsewall/reinforced,
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "bi" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -690,15 +682,9 @@
 	},
 /area/mine/laborcamp)
 "by" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA";
-	pixel_y = 0
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/obj/structure/falsewall/reinforced,
+/obj/structure/sign/securearea,
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "bz" = (
 /obj/structure/cable{
@@ -719,9 +705,7 @@
 	},
 /area/mine/eva)
 "bA" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/laborcamp/security)
 "bB" = (
 /obj/structure/table,
@@ -1696,9 +1680,7 @@
 	},
 /area/mine/laborcamp)
 "ds" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/eva)
 "dt" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -2041,9 +2023,7 @@
 /turf/closed/mineral/random/high_chance/volcanic,
 /area/lavaland/surface/outdoors)
 "ee" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/living_quarters)
 "ef" = (
 /obj/structure/sign/securearea{
@@ -2051,9 +2031,7 @@
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
 	},
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/living_quarters)
 "eg" = (
 /obj/item/device/radio/intercom{
@@ -2123,20 +2101,14 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/turf/open/floor/plasteel{
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
+/area/mine/laborcamp)
 "eo" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining External Airlock";
-	opacity = 0;
-	req_access_txt = "54"
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "ep" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2716,9 +2688,7 @@
 /area/mine/production)
 "ft" = (
 /obj/machinery/mineral/processing_unit_console,
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/closed/wall/r_wall,
 /area/mine/production)
 "fu" = (
 /obj/machinery/mineral/processing_unit{
@@ -7415,17 +7385,17 @@ af
 af
 af
 af
-an
-an
-an
-an
-an
+am
+am
+am
+am
+am
 aO
-an
+am
 ab
-an
+am
 bm
-an
+am
 ab
 ab
 af
@@ -7672,17 +7642,17 @@ af
 af
 af
 ab
-an
+am
 ay
 aC
 aG
-an
+am
 aP
-an
-an
-an
+am
+am
+am
 aF
-an
+am
 ab
 al
 af
@@ -7929,17 +7899,17 @@ af
 af
 ab
 ab
-an
+am
 az
 at
 au
-an
+am
 aO
-an
+am
 aZ
-an
+am
 bm
-an
+am
 al
 al
 al
@@ -8185,18 +8155,18 @@ al
 am
 am
 am
-an
-an
-an
+am
+am
+am
 aD
-an
-an
+am
+am
 aQ
-an
+am
 ba
 at
 at
-an
+am
 bA
 bA
 bA
@@ -8441,8 +8411,8 @@ al
 al
 am
 ao
-ao
-an
+en
+am
 at
 at
 at
@@ -8453,10 +8423,10 @@ at
 at
 at
 at
-an
+am
 bB
 bK
-bT
+bA
 af
 af
 af
@@ -8696,7 +8666,7 @@ al
 al
 al
 al
-an
+am
 ap
 fD
 aw
@@ -8713,7 +8683,7 @@ bc
 bu
 bC
 bL
-bT
+bA
 af
 af
 af
@@ -8953,10 +8923,10 @@ al
 al
 al
 al
-an
+am
 aq
 aM
-an
+am
 aA
 at
 at
@@ -8967,10 +8937,10 @@ au
 fH
 at
 be
-an
+am
 bD
 bM
-bT
+bA
 af
 af
 af
@@ -9210,24 +9180,24 @@ al
 al
 al
 al
-an
-an
-an
-an
-an
+am
+am
+am
+am
+am
 at
 at
 at
 at
 dr
-an
+am
 aS
-an
+am
 bd
-an
-an
-an
-an
+am
+am
+am
+am
 af
 af
 af
@@ -9467,24 +9437,24 @@ al
 al
 al
 al
-an
+am
 ar
 ar
 ar
-an
+am
 at
 fE
-an
-an
+am
+am
 aL
-an
+am
 aS
-an
+am
 be
-an
+am
 bE
 bN
-an
+am
 af
 af
 af
@@ -9724,7 +9694,7 @@ al
 al
 al
 al
-an
+am
 as
 at
 at
@@ -9736,12 +9706,12 @@ aT
 fG
 aT
 aV
-an
+am
 bf
 bw
 aW
 aX
-an
+am
 af
 af
 ab
@@ -9981,36 +9951,36 @@ al
 al
 al
 al
-an
-an
+am
+am
 av
 ax
-an
+am
 aE
-an
-an
-an
-an
-an
-an
-an
-an
-an
+am
+am
+am
+am
+am
+am
+am
+am
+am
 bx
 bO
-an
+am
 af
 eh
 eh
 eh
 eh
-ei
-ei
-ei
 ee
-ei
-ei
-ei
+ee
+ee
+ee
+ee
+ee
+ee
 ee
 al
 al
@@ -10239,12 +10209,12 @@ al
 al
 al
 al
-an
-an
-an
-an
+am
+am
+am
+am
 at
-an
+am
 aY
 aN
 aN
@@ -10252,10 +10222,10 @@ ab
 ab
 ab
 ab
-an
+am
 bF
 bG
-an
+am
 af
 eh
 dm
@@ -10499,9 +10469,9 @@ al
 al
 al
 al
-an
+am
 aF
-an
+am
 aY
 ab
 ab
@@ -10509,10 +10479,10 @@ ab
 ab
 ab
 ab
-an
-an
-an
-an
+am
+am
+am
+am
 af
 eh
 ex
@@ -10525,7 +10495,7 @@ ee
 fB
 fj
 da
-ei
+ee
 ab
 af
 af
@@ -10756,9 +10726,9 @@ al
 al
 al
 ab
-an
+am
 aE
-an
+am
 aY
 ab
 ab
@@ -10770,7 +10740,7 @@ af
 af
 af
 af
-ab
+af
 eh
 ey
 eN
@@ -10782,7 +10752,7 @@ cy
 fo
 cV
 db
-ei
+ee
 ab
 af
 af
@@ -11026,7 +10996,7 @@ af
 af
 af
 af
-ab
+af
 ed
 eh
 ez
@@ -11039,7 +11009,7 @@ ee
 cJ
 fj
 bo
-ei
+ee
 ab
 al
 al
@@ -12056,7 +12026,7 @@ af
 af
 af
 ab
-ei
+ee
 eB
 eR
 fb
@@ -12313,7 +12283,7 @@ af
 af
 af
 ab
-ei
+ee
 eB
 eS
 fc
@@ -12586,7 +12556,7 @@ fm
 cu
 cN
 fm
-ei
+ee
 af
 af
 af
@@ -12843,7 +12813,7 @@ dn
 cl
 cO
 cV
-ei
+ee
 ab
 af
 af
@@ -13098,8 +13068,8 @@ fb
 ee
 ee
 ee
-ei
-ei
+ee
+ee
 ee
 al
 ab
@@ -13853,7 +13823,7 @@ al
 ab
 ab
 af
-ab
+af
 ee
 eD
 eF
@@ -14110,7 +14080,7 @@ ab
 ab
 af
 af
-ab
+af
 ee
 em
 eG
@@ -14617,19 +14587,19 @@ af
 af
 ab
 ab
+af
+af
+af
+af
+af
+af
+af
+af
+af
 ab
 ab
-af
-af
-af
-af
-af
-af
-af
-af
 ab
-ab
-ei
+ee
 fj
 bg
 fj
@@ -14878,7 +14848,6 @@ af
 af
 af
 af
-ab
 af
 af
 af
@@ -14886,15 +14855,16 @@ af
 af
 af
 ab
-ei
+ab
+ee
 fq
 bp
 cH
 ee
-ei
-ei
-ei
-ei
+ee
+ee
+ee
+ee
 ee
 al
 al
@@ -15135,19 +15105,19 @@ af
 af
 af
 af
-ab
+af
+af
+af
+af
+af
 af
 ab
-af
-af
-af
-af
-af
-ei
-ei
+ab
+ee
+ee
 bs
-ei
-ei
+ee
+ee
 ab
 ab
 ab
@@ -15399,20 +15369,20 @@ ab
 ab
 af
 af
-af
-af
-ei
+ab
+ab
+ee
 bQ
-ei
+ee
 ab
 ab
-af
-af
-af
-af
-af
-af
-af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 af
 af
 af
@@ -15657,12 +15627,12 @@ ab
 ab
 af
 af
-af
-ei
-bg
-ei
 ab
-af
+ee
+bg
+ee
+ab
+ab
 af
 af
 af
@@ -15912,14 +15882,14 @@ ab
 ab
 ab
 ab
-af
-af
-af
-ei
-bg
-ei
 ab
 af
+ab
+ee
+bg
+ee
+ab
+ab
 af
 af
 af
@@ -16171,12 +16141,12 @@ ab
 ab
 ab
 af
-af
-ei
-bg
-ei
 ab
-af
+ee
+bg
+ee
+ab
+ab
 af
 af
 af
@@ -16429,11 +16399,11 @@ ab
 ab
 af
 ab
-dx
+eo
 bV
-dx
+eo
 ab
-af
+ab
 af
 af
 af
@@ -16686,11 +16656,11 @@ ab
 af
 af
 ab
-dx
+eo
 bV
-dx
+eo
 ab
-af
+ab
 af
 af
 af
@@ -16936,18 +16906,18 @@ ab
 ab
 by
 bH
-dx
+bh
 ab
 ab
 af
 af
 af
 ab
-dx
+eo
 bV
-dx
+eo
 ab
-af
+ab
 af
 af
 af
@@ -17189,23 +17159,23 @@ af
 af
 af
 af
-af
 ab
-dx
+ab
+bh
 dI
-dx
+bh
+ab
 ab
 af
 af
-af
-af
 ab
-dx
+ab
+eo
 dK
-dx
+eo
 ab
 ab
-af
+ab
 af
 af
 af
@@ -17445,25 +17415,25 @@ af
 af
 af
 af
-af
-af
-dx
-dx
+ab
+ab
+bh
+bh
 bH
-dx
-dx
+bh
+bh
 ab
-af
-af
 ab
-dx
-dx
+ab
+ab
+eo
+eo
 cb
-dx
-dx
+eo
+eo
 ab
 ab
-af
+ab
 af
 af
 af
@@ -17702,25 +17672,25 @@ al
 al
 af
 af
-af
+ab
 bh
-dx
+bh
 dH
 dR
 bP
-dI
-bh
-bh
-bh
-bh
-dx
+eo
+eo
+eo
+eo
+eo
+eo
 bU
 bW
 bP
-dx
-bh
-al
-al
+eo
+eo
+ab
+ab
 af
 af
 af
@@ -17960,7 +17930,7 @@ af
 af
 af
 ab
-bh
+eo
 bq
 dI
 dS
@@ -17975,9 +17945,9 @@ dI
 bV
 dI
 cz
-bh
+eo
 ab
-af
+ab
 af
 af
 af
@@ -18215,9 +18185,9 @@ al
 af
 af
 af
-af
 ab
-dx
+ab
+bh
 dB
 dJ
 dT
@@ -18232,9 +18202,9 @@ bR
 ce
 cw
 cA
-bh
+eo
 ab
-af
+ab
 af
 af
 af
@@ -18470,11 +18440,11 @@ al
 al
 af
 af
-af
-af
 ab
 ab
-dx
+ab
+ab
+bh
 dC
 dK
 bI
@@ -18489,9 +18459,9 @@ dI
 ch
 dI
 cC
-dx
+eo
 ab
-af
+ab
 af
 af
 af
@@ -18727,7 +18697,7 @@ al
 al
 af
 af
-al
+ab
 ds
 ds
 ds
@@ -18737,7 +18707,7 @@ bz
 bb
 ds
 ea
-bh
+eo
 eq
 eH
 eV
@@ -18746,9 +18716,9 @@ bS
 cm
 bI
 cD
-dx
+eo
 ab
-af
+ab
 af
 af
 af
@@ -18984,7 +18954,7 @@ al
 al
 al
 al
-al
+ab
 ds
 du
 dy
@@ -18994,16 +18964,16 @@ dL
 dU
 ds
 eb
-bh
-bh
+eo
+eo
 eI
-bh
+eo
 ff
 fr
 cn
 ff
-bh
-bh
+eo
+eo
 ab
 ab
 af
@@ -19242,7 +19212,7 @@ al
 al
 al
 ab
-dt
+ds
 dv
 dz
 dz
@@ -19251,7 +19221,7 @@ dM
 dV
 ds
 ec
-bh
+eo
 er
 eJ
 eW
@@ -19260,7 +19230,7 @@ dR
 co
 bP
 dI
-dx
+eo
 ab
 ab
 af
@@ -19498,8 +19468,8 @@ al
 al
 al
 af
-af
-dt
+ab
+ds
 dv
 dz
 dz
@@ -19507,8 +19477,8 @@ dD
 dN
 bj
 ds
-bh
-bh
+eo
+eo
 es
 dI
 dI
@@ -19517,7 +19487,7 @@ dI
 cp
 bS
 cE
-bh
+eo
 ab
 ab
 af
@@ -19755,7 +19725,7 @@ al
 al
 al
 af
-af
+ab
 ds
 dv
 dz
@@ -19765,16 +19735,16 @@ dO
 dW
 ds
 ed
-bh
+eo
 et
 dI
 eX
 fg
 fg
 cq
-bh
+eo
 cF
-bh
+eo
 ab
 ab
 af
@@ -20012,17 +19982,17 @@ al
 al
 al
 af
-af
-dt
+ab
+ds
 dv
 dz
 ds
-dt
+ds
 dP
-dt
+ds
 ds
 al
-bh
+eo
 eu
 dI
 eY
@@ -20031,7 +20001,7 @@ fs
 cr
 ff
 cG
-bh
+eo
 ab
 ab
 af
@@ -20269,8 +20239,8 @@ al
 al
 al
 af
-af
-dt
+ab
+ds
 dA
 dz
 ds
@@ -20279,16 +20249,16 @@ dQ
 dX
 ds
 al
-bh
+eo
 ev
 eK
-bh
+eo
 ff
 ft
 ff
 ff
 cG
-bh
+eo
 ab
 ab
 af
@@ -20525,8 +20495,8 @@ al
 al
 al
 al
-al
-af
+ab
+ab
 ds
 ds
 ds
@@ -20536,7 +20506,7 @@ dO
 dY
 ds
 al
-bh
+eo
 ew
 eL
 eZ
@@ -20545,7 +20515,7 @@ fu
 fi
 fi
 cI
-bh
+eo
 ab
 ab
 ab
@@ -20782,27 +20752,27 @@ al
 al
 al
 ab
-al
-al
-af
-af
+ab
+ab
+ab
+ab
 ab
 ds
-dt
+ds
 dP
-dt
+ds
 ds
 al
-bh
-bh
-bh
-bh
-bh
-bh
-bh
-bh
-bh
-bh
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
+eo
 ab
 ab
 ab
@@ -21053,10 +21023,10 @@ al
 al
 ab
 ab
-af
-af
-af
-af
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -21308,13 +21278,13 @@ ab
 ab
 ab
 ab
-af
-af
-af
-af
-af
-af
-af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -21565,14 +21535,14 @@ ab
 ab
 ab
 ab
-af
-af
-af
-af
-af
-af
-af
-af
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -21821,7 +21791,7 @@ ab
 ab
 ab
 ab
-af
+ab
 af
 af
 af
@@ -22077,7 +22047,7 @@ ab
 ab
 ab
 ab
-af
+ab
 af
 af
 af
@@ -22334,8 +22304,8 @@ ab
 ab
 ab
 ab
-af
-af
+ab
+ab
 af
 af
 af
@@ -22345,7 +22315,7 @@ al
 al
 al
 al
-al
+ab
 ab
 ab
 af
@@ -22602,8 +22572,8 @@ al
 al
 al
 al
-al
-al
+ab
+ab
 ab
 af
 ab
