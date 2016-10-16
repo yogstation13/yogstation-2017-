@@ -89,10 +89,12 @@
 /datum/species/abomination/spec_life(mob/living/carbon/human/user)
 	if(user.health < 100 && prob(40))
 		var/mob/living/carbon/human/H = user
-		H.adjustBruteLoss(-7)
-		H.adjustFireLoss(-7)
+		H.adjustBruteLoss(-4)
+		H.adjustFireLoss(-4)
 		H.adjustOxyLoss(-10)
 		H.adjustToxLoss(-10)
+		if(prob(25))
+			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, quickly healing its wounds.</span>")
 
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)
