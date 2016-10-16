@@ -261,6 +261,7 @@
 					<a href='?src=\ref[src];user=\ref[usr];action=monitor_admin_ticket;ticket=\ref[src]' class='monitor-button'><img border='0' width='16' height='16' class='uiIcon16 icon-pin-s' /> <span>[!is_monitor(usr.client) ? "Un" : ""]Monitor</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=resolve_admin_ticket;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[resolved ? "Un" : ""]Resolve</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=administer_admin_ticket;ticket=\ref[src]' class='admin-button'><img border='0' width='16' height='16' class='uiIcon16 icon-flag' /> <span>Administer</span></a>
+					<a href='?src=\ref[src];user=\ref[usr];action=toggle_popup;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[force_popup ? "De" : ""]Activate popups</span></a>
 				</p>"}
 		if(owner && owner.mob)
 			if(owner.mob.mind && owner.mob.mind.assigned_role)
