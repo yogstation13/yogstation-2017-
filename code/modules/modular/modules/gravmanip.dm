@@ -16,7 +16,7 @@
 	if(!..())
 		return
 	if(mode in 1 to 2)
-		if(isturf(A)) //can't push pull turfs (can still do so with objects, shhhh)
+		if(isturf(A)) //can't push pull turfs
 			return FALSE
 	return TRUE
 

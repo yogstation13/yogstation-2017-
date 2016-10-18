@@ -31,9 +31,6 @@
 /obj/item/module/assault/shockgloves/can_be_applied(atom/A, mob/user)
 	if(!..())
 		return
-	if(world.time < next_allowed_time)
-		user << "<span class='notice'>The gloves cannot be used for another [round(((next_allowed_time-world.time)/10), 0.1)] seconds before they can attempt to shock someone again.</span>"
-		return FALSE
 	var/found_cable = FALSE
 	var/damage
 	for(var/obj/structure/cable/cable in view(1, user))
