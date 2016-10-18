@@ -35223,11 +35223,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/shower{
-	desc = "A showerhead found in school science labs and medbays alike, used to quickly wash off any dangerous fluids covering a person.";
-	dir = 4;
-	name = "emergency shower"
-	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -69138,6 +69133,18 @@
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
+/area/medical/sleeper)
+"YoV" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/shower{
+	desc = "A showerhead found in school science labs and medbays alike, used to quickly wash off any dangerous fluids covering a person.";
+	name = "emergency shower";
+	pixel_y = 15
+	},
+/turf/open/floor/noslip,
 /area/medical/sleeper)
 "YoW" = (
 /obj/structure/closet/emcloset,
@@ -104253,7 +104260,7 @@ biq
 bvU
 bxs
 byB
-byG
+bAj
 byG
 byG
 byG
@@ -105538,8 +105545,8 @@ buA
 bvY
 bxw
 byG
-bAj
-bBC
+byG
+YoV
 bBC
 byG
 byG
