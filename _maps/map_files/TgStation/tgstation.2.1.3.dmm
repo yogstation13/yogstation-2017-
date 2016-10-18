@@ -16278,7 +16278,6 @@
 	req_access_txt = "22"
 	},
 /obj/machinery/mass_driver{
-	desc = "Holy Driver! You've been down too long in the greytide sea!";
 	dir = 4;
 	id = "chapelgun";
 	name = "Holy Driver"
@@ -24852,8 +24851,8 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel{
-	icon_state = "warningcorner";
-	dir = 8
+	dir = 4;
+	icon_state = "warning"
 	},
 /area/hallway/secondary/exit)
 "aXN" = (
@@ -26624,9 +26623,14 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "bbn" = (
+/obj/machinery/camera{
+	c_tag = "Escape Arm Airlocks";
+	dir = 8;
+	network = list("SS13")
+	},
 /turf/open/floor/plasteel{
-	icon_state = "warningcorner";
-	dir = 2
+	dir = 4;
+	icon_state = "warning"
 	},
 /area/hallway/secondary/exit)
 "bbo" = (
@@ -35218,6 +35222,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/shower{
+	desc = "A showerhead found in school science labs and medbays alike, used to quickly wash off any dangerous fluids covering a person.";
+	dir = 4;
+	name = "emergency shower"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -69130,42 +69139,6 @@
 	icon_state = "white"
 	},
 /area/medical/sleeper)
-"YoR" = (
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/hallway/secondary/exit)
-"YoS" = (
-/turf/open/floor/plasteel{
-	dir = 5;
-	icon_state = "warning"
-	},
-/area/hallway/secondary/exit)
-"YoT" = (
-/turf/open/floor/plasteel{
-	icon_state = "warning"
-	},
-/area/hallway/secondary/exit)
-"YoU" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "warning"
-	},
-/area/hallway/secondary/exit)
-"YoV" = (
-/obj/machinery/camera{
-	c_tag = "Escape Arm Airlocks";
-	dir = 8;
-	network = list("SS13")
-	},
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warning"
-	},
-/area/hallway/secondary/exit)
 "YoW" = (
 /obj/structure/closet/emcloset,
 /obj/structure/cable{
@@ -118653,7 +118626,7 @@ aNV
 aQv
 aWv
 aXM
-aQv
+aZG
 bbn
 aQw
 aQv
@@ -118909,9 +118882,9 @@ aRN
 aNV
 aUP
 aNV
-YoR
-aQv
-YoT
+aNV
+aNV
+aNV
 aNV
 aUQ
 aNV
@@ -119166,9 +119139,9 @@ aRO
 aNV
 aRO
 aNV
-aPe
-aQv
-YoU
+aaa
+aaA
+aaa
 aNV
 aRO
 aNV
@@ -119423,9 +119396,9 @@ aRO
 aNV
 aRO
 aNV
-YoR
-aQv
-YoT
+aaA
+aaA
+aaA
 aNV
 aRO
 aNV
@@ -119680,9 +119653,9 @@ cFf
 aNV
 aRO
 aNV
-aPe
-aQv
-YoU
+aaA
+aaa
+aaA
 aNV
 aRO
 aNV
@@ -119937,9 +119910,9 @@ aRO
 aNV
 aRO
 aNV
-YoS
-aZG
-YoV
+aaA
+aaa
+aaA
 aNV
 aRO
 aNV
@@ -120194,9 +120167,9 @@ aRN
 aTo
 aUQ
 aNV
-aNV
-aNV
-aNV
+aaA
+aaa
+aaA
 aNV
 aUQ
 aTo
