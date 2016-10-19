@@ -1,0 +1,6 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "Pais can now accept radio encryption keys."
+  - tweak: "Pais now have a notice in the radio software menu when their radio transmitting or receiving is disabled."
+  - tweak: "Pais can now set the range that their radio microphone and speaker reach."
