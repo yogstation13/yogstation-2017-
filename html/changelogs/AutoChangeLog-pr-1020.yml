@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "lavaland ruins with ghost roles should no longer ever be blocked off completely by lava. If you ever see this happen, please notify a coder or take a screenshot and post it on discord under coder-public."

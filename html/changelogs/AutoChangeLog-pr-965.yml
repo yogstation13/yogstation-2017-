@@ -1,6 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - rscadd: "Added a new Pai module, the diagnostic hud, giving Pais a hud to see the health of robotic organisms."
-  - rscadd: "Added a new Pai module, the digital voice recorder, giving the Pai access to an inbuilt taperecorder."
-  - rscadd: "Added a new Pai module, the sound synthesizer, allowing Pais to play any instrument and make a few sounds."

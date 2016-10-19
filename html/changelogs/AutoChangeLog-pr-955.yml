@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - rscadd: "Tape recorders now remember the font (but not the font size) of messages they record."

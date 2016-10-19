@@ -1,5 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - tweak: "Saline glucose's ability to generate blood when injected has been adjusted. At 50% blood level, it now takes 1 unit of salglu to generate one unit of blood, and at 100% blood level it takes 2 units of salglu to generate one unit of blood. Effects are significantly reduced when injecting quantities larger than 2.5 at a time."
-  - tweak: "Iron's capacity to regenerate blood has been reduced from 1.25 units of blood per unit iron to 0.5 units of blood per unit iron."
