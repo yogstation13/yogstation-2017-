@@ -45,7 +45,8 @@
 	var/obj/item/device/pda/ai/pai/pda = null
 
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
-	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
+	var/medHUD = 0			// Toggles whether the Medical HUD is active or not
+	var/diagHUD = 0			// Toggles whether the Diagnostic HUD is active or not
 
 	var/datum/data/record/medicalActive1		// Datacore record declarations for record software
 	var/datum/data/record/medicalActive2
@@ -57,6 +58,10 @@
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
 	var/obj/item/radio/integrated/signal/sradio // AI's signaller
+	var/obj/item/device/taperecorder/pai/recorder
+	var/list/audio_tapes
+	var/datum/song/pai/song
+	var/nextSoundTime = 0
 
 	var/obj/machinery/paired
 	var/pairing = 0
@@ -421,8 +426,8 @@
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
 	return 1
 
-// Debug command - Maybe should be added to admin verbs later
-/*/mob/verb/makePAI(var/turf/t in view())
+/*// Debug command - Maybe should be added to admin verbs later
+mob/verb/makePAI(var/turf/t in view())
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
 	pai.key = src.key
