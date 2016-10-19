@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "Minedrones now immediately pick up ore they move over, stop moving toward their target when you start dragging them, and can be moved through and nuzzle when they are on idle"
