@@ -54,6 +54,7 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 			C.flash_eyes()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen
+			var/mob/living/simple_animal/C
 			if (reaction_name == "Friendly Gold Slime")
 				chosen = pick(chemical_mob_spawn_nicecritters)
 			else if(reaction_name == "Strange Gold Slime")  //Sooper Sekrit, don't tell anyone!
@@ -61,11 +62,10 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 				switch(chosen)
 					if(/mob/living/simple_animal/borer)
 						//Spawn and populate a borer
-						var/mob/living/simple_animal/borer/B = new
+						var/mob/living/simple_animal/borer/B = new(get_turf(holder.my_atom))
+						C = B
+						B.faction |= mob_faction
 						B.loc = get_turf(holder.my_atom)
-						if(prob(50))
-							for(var/j = 1, j <= rand(1, 3), j++)
-								step(B, pick(NORTH,SOUTH,EAST,WEST))
 						for(var/mob/O in viewers(get_turf(holder.my_atom),null))
 							O.show_message(text("<span class='notice'>Some sort of alien slug has crawled out of the slime extract!</span>"), 1)
 
@@ -81,19 +81,16 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 							B << "<span class='userdanger'>Serve your creator, and help them accomplish their goals at all costs.</span>"
 
 					if(/obj/item/device/unactivated_swarmer)
-						var/obj/item/device/unactivated_swarmer/U = new
-						U.loc = get_turf(holder.my_atom)
+						var/obj/item/device/unactivated_swarmer/U = new(get_turf(holder.my_atom))
+						C = U
 						U.creator = 1
-						if(prob(50))
-							for(var/j = 1, j <= rand(1, 3), j++)
-								step(U, pick(NORTH,SOUTH,EAST,WEST))
 						for(var/mob/O in viewers(get_turf(holder.my_atom),null))
 							O.show_message(text("<span class='notice'>The slime extract shudders, then forms some sort of alien machine!</span>"), 1)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
-			var/mob/living/simple_animal/C = new chosen
-			C.faction |= mob_faction
-			C.loc = get_turf(holder.my_atom)
+			if(!C)
+				C = new chosen(get_turf(holder.my_atom))
+				C.faction |= mob_faction
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))

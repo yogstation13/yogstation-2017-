@@ -76,12 +76,14 @@ var/total_borer_hosts_needed = 10
 
 	..()
 
-	for(var/image/hud in client.images)
-		if(hud.icon_state == "borer")
-			client.images -= hud
+	if(client)
+		for(var/image/hud in client.images)
+			if(hud.icon_state == "borer")
+				client.images -= hud
 	for(var/mob/living/simple_animal/borer/B in borers)
 		if(B.victim)
-			client.images += image('icons/mob/hud.dmi',B.victim,"borer")
+			if(client)
+				client.images += image('icons/mob/hud.dmi',B.victim,"borer")
 			if(victim && victim.client)
 				victim.client.images += image('icons/mob/hud.dmi',B.victim,"borer")
 
