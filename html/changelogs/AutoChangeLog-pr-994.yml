@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Stypic Powder and Silver Sulfadine do not heal over time, but still heal on immediate application."
