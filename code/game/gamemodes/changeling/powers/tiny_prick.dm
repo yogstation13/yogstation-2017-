@@ -116,7 +116,7 @@
 
 /obj/effect/proc_holder/changeling/sting/false_armblade
 	name = "Armblade Sting"
-	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
+	desc = "We silently sting a human, injecting a retrovirus that temporarily mutates their arm into an armblade."
 	helptext = "The victim will form an armblade much like a changeling would. Beware, it is as deadly as one of ours!"
 	sting_icon = "sting_armblade"
 	chemical_cost = 10
