@@ -42696,12 +42696,12 @@
 /area/crew_quarters/hor)
 "bGO" = (
 /obj/structure/table,
-/obj/item/weapon/cartridge/signal/toxins,
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/weapon/cartridge/toxins,
+/obj/item/weapon/cartridge/toxins{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/weapon/cartridge/toxins{
 	pixel_x = 4;
 	pixel_y = 6
 	},

@@ -66,7 +66,7 @@
 
 /obj/item/device/pda/toxins
 	name = "scientist PDA"
-	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
+	default_cartridge = /obj/item/weapon/cartridge/toxins
 	icon_state = "pda-science"
 	ttone = "boom"
 
@@ -114,7 +114,7 @@
 
 /obj/item/device/pda/cargo
 	name = "cargo technician PDA"
-	default_cartridge = /obj/item/weapon/cartridge/quartermaster
+	default_cartridge = /obj/item/weapon/cartridge/cargo
 	icon_state = "pda-cargo"
 
 /obj/item/device/pda/quartermaster
@@ -191,7 +191,3 @@
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-genetics"
-
-/obj/item/device/pda/shiny
-	name = "Delux PDA"
-	icon_state = "pda-clear"
