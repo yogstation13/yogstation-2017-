@@ -376,3 +376,7 @@
 /atom/movable/proc/on_z_level_change()
 	for(var/atom/movable/A in contents)
 		A.on_z_level_change()
+
+/atom/movable/proc/on_pulledby(mob/new_pulledby, supress_message)
+	pulledby = new_pulledby
+	return
