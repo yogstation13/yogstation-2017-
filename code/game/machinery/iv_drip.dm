@@ -7,6 +7,8 @@
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/transfer_amount = 2.5
+	var/transfers_per_inject = 2 //this is doubled for bloodpacks
 
 
 /obj/machinery/iv_drip/New()
@@ -111,13 +113,13 @@
 		// Give blood
 		if(mode)
 			if(beaker.volume > 0)
-				var/transfer_amount = 5
+				var/transfers = transfers_per_inject
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount = 10
-				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
-				beaker.reagents.trans_to(attached, transfer_amount)
+					transfers += transfers_per_inject
+				for(var/i in 1 to transfers)
+					beaker.reagents.reaction(attached, INJECT, transfer_amount, 0) //make reagents reacts, but don't spam messages
+				beaker.reagents.trans_to(attached, transfer_amount * transfers)
 				update_icon()
 
 		// Take blood
