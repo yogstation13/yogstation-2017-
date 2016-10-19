@@ -185,7 +185,7 @@
 /datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
-	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores burn wounds. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -201,11 +201,6 @@
 				M << "<span class='danger'>You feel your burns healing! It stings like hell!</span>"
 			M.emote("scream")
 	..()
-
-/datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
-	M.adjustFireLoss(-2*REM, 0)
-	..()
-	. = 1
 
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
@@ -233,7 +228,7 @@
 /datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
-	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores bruising. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#FF9696"
 
@@ -250,11 +245,6 @@
 			M.emote("scream")
 	..()
 
-
-/datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-2*REM, 0)
-	..()
-	. = 1
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
