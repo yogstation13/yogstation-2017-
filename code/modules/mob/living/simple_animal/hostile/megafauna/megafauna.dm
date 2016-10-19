@@ -15,7 +15,16 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-	var/alert_admins
+	var/alert_admins_z_level = 1
+	var/alert_admins_area = 1
+
+	var/turf/aggroed_from = null
+	var/turf/aggro_log = null
+	var/lastTarget = "no target"
+
+/mob/living/simple_animal/hostile/megafauna/New()
+	..()
+	aggro_log = list()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
@@ -58,12 +67,38 @@
 
 /mob/living/simple_animal/hostile/megafauna/Life()
 	..()
-	if((loc.z != ZLEVEL_LAVALAND) && !alert_admins)
+	if(loc && (loc.z != ZLEVEL_LAVALAND) && alert_admins_z_level)
 		message_admins("A live [src.name] ([src.desc]) has left the lavaland and is currently on another z level. <A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
 		log_admin("[src] is off of the lavaland.")
-		alert_admins = !alert_admins
+		alert_admins_z_level = 0
 		spawn(3000) // a cooldown, so it'll alert the admins again if it's still off the z level.
-			alert_admins = !alert_admins
+			alert_admins_z_level = 1
+
+	var/area/A = get_area(src)
+	if(!istype(A, /area/lavaland/surface/outdoors) && alert_admins_area)
+		message_admins("A live [src.name] ([src.desc]) was led [aggroed_from ? "a distance of [get_dist(aggroed_from, src)] tiles " : ""] to [A] by [lastTarget]. Check the aggro_log var of this creature to see where it was led from.<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
+		log_admin("[src] was led to [A] by [lastTarget].")
+		alert_admins_area = 0
+		spawn(3000)
+			alert_admins_area = 1
 
 /mob/living/simple_animal/hostile/megafauna/experience_pressure_difference(pressure_difference, direction)
 	return //Immune to Space Wind
+
+/mob/living/simple_animal/hostile/megafauna/Aggro()
+	aggroed_from = get_turf(src)
+	if(target)
+		if(ismob(target))
+			var/mob/M = target
+			lastTarget = "[M.real_name] ([M.key])"
+		else
+			lastTarget = "[target]"
+	else
+		lastTarget = "no target"
+	..()
+
+/mob/living/simple_animal/hostile/megafauna/LoseTarget()
+	var/turf/T = get_turf(src)
+	aggro_log += "Lost target [lastTarget] at [T ? "[T.x], [T.y], [T.z]" : "null loc"] after being pulled from [aggroed_from ? "[aggroed_from.x], [aggroed_from.y], [aggroed_from.z]" : "null loc"][(T && aggroed_from) ? " (distance of [get_dist(T, aggroed_from)])" : ""]."
+	aggroed_from = null
+	..()
