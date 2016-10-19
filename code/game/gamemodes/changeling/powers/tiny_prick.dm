@@ -249,19 +249,19 @@
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/cryo
-	name = "Cryogenic Sting"
-	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
-	helptext = "Does not provide a warning to the victim, though they will likely realize they are suddenly freezing."
+	name = "Disorienting Sting"
+	desc = "We silently sting a human with a cocktail of chemicals that slows and disorients them."
+	helptext = "Does not provide a warning to the victim, though they will likely realize they are moving very slowly."
 	sting_icon = "sting_cryo"
 	chemical_cost = 15
-	dna_cost = 2
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
 	add_logs(user, target, "stung", "cryo sting")
 	if(target.reagents)
-		target.reagents.add_reagent("frostoil", 30)
+		target.reagents.add_reagent("bolamine", 15)
+	target.Dizzy(30)
 	feedback_add_details("changeling_powers","CS")
 	return 1
-*/
