@@ -41,6 +41,10 @@
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "Transmit: <A href='byond://?src=\ref[src];wires=transmit'>[(radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
 			dat += "Receive: <A href='byond://?src=\ref[src];wires=receive'>[(radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
+			if(radio.keyslot)
+				dat += "[radio.keyslot]: <A href='byond://?src=\ref[src];e_key=1'>Remove</A><br>"
+			else
+				dat += "<i>no encryption key inserted</i><br>"
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
@@ -52,13 +56,27 @@
 		else
 			dat += "No personality is installed.<br>"
 			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness."
+			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.<br>"
+		if(radio)
+			if(radio.keyslot)
+				dat += "<br>[radio.keyslot]: <A href='byond://?src=\ref[src];e_key=1'>Remove</A><br>"
+			else
+				dat += "<br><i>no encryption key inserted</i><br>"
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
 
 /obj/item/device/paicard/attackby(obj/item/P, mob/user, params)
-	if (pai)
+	if(radio && istype(P, /obj/item/device/encryptionkey))
+		if(!user.unEquip(P))
+			return
+		user << "<span class='notice'>You slot [P] into [src].</span>"
+		if(pai)
+			pai << "<span class='notice'>Radio encryption key inserted.</span>"
+		P.loc = radio
+		radio.keyslot = P
+		radio.recalculateChannels()
+	else if (pai)
 		pai.attackby(P, user, params) //forward event to pai handle
 		return
 	else
@@ -84,7 +102,21 @@
 	if(href_list["request"])
 		src.looking_for_personality = 1
 		SSpai.findPAI(src, usr)
+		return
 
+	if(href_list["e_key"])
+		if(radio && radio.keyslot)
+			if(Adjacent(usr))
+				usr.put_in_hands(radio.keyslot)
+			else
+				var/turf/T = get_turf(src)
+				radio.keyslot.loc = T //just in case we are in nullspace
+				radio.keyslot.forceMove(T)
+			if(pai)
+				pai << "<span class='notice'>Radio encryption key removed.</span>"
+			usr << "<span class='notice'>You remove [radio.keyslot] from [src].</span>"
+			radio.keyslot = null
+			radio.recalculateChannels()
 	if(pai)
 		if(href_list["setdna"])
 			if(pai.master_dna)
