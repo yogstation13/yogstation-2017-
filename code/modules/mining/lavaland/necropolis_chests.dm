@@ -172,7 +172,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
-	fire_sound = 'sound/weapons/meathook_shoot.ogg'
+	fire_sound = 'sound/weapons/meathook_fire.ogg'
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
