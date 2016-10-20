@@ -277,13 +277,9 @@
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
 		if(affecting)
-			if(M.melee_damage_type == BRUTE && M.candismember == TRUE && dam_zone != "chest")
-				if(damage >= 25)
-					if(prob(damage)) //higher damage means higher chance of dismember
-						affecting.dismember()
-				else
-					if(prob(15)) //if it's below 25 just use a flat 15% for your 1 damage dismember needs
-						affecting.dismember()
+			if(M.melee_damage_type == BRUTE && M.dismember_chance > 0 && dam_zone != "chest")
+				if(prob(M.dismember_chance))
+					affecting.dismember()
 		updatehealth()
 
 
