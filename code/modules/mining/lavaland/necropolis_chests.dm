@@ -192,7 +192,7 @@
 	damage = 25
 	armour_penetration = 100
 	damage_type = BRUTE
-	hitsound = 'sound/effects/splat.ogg'
+	hitsound = 'sound/effects/get_over_here.ogg'
 	weaken = 3
 	var/chain
 
