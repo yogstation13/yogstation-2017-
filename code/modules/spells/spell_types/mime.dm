@@ -28,13 +28,13 @@
 
 
 /obj/effect/proc_holder/spell/targeted/mime/speak
-	name = "Speech"
-	desc = "Make or break a vow of silence."
+	name = "Break your vow of silence"
+	desc = ""
 	school = "mime"
 	panel = "Mime"
 	clothes_req = 0
 	human_req = 1
-	charge_max = 3000
+	charge_max = 1000
 	range = -1
 	include_user = 1
 
@@ -47,16 +47,6 @@
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/H = usr
-	if(H.mind.miming)
-		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
-	else
-		still_recharging_msg = "<span class='warning'>You'll have to wait before you can give your vow of silence again!</span>"
-	..()
-
-/obj/effect/proc_holder/spell/targeted/mime/speak/cast(list/targets,mob/user = usr)
-	for(var/mob/living/carbon/human/H in targets)
-		H.mind.miming=!H.mind.miming
-		if(H.mind.miming)
-			H << "<span class='notice'>You make a vow of silence.</span>"
-		else
-			H << "<span class='notice'>You break your vow of silence.</span>"
+		M.gib()
+		invocation_emote_self = "<span class='notice'>The silentfather's wrath gibs you on the spot!</span>"
+		invocation = "<B>[usr.real_name]</B>is torn apart by the silentfather's wrath!"
