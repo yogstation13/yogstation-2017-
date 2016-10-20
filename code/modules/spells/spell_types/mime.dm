@@ -58,6 +58,7 @@
 				usr.dna.add_mutation(CLOWNMUT)
 				usr.dna.add_mutation(EPILEPSY)
 				for(var/obj/item/bodypart/B in usr.bodyparts)
+				usr.verbs -= /mob/living/verb/ghost //NO ESCAPE
    					if(B.body_zone != "head" && B.body_zone != "chest")
        						B.dismember()
 				usr << "<span class='notice'>You are torn apart by the silentfather's holy wrath!</span>"
