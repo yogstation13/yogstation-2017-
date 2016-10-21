@@ -64,10 +64,10 @@
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
 	belt = /obj/item/weapon/storage/belt/military/assault
 	belt_contents = list(/obj/item/weapon/melee/baton/loaded=1,\
-	/obj/item/weapon/grenade/flashbang=1,\
-	/obj/item/weapon/restraints/handcuffs=1,\
-	/obj/item/weapon/grenade/syndieminibomb/concussion/frag=3,\
-	/obj/item/weapon/grenade/gluon=1)
+		/obj/item/weapon/grenade/flashbang=1,\
+		/obj/item/weapon/restraints/handcuffs=1,\
+		/obj/item/weapon/grenade/syndieminibomb/concussion/frag=3,\
+		/obj/item/weapon/grenade/gluon=1)
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 	l_pocket = /obj/item/weapon/melee/energy/sword/saber
 
@@ -110,10 +110,10 @@
 		/obj/item/weapon/gun/energy/pulse/carbine/loyalpin=1)
 	belt = /obj/item/weapon/storage/belt/military/assault
 	belt_contents = list(/obj/item/weapon/melee/baton/loaded=1,\
-	/obj/item/weapon/grenade/flashbang=1,\
-	/obj/item/weapon/restraints/handcuffs=1,\
-	/obj/item/weapon/grenade/syndieminibomb/concussion/frag=3,\
-	/obj/item/weapon/grenade/gluon=1)
+		/obj/item/weapon/grenade/flashbang=1,\
+		/obj/item/weapon/restraints/handcuffs=1,\
+		/obj/item/weapon/grenade/syndieminibomb/concussion/frag=3,\
+		/obj/item/weapon/grenade/gluon=1)
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 
 
@@ -153,7 +153,7 @@
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1,\
 		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1,\
-		/obj/item/weapon/storage/box/syndie_kit/bioterror=1,\ //yes, NT has some
+		/obj/item/weapon/storage/box/syndie_kit/bioterror=1,\
 		/obj/item/weapon/gun/syringe/rapidsyringe=1,\
 		/obj/item/weapon/gun/medbeam=1)
 	r_pocket = /obj/item/weapon/grenade/chem_grenade/bioterrorfoam //yes, NT has some samples
@@ -168,12 +168,12 @@
 	back = /obj/item/weapon/storage/backpack/industrial
 	belt = /obj/item/weapon/storage/belt/utility
 	belt_contents = list(/obj/item/weapon/weldingtool/experimental=1,\
-	/obj/item/weapon/crowbar/red=1,/
-	/obj/item/weapon/wirecutters=1,/
-	/obj/item/weapon/screwdriver=1,/
-	/obj/item/weapon/wrench=1,/
-	/obj/item/device/multitool=1,/
-	/obj/item/device/t_scanner=1)
+		/obj/item/weapon/crowbar/red=1,\
+		/obj/item/weapon/wirecutters=1,\
+		/obj/item/weapon/screwdriver=1,\
+		/obj/item/weapon/wrench=1,\
+		/obj/item/device/multitool=1,\
+		/obj/item/device/t_scanner=1)
 	l_pocket = /obj/item/weapon/rcd_ammo/large
 	r_hand = /obj/item/weapon/storage/firstaid/regular
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
