@@ -1,19 +1,19 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	candismember = TRUE
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
-	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
+	damage_coeff = list(BRUTE = 2, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and are exceptionally weak to brute and burn and transmit stamina damage to the host, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's an assassin carp! Just when you thought it was safe to go back to the water... which is unhelpful, because we're in space.</span>"
 
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
-	var/stealthcooldown = 160
+	var/stealthcooldown = 200
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
@@ -59,15 +59,12 @@
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
-			cooldown = world.time + 40 //can't recall for 4 seconds
+			cooldown = world.time + 8 //can't recall for 4 seconds
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
-		if(src.loc == summoner)
-			src << "<span class='danger'><B>You have to be manifested to enter stealth!</span></B>"
-			return
-		melee_damage_lower = 50
-		melee_damage_upper = 50
+		melee_damage_lower = 40
+		melee_damage_upper = 35
 		armour_penetration = 100
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
