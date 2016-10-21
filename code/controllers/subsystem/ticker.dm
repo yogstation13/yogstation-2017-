@@ -190,6 +190,7 @@ var/datum/subsystem/ticker/ticker
 			qdel(mode)
 			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			message_admins("<B>Error setting up [master_mode]([mode.name], [mode.type]).</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return 0
 	else
