@@ -212,7 +212,7 @@
  	if(!istype(H))
 		return ..()
  	if(H.wear_suit) //badmin sanity
- 		var/obj/item/clothing/suit/space/hardsuit/mining/elite/M = H.wear_suit
+ 		var/obj/item/clothing/suit/space/hardsuit/mining/M = H.wear_suit
  		if(istype(M))
  			if(M.l_int)
  				H.weather_immunities = list("lava") //they already had the lava resist intrinsic when they put on the suit (currently only from ash drake blood)
