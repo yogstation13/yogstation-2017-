@@ -13,7 +13,7 @@
 
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
-	var/stealthcooldown = 200
+	var/stealthcooldown = 170
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
@@ -59,11 +59,11 @@
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
-			cooldown = world.time + 8 //can't recall for 4 seconds
+			cooldown = world.time + 80 //can't recall for 4 seconds
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
-		melee_damage_lower = 40
+		melee_damage_lower = 45
 		melee_damage_upper = 35
 		armour_penetration = 100
 		environment_smash = 0
