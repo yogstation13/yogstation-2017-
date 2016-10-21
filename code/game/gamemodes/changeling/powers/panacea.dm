@@ -18,23 +18,21 @@
 			C.vomit(0)
 		egg.loc = get_turf(user)
 
-	user.reagents.add_reagent("mutadone", 10)
-	user.reagents.add_reagent("pen_acid", 20)
-	user.reagents.add_reagent("antihol", 10)
-	user.reagents.add_reagent("mannitol", 25)
-	user.hallucination = max(0, M.hallucination - 50)
-	user.set_eye_damage(0,0)
-	user.setEarDamage(0,0)
-	
-	if(user.ToxLoss > 40)
-		user.setToxLoss(40)
-	else
-		return
-
 	for(var/datum/disease/D in user.viruses)
 		if(D.severity == NONTHREAT)
 			continue
 		else
 			D.cure()
+			
+	user.hallucination = max(0, user.hallucination - 600)
+	
+	user.reagents.clear_reagents()
+	sleep(1)
+	user.reagents.add_reagent("antihol", 10)
+	user.reagents.add_reagent("mannitol", 25)
+	user.reagents.add_reagent("inacusiate", 10)
+	user.reagents.add_reagent("antitoxin", 29)
+	user.reagents.add_reagent("mutadone", 10)
+	
 	feedback_add_details("changeling_powers","AP")
 	return 1
