@@ -57,12 +57,11 @@
 				usr.setEarDamage(50000,0)
 				usr.dna.add_mutation(CLOWNMUT)
 				usr.dna.add_mutation(EPILEPSY)
-				for(var/obj/item/bodypart/B in usr.bodyparts)
 				usr.verbs -= /mob/living/verb/ghost //NO ESCAPE
+				for(var/obj/item/bodypart/B in usr.bodyparts)
    					if(B.body_zone != "head" && B.body_zone != "chest")
        						B.dismember()
 				usr << "<span class='notice'>You are torn apart by the silentfather's holy wrath!</span>"
-				return
 				invocation = "<B>[usr.real_name]</B> has broken their vow of silence, and was punished for it!"
 			else
 				return
