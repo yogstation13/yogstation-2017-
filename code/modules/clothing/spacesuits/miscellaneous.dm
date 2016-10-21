@@ -169,6 +169,8 @@ Contains:
 	armor = list(melee = 65, bullet = 50, laser = 60, energy = 50, bomb = 50, bio = 100, rad = 100)
 	strip_delay = 130
 	flags = STOPSPRESSUREDMAGE | THICKMATERIAL | NODROP
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	brightness_on = 7
 
 /obj/item/clothing/suit/space/hardsuit/ert
@@ -179,6 +181,8 @@ Contains:
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 100, rad = 100)
+	heat_protection = HEAD							
+ 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	slowdown = 0
 	strip_delay = 130
 
@@ -201,16 +205,12 @@ Contains:
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
 	item_color = "ert_engineer"
-	heat_protection = HEAD							
- 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
 	desc = "Standard issue engineer suit for the ERT."
 	icon_state = "ert_engineer"
 	item_state = "ert_engineer"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/engi
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
 	//ERT Medical
 /obj/item/clothing/head/helmet/space/hardsuit/ert/med
