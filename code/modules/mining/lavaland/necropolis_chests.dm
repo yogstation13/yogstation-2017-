@@ -648,7 +648,7 @@
 	desc = "A curved sword smelted from an unknown metal. Looking at it gives you the otherworldly urge to pawn it off for '30k,' whatever that means."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "rune_scimmy"
-	force = 22
+	force = 20
 	damtype = BRUTE
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/rs_slash.ogg'
