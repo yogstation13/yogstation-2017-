@@ -37,6 +37,11 @@
 		holder << "<span class='warning'>[target] seems to resist the implant!</span>"
 		return 0
 
+	if(target.mind.changeling)
+		holder << "<span class='warning'>[target]'s skin thickens where you try to inject them. Odd...</span>"
+		target << "<span class='warning'>We instinctively prevent [holder]'s injector from penetrating our skin.</span>"
+		return 0
+
 	target << "<span class='userdanger'><FONT size = 3>You feel a strange urge to serve [holder.real_name]. A simple thought about disobeying his/her commands makes your head feel like it is going to explode. You feel like you dont want to know what will happen if you actually disobey your new master.</FONT></span>"
 
 	var/datum/objective/mindslave/serve_objective = new
