@@ -10,14 +10,14 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
+	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
 	
-	var/obj/item/weapon/implant/krav_maga/L = new/obj/item/weapon/implant/krav_maga(H)
-	L.imp_in = H
-	L.implanted = 1
+	var/obj/item/weapon/implant/krav_maga/KM = new(H)
+	KM.imp_in = H
+	KM.implanted = 1
 
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
@@ -63,11 +63,13 @@
 		/obj/item/ammo_box/magazine/m556=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
 	belt = /obj/item/weapon/storage/belt/military/assault
+	/* Commented out until belt content definition becomes supported
 	belt_contents = list(/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/weapon/grenade/flashbang=1,\
 		/obj/item/weapon/restraints/handcuffs=1,\
 		/obj/item/weapon/grenade/syndieminibomb/concussion/frag=3,\
 		/obj/item/weapon/grenade/gluon=1)
+	*/
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 	l_pocket = /obj/item/weapon/melee/energy/sword/saber
 
@@ -109,11 +111,13 @@
 		/obj/item/ammo_box/magazine/m556=2,\
 		/obj/item/weapon/gun/energy/pulse/carbine/loyalpin=1)
 	belt = /obj/item/weapon/storage/belt/military/assault
+	/*
 	belt_contents = list(/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/weapon/grenade/flashbang=1,\
 		/obj/item/weapon/restraints/handcuffs=1,\
 		/obj/item/weapon/grenade/syndieminibomb/concussion/frag=3,\
 		/obj/item/weapon/grenade/gluon=1)
+	*/
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
 
 
@@ -167,6 +171,7 @@
 	glasses =  /obj/item/clothing/glasses/meson/night
 	back = /obj/item/weapon/storage/backpack/industrial
 	belt = /obj/item/weapon/storage/belt/utility
+	/*
 	belt_contents = list(/obj/item/weapon/weldingtool/experimental=1,\
 		/obj/item/weapon/crowbar/red=1,\
 		/obj/item/weapon/wirecutters=1,\
@@ -174,6 +179,7 @@
 		/obj/item/weapon/wrench=1,\
 		/obj/item/device/multitool=1,\
 		/obj/item/device/t_scanner=1)
+	*/
 	l_pocket = /obj/item/weapon/rcd_ammo/large
 	r_hand = /obj/item/weapon/storage/firstaid/regular
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
