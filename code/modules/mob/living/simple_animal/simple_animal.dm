@@ -651,6 +651,8 @@
 /mob/living/simple_animal/proc/AttackingTarget(atom/T)
 	if(harness && harness.on_melee_attack(src, T, 1))
 		return
+	if(T == src)
+		return
 	T.attack_animal(src)
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
