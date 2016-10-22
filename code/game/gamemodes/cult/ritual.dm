@@ -20,6 +20,7 @@ This file contains the arcane tome files.
 		user << "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>"
 		user << "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>"
 		user << "<span class='cult'>Striking a noncultist, however, will sear their flesh.</span>"
+		user << "<span class='cult'>Striking a runed wall will make it intangible or tangible.</span>"
 
 /obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
 	if(!istype(M))

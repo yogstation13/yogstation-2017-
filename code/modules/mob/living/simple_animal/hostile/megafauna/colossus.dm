@@ -183,7 +183,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
 	spawn()
-		for(var/turf/turf in range(1, target))
+		var/turf/T = get_turf(target)
+		for(var/turf/turf in range(1, T))
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)

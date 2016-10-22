@@ -627,9 +627,8 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
-		if(!isobserver(usr))
-			message_admins("[key_name_admin(usr)] checked antagonists.")
+		log_admin("[key_name(usr)] checked antagonists.")
+		message_admins("[key_name_admin(usr)] checked antagonists.")
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -937,6 +936,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check Ruins"
 	set category = "Debug"
 	set desc = "Check all loaded ruins."
+	log_admin("[key_name(usr)] checked ruins.")
+	message_admins("[key_name_admin(usr)] checked ruins.")
 	var/dat = "<center><b>Ruins</b></center><br>"
 	for(var/V in ruinAreas)
 		var/list/L = V

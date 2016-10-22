@@ -172,6 +172,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
 		return 0
+	if(target == summoner && !(istype(src,/mob/living/simple_animal/hostile/guardian/healer)))
+		return 0
 	else
 		..()
 		return 1
@@ -314,15 +316,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		G.Recall()
 
 /mob/living/proc/guardian_reset()
-	set name = "Reset Guardian Player (One Use)"
+	set name = "Reset Guardian Player"
 	set category = "Guardian"
-	set desc = "Re-rolls which ghost will control your Guardian. One use per Guardian."
+	set desc = "Re-rolls which ghost will control your Guardian."
 
 	var/list/guardians = hasparasites()
-	for(var/para in guardians)
-		var/mob/living/simple_animal/hostile/guardian/P = para
-		if(P.reset)
-			guardians -= P //clear out guardians that are already reset
 	if(guardians.len)
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
@@ -344,14 +342,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 					if("magic")
 						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
 				guardians -= G
-				if(!guardians.len)
-					verbs -= /mob/living/proc/guardian_reset
 			else
 				src << "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>"
 		else
 			src << "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>"
-	else
-		verbs -= /mob/living/proc/guardian_reset
 
 ////////parasite tracking/finding procs
 
@@ -501,7 +495,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <br>
  <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
- <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
+ <b>Chaos</b>: Ignites enemies on attack. Bumping humans causes them to hallucinate all nearby humans as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>

@@ -852,10 +852,61 @@ var/list/teleport_runes = list()
 	explosion(T, -1, 0, 1, 5)
 
 
+///Blood Drain: Deals 10-20 damage to someone on top of it and heals an equivalent amount of brute damage to the user. Can be stacked. Too much blood drain = blood hunger that must be sated.
+
+/obj/effect/rune/blood_drain
+	cultist_name = "Blood Drain"
+	cultist_desc = "when invoked, drains life from all living non-cultists on top of any other active blood drain runes. Draining too many lifeforms at once will cause hunger."
+	invocation = "Perv'ide Suocu!"
+	icon_state = "3"
+	color = rgb(255, 0, 0)
+
+/obj/effect/rune/blood_drain/invoke(var/list/invokers)
+	var/mob/living/user = invokers[1]
+	..()
+	var/drain = 0
+	for(var/obj/effect/rune/blood_drain/R in world)
+		for(var/mob/living/carbon/D in R.loc)
+			if(D == user)
+				continue
+			if(!iscultist(D))
+				if(D.stat != DEAD)
+					var/bdrain = rand(10,20)
+					D << "<span class='danger'>You feel weakened.</span>"
+					D.take_overall_damage(bdrain, 0)
+					drain += bdrain
+	if(!drain)
+		fail_invoke()
+		return
+	usr.visible_message("<span class='danger'>Blood flows from the rune into [usr]!</span>", \
+	"<span class='danger'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
+	"<span class='italics'>You hear a liquid flowing.</span>")
+	if(user.bhunger)
+		user.bhunger = max(user.bhunger-2*drain,0)
+	if(drain>=50)
+		user.visible_message("<span class='danger'>[user]'s eyes give off eerie red glow!</span>", \
+		"<span class='danger'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
+		"<span class='italics'>You hear a heartbeat.</span>")
+		user.bhunger += drain
+		src = user
+		spawn()
+			for (,user.bhunger>0,user.bhunger--)
+				sleep(50)
+				user.take_overall_damage(3, 0)
+		return
+	user.heal_organ_damage(drain%5, 0)
+	drain-=drain%5
+	for (,drain>0,drain-=5)
+		sleep(2)
+		user.heal_organ_damage(5, 0)
+	return
+
+
+
 //Rite of Spectral Manifestation: Summons a ghost on top of the rune as a cultist human with no items. User must stand on the rune at all times, and takes damage for each summoned ghost.
 /obj/effect/rune/manifest
 	cultist_name = "Manifest Spirit"
-	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit."
+	cultist_desc = "manifests a spirit as a servant of the Geometer. The invoker must not move from atop the rune, and will take damage for each summoned spirit. Placing a soulstone on the rune will capture the soul of the manifested spirit."
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	construct_invoke = 0
@@ -889,6 +940,11 @@ var/list/teleport_runes = list()
 		if(O.client && !jobban_isbanned(O, ROLE_CULTIST))
 			ghosts_on_rune |= O
 	var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
+	for(var/obj/item/device/soulstone/S in get_turf(src))
+		user <<"<span class='warning'>You attempt to absorb the manifested soul of [ghost_to_spawn] through [S]!</span>"
+		add_logs(user, ghost_to_spawn, "captured [ghost_to_spawn.name]'s soul", S)
+		S.transfer_soul("VICTIM", ghost_to_spawn, user)
+		return
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
 	new_human.real_name = ghost_to_spawn.real_name
 	new_human.alpha = 150 //Makes them translucent

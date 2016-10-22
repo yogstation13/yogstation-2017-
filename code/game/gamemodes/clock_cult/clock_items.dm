@@ -58,16 +58,16 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/clockwork/slab/process()
 	if(!produces_components)
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 		return
 	if(production_time > world.time)
 		return
@@ -446,10 +446,10 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/clothing/glasses/wraith_spectacles/process()
@@ -990,11 +990,11 @@
 
 /obj/item/clockwork/tinkerers_daemon/New()
 	..()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	clockwork_daemons++
 
 /obj/item/clockwork/tinkerers_daemon/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	clockwork_daemons--
 	return ..()
 

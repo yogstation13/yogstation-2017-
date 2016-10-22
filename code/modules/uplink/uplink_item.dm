@@ -645,7 +645,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/chameleon
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
-	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	item = /obj/item/weapon/storage/box/chameleon
 	cost = 4
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
@@ -711,10 +711,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after injection."
+			5 minutes after injection. You also cannot be put into critical as long as the stimulants are in your body."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
-	cost = 5
-	surplus = 90
+	cost = 10
+	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
