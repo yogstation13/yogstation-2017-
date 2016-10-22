@@ -649,7 +649,7 @@
 	damtype = BRUTE
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/rs_slash.ogg'
-	attack_verb = "slashed"
+	attack_verb = list("slashed","pk'd","atk'd")
 
 ///Bubblegum
 
