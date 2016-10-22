@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,26)
+	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -35,7 +35,7 @@
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/weapon/implant/sad_trombone(src)
+			new /obj/item/weapon/rune_scimmy(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
@@ -69,9 +69,6 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(25)
 			new /obj/item/organ/heart/cursed/wizard(src)
-		if(26)
-			new /obj/item/weapon/rune_scimmy(src)
-
 
 
 //Spooky special loot
