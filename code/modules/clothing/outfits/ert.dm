@@ -38,7 +38,7 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/weapon/gun/energy/gun/ =1,\
+		/obj/item/weapon/gun/energy/gun/=1,\
 		/obj/item/weapon/gun/projectile/automatic/ar=1,\
 		/obj/item/ammo_box/magazine/m556=2)
 	l_pocket = /obj/item/weapon/kitchen/knife/combat
@@ -132,7 +132,7 @@
 		/obj/item/weapon/gun/energy/gun=1,\
 		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1,\
 		/obj/item/weapon/gun/syringe/rapidsyringe=1,\
-		/obj/item/weapon/reagent_containers/syringe/lethal =1,\
+		/obj/item/weapon/reagent_containers/syringe/lethal=1,\
 		/obj/item/weapon/gun/medbeam=1)
 
 /datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -200,8 +200,8 @@
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/rcd/combat=1,\
 		/obj/item/weapon/gun/projectile/automatic/ar=1,\
-		 /obj/item/ammo_box/magazine/m556=2,\
-		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin =1)
+		/obj/item/ammo_box/magazine/m556=2,\
+		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
 		
 /datum/outfit/ert/inquisitor //FUCKEN XENOS
 	name = "ERT Religious Specialist"
@@ -219,7 +219,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater=1,\
 		/obj/item/weapon/melee/baton/loaded=1)
 	r_pocket = /obj/item/weapon/restraints/handcuffs/energy/cult
-	l_pocket = r_pocket = /obj/item/weapon/gun/energy/gun/mini
+	l_pocket = /obj/item/weapon/gun/energy/gun/mini
 	belt = /obj/item/weapon/storage/belt/security/full
 	
 /datum/outfit/ert/inquisitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
