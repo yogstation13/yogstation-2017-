@@ -38,7 +38,7 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/weapon/gun/energy/gun/=1,\
+		/obj/item/weapon/gun/energy/gun=1,\
 		/obj/item/weapon/gun/projectile/automatic/ar=1,\
 		/obj/item/ammo_box/magazine/m556=2)
 	l_pocket = /obj/item/weapon/kitchen/knife/combat
@@ -212,7 +212,7 @@
 /datum/outfit/ert/inquisitor //FUCKEN XENOS
 	name = "ERT Religious Specialist"
 	
-	id = /obj/item/weapon/card/id/ert/Commander
+	id = /obj/item/weapon/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	glasses = /obj/item/clothing/glasses/godeye
 	back = /obj/item/weapon/storage/backpack/cultpack
