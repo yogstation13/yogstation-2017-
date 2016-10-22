@@ -63,8 +63,8 @@
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
-		melee_damage_lower = 45
-		melee_damage_upper = 35
+		melee_damage_lower = 35
+		melee_damage_upper = 45
 		armour_penetration = 100
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
