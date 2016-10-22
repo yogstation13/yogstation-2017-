@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25)
+	var/loot = rand(1,26)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -69,6 +69,8 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(25)
 			new /obj/item/organ/heart/cursed/wizard(src)
+		if(26)
+			new /obj/item/weapon/rune_scimmy(src)
 
 
 
@@ -638,6 +640,19 @@
 		O.ChangeTurf(turf_type)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		timer = world.time + cooldown
+
+//Runite Scimitar
+
+/obj/item/weapon/rune_scimmy
+	name = "rune scimitar"
+	desc = "A curved sword smelted from an unknown metal. Looking at it gives you the otherworldly urge to pawn it off for '30k,' whatever that means."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "rune_scimmy"
+	force = 22
+	damtype = BRUTE
+	sharpness = IS_SHARP
+	hitsound = 'sound/weapons/rs_slash.ogg'
+	attack_verb = "slashed"
 
 ///Bubblegum
 
