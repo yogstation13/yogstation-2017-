@@ -132,12 +132,12 @@
 	time_between_triggers = 1200 //Exists for 2 minutes
 	
 /obj/structure/divine/trap/ward/attack_hand(mob/user)
-	if(iscarbon(user) && side == "red" && is_handofgod_redcultist(H)) || (side == "blue" && is_handofgod_bluecultist(H))) && user.a_intent == "harm")))
+	if(iscarbon(user) && ( (side == "red" && is_handofgod_redcultist(H)) || (side == "blue" && is_handofgod_bluecultist(H)) ) && user.a_intent == "harm")
 		if(density == 1)
-			user.visible_message("You force the ward to become passable.</span>")
+			user.visible_message("<span class='notice'>You force the ward to become passable.</span>")
 			density == 0
 		if(density == 0)
-			user.visible_message("You force the ward to become dense.</span>")
+			user.visible_message("<span class='notice'>You force the ward to become dense.</span>")
 			density == 1
 		qdel(src)
 		return 1
