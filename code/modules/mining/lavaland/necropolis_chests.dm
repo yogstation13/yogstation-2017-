@@ -33,7 +33,7 @@
 			new /obj/item/clothing/suit/magusred(src)
 			new /obj/item/clothing/head/magus(src)
 		if(9)
-			new /obj/item/weapon/spellbook/oneuse/barnyard(src)
+			new /obj/item/weapon/greentext(src)
 		if(10)
 			new /obj/item/weapon/implant/sad_trombone(src)
 		if(11)
