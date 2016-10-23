@@ -315,7 +315,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			organic host as a home base and source of fuel."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 25
 
 // Ammunition
