@@ -45,7 +45,7 @@
 		desc = initial(desc)
 	if((side == "red" && is_handofgod_redcultist(H)) || (side == "blue" && is_handofgod_bluecultist(H)))
 		desc = friendlycultdesc
-	if((side == "red" !is_handofgod_redcultist(H)) || (side == "blue" !is_handofgod_bluecultist(H)))
+	else
 		desc = enemycultdesc
 	alpha = 200
 	animate(src, alpha = 30, time = time_between_triggers)
