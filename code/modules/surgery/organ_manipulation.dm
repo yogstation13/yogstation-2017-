@@ -28,6 +28,7 @@
 	var/implements_mend = list(/obj/item/weapon/cautery = 100, /obj/item/weapon/weldingtool = 70, /obj/item/weapon/lighter = 45, /obj/item/weapon/match = 20)
 	var/current_type
 	var/obj/item/organ/I = null
+	var/mob/living/simple_animal/borer/borer = null //WARNING!! HACKY CODE ALERT NEEE NOOOH NEEEE NOOOH IT'S OISINS FAULT
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
