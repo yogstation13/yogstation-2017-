@@ -175,7 +175,7 @@ var/total_borer_hosts_needed = 10
 
 	src.victim = victim
 	victim.borer = src
-	var/obj/item/organ/borrer_home/B = new/obj/item/organ/borrer_home(victim)
+	var/obj/item/organ/borer_home/B = new/obj/item/organ/borer_home(victim)
 	B.Insert(victim)
 	B.borer = src
 	loc = victim
@@ -270,8 +270,8 @@ var/total_borer_hosts_needed = 10
 	M.special_role = "Cortical Borer"
 	return M
 
-/obj/item/organ/borrer_home
-	name = "borrer vessel"
+/obj/item/organ/borer_home
+	name = "borer vessel"
 	zone = "head"
 	slot = "brain tumor"
 	desc = "A hunk of alien flesh developed from inside the brain, and also a command center for any type of borer. Home is where the heart is. Or in this case, the head."
@@ -279,7 +279,7 @@ var/total_borer_hosts_needed = 10
 	var/mob/living/simple_animal/borer/borer = null
 
 
-/obj/item/organ/borrer_home/Remove(mob/living/carbon/M)
+/obj/item/organ/borer_home/Remove(mob/living/carbon/M)
 	if(borer)
 		borer << "<span class='warning'>Your [src] is rising into the air! Something isn't right!"
 		borer.leave_victim()
