@@ -87,8 +87,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
