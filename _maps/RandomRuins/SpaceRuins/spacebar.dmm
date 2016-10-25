@@ -102,7 +102,10 @@
 	})
 "as" = (
 /obj/structure/table,
-/obj/item/toy/figure/bartender,
+/obj/item/toy/figure/bartender{
+	pixel_x = -8;
+	pixel_y = 5
+	},
 /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 /obj/item/weapon/storage/belt/bandolier,
 /turf/open/floor/wood,
@@ -112,6 +115,7 @@
 "at" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -479,15 +483,30 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bv" = (
+"bx" = (
 /obj/machinery/computer/arcade/battle,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bu" = (
+"bw" = (
 /obj/machinery/computer/arcade/orion_trail,
 /turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bv" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bu" = (
+/obj/structure/table,
+/mob/living/carbon/monkey{
+	name = "Nup Nup"
+	},
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
@@ -1354,7 +1373,7 @@ bo
 ao
 ar
 aC
-aG
+bu
 aJ
 aK
 aK
@@ -1487,8 +1506,8 @@ aK
 aR
 aK
 aK
-bu
-bv
+bw
+bx
 aU
 be
 aZ
@@ -1696,7 +1715,7 @@ aK
 aS
 aK
 aK
-aK
+bv
 bo
 bc
 bc
