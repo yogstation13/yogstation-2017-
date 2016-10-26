@@ -166,11 +166,15 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	var/magic_yolk = "water" //I can't use pick here, so it's at the New(). Water wont be used, it's just there.
+
+/obj/item/organ/gland/egg/New()
+	magic_yolk = pick("mindbreaker", "chloralhydrate", "initropidril", "teslium", "tiresolution", "zombiepowder", "amatoxin", "spraytan", "colorful_reagent", "laughter", "godblood") //HONK
 
 /obj/item/organ/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
-	egg.reagents.add_reagent("sacid",20)
+	egg.reagents.add_reagent(magic_yolk,20)
 	egg.desc += " It smells bad."
 
 /obj/item/organ/gland/bloody
