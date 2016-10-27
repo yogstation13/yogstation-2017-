@@ -1,3 +1,5 @@
+var/list/possible_abductor_IDs = list("Qlekkeb","Qielnuhl","Quebhubea","Aestiehxea","Qreivveq","Qruywors","Gnauhhurqo","Xuoq'eilpae","Qawrihzue","Qroguz","Qiphltoe","Qlyddowth","Qlealeo","Qroehz","Qaddyrk","Gleadholl","Githanie","Qlymt","Qrotym","Quavvehr","Gliks","Gokirb","Qleiv'int","Gleovykx")
+
 /datum/game_mode/traitor/traitorabd
 	name = "traitor+abductor"
 	config_tag = "traitorabd"
@@ -40,7 +42,7 @@
 
 /datum/game_mode/traitor/traitorabd/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
-	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	team_names[team_number] = "team_names[team_number] = "Mothership [pick(possible_abductor_IDs)]"
 	//Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
@@ -182,6 +184,7 @@
 	abductor.current << "<span class='notice'>You are an agent of [team_name]!</span>"
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
+	abductor.current << "<span class='notice'>Make sure not to injure, kill, or impede humans or other lifeforms unnecessarily.</span>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
@@ -196,6 +199,7 @@
 	abductor.current << "<span class='notice'>You are a scientist of [team_name]!</span>"
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
+	abductor.current << "<span class='notice'>Make sure not to impede or injure humans or other lifeforms unnecessarily, outside of experiments.</span>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
