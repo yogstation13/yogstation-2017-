@@ -269,7 +269,7 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = 3 //Can fit in backpacks itself.
-	max_combined_w_class = 15
+	max_combined_w_class = 20
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
 
@@ -358,6 +358,7 @@
 	item_state = "duffle-syndiemed"
 	origin_tech = "syndicate=1"
 	silent = 1
+	w_class = 3
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/med
@@ -384,7 +385,9 @@
 	new /obj/item/weapon/surgical_drapes(src)
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
-	new /obj/item/device/mmi/syndie(src)
+	new /obj/item/weapon/restraints/handcuffs(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/sodium_thiopental(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
