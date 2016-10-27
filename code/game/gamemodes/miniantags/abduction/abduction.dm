@@ -1,3 +1,5 @@
+var/list/possible_abductor_IDs = list("Qlekkeb","Qielnuhl","Quebhubea","Aestiehxea","Qreivveq","Qruywors","Gnauhhurqo","Xuoq'eilpae","Qawrihzue","Qroguz","Qiphltoe","Qlyddowth","Qlealeo","Qroehz","Qaddyrk","Gleadholl","Githanie","Qlymt","Qrotym","Quavvehr","Gliks","Gokirb","Qleiv'int","Gleovykx")
+
 /datum/game_mode
 	var/abductor_teams = 0
 	var/list/datum/mind/abductors = list()
@@ -43,7 +45,7 @@
 
 /datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
-	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+	team_names[team_number] = "Mothership [pick(possible_abductor_IDs)]"
 	//Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
@@ -187,6 +189,7 @@
 	abductor.current << "<span class='notice'>You are an agent of [team_name]!</span>"
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
+	abductor.current << "<span class='notice'>Make sure not to injure, kill, or impede humans or other lifeforms unnecessarily.</span>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
@@ -201,6 +204,7 @@
 	abductor.current << "<span class='notice'>You are a scientist of [team_name]!</span>"
 	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
 	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
+	abductor.current << "<span class='notice'>Make sure not to impede or injure humans or other lifeforms unnecessarily, outside of experiments.</span>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
@@ -259,17 +263,6 @@
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	beamplant.implant(scientist)
 
-
-/datum/game_mode/abduction/check_finished()
-	if(!finished)
-		for(var/team_number=1,team_number<=abductor_teams,team_number++)
-			var/obj/machinery/abductor/console/con = get_team_console(team_number)
-			var/datum/objective/objective = team_objectives[team_number]
-			if (con.experiment.points >= objective.target_amount)
-				SSshuttle.emergency.request(null, 0.5)
-				finished = 1
-				return ..()
-	return ..()
 
 /datum/game_mode/abduction/declare_completion()
 	for(var/team_number=1,team_number<=abductor_teams,team_number++)
@@ -343,7 +336,23 @@
 			else
 				return 0
 	return 0
+	
+// /datum/objective/experiment/fluff
+	dangerrating = 5
+	var/team
+	completed = 1
+	
 
+// /datum/objective/experiment/fluff/lizard
+	explanation_text = "Experiment on one unathi."
+	
+// /datum/objective/experiment/fluff/silent
+	explanation_text = "Remain undetected to the best of your ability by the crew."
+	
+	
+// /datum/objective/experiment/fluff/abomination
+	explanation_text = "Transform one abducted human into a horrific experiment without killing them."
+	
 /datum/game_mode/proc/update_abductor_icons_added(datum/mind/alien_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_ABDUCTOR]
 	hud.join_hud(alien_mind.current)
