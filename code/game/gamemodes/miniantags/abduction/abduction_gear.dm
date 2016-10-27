@@ -19,7 +19,7 @@
 	var/combat_cooldown = 10
 	var/datum/icon_snapshot/disguise
 	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
-	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 50, rad = 50)
+	var/combat_armor = list(melee = 50, bullet = 50, laser = 50, energy = 80, bomb = 50, bio = 50, rad = 50)
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
@@ -112,11 +112,73 @@
 	if(combat_cooldown==initial(combat_cooldown))
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/device/abductor/proc/AbductorCheck(user)
-	if(isabductor(user))
-		return TRUE
-	user << "<span class='warning'>You can't figure how this works!</span>"
-	return FALSE
+	
+/obj/item/clothing/suit/armor/abductor/vest/shitty
+	name = "replica agent vest"
+	desc = "A replica of an alien stealth vest, without many additional functions, and liable to irradiate the user."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "vest_stealth"
+	item_state = "armor"
+	blood_overlay_type = "armor"
+	origin_tech = "magnets=7;biotech=4;powerstorage=4;abductor=2"
+	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
+	actions_types = list(/datum/action/item_action/hands_free/activate)
+	var/mode = VEST_STEALTH
+	var/stealth_active = 0
+	var/datum/icon_snapshot/disguise
+	var/stealth_armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
+
+	
+	
+
+/obj/item/clothing/suit/armor/abductor/vest/shitty/proc/flip_mode()
+	switch(mode)
+		if(VEST_STEALTH)
+			user << "<span class='warning'>You can't swap to combat mode with this vest.</span>"
+		if(VEST_COMBAT)// TO STEALTH
+			mode = VEST_STEALTH
+			armor = stealth_armor
+			icon_state = "vest_stealth"
+			
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_wear_suit()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+		
+/obj/item/clothing/suit/armor/abductor/vest/shitty/IsReflect()
+	DeactivateStealth()
+	IrradiateUser()
+	return 0
+	
+/obj/item/clothing/suit/armor/abductor/vest/shitty/hit_reaction()
+	DeactivateStealth()
+	IrradiateUser()
+	return 0
+	
+/obj/item/clothing/suit/armor/abductor/vest/shitty/proc/ActivateStealth()
+	if(disguise == null)
+		return
+	stealth_active = 1
+	if(istype(src.loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src.loc
+		spawn(0)
+			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
+
+		M.name_override = disguise.name
+		M.icon = disguise.icon
+		M.icon_state = disguise.icon_state
+		M.overlays = disguise.overlays
+		M.update_inv_r_hand()
+		M.update_inv_l_hand()
+	IrradiateUser()
+	return
+	
+/obj/item/clothing/suit/armor/abductor/vest/shitty/proc/IrradiateUser()
+	if(istype(src.loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = src.loc
+		M.rad_act(rand(80, 120))
 
 /obj/item/device/abductor/proc/ScientistCheck(user)
 	var/mob/living/carbon/human/H = user
@@ -202,6 +264,68 @@
 	if(do_after(user, 100, target = target))
 		marked = target
 		user << "<span class='notice'>You finish preparing [target] for transport.</span>"
+		
+		
+/obj/item/device/abductor/gizmo/shitty
+	name = "replica science tool"
+	desc = "A replica of an alien dual-mode tool that cannot be used through cameras. Capable of allowing a tied agent vest to sync disguises or warp a selected target."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "gizmo_scan"
+	item_state = "silencer"
+	origin_tech = "engineering=7;magnets=4;bluespace=6;abductor=3"
+	var/mode = GIZMO_DUNK
+	var/blink_range = 25
+	var/intensity = 10
+	
+	
+/obj/item/device/abductor/gizmo/shitty/attack_self(mob/user)
+	if(mode == GIZMO_DUNK)
+		mode = GIZMO_WARP
+		icon_state = "gizmo_mark"
+	else
+		mode = GIZMO_DUNK
+		icon_state = "gizmo_scan"
+	user << "<span class='notice'>You switch the device to [mode==GIZMO_DUNK? "IRRADIATE": "WARP"] MODE</span>"
+	
+/obj/item/device/abductor/gizmo/shitty/afterattack(atom/target, mob/living/user, flag, params)
+	if(flag)
+		return
+	switch(mode)
+		if(GIZMO_DUNK)
+			irradiate(target, user)
+		if(GIZMO_WARP)
+			warp(target, user)
+	
+/obj/item/device/abductor/gizmo/shitty/proc/warp(atom/target, mob/living/user)
+	if(!istype(target,/mob/living))
+		return
+	if(get_dist(target,user)>1)
+		user << "<span class='warning'>You need to be next to the target to prepare it for transport!</span>"
+		return
+	user << "<span class='notice'>You begin preparing [target] for transport...</span>"
+	if(do_after(user, 30, target = target))
+		user.visible_message("<span class='warning'>[user] points a strange device at [target], and they vanish!</span>", "<span class='danger'>You crush [src]!</span>")
+		PoolOrNew(/obj/effect/particle_effect/sparks, loc)
+		playsound(src.loc, "sparks", 50, 1)
+		blink_mob(target)
+	user << "<span class='notice'>You teleport [target] away.</span>"
+
+/obj/item/device/abductor/gizmo/shitty/proc/blink_mob(mob/living/L)	
+	do_teleport(L, get_turf(L), blink_range, asoundin = 'sound/effects/phasein.ogg')
+	
+	
+
+/obj/item/device/abductor/gizmo/proc/irradiate(atom/target, mob/living/user)
+	if(!istype(target,/mob/living/carbon/human))
+	if(get_dist(target,user)>1)
+		user << "<span class='warning'>You need to be next to the target to prepare it for transport!</span>"
+		return
+	else
+		if(do_after(user, 10, target = target))
+		add_logs(user, M, "irradiated", src)
+		user.visible_message("<span class='notice'>[user] points a strange device at [target], bathing them in green light.</span>")
+		target.rad_act(50)
+		
 
 
 /obj/item/device/abductor/silencer
@@ -397,9 +521,6 @@ Congratulations! You are now trained for xenobiology research!"}
 			item_state = "wonderprodProbe"
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!isabductor(user))
-		return
-
 	if(isrobot(target))
 		..()
 		return
@@ -474,14 +595,14 @@ Congratulations! You are now trained for xenobiology research!"}
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 			if(do_mob(user, C, cufftime) && C.get_num_arms() >= 2)
 				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
+					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/alien(C)
 					C.update_handcuffed()
 					user << "<span class='notice'>You handcuff [C].</span>"
 					add_logs(user, C, "handcuffed")
 			else
 				user << "<span class='warning'>You fail to handcuff [C].</span>"
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			user << "<span class='warning'>[C] is unable to be handcuffed-Missing limb detected.</span>"
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
@@ -494,51 +615,31 @@ Congratulations! You are now trained for xenobiology research!"}
 		var/mob/living/carbon/human/H = L
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
-			species = "<span class='warning'>Changeling lifeform</span>"
-
+			species = "<span class='warning'>Subject is a changeling.</span>"
+		
 		if(L.mind && L.mind.special_role == "Servant of Ratvar")
 			species = "<span class='warning'>Lifeform has connections to the elder god, Ratvar.</span>"
-
+			
 		if(L.mind && L.mind.special_role == "Cultist")
 			species = "<span class='warning'>Lifeform has connections to the elder god, Narsie.</span>"
 
 		if(L.mind && L.mind.special_role == "thrall")
-			species = "<span class='warning'>Shadowling possessed lifeform</span>"
+			species = "<span class='warning'>Subject is enslaved by a shadowling.</span>"
 
 		if(L.mind && L.mind.special_role == "Shadowling")
-			species = "<span class='warning'>Shadowling lifeform</span>"
+			species = "<span class='warning'>Species is a parasitic psychic lifeform attuned to darkness.</span>"
 
 		if(L.mind && L.mind.special_role == "Cyberman")
 			species = "<span class='warning'>Lifeform has a multitude of neurally connected submicrolevel binary particles.</span>"
 
 		var/obj/item/organ/gland/temp = locate() in H.internal_organs
 		if(temp)
-			helptext = "<span class='warning'>Experimental gland detected!</span>"
+			helptext = "<span class='warning'>Eperimental gland detected!</span>"
 		else
 			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
 
 	user << "<span class='notice'>Probing result:</span>[species]"
 	user << "[helptext]"
-
-/obj/item/weapon/restraints/handcuffs/energy
-	name = "hard-light energy field"
-	desc = "A hard-light field restraining the hands."
-	icon_state = "cuff_white" // Needs sprite
-	breakouttime = 450
-	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
-	origin_tech = "materials=4;magnets=5;abductor=2"
-
-/obj/item/weapon/restraints/handcuffs/energy/used
-	desc = "energy discharge"
-	flags = DROPDEL
-
-/obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
-	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
-							"<span class='userdanger'>[user]'s [src] break in a discharge of energy!</span>")
-	var/datum/effect_system/spark_spread/S = new
-	S.set_up(4,0,user.loc)
-	S.start()
-	. = ..()
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
@@ -551,7 +652,85 @@ Congratulations! You are now trained for xenobiology research!"}
 			user <<"<span class='warning'>The baton is in restraining mode.</span>"
 		if(BATON_PROBE)
 			user << "<span class='warning'>The baton is in probing mode.</span>"
+			
+/obj/item/weapon/abductor_baton/shitty
+	name = "advanced baton replica"
+	desc = "A tri-mode advanced baton, replicated from alien technology. Comes with inbuilt probing, stunning, and cuffing modes."
+	var/mode = BATON_STUN
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "wonderprodStun"
+	item_state = "wonderprod"
+	slot_flags = SLOT_BELT
+	origin_tech = "materials=7;combat=7;biotech=7;abductor=5"
+	force = 7
+	w_class = 3
+	actions_types = list(/datum/action/item_action/toggle_mode)
+	var/stuntime = 7
+	origin_tech = "materials=7;combat=7;biotech=7;abductor=6"
+	var/cufftime = 50 // operates the amount of time put into cuffing someone.
 
+/obj/item/weapon/abductor_baton/shitty/attack(mob/target, mob/living/user)
+	if(isrobot(target))
+		..()
+		return
+
+	if(!isliving(target))
+		return
+
+	var/mob/living/L = target
+
+	user.do_attack_animation(L)
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.check_shields(0, "[user]'s [name]", src, MELEE_ATTACK))
+			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 0
+
+	switch (mode)
+		if(BATON_STUN)
+			StunAttack(L,user)
+		if(BATON_CUFF)
+			CuffAttack(L,user)
+		if(BATON_BADPROBE)
+			BadProbeAttack(L,user)
+
+/obj/item/weapon/abductor_baton/attack_self(mob/living/user)
+	toggle(user)
+	
+obj/item/weapon/abductor_baton/proc/BadProbeAttack(mob/living/L,mob/living/user)
+	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
+						"<span class='userdanger'>[user] probes you!</span>")
+
+	var/species = "<span class='warning'>Unknown species</span>"
+	var/helptext = "<span class='warning'>This species is not in any database.</span>"
+
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		species = "<span clas=='notice'>[H.dna.species.name]</span>"
+		if(L.mind && L.mind.changeling)
+			species = "<span class='warning'>Unknown lifeform with rapid-altering genetic sequence.</span>"
+
+		if(L.mind && L.mind.special_role == "thrall")
+			species = "<span class='warning'>Extraneous gland detected.</span>"
+
+		if(L.mind && L.mind.special_role == "Shadowling")
+			species = "<span class='warning'>Subject is a parasitic psychic lifeform attuned to darkness./span>"
+
+		if(L.mind && L.mind.special_role == "Cyberman")
+			species = "<span class='warning'>Lifeform has a multitude of neurally connected submicrolevel binary particles.</span>"
+
+		var/obj/item/organ/gland/temp = locate() in H.internal_organs
+		if(temp)
+			helptext = "<span class='warning'>Extraneous gland detected.</span>"
+		else
+			helptext = "<span class='notice'>Subject is unaltered.</span>"
+
+	user << "<span class='notice'>Probing result:</span>[species]"
+	user << "[helptext]"
+	healthscan(user, L)
+	chemscan(user, L)
+	
 
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
@@ -599,10 +778,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
-	flags = NODECONSTRUCT
-
-/obj/structure/table/optable/abductor/table_destroy()
-	return //can't destroy the abductor's only optable.
+	
 
 /obj/structure/bed/abductor
 	name = "resting contraption"
@@ -656,7 +832,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/structure/closet/abductor
 	name = "alien locker"
-	desc = "Contains secrets of the universe."
+	desc = "Contains secrets of the universe. Or, you know, just comic books."
 	icon_state = "abductor"
 	icon_door = "abductor"
 	can_weld_shut = FALSE
