@@ -578,13 +578,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 6
 	surplus = 50
 
-/datum/uplink_item/stealthy_weapons/dart_pistol
-	name = "Dart Pistol"
-	desc = "A miniaturized version of a normal syringe gun. It is very quiet when fired and can fit into any \
-			space a small item can."
-	item = /obj/item/weapon/gun/syringe/syndicate
-	cost = 4
-	surplus = 50
 
 /datum/uplink_item/stealthy_weapons/detomatix
 	name = "Detomatix PDA Cartridge"
@@ -646,15 +639,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	exclude_modes = list(/datum/game_mode/traitor/double_agents)//being able to completely change your appearance infinitely when you have an assassin is dumb
 
-/datum/uplink_item/stealthy_tools/syndigaloshes
-	name = "No-Slip Chameleon Shoes"
-	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
-			They also work on heavily lubricated surfaces."
-	item = /obj/item/clothing/shoes/chameleon
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 25
-
 /datum/uplink_item/stealthy_tools/syndigaloshes/nuke
 	name = "Stealthy No-Slip Chameleon Shoes"
 	desc = "These shoes will allow the wearer to run on wet floors and slippery objects without falling down. \
@@ -663,24 +647,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/stealthy_tools/agent_card
-	name = "Agent Identification Card"
-	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access \
-			from other identification cards. The access is cumulative, so scanning one card does not erase the \
-			access gained from another. In addition, they can be forged to display a new assignment and name. \
-			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
-			with these cards."
-	item = /obj/item/weapon/card/id/syndicate
-	cost = 2
-
-/datum/uplink_item/stealthy_tools/cham_belt
-	name = "Chameleon Military Belt"
-	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment. This one can be disguised to imitate many of the standard belts found around the station."
-	item = /obj/item/weapon/storage/belt/military/chameleon
-	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
@@ -794,9 +760,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	
 /datum/uplink_item/device_tools/syndie_mmi
-	name = "Syndicate MMI
-	desc = "A syndicate MMI that will automatically turn any brain placed within it into a syndicate-slaved cyborg.
+	name = "Syndicate MMI"
+	desc = "A syndicate MMI that will automatically turn any brain placed within it into a syndicate-slaved cyborg."
 	item = /obj/item/device/mmi/syndie
+	cost = 2
+	
+/datum/uplink_item/device_tools/syndie_surgery_duffel
+	name = "Suspicious Dufflebag"
+	desc = "A syndicate surgery duffelbag that comes stocked with surgical tools, a straightjacket, and morphine."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
 	cost = 2
 
 /datum/uplink_item/device_tools/military_belt
@@ -824,14 +796,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/glasses/thermal/syndi
 	cost = 5
 
-/datum/uplink_item/device_tools/binary
-	name = "Binary Translator Key"
-	desc = "A key that, when inserted into a radio headset, allows you to listen to and talk with silicon-based lifeforms, \
-			such as AI units and cyborgs, over their private binary channel. Caution should \
-			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
-	item = /obj/item/device/encryptionkey/binary
-	cost = 1
-	surplus = 75
 
 /datum/uplink_item/device_tools/encryptionkey
 	name = "Syndicate Encryption Key"
