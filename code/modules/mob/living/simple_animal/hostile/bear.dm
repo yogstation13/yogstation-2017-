@@ -53,7 +53,11 @@
 
 
 
-
+/mob/living/simple_animal/hostile/bear/CanAttack(var/atom/the_target)
+	. = ..()
+	for(var/obj/effect/decal/cleanable/crayon/C in get_turf(the_target))
+		if(C.icon_state == "o") //drawing a circle around yourself is the only way to ward off space bears!
+			return 0
 
 
 

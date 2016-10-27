@@ -757,7 +757,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "cart"
 	icon_deny = "cart-deny"
 	products = list("Cartridges" = list(/obj/item/weapon/cartridge/medical = 10,/obj/item/weapon/cartridge/engineering = 10,/obj/item/weapon/cartridge/security = 10,
-					/obj/item/weapon/cartridge/janitor = 10,/obj/item/weapon/cartridge/signal/toxins = 10,/obj/item/device/pda/heads = 10,
+					/obj/item/weapon/cartridge/janitor = 10,/obj/item/weapon/cartridge/toxins = 10,/obj/item/device/pda/heads = 10,
 					/obj/item/weapon/cartridge/captain = 3,/obj/item/weapon/cartridge/quartermaster = 10))
 
 /obj/machinery/vending/liberationstation
@@ -913,12 +913,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
 					/obj/item/clothing/suit/poncho/green = 1, /obj/item/clothing/suit/poncho/red = 1,
 					/obj/item/clothing/under/maid = 1, /obj/item/clothing/under/janimaid = 1,/obj/item/clothing/glasses/cold=1,/obj/item/clothing/glasses/heat=1,
-					/obj/item/clothing/suit/whitedress = 1,
+					/obj/item/clothing/suit/whitedress = 1, /obj/item/clothing/glasses/sunglasses/cheap = 1,
 					/obj/item/clothing/under/jester = 1, /obj/item/clothing/head/jester = 1,
 					/obj/item/clothing/suit/hooded/carp_costume = 1,
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
 					/obj/item/clothing/suit/snowman = 1,
-					/obj/item/clothing/head/snowman = 1))
+					/obj/item/clothing/head/snowman = 1,
+					/obj/item/clothing/suit/beekeeper_suit/clown = 1,
+					/obj/item/clothing/head/beekeeper_head/clown = 1))
 	contraband = list("Clothing" = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2))
 	premium = list("Clothing" = list(/obj/item/clothing/under/ronaldmcdonald = 1, /obj/item/clothing/suit/hgpirate = 2, /obj/item/clothing/head/hgpiratecap = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1))
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
@@ -995,7 +997,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
-	products = list("Clothing" = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
+	products = list("Clothing" = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1, /obj/item/clothing/glasses/sunglasses/cheap=3, /obj/item/clothing/glasses/meson/gar/cheap=2,
 	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
 	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
 	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
@@ -1094,7 +1096,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					"Clothing" = list(),
 					"Medical" = list(),
 					"Tools" = list(/obj/item/device/multitool = 1),
-					"PDAs and Cartridges" = list(/obj/item/device/pda/shiny = 1))
+					"PDAs and Cartridges" = list(/obj/item/device/pda/clear = 1))
 
 
 #undef STANDARD_CHARGE

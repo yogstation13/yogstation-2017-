@@ -54,6 +54,10 @@ var/list/awaydestinations = list()	//a list of landmarks that the warpgate can t
 	//used by jump-to-area etc. Updated by area/updateName()
 var/list/sortedAreas = list()
 
+	//used by check_ruins()
+	//each element is a list in the form list("ruin name", x, y, z)
+var/list/ruinAreas = list()
+
 //List of preloaded templates
 var/list/datum/map_template/map_templates = list()
 

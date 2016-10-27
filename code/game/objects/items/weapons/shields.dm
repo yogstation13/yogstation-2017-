@@ -116,7 +116,8 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 	else if(attack_type == THROWN_PROJECTILE_ATTACK)
 		if(isitem(AT))
 			var/obj/item/O = AT
-			O.dir = O.thrower_dir
+			if(O.thrower_dir)
+				O.dir = O.thrower_dir
 			if(!check_for_positions(owner,O))
 				return 0
 			else

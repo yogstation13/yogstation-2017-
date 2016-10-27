@@ -30,6 +30,7 @@
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	candismember = TRUE
 	see_in_dark = 8
 	var/boost = 0
 	bloodcrawl = BLOODCRAWL_EAT

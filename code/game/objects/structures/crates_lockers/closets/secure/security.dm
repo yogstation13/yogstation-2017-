@@ -297,3 +297,5 @@
 	new /obj/item/clothing/head/bombCollar(src)
 	new /obj/item/device/collarDetonator(src)
 	new /obj/item/weapon/paper/bombcollars(src)
+	new /obj/item/weapon/implantcase/bombcollar(src)
+	new /obj/item/weapon/implanter(src)

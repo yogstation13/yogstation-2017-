@@ -148,10 +148,12 @@
 	. = ..()
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
-		// calls dropped().
-		sleep(1)
-		if(!ismob(loc))
-			empty()
+		// calls dropped()
+		addtimer(src, "empty_if_not_held", 2)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
+	if(!ismob(loc))
+		empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
 	power_supply.use(500)
@@ -333,7 +335,7 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/energy/printer/process()
 	charge_tick++

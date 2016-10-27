@@ -49,15 +49,11 @@
 	item_state = "disintegrate"
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
-
-/obj/item/weapon/nullrod/godhand/dropped(mob/user)
-	qdel(src)
-
 
 /obj/item/weapon/nullrod/genesis
 	icon_state = "disintegrate"
@@ -169,7 +165,6 @@
 	sleep(15)
 	user.say("Wynken, Blynken, and Nod")
 	return (BRUTELOSS)
-
 
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
@@ -467,10 +462,10 @@
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/nullrod/tribal_knife/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/nullrod/tribal_knife/process()

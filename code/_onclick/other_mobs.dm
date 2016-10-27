@@ -62,10 +62,11 @@
 
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	target = A
-	AttackingTarget()
+	..()
 
 /atom/proc/attack_animal(mob/user)
 	return
+
 /mob/living/RestrainedClickOn(atom/A)
 	return
 

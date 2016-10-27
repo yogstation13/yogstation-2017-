@@ -382,6 +382,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
+	if(DROPDEL & flags)
+		//Prevents infinite loops where Destroy() calls an objects dropped() function
+		flags &= ~DROPDEL
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -581,7 +585,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	thrownby = thrower
-	thrower_dir = thrower.dir
+	if(thrower)
+		thrower_dir = thrower.dir
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 

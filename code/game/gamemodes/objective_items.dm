@@ -117,7 +117,7 @@
 	altitems = list(/obj/item/weapon/photo)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
-	if(istype(I, /obj/item/areaeditor/blueprints))
+	if(I.type == /obj/item/areaeditor/blueprints)
 		return 1
 	if(istype(I, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = I

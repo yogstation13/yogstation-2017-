@@ -29,6 +29,10 @@
 		apply_cuffs(user,user)
 		return
 
+	if(C.dna.species.id == "abomination")
+		user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
+		return
+
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2)
 			add_logs(user, C, "attempted to handcuff")
@@ -37,6 +41,9 @@
 
 			playsound(loc, cuffsound, 30, 1, -2)
 			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+				if(C.dna.species.id == "abomination")
+					user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
+					return
 				apply_cuffs(C,user)
 				user << "<span class='notice'>You handcuff [C].</span>"
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
@@ -113,7 +120,7 @@
 		new_coil.amount = 15
 		qdel(src)
 		usr.put_in_hands(new_coil)
-		usr.visible_message("<span class='notice'>[user.name] unties the knot that holds together [src].</span>")
+		usr.visible_message("<span class='notice'>[user.name] unties the knot holding together [src].</span>")
 
 /obj/item/weapon/restraints/handcuffs/cable
 
@@ -304,19 +311,18 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
 	..()
-	spawn(100)
-		if(!istype(loc, /mob))
-			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-			sparks.set_up(1, 1, src)
-			sparks.start()
-			qdel(src)
+	addtimer(src, "dissipate", 100)
 
-/obj/item/weapon/restraints/legcuffs/beartrap/energy/dropped()
-	..()
-	qdel(src)
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
+	if(!istype(loc, /mob))
+		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+		sparks.set_up(1, 1, src)
+		sparks.start()
+		qdel(src)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk

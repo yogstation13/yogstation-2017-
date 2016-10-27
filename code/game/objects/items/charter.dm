@@ -1,6 +1,7 @@
 /obj/item/station_charter
 	name = "station charter"
 	icon = 'icons/obj/wizard.dmi'
+	attack_verb = list("renamed", "charted", "named")
 	icon_state = "scroll2"
 	desc = "An official document entrusting the governance of the station and surrounding space to the Captain. Despite the fact it looks like a scroll, it actually has highly powerful electronic bindings attached which transmits information back and forth to Centcomm."
 	var/used = FALSE

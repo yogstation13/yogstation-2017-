@@ -2394,3 +2394,16 @@
 			if("11")
 				set_cybermen_queued_objective()
 		cybermen_panel()//refresh the page.
+	
+	else if(href_list["adminserverrestart"])
+		if(!check_rights(R_TICKET))
+			usr << "Clients without ticket administration rights cannot use this command. Get out of here, coder!"
+			return
+		if(ticker.current_state != GAME_STATE_FINISHED)
+			usr << "The round has not yet ended. You cannot restart the server using this option at this time."
+			return
+		if(ticker.server_reboot_in_progress)
+			usr << "A server reboot is already in progress."
+			return
+		ticker.delay_end = 0
+		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)

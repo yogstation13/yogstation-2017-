@@ -266,6 +266,8 @@
 			var/washears = 1
 			var/washglasses = 1
 
+			M.color = null //Washes off the colorful reagent color, mainly a counter to the clowns rainbow crayon
+
 			if(H.wear_suit)
 				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
 				washshoes = !(H.wear_suit.flags_inv & HIDESHOES)

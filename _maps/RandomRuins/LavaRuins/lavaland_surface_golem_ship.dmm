@@ -30,26 +30,28 @@
 "D" = (/obj/item/weapon/storage/firstaid/brute,/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/brute,/obj/item/weapon/disk/design_disk/golem_shell,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "E" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "F" = (/obj/structure/ore_box,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
+"L" = (/turf/template_noop,/area/template_noop/mapgen_protected)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aaaaabbbbbbbbbbbbbbb
-aaaaabccccccdddefghi
-aaaaabfffffffffffghi
-aabbbbjjbbbbjjbbbbbb
-aabkllllmmbllllllnhi
-aabllllloojlllllllhi
-bbbjjbbbbbblllllpbbb
-bqrllllllljlslllljtj
-bulllllllljlllllljlj
-bbbjjbbbbbbllllvwbbb
-aabllllloojllllllxhi
-aabyllllmmbzllABCDhi
-aabbbbjjbbbbjjbbbbbb
-aaaaabfffffffffffEhi
-aaaaabFFFFFFFefffEhi
-aaaaabbbbbbbbbbbbbbb
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaa
+aaaaabbbbbbbbbbbbbbbLa
+aaaaabccccccdddefghiLL
+aaaaabfffffffffffghiLL
+aabbbbjjbbbbjjbbbbbbLL
+aabkllllmmbllllllnhiLL
+aabllllloojlllllllhiLL
+bbbjjbbbbbblllllpbbbLL
+bqrllllllljlslllljtjLL
+bulllllllljlllllljljLL
+bbbjjbbbbbbllllvwbbbLL
+aabllllloojllllllxhiLL
+aabyllllmmbzllABCDhiLL
+aabbbbjjbbbbjjbbbbbbLL
+aaaaabfffffffffffEhiLL
+aaaaabFFFFFFFefffEhiLL
+aaaaabbbbbbbbbbbbbbbLa
+aaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaa
 "}
+
