@@ -1,12 +1,14 @@
 /obj/machinery/abductor/gland_dispenser
-	name = "Replacement Organ Storage"
-	desc = "A tank filled with replacement organs"
+	name = "Alien Implant Storage"
+	desc = "A tank filled with organs floating in fluid and mechanical implements."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = 1
 	anchored = 1
 	var/list/gland_types
 	var/list/gland_colors
+	var/list/implant_types
+	var/list/implant_colors
 	var/list/amounts
 
 /obj/machinery/abductor/gland_dispenser/proc/random_color()
@@ -17,15 +19,18 @@
 	gland_types = subtypesof(/obj/item/organ/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
+	implant_types = shuffle(implant_types)
+	implant_colors = new/list(implant_types.len)
 	amounts = new/list(gland_types.len)
 	for(var/i=1,i<=gland_types.len,i++)
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
+	for(var/i=1,i<=implant_types.len,i++)
+		implant_colors[i] = random_color()
+		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
-		return
-	if(!isabductor(user))
 		return
 	user.set_machine(src)
 	var/box_css = {"
@@ -46,12 +51,13 @@
 	for(var/i=1,i<=gland_colors.len,i++)
 		item_count++
 		var/g_color = gland_colors[i]
+		var/list/implant_colors = implant_colors[i]
 		var/amount = amounts[i]
 		dat += "<a class='box gland' style='background-color:[g_color]' href='?src=\ref[src];dispense=[i]'>[amount]</a>"
-		if(item_count == 3) // Three boxes per line
+		if(item_count == 4) // Four boxes per line
 			dat +="</br></br>"
 			item_count = 0
-	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
+	var/datum/browser/popup = new(user, "glands and implants", "Alien Implant Storage", 200, 200)
 	popup.add_head_content(box_css)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -60,6 +66,9 @@
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/organ/gland))
+		if(!user.drop_item())
+			return
+		if(istype(W, /obj/item/weapon/implant))
 		if(!user.drop_item())
 			return
 		W.loc = src
@@ -82,4 +91,6 @@
 	if(amounts[count]>0)
 		amounts[count]--
 		var/T = gland_types[count]
+		new T(get_turf(src))
+		var/T = implant_types[count]
 		new T(get_turf(src))
