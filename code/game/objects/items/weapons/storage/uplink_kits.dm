@@ -297,6 +297,8 @@
 	new /obj/item/weapon/stamp/chameleon(src)
 	new /obj/item/device/pda/chameleon(src)
 	new /obj/item/weapon/gun/energy/laser/chameleon(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /datum/uplink_item/stealthy_tools/cham_belt(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
