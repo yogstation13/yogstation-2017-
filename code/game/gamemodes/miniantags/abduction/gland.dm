@@ -169,7 +169,7 @@
 	var/magic_yolk = "water" //I can't use pick here, so it's at the New(). Water wont be used, it's just there.
 
 /obj/item/organ/gland/egg/New()
-	magic_yolk = pick("mindbreaker", "chloralhydrate", "initropidril", "teslium", "tiresolution", "zombiepowder", "amatoxin", "spraytan", "colorful_reagent", "laughter", "godblood") //HONK
+	magic_yolk = pick("mindbreaker", "chloralhydrate", "tiresolution", "spraytan", "colorful_reagent", "laughter", "godblood") //HONK
 
 /obj/item/organ/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
