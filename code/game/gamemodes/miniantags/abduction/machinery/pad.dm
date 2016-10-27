@@ -46,6 +46,26 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "teleport"
 	duration = 80
+	
+/obj/machinery/abductor/pad(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "alien-pad-idle", "alien-pad-idle", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+
+/obj/machinery/abductor/pad/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/abductor/pad(null)
+	B.apply_default_parts(src)
+	
+/obj/item/weapon/circuitboard/machine/chem_heater
+	name = "Teleport Pad (Abductor)"
+	build_path = /obj/machinery/abductor/pad
+	origin_tech = "programming=7;engineering=6;bluespace=7;alien=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser/quadultra = 2,
+							/obj/item/weapon/stock_parts/manipulator/femto = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/effect/overlay/temp/teleport_abductor/New()
 	var/datum/effect_system/spark_spread/S = new
