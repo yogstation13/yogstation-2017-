@@ -1,34 +1,3 @@
-//spooky halloween stuff. only tick on halloween!!!
-
-
-//uses super seekrit double proc definition stuffs. remember to call ..()!
-/*/mob/dead/observer/say(var/message) //this doesn't actually work vOv
-	..()
-	for(var/mob/M in hearers(src, 1))
-		if(!M.stat)
-			if(M.job == "Chaplain")
-				if (prob (49))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
-						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-				else
-					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
-//				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					if(prob(30))
-						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-			else
-				if(prob(50))
-					return
-				else if(prob (95))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-					if(prob(20))
-						playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-				else
-					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
-//				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-					playsound(loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)*/
-
-
 ///////////////////////////////////////
 ///////////HALLOWEEN CONTENT///////////
 ///////////////////////////////////////
@@ -102,14 +71,9 @@
 
 	else if(trapped == SPOOKY_SKELETON)
 		visible_message("<span class='userdanger'><font size='5'>BOO!</font></span>")
-		playsound(loc, pick('sound/effects/xylophone1.ogg','sound/effects/xylophone2.ogg','sound/effects/xylophone3.ogg','sound/spookoween/girlscream.ogg'), 300, 1)
+		playsound(loc, 'sound/spookoween/girlscream.ogg', 300, 1)
 		trapped = 0
-		spawn(90)
-			if(trapped_mob && trapped_mob.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new()
-				smoke.set_up(1, 0, trapped_mob.loc, 0)
-				smoke.start()
-				qdel(trapped_mob)
+		QDEL_IN(trapped_mob, 90)
 
 	else if(trapped == HOWLING_GHOST)
 		visible_message("<span class='userdanger'><font size='5'>[pick("OooOOooooOOOoOoOOooooOOOOO", "BooOOooOooooOOOO", "BOO!", "WoOOoOoooOooo")]</font></span>")
@@ -130,22 +94,17 @@
 		visible_message("<span class='userdanger'><font size='5'>THIS BEING RADIATES PURE EVIL! YOU BETTER RUN!!!</font></span>")
 		playsound(loc, 'sound/hallucinations/wail.ogg', 300, 1)
 		var/mob/living/simple_animal/hostile/faithless/F = new(loc)
-		F.stance = HOSTILE_STANCE_ATTACK
-		F.GiveTarget(usr)
 		trapped = 0
-		spawn(120)
-			if(F && F.loc)
-				var/datum/effect/effect/system/harmless_smoke_spread/smoke = new
-				smoke.set_up(1,0, F.loc, 0)
-				smoke.start()
-				qdel(F)
+		QDEL_IN(F, 120)
 
 	else if(trapped == INSANE_CLOWN)
 		visible_message("<span class='userdanger'><font size='5'>...</font></span>")
 		playsound(loc, 'sound/spookoween/scary_clown_appear.ogg', 300, 1)
-		var/mob/living/simple_animal/hostile/retaliate/clown/insane/IC = new (loc)
-		IC.GiveTarget(usr)
+		addtimer(src, "spawn_clown", 1)
 		trapped = 0
+
+/obj/structure/closet/proc/spawn_clown()
+	new /mob/living/simple_animal/hostile/retaliate/clown/insane(get_turf(src))
 
 //don't spawn in crates
 /obj/structure/closet/crate/trigger_spooky_trap()
@@ -240,7 +199,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/New()
 	..()
 	timer = rand(5,15)
-	status_flags |= GODMODE
+	status_flags = (status_flags | GODMODE)
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Retaliate()
@@ -267,9 +226,9 @@
 			loc = M.loc
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
-	return
+	stalk(target)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackTarget()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackingTarget()
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/adjustHealth()
@@ -290,3 +249,82 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/handle_temperature_damage()
 	return
+
+//spooky alt apperances
+
+var/list/spookySeeingMobs = list()
+var/list/spookyAtoms = list()
+
+/atom
+	var/image/spooky_image = null
+
+/mob/proc/startSeeingSpooky()
+	spookySeeingMobs += src
+	if(client)
+		listclearnulls(spookyAtoms)
+		for(var/V in spookyAtoms)
+			var/atom/A = V
+			if(A.spooky_image)
+				client.images += A.spooky_image
+			else
+				spookyAtoms -= A
+
+/mob/proc/stopSeeingSpooky()
+	spookySeeingMobs -= src
+	if(client)
+		listclearnulls(spookyAtoms)
+		for(var/V in spookyAtoms)
+			var/atom/A = V
+			if(A.spooky_image)
+				client.images -= A.spooky_image
+			else
+				spookyAtoms -= A
+
+/atom/proc/makeSpooky(image/I)
+	spooky_image = I
+	spookyAtoms += src
+	for(var/V in spookySeeingMobs)
+		var/mob/M = V
+		if(M.client)
+			M.client.images += spooky_image
+
+/atom/proc/makeUnSpooky()
+	spookyAtoms -= src
+	for(var/V in spookySeeingMobs)
+		var/mob/M = V
+		if(M.client)
+			M.client.images -= spooky_image
+	qdel(spooky_image)
+
+/mob/dead/observer/verb/toggle_spookysight()
+	set name = "Toggle Spookyness"
+	set category = "Ghost"
+	if(src in spookySeeingMobs)
+		stopSeeingSpooky()
+		src << "<span class='notice'>You will no longer see spooky things.</span>"
+	else
+		startSeeingSpooky()
+		src << "<span class='notice'>You will now see spooky things.</span>"
+
+/mob/Login()
+	..()
+	if(src in spookySeeingMobs)
+		startSeeingSpooky()
+	else
+		stopSeeingSpooky()
+
+/mob/living/carbon/human/New()
+	..()
+	var/image/I
+	switch(rand(1, 100))
+		if(1 to 33)
+			I = image(icon = 'icons/mob/human.dmi' , icon_state = "skeleton_s", loc = src)
+			I.override = 1
+		if(34 to 66)
+			I = image(icon = 'icons/mob/head.dmi' , icon_state = "hardhat0_pumpkin", loc = src)
+			I.overlays += image(icon = 'icons/mob/suit.dmi' , icon_state = "leathercoat")
+		if(67 to 100)
+			I = image(icon = 'icons/mob/mob.dmi' , icon_state = "ghost", loc = src)
+			I.override = 1
+
+	makeSpooky(I)

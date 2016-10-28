@@ -148,6 +148,13 @@
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
 
+/obj/item/weapon/reagent_containers/food/drinks/pumpkin_spice
+	name = "Pumpkin Spice Latte"
+	desc = "Take a sip for some festive fun."
+	icon_state = "coffee"
+	list_reagents = list("pumpkin_latte" = 30)
+	spillable = 1
+
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."

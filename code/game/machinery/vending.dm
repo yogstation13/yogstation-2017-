@@ -704,7 +704,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "coffee"
 	icon_vend = "coffee-vend"
 	vend_delay = 34
-	products = list("Drinks" = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/mug/coco = 25))
+	products = list("Drinks" = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/mug/coco = 25), "Festive Drinks" = list(/obj/item/weapon/reagent_containers/food/drinks/pumpkin_spice = 24))
 	contraband = list("Drinks" = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 12))
 	refill_canister = /obj/item/weapon/vending_refill/coffee
 

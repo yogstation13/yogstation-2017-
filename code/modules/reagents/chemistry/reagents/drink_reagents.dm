@@ -455,11 +455,19 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/pumpkin_latte
-	name = "Pumpkin Latte"
+	name = "Pumpkin Spice Latte"
 	id = "pumpkin_latte"
-	description = "A mix of pumpkin juice and coffee."
+	description = "A festive mix of pumpkin juice and coffee."
 	color = "#F4A460"
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM
+	metabolization_rate = 0.25
+
+/datum/reagent/consumable/pumpkin_latte/on_mob_delete(mob/M)
+	M.stopSeeingSpooky()
+
+/datum/reagent/consumable/pumpkin_latte/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method == INGEST)
+		M.startSeeingSpooky()
 
 /datum/reagent/consumable/gibbfloats
 	name = "Gibb Floats"

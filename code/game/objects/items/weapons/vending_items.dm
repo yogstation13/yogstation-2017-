@@ -40,8 +40,8 @@
 /obj/item/weapon/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
 	icon_state = "refill_joe"
-	charges = list(25, 4, 0)//of 75 standard, 12 contraband
-	init_charges = list(25, 4, 0)
+	charges = list(33, 4, 0)//of 99 standard, 12 contraband
+	init_charges = list(33, 4, 0)
 
 /obj/item/weapon/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"

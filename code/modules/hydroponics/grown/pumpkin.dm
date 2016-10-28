@@ -13,7 +13,7 @@
 	icon_grow = "pumpkin-grow"
 	icon_dead = "pumpkin-dead"
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4, "pumpkin_latte" = 0.3)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkin
