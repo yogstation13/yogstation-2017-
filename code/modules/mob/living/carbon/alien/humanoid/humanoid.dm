@@ -31,7 +31,7 @@
 
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
-		if(M.dna.species.id == "abomination")
+		if(user.dna.species.id == "abomination")
 			adjustBruteLoss(40)
 			visible_message("<span class='danger'>[user] tears into [src]!</span>")
 			playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
