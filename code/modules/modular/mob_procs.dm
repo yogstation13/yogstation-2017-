@@ -14,7 +14,6 @@
 	3. UnarmedAttack is going to be called if the target is adjecent
 	4. RangedAttack is only going to be called if you are not adjecent to the clicked thing
 
-	Oh, right, there's also no checks for src == clicked_thing
 	These are called in code/_onclick/other_mobs.dm UnarmedAttack/RangedAttack procs.
 
 	Everything is handled using the 'resolve_order' datum that controls the order in which items are resolved
@@ -81,7 +80,6 @@
 	return FALSE
 
 /mob/living/carbon/human/resolve_defense_modules(atom/I, mob/living/user, obj/item/bodypart/affecting, attack_type, datum/resolve_order/defense_order)
-
 	if(!istype(affecting)) //if we pass the zone (projectile attack, for example)
 		affecting = get_bodypart(affecting)
 

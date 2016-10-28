@@ -43,14 +43,8 @@
 		append(slot_r_hand)
 		append(slot_l_hand)
 
-//Try to resolve the currently held item first...again
 /datum/resolve_order/human/defense/New(active_hand)
-	if(active_hand)
-		append(slot_l_hand)
-		append(slot_r_hand)
-	else
-		append(slot_r_hand)
-		append(slot_l_hand)
+	append_hands(active_hand)
 
 /datum/resolve_order/human/defense/head/New(active_hand)
 	..()

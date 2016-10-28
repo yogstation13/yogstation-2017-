@@ -83,14 +83,11 @@
 	if(module.module_type & MODULE_DEFENSE)
 		if(!defense_modules)
 			defense_modules = list("global" = list(), "local" = list())
-		var/list/def_mod_list
 		switch(module.onhit_type)
 			if(ONHIT_LOCAL)
-				def_mod_list = defense_modules["local"]
-				def_mod_list[module.id] = module
+				defense_modules["local"][module.id] = module
 			if(ONHIT_GLOBAL)
-				def_mod_list = defense_modules["global"]
-				def_mod_list[module.id] = module
+				defense_modules["global"][module.id] = module
 
 	if(module.module_type & MODULE_ASSAULT)
 		if(!assault_modules)
@@ -113,14 +110,11 @@
 		return FALSE
 
 	if(module.module_type & MODULE_DEFENSE)
-		var/list/def_mod_list
 		switch(module.onhit_type)
 			if(ONHIT_LOCAL)
-				def_mod_list = defense_modules["local"]
-				def_mod_list -= module.id
+				defense_modules["local"] -= module.id
 			if(ONHIT_GLOBAL)
-				def_mod_list = defense_modules["global"]
-				def_mod_list -= module.id
+				defense_modules["global"] -= module.id
 
 	if(module.module_type & MODULE_ASSAULT)
 		assault_modules -= module.id
