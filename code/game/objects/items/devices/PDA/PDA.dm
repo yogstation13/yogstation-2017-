@@ -103,6 +103,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		hidden_uplink.interact(user)
 		return
 
+	if(cartridge)
+		cartridge.unlock(0) //refresh the cartridge screen
+
 	user.set_machine(src)
 
 	if(software)

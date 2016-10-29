@@ -246,23 +246,24 @@
 	icon_state = "cart"
 	spam_enabled = 1
 
-/obj/item/weapon/cartridge/proc/unlock()
+/obj/item/weapon/cartridge/proc/unlock(refresh_screen = 1)
 	if (!istype(loc, /obj/item/device/pda))
 		return
 
 	generate_menu()
-	print_to_host(menu)
+	print_to_host(menu, refresh_screen)
 	return
 
-/obj/item/weapon/cartridge/proc/print_to_host(text)
+/obj/item/weapon/cartridge/proc/print_to_host(text, refresh_screen = 1)
 	if (!istype(loc, /obj/item/device/pda))
 		return
 	var/obj/item/device/pda/P = loc
 	P.cart = text
 
-	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
-			P.attack_self(M)
+	if(refresh_screen)
+		for (var/mob/M in viewers(1, loc.loc))
+			if (M.client && M.machine == loc)
+				P.attack_self(M)
 
 	return
 
