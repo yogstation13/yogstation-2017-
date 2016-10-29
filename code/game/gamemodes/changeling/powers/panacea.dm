@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, treating hallucinations, ear, and eye damage, and waking us up, purging toxins and radiation, and resetting our genetic code completely."
+	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, treating ear damage, waking us up, purging toxins and radiation, and resetting our genetic code completely."
 	helptext = "Can be used while unconscious."
 	chemical_cost = 40
 	dna_cost = 2
@@ -24,7 +24,6 @@
 		else
 			D.cure()
 			
-	user.hallucination = max(0, user.hallucination - 600)
 	
 	user.reagents.clear_reagents()
 	sleep(1)
