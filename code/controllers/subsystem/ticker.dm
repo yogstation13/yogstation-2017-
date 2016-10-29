@@ -187,6 +187,10 @@ var/datum/subsystem/ticker/ticker
 
 	if(!Debug2)
 		if(!can_continue)
+			if(mode)
+				message_admins("<B>Error setting up [master_mode]([mode.name], [mode.type]).</B> Reverting to pre-game lobby.")
+			else
+				message_admins("<B>Error setting up [master_mode](mode is null).</B> Reverting to pre-game lobby.")
 			qdel(mode)
 			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
