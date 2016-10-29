@@ -40,19 +40,16 @@
 
 	var/mob/living/simple_animal/borer/B = getBorer()
 	if(!B)
-		..()
 		return
 
-	var/mob/living/captive_brain/H = src
-
-	H << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 10 seconds).</span>"
+	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 10 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 
 	spawn(150)
 		if(!B || !B.controlling) return
 
 		B.victim.adjustBrainLoss(rand(5,10))
-		H << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
+		src << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
 		B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
 		B.detatch()
 		verbs -= /mob/living/carbon/proc/release_control
