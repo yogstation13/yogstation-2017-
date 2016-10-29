@@ -764,7 +764,7 @@
 /obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
 	..()
 	for(var/obj/effect/proc_holder/spell/targeted/summonsaw/spell in user.mind.spell_list)
-		qdel(spell)//removes summon spell if they got it before
+		user.mind.RemovespellSpell(spell)//removes summon spell if they got it before
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonsaw(src))
 
 /obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
@@ -809,5 +809,5 @@
 			playsound(get_turf(user),'sound/effects/splat.ogg', 100, 1, -1)
 			S.recalled = FALSE
 	else
-		qdel(src)
+		user.mind.RemovespellSpell(src)
 
