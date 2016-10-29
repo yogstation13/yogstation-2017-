@@ -33,7 +33,7 @@
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB | PASSDOOR
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = list(CANPUSH, CANSTUN, CANWEAKEN)
+	status_flags = list(CANPUSH, CANSTUN, CANWEAKEN, NOGUNS)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
@@ -65,6 +65,12 @@
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
 	var/datum/personal_crafting/handcrafting
+
+/datum/mob/living/simple_animal/drone/spec_life(mob/living/simple_animal/drone = D)
+ 	if(D.stat == DEAD)
+ 		return
+ 	if(D.z = ZLEVEL_CENTCOM)
+		D.gib()
 
 /mob/living/simple_animal/drone/New()
 	. = ..()
