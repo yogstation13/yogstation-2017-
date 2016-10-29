@@ -16278,6 +16278,7 @@
 	req_access_txt = "22"
 	},
 /obj/machinery/mass_driver{
+	desc = "Holy Driver! You've been down too long in the greytide sea!";
 	dir = 4;
 	id = "chapelgun";
 	name = "Holy Driver"
@@ -24851,8 +24852,8 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "warningcorner";
+	dir = 8
 	},
 /area/hallway/secondary/exit)
 "aXN" = (
@@ -26623,14 +26624,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "bbn" = (
-/obj/machinery/camera{
-	c_tag = "Escape Arm Airlocks";
-	dir = 8;
-	network = list("SS13")
-	},
 /turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "warningcorner";
+	dir = 2
 	},
 /area/hallway/secondary/exit)
 "bbo" = (
@@ -69134,6 +69130,42 @@
 	icon_state = "white"
 	},
 /area/medical/sleeper)
+"YoR" = (
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoS" = (
+/turf/open/floor/plasteel{
+	dir = 5;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoT" = (
+/turf/open/floor/plasteel{
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoU" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoV" = (
+/obj/machinery/camera{
+	c_tag = "Escape Arm Airlocks";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
 "YoW" = (
 /obj/structure/closet/emcloset,
 /obj/structure/cable{
@@ -118621,7 +118653,7 @@ aNV
 aQv
 aWv
 aXM
-aZG
+aQv
 bbn
 aQw
 aQv
@@ -118877,9 +118909,9 @@ aRN
 aNV
 aUP
 aNV
-aNV
-aNV
-aNV
+YoR
+aQv
+YoT
 aNV
 aUQ
 aNV
@@ -119134,9 +119166,9 @@ aRO
 aNV
 aRO
 aNV
-aaa
-aaA
-aaa
+aPe
+aQv
+YoU
 aNV
 aRO
 aNV
@@ -119391,9 +119423,9 @@ aRO
 aNV
 aRO
 aNV
-aaA
-aaA
-aaA
+YoR
+aQv
+YoT
 aNV
 aRO
 aNV
@@ -119648,9 +119680,9 @@ cFf
 aNV
 aRO
 aNV
-aaA
-aaa
-aaA
+aPe
+aQv
+YoU
 aNV
 aRO
 aNV
@@ -119905,9 +119937,9 @@ aRO
 aNV
 aRO
 aNV
-aaA
-aaa
-aaA
+YoS
+aZG
+YoV
 aNV
 aRO
 aNV
@@ -120162,9 +120194,9 @@ aRN
 aTo
 aUQ
 aNV
-aaA
-aaa
-aaA
+aNV
+aNV
+aNV
 aNV
 aUQ
 aTo
