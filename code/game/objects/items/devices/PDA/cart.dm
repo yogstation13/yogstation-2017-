@@ -222,7 +222,7 @@
 /obj/item/weapon/cartridge/syndicate
 	name = "\improper Detomatix cartridge"
 	icon_state = "cart"
-	special_functions = PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS
+	special_functions = PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS | PDA_SPECIAL_DETONATE_FUNCTIONS
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing. //this has been here for years, guess we are still testing.
 	detonate_charges = 4
 
