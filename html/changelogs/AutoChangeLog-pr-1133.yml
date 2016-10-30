@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Skeleton/zombie Halloween event disabled due to overlooked issues with it."
