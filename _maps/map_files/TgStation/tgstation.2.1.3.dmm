@@ -27100,6 +27100,7 @@
 /area/hydroponics)
 "bcp" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
