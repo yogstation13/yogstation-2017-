@@ -19649,12 +19649,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/hydroponics)
-"aLJ" = (
-/obj/structure/closet/wardrobe/botanist,
-/turf/open/floor/plasteel{
-	icon_state = "hydrofloor"
-	},
-/area/hydroponics)
 "aLK" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel{
@@ -64228,14 +64222,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cwL" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cwM" = (
 /obj/effect/landmark/start{
 	name = "Station Engineer"
@@ -64638,24 +64624,6 @@
 	amount = 50
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
-"cxv" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/obj/item/device/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/device/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "warning"
-	},
 /area/engine/engineering)
 "cxw" = (
 /obj/structure/sign/securearea{
@@ -69034,6 +69002,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
+"mFS" = (
+/obj/structure/closet/wardrobe/botanist,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel{
+	icon_state = "hydrofloor"
+	},
+/area/hydroponics)
 "snF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -109116,7 +109093,7 @@ aHs
 aIM
 aKq
 aLH
-aLJ
+mFS
 aKq
 aPX
 aRt
