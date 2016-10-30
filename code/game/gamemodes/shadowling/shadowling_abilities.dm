@@ -176,7 +176,6 @@
 		var/mob/living/simple_animal/drone/D = H
 		D.light_on = 2
 		blacklistLuminosity -= D.luminosity
-		addtimer(D, "fix_light", 80000000)
 	else if(istype(H, /mob/living/simple_animal/hostile/mining_drone))
 		var/mob/living/simple_animal/hostile/mining_drone/D = H
 		D.light_on = 2
