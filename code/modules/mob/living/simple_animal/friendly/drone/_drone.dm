@@ -67,9 +67,9 @@
 	var/datum/personal_crafting/handcrafting
 
 /datum/mob/living/simple_animal/drone/spec_life(mob/living/simple_animal/drone = D)
- 	if(D.stat == DEAD)
- 		return
- 	if(D.z = ZLEVEL_CENTCOM)
+	if(D.stat == DEAD)
+		return
+	if(D.z = ZLEVEL_CENTCOM)
 		D.gib()
 
 /mob/living/simple_animal/drone/New()
