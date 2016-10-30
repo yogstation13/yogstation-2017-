@@ -177,7 +177,7 @@
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 			if(!removed)
 				return
-			var/list/removed_gases = removed
+			var/list/removed_gases = removed.gases
 			if(!removed_gases)
 				return
 
