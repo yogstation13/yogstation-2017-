@@ -166,10 +166,10 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
-	var/magic_yolk = "water" //I can't use pick here, so it's at the New(). Water wont be used, it's just there.
+	var/list/magic_yolk = list("mindbreaker", "chloralhydrate", "tiresolution", "spraytan", "space_drugs", "colorful_reagent", "laughter", "godblood")
 
 /obj/item/organ/gland/egg/New()
-	magic_yolk = pick("mindbreaker", "chloralhydrate", "tiresolution", "spraytan", "space_drugs", "colorful_reagent", "laughter", "godblood") //HONK
+	magic_yolk = pick(magic_yolk)
 
 /obj/item/organ/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
