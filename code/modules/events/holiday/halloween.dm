@@ -11,6 +11,10 @@
 	for(var/mob/living/carbon/human/H in mob_list)
 		var/obj/item/weapon/storage/backpack/b = locate() in H.contents
 		new /obj/item/weapon/storage/spooky(b)
+		if(prob(50))
+			H.set_species(/datum/species/skeleton)
+		else
+			H.set_species(/datum/species/zombie)
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
 		Ian.place_on_head(new /obj/item/weapon/bedsheet(Ian))
@@ -68,9 +72,16 @@
 	icon = 'icons/obj/halloween_items.dmi'
 	icon_state = "treatbag"
 
-/obj/item/weapon/storage/spooky/New()
+
+/obj/item/weapon/storage/candybowl
+	name = "halloween candy bowl"
+	desc = "A bowl filled with goodies, try to give some away."
+	icon = 'icons/obj/halloween_items.dmi'
+	icon_state = "candybowl"
+
+/obj/item/weapon/storage/candybowl/New()
 	..()
-	for(var/distrobuteinbag=0 to 5)
+	for(var/distrobuteinbag=40 to 50)
 		var/type = pick(/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookyskull,
 		/obj/item/weapon/reagent_containers/food/snacks/sugarcookie/spookycoffin,
 		/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
