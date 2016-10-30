@@ -69,6 +69,7 @@
 
 	if(!robots)
 		dat += "No Cyborg Units detected within access parameters."
+		dat += "<BR>"
 		
 	var/drones = 0
 	for(var/mob/living/simple_animal/drone/D in mob_list)
@@ -142,6 +143,8 @@
 				R.SetEmagged(1)
 				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+		else
+			message_admins("EXPLOIT: [usr] attempted to emag a bot using robotics console without having the right to do so.")
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))
 			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
@@ -153,8 +156,6 @@
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
-		else
-			message_admins("EXPLOIT: [usr] attempted to emag a bot using robotics console without having the right to do so.")
 
 	src.updateUsrDialog()
 	return
