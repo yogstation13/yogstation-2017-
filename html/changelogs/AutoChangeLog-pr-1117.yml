@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "IV drips no longer inject way too much blood."

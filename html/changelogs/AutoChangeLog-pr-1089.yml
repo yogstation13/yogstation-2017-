@@ -1,7 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - tweak: "Tickets now support captive brains."
-  - tweak: "Borers are back."
-  - tweak: "Organ Manipulation now removes borers. When you're digging inside a patients head be on the lookout for a \"borer vessel\"."
-  - tweak: "Removing someones brain from their head will force-eject the borer within"
