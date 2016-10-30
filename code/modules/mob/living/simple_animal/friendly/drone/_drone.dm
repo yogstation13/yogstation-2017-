@@ -33,7 +33,7 @@
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB | PASSDOOR
 	sight = (SEE_TURFS | SEE_OBJS)
-	status_flags = list(CANPUSH, CANSTUN, CANWEAKEN, NOGUNS)
+	status_flags = list(CANPUSH, CANSTUN, CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
 	speak_emote = list("chirps")
@@ -100,6 +100,9 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
+/mob/living/simple_animal/drone/can_use_guns(var/obj/item/weapon/gun/G)
+	src << "<span class='warning'>Stop trying to kill people as a drone, asshole.</span>
+	return FALSE
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
