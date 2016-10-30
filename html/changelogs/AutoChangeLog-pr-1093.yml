@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Crates can be shot open in a reasonable timeframe now."
