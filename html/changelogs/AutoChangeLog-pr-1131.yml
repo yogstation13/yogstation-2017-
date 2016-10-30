@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Allows crew to remove drone dispenser material sheets with a crowbar. This decision was made calmly."
