@@ -101,7 +101,7 @@
 	diag_hud.add_to_hud(src)
 
 /mob/living/simple_animal/drone/can_use_guns(var/obj/item/weapon/gun/G)
-	src << "<span class='warning'>Stop trying to kill people as a drone, asshole.</span>
+	src << "<span class='warning'>Stop trying to kill people as a drone, asshole.</span>"
 	return FALSE
 
 /mob/living/simple_animal/drone/med_hud_set_health()
