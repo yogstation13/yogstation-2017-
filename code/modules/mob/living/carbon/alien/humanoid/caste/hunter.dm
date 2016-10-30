@@ -9,6 +9,8 @@
 
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
+	internal_organs += new /obj/item/organ/alien/neurotoxinthroat/frail
+
 	AddAbility(new/obj/effect/proc_holder/alien/sneak)
 	..()
 

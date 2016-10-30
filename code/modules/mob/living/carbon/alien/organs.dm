@@ -32,7 +32,7 @@
 	icon_state = "plasma"
 	origin_tech = "biotech=5;plasmatech=4"
 	w_class = 3
-	zone = "chest"
+	zone = "neck"
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
 
@@ -41,6 +41,24 @@
 	var/heal_rate = 5
 	var/plasma_rate = 10
 	var/regen_rate
+
+/obj/effect/proc_holder/alien/plant
+	name = "Plant Weeds"
+	desc = "Plants some alien weeds"
+	plasma_cost = 50
+	check_turf = 1
+	action_icon_state = "alien_plant"
+
+/obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
+	if(locate(/obj/structure/alien/weeds) in get_turf(user))
+		src << "There's already a weed node here."
+		return 0
+	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
+	new/obj/structure/alien/weeds/node(user.loc, null, 1)
+	return 1
+
+
+
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
@@ -164,25 +182,6 @@
 	origin_tech = "biotech=5;materials=4"
 	alien_powers = list(/obj/effect/proc_holder/alien/resin)
 
-
-/obj/item/organ/alien/acid
-	name = "acid gland"
-	icon_state = "acid"
-	zone = "mouth"
-	slot = "acidgland"
-	origin_tech = "biotech=5;materials=2;combat=2"
-	alien_powers = list(/obj/effect/proc_holder/alien/acid)
-
-
-/obj/item/organ/alien/neurotoxin
-	name = "neurotoxin gland"
-	icon_state = "neurotox"
-	zone = "mouth"
-	slot = "neurotoxingland"
-	origin_tech = "biotech=5;combat=5"
-	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin)
-
-
 /obj/item/organ/alien/eggsac
 	name = "egg sac"
 	icon_state = "eggsac"
@@ -191,3 +190,153 @@
 	w_class = 4
 	origin_tech = "biotech=6"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)
+
+/obj/item/organ/alien/neurotoxinthroat
+	name = "xenomorphic throat canal"
+	icon_state = "plasma"
+	origin_tech = "biotech=6;plasmatech=5"
+	w_class = 5
+	zone = "chest"
+	slot = "throatcanal"
+	alien_powers = list(/obj/effect/proc_holder/alien/coughneuro, /obj/effect/proc_holder/alien/neurotoxin)
+	var/neurotoxinStorage = 0
+	var/neurotoxinStorageLimit
+
+
+/obj/item/organ/alien/neurotoxinthroat/process()
+	if(!owner)
+		return
+
+	if(neurotoxinStorage)
+		if(prob(25))
+			drool()
+		if(neurotoxinStorage == neurotoxinStorageLimit)
+			drool()
+
+
+/obj/item/organ/alien/neurotoxinthroat/proc/drool()
+	if(!owner)
+		return
+
+	var/obj/effect/decal/cleanable/xenodrool/XT = new /obj/effect/decal/cleanable/xenodrool(owner.loc)
+	var/turf/T = get_turf(owner)
+	XT.loc = T.loc
+
+
+/obj/item/organ/alien/neurotoxinthroat/frail
+	name = "weak xenomorphic throat canal"
+	origin_tech = "biotech=3;plasmatech=5"
+	neurotoxinStorageLimit = 5
+
+/obj/item/organ/alien/neurotoxinthroat/normal
+	origin_tech = "biotech=3;plasmatech=5"
+	neurotoxinStorageLimit = 15
+
+/obj/item/organ/alien/neurotoxinthroat/strong
+	name = "strong xenomorphic throat canal"
+	origin_tech = "biotech=7;plasmatech=8"
+	neurotoxinStorageLimit = 25
+
+
+
+/obj/effect/proc_holder/alien/coughneuro
+	name = "Cough Up Neurotoxin"
+	desc = "Coughs up a blob of neurotoxin which can be used as projectile spit."
+	action_icon_state = "alien_plant"
+
+/obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
+	var/obj/item/organ/alien/neurotoxinthroat/throat = user.get_bodypart("neck")
+	if(!throat)
+		return
+
+	user.visible_message("[user] begins to start cough up something, and than swallows it into another organ!", "You \
+	hear something or someone coughing up a monstrous blob of spit.", 15)
+
+	if((throat.neurotoxinStorage + 5) > throat.neurotoxinStorageLimit)
+		user.visible_message("[user] starts choking up!", "[user] is choking!", 15)
+		user.confused += 50
+		user.stuttering += 50
+		return
+
+	throat.neurotoxinStorage += 5
+	if(throat.neurotoxinStorage == throat.neurotoxinStorageLimit)
+		user << "<span class='aliennotice'>You feel a buldge coming from your neurotoxin throat sac. It's at it's max capacity of neurotoxin. Anymore could harm you."
+
+	return 1
+
+/obj/effect/proc_holder/alien/neurotoxin
+	name = "Spit Neurotoxin"
+	desc = "Spits neurotoxin at someone, burning them. Can be used to destroy machinery as well."
+	action_icon_state = "alien_neurotoxin_0"
+	var/active = 0
+
+/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
+	if(active)
+		user.ranged_ability = null
+		user << "<span class='notice'>You empty your neurotoxin gland.</span>"
+		active = 0
+	else if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'>You already have another aimed ability readied! Cancel it first."
+		return
+	else
+		user.ranged_ability = src
+		active = 1
+		user << "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
+
+	user.client.click_intercept = user.ranged_ability
+	action.button_icon_state = "alien_neurotoxin_[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+	var/p_cost = 60
+	if(!iscarbon(user) || user.lying || user.stat)
+		return
+	user.next_click = world.time + 6
+	user.face_atom(target)
+	if(user.getPlasma() < p_cost)
+		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
+		return
+
+	var/obj/item/organ/alien/neurotoxinthroat/throat = user.get_bodypart("neck")
+	if(!throat)
+		return
+
+	if(!throat.neurotoxinStorage)
+		user << "<span class='warning'>You need to cough up some neurotoxin into your throat to use this ability!"
+		return
+
+	var/turf/T = user.loc
+	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
+	if(!isturf(U) || !isturf(T))
+		return 0
+
+	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
+	var/obj/item/projectile/bullet/neurospit/A
+
+	switch(throat.neurotoxinStorage)
+		if(5)
+			A = new /obj/item/projectile/bullet/neurospit(user.loc)
+		if(10)
+			A = new /obj/item/projectile/bullet/neurospit/average(user.loc)
+		if(15)
+			A = new /obj/item/projectile/bullet/neurospit/moderate(user.loc)
+		if(20)
+			A = new /obj/item/projectile/bullet/neurospit/strong(user.loc)
+		if(25)
+			A = new /obj/item/projectile/bullet/neurospit/bulky(user.loc)
+
+	if(!A)
+		message_admins("ERROR: [user] ([user.ckey]) failed to fire '[src]' because their xenomorphic throat had [throat.neurotoxinStorage]. Report to a coder immediately.")
+
+	A.current = U
+	A.preparePixelProjectile(target, get_turf(target), user, params)
+	A.fire()
+	user.newtonian_move(get_dir(U, T))
+	user.adjustPlasma(-p_cost)
+	throat.neurotoxinStorage = 0
+
+	return 1
+
+/obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
+	if(user.ranged_ability == src)
+		user.ranged_ability = null

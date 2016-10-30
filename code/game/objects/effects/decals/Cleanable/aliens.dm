@@ -72,3 +72,17 @@
 	icon_state = "xtracks"
 	random_icon_states = null
 	blood_DNA = list("UNKNOWN DNA" = "X*")
+
+/obj/effect/decal/cleanable/xenodrool
+	name = "xeno drool"
+	desc = "A nasty pool of coughed up alien spit and drool. It seems like it's still melting the surface below it... must be fresh."
+
+/obj/effect/decal/cleanable/xenodrool/New()
+	. = ..()
+
+	addtimer(src, "dry_up", 1000)
+
+
+/obj/effect/decal/cleanable/xenodrool/proc/dry_up()
+	visible_message("[src] settles down.")
+	desc = "A nasty pool of coughed up alien spit and drool. It appears to be settling down, so it must have been here for awhile."
