@@ -26,6 +26,7 @@ Clown
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/device/assembly/bikehorn
 	r_pocket = /obj/item/toy/crayon/rainbow
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
@@ -86,6 +87,7 @@ Mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
 		/obj/item/toy/crayon/mime=1)
 
@@ -133,6 +135,7 @@ Librarian
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/weapon/barcodescanner
 	l_pocket = /obj/item/device/laser_pointer
+	r_hand = /obj/item/weapon/storage/spooky
 
 /*
 Lawyer
@@ -164,6 +167,7 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
+	r_hand = /obj/item/weapon/storage/spooky
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -205,9 +209,10 @@ Tourist
 	ears = /obj/item/device/radio/headset
 	belt = /obj/item/device/pda
 	backpack_contents = list(/obj/item/device/camera_film, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c20)
-	r_hand =  /obj/item/device/camera 
+	r_hand =  /obj/item/device/camera
 	l_pocket = /obj/item/device/camera_film
 	r_pocket = /obj/item/device/camera_film
+	l_hand = /obj/item/weapon/storage/spooky
 
 
 
@@ -240,6 +245,7 @@ Clerk
 	uniform = /obj/item/clothing/under/rank/clerk
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	head = /obj/item/clothing/head/clerkcap
+	l_hand = /obj/item/weapon/storage/spooky
 
 
 

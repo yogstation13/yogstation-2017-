@@ -27,6 +27,7 @@ Quartermaster
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/weapon/clipboard
 	l_pocket = /obj/item/device/export_scanner
+	r_hand = /obj/item/weapon/storage/spooky
 
 /*
 Cargo Technician
@@ -54,7 +55,7 @@ Cargo Technician
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
 	l_pocket = /obj/item/device/export_scanner
-
+	l_hand = /obj/item/weapon/storage/spooky
 
 /*
 Shaft Miner
@@ -84,6 +85,7 @@ Shaft Miner
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
@@ -125,6 +127,7 @@ Bartender
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
+	l_hand = /obj/item/weapon/storage/spooky
 
 /datum/job/bartender/space
 	title = "Space Bartender"
@@ -165,6 +168,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	l_hand = /obj/item/weapon/storage/spooky
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -210,6 +214,7 @@ Botanist
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
 	suit_store = /obj/item/device/plant_analyzer
+	l_hand = /obj/item/weapon/storage/spooky
 
 	backpack = /obj/item/weapon/storage/backpack/botany
 	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
@@ -241,3 +246,4 @@ Janitor
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
+	l_hand = /obj/item/weapon/storage/spooky

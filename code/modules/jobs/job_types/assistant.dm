@@ -32,6 +32,8 @@ Assistant
 /datum/outfit/job/assistant
 	name = "Assistant"
 
+	l_hand = /obj/item/weapon/storage/spooky
+
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	if (config.grey_assistants)

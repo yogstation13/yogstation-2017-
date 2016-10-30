@@ -23,6 +23,7 @@ Chaplain
 
 	belt = /obj/item/device/pda/chaplain
 	uniform = /obj/item/clothing/under/rank/chaplain
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
 	backpack = /obj/item/weapon/storage/backpack/cultpack
 	satchel = /obj/item/weapon/storage/backpack/cultpack

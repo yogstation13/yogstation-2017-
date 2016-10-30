@@ -33,6 +33,7 @@ Chief Medical Officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/weapon/storage/firstaid/regular
+	r_hand = /obj/item/weapon/storage/spooky
 	suit_store = /obj/item/device/flashlight/pen
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
@@ -77,6 +78,7 @@ Medical Doctor
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
+	r_hand = /obj/item/weapon/storage/spooky
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel_med
@@ -110,6 +112,7 @@ Chemist
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
+	l_hand = /obj/item/weapon/storage/spooky
 
 	backpack = /obj/item/weapon/storage/backpack/chemistry
 	satchel = /obj/item/weapon/storage/backpack/satchel_chem
@@ -143,6 +146,7 @@ Geneticist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store =  /obj/item/device/flashlight/pen
+	l_hand = /obj/item/weapon/storage/spooky
 
 	backpack = /obj/item/weapon/storage/backpack/genetics
 	satchel = /obj/item/weapon/storage/backpack/satchel_gen
@@ -177,6 +181,7 @@ Virologist
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/device/flashlight/pen
+	l_hand = /obj/item/weapon/storage/spooky
 
 	backpack = /obj/item/weapon/storage/backpack/virology
 	satchel = /obj/item/weapon/storage/backpack/satchel_vir
@@ -247,6 +252,7 @@ Paramedic
 	l_hand = /obj/item/roller
 	l_pocket = /obj/item/device/flashlight
 	r_pocket = /obj/item/device/gps
+	r_hand = /obj/item/weapon/storage/spooky
 
 
 /*
@@ -276,5 +282,5 @@ Psychiatrist
 	glasses = /obj/item/clothing/glasses/regular
 	belt = /obj/item/device/pda
 	ears = /obj/item/device/radio/headset/headset_med
-
+	r_hand = /obj/item/weapon/storage/spooky
 

@@ -47,6 +47,7 @@ Head of Security
 	suit_store = /obj/item/weapon/gun/energy/gun
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
@@ -105,6 +106,7 @@ Warden
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
@@ -156,6 +158,7 @@ Detective
 	head = /obj/item/clothing/head/det_hat
 	l_pocket = /obj/item/toy/crayon/white
 	r_pocket = /obj/item/weapon/lighter
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
@@ -216,6 +219,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
+	l_hand = /obj/item/weapon/storage/spooky
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
