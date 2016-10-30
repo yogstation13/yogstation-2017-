@@ -22,7 +22,7 @@
 		H.blur_eyes(20)
 		H.adjust_eye_damage(5)
 		H.confused += 3
-	for(var/mob/living/silicon/S in range(2,user))
+	for(var/mob/living/silicon/S in range(3,user))
 		S << "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>"
 		S.Weaken(5)
 	var/turf = get_turf(user)
