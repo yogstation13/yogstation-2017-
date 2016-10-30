@@ -175,8 +175,10 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
-			var/list/removed_gases = removed.gases
-			if (isnull(removed)) //in space
+			if(!removed)
+				return
+			var/list/removed_gases = removed
+			if(!removed_gases)
 				return
 
 			//Filter it

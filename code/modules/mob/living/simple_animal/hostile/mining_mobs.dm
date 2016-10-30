@@ -796,8 +796,8 @@
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
 	. = ..()
 	if(health < (maxHealth/3))  //He's REALLY mad.
-		speak_emote = ("chitters angrily")
-		emote_hear = ("chitters furiously")
+		speak_emote = list("chitters angrily")
+		emote_hear = list("chitters furiously")
 		move_to_delay = 8
 		speed = 3
 		melee_damage_lower = 15
@@ -808,6 +808,7 @@
 	else
 		poison_type = initial(poison_type)
 		poison_per_bite = initial(poison_per_bite)
+		speak_emote = list("chitters")
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
