@@ -23,6 +23,7 @@
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/weapon/storage/box/chameleon(src)
+			/obj/item/weapon/storage/belt/military/chameleon(src)
 			return
 
 		if("bond")
@@ -299,7 +300,7 @@
 	new /obj/item/device/pda/chameleon(src)
 	new /obj/item/weapon/gun/energy/laser/chameleon(src)
 	new /obj/item/weapon/card/id/syndicate(src)
-	new /datum/uplink_item/stealthy_tools/cham_belt(src)
+	new /obj/item/weapon/storage/belt/military/chameleon(src)
 
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
