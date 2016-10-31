@@ -386,13 +386,14 @@ mob/living/carbon/proc/release_control()
 		return
 
 	if(borer.chemicals >= 100)
-		var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
+		var/list/candidates = get_candidates(ROLE_BORER, null, ROLE_BORER)
 		for(var/client/C in candidates)
-			if(jobban_isbanned(C.mob, "borer") || !(C.prefs.toggles & MIDROUND_ANTAG))
+			if(!(C.prefs.toggles & MIDROUND_ANTAG))
 				candidates -= C
 		if(!candidates.len)
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
+
 		var/client/C = pick(candidates)
 
 		borer.chemicals -= 100
