@@ -64,14 +64,20 @@
 /area/ruin/powered)
 "ao" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
+/obj/machinery/chem_dispenser/drinks/beer{
+	emagged = 1;
+	name = "\"exotic\"booze dispenser"
+	},
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
 "ap" = (
 /obj/structure/table,
-/obj/machinery/chem_dispenser/drinks,
+/obj/machinery/chem_dispenser/drinks{
+	emagged = 1;
+	name = "\"exotic\" soda dispenser"
+	},
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -81,6 +87,10 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -92,7 +102,12 @@
 	})
 "as" = (
 /obj/structure/table,
-/obj/item/toy/figure/bartender,
+/obj/item/toy/figure/bartender{
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/obj/item/weapon/storage/belt/bandolier,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -100,6 +115,7 @@
 "at" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -182,10 +198,11 @@
 	name = "Space Bar"
 	})
 "aF" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 10
-	},
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/weapon/rcd_ammo/large,
+/obj/item/weapon/rcd,
+/obj/structure/closet/crate,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -436,9 +453,20 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/powered)
-"bs" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+"bo" = (
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bp" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bq" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
@@ -449,20 +477,42 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bq" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+"bs" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bx" = (
+/obj/machinery/computer/arcade/battle,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bw" = (
+/obj/machinery/computer/arcade/orion_trail,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bv" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bu" = (
+/obj/structure/table,
+/mob/living/carbon/monkey{
+	name = "Nup Nup"
+	},
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bp" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
+"bt" = (
+/obj/machinery/autolathe,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bo" = (
-/turf/closed/wall,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
@@ -1323,7 +1373,7 @@ bo
 ao
 ar
 aC
-aG
+bu
 aJ
 aK
 aK
@@ -1446,7 +1496,7 @@ ac
 aM
 af
 bo
-ar
+bt
 ar
 ar
 aG
@@ -1456,8 +1506,8 @@ aK
 aR
 aK
 aK
-aK
-aK
+bw
+bx
 aU
 be
 aZ
@@ -1665,7 +1715,7 @@ aK
 aS
 aK
 aK
-aK
+bv
 bo
 bc
 bc

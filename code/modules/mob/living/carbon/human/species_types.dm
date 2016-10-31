@@ -128,7 +128,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
-	id = "lizard"
+	id = "ashlizard"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 
 /datum/species/lizard/fly
