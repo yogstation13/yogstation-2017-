@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/guardian/assassin
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	candismember = TRUE
+	dismember_chance = 0
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -53,6 +53,7 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		armour_penetration = initial(armour_penetration)
 		environment_smash = initial(environment_smash)
+		dismember_chance = initial(dismember_chance)
 		alpha = initial(alpha)
 		if(!forced)
 			src << "<span class='danger'><B>You exit stealth.</span></B>"
@@ -69,6 +70,7 @@
 		melee_damage_lower = 50
 		melee_damage_upper = 50
 		armour_penetration = 100
+		dismember_chance = 100
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15
