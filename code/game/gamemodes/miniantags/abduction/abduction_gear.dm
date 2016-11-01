@@ -463,7 +463,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			if(C.borer)
-				C.borer.silent(sleeptime)
+				C.borer.staminaloss += sleeptime
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1

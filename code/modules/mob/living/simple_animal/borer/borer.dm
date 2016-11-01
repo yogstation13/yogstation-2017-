@@ -127,6 +127,9 @@ var/total_borer_hosts_needed = 10
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
+	if(staminaloss) // stamina loss will mute borers
+		return
+
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
