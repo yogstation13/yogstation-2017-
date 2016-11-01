@@ -276,7 +276,7 @@ var/total_borer_hosts_needed = 10
 	name = "borer vessel"
 	zone = "head"
 	slot = "brain tumor"
-	desc = "A hunk of alien flesh developed from inside the brain, and also a command center for any type of borer. Home is where the heart is. Or in this case, the head."
+	desc = "A hunk of alien flesh molded from the inside of a human brain. It now resembles a once operatable command center for a borer. Home is where the heart is. Or in this case, the head."
 	icon_state = "eggsac"
 	var/mob/living/simple_animal/borer/borer = null
 
