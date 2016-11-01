@@ -4,7 +4,7 @@
 	icon_state = "securecrate"
 	secure = 1
 	locked = 1
-	health = 1000
+	health = 150
 
 /obj/structure/closet/crate/secure/update_icon()
 	..()
