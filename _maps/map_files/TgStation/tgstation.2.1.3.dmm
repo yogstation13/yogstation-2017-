@@ -16278,6 +16278,7 @@
 	req_access_txt = "22"
 	},
 /obj/machinery/mass_driver{
+	desc = "Holy Driver! You've been down too long in the greytide sea!";
 	dir = 4;
 	id = "chapelgun";
 	name = "Holy Driver"
@@ -24845,8 +24846,8 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "warningcorner";
+	dir = 8
 	},
 /area/hallway/secondary/exit)
 "aXN" = (
@@ -69112,6 +69113,45 @@
 	icon_state = "white"
 	},
 /area/medical/sleeper)
+"YoP" = (
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoQ" = (
+/turf/open/floor/plasteel{
+	dir = 5;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoR" = (
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "warningcorner"
+	},
+/area/hallway/secondary/exit)
+"YoS" = (
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoT" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
+"YoU" = (
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "warning"
+	},
+/area/hallway/secondary/exit)
 "YoV" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8;
@@ -118611,9 +118651,9 @@ aNV
 aQv
 aWv
 aXM
-aZG
+aQv
+YoR
 bbn
-aQw
 aQv
 bfb
 aQv
@@ -118867,9 +118907,9 @@ aRN
 aNV
 aUP
 aNV
-aNV
-aNV
-aNV
+YoP
+aQv
+YoS
 aNV
 aUQ
 aNV
@@ -119124,9 +119164,9 @@ aRO
 aNV
 aRO
 aNV
-aaa
-aaA
-aaa
+aPe
+aQv
+YoT
 aNV
 aRO
 aNV
@@ -119381,9 +119421,9 @@ aRO
 aNV
 aRO
 aNV
-aaA
-aaA
-aaA
+YoP
+aQv
+YoS
 aNV
 aRO
 aNV
@@ -119638,9 +119678,9 @@ cFf
 aNV
 aRO
 aNV
-aaA
-aaa
-aaA
+aPe
+aQv
+YoT
 aNV
 aRO
 aNV
@@ -119895,9 +119935,9 @@ aRO
 aNV
 aRO
 aNV
-aaA
-aaa
-aaA
+YoQ
+aZG
+YoU
 aNV
 aRO
 aNV
@@ -120152,9 +120192,9 @@ aRN
 aTo
 aUQ
 aNV
-aaA
-aaa
-aaA
+aNV
+aNV
+aNV
 aNV
 aUQ
 aTo
