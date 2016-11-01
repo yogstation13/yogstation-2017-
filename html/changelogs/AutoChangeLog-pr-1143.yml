@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "When borers puke, they correctly grab the ghosts with BE_BORER instead of BE_ALIEN."
