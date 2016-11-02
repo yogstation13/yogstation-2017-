@@ -19649,12 +19649,6 @@
 	icon_state = "hydrofloor"
 	},
 /area/hydroponics)
-"aLJ" = (
-/obj/structure/closet/wardrobe/botanist,
-/turf/open/floor/plasteel{
-	icon_state = "hydrofloor"
-	},
-/area/hydroponics)
 "aLK" = (
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel{
@@ -27106,6 +27100,7 @@
 /area/hydroponics)
 "bcp" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -64228,14 +64223,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cwL" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cwM" = (
 /obj/effect/landmark/start{
 	name = "Station Engineer"
@@ -64638,24 +64625,6 @@
 	amount = 50
 	},
 /turf/open/floor/plasteel,
-/area/engine/engineering)
-"cxv" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 5
-	},
-/obj/item/device/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/device/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "warning"
-	},
 /area/engine/engineering)
 "cxw" = (
 /obj/structure/sign/securearea{
@@ -69034,6 +69003,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
+"mFS" = (
+/obj/structure/closet/wardrobe/botanist,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel{
+	icon_state = "hydrofloor"
+	},
+/area/hydroponics)
 "snF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -69133,6 +69111,18 @@
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
+/area/medical/sleeper)
+"YoV" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/shower{
+	desc = "A showerhead found in school science labs and medbays alike, used to quickly wash off any dangerous fluids covering a person.";
+	name = "emergency shower";
+	pixel_y = 15
+	},
+/turf/open/floor/noslip,
 /area/medical/sleeper)
 "YoW" = (
 /obj/structure/closet/emcloset,
@@ -104248,7 +104238,7 @@ biq
 bvU
 bxs
 byB
-byG
+bAj
 byG
 byG
 byG
@@ -105533,8 +105523,8 @@ buA
 bvY
 bxw
 byG
-bAj
-bBC
+byG
+YoV
 bBC
 byG
 byG
@@ -109104,7 +109094,7 @@ aHs
 aIM
 aKq
 aLH
-aLJ
+mFS
 aKq
 aPX
 aRt
