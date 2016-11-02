@@ -18,6 +18,11 @@
 			C.vomit(0)
 		egg.loc = get_turf(user)
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.borer)
+			H.borer.leave_victim()
+
 	user.reagents.add_reagent("mutadone", 10)
 	user.reagents.add_reagent("pen_acid", 20)
 	user.reagents.add_reagent("antihol", 10)
@@ -25,5 +30,6 @@
 
 	for(var/datum/disease/D in user.viruses)
 		D.cure()
+
 	feedback_add_details("changeling_powers","AP")
 	return 1

@@ -38,6 +38,10 @@
 	set desc = "Attempt to break free of your borer's control!"
 	set category = "Borer"
 
+	if(client.prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
+
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
 		var/mob/living/captive_brain/H = src

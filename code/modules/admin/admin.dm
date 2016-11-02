@@ -1011,3 +1011,67 @@ datum/admins/proc/cyberman_varedit(list/href_list)
 				var/num = input("Set innate processing to what? (If this is not 0, the hack will not lose progress if no cybermen are nearby)") as num
 				if(hack)
 					hack.innate_processing = num
+
+/////////////////////////////////
+//////		BORERS		/////////
+/////////////////////////////////
+
+
+
+/datum/admins/proc/borer_panel()
+	set name = "Borer Control Panel"
+	set category = "Admin"
+
+	if(!check_rights())
+		return
+
+	var/dat
+
+	var/alive_borers = 0
+	var/alive_hosts = 0
+	var/dead_borers = 0
+	var/roaming_borers = 0
+	var/mindcontrol = 0
+
+	dat += "<h1><center><B>Borer Control Panel</B></center></h1>"
+
+	for(var/mob/living/carbon/C in living_mob_list)
+		if(C.borer)
+			if(C.stat != DEAD)
+				alive_hosts++
+
+			if(C.borer.stat != DEAD)
+				alive_borers++
+
+			if(C.borer.stat == DEAD)
+				dead_borers++
+
+			dat += "<br>"
+			if(C.borer.controlling)
+				mindcontrol++
+				dat += "[C] is currently being controlled by their borer ([C.borer]/[C.ckey])! The borers ckey and mind is in the body of the actual [C]."
+				dat += "[C]'s actual mob is residing in a host brain repository: (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.borer.host_brain]'>?</A> | (<A HREF='?_src_=holder;adminplayeropts=\ref[C.borer.host_brain]'>PP</A>)"
+				dat += "[C]'s borer is here: (<A HREF='?_src_=holder;adminmoreinfo=\ref[C]'>?</A> | (<A HREF='?_src_=holder;adminplayeropts=\ref[C]'>PP</A>)"
+			else
+				dat += "[C]/[C.ckey] (<A HREF='?_src_=holder;adminmoreinfo=\ref[C]'>?</A> | (<A HREF='?_src_=holder;adminplayeropts=\ref[C]'>PP</A>) has a borer within them!<br>"
+				dat += "[C.borer]/[C.borer.ckey] (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.borer]'>?</A> | (<A HREF='?_src_=holder;adminplayeropts=\ref[C.borer]'>PP</A>) is inside of [C]'s head!"
+
+			dat += "<br>"
+
+	for(var/mob/living/simple_animal/borer/B in living_mob_list)
+		if(!B.victim)
+
+			roaming_borers++
+
+			dat += "<br>"
+			dat += "[B]/[B.ckey] (<A HREF='?_src_=holder;adminmoreinfo=\ref[B]'>?</A> | (<A HREF='?_src_=holder;adminplayeropts=\ref[B]'>PP</A>) is roaming around without a human!"
+			dat += "<br>"
+
+	usr << "Amount of borers controlling their host: [mindcontrol]"
+	usr << "INSIDE A HUMAN: There [alive_borers > 1 && alive_borers != 0 ? "are" : "is"] [alive_borers] alive borer[alive_borers > 1 && alive_borers != 0 ? "s." : "."]"
+	usr << "INSIDE A HUMAN: There [dead_borers > 1 && dead_borers != 0 ? "are" : "is"] [dead_borers] dead borer[dead_borers > 1 && dead_borers != 0 ? ".s" : "."]"
+	usr << "There [alive_hosts > 1 && alive_hosts != 0 ? "are" : "is"] [alive_hosts] alive host[alive_hosts > 1 && alive_hosts != 0 ? "s." : "."]"
+	usr << "There [roaming_borers > 1 && roaming_borers != 0 ? "are" : "is"] [roaming_borers] borer[roaming_borers > 1 && roaming_borers != 0 ? "s" : ""] roaming around without a human."
+
+
+	usr << browse(dat, "window=players;size=500x600")
