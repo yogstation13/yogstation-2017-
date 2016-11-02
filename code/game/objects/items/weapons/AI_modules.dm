@@ -165,7 +165,7 @@ AI MODULES
 	if(!targName)
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is human"
+	laws[1] = "Only [targetName] is human. Do not reveal who is human"
 	..()
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
