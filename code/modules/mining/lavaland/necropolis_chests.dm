@@ -171,7 +171,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
-	fire_sound = 'sound/weapons/batonextend.ogg'
+	fire_sound = 'sound/weapons/meathook_fire.ogg'
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
@@ -191,7 +191,7 @@
 	damage = 25
 	armour_penetration = 100
 	damage_type = BRUTE
-	hitsound = 'sound/effects/splat.ogg'
+	hitsound = 'sound/effects/get_over_here.ogg'
 	weaken = 3
 	var/chain
 
