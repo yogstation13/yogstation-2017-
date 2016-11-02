@@ -60,12 +60,9 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		armour_penetration = initial(armour_penetration)
 		environment_smash = initial(environment_smash)
-<<<<<<< HEAD
 		pass_flags &= ~PASSMOB
 		pass_flags &= ~PASSTABLE
-=======
 		dismember_chance = initial(dismember_chance)
->>>>>>> yogstation/master
 		alpha = initial(alpha)
 		if(!forced)
 			src << "<span class='danger'><B>You exit stealth.</span></B>"
