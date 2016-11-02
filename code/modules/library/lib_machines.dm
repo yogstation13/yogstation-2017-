@@ -485,8 +485,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	else
 		return ..()
 		
-/obj/machinery/libraryscanner/attackby(obj/item/W
-, mob/user, params)
+/obj/machinery/libraryscanner/attackby(obj/item/W, mob/user, params)
 
 
 	if(istype(W, /obj/item/weapon/wrench))
