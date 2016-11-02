@@ -39,6 +39,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.update_hair(0)
+	if(M.borer)
+		visible_message("<span class='danger'>[M.borer] has slipped out of [M]'s brain!!</span>", \
+			"<span class='danger'>[M.borer] slips out of [src]!</span>")
+		M.borer.leave_victim()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.

@@ -71,6 +71,8 @@
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
 	var/list/newsmokes = list()
+	if(!t_loc)
+		return
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)
