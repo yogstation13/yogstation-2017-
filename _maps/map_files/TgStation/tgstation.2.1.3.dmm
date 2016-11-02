@@ -62011,7 +62011,7 @@
 /area/maintenance/incinerator)
 "csV" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -62025,7 +62025,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -62167,7 +62167,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 4;
 	icon_state = "0-4"
 	},
@@ -62177,12 +62177,12 @@
 	},
 /area/engine/engine_smes)
 "ctn" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -62196,7 +62196,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -62474,7 +62474,7 @@
 	},
 /area/maintenance/incinerator)
 "ctP" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -62659,7 +62659,7 @@
 	},
 /area/engine/engine_smes)
 "cuh" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -62753,7 +62753,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cuo" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -62770,7 +62770,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -62778,7 +62778,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cuq" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -62854,7 +62854,7 @@
 	},
 /area/maintenance/incinerator)
 "cuz" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -62975,7 +62975,7 @@
 /area/engine/engine_smes)
 "cuK" = (
 /obj/structure/window/reinforced,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 4;
 	icon_state = "0-4"
 	},
@@ -62992,17 +62992,17 @@
 	name = "SMES Chamber";
 	req_access_txt = "32"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -63017,7 +63017,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -63289,7 +63289,7 @@
 	id = "Singularity";
 	name = "radiation shutters"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -63439,7 +63439,7 @@
 	},
 /area/maintenance/incinerator)
 "cvx" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -63555,7 +63555,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -63640,7 +63640,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cvO" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -63652,7 +63652,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cvP" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -63664,7 +63664,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cvQ" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -63679,7 +63679,7 @@
 	dir = 4;
 	name = "Firelock East"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -63695,7 +63695,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -63706,7 +63706,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cvT" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -63769,7 +63769,7 @@
 	},
 /area/engine/engineering)
 "cwa" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64006,7 +64006,7 @@
 	},
 /area/maintenance/incinerator)
 "cwu" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64072,7 +64072,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cwA" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -64084,7 +64084,7 @@
 /area/engine/engine_smes)
 "cwB" = (
 /obj/machinery/light,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64105,7 +64105,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64116,7 +64116,7 @@
 	},
 /area/engine/engine_smes)
 "cwD" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64128,7 +64128,7 @@
 	dir = 1;
 	on = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64154,7 +64154,7 @@
 	icon_state = "alarm0";
 	pixel_y = -22
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64172,7 +64172,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64180,7 +64180,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cwH" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64194,7 +64194,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64202,7 +64202,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cwJ" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -64227,7 +64227,7 @@
 /obj/effect/landmark/start{
 	name = "Station Engineer"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -64235,12 +64235,12 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cwN" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64261,7 +64261,7 @@
 	id = "Singularity";
 	name = "radiation shutters"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64272,12 +64272,12 @@
 	},
 /area/engine/engineering)
 "cwP" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -64288,12 +64288,12 @@
 	},
 /area/engine/engineering)
 "cwQ" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -64305,7 +64305,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cwS" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -64314,7 +64314,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cwT" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64338,7 +64338,7 @@
 	id = "Singularity";
 	name = "radiation shutters"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -64349,12 +64349,12 @@
 	},
 /area/engine/engineering)
 "cwV" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -64525,7 +64525,7 @@
 	name = "Incinerator Interior Airlock";
 	req_access_txt = "12"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64648,7 +64648,7 @@
 /area/engine/engineering)
 "cxy" = (
 /obj/item/clothing/glasses/meson,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64660,7 +64660,7 @@
 /area/engine/engineering)
 "cxz" = (
 /obj/structure/chair/stool,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64678,7 +64678,7 @@
 	pixel_y = 0;
 	req_access_txt = "11"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64696,7 +64696,7 @@
 	pixel_y = 0;
 	req_access_txt = "11"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64708,7 +64708,7 @@
 /area/engine/engineering)
 "cxC" = (
 /obj/machinery/particle_accelerator/control_box,
-/obj/structure/cable/yellow/yellow,
+/obj/structure/cable/yellow/orange,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cxD" = (
@@ -64742,7 +64742,7 @@
 	pixel_y = 0;
 	req_access_txt = "11"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64753,7 +64753,7 @@
 	},
 /area/engine/engineering)
 "cxH" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64898,7 +64898,7 @@
 /turf/open/floor/engine,
 /area/maintenance/incinerator)
 "cxV" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -64995,7 +64995,7 @@
 	id = "Singularity";
 	name = "radiation shutters"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65012,7 +65012,7 @@
 	pixel_y = -7
 	},
 /obj/item/weapon/crowbar,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65106,7 +65106,7 @@
 	name = "Incinerator Exterior Airlock";
 	req_access_txt = "12"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65210,7 +65210,7 @@
 /obj/machinery/power/rad_collector{
 	anchored = 1
 	},
-/obj/structure/cable/yellow/yellow,
+/obj/structure/cable/yellow/orange,
 /obj/item/weapon/tank/internals/plasma,
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -65219,7 +65219,7 @@
 	anchored = 1
 	},
 /obj/item/weapon/tank/internals/plasma,
-/obj/structure/cable/yellow/yellow,
+/obj/structure/cable/yellow/orange,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cyG" = (
@@ -65228,7 +65228,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cyH" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65302,7 +65302,7 @@
 	luminosity = 2;
 	on = 0
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65395,7 +65395,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cza" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -65406,7 +65406,7 @@
 	},
 /area/engine/engineering)
 "czb" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -65418,7 +65418,7 @@
 /area/engine/engineering)
 "czc" = (
 /obj/item/weapon/wirecutters,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -65466,8 +65466,8 @@
 	dir = 1;
 	luminosity = 2
 	},
-/obj/structure/cable/yellow/yellow,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange,
+/obj/structure/cable/yellow/orange{
 	d2 = 2;
 	icon_state = "0-2"
 	},
@@ -65527,7 +65527,7 @@
 "czo" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65648,7 +65648,7 @@
 /obj/machinery/power/turbine{
 	luminosity = 2
 	},
-/obj/structure/cable/yellow/yellow,
+/obj/structure/cable/yellow/orange,
 /turf/open/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "czz" = (
@@ -65756,7 +65756,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "czJ" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -65764,7 +65764,7 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "czK" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -65772,17 +65772,17 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "czL" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -65790,7 +65790,7 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "czM" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -65925,7 +65925,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "czZ" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
@@ -65982,12 +65982,12 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cAg" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -65998,7 +65998,7 @@
 /obj/machinery/power/tesla_coil{
 	anchored = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 8;
 	icon_state = "0-8"
 	},
@@ -66013,19 +66013,19 @@
 /obj/machinery/power/tesla_coil{
 	anchored = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating/airless,
 /area/space)
 "cAk" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -67189,7 +67189,7 @@
 /obj/machinery/power/tesla_coil{
 	anchored = 1
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d2 = 2;
 	icon_state = "0-2"
 	},
@@ -67533,7 +67533,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cCU" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
@@ -67541,12 +67541,12 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cCV" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
@@ -67554,7 +67554,7 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "cCW" = (
-/obj/structure/cable/yellow/yellow{
+/obj/structure/cable/yellow/orange{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
