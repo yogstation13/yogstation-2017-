@@ -42,7 +42,7 @@
 	if(!B)
 		return
 
-if(client.prefs.afreeze)
+	if(client.prefs.afreeze)
 		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
 

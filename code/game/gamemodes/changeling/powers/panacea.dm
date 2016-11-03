@@ -19,7 +19,7 @@
 		egg.loc = get_turf(user)
 
 
-if(ishuman(user))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.borer)
 			H.borer.leave_victim()
@@ -29,8 +29,8 @@ if(ishuman(user))
 			continue
 		else
 			D.cure()
-			
-	
+
+
 	user.reagents.clear_reagents()
 	sleep(1)
 	user.reagents.add_reagent("antihol", 10)
@@ -38,7 +38,7 @@ if(ishuman(user))
 	user.reagents.add_reagent("inacusiate", 10)
 	user.reagents.add_reagent("antitoxin", 29)
 	user.reagents.add_reagent("mutadone", 10)
-	
+
 
 	feedback_add_details("changeling_powers","AP")
 	return 1
