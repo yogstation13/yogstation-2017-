@@ -67,6 +67,9 @@
 		return
 
 	for(var/turf/F in orange(1, src))
+		var/area/A = get_area(F)
+		if(A.mapgen_protected)
+			continue
 		if(!F.density || istype(F, /turf/closed/mineral))
 			var/turf/L = new src.type(F)
 

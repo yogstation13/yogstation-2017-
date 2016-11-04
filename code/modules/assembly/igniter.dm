@@ -4,18 +4,22 @@
 	icon_state = "igniter"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/sparks
 	heat = 1000
 
 /obj/item/device/assembly/igniter/New()
 	..()
-	sparks.set_up(2, 0, src)
-	sparks.attach(src)
+	set_up_sparks()
 
 /obj/item/device/assembly/igniter/Destroy()
 	qdel(sparks)
 	sparks = null
 	return ..()
+
+/obj/item/device/assembly/igniter/proc/set_up_sparks()
+	sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(2, 0, src)
+	sparks.attach(src)
 
 
 /obj/item/device/assembly/igniter/activate()
@@ -24,6 +28,8 @@
 	var/turf/location = get_turf(loc)
 	if(location)
 		location.hotspot_expose(1000,1000)
+	if(!sparks)
+		set_up_sparks()
 	sparks.start()
 	return 1
 

@@ -4,7 +4,7 @@
 	icon_state = "securecrate"
 	secure = 1
 	locked = 1
-	health = 1000
+	health = 150
 
 /obj/structure/closet/crate/secure/update_icon()
 	..()
@@ -39,7 +39,6 @@
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
 	name = "secure engineering crate"
 	icon_state = "engi_secure_crate"
-
 /obj/structure/closet/crate/secure/medical
 	desc = "A crate with a lock on it, painted in the shceme of the station's doctors."
 	name = "secure medical crate"

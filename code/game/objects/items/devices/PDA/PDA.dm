@@ -103,6 +103,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		hidden_uplink.interact(user)
 		return
 
+	if(cartridge)
+		cartridge.unlock(0) //refresh the cartridge screen
+
 	user.set_machine(src)
 
 	if(software)
@@ -139,7 +142,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
 
 				dat += "<br><br>"
-				if(cartridge && cartridge.special_functions & PDA_SPECIAL_SOFTWARE_FUNCTIONS)
+				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_SOFTWARE_FUNCTIONS))
 					dat += "<h4>Centcomm Administration Functions</h4>"
 					dat += "<ul>"
 					dat += "<li><a href='byond://?src=\ref[src];choice=create_virus'><img src=pda_signaler.png>Create Software</a></li>"
@@ -274,11 +277,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<a href='byond://?src=\ref[src];choice=Ringtone'><img src=pda_bell.png> Set Ringtone</a> | "
 				dat += "<a href='byond://?src=\ref[src];choice=21'><img src=pda_mail.png> Messages</a><br>"
 
-				if (cartridge && cartridge.special_functions & PDA_SPECIAL_DETONATE_FUNCTIONS)
+				if (cartridge && (cartridge.special_functions & PDA_SPECIAL_DETONATE_FUNCTIONS))
 					dat += "<b>[cartridge.detonate_charges] detonation charges left.</b><HR>"
-				if (cartridge && cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS)
+				if (cartridge && (cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS))
 					dat += "<b>[cartridge.honk_charges] viral files left.</b><HR>"
-				if (cartridge && cartridge.special_functions & PDA_SPECIAL_MIME_FUNCTIONS)
+				if (cartridge && (cartridge.special_functions & PDA_SPECIAL_MIME_FUNCTIONS))
 					dat += "<b>[cartridge.mime_charges] viral files left.</b><HR>"
 
 				dat += "<h4><img src=pda_menu.png> Detected PDAs</h4>"
@@ -291,11 +294,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						if (P == src)
 							continue
 						dat += "<li><a href='byond://?src=\ref[src];choice=Message;target=\ref[P]'>[P]</a>"
-						if (cartridge && cartridge.special_functions & PDA_SPECIAL_DETONATE_FUNCTIONS && P.detonate)
+						if (cartridge && (cartridge.special_functions & PDA_SPECIAL_DETONATE_FUNCTIONS) && P.detonate)
 							dat += " (<a href='byond://?src=\ref[src];choice=Detonate;target=\ref[P]'><img src=pda_boom.png>*Detonate*</a>)"
-						if (cartridge && cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS)
+						if (cartridge && (cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS))
 							dat += " (<a href='byond://?src=\ref[src];choice=Send Honk;target=\ref[P]'><img src=pda_honk.png>*Send Virus*</a>)"
-						if (cartridge && cartridge.special_functions & PDA_SPECIAL_MIME_FUNCTIONS)
+						if (cartridge && (cartridge.special_functions & PDA_SPECIAL_MIME_FUNCTIONS))
 							dat += " (<a href='byond://?src=\ref[src];choice=Send Silence;target=\ref[P]'>*Send Virus*</a>)"
 						dat += "</li>"
 						count++
@@ -547,7 +550,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				src.send_to_all(U)
 
 			if("Send Honk")//Honk virus
-				if(cartridge && cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS)//Cartridge checks are kind of unnecessary since everything is done through switch.
+				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS))//Cartridge checks are kind of unnecessary since everything is done through switch.
 					var/obj/item/device/pda/P = locate(href_list["target"])//Leaving it alone in case it may do something useful, I guess.
 					if(!isnull(P))
 						if (!P.toff && cartridge.honk_charges > 0)
@@ -563,7 +566,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					U << browse(null, "window=pda")
 					return
 			if("Send Silence")//Silent virus
-				if(cartridge && cartridge.special_functions & PDA_SPECIAL_MIME_FUNCTIONS)
+				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_MIME_FUNCTIONS))
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!isnull(P))
 						if (!P.toff && cartridge.mime_charges > 0)
@@ -582,7 +585,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
-				if(cartridge && cartridge.special_functions & PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS)
+				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS))
 					for(var/obj/machinery/door/poddoor/M in machines)
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
@@ -591,7 +594,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 								M.close()
 
 			if("Detonate")//Detonate PDA
-				if(cartridge && cartridge.special_functions & PDA_SPECIAL_DETONATE_FUNCTIONS)
+				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_DETONATE_FUNCTIONS))
 					var/obj/item/device/pda/P = locate(href_list["target"])
 					if(!isnull(P) && P.detonate)
 						if (!P.toff && cartridge.detonate_charges > 0)
