@@ -1,0 +1,5 @@
+author: DrFino
+delete-after: True
+changes: 
+  - spellcheck: "Fixes chameleon HUD's name."
+  - spellcheck: "Capitalized mint description."
