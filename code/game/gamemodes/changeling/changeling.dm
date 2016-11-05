@@ -512,23 +512,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
 
-//abomination stuff
-/datum/species/abomination
-	name = "???"
-	id = "abomination"
-	specflags = list(NOBREATH,COLDRES,NOGUNS,VIRUSIMMUNE,PIERCEIMMUNE,RADIMMUNE,NODISMEMBER)
-	sexes = 0
-	speedmod = 4
-	armor = 0//has horror armor instead
-	punchdamagelow = 30
-	punchdamagehigh = 30
-	punchstunthreshold = 30 //100 % chance
-	no_equip = list(slot_w_uniform, slot_back, slot_ears)
-	attack_verb = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	heatmod = 1.5
-	blacklisted = 1
-
 /datum/species/deformed //what you get from abomination reversion
 	name = "???"
 	id = "husk"

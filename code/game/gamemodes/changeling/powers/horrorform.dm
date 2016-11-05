@@ -86,6 +86,34 @@
 
 //forced reversion
 
+
+//abomination stuff
+/datum/species/abomination
+	name = "???"
+	id = "abomination"
+	specflags = list(NOBREATH,COLDRES,NOGUNS,VIRUSIMMUNE,PIERCEIMMUNE,RADIMMUNE,NODISMEMBER)
+	sexes = 0
+	speedmod = 4
+	armor = 0//has horror armor instead
+	punchdamagelow = 30
+	punchdamagehigh = 30
+	punchstunthreshold = 30 //100 % chance
+	no_equip = list(slot_w_uniform, slot_back, slot_ears)
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	heatmod = 1.5
+	blacklisted = 1
+
+/datum/species/abomination/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	handle_body(C)
+
+/datum/species/abomination/on_species_loss(mob/living/carbon/C)
+	C.icon_state = initial(C.icon_state)
+
+/datum/species/abomination/handle_body(mob/living/carbon/human/H)
+	H.icon_state = "abomination_s"
+	return
+
 /datum/species/abomination/spec_life(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)

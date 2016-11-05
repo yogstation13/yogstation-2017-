@@ -262,18 +262,18 @@
 	handle_mutant_bodyparts(H)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+	if(!(H.disabilities & HUSK))
+		// lipstick
+		if(H.lip_style && (LIPS in specflags) && HD)
+			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
+			lips.color = H.lip_color
+			standing	+= lips
 
-	// lipstick
-	if(H.lip_style && (LIPS in specflags) && HD)
-		var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
-		lips.color = H.lip_color
-		standing	+= lips
-
-	// eyes
-	if((EYECOLOR in specflags) && HD)
-		var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER)
-		img_eyes_s.color = "#" + H.eye_color
-		standing	+= img_eyes_s
+		// eyes
+		if((EYECOLOR in specflags) && HD)
+			var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER)
+			img_eyes_s.color = "#" + H.eye_color
+			standing	+= img_eyes_s
 
 	//Underwear, Undershirts & Socks
 	if(H.underwear)
@@ -298,7 +298,7 @@
 		H.overlays_standing[BODY_LAYER] = standing
 
 	H.apply_overlay(BODY_LAYER)
-
+	handle_mutant_bodyparts(H)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
@@ -483,6 +483,9 @@
 			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/spec_husk(mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)

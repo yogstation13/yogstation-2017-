@@ -225,7 +225,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	default_color = "FFFFFF"
-	specflags = list(NODISMEMBER)
+	specflags = list(NODISMEMBER, MUTCOLORS)
 	roundstart = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 
@@ -1018,7 +1018,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
+	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //all of these + whatever we inherit from the real species
 	safe_oxygen_min = 0
 	safe_toxins_min = 0
 	safe_toxins_max = 0
@@ -1030,9 +1030,15 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = null
 	exotic_damage_overlay = "synth"
 	limbs_id = "synth"
-	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
+	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+
+/datum/species/synth/Destroy()
+	var/fs = fake_species
+	fake_species = null
+	qdel(fs)
+	return ..()
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -1044,8 +1050,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	disguise_fail_health = 50
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	..()
 	assume_disguise(old_species, H)
+	..()
+	for(var/V in H.internal_organs)
+		var/obj/item/organ/O = V
+		O.name = "synthetic [O.name]"
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "synthflesh")
@@ -1077,6 +1086,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		fixed_mut_color = S.fixed_mut_color
 		hair_color = S.hair_color
 		fake_species = new S.type
+		mutant_bodyparts = fake_species.mutant_bodyparts.Copy()
 	else
 		name = initial(name)
 		say_mod = initial(say_mod)
@@ -1096,7 +1106,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		sexes = 0
 		fixed_mut_color = ""
 		hair_color = ""
+	if(H)
+		H.regenerate_icons()
 
+/datum/species/synth/spec_husk(mob/living/carbon/human/H)
+	assume_disguise(null, H)
 
 //Proc redirects:
 //Passing procs onto the fake_species, to ensure we look as much like them as possible
@@ -1137,6 +1151,11 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	else
 		return ..()
 
+/datum/species/synth/spec_life(mob/living/carbon/human/H)
+	if(fake_species && (H.health > disguise_fail_health))
+		fake_species.spec_life(H)
+	else
+		..()
 
 /*
 SYNDICATE BLACK OPS
