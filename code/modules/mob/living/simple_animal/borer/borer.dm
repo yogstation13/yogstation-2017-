@@ -1,6 +1,7 @@
 
 var/list/mob/living/simple_animal/borer/borers = list()
 var/total_borer_hosts_needed = 10
+var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surrenders")
 
 /mob/living/simple_animal/borer
 	name = "Cortical Borer"
@@ -127,6 +128,10 @@ var/total_borer_hosts_needed = 10
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
+	if(docile)
+		src << "<span class='warning'>Your state is weakened by the nature of sugar within your hosts blood. You are too docile to even speak.</span>"
+		return
+
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
@@ -138,6 +143,16 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You cannot speak without a host!</span>"
 		return
 	if(dd_hasprefix(message, "*"))
+		var/pass = TRUE
+		for(var/M in banned_borer_emotes)
+			if(M == message)
+				src << "<span class='warning'>You don't have the strength to do this...</span>"
+			//	src << "Nice try, asshole."
+				pass = FALSE
+				break
+
+		if(!pass)
+			return
 		message = copytext(message,2)
 		victim.say(message)
 		return
