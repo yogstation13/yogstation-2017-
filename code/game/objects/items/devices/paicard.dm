@@ -95,7 +95,7 @@
 	if(!usr || usr.stat)
 		return
 
-	if (loc != usr)
+	if ((loc != usr) && !(istype(loc, /obj/item/device/pda) && loc.loc == usr))
 		usr.unset_machine()
 		return
 
