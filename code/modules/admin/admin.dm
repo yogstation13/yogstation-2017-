@@ -1029,7 +1029,6 @@ datum/admins/proc/cyberman_varedit(list/href_list)
 
 	var/alive_borers = 0
 	var/alive_hosts = 0
-	var/dead_borers = 0
 	var/roaming_borers = 0
 	var/mindcontrol = 0
 
@@ -1042,9 +1041,6 @@ datum/admins/proc/cyberman_varedit(list/href_list)
 
 			if(C.borer.stat != DEAD)
 				alive_borers++
-
-			if(C.borer.stat == DEAD)
-				dead_borers++
 
 			dat += "<br>"
 			if(C.borer.controlling)
@@ -1069,7 +1065,6 @@ datum/admins/proc/cyberman_varedit(list/href_list)
 
 	usr << "Amount of borers controlling their host: [mindcontrol]"
 	usr << "INSIDE A HUMAN: There [alive_borers > 1 && alive_borers != 0 ? "are" : "is"] [alive_borers] alive borer[alive_borers > 1 && alive_borers != 0 ? "s." : "."]"
-	usr << "INSIDE A HUMAN: There [dead_borers > 1 && dead_borers != 0 ? "are" : "is"] [dead_borers] dead borer[dead_borers > 1 && dead_borers != 0 ? ".s" : "."]"
 	usr << "There [alive_hosts > 1 && alive_hosts != 0 ? "are" : "is"] [alive_hosts] alive host[alive_hosts > 1 && alive_hosts != 0 ? "s." : "."]"
 	usr << "There [roaming_borers > 1 && roaming_borers != 0 ? "are" : "is"] [roaming_borers] borer[roaming_borers > 1 && roaming_borers != 0 ? "s" : ""] roaming around without a human."
 
