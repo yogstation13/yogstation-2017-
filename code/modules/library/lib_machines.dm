@@ -477,13 +477,6 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
 
-/obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/book))
-		if(!user.drop_item())
-			return
-		O.loc = src
-	else
-		return ..()
 /obj/machinery/libraryscanner/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
@@ -498,13 +491,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		else
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user << "<span class='notice'>You start unsecuring the scanner control interface...</span>"
-			do_after(user, 20/W.toolspeed, target = src)
-			anchored = 0
-			user << "<span class='notice'>You unsecure the scanner control interface.</span>"
-			return 0
-
+			if (do_after(user, 20/W.toolspeed, target = src))
+				anchored = 0
+				user << "<span class='notice'>You unsecure the scanner control interface.</span>"
 /obj/machinery/libraryscanner/attack_hand(mob/user)
-	if(anchored == 0)
+	if(!anchored)
 		user << "<span class='warning'>You cannot use scanner control interface while it's unsecured!</span>"
 		return 0
 	usr.set_machine(src)
