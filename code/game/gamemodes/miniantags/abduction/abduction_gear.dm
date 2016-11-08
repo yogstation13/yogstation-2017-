@@ -526,8 +526,8 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/abductor_baton/weak
 	name = "unorthodox alien baton"
-	var/stuntime = 5
-	var/sleeptime = 0
+	stuntime = 5
+	sleeptime = 0
 
 /obj/item/weapon/abductor_baton/weak/ProbeAttack()
 	return 0
