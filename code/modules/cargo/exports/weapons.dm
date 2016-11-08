@@ -70,3 +70,8 @@
 	unit_name = "pair"
 	message = "of handcuffs"
 	export_types = list(/obj/item/weapon/restraints/handcuffs)
+
+/datum/export/weapon/rune_scimmy
+	cost = 30000
+	unit_name = "rune scimmy"
+	export_types = list(/obj/item/weapon/rune_scimmy)

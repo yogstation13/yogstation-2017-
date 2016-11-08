@@ -268,6 +268,8 @@
 				content += "<p class='user-info-bar'>Role: [owner.mob.mind.assigned_role]</p>"
 				if(owner.mob.mind.special_role)
 					content += "<p class='user-info-bar'>Antagonist: [owner.mob.mind.special_role]</p>"
+				else if(iscaptive(owner.mob))
+					content += "<p class='user-info-bar>This player's body is in control of [owner.mob.getBorer(1)] ((<A HREF='?_src_=holder;adminmoreinfo=\ref[owner.mob.getBorer(1)]'>?</A>))</p>"
 				else
 					content += "<p class='user-info-bar'>Antagonist: No</p>"
 

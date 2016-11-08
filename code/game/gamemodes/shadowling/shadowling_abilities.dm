@@ -14,8 +14,6 @@
 		return 1
 	if(H.dna.species.id == "l_shadowling" && is_thrall(H))
 		return 1
-	if(!is_shadow_or_thrall(usr))
-		usr << "<span class='warning'>You can't wrap your head around how to do this.</span>"
 	else if(is_thrall(usr))
 		usr << "<span class='warning'>You aren't powerful enough to do this.</span>"
 	else if(is_shadow(usr))
@@ -178,7 +176,6 @@
 		var/mob/living/simple_animal/drone/D = H
 		D.light_on = 2
 		blacklistLuminosity -= D.luminosity
-		addtimer(D, "fix_light", 600)
 	else if(istype(H, /mob/living/simple_animal/hostile/mining_drone))
 		var/mob/living/simple_animal/hostile/mining_drone/D = H
 		D.light_on = 2
@@ -961,10 +958,6 @@
 		revert_cast()
 		return
 	for(var/mob/living/boom in targets)
-		if(is_shadow_or_thrall(boom))
-			user << "<span class='warning'>Making an ally explode seems unwise.<span>"
-			revert_cast()
-			return
 		user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
 							"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
 		sleep(4)
@@ -1057,8 +1050,6 @@
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
-			if(is_shadow_or_thrall(target))
-				continue
 			target << "<span class='userdanger'>You are struck by a bolt of lightning!</span>"
 			playsound(target, 'sound/magic/LightningShock.ogg', 50, 1)
 			target.Weaken(8)

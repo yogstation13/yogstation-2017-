@@ -21,7 +21,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 30;
-	id = "whiteship_home";
+	id = "whiteship";
 	launch_status = 0;
 	name = "S.S. Shitbucket, MK.3";
 	roundstart_move = "whiteship_away";

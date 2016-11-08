@@ -35,7 +35,7 @@
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/weapon/implant/sad_trombone(src)
+			new /obj/item/weapon/rune_scimmy(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
@@ -69,7 +69,6 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(25)
 			new /obj/item/organ/heart/cursed/wizard(src)
-
 
 
 //Spooky special loot
@@ -172,7 +171,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
-	fire_sound = 'sound/weapons/batonextend.ogg'
+	fire_sound = 'sound/weapons/meathook_fire.ogg'
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
@@ -192,7 +191,7 @@
 	damage = 25
 	armour_penetration = 100
 	damage_type = BRUTE
-	hitsound = 'sound/effects/splat.ogg'
+	hitsound = 'sound/effects/get_over_here.ogg'
 	weaken = 3
 	var/chain
 
@@ -639,6 +638,19 @@
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		timer = world.time + cooldown
 
+//Runite Scimitar
+
+/obj/item/weapon/rune_scimmy
+	name = "rune scimitar"
+	desc = "A curved sword smelted from an unknown metal. Looking at it gives you the otherworldly urge to pawn it off for '30k,' whatever that means."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "rune_scimmy"
+	force = 25
+	damtype = BRUTE
+	sharpness = IS_SHARP
+	hitsound = 'sound/weapons/rs_slash.ogg'
+	attack_verb = list("slashed","pk'd","atk'd")
+
 ///Bubblegum
 
 /obj/item/mayhem
@@ -764,7 +776,7 @@
 /obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
 	..()
 	for(var/obj/effect/proc_holder/spell/targeted/summonsaw/spell in user.mind.spell_list)
-		qdel(spell)//removes summon spell if they got it before
+		user.mind.RemoveSpell(spell)//removes summon spell if they got it before
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonsaw(src))
 
 /obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
@@ -809,5 +821,5 @@
 			playsound(get_turf(user),'sound/effects/splat.ogg', 100, 1, -1)
 			S.recalled = FALSE
 	else
-		qdel(src)
+		user.mind.RemoveSpell(src)
 
