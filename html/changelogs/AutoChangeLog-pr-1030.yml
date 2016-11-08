@@ -1,0 +1,8 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - tweak: "Increases Horrorform speed very slightly."
+  - tweak: "Decreases cooldown for Horrorform Screech."
+  - tweak: "Decreases Horrorform chemical drain."
+  - rscadd: "Shambling Abominations from the changeling Horrorform now heal passively."
+  - rscdel: "Removed Horrorform fleshmend ability."

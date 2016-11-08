@@ -922,7 +922,7 @@
 // ATTACK PROCS //
 //////////////////
 
-/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H)
+/datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, obj/item/bodypart/affecting)
 	if(!istype(M))
 		return
 	CHECK_DNA_AND_SPECIES(M)
@@ -986,7 +986,8 @@
 
 				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 
-				var/obj/item/bodypart/affecting = H.get_bodypart(ran_zone(M.zone_selected))
+				if(!affecting)
+					affecting = H.get_bodypart(ran_zone(M.zone_selected))
 
 				if(!damage || !affecting)
 					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
@@ -1019,7 +1020,8 @@
 
 				if(H.w_uniform)
 					H.w_uniform.add_fingerprint(M)
-				var/obj/item/bodypart/affecting = H.get_bodypart(ran_zone(M.zone_selected))
+				if(!affecting)
+					affecting = H.get_bodypart(ran_zone(M.zone_selected))
 				var/randn = rand(1, 100)
 				if(randn <= 25)
 					playsound(H, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

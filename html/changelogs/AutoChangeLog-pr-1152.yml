@@ -1,0 +1,4 @@
+author: AndySok
+delete-after: True
+changes: 
+  - rscadd: "makes library scanners movable , for building purposes only"

@@ -1,0 +1,7 @@
+author: smuggy
+delete-after: True
+changes: 
+  - rscdel: "Removes holoparasites being able to pull things around."
+  - tweak: "Increases cooldown on assassin holoparasite stealth and recall."
+  - tweak: "Decreases out-of-stealth assassin holoparasite damage."
+  - rscadd: "Assassin holoparasites can now stealth before manifesting for MAXIMUM STEALTH."

@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "Spawning a clockwork cult (with antagonist panel) correctly spawns a cult instead of spawning a revenant."

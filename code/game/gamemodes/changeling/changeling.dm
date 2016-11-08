@@ -512,6 +512,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
 
+//for the abomination species, see horrorform.dm
+
 /datum/species/deformed //what you get from abomination reversion
 	name = "???"
 	id = "husk"
@@ -519,13 +521,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	sexes = 0
 	roundstart = 0
 
-/obj/item/clothing/suit/abomination
+/obj/item/clothing/suit/space/abomination
 	name = "fleshy hide"
 	desc = "A huge chunk of flesh. It seems to be shifting around itself."
 	icon_state = "golem"
 	item_state = "golem"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = 80, bullet = 50, laser = 70,energy = 100, bomb = 30, bio = 100, rad = 0)
+	slowdown = 0
 	unacidable = 1
 	burn_state = -1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -550,7 +553,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	burn_state = -1
 	flags_cover = MASKCOVERSEYES
 
-/obj/item/clothing/head/abomination
+/obj/item/clothing/head/helmet/space/abomination
 	name = "hardened membrane"
 	icon_state = "golem"
 	item_state = "golem"
