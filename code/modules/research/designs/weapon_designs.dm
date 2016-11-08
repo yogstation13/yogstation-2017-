@@ -1,7 +1,7 @@
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
-// firing pins 
+// firing pins
 
 /datum/design/pin_alien
 	name = "alien firing pin"
@@ -22,7 +22,7 @@
 	materials = list(MAT_METAL = 400, MAT_BANANIUM = 1000)
 	build_path = /obj/item/device/firing_pin/clown
 	category = list("Firing Pins")
- 
+
 /datum/design/pin_clownbomb
 	name = "PRICELESS firing pin"
 	desc = "This pin violently explodes if used by a non-clown. GLORY TO THE CLOWNDICATE!"
@@ -149,14 +149,14 @@
 
 //alien shit
 
-/datum/design/advbaton //if this gets merged i'll make  separate item that doesn't have sleep or probe modes, or at least a shitty ver of sleep
+/datum/design/advbaton
 	name = "Advanced Baton"
 	desc = "Shitcurity-Future edition!"
 	id = "advancedbaton"
 	build_type = PROTOLATHE
 	req_tech = list("combat" = 6, "magnets" = 4, "biotech" = 6, "abductor" = 3)
 	materials = list(MAT_SILVER = 4000, MAT_METAL = 10000, MAT_PLASMA = 5000)
-	build_path = /obj/item/weapon/abductor_baton
+	build_path = /obj/item/weapon/abductor_baton/weak
 	category = list("Weapons")
 
 /datum/design/aliensilencer
@@ -168,7 +168,7 @@
 	req_tech = list("combat" = 5, "magnets" = 6, "biotech" = 7, "abductor" = 6, "engineering" = 6)
 	materials = list(MAT_URANIUM = 6000, MAT_METAL = 15000, MAT_PLASMA = 10000, MAT_DIAMOND = 1000)
 	category = list("Weapons")
- 
+
 /datum/design/alienhelmet
 	name = "Alien Helmet"
 	desc = "Based off a rough estimation of abductor helmet capabilities, this helmet will block tracking and provide armor."
