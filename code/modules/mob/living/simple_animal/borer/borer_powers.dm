@@ -40,6 +40,10 @@
 		src << "<span class='warning'>I must be conscious to do this...</span>"
 		return 0
 
+	if(H.mind.devilinfo)
+		src << "<span class='warning'>This being has a strange presence, it would be unwise to enter their body."
+		return 0
+
 	return 1
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
