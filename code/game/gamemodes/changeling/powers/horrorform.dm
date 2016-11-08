@@ -31,7 +31,7 @@
 			if(H.dna.species.id == "abomination")
 				user << "<span class='warning'>You're already transformed!</span>"
 				return
-			if(changeling.geneticdamage > 0)
+			if(changeling.geneticdamage > 15)
 				user << "<span class='warning'>Your genomes are too damaged to allow you to transform.</span>"
 				return
 			changeling.geneticdamage += 5
@@ -44,7 +44,10 @@
 
 			playsound(user.loc, 'sound/effects/creepyshriek.ogg', 100, 1, extrarange = 30)
 			user.visible_message("<span class='warning'><b>[user] lets out an abhorrent screech as their height suddenly increases, their body parts splitting and deforming horribly!</span>")
-			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals extremely quickly. Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable. Check the 'Abomination' spell tab to use your abilities.</span>"
+			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly. Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable. Check the 'Abomination' spell tab to use your abilities. Remember, you can maintain this form by using your 'Devour' ability whilst grabbing a humanoid to devour them and gain chemicals!</span>"
+			user <<"<span class='notice'>You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly.</span>"
+			user <<"<span class='notice'>Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable.</span>"
+			user <<"<span class='notice'>Check the 'Abomination' spell tab to use your abilities. The 'Devour' ability will allow you to eat a grabbed humanoid and gain chemicals from them!</span>"
 			H.restore_blood()
 			H.remove_all_embedded_objects()
 			var/list/missing = H.get_missing_limbs()
@@ -65,13 +68,13 @@
 			for(var/obj/item/I in user) //in case any weird stuff happens with flesh clothing
 				qdel(I)
 			user.equip_to_slot_or_del(new /obj/item/clothing/shoes/abomination(user), slot_shoes)
-			user.equip_to_slot_or_del(new /obj/item/clothing/suit/abomination(user), slot_wear_suit)
-			user.equip_to_slot_or_del(new /obj/item/clothing/head/abomination(user), slot_head)
+			user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/abomination(user), slot_wear_suit)
+			user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/abomination(user), slot_head)
 			user.equip_to_slot_or_del(new /obj/item/clothing/gloves/abomination(user), slot_gloves)
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/muzzle/abomination(user), slot_wear_mask)
 			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling/abomination(user), slot_glasses)
 			H.set_species(/datum/species/abomination)
-			changeling.chem_recharge_slowdown = 6
+			changeling.chem_recharge_slowdown = 3
 
 //hulk
 			var/datum/mutation/human/HM = mutations_list[HULK]
@@ -80,13 +83,22 @@
 
 //spells
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/abomination/screech
-				user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend
+				//user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend //replaced with constant healing, hopefully not too op
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/devour
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/abom_revert
 
-//forced reversion
+//forced reversion and healing
 
 /datum/species/abomination/spec_life(mob/living/carbon/human/user)
+	if(user.health < 100 && prob(40))
+		var/mob/living/carbon/human/H = user
+		H.adjustBruteLoss(-4)
+		H.adjustFireLoss(-4)
+		H.adjustOxyLoss(-10)
+		H.adjustToxLoss(-10)
+		if(prob(25))
+			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
+
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)
 		user.visible_message("<span class='warning'>[user] sustains too much damage to continue their transformation, and collapses!</span>")
@@ -96,7 +108,7 @@
 		if(H.dna && H.dna.mutations)
 			HM.force_lose(H)
 		changeling.reverting = 1
-		changeling.geneticdamage += 50
+		changeling.geneticdamage += 30
 		user.Weaken(15)
 		user.apply_damage(30, CLONE)
 
@@ -108,7 +120,7 @@
 		if(H.dna && H.dna.mutations)
 			HM.force_lose(H)
 		changeling.reverting = 1
-		changeling.geneticdamage += 20
+		changeling.geneticdamage += 10
 		user.Weaken(5)
 
 

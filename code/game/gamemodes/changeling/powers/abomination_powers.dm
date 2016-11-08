@@ -15,7 +15,7 @@
 	desc = "Releases a terrifying screech, freezing those who hear."
 	panel = "Abomination"
 	range = 7
-	charge_max = 150
+	charge_max = 100
 	clothes_req = 0
 	sound = 'sound/effects/creepyshriek.ogg'
 
@@ -41,7 +41,7 @@
 		L.broken()
 
 
-/obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend
+/*/obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend
 	name = "Fleshmend"
 	desc = "Rapidly replaces damaged flesh, healing any physical damage sustained."
 	panel = "Abomination"
@@ -65,8 +65,7 @@
 		H.adjustOxyLoss(-10)
 		H.adjustFireLoss(-10)
 		H.adjustToxLoss(-10)//no cyaniding the horrifying monster
-		sleep(10)
-
+		sleep(10)*/
 
 
 
