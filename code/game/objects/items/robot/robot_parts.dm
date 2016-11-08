@@ -56,6 +56,8 @@
 /obj/item/robot_parts/robot_suit
 	name = "cyborg endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
+	attack_verb = list("borged", "stated the laws of", "robotized")
+	hitsound = 'sound/voice/liveagain.ogg'
 	icon_state = "robo_suit"
 	var/obj/item/robot_parts/l_arm/l_arm = null
 	var/obj/item/robot_parts/r_arm/r_arm = null

@@ -261,12 +261,15 @@
 					<a href='?src=\ref[src];user=\ref[usr];action=monitor_admin_ticket;ticket=\ref[src]' class='monitor-button'><img border='0' width='16' height='16' class='uiIcon16 icon-pin-s' /> <span>[!is_monitor(usr.client) ? "Un" : ""]Monitor</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=resolve_admin_ticket;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[resolved ? "Un" : ""]Resolve</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=administer_admin_ticket;ticket=\ref[src]' class='admin-button'><img border='0' width='16' height='16' class='uiIcon16 icon-flag' /> <span>Administer</span></a>
+					<a href='?src=\ref[src];user=\ref[usr];action=toggle_popup;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[force_popup ? "De" : ""]Activate popups</span></a>
 				</p>"}
 		if(owner && owner.mob)
 			if(owner.mob.mind && owner.mob.mind.assigned_role)
 				content += "<p class='user-info-bar'>Role: [owner.mob.mind.assigned_role]</p>"
 				if(owner.mob.mind.special_role)
 					content += "<p class='user-info-bar'>Antagonist: [owner.mob.mind.special_role]</p>"
+				else if(iscaptive(owner.mob))
+					content += "<p class='user-info-bar>This player's body is in control of [owner.mob.getBorer(1)] ((<A HREF='?_src_=holder;adminmoreinfo=\ref[owner.mob.getBorer(1)]'>?</A>))</p>"
 				else
 					content += "<p class='user-info-bar'>Antagonist: No</p>"
 

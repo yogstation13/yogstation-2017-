@@ -76,7 +76,9 @@
 
 /obj/item/weapon/minigunpack/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	qdel(gun)
+	var/g = gun
+	gun = null
+	qdel(g)
 	return ..()
 
 /obj/item/weapon/minigunpack/process()
@@ -179,7 +181,9 @@
 			qdel(src)//No pack, no gun
 
 /obj/item/weapon/gun/projectile/minigun/Destroy()
-	qdel(ammo_pack)
+	var/ap = ammo_pack
+	ammo_pack = null
+	qdel(ap)
 	return ..()
 
 /obj/item/weapon/gun/projectile/minigun/attack_self(mob/living/user)

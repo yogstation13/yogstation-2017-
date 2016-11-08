@@ -57,8 +57,10 @@
 		update_icon()
 
 /obj/item/device/taperecorder/fire_act()
-	mytape.ruin() //Fires destroy the tape
-	return()
+	if(mytape)
+		mytape.ruin() //Fires destroy the tape
+		mytape.erase()
+	return ..()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
@@ -104,7 +106,11 @@
 /obj/item/device/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 	if(mytape && recording)
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] [message]"
+		mytape.storedinfo += raw_message
+		add_list_to_list(mytape.storedspans, spans)
+		var/atom/movable/virtualspeaker/virt = get_virtual_speaker_for(speaker)
+		virt.languages_spoken = message_langs
+		mytape.stored_speakers += virt
 
 /obj/item/device/taperecorder/verb/record()
 	set name = "Start Recording"
@@ -124,7 +130,9 @@
 		recording = 1
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording started."
+		mytape.storedinfo += "Recording started."
+		add_list_to_list(mytape.storedspans, get_spans())
+		mytape.stored_speakers += get_virtual_speaker_for(src)
 		var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 		var/max = mytape.max_capacity
 		for(used, used < max)
@@ -149,7 +157,9 @@
 	if(recording)
 		recording = 0
 		mytape.timestamp += mytape.used_capacity
-		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
+		mytape.storedinfo += "Recording stopped."
+		add_list_to_list(mytape.storedspans, get_spans())
+		mytape.stored_speakers += get_virtual_speaker_for(src)
 		usr << "<span class='notice'>Recording stopped.</span>"
 		return
 	else if(playing)
@@ -184,7 +194,7 @@
 			break
 		if(mytape.storedinfo.len < i)
 			break
-		say(mytape.storedinfo[i])
+		sayRecorded(i)
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(10)
@@ -200,6 +210,21 @@
 	playing = 0
 	update_icon()
 
+/obj/item/device/taperecorder/proc/sayRecorded(index)
+	var/list/spans = get_spans()
+	for(var/atom/movable/AM in get_hearers_in_view(7, src))
+		var/msg
+		var/langs
+		var/atom/movable/virtualspeaker/virt = mytape.stored_speakers[index]
+		langs = virt.languages_spoken
+		//if we understand any of the languages, translate to all languages we can speak
+		if(languages_understood & langs)
+			langs |= languages_spoken
+		msg = AM.compose_message(virt, langs, mytape.storedinfo[index], , mytape.storedspans[index])
+		langs = ALL
+		msg = "\[" + time2text(mytape.timestamp[index] * 10,"mm:ss") + "\] " + msg
+		msg = AM.compose_message(src, ALL, msg, , get_spans()) //everyone gets the numbers for free (because math is the universal language)
+		AM.Hear(msg, src, ALL, msg, , spans)
 
 /obj/item/device/taperecorder/attack_self(mob/user)
 	if(!mytape || mytape.ruined)
@@ -239,8 +264,9 @@
 
 //empty tape recorders
 /obj/item/device/taperecorder/empty/New()
-	return
-
+	..()
+	qdel(mytape)
+	mytape = null
 
 /obj/item/device/tape
 	name = "tape"
@@ -255,6 +281,8 @@
 	var/used_capacity = 0
 	var/list/storedinfo = list()
 	var/list/timestamp = list()
+	var/list/stored_speakers = list()
+	var/list/storedspans = list()
 	var/ruined = 0
 
 /obj/item/device/tape/fire_act()
@@ -275,6 +303,15 @@
 /obj/item/device/tape/proc/fix()
 	overlays -= "ribbonoverlay"
 	ruined = 0
+
+/obj/item/device/tape/proc/erase()
+	used_capacity = 0
+	storedinfo = list()
+	timestamp = list()
+	storedspans = list()
+	for(var/s in stored_speakers)
+		qdel(s)
+	stored_speakers = list()
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)

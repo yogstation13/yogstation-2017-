@@ -43,7 +43,7 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
-			if(!istype(new_area, whitelist_area)) //Rivers will skip ruins
+			if(!istype(new_area, whitelist_area) || new_area.mapgen_protected) //Rivers will skip ruins
 				detouring = 0
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
@@ -67,6 +67,9 @@
 		return
 
 	for(var/turf/F in orange(1, src))
+		var/area/A = get_area(F)
+		if(A.mapgen_protected)
+			continue
 		if(!F.density || istype(F, /turf/closed/mineral))
 			var/turf/L = new src.type(F)
 

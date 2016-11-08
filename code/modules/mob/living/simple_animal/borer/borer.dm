@@ -76,12 +76,14 @@ var/total_borer_hosts_needed = 10
 
 	..()
 
-	for(var/image/hud in client.images)
-		if(hud.icon_state == "borer")
-			client.images -= hud
+	if(client)
+		for(var/image/hud in client.images)
+			if(hud.icon_state == "borer")
+				client.images -= hud
 	for(var/mob/living/simple_animal/borer/B in borers)
 		if(B.victim)
-			client.images += image('icons/mob/hud.dmi',B.victim,"borer")
+			if(client)
+				client.images += image('icons/mob/hud.dmi',B.victim,"borer")
 			if(victim && victim.client)
 				victim.client.images += image('icons/mob/hud.dmi',B.victim,"borer")
 
@@ -175,6 +177,9 @@ var/total_borer_hosts_needed = 10
 
 	src.victim = victim
 	victim.borer = src
+	var/obj/item/organ/borer_home/B = new/obj/item/organ/borer_home(victim)
+	B.Insert(victim)
+	B.borer = src
 	loc = victim
 
 	log_game("[src]/([src.ckey]) has infected [victim]/([victim.ckey]")
@@ -209,6 +214,7 @@ var/total_borer_hosts_needed = 10
 	your host and your eventual spawn safe and warm."
 	src << "You can speak to your victim with <b>say</b> and your fellow borers by prefixing your message with ';'. You can also force a host you have infested to speak by prefixing messages with *. Check out your borer tab to see your powers as a borer."
 	src << "You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle."
+
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling) return
 
@@ -265,3 +271,21 @@ var/total_borer_hosts_needed = 10
 	M.assigned_role = "Cortical Borer"
 	M.special_role = "Cortical Borer"
 	return M
+
+/obj/item/organ/borer_home
+	name = "borer vessel"
+	zone = "head"
+	slot = "brain tumor"
+	desc = "A hunk of alien flesh molded from the inside of a human brain. It now resembles a once operatable command center for a borer. Home is where the heart is. Or in this case, the head."
+	icon_state = "eggsac"
+	var/mob/living/simple_animal/borer/borer = null
+
+
+/obj/item/organ/borer_home/Remove(mob/living/carbon/M)
+	if(borer)
+		borer << "<span class='warning'>Your [src] is rising into the air! Something isn't right!"
+		borer.leave_victim()
+
+	M << "<span class='notice'>You feel the sweet embrace of dopamine that surges through your brain as it's suddenly relieved of a foreign parasite.</span>"
+	qdel(src)
+	..()
