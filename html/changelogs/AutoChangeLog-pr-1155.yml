@@ -1,7 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - tweak: "Laughter demons now move more slowly than regular Slaughter Demons when their boost is gone."
-  - tweak: "Laughter demons can no longer dismember."
-  - tweak: "Lowers demon boost duration very slightly."
-  - bugfix: "You can no longer bloodcrawl when unconscious."

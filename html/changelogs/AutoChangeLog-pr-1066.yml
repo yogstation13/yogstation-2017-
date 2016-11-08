@@ -1,4 +1,0 @@
-author: Yewmi
-delete-after: True
-changes: 
-  - rscadd: "A new sprite for secure medical crates has been added to Cargo, which replaces the sprite for Virus crates. Now they look more distinct!"

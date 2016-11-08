@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Chasms should no longer ever have items sitting on top of them. Screenshot and report in coder-pulic on discord if you see it again."
