@@ -13618,6 +13618,7 @@
 "azA" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/wrench,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azB" = (
@@ -14116,6 +14117,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/closet/golf,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "neutral"
@@ -27100,7 +27102,6 @@
 /area/hydroponics)
 "bcp" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -29802,12 +29803,18 @@
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/stamp/captain,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/golfclub,
+/obj/item/golfclub,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bil" = (
 /obj/structure/table/wood,
 /obj/item/weapon/hand_tele,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/item/golfball,
+/obj/item/golfball,
+/obj/item/golfball,
+/obj/item/golfball,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bim" = (
@@ -58811,6 +58818,7 @@
 /area/engine/chiefs_office)
 "cmt" = (
 /obj/machinery/light{
+	color = "orange";
 	dir = 1
 	},
 /obj/machinery/keycard_auth{
@@ -69005,9 +69013,6 @@
 /area/maintenance/asmaint)
 "mFS" = (
 /obj/structure/closet/wardrobe/botanist,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /turf/open/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
@@ -69112,6 +69117,10 @@
 	icon_state = "white"
 	},
 /area/medical/sleeper)
+"YoU" = (
+/obj/machinery/golfhole/puttinggreen,
+/turf/open/floor/wood,
+/area/crew_quarters/captain)
 "YoV" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8;
@@ -101397,7 +101406,7 @@ baD
 bbX
 bdE
 beJ
-bdE
+YoU
 bgW
 bip
 bjL
@@ -104238,7 +104247,7 @@ biq
 bvU
 bxs
 byB
-bAj
+byG
 byG
 byG
 byG
@@ -105523,8 +105532,8 @@ buA
 bvY
 bxw
 byG
-byG
-YoV
+bAj
+bBC
 bBC
 byG
 byG
