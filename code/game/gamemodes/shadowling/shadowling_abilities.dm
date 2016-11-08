@@ -883,6 +883,7 @@
 /obj/effect/proc_holder/spell/self/lesser_shadow_walk/cast(mob/living/carbon/human/user)
 	user.visible_message("<span class='warning'>[user] suddenly fades away!</span>", "<span class='shadowling'>You veil yourself in darkness, making you harder to see.</span>")
 	user.alpha = 10
+	src = null
 	sleep(40)
 	user.visible_message("<span class='warning'>[user] appears from nowhere!</span>", "<span class='shadowling'>Your shadowy guise slips away.</span>")
 	user.alpha = initial(user.alpha)
@@ -909,6 +910,10 @@
 		user.dna.species.darksight = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
 	user.update_sight()
+
+/obj/effect/proc_holder/spell/self/thrall_vision/Removed(datum/mind/M)
+	if(active && M && M.current)
+		cast(M.current) //turn it off
 
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind //Lets a thrall talk with their allies
