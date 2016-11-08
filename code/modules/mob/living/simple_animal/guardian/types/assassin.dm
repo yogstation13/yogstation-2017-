@@ -80,7 +80,7 @@
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15
-		pass_flags = PASSTABLE | PASSMOB
+		pass_flags |= (PASSTABLE | PASSMOB)
 		if(!forced)
 			src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
 		updatestealthalert()
