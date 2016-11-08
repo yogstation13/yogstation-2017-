@@ -618,9 +618,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if("1")		// Configure pAI device
 						pai.attack_self(U)
 					if("2")		// Eject pAI device
-						var/turf/T = get_turf(src.loc)
-						if(T)
-							pai.loc = T
+						if(Adjacent(usr))
+							usr.put_in_hands(pai)
+							pai = null
+						else
+							var/turf/T = get_turf(src)
+							if(T)
+								pai.forceMove(T)
+								pai = null
 
 //DEBUG/ADMIN FUNCTIONS===================================
 			if("create_virus")
