@@ -502,6 +502,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if (do_after(user, 20/W.toolspeed, target = src))
 				anchored = 0
 				user << "<span class='notice'>You unsecure the scanner control interface.</span>"
+
 /obj/machinery/libraryscanner/attack_hand(mob/user)
 	if(!anchored)
 		user << "<span class='warning'>You cannot use scanner control interface while it's unsecured!</span>"
