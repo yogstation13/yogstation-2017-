@@ -3,7 +3,7 @@
 	desc = "A hole for the game of golf. Try to score a hole in one."
 	name = "golf hole"
 	icon = 'code/game/golf/golfstuff.dmi'
-	icon_state = "redgolfhole_u"
+	icon_state = "redgolfhole"
 	anchored = 0
 
 
@@ -12,18 +12,18 @@
 		switch(anchored)
 			if(0)
 				anchored = 1
-				icon_state = "redgolfhole"
+				icon_state = icon_state + "_w"
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures the golf hole to the floor.", \
-				"<span class='notice'>You secure the golf hole to the floor.</span>", \
+				user.visible_message("[user.name] secures [src] to the floor.", \
+				"<span class='notice'>You secure [src] to the floor.</span>", \
 			"	<span class='italics'>You hear a ratchet</span>")
 				src.anchored = 1
 			if(1)
 				anchored = 0
-				icon_state = "redgolfhole_u"
+				icon_state = initial(icon_state)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures the golf hole  from the floor.", \
-				"<span class='notice'>You unwrench the golf hole from the floor.</span>", \
+				user.visible_message("[user.name] unsecures [src]  from the floor.", \
+				"<span class='notice'>You unwrench [src] from the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 				src.anchored = 0
 
@@ -35,11 +35,11 @@
 		var/obj/item/golfball = mover
 		if(prob(75))
 			golfball.loc = src
-			visible_message("<span class='notice'>The golfball lands in the [src].</span>")
+			visible_message("<span class='notice'>The golfball lands in [src].</span>")
 
 			update_icon()
 		else
-			visible_message("<span class='notice'>The golfball bounces out of the [src]!</span>")
+			visible_message("<span class='notice'>The golfball bounces out of [src]!</span>")
 		return 0
 	else
 		return ..(mover, target, height)
@@ -54,63 +54,17 @@
 
 /obj/machinery/golfhole/proc/hole_place_item_in(obj/item/golfball, mob/user)
 	golfball.loc = src
-	user.visible_message("[user.name] knocks the golfball into the [src].", \
-						"<span class='notice'>You knock the golfball into the [src].</span>")
+	user.visible_message("[user.name] knocks the golfball into [src].", \
+						"<span class='notice'>You knock the golfball into [src].</span>")
 
 /obj/machinery/golfhole/blue
-	desc = "A hole for the game of golf. Try to score a hole in one."
-	name = "golf hole"
-	icon = 'code/game/golf/golfstuff.dmi'
-	icon_state = "bluegolfhole_u"
-	anchored = 0
-
-/obj/machinery/golfhole/blue/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
-		switch(anchored)
-			if(0)
-				anchored = 1
-				icon_state = "bluegolfhole"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures the golf hole to the floor.", \
-				"<span class='notice'>You secure the golf hole to the floor.</span>", \
-			"	<span class='italics'>You hear a ratchet</span>")
-				src.anchored = 1
-			if(1)
-				anchored = 0
-				icon_state = "bluegolfhole_u"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures the golf hole  from the floor.", \
-				"<span class='notice'>You unwrench the golf hole from the floor.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-				src.anchored = 0
+	icon_state = "bluegolfhole"
 
 
 /obj/machinery/golfhole/puttinggreen
 	desc = "The captain's putting green for the game of golf. Try to score a hole in one."
-	name = "Captain's putting green"
-	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state = "puttinggreen"
-	anchored = 1
 
-/obj/machinery/golfhole/puttinggreen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench))
-		switch(anchored)
-			if(0)
-				anchored = 1
-				icon_state = "puttinggreen"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] secures the putting green to the floor.", \
-				"<span class='notice'>You secure the putting green to the floor.</span>", \
-			"	<span class='italics'>You hear a ratchet</span>")
-				src.anchored = 1
-			if(1)
-				anchored = 0
-				icon_state = "puttinggreen"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-				user.visible_message("[user.name] unsecures the putting green  from the floor.", \
-				"<span class='notice'>You unwrench the putting green from the floor.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-				src.anchored = 0
 
 /obj/item/golfball
 	desc = "A ball for the game of golf."
