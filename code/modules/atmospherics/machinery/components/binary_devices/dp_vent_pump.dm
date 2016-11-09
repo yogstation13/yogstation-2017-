@@ -155,6 +155,9 @@ Acts like a normal vent, but has an input AND output.
 
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return 0
+
+	var/old_on = on
+
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
 
@@ -183,6 +186,9 @@ Acts like a normal vent, but has an input AND output.
 
 	if("set_external_pressure" in signal.data)
 		external_pressure_bound = Clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
+
+	if(on != old_on)
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
 
 	if("status" in signal.data)
 		spawn(2)
