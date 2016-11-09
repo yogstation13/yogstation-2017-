@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Every time the labor camp or mining shuttle is launched a notification is sent over the radio."
