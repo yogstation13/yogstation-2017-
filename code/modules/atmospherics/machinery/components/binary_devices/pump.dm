@@ -169,7 +169,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
-		message_admins("Investagate Mix to Distro, please.")
+		
 
 	if("status" in signal.data)
 		broadcast_status()
