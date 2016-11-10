@@ -6,4 +6,5 @@ Currently, that list consists of:
 	-Morphs
 	-Revenants
 	-Slaughter demons
+	-Vampires
 Please update this if you add another mini-antagonist.
