@@ -29,6 +29,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = 1
 
+
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
@@ -120,6 +121,7 @@ Thus, the two variables affect pump operation are set in New():
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			message_admins("Investagate Atmos, Check Mix to Distro and N20/Plasma Pumps.")
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -136,6 +138,8 @@ Thus, the two variables affect pump operation are set in New():
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+
+
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -160,6 +164,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		message_admins("Investagate Mix to Distro, please.")
 
 	if("status" in signal.data)
 		broadcast_status()
