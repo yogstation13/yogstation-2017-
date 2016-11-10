@@ -26,6 +26,8 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	var/adminlog = 0
+
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = 1
 
@@ -33,6 +35,8 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
+	if(adminlog == 1)
+		message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) destroyed protected device '[src]'. <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a> This alert will not show again for this device.")
 	if(radio_connection)
 		radio_connection = null
 	return ..()
@@ -121,8 +125,9 @@ Thus, the two variables affect pump operation are set in New():
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-			message_admins("Investagate Atmos, Check Mix to Distro and N20/Plasma Pumps.")
 			. = TRUE
+			if(adminlog == 1)
+				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has toggled [src] [on ? "ON" : "OFF"]. ([loc.x],[loc.y],[loc.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a>")
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")

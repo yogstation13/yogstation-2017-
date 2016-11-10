@@ -49706,6 +49706,7 @@
 /area/atmos)
 "bTX" = (
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 1;
 	name = "Mix to Distro";
 	on = 0
@@ -52815,6 +52816,7 @@
 /area/atmos)
 "cag" = (
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 8;
 	name = "N2O Outlet Pump";
 	on = 0
@@ -54954,6 +54956,7 @@
 	network = list("SS13")
 	},
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 8;
 	name = "Plasma Outlet Pump";
 	on = 0
@@ -56946,6 +56949,7 @@
 /area/atmos)
 "cir" = (
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 8;
 	name = "CO2 Outlet Pump";
 	on = 0
@@ -59383,6 +59387,7 @@
 /area/atmos)
 "cnB" = (
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 1;
 	name = "N2 Outlet Pump";
 	on = 1
