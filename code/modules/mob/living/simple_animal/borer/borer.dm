@@ -126,8 +126,6 @@ var/total_borer_hosts_needed = 10
 				if(prob(victim.brainloss/20))
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
-	adjustStaminaLoss(-3)
-
 /mob/living/simple_animal/borer/say(message)
 	if(staminaloss) // stamina loss will mute borers
 		return
@@ -294,3 +292,12 @@ var/total_borer_hosts_needed = 10
 	M << "<span class='notice'>You feel the sweet embrace of dopamine that surges through your brain as it's suddenly relieved of a foreign parasite.</span>"
 	qdel(src)
 	..()
+
+
+/mob/living/simple_animal/borer/proc/checkStrength()
+	if(weakened || stunned)
+		src << "<span class='warning'>You lack the strength to do this.</span>"
+		return FALSE
+
+	else
+		return TRUE

@@ -107,6 +107,13 @@
 			handle_automated_movement()
 			handle_automated_action()
 			handle_automated_speech()
+
+		if(staminaloss)
+			adjustStaminaLoss(-3)
+		if(weakened)
+			AdjustWeakened(-1)
+		if(stunned)
+			AdjustStunned(-1)
 		return 1
 
 /mob/living/simple_animal/update_stat()
