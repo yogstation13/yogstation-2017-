@@ -213,6 +213,7 @@
 	slowdown = 2
 	var/processing = 0
 	luminosity = 1
+	flags = 0
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"

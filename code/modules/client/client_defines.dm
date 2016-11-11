@@ -11,6 +11,9 @@
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 
+	var/last_message_time = 0 //contains the world.time that the last message was sent without triggering the fast message spam filter
+	var/fast_message_count = 0 //how many messages have been sent since the last time the fast message spam filter was reset
+
 		/////////
 		//OTHER//
 		/////////

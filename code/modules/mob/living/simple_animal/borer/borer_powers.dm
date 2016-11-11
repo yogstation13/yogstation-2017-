@@ -41,6 +41,11 @@
 		src << "<span class='warning'>I must be conscious to do this...</span>"
 		return 0
 
+	if(H.mind.devilinfo)
+		src << "<span class='warning'>This being has a strange presence, it would be unwise to enter their body."
+		return 0
+
+	return 1
 	var/unprotected = TRUE
 
 	if((H.wear_suit && (H.wear_suit.flags & THICKMATERIAL)) && (H.head && (H.head.flags & THICKMATERIAL)))
@@ -393,13 +398,14 @@ mob/living/carbon/proc/release_control()
 		return
 
 	if(borer.chemicals >= 100)
-		var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
+		var/list/candidates = get_candidates(ROLE_BORER, null, ROLE_BORER)
 		for(var/client/C in candidates)
-			if(jobban_isbanned(C.mob, "borer") || !(C.prefs.toggles & MIDROUND_ANTAG))
+			if(!(C.prefs.toggles & MIDROUND_ANTAG))
 				candidates -= C
 		if(!candidates.len)
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
+
 		var/client/C = pick(candidates)
 
 		borer.chemicals -= 100

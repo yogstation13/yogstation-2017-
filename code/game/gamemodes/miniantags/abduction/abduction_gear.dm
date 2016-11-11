@@ -520,6 +520,21 @@ Congratulations! You are now trained for xenobiology research!"}
 	user << "<span class='notice'>Probing result:</span>[species]"
 	user << "[helptext]"
 
+
+// Research prototype of the abductor baton
+// can only stun and cuff... infintely.
+
+/obj/item/weapon/abductor_baton/weak
+	name = "unorthodox alien baton"
+	stuntime = 5
+	sleeptime = 0
+
+/obj/item/weapon/abductor_baton/weak/ProbeAttack()
+	return 0
+
+/obj/item/weapon/abductor_baton/weak/SleepAttack()
+	return 0
+
 /obj/item/weapon/restraints/handcuffs/energy
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."

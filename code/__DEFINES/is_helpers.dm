@@ -4,6 +4,10 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
+#define ismodholder(O) (istype(O, /obj/item/module_holder))
+
+#define ismodule(O) (istype(O, /obj/item/module))
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -87,6 +91,10 @@
 #define isitem(A) istype(A, /obj/item)
 
 #define ispredator(A) (istype(A, /mob/living/carbon/human/predator))
+
+#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+
+#define iscaptive(A) (istype(A, /mob/living/captive_brain))
 
 // ASSEMBLY HELPERS
 
