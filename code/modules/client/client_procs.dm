@@ -109,19 +109,32 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
-			cmd_admin_mute(src, mute_type, 1)
-			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
-			return 0
-	else
-		last_message = message
-		src.last_message_count = 0
-		return 0
+	if(config.automute_on && !holder)
+		if(last_message == message)
+			last_message_count++
+			if(last_message_count >= SPAM_TRIGGER_AUTOMUTE_IDENTICAL)
+				src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+				cmd_admin_mute(src, mute_type, 1)
+				return 1
+			if(last_message_count >= SPAM_TRIGGER_WARNING_IDENTICAL)
+				src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+		else
+			last_message_count = 0
+			last_message = message
+
+		if((world.time - last_message_time) < SPAM_TRIGGER_AUTOMUTE_TIME)
+			fast_message_count++
+			if(fast_message_count >= SPAM_TRIGGER_AUTOMUTE)
+				src << "<span class='danger'>You have exceeded the spam filter limit for messages in a short time period. An auto-mute was applied.</span>"
+				cmd_admin_mute(src, mute_type, 1)
+				return 1
+			if(fast_message_count >= SPAM_TRIGGER_WARNING)
+				src << "<span class='danger'>You are nearing the spam filter limit for messages in a short time period.</span>"
+		else
+			fast_message_count = 0
+		last_message_time = world.time
+
+	return 0
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)

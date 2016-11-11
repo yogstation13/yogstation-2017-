@@ -512,22 +512,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
 
-//abomination stuff
-/datum/species/abomination
-	name = "???"
-	id = "abomination"
-	specflags = list(NOBREATH,COLDRES,NOGUNS,VIRUSIMMUNE,PIERCEIMMUNE,RADIMMUNE,NODISMEMBER)
-	sexes = 0
-	speedmod = 4
-	armor = 0//has horror armor instead
-	punchdamagelow = 30
-	punchdamagehigh = 30
-	punchstunthreshold = 30 //100 % chance
-	no_equip = list(slot_w_uniform, slot_back, slot_ears)
-	attack_verb = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	heatmod = 1.5
-	blacklisted = 1
+//for the abomination species, see horrorform.dm
 
 /datum/species/deformed //what you get from abomination reversion
 	name = "???"
@@ -536,13 +521,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	sexes = 0
 	roundstart = 0
 
-/obj/item/clothing/suit/abomination
+/obj/item/clothing/suit/space/abomination
 	name = "fleshy hide"
 	desc = "A huge chunk of flesh. It seems to be shifting around itself."
 	icon_state = "golem"
 	item_state = "golem"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = 80, bullet = 50, laser = 70,energy = 100, bomb = 30, bio = 100, rad = 0)
+	slowdown = 0
 	unacidable = 1
 	burn_state = -1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -567,7 +553,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	burn_state = -1
 	flags_cover = MASKCOVERSEYES
 
-/obj/item/clothing/head/abomination
+/obj/item/clothing/head/helmet/space/abomination
 	name = "hardened membrane"
 	icon_state = "golem"
 	item_state = "golem"

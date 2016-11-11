@@ -115,7 +115,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
 	name = "mint"
-	desc = "it is only wafer thin."
+	desc = "It's only wafer thin. You should take its advice."
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate

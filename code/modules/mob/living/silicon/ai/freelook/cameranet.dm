@@ -92,7 +92,7 @@ var/datum/cameranet/cameranet = new()
 // Used for Cyborg cameras. Since portable cameras can be in ANY chunk.
 
 /datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
-	if(c.can_use())
+	if(c && c.can_use())
 		majorChunkChange(c, 1)
 	//else
 	//	majorChunkChange(c, 0)
