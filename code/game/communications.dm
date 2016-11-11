@@ -163,9 +163,6 @@ var/const/SEC_FREQ = 1359 //security, coloured red in chat window
 var/const/CENTCOM_FREQ = 1337 //centcom frequency, coloured grey in chat window
 var/const/AIPRIV_FREQ = 1447 //AI private, colored magenta in chat window
 
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
 /* filters */
 var/const/RADIO_TO_AIRALARM = "1"
 var/const/RADIO_FROM_AIRALARM = "2"

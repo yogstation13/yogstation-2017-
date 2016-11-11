@@ -48,6 +48,7 @@
 			dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
 			dat += "<br>Current Network: [network]"
 			dat += "<br>Selected Server: [SelectedServer.id]"
+			dat += "<br>Server Encryption Mode: [SelectedServer.encryption ? SelectedServer.encryption : "OFF"]"
 
 			if(SelectedServer.totaltraffic >= 1024)
 				dat += "<br>Total recorded traffic: [round(SelectedServer.totaltraffic / 1024)] Terrabytes<br><br>"
@@ -112,6 +113,7 @@
 						dat += "<u><font color = #18743E>Data type</font color></u>: [C.input_type]<br>"
 						dat += "<u><font color = #18743E>Source</font color></u>: [C.parameters["name"]] (Job: [C.parameters["job"]])<br>"
 						dat += "<u><font color = #18743E>Class</font color></u>: [race]<br>"
+						dat += "<u><font color = #18743E>Encryption Applied</font color></u>: [C.parameters["encryption"] ? C.parameters["encryption"] : "none"]<br>"
 						dat += "<u><font color = #18743E>Contents</font color></u>: \"[C.parameters["message"]]\"<br>"
 
 

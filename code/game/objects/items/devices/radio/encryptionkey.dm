@@ -1,5 +1,5 @@
 
-/obj/item/device/encryptionkey/
+/obj/item/device/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
 	icon = 'icons/obj/radio.dmi'
@@ -11,10 +11,17 @@
 	var/syndie = 0
 	var/centcom = 0
 	var/list/channels = list()
+	var/list/encryption_keys = list()
+
+/obj/item/device/encryptionkey/New()
+	for(var/channel in channels)
+		encryption_keys += channel
 
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
 	channels = list("Syndicate" = 1)
+	//ironically the syndicate channel does not need an encryption key because of the special way syndicate frequencies are treated
+	encryption_keys = list("Command", "Security", "Engineering", "Science", "Medical", "Supply", "Service")
 	origin_tech = "syndicate=1;engineering=3;bluespace=2"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
