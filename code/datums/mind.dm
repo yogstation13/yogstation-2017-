@@ -1760,6 +1760,7 @@
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(istype(S, spell))
+			S.Removed(src)
 			qdel(S)
 			spell_list -= S
 

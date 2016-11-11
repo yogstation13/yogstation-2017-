@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/bloodcrawl
+/*/obj/effect/proc_holder/spell/bloodcrawl
 	name = "Blood Crawl"
 	desc = "Use pools of blood to phase out of existence."
 	charge_max = 0
@@ -13,7 +13,7 @@
 	action_background_icon_state = "bg_demon"
 	var/phased = 0
 
-/*/obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
+/obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
 	for(var/obj/effect/decal/cleanable/target in range(range, get_turf(user)))
 		if(target.can_bloodcrawl_in())
 			perform(target)
@@ -37,6 +37,8 @@
 /obj/effect/decal/cleanable/blood/CtrlClick(mob/living/user)
 	..()
 	if(user.bloodcrawl)
+		if(user.stat != CONSCIOUS)//people managed to hide in blood while knocked out which is stupid
+			return
 		if(user.holder)
 			user.phasein(src)
 		else
@@ -46,6 +48,8 @@
 /obj/effect/decal/cleanable/trail_holder/CtrlClick(mob/living/user)
 	..()
 	if(user.bloodcrawl)
+		if(user.stat != CONSCIOUS)
+			return
 		if(user.holder)
 			user.phasein(src)
 		else
@@ -57,6 +61,8 @@
 	if(!istype(user))
 		return
 	if(user.bloodcrawl)
+		if(user.stat != CONSCIOUS)//no hiding in blood while KOed
+			return
 		for(var/obj/effect/decal/cleanable/B in src.contents)
 			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))
 				if(user.holder)

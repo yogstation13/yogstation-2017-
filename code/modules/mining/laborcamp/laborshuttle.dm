@@ -5,6 +5,7 @@
 	shuttleId = "laborcamp"
 	possible_destinations = "laborcamp_home;laborcamp_away"
 	req_access = list(access_brig)
+	notification = SEC_FREQ
 
 
 /obj/machinery/computer/shuttle/labor/one_way

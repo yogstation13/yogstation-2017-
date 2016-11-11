@@ -41,7 +41,8 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
-			if(!istype(loc, /turf/open/floor))
+			var/turf/T = loc
+			if(!istype(T, /turf/open) || !(T.flags & GIRDERABLE))
 				user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
