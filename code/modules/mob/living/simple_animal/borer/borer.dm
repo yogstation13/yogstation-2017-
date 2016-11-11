@@ -126,6 +126,8 @@ var/total_borer_hosts_needed = 10
 				if(prob(victim.brainloss/20))
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
+	adjustStaminaLoss(-3)
+
 /mob/living/simple_animal/borer/say(message)
 	if(staminaloss) // stamina loss will mute borers
 		return
