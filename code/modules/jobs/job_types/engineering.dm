@@ -20,11 +20,11 @@ Chief Engineer
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors, access_minisat,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_tcomadmin, access_mineral_storeroom)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors, access_minisat,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_mineral_storeroom)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_tcomadmin, access_mineral_storeroom)
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"
@@ -70,7 +70,7 @@ Station Engineer
 	outfit = /datum/outfit/job/engineer
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat)
+									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat, access_tcomadmin)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 									access_external_airlocks, access_construction, access_tcomsat)
 
@@ -119,6 +119,42 @@ Atmospheric Technician
 	ears = /obj/item/device/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/atmospheric_technician
 	r_pocket = /obj/item/device/analyzer
+
+	backpack = /obj/item/weapon/storage/backpack/industrial
+	satchel = /obj/item/weapon/storage/backpack/satchel_eng
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
+	box = /obj/item/weapon/storage/box/engineer
+	pda_slot = slot_l_store
+
+/*
+Signal Technician
+*/
+/datum/job/signal_tech
+	title = "Signal Technician"
+	flag = SIGNALTECH
+	department_head = list("Chief Engineer")
+	department_flag = ENGSEC
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the chief engineer"
+	selection_color = "#fff5cc"
+
+	outfit = /datum/outfit/job/signal_tech
+
+	access = list(access_tcomsat, access_tcomadmin, access_tech_storage, access_RC_announce, access_construction, access_engine, access_engine_equip)
+	minimal_access = list(access_tcomsat, access_tcomadmin, access_tech_storage, access_construction, access_RC_announce)
+
+/datum/outfit/job/signal_tech
+	name = "Signal Technician"
+
+	belt = /obj/item/weapon/storage/belt/utility/full
+	l_pocket = /obj/item/device/pda/signaltech
+	ears = /obj/item/device/radio/headset/headset_eng
+	uniform = /obj/item/clothing/under/rank/signal_tech
+	suit = /obj/item/clothing/suit/hooded/wintercoat/engineering/tcomms
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/workboots
 
 	backpack = /obj/item/weapon/storage/backpack/industrial
 	satchel = /obj/item/weapon/storage/backpack/satchel_eng
