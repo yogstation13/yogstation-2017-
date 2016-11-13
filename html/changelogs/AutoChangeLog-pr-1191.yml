@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "Secure radio channels are now actually secure. Adding an encryption key to the telecommunications server will allow the message to be encrypted, causing any radio without an encryption key to hear gibberish from that channel. You can still transmit to channels you do not have a key for. All telecommunications servers start with the corresponding encryption key installed."
