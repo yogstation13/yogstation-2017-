@@ -37,7 +37,7 @@
 	unique_name = 1
 	gold_core_spawnable = 0
 	death_sound = 'sound/voice/hiss6.ogg'
-	candismember = TRUE
+	dismember_chance = 15
 	force_threshold = 3
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	var/alien_state
@@ -57,7 +57,7 @@
 	var/plant_cooldown = 30
 	var/plants_off = 0
 	ranged = 1
-	candismember = FALSE //weak drones
+	dismember_chance = 0 //weak drones
 	projectiletype = /obj/item/projectile/neurotox/superlight
 
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
@@ -181,7 +181,6 @@
 							/obj/item/organ/brain/alien = 1) //only the queen is smart
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 0
-	candismember = TRUE
 	force_threshold = 8
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob/bitchslap
 

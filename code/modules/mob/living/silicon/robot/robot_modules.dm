@@ -157,10 +157,14 @@
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
 	modules += new /obj/item/borg/cyborghug(src)
+	modules += new /obj/item/weapon/twohanded/shockpaddles(src)
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
+	add_module(new /obj/item/stack/medical/ointment/cyborg())
+	add_module(new /obj/item/stack/medical/bruise_pack/cyborg())
 
 	emag = new /obj/item/weapon/gun/syringe/rapidsyringe/borg(src)
+		new /obj/item/weapon/reagent_containers/borghypo/hacked(src)
 
 	fix_modules()
 
@@ -205,8 +209,12 @@
 	..()
 	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
+	modules += new /obj/item/device/harmalarm(src)
+	modules += new /obj/item/borg/cyborghug/peacekeeper(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/holosign_creator/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/e_gun/dragnet/snare/cyborg(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	fix_modules()
 
@@ -414,3 +422,9 @@
 	max_energy = 2500
 	recharge_rate = 250
 	name = "Medical Synthesizer"
+	
+/datum/robot_energy_storage/bruise
+	name = "Bruise Pack Synthesizer"
+
+/datum/robot_energy_storage/ointment
+	name = "Ointment Synthesizer"

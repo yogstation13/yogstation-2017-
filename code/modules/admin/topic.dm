@@ -138,6 +138,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a cyberman. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a cyberman.")
+			if("18")
+				if(src.makeClockCult())
+					message_admins("[key_name(usr)] started a clockwork cult.")
+					log_admin("[key_name(usr)] started a clockwork cult.")
+				else
+					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a clockwork cult.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -2394,7 +2401,7 @@
 			if("11")
 				set_cybermen_queued_objective()
 		cybermen_panel()//refresh the page.
-	
+
 	else if(href_list["adminserverrestart"])
 		if(!check_rights(R_TICKET))
 			usr << "Clients without ticket administration rights cannot use this command. Get out of here, coder!"
