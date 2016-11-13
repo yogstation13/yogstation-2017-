@@ -15,9 +15,10 @@
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
 	channels = list("Syndicate" = 1)
-	origin_tech = "syndicate=1;engineering=3;bluespace=2"
+	origin_tech = "syndicate=3;engineering=4;bluespace=3"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
-
+	translate_binary = 1
+	
 /obj/item/device/encryptionkey/binary
 	name = "binary translator key"
 	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
@@ -71,7 +72,7 @@
 	name = "\proper the captain's encryption key"
 	desc = "An encryption key for a radio headset.  Channels are as follows: :c - command, :s - security, :e - engineering, :u - supply, :v - service, :m - medical, :n - science."
 	icon_state = "cap_cypherkey"
-	channels = list("Command" = 1, "Security" = 1, "Engineering" = 0, "Science" = 0, "Medical" = 0, "Supply" = 0, "Service" = 0)
+	channels = list("Command" = 1, "Security" = 1, "Engineering" = 1, "Science" = 1, "Medical" = 1, "Supply" = 1, "Service" = 1)
 
 /obj/item/device/encryptionkey/heads/rd
 	name = "\proper the research director's encryption key"

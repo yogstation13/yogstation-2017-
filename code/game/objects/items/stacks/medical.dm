@@ -137,3 +137,14 @@
 	heal_burn = 40
 	origin_tech = "biotech=2"
 	self_delay = 20
+	
+/obj/item/stack/medical/bruise_pack/cyborg/
+	materials = list()
+	is_cyborg = 1
+	cost = 250
+	
+/obj/item/stack/medical/ointment
+	materials = list()
+	is_cyborg = 1
+	cost = 250
+
