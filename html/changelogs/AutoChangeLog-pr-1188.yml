@@ -1,4 +1,0 @@
-author: utahclock
-delete-after: True
-changes: 
-  - tweak: "Gives an admin message anytime pumps are turned on/off to prompt investigation"
