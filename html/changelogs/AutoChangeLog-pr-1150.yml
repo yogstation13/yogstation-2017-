@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - tweak: "Advanced Batons stun and sleep modes work on borers."
+  - tweak: "Stamina Loss in general now mutes borers."
+  - tweak: "Advanced Batons probe mode can detect borers inside of bodies."
