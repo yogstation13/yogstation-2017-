@@ -1,7 +1,3 @@
-/obj/item/clothing/glasses
-	name = "glasses"
-	materials = list(MAT_GLASS = 250)
-
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
@@ -50,6 +46,9 @@
 	force = 0
 	throwforce = 0
 	sharpness = null
+	vision_flags = 0
+	invis_view = 2
+	invis_view = SEE_INVISIBLE_LIVING
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -148,6 +147,7 @@
 	desc = "Nice and cheap, just the way Nanotrasen likes it."
 	darkness_view = 0
 	flash_protect = 0
+	tint = 0
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
