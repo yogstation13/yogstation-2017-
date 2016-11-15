@@ -652,8 +652,11 @@
 	if(harness && harness.on_melee_attack(src, T, 1))
 		return
 	if(T == src)
-		return
+		AttackingSelf()
 	T.attack_animal(src)
+
+/mob/living/simple_animal/proc/AttackingSelf() //when a mob attacks itself
+	return
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
 	if(harness && harness.on_ranged_attack(src, A, params))
