@@ -128,8 +128,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
-	if(docile)
-		src << "<span class='warning'>Your state is weakened by the nature of sugar within your hosts blood. You are too docile to even speak.</span>"
+	if(staminaloss) // stamina loss will mute borers
 		return
 
 	if(dd_hasprefix(message, ";"))
@@ -304,3 +303,12 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	M << "<span class='notice'>You feel the sweet embrace of dopamine that surges through your brain as it's suddenly relieved of a foreign parasite.</span>"
 	qdel(src)
 	..()
+
+
+/mob/living/simple_animal/borer/proc/checkStrength()
+	if(weakened || stunned)
+		src << "<span class='warning'>You lack the strength to do this.</span>"
+		return FALSE
+
+	else
+		return TRUE

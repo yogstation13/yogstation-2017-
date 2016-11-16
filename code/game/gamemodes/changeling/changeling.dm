@@ -64,11 +64,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
-
 	if(antag_candidates.len>0)
-		for(var/i = 0, i < num_changelings, i++)
-			if(!antag_candidates.len) break
-			var/datum/mind/changeling = pick_candidate()
+		var/list/lings = pick_candidate(amount = num_changelings)
+		for(var/M in lings)
+			var/datum/mind/changeling = M
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs

@@ -60,7 +60,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		var/datum/signal/copy = new
 		if(copysig)
 
-			copy.transmission_method = 2
+			copy.transmission_method = TRANSMISSION_SUBSPACE
 			copy.frequency = signal.frequency
 			// Copy the main data contents! Workaround for some nasty bug where the actual array memory is copied and not its contents.
 			copy.data = list(
@@ -73,6 +73,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"job" = signal.data["job"],
 			"key" = signal.data["key"],
 			"vmask" = signal.data["vmask"],
+			"encryption" = signal.data["encryption"],
 			"compression" = signal.data["compression"],
 			"message" = signal.data["message"],
 			"radio" = signal.data["radio"],
@@ -83,6 +84,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"reject" = signal.data["reject"],
 			"level" = signal.data["level"],
 			"spans" = signal.data["spans"],
+			"languages" = signal.data["languages"],
 			"verb_say" = signal.data["verb_say"],
 			"verb_ask" = signal.data["verb_ask"],
 			"verb_exclaim" = signal.data["verb_exclaim"],
