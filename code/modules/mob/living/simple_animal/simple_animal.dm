@@ -653,7 +653,9 @@
 		return
 	if(T == src)
 		AttackingSelf()
-	T.attack_animal(src)
+		return
+	else
+		T.attack_animal(src)
 
 /mob/living/simple_animal/proc/AttackingSelf() //when a mob attacks itself
 	return

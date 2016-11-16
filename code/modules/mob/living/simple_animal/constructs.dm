@@ -67,11 +67,11 @@
 
 /mob/living/simple_animal/hostile/construct/AttackingSelf()
 	if(health < maxHealth)
-		adjusthealth(-5)
+		adjustHealth(-5)
 		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
 					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
 	else
-		M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
+		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 
 /mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
 	return 1
