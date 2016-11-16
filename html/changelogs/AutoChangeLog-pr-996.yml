@@ -1,5 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "Research can print alien technologies if their alien tech levels are high enough."
-  - rscadd: "The modular reciever now does not require plasma."
