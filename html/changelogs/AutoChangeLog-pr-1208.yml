@@ -1,4 +1,0 @@
-author: oisin100
-delete-after: True
-changes: 
-  - bugfix: "Rules now lead to the actual rule page."
