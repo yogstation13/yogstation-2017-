@@ -87,3 +87,4 @@
 /datum/link_approval/New(var/hyperlink)
 	poster = usr
 	link = hyperlink
+
