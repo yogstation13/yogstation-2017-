@@ -54,6 +54,27 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/bus(null)
 	B.apply_default_parts(src)
 
+/obj/machinery/telecomms/bus/Options_Menu()
+	var/dat = "<br>Change Signal Frequency: <A href='?src=\ref[src];change_freq=1'>[change_frequency ? "YES ([change_frequency])" : "NO"]</a>"
+	return dat
+
+/obj/machinery/telecomms/bus/Options_Topic(href, href_list)
+
+	if(href_list["change_freq"])
+
+		var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
+		if(canAccess(usr))
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					change_frequency = newfreq
+					temp = "<font color = #666633>-% New frequency to change to assigned: \"[newfreq] GHz\" %-</font color>"
+			else
+				change_frequency = 0
+				temp = "<font color = #666633>-% Frequency changing deactivated %-</font color>"
+
+
 /obj/item/weapon/circuitboard/machine/telecomms/bus
 	name = "circuit board (Bus Mainframe)"
 	build_path = /obj/machinery/telecomms/bus
@@ -62,10 +83,6 @@
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/subspace/filter = 1)
-
-
-
-
 
 //Preset Buses
 

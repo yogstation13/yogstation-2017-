@@ -182,6 +182,12 @@
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
+					if(useramount < 0)
+						var/msg = "[usr] ([usr.ckey ? usr.ckey : "no key"]) possibly attempted an infinite reagent exploit with a chem master."
+						message_admins(msg)
+						log_admin(msg)
+						log_game(msg)
+						return
 					beaker.reagents.trans_id_to(src, id, useramount)
 					. = TRUE
 

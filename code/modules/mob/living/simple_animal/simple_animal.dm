@@ -125,6 +125,9 @@
 	if(stuttering)
 		stuttering = 0
 
+	if(staminaloss)
+		adjustStaminaLoss(-3)
+
 /mob/living/simple_animal/proc/handle_automated_action()
 	return
 

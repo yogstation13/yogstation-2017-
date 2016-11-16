@@ -211,7 +211,9 @@
 			return 1
 
 	if(href_list["drules"])
-		src << browse(file('html/rules.html'), "window=rules;size=700x700")
+		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")=="No")
+			return
+		src << link(config.rulesurl)
 		return
 
 	if(href_list["dtgwiki"])

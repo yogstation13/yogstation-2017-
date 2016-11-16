@@ -312,6 +312,7 @@
 		if (keyslot2.centcom)
 			centcom = 1
 
+		encryption_keys |= keyslot2.encryption_keys
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])

@@ -437,6 +437,11 @@ Congratulations! You are now trained for xenobiology research!"}
 	L.Stun(stuntime)
 	L.Weaken(stuntime)
 	L.apply_effect(STUTTER, stuntime)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		if(C.borer)
+			C.borer.Stun(stuntime)
+			C.borer.Weaken(stuntime)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
@@ -455,6 +460,10 @@ Congratulations! You are now trained for xenobiology research!"}
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 		L.Sleeping(sleeptime)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.borer)
+				C.borer.staminaloss += sleeptime
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
@@ -516,6 +525,10 @@ Congratulations! You are now trained for xenobiology research!"}
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
 			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
+
+		if(H.borer)
+			helptext += "<br><span class='warning'>A [H.borer] has been identified active inside of the subject!"
+
 
 	user << "<span class='notice'>Probing result:</span>[species]"
 	user << "[helptext]"

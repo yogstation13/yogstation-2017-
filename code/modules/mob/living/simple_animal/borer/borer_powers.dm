@@ -36,6 +36,9 @@
 	if(!Adjacent(H))
 		return 0
 
+	if(!checkStrength())
+		return 0
+
 	if(stat != CONSCIOUS)
 		src << "<span class='warning'>I must be conscious to do this...</span>"
 		return 0
@@ -65,6 +68,9 @@
 	if(docile)
 		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
 		return
+
+	if(!checkStrength())
+		return 0
 
 	var content = ""
 	content += "<p>Chemicals: <span id='chemicals'>[chemicals]</span></p>"
@@ -210,6 +216,9 @@
 		src << "<span class='warning'>You need 250 chemicals to use this!</span>"
 		return
 
+	if(!checkStrength())
+		return 0
+
 	if(victim.stat == DEAD)
 		dead_mob_list -= victim
 		living_mob_list += victim
@@ -262,6 +271,8 @@
 		src << "<span class='warning'>It's too soon to use that!</span>"
 		return
 
+	if(!checkStrength())
+		return 0
 	if(client.prefs.afreeze)
 		src << "<span class='warning'>You are frozen by an administrator.</span>"
 		return
@@ -346,6 +357,9 @@
 	if(chemicals < 75)
 		src << "<span class='warning'>You need 75 chems to punish your host.</span>"
 		return
+
+	if(!checkStrength())
+		return 0
 
 	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Stun")
 
