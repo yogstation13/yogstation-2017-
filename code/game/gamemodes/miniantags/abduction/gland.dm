@@ -193,7 +193,7 @@
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
 
-/*
+
 /obj/item/organ/gland/bodysnatch
 	cooldown_low = 600
 	cooldown_high = 600
@@ -207,10 +207,10 @@
 		var/obj/effect/cocoon/abductor/C = new (get_turf(owner))
 		C.Copy(owner)
 		C.Start()
-	owner.gib()
+	owner.adjustBruteLoss(10)
 	return
 
-*/
+
 
 /obj/effect/cocoon/abductor
 	name = "slimy cocoon"
