@@ -193,6 +193,7 @@
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
 
+/*
 /obj/item/organ/gland/bodysnatch
 	cooldown_low = 600
 	cooldown_high = 600
@@ -208,6 +209,8 @@
 		C.Start()
 	owner.gib()
 	return
+
+*/
 
 /obj/effect/cocoon/abductor
 	name = "slimy cocoon"
@@ -244,6 +247,7 @@
 			M.loc = src.loc
 		qdel(src)
 
+/*
 /obj/item/organ/gland/plasma
 	cooldown_low = 2400
 	cooldown_high = 3000
@@ -263,3 +267,5 @@
 		T.atmos_spawn_air("plasma=300;TEMP=[T20C]")
 	owner.gib()
 	return
+
+*/
