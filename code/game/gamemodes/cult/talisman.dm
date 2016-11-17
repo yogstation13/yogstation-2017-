@@ -118,6 +118,7 @@
 	color = "#551A8B" // purple
 	invocation = "Sas'so c'arta forbici!"
 	health_cost = 5
+	uses = 3
 
 /obj/item/weapon/paper/talisman/teleport/invoke(mob/living/user, successfuluse = 1)
 	var/list/potential_runes = list()
@@ -205,7 +206,7 @@
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
-		R.desc = "A rune drawn in crayon."
+		R.desc = "A rune vandalizing the station."
 
 
 //Rite of Disruption: Weaker than rune
@@ -221,6 +222,27 @@
 	user.visible_message("<span class='warning'>[user]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
+	
+//Rite of Protection: Creates a sanguine barrier when used, good for OH FUCK HELP SEC AFTER ME
+/obj/item/weapon/paper/talisman/barrier
+	cultist_name = "Talisman of Barrier Formation
+	cultist_desc = "A talisman that will form a moderately strong barrier on top of the invoker."
+	color = "#C0392B" //lightish red
+	invocation = "Utkkbxk, kblx!"
+	health_cost = 10 //so it can't be spammed
+	
+/obj/item/weapon/paper/talisman/barrier/invoke(mob/living/user, successfuluse = 1)
+	. = ..()
+	user.visible_message("<span class='warning'>[user]'s hand flares with an unholy light!</span>",\
+							 "<span class='cultitalic'>You speak the words of the talisman, forming a barrier.</span>")
+	new /obj/machinery/shield/cult(get_turf(user))
+	
+	
+/obj/machinery/shield/cult //for the talisman of barrier forming
+	name = "sanguine barrier"
+	desc = "A formidable barrier, used by cultists to defend their rites."
+	health = 80
+	icon_state = "shield-red"
 
 
 //Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
@@ -263,7 +285,10 @@
 				C.cultslurring += 15
 				C.Jitter(15)
 			if(is_servant_of_ratvar(target))
-				target.adjustBruteLoss(15)
+				target.adjustBruteLoss(25)
+				target.adjust_fire_stacks(5)
+				target.IgniteMob()
+				target.visible_message("<span class='cultlarge'>\"Lnyyxk tl rhnk zhw bl.\"</span>")
 		user.drop_item()
 		qdel(src)
 		return
@@ -303,7 +328,8 @@
 	cultist_name = "Talisman of Horrors"
 	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
 	color = "#ffb366" // light orange
-	invocation = "Lo'Nab Na'Dm!"
+	item_state = "null" //invisible inhand so cultists can smack a bitch with it silently
+	invocation = null //it's fucking silent
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
@@ -322,9 +348,10 @@
 //Talisman of Fabrication: Creates a construct shell out of 25 metal sheets.
 /obj/item/weapon/paper/talisman/construction
 	cultist_name = "Talisman of Construction"
-	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 10 sheets of reinforced glass will create a soulstone."
+	cultist_desc = "Use this talisman on construction materials to form advanced items for the cult. Using it on 25 sheets of regular metal will form a construct shell. Using it on plasteel will convert it into runed metal. Using it on 25 sheets of reinforced glass will create a soulstone. Using it on a construct will repair it, and using it on a wall will turn it into a cult wall, or destroy the cult wall, depending."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
+	uses = 4
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
@@ -333,10 +360,50 @@
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
 
-/obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
+/obj/item/weapon/paper/talisman/construction/attack(mob/M,mob/living/user)
 	if(iscultist(user))
-		user << "<span class='cultitalic'>This talisman will only work on metal, plasteel, and reinforced glass!</span>"
+		if(istype(target, /mob/living/simple_animal/M)
+			if(istype(M, /mob/living/simple_animal/hostile/construct))
+				if(health < maxHealth)
+					adjustHealth(-40)
+					if(src != user)
+						Beam(user,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+						M.visible_message("<span class='danger'>[user] repairs some of \the <b>[src]'s</b> dents.</span>", \
+						  	 "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+						uses--
+						if(uses <= 0)
+							talisman_consumed()
+						   
+/obj/item/weapon/paper/talisman/construct/attack(obj/M,mob/living/user)
+	if(iscultist(user))
+		user << "<span class='cultitalic'>This talisman will only work on metal, plasteel, reinforced glass, constructs, and walls!</span>"
 		log_game("Construct talisman failed - not a valid target")
+			
+
+/obj/item/weapon/paper/talisman/construction/afterattack(turf/closed/wall, mob/living/user, proximity_flag, click_parameters)
+	..()
+	if(proximity_flag && iscultist(user))
+		if(istype(target, /turf/closed/wall))
+			var/turf/T = get_turf(target)
+				if(istype(target, /turf/closed/wall/mineral/cult)
+					break_wall()
+					log_game("Construct talisman destroyed a wall, used by [user.ckey]")
+					user << sound('sound/effects/magic.ogg',0,1,25)
+					uses--
+						if(uses <= 0)
+							talisman_consumed()
+				if(istype(target, /turf/closed/wall/r_wall)
+					user << "<span class='cultitalic'>This talisman cannot affect such a powerful wall.</span>"
+					log_game("Construct talisman failed - not a valid target")
+				else
+					src.ChangeTurf(/turf/closed/wall/mineral/cult)
+					user << "<span class='cultitalic'>You turn the [src] into a cult wall with the talisman's vile magicks.</span>"
+					user << sound('sound/effects/magic.ogg',0,1,25)
+					uses--
+					if(uses <= 0)
+						talisman_consumed()
+
+		
 
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -347,7 +414,9 @@
 				new /obj/structure/constructshell(T)
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
-				qdel(src)
+				uses--
+				if(uses <= 0)
+						talisman_consumed()
 		if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/quantity = target.amount
 			var/turf/T = get_turf(target)
@@ -355,16 +424,20 @@
 			target.use(quantity)
 			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
 			user << sound('sound/effects/magic.ogg',0,1,25)
-			qdel(src)
+			uses--
+			if(uses <= 0)
+						talisman_consumed()
 		if(istype(target, /obj/item/stack/sheet/rglass))
 			var/turf/T = get_turf(target)
-			if(target.use(10))
+			if(target.use(25))
 				new /obj/item/device/soulstone(T)
 				user <<"<span class='warning'>The talisman clings to the glass, forcing it to contract and twist, turning a bloody red!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
-				qdel(src)
+				uses--
+				if(uses <= 0)
+						talisman_consumed()
 		else
-			user << "<span class='warning'>The talisman must be used on metal, plasteel, or reinforced glass!</span>"
+			user << "<span class='cultitalic'>The talisman will only work on metal, reinforced glass, plasteel, constructs, or walls.</span>"
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
@@ -389,6 +462,8 @@
 		if(target.stat == DEAD)
 			user.visible_message("<span class='cultitalic'>This talisman's magic does not affect the dead!</span>")
 			return
+		if(is_servant_of_ratvar(target))
+			FuckRatvar(target, user)
 		CuffAttack(target, user)
 		return
 	..()
@@ -413,9 +488,18 @@
 	else
 		user << "<span class='warning'>[C] is already bound.</span>"
 	if(uses <= 0)
-		user.drop_item()
-		qdel(src)
+		talisman_consumed()
 	return
+	
+/obj/item/weapon/paper/talisman/shackle/proc/FuckRatvar(mob/living/carbon/C, mob/living/user)
+	if(!C.handcuffed)
+		C.apply_damage(rand(10, 20), BRUTE, pick("l_arm", "r_arm"))
+		C.visible_message("<span class='cultlarge'>\"Lnyyxk tl rhnk zhw bl.\"</span>")
+	return
+
+
+		
+	
 
 /obj/item/weapon/restraints/handcuffs/energy/cult //For the talisman of shackling
 	name = "cult shackles"
@@ -428,3 +512,9 @@
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
 							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
 	. = ..()
+	
+/obj/item/weapon/paper/talisman/talisman_consumed()
+	if(uses <= 0)
+		ser.drop_item()
+		qdel(src)
+	return
