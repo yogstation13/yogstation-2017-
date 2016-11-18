@@ -197,6 +197,7 @@
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
+	force = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -211,6 +212,8 @@
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
 	slot_flags = SLOT_BELT
+	force = 18
+	block_chance = 45
 	hitsound = 'sound/hallucinations/growl1.ogg'
 
 /obj/item/weapon/nullrod/claymore/chainsaw_sword
@@ -226,6 +229,7 @@
 	icon_state = "swordon"
 	item_state = "swordon"
 	name = "force weapon"
+	force = 20
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = SLOT_BELT
 
@@ -234,14 +238,19 @@
 	desc = "Capable of cutting clean through a holy claymore."
 	icon_state = "katana"
 	item_state = "katana"
+	force = 20
 	slot_flags = SLOT_BELT | SLOT_BACK
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
+	desc = "Once the harbringer of a interdimensional war, it's sharpness fluctures wildly."
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
+	
+/obj/item/weapon/nullrod/claymore/multiverse/attack(mob/living/carbon/M, mob/living/carbon/user)
+	force = rand(1, 30)
+	..()
 
 /obj/item/weapon/nullrod/claymore/saber
 	name = "light energy sword"
@@ -273,6 +282,8 @@
 	throwforce = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	
+
 
 /obj/item/weapon/nullrod/scythe
 	icon_state = "scythe0"
@@ -280,16 +291,23 @@
 	name = "reaper scythe"
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
-	armour_penetration = 35
+	force = 15
+	armour_penetration = 70
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
+	
+/obj/item/weapon/nullrod/scythe/attack_self(mob/user)
+	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		user.add_atom_colour(#000000)
 
 /obj/item/weapon/nullrod/scythe/vibro
 	icon_state = "hfrequency0"
 	item_state = "hfrequency1"
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
+	force = 20
+	armour_penetration = 40
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -344,6 +362,10 @@
 	slot_flags = SLOT_BELT
 	w_class = 5
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
+	
+/obj/item/weapon/nullrod/hammer/attack(mob/living/target, mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 
 /obj/item/weapon/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -365,6 +387,14 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	
+/obj/item/weapon/nullrod/clown/afterattack(atom/movable/AM, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		H.mind.assigned_role == "Clown"
+			H.adjustBruteLoss(-8) //Bonus healin'
 
 /obj/item/weapon/nullrod/whip
 	name = "holy whip"
@@ -379,7 +409,7 @@
 		return
 	if(istype(AM, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if(is_shadow(H))
+		if()
 			var/phrase = pick("Die monster! You don't belong in this world!!!", "You steal men's souls and make them your slaves!!!", "Your words are as empty as your soul!!!", "Mankind ill needs a savior such as you!!!")
 			user.say("[phrase]")
 			H.adjustBruteLoss(8) //Bonus damage
