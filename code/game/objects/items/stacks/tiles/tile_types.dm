@@ -23,12 +23,15 @@
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(get_amount() < 4)
-			user << "<span class='warning'>You need at least four tiles to do this!</span>"
+		if(!WT.is_hot())
 			return
 
-		if(WT.is_hot() && !mineralType)
+		if(!mineralType)
 			user << "<span class='warning'>You can not reform this!</span>"
+			return
+
+		if(get_amount() < 4)
+			user << "<span class='warning'>You need at least four tiles to do this!</span>"
 			return
 
 		if(WT.remove_fuel(0,user))
