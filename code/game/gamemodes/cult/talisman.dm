@@ -169,6 +169,20 @@
 	new /obj/item/weapon/tome(get_turf(user))
 	user.visible_message("<span class='warning'>A tome appears at [user]'s feet!</span>", \
 			 "<span class='cultitalic'>An arcane tome materializes at your feet.</span>")
+			 
+			 
+/obj/item/weapon/paper/talisman/rune_alert
+	cultist_name = "Talisman of get around the fucking rune"
+	cultist_desc = "A one-use talisman that will tell your fellow cultists to get around the fucking rune already"
+	color = "#512727" // red-black
+	invocation = "G'et a'round th'e fu'cking ru'ne!"
+	
+/obj/item/weapon/paper/talisman/rune_alert/invoke(mob/living/user, successfuluse = 1)
+	. = ..()
+	
+	for(var/mob/M in mob_list)
+		if(iscultist(M))
+		M.visible_message("<span class='cultlarge'><b>"GET AROUND THE DAMN RUNE ALREADY!"</span>")
 
 /obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
@@ -225,7 +239,7 @@
 	
 //Rite of Protection: Creates a sanguine barrier when used, good for OH FUCK HELP SEC AFTER ME
 /obj/item/weapon/paper/talisman/barrier
-	cultist_name = "Talisman of Barrier Formation
+	cultist_name = "Talisman of Barrier Formation"
 	cultist_desc = "A talisman that will form a moderately strong barrier on top of the invoker."
 	color = "#C0392B" //lightish red
 	invocation = "Utkkbxk, kblx!"
