@@ -197,7 +197,7 @@
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharpness = IS_SHARP
-	force = 20
+	force = 18
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -212,9 +212,19 @@
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
 	slot_flags = SLOT_BELT
-	force = 18
-	block_chance = 45
+	force = 15
+	block_chance = 25
 	hitsound = 'sound/hallucinations/growl1.ogg'
+	
+/obj/item/weapon/nullrod/claymore/darkblade/afterattack(atom/movable/AM, mob/user, proximity)
+	if(!proximity)
+		return
+	if(istype(AM, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = AM
+		if(is_servant_of_ratvar(H))
+			H.bleed(20)
+			H.adjust.BruteLoss(5)
+	
 
 /obj/item/weapon/nullrod/claymore/chainsaw_sword
 	icon_state = "chainswordon"
@@ -229,9 +239,33 @@
 	icon_state = "swordon"
 	item_state = "swordon"
 	name = "force weapon"
-	force = 20
+	force = 18
 	desc = "The blade glows with the power of faith. Or possibly a battery."
 	slot_flags = SLOT_BELT
+	var/on = 0
+	var/brightness_on = 4 //luminosity when on
+	
+/obj/item/weapon/nullrod/claymore/proc/update_brightness(mob/user = null)
+	if(on)
+		icon_state = "[initial(icon_state)]-on"
+		if(loc == user)
+			user.AddLuminosity(brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(brightness_on)
+	else
+		icon_state = initial(icon_state)
+		if(loc == user)
+			user.AddLuminosity(-brightness_on)
+		else if(isturf(loc))
+			SetLuminosity(0)
+	
+/obj/item/weapon/nullrod/claymore/glowing/attack_self(mob/user)
+	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+		on = !on
+		update_brightness(user)
+		return 1
+		
+		
 
 /obj/item/weapon/nullrod/claymore/katana
 	name = "hanzo steel"
@@ -315,6 +349,7 @@
 	icon_state = "talking_sword"
 	item_state = "talking_sword"
 	name = "possessed blade"
+	armour_penetration = 40
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	attack_verb = list("chopped", "sliced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -409,7 +444,7 @@
 		return
 	if(istype(AM, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
-		if()
+		if(is_shadow(H))
 			var/phrase = pick("Die monster! You don't belong in this world!!!", "You steal men's souls and make them your slaves!!!", "Your words are as empty as your soul!!!", "Mankind ill needs a savior such as you!!!")
 			user.say("[phrase]")
 			H.adjustBruteLoss(8) //Bonus damage
