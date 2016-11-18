@@ -1,212 +1,119 @@
-/obj/item/weapon/gun/projectile/shotgun
+/obj/item/weapon/gun/projectile/shotgun/pump
 	name = "shotgun"
-	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
+	desc = "The mass-produced W-T Remmington 29x shotgun is a favourite of police and security forces on many worlds. Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = 4
+	max_shells = 4
+	w_class = ITEMSIZE_LARGE
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
-	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot
+	caliber = "shotgun"
+	origin_tech = list(TECH_COMBAT = 4, TECH_MATERIAL = 2)
+	load_method = SINGLE_CASING
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+	handle_casings = HOLD_CASINGS
+	fire_sound = 'sound/weapons/shotgun.ogg'
 	var/recentpump = 0 // to prevent spammage
+	var/action_sound = 'sound/weapons/shotgunpump.ogg'
 
-/obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/A, mob/user, params)
-	. = ..()
-	if(.)
-		return
-	var/num_loaded = magazine.attackby(A, user, params, 1)
-	if(num_loaded)
-		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
-		A.update_icon()
-		update_icon()
+/obj/item/weapon/gun/projectile/shotgun/pump/consume_next_projectile()
+	if(chambered)
+		return chambered.BB
+	return null
 
-/obj/item/weapon/gun/projectile/shotgun/process_chamber()
-	return ..(0, 0)
+/obj/item/weapon/gun/projectile/shotgun/pump/attack_self(mob/living/user as mob)
+	if(world.time >= recentpump + 10)
+		pump(user)
+		recentpump = world.time
 
-/obj/item/weapon/gun/projectile/shotgun/chamber_round()
-	return
+/obj/item/weapon/gun/projectile/shotgun/pump/proc/pump(mob/M as mob)
+	playsound(M, action_sound, 60, 1)
 
-/obj/item/weapon/gun/projectile/shotgun/can_shoot()
-	if(!chambered)
-		return 0
-	return (chambered.BB ? 1 : 0)
-
-/obj/item/weapon/gun/projectile/shotgun/attack_self(mob/living/user)
-	if(recentpump)
-		return
-	pump(user)
-	recentpump = 1
-	spawn(10)
-		recentpump = 0
-	return
-
-/obj/item/weapon/gun/projectile/shotgun/blow_up(mob/user)
-	. = 0
-	if(chambered && chambered.BB)
-		process_fire(user, user,0)
-		. = 1
-
-/obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
-	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
-	pump_unload(M)
-	pump_reload(M)
-	update_icon()	//I.E. fix the desc
-	return 1
-
-/obj/item/weapon/gun/projectile/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
 		chambered.loc = get_turf(src)//Eject casing
-		chambered.SpinAnimation(5, 1)
 		chambered = null
 
-/obj/item/weapon/gun/projectile/shotgun/proc/pump_reload(mob/M)
-	if(!magazine.ammo_count())
-		return 0
-	var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.
-	chambered = AC
+	if(loaded.len)
+		var/obj/item/ammo_casing/AC = loaded[1] //load next casing.
+		loaded -= AC //Remove casing from loaded list.
+		chambered = AC
 
+	update_icon()
 
-/obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
-	..()
-	if (chambered)
-		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
-
-/obj/item/weapon/gun/projectile/shotgun/lethal
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
-
-// RIOT SHOTGUN //
-
-/obj/item/weapon/gun/projectile/shotgun/riot //for spawn in the armory
-	name = "riot shotgun"
-	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
-	icon_state = "riotshotgun"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
-	sawn_desc = "Come with me if you want to live."
-
-/obj/item/weapon/gun/projectile/shotgun/riot/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
-		sawoff(user)
-	if(istype(A, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/W = A
-		if(W.active)
-			sawoff(user)
-
-///////////////////////
-// BOLT ACTION RIFLE //
-///////////////////////
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction
-	name = "\improper Mosin Nagant"
-	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
-	icon_state = "moistnugget"
-	item_state = "moistnugget"
-	slot_flags = 0 //no SLOT_BACK sprite, alas
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
-	var/bolt_open = 0
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/pump(mob/M)
-	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
-	if(bolt_open)
-		pump_reload(M)
-	else
-		pump_unload(M)
-	bolt_open = !bolt_open
-	update_icon()	//I.E. fix the desc
-	return 1
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(obj/item/A, mob/user, params)
-	if(!bolt_open)
-		user << "<span class='notice'>The bolt is closed!</span>"
-		return
-	. = ..()
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/examine(mob/user)
-	..()
-	user << "The bolt is [bolt_open ? "open" : "closed"]."
-
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted
-	name = "enchanted bolt action rifle"
-	desc = "Careful not to lose your head."
-	var/guns_left = 30
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/New()
-	..()
-	bolt_open = 1
-	pump()
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/dropped()
-	..()
-	guns_left = 0
-
-/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
-	..()
-	if(guns_left)
-		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new
-		GUN.guns_left = src.guns_left - 1
-		user.drop_item()
-		user.swap_hand()
-		user.put_in_hands(GUN)
-	else
-		user.drop_item()
-	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
-	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
-
-// Automatic Shotguns//
-
-/obj/item/weapon/gun/projectile/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
-	..()
-	src.pump(user)
-
-/obj/item/weapon/gun/projectile/shotgun/automatic/combat
+/obj/item/weapon/gun/projectile/shotgun/pump/combat
 	name = "combat shotgun"
-	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
+	desc = "Built for close quarters combat, the Hesphaistos Industries KS-40 is widely regarded as a weapon of choice for repelling boarders."
 	icon_state = "cshotgun"
-	origin_tech = "combat=6"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
-	w_class = 5
+	item_state = "cshotgun"
+	origin_tech = list(TECH_COMBAT = 5, TECH_MATERIAL = 2)
+	max_shells = 7 //match the ammo box capacity, also it can hold a round in the chamber anyways, for a total of 8.
+	ammo_type = /obj/item/ammo_casing/shotgun
 
-//Dual Feed Shotgun
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel
+	name = "double-barreled shotgun"
+	desc = "A true classic."
+	icon_state = "dshotgun"
+	item_state = "dshotgun"
+	//SPEEDLOADER because rapid unloading.
+	//In principle someone could make a speedloader for it, so it makes sense.
+	load_method = SINGLE_CASING|SPEEDLOADER
+	handle_casings = CYCLE_CASINGS
+	max_shells = 2
+	w_class = ITEMSIZE_LARGE
+	force = 10
+	flags =  CONDUCT
+	slot_flags = SLOT_BACK
+	caliber = "shotgun"
+	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 1)
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube
-	name = "cycler shotgun"
-	desc = "An advanced shotgun with two separate magazine tubes, allowing you to quickly toggle between ammo types."
-	icon_state = "cycler"
-	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	w_class = 5
-	var/toggled = 0
-	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
+	burst_delay = 0
+	firemodes = list(
+		list(mode_name="fire one barrel at a time", burst=1),
+		list(mode_name="fire both barrels at once", burst=2),
+		)
 
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/New()
-	..()
-	if (!alternate_magazine)
-		alternate_magazine = new mag_type(src)
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/pellet
+	ammo_type = /obj/item/ammo_casing/shotgun/pellet
 
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/attack_self(mob/living/user)
-	if(!chambered && magazine.contents.len)
-		pump()
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/flare
+	name = "signal shotgun"
+	desc = "A double-barreled shotgun meant to fire signal flash shells."
+	ammo_type = /obj/item/ammo_casing/shotgun/flash
+
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/unload_ammo(user, allow_dump)
+	..(user, allow_dump=1)
+
+//this is largely hacky and bad :(	-Pete
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/attackby(var/obj/item/A as obj, mob/user as mob)
+	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/melee/energy) || istype(A, /obj/item/weapon/pickaxe/plasmacutter))
+		user << "<span class='notice'>You begin to shorten the barrel of \the [src].</span>"
+		if(loaded.len)
+			for(var/i in 1 to max_shells)
+				afterattack(user, user)	//will this work? //it will. we call it twice, for twice the FUN
+				playsound(user, fire_sound, 50, 1)
+			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
+			return
+		if(do_after(user, 30))	//SHIT IS STEALTHY EYYYYY
+			icon_state = "sawnshotgun"
+			item_state = "sawnshotgun"
+			w_class = ITEMSIZE_NORMAL
+			force = 5
+			slot_flags &= ~SLOT_BACK	//you can't sling it on your back
+			slot_flags |= (SLOT_BELT|SLOT_HOLSTER) //but you can wear it on your belt (poorly concealed under a trenchcoat, ideally) - or in a holster, why not.
+			name = "sawn-off shotgun"
+			desc = "Omar's coming!"
+			user << "<span class='warning'>You shorten the barrel of \the [src]!</span>"
 	else
-		toggle_tube(user)
+		..()
 
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/proc/toggle_tube(mob/living/user)
-	var/current_mag = magazine
-	var/alt_mag = alternate_magazine
-	magazine = alt_mag
-	alternate_magazine = current_mag
-	toggled = !toggled
-	if(toggled)
-		user << "You switch to tube B."
-	else
-		user << "You switch to tube A."
-
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
-		return
-	pump()
-
-
-// DOUBLE BARRELED SHOTGUN and IMPROVISED SHOTGUN are in revolver.dm
+/obj/item/weapon/gun/projectile/shotgun/doublebarrel/sawn
+	name = "sawn-off shotgun"
+	desc = "Omar's coming!"
+	icon_state = "sawnshotgun"
+	item_state = "sawnshotgun"
+	slot_flags = SLOT_BELT|SLOT_HOLSTER
+	ammo_type = /obj/item/ammo_casing/shotgun/pellet
+	w_class = ITEMSIZE_NORMAL
+	force = 5

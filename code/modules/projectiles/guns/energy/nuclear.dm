@@ -1,81 +1,67 @@
 /obj/item/weapon/gun/energy/gun
 	name = "energy gun"
-	desc = "A basic hybrid energy gun with two settings: disable and kill."
-	icon_state = "energy"
+	desc = "Another bestseller of Lawson Arms and the FTU, the LAEP90 Perun is a versatile energy based sidearm, capable of switching between low and high capacity projectile settings. In other words: Stun or Kill."
+	icon_state = "energystun100"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
-	origin_tech = "combat=4;magnets=3"
-	modifystate = 2
-	can_flashlight = 1
-	ammo_x_offset = 3
-	flight_x_offset = 15
-	flight_y_offset = 10
+	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_delay = 10 // Handguns should be inferior to two-handed weapons.
 
-/obj/item/weapon/gun/energy/gun/mini
-	name = "miniature energy gun"
-	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: stun and kill."
-	icon_state = "mini"
-	item_state = "gun"
-	w_class = 2
-	cell_type = /obj/item/weapon/stock_parts/cell{charge = 600; maxcharge = 600}
-	ammo_x_offset = 2
-	charge_sections = 3
-	can_flashlight = 0 // Can't attach or detach the flashlight, and override it's icon update
+	projectile_type = /obj/item/projectile/beam/stun
+	origin_tech = list(TECH_COMBAT = 3, TECH_MAGNET = 2)
+	modifystate = "energystun"
 
-/obj/item/weapon/gun/energy/gun/mini/New()
-	F = new /obj/item/device/flashlight/seclite(src)
-	..()
+	firemodes = list(
+		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun/weak, modifystate="energystun", fire_sound='sound/weapons/Taser.ogg', charge_cost = 240),
+		list(mode_name="lethal", projectile_type=/obj/item/projectile/beam, modifystate="energykill", fire_sound='sound/weapons/Laser.ogg', charge_cost = 480),
+		)
 
-/obj/item/weapon/gun/energy/gun/mini/update_icon()
-	..()
-	if(F && F.on)
-		overlays += "mini-light"
+/obj/item/weapon/gun/energy/gun/mounted
+	name = "mounted energy gun"
+	self_recharge = 1
+	use_external_power = 1
 
-/obj/item/weapon/gun/energy/gun/hos
-	name = "\improper X-01 MultiPhase Energy Gun"
-	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
-	icon_state = "hoslaser"
-	origin_tech = null
-	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
-	ammo_x_offset = 4
 
-/obj/item/weapon/gun/energy/gun/dragnet
-	name = "\improper DRAGnet"
-	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
-	icon_state = "dragnet"
-	origin_tech = "combat=4;magnets=3;bluespace=4"
-	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
-	can_flashlight = 0
-	ammo_x_offset = 1
+/obj/item/weapon/gun/energy/gun/burst
+	name = "burst laser"
+	desc = "The FM-2t is a versatile energy based weapon, capable of switching between stun or kill with a three round burst option for both settings."
+	icon_state = "fm-2tstun100"	//May resprite this to be more rifley
+	item_state = null	//so the human update icon uses the icon_state instead.
+	fire_sound = 'sound/weapons/Taser.ogg'
+	charge_cost = 100
+	force = 8
+	w_class = ITEMSIZE_LARGE	//Probably gonna make it a rifle sooner or later
+	fire_delay = 6
 
-/obj/item/weapon/gun/energy/gun/dragnet/snare
-	name = "Energy Snare Launcher"
-	desc = "Fires an energy snare that slows the target down"
-	ammo_type = list(/obj/item/ammo_casing/energy/trap)
+	projectile_type = /obj/item/projectile/beam/stun/weak
+	origin_tech = list(TECH_COMBAT = 4, TECH_MAGNET = 2, TECH_ILLEGAL = 3)
+	modifystate = "fm-2tstun"
 
-/obj/item/weapon/gun/energy/gun/turret
-	name = "hybrid turret gun"
-	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
-	icon_state = "turretlaser"
-	item_state = "turretlaser"
-	slot_flags = null
-	w_class = 5
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
-	weapon_weight = WEAPON_MEDIUM
-	can_flashlight = 0
-	trigger_guard = TRIGGER_GUARD_NONE
-	ammo_x_offset = 2
+//	requires_two_hands = 1
+	one_handed_penalty = 2
+
+	firemodes = list(
+		list(mode_name="stun", burst=1, projectile_type=/obj/item/projectile/beam/stun/weak, modifystate="fm-2tstun", fire_sound='sound/weapons/Taser.ogg', charge_cost = 100),
+		list(mode_name="stun burst", burst=3, fire_delay=null, move_delay=4, burst_accuracy=list(0,0,0), dispersion=list(0.0, 0.2, 0.5), projectile_type=/obj/item/projectile/beam/stun/weak, modifystate="fm-2tstun", fire_sound='sound/weapons/Taser.ogg'),
+		list(mode_name="lethal", burst=1, projectile_type=/obj/item/projectile/beam/burstlaser, modifystate="fm-2tkill", fire_sound='sound/weapons/Laser.ogg', charge_cost = 200),
+		list(mode_name="lethal burst", burst=3, fire_delay=null, move_delay=4, burst_accuracy=list(0,0,0), dispersion=list(0.0, 0.2, 0.5), projectile_type=/obj/item/projectile/beam/burstlaser, modifystate="fm-2tkill", fire_sound='sound/weapons/Laser.ogg'),
+		)
 
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "advanced energy gun"
-	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
-	icon_state = "nucgun"
-	item_state = "nucgun"
-	origin_tech = "combat=4;magnets=4;powerstorage=4"
-	charge_delay = 5
-	pin = null
-	can_charge = 0
-	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
-	selfcharge = 1
+	desc = "An energy gun with an experimental miniaturized reactor."
+	icon_state = "nucgunstun"
+	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 5, TECH_POWER = 3)
+	slot_flags = SLOT_BELT
+	force = 8 //looks heavier than a pistol
+	w_class = ITEMSIZE_LARGE	//Looks bigger than a pistol, too.
+	fire_delay = 6	//This one's not a handgun, it should have the same fire delay as everything else
+	self_recharge = 1
+	modifystate = null
+
+//	requires_two_hands = 1
+	one_handed_penalty = 1 // It's rather bulky, so holding it in one hand is a little harder than with two, however it's not 'required'.
+
+	firemodes = list(
+		list(mode_name="stun", projectile_type=/obj/item/projectile/beam/stun, modifystate="nucgunstun", fire_sound='sound/weapons/Taser.ogg', charge_cost = 240),
+		list(mode_name="lethal", projectile_type=/obj/item/projectile/beam, modifystate="nucgunkill", fire_sound='sound/weapons/Laser.ogg', charge_cost = 480),
+		)

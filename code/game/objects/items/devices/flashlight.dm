@@ -3,162 +3,244 @@
 	desc = "A hand-held emergency light."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
-	item_state = "flashlight"
-	w_class = 2
+	w_class = ITEMSIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
-	actions_types = list(/datum/action/item_action/toggle_light)
+	matter = list(DEFAULT_WALL_MATERIAL = 50,"glass" = 20)
+	action_button_name = "Toggle Flashlight"
 	var/on = 0
-	var/broken = 0
 	var/brightness_on = 4 //luminosity when on
+	var/obj/item/weapon/cell/cell
+	var/cell_type = /obj/item/weapon/cell/device
+	var/list/brightness_levels
+	var/brightness_level = "medium"
+	var/power_usage
+	var/power_use = 1
 
 /obj/item/device/flashlight/initialize()
 	..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		SetLuminosity(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		SetLuminosity(0)
+	update_icon()
 
-/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+/obj/item/device/flashlight/New()
+	if(power_use)
+		processing_objects |= src
+
+		if(cell_type)
+			cell = new cell_type(src)
+			brightness_levels = list("low" = 0.25, "medium" = 0.5, "high" = 1)
+			power_usage = brightness_levels[brightness_level]
+
+	else
+		verbs -= /obj/item/device/flashlight/verb/toggle
+	..()
+
+/obj/item/device/flashlight/Destroy()
+	if(power_use)
+		processing_objects -= src
+	..()
+
+/obj/item/device/flashlight/verb/toggle()
+	set name = "Toggle Flashlight Brightness"
+	set category = "Object"
+	set src in usr
+	set_brightness(usr)
+
+/obj/item/device/flashlight/proc/set_brightness(mob/user as mob)
+	var/choice = input("Choose a brightness level.") as null|anything in brightness_levels
+	if(choice)
+		brightness_level = choice
+		power_usage = brightness_levels[choice]
+		user << "<span class='notice'>You set the brightness level on \the [src] to [brightness_level].</span>"
+		update_icon()
+
+/obj/item/device/flashlight/process()
+	if(on)
+		if(cell)
+			if(brightness_level && power_usage)
+				if(power_usage < cell.charge)
+					cell.charge -= power_usage
+				else
+					cell.charge = 0
+					visible_message("<span class='warning'>\The [src] flickers before going dull.</span>")
+					set_light(0)
+					on = 0
+					update_icon()
+
+/obj/item/device/flashlight/update_icon()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.AddLuminosity(brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
+
+		if(brightness_level == "low")
+			set_light(brightness_on/2)
+		else if(brightness_level == "high")
+			set_light(brightness_on*4)
+		else
+			set_light(brightness_on)
+
 	else
-		icon_state = initial(icon_state)
-		if(loc == user)
-			user.AddLuminosity(-brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		icon_state = "[initial(icon_state)]"
+		set_light(0)
+
+/obj/item/device/flashlight/examine(mob/user)
+	..()
+	if(power_use && brightness_level)
+		var/tempdesc
+		tempdesc += "\The [src] is set to [brightness_level]. "
+		if(cell)
+			tempdesc += "\The [src] has a \the [cell] attached. "
+
+			if(cell.charge <= cell.maxcharge*0.25)
+				tempdesc += "It appears to have a low amount of power remaining."
+			else if(cell.charge > cell.maxcharge*0.25 && cell.charge <= cell.maxcharge*0.5)
+				tempdesc += "It appears to have an average amount of power remaining."
+			else if(cell.charge > cell.maxcharge*0.5 && cell.charge <= cell.maxcharge*0.75)
+				tempdesc += "It appears to have an above average amount of power remaining."
+			else if(cell.charge > cell.maxcharge*0.75 && cell.charge <= cell.maxcharge)
+				tempdesc += "It appears to have a high amount of power remaining."
+
+		user << "[tempdesc]"
 
 /obj/item/device/flashlight/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return 0
-	if(broken)
-		user << "<spawn class='warning'>The [src] refuses to turn on!</span>"
-		return 0
+	if(power_use)
+		if(!isturf(user.loc))
+			user << "You cannot turn the light on while in this [user.loc]." //To prevent some lighting anomalities.
+			return 0
+		if(!cell || cell.charge == 0)
+			user << "You flick the switch on [src], but nothing happens."
+			return 0
 	on = !on
-	update_brightness(user)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_icon()
+	user.update_action_buttons()
 	return 1
 
+/obj/item/device/flashlight/emp_act(severity)
+	for(var/obj/O in contents)
+		O.emp_act(severity)
+	..()
 
-/obj/item/device/flashlight/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/device/flashlight/attack(mob/living/M as mob, mob/living/user as mob)
 	add_fingerprint(user)
-	if(on && user.zone_selected == "eyes")
+	if(on && user.zone_sel.selecting == O_EYES)
 
-		if((user.disabilities & CLUMSY || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
+		if((CLUMSY in user.mutations) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
 
-		if(!user.IsAdvancedToolUser())
-			user << "<span class='warning'>You don't have the dexterity to do this!</span>"
-			return
-
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
-			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
-			return
+		if(istype(H))
+			for(var/obj/item/clothing/C in list(H.head,H.wear_mask,H.glasses))
+				if(istype(C) && (C.body_parts_covered & EYES))
+					user << "<span class='warning'>You're going to need to remove [C.name] first.</span>"
+					return
 
-		if(M == user)	//they're using it on themselves
-			if(M.flash_eyes(visual = 1))
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
-			else
-				M.visible_message("[M] directs [src] to \his eyes.", \
-									 "<span class='notice'>You wave the light in front of your eyes.</span>")
-		else
-			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
-								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				if(C.stat == DEAD || (C.disabilities & BLIND)) //mob is dead or fully blind
-					user << "<span class='warning'>[C] pupils don't react to the light!</span>"
-				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
-					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
-				else //they're okay!
-					if(C.flash_eyes(visual = 1))
-						user << "<span class='notice'>[C]'s pupils narrow.</span>"
+			var/obj/item/organ/vision
+			if(H.species.vision_organ)
+				vision = H.internal_organs_by_name[H.species.vision_organ]
+			if(!vision)
+				user << "<span class='warning'>You can't find any [H.species.vision_organ ? H.species.vision_organ : "eyes"] on [H]!</span>"
+
+			user.visible_message("<span class='notice'>\The [user] directs [src] to [M]'s eyes.</span>", \
+							 	 "<span class='notice'>You direct [src] to [M]'s eyes.</span>")
+			if(H == user)	//can't look into your own eyes buster
+				if(M.stat == DEAD || M.blinded)	//mob is dead or fully blind
+					user << "<span class='warning'>\The [M]'s pupils do not react to the light!</span>"
+					return
+				if(XRAY in M.mutations)
+					user << "<span class='notice'>\The [M] pupils give an eerie glow!</span>"
+				if(vision.is_bruised())
+					user << "<span class='warning'>There's visible damage to [M]'s [vision.name]!</span>"
+				else if(M.eye_blurry)
+					user << "<span class='notice'>\The [M]'s pupils react slower than normally.</span>"
+				if(M.getBrainLoss() > 15)
+					user << "<span class='notice'>There's visible lag between left and right pupils' reactions.</span>"
+
+				var/list/pinpoint = list("oxycodone"=1,"tramadol"=5)
+				var/list/dilating = list("space_drugs"=5,"mindbreaker"=1)
+				if(M.reagents.has_any_reagent(pinpoint) || H.ingested.has_any_reagent(pinpoint))
+					user << "<span class='notice'>\The [M]'s pupils are already pinpoint and cannot narrow any more.</span>"
+				else if(M.reagents.has_any_reagent(dilating) || H.ingested.has_any_reagent(dilating))
+					user << "<span class='notice'>\The [M]'s pupils narrow slightly, but are still very dilated.</span>"
+				else
+					user << "<span class='notice'>\The [M]'s pupils narrow.</span>"
+
+			user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN) //can be used offensively
+			M.flash_eyes()
 	else
 		return ..()
 
+/obj/item/device/flashlight/attack_hand(mob/user as mob)
+	if(user.get_inactive_hand() == src)
+		if(cell)
+			cell.update_icon()
+			user.put_in_hands(cell)
+			cell = null
+			user << "<span class='notice'>You remove the cell from the [src].</span>"
+			on = 0
+			update_icon()
+			return
+		..()
+	else
+		return ..()
 
-/obj/item/device/flashlight/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
+/obj/item/device/flashlight/attackby(obj/item/weapon/W, mob/user as mob)
+	if(power_use)
+		if(istype(W, /obj/item/weapon/cell))
+			if(istype(W, /obj/item/weapon/cell/device))
+				if(!cell)
+					user.drop_item()
+					W.loc = src
+					cell = W
+					user << "<span class='notice'>You install a cell in \the [src].</span>"
+					update_icon()
+				else
+					user << "<span class='notice'>\The [src] already has a cell.</span>"
+			else
+				user << "<span class='notice'>\The [src] cannot use that type of cell.</span>"
 
-
-/obj/item/device/flashlight/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
-/obj/item/device/flashlight/proc/fix_light()
-	broken = 0
+	else
+		..()
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
-	desc = "A pen-sized light, used by medical staff. It can also be used to create a hologram to alert people of incoming medical assistance."
+	desc = "A pen-sized light, used by medical staff."
 	icon_state = "penlight"
-	item_state = ""
+	item_state = "pen"
+	flags = CONDUCT
+	slot_flags = SLOT_EARS
+	brightness_on = 2
+	w_class = ITEMSIZE_TINY
+	power_use = 0
+
+/obj/item/device/flashlight/maglight
+	name = "maglight"
+	desc = "A very, very heavy duty flashlight."
+	icon_state = "maglight"
+	force = 10
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = ITEMSIZE_SMALL
+	attack_verb = list ("smacked", "thwacked", "thunked")
+	matter = list(DEFAULT_WALL_MATERIAL = 200,"glass" = 50)
+	hitsound = "swing_hit"
+
+/obj/item/device/flashlight/drone
+	name = "low-power flashlight"
+	desc = "A miniature lamp, that might be used by small robots."
+	icon_state = "penlight"
+	item_state = null
 	flags = CONDUCT
 	brightness_on = 2
-	var/holo_cooldown = 0
-
-/obj/item/device/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
-	if(!proximity_flag)
-		if(holo_cooldown > world.time)
-			user << "<span class='warning'>[src] is not ready yet!</span>"
-			return
-		var/T = get_turf(target)
-		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
-			holo_cooldown = world.time + 100
-			return
-	..()
-
-/obj/effect/overlay/temp/medical_holosign
-	name = "medical holosign"
-	desc = "A small holographic glow that indicates a medic is coming to treat a patient."
-	icon_state = "medi_holo"
-	duration = 30
-
-/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
-	..()
-	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
-	if(creator)
-		visible_message("<span class='danger'>[creator] created a medical hologram!</span>")
-
-
-/obj/item/device/flashlight/seclite
-	name = "seclite"
-	desc = "A robust flashlight used by security."
-	icon_state = "seclite"
-	item_state = "seclite"
-	force = 9 // Not as good as a stun baton.
-	brightness_on = 5 // A little better than the standard flashlight.
-	hitsound = 'sound/weapons/genhit1.ogg'
+	w_class = ITEMSIZE_TINY
+	power_use = 0
 
 // the desk lamps are a bit special
 /obj/item/device/flashlight/lamp
 	name = "desk lamp"
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
-	item_state = "lamp"
 	brightness_on = 5
-	w_class = 4
+	w_class = ITEMSIZE_LARGE
 	flags = CONDUCT
-	materials = list()
+	power_use = 0
 	on = 1
 
 
@@ -166,9 +248,8 @@
 /obj/item/device/flashlight/lamp/green
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
-	item_state = "lampgreen"
-
-
+	brightness_on = 5
+	light_color = "#FFC58F"
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
 	set name = "Toggle light"
@@ -178,32 +259,25 @@
 	if(!usr.stat)
 		attack_self(usr)
 
-//Bananalamp
-obj/item/device/flashlight/lamp/bananalamp
-	name = "banana lamp"
-	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
-	icon_state = "bananalamp"
-	item_state = "bananalamp"
-
 // FLARES
 
 /obj/item/device/flashlight/flare
 	name = "flare"
-	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = 2
-	brightness_on = 7 // Pretty bright.
+	desc = "A red standard-issue flare. There are instructions on the side reading 'pull cord, make light'."
+	w_class = ITEMSIZE_SMALL
+	brightness_on = 8 // Pretty bright.
+	light_power = 3
+	light_color = "#e58775"
 	icon_state = "flare"
 	item_state = "flare"
-	actions_types = list()
+	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
-	var/frng_min = 800
-	var/frng_max = 1000
-	heat = 1000
+	power_use = 0
 
 /obj/item/device/flashlight/flare/New()
-	fuel = rand(frng_min, frng_max) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
 /obj/item/device/flashlight/flare/process()
@@ -214,31 +288,20 @@ obj/item/device/flashlight/lamp/bananalamp
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
-			icon_state = "[initial(icon_state)]-empty"
-		STOP_PROCESSING(SSobj, src)
+			src.icon_state = "[initial(icon_state)]-empty"
+		processing_objects -= src
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
-	force = initial(src.force)
-	damtype = initial(src.damtype)
-	if(ismob(loc))
-		var/mob/U = loc
-		update_brightness(U)
-	else
-		update_brightness(null)
-
-/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
-	..()
-	if(on)
-		item_state = "[initial(item_state)]-on"
-	else
-		item_state = "[initial(item_state)]"
+	src.force = initial(src.force)
+	src.damtype = initial(src.damtype)
+	update_icon()
 
 /obj/item/device/flashlight/flare/attack_self(mob/user)
 
 	// Usual checks
 	if(!fuel)
-		user << "<span class='warning'>It's out of fuel!</span>"
+		user << "<span class='notice'>It's out of fuel.</span>"
 		return
 	if(on)
 		return
@@ -246,100 +309,108 @@ obj/item/device/flashlight/lamp/bananalamp
 	. = ..()
 	// All good, turn it on.
 	if(.)
-		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
-		force = on_damage
-		damtype = "fire"
-		START_PROCESSING(SSobj, src)
+		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
+		src.force = on_damage
+		src.damtype = "fire"
+		processing_objects += src
 
-/obj/item/device/flashlight/flare/is_hot()
-	return on * heat
+/obj/item/device/flashlight/flare/proc/ignite() //Used for flare launchers.
+	on = !on
+	update_icon()
+	force = on_damage
+	damtype = "fire"
+	processing_objects += src
+	return 1
 
-/obj/item/device/flashlight/flare/emergency
-	name = "safety flare"
-	desc = "A flare issued to nanotrasen employees for pending emergencies. There are instructions on the side, it reads 'pull cord, make light, obey nanotrasen'."
-	brightness_on = 3
-	frng_min = 150
-	frng_max = 350
+//Glowsticks
 
-/obj/item/device/flashlight/flare/security
-	name = "heavy-duty safety flare"
-	desc = "A lightweight flare which usually carries around more fuel then the standard edition for emergencies. You can use it on tactical missions, cooperative missions, or for waving back and forth during a concert."
-	frng_min = 700
-	frng_max = 1250
-
-/obj/item/device/flashlight/flare/torch
-	name = "torch"
-	desc = "A torch fashioned from some leaves and a log."
-	w_class = 4
+/obj/item/device/flashlight/glowstick
+	name = "green glowstick"
+	desc = "A green military-grade glowstick."
+	w_class = ITEMSIZE_SMALL
 	brightness_on = 4
-	icon_state = "torch"
-	item_state = "torch"
-	on_damage = 10
-	slot_flags = null
+	light_power = 2
+	light_color = "#49F37C"
+	icon_state = "glowstick"
+	item_state = "glowstick"
+	var/fuel = 0
+	power_use = 0
 
-/obj/item/device/flashlight/lantern
-	name = "lantern"
-	icon_state = "lantern"
-	item_state = "lantern"
-	desc = "A mining lantern."
-	brightness_on = 6			// luminosity when on
+/obj/item/device/flashlight/glowstick/New()
+	fuel = rand(1600, 2000)
+	..()
 
+/obj/item/device/flashlight/glowstick/process()
+	fuel = max(fuel - 1, 0)
+	if(!fuel || !on)
+		turn_off()
+		if(!fuel)
+			src.icon_state = "[initial(icon_state)]-empty"
+		processing_objects -= src
+
+/obj/item/device/flashlight/glowstick/proc/turn_off()
+	on = 0
+	update_icon()
+
+/obj/item/device/flashlight/glowstick/attack_self(mob/user)
+
+	if(!fuel)
+		user << "<span class='notice'>The glowstick has already been turned on.</span>"
+		return
+	if(on)
+		return
+
+	. = ..()
+	if(.)
+		user.visible_message("<span class='notice'>[user] cracks and shakes the glowstick.</span>", "<span class='notice'>You crack and shake the glowstick, turning it on!</span>")
+		processing_objects += src
+
+/obj/item/device/flashlight/glowstick/red
+	name = "red glowstick"
+	desc = "A red military-grade glowstick."
+	light_color = "#FC0F29"
+	icon_state = "glowstick_red"
+	item_state = "glowstick_red"
+
+/obj/item/device/flashlight/glowstick/blue
+	name = "blue glowstick"
+	desc = "A blue military-grade glowstick."
+	light_color = "#599DFF"
+	icon_state = "glowstick_blue"
+	item_state = "glowstick_blue"
+
+/obj/item/device/flashlight/glowstick/orange
+	name = "orange glowstick"
+	desc = "A orange military-grade glowstick."
+	light_color = "#FA7C0B"
+	icon_state = "glowstick_orange"
+	item_state = "glowstick_orange"
+
+/obj/item/device/flashlight/glowstick/yellow
+	name = "yellow glowstick"
+	desc = "A yellow military-grade glowstick."
+	light_color = "#FEF923"
+	icon_state = "glowstick_yellow"
+	item_state = "glowstick_yellow"
 
 /obj/item/device/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
-	desc = "Extract from a yellow slime. It emits a strong light when squeezed."
+	desc = "A glowing ball of what appears to be amber."
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "slime"
+	icon_state = "floor1" //not a slime extract sprite but... something close enough!
 	item_state = "slime"
-	w_class = 2
-	slot_flags = SLOT_BELT
-	materials = list()
-	brightness_on = 6 //luminosity when on
+	w_class = ITEMSIZE_TINY
+	brightness_on = 6
+	on = 1 //Bio-luminesence has one setting, on.
+	power_use = 0
 
-/obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
-	var/emp_max_charges = 4
-	var/emp_cur_charges = 4
-	var/charge_tick = 0
+/obj/item/device/flashlight/slime/New()
+	..()
+	set_light(brightness_on)
 
-
-/obj/item/device/flashlight/emp/New()
-		..()
-		START_PROCESSING(SSobj, src)
-
-/obj/item/device/flashlight/emp/Destroy()
-		STOP_PROCESSING(SSobj, src)
-		return ..()
-
-/obj/item/device/flashlight/emp/process()
-		charge_tick++
-		if(charge_tick < 10) return 0
-		charge_tick = 0
-		emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
-		return 1
-
-/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_selected == "eyes") // call original attack proc only if aiming at the eyes
-		..()
+/obj/item/device/flashlight/slime/update_icon()
 	return
 
-/obj/item/device/flashlight/emp/afterattack(atom/movable/A, mob/user, proximity)
-	if(!proximity)
-		return
-
-	if(emp_cur_charges > 0)
-		emp_cur_charges -= 1
-
-		if(ismob(A))
-			var/mob/M = A
-			add_logs(user, M, "attacked", "EMP-light")
-			M.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].", \
-								"<span class='userdanger'>[user] blinks \the [src] at you.")
-		else
-			A.visible_message("<span class='danger'>[user] blinks \the [src] at \the [A].")
-		user << "\The [src] now has [emp_cur_charges] charge\s."
-		A.emp_act(1)
-	else
-		user << "<span class='warning'>\The [src] needs time to recharge!</span>"
-	return
+/obj/item/device/flashlight/slime/attack_self(mob/user)
+	return //Bio-luminescence does not toggle.

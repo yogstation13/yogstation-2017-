@@ -1,407 +1,511 @@
-/var/yog_round_number = 0
+
+/*
+	The initialization of the game happens roughly like this:
+
+	1. All global variables are initialized (including the global_init instance).
+	2. The map is initialized, and map objects are created.
+	3. world/New() runs, creating the process scheduler (and the old master controller) and spawning their setup.
+	4. processScheduler/setup() runs, creating all the processes. game_controller/setup() runs, calling initialize() on all movable atoms in the world.
+	5. The gameticker is created.
+
+*/
+var/global/datum/global_init/init = new ()
+
+/*
+	Pre-map initialization stuff should go here.
+*/
+/datum/global_init/New()
+
+	makeDatumRefLists()
+	load_configuration()
+
+	initialize_chemical_reagents()
+	initialize_chemical_reactions()
+
+	qdel(src) //we're done
+
+/datum/global_init/Destroy()
+	return 1
 
 /world
 	mob = /mob/new_player
-	turf = /turf/open/space
+	turf = /turf/space
 	area = /area/space
 	view = "15x15"
-	cache_lifespan = 7
+	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
 
-var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
+
+#define RECOMMENDED_VERSION 501
 /world/New()
-	check_for_cleanbot_bug()
-	map_ready = 1
-
-#if (PRELOAD_RSC == 0)
-	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
-	var/i=1
-	while(i<=external_rsc_urls.len)
-		if(external_rsc_urls[i])
-			i++
-		else
-			external_rsc_urls.Cut(i,i+1)
-#endif
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
-	admindiary = file("data/logs/[date_string] Admin.log")
-	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	admindiary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
-	var/roundfile = file("data/roundcount.txt")
-	yog_round_number = text2num(file2text(roundfile))
-	if(yog_round_number == null || yog_round_number == "" || yog_round_number == 0)
-		yog_round_number = 1
-	else
-		yog_round_number++
-	fdel(roundfile)
-	text2file(num2text(yog_round_number), roundfile)
+	if(byond_version < RECOMMENDED_VERSION)
+		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
 
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-
-	load_configuration()
-	load_mode()
-	load_motd()
-	refresh_admin_files()
-	load_admins()
-	if(config.usewhitelist)
-		load_whitelist()
-	jobban_loadbanfile()
-	appearance_loadbanfile()
-	jobban_updatelegacybans()
-	LoadBans()
-	load_donators()
-	investigate_reset()
-
-	setup_pretty_filter()
+	config.post_load()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
+		// dumb and hardcoded but I don't care~
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	timezoneOffset = text2num(time2text(0,"hh")) * 36000
+	if(config && config.log_runtime)
+		log = file("data/logs/runtime/[time2text(world.realtime,"YYYY-MM-DD-(hh-mm-ss)")]-runtime.log")
 
-	if(config.sql_enabled)
-		if(!setup_database_connection())
-			world.log << "Your server failed to establish a connection with the database."
+	callHook("startup")
+	//Emergency Fix
+	load_mods()
+	//end-emergency fix
+
+	src.update_status()
+
+	. = ..()
+
+#if UNIT_TEST
+	log_unit_test("Unit Tests Enabled.  This will destroy the world when testing is complete.")
+	log_unit_test("If you did not intend to enable this please check code/__defines/unit_testing.dm")
+#else
+	sleep_offline = 1
+#endif
+
+	// Set up roundstart seed list.
+	plant_controller = new()
+
+	// Set up roundstart gene masking
+	xenobio_controller = new()
+
+	// This is kinda important. Set up details of what the hell things are made of.
+	populate_material_list()
+
+	if(config.generate_asteroid)
+		// These values determine the specific area that the map is applied to.
+		// Because we do not use Bay's default map, we check the config file to see if custom parameters are needed, so we need to avoid hardcoding.
+		if(config.asteroid_z_levels)
+			for(var/z_level in config.asteroid_z_levels)
+				// In case we got fed a string instead of a number...
+				z_level = text2num(z_level)
+				if(!isnum(z_level))
+					// If it's still not a number, we probably got fed some nonsense string.
+					admin_notice("<span class='danger'>Error: ASTEROID_Z_LEVELS config wasn't given a number.</span>")
+				// Now for the actual map generating.  This occurs for every z-level defined in the config.
+				new /datum/random_map/automata/cave_system(null,1,1,z_level,300,300)
+				// Let's add ore too.
+				new /datum/random_map/noise/ore(null, 1, 1, z_level, 64, 64)
 		else
-			world.log << "Database connection established."
+			admin_notice("<span class='danger'>Error: No asteroid z-levels defined in config!</span>")
+		// Update all turfs to ensure everything looks good post-generation. Yes,
+		// it's brute-forcey, but frankly the alternative is a mine turf rewrite.
+		for(var/turf/simulated/mineral/M in world) // Ugh.
+			M.update_icon()
 
+	// Create frame types.
+	populate_frame_types()
 
-	data_core = new /datum/datacore()
+	// Create robolimbs for chargen.
+	populate_robolimb_list()
 
-	spawn(10)
-		Master.Setup()
+	//Must be done now, otherwise ZAS zones and lighting overlays need to be recreated.
+	createRandomZlevel()
+	
+	processScheduler = new
+	master_controller = new /datum/controller/game_controller()
+	spawn(1)
+		processScheduler.deferSetupFor(/datum/controller/process/ticker)
+		processScheduler.setup()
+		master_controller.setup()
+#if UNIT_TEST
+		initialize_unit_tests()
+#endif
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
-	SortAreas()						//Build the list of all existing areas and sort it alphabetically
+	spawn(3000)		//so we aren't adding to the round-start lag
+		if(config.ToRban)
+			ToRban_autoupdate()
 
-	#ifdef MAP_NAME
-	map_name = "[MAP_NAME]"
-	#else
-	map_name = "Unknown"
-	#endif
-
-	send_discord_message("public", "A new round is about to begin! Join with this address https://yogstation.net/play.php ! The current round number is **[yog_round_number]** and the chosen map is **[map_name]**")
-
-	config.Tickcomp = 0
-	world.fps = 20
+#undef RECOMMENDED_VERSION
 
 	return
 
-#define IRC_STATUS_THROTTLE 50
-var/last_irc_status = 0
+var/world_topic_spam_protect_ip = "0.0.0.0"
+var/world_topic_spam_protect_time = world.timeofday
 
 /world/Topic(T, addr, master, key)
-	if(config && config.log_world_topic)
-		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+	diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key][log_end]"
 
-	var/list/input = params2list(T)
-	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
-
-	if("ping" in input)
+	if (T == "ping")
 		var/x = 1
-		for (var/client/C in clients)
+		for (var/client/C)
 			x++
 		return x
 
-	else if("players" in input)
+	else if(T == "players")
 		var/n = 0
 		for(var/mob/M in player_list)
 			if(M.client)
 				n++
 		return n
 
-	else if("status" in input)
+	else if (copytext(T,1,7) == "status")
+		var/input[] = params2list(T)
 		var/list/s = list()
 		s["version"] = game_version
 		s["mode"] = master_mode
-		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["respawn"] = config.abandon_allowed
+		s["enter"] = config.enter_allowed
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
-		s["active_players"] = get_active_player_count()
-		s["players"] = clients.len
-		s["revision"] = revdata.commit
-		s["revision_date"] = revdata.date
 
-		var/list/adm = get_admin_counts()
-		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
-		s["gamestate"] = 1
-		if(ticker)
-			s["gamestate"] = ticker.current_state
+		// This is dumb, but spacestation13.com's banners break if player count isn't the 8th field of the reply, so... this has to go here.
+		s["players"] = 0
+		s["stationtime"] = stationtime2text()
+		s["roundduration"] = roundduration2text()
 
-		s["map_name"] = map_name ? map_name : "Unknown"
+		if(input["status"] == "2")
+			var/list/players = list()
+			var/list/admins = list()
 
-		if(key_valid && ticker && ticker.mode)
-			s["real_mode"] = ticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
+			for(var/client/C in clients)
+				if(C.holder)
+					if(C.holder.fakekey)
+						continue
+					admins[C.key] = C.holder.rank
+				players += C.key
 
-		s["security_level"] = get_security_level()
-		s["round_duration"] = round(world.time/10)
-		// Amount of world's ticks in seconds, useful for calculating round duration
+			s["players"] = players.len
+			s["playerlist"] = list2params(players)
+			s["admins"] = admins.len
+			s["adminlist"] = list2params(admins)
+		else
+			var/n = 0
+			var/admins = 0
 
-		if(SSshuttle && SSshuttle.emergency)
-			s["shuttle_mode"] = SSshuttle.emergency.mode
-			// Shuttle status, see /__DEFINES/stat.dm
-			s["shuttle_timer"] = SSshuttle.emergency.timeLeft()
-			// Shuttle timer, in seconds
+			for(var/client/C in clients)
+				if(C.holder)
+					if(C.holder.fakekey)
+						continue	//so stealthmins aren't revealed by the hub
+					admins++
+				s["player[n]"] = C.key
+				n++
+
+			s["players"] = n
+			s["admins"] = admins
 
 		return list2params(s)
 
-	else if("adminwho" in input)
-		var/msg = "Current Admins:\n"
-		for(var/client/C in admins)
-			msg += "\t[C] is a [C.holder.rank]"
-			if(C.is_afk())
-				msg += " (AFK)"
-			msg += "\n"
-		return msg
+	else if(T == "manifest")
+		var/list/positions = list()
+		var/list/set_names = list(
+				"heads" = command_positions,
+				"sec" = security_positions,
+				"eng" = engineering_positions,
+				"med" = medical_positions,
+				"sci" = science_positions,
+				"car" = cargo_positions,
+				"civ" = civilian_positions,
+				"bot" = nonhuman_positions
+			)
 
-	else if(copytext(T,1,9) == "announce")
-		if(!key_valid)
+		for(var/datum/data/record/t in data_core.general)
+			var/name = t.fields["name"]
+			var/rank = t.fields["rank"]
+			var/real_rank = make_list_rank(t.fields["real_rank"])
+
+			var/department = 0
+			for(var/k in set_names)
+				if(real_rank in set_names[k])
+					if(!positions[k])
+						positions[k] = list()
+					positions[k][name] = rank
+					department = 1
+			if(!department)
+				if(!positions["misc"])
+					positions["misc"] = list()
+				positions["misc"][name] = rank
+
+		for(var/k in positions)
+			positions[k] = list2params(positions[k]) // converts positions["heads"] = list("Bob"="Captain", "Bill"="CMO") into positions["heads"] = "Bob=Captain&Bill=CMO"
+
+		return list2params(positions)
+
+	else if(T == "revision")
+		if(revdata.revision)
+			return list2params(list(branch = revdata.branch, date = revdata.date, revision = revdata.revision))
+		else
+			return "unknown"
+
+	else if(copytext(T,1,5) == "info")
+		var/input[] = params2list(T)
+		if(input["key"] != config.comms_password)
+			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
+
+				spawn(50)
+					world_topic_spam_protect_time = world.time
+					return "Bad Key (Throttled)"
+
+			world_topic_spam_protect_time = world.time
+			world_topic_spam_protect_ip = addr
+
 			return "Bad Key"
+
+		var/list/search = params2list(input["info"])
+		var/list/ckeysearch = list()
+		for(var/text in search)
+			ckeysearch += ckey(text)
+
+		var/list/match = list()
+
+		for(var/mob/M in mob_list)
+			var/strings = list(M.name, M.ckey)
+			if(M.mind)
+				strings += M.mind.assigned_role
+				strings += M.mind.special_role
+			for(var/text in strings)
+				if(ckey(text) in ckeysearch)
+					match[M] += 10 // an exact match is far better than a partial one
+				else
+					for(var/searchstr in search)
+						if(findtext(text, searchstr))
+							match[M] += 1
+
+		var/maxstrength = 0
+		for(var/mob/M in match)
+			maxstrength = max(match[M], maxstrength)
+		for(var/mob/M in match)
+			if(match[M] < maxstrength)
+				match -= M
+
+		if(!match.len)
+			return "No matches"
+		else if(match.len == 1)
+			var/mob/M = match[1]
+			var/info = list()
+			info["key"] = M.key
+			info["name"] = M.name == M.real_name ? M.name : "[M.name] ([M.real_name])"
+			info["role"] = M.mind ? (M.mind.assigned_role ? M.mind.assigned_role : "No role") : "No mind"
+			var/turf/MT = get_turf(M)
+			info["loc"] = M.loc ? "[M.loc]" : "null"
+			info["turf"] = MT ? "[MT] @ [MT.x], [MT.y], [MT.z]" : "null"
+			info["area"] = MT ? "[MT.loc]" : "null"
+			info["antag"] = M.mind ? (M.mind.special_role ? M.mind.special_role : "Not antag") : "No mind"
+			info["hasbeenrev"] = M.mind ? M.mind.has_been_rev : "No mind"
+			info["stat"] = M.stat
+			info["type"] = M.type
+			if(isliving(M))
+				var/mob/living/L = M
+				info["damage"] = list2params(list(
+							oxy = L.getOxyLoss(),
+							tox = L.getToxLoss(),
+							fire = L.getFireLoss(),
+							brute = L.getBruteLoss(),
+							clone = L.getCloneLoss(),
+							brain = L.getBrainLoss()
+						))
+			else
+				info["damage"] = "non-living"
+			info["gender"] = M.gender
+			return list2params(info)
 		else
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-			for(var/client/C in clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					C << "<span class='announce'>PR: [input["announce"]]</span>"
-#undef CHAT_PULLR
-	else if (copytext(T,1,5) == "asay")
-		//var/input[] = params2list(T)
-		if(global.comms_allowed)
-			if(input["key"] != global.comms_key)
-				return "Bad Key"
-			else
-				var/msg = "<span class='adminobserver'><span class='prefix'>DISCORD ADMIN:</span> <EM>[input["admin"]]</EM>: <span class='message'>[input["asay"]]</span></span>"
-				admins << msg
-	else if (copytext(T,1,4) == "ooc")
-		//var/input[] = params2list(T)
-		if(global.comms_allowed)
-			if(input["key"] != global.comms_key)
-				return "Bad Key"
-			else
-				for(var/client/C in clients)
-					//if(C.prefs.chat_toggles & CHAT_OOC) // Discord OOC should bypass preferences.
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>DISCORD OOC:</span> <EM>[input["admin"]]:</EM> <span class='message'>[input["ooc"]]</span></span></font>"
-	else if (copytext(T,1,7) == "reboot")
-		//var/input[] = params2list(T)
-		if(global.comms_allowed)
-			if(input["key"] != global.comms_key)
-				return "Bad Key"
-			else
-				Reboot(null, null, null, null, 1)
-	else if (copytext(T,1,7) == "ticket")
-		//var/input[] = params2list(T)
-		if(global.comms_allowed)
-			if(input["key"] != global.comms_key)
-				return "Bad Key"
-			else
-				var/action = input["action"]
-				var/msg = "Theres [total_unresolved_tickets()] unresolved tickets out of [tickets_list.len] tickets."
-				if(action == "list")
-					msg += "\nCurrent unresolved tickets:"
-					for(var/i = tickets_list.len, i >= 1, i--)
-						var/datum/admin_ticket/ticket = tickets_list[i]
-						if(!ticket.resolved)
-							msg += "\n    #[ticket.ticket_id]. Opened by: [ticket.owner_ckey] Title: \"[ticket.title]\""
-				if(action == "log")
-					var/datum/admin_ticket/ticket
-					for(var/i = tickets_list.len, i >= 1, i--)
-						var/datum/admin_ticket/ticket2 = tickets_list[i]
-						if(ticket2.ticket_id == text2num(input["id"]))
-							ticket = ticket2
-					if(!ticket)
-						return "Ticket not found"
-					msg += "\n Ticket #[ticket.ticket_id] log:"
-					if(ticket.ticket_id == text2num(input["id"]))
-						for(var/i = 1; i <= ticket.log.len; i++)
-							var/datum/ticket_log/item = ticket.log[i]
-							msg += "\n    [item.toSanitizedString()]"
-				if(action == "reply")
-					for(var/i = tickets_list.len, i >= 1, i--)
-						var/datum/admin_ticket/ticket = tickets_list[i]
-						if(ticket.ticket_id == text2num(input["id"]))
-							var/datum/ticket_log/log_item = null
-							log_item = new /datum/ticket_log(ticket, input["admin"], input["response"], 0)
-							ticket.log += log_item
-							ticket.owner << "<span class='ticket-header-recieved'>-- Administrator private message --</span>"
-							ticket.owner << "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>"
-				return msg
+			var/list/ret = list()
+			for(var/mob/M in match)
+				ret[M.key] = M.name
+			return list2params(ret)
+
+	else if(copytext(T,1,9) == "adminmsg")
+		/*
+			We got an adminmsg from IRC bot lets split the input then validate the input.
+			expected output:
+				1. adminmsg = ckey of person the message is to
+				2. msg = contents of message, parems2list requires
+				3. validatationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
+				4. sender = the ircnick that send the message.
+		*/
 
 
-/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
-	if (reason == 1) //special reboot, do none of the normal stuff
-		if (usr)
-			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
-			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
-		ticker.server_reboot_in_progress = 1
-		return ..(1)
-	var/delay
-	if(time)
-		delay = time
-	else
-		delay = config.round_end_countdown * 10
-	if(ticker.delay_end)
-		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
-		return
-	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
-	ticker.server_reboot_in_progress = 1
-	sleep(delay)
-	if(blackbox)
-		blackbox.save_all_data_to_sql()
-	if(ticker.delay_end)
-		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
-		ticker.server_reboot_in_progress = 0
-		return
-	if(mapchanging)
-		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
-		rebootingpendingmapchange = 1
-		spawn(1200)
-			if(mapchanging)
-				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
-				Reboot("Map change timed out", time = 10)
-		return
-	feedback_set_details("[feedback_c]","[feedback_r]")
-	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
-	#ifdef dellogging
-	var/log = file("data/logs/del.log")
-	log << time2text(world.realtime)
-	for(var/index in del_counter)
-		var/count = del_counter[index]
-		if(count > 10)
-			log << "#[count]\t[index]"
-#endif
-	spawn(0)
-		if(ticker && ticker.round_end_sound)
-			world << sound(ticker.round_end_sound)
+		var/input[] = params2list(T)
+		if(input["key"] != config.comms_password)
+			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
+
+				spawn(50)
+					world_topic_spam_protect_time = world.time
+					return "Bad Key (Throttled)"
+
+			world_topic_spam_protect_time = world.time
+			world_topic_spam_protect_ip = addr
+
+			return "Bad Key"
+
+		var/client/C
+		var/req_ckey = ckey(input["adminmsg"])
+
+		for(var/client/K in clients)
+			if(K.ckey == req_ckey)
+				C = K
+				break
+		if(!C)
+			return "No client with that name on server"
+
+		var/rank = input["rank"]
+		if(!rank)
+			rank = "Admin"
+
+		var/message =	"<font color='red'>IRC-[rank] PM from <b><a href='?irc_msg=[input["sender"]]'>IRC-[input["sender"]]</a></b>: [input["msg"]]</font>"
+		var/amessage =  "<font color='blue'>IRC-[rank] PM from <a href='?irc_msg=[input["sender"]]'>IRC-[input["sender"]]</a> to <b>[key_name(C)]</b> : [input["msg"]]</font>"
+
+		C.received_irc_pm = world.time
+		C.irc_admin = input["sender"]
+
+		C << 'sound/effects/adminhelp.ogg'
+		C << message
+
+
+		for(var/client/A in admins)
+			if(A != C)
+				A << amessage
+
+		return "Message Successful"
+
+	else if(copytext(T,1,6) == "notes")
+		/*
+			We got a request for notes from the IRC Bot
+			expected output:
+				1. notes = ckey of person the notes lookup is for
+				2. validationkey = the key the bot has, it should match the gameservers commspassword in it's configuration.
+		*/
+		var/input[] = params2list(T)
+		if(input["key"] != config.comms_password)
+			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
+
+				spawn(50)
+					world_topic_spam_protect_time = world.time
+					return "Bad Key (Throttled)"
+
+			world_topic_spam_protect_time = world.time
+			world_topic_spam_protect_ip = addr
+			return "Bad Key"
+
+		return show_player_info_irc(ckey(input["notes"]))
+
+	else if(copytext(T,1,4) == "age")
+		var/input[] = params2list(T)
+		if(input["key"] != config.comms_password)
+			if(world_topic_spam_protect_ip == addr && abs(world_topic_spam_protect_time - world.time) < 50)
+				spawn(50)
+					world_topic_spam_protect_time = world.time
+					return "Bad Key (Throttled)"
+
+			world_topic_spam_protect_time = world.time
+			world_topic_spam_protect_ip = addr
+			return "Bad Key"
+
+		var/age = get_player_age(input["age"])
+		if(isnum(age))
+			if(age >= 0)
+				return "[age]"
+			else
+				return "Ckey not found"
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+			return "Database connection failed or not set up"
+
+
+/world/Reboot(var/reason)
+	/*spawn(0)
+		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
+		*/
+
+	processScheduler.stop()
+
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
-	..(0)
 
-var/inerror = 0
-/world/Error(var/exception/e)
-	//runtime while processing runtimes
-	if (inerror)
-		inerror = 0
-		return ..(e)
-	inerror = 1
-	//newline at start is because of the "runtime error" byond prints that can't be timestamped.
-	e.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][e.name]"
+	..(reason)
 
-	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
-	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
-	var/list/split = splittext(e.desc, "\n")
-	for (var/i in 1 to split.len)
-		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-	e.desc = jointext(split, "\n")
-	inerror = 0
-	return ..(e)
-
-/world/proc/manage_fps()
-	var/count = player_list.len
-
-	var/oldTC = config.Tickcomp
-	var/oldFPS = world.fps
-
-	if(count < 50)
-		config.Tickcomp = 0
-		world.fps = 22
-	else if(count < 60)
-		config.Tickcomp = 0
-		world.fps = 21
-	else if(count < 70)
-		config.Tickcomp = 0
-		world.fps = 20
-	else if(count < 80)
-		config.Tickcomp = 0
-		world.fps = 19
-	else if(count < 90)
-		config.Tickcomp = 0
-		world.fps = 18
-	else
-		config.Tickcomp = 1
-		world.fps = 16
-
-	if(world.fps != oldFPS || config.Tickcomp != oldTC)
-		var/msg = "WORLD has modified world.fps to [world.fps] and config.Tickcomp to [config.Tickcomp] (player count reached [count])"
-		log_admin(msg, 0)
-		message_admins(msg, 0)
+/hook/startup/proc/loadMode()
+	world.load_mode()
+	return 1
 
 /world/proc/load_mode()
+	if(!fexists("data/mode.txt"))
+		return
+
+
 	var/list/Lines = file2list("data/mode.txt")
 	if(Lines.len)
 		if(Lines[1])
 			master_mode = Lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			log_misc("Saved mode is '[master_mode]'")
 
-/world/proc/save_mode(the_mode)
+/world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
 
+
+/hook/startup/proc/loadMOTD()
+	world.load_motd()
+	return 1
+
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
 
-/world/proc/load_configuration()
-	protected_config = new /datum/protected_configuration()
+
+/proc/load_configuration()
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
-	config.load("config/discord.txt","discord")
 	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation && SERVERTOOLS)
-		config.loadmaplist("config/maps.txt")
+	config.loadforumsql("config/forumdbconfig.txt")
 
-	// apply some settings from config..
-	abandon_allowed = config.respawn
+/hook/startup/proc/loadMods()
+	world.load_mods()
+	world.load_mentors() // no need to write another hook.
+	return 1
 
-var/list/donators = list()
+/world/proc/load_mods()
+	if(config.admin_legacy_system)
+		var/text = file2text("config/moderators.txt")
+		if (!text)
+			error("Failed to load config/mods.txt")
+		else
+			var/list/lines = splittext(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
 
-/world/proc/load_donators()
-	var/ckey
-	var/datum/preferences/P
-	for(var/key in donators)
-		ckey = ckey(key)
-		P = preferences_datums[ckey]
-		if(P)
-			P.unlock_content &= 1
-	donators = list()
-	var/list/donatorskeys = list()
-	if(config.donator_legacy_system)
-		donatorskeys = file2list("config/donators.txt")
-	else
-		establish_db_connection()
-		if(!dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_donators(). Reverting to legacy system."
-			diary << "Failed to connect to database in load_donators(). Reverting to legacy system."
-			config.donator_legacy_system = 1
-			load_donators()
-			return
+				if (copytext(line, 1, 2) == ";")
+					continue
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey FROM [format_table_name("donors")] WHERE (expiration_time > Now()) AND (revoked IS NULL)")
-		query.Execute()
-		while(query.NextRow())
-			ckey = query.item[1]
-			if(ckey)
-				donatorskeys |= ckey
-	for(var/key in donatorskeys)
-		ckey = ckey(key)
-		donators += ckey
-		P = preferences_datums[ckey]
-		if(P)
-			P.unlock_content |= 2
+				var/title = "Moderator"
+				var/rights = admin_ranks[title]
+
+				var/ckey = copytext(line, 1, length(line)+1)
+				var/datum/admins/D = new /datum/admins(title, rights, ckey)
+				D.associate(directory[ckey])
+
+/world/proc/load_mentors()
+	if(config.admin_legacy_system)
+		var/text = file2text("config/mentors.txt")
+		if (!text)
+			error("Failed to load config/mentors.txt")
+		else
+			var/list/lines = splittext(text, "\n")
+			for(var/line in lines)
+				if (!line)
+					continue
+				if (copytext(line, 1, 2) == ";")
+					continue
+
+				var/title = "Mentor"
+				var/rights = admin_ranks[title]
+
+				var/ckey = copytext(line, 1, length(line)+1)
+				var/datum/admins/D = new /datum/admins(title, rights, ckey)
+				D.associate(directory[ckey])
 
 /world/proc/update_status()
 	var/s = ""
@@ -411,9 +515,9 @@ var/list/donators = list()
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"https://www.yogstation.net\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
 //	s += "[game_version]"
-	s += "Yogstation.net"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
+	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.
 	s += "</a>"
 	s += ")"
 
@@ -425,10 +529,10 @@ var/list/donators = list()
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (!config.enter_allowed)
 		features += "closed"
 
-	features += abandon_allowed ? "respawn" : "no respawn"
+	features += config.abandon_allowed ? "respawn" : "no respawn"
 
 	if (config && config.allow_vote_mode)
 		features += "vote"
@@ -446,20 +550,33 @@ var/list/donators = list()
 	else if (n > 0)
 		features += "~[n] player"
 
-	if (!host && config && config.hostedby)
+
+	if (config && config.hostedby)
 		features += "hosted by <b>[config.hostedby]</b>"
 
 	if (features)
 		s += ": [jointext(features, ", ")]"
 
-	status = s
+	/* does this help? I do not know */
+	if (src.status != s)
+		src.status = s
 
 #define FAILED_DB_CONNECTION_CUTOFF 5
 var/failed_db_connections = 0
+var/failed_old_db_connections = 0
 
-/proc/setup_database_connection()
+/hook/startup/proc/connectDB()
+	if(!config.sql_enabled)
+		world.log << "SQL connection disabled in config."
+	else if(!setup_database_connection())
+		world.log << "Your server failed to establish a connection with the feedback database."
+	else
+		world.log << "Feedback database connection established."
+	return 1
 
-	if(failed_db_connections >= FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
+proc/setup_database_connection()
+
+	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
 		return 0
 
 	if(!dbcon)
@@ -477,13 +594,12 @@ var/failed_db_connections = 0
 		failed_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
-		if(config.sql_enabled)
-			world.log << "SQL error: " + dbcon.ErrorMsg()
+		world.log << dbcon.ErrorMsg()
 
 	return .
 
 //This proc ensures that the connection to the feedback database (global variable dbcon) is established
-/proc/establish_db_connection()
+proc/establish_db_connection()
 	if(failed_db_connections > FAILED_DB_CONNECTION_CUTOFF)
 		return 0
 
@@ -492,97 +608,49 @@ var/failed_db_connections = 0
 	else
 		return 1
 
+
+/hook/startup/proc/connectOldDB()
+	if(!config.sql_enabled)
+		world.log << "SQL connection disabled in config."
+	else if(!setup_old_database_connection())
+		world.log << "Your server failed to establish a connection with the SQL database."
+	else
+		world.log << "SQL database connection established."
+	return 1
+
+//These two procs are for the old database, while it's being phased out. See the tgstation.sql file in the SQL folder for more information.
+proc/setup_old_database_connection()
+
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to conenct anymore.
+		return 0
+
+	if(!dbcon_old)
+		dbcon_old = new()
+
+	var/user = sqllogin
+	var/pass = sqlpass
+	var/db = sqldb
+	var/address = sqladdress
+	var/port = sqlport
+
+	dbcon_old.Connect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = dbcon_old.IsConnected()
+	if ( . )
+		failed_old_db_connections = 0	//If this connection succeeded, reset the failed connections counter.
+	else
+		failed_old_db_connections++		//If it failed, increase the failed connections counter.
+		world.log << dbcon.ErrorMsg()
+
+	return .
+
+//This proc ensures that the connection to the feedback database (global variable dbcon) is established
+proc/establish_old_db_connection()
+	if(failed_old_db_connections > FAILED_DB_CONNECTION_CUTOFF)
+		return 0
+
+	if(!dbcon_old || !dbcon_old.IsConnected())
+		return setup_old_database_connection()
+	else
+		return 1
+
 #undef FAILED_DB_CONNECTION_CUTOFF
-
-
-/proc/maprotate()
-	if (!SERVERTOOLS)
-		return
-	var/players = clients.len
-	var/list/mapvotes = list()
-	//count votes
-	for (var/client/c in clients)
-		var/vote = c.prefs.preferred_map
-		if (!vote)
-			if (config.defaultmap)
-				mapvotes[config.defaultmap.name] += 1
-			continue
-		mapvotes[vote] += 1
-
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-		if (!(map in config.maplist))
-			mapvotes.Remove(map)
-			continue
-		var/datum/votablemap/VM = config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.minusers > 0 && players < VM.minusers)
-			mapvotes.Remove(map)
-			continue
-		if (VM.maxusers > 0 && players > VM.maxusers)
-			mapvotes.Remove(map)
-			continue
-
-		mapvotes[map] = mapvotes[map]*VM.voteweight
-
-	var/pickedmap = pickweight(mapvotes)
-	if (!pickedmap)
-		return
-	var/datum/votablemap/VM = config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
-	. = changemap(VM)
-	if (. == 0)
-		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
-
-var/datum/votablemap/nextmap
-var/mapchanging = 0
-var/rebootingpendingmapchange = 0
-/proc/changemap(var/datum/votablemap/VM)
-	if (!SERVERTOOLS)
-		return
-	if (!istype(VM))
-		return
-	mapchanging = 1
-	log_game("Changing map to [VM.name]([VM.friendlyname])")
-	var/file = file("setnewmap.bat")
-	file << "\nset MAPROTATE=[VM.name]\n"
-	. = shell("..\\bin\\maprotate.bat")
-	mapchanging = 0
-	switch (.)
-		if (null)
-			message_admins("Failed to change map: Could not run map rotator")
-			log_game("Failed to change map: Could not run map rotator")
-		if (0)
-			log_game("Changed to map [VM.friendlyname]")
-			nextmap = VM
-		//1x: file errors
-		if (11)
-			message_admins("Failed to change map: File error: Map rotator script couldn't find file listing new map")
-			log_game("Failed to change map: File error: Map rotator script couldn't find file listing new map")
-		if (12)
-			message_admins("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
-			log_game("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
-		//2x: conflicting operation errors
-		if (21)
-			message_admins("Failed to change map: Conflicting operation error: Current server update operation detected")
-			log_game("Failed to change map: Conflicting operation error: Current server update operation detected")
-		if (22)
-			message_admins("Failed to change map: Conflicting operation error: Current map rotation operation detected")
-			log_game("Failed to change map: Conflicting operation error: Current map rotation operation detected")
-		//3x: external errors
-		if (31)
-			message_admins("Failed to change map: External error: Could not compile new map:[VM.name]")
-			log_game("Failed to change map: External error: Could not compile new map:[VM.name]")
-
-		else
-			message_admins("Failed to change map: Unknown error: Error code #[.]")
-			log_game("Failed to change map: Unknown error: Error code #[.]")
-	if(rebootingpendingmapchange)
-		world.Reboot("Map change finished", time = 10)

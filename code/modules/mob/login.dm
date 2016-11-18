@@ -6,67 +6,46 @@
 	log_access("Login: [key_name(src)] from [lastKnownIP ? lastKnownIP : "localhost"]-[computer_id] || BYOND v[client.byond_version]")
 	if(config.log_access)
 		for(var/mob/M in player_list)
-			if(M == src)
-				continue
+			if(M == src)	continue
 			if( M.key && (M.key != key) )
 				var/matches
 				if( (M.lastKnownIP == client.address) )
 					matches += "IP ([client.address])"
-				if( (M.computer_id == client.computer_id) )
-					if(matches)
-						matches += " and "
+				if( (client.connection != "web") && (M.computer_id == client.computer_id) )
+					if(matches)	matches += " and "
 					matches += "ID ([client.computer_id])"
 					spawn() alert("You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 				if(matches)
 					if(M.client)
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(M)].</font>")
+						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as <A href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name_admin(M)]</A>.</font>", 1)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)].")
 					else
-						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>")
+						message_admins("<font color='red'><B>Notice: </B></font><font color='blue'><A href='?src=\ref[usr];priv_msg=\ref[src]'>[key_name_admin(src)]</A> has the same [matches] as [key_name_admin(M)] (no longer logged in). </font>", 1)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
+
 	player_list |= src
 	update_Login_details()
 	world.update_status()
-	client.screen = list()				//remove hud items just in case
-	client.images = list()
 
-	if(!hud_used)
-		create_mob_hud()
-	if(hud_used)
-		hud_used.show_hud(hud_used.hud_version)
+	client.images = null				//remove the images such as AIs being unable to see runes
+	client.screen = list()				//remove hud items just in case
+	if(hud_used)	qdel(hud_used)		//remove the hud objects
+	hud_used = new /datum/hud(src)
 
 	next_move = 1
-
+	disconnect_time = null				//clear the disconnect time
+	sight |= SEE_SELF
 	..()
-	if (key != client.key)
-		key = client.key
-	reset_perspective(loc)
 
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
-
-	//readd this mob's HUDs (antag, med, etc)
-	reload_huds()
-
+	if(loc && !isturf(loc))
+		client.eye = loc
+		client.perspective = EYE_PERSPECTIVE
+	else
+		client.eye = src
+		client.perspective = MOB_PERSPECTIVE
 	reload_fullscreen() // Reload any fullscreen overlays this mob has.
-
-	if(ckey in deadmins)
-		verbs += /client/proc/readmin
-
 	add_click_catcher()
-
-	sync_mind()
-
-	client.sethotkeys() //set mob specific hotkeys
-
-	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
-		for(var/aakey in viewing_alternate_appearances)
-			var/datum/alternate_appearance/AA = viewing_alternate_appearances[aakey]
-			if(AA)
-				AA.display_to(list(src))
-
-	update_client_colour()
-	client.click_intercept = null
+	//set macro to normal incase it was overriden (like cyborg currently does)
+	winset(src, null, "mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true input.background-color=#D3B5B5")

@@ -69,15 +69,11 @@
 //
 	IfStatement
 		var
-			skip = 0
 			node
 				BlockDefinition
 					block
 					else_block //may be null
 				expression/cond
-				statement/else_if
-
-		ElseIf
 
 /*
 	Class: WhileLoop

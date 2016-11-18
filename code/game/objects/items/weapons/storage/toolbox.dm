@@ -1,43 +1,39 @@
 /obj/item/weapon/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "red"
-	item_state = "toolbox_red"
+	item_state_slots = list(slot_r_hand_str = "toolbox_red", slot_l_hand_str = "toolbox_red")
 	flags = CONDUCT
 	force = 10
 	throwforce = 10
-	throw_speed = 2
+	throw_speed = 1
 	throw_range = 7
-	w_class = 4
-	materials = list(MAT_METAL = 500)
-	origin_tech = "combat=1;engineering=1"
+	w_class = ITEMSIZE_LARGE
+	max_w_class = ITEMSIZE_NORMAL
+	max_storage_space = ITEMSIZE_COST_SMALL * 7 //enough to hold all starting contents
+	origin_tech = list(TECH_COMBAT = 1)
 	attack_verb = list("robusted")
-	hitsound = 'sound/weapons/smash.ogg'
-
-/obj/item/weapon/storage/toolbox/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] robusts \himself with [src]! It looks like \he's trying to commit suicide..</span>")
-	return (BRUTELOSS)
 
 /obj/item/weapon/storage/toolbox/emergency
 	name = "emergency toolbox"
 	icon_state = "red"
-	item_state = "toolbox_red"
+	item_state_slots = list(slot_r_hand_str = "toolbox_red", slot_l_hand_str = "toolbox_red")
 
 /obj/item/weapon/storage/toolbox/emergency/New()
 	..()
 	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/weldingtool/mini(src)
 	new /obj/item/weapon/extinguisher/mini(src)
 	if(prob(50))
 		new /obj/item/device/flashlight(src)
 	else
 		new /obj/item/device/flashlight/flare(src)
-	new /obj/item/device/radio/off(src)
+	new /obj/item/device/radio(src)
 
 /obj/item/weapon/storage/toolbox/mechanical
 	name = "mechanical toolbox"
 	icon_state = "blue"
-	item_state = "toolbox_blue"
+	item_state_slots = list(slot_r_hand_str = "toolbox_blue", slot_l_hand_str = "toolbox_blue")
 
 /obj/item/weapon/storage/toolbox/mechanical/New()
 	..()
@@ -51,95 +47,126 @@
 /obj/item/weapon/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
-	item_state = "toolbox_yellow"
+	item_state_slots = list(slot_r_hand_str = "toolbox_yellow", slot_l_hand_str = "toolbox_yellow")
 
 /obj/item/weapon/storage/toolbox/electrical/New()
 	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
-	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/stack/cable_coil/random(src,30)
+	new /obj/item/stack/cable_coil/random(src,30)
 	if(prob(5))
-		new /obj/item/clothing/gloves/color/yellow(src)
+		new /obj/item/clothing/gloves/yellow(src)
 	else
-		new /obj/item/stack/cable_coil(src,30,color)
+		new /obj/item/stack/cable_coil/random(src,30)
 
 /obj/item/weapon/storage/toolbox/syndicate
-	name = "suspicious looking toolbox"
+	name = "black and red toolbox"
 	icon_state = "syndicate"
-	item_state = "toolbox_syndi"
-	origin_tech = "combat=2;syndicate=1;engineering=2"
-	silent = 1
-	force = 15
-	throwforce = 18
-	w_class = 3
+	item_state_slots = list(slot_r_hand_str = "toolbox_syndi", slot_l_hand_str = "toolbox_syndi")
+	origin_tech = list(TECH_COMBAT = 1, TECH_ILLEGAL = 1)
+	force = 14
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
-	var/obj/item/I
-	I = new /obj/item/weapon/screwdriver(src, "red")
-	I.toolspeed = 1.5
-	I = new /obj/item/weapon/wrench(src)
-	I.toolspeed = 1.5
-	I = new /obj/item/weapon/weldingtool/largetank(src)
-	I.toolspeed = 1.5
-	I = new /obj/item/weapon/crowbar/red(src)
-	I.toolspeed = 1.5
-	I = new /obj/item/weapon/wirecutters(src, "red")
-	I.toolspeed = 1.5
-	I = new /obj/item/device/multitool(src)
-	I.toolspeed = 1.5
-	I = new /obj/item/clothing/gloves/combat/stealth(src)
-	I.toolspeed = 1.5
-
-/obj/item/weapon/storage/toolbox/drone
-	name = "mechanical toolbox"
-	icon_state = "blue"
-	item_state = "toolbox_blue"
-
-/obj/item/weapon/storage/toolbox/drone/New()
-	..()
-	var/color = pick("red","yellow","green","blue","pink","orange","cyan","white")
+	new /obj/item/clothing/gloves/yellow(src)
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
-	new /obj/item/stack/cable_coil(src,30,color)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
-/obj/item/weapon/storage/toolbox/brass
-	name = "brass box"
-	desc = "A huge brass box with several indentations in its surface."
-	icon_state = "brassbox"
-	w_class = 5
-	max_w_class = 3
-	max_combined_w_class = 28
-	storage_slots = 28
-	slowdown = 1
-	flags = HANDSLOW
-	attack_verb = list("robusted", "crushed", "smashed")
-	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
+/obj/item/weapon/storage/toolbox/lunchbox
+	max_storage_space = ITEMSIZE_COST_SMALL * 4 //slightly smaller than a toolbox
+	name = "rainbow lunchbox"
+	icon_state = "lunchbox_rainbow"
+	item_state_slots = list(slot_r_hand_str = "toolbox_pink", slot_l_hand_str = "toolbox_pink")
+	desc = "A little lunchbox. This one is the colors of the rainbow!"
+	w_class = ITEMSIZE_NORMAL
+	max_w_class = ITEMSIZE_SMALL
+	var/filled = FALSE
+	attack_verb = list("lunched")
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/New()
+/obj/item/weapon/storage/toolbox/lunchbox/New()
 	..()
-	new proselytizer_type(src)
-	new /obj/item/weapon/screwdriver/brass(src)
-	new /obj/item/weapon/wirecutters/brass(src)
-	new /obj/item/weapon/wrench/brass(src)
-	new /obj/item/weapon/crowbar/brass(src)
-	new /obj/item/weapon/weldingtool/experimental/brass(src)
+	if(filled)
+		var/list/lunches = lunchables_lunches()
+		var/lunch = lunches[pick(lunches)]
+		new lunch(src)
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
-	var/slab_type = /obj/item/clockwork/slab/scarab
+		var/list/snacks = lunchables_snacks()
+		var/snack = snacks[pick(snacks)]
+		new snack(src)
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/New()
-	..()
-	new slab_type(src)
+		var/list/drinks = lunchables_drinks()
+		var/drink = drinks[pick(drinks)]
+		new drink(src)
 
-/obj/item/weapon/storage/toolbox/brass/prefilled/ratvar/admin
-	slab_type = /obj/item/clockwork/slab/debug
-	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
+/obj/item/weapon/storage/toolbox/lunchbox/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/heart
+	name = "heart lunchbox"
+	icon_state = "lunchbox_lovelyhearts"
+	item_state_slots = list(slot_r_hand_str = "toolbox_pink", slot_l_hand_str = "toolbox_pink")
+	desc = "A little lunchbox. This one has cute little hearts on it!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/heart/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/cat
+	name = "cat lunchbox"
+	icon_state = "lunchbox_sciencecatshow"
+	item_state_slots = list(slot_r_hand_str = "toolbox_green", slot_l_hand_str = "toolbox_green")
+	desc = "A little lunchbox. This one has a cute little science cat from a popular show on it!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/cat/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/nt
+	name = "NanoTrasen brand lunchbox"
+	icon_state = "lunchbox_nanotrasen"
+	item_state_slots = list(slot_r_hand_str = "toolbox_blue", slot_l_hand_str = "toolbox_blue")
+	desc = "A little lunchbox. This one is branded with the NanoTrasen logo!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/nt/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/mars
+	name = "\improper Mojave university lunchbox"
+	icon_state = "lunchbox_marsuniversity"
+	item_state_slots = list(slot_r_hand_str = "toolbox_red", slot_l_hand_str = "toolbox_red")
+	desc = "A little lunchbox. This one is branded with the Mojave university logo!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/mars/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/cti
+	name = "\improper CTI lunchbox"
+	icon_state = "lunchbox_cti"
+	item_state_slots = list(slot_r_hand_str = "toolbox_blue", slot_l_hand_str = "toolbox_blue")
+	desc = "A little lunchbox. This one is branded with the CTI logo!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/cti/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/nymph
+	name = "\improper Diona nymph lunchbox"
+	icon_state = "lunchbox_dionanymph"
+	item_state_slots = list(slot_r_hand_str = "toolbox_yellow", slot_l_hand_str = "toolbox_yellow")
+	desc = "A little lunchbox. This one is an adorable Diona nymph on the side!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/nymph/filled
+	filled = TRUE
+
+/obj/item/weapon/storage/toolbox/lunchbox/syndicate
+	name = "black and red lunchbox"
+	icon_state = "lunchbox_syndie"
+	item_state_slots = list(slot_r_hand_str = "toolbox_syndi", slot_l_hand_str = "toolbox_syndi")
+	desc = "A little lunchbox. This one is a sleek black and red, made of a durable steel!"
+
+/obj/item/weapon/storage/toolbox/lunchbox/syndicate/filled
+	filled = TRUE

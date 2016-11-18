@@ -1,11 +1,21 @@
 /obj/item/weapon/grenade/empgrenade
-	name = "classic EMP grenade"
-	desc = "It is designed to wreak havok on electronic systems."
+	name = "emp grenade"
 	icon_state = "emp"
-	item_state = "emp"
-	origin_tech = "magnets=3;combat=2"
+	item_state = "empgrenade"
+	origin_tech = list(TECH_MATERIAL = 2, TECH_MAGNET = 3)
+	var/emp_heavy = 4
+	var/emp_light = 10
 
-/obj/item/weapon/grenade/empgrenade/prime()
-	update_mob()
-	empulse(src, 4, 10)
-	qdel(src)
+	prime()
+		..()
+		if(empulse(src, emp_heavy, emp_light))
+			qdel(src)
+		return
+
+/obj/item/weapon/grenade/empgrenade/low_yield
+	name = "low yield emp grenade"
+	desc = "A weaker variant of the EMP grenade"
+	icon_state = "lyemp"
+	origin_tech = list(TECH_MATERIAL = 2, TECH_MAGNET = 3)
+	emp_heavy = 1
+	emp_light = 4

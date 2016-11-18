@@ -1,3 +1,11 @@
-[Note]: # (State what the issue is from a "whats wrong" prospective. Issue reports should clearly allow maintainers to understand whats wrong and how to test/reproduce if that is not obvious. Avoid ambiguity. Start your issue report below both of these lines (or remove them))
+#### Brief description of the issue
 
-[Admins]: # (If you are reporting a bug that occured AFTER you used varedit/admin buttons to alter an object out of normal operating conditions, please verify that you can re-create the bug without the varedit usage/admin buttons before reporting the issue.)
+#### What you expected to happen
+
+#### What actually happened
+
+#### Steps to reproduce
+
+#### Additional info:
+ - **Server Revision**: Found using the "Show Server Revision" verb under the OOC tab.
+ - **Anything else you may wish to add** (Location if it's a mapping issue, etc)

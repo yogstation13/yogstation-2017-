@@ -1,22 +1,28 @@
-/mob/living/proc/alien_talk(message, shown_name = name)
-	log_say("[key_name(src)] : [message]")
+/mob/living/carbon/alien/say(var/message)
+	var/verb = "says"
+	var/message_range = world.view
+
+	if(client)
+		if(client.prefs.muted & MUTE_IC)
+			src << "\red You cannot speak in IC (Muted)."
+			return
+
+	message = sanitize(message)
+
+	if(stat == 2)
+		return say_dead(message)
+
+	if(copytext(message,1,2) == "*")
+		return emote(copytext(message,2))
+
+	var/datum/language/speaking = parse_language(message)
+
+	if(speaking)
+		message = copytext(message, 2+length(speaking.key))
+
 	message = trim(message)
-	if(!message) return
 
-	var/message_a = say_quote(message, get_spans())
-	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
-	for(var/mob/S in player_list)
-		if(!S.stat && S.hivecheck())
-			S << rendered
-		if(S in dead_mob_list)
-			var/link = FOLLOW_LINK(S, src)
-			S << "[link] [rendered]"
+	if(!message || stat)
+		return
 
-/mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
-	shown_name = "<FONT size = 3>[shown_name]</FONT>"
-	..(message, shown_name)
-
-/mob/living/carbon/hivecheck()
-	var/obj/item/organ/alien/hivenode/N = getorgan(/obj/item/organ/alien/hivenode)
-	if(N && !N.recent_queen_death) //Mob has alien hive node and is not under the dead queen special effect.
-		return N
+	..(message, speaking, verb, null, null, message_range, null)

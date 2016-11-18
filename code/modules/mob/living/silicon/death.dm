@@ -1,11 +1,15 @@
-/mob/living/silicon/spawn_gibs()
-	robogibs(loc, viruses)
+/mob/living/silicon/gib()
+	..("gibbed-r")
+	gibs(loc, null, /obj/effect/gibspawner/robot)
 
-/mob/living/silicon/spawn_dust()
-	new /obj/effect/decal/remains/robot(loc)
+/mob/living/silicon/dust()
+	..("dust-r", /obj/effect/decal/remains/robot)
 
-/mob/living/silicon/death(gibbed)
-	diag_hud_set_status()
-	diag_hud_set_health()
-	update_health_hud()
-	..()
+/mob/living/silicon/ash()
+	..("dust-r")
+
+/mob/living/silicon/death(gibbed,deathmessage)
+	if(in_contents_of(/obj/machinery/recharge_station))//exit the recharge station
+		var/obj/machinery/recharge_station/RC = loc
+		RC.go_out()
+	return ..(gibbed,deathmessage)

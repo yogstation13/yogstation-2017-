@@ -1,72 +1,54 @@
-/obj/effect/proc_holder/changeling/transform
+/datum/power/changeling/transform
 	name = "Transform"
-	desc = "We take on the appearance and voice of one we have absorbed."
-	chemical_cost = 5
-	dna_cost = 0
-	req_dna = 1
-	req_human = 1
-	max_genetic_damage = 3
-
-/obj/item/clothing/glasses/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/under/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/suit/changeling
-	name = "flesh"
-	flags = NODROP
-	allowed = list(/obj/item/changeling)
-
-/obj/item/clothing/head/changeling
-	name = "flesh"
-	flags = NODROP
-/obj/item/clothing/shoes/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/gloves/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/mask/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/changeling
-	name = "flesh"
-	flags = NODROP
-	slot_flags = ALL
-	allowed = list(/obj/item/changeling)
+	desc = "We take on the apperance and voice of one we have absorbed."
+	ability_icon_state = "ling_transform"
+	genomecost = 0
+	verbpath = /mob/proc/changeling_transform
 
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
-	var/datum/changeling/changeling = user.mind.changeling
-	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA", user)
+/mob/proc/changeling_transform()
+	set category = "Changeling"
+	set name = "Transform (5)"
 
-	if(!chosen_prof)
+	var/datum/changeling/changeling = changeling_power(5,1,0)
+	if(!changeling)	return
+
+	var/list/names = list()
+	for(var/datum/absorbed_dna/DNA in changeling.absorbed_dna)
+		names += "[DNA.name]"
+
+	var/S = input("Select the target DNA: ", "Target DNA", null) as null|anything in names
+	if(!S)	return
+
+	var/datum/absorbed_dna/chosen_dna = changeling.GetDNA(S)
+	if(!chosen_dna)
 		return
 
-	changeling_transform(user, chosen_prof)
+	changeling.chem_charges -= 5
+	src.visible_message("<span class='warning'>[src] transforms!</span>")
+	changeling.geneticdamage = 5
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/newSpecies = chosen_dna.speciesName
+		H.set_species(newSpecies,1)
+
+	src.dna = chosen_dna.dna.Clone()
+	src.dna.b_type = "AB+" //This is needed to avoid blood rejection bugs.  The fact that the blood type might not match up w/ records could be a *FEATURE* too.
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.b_type = "AB+" //For some reason we have two blood types on the mob.
+		H.identifying_gender = chosen_dna.identifying_gender
+		H.flavor_texts = chosen_dna.flavour_texts ? chosen_dna.flavour_texts.Copy() : null
+	src.real_name = chosen_dna.name
+	src.UpdateAppearance()
+	domutcheck(src, null)
+	changeling_update_languages(changeling.absorbed_languages)
+
+	src.verbs -= /mob/proc/changeling_transform
+	spawn(10)
+		src.verbs += /mob/proc/changeling_transform
+		src.regenerate_icons()
 
 	feedback_add_details("changeling_powers","TR")
 	return 1
-
-/datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
-	var/list/names = list("Drop Flesh Disguise")
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		names += "[prof.name]"
-
-	var/chosen_name = input(prompt, title, null) as null|anything in names
-	if(!chosen_name)
-		return
-	
-	if(chosen_name == "Drop Flesh Disguise")
-		for(var/slot in slots)
-			if(istype(user.vars[slot], slot2type[slot]))
-				qdel(user.vars[slot])
-
-	var/datum/changelingprofile/prof = get_dna(chosen_name)
-	return prof

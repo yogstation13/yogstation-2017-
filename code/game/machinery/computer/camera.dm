@@ -1,192 +1,258 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 /obj/machinery/computer/security
-	name = "security camera console"
+	name = "security camera monitor"
 	desc = "Used to access the various cameras on the station."
-	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	circuit = /obj/item/weapon/circuitboard/computer/security
-	var/last_pic = 1
-	var/list/network = list("SS13")
+	icon_screen = "cameras"
+	light_color = "#a91515"
+	var/current_network = null
+	var/obj/machinery/camera/current_camera = null
+	var/last_pic = 1.0
+	var/list/network
 	var/mapping = 0//For the overview file, interesting bit of code.
-	var/list/watchers = list() //who's using the console, associated with the camera they're on.
+	var/cache_id = 0
+	circuit = /obj/item/weapon/circuitboard/security
 
-/obj/machinery/computer/security/check_eye(mob/user)
-	if( (stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
-		user.unset_machine()
-		return
-	if(!(user in watchers))
-		user.unset_machine()
-		return
-	if(!watchers[user])
-		user.unset_machine()
-		return
-	var/obj/machinery/camera/C = watchers[user]
-	if(!C.can_use())
-		user.unset_machine()
-		return
-	if(!issilicon(user))
-		if(!Adjacent(user))
-			user.unset_machine()
-			return
-	else if(isrobot(user))
-		var/list/viewing = viewers(src)
-		if(!viewing.Find(user))
-			user.unset_machine()
-	else if(ispAI(user))
-		var/mob/living/silicon/pai/P = user
-		if(P in watchers && P.paired != src)
-			P.machine = src
-			user.unset_machine()
+/obj/machinery/computer/security/New()
+	if(!network)
+		network = station_networks.Copy()
+	..()
+	if(network.len)
+		current_network = network[1]
 
-/obj/machinery/computer/security/on_unset_machine(mob/user)
-	watchers.Remove(user)
-	user.reset_perspective(null)
+/obj/machinery/computer/security/attack_ai(var/mob/user as mob)
+	return attack_hand(user)
 
-/obj/machinery/computer/security/Destroy()
-	if(watchers.len)
-		for(var/mob/M in watchers)
-			M.unset_machine() //to properly reset the view of the users if the console is deleted.
-	return ..()
+/obj/machinery/computer/security/check_eye(var/mob/user as mob)
+	if (user.stat || ((get_dist(user, src) > 1 || !( user.canmove ) || user.blinded) && !istype(user, /mob/living/silicon))) //user can't see - not sure why canmove is here.
+		return -1
+	if(!current_camera)
+		return 0
+	var/viewflag = current_camera.check_eye(user)
+	if ( viewflag < 0 ) //camera doesn't work
+		reset_current()
+	return viewflag
 
-/obj/machinery/computer/security/attack_hand(mob/user)
-	if(stat)
-		return
-	if (!network)
-		throw EXCEPTION("No camera network")
-		user.unset_machine()
-		return
-	if (!(istype(network,/list)))
-		throw EXCEPTION("Camera network is not a list")
-		user.unset_machine()
-		return
+/obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+	if(src.z > 6) return
+	if(stat & (NOPOWER|BROKEN)) return
+	if(user.stat) return
+
+	var/data[0]
+
+	data["current_camera"] = current_camera ? current_camera.nano_structure() : null
+	data["current_network"] = current_network
+	data["networks"] = network ? network : list()
+	if(current_network)
+		data["cameras"] = camera_repository.cameras_in_network(current_network)
+	if(current_camera)
+		switch_to_camera(user, current_camera)
+
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "sec_camera.tmpl", "Camera Console", 900, 800)
+
+		// adding a template with the key "mapContent" enables the map ui functionality
+		ui.add_template("mapContent", "sec_camera_map_content.tmpl")
+		// adding a template with the key "mapHeader" replaces the map header content
+		ui.add_template("mapHeader", "sec_camera_map_header.tmpl")
+
+		ui.set_initial_data(data)
+		ui.open()
+
+/obj/machinery/computer/security/Topic(href, href_list)
 	if(..())
-		user.unset_machine()
-		return
-
-	var/list/camera_list = get_available_cameras()
-	if(!(user in watchers))
-		for(var/Num in camera_list)
-			var/obj/machinery/camera/CAM = camera_list[Num]
-			if(istype(CAM))
-				if(CAM.can_use())
-					watchers[user] = CAM //let's give the user the first usable camera, and then let him change to the camera he wants.
-					break
-		if(!(user in watchers))
-			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
+		return 1
+	if(href_list["switch_camera"])
+		if(src.z>6 || stat&(NOPOWER|BROKEN)) return
+		if(usr.stat || ((get_dist(usr, src) > 1 || !( usr.canmove ) || usr.blinded) && !istype(usr, /mob/living/silicon))) return
+		var/obj/machinery/camera/C = locate(href_list["switch_camera"]) in cameranet.cameras
+		if(!C)
 			return
-	use_camera_console(user)
+		if(!(current_network in C.network))
+			return
 
-/obj/machinery/computer/security/proc/use_camera_console(mob/user)
-	var/list/camera_list = get_available_cameras()
-	var/t = input(user, "Which camera should you change to?") as null|anything in camera_list
-	if(user.machine != src && !ispAI(user)) //while we were choosing we got disconnected from our computer or are using another machine.
+		switch_to_camera(usr, C)
+		return 1
+	else if(href_list["switch_network"])
+		if(src.z>6 || stat&(NOPOWER|BROKEN)) return
+		if(usr.stat || ((get_dist(usr, src) > 1 || !( usr.canmove ) || usr.blinded) && !istype(usr, /mob/living/silicon))) return
+		if(href_list["switch_network"] in network)
+			current_network = href_list["switch_network"]
+		return 1
+	else if(href_list["reset"])
+		if(src.z>6 || stat&(NOPOWER|BROKEN)) return
+		if(usr.stat || ((get_dist(usr, src) > 1 || !( usr.canmove ) || usr.blinded) && !istype(usr, /mob/living/silicon))) return
+		reset_current()
+		usr.reset_view(current_camera)
+		return 1
+	else
+		. = ..()
+
+/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+	if (src.z > 6)
+		user << "<span class='danger'>Unable to establish a connection:</span> You're too far away from the station!"
 		return
-	if(!t)
-		user.unset_machine()
-		return
+	if(stat & (NOPOWER|BROKEN))	return
 
-	var/obj/machinery/camera/C = camera_list[t]
+	if(!isAI(user))
+		user.set_machine(src)
+	ui_interact(user)
 
-	if(t == "Cancel")
-		user.unset_machine()
-		return
-	if(C)
-		var/camera_fail = 0
-		if (!ispAI(user) && user.machine != src)
-			camera_fail = 1
-		if(!C.can_use() || user.eye_blind || user.incapacitated())
-			camera_fail = 1
-		else if(isrobot(user))
-			var/list/viewing = viewers(src)
-			if(!viewing.Find(user))
-				camera_fail = 1
-		else if(!issilicon(user))
-			if(!Adjacent(user))
-				camera_fail = 1
-
-		if(camera_fail)
-			user.unset_machine()
+/obj/machinery/computer/security/proc/switch_to_camera(var/mob/user, var/obj/machinery/camera/C)
+	//don't need to check if the camera works for AI because the AI jumps to the camera location and doesn't actually look through cameras.
+	if(isAI(user))
+		var/mob/living/silicon/ai/A = user
+		// Only allow non-carded AIs to view because the interaction with the eye gets all wonky otherwise.
+		if(!A.is_in_chassis())
 			return 0
 
-		if(isAI(user))
-			var/mob/living/silicon/ai/A = user
-			A.eyeobj.setLoc(get_turf(C))
-			A.client.eye = A.eyeobj
-		else if(ispAI(user))
-			var/mob/living/silicon/pai/A = user
-			A.switchCamera(C)
-		else
-			user.reset_perspective(C)
-		watchers[user] = C
-		use_power(50)
-		spawn(5)
-			use_camera_console(user)
-	else
-		user.unset_machine()
+		A.eyeobj.setLoc(get_turf(C))
+		A.client.eye = A.eyeobj
+		return 1
 
-//returns the list of cameras accessible from this computer
-/obj/machinery/computer/security/proc/get_available_cameras()
-	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameranet.cameras)
-		if((z > ZLEVEL_SPACEMAX || C.z > ZLEVEL_SPACEMAX) && (C.z != z))//if on away mission, can only recieve feed from same z_level cameras
-			continue
-		L.Add(C)
+	if (!C.can_use() || user.stat || (get_dist(user, src) > 1 || user.machine != src || user.blinded || !( user.canmove ) && !istype(user, /mob/living/silicon)))
+		return 0
+	set_current(C)
+	user.reset_view(current_camera)
+	check_eye(user)
+	return 1
 
-	camera_sort(L)
+//Camera control: moving.
+/obj/machinery/computer/security/proc/jump_on_click(var/mob/user,var/A)
+	if(user.machine != src)
+		return
+	var/obj/machinery/camera/jump_to
+	if(istype(A,/obj/machinery/camera))
+		jump_to = A
+	else if(ismob(A))
+		if(ishuman(A))
+			jump_to = locate() in A:head
+		else if(isrobot(A))
+			jump_to = A:camera
+	else if(isobj(A))
+		jump_to = locate() in A
+	else if(isturf(A))
+		var/best_dist = INFINITY
+		for(var/obj/machinery/camera/camera in get_area(A))
+			if(!camera.can_use())
+				continue
+			if(!can_access_camera(camera))
+				continue
+			var/dist = get_dist(camera,A)
+			if(dist < best_dist)
+				best_dist = dist
+				jump_to = camera
+	if(isnull(jump_to))
+		return
+	if(can_access_camera(jump_to))
+		switch_to_camera(user,jump_to)
 
-	var/list/D = list()
-	D["Cancel"] = "Cancel"
-	for(var/obj/machinery/camera/C in L)
-		if(!C.network)
-			spawn(0)
-				throw EXCEPTION("Camera in a cameranet has no camera network")
-			continue
-		if(!(istype(C.network,/list)))
-			spawn(0)
-				throw EXCEPTION("Camera in a cameranet has a non-list camera network")
-			continue
-		var/list/tempnetwork = C.network&network
-		if(tempnetwork.len)
-			D["[C.c_tag][(C.status ? null : " (Deactivated)")]"] = C
-	return D
+/obj/machinery/computer/security/process()
+	if(cache_id != camera_repository.camera_cache_id)
+		cache_id = camera_repository.camera_cache_id
+		nanomanager.update_uis(src)
+
+/obj/machinery/computer/security/proc/can_access_camera(var/obj/machinery/camera/C)
+	var/list/shared_networks = src.network & C.network
+	if(shared_networks.len)
+		return 1
+	return 0
+
+/obj/machinery/computer/security/proc/set_current(var/obj/machinery/camera/C)
+	if(current_camera == C)
+		return
+
+	if(current_camera)
+		reset_current()
+
+	src.current_camera = C
+	if(current_camera)
+		use_power = 2
+		var/mob/living/L = current_camera.loc
+		if(istype(L))
+			L.tracking_initiated()
+
+/obj/machinery/computer/security/proc/reset_current()
+	if(current_camera)
+		var/mob/living/L = current_camera.loc
+		if(istype(L))
+			L.tracking_cancelled()
+	current_camera = null
+	use_power = 1
+
+//Camera control: mouse.
+/atom/DblClick()
+	..()
+	if(istype(usr.machine,/obj/machinery/computer/security))
+		var/obj/machinery/computer/security/console = usr.machine
+		console.jump_on_click(usr,src)
+//Camera control: arrow keys.
+/mob/Move(n,direct)
+	if(istype(machine,/obj/machinery/computer/security))
+		var/obj/machinery/computer/security/console = machine
+		var/turf/T = get_turf(console.current_camera)
+		for(var/i;i<10;i++)
+			T = get_step(T,direct)
+		console.jump_on_click(src,T)
+		return
+	return ..(n,direct)
 
 /obj/machinery/computer/security/telescreen
-	name = "\improper Telescreen"
+	name = "Telescreen"
 	desc = "Used for watching an empty arena."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "telescreen"
-	network = list("thunder")
+	icon_state = "wallframe"
+	icon_keyboard = null
+	icon_screen = null
+	light_range_on = 0
+	network = list(NETWORK_THUNDER)
 	density = 0
 	circuit = null
-	clockwork = TRUE //it'd look very weird
-
-/obj/machinery/computer/security/telescreen/update_icon()
-	icon_state = initial(icon_state)
-	if(stat & BROKEN)
-		icon_state += "b"
-	return
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
-	desc = "Damn, they better have the /tg/ channel on these things."
+	desc = "Damn, why do they never have anything interesting on these things?"
 	icon = 'icons/obj/status_display.dmi'
-	icon_state = "entertainment"
-	network = list("thunder")
-	density = 0
-	circuit = null
-
+	icon_screen = "entertainment"
+	light_color = "#FFEEDB"
+	light_range_on = 2
+	network = list(NETWORK_THUNDER)
+	circuit = /obj/item/weapon/circuitboard/security/telescreen/entertainment
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
-	clockwork = TRUE //it'd look weird
-
-
+	circuit = null
+	light_color = "#3848B3"
+	light_power_on = 0.5
 /obj/machinery/computer/security/mining
-	name = "outpost camera console"
+	name = "outpost camera monitor"
 	desc = "Used to access the various cameras on the outpost."
-	icon_screen = "mining"
 	icon_keyboard = "mining_key"
+	icon_screen = "mining"
 	network = list("MINE")
-	circuit = /obj/item/weapon/circuitboard/computer/mining
+	circuit = /obj/item/weapon/circuitboard/security/mining
+	light_color = "#F9BBFC"
+/obj/machinery/computer/security/engineering
+	name = "engineering camera monitor"
+	desc = "Used to monitor fires and breaches."
+	icon_keyboard = "power_key"
+	icon_screen = "engie_cams"
+	circuit = /obj/item/weapon/circuitboard/security/engineering
+	light_color = "#FAC54B"
+/obj/machinery/computer/security/engineering/New()
+	if(!network)
+		network = engineering_networks.Copy()
+	..()
+/obj/machinery/computer/security/nuclear
+	name = "head mounted camera monitor"
+	desc = "Used to access the built-in cameras in helmets."
+	icon_state = "syndicam"
+	network = list(NETWORK_MERCENARY)
+	circuit = null
+/obj/machinery/computer/security/nuclear/New()
+	..()
+	req_access = list(150)

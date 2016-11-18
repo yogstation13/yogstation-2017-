@@ -1,29 +1,29 @@
 /obj/machinery/wish_granter
-	name = "wish granter"
+	name = "Wish Granter"
 	desc = "You're not so sure about this, anymore..."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
-
 	use_power = 0
 	anchored = 1
 	density = 1
-
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
+/obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
+	usr.set_machine(src)
+
 	if(charges <= 0)
 		user << "The Wish Granter lies silent."
 		return
 
-	else if(!ishuman(user))
+	else if(!istype(user, /mob/living/carbon/human))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
 	else if(is_special_character(user))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
 
-	else if (!insisting)
+	else if(!insisting)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
 		insisting++
 
@@ -34,23 +34,35 @@
 		charges--
 		insisting = 0
 
-		user.dna.add_mutation(HULK)
-		user.dna.add_mutation(XRAY)
-		user.dna.add_mutation(COLDRES)
-		user.dna.add_mutation(TK)
+		if(!(HULK in user.mutations))
+			user.mutations.Add(HULK)
 
-		ticker.mode.traitors += user.mind
+		if(!(LASER in user.mutations))
+			user.mutations.Add(LASER)
+
+		if(!(XRAY in user.mutations))
+			user.mutations.Add(XRAY)
+			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
+			user.see_in_dark = 8
+			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+		if(!(COLD_RESISTANCE in user.mutations))
+			user.mutations.Add(COLD_RESISTANCE)
+
+		if(!(TK in user.mutations))
+			user.mutations.Add(TK)
+
+		if(!(HEAL in user.mutations))
+			user.mutations.Add(HEAL)
+
+		user.update_mutations()
 		user.mind.special_role = "Avatar of the Wish Granter"
 
-		var/datum/objective/hijack/hijack = new
-		hijack.owner = user.mind
-		user.mind.objectives += hijack
+		var/datum/objective/silence/silence = new
+		silence.owner = user.mind
+		user.mind.objectives += silence
 
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in user.mind.objectives)
-			user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-			obj_count++
-
+		show_objectives(user.mind)
 		user << "You have a very bad feeling about this."
 
 	return

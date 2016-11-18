@@ -1,16 +1,6 @@
 /datum/game_mode/extended
-	name = "extended"
+	name = "Extended"
 	config_tag = "extended"
 	required_players = 0
-	prob_traitor_ai = 0
-	//reroll_friendly = 1
-
-/datum/game_mode/announce()
-	world << "<B>The current game mode is - Extended Role-Playing!</B>"
-	world << "<B>Just have fun and role-play!</B>"
-
-/datum/game_mode/extended/pre_setup()
-	return 1
-
-/datum/game_mode/extended/post_setup()
-	..()
+	round_description = "Just have fun and role-play!"
+	extended_round_description = "There are no antagonists during extended, unless an admin decides to be cheeky. Just play your character, mess around with your job, and have fun."

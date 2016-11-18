@@ -1,181 +1,141 @@
 // It is a gizmo that flashes a small area
-
 /obj/machinery/flasher
-	name = "mounted flash"
+	name = "Mounted flash"
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	var/obj/item/device/assembly/flash/handheld/bulb = null
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
+	var/disable = 0
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
-	var/strength = 5 //How weakened targets are when flashed.
+	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = 1
+	use_power = 1
+	idle_power_usage = 2
+	flags = PROXMOVE
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
-	icon_state = "pflash1-p"
-	strength = 4
+	icon_state = "pflash1"
+	strength = 8
 	anchored = 0
 	base_state = "pflash"
 	density = 1
 
-/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
-	if(built)
-		dir = ndir
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
-	else
-		bulb = new /obj/item/device/assembly/flash/handheld(src)
-	..() // ..() is EXTREMELY IMPORTANT, never forget to add it //Initializing variables defined in your object before calling the parent is, arguably, MORE IMPORTANT.
-
-/obj/machinery/flasher/Move()
-	remove_from_proximity_list(src, range)
-	..()
-
 /obj/machinery/flasher/power_change()
-	if (powered() && anchored && bulb)
-		stat &= ~NOPOWER
-		if(bulb.crit_fail)
-			icon_state = "[base_state]1-p"
-		else
-			icon_state = "[base_state]1"
+	..()
+	if(!(stat & NOPOWER))
+		icon_state = "[base_state]1"
+//		sd_SetLuminosity(2)
 	else
-		stat |= NOPOWER
 		icon_state = "[base_state]1-p"
+//		sd_SetLuminosity(0)
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
-	add_fingerprint(user)
-	if (istype(W, /obj/item/weapon/wirecutters))
-		if (bulb)
-			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
-			playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			if(do_after(user, 30/W.toolspeed, target = src) && bulb)
-				user.visible_message("[user] has disconnected [src]'s flashbulb!", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
-				bulb.loc = src.loc
-				bulb = null
-				power_change()
-
-	else if (istype(W, /obj/item/device/assembly/flash/handheld))
-		if (!bulb)
-			if(!user.drop_item())
-				return
-			user.visible_message("[user] installs [W] into [src].", "<span class='notice'>You install [W] into [src].</span>")
-			W.loc = src
-			bulb = W
-			power_change()
-		else
-			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
-
-	else if (istype(W, /obj/item/weapon/wrench))
-		if(!bulb)
-			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
-			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-			if(do_after(user, 40/W.toolspeed, target = src))
-				user << "<span class='notice'>You unsecure the flasher frame.</span>"
-				var/obj/item/wallframe/flasher/F = new(get_turf(src))
-				transfer_fingerprints_to(F)
-				F.id = id
-				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-				qdel(src)
-		else
-			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
-	else
-		return ..()
+/obj/machinery/flasher/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wirecutters))
+		add_fingerprint(user)
+		disable = !disable
+		if(disable)
+			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
+		if(!disable)
+			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
-	if (anchored)
+	if(anchored)
 		return flash()
 	else
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!powered() || !bulb)
+	if(!(powered()))
 		return
 
-	if (bulb.crit_fail || (last_flash && world.time < src.last_flash + 150))
+	if((disable) || (last_flash && world.time < last_flash + 150))
 		return
-
-	if(!bulb.flash_recharge(30)) //Bulb can burn out if it's used too often too fast
-		power_change()
-		return
-	bulb.times_used ++
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	last_flash = world.time
-	use_power(1000)
+	use_power(1500)
 
-	for (var/mob/living/L in viewers(src, null))
-		if (get_dist(src, L) > range)
+	for (var/mob/O in viewers(src, null))
+		if(get_dist(src, O) > range)
 			continue
 
-		if(L.flash_eyes(affect_silicon = 1))
-			L.Weaken(strength)
-			if(L.weakeyes)
-				L.Weaken(strength * 1.5)
-				L.visible_message("<span class='disarm'><b>[L]</b> gasps and shields their eyes!</span>")
-
-	return 1
-
+		var/flash_time = strength
+		if(istype(O, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = O
+			if(!H.eyecheck() <= 0)
+				continue
+			flash_time *= H.species.flash_mod
+			var/obj/item/organ/internal/eyes/E = H.internal_organs_by_name[O_EYES]
+			if(!E)
+				return
+			if(E.is_bruised() && prob(E.damage + 50))
+				H.flash_eyes()
+				E.damage += rand(1, 5)
+		else
+			if(!O.blinded && isliving(O))
+				var/mob/living/L = O
+				L.flash_eyes()
+		O.Weaken(flash_time)
 
 /obj/machinery/flasher/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
-	if(bulb && prob(75/severity))
+	if(prob(75/severity))
 		flash()
-		bulb.burn_out()
-		power_change()
 	..(severity)
 
-/obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
-	if (last_flash && world.time < last_flash + 150)
+/obj/machinery/flasher/portable/HasProximity(atom/movable/AM as mob|obj)
+	if((disable) || (last_flash && world.time < last_flash + 150))
 		return
 
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if (M.m_intent != "walk" && anchored)
+		if((M.m_intent != "walk") && (anchored))
 			flash()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/wrench))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+/obj/machinery/flasher/portable/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/wrench))
+		add_fingerprint(user)
+		anchored = !anchored
 
-		if (!anchored && !isinspace())
-			user << "<span class='notice'>[src] is now secured.</span>"
-			overlays += "[base_state]-s"
-			anchored = 1
-			power_change()
-			add_to_proximity_list(src, range)
-		else
-			user << "<span class='notice'>[src] can now be moved.</span>"
+		if(!anchored)
+			user.show_message(text("<span class='warning'>[src] can now be moved.</span>"))
 			overlays.Cut()
-			anchored = 0
-			power_change()
-			remove_from_proximity_list(src, range)
 
-	else
-		return ..()
+		else if(anchored)
+			user.show_message(text("<span class='warning'>[src] is now secured.</span>"))
+			overlays += "[base_state]-s"
 
+/obj/machinery/button/flasher
+	name = "flasher button"
+	desc = "A remote control switch for a mounted flasher."
 
-/obj/item/wallframe/flasher
-	name = "mounted flash frame"
-	desc = "Used for building wall-mounted flashers."
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "mflash_frame"
-	result_path = /obj/machinery/flasher
-	var/id = null
+/obj/machinery/button/flasher/attack_hand(mob/user as mob)
 
-/obj/item/wallframe/flasher/examine(mob/user)
-	..()
-	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+	if(..())
+		return
 
-/obj/item/wallframe/flasher/after_attach(var/obj/O)
-	..()
-	var/obj/machinery/flasher/F = O
-	F.id = id
+	use_power(5)
+
+	active = 1
+	icon_state = "launcheract"
+
+	for(var/obj/machinery/flasher/M in machines)
+		if(M.id == id)
+			spawn()
+				M.flash()
+
+	sleep(50)
+
+	icon_state = "launcherbtt"
+	active = 0
+
+	return

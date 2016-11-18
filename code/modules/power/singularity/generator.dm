@@ -8,30 +8,24 @@
 	density = 1
 	use_power = 0
 	var/energy = 0
-	var/creation_type = /obj/singularity
 
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
 	if(src.energy >= 200)
-		feedback_add_details("engine_started","[src.type]")
-		var/obj/singularity/S = new creation_type(T, 50)
-		transfer_fingerprints_to(S)
-		qdel(src)
+		new /obj/singularity/(T, 50)
+		if(src) qdel(src)
 
-/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-
-		if(!anchored && !isinspace())
+		anchored = !anchored
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		if(anchored)
 			user.visible_message("[user.name] secures [src.name] to the floor.", \
-				"<span class='notice'>You secure the [src.name] to the floor.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			anchored = 1
-		else if(anchored)
+				"You secure the [src.name] to the floor.", \
+				"You hear a ratchet")
+		else
 			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
-				"<span class='notice'>You unsecure the [src.name] from the floor.</span>", \
-				"<span class='italics'>You hear a ratchet.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			anchored = 0
-	else
-		return ..()
+				"You unsecure the [src.name] from the floor.", \
+				"You hear a ratchet")
+		return
+	return ..()

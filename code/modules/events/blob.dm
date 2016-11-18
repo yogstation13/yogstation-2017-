@@ -1,30 +1,25 @@
-/datum/round_event_control/blob
-	name = "Blob"
-	typepath = /datum/round_event/blob
-	weight = 5
-	max_occurrences = 1
-
-	min_players = 20
-	earliest_start = 36000 //60 minutes
-
-	gamemode_blacklist = list("blob") //Just in case a blob survives that long
-
-/datum/round_event/blob
+/datum/event/blob
 	announceWhen	= 12
 	endWhen			= 120
-	var/new_rate = 2
 
-/datum/round_event/blob/New(var/strength)
-	..()
-	if(strength)
-		new_rate = strength
+	var/obj/effect/blob/core/Blob
 
-/datum/round_event/blob/announce()
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
+/datum/event/blob/announce()
+	level_seven_announcement()
 
-
-/datum/round_event/blob/start()
+/datum/event/blob/start()
 	var/turf/T = pick(blobstart)
 	if(!T)
-		return kill()
-	new/obj/effect/blob/core(T, null, new_rate)
+		kill()
+		return
+	Blob = new /obj/effect/blob/core(T)
+	for(var/i = 1; i < rand(3, 4), i++)
+		Blob.process()
+
+/datum/event/blob/tick()
+	if(!Blob || !Blob.loc)
+		Blob = null
+		kill()
+		return
+	if(IsMultiple(activeFor, 3))
+		Blob.process()

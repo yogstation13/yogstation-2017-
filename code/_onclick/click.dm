@@ -4,22 +4,7 @@
 */
 
 // 1 decisecond click delay (above and beyond mob/next_move)
-//This is mainly modified by click code, to modify click delays elsewhere, use next_move and changeNext_move()
-/mob/var/next_click	= 0
-
-// THESE DO NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-/mob/var/next_move_adjust = 0 //Amount to adjust action/click delays by, + or -
-/mob/var/next_move_modifier = 1 //Value to multiply action/click delays by
-
-
-//Delays the mob's next click/action by num deciseconds
-// eg: 10-3 = 7 deciseconds of delay
-// eg: 10*0.5 = 5 deciseconds of delay
-// DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
-
-/mob/proc/changeNext_move(num)
-	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
-
+/mob/var/next_click = 0
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -30,10 +15,14 @@
 
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
-/atom/Click(location,control,params)
-	usr.ClickOn(src, params)
-/atom/DblClick(location,control,params)
-	usr.DblClickOn(src,params)
+
+/atom/Click(var/location, var/control, var/params) // This is their reaction to being clicked on (standard proc)
+	if(src)
+		usr.ClickOn(src, params)
+
+/atom/DblClick(var/location, var/control, var/params)
+	if(src)
+		usr.DblClickOn(src, params)
 
 /*
 	Standard mob ClickOn()
@@ -48,120 +37,123 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( atom/A, params )
-	if(world.time <= next_click)
+/mob/proc/ClickOn(var/atom/A, var/params)
+
+	if(world.time <= next_click) // Hard check, before anything else, to avoid crashing
 		return
+
 	next_click = world.time + 1
 
-	if(client.prefs.afreeze)
-		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
 		return
-
-	if(client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"] && modifiers["alt"])
-		ShiftAltClickOn(A)
-		return
-	if(modifiers["alt"] && modifiers["ctrl"])
-		CtrlAltClickOn(A)
-		return
-	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
-		return
+		return 1
 	if(modifiers["middle"])
 		MiddleClickOn(A)
-		return
+		return 1
 	if(modifiers["shift"])
 		ShiftClickOn(A)
-		return
+		return 0
 	if(modifiers["alt"]) // alt and alt-gr (rightalt)
 		AltClickOn(A)
-		return
+		return 1
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
+		return 1
+
+	if(stat || paralysis || stunned || weakened)
 		return
 
-	if(incapacitated(ignore_restraints = 1))
+	face_atom(A) // change direction to face what you clicked on
+
+	if(!canClick()) // in the year 2000...
 		return
 
-	face_atom(A)
-
-	if(next_move > world.time) // in the year 2000...
-		return
-
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
+		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
+			return
 		var/obj/mecha/M = loc
-		return M.click_action(A,src,params)
+		return M.click_action(A, src)
 
 	if(restrained())
-		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
+		setClickCooldown(10)
 		RestrainedClickOn(A)
-		return
+		return 1
 
 	if(in_throw_mode)
-		throw_item(A)
-		return
+		if(isturf(A) || isturf(A.loc))
+			throw_item(A)
+			trigger_aiming(TARGET_CAN_CLICK)
+			return 1
+		throw_mode_off()
 
 	var/obj/item/W = get_active_hand()
 
-	if(W == A)
+	if(W == A) // Handle attack_self
 		W.attack_self(src)
-		if(hand)
-			update_inv_l_hand(0)
-		else
-			update_inv_r_hand(0)
-		return
+		trigger_aiming(TARGET_CAN_CLICK)
+		update_inv_active_hand(0)
+		return 1
 
-	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
-	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
-		// No adjacency needed
+	//Atoms on your person
+	// A is your location but is not a turf; or is on you (backpack); or is on something on you (box in backpack); sdepth is needed here because contents depth does not equate inventory storage depth.
+	var/sdepth = A.storage_depth(src)
+	if((!isturf(A) && A == loc) || (sdepth != -1 && sdepth <= 1))
 		if(W)
-			var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+			var/resolved = W.resolve_attackby(A, src)
 			if(!resolved && A && W)
-				resolved = A.attackby(W,src)
-			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
+				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
-			if(ismob(A))
-				changeNext_move(CLICK_CD_MELEE)
-			UnarmedAttack(A)
-		return
+			if(ismob(A)) // No instant mob attacking
+				setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+			UnarmedAttack(A, 1)
+
+		trigger_aiming(TARGET_CAN_CLICK)
+		return 1
 
 	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
 		return
 
-	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
+	//Atoms on turfs (not on your person)
+	// A is a turf or is on a turf, or in something on a turf (pen in a box); but not something in something on a turf (pen in a box in a backpack)
+	sdepth = A.storage_depth_turf()
+	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
+				var/resolved = W.resolve_attackby(A,src)
 				if(!resolved && A && W)
-					resolved = A.attackby(W,src,params)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
 			else
-				if(ismob(A))
-					changeNext_move(CLICK_CD_MELEE)
+				if(ismob(A)) // No instant mob attacking
+					setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 				UnarmedAttack(A, 1)
+			trigger_aiming(TARGET_CAN_CLICK)
 			return
 		else // non-adjacent click
 			if(W)
-				var/resolved = resolve_assault_modules(A, ARMED_RANGE_CLICK)
-				if(!resolved && A && W)
-					W.afterattack(A,src,0,params) // 0: not Adjacent
+				W.afterattack(A, src, 0, params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 
-// Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
-/mob/proc/DblClickOn(atom/A, params)
-	return
+			trigger_aiming(TARGET_CAN_CLICK)
+	return 1
 
+/mob/proc/setClickCooldown(var/timeout)
+	next_move = max(world.time + timeout, next_move)
+
+/mob/proc/canClick()
+	if(config.no_click_cooldown || next_move <= world.time)
+		return 1
+	return 0
+
+// Default behavior: ignore double clicks, the second click that makes the doubleclick call already calls for a normal click
+/mob/proc/DblClickOn(var/atom/A, var/params)
+	return
 
 /*
 	Translates into attack_hand, etc.
@@ -173,10 +165,19 @@
 	proximity_flag is not currently passed to attack_hand, and is instead used
 	in human click code to allow glove touches only at melee range.
 */
-/mob/proc/UnarmedAttack(atom/A, proximity_flag)
-	if(ismob(A))
-		changeNext_move(CLICK_CD_MELEE)
+/mob/proc/UnarmedAttack(var/atom/A, var/proximity_flag)
 	return
+
+/mob/living/UnarmedAttack(var/atom/A, var/proximity_flag)
+
+	if(!ticker)
+		src << "You cannot attack people before the game has started."
+		return 0
+
+	if(stat)
+		return 0
+
+	return 1
 
 /*
 	Ranged unarmed attack:
@@ -186,39 +187,34 @@
 	for things like ranged glove touches, spitting alien acid/neurotoxin,
 	animals lunging, etc.
 */
-/mob/proc/RangedAttack(atom/A, params)
+/mob/proc/RangedAttack(var/atom/A, var/params)
+	if(!mutations.len) return
+	if((LASER in mutations) && a_intent == I_HURT)
+		LaserEyes(A) // moved into a proc below
+	else if(TK in mutations)
+		if(get_dist(src, A) > tk_maxrange)
+			return
+		A.attack_tk(src)
 /*
 	Restrained ClickOn
 
 	Used when you are handcuffed and click things.
 	Not currently used by anything but could easily be.
 */
-/mob/proc/RestrainedClickOn(atom/A)
+/mob/proc/RestrainedClickOn(var/atom/A)
 	return
 
 /*
 	Middle click
 	Only used for swapping hands
 */
-/mob/proc/MiddleClickOn(atom/A)
-	return
-
-/mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
-		next_click = world.time + 5
-		mind.cyberman.initiate_hack(A)
-	else
-		swap_hand()
-
-/mob/living/simple_animal/drone/MiddleClickOn(atom/A)
+/mob/proc/MiddleClickOn(var/atom/A)
 	swap_hand()
+	return
 
 // In case of use break glass
 /*
-/atom/proc/MiddleClick(mob/M as mob)
+/atom/proc/MiddleClick(var/mob/M as mob)
 	return
 */
 
@@ -227,11 +223,11 @@
 	For most mobs, examine.
 	This is overridden in ai.dm
 */
-/mob/proc/ShiftClickOn(atom/A)
+/mob/proc/ShiftClickOn(var/atom/A)
 	A.ShiftClick(src)
 	return
-/atom/proc/ShiftClick(mob/user)
-	if(user.client && user.client.eye == user || user.client.eye == user.loc)
+/atom/proc/ShiftClick(var/mob/user)
+	if(user.client && user.client.eye == user)
 		user.examinate(src)
 	return
 
@@ -239,75 +235,47 @@
 	Ctrl click
 	For most objects, pull
 */
-/mob/proc/CtrlClickOn(atom/A)
+/mob/proc/CtrlClickOn(var/atom/A)
 	A.CtrlClick(src)
 	return
+/atom/proc/CtrlClick(var/mob/user)
+	return
 
-/atom/proc/CtrlClick(mob/user)
-	var/mob/living/ML = user
-	if(istype(ML))
-		ML.pulled(src)
+/atom/movable/CtrlClick(var/mob/user)
+	if(Adjacent(user))
+		user.start_pulling(src)
 
 /*
 	Alt click
 	Unused except for AI
 */
-/mob/proc/AltClickOn(atom/A)
+/mob/proc/AltClickOn(var/atom/A)
 	A.AltClick(src)
 	return
 
-/mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
-		next_click = world.time + 5
-		mind.cyberman.initiate_hack(A)
-	else
-		..()
-
-/atom/proc/AltClick(mob/user)
+/atom/proc/AltClick(var/mob/user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
 			user.listed_turf = null
 		else
 			user.listed_turf = T
-			user.client.statpanel = T.name
-	return
+			user.client.statpanel = "Turf"
+	return 1
 
-/mob/proc/TurfAdjacent(turf/T)
-	return T.Adjacent(src)
+/mob/proc/TurfAdjacent(var/turf/T)
+	return T.AdjacentQuick(src)
 
 /*
 	Control+Shift click
 	Unused except for AI
 */
-/mob/proc/CtrlShiftClickOn(atom/A)
+/mob/proc/CtrlShiftClickOn(var/atom/A)
 	A.CtrlShiftClick(src)
 	return
 
-/mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+/atom/proc/CtrlShiftClick(var/mob/user)
 	return
-
-/atom/proc/CtrlShiftClick(mob/user)
-	return
-
-/mob/proc/ShiftAltClickOn(atom/A)
-	A.ShiftAltClick(src)
-	return
-
-/atom/proc/ShiftAltClick(mob/user)
-	return
-
-/mob/proc/CtrlAltClickOn(atom/A)
-	A.CtrlAltClick(src)
-	return
-
-/atom/proc/CtrlAltClick(mob/user)
-	return
-
 
 /*
 	Misc helpers
@@ -319,50 +287,38 @@
 	return
 
 /mob/living/LaserEyes(atom/A)
-	changeNext_move(CLICK_CD_RANGE)
+	setClickCooldown(4)
 	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
 
-	var/obj/item/projectile/beam/LE = new /obj/item/projectile/beam( loc )
+	var/obj/item/projectile/beam/LE = new (T)
 	LE.icon = 'icons/effects/genetics.dmi'
 	LE.icon_state = "eyelasers"
 	playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
-
-	LE.firer = src
-	LE.def_zone = get_organ_target()
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
-	LE.fire()
+	LE.launch(A)
+/mob/living/carbon/human/LaserEyes()
+	if(nutrition>0)
+		..()
+		nutrition = max(nutrition - rand(1,5),0)
+		handle_regular_hud_updates()
+	else
+		src << "<span class='warning'>You're out of energy!  You need food!</span>"
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
-/mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
-		return
+/mob/proc/face_atom(var/atom/A)
+	if(!A || !x || !y || !A.x || !A.y) return
 	var/dx = A.x - x
 	var/dy = A.y - y
-	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)
-			dir = NORTH
-		else if(A.pixel_y < -16)
-			dir = SOUTH
-		else if(A.pixel_x > 16)
-			dir = EAST
-		else if(A.pixel_x < -16)
-			dir = WEST
-		return
+	if(!dx && !dy) return
 
+	var/direction
 	if(abs(dx) < abs(dy))
-		if(dy > 0)
-			dir = NORTH
-		else
-			dir = SOUTH
+		if(dy > 0)	direction = NORTH
+		else		direction = SOUTH
 	else
-		if(dx > 0)
-			dir = EAST
-		else
-			dir = WEST
+		if(dx > 0)	direction = EAST
+		else		direction = WEST
+	if(direction != dir)
+		facedir(direction)
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
@@ -385,118 +341,6 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
-		if(T)
-			T.Click(location, control, params)
+		var/turf/T = screen_loc2turf("screen-loc", get_turf(usr))
+		T.Click(location, control, params)
 	. = 1
-
-
-///////////////////////////////////////
-///////////// HUD HOTKEYS /////////////
-///////////////////////////////////////
-
-/mob/living/carbon/human/ShiftAltClickOn(atom/A)
-	if(istype(A, /mob/living/carbon/human))
-		if(A == src)
-			return
-
-		var/obj/item/organ/cyberimp/eyes/hud/CIH = src.getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
-		if(istype(src.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
-			var/allowed_access = checkHUDaccess(sec=1)
-			if(!allowed_access) return
-			var/mob/living/carbon/human/AH = A
-			var/perpname = AH.get_face_name(get_id_name(""))
-			var/datum/data/record/R = find_record("name", perpname, data_core.general)
-			R = find_record("name", perpname, data_core.security)
-			if(R)
-				var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
-				if(setcriminal != "Cancel")
-					if(src.canUseHUD())
-						if(src in view(10, AH))
-							investigate_log("[AH.key] has been set from [R.fields["criminal"]] to [setcriminal] by [src.name] ([src.key]).", "records")
-							R.fields["criminal"] = setcriminal
-							AH.sec_hud_set_security_status()
-							return
-						src << "<span class='alert'>The target is out of range!</span>"
-
-/mob/living/carbon/human/CtrlShiftClickOn(atom/A)
-	if(istype(A, /mob/living/carbon/human))
-		if(A == src)
-			return
-
-		var/mob/living/carbon/human/AH = A
-		var/perpname = AH.get_face_name(get_id_name(""))
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
-		var/allowed_access1 = checkHUDaccess(sec=1)
-//		var/allowed_access2 = checkHUDaccess(med=1)
-
-		var/obj/item/organ/cyberimp/eyes/hud/CIH = src.getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
-		if(istype(src.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
-			if(!allowed_access1) return
-			switch(alert("What would you like to add?","Security HUD","Minor Crime","Major Crime", "Comment", "Cancel"))
-				if("Minor Crime")
-					if(R)
-						var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
-						var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
-						if(R)
-							if (!t1 || !t2 || !allowed_access1) return
-							else if(!src.canUseHUD()) return
-							var/crime = data_core.createCrimeEntry(t1, t2, allowed_access1, worldtime2text())
-							data_core.addMinorCrime(R.fields["id"], crime)
-							src << "<span class='notice'>Successfully added a minor crime.</span>"
-							return
-				if("Major Crime")
-					if(R)
-						if(!allowed_access1) return
-						var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
-						var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
-						if(R)
-							if (!t1 || !t2 || !allowed_access1) return
-							else if (!src.canUseHUD()) return
-							var/crime = data_core.createCrimeEntry(t1, t2, allowed_access1, worldtime2text())
-							data_core.addMajorCrime(R.fields["id"], crime)
-							src << "<span class='notice'>Successfully added a major crime.</span>"
-				if("Comment")
-					if(R)
-						var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
-						if(R)
-							if (!t1 || !allowed_access1) return
-							else if(!src.canUseHUD()) return
-							var/counter = 1
-							while(R.fields[text("com_[]", counter)])
-								counter++
-							R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access1, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
-							src << "<span class='notice'>Successfully added comment.</span>"
-
-/*			FUTURE USE POSSIBLY??
-		if(istype(src.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
-			if(!allowed_access2) return
-*/
-
-
-/mob/living/carbon/human/proc/checkHUDaccess(var/sec = 0, var/med = 0)
-	if(!sec && !med)
-		message_admins("Yell at Super3222, something went wrong with the proc call checkHUDaccess(). Associated with [usr] so check them out.")
-		return
-	var/allowed_id = null
-	var/obj/item/clothing/glasses/G = src.glasses
-	if (!G.emagged)
-		if(src.wear_id)
-			var/list/access = src.wear_id.GetAccess()
-			if(sec)
-				if(access_brig in access)
-					allowed_id = src.get_authentification_name()
-					return allowed_id
-			if(med)
-				if(access_brig in access)
-					allowed_id = src.get_authentification_name()
-					return allowed_id
-		else
-			return 0
-	else
-		allowed_id = "@%&ERROR_%$*"
-		return allowed_id
-
-	if(!allowed_id)
-		src << "<span class='warning'>ERROR: Invalid Access</span>"
-		return 0

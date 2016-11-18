@@ -3,60 +3,62 @@
 // can also operate on non-loc area through "otherarea" var
 /obj/machinery/light_switch
 	name = "light switch"
+	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
+	anchored = 1.0
+	use_power = 1
+	idle_power_usage = 10
+	power_channel = LIGHT
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
+	var/image/overlay
 
 /obj/machinery/light_switch/New()
 	..()
 	spawn(5)
-		src.area = src.loc.loc
+		area = get_area(src)
 
 		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
+			area = locate(text2path("/area/[otherarea]"))
 
 		if(!name)
 			name = "light switch ([area.name])"
 
-		src.on = src.area.lightswitch
+		on = area.lightswitch
 		updateicon()
 
-
-
 /obj/machinery/light_switch/proc/updateicon()
+	if(!overlay)
+		overlay = image(icon, "light1-overlay", LIGHTING_LAYER+0.1)
+
+	overlays.Cut()
 	if(stat & NOPOWER)
 		icon_state = "light-p"
+		set_light(0)
 	else
-		if(on)
-			icon_state = "light1"
-		else
-			icon_state = "light0"
+		icon_state = "light[on]"
+		overlay.icon_state = "light[on]-overlay"
+		overlays += overlay
+		set_light(2, 0.1, on ? "#82FF4C" : "#F86060")
 
 /obj/machinery/light_switch/examine(mob/user)
-	..()
-	user << "It is [on? "on" : "off"]."
-
-
-/obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
+	if(..(user, 1))
+		user << "A light switch. It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 
 	on = !on
 
-	for(var/area/A in area.master.related)
-		A.lightswitch = on
-		A.updateicon()
+	area.lightswitch = on
+	area.updateicon()
 
-		for(var/obj/machinery/light_switch/L in A)
-			L.on = on
-			L.updateicon()
+	for(var/obj/machinery/light_switch/L in area)
+		L.on = on
+		L.updateicon()
 
-	area.master.power_change()
+	area.power_change()
 
 /obj/machinery/light_switch/power_change()
 

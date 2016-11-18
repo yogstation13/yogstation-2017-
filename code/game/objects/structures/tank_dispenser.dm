@@ -1,98 +1,120 @@
-#define TANK_DISPENSER_CAPACITY 10
-
-/obj/structure/tank_dispenser
-	name = "tank dispenser"
-	desc = "A simple yet bulky storage device for gas tanks. Holds up to 10 oxygen tanks and 10 plasma tanks."
+/obj/structure/dispenser
+	name = "tank storage unit"
+	desc = "A simple yet bulky storage device for gas tanks. Has room for up to ten oxygen tanks, and ten phoron tanks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser"
 	density = 1
-	anchored = 1
-	var/oxygentanks = TANK_DISPENSER_CAPACITY
-	var/plasmatanks = TANK_DISPENSER_CAPACITY
+	anchored = 1.0
+	w_class = ITEMSIZE_HUGE
+	var/oxygentanks = 10
+	var/phorontanks = 10
+	var/list/oxytanks = list()	//sorry for the similar var names
+	var/list/platanks = list()
 
-/obj/structure/tank_dispenser/oxygen
-	plasmatanks = 0
 
-/obj/structure/tank_dispenser/plasma
+/obj/structure/dispenser/oxygen
+	phorontanks = 0
+
+/obj/structure/dispenser/phoron
 	oxygentanks = 0
 
-/obj/structure/tank_dispenser/New()
-	for(var/i in 1 to oxygentanks)
-		new /obj/item/weapon/tank/internals/oxygen(src)
-	for(var/i in 1 to plasmatanks)
-		new /obj/item/weapon/tank/internals/plasma(src)
+
+/obj/structure/dispenser/New()
 	update_icon()
 
-/obj/structure/tank_dispenser/update_icon()
+
+/obj/structure/dispenser/update_icon()
 	overlays.Cut()
 	switch(oxygentanks)
-		if(1 to 3)
-			overlays += "oxygen-[oxygentanks]"
-		if(4 to TANK_DISPENSER_CAPACITY)
-			overlays += "oxygen-4"
-	switch(plasmatanks)
-		if(1 to 4)
-			overlays += "plasma-[plasmatanks]"
-		if(5 to TANK_DISPENSER_CAPACITY)
-			overlays += "plasma-5"
+		if(1 to 3)	overlays += "oxygen-[oxygentanks]"
+		if(4 to INFINITY) overlays += "oxygen-4"
+	switch(phorontanks)
+		if(1 to 4)	overlays += "phoron-[phorontanks]"
+		if(5 to INFINITY) overlays += "phoron-5"
 
-/obj/structure/tank_dispenser/attackby(obj/item/I, mob/user, params)
-	var/full
-	if(istype(I, /obj/item/weapon/tank/internals/plasma))
-		if(plasmatanks < TANK_DISPENSER_CAPACITY)
-			plasmatanks++
-		else
-			full = TRUE
-	else if(istype(I, /obj/item/weapon/tank/internals/oxygen))
-		if(oxygentanks < TANK_DISPENSER_CAPACITY)
+/obj/structure/dispenser/attack_ai(mob/user as mob)
+	if(user.Adjacent(src))
+		return attack_hand(user)
+	..()
+
+/obj/structure/dispenser/attack_hand(mob/user as mob)
+	user.set_machine(src)
+	var/dat = "[src]<br><br>"
+	dat += "Oxygen tanks: [oxygentanks] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Dispense</A>" : "empty"]<br>"
+	dat += "Phoron tanks: [phorontanks] - [phorontanks ? "<A href='?src=\ref[src];phoron=1'>Dispense</A>" : "empty"]"
+	user << browse(dat, "window=dispenser")
+	onclose(user, "dispenser")
+	return
+
+
+/obj/structure/dispenser/attackby(obj/item/I as obj, mob/user as mob)
+	if(istype(I, /obj/item/weapon/tank/oxygen) || istype(I, /obj/item/weapon/tank/air) || istype(I, /obj/item/weapon/tank/anesthetic))
+		if(oxygentanks < 10)
+			user.drop_item()
+			I.loc = src
+			oxytanks.Add(I)
 			oxygentanks++
+			user << "<span class='notice'>You put [I] in [src].</span>"
+			if(oxygentanks < 5)
+				update_icon()
 		else
-			full = TRUE
-	else if(user.a_intent != "harm")
-		user << "<span class='notice'>[I] does not fit into [src].</span>"
+			user << "<span class='notice'>[src] is full.</span>"
+		updateUsrDialog()
 		return
-	else
-		return ..()
-	if(full)
-		user << "<span class='notice'>[src] can't hold anymore of [I].</span>"
+	if(istype(I, /obj/item/weapon/tank/phoron))
+		if(phorontanks < 10)
+			user.drop_item()
+			I.loc = src
+			platanks.Add(I)
+			phorontanks++
+			user << "<span class='notice'>You put [I] in [src].</span>"
+			if(oxygentanks < 6)
+				update_icon()
+		else
+			user << "<span class='notice'>[src] is full.</span>"
+		updateUsrDialog()
+		return
+	if(istype(I, /obj/item/weapon/wrench))
+		if(anchored)
+			user << "<span class='notice'>You lean down and unwrench [src].</span>"
+			anchored = 0
+		else
+			user << "<span class='notice'>You wrench [src] into place.</span>"
+			anchored = 1
 		return
 
-	if(!user.drop_item())
+/obj/structure/dispenser/Topic(href, href_list)
+	if(usr.stat || usr.restrained())
 		return
-	I.loc = src
-	user << "<span class='notice'>You put [I] in [src].</span>"
-	update_icon()
-
-/obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 100, master_ui, state)
-		ui.open()
-
-/obj/structure/tank_dispenser/ui_data(mob/user)
-	var/list/data = list()
-	data["oxygen"] = oxygentanks
-	data["plasma"] = plasmatanks
-
-	return data
-
-/obj/structure/tank_dispenser/ui_act(action, params)
-	if(..())
-		return
-	switch(action)
-		if("plasma")
-			var/obj/item/weapon/tank/internals/plasma/tank = locate() in src
-			if(tank)
-				usr.put_in_hands(tank)
-				plasmatanks--
-			. = TRUE
-		if("oxygen")
-			var/obj/item/weapon/tank/internals/oxygen/tank = locate() in src
-			if(tank)
-				usr.put_in_hands(tank)
+	if(Adjacent(usr))
+		usr.set_machine(src)
+		if(href_list["oxygen"])
+			if(oxygentanks > 0)
+				var/obj/item/weapon/tank/oxygen/O
+				if(oxytanks.len == oxygentanks)
+					O = oxytanks[1]
+					oxytanks.Remove(O)
+				else
+					O = new /obj/item/weapon/tank/oxygen(loc)
+				O.loc = loc
+				usr << "<span class='notice'>You take [O] out of [src].</span>"
 				oxygentanks--
-			. = TRUE
-	update_icon()
-
-#undef TANK_DISPENSER_CAPACITY
+				update_icon()
+		if(href_list["phoron"])
+			if(phorontanks > 0)
+				var/obj/item/weapon/tank/phoron/P
+				if(platanks.len == phorontanks)
+					P = platanks[1]
+					platanks.Remove(P)
+				else
+					P = new /obj/item/weapon/tank/phoron(loc)
+				P.loc = loc
+				usr << "<span class='notice'>You take [P] out of [src].</span>"
+				phorontanks--
+				update_icon()
+		add_fingerprint(usr)
+		updateUsrDialog()
+	else
+		usr << browse(null, "window=dispenser")
+		return
+	return

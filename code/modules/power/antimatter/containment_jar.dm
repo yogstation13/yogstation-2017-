@@ -15,25 +15,26 @@
 	var/stability = 100//TODO: add all the stability things to this so its not very safe if you keep hitting in on things
 
 
-/obj/item/weapon/am_containment/ex_act(severity, target)
+/obj/item/weapon/am_containment/ex_act(severity)
 	switch(severity)
-		if(1)
+		if(1.0)
 			explosion(get_turf(src), 1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
 			if(src)
 				qdel(src)
-		if(2)
+			return
+		if(2.0)
 			if(prob((fuel/10)-stability))
 				explosion(get_turf(src), 1, 2, 3, 5)
 				if(src)
 					qdel(src)
 				return
 			stability -= 40
-		if(3)
+		if(3.0)
 			stability -= 20
 	//check_stability()
 	return
 
-/obj/item/weapon/am_containment/proc/usefuel(wanted)
+/obj/item/weapon/am_containment/proc/usefuel(var/wanted)
 	if(fuel < wanted)
 		wanted = fuel
 	fuel -= wanted

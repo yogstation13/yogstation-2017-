@@ -1,151 +1,97 @@
-/turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
-	name = "mech bay recharge station"                      //        Recharging turfs
-	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
-	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
-
-/turf/open/floor/mech_bay_recharge_floor/break_tile()
-	src.ChangeTurf(/turf/open/floor/plating)
-
-/turf/open/floor/mech_bay_recharge_floor/airless
-	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = "TEMP=2.7"
-
-/obj/machinery/mech_bay_recharge_port
-	name = "mech bay power port"
-	density = 1
-	anchored = 1
-	dir = 4
+/obj/machinery/mech_recharger
+	name = "mech recharger"
+	desc = "A mech recharger, built into the floor."
 	icon = 'icons/mecha/mech_bay.dmi'
-	icon_state = "recharge_port"
-	var/obj/mecha/recharging_mech
-	var/obj/machinery/computer/mech_bay_power_console/recharge_console
-	var/max_charge = 50
-	var/on = 0
-	var/repairability = 0
-	var/turf/recharging_turf = null
+	icon_state = "recharge_floor"
+	density = 0
+	anchored = 1
+	layer = TURF_LAYER + 0.1
+	circuit = /obj/item/weapon/circuitboard/mech_recharger
 
-/obj/machinery/mech_bay_recharge_port/New()
+	var/obj/mecha/charging = null
+	var/charge = 45
+	var/repair = 0
+
+/obj/machinery/mech_recharger/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mech_recharger(null)
-	B.apply_default_parts(src)
-	recharging_turf = get_step(loc, dir)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
+	RefreshParts()
 
-/obj/item/weapon/circuitboard/machine/mech_recharger
-	name = "circuit board (Mechbay Recharger)"
-	build_path = /obj/machinery/mech_bay_recharge_port
-	origin_tech = "programming=3;powerstorage=3;engineering=3"
-	req_components = list(
-							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/capacitor = 5)
+/obj/machinery/mech_recharger/Crossed(var/obj/mecha/M)
+	. = ..()
+	if(istype(M) && charging != M)
+		start_charging(M)
 
-/obj/machinery/mech_bay_recharge_port/RefreshParts()
-	var/MC
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
-		MC += C.rating
-	max_charge = MC * 25
+/obj/machinery/mech_recharger/Uncrossed(var/obj/mecha/M)
+	. = ..()
+	if(M == charging)
+		stop_charging()
 
-/obj/machinery/mech_bay_recharge_port/process()
-	if(stat & NOPOWER || !recharge_console)
-		return
-	if(!recharging_mech)
-		recharging_mech = locate(/obj/mecha) in recharging_turf
-		if(recharging_mech)
-			recharge_console.update_icon()
-	if(recharging_mech && recharging_mech.cell)
-		if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
-			var/delta = min(max_charge, recharging_mech.cell.maxcharge - recharging_mech.cell.charge)
-			recharging_mech.give_power(delta)
-			use_power(delta*150)
-		else
-			recharge_console.update_icon()
-		if(recharging_mech.loc != recharging_turf)
-			recharging_mech = null
-			recharge_console.update_icon()
-
-
-/obj/machinery/mech_bay_recharge_port/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "recharge_port-o", "recharge_port", I))
-		return
-
-	if(default_change_direction_wrench(user, I))
-		recharging_turf = get_step(loc, dir)
-		return
-
-	if(exchange_parts(user, I))
-		return
-
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
-
-/obj/machinery/computer/mech_bay_power_console
-	name = "mech bay power control console"
-	desc = "Used to control mechbay power ports."
-	icon_screen = "recharge_comp"
-	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
-	var/obj/machinery/mech_bay_recharge_port/recharge_port
-
-/obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "mech_bay_power_console", "Mech Bay Power Control Console", 400, 170, master_ui, state)
-		ui.open()
-
-/obj/machinery/computer/mech_bay_power_console/ui_act(action, params)
-	if(..())
-		return
-	switch(action)
-		if("reconnect")
-			reconnect()
-			. = TRUE
-			update_icon()
-
-/obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
-	var/list/data = list()
-	if(recharge_port && !qdeleted(recharge_port))
-		data["recharge_port"] = list("mech" = null)
-		if(recharge_port.recharging_mech && !qdeleted(recharge_port.recharging_mech))
-			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.health, "maxhealth" = initial(recharge_port.recharging_mech.health), "cell" = null)
-			if(recharge_port.recharging_mech.cell && !qdeleted(recharge_port.recharging_mech.cell))
-				data["recharge_port"]["mech"]["cell"] = list(
-				"critfail" = recharge_port.recharging_mech.cell.crit_fail,
-				"charge" = recharge_port.recharging_mech.cell.charge,
-				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
-				)
-	return data
-
-
-/obj/machinery/computer/mech_bay_power_console/proc/reconnect()
-	if(recharge_port)
-		return
-	recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in range(1)
-	if(!recharge_port )
-		for(var/D in cardinal)
-			var/turf/A = get_step(src, D)
-			A = get_step(A, D)
-			recharge_port = locate(/obj/machinery/mech_bay_recharge_port) in A
-			if(recharge_port)
-				break
-	if(recharge_port)
-		if(!recharge_port.recharge_console)
-			recharge_port.recharge_console = src
-		else
-			recharge_port = null
-
-/obj/machinery/computer/mech_bay_power_console/update_icon()
+/obj/machinery/mech_recharger/RefreshParts()
 	..()
-	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
-		return
-	overlays += "recharge_comp_on"
+	charge = 0
+	repair = -5
+	for(var/obj/item/weapon/stock_parts/P in component_parts)
+		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
+			charge += P.rating * 20
+		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
+			charge += P.rating * 5
+			repair += P.rating
+		if(istype(P, /obj/item/weapon/stock_parts/manipulator))
+			repair += P.rating * 2
 
-/obj/machinery/computer/mech_bay_power_console/initialize()
-	reconnect()
+/obj/machinery/mech_recharger/process()
+	..()
+	if(!charging)
+		return
+	if(charging.loc != src.loc) // Could be qdel or teleport or something
+		stop_charging()
+		return
+	var/done = 1
+	if(charging.cell)
+		var/t = min(charge, charging.cell.maxcharge - charging.cell.charge)
+		if(t > 0)
+			charging.give_power(t)
+			use_power(t * 150)
+			done = 0
+		else
+			charging.occupant_message("<span class='notice'>Fully charged.</span>")
+	if(repair && charging.health < initial(charging.health))
+		charging.health = min(charging.health + repair, initial(charging.health))
+		if(charging.health == initial(charging.health))
+			charging.occupant_message("<span class='notice'>Fully repaired.</span>")
+
+		else
+			done = 0
+	if(done)
+		stop_charging()
+	return
+
+/obj/machinery/mech_recharger/attackby(var/obj/item/I, var/mob/user)
+	if(default_deconstruction_screwdriver(user, I))
+		return
+	if(default_deconstruction_crowbar(user, I))
+		return
+	if(default_part_replacement(user, I))
+		return
+
+/obj/machinery/mech_recharger/proc/start_charging(var/obj/mecha/M)
+	if(stat & (NOPOWER | BROKEN))
+		M.occupant_message("<span class='warning'>Power port not responding. Terminating.</span>")
+
+		return
+	if(M.cell)
+		M.occupant_message("<span class='notice'>Now charging...</span>")
+		charging = M
+	return
+
+/obj/machinery/mech_recharger/proc/stop_charging()
+	if(!charging)
+
+		return
+	charging = null

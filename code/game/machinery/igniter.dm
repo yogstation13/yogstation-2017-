@@ -1,35 +1,32 @@
 /obj/machinery/igniter
 	name = "igniter"
-	desc = "It's useful for igniting plasma."
+	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
 	var/id = null
-	var/on = 1
-	anchored = 1
+	var/on = 1.0
+	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
 
-/obj/machinery/igniter/attack_ai(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/igniter/attack_ai(mob/user as mob)
+	return attack_hand(user)
 
-/obj/machinery/igniter/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/igniter/attack_hand(mob/user)
+/obj/machinery/igniter/attack_hand(mob/user as mob)
 	if(..())
 		return
 	add_fingerprint(user)
 
 	use_power(50)
-	src.on = !( src.on )
-	src.icon_state = text("igniter[]", src.on)
+	on = !(on)
+	icon_state = text("igniter[]", on)
 	return
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
-	if (src.on && !(stat & NOPOWER) )
+	if(on && !(stat & NOPOWER))
 		var/turf/location = src.loc
-		if (isturf(location))
+		if(isturf(location))
 			location.hotspot_expose(1000,500,1)
 	return 1
 
@@ -38,15 +35,16 @@
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/power_change()
-	if(!( stat & NOPOWER) )
-		icon_state = "igniter[src.on]"
+	..()
+	if(!(stat & NOPOWER))
+		icon_state = "igniter[on]"
 	else
 		icon_state = "igniter0"
 
 // Wall mounted remote-control igniter.
 
 /obj/machinery/sparker
-	name = "mounted igniter"
+	name = "Mounted igniter"
 	desc = "A wall-mounted ignition device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "migniter"
@@ -54,66 +52,59 @@
 	var/disable = 0
 	var/last_spark = 0
 	var/base_state = "migniter"
-	var/datum/effect_system/spark_spread/spark_system
 	anchored = 1
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 4
 
 /obj/machinery/sparker/New()
 	..()
-	spark_system = new /datum/effect_system/spark_spread
-	spark_system.set_up(2, 1, src)
-	spark_system.attach(src)
-
-/obj/machinery/sparker/Destroy()
-	qdel(spark_system)
-	spark_system = null
-	return ..()
 
 /obj/machinery/sparker/power_change()
-	if ( powered() && disable == 0 )
-		stat &= ~NOPOWER
-		icon_state = "[base_state]"
-//		src.sd_SetLuminosity(2)
-	else
-		stat |= ~NOPOWER
-		icon_state = "[base_state]-p"
-//		src.sd_SetLuminosity(0)
+	..()
+	if(!(stat & NOPOWER) && disable == 0)
 
-/obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user, params)
-	if (istype(W, /obj/item/weapon/screwdriver))
+		icon_state = "[base_state]"
+//		sd_SetLuminosity(2)
+	else
+		icon_state = "[base_state]-p"
+//		sd_SetLuminosity(0)
+
+/obj/machinery/sparker/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/weapon/screwdriver))
 		add_fingerprint(user)
-		src.disable = !src.disable
-		if (src.disable)
-			user.visible_message("[user] has disabled \the [src]!", "<span class='notice'>You disable the connection to \the [src].</span>")
+		disable = !disable
+		if(disable)
+			user.visible_message("<span class='warning'>[user] has disabled the [src]!</span>", "<span class='warning'>You disable the connection to the [src].</span>")
 			icon_state = "[base_state]-d"
-		if (!src.disable)
-			user.visible_message("[user] has reconnected \the [src]!", "<span class='notice'>You fix the connection to \the [src].</span>")
-			if(src.powered())
+		if(!disable)
+			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
+			if(powered())
 				icon_state = "[base_state]"
 			else
 				icon_state = "[base_state]-p"
-	else
-		return ..()
 
 /obj/machinery/sparker/attack_ai()
-	if (anchored)
-		return src.ignite()
+	if(anchored)
+		return ignite()
 	else
 		return
 
 /obj/machinery/sparker/proc/ignite()
-	if (!(powered()))
+	if(!(powered()))
 		return
 
-	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))
+	if((disable) || (last_spark && world.time < last_spark + 50))
 		return
-
 
 	flick("[base_state]-spark", src)
-	spark_system.start()
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(2, 1, src)
+	s.start()
 	last_spark = world.time
 	use_power(1000)
 	var/turf/location = src.loc
-	if (isturf(location))
+	if(isturf(location))
 		location.hotspot_expose(1000,500,1)
 	return 1
 
@@ -123,3 +114,35 @@
 		return
 	ignite()
 	..(severity)
+
+/obj/machinery/button/ignition
+	name = "ignition switch"
+	desc = "A remote control switch for a mounted igniter."
+
+/obj/machinery/button/ignition/attack_hand(mob/user as mob)
+
+	if(..())
+		return
+
+	use_power(5)
+
+	active = 1
+	icon_state = "launcheract"
+
+	for(var/obj/machinery/sparker/M in machines)
+		if(M.id == id)
+			spawn(0)
+				M.ignite()
+
+	for(var/obj/machinery/igniter/M in machines)
+		if(M.id == id)
+			use_power(50)
+			M.on = !(M.on)
+			M.icon_state = text("igniter[]", M.on)
+
+	sleep(50)
+
+	icon_state = "launcherbtt"
+	active = 0
+
+	return

@@ -23,6 +23,7 @@ a, a:link, a:visited, a:active, .linkOn, .linkOff
 	padding: 1px 4px 1px 4px;
 	margin: 0 2px 0 0;
 	cursor:default;
+	white-space:nowrap;
 }
 
 a:hover 
@@ -45,23 +46,6 @@ a.white, a.white:link, a.white:visited, a.white:active
 a.white:hover 
 { 
 	color: #ffffff;
-	background: #40628a;
-}
-
-a.special, a.special:link, a.special:visited, a.special:active
-{ 
-	color: #40628a; 
-	text-decoration: none;
-	background: #000000;
-	border: 1px solid #161616;
-	padding: 1px 4px 1px 4px;
-	margin: 0 2px 0 0;
-	cursor:default;
-}
-
-a.special:hover 
-{ 
-	color: #000000;
 	background: #40628a;
 }
 
@@ -92,6 +76,22 @@ a.icon img, .linkOn.icon img
 	left: 0;
 	width: 18px;
 	height: 18px;
+}
+
+a.icon64, .linkOn.icon64, .linkOff.icon64
+{
+	position: relative;
+	padding: 1px 4px 2px 68px;
+	font-size: 55px;
+}
+
+a.icon64 img, .linkOn.icon64 img
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 66px;
+	height: 66px;
 }
 
 ul
@@ -143,6 +143,7 @@ h4
 
 	width: 100%;
 	height: 100%;
+	padding-top:32px;
 }
 
 .uiTitle
@@ -154,6 +155,25 @@ h4
 	color: #98B0C3;
 	font-size: 16px;
 }
+
+.uiTitleWrapper
+ {
+ 	position:fixed;
+ 	top:0px;
+ 	left:0px;
+ 	right:0px;
+ 	z-index: 10
+ }
+ 
+ .uiTitleButtons
+ {
+ 	position:fixed;
+ 	top:0px;
+ 	right:0px;
+ 	height:32px;
+ 	z-index:11;
+ }
+
 
 .uiTitle.icon
 {
@@ -231,19 +251,6 @@ div.notice
 	border: 1px solid #40628a;
 	padding: 4px;
 	margin: 3px 0;
-}
-
-.statusLabel
-{
-	width: 138px;
-	float: left;
-	overflow: hidden;
-	color: #98B0C3;
-}
-
-.statusValue
-{
-	float: left;
 }
 
 .block

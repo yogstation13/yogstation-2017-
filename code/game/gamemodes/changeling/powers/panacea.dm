@@ -1,37 +1,42 @@
-/obj/effect/proc_holder/changeling/panacea
+/datum/power/changeling/panacea
 	name = "Anatomic Panacea"
-	desc = "Expels impurifications from our form; curing diseases, removing parasites, sobering us, treating ear damage, waking us up, purging toxins and radiation, and resetting our genetic code completely."
-	helptext = "Can be used while unconscious."
-	chemical_cost = 40
-	dna_cost = 2
-	req_stat = UNCONSCIOUS
+	desc = "Expels impurifications from our form; curing diseases, removing toxins, chemicals, radiation, and resetting our genetic code completely."
+	helptext = "Can be used while unconscious.  This will also purge any reagents inside ourselves, both harmful and beneficial."
+	enhancedtext = "We heal more toxins."
+	ability_icon_state = "ling_anatomic_panacea"
+	genomecost = 1
+	verbpath = /mob/proc/changeling_panacea
 
 //Heals the things that the other regenerative abilities don't.
-/obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
-	user << "<span class='notice'>We begin cleansing impurities from our form.</span>"
+/mob/proc/changeling_panacea()
+	set category = "Changeling"
+	set name = "Anatomic Panacea (20)"
+	set desc = "Clense ourselves of impurities."
 
-	var/obj/item/organ/body_egg/egg = user.getorgan(/obj/item/organ/body_egg)
-	if(egg)
-		egg.Remove(user)
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.vomit(0)
-		egg.loc = get_turf(user)
+	var/datum/changeling/changeling = changeling_power(20,0,100,UNCONSCIOUS)
+	if(!changeling)
+		return 0
+	src.mind.changeling.chem_charges -= 20
 
-	for(var/datum/disease/D in user.viruses)
-		if(D.severity == NONTHREAT)
-			continue
-		else
-			D.cure()
-			
-	
-	user.reagents.clear_reagents()
-	sleep(1)
-	user.reagents.add_reagent("antihol", 10)
-	user.reagents.add_reagent("mannitol", 25)
-	user.reagents.add_reagent("inacusiate", 10)
-	user.reagents.add_reagent("antitoxin", 29)
-	user.reagents.add_reagent("mutadone", 10)
-	
+	src << "<span class='notice'>We cleanse impurities from our form.</span>"
+
+	var/mob/living/carbon/human/C = src
+
+	C.radiation = 0
+	C.sdisabilities = 0
+	C.disabilities = 0
+	C.reagents.clear_reagents()
+	C.ingested.clear_reagents()
+
+	var/heal_amount = 5
+	if(src.mind.changeling.recursive_enhancement)
+		heal_amount = heal_amount * 2
+		src << "<span class='notice'>We will heal much faster.</span>"
+
+	for(var/i = 0, i<10,i++)
+		if(C)
+			C.adjustToxLoss(-heal_amount)
+			sleep(10)
+
 	feedback_add_details("changeling_powers","AP")
 	return 1

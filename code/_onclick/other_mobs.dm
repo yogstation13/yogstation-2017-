@@ -1,157 +1,154 @@
+// Generic damage proc (slimes and monkeys).
+/atom/proc/attack_generic(mob/user as mob)
+	return 0
+
 /*
 	Humans:
 	Adds an exception for gloves, to allow special glove types like the ninja ones.
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/human/UnarmedAttack(var/atom/A, var/proximity)
 
-	if(!has_active_hand()) //can't attack without a hand.
-		src << "<span class='notice'>You look at your arm and sigh.</span>"
+	if(!..())
 		return
 
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
-	if(proximity && istype(G) && G.Touch(A,1))
-		return
-
-	//Touch code not reworked to be a module yet, it should be at some point
-	if(proximity) //no stacking melee module effects with TK
-		if(resolve_assault_modules(A, UNARMED_MELEE_CLICK))
-			return
-
-	var/override = 0
-
-	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A)
-
-	if(override)
+	if(istype(G) && G.Touch(A,1))
 		return
 
 	A.attack_hand(src)
 
-/atom/proc/attack_hand(mob/user)
+/atom/proc/attack_hand(mob/user as mob)
 	return
 
-/atom/proc/interact(mob/user)
+/mob/living/carbon/human/RestrainedClickOn(var/atom/A)
 	return
 
-/*
-/mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
-	return
-*/
+/mob/living/carbon/human/RangedAttack(var/atom/A)
+	if(!gloves && !mutations.len) return
+	var/obj/item/clothing/gloves/G = gloves
+	if((LASER in mutations) && a_intent == I_HURT)
+		LaserEyes(A) // moved into a proc below
 
-/mob/living/carbon/RestrainedClickOn(atom/A)
-	return 0
-
-/mob/living/carbon/human/RangedAttack(atom/A)
-	if(gloves)
-		var/obj/item/clothing/gloves/G = gloves
-		if(istype(G) && G.Touch(A,0)) // for magic gloves
-			return
-
-	// This time, we resolve the modules that are defined as ranged, reusing attack types to not much up defines
-	if(resolve_assault_modules(A, UNARMED_RANGE_CLICK))
+	else if(istype(G) && G.Touch(A,0)) // for magic gloves
 		return
 
-	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(src, A)
+	else if(TK in mutations)
+		A.attack_tk(src)
 
-	var/turf/T = A
-	if(istype(T) && get_dist(src,T) <= 1)
-		src.Move_Pulled(T)
-
-/*
-	Animals & All Unspecified
-*/
-/mob/living/UnarmedAttack(atom/A)
-	A.attack_animal(src)
-
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
-	target = A
-	..()
-
-/atom/proc/attack_animal(mob/user)
+/mob/living/RestrainedClickOn(var/atom/A)
 	return
-
-/mob/living/RestrainedClickOn(atom/A)
-	return
-
-/*
-	Monkeys
-*/
-/mob/living/carbon/monkey/UnarmedAttack(atom/A)
-	A.attack_paw(src)
-/atom/proc/attack_paw(mob/user)
-	return
-
-/*
-	Monkey RestrainedClickOn() was apparently the
-	one and only use of all of the restrained click code
-	(except to stop you from doing things while handcuffed);
-	moving it here instead of various hand_p's has simplified
-	things considerably
-*/
-/mob/living/carbon/monkey/RestrainedClickOn(atom/A)
-	if(..())
-		return
-	if(a_intent != "harm" || !ismob(A))
-		return
-	if(is_muzzled())
-		return
-	var/mob/living/carbon/ML = A
-	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/bodypart/affecting = null
-	if(ishuman(ML))
-		var/mob/living/carbon/human/H = ML
-		affecting = H.get_bodypart(ran_zone(dam_zone))
-	var/armor = ML.run_armor_check(affecting, "melee")
-	if(prob(75))
-		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
-		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
-						"<span class='userdanger'>[name] bites [ML]!</span>")
-		if(armor >= 2)
-			return
-		for(var/datum/disease/D in viruses)
-			ML.ForceContractDisease(D)
-	else
-		ML.visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
 
 /*
 	Aliens
-	Defaults to same as monkey in most places
 */
-/mob/living/carbon/alien/UnarmedAttack(atom/A)
-	A.attack_alien(src)
-/atom/proc/attack_alien(mob/user)
-	attack_paw(user)
-	return
-/mob/living/carbon/alien/RestrainedClickOn(atom/A)
+
+/mob/living/carbon/alien/RestrainedClickOn(var/atom/A)
 	return
 
-// Babby aliens
-/mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
-	A.attack_larva(src)
-/atom/proc/attack_larva(mob/user)
-	return
+/mob/living/carbon/alien/UnarmedAttack(var/atom/A, var/proximity)
 
+	if(!..())
+		return 0
+
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	A.attack_generic(src,rand(5,6),"bitten")
 
 /*
 	Slimes
 	Nothing happening here
 */
-/mob/living/simple_animal/slime/UnarmedAttack(atom/A)
-	A.attack_slime(src)
-/atom/proc/attack_slime(mob/user)
-	return
-/mob/living/simple_animal/slime/RestrainedClickOn(atom/A)
+
+/mob/living/carbon/slime/RestrainedClickOn(var/atom/A)
 	return
 
+/mob/living/carbon/slime/UnarmedAttack(var/atom/A, var/proximity)
+
+	if(!..())
+		return
+
+	// Eating
+	if(Victim)
+		if (Victim == A)
+			Feedstop()
+		return
+
+	//should have already been set if we are attacking a mob, but it doesn't hurt and will cover attacking non-mobs too
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+
+	var/mob/living/M = A
+	if (istype(M))
+
+		switch(src.a_intent)
+			if (I_HELP) // We just poke the other
+				M.visible_message("<span class='notice'>[src] gently pokes [M]!</span>", "<span class='notice'>[src] gently pokes you!</span>")
+			if (I_DISARM) // We stun the target, with the intention to feed
+				var/stunprob = 1
+				var/power = max(0, min(10, (powerlevel + rand(0, 3))))
+				if (powerlevel > 0 && !istype(A, /mob/living/carbon/slime))
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						stunprob *= max(H.species.siemens_coefficient,0)
+
+
+					switch(power * 10)
+						if(0) stunprob *= 10
+						if(1 to 2) stunprob *= 20
+						if(3 to 4) stunprob *= 30
+						if(5 to 6) stunprob *= 40
+						if(7 to 8) stunprob *= 60
+						if(9) 	   stunprob *= 70
+						if(10) 	   stunprob *= 95
+
+				if(prob(stunprob))
+					powerlevel = max(0, powerlevel-3)
+					M.visible_message("<span class='danger'>[src] has shocked [M]!</span>", "<span class='danger'>[src] has shocked you!</span>")
+					M.Weaken(power)
+					M.Stun(power)
+					M.stuttering = max(M.stuttering, power)
+
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+					s.set_up(5, 1, M)
+					s.start()
+
+					if(prob(stunprob) && powerlevel >= 8)
+						M.adjustFireLoss(powerlevel * rand(6,10))
+				else if(prob(40))
+					M.visible_message("<span class='danger'>[src] has pounced at [M]!</span>", "<span class='danger'>[src] has pounced at you!</span>")
+					M.Weaken(power)
+				else
+					M.visible_message("<span class='danger'>[src] has tried to pounce at [M]!</span>", "<span class='danger'>[src] has tried to pounce at you!</span>")
+				M.updatehealth()
+			if (I_GRAB) // We feed
+				Wrap(M)
+			if (I_HURT) // Attacking
+				A.attack_generic(src, (is_adult ? rand(20,40) : rand(5,25)), "glomped")
+	else
+		A.attack_generic(src, (is_adult ? rand(20,40) : rand(5,25)), "glomped") // Basic attack.
 /*
 	New Players:
 	Have no reason to click on anything at all.
 */
 /mob/new_player/ClickOn()
 	return
+
+/*
+	Animals
+*/
+/mob/living/simple_animal/UnarmedAttack(var/atom/A, var/proximity)
+
+	if(!..())
+		return
+
+	if(melee_damage_upper == 0 && istype(A,/mob/living))
+		custom_emote(1,"[friendly] [A]!")
+		return
+
+	setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	var/damage = rand(melee_damage_lower, melee_damage_upper)
+	if(A.attack_generic(src,damage,attacktext,environment_smash) && loc && attack_sound)
+		playsound(loc, attack_sound, 50, 1, 1)

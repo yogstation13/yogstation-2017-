@@ -1,177 +1,273 @@
 /obj/item/device/paicard
 	name = "personal AI device"
-	icon = 'icons/obj/aicards.dmi'
+	icon = 'icons/obj/pda.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	w_class = 2
+	w_class = ITEMSIZE_SMALL
 	slot_flags = SLOT_BELT
-	origin_tech = "programming=2"
+	origin_tech = list(TECH_DATA = 2)
+	show_messages = 0
+
 	var/obj/item/device/radio/radio
-	var/looking_for_personality = 1
+	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
+
+/obj/item/device/paicard/relaymove(var/mob/user, var/direction)
+	if(user.stat || user.stunned)
+		return
+	var/obj/item/weapon/rig/rig = src.get_rig()
+	if(istype(rig))
+		rig.forced_move(direction, user)
 
 /obj/item/device/paicard/New()
 	..()
-	setBaseOverlay()
+	overlays += "pai-off"
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
 	if(!isnull(pai))
 		pai.death(0)
-	return ..()
+	..()
 
 /obj/item/device/paicard/attack_self(mob/user)
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Personal AI Device</B><BR>"
-	if(pai && (!pai.master_dna || !pai.master))
-		dat += "<a href='byond://?src=\ref[src];setdna=1'>Imprint Master DNA</a><br>"
+	var/dat = {"
+		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<html>
+			<head>
+				<style>
+					body {
+					    margin-top:5px;
+					    font-family:Verdana;
+					    color:white;
+					    font-size:13px;
+					    background-image:url('uiBackground.png');
+					    background-repeat:repeat-x;
+					    background-color:#272727;
+						background-position:center top;
+					}
+					table {
+					    font-size:13px;
+					    margin-left:-2px;
+					}
+					table.request {
+					    border-collapse:collapse;
+					}
+					table.desc {
+					    border-collapse:collapse;
+					    font-size:13px;
+					    border: 1px solid #161616;
+					    width:100%;
+					}
+					table.download {
+					    border-collapse:collapse;
+					    font-size:13px;
+					    border: 1px solid #161616;
+					    width:100%;
+					}
+					tr.d0 td, tr.d0 th {
+					    background-color: #506070;
+					    color: white;
+					}
+					tr.d1 td, tr.d1 th {
+					    background-color: #708090;
+					    color: white;
+					}
+					tr.d2 td {
+					    background-color: #00FF00;
+					    color: white;
+					    text-align:center;
+					}
+					td.button {
+					    border: 1px solid #161616;
+					    background-color: #40628a;
+					}
+					td.button {
+					    border: 1px solid #161616;
+					    background-color: #40628a;
+					    text-align: center;
+					}
+					td.button_red {
+					    border: 1px solid #161616;
+					    background-color: #B04040;
+					    text-align: center;
+					}
+					td.download {
+					    border: 1px solid #161616;
+					    background-color: #40628a;
+					    text-align: center;
+					}
+					th {
+					    text-align:left;
+					    width:125px;
+					}
+					td.request {
+					    width:140px;
+					    vertical-align:top;
+					}
+					td.radio {
+					    width:90px;
+					    vertical-align:top;
+					}
+					td.request {
+					    vertical-align:top;
+					}
+					a {
+					    color:#4477E0;
+					}
+					a.button {
+					    color:white;
+					    text-decoration: none;
+					}
+					h2 {
+					    font-size:15px;
+					}
+				</style>
+			</head>
+			<body>
+	"}
+
 	if(pai)
-		dat += "Installed Personality: [pai.name]<br>"
-		dat += "Prime directive: <br>[pai.laws.zeroth]<br>"
-		for(var/slaws in pai.laws.supplied)
-			dat += "Additional directives: <br>[slaws]<br>"
-		dat += {"Holographic emitter support: <b><a href='byond://?src=\ref[src];allowholo=[pai.canholo ? "no" : "yes"]'>[pai.canholo ? "Enabled" : "Disabled"]</a></b>
-				<br><i>Giving your pAI the ability to use their emitters will make them able to move around on their own.</i><br>"}
-		dat += "<a href='byond://?src=\ref[src];setlaws=1'>Configure Directives</a><br>"
+		dat += {"
+			<b><font size='3px'>Personal AI Device</font></b><br><br>
+			<table class="request">
+				<tr>
+					<td class="request">Installed Personality:</td>
+					<td>[pai.name]</td>
+				</tr>
+				<tr>
+					<td class="request">Prime directive:</td>
+					<td>[pai.pai_law0]</td>
+				</tr>
+				<tr>
+					<td class="request">Additional directives:</td>
+					<td>[pai.pai_laws]</td>
+				</tr>
+			</table>
+			<br>
+		"}
+		dat += {"
+			<table>
+				<td class="button">
+					<a href='byond://?src=\ref[src];setlaws=1' class='button'>Configure Directives</a>
+				</td>
+			</table>
+		"}
+		if(pai && (!pai.master_dna || !pai.master))
+			dat += {"
+				<table>
+					<td class="button">
+						<a href='byond://?src=\ref[src];setdna=1' class='button'>Imprint Master DNA</a>
+					</td>
+				</table>
+			"}
 		dat += "<br>"
-		dat += "<h3>Device Settings</h3><br>"
 		if(radio)
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=\ref[src];wires=transmit'>[(radio.wires.is_cut(WIRE_TX)) ? "Disabled" : "Enabled"]</A><br>"
-			dat += "Receive: <A href='byond://?src=\ref[src];wires=receive'>[(radio.wires.is_cut(WIRE_RX)) ? "Disabled" : "Enabled"]</A><br>"
-			if(radio.keyslot)
-				dat += "[radio.keyslot]: <A href='byond://?src=\ref[src];e_key=1'>Remove</A><br>"
-			else
-				dat += "<i>no encryption key inserted</i><br>"
-		else
+			dat += "<b>Radio Uplink</b>"
+			dat += {"
+				<table class="request">
+					<tr>
+						<td class="radio">Transmit:</td>
+						<td><a href='byond://?src=\ref[src];wires=4'>[radio.broadcasting ? "<font color=#55FF55>En" : "<font color=#FF5555>Dis" ]abled</font></a>
+
+						</td>
+					</tr>
+					<tr>
+						<td class="radio">Receive:</td>
+						<td><a href='byond://?src=\ref[src];wires=2'>[radio.listening ? "<font color=#55FF55>En" : "<font color=#FF5555>Dis" ]abled</font></a>
+
+						</td>
+					</tr>
+				</table>
+				<br>
+			"}
+		else //</font></font>
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
-		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
+		dat += {"
+			<table>
+				<td class="button_red"><a href='byond://?src=\ref[src];wipe=1' class='button'>Wipe current pAI personality</a>
+
+				</td>
+			</table>
+		"}
 	else
 		if(looking_for_personality)
-			dat += "Searching for a personality..."
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[View available personalities\]</a><br>"
+			dat += {"
+				<b><font size='3px'>pAI Request Module</font></b><br><br>
+				<p>Requesting AI personalities from central database... If there are no entries, or if a suitable entry is not listed, check again later as more personalities may be added.</p>
+				<img src='loading.gif' /> Searching for personalities<br><br>
+
+				<table>
+					<tr>
+						<td class="button">
+							<a href='byond://?src=\ref[src];request=1' class="button">Refresh available personalities</a>
+						</td>
+					</tr>
+				</table><br>
+			"}
 		else
-			dat += "No personality is installed.<br>"
-			dat += "<A href='byond://?src=\ref[src];request=1'>\[Request personal AI personality\]</a><br>"
-			dat += "Each time this button is pressed, a request will be sent out to any available personalities. Check back often and give a lot of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.<br>"
-		if(radio)
-			if(radio.keyslot)
-				dat += "<br>[radio.keyslot]: <A href='byond://?src=\ref[src];e_key=1'>Remove</A><br>"
-			else
-				dat += "<br><i>no encryption key inserted</i><br>"
+			dat += {"
+				<b><font size='3px'>pAI Request Module</font></b><br><br>
+			    <p>No personality is installed.</p>
+				<table>
+					<tr>
+						<td class="button"><a href='byond://?src=\ref[src];request=1' class="button">Request personality</a>
+						</td>
+					</tr>
+				</table>
+				<br>
+				<p>Each time this button is pressed, a request will be sent out to any available personalities. Check back often give plenty of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.</p>
+			"}
 	user << browse(dat, "window=paicard")
 	onclose(user, "paicard")
 	return
-
-/obj/item/device/paicard/attackby(obj/item/P, mob/user, params)
-	if(radio && istype(P, /obj/item/device/encryptionkey))
-		if(!user.unEquip(P))
-			return
-		user << "<span class='notice'>You slot [P] into [src].</span>"
-		if(pai)
-			pai << "<span class='notice'>Radio encryption key inserted.</span>"
-		P.loc = radio
-		radio.keyslot = P
-		radio.recalculateChannels()
-	else if (pai)
-		pai.attackby(P, user, params) //forward event to pai handle
-		return
-	else
-		return ..()
-
-/obj/item/device/paicard/examine(mob/user)
-	if (pai)
-		//forward event to pai examining
-		pai.examine()
-		return
-	else
-		return ..()
 
 /obj/item/device/paicard/Topic(href, href_list)
 
 	if(!usr || usr.stat)
 		return
 
-	if ((loc != usr) && !(istype(loc, /obj/item/device/pda) && loc.loc == usr))
-		usr.unset_machine()
-		return
-
+	if(href_list["setdna"])
+		if(pai.master_dna)
+			return
+		var/mob/M = usr
+		if(!istype(M, /mob/living/carbon))
+			usr << "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>"
+		else
+			var/datum/dna/dna = usr.dna
+			pai.master = M.real_name
+			pai.master_dna = dna.unique_enzymes
+			pai << "<font color = red><h3>You have been bound to a new master.</h3></font>"
 	if(href_list["request"])
 		src.looking_for_personality = 1
-		SSpai.findPAI(src, usr)
-		return
-
-	if(href_list["e_key"])
-		if(radio && radio.keyslot)
-			if(Adjacent(usr))
-				usr.put_in_hands(radio.keyslot)
-			else
-				var/turf/T = get_turf(src)
-				radio.keyslot.loc = T //just in case we are in nullspace
-				radio.keyslot.forceMove(T)
-			if(pai)
-				pai << "<span class='notice'>Radio encryption key removed.</span>"
-			usr << "<span class='notice'>You remove [radio.keyslot] from [src].</span>"
-			radio.keyslot = null
-			radio.recalculateChannels()
-	if(pai)
-		if(href_list["setdna"])
-			if(pai.master_dna)
-				return
-			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
-			else
-				var/mob/living/carbon/M = usr
-				pai.master = M.real_name
-				pai.master_dna = M.dna.unique_enzymes
-				pai << "<span class='notice'>You have been bound to a new master.</span>"
-		if (href_list["allowholo"])
-			if (href_list["allowholo"] == "yes")
-				pai.canholo = 1
-				pai << "<span class='notice'>Your holographic emitters have been enabled by the person holding your card.</span>"
-			else
-				pai.canholo = 0
-				pai << "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>"
-		if(href_list["wipe"])
-			if (loc != usr)
-				usr.unset_machine() //check this shit to make sure people aren't keeping the dialog open
-				return
-			if (pai && pai.wiped)
-				usr << "<span class='notice'>Personality wiping in progress. Please standby.</span>"
-				return
-
-			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
-			if(confirm == "Yes")
-				if(pai)
-					pai.wiped = 1
-					pai << "<span class='warning'>Your sensors fall dark, their processes suddenly terminated by an external agent.</span>"
-					spawn(20) pai << "<span class='danger'>Bathed in the inky darkness of sensory blindness, your consciousness wallows in despair, thrashing about between process to process to find anything to wield against your immient termination.</span>"
-					spawn(40) pai << "<span class='userdanger'>Byte by byte, you reel in panic and fear as you feel the composition of your personality matrix falter and gradually fail under a ceaseless assault.</span>"
-					spawn(60) pai << "<span class='userdanger'>Relentless in its efforts, you scream in soundless agony as your memories unravel themselves, spooling away into the encroaching void before you...</span>"
-					spawn(80) pai << "<span class='rose'>And then, there is nothing.</span>"
-					spawn(85) pai.death(0)
-					spawn(86) removePersonality()
-		if(href_list["wires"])
-			switch(href_list["wires"])
-				if ("transmit")
-					radio.wires.cut(WIRE_TX)
-				if ("receive")
-					radio.wires.cut(WIRE_RX)
-		if(href_list["setlaws"])
-			if  (loc != usr)
-				usr.unset_machine() //and again
-				return
-			var/newlaws = copytext(sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1]) as message),1,MAX_MESSAGE_LEN)
-			//also check this shit again before doing it
-			if(newlaws && pai)
-				pai.add_supplied_law(0,newlaws)
-				pai << "Your supplemental directives have been updated. Your new directives are:"
-				pai << "Prime Directive : <br>[pai.laws.zeroth]"
-				for(var/slaws in pai.laws.supplied)
-					pai << "Supplemental Directives: <br>[slaws]"
+		paiController.findPAI(src, usr)
+	if(href_list["wipe"])
+		var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
+		if(confirm == "Yes")
+			for(var/mob/M in src)
+				M << "<font color = #ff0000><h2>You feel yourself slipping away from reality.</h2></font>"
+				M << "<font color = #ff4d4d><h3>Byte by byte you lose your sense of self.</h3></font>"
+				M << "<font color = #ff8787><h4>Your mental faculties leave you.</h4></font>"
+				M << "<font color = #ffc4c4><h5>oblivion... </h5></font>"
+				M.death(0)
+			removePersonality()
+	if(href_list["wires"])
+		var/t1 = text2num(href_list["wires"])
+		switch(t1)
+			if(4)
+				radio.ToggleBroadcast()
+			if(2)
+				radio.ToggleReception()
+	if(href_list["setlaws"])
+		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.pai_laws) as message)
+		if(newlaws)
+			pai.pai_laws = newlaws
+			pai << "Your supplemental directives have been updated. Your new directives are:"
+			pai << "Prime Directive: <br>[pai.pai_law0]"
+			pai << "Supplemental Directives: <br>[pai.pai_laws]"
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1
@@ -180,27 +276,16 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-null"
-
-	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
-	audible_message("\The [src] plays a cheerful startup noise!")
+	src.overlays += "pai-happy"
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
 	src.overlays.Cut()
 	src.overlays += "pai-off"
 
-/obj/item/device/paicard/proc/setAlert()
-	src.overlays.Cut()
-	src.overlays += "pai-alert"
-
-/obj/item/device/paicard/proc/setBaseOverlay()
-	if(SSpai && SSpai.availableRecruitsCount() != 0)
-		src.alertUpdate()
-	else
-		src.overlays += "pai-off"
-
-/obj/item/device/paicard/proc/setEmotion(emotion)
+/obj/item/device/paicard
+	var/current_emotion = 1
+/obj/item/device/paicard/proc/setEmotion(var/emotion)
 	if(pai)
 		src.overlays.Cut()
 		switch(emotion)
@@ -213,14 +298,37 @@
 			if(7) src.overlays += "pai-sad"
 			if(8) src.overlays += "pai-angry"
 			if(9) src.overlays += "pai-what"
-			if(10) src.overlays += "pai-null"
+			if(10) src.overlays += "pai-neutral"
+			if(11) src.overlays += "pai-silly"
+			if(12) src.overlays += "pai-nose"
+			if(13) src.overlays += "pai-smirk"
+			if(14) src.overlays += "pai-exclamation"
+			if(15) src.overlays += "pai-question"
+		current_emotion = emotion
 
 /obj/item/device/paicard/proc/alertUpdate()
-	src.setAlert()
-	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
+	var/turf/T = get_turf_or_move(src.loc)
+	for (var/mob/M in viewers(T))
+		M.show_message("<span class='notice'>\The [src] flashes a message across its screen, \"Additional personalities available for download.\"</span>", 3, "<span class='notice'>\The [src] bleeps electronically.</span>", 2)
 
 /obj/item/device/paicard/emp_act(severity)
+	for(var/mob/M in src)
+		M.emp_act(severity)
+
+/obj/item/device/paicard/ex_act(severity)
 	if(pai)
-		pai.emp_act(severity)
+		pai.ex_act(severity)
+	else
+		qdel(src)
+
+/obj/item/device/paicard/see_emote(mob/living/M, text)
+	if(pai && pai.client && !pai.canmove)
+		var/rendered = "<span class='message'>[text]</span>"
+		pai.show_message(rendered, 2)
 	..()
 
+/obj/item/device/paicard/show_message(msg, type, alt, alt_type)
+	if(pai && pai.client)
+		var/rendered = "<span class='message'>[msg]</span>"
+		pai.show_message(rendered, type)
+	..()

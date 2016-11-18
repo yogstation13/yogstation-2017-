@@ -8,17 +8,14 @@
 */
 /obj/screen
 	name = ""
-	icon = 'icons/mob/screen_gen.dmi'
-	layer = ABOVE_HUD_LAYER
+	icon = 'icons/mob/screen1.dmi'
+	layer = 20.0
 	unacidable = 1
-	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
-	var/datum/hud/hud = null // A reference to the owner HUD, if any.
 
 /obj/screen/Destroy()
 	master = null
 	return ..()
-
 
 /obj/screen/text
 	icon = null
@@ -28,302 +25,64 @@
 	maptext_height = 480
 	maptext_width = 480
 
-/obj/screen/swap_hand
-	layer = HUD_LAYER
-	name = "swap hand"
-
-/obj/screen/swap_hand/Click()
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-
-	if(usr.incapacitated())
-		return 1
-
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand()
-	return 1
-
-/obj/screen/inventory/craft
-	name = "crafting menu"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "craft"
-	screen_loc = ui_crafting
-
-/obj/screen/inventory/craft/Click()
-	var/mob/living/M = usr
-	M.OpenCraftingMenu()
 
 /obj/screen/inventory
-	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
-	var/icon_empty // Icon when empty. For now used only by humans.
-	var/icon_full  // Icon when contains an item. For now used only by humans.
-	layer = HUD_LAYER
+	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
 
-/obj/screen/inventory/Click()
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-
-	if(usr.incapacitated())
-		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return 1
-	if(usr.attack_ui(slot_id))
-		usr.update_inv_l_hand(0)
-		usr.update_inv_r_hand(0)
-	return 1
-
-/obj/screen/inventory/update_icon()
-	if(!icon_empty)
-		icon_empty = icon_state
-
-	if(hud && hud.mymob && slot_id && icon_full)
-		if(hud.mymob.get_item_by_slot(slot_id))
-			icon_state = icon_full
-		else
-			icon_state = icon_empty
-
-/obj/screen/inventory/hand
-	var/image/active_overlay
-	var/image/handcuff_overlay
-	var/image/blocked_overlay
-
-/obj/screen/inventory/hand/update_icon()
-	..()
-	if(!active_overlay)
-		active_overlay = image("icon"=icon, "icon_state"="hand_active")
-	if(!handcuff_overlay)
-		var/state = (slot_id == slot_r_hand) ? "markus" : "gabrielle"
-		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
-	if(!blocked_overlay)
-		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
-
-	overlays.Cut()
-
-	if(hud && hud.mymob)
-		if(iscarbon(hud.mymob))
-			var/mob/living/carbon/C = hud.mymob
-			if(C.handcuffed)
-				overlays += handcuff_overlay
-			if(slot_id == slot_r_hand)
-				if(!C.has_right_hand())
-					overlays += blocked_overlay
-			else if(slot_id == slot_l_hand)
-				if(!C.has_left_hand())
-					overlays += blocked_overlay
-
-		if(slot_id == slot_l_hand && hud.mymob.hand)
-			overlays += active_overlay
-		else if(slot_id == slot_r_hand && !hud.mymob.hand)
-			overlays += active_overlay
-
-/obj/screen/inventory/hand/Click()
-	// At this point in client Click() code we have passed the 1/10 sec check and little else
-	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
-	if(usr.incapacitated())
-		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return 1
-
-	if(ismob(usr))
-		var/mob/M = usr
-		switch(name)
-			if("right hand", "r_hand")
-				M.activate_hand("r")
-			if("left hand", "l_hand")
-				M.activate_hand("l")
-	return 1
 
 /obj/screen/close
 	name = "close"
 
 /obj/screen/close/Click()
-	if(istype(master, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = master
-		S.close(usr)
+	if(master)
+		if(istype(master, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = master
+			S.close(usr)
 	return 1
 
 
-/obj/screen/drop
-	name = "drop"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "act_drop"
-	layer = HUD_LAYER
+/obj/screen/item_action
+	var/obj/item/owner
 
-/obj/screen/drop/Click()
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+/obj/screen/item_action/Destroy()
+	..()
+	owner = null
+
+/obj/screen/item_action/Click()
+	if(!usr || !owner)
 		return 1
-	usr.drop_item_v()
-
-/obj/screen/act_intent
-	name = "intent"
-	icon_state = "help"
-	screen_loc = ui_acti
-
-/obj/screen/act_intent/Click(location, control, params)
-
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return 1
-
-	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
-
-		var/_x = text2num(params2list(params)["icon-x"])
-		var/_y = text2num(params2list(params)["icon-y"])
-
-		if(_x<=16 && _y<=16)
-			usr.a_intent_change("harm")
-
-		else if(_x<=16 && _y>=17)
-			usr.a_intent_change("help")
-
-		else if(_x>=17 && _y<=16)
-			usr.a_intent_change("grab")
-
-		else if(_x>=17 && _y>=17)
-			usr.a_intent_change("disarm")
-
-	else
-		usr.a_intent_change("right")
-
-/obj/screen/act_intent/alien
-	icon = 'icons/mob/screen_alien.dmi'
-	screen_loc = ui_movi
-
-/obj/screen/act_intent/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
-	screen_loc = ui_borg_intents
-
-/obj/screen/internals
-	name = "toggle internals"
-	icon_state = "internal0"
-	screen_loc = ui_internal
-
-/obj/screen/internals/Click()
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return 1
-	if(!iscarbon(usr))
-		return
-	var/mob/living/carbon/C = usr
-	if(C.incapacitated())
+	if(!usr.canClick())
 		return
 
-	if(C.internal)
-		C.internal = null
-		C << "<span class='notice'>You are no longer running on internals.</span>"
-		icon_state = "internal0"
-	else
-		if(!C.getorganslot("breathing_tube"))
-			if(!istype(C.wear_mask, /obj/item/clothing/mask))
-				C << "<span class='warning'>You are not wearing an internals mask!</span>"
-				return 1
-			else
-				var/obj/item/clothing/mask/M = C.wear_mask
-				if(M.mask_adjusted) // if mask on face but pushed down
-					M.adjustmask(C) // adjust it back
-				if( !(M.flags & MASKINTERNALS) )
-					C << "<span class='warning'>You are not wearing an internals mask!</span>"
-					return
-
-		if(istype(C.l_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.l_hand] on your left hand.</span>"
-			C.internal = C.l_hand
-		else if(istype(C.r_hand, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.r_hand] on your right hand.</span>"
-			C.internal = C.r_hand
-		else if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(istype(H.s_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.s_store] on your [H.wear_suit].</span>"
-				H.internal = H.s_store
-			else if(istype(H.belt, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.belt] on your belt.</span>"
-				H.internal = H.belt
-			else if(istype(H.l_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.l_store] in your left pocket.</span>"
-				H.internal = H.l_store
-			else if(istype(H.r_store, /obj/item/weapon/tank))
-				H << "<span class='notice'>You are now running on internals from the [H.r_store] in your right pocket.</span>"
-				H.internal = H.r_store
-
-		//Seperate so CO2 jetpacks are a little less cumbersome.
-		if(!C.internal && istype(C.back, /obj/item/weapon/tank))
-			C << "<span class='notice'>You are now running on internals from the [C.back] on your back.</span>"
-			C.internal = C.back
-
-		if(C.internal)
-			icon_state = "internal1"
-		else
-			C << "<span class='warning'>You don't have an oxygen tank!</span>"
-			return
-	C.update_action_buttons_icon()
-
-/obj/screen/mov_intent
-	name = "run/walk toggle"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "running"
-
-/obj/screen/mov_intent/Click()
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
 		return 1
-	switch(usr.m_intent)
-		if("run")
-			usr.m_intent = "walk"
-			icon_state = "walking"
-		if("walk")
-			usr.m_intent = "run"
-			icon_state = "running"
-	usr.update_icons()
 
-/obj/screen/pull
-	name = "stop pulling"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "pull"
-
-/obj/screen/pull/Click()
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+	if(!(owner in usr))
 		return 1
-	usr.stop_pulling()
 
-/obj/screen/pull/update_icon(mob/mymob)
-	if(!mymob) return
-	if(mymob.pulling)
-		icon_state = "pull"
-	else
-		icon_state = "pull0"
+	owner.ui_action_click()
+	return 1
 
-/obj/screen/resist
-	name = "resist"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "act_resist"
-	layer = HUD_LAYER
+/obj/screen/grab
+	name = "grab"
 
-/obj/screen/resist/Click()
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return 1
-	if(isliving(usr))
-		var/mob/living/L = usr
-		L.resist()
+/obj/screen/grab/Click()
+	var/obj/item/weapon/grab/G = master
+	G.s_click(src)
+	return 1
+
+/obj/screen/grab/attack_hand()
+	return
+
+/obj/screen/grab/attackby()
+	return
+
 
 /obj/screen/storage
 	name = "storage"
 
-/obj/screen/storage/Click(location, control, params)
-	if(world.time <= usr.next_move)
-		return 1
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+/obj/screen/storage/Click()
+	if(!usr.canClick())
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
@@ -332,165 +91,412 @@
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
-			master.attackby(I, usr, params)
+			usr.ClickOn(master)
 	return 1
-
-/obj/screen/throw_catch
-	name = "throw/catch"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "act_throw_off"
-
-/obj/screen/throw_catch/Click()
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return 1
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
 
 /obj/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
-	var/selecting = "chest"
+	var/selecting = BP_TORSO
 
 /obj/screen/zone_sel/Click(location, control,params)
-	if(usr.client && usr.client.prefs.afreeze)
-		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return 1
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
 	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
 
 	switch(icon_y)
-		if(1 to 9) //Legs
+		if(1 to 3) //Feet
 			switch(icon_x)
 				if(10 to 15)
-					selecting = "r_leg"
+					selecting = BP_R_FOOT
 				if(17 to 22)
-					selecting = "l_leg"
+					selecting = BP_L_FOOT
+				else
+					return 1
+		if(4 to 9) //Legs
+			switch(icon_x)
+				if(10 to 15)
+					selecting = BP_R_LEG
+				if(17 to 22)
+					selecting = BP_L_LEG
 				else
 					return 1
 		if(10 to 13) //Hands and groin
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_arm"
+					selecting = BP_R_HAND
 				if(12 to 20)
-					selecting = "groin"
+					selecting = BP_GROIN
 				if(21 to 24)
-					selecting = "l_arm"
+					selecting = BP_L_HAND
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders
 			switch(icon_x)
 				if(8 to 11)
-					selecting = "r_arm"
+					selecting = BP_R_ARM
 				if(12 to 20)
-					selecting = "chest"
+					selecting = BP_TORSO
 				if(21 to 24)
-					selecting = "l_arm"
+					selecting = BP_L_ARM
 				else
 					return 1
 		if(23 to 30) //Head, but we need to check for eye or mouth
 			if(icon_x in 12 to 20)
-				selecting = "head"
+				selecting = BP_HEAD
 				switch(icon_y)
 					if(23 to 24)
 						if(icon_x in 15 to 17)
-							selecting = "mouth"
+							selecting = O_MOUTH
 					if(26) //Eyeline, eyes are on 15 and 17
 						if(icon_x in 14 to 18)
-							selecting = "eyes"
+							selecting = O_EYES
 					if(25 to 27)
 						if(icon_x in 15 to 17)
-							selecting = "eyes"
+							selecting = O_EYES
 
 	if(old_selecting != selecting)
-		update_icon(usr)
+		update_icon()
 	return 1
 
-/obj/screen/zone_sel/update_icon(mob/user)
+/obj/screen/zone_sel/update_icon()
 	overlays.Cut()
-	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
-	user.zone_selected = selecting
-
-/obj/screen/zone_sel/alien
-	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/zone_sel/alien/update_icon(mob/user)
-	overlays.Cut()
-	overlays += image('icons/mob/screen_alien.dmi', "[selecting]")
-	user.zone_selected = selecting
-
-/obj/screen/zone_sel/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
+	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
 
 
-/obj/screen/flash
-	name = "flash"
-	icon_state = "blank"
-	blend_mode = BLEND_ADD
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	layer = FLASH_LAYER
+/obj/screen/Click(location, control, params)
+	if(!usr)	return 1
+	switch(name)
+		if("toggle")
+			if(usr.hud_used.inventory_shown)
+				usr.hud_used.inventory_shown = 0
+				usr.client.screen -= usr.hud_used.other
+			else
+				usr.hud_used.inventory_shown = 1
+				usr.client.screen += usr.hud_used.other
 
-/obj/screen/damageoverlay
-	icon = 'icons/mob/screen_full.dmi'
-	icon_state = "oxydamageoverlay0"
-	name = "dmg"
-	blend_mode = BLEND_MULTIPLY
-	screen_loc = "CENTER-7,CENTER-7"
-	mouse_opacity = 0
-	layer = UI_DAMAGE_LAYER
+			usr.hud_used.hidden_inventory_update()
 
-/obj/screen/healths
-	name = "health"
-	icon_state = "health0"
-	screen_loc = ui_health
+		if("equip")
+			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+				return 1
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.quick_equip()
 
-/obj/screen/healths/alien
-	icon = 'icons/mob/screen_alien.dmi'
-	screen_loc = ui_alien_health
+		if("resist")
+			if(isliving(usr))
+				var/mob/living/L = usr
+				L.resist()
 
-/obj/screen/healths/robot
-	icon = 'icons/mob/screen_cyborg.dmi'
-	screen_loc = ui_borg_health
+		if("mov_intent")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				if(C.legcuffed)
+					C << "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>"
+					C.m_intent = "walk"	//Just incase
+					C.hud_used.move_intent.icon_state = "walking"
+					return 1
+				switch(usr.m_intent)
+					if("run")
+						usr.m_intent = "walk"
+						usr.hud_used.move_intent.icon_state = "walking"
+					if("walk")
+						usr.m_intent = "run"
+						usr.hud_used.move_intent.icon_state = "running"
+		if("m_intent")
+			if(!usr.m_int)
+				switch(usr.m_intent)
+					if("run")
+						usr.m_int = "13,14"
+					if("walk")
+						usr.m_int = "14,14"
+					if("face")
+						usr.m_int = "15,14"
+			else
+				usr.m_int = null
+		if("walk")
+			usr.m_intent = "walk"
+			usr.m_int = "14,14"
+		if("face")
+			usr.m_intent = "face"
+			usr.m_int = "15,14"
+		if("run")
+			usr.m_intent = "run"
+			usr.m_int = "13,14"
+		if("Reset Machine")
+			usr.unset_machine()
+		if("internal")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+					if(C.internal)
+						C.internal = null
+						C << "<span class='notice'>No longer running on internals.</span>"
+						if(C.internals)
+							C.internals.icon_state = "internal0"
+					else
 
-/obj/screen/healths/deity
-	name = "Nexus Health"
-	icon_state = "deity_nexus"
-	screen_loc = ui_deityhealth
+						var/no_mask
+						if(!(C.wear_mask && C.wear_mask.item_flags & AIRTIGHT))
+							var/mob/living/carbon/human/H = C
+							if(!(H.head && H.head.item_flags & AIRTIGHT))
+								no_mask = 1
 
-/obj/screen/healths/blob
-	name = "blob health"
-	icon_state = "block"
-	screen_loc = ui_internal
-	mouse_opacity = 0
+						if(no_mask)
+							C << "<span class='notice'>You are not wearing a suitable mask or helmet.</span>"
+							return 1
+						else
+							var/list/nicename = null
+							var/list/tankcheck = null
+							var/breathes = "oxygen"    //default, we'll check later
+							var/list/contents = list()
+							var/from = "on"
 
-/obj/screen/healths/blob/naut
-	name = "health"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "nauthealth"
+							if(ishuman(C))
+								var/mob/living/carbon/human/H = C
+								breathes = H.species.breath_type
+								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+							else
+								nicename = list("right hand", "left hand", "back")
+								tankcheck = list(C.r_hand, C.l_hand, C.back)
 
-/obj/screen/healths/blob/naut/core
-	name = "overmind health"
-	screen_loc = ui_health
-	icon_state = "corehealth"
+							// Rigs are a fucking pain since they keep an air tank in nullspace.
+							if(istype(C.back,/obj/item/weapon/rig))
+								var/obj/item/weapon/rig/rig = C.back
+								if(rig.air_supply)
+									from = "in"
+									nicename |= "hardsuit"
+									tankcheck |= rig.air_supply
 
-/obj/screen/healths/guardian
-	name = "summoner health"
-	icon = 'icons/mob/guardian.dmi'
-	icon_state = "base"
-	screen_loc = ui_health
-	mouse_opacity = 0
+							for(var/i=1, i<tankcheck.len+1, ++i)
+								if(istype(tankcheck[i], /obj/item/weapon/tank))
+									var/obj/item/weapon/tank/t = tankcheck[i]
+									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
+										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
+										continue					//in it, so we're going to believe the tank is what it says it is
+									switch(breathes)
+																		//These tanks we're sure of their contents
+										if("nitrogen") 							//So we're a bit more picky about them.
 
-/obj/screen/healths/revenant
-	name = "essence"
-	icon = 'icons/mob/actions.dmi'
-	icon_state = "bg_revenant"
-	screen_loc = ui_health
-	mouse_opacity = 0
+											if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+												contents.Add(t.air_contents.gas["nitrogen"])
+											else
+												contents.Add(0)
 
-/obj/screen/healthdoll
-	name = "health doll"
-	screen_loc = ui_healthdoll
+										if ("oxygen")
+											if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["oxygen"])
+											else
+												contents.Add(0)
+
+										// No races breath this, but never know about downstream servers.
+										if ("carbon dioxide")
+											if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["carbon_dioxide"])
+											else
+												contents.Add(0)
+
+
+								else
+									//no tank so we set contents to 0
+									contents.Add(0)
+
+							//Alright now we know the contents of the tanks so we have to pick the best one.
+
+							var/best = 0
+							var/bestcontents = 0
+							for(var/i=1, i <  contents.len + 1 , ++i)
+								if(!contents[i])
+									continue
+								if(contents[i] > bestcontents)
+									best = i
+									bestcontents = contents[i]
+
+
+							//We've determined the best container now we set it as our internals
+
+							if(best)
+								C << "<span class='notice'>You are now running on internals from [tankcheck[best]] [from] your [nicename[best]].</span>"
+								C.internal = tankcheck[best]
+
+
+							if(C.internal)
+								if(C.internals)
+									C.internals.icon_state = "internal1"
+							else
+								C << "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>"
+		if("act_intent")
+			usr.a_intent_change("right")
+		if(I_HELP)
+			usr.a_intent = I_HELP
+			usr.hud_used.action_intent.icon_state = "intent_help"
+		if(I_HURT)
+			usr.a_intent = I_HURT
+			usr.hud_used.action_intent.icon_state = "intent_harm"
+		if(I_GRAB)
+			usr.a_intent = I_GRAB
+			usr.hud_used.action_intent.icon_state = "intent_grab"
+		if(I_DISARM)
+			usr.a_intent = I_DISARM
+			usr.hud_used.action_intent.icon_state = "intent_disarm"
+
+		if("pull")
+			usr.stop_pulling()
+		if("throw")
+			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
+				usr:toggle_throw_mode()
+		if("drop")
+			if(usr.client)
+				usr.client.drop_item()
+
+		if("module")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+//				if(R.module)
+//					R.hud_used.toggle_show_robot_modules()
+//					return 1
+				R.pick_module()
+
+		if("inventory")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.hud_used.toggle_show_robot_modules()
+					return 1
+				else
+					R << "You haven't selected a module yet."
+
+		if("radio")
+			if(issilicon(usr))
+				usr:radio_menu()
+		if("panel")
+			if(issilicon(usr))
+				usr:installed_modules()
+
+		if("store")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.uneq_active()
+					R.hud_used.update_robot_modules_display()
+				else
+					R << "You haven't selected a module yet."
+
+		if("module1")
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(1)
+
+		if("module2")
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(2)
+
+		if("module3")
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(3)
+
+		if("AI Core")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.view_core()
+
+		if("Show Camera List")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/camera = input(AI) in AI.get_camera_list()
+				AI.ai_camera_list(camera)
+
+		if("Track With Camera")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				var/target_name = input(AI) in AI.trackable_mobs()
+				AI.ai_camera_track(target_name)
+
+		if("Toggle Camera Light")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.toggle_camera_light()
+
+		if("Crew Monitoring")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.subsystem_crew_monitor()
+
+		if("Show Crew Manifest")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_roster()
+
+		if("Show Alerts")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.subsystem_alarm_monitor()
+
+		if("Announcement")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_announcement()
+
+		if("Call Emergency Shuttle")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_call_shuttle()
+
+		if("State Laws")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.ai_checklaws()
+
+		if("PDA - Send Message")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.aiPDA.cmd_send_pdamesg(usr)
+
+		if("PDA - Show Message Log")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.aiPDA.cmd_show_message_log(usr)
+
+		if("Take Image")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.take_image()
+
+		if("View Images")
+			if(isAI(usr))
+				var/mob/living/silicon/ai/AI = usr
+				AI.view_images()
+		else
+			return 0
+	return 1
+
+/obj/screen/inventory/Click()
+	// At this point in client Click() code we have passed the 1/10 sec check and little else
+	// We don't even know if it's a middle click
+	if(!usr.canClick())
+		return 1
+	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+		return 1
+	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return 1
+	switch(name)
+		if("r_hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.activate_hand("r")
+		if("l_hand")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				C.activate_hand("l")
+		if("swap")
+			usr:swap_hand()
+		if("hand")
+			usr:swap_hand()
+		else
+			if(usr.attack_ui(slot_id))
+				usr.update_inv_l_hand(0)
+				usr.update_inv_r_hand(0)
+	return 1

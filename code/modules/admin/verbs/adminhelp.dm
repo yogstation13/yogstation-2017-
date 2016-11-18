@@ -1,86 +1,29 @@
-/proc/keywords_lookup(msg)
 
-	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
-	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
 
-	//explode the input msg into a list
-	var/list/msglist = splittext(msg, " ")
+/client/verb/adminhelp(msg as text)
+	set category = "Admin"
+	set name = "Adminhelp"
 
-	//generate keywords lookup
-	var/list/surnames = list()
-	var/list/forenames = list()
-	var/list/ckeys = list()
-	for(var/mob/M in mob_list)
-		var/list/indexing = list(M.real_name, M.name)
-		if(M.mind)
-			indexing += M.mind.name
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "\red Speech is currently admin-disabled."
+		return
 
-		for(var/string in indexing)
-			var/list/L = splittext(string, " ")
-			var/surname_found = 0
-			//surnames
-			for(var/i=L.len, i>=1, i--)
-				var/word = ckey(L[i])
-				if(word)
-					surnames[word] = M
-					surname_found = i
-					break
-			//forenames
-			for(var/i=1, i<surname_found, i++)
-				var/word = ckey(L[i])
-				if(word)
-					forenames[word] = M
-			//ckeys
-			ckeys[M.ckey] = M
+	//handle muting and automuting
+	if(prefs.muted & MUTE_ADMINHELP)
+		src << "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted).</font>"
+		return
 
-	var/list/jobs = list()
-	var/list/job_count = list()
-	for(var/datum/mind/M in ticker.minds)
-		var/T = lowertext(M.assigned_role)
-		jobs[T] = M.current
-		job_count[T]++ //count how many of this job was found so we only show link for singular jobs
+	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
 
-	var/ai_found = 0
-	msg = ""
-	var/list/mobs_found = list()
-	for(var/original_word in msglist)
-		var/word = ckey(original_word)
-		if(word)
-			if(!(word in adminhelp_ignored_words))
-				if(word == "ai")
-					ai_found = 1
-				else
-					var/mob/found = ckeys[word]
-					if(!found)
-						found = surnames[word]
-						if(!found)
-							found = forenames[word]
-					if(!found)
-						var/T = lowertext(original_word)
-						if(T == "cap") T = "captain"
-						if(T == "hop") T = "head of personnel"
-						if(T == "cmo") T = "chief medical officer"
-						if(T == "ce")  T = "chief engineer"
-						if(T == "hos") T = "head of security"
-						if(T == "rd")  T = "research director"
-						if(T == "qm")  T = "quartermaster"
-						if(job_count[T] == 1) //skip jobs with multiple results
-							found = jobs[T]
-					if(found)
-						if(!(found in mobs_found))
-							mobs_found += found
-							if(!ai_found && isAI(found))
-								ai_found = 1
-							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
-							continue
-		msg += "[original_word] "
-	return msg
-
-
-/proc/keywords_lookup_ai(mob/living/ML, msg)
-
-	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
-	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+	//clean the input msg
+	if(!msg)
+		return
+	msg = sanitize(msg)
+	if(!msg)
+		return
+	var/original_msg = msg
 
 	//explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
@@ -111,13 +54,6 @@
 			//ckeys
 			ckeys[M.ckey] = M
 
-	var/list/jobs = list()
-	var/list/job_count = list()
-	for(var/datum/mind/M in ticker.minds)
-		var/T = lowertext(M.assigned_role)
-		jobs[T] = M.current
-		job_count[T]++ //count how many of this job was found so we only show link for singular jobs
-
 	var/ai_found = 0
 	msg = ""
 	var/list/mobs_found = list()
@@ -133,79 +69,50 @@
 						found = surnames[word]
 						if(!found)
 							found = forenames[word]
-					if(!found)
-						var/T = lowertext(original_word)
-						if(T == "cap") T = "captain"
-						if(T == "hop") T = "head of personnel"
-						if(T == "cmo") T = "chief medical officer"
-						if(T == "ce")  T = "chief engineer"
-						if(T == "hos") T = "head of security"
-						if(T == "rd")  T = "research director"
-						if(T == "qm")  T = "quartermaster"
-						if(job_count[T] == 1) //skip jobs with multiple results
-							found = jobs[T]
 					if(found)
 						if(!(found in mobs_found))
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							msg += "[original_word]<font size='1' color='black'>(<A HREF=\"?src=\ref[ML];track=[found.name]\">T</A>)</font> "
+							msg += "<b><font color='black'>[original_word] (<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>)</font></b> "
 							continue
-		msg += "[original_word] "
-	return msg
+			msg += "[original_word] "
 
-/proc/get_admin_counts(requiredflags = R_BAN)
-	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
-	for(var/client/X in admins)
-		.["total"]++
-		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			.["noflags"]++
-		else if(X.is_afk())
-			.["afk"]++
-		else if(X.holder.fakekey)
-			.["stealth"]++
-		else
-			.["present"]++
+	if(!mob) //this doesn't happen
+		return
 
-/proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
-	var/admin_number_total = 0		//Total number of admins
-	var/admin_number_afk = 0		//Holds the number of admins who are afk
-	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
-	var/admin_number_decrease = 0	//Holds the number of admins with are afk, ignored or both
+	var/ai_cl
+	if(ai_found)
+		ai_cl = " (<A HREF='?_src_=holder;adminchecklaws=\ref[mob]'>CL</A>)"
+
+			//Options bar:  mob, details ( admin = 2, dev = 3, mentor = 4, character name (0 = just ckey, 1 = ckey and character name), link? (0 no don't make it a link, 1 do so),
+			//		highlight special roles (0 = everyone has same looking name, 1 = antags / special roles get a golden name)
+
+	var/mentor_msg = "\blue <b><font color=red>Request for Help: </font>[get_options_bar(mob, 4, 1, 1, 0)][ai_cl]:</b> [msg]"
+	msg = "\blue <b><font color=red>Request for Help:: </font>[get_options_bar(mob, 2, 1, 1)][ai_cl]:</b> [msg]"
+
+	var/admin_number_afk = 0
+
 	for(var/client/X in admins)
-		admin_number_total++;
-		var/invalid = 0
-		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			admin_number_ignored++
-			invalid = 1
-		if(X.is_afk())
-			admin_number_afk++
-			invalid = 1
-		if(X.holder.fakekey)
-			admin_number_ignored++
-			invalid = 1
-		if(invalid)
-			admin_number_decrease++
-	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
+		if((R_ADMIN|R_MOD|R_MENTOR|R_SERVER) & X.holder.rights)
+			if(X.is_afk())
+				admin_number_afk++
+			if(X.is_preference_enabled(/datum/client_preference/holder/play_adminhelp_ping))
+				X << 'sound/effects/adminhelp.ogg'
+			if(X.holder.rights == R_MENTOR)
+				X << mentor_msg		// Mentors won't see coloring of names on people with special_roles (Antags, etc.)
+			else
+				X << msg
+
+	//show it to the person adminhelping too
+	src << "<font color='blue'>PM to-<b>Staff </b>: [original_msg]</font>"
+
+	var/admin_number_present = admins.len - admin_number_afk
+	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
 	if(admin_number_present <= 0)
-		if(!admin_number_afk && !admin_number_ignored)
-			send2irc(source, "[msg] - No admins online")
-		else
-			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
-	return admin_number_present
-
-
-/proc/send2irc(msg,msg2)
-	if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+		send2adminirc("Request for Help from [key_name(src)]: [html_decode(original_msg)] - !![admin_number_afk ? "All admins AFK ([admin_number_afk])" : "No admins online"]!!")
+	else
+		send2adminirc("Request for Help from [key_name(src)]: [html_decode(original_msg)]")
+	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/send2otherserver(source,msg,type = "Ahelp")
-	if(global.cross_allowed)
-		var/list/message = list()
-		message["message"] = "[source]: [msg]"
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
-		message["crossmessage"] = type
-
-		world.Export("[global.cross_address]?[list2params(message)]")

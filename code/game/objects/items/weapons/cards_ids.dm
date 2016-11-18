@@ -15,9 +15,11 @@
 	name = "card"
 	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
-	w_class = 1
+	w_class = ITEMSIZE_TINY
+	slot_flags = SLOT_EARS
+	var/associated_account_number = 0
 
-	var/list/files = list()
+	var/list/files = list(  )
 
 /obj/item/weapon/card/data
 	name = "data disk"
@@ -33,68 +35,166 @@
 	set category = "Object"
 	set src in usr
 
-	if(usr.stat || !usr.canmove || usr.restrained())
-		return
-
 	if (t)
-		src.name = "data disk- '[t]'"
+		src.name = text("data disk- '[]'", t)
 	else
 		src.name = "data disk"
 	src.add_fingerprint(usr)
 	return
 
+/obj/item/weapon/card/data/clown
+	name = "\proper the coordinates to clown planet"
+	icon_state = "data"
+	item_state = "card-id"
+	layer = 3
+	level = 2
+	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
+	function = "teleporter"
+	data = "Clown Land"
+
 /*
  * ID CARDS
  */
+
+/obj/item/weapon/card/emag_broken
+	desc = "It's a card with a magnetic strip attached to some circuitry. It looks too busted to be used for anything but salvage."
+	name = "broken cryptographic sequencer"
+	icon_state = "emag"
+	item_state = "card-id"
+	origin_tech = list(TECH_MAGNET = 2, TECH_ILLEGAL = 2)
+
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
-	// attack_verb = list("emagged", "hacked", "glitched") //might cause some problems with trying to emag borgs, will be excluded until someone resolves it
 	icon_state = "emag"
 	item_state = "card-id"
-	origin_tech = "magnets=2;syndicate=2"
-	flags = NOBLUDGEON
-	var/prox_check = TRUE //If the emag requires you to be in range
+	origin_tech = list(TECH_MAGNET = 2, TECH_ILLEGAL = 2)
+	var/uses = 10
 
-/obj/item/weapon/card/emag/bluespace
-	name = "bluespace cryptographic sequencer"
-	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
-	color = rgb(40, 130, 255)
-	origin_tech = "bluespace=4;magnets=4;syndicate=5"
-	prox_check = FALSE
+/obj/item/weapon/card/emag/resolve_attackby(atom/A, mob/user)
+	var/used_uses = A.emag_act(uses, user, src)
+	if(used_uses < 0)
+		return ..(A, user)
 
-/obj/item/weapon/card/emag/attack()
-	return
+	uses -= used_uses
+	A.add_fingerprint(user)
+	log_and_message_admins("emagged \an [A].")
 
-/obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
-	A.emag_act(user)
+	if(uses<1)
+		user.visible_message("<span class='warning'>\The [src] fizzles and sparks - it seems it's been used once too often, and is now spent.</span>")
+		user.drop_item()
+		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+		junk.add_fingerprint(user)
+		qdel(src)
+
+	return 1
+
+/obj/item/weapon/card/emag/attackby(obj/item/O as obj, mob/user as mob)
+	if(istype(O, /obj/item/stack/telecrystal))
+		var/obj/item/stack/telecrystal/T = O
+		if(T.amount < 1)
+			usr << "<span class='notice'>You are not adding enough telecrystals to fuel \the [src].</span>"
+			return
+		uses += T.amount/2 //Gives 5 uses per 10 TC
+		uses = ceil(uses) //Ensures no decimal uses nonsense, rounds up to be nice
+		usr << "<span class='notice'>You add \the [O] to \the [src]. Increasing the uses of \the [src] to [uses].</span>"
+		qdel(O)
+
 
 /obj/item/weapon/card/id
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
-	slot_flags = SLOT_ID
-	attack_verb = list("identified", "slapped")
-	var/mining_points = 0 //For redeeming at mining equipment vendors
-	var/list/access = list()
-	var/registered_name = null // The name registered_name on the card
-	var/assignment = null
-	var/dorm = 0		// determines if this ID has claimed a dorm already
 
-/obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
-					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
-	return
+	sprite_sheets = list(
+		"Teshari" = 'icons/mob/species/seromi/id.dmi'
+		)
+
+	var/access = list()
+	var/registered_name = "Unknown" // The name registered_name on the card
+	slot_flags = SLOT_ID | SLOT_EARS
+
+	var/age = "\[UNSET\]"
+	var/blood_type = "\[UNSET\]"
+	var/dna_hash = "\[UNSET\]"
+	var/fingerprint_hash = "\[UNSET\]"
+	var/sex = "\[UNSET\]"
+	var/icon/front
+	var/icon/side
+
+	var/primary_color = rgb(0,0,0) // Obtained by eyedroppering the stripe in the middle of the card
+	var/secondary_color = rgb(0,0,0) // Likewise for the oval in the top-left corner
+
+	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
+	var/assignment = null	//can be alt title or the actual job
+	var/rank = null			//actual job
+	var/dorm = 0			// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/examine(mob/user)
+	set src in oview(1)
+	if(in_range(usr, src))
+		show(usr)
+		usr << desc
+	else
+		usr << "<span class='warning'>It is too far away.</span>"
+
+/obj/item/weapon/card/id/proc/prevent_tracking()
+	return 0
+
+/obj/item/weapon/card/id/proc/show(mob/user as mob)
+	if(front && side)
+		user << browse_rsc(front, "front.png")
+		user << browse_rsc(side, "side.png")
+	var/datum/browser/popup = new(user, "idcard", name, 600, 250)
+	popup.set_content(dat())
+	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	return
+
+/obj/item/weapon/card/id/proc/update_name()
+	name = "[src.registered_name]'s ID Card ([src.assignment])"
+
+/obj/item/weapon/card/id/proc/set_id_photo(var/mob/M)
+	front = getFlatIcon(M, SOUTH, always_use_defdir = 1)
+	side = getFlatIcon(M, WEST, always_use_defdir = 1)
+
+/mob/proc/set_id_info(var/obj/item/weapon/card/id/id_card)
+	id_card.age = 0
+	id_card.registered_name		= real_name
+	id_card.sex 				= capitalize(gender)
+	id_card.set_id_photo(src)
+
+	if(dna)
+		id_card.blood_type		= dna.b_type
+		id_card.dna_hash		= dna.unique_enzymes
+		id_card.fingerprint_hash= md5(dna.uni_identity)
+	id_card.update_name()
+
+/mob/living/carbon/human/set_id_info(var/obj/item/weapon/card/id/id_card)
 	..()
-	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+	id_card.age = age
+
+/obj/item/weapon/card/id/proc/dat()
+	var/dat = ("<table><tr><td>")
+	dat += text("Name: []</A><BR>", registered_name)
+	dat += text("Sex: []</A><BR>\n", sex)
+	dat += text("Age: []</A><BR>\n", age)
+	dat += text("Rank: []</A><BR>\n", assignment)
+	dat += text("Fingerprint: []</A><BR>\n", fingerprint_hash)
+	dat += text("Blood Type: []<BR>\n", blood_type)
+	dat += text("DNA Hash: []<BR><BR>\n", dna_hash)
+	if(front && side)
+		dat +="<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4><img src=side.png height=80 width=80 border=4></td>"
+	dat += "</tr></table>"
+	return dat
+
+/obj/item/weapon/card/id/attack_self(mob/user as mob)
+	user.visible_message("\The [user] shows you: \icon[src] [src.name]. The assignment on the card: [src.assignment]",\
+		"You flash your ID card: \icon[src] [src.name]. The assignment on the card: [src.assignment]")
+
+	src.add_fingerprint(user)
+	return
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -102,191 +202,164 @@
 /obj/item/weapon/card/id/GetID()
 	return src
 
-/*
-Usage:
-update_label()
-	Sets the id name to whatever registered_name and assignment is
+/obj/item/weapon/card/id/verb/read()
+	set name = "Read ID Card"
+	set category = "Object"
+	set src in usr
 
-update_label("John Doe", "Clowny")
-	Properly formats the name and occupation and sets the id name to the arguments
-*/
-/obj/item/weapon/card/id/proc/update_label(newname, newjob)
-	if(newname || newjob)
-		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
-		return
-
-	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	usr << text("\icon[] []: The current assignment on the card is [].", src, src.name, src.assignment)
+	usr << "The blood type on the card is [blood_type]."
+	usr << "The DNA hash on the card is [dna_hash]."
+	usr << "The fingerprint hash on the card is [fingerprint_hash]."
+	return
 
 /obj/item/weapon/card/id/silver
-	name = "silver identification card"
+	name = "identification card"
 	desc = "A silver card which shows honour and dedication."
-	attack_verb = list("promoted", "slapped", "identified")
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
-	name = "gold identification card"
+	name = "identification card"
 	desc = "A golden card which shows power and might."
-	attack_verb = list("promoted", "honored", "identified", "slapped")
 	icon_state = "gold"
 	item_state = "gold_id"
-
-/obj/item/weapon/card/id/syndicate
-	name = "agent card"
-	access = list(access_maint_tunnels, access_syndicate)
-	origin_tech = "syndicate=1"
-
-/obj/item/weapon/card/id/syndicate/New()
-	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/card/id
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
-
-/obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
-	if(!proximity)
-		return
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = O
-		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
-			if(user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
-
-/obj/item/weapon/card/id/syndicate/attack_self(mob/user)
-	if(istype(user, /mob/living) && user.mind)
-		if(user.mind.special_role)
-			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
-				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
-					if (t)
-						alert("Invalid name.")
-					return
-				registered_name = t
-
-				var u = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant")as text | null),1,MAX_MESSAGE_LEN)
-				if(!u)
-					registered_name = ""
-					return
-				assignment = u
-				update_label()
-				user << "<span class='notice'>You successfully forge the ID card.</span>"
-				return
-	..()
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
-	access = list(access_syndicate)
-
-/obj/item/weapon/card/id/syndicate/abductor
-	name = "abductor agent card"
-	desc = "A card that can copy access from the IDs of abductees."
-	access = list()
-	origin_tech = "abductor=3"
+	access = list(access_syndicate, access_external_airlocks)
 
 /obj/item/weapon/card/id/captains_spare
-	name = "captain's spare ID"
+	name = "colony director's spare ID"
 	desc = "The spare ID of the High Lord himself."
-	attack_verb = list("spared", "promoted", "honored", "identified", "slapped")
 	icon_state = "gold"
 	item_state = "gold_id"
-	registered_name = "Captain"
-	assignment = "Captain"
-
+	registered_name = "Colony Director"
+	assignment = "Colony Director"
 /obj/item/weapon/card/id/captains_spare/New()
-	var/datum/job/captain/J = new/datum/job/captain
-	access = J.get_access()
+	access = get_all_station_access()
+	..()
+
+/obj/item/weapon/card/id/synthetic
+	name = "\improper Synthetic ID"
+	desc = "Access module for NanoTrasen Synthetics"
+	icon_state = "id-robot"
+	item_state = "tdgreen"
+	assignment = "Synthetic"
+
+/obj/item/weapon/card/id/synthetic/New()
+	access = get_all_station_access() + access_synth
 	..()
 
 /obj/item/weapon/card/id/centcom
-	name = "\improper Centcom ID"
+	name = "\improper CentCom. ID"
 	desc = "An ID straight from Cent. Com."
-	attack_verb = list("inspected", "identified", "slapped")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
+	New()
+		access = get_all_accesses()
+		..()
 
-/obj/item/weapon/card/id/centcom/New()
-	access = get_all_centcom_access()
+/obj/item/weapon/card/id/centcom/ERT
+	name = "\improper Emergency Response Team ID"
+	assignment = "Emergency Response Team"
+
+/obj/item/weapon/card/id/centcom/ERT/New()
 	..()
+	access |= get_all_station_access()
 
-/obj/item/weapon/card/id/ert
-	name = "\improper Centcom ID"
-	desc = "A ERT ID card"
-	icon_state = "centcom"
-	attack_verb = list("responded to","identified", "slapped")
-	registered_name = "Emergency Response Team Commander"
-	assignment = "Emergency Response Team Commander"
+// Department-flavor IDs
+/obj/item/weapon/card/id/medical
+	name = "identification card"
+	desc = "A card issued to station medical staff."
+	icon_state = "med"
+	primary_color = rgb(189,237,237)
+	secondary_color = rgb(223,255,255)
 
-/obj/item/weapon/card/id/ert/New()
-	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
+/obj/item/weapon/card/id/medical/head
+	name = "identification card"
+	desc = "A card which represents care and compassion."
+	icon_state = "medGold"
+	primary_color = rgb(189,237,237)
+	secondary_color = rgb(255,223,127)
 
-/obj/item/weapon/card/id/ert/Security
-	registered_name = "Security Response Officer"
-	assignment = "Security Response Officer"
+/obj/item/weapon/card/id/security
+	name = "identification card"
+	desc = "A card issued to station security staff."
+	icon_state = "sec"
+	primary_color = rgb(189,47,0)
+	secondary_color = rgb(223,127,95)
 
-/obj/item/weapon/card/id/ert/Security/New()
-	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
+/obj/item/weapon/card/id/security/head
+	name = "identification card"
+	desc = "A card which represents honor and protection."
+	icon_state = "secGold"
+	primary_color = rgb(189,47,0)
+	secondary_color = rgb(255,223,127)
 
-/obj/item/weapon/card/id/ert/Engineer
-	registered_name = "Engineer Response Officer"
-	assignment = "Engineer Response Officer"
+/obj/item/weapon/card/id/engineering
+	name = "identification card"
+	desc = "A card issued to station engineering staff."
+	icon_state = "eng"
+	primary_color = rgb(189,94,0)
+	secondary_color = rgb(223,159,95)
 
-/obj/item/weapon/card/id/ert/Engineer/New()
-	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
+/obj/item/weapon/card/id/engineering/head
+	name = "identification card"
+	desc = "A card which represents creativity and ingenuity."
+	icon_state = "engGold"
+	primary_color = rgb(189,94,0)
+	secondary_color = rgb(255,223,127)
 
-/obj/item/weapon/card/id/ert/Medical
-	registered_name = "Medical Response Officer"
-	assignment = "Medical Response Officer"
+/obj/item/weapon/card/id/science
+	name = "identification card"
+	desc = "A card issued to station science staff."
+	icon_state = "sci"
+	primary_color = rgb(142,47,142)
+	secondary_color = rgb(191,127,191)
 
-/obj/item/weapon/card/id/ert/Medical/New()
-	access = get_all_accesses()+get_ert_access("med")-access_change_ids
+/obj/item/weapon/card/id/science/head
+	name = "identification card"
+	desc = "A card which represents knowledge and reasoning."
+	icon_state = "sciGold"
+	primary_color = rgb(142,47,142)
+	secondary_color = rgb(255,223,127)
 
-/obj/item/weapon/card/id/prisoner
-	name = "prisoner ID card"
-	desc = "You are a number, you are not a free man."
-	attack_verb = list("arrested", "cuffed", "took freedom from", "imprisoned", "identified", "slapped")
-	icon_state = "orange"
-	item_state = "orange-id"
-	assignment = "Prisoner"
-	registered_name = "Scum"
-	var/goal = 0 //How far from freedom?
-	var/points = 0
+/obj/item/weapon/card/id/cargo
+	name = "identification card"
+	desc = "A card issued to station cargo staff."
+	icon_state = "cargo"
+	primary_color = rgb(142,94,0)
+	secondary_color = rgb(191,159,95)
 
-/obj/item/weapon/card/id/prisoner/attack_self(mob/user)
-	usr << "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
+/obj/item/weapon/card/id/cargo/head
+	name = "identification card"
+	desc = "A card which represents service and planning."
+	icon_state = "cargoGold"
+	primary_color = rgb(142,94,0)
+	secondary_color = rgb(255,223,127)
 
-/obj/item/weapon/card/id/prisoner/one
-	name = "Prisoner #13-001"
-	registered_name = "Prisoner #13-001"
+/obj/item/weapon/card/id/civilian
+	name = "identification card"
+	desc = "A card issued to station civilian staff."
+	icon_state = "civ"
+	primary_color = rgb(0,94,142)
+	secondary_color = rgb(95,159,191)
 
-/obj/item/weapon/card/id/prisoner/two
-	name = "Prisoner #13-002"
-	registered_name = "Prisoner #13-002"
+/obj/item/weapon/card/id/civilian/head //This is not the HoP. There's no position that uses this right now.
+	name = "identification card"
+	desc = "A card which represents common sense and responsibility."
+	icon_state = "civGold"
+	primary_color = rgb(0,94,142)
+	secondary_color = rgb(255,223,127)
 
-/obj/item/weapon/card/id/prisoner/three
-	name = "Prisoner #13-003"
-	registered_name = "Prisoner #13-003"
-
-/obj/item/weapon/card/id/prisoner/four
-	name = "Prisoner #13-004"
-	registered_name = "Prisoner #13-004"
-
-/obj/item/weapon/card/id/prisoner/five
-	name = "Prisoner #13-005"
-	registered_name = "Prisoner #13-005"
-
-/obj/item/weapon/card/id/prisoner/six
-	name = "Prisoner #13-006"
-	registered_name = "Prisoner #13-006"
-
-/obj/item/weapon/card/id/prisoner/seven
-	name = "Prisoner #13-007"
-	registered_name = "Prisoner #13-007"
-
-/obj/item/weapon/card/id/mining
-	name = "mining ID"
-	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+/obj/item/weapon/card/id/external
+	name = "identification card"
+	desc = "An identification card of some sort. It does not look like it is issued by NT."
+	icon_state = "permit"
+	primary_color = rgb(142,94,0)
+	secondary_color = rgb(191,159,95)

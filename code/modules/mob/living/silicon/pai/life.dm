@@ -1,44 +1,36 @@
 /mob/living/silicon/pai/Life()
-	updatehealth()
-	if (src.stat == DEAD)
-		return
-	if (src.selfrepair == 1 && src.health < 100)
-		if(prob(12))
-			adjustBruteLoss(rand(-4, -8))
 
-	if (src.health < -50)
-		death()
+	if (src.stat == 2)
+		return
+
 	if(src.cable)
 		if(get_dist(src, src.cable) > 1)
-			var/turf/T = get_turf(src.loc)
-			T.visible_message("<span class='warning'>[src.cable] rapidly retracts back into its spool.</span>", "<span class='italics'>You hear a click and the sound of wire spooling rapidly.</span>")
+			var/turf/T = get_turf_or_move(src.loc)
+			for (var/mob/M in viewers(T))
+				M.show_message("\red The data cable rapidly retracts back into its spool.", 3, "\red You hear a click and the sound of wire spooling rapidly.", 2)
 			qdel(src.cable)
-			cable = null
+
+	handle_regular_hud_updates()
+
+	if(src.secHUD == 1)
+		process_sec_hud(src, 1)
+
+	if(src.medHUD == 1)
+		process_med_hud(src, 1)
+
 	if(silence_time)
 		if(world.timeofday >= silence_time)
 			silence_time = null
 			src << "<font color=green>Communication circuit reinitialized. Speech and messaging functionality restored.</font>"
-	if(emitter_OD) //beacon overcharge software emitter stuff (/datum/pai/software/beacon_overcharge [beacon_overcharge.dm])
-		if (src.getFireLoss() >= 75)
-			var/datum/pai/software/beacon_overcharge/S = new /datum/pai/software/beacon_overcharge
-			S.take_overload_damage(src)
-		if (luminosity && luminosity < 6)
-			if (prob(12))
-				AddLuminosity(1)
-				if (prob(50))
-					adjustFireLoss(rand(6, 8))
-					src << "<span class='warning'>Your circuits sizzle and whine under the increased heat produced by your overloaded holographic emitters.</span>"
-			if (luminosity && luminosity > 1 && prob(3))
-				AddLuminosity(-1)
-		else if (luminosity && luminosity == 6)
-			if (prob(50))
-				adjustFireLoss(rand(2, 4))
-				src << "<span class='warning'>Your circuits sizzle and whine under the increased heat produced by your overloaded holographic emitters.</span>"
-				src << "<span class='warning><b>/mnt/holo_em:</b> PROTOCOL WARNING: VOLTAGE MAXED</span>"
+
+	handle_statuses()
+
+	if(health <= 0)
+		death(null,"gives one shrill beep before falling lifeless.")
 
 /mob/living/silicon/pai/updatehealth()
-	if(GODMODE in status_flags)
-		return
-	health = maxHealth - getBruteLoss() - getFireLoss()
-	update_stat()
-
+	if(status_flags & GODMODE)
+		health = 100
+		stat = CONSCIOUS
+	else
+		health = 100 - getBruteLoss() - getFireLoss()

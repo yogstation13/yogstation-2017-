@@ -4,494 +4,322 @@
  *		Camera Film
  *		Photos
  *		Photo Albums
- *		AI Photography
  */
 
-/*
- * Film
- */
+/*******
+* film *
+*******/
 /obj/item/device/camera_film
 	name = "film cartridge"
 	icon = 'icons/obj/items.dmi'
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
-	item_state = "electropack"
-	w_class = 1
-	burn_state = FLAMMABLE
+	item_state = "camera"
+	w_class = ITEMSIZE_TINY
 
-/*
- * Photo
- */
+
+/********
+* photo *
+********/
+var/global/photo_count = 0
+
 /obj/item/weapon/photo
 	name = "photo"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = 1
-	burn_state = FLAMMABLE
-	burntime = 5
-	var/icon/img		//Big photo image
-	var/scribble		//Scribble on the back.
-	var/blueprints = 0	//Does it include the blueprints?
-	var/sillynewscastervar  //Photo objects with this set to 1 will not be ejected by a newscaster. Only gets set to 1 if a silicon puts one of their images into a newscaster
+	w_class = ITEMSIZE_SMALL
+	var/id
+	var/icon/img	//Big photo image
+	var/scribble	//Scribble on the back.
+	var/icon/tiny
+	var/photo_size = 3
 
+/obj/item/weapon/photo/New()
+	id = photo_count++
 
-/obj/item/weapon/photo/attack_self(mob/user)
+/obj/item/weapon/photo/attack_self(mob/user as mob)
 	user.examinate(src)
 
-
-/obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
-		txt = copytext(txt, 1, 128)
+/obj/item/weapon/photo/attackby(obj/item/weapon/P as obj, mob/user as mob)
+	if(istype(P, /obj/item/weapon/pen))
+		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text, 128)
 		if(loc == user && user.stat == 0)
 			scribble = txt
 	..()
 
-
 /obj/item/weapon/photo/examine(mob/user)
-	..()
-
 	if(in_range(user, src))
 		show(user)
+		user << desc
 	else
-		user << "<span class='warning'>You need to get closer to get a good look at this photo!</span>"
+		user << "<span class='notice'>It is too far away.</span>"
 
-
-/obj/item/weapon/photo/proc/show(mob/user)
-	user << browse_rsc(img, "tmp_photo.png")
+/obj/item/weapon/photo/proc/show(mob/user as mob)
+	user << browse_rsc(img, "tmp_photo_[id].png")
 	user << browse("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
+		+ "<img src='tmp_photo_[id].png' width='[64*photo_size]' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
+		+ "</body></html>", "window=book;size=[64*photo_size]x[scribble ? 400 : 64*photo_size]")
 	onclose(user, "[name]")
-
+	return
 
 /obj/item/weapon/photo/verb/rename()
 	set name = "Rename photo"
 	set category = "Object"
 	set src in usr
 
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = sanitizeSafe(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0 && usr.canmove && !usr.restrained())
-		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
+	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == 0))
+		name = "[(n_name ? text("[n_name]") : "photo")]"
 	add_fingerprint(usr)
+	return
 
-/obj/item/weapon/photo/proc/photocreate(inicon, inimg, indesc, inblueprints)
-	icon = inicon
-	img = inimg
-	desc = indesc
-	blueprints = inblueprints
 
-/*
- * Photo album
- */
+/**************
+* photo album *
+**************/
 /obj/item/weapon/storage/photo_album
-	name = "photo album"
+	name = "Photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	burn_state = FLAMMABLE
 
-/*
- * Camera
- */
+/obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+
+	if((istype(usr, /mob/living/carbon/human)))
+		var/mob/living/carbon/human/M = usr
+		if(!( istype(over_object, /obj/screen) ))
+			return ..()
+		playsound(loc, "rustle", 50, 1, -5)
+		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
+			switch(over_object.name)
+				if("r_hand")
+					M.u_equip(src)
+					M.put_in_r_hand(src)
+				if("l_hand")
+					M.u_equip(src)
+					M.put_in_l_hand(src)
+			add_fingerprint(usr)
+			return
+		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
+			if(usr.s_active)
+				usr.s_active.close(usr)
+			show_to(usr)
+			return
+	return
+
+/*********
+* camera *
+*********/
 /obj/item/device/camera
 	name = "camera"
 	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera."
+	desc = "A polaroid camera. 10 photos left."
 	icon_state = "camera"
-	item_state = "electropack"
-	w_class = 2
+	item_state = "camera"
+	w_class = ITEMSIZE_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	materials = list(MAT_METAL=2000)
+	matter = list(DEFAULT_WALL_MATERIAL = 2000)
 	var/pictures_max = 10
 	var/pictures_left = 10
 	var/on = 1
-	var/blueprints = 0	//are blueprints visible in the current photo being created?
-	var/list/aipictures = list() //Allows for storage of pictures taken by AI, in a similar manner the datacore stores info. Keeping this here allows us to share some procs w/ regualar camera
-	var/see_ghosts = 0 //for the spoop of it
+	var/icon_on = "camera"
+	var/icon_off = "camera_off"
+	var/size = 3
 
+/obj/item/device/camera/verb/change_size()
+	set name = "Set Photo Focus"
+	set category = "Object"
+	var/nsize = input("Photo Size","Pick a size of resulting photo.") as null|anything in list(1,3,5,7)
+	if(nsize)
+		size = nsize
+		usr << "<span class='notice'>Camera will now take [size]x[size] photos.</span>"
 
-/obj/item/device/camera/CheckParts(list/parts_list)
-	..()
-	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
-	if(C)
-		pictures_max = C.pictures_max
-		pictures_left = C.pictures_left
-		visible_message("[C] has been imbued with godlike power!")
-		qdel(C)
-
-
-/obj/item/device/camera/spooky
-	name = "camera obscura"
-	desc = "A polaroid camera, some say it can see ghosts!"
-	see_ghosts = 1
-
-/obj/item/device/camera/detective
-	name = "Detective's camera"
-	desc = "A polaroid camera with extra capacity for crime investigations."
-	pictures_max = 30
-	pictures_left = 30
-
-
-/obj/item/device/camera/siliconcam //camera AI can take pictures with
-	name = "silicon photo camera"
-	var/in_camera_mode = 0
-
-/obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
-	name = "AI photo camera"
-
-/obj/item/device/camera/siliconcam/robot_camera //camera cyborgs can take pictures with.. needs it's own because of verb CATEGORY >.>
-	name = "Cyborg photo camera"
-
-/obj/item/device/camera/siliconcam/robot_camera/verb/borgprinting()
-	set category ="Robot Commands"
-	set name = "Print Image"
-	set src in usr
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	borgprint()
-
-/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/device/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return
 
+/obj/item/device/camera/attack_self(mob/user as mob)
+	on = !on
+	if(on)
+		src.icon_state = icon_on
+	else
+		src.icon_state = icon_off
+	user << "You switch the camera [on ? "on" : "off"]."
+	return
 
-/obj/item/device/camera/attackby(obj/item/I, mob/user, params)
+/obj/item/device/camera/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/device/camera_film))
 		if(pictures_left)
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
-		if(!user.unEquip(I))
-			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
+		user.drop_item()
 		qdel(I)
 		pictures_left = pictures_max
 		return
 	..()
 
 
-/obj/item/device/camera/examine(mob/user)
-	..()
-	user << "It has [pictures_left] photos left."
+/obj/item/device/camera/proc/get_icon(list/turfs, turf/center)
 
+	//Bigger icon base to capture those icons that were shifted to the next tile
+	//i.e. pretty much all wall-mounted machinery
+	var/icon/res = icon('icons/effects/96x96.dmi', "")
+	res.Scale(size*32, size*32)
+	// Initialize the photograph to black.
+	res.Blend("#000", ICON_OVERLAY)
 
-/obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()
-	for(var/turf/T in turfs)
-		atoms.Add(T)
-		for(var/atom/movable/A in T)
-			if(A.invisibility)
-				if(see_ghosts)
-					if(istype(A, /mob/dead/observer))
-						var/mob/dead/observer/O = A
-						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
-							continue
-				else
-					continue
+	for(var/turf/the_turf in turfs)
+		// Add outselves to the list of stuff to draw
+		atoms.Add(the_turf);
+		// As well as anything that isn't invisible.
+		for(var/atom/A in the_turf)
+			if(A.invisibility) continue
 			atoms.Add(A)
 
-	var/list/sorted = list()
-	var/j
-	for(var/i = 1 to atoms.len)
-		var/atom/c = atoms[i]
-		for(j = sorted.len, j > 0, --j)
-			var/atom/c2 = sorted[j]
-			if(c2.layer <= c.layer)
-				break
-		sorted.Insert(j+1, c)
+	// Sort the atoms into their layers
+	var/list/sorted = sort_atoms_by_layer(atoms)
+	var/center_offset = (size-1)/2 * 32 + 1
+	for(var/i; i <= sorted.len; i++)
+		var/atom/A = sorted[i]
+		if(A)
+			var/icon/img = getFlatIcon(A)//build_composite_icon(A)
 
-	var/icon/res = icon('icons/effects/96x96.dmi', "")
+			// If what we got back is actually a picture, draw it.
+			if(istype(img, /icon))
+				// Check if we're looking at a mob that's lying down
+				if(istype(A, /mob/living) && A:lying)
+					// If they are, apply that effect to their picture.
+					img.BecomeLying()
+				// Calculate where we are relative to the center of the photo
+				var/xoff = (A.x - center.x) * 32 + center_offset
+				var/yoff = (A.y - center.y) * 32 + center_offset
+				if (istype(A,/atom/movable))
+					xoff+=A:step_x
+					yoff+=A:step_y
+				res.Blend(img, blendMode2iconMode(A.blend_mode),  A.pixel_x + xoff, A.pixel_y + yoff)
 
-	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
-			img.Turn(A:lying)
-
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
-		if(istype(A, /atom/movable))
-			offX += A:step_x
-			offY += A:step_y
-
-		res.Blend(img, blendMode2iconMode(A.blend_mode), offX, offY)
-
-		if(istype(A, /obj/item/areaeditor/blueprints))
-			blueprints = 1
-
-	for(var/turf/T in turfs)
-		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
-
+	// Lastly, render any contained effects on top.
+	for(var/turf/the_turf in turfs)
+		// Calculate where we are relative to the center of the photo
+		var/xoff = (the_turf.x - center.x) * 32 + center_offset
+		var/yoff = (the_turf.y - center.y) * 32 + center_offset
+		res.Blend(getFlatIcon(the_turf.loc), blendMode2iconMode(the_turf.blend_mode),xoff,yoff)
 	return res
 
 
-/obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
+/obj/item/device/camera/proc/get_mobs(turf/the_turf as turf)
 	var/mob_detail
-	for(var/mob/M in the_turf)
-		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
-				var/mob/dead/observer/O = M
-				if(O.orbiting)
-					continue
-				if(!mob_detail)
-					mob_detail = "You can see a g-g-g-g-ghooooost! "
-				else
-					mob_detail += "You can also see a g-g-g-g-ghooooost!"
-			else
-				continue
-
+	for(var/mob/living/carbon/A in the_turf)
+		if(A.invisibility) continue
 		var/holding = null
+		if(A.l_hand || A.r_hand)
+			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
+			if(A.r_hand)
+				if(holding)
+					holding += " and \a [A.r_hand]"
+				else
+					holding = "They are holding \a [A.r_hand]"
 
-		if(istype(M, /mob/living))
-			var/mob/living/L = M
-			if(L.l_hand || L.r_hand)
-				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
-				if(L.r_hand)
-					if(holding)
-						holding += " and \a [L.r_hand]"
-					else
-						holding = "They are holding \a [L.r_hand]"
-
-			if(!mob_detail)
-				mob_detail = "You can see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
-			else
-				mob_detail += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
-
-
+		if(!mob_detail)
+			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
+		else
+			mob_detail += "You can also see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]."
 	return mob_detail
 
-
-/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
-	var/mobs = ""
-	var/isAi = istype(user, /mob/living/silicon/ai)
-	var/list/seen
-	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
-		if(user.client)		//To make shooting through security cameras possible
-			seen = get_hear(world.view, user.client.eye) //To make shooting through security cameras possible
-		else
-			seen = get_hear(world.view, user)
-	else
-		seen = get_hear(world.view, target)
-
-	var/list/turfs = list()
-	for(var/turf/T in range(1, target))
-		if(T in seen)
-			if(isAi && !cameranet.checkTurfVis(T))
-				continue
-			else
-				turfs += T
-				mobs += camera_get_mobs(T)
-
-	var/icon/temp = icon('icons/effects/96x96.dmi',"")
-	temp.Blend("#000", ICON_OVERLAY)
-	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
-
-	if(!issilicon(user))
-		printpicture(user, temp, mobs, flag)
-	else
-		aipicture(user, temp, mobs, isAi, blueprints)
-
-
-
-
-/obj/item/device/camera/proc/printpicture(mob/user, icon/temp, mobs, flag) //Normal camera proc for creating photos
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo(get_turf(src))
-	if(Adjacent(user)) //needed because of TK
-		user.put_in_hands(P)
-	var/icon/small_img = icon(temp)
-	var/icon/ic = icon('icons/obj/items.dmi',"photo")
-	small_img.Scale(8, 8)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
-	P.icon = ic
-	P.img = temp
-	P.desc = mobs
-	P.pixel_x = rand(-10, 10)
-	P.pixel_y = rand(-10, 10)
-
-	if(blueprints)
-		P.blueprints = 1
-		blueprints = 0
-
-
-/obj/item/device/camera/proc/aipicture(mob/user, icon/temp, mobs, isAi) //instead of printing a picture like a regular camera would, we do this instead for the AI
-
-	var/icon/small_img = icon(temp)
-	var/icon/ic = icon('icons/obj/items.dmi',"photo")
-	small_img.Scale(8, 8)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
-	var/icon = ic
-	var/img = temp
-	var/desc = mobs
-	var/pixel_x = rand(-10, 10)
-	var/pixel_y = rand(-10, 10)
-
-	var/injectblueprints = 1
-	if(blueprints)
-		injectblueprints = 1
-		blueprints = 0
-
-	if(isAi)
-		injectaialbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
-	else
-		injectmasteralbum(icon, img, desc, pixel_x, pixel_y, injectblueprints)
-
-
-
-/datum/picture
-	var/name = "image"
-	var/list/fields = list()
-
-
-/obj/item/device/camera/proc/injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
-	var/numberer = 1
-	for(var/datum/picture in src.aipictures)
-		numberer++
-	var/datum/picture/P = new()
-	P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
-	P.fields["icon"] = icon
-	P.fields["img"] = img
-	P.fields["desc"] = desc
-	P.fields["pixel_x"] = pixel_x
-	P.fields["pixel_y"] = pixel_y
-	P.fields["blueprints"] = blueprintsinject
-
-	aipictures += P
-	usr << "<span class='unconscious'>Image recorded</span>"	//feedback to the AI player that the picture was taken
-
-/obj/item/device/camera/proc/injectmasteralbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject) //stores image information to a list similar to that of the datacore
-	var/numberer = 1
-	var/mob/living/silicon/robot/C = src.loc
-	if(C.connected_ai)
-		for(var/datum/picture in C.connected_ai.aicamera.aipictures)
-			numberer++
-		var/datum/picture/P = new()
-		P.fields["name"] = "Image [numberer] (taken by [src.loc.name])"
-		P.fields["icon"] = icon
-		P.fields["img"] = img
-		P.fields["desc"] = desc
-		P.fields["pixel_x"] = pixel_x
-		P.fields["pixel_y"] = pixel_y
-		P.fields["blueprints"] = blueprintsinject
-
-		C.connected_ai.aicamera.aipictures += P
-		usr << "<span class='unconscious'>Image recorded and saved to remote database</span>"	//feedback to the Cyborg player that the picture was taken
-	else
-		injectaialbum(icon, img, desc, pixel_x, pixel_y, blueprintsinject)
-
-/obj/item/device/camera/siliconcam/proc/selectpicture(obj/item/device/camera/siliconcam/targetloc)
-	var/list/nametemp = list()
-	var/find
-	if(targetloc.aipictures.len == 0)
-		usr << "<span class='boldannounce'>No images saved</span>"
-		return
-	for(var/datum/picture/t in targetloc.aipictures)
-		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
-	for(var/datum/picture/q in targetloc.aipictures)
-		if(q.fields["name"] == find)
-			return q
-
-/obj/item/device/camera/siliconcam/proc/viewpichelper(obj/item/device/camera/siliconcam/targetloc)
-	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
-	var/datum/picture/selection = selectpicture(targetloc)
-	if(selection)
-		P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-		P.pixel_x = selection.fields["pixel_x"]
-		P.pixel_y = selection.fields["pixel_y"]
-
-		P.show(usr)
-		usr << P.desc
-	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
-
-/obj/item/device/camera/siliconcam/proc/viewpictures(user)
-	if(isrobot(user)) // Cyborg
-		var/mob/living/silicon/robot/C = src.loc
-		var/obj/item/device/camera/siliconcam/Cinfo
-		if(C.connected_ai)
-			Cinfo = C.connected_ai.aicamera
-			viewpichelper(Cinfo)
-		else
-			Cinfo = C.aicamera
-			viewpichelper(Cinfo)
-	else // AI
-		var/Ainfo = src
-		viewpichelper(Ainfo)
-
-/obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || !isturf(target.loc))
-		return
-
+/obj/item/device/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
+	if(!on || !pictures_left || ismob(target.loc)) return
 	captureimage(target, user, flag)
 
 	playsound(loc, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, 1, -3)
 
 	pictures_left--
+	desc = "A polaroid camera. It has [pictures_left] photos left."
 	user << "<span class='notice'>[pictures_left] photos left.</span>"
-	icon_state = "camera_off"
+	icon_state = icon_off
 	on = 0
 	spawn(64)
-		icon_state = "camera"
+		icon_state = icon_on
 		on = 1
 
-/obj/item/device/camera/siliconcam/proc/toggle_camera_mode()
-	if(in_camera_mode)
-		camera_mode_off()
-	else
-		camera_mode_on()
+/obj/item/device/camera/proc/can_capture_turf(turf/T, mob/user)
+	var/mob/dummy = new(T)	//Go go visibility check dummy
+	var/viewer = user
+	if(user.client)		//To make shooting through security cameras possible
+		viewer = user.client.eye
+	var/can_see = (dummy in viewers(world.view, viewer))
 
-/obj/item/device/camera/siliconcam/proc/camera_mode_off()
-	src.in_camera_mode = 0
-	usr << "<B>Camera Mode deactivated</B>"
+	qdel(dummy)
+	return can_see
 
-/obj/item/device/camera/siliconcam/proc/camera_mode_on()
-	src.in_camera_mode = 1
-	usr << "<B>Camera Mode activated</B>"
+/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)
+	var/x_c = target.x - (size-1)/2
+	var/y_c = target.y + (size-1)/2
+	var/z_c	= target.z
+	var/list/turfs = list()
+	var/mobs = ""
+	for(var/i = 1; i <= size; i++)
+		for(var/j = 1; j <= size; j++)
+			var/turf/T = locate(x_c, y_c, z_c)
+			if(can_capture_turf(T, user))
+				turfs.Add(T)
+				mobs += get_mobs(T)
+			x_c++
+		y_c--
+		x_c = x_c - size
 
-/obj/item/device/camera/siliconcam/robot_camera/proc/borgprint()
-	var/list/nametemp = list()
-	var/find
-	var/datum/picture/selection
-	var/mob/living/silicon/robot/C = src.loc
-	var/obj/item/device/camera/siliconcam/targetcam = null
-	if(C.toner < 20)
-		usr << "Insufficent toner to print image."
-		return
-	if(C.connected_ai)
-		targetcam = C.connected_ai.aicamera
-	else
-		targetcam = C.aicamera
-	if(targetcam.aipictures.len == 0)
-		usr << "<span class='userdanger'>No images saved</span>"
-		return
-	for(var/datum/picture/t in targetcam.aipictures)
-		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
-	for(var/datum/picture/q in targetcam.aipictures)
-		if(q.fields["name"] == find)
-			selection = q
-			break
-	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
-	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
+	var/obj/item/weapon/photo/p = createpicture(target, user, turfs, mobs, flag)
+	printpicture(user, p)
+
+/obj/item/device/camera/proc/createpicture(atom/target, mob/user, list/turfs, mobs, flag)
+	var/icon/photoimage = get_icon(turfs, target)
+
+	var/icon/small_img = icon(photoimage)
+	var/icon/tiny_img = icon(photoimage)
+	var/icon/ic = icon('icons/obj/items.dmi',"photo")
+	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
+	small_img.Scale(8, 8)
+	tiny_img.Scale(4, 4)
+	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
+	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+
+	var/obj/item/weapon/photo/p = new()
+	p.name = "photo"
+	p.icon = ic
+	p.tiny = pc
+	p.img = photoimage
+	p.desc = mobs
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
-	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
-	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
-	usr << "<span class='notice'>You print a photograph.</span>"
+	p.photo_size = size
 
-/*
- * Photo book
- */
-/obj/item/weapon/storage/photobook
-	w_class = 3.0
-	name = "photo book"
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "photobook"
-	item_state = "photobook"
-	can_hold = list(/obj/item/weapon/photo)
-	storage_slots = 70
-	burn_state = 0 //Burnable
+	return p
+
+/obj/item/device/camera/proc/printpicture(mob/user, obj/item/weapon/photo/p)
+	p.loc = user.loc
+	if(!user.get_inactive_hand())
+		user.put_in_inactive_hand(p)
+
+/obj/item/weapon/photo/proc/copy(var/copy_id = 0)
+	var/obj/item/weapon/photo/p = new/obj/item/weapon/photo()
+
+	p.name = name
+	p.icon = icon(icon, icon_state)
+	p.tiny = icon(tiny)
+	p.img = icon(img)
+	p.desc = desc
+	p.pixel_x = pixel_x
+	p.pixel_y = pixel_y
+	p.photo_size = photo_size
+	p.scribble = scribble
+
+	if(copy_id)
+		p.id = id
+
+	return p

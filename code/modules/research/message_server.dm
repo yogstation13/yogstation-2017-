@@ -1,12 +1,14 @@
+#define MESSAGE_SERVER_SPAM_REJECT 1
+#define MESSAGE_SERVER_DEFAULT_SPAM_LIMIT 10
+
 var/global/list/obj/machinery/message_server/message_servers = list()
 
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
 	var/sender = "Unspecified" //name of the sender
 	var/message = "Blank" //transferred message
-	var/image/photo = null //Attached photo
 
-/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "",var/param_photo=null)
+/datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
 
 	if(param_rec)
 		recipient = param_rec
@@ -14,24 +16,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		sender = param_sender
 	if(param_message)
 		message = param_message
-	if(param_photo)
-		photo = param_photo
-
-/datum/data_pda_msg/proc/get_photo_ref()
-	if(photo)
-		return "<a href='byond://?src=\ref[src];photo=1'>(Photo)</a>"
-	return ""
-
-/datum/data_pda_msg/Topic(href,href_list)
-	..()
-	if(href_list["photo"])
-		var/mob/M = usr
-		M << browse_rsc(photo, "pda_photo.png")
-		M << browse("<html><head><title>PDA Photo</title></head>" \
-		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
-		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=book;size=192x192")
-		onclose(M, "PDA Photo")
 
 /datum/data_rc_msg
 	var/rec_dpt = "Unspecified" //name of the person
@@ -68,7 +52,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon_state = "server"
 	name = "Messaging Server"
 	density = 1
-	anchored = 1
+	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -77,6 +61,12 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = 1
 	var/decryptkey = "password"
+
+	//Spam filtering stuff
+	var/list/spamfilter = list("You have won", "your prize", "male enhancement", "shitcurity", \
+			"are happy to inform you", "account number", "enter your PIN")
+			//Messages having theese tokens will be rejected by server. Case sensitive
+	var/spamfilter_limit = MESSAGE_SERVER_DEFAULT_SPAM_LIMIT	//Maximal amount of tokens
 
 /obj/machinery/message_server/New()
 	message_servers += src
@@ -87,7 +77,8 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 /obj/machinery/message_server/Destroy()
 	message_servers -= src
-	return ..()
+	..()
+	return
 
 /obj/machinery/message_server/proc/GenerateKey()
 	//Feel free to move to Helpers.
@@ -106,20 +97,61 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	update_icon()
 	return
 
-/obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "",photo=null)
-	. = new/datum/data_pda_msg(recipient,sender,message,photo)
-	pda_msgs += .
+/obj/machinery/message_server/proc/send_pda_message(var/recipient = "",var/sender = "",var/message = "")
+	var/result
+	for (var/token in spamfilter)
+		if (findtextEx(message,token))
+			message = "<font color=\"red\">[message]</font>"	//Rejected messages will be indicated by red color.
+			result = token										//Token caused rejection (if there are multiple, last will be chosen>.
+	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
+	return result
 
-/obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
+/obj/machinery/message_server/proc/send_rc_message(var/recipient = "",var/sender = "",var/message = "",var/stamp = "", var/id_auth = "", var/priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
+	var/authmsg = "[message]<br>"
+	if (id_auth)
+		authmsg += "[id_auth]<br>"
+	if (stamp)
+		authmsg += "[stamp]<br>"
+	for (var/obj/machinery/requests_console/Console in allConsoles)
+		if (ckey(Console.department) == ckey(recipient))
+			if(Console.inoperable())
+				Console.message_log += "<B>Message lost due to console failure.</B><BR>Please contact [station_name()] system adminsitrator or AI for technical assistance.<BR>"
+				continue
+			if(Console.newmessagepriority < priority)
+				Console.newmessagepriority = priority
+				Console.icon_state = "req_comp[priority]"
+			switch(priority)
+				if(2)
+					if(!Console.silent)
+						playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+						Console.audible_message(text("\icon[Console] *The Requests Console beeps: 'PRIORITY Alert in [sender]'"),,5)
+					Console.message_log += "<B><FONT color='red'>High Priority message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></FONT></B><BR>[authmsg]"
+				else
+					if(!Console.silent)
+						playsound(Console.loc, 'sound/machines/twobeep.ogg', 50, 1)
+						Console.audible_message(text("\icon[Console] *The Requests Console beeps: 'Message from [sender]'"),,4)
+					Console.message_log += "<B>Message from <A href='?src=\ref[Console];write=[sender]'>[sender]</A></B><BR>[authmsg]"
+			Console.set_light(2)
 
-/obj/machinery/message_server/attack_hand(mob/user)
-//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few Centcom delays."
+
+/obj/machinery/message_server/attack_hand(user as mob)
+//	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
 	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
 	active = !active
 	update_icon()
 
 	return
+
+/obj/machinery/message_server/attackby(obj/item/weapon/O as obj, mob/living/user as mob)
+	if (active && !(stat & (BROKEN|NOPOWER)) && (spamfilter_limit < MESSAGE_SERVER_DEFAULT_SPAM_LIMIT*2) && \
+		istype(O,/obj/item/weapon/circuitboard/message_monitor))
+		spamfilter_limit += round(MESSAGE_SERVER_DEFAULT_SPAM_LIMIT / 2)
+		user.drop_item()
+		qdel(O)
+		user << "You install additional memory and processors into message server. Its filtering capabilities been enhanced."
+	else
+		..(O, user)
 
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
@@ -141,46 +173,43 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	variable = param_variable
 	value = param_value
 
-/datum/feedback_variable/proc/inc(num = 1)
-	if (isnum(value))
+/datum/feedback_variable/proc/inc(var/num = 1)
+	if(isnum(value))
 		value += num
 	else
 		value = text2num(value)
-		if (isnum(value))
+		if(isnum(value))
 			value += num
 		else
 			value = num
 
-/datum/feedback_variable/proc/dec(num = 1)
-	if (isnum(value))
+/datum/feedback_variable/proc/dec(var/num = 1)
+	if(isnum(value))
 		value -= num
 	else
 		value = text2num(value)
-		if (isnum(value))
+		if(isnum(value))
 			value -= num
 		else
 			value = -num
 
-/datum/feedback_variable/proc/set_value(num)
-	if (isnum(num))
+/datum/feedback_variable/proc/set_value(var/num)
+	if(isnum(num))
 		value = num
 
 /datum/feedback_variable/proc/get_value()
-	if (!isnum(value))
-		return 0
 	return value
 
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-/datum/feedback_variable/proc/set_details(text)
-	if (istext(text))
+/datum/feedback_variable/proc/set_details(var/text)
+	if(istext(text))
 		details = text
 
-/datum/feedback_variable/proc/add_details(text)
-	if (istext(text))
-		text = replacetext(text, " ", "_")
-		if (!details)
+/datum/feedback_variable/proc/add_details(var/text)
+	if(istext(text))
+		if(!details)
 			details = text
 		else
 			details += " [text]"
@@ -198,7 +227,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = 1
-	anchored = 1
+	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -213,21 +242,21 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/msg_security = list()
 	var/list/msg_deathsquad = list()
 	var/list/msg_syndicate = list()
-	var/list/msg_service = list()
 	var/list/msg_cargo = list()
+	var/list/msg_service = list()
 
 	var/list/datum/feedback_variable/feedback = new()
 
-	//Only one can exsist in the world!
+	//Only one can exist in the world!
 /obj/machinery/blackbox_recorder/New()
-	if (blackbox)
-		if (istype(blackbox,/obj/machinery/blackbox_recorder))
+	if(blackbox)
+		if(istype(blackbox,/obj/machinery/blackbox_recorder))
 			qdel(src)
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
 	var/turf/T = locate(1,1,2)
-	if (T)
+	if(T)
 		blackbox = null
 		var/obj/machinery/blackbox_recorder/BR = new/obj/machinery/blackbox_recorder(T)
 		BR.msg_common = msg_common
@@ -238,18 +267,18 @@ var/obj/machinery/blackbox_recorder/blackbox
 		BR.msg_security = msg_security
 		BR.msg_deathsquad = msg_deathsquad
 		BR.msg_syndicate = msg_syndicate
-		BR.msg_service = msg_service
 		BR.msg_cargo = msg_cargo
+		BR.msg_service = msg_service
 		BR.feedback = feedback
 		BR.messages = messages
 		BR.messages_admin = messages_admin
 		if(blackbox != BR)
 			blackbox = BR
-	return ..()
+	..()
 
-/obj/machinery/blackbox_recorder/proc/find_feedback_datum(variable)
-	for (var/datum/feedback_variable/FV in feedback)
-		if (FV.get_variable() == variable)
+/obj/machinery/blackbox_recorder/proc/find_feedback_datum(var/variable)
+	for(var/datum/feedback_variable/FV in feedback)
+		if(FV.get_variable() == variable)
 			return FV
 	var/datum/feedback_variable/FV = new(variable)
 	feedback += FV
@@ -263,10 +292,10 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/pda_msg_amt = 0
 	var/rc_msg_amt = 0
 
-	for (var/obj/machinery/message_server/MS in message_servers)
-		if (MS.pda_msgs.len > pda_msg_amt)
+	for(var/obj/machinery/message_server/MS in machines)
+		if(MS.pda_msgs.len > pda_msg_amt)
 			pda_msg_amt = MS.pda_msgs.len
-		if (MS.rc_msgs.len > rc_msg_amt)
+		if(MS.rc_msgs.len > rc_msg_amt)
 			rc_msg_amt = MS.rc_msgs.len
 
 	feedback_set_details("radio_usage","")
@@ -279,8 +308,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","SEC-[msg_security.len]")
 	feedback_add_details("radio_usage","DTH-[msg_deathsquad.len]")
 	feedback_add_details("radio_usage","SYN-[msg_syndicate.len]")
-	feedback_add_details("radio_usage","SRV-[msg_service.len]")
 	feedback_add_details("radio_usage","CAR-[msg_cargo.len]")
+	feedback_add_details("radio_usage","SRV-[msg_service.len]")
 	feedback_add_details("radio_usage","OTH-[messages.len]")
 	feedback_add_details("radio_usage","PDA-[pda_msg_amt]")
 	feedback_add_details("radio_usage","RC-[rc_msg_amt]")
@@ -291,67 +320,72 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 //This proc is only to be called at round end.
 /obj/machinery/blackbox_recorder/proc/save_all_data_to_sql()
-	if (!feedback) return
+	if(!feedback) return
 
 	round_end_data_gathering() //round_end time logging and some other data processing
 	establish_db_connection()
-	if (!dbcon.IsConnected()) return
+	if(!dbcon.IsConnected()) return
 	var/round_id
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM [format_table_name("feedback")]")
+	var/DBQuery/query = dbcon.NewQuery("SELECT MAX(round_id) AS round_id FROM erro_feedback")
 	query.Execute()
-	while (query.NextRow())
+	while(query.NextRow())
 		round_id = query.item[1]
 
-	if (!isnum(round_id))
+	if(!isnum(round_id))
 		round_id = text2num(round_id)
 	round_id++
 
-	var/sqlrowlist = ""
+	for(var/datum/feedback_variable/FV in feedback)
+		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
+		var/DBQuery/query_insert = dbcon.NewQuery(sql)
+		query_insert.Execute()
 
+// Sanitize inputs to avoid SQL injection attacks
+proc/sql_sanitize_text(var/text)
+	text = replacetext(text, "'", "''")
+	text = replacetext(text, ";", "")
+	text = replacetext(text, "&", "")
+	return text
 
-	for (var/datum/feedback_variable/FV in feedback)
-		if (sqlrowlist != "")
-			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
+proc/feedback_set(var/variable,var/value)
+	if(!blackbox) return
 
-		sqlrowlist += "(null, Now(), [round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
-
-	if (sqlrowlist == "")
-		return
-
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
-	query_insert.Execute()
-
-
-/proc/feedback_set(variable,value)
-	if (!blackbox) return
+	variable = sql_sanitize_text(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.set_value(value)
 
-/proc/feedback_inc(variable,value)
-	if (!blackbox) return
+proc/feedback_inc(var/variable,var/value)
+	if(!blackbox) return
+
+	variable = sql_sanitize_text(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.inc(value)
 
-/proc/feedback_dec(variable,value)
-	if (!blackbox) return
+proc/feedback_dec(var/variable,var/value)
+	if(!blackbox) return
+
+	variable = sql_sanitize_text(variable)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.dec(value)
 
-/proc/feedback_set_details(variable,details)
-	if (!blackbox) return
+proc/feedback_set_details(var/variable,var/details)
+	if(!blackbox) return
+
+	variable = sql_sanitize_text(variable)
+	details = sql_sanitize_text(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
@@ -359,11 +393,14 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 	FV.set_details(details)
 
-/proc/feedback_add_details(variable,details)
-	if (!blackbox) return
+proc/feedback_add_details(var/variable,var/details)
+	if(!blackbox) return
+
+	variable = sql_sanitize_text(variable)
+	details = sql_sanitize_text(details)
 
 	var/datum/feedback_variable/FV = blackbox.find_feedback_datum(variable)
 
-	if (!FV) return
+	if(!FV) return
 
 	FV.add_details(details)

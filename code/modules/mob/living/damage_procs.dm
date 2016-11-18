@@ -8,14 +8,18 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
-	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))
+/mob/living/proc/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/used_weapon = null, var/sharp = 0, var/edge = 0)
+	if(Debug2)
+		world.log << "## DEBUG: apply_damage() was called on [src], with [damage] damage, and an armor value of [blocked]."
+	if(!damage || (blocked >= 100))
 		return 0
+	blocked = (100-blocked)/100
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
 		if(BURN)
+			if(COLD_RESISTANCE in mutations)
+				damage = 0
 			adjustFireLoss(damage * blocked)
 		if(TOX)
 			adjustToxLoss(damage * blocked)
@@ -23,35 +27,33 @@
 			adjustOxyLoss(damage * blocked)
 		if(CLONE)
 			adjustCloneLoss(damage * blocked)
-		if(STAMINA)
-			adjustStaminaLoss(damage * blocked)
+		if(HALLOSS)
+			adjustHalLoss(damage * blocked)
+	flash_weak_pain()
 	updatehealth()
 	return 1
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
+/mob/living/proc/apply_damages(var/brute = 0, var/burn = 0, var/tox = 0, var/oxy = 0, var/clone = 0, var/halloss = 0, var/def_zone = null, var/blocked = 0)
 	if(blocked >= 100)
 		return 0
-	if(brute)
-		apply_damage(brute, BRUTE, def_zone, blocked)
-	if(burn)
-		apply_damage(burn, BURN, def_zone, blocked)
-	if(tox)
-		apply_damage(tox, TOX, def_zone, blocked)
-	if(oxy)
-		apply_damage(oxy, OXY, def_zone, blocked)
-	if(clone)
-		apply_damage(clone, CLONE, def_zone, blocked)
-	if(stamina)
-		apply_damage(stamina, STAMINA, def_zone, blocked)
+	if(brute)	apply_damage(brute, BRUTE, def_zone, blocked)
+	if(burn)	apply_damage(burn, BURN, def_zone, blocked)
+	if(tox)		apply_damage(tox, TOX, def_zone, blocked)
+	if(oxy)		apply_damage(oxy, OXY, def_zone, blocked)
+	if(clone)	apply_damage(clone, CLONE, def_zone, blocked)
+	if(halloss) apply_damage(halloss, HALLOSS, def_zone, blocked)
 	return 1
 
 
 
-/mob/living/proc/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
-	blocked = (100-blocked)/100
-	if(!effect || (blocked <= 0))
+/mob/living/proc/apply_effect(var/effect = 0,var/effecttype = STUN, var/blocked = 0, var/check_protection = 1)
+	if(Debug2)
+		world.log << "## DEBUG: apply_effect() was called.  The type of effect is [effecttype].  Blocked by [blocked]."
+	if(!effect || (blocked >= 100))
 		return 0
+	blocked = (100-blocked)/100
+
 	switch(effecttype)
 		if(STUN)
 			Stun(effect * blocked)
@@ -59,44 +61,36 @@
 			Weaken(effect * blocked)
 		if(PARALYZE)
 			Paralyse(effect * blocked)
+		if(AGONY)
+			halloss += max((effect * blocked), 0) // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
-			radiation += max(effect * blocked, 0)
-		if(SLUR)
-			slurring = max(slurring,(effect * blocked))
+		/*
+			var/rad_protection = check_protection ? getarmor(null, "rad")/100 : 0
+			radiation += max((1-rad_protection)*effect/(blocked+1),0)//Rads auto check armor
+		*/
+			var/rad_protection = getarmor(null, "rad")
+			rad_protection = (100-rad_protection)/100
+			radiation += max((effect * rad_protection), 0)
 		if(STUTTER)
-			if(CANSTUN in status_flags) // stun is usually associated with stutter
+			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))
 		if(EYE_BLUR)
-			blur_eyes(effect * blocked)
+			eye_blurry = max(eye_blurry,(effect * blocked))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect * blocked))
-		if(JITTER)
-			if(CANSTUN in status_flags)
-				jitteriness = max(jitteriness,(effect * blocked))
+	updatehealth()
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(var/stun = 0, var/weaken = 0, var/paralyze = 0, var/irradiate = 0, var/stutter = 0, var/eyeblur = 0, var/drowsy = 0, var/agony = 0, var/blocked = 0)
 	if(blocked >= 100)
 		return 0
-	if(stun)
-		apply_effect(stun, STUN, blocked)
-	if(weaken)
-		apply_effect(weaken, WEAKEN, blocked)
-	if(paralyze)
-		apply_effect(paralyze, PARALYZE, blocked)
-	if(irradiate)
-		apply_effect(irradiate, IRRADIATE, blocked)
-	if(slur)
-		apply_effect(slur, SLUR, blocked)
-	if(stutter)
-		apply_effect(stutter, STUTTER, blocked)
-	if(eyeblur)
-		apply_effect(eyeblur, EYE_BLUR, blocked)
-	if(drowsy)
-		apply_effect(drowsy, DROWSY, blocked)
-	if(stamina)
-		apply_damage(stamina, STAMINA, null, blocked)
-	if(jitter)
-		apply_effect(jitter, JITTER, blocked)
+	if(stun)		apply_effect(stun, STUN, blocked)
+	if(weaken)		apply_effect(weaken, WEAKEN, blocked)
+	if(paralyze)	apply_effect(paralyze, PARALYZE, blocked)
+	if(irradiate)	apply_effect(irradiate, IRRADIATE, blocked)
+	if(stutter)		apply_effect(stutter, STUTTER, blocked)
+	if(eyeblur)		apply_effect(eyeblur, EYE_BLUR, blocked)
+	if(drowsy)		apply_effect(drowsy, DROWSY, blocked)
+	if(agony)		apply_effect(agony, AGONY, blocked)
 	return 1

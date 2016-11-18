@@ -1,159 +1,107 @@
+////////////// PTR-7 Anti-Materiel Rifle //////////////
 
-/obj/item/weapon/gun/projectile/automatic/sniper_rifle
-	name = "sniper rifle"
-	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
-	icon_state = "sniper"
-	item_state = "sniper"
-	recoil = 2
-	weapon_weight = WEAPON_MEDIUM
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
-	fire_delay = 40
-	burst_size = 1
-	origin_tech = "combat=7"
-	can_unsuppress = 1
-	can_suppress = 1
-	w_class = 3
-	zoomable = TRUE
-	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+/obj/item/weapon/gun/projectile/heavysniper
+	name = "anti-materiel rifle"
+	desc = "A portable anti-armour rifle fitted with a scope, the HI PTR-7 Rifle was originally designed to used against armoured exosuits. It is capable of punching through windows and non-reinforced walls with ease. Fires armor piercing 14.5mm shells."
+	icon_state = "heavysniper"
+	item_state = "l6closed-empty" // placeholder
+	item_state_slots = list(slot_r_hand_str = "heavysniper", slot_l_hand_str = "heavysniper")
+	w_class = ITEMSIZE_HUGE // So it can't fit in a backpack.
+	force = 10
 	slot_flags = SLOT_BACK
-	actions_types = list()
+	origin_tech = list(TECH_COMBAT = 8, TECH_MATERIAL = 2, TECH_ILLEGAL = 8)
+	caliber = "14.5mm"
+	recoil = 5 //extra kickback
+	fire_sound = 'sound/weapons/sniper.ogg' // extra boom
+	handle_casings = HOLD_CASINGS
+	load_method = SINGLE_CASING
+	max_shells = 1
+	ammo_type = /obj/item/ammo_casing/a145
+	accuracy = -5
+	scoped_accuracy = 5
+	var/bolt_open = 0
 
-
-/obj/item/weapon/gun/projectile/automatic/sniper_rifle/update_icon()
-	if(magazine)
-		icon_state = "sniper-mag"
+/obj/item/weapon/gun/projectile/heavysniper/update_icon()
+	if(bolt_open)
+		icon_state = "heavysniper-open"
 	else
-		icon_state = "sniper"
+		icon_state = "heavysniper"
 
-
-/obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
-	name = "syndicate sniper rifle"
-	desc = "An illegally modified .50 cal sniper rifle with supression compatibility. Quickscoping still doesn't work."
-	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=7;syndicate=6"
-
-
-
-
-
-//Normal Boolets
-/obj/item/ammo_box/magazine/sniper_rounds
-	name = "sniper rounds (.50)"
-	icon_state = ".50mag"
-	origin_tech = "combat=6;syndicate=2"
-	ammo_type = /obj/item/ammo_casing/point50
-	max_ammo = 6
-	caliber = ".50"
-
-/obj/item/ammo_box/magazine/sniper_rounds/update_icon()
-	if(ammo_count())
-		icon_state = "[initial(icon_state)]-ammo"
+/obj/item/weapon/gun/projectile/heavysniper/attack_self(mob/user as mob)
+	playsound(src.loc, 'sound/weapons/flipblade.ogg', 50, 1)
+	bolt_open = !bolt_open
+	if(bolt_open)
+		if(chambered)
+			user << "<span class='notice'>You work the bolt open, ejecting [chambered]!</span>"
+			chambered.loc = get_turf(src)
+			loaded -= chambered
+			chambered = null
+		else
+			user << "<span class='notice'>You work the bolt open.</span>"
 	else
-		icon_state = "[initial(icon_state)]"
+		user << "<span class='notice'>You work the bolt closed.</span>"
+		bolt_open = 0
+	add_fingerprint(user)
+	update_icon()
 
-/obj/item/ammo_casing/point50
-	desc = "A .50 bullet casing."
-	caliber = ".50"
-	projectile_type = /obj/item/projectile/bullet/sniper
-	icon_state = ".50"
-
-/obj/item/projectile/bullet/sniper
-	damage = 70
-	stun = 5
-	weaken = 5
-	armour_penetration = 50
-	var/breakthings = TRUE
-
-/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0, hit_zone)
-	if((blocked != 100) && (!ismob(target) && breakthings))
-		target.ex_act(rand(1,2))
-
+/obj/item/weapon/gun/projectile/heavysniper/special_check(mob/user)
+	if(bolt_open)
+		user << "<span class='warning'>You can't fire [src] while the bolt is open!</span>"
+		return 0
 	return ..()
 
+/obj/item/weapon/gun/projectile/heavysniper/load_ammo(var/obj/item/A, mob/user)
+	if(!bolt_open)
+		return
+	..()
 
+/obj/item/weapon/gun/projectile/heavysniper/unload_ammo(mob/user, var/allow_dump=1)
+	if(!bolt_open)
+		return
+	..()
 
+/obj/item/weapon/gun/projectile/heavysniper/verb/scope()
+	set category = "Object"
+	set name = "Use Scope"
+	set popup_menu = 1
 
-//Sleepy ammo
-/obj/item/ammo_box/magazine/sniper_rounds/soporific
-	name = "sniper rounds (Zzzzz)"
-	desc = "Soporific sniper rounds, designed for happy days and dead quiet nights..."
-	icon_state = "soporific"
-	origin_tech = "combat=6;syndicate=3"
-	ammo_type = /obj/item/ammo_casing/soporific
-	max_ammo = 3
-	caliber = ".50"
+	toggle_scope(2.0)
 
-/obj/item/ammo_casing/soporific
-	desc = "A .50 bullet casing, specialised in sending the target to sleep, instead of hell."
-	caliber = ".50"
-	projectile_type = /obj/item/projectile/bullet/sniper/soporific
-	icon_state = ".50"
+////////////// Dragunov Sniper Rifle //////////////
 
-/obj/item/projectile/bullet/sniper/soporific
-	armour_penetration = 0
-	nodamage = 1
-	stun = 0
-	weaken = 0
-	breakthings = FALSE
+/* // Commented out until it's not worthless. Also might be nice to have a new icon that looks more sci-fi Dragunov-ish.
+/obj/item/weapon/gun/projectile/SVD
+	name = "\improper Dragunov"
+	desc = "The SVD, also known as the Dragunov, was mass produced with an Optical Sniper Sight so simple that even Ivan can figure out how it works. Too bad for you that it's written in Russian. Uses 7.62mm rounds."
+	icon_state = "SVD"
+	item_state = "SVD"
+	w_class = ITEMSIZE_HUGE // So it can't fit in a backpack.
+	force = 10
+	slot_flags = SLOT_BACK // Needs a sprite.
+	origin_tech = list(TECH_COMBAT = 8, TECH_MATERIAL = 2, TECH_ILLEGAL = 8)
+	recoil = 2 //extra kickback
+	caliber = "a762"
+	load_method = MAGAZINE
+	accuracy = -3 //shooting at the hip
+	scoped_accuracy = 0
+//	requires_two_hands = 1
+	one_handed_penalty = 4 // The weapon itself is heavy, and the long barrel makes it hard to hold steady with just one hand.
+	fire_sound = 'sound/weapons/SVD_shot.ogg'
+	magazine_type = /obj/item/ammo_magazine/SVD
+	allowed_magazines = list(/obj/item/ammo_magazine/SVD, /obj/item/ammo_magazine/c762)
 
-/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0, hit_zone)
-	if((blocked != 100) && istype(target, /mob/living))
-		var/mob/living/L = target
-		L.Sleeping(20)
+/obj/item/weapon/gun/projectile/SVD/update_icon()
+	..()
+//	if(istype(ammo_magazine,/obj/item/ammo_magazine/c762)
+//		icon_state = "SVD-bigmag" //No icon for this exists yet.
+	if(ammo_magazine)
+		icon_state = "SVD"
+	else
+		icon_state = "SVD-empty"
 
-	return ..()
+/obj/item/weapon/gun/projectile/SVD/verb/scope()
+	set category = "Object"
+	set name = "Use Scope"
+	set popup_menu = 1
 
-
-
-//hemorrhage ammo
-/obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
-	name = "sniper rounds (Bleed)"
-	desc = "Haemorrhage sniper rounds, leaves your target in a pool of crimson pain"
-	icon_state = "haemorrhage"
-	ammo_type = /obj/item/ammo_casing/haemorrhage
-	max_ammo = 5
-	caliber = ".50"
-
-/obj/item/ammo_casing/haemorrhage
-	desc = "A .50 bullet casing, specialised in causing massive bloodloss"
-	caliber = ".50"
-	projectile_type = /obj/item/projectile/bullet/sniper/haemorrhage
-	icon_state = ".50"
-
-/obj/item/projectile/bullet/sniper/haemorrhage
-	armour_penetration = 15
-	damage = 15
-	stun = 0
-	weaken = 0
-	breakthings = FALSE
-
-/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0, hit_zone)
-	if((blocked != 100) && iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.bleed(300)
-
-	return ..()
-
-
-//penetrator ammo
-/obj/item/ammo_box/magazine/sniper_rounds/penetrator
-	name = "sniper rounds (penetrator)"
-	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
-	ammo_type = /obj/item/ammo_casing/penetrator
-	origin_tech = "combat=6;syndicate=3"
-	max_ammo = 5
-
-/obj/item/ammo_casing/penetrator
-	desc = "A .50 caliber penetrator round casing."
-	caliber = ".50"
-	projectile_type = /obj/item/projectile/bullet/sniper/penetrator
-	icon_state = ".50"
-
-/obj/item/projectile/bullet/sniper/penetrator
-	icon_state = "gauss"
-	name = "penetrator round"
-	damage = 60
-	forcedodge = 1
-	stun = 0
-	weaken = 0
-	breakthings = FALSE
+	toggle_scope(2.0)*/

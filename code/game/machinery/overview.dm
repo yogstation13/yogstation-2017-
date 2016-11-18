@@ -1,27 +1,22 @@
 //#define AMAP
-
 /obj/machinery/computer/security/verb/station_map()
 	set name = ".map"
 	set category = "Object"
 	set src in view(1)
 	usr.set_machine(src)
-	if(!mapping)
-		return
-
+	if(!mapping)	return
 	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
+	drawmap(usr)
 
-	src.drawmap(usr)
-
-/obj/machinery/computer/security/proc/drawmap(mob/user)
+/obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
 
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
 
-	var/xoff = round( (icx*16-world.maxx)-2)
-	var/yoff = round( (icy*16-world.maxy)-2)
+	var/xoff = round((icx*16-world.maxx)-2)
+	var/yoff = round((icy*16-world.maxy)-2)
 
 	var/icount = icx * icy
-
 
 	var/list/imap = list()
 
@@ -33,7 +28,6 @@
 
 	//world << "[icount] images in list"
 
-
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
 
 		for(var/wy = 1; wy <= world.maxy; wy++)
@@ -43,39 +37,40 @@
 			var/colour
 			var/colour2
 
-
-
 			if(!T)
 				colour = rgb(0,0,0)
 
 			else
 				var/sense = 1
 				switch("[T.type]")
-					if("/turf/open/space")
+					if("/turf/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/open/floor")
+					if("/turf/simulated/floor")
 						colour = rgb(150,150,150)
-						var/turf/open/floor/TF = T
+						var/turf/simulated/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
 							colour = rgb(130,130,130)
 
-					if("/turf/open/floor/engine")
+					if("/turf/simulated/floor/reinforced")
 						colour = rgb(128,128,128)
 
-					if("/turf/closed/wall")
+					if("/turf/simulated/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/closed/wall/r_wall")
+					if("/turf/simulated/wall/r_wall")
 						colour = rgb(128,96,96)
+
+					if("/turf/unsimulated/floor")
+						colour  = rgb(240,240,240)
+
+					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+						colour  = rgb(140,140,140)
 
 					else
 						colour = rgb(0,40,0)
-
-
-
 
 				if(sense)
 
@@ -88,7 +83,7 @@
 							else
 								colour = rgb(128,192,128)
 
-						if(istype(AM, /obj/machinery/airalarm))
+						if(istype(AM, /obj/machinery/alarm))
 							colour = rgb(0,255,0)
 							colour2 = colour
 							if(AM.icon_state=="alarm:1")
@@ -122,9 +117,7 @@
 				var/turf_total = environment.total_moles()
 				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
 
-
 				var/t1 = turf_total / MOLES_CELLSTANDARD * 150
-
 
 				if(t1<=100)
 					colour2 = rgb(t1*2.55,0,0)
@@ -145,18 +138,15 @@
 			var/icon/I = imap[1+(ix + icx*iy)*2]
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
-
 			//world << "icon: \icon[I]"
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
 			I2.DrawBox(colour2, rx, ry, rx+1, ry+1)
 
-
 	user.clearmap()
 
 	user.mapobjs = list()
-
 
 	for(var/i=0; i<icount;i++)
 		var/obj/screen/H = new /obj/screen()
@@ -178,7 +168,7 @@
 		qdel(I)
 		qdel(J)
 		H.icon = HI
-		H.layer = ABOVE_HUD_LAYER
+		H.layer = 25
 		usr.mapobjs += H
 #else
 
@@ -199,30 +189,35 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
-					if("/turf/open/space")
+					if("/turf/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/open/floor", "/turf/open/floor/engine")
+					if("/turf/simulated/floor/tiled", "/turf/simulated/floor/reinforced")
 						var/datum/gas_mixture/environment = T.return_air()
-						var/turf_total = environment.total_moles()
+						var/turf_total = environment.total_moles
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
 
 						if(t1<=100)
 							colour = rgb(0,0,t1*2.55)
 						else
 							t1 = min(100, t1-100)
-							colour = rgb( t1*2.55, t1*2.55, 255)
+							colour = rgb(t1*2.55, t1*2.55, 255)
 
-					if("/turf/closed/wall")
+					if("/turf/simulated/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/closed/wall/r_wall")
+					if("/turf/simulated/wall/r_wall")
 						colour = rgb(128,96,96)
+
+					if("/turf/unsimulated/floor")
+						colour  = rgb(240,240,240)
+
+					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+						colour  = rgb(140,140,140)
 
 					else
 						colour = rgb(0,40,0)
-
 
 				if(sense)
 
@@ -234,7 +229,7 @@
 							else
 								colour = rgb(96,192,128)
 
-						if(istype(AM, /obj/machinery/airalarm))
+						if(istype(AM, /obj/machinery/alarm))
 							colour = rgb(0,255,0)
 
 							if(AM.icon_state=="alarm:1")
@@ -257,7 +252,6 @@
 					var/green = getg(colour)
 					var/blue = getb(colour)
 
-
 					green = min(255, green+40)
 					blue = min(255, blue+40)
 
@@ -272,16 +266,13 @@
 			//world << "trying [ix],[iy] : [ix+icx*iy]"
 			var/icon/I = imap[1+(ix + icx*iy)]
 
-
 			//world << "icon: \icon[I]"
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
-
 	user.clearmap()
 
 	user.mapobjs = list()
-
 
 	for(var/i=0; i<icount;i++)
 		var/obj/screen/H = new /obj/screen()
@@ -296,7 +287,7 @@
 
 		H.icon = I
 		qdel(I)
-		H.layer = ABOVE_HUD_LAYER
+		H.layer = 25
 		usr.mapobjs += H
 
 #endif
@@ -311,8 +302,6 @@
 				user.clearmap()*/
 	return
 
-
-
 /obj/machinery/computer/security/proc/close(mob/user)
 	spawn(20)
 		var/using = null
@@ -326,18 +315,16 @@
 			else
 				user.clearmap()
 
-
 		return
 
-/proc/getr(col)
-	return hex2num( copytext(col, 2,4))
+proc/getr(col)
+	return hex2num(copytext(col, 2,4))
 
-/proc/getg(col)
-	return hex2num( copytext(col, 4,6))
+proc/getg(col)
+	return hex2num(copytext(col, 4,6))
 
-/proc/getb(col)
-	return hex2num( copytext(col, 6))
-
+proc/getb(col)
+	return hex2num(copytext(col, 6))
 
 /mob/proc/clearmap()
 	src.client.screen -= src.mapobjs
@@ -346,4 +333,3 @@
 
 	mapobjs = null
 	src.unset_machine()
-
