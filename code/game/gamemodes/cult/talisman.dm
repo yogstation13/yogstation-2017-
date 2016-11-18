@@ -328,7 +328,7 @@
 	cultist_name = "Talisman of Horrors"
 	cultist_desc = "A talisman that will break the mind of the victim with nightmarish hallucinations."
 	color = "#ffb366" // light orange
-	item_state = "null" //invisible inhand so cultists can smack a bitch with it silently
+	item_state = null //invisible inhand so cultists can smack a bitch with it silently
 	invocation = null //it's fucking silent
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
