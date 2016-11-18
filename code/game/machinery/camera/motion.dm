@@ -1,12 +1,14 @@
 /obj/machinery/camera
-
 	var/list/motionTargets = list()
 	var/detectTime = 0
 	var/area/ai_monitored/area_motion = null
-	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
+	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
+	flags = PROXMOVE
 
-/obj/machinery/camera/process()
+/obj/machinery/camera/internal_process()
 	// motion camera event loop
+	if (stat & (EMPED|NOPOWER))
+		return
 	if(!isMotion())
 		. = PROCESS_KILL
 		return
@@ -24,7 +26,7 @@
 					// If they aren't in range, lose the target.
 					lostTarget(target)
 
-/obj/machinery/camera/proc/newTarget(mob/target)
+/obj/machinery/camera/proc/newTarget(var/mob/target)
 	if (istype(target, /mob/living/silicon/ai)) return 0
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
@@ -32,32 +34,25 @@
 		motionTargets += target
 	return 1
 
-/obj/machinery/camera/proc/lostTarget(mob/target)
+/obj/machinery/camera/proc/lostTarget(var/mob/target)
 	if (target in motionTargets)
 		motionTargets -= target
 	if (motionTargets.len == 0)
 		cancelAlarm()
 
 /obj/machinery/camera/proc/cancelAlarm()
+	if (!status || (stat & NOPOWER))
+		return 0
 	if (detectTime == -1)
-		if (status)
-			for (var/mob/living/silicon/aiPlayer in player_list)
-				aiPlayer.cancelAlarm("Motion", get_area(src), src)
-			for(var/L in motion_alert_listeners)
-				var/datum/alert_listener/listener = L
-				listener.cancelAlarm("Motion", get_area(src), src)
+		motion_alarm.clearAlarm(loc, src)
 	detectTime = 0
 	return 1
 
 /obj/machinery/camera/proc/triggerAlarm()
-	if (!detectTime)
+	if (!status || (stat & NOPOWER))
 		return 0
-	if (status)
-		for (var/mob/living/silicon/aiPlayer in player_list)
-			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
-		for(var/L in motion_alert_listeners)
-			var/datum/alert_listener/listener = L
-			listener.triggerAlarm("Motion", get_area(src), list(src), src)
+	if (!detectTime) return 0
+	motion_alarm.triggerAlarm(loc, src)
 	detectTime = -1
 	return 1
 

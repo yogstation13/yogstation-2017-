@@ -1,303 +1,246 @@
 //Cat
-/mob/living/simple_animal/pet/cat
+/mob/living/simple_animal/cat
 	name = "cat"
-	desc = "Kitty!!"
-	icon = 'icons/mob/pets.dmi'
+	desc = "A domesticated, feline pet. Has a tendency to adopt crewmembers."
 	icon_state = "cat2"
+	item_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
-	gender = MALE
-	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
+	speak = list("Meow!","Esp!","Purr!","HSSSSS")
 	speak_emote = list("purrs", "meows")
-	emote_hear = list("meows", "mews")
-	emote_see = list("shakes its head", "shivers")
+	emote_hear = list("meows","mews")
+	emote_see = list("shakes their head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
-	see_in_dark = 8
-	ventcrawler = 2
-	pass_flags = PASSTABLE
-	mob_size = MOB_SIZE_SMALL
-	minbodytemp = TCMB //he hangs out in cryo, so
-	maxbodytemp = 400
-	unsuitable_atmos_damage = 1
-	animal_species = /mob/living/simple_animal/pet/cat
-	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
+	see_in_dark = 6
+	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	gold_core_spawnable = 2
+	var/mob/flee_target
+	min_oxy = 16 //Require atleast 16kPA oxygen
+	minbodytemp = 223		//Below -50 Degrees Celcius
+	maxbodytemp = 323	//Above 50 Degrees Celcius
+	holder_type = /obj/item/weapon/holder/cat
+	mob_size = MOB_SMALL
 
-/mob/living/simple_animal/pet/cat/New()
-	..()
-	verbs += /mob/living/proc/lay_down
-
-/mob/living/simple_animal/pet/cat/update_canmove()
-	..()
-	if(client)
-		if (resting)
-			icon_state = "[icon_living]_rest"
-		else
-			icon_state = "[icon_living]"
-
-
-/mob/living/simple_animal/pet/cat/space
-	name = "space cat"
-	desc = "It's a cat... in space!"
-	icon_state = "spacecat"
-	icon_living = "spacecat"
-	icon_dead = "spacecat_dead"
-	unsuitable_atmos_damage = 0
-	minbodytemp = TCMB
-	maxbodytemp = T0C + 40
-
-/mob/living/simple_animal/pet/cat/original
-	name = "Batsy"
-	desc = "The product of alien DNA and bored geneticists."
-	icon_state = "original"
-	icon_living = "original"
-	icon_dead = "original_dead"
-
-/mob/living/simple_animal/pet/cat/kitten
-	name = "kitten"
-	desc = "D'aaawwww."
-	icon_state = "kitten"
-	icon_living = "kitten"
-	icon_dead = "kitten_dead"
-	gender = NEUTER
-	density = 0
-	pass_flags = PASSMOB
-	mob_size = MOB_SIZE_SMALL
-
-//RUNTIME IS ALIVE! SQUEEEEEEEE~
-/mob/living/simple_animal/pet/cat/Runtime
-	name = "Runtime"
-	desc = "GCAT."
-	icon_state = "cat"
-	icon_living = "cat"
-	icon_dead = "cat_dead"
-	gender = FEMALE
-	gold_core_spawnable = 0
-	var/list/family = list()
-	//var/cats_deployed = 0
-	//var/memory_saved = 0
-// If you're from 500 years in the future and wondering why this is commented out-One, go play a better game. Two, runtime literally did not stop fucking other cats until admins had to delete them over and over.
-///mob/living/simple_animal/pet/cat/Runtime/New()
-//	if(prob(5))
-//		icon_state = "original"
-//		icon_living = "original"
-//		icon_dead = "original_dead"
-	//Read_Memory()
-//	..()
-
-///mob/living/simple_animal/pet/cat/Runtime/Life()
-//	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
-//		Deploy_The_Cats()
-//	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-//		Write_Memory()
-//	..()
-
-//mob/living/simple_animal/pet/cat/Runtime/death()
-//	if(!memory_saved)
-//		Write_Memory(1)
-//	..()
-
-//mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-//	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-//	S["family"] 			>> family
-
-//	if(isnull(family))
-//		family = list()
-
-///mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-//	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-//	family = list()
-//	if(!dead)
-//		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-//			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
-//				continue
-//			if(C.type in family)
-//				family[C.type] += 1
-//			else
-//				family[C.type] = 1
-//	S["family"]				<< family
-//	memory_saved = 1
-
-///mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
-//	cats_deployed = 1
-//	for(var/cat_type in family)
-//		if(family[cat_type] > 0)
-//			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
-//				new cat_type(loc)
-
-/mob/living/simple_animal/pet/cat/Proc
-	name = "Proc"
-	gold_core_spawnable = 2 
-
-/mob/living/simple_animal/pet/cat/Life()
-	if(!stat && !buckled && !client)
-		if(prob(1))
-			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
-			icon_state = "[icon_living]_rest"
-			resting = 1
-			update_canmove()
-		else if (prob(1))
-			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
-			icon_state = "[icon_living]_sit"
-			resting = 1
-			update_canmove()
-		else if (prob(1))
-			if (resting)
-				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
-				icon_state = "[icon_living]"
-				resting = 0
-				update_canmove()
-			else
-				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
-
+/mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
 		if(!stat && !resting && !buckled)
-			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(!M.stat && Adjacent(M))
-					emote("me", 1, "splats \the [M]!")
+			for(var/mob/living/simple_animal/mouse/M in loc)
+				if(!M.stat)
 					M.splat()
+					visible_emote(pick("bites \the [M]!","toys with \the [M].","chomps on \the [M]!"))
 					movement_target = null
 					stop_automated_movement = 0
 					break
-			for(var/obj/item/toy/cattoy/T in view(1,src))
-				if (T.cooldown < (world.time - 400))
-					emote("me", 1, "bats \the [T] around with its paw!")
-					T.cooldown = world.time
 
 	..()
 
-	make_babies()
+	for(var/mob/living/simple_animal/mouse/snack in oview(src,5))
+		if(snack.stat < DEAD && prob(15))
+			audible_emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
+		break
 
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
-		if(turns_since_scan > 5)
+		if (turns_since_scan > 5)
 			walk_to(src,0)
 			turns_since_scan = 0
-			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
-				movement_target = null
-				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
-				movement_target = null
-				stop_automated_movement = 0
-				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
-					if(isturf(snack.loc) && !snack.stat)
-						movement_target = snack
-						break
-			if(movement_target)
+
+			if (flee_target) //fleeing takes precendence
+				handle_flee_target()
+			else
+				handle_movement_target()
+
+	if(prob(2)) //spooky
+		var/mob/observer/dead/spook = locate() in range(src,5)
+		if(spook)
+			var/turf/T = spook.loc
+			var/list/visible = list()
+			for(var/obj/O in T.contents)
+				if(!O.invisibility && O.name)
+					visible += O
+			if(visible.len)
+				var/atom/A = pick(visible)
+				visible_emote("suddenly stops and stares at something unseen[istype(A) ? " near [A]":""].")
+
+/mob/living/simple_animal/cat/proc/handle_movement_target()
+	//if our target is neither inside a turf or inside a human(???), stop
+	if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
+		movement_target = null
+		stop_automated_movement = 0
+	//if we have no target or our current one is out of sight/too far away
+	if( !movement_target || !(movement_target.loc in oview(src, 4)) )
+		movement_target = null
+		stop_automated_movement = 0
+		for(var/mob/living/simple_animal/mouse/snack in oview(src)) //search for a new target
+			if(isturf(snack.loc) && !snack.stat)
+				movement_target = snack
+				break
+
+	if(movement_target)
+		stop_automated_movement = 1
+		walk_to(src,movement_target,0,3)
+
+/mob/living/simple_animal/cat/proc/handle_flee_target()
+	//see if we should stop fleeing
+	if (flee_target && !(flee_target.loc in view(src)))
+		flee_target = null
+		stop_automated_movement = 0
+
+	if (flee_target)
+		if(prob(25)) say("HSSSSS")
+		stop_automated_movement = 1
+		walk_away(src, flee_target, 7, 2)
+
+/mob/living/simple_animal/cat/proc/set_flee_target(atom/A)
+	if(A)
+		flee_target = A
+		turns_since_scan = 5
+
+/mob/living/simple_animal/cat/attackby(var/obj/item/O, var/mob/user)
+	. = ..()
+	if(O.force)
+		set_flee_target(user? user : src.loc)
+
+/mob/living/simple_animal/cat/attack_hand(mob/living/carbon/human/M as mob)
+	. = ..()
+	if(M.a_intent == I_HURT)
+		set_flee_target(M)
+
+/mob/living/simple_animal/cat/ex_act()
+	. = ..()
+	set_flee_target(src.loc)
+
+/mob/living/simple_animal/cat/bullet_act(var/obj/item/projectile/proj)
+	. = ..()
+	set_flee_target(proj.firer? proj.firer : src.loc)
+
+/mob/living/simple_animal/cat/hitby(atom/movable/AM)
+	. = ..()
+	set_flee_target(AM.thrower? AM.thrower : src.loc)
+
+//Basic friend AI
+/mob/living/simple_animal/cat/fluff
+	var/mob/living/carbon/human/friend
+	var/befriend_job = null
+
+/mob/living/simple_animal/cat/fluff/handle_movement_target()
+	if (friend)
+		var/follow_dist = 4
+		if (friend.stat >= DEAD || friend.health <= config.health_threshold_softcrit) //danger
+			follow_dist = 1
+		else if (friend.stat || friend.health <= 50) //danger or just sleeping
+			follow_dist = 2
+		var/near_dist = max(follow_dist - 2, 1)
+		var/current_dist = get_dist(src, friend)
+
+		if (movement_target != friend)
+			if (current_dist > follow_dist && !istype(movement_target, /mob/living/simple_animal/mouse) && (friend in oview(src)))
+				//stop existing movement
+				walk_to(src,0)
+				turns_since_scan = 0
+
+				//walk to friend
 				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
+				movement_target = friend
+				walk_to(src, movement_target, near_dist, 4)
 
-/mob/living/simple_animal/pet/cat/attack_hand(mob/living/carbon/human/M)
-	. = ..()
-	switch(M.a_intent)
-		if("help")
-			wuv(1, M)
-		if("harm")
-			wuv(-1, M)
+		//already following and close enough, stop
+		else if (current_dist <= near_dist)
+			walk_to(src,0)
+			movement_target = null
+			stop_automated_movement = 0
+			if (prob(10))
+				say("Meow!")
 
-/mob/living/simple_animal/pet/cat/proc/wuv(change, mob/M)
-	if(change)
-		if(change > 0)
-			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
-				emote("me", 1, "purrs!")
+	if (!friend || movement_target != friend)
+		..()
+
+/mob/living/simple_animal/cat/fluff/Life()
+	..()
+	if (stat || !friend)
+		return
+	if (get_dist(src, friend) <= 1)
+		if (friend.stat >= DEAD || friend.health <= config.health_threshold_softcrit)
+			if (prob((friend.stat < DEAD)? 50 : 15))
+				var/verb = pick("meows", "mews", "mrowls")
+				audible_emote(pick("[verb] in distress.", "[verb] anxiously."))
 		else
-			if(M && stat != DEAD)
-				emote("me", 1, "hisses!")
+			if (prob(5))
+				visible_emote(pick("nuzzles [friend].",
+								   "brushes against [friend].",
+								   "rubs against [friend].",
+								   "purrs."))
+	else if (friend.health <= 50)
+		if (prob(10))
+			var/verb = pick("meows", "mews", "mrowls")
+			audible_emote("[verb] anxiously.")
 
-/mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
-	name = "Keeki"
-	desc = "It's a cat made out of cake."
-	icon_state = "cak"
-	icon_living = "cak"
-	icon_dead = "cak_dead"
-	health = 50
-	maxHealth = 50
-	harm_intent_damage = 10
-	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
-	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
-	response_harm = "takes a bite out of"
-	deathmessage = "loses its false life and collapses!"
-	death_sound = "bodyfall"
+/mob/living/simple_animal/cat/fluff/verb/become_friends()
+	set name = "Become Friends"
+	set category = "IC"
+	set src in view(1)
 
-/mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
-	..()
-	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
-	if(!B || !B.brainmob || !B.brainmob.mind)
-		return
-	B.brainmob.mind.transfer_to(src)
-	src << "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
-	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
-	free cake to the station!</b>"
-	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
-	if(new_name)
-		src << "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>"
-		name = new_name
+	if(!friend)
+		var/mob/living/carbon/human/H = usr
+		if(istype(H) && (!befriend_job || H.job == befriend_job))
+			friend = usr
+			. = 1
+	else if(usr == friend)
+		. = 1 //already friends, but show success anyways
 
-/mob/living/simple_animal/pet/cat/cak/Life()
-	..()
-	if(stat)
-		return
-	if(health < maxHealth)
-		adjustBruteLoss(-8) //Fast life regen
-	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
-		if(D.icon_state != "donut2")
-			D.name = "frosted donut"
-			D.icon_state = "donut2"
-			D.reagents.add_reagent("sprinkles", 2)
-			D.bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
-			D.filling_color = "#FF69B4"
-
-/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
-	..()
-	if(L.a_intent == "harm" && L.reagents && !stat)
-		L.reagents.add_reagent("nutriment", 0.4)
-		L.reagents.add_reagent("vitamin", 0.4)
-
-
-/mob/living/simple_animal/pet/cat/mimekitty
-	name = "\improper Mimekitty"
-	desc = "The rare and powerful Mimekitty."
-	icon_state = "mimekitty"
-	icon_living = "mimekitty"
-	icon_dead = "mimekitty_dead"
-	gender = FEMALE
-	var/following = 0
-
-/mob/living/simple_animal/pet/cat/mimekitty/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "harm")
-		M << "<span class='warning'>You can't bring yourself to kick [src]!</span>"
-		return 0
+	if(.)
+		set_dir(get_dir(src, friend))
+		visible_emote(pick("nuzzles [friend].",
+						   "brushes against [friend].",
+						   "rubs against [friend].",
+						   "purrs."))
 	else
-		if(M && stat != DEAD)
-			flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
-			emote("me", 1, "purrs!")
-	. = ..()
+		usr << "<span class='notice'>[src] ignores you.</span>"
+	return
 
-/mob/living/simple_animal/pet/cat/mimekitty/Life()
-	if (following)
-		return ..()
-	for(var/mob/living/carbon/M in view(7, src))
-		if (istype(M) && M.name == "Mimekitty")
-			var/mob/living/target = M
-			following = 1
-			spawn(0)
-				while(target in view(7, src))
-					if(!target.Adjacent(src))
-						step_to(src,target)
-					sleep(3)
-				following = 0
-			break;
-	return ..()
+//RUNTIME IS ALIVE! SQUEEEEEEEE~
+/mob/living/simple_animal/cat/fluff/Runtime
+	name = "Runtime"
+	desc = "Her fur has the look and feel of velvet, and her tail quivers occasionally."
+	gender = FEMALE
+	icon_state = "cat"
+	item_state = "cat"
+	icon_living = "cat"
+	icon_dead = "cat_dead"
 
-/mob/living/simple_animal/pet/cat/mimekitty/say()
-	return //MIME kitty. Not SPEAK kitty.
+/mob/living/simple_animal/cat/kitten
+	name = "kitten"
+	desc = "D'aaawwww"
+	icon_state = "kitten"
+	item_state = "kitten"
+	icon_living = "kitten"
+	icon_dead = "kitten_dead"
+	gender = NEUTER
 
+// Leaving this here for now.
+/obj/item/weapon/holder/cat/fluff/bones
+	name = "Bones"
+	desc = "It's Bones! Meow."
+	gender = MALE
+	icon_state = "cat3"
+
+/mob/living/simple_animal/cat/fluff/bones
+	name = "Bones"
+	desc = "That's Bones the cat. He's a laid back, black cat. Meow."
+	gender = MALE
+	icon_state = "cat3"
+	item_state = "cat3"
+	icon_living = "cat3"
+	icon_dead = "cat3_dead"
+	holder_type = /obj/item/weapon/holder/cat/fluff/bones
+	var/friend_name = "Erstatz Vryroxes"
+
+/mob/living/simple_animal/cat/kitten/New()
+	gender = pick(MALE, FEMALE)
+	..()

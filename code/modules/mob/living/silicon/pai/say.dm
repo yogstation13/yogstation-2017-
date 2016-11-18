@@ -1,10 +1,5 @@
-/mob/living/silicon/pai/say(msg)
+/mob/living/silicon/pai/say(var/msg)
 	if(silence_time)
-		src << "<span class='warning'>Communication circuits remain unitialized.</span>"
+		src << "<font color=green>Communication circuits remain uninitialized.</font>"
 	else
 		..(msg)
-
-/mob/living/silicon/pai/binarycheck()
-	if(radio && radio.translate_binary)
-		return 1
-	return 0

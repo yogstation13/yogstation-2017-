@@ -1,276 +1,241 @@
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
-//as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
+//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
+var/list/slot_equipment_priority = list( \
+		slot_back,\
+		slot_wear_id,\
+		slot_w_uniform,\
+		slot_wear_suit,\
+		slot_wear_mask,\
+		slot_head,\
+		slot_shoes,\
+		slot_gloves,\
+		slot_l_ear,\
+		slot_r_ear,\
+		slot_glasses,\
+		slot_belt,\
+		slot_s_store,\
+		slot_tie,\
+		slot_l_store,\
+		slot_r_store\
+	)
+
+/mob
+	var/obj/item/weapon/storage/s_active = null // Even ghosts can/should be able to peek into boxes on the ground
+
+//This proc is called whenever someone clicks an inventory ui slot.
+/mob/proc/attack_ui(var/slot)
+	var/obj/item/W = get_active_hand()
+
+	var/obj/item/E = get_equipped_item(slot)
+	if (istype(E))
+		if(istype(W))
+			E.attackby(W,src)
+		else
+			E.attack_hand(src)
+	else
+		equip_to_slot_if_possible(W, slot)
+
+/* Inventory manipulation */
+
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
+	if(equip_to_slot_if_possible(W, slot_l_hand, del_on_fail, disable_warning, redraw_mob))
+		return 1
+	else if(equip_to_slot_if_possible(W, slot_r_hand, del_on_fail, disable_warning, redraw_mob))
+		return 1
+	return 0
+
+//This is a SAFE proc. Use this instead of equip_to_slot()!
+//set del_on_fail to have it delete W if it fails to equip
+//set disable_warning to disable the 'you are unable to equip that' warning.
+//unset redraw_mob to prevent the mob from being redrawn at the end.
+/mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+	if(!W.mob_can_equip(src, slot))
+		if(del_on_fail)
+			qdel(W)
+
+		else
+			if(!disable_warning)
+				src << "\red You are unable to equip that." //Only print if del_on_fail is false
+		return 0
+
+	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	return 1
+
+//This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
+//In most cases you will want to use equip_to_slot_if_possible()
+/mob/proc/equip_to_slot(obj/item/W as obj, slot)
+	return
+
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+/mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
+	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
+
+//Checks if a given slot can be accessed at this time, either to equip or unequip I
+/mob/proc/slot_is_accessible(var/slot, var/obj/item/I, mob/user=null)
+	return 1
+
+//puts the item "W" into an appropriate slot in a human's inventory
+//returns 0 if it cannot, 1 if successful
+/mob/proc/equip_to_appropriate_slot(obj/item/W)
+	for(var/slot in slot_equipment_priority)
+		if(equip_to_slot_if_possible(W, slot, del_on_fail=0, disable_warning=1, redraw_mob=1))
+			return 1
+
+	return 0
+
+/mob/proc/equip_to_storage(obj/item/newitem)
+	return 0
+
+/* Hands */
 
 //Returns the thing in our active hand
 /mob/proc/get_active_hand()
-	if(hand)
-		return l_hand
-	else
-		return r_hand
-
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
-	if(hand)
-		return r_hand
-	else
-		return l_hand
-
-
-//Returns if a certain item can be equipped to a certain slot.
-// Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
-	return 0
 
 //Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(obj/item/W)
-	if(!put_in_hand_check(W))
+/mob/proc/put_in_l_hand(var/obj/item/W)
+	if(lying || !istype(W))
 		return 0
-	if(!has_left_hand())
-		return 0
-	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
-		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
-		W.equipped(src,slot_l_hand)
-		if(W.pulledby)
-			W.pulledby.stop_pulling()
-		update_inv_l_hand()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
+	return 1
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(obj/item/W)
-	if(!put_in_hand_check(W))
-		return 0
-	if(!has_right_hand())
-		return 0
-	if(!r_hand)
-		W.loc = src
-		r_hand = W
-		W.layer = ABOVE_HUD_LAYER
-		W.equipped(src,slot_r_hand)
-		if(W.pulledby)
-			W.pulledby.stop_pulling()
-		update_inv_r_hand()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
-
-/mob/proc/put_in_hand_check(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))
-		return 0
-	if(!istype(W))
+/mob/proc/put_in_r_hand(var/obj/item/W)
+	if(lying || !istype(W))
 		return 0
 	return 1
 
 //Puts the item into our active hand if possible. returns 1 on success.
-/mob/proc/put_in_active_hand(obj/item/W)
-	if(hand)
-		return put_in_l_hand(W)
-	else
-		return put_in_r_hand(W)
-
+/mob/proc/put_in_active_hand(var/obj/item/W)
+	return 0 // Moved to human procs because only they need to use hands.
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
-/mob/proc/put_in_inactive_hand(obj/item/W)
-	if(hand)
-		return put_in_r_hand(W)
-	else
-		return put_in_l_hand(W)
-
+/mob/proc/put_in_inactive_hand(var/obj/item/W)
+	return 0 // As above.
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
 //This is probably the main one you need to know :)
-/mob/proc/put_in_hands(obj/item/W)
+/mob/proc/put_in_hands(var/obj/item/W)
 	if(!W)
 		return 0
-	if(put_in_active_hand(W))
-		return 1
-	else if(put_in_inactive_hand(W))
-		return 1
-	else
-		W.loc = get_turf(src)
-		W.layer = initial(W.layer)
-		W.dropped(src)
-		return 0
-
-
-/mob/proc/drop_item_v()		//this is dumb.
-	if(stat == CONSCIOUS && isturf(loc))
-		return drop_item()
+	W.forceMove(get_turf(src))
+	W.layer = initial(W.layer)
+	W.dropped()
 	return 0
 
+// Removes an item from inventory and places it in the target atom.
+// If canremove or other conditions need to be checked then use unEquip instead.
+
+/mob/proc/drop_from_inventory(var/obj/item/W, var/atom/target = null)
+	if(W)
+		remove_from_mob(W, target)
+		if(!(W && W.loc))
+			return 1 // self destroying objects (tk, grabs)
+		update_icons()
+		return 1
+	return 0
 
 //Drops the item in our left hand
-/mob/proc/drop_l_hand()
-	if(!loc || !loc.allow_drop())
-		return
-	return unEquip(l_hand) //All needed checks are in unEquip
-
+/mob/proc/drop_l_hand(var/atom/Target)
+	return 0
 
 //Drops the item in our right hand
-/mob/proc/drop_r_hand()
-	if(!loc || !loc.allow_drop())
-		return
-	return unEquip(r_hand)
+/mob/proc/drop_r_hand(var/atom/Target)
+	return 0
 
+//Drops the item in our active hand. TODO: rename this to drop_active_hand or something
+/mob/proc/drop_item(var/atom/Target)
+	return
 
-//Drops the item in our active hand.
-/mob/proc/drop_item()
-	if(hand)
-		return drop_l_hand()
-	else
-		return drop_r_hand()
+/*
+	Removes the object from any slots the mob might have, calling the appropriate icon update proc.
+	Does nothing else.
 
+	DO NOT CALL THIS PROC DIRECTLY. It is meant to be called only by other inventory procs.
+	It's probably okay to use it if you are transferring the item between slots on the same mob,
+	but chances are you're safer calling remove_from_mob() or drop_from_inventory() anyways.
 
-//Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
+	As far as I can tell the proc exists so that mobs with different inventory slots can override
+	the search through all the slots, without having to duplicate the rest of the item dropping.
+*/
+/mob/proc/u_equip(obj/W as obj)
 
-
-/mob/proc/canUnEquip(obj/item/I, force)
+/mob/proc/isEquipped(obj/item/I)
 	if(!I)
-		return 1
-	if((I.flags & NODROP) && !force)
 		return 0
-	return 1
+	return get_inventory_slot(I) != 0
 
-/mob/proc/unEquip(obj/item/I, force) //Force overrides NODROP for things like wizarditis and admin undress.
-	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP.
+/mob/proc/canUnEquip(obj/item/I)
+	if(!I) //If there's nothing to drop, the drop is automatically successful.
 		return 1
+	var/slot = get_inventory_slot(I)
+	return slot && I.mob_can_unequip(src, slot)
 
-	if((I.flags & NODROP) && !force)
-		return 0
+/mob/proc/get_inventory_slot(obj/item/I)
+	var/slot = 0
+	for(var/s in slot_back to slot_tie) //kind of worries me
+		if(get_equipped_item(s) == I)
+			slot = s
+			break
+	return slot
 
-	if(I == r_hand)
-		r_hand = null
-		update_inv_r_hand()
-	else if(I == l_hand)
-		l_hand = null
-		update_inv_l_hand()
 
-	if(I)
-		if(client)
-			client.screen -= I
-		I.loc = loc
-		I.dropped(src)
-		if(I)
-			I.layer = initial(I.layer)
+//This differs from remove_from_mob() in that it checks if the item can be unequipped first.
+/mob/proc/unEquip(obj/item/I, force = 0) //Force overrides NODROP for things like wizarditis and admin undress.
+	if(!(force || canUnEquip(I)))
+		return
+	drop_from_inventory(I)
 	return 1
 
 
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
-/mob/proc/remove_from_mob(var/obj/O)
-	unEquip(O)
+//Attemps to remove an object on a mob.
+/mob/proc/remove_from_mob(var/obj/O, var/atom/target)
+	if(!O) // Nothing to remove, so we succeed.
+		return 1
+	src.u_equip(O)
+	if (src.client)
+		src.client.screen -= O
+	O.layer = initial(O.layer)
 	O.screen_loc = null
+	if(istype(O, /obj/item))
+		var/obj/item/I = O
+		if(target)
+			I.forceMove(target)
+		else
+			I.dropInto(loc)
+		I.dropped(src)
 	return 1
 
+
+//Returns the item equipped to the specified slot, if any.
+/mob/proc/get_equipped_item(var/slot)
+	return null
 
 //Outdated but still in use apparently. This should at least be a human proc.
 /mob/proc/get_equipped_items()
 	var/list/items = new/list()
 
-	if(hasvar(src,"back"))
-		if(src:back)
-			items += src:back
-	if(hasvar(src,"belt"))
-		if(src:belt)
-			items += src:belt
-	if(hasvar(src,"ears"))
-		if(src:ears)
-			items += src:ears
-	if(hasvar(src,"glasses"))
-		if(src:glasses)
-			items += src:glasses
-	if(hasvar(src,"gloves"))
-		if(src:gloves)
-			items += src:gloves
-	if(hasvar(src,"head"))
-		if(src:head)
-			items += src:head
-	if(hasvar(src,"shoes"))
-		if(src:shoes)
-			items += src:shoes
-	if(hasvar(src,"wear_id"))
-		if(src:wear_id)
-			items += src:wear_id
-	if(hasvar(src,"wear_mask"))
-		if(src:wear_mask)
-			items += src:wear_mask
-	if(hasvar(src,"wear_suit"))
-		if(src:wear_suit)
-			items += src:wear_suit
-/*	if(hasvar(src,"w_radio"))
-		if(src:w_radio)
-			items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN */
-	if(hasvar(src,"w_uniform"))
-		if(src:w_uniform)
-			items += src:w_uniform
+	if(hasvar(src,"back")) if(src:back) items += src:back
+	if(hasvar(src,"belt")) if(src:belt) items += src:belt
+	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
+	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
+	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
+	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
+	if(hasvar(src,"head")) if(src:head) items += src:head
+	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
+	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
+	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
+	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
+//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
+	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
 
-/*	if(hasvar(src,"l_hand"))
-		if(src:l_hand)
-			items += src:l_hand
-	if(hasvar(src,"r_hand"))
-		if(src:r_hand)
-			items += src:r_hand*/
+	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
+	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
 
 	return items
 
-
-/obj/item/proc/equip_to_best_slot(var/mob/M)
-	if(src != M.get_active_hand())
-		M << "<span class='warning'>You are not holding anything to equip!</span>"
-		return 0
-
-	if(M.equip_to_appropriate_slot(src))
-		if(M.hand)
-			M.update_inv_l_hand()
-		else
-			M.update_inv_r_hand()
-		return 1
-
-	if(M.s_active && M.s_active.can_be_inserted(src,1))	//if storage active insert there
-		M.s_active.handle_item_insertion(src)
-		return 1
-
-	var/obj/item/weapon/storage/S = M.get_inactive_hand()
-	if(istype(S) && S.can_be_inserted(src,1))	//see if we have box in other hand
-		S.handle_item_insertion(src)
-		return 1
-
-	S = M.get_item_by_slot(slot_belt)
-	if(istype(S) && S.can_be_inserted(src,1))		//else we put in belt
-		S.handle_item_insertion(src)
-		return 1
-
-	S = M.get_item_by_slot(slot_drone_storage)	//else we put in whatever is in drone storage
-	if(istype(S) && S.can_be_inserted(src,1))
-		S.handle_item_insertion(src)
-
-	S = M.get_item_by_slot(slot_back)	//else we put in backpack
-	if(istype(S) && S.can_be_inserted(src,1))
-		S.handle_item_insertion(src)
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return 1
-
-	M << "<span class='warning'>You are unable to equip that!</span>"
-	return 0
-
-
-/mob/verb/quick_equip()
-	set name = "quick-equip"
-	set hidden = 1
-
-	var/obj/item/I = get_active_hand()
-	if (I)
-		I.equip_to_best_slot(src)
-
-//used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
-/mob/proc/getBackSlot()
-	return slot_back
-
-/mob/proc/getBeltSlot()
-	return slot_belt
+/mob/proc/delete_inventory()
+	for(var/entry in get_equipped_items())
+		drop_from_inventory(entry)
+		qdel(entry)

@@ -1,355 +1,488 @@
-#define BASIC_BUILDMODE 1
-#define ADV_BUILDMODE 2
-#define VAR_BUILDMODE 3
-#define THROW_BUILDMODE 4
-#define AREA_BUILDMODE 5
-#define COPY_BUILDMODE 6
-#define NUM_BUILDMODES 6
-
-//Buildmode Shuttle
-//Builmode Move
-
-/obj/screen/buildmode
-	icon = 'icons/misc/buildmode.dmi'
-	var/datum/buildmode/bd
-
-/obj/screen/buildmode/New(bd)
-	..()
-	src.bd = bd
-
-/obj/screen/buildmode/mode
-	icon_state = "buildmode1"
-	name = "Toggle Mode"
-	screen_loc = "NORTH,WEST"
-
-/obj/screen/buildmode/mode/Click(location, control, params)
-	var/list/pa = params2list(params)
-
-	if(pa.Find("left"))
-		bd.toggle_modes()
-	else if(pa.Find("right"))
-		bd.change_settings(usr)
-	update_icon()
-	return 1
-
-/obj/screen/buildmode/mode/update_icon()
-	icon_state = "buildmode[bd.mode]"
-	return
-
-/obj/screen/buildmode/help
-	icon_state = "buildhelp"
-	screen_loc = "NORTH,WEST+1"
-	name = "Buildmode Help"
-
-/obj/screen/buildmode/help/Click()
-	bd.show_help(usr)
-	return 1
-
-/obj/screen/buildmode/bdir
-	icon_state = "build"
-	screen_loc = "NORTH,WEST+2"
-	name = "Change Dir"
-
-
-/obj/screen/buildmode/bdir/update_icon()
-	dir = bd.build_dir
-	return
-
-/obj/screen/buildmode/quit
-	icon_state = "buildquit"
-	screen_loc = "NORTH,WEST+3"
-	name = "Quit Buildmode"
-
-/obj/screen/buildmode/quit/Click()
-	bd.quit()
-	return 1
-
-/obj/screen/buildmode/bdir/Click()
-	bd.change_dir()
-	update_icon()
-	return 1
-
-/datum/buildmode
-	var/mode = BASIC_BUILDMODE
-	var/client/holder = null
-	var/list/obj/screen/buttons = list()
-	var/build_dir = SOUTH
-	var/atom/movable/throw_atom = null
-	var/turf/cornerA = null
-	var/turf/cornerB = null
-	var/generator_path = null
-	var/varholder = "name"
-	var/valueholder = "derp"
-	var/objholder = /obj/structure/closet
-	var/atom/movable/stored = null
-
-/datum/buildmode/New(client/c)
-	create_buttons()
-	holder = c
-	holder.click_intercept = src
-	holder.show_popup_menus = 0
-	holder.screen += buttons
-
-/datum/buildmode/proc/quit()
-	holder.screen -= buttons
-	holder.click_intercept = null
-	holder.show_popup_menus = 1
-	qdel(src)
-	return
-
-/datum/buildmode/Destroy()
-	stored = null
-	for(var/button in buttons)
-		qdel(button)
-
-/datum/buildmode/proc/create_buttons()
-	buttons += new /obj/screen/buildmode/mode(src)
-	buttons += new /obj/screen/buildmode/help(src)
-	buttons += new /obj/screen/buildmode/bdir(src)
-	buttons += new /obj/screen/buildmode/quit(src)
-
-/datum/buildmode/proc/toggle_modes()
-	mode = (mode % NUM_BUILDMODES) +1
-	Reset()
-	return
-
-/datum/buildmode/proc/show_help(mob/user)
-	switch(mode)
-		if(BASIC_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button        = Construct / Upgrade"
-			user << "\blue Right Mouse Button       = Deconstruct / Delete / Downgrade"
-			user << "\blue Left Mouse Button + ctrl = R-Window"
-			user << "\blue Left Mouse Button + alt  = Airlock"
-			user << ""
-			user << "\blue Use the button in the upper left corner to"
-			user << "\blue change the direction of built objects."
-			user << "\blue ***********************************************************"
-		if(ADV_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Right Mouse Button on buildmode button = Set object type"
-			user << "\blue Left Mouse Button on turf/obj          = Place objects"
-			user << "\blue Right Mouse Button                     = Delete objects"
-			user << ""
-			user << "\blue Use the button in the upper left corner to"
-			user << "\blue change the direction of built objects."
-			user << "\blue ***********************************************************"
-		if(VAR_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Right Mouse Button on buildmode button = Select var(type) & value"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Set var(type) & value"
-			user << "\blue Right Mouse Button on turf/obj/mob     = Reset var's value"
-			user << "\blue ***********************************************************"
-		if(THROW_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Select"
-			user << "\blue Right Mouse Button on turf/obj/mob     = Throw"
-			user << "\blue ***********************************************************"
-		if(AREA_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on turf/obj/mob      = Select corner"
-			user << "\blue Right Mouse Button on buildmode button = Select generator"
-			user << "\blue ***********************************************************"
-		if(COPY_BUILDMODE)
-			user << "\blue ***********************************************************"
-			user << "\blue Left Mouse Button on obj/turf/mob   = Spawn a Copy of selected target"
-			user << "\blue Right Mouse Button on obj/mob = Select target to copy"
-			user << "\blue ***********************************************************"
-
-/datum/buildmode/proc/change_settings(mob/user)
-	switch(mode)
-		if(BASIC_BUILDMODE)
-			return 1
-		if(ADV_BUILDMODE)
-			var/target_path = input(user,"Enter typepath:" ,"Typepath","/obj/structure/closet")
-			objholder = text2path(target_path)
-			if(!ispath(objholder))
-				objholder = pick_closest_path(target_path)
-				if(!objholder)
-					objholder = /obj/structure/closet
-					alert("That path is not allowed.")
-			else
-				if(ispath(objholder,/mob) && !check_rights(R_DEBUG,0))
-					objholder = /obj/structure/closet
-		if(VAR_BUILDMODE)
-			var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
-
-			varholder = input(user,"Enter variable name:" ,"Name", "name")
-			if(varholder in locked && !check_rights(R_DEBUG,0))
-				return 1
-			var/thetype = input(user,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
-			if(!thetype) return 1
-			switch(thetype)
-				if("text")
-					valueholder = input(user,"Enter variable value:" ,"Value", "value") as text
-				if("number")
-					valueholder = input(user,"Enter variable value:" ,"Value", 123) as num
-				if("mob-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as mob in mob_list
-				if("obj-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as obj in world
-				if("turf-reference")
-					valueholder = input(user,"Enter variable value:" ,"Value") as turf in world
-		if(AREA_BUILDMODE)
-			var/list/gen_paths = subtypesof(/datum/mapGenerator)
-
-			var/type = input(user,"Select Generator Type","Type") as null|anything in gen_paths
-			if(!type) return
-
-			generator_path = type
-			cornerA = null
-			cornerB = null
-
-/datum/buildmode/proc/change_dir()
-	switch(build_dir)
-		if(NORTH)
-			build_dir = EAST
-		if(EAST)
-			build_dir = SOUTH
-		if(SOUTH)
-			build_dir = WEST
-		if(WEST)
-			build_dir = NORTHWEST
-		if(NORTHWEST)
-			build_dir = NORTH
-	return 1
-
-/datum/buildmode/proc/Reset()//Reset temporary variables
-	cornerA = null
-	cornerB = null
-
-/proc/togglebuildmode(mob/M in player_list)
+/proc/togglebuildmode(mob/M as mob in player_list)
 	set name = "Toggle Build Mode"
 	set category = "Special Verbs"
 	if(M.client)
-		if(istype(M.client.click_intercept,/datum/buildmode))
-			var/datum/buildmode/B = M.client.click_intercept
-			B.quit()
+		if(M.client.buildmode)
 			log_admin("[key_name(usr)] has left build mode.")
+			M.client.buildmode = 0
+			M.client.show_popup_menus = 1
+			for(var/obj/effect/bmode/buildholder/H)
+				if(H.cl == M.client)
+					qdel(H)
 		else
-			new/datum/buildmode(M.client)
-			message_admins("[key_name(usr)] has entered build mode.")
 			log_admin("[key_name(usr)] has entered build mode.")
+			M.client.buildmode = 1
+			M.client.show_popup_menus = 0
 
+			var/obj/effect/bmode/buildholder/H = new/obj/effect/bmode/buildholder()
+			var/obj/effect/bmode/builddir/A = new/obj/effect/bmode/builddir(H)
+			A.master = H
+			var/obj/effect/bmode/buildhelp/B = new/obj/effect/bmode/buildhelp(H)
+			B.master = H
+			var/obj/effect/bmode/buildmode/C = new/obj/effect/bmode/buildmode(H)
+			C.master = H
+			var/obj/effect/bmode/buildquit/D = new/obj/effect/bmode/buildquit(H)
+			D.master = H
 
-/datum/buildmode/proc/InterceptClickOn(user,params,atom/object) //Click Intercept
+			H.builddir = A
+			H.buildhelp = B
+			H.buildmode = C
+			H.buildquit = D
+			M.client.screen += A
+			M.client.screen += B
+			M.client.screen += C
+			M.client.screen += D
+			H.cl = M.client
+
+/obj/effect/bmode//Cleaning up the tree a bit
+	density = 1
+	anchored = 1
+	layer = 20
+	dir = NORTH
+	icon = 'icons/misc/buildmode.dmi'
+	var/obj/effect/bmode/buildholder/master = null
+
+/obj/effect/bmode/Destroy()
+	if(master && master.cl)
+		master.cl.screen -= src
+	master = null
+	return ..()
+
+/obj/effect/bmode/builddir
+	icon_state = "build"
+	screen_loc = "NORTH,WEST"
+	Click()
+		switch(dir)
+			if(NORTH)
+				set_dir(EAST)
+			if(EAST)
+				set_dir(SOUTH)
+			if(SOUTH)
+				set_dir(WEST)
+			if(WEST)
+				set_dir(NORTHWEST)
+			if(NORTHWEST)
+				set_dir(NORTH)
+		return 1
+
+/obj/effect/bmode/buildhelp
+	icon = 'icons/misc/buildmode.dmi'
+	icon_state = "buildhelp"
+	screen_loc = "NORTH,WEST+1"
+	Click()
+		switch(master.cl.buildmode)
+			if(1) // Basic Build
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Left Mouse Button        = Construct / Upgrade</span>"
+				usr << "<span class='notice'>Right Mouse Button       = Deconstruct / Delete / Downgrade</span>"
+				usr << "<span class='notice'>Left Mouse Button + ctrl = R-Window</span>"
+				usr << "<span class='notice'>Left Mouse Button + alt  = Airlock</span>"
+				usr << ""
+				usr << "<span class='notice'>Use the button in the upper left corner to</span>"
+				usr << "<span class='notice'>change the direction of built objects.</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(2) // Adv. Build
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>"
+				usr << "<span class='notice'>Middle Mouse Button on buildmode button= On/Off object type saying</span>"
+				usr << "<span class='notice'>Middle Mouse Button on turf/obj        = Capture object type</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>"
+				usr << "<span class='notice'>Right Mouse Button                     = Delete objects</span>"
+				usr << "<span class='notice'>Mouse Button + ctrl                    = Copy object type</span>"
+				usr << ""
+				usr << "<span class='notice'>Use the button in the upper left corner to</span>"
+				usr << "<span class='notice'>change the direction of built objects.</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(3) // Edit
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Right Mouse Button on buildmode button = Select var(type) & value</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Set var(type) & value</span>"
+				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset var's value</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(4) // Throw
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>"
+				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Throw</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(5) // Room Build
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf              = Select as point A</span>"
+				usr << "<span class='notice'>Right Mouse Button on turf             = Select as point B</span>"
+				usr << "<span class='notice'>Right Mouse Button on buildmode button = Change floor/wall type</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(6) // Make Ladders
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf              = Set as upper ladder loc</span>"
+				usr << "<span class='notice'>Right Mouse Button on turf             = Set as lower ladder loc</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(7) // Move Into Contents
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Select</span>"
+				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Move into selection</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+			if(8) // Make Lights
+				usr << "<span class='notice'>***********************************************************</span>"
+				usr << "<span class='notice'>Left Mouse Button on turf/obj/mob      = Make it glow</span>"
+				usr << "<span class='notice'>Right Mouse Button on turf/obj/mob     = Reset glowing</span>"
+				usr << "<span class='notice'>Right Mouse Button on buildmode button = Change glow properties</span>"
+				usr << "<span class='notice'>***********************************************************</span>"
+		return 1
+
+/obj/effect/bmode/buildquit
+	icon_state = "buildquit"
+	screen_loc = "NORTH,WEST+3"
+
+	Click()
+		togglebuildmode(master.cl.mob)
+		return 1
+
+/obj/effect/bmode/buildholder
+	density = 0
+	anchored = 1
+	var/client/cl = null
+	var/obj/effect/bmode/builddir/builddir = null
+	var/obj/effect/bmode/buildhelp/buildhelp = null
+	var/obj/effect/bmode/buildmode/buildmode = null
+	var/obj/effect/bmode/buildquit/buildquit = null
+	var/atom/movable/throw_atom = null
+
+/obj/effect/bmode/buildholder/Destroy()
+	qdel(builddir)
+	builddir = null
+	qdel(buildhelp)
+	buildhelp = null
+	qdel(buildmode)
+	buildmode = null
+	qdel(buildquit)
+	buildquit = null
+	throw_atom = null
+	cl = null
+	return ..()
+
+/obj/effect/bmode/buildmode
+	icon_state = "buildmode1"
+	screen_loc = "NORTH,WEST+2"
+	var/varholder = "name"
+	var/valueholder = "derp"
+	var/objholder = /obj/structure/closet
+	var/objsay = 1
+
+	var/wall_holder = /turf/simulated/wall
+	var/floor_holder = /turf/simulated/floor/plating
+	var/turf/coordA = null
+	var/turf/coordB = null
+
+	var/new_light_color = "#FFFFFF"
+	var/new_light_range = 3
+	var/new_light_intensity = 3
+
+/obj/effect/bmode/buildmode/Click(location, control, params)
 	var/list/pa = params2list(params)
-	var/right_click = pa.Find("right")
-	var/left_click = pa.Find("left")
-	var/alt_click = pa.Find("alt")
-	var/ctrl_click = pa.Find("ctrl")
 
-	. = 1
-	switch(mode)
-		if(BASIC_BUILDMODE)
-			if(istype(object,/turf) && left_click && !alt_click && !ctrl_click)
-				var/turf/T = object
-				if(istype(object,/turf/open/space))
-					T.ChangeTurf(/turf/open/floor/plasteel)
-				else if(istype(object,/turf/open/floor))
-					T.ChangeTurf(/turf/closed/wall)
-				else if(istype(object,/turf/closed/wall))
-					T.ChangeTurf(/turf/closed/wall/r_wall)
-				log_admin("Build Mode: [key_name(user)] built [T] at ([T.x],[T.y],[T.z])")
-				return
-			else if(right_click)
-				log_admin("Build Mode: [key_name(user)] deleted [object] at ([object.x],[object.y],[object.z])")
-				if(istype(object,/turf/closed/wall))
+	if(pa.Find("middle"))
+		switch(master.cl.buildmode)
+			if(2)
+				objsay=!objsay
+
+
+	if(pa.Find("left"))
+		switch(master.cl.buildmode)
+			if(1)
+				master.cl.buildmode = 2
+				src.icon_state = "buildmode2"
+			if(2)
+				master.cl.buildmode = 3
+				src.icon_state = "buildmode3"
+			if(3)
+				master.cl.buildmode = 4
+				src.icon_state = "buildmode4"
+			if(4)
+				master.cl.buildmode = 5
+				src.icon_state = "buildmode5"
+			if(5)
+				master.cl.buildmode = 6
+				src.icon_state = "buildmode6"
+			if(6)
+				master.cl.buildmode = 7
+				src.icon_state = "buildmode7"
+			if(7)
+				master.cl.buildmode = 8
+				src.icon_state = "buildmode8"
+			if(8)
+				master.cl.buildmode = 1
+				src.icon_state = "buildmode1"
+
+	else if(pa.Find("right"))
+		switch(master.cl.buildmode)
+			if(1) // Basic Build
+				return 1
+			if(2) // Adv. Build
+				objholder = get_path_from_partial_text(/obj/structure/closet)
+
+			if(3) // Edit
+				var/list/locked = list("vars", "key", "ckey", "client", "firemut", "ishulk", "telekinesis", "xray", "virus", "viruses", "cuffed", "ka", "last_eaten", "urine")
+
+				master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
+				if(master.buildmode.varholder in locked && !check_rights(R_DEBUG,0))
+					return 1
+				var/thetype = input(usr,"Select variable type:" ,"Type") in list("text","number","mob-reference","obj-reference","turf-reference")
+				if(!thetype) return 1
+				switch(thetype)
+					if("text")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
+					if("number")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
+					if("mob-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as mob in mob_list
+					if("obj-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as obj in world
+					if("turf-reference")
+						master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value") as turf in world
+			if(5) // Room build
+				var/choice = alert("Would you like to change the floor or wall holders?","Room Builder", "Floor", "Wall")
+				switch(choice)
+					if("Floor")
+						floor_holder = get_path_from_partial_text(/turf/simulated/floor/plating)
+					if("Wall")
+						wall_holder = get_path_from_partial_text(/turf/simulated/wall)
+			if(8) // Lights
+				var/choice = alert("Change the new light range, power, or color?", "Light Maker", "Range", "Power", "Color")
+				switch(choice)
+					if("Range")
+						var/input = input("New light range.","Light Maker",3) as null|num
+						if(input)
+							new_light_range = input
+					if("Power")
+						var/input = input("New light power.","Light Maker",3) as null|num
+						if(input)
+							new_light_intensity = input
+					if("Color")
+						var/input = input("New light color.","Light Maker",3) as null|color
+						if(input)
+							new_light_color = input
+	return 1
+
+/proc/build_click(var/mob/user, buildmode, params, var/obj/object)
+	var/obj/effect/bmode/buildholder/holder = null
+	for(var/obj/effect/bmode/buildholder/H)
+		if(H.cl == user.client)
+			holder = H
+			break
+	if(!holder) return
+	var/list/pa = params2list(params)
+
+	switch(buildmode)
+		if(1) // Basic Build
+			if(istype(object,/turf) && pa.Find("left") && !pa.Find("alt") && !pa.Find("ctrl") )
+				if(istype(object,/turf/space))
 					var/turf/T = object
-					T.ChangeTurf(/turf/open/floor/plasteel)
-				else if(istype(object,/turf/open/floor))
+					T.ChangeTurf(/turf/simulated/floor)
+					return
+				else if(istype(object,/turf/simulated/floor))
 					var/turf/T = object
-					T.ChangeTurf(/turf/open/space)
-				else if(istype(object,/turf/closed/wall/r_wall))
+					T.ChangeTurf(/turf/simulated/wall)
+					return
+				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
-					T.ChangeTurf(/turf/closed/wall)
+					T.ChangeTurf(/turf/simulated/wall/r_wall)
+					return
+			else if(pa.Find("right"))
+				if(istype(object,/turf/simulated/wall))
+					var/turf/T = object
+					T.ChangeTurf(/turf/simulated/floor)
+					return
+				else if(istype(object,/turf/simulated/floor))
+					var/turf/T = object
+					T.ChangeTurf(/turf/space)
+					return
+				else if(istype(object,/turf/simulated/wall/r_wall))
+					var/turf/T = object
+					T.ChangeTurf(/turf/simulated/wall)
+					return
 				else if(istype(object,/obj))
 					qdel(object)
-				return
-			else if(istype(object,/turf) && alt_click && left_click)
-				log_admin("Build Mode: [key_name(user)] built an airlock at ([object.x],[object.y],[object.z])")
+					return
+			else if(istype(object,/turf) && pa.Find("alt") && pa.Find("left"))
 				new/obj/machinery/door/airlock(get_turf(object))
-			else if(istype(object,/turf) && ctrl_click && left_click)
-				switch(build_dir)
+			else if(istype(object,/turf) && pa.Find("ctrl") && pa.Find("left"))
+				switch(holder.builddir.dir)
 					if(NORTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = NORTH
+						WIN.set_dir(NORTH)
 					if(SOUTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = SOUTH
+						WIN.set_dir(SOUTH)
 					if(EAST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = EAST
+						WIN.set_dir(EAST)
 					if(WEST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = WEST
+						WIN.set_dir(WEST)
 					if(NORTHWEST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = NORTHWEST
-				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
-		if(ADV_BUILDMODE)
-			if(left_click)
-				if(ispath(objholder,/turf))
+						WIN.set_dir(NORTHWEST)
+		if(2) // Adv. Build
+			if(pa.Find("left") && !pa.Find("ctrl"))
+				if(ispath(holder.buildmode.objholder,/turf))
 					var/turf/T = get_turf(object)
-					log_admin("Build Mode: [key_name(user)] modified [T] ([T.x],[T.y],[T.z]) to [objholder]")
-					T.ChangeTurf(objholder)
+					T.ChangeTurf(holder.buildmode.objholder)
 				else
-					var/obj/A = new objholder (get_turf(object))
-					A.dir = build_dir
-					log_admin("Build Mode: [key_name(user)] modified [A]'s ([A.x],[A.y],[A.z]) dir to [build_dir]")
-			else if(right_click)
+					var/obj/A = new holder.buildmode.objholder (get_turf(object))
+					A.set_dir(holder.builddir.dir)
+			else if(pa.Find("right"))
 				if(isobj(object))
-					log_admin("Build Mode: [key_name(user)] deleted [object] at ([object.x],[object.y],[object.z])")
 					qdel(object)
+			else if(pa.Find("ctrl"))
+				holder.buildmode.objholder = object.type
+				user << "<span class='notice'>[object]([object.type]) copied to buildmode.</span>"
+			if(pa.Find("middle"))
+				holder.buildmode.objholder = text2path("[object.type]")
+				if(holder.buildmode.objsay)	usr << "[object.type]"
 
-		if(VAR_BUILDMODE)
-			if(left_click) //I cant believe this shit actually compiles.
-				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = valueholder
+
+		if(3) // Edit
+			if(pa.Find("left")) //I cant believe this shit actually compiles.
+				if(object.vars.Find(holder.buildmode.varholder))
+					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
+					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder
 				else
-					user << "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>"
-			if(right_click)
-				if(object.vars.Find(varholder))
-					log_admin("Build Mode: [key_name(user)] modified [object.name]'s [varholder] to [valueholder]")
-					object.vars[varholder] = initial(object.vars[varholder])
+					user << "<span class='danger'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>"
+			if(pa.Find("right"))
+				if(object.vars.Find(holder.buildmode.varholder))
+					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
+					object.vars[holder.buildmode.varholder] = initial(object.vars[holder.buildmode.varholder])
 				else
-					user << "<span class='warning'>[initial(object.name)] does not have a var called '[varholder]'</span>"
+					user << "<span class='danger'>[initial(object.name)] does not have a var called '[holder.buildmode.varholder]'</span>"
 
-		if(THROW_BUILDMODE)
-			if(left_click)
-				if(isturf(object))
-					return
-				throw_atom = object
-			if(right_click)
-				if(throw_atom)
-					throw_atom.throw_at(object, 10, 1,user)
-					log_admin("Build Mode: [key_name(user)] threw [throw_atom] at [object] ([object.x],[object.y],[object.z])")
-		if(AREA_BUILDMODE)
-			if(!cornerA)
-				cornerA = get_turf(object)
-				return
-			if(cornerA && !cornerB)
-				cornerB = get_turf(object)
+		if(4) // Throw
+			if(pa.Find("left"))
+				if(istype(object, /atom/movable))
+					holder.throw_atom = object
+			if(pa.Find("right"))
+				if(holder.throw_atom)
+					holder.throw_atom.throw_at(object, 10, 1)
+					log_admin("[key_name(usr)] threw [holder.throw_atom] at [object]")
+		if(5) // Room build
+			if(pa.Find("left"))
+				holder.buildmode.coordA = get_turf(object)
+				user << "<span class='notice'>Defined [object] ([object.type]) as point A.</span>"
 
-			if(left_click) //rectangular
-				if(cornerA && cornerB)
-					if(!generator_path)
-						user << "<span class='warning'>Select generator type first.</span>"
-					var/datum/mapGenerator/G = new generator_path
-					G.defineRegion(cornerA,cornerB,1)
-					G.generate()
-					cornerA = null
-					cornerB = null
-					return
-			//Something wrong - Reset
-			cornerA = null
-			cornerB = null
-		if(COPY_BUILDMODE)
-			if(left_click)
-				var/turf/T = get_turf(object)
-				if(stored)
-					DuplicateObject(stored,perfectcopy=1,newloc=T)
-			else if(right_click)
-				if(ismovableatom(object)) // No copying turfs for now.
-					stored = object
+			if(pa.Find("right"))
+				holder.buildmode.coordB = get_turf(object)
+				user << "<span class='notice'>Defined [object] ([object.type]) as point B.</span>"
+
+			if(holder.buildmode.coordA && holder.buildmode.coordB)
+				user << "<span class='notice'>A and B set, creating rectangle.</span>"
+				holder.buildmode.make_rectangle(
+					holder.buildmode.coordA,
+					holder.buildmode.coordB,
+					holder.buildmode.wall_holder,
+					holder.buildmode.floor_holder
+					)
+				holder.buildmode.coordA = null
+				holder.buildmode.coordB = null
+		if(6) // Ladders
+			if(pa.Find("left"))
+				holder.buildmode.coordA = get_turf(object)
+				user << "<span class='notice'>Defined [object] ([object.type]) as upper ladder location.</span>"
+
+			if(pa.Find("right"))
+				holder.buildmode.coordB = get_turf(object)
+				user << "<span class='notice'>Defined [object] ([object.type]) as lower ladder location.</span>"
+
+			if(holder.buildmode.coordA && holder.buildmode.coordB)
+				user << "<span class='notice'>Ladder locations set, building ladders.</span>"
+				var/obj/structure/ladder/A = new /obj/structure/ladder(holder.buildmode.coordA)
+				var/obj/structure/ladder/B = new /obj/structure/ladder(holder.buildmode.coordB)
+				A.target = B
+				B.target = A
+				B.icon_state = "ladderup"
+				holder.buildmode.coordA = null
+				holder.buildmode.coordB = null
+		if(7) // Move into contents
+			if(pa.Find("left"))
+				if(istype(object, /atom))
+					holder.throw_atom = object
+			if(pa.Find("right"))
+				if(holder.throw_atom && istype(object, /atom/movable))
+					object.forceMove(holder.throw_atom)
+					log_admin("[key_name(usr)] moved [object] into [holder.throw_atom].")
+		if(8) // Lights
+			if(pa.Find("left"))
+				if(object)
+					object.set_light(holder.buildmode.new_light_range, holder.buildmode.new_light_intensity, holder.buildmode.new_light_color)
+			if(pa.Find("right"))
+				if(object)
+					object.set_light(0, 0, "#FFFFFF")
+
+/obj/effect/bmode/buildmode/proc/get_path_from_partial_text(default_path)
+	var/desired_path = input("Enter full or partial typepath.","Typepath","[default_path]")
+
+	var/list/types = typesof(/atom)
+	var/list/matches = list()
+
+	for(var/path in types)
+		if(findtext("[path]", desired_path))
+			matches += path
+
+	if(matches.len==0)
+		alert("No results found.  Sorry.")
+		return
+
+	var/result = null
+
+	if(matches.len==1)
+		result = matches[1]
+	else
+		result = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+		if(!objholder)
+			result = default_path
+	return result
+
+/obj/effect/bmode/buildmode/proc/make_rectangle(var/turf/A, var/turf/B, var/turf/wall_type, var/turf/floor_type)
+	if(!A || !B) // No coords
+		return
+	if(A.z != B.z) // Not same z-level
+		return
+
+	var/height = A.y - B.y
+	var/width = A.x - B.x
+	var/z_level = A.z
+
+	var/turf/lower_left_corner = null
+	// First, try to find the lowest part
+	var/desired_y = 0
+	if(A.y <= B.y)
+		desired_y = A.y
+	else
+		desired_y = B.y
+
+	//Now for the left-most part.
+	var/desired_x = 0
+	if(A.x <= B.x)
+		desired_x = A.x
+	else
+		desired_x = B.x
+
+	lower_left_corner = locate(desired_x, desired_y, z_level)
+
+	// Now we can begin building the actual room.  This defines the boundries for the room.
+	var/low_bound_x = lower_left_corner.x
+	var/low_bound_y = lower_left_corner.y
+
+	var/high_bound_x = lower_left_corner.x + abs(width)
+	var/high_bound_y = lower_left_corner.y + abs(height)
+
+	for(var/i = low_bound_x, i <= high_bound_x, i++)
+		for(var/j = low_bound_y, j <= high_bound_y, j++)
+			var/turf/T = locate(i, j, z_level)
+			if(i == low_bound_x || i == high_bound_x || j == low_bound_y || j == high_bound_y)
+				if(isturf(wall_type))
+					T.ChangeTurf(wall_type)
+				else
+					new wall_type(T)
+			else
+				if(isturf(floor_type))
+					T.ChangeTurf(floor_type)
+				else
+					new floor_type(T)

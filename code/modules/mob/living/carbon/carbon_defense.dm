@@ -1,108 +1,158 @@
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked = 0)
-	if(!skipcatch)	//ugly, but easy
-		if(in_throw_mode && !get_active_hand())	//empty active hand and we're in throw mode
-			if(canmove && !restrained())
-				if(istype(AM, /obj/item))
-					var/obj/item/I = AM
-					if(isturf(I.loc))
-						put_in_active_hand(I)
-						visible_message("<span class='warning'>[src] catches [I]!</span>")
-						throw_mode_off()
-						return 1
+//Called when the mob is hit with an item in combat.
+/mob/living/carbon/resolve_item_attack(obj/item/I, mob/living/user, var/effective_force, var/hit_zone)
+	if(check_neckgrab_attack(I, user, hit_zone))
+		return null
 	..()
 
-/mob/living/carbon/throw_impact(atom/hit_atom)
-	. = ..()
-	if(hit_atom.density && isturf(hit_atom))
-		Weaken(1)
-		take_organ_damage(10)
+/mob/living/carbon/standard_weapon_hit_effects(obj/item/I, mob/living/user, var/effective_force, var/blocked, var/hit_zone)
+	if(!effective_force || blocked >= 100)
+		return 0
 
-/mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(lying)
-		if(surgeries.len)
-			if(user != src && user.a_intent == "help")
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
+	//Hulk modifier
+	if(HULK in user.mutations)
+		effective_force *= 2
+
+	//Apply weapon damage
+	var/weapon_sharp = is_sharp(I)
+	var/weapon_edge = has_edge(I)
+	var/hit_embed_chance = I.embed_chance
+	if(prob(getarmor(hit_zone, "melee"))) //melee armour provides a chance to turn sharp/edge weapon attacks into blunt ones
+		weapon_sharp = 0
+		weapon_edge = 0
+		hit_embed_chance = I.force/(I.w_class*3)
+
+	apply_damage(effective_force, I.damtype, hit_zone, blocked, sharp=weapon_sharp, edge=weapon_edge, used_weapon=I)
+
+	//Melee weapon embedded object code.
+	if (I && I.damtype == BRUTE && !I.anchored && !is_robot_module(I) && I.embed_chance > 0)
+		var/damage = effective_force
+		if (blocked)
+			damage *= (100 - blocked)/100
+			hit_embed_chance *= (100 - blocked)/100
+
+		//blunt objects should really not be embedding in things unless a huge amount of force is involved
+		var/embed_threshold = weapon_sharp? 5*I.w_class : 15*I.w_class
+
+		if(damage > embed_threshold && prob(hit_embed_chance))
+			src.embed(I, hit_zone)
+
+	return 1
+
+// Attacking someone with a weapon while they are neck-grabbed
+/mob/living/carbon/proc/check_neckgrab_attack(obj/item/W, mob/user, var/hit_zone)
+	if(user.a_intent == I_HURT)
+		for(var/obj/item/weapon/grab/G in src.grabbed_by)
+			if(G.assailant == user)
+				if(G.state >= GRAB_AGGRESSIVE)
+					if(hit_zone == BP_TORSO && shank_attack(W, G, user))
 						return 1
-	return ..()
-
-
-/mob/living/carbon/attack_hand(mob/living/carbon/human/user)
-	if(!iscarbon(user))
-		return
-
-	for(var/datum/disease/D in viruses)
-		if(D.IsSpreadByTouch())
-			user.ContractDisease(D)
-
-	for(var/datum/disease/D in user.viruses)
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
-
-	if(lying)
-		if(user.a_intent == "help")
-			if(surgeries.len)
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
+				if(G.state >= GRAB_NECK)
+					if(hit_zone == BP_HEAD && attack_throat(W, G, user, hit_zone))
 						return 1
 	return 0
 
 
-/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	if(!istype(M, /mob/living/carbon))
+// Knifing
+/mob/living/carbon/proc/attack_throat(obj/item/W, obj/item/weapon/grab/G, mob/user)
+
+	if(!W.edge || !W.force || W.damtype != BRUTE)
+		return 0 //unsuitable weapon
+
+	user.visible_message("<span class='danger'>\The [user] begins to slit [src]'s throat with \the [W]!</span>")
+
+	user.next_move = world.time + 20 //also should prevent user from triggering this repeatedly
+	if(!do_after(user, 20))
+		return 0
+	if(!(G && G.assailant == user && G.affecting == src)) //check that we still have a grab
 		return 0
 
-	for(var/datum/disease/D in viruses)
-		if(D.IsSpreadByTouch())
-			M.ContractDisease(D)
+	var/damage_mod = 1
+	//presumably, if they are wearing a helmet that stops pressure effects, then it probably covers the throat as well
+	var/obj/item/clothing/head/helmet = get_equipped_item(slot_head)
+	if(istype(helmet) && (helmet.body_parts_covered & HEAD) && (helmet.flags & STOPPRESSUREDAMAGE))
+		//we don't do an armor_check here because this is not an impact effect like a weapon swung with momentum, that either penetrates or glances off.
+		damage_mod = 1.0 - (helmet.armor["melee"]/100)
 
-	for(var/datum/disease/D in M.viruses)
-		if(D.IsSpreadByTouch())
-			ContractDisease(D)
+	var/total_damage = 0
+	for(var/i in 1 to 3)
+		var/damage = min(W.force*1.5, 20)*damage_mod
+		apply_damage(damage, W.damtype, "head", 0, sharp=W.sharp, edge=W.edge)
+		total_damage += damage
 
-	if(M.a_intent == "help")
-		help_shake_act(M)
-		return 0
+	var/oxyloss = total_damage
+	if(total_damage >= 40) //threshold to make someone pass out
+		oxyloss = 60 // Brain lacks oxygen immediately, pass out
 
-	if(..()) //successful monkey bite.
-		for(var/datum/disease/D in M.viruses)
-			ForceContractDisease(D)
-		return 1
+	adjustOxyLoss(min(oxyloss, 100 - getOxyLoss())) //don't put them over 100 oxyloss
 
+	if(total_damage)
+		if(oxyloss >= 40)
+			user.visible_message("<span class='danger'>\The [user] slit [src]'s throat open with \the [W]!</span>")
+		else
+			user.visible_message("<span class='danger'>\The [user] cut [src]'s neck with \the [W]!</span>")
 
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M)
-	if(..()) //successful slime attack
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
+		if(W.hitsound)
+			playsound(loc, W.hitsound, 50, 1, -1)
 
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
+	G.last_action = world.time
+	flick(G.hud.icon_state, G.hud)
 
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(5, 1, src)
-				s.start()
-				var/power = M.powerlevel + rand(0,3)
-				Weaken(power)
-				if(stuttering < power)
-					stuttering = power
-				Stun(power)
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-					updatehealth()
-		return 1
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Knifed [name] ([ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(W.damtype)])</font>"
+	src.attack_log += "\[[time_stamp()]\]<font color='orange'> Got knifed by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(W.damtype)])</font>"
+	msg_admin_attack("[key_name(user)] knifed [key_name(src)] with [W.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(W.damtype)])" )
+	return 1
 
-/mob/living/carbon/proc/devour_mob(mob/living/carbon/C, devour_time = 130)
-	C.visible_message("<span class='danger'>[src] is attempting to devour [C]!</span>", \
-					"<span class='userdanger'>[src] is attempting to devour you!</span>")
-	if(!do_mob(src, C, devour_time))
-		return
-	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == "grab")
-		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
-						"<span class='userdanger'>[src] devours you!</span>")
-		C.forceMove(src)
-		stomach_contents.Add(C)
-		add_logs(src, C, "devoured")
+/mob/living/carbon/proc/shank_attack(obj/item/W, obj/item/weapon/grab/G, mob/user, hit_zone)
+
+	if(!W.sharp || !W.force || W.damtype != BRUTE)
+		return 0 //unsuitable weapon
+
+	user.visible_message("<span class='danger'>\The [user] plunges \the [W] into \the [src]!</span>")
+
+	var/damage = shank_armor_helper(W, G, user)
+	apply_damage(damage, W.damtype, "torso", 0, sharp=W.sharp, edge=W.edge)
+
+	if(W.hitsound)
+		playsound(loc, W.hitsound, 50, 1, -1)
+
+	user.attack_log += "\[[time_stamp()]\]<font color='red'> Shanked [name] ([ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(W.damtype)])</font>"
+	src.attack_log += "\[[time_stamp()]\]<font color='orange'> Got shanked by [user.name] ([user.ckey]) with [W.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(W.damtype)])</font>"
+	msg_admin_attack("[key_name(user)] shanked [key_name(src)] with [W.name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(W.damtype)])" )
+
+	return 1
+
+/mob/living/carbon/proc/shank_armor_helper(obj/item/W, obj/item/weapon/grab/G, mob/user)
+	var/damage = W.force
+	var/damage_mod = 1
+	if(W.edge)
+		damage = damage * 1.25 //small damage bonus for having sharp and edge
+
+	var/obj/item/clothing/suit/worn_suit
+	var/obj/item/clothing/under/worn_under
+	var/worn_suit_armor
+	var/worn_under_armor
+
+	//if(slot_wear_suit)
+	if(get_equipped_item(slot_wear_suit))
+		worn_suit = get_equipped_item(slot_wear_suit)
+		//worn_suit = get_equipped_item(slot_wear_suit)
+		worn_suit_armor = worn_suit.armor["melee"]
+	else
+		worn_suit_armor = 0
+
+	//if(slot_w_uniform)
+	if(get_equipped_item(slot_w_uniform))
+		worn_under = get_equipped_item(slot_w_uniform)
+		//worn_under_armor = slot_w_uniform.armor["melee"]
+		worn_under_armor = worn_under.armor["melee"]
+	else
+		worn_under_armor = 0
+
+	if(worn_under_armor > worn_suit_armor)
+		damage_mod = 1 - (worn_under_armor/100)
+	else
+		damage_mod = 1 - (worn_suit_armor/100)
+
+	damage = damage * damage_mod
+
+	return damage

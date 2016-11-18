@@ -1,59 +1,49 @@
+#define METEOR_DELAY 6000
+
 /datum/game_mode/meteor
-	name = "meteor"
+	name = "Meteor"
+	round_description = "The space station has been stuck in a major meteor shower."
+	extended_round_description = "The station is on an unavoidable collision course with an asteroid field. The station will be continuously slammed with meteors, venting hallways, rooms, and ultimately destroying a majority of the basic life functions of the entire structure. Coordinate with your fellow crew members to survive the inevitable destruction of the station and get back home in one piece!"
 	config_tag = "meteor"
-	var/meteordelay = 2000
-	var/nometeors = 0
-	var/rampupdelta = 5
 	required_players = 0
+	votable = 0
+	deny_respawn = 0
+	var/next_wave = METEOR_DELAY
 
-
-/datum/game_mode/meteor/announce()
-	world << "<B>The current game mode is - Meteor!</B>"
-	world << "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>"
-
+/datum/game_mode/meteor/post_setup()
+	defer_powernet_rebuild = 2//Might help with the lag
+	..()
 
 /datum/game_mode/meteor/process()
-	if(nometeors || meteordelay > world.time - round_start_time) 
-		return
-	
-	var/list/wavetype = meteors_normal
-	var/meteorminutes = (world.time - round_start_time - meteordelay) / 10 / 60
-	
-	
-	if (prob(meteorminutes))
-		wavetype = meteors_threatening
-
-	if (prob(meteorminutes/2))
-		wavetype = meteors_catastrophic
-
-	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
-
-	spawn_meteors(ramp_up_final, wavetype)
-
+	if(world.time >= next_wave)
+		next_wave = world.time + meteor_wave_delay
+		spawn() spawn_meteors(6, meteors_normal)
 
 /datum/game_mode/meteor/declare_completion()
 	var/text
 	var/survivors = 0
-
 	for(var/mob/living/player in player_list)
 		if(player.stat != DEAD)
-			++survivors
-
-			if(player.onCentcom())
-				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
-			else if(player.onSyndieBase())
-				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
-			else
-				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
-
+			var/turf/location = get_turf(player.loc)
+			if(!location)	continue
+			switch(location.loc.type)
+				if( /area/shuttle/escape/centcom )
+					text += "<br><b><font size=2>[player.real_name] escaped on the emergency shuttle</font></b>"
+				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
+					text += "<br><font size=2>[player.real_name] escaped in a life pod.</font>"
+				else
+					text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
+			survivors++
 
 	if(survivors)
-		world << "<span class='boldnotice'>The following survived the meteor storm</span>:[text]"
+		world << "<span class='notice'><B>The following survived the meteor storm</B></span>:[text]"
 	else
-		world << "<span class='boldnotice'>Nobody survived the meteor storm!</span>"
+		world << "<span class='notice'><B>Nobody survived the meteor storm!</B></span>"
 
 	feedback_set_details("round_end_result","end - evacuation")
 	feedback_set("round_end_result",survivors)
 
 	..()
 	return 1
+
+#undef METEOR_DELAY

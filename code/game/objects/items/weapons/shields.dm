@@ -1,300 +1,226 @@
-#define SHIELD_NORMAL 0
-#define SHIELD_CRACKED 1
-#define SHIELD_BREAKING 2
+//** Shield Helpers
+//These are shared by various items that have shield-like behaviour
 
-#define IMPROPERBLOCK 0
-#define PROPERBLOCK 1
+//bad_arc is the ABSOLUTE arc of directions from which we cannot block. If you want to fix it to e.g. the user's facing you will need to rotate the dirs yourself.
+/proc/check_shield_arc(mob/user, var/bad_arc, atom/damage_source = null, mob/attacker = null)
+	//check attack direction
+	var/attack_dir = 0 //direction from the user to the source of the attack
+	if(istype(damage_source, /obj/item/projectile))
+		var/obj/item/projectile/P = damage_source
+		attack_dir = get_dir(get_turf(user), P.starting)
+	else if(attacker)
+		attack_dir = get_dir(get_turf(user), get_turf(attacker))
+	else if(damage_source)
+		attack_dir = get_dir(get_turf(user), get_turf(damage_source))
 
-var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[NORTH]" = IMPROPERBLOCK),
-"[EAST]" = list("[SOUTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = IMPROPERBLOCK, "[NORTH]" = PROPERBLOCK),
-"[SOUTH]" = list("[NORTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = IMPROPERBLOCK ),
-"[WEST]" = list("[NORTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = PROPERBLOCK, "[WEST]" = IMPROPERBLOCK) )
+	if(!(attack_dir && (attack_dir & bad_arc)))
+		return 1
+	return 0
 
-/obj/item/weapon/proc/check_for_positions(mob/living/carbon/human/H, atom/movable/AM)
-	var/facing_hit = blockcheck["[H.dir]"]["[AM.dir]"]
-//	message_admins("This is [H] and his direction is [H.dir].") //break glass if needed -Super
-//	message_admins("This is [AM] and his direction is [AM.dir].")
-	return facing_hit
+/proc/default_parry_check(mob/user, mob/attacker, atom/damage_source)
+	//parry only melee attacks
+	if(istype(damage_source, /obj/item/projectile) || (attacker && get_dist(user, attacker) > 1) || user.incapacitated())
+		return 0
+
+	//block as long as they are not directly behind us
+	var/bad_arc = reverse_direction(user.dir) //arc of directions from which we cannot block
+	if(!check_shield_arc(user, bad_arc, damage_source, attacker))
+		return 0
+
+	return 1
 
 /obj/item/weapon/shield
 	name = "shield"
-	icon = 'icons/obj/weapons.dmi'
-	block_chance = 50
-	var/block_limit = 0 // used to see whether a weapon has enough force to break a shield
-	var/shieldstate = SHIELD_NORMAL
-	var/shieldhealth
+	var/base_block_chance = 50
+	item_icons = list(
+				slot_l_hand_str = 'icons/mob/items/lefthand_melee.dmi',
+				slot_r_hand_str = 'icons/mob/items/righthand_melee.dmi',
+				)
 
+/obj/item/weapon/shield/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/def_zone = null, var/attack_text = "the attack")
+	if(user.incapacitated())
+		return 0
 
-/obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 80
-	else if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance -= 20
-	else
-		return 1
-
-/obj/item/weapon/shield/proc/shatter_reaction(mob/living/carbon/human/owner)
-	owner.visible_message("<span class='danger'>[owner]'s shield shatters after blocking an attack!</span class>")
-	var/break_location = get_turf(loc)
-	var/obj/item/weapon/shield/broken/B = new /obj/item/weapon/shield/broken(break_location)
-	owner.put_in_active_hand(B)
-	var/formershield = icon_state
-	B.generateshield(formershield)
-	qdel(src)
-
-/obj/item/weapon/shield/proc/check_shatter(mob/living/carbon/human/owner, damage)
-	if(damage)
-		var/examinedhealth = shieldhealth - damage
-		if(examinedhealth >= 50)
-			shieldstate = SHIELD_CRACKED
-			owner.visible_message("<span class='danger'>[owner]'s shield cracks slightly from the hit!</span class>")
-			shieldhealth = examinedhealth
+	//block as long as they are not directly behind us
+	var/bad_arc = reverse_direction(user.dir) //arc of directions from which we cannot block
+	if(check_shield_arc(user, bad_arc, damage_source, attacker))
+		if(prob(get_block_chance(user, damage, damage_source, attacker)))
+			user.visible_message("<span class='danger'>\The [user] blocks [attack_text] with \the [src]!</span>")
 			return 1
-		if(examinedhealth >= 25) // below 50
-			shieldstate = SHIELD_BREAKING
-			owner.visible_message("<span class='danger'>[owner]'s shield begins to fall apart from the hit!<span class>")
-			shieldhealth = examinedhealth
-			return 1
+	return 0
 
-		if(examinedhealth >= 6 || examinedhealth < 4)
-			shieldstate = null
-			shatter_reaction(owner)
-			shieldhealth = examinedhealth
-			return 0
-
-		else
-			return 1
+/obj/item/weapon/shield/proc/get_block_chance(mob/user, var/damage, atom/damage_source = null, mob/attacker = null)
+	return base_block_chance
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
-	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
+	desc = "A shield adept for close quarters engagement.  It's also capable of protecting from less powerful projectiles."
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
-	force = 10
-	throwforce = 5
-	throw_speed = 2
-	throw_range = 3
-	w_class = 4
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=3;combat=4"
+	force = 5.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = ITEMSIZE_LARGE
+	origin_tech = list(TECH_MATERIAL = 2)
+	matter = list("glass" = 7500, DEFAULT_WALL_MATERIAL = 1000)
 	attack_verb = list("shoved", "bashed")
-	block_chance = 50
-	block_limit = 25
-	shieldhealth = 75
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/weapon/shield/riot/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/def_zone = null, var/attack_text = "the attack")
+	if(user.incapacitated())
+		return 0
+
+	//block as long as they are not directly behind us
+	var/bad_arc = reverse_direction(user.dir) //arc of directions from which we cannot block
+	if(check_shield_arc(user, bad_arc, damage_source, attacker))
+		if(prob(get_block_chance(user, damage, damage_source, attacker)))
+			//At this point, we succeeded in our roll for a block attempt, however these kinds of shields struggle to stand up
+			//to strong bullets and lasers.  They still do fine to pistol rounds of all kinds, however.
+			if(istype(damage_source, /obj/item/projectile))
+				var/obj/item/projectile/P = damage_source
+				if((is_sharp(P) && P.armor_penetration >= 10) || istype(P, /obj/item/projectile/beam))
+					//If we're at this point, the bullet/beam is going to go through the shield, however it will hit for less damage.
+					//Bullets get slowed down, while beams are diffused as they hit the shield, so these shields are not /completely/
+					//useless.  Extremely penetrating projectiles will go through the shield without less damage.
+					user.visible_message("<span class='danger'>\The [user]'s [src.name] is pierced by [attack_text]!</span>")
+					if(P.armor_penetration < 30) //PTR bullets and x-rays will bypass this entirely.
+						P.damage = P.damage / 2
+					return 0
+			//Otherwise, if we're here, we're gonna stop the attack entirely.
+			user.visible_message("<span class='danger'>\The [user] blocks [attack_text] with \the [src]!</span>")
+			playsound(user.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+			return 1
+	return 0
+
+/obj/item/weapon/shield/riot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/melee/baton))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
 	else
-		return ..()
+		..()
 
-/obj/item/weapon/shield/riot/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
-	if(attack_type == MELEE_ATTACK)
-		if(!check_for_positions(owner,AT))
-			return 0
-		if(damage > block_limit)
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
-			var/roll_for_shatter = check_shatter(owner, damage)
-			if(roll_for_shatter)
-				return 1
-			else
-				return 0
-		else
-			return 1
-
-	else if(attack_type == UNARMED_ATTACK)
-		if(!check_for_positions(owner,AT))
-			return 0
-		else
-			return 1
-
-
-	else if(attack_type == THROWN_PROJECTILE_ATTACK)
-		if(isitem(AT))
-			var/obj/item/O = AT
-			if(O.thrower_dir)
-				O.dir = O.thrower_dir
-			if(!check_for_positions(owner,O))
-				return 0
-			else
-				return 1
-		else
-			final_block_chance += 50
-			return ..()
-
-	else if(attack_type == PROJECTILE_ATTACK)
-		if(!check_for_positions(owner,AT))
-			return 0
-		return ..()
-
-	else if (attack_type == HULK_ATTACK) // trying to block a hulk backfires.
-		playsound(src, 'sound/effects/bang.ogg', 100, 1)
-		owner.unEquip(src)
-		var/target = src.loc
-		for(var/i = 0, i < 7, i++)
-			target = get_step(target, pick(alldirs))
-		src.throw_at(target,7,1, spin = 0)
-		if(prob(final_block_chance))
-			owner.Weaken(2) // if it ain't tossin, they're takin the heat
-		return 0
-	else
-		return 1
-
-/obj/item/weapon/shield/riot/examine(mob/user)
-	..()
-	if(shieldstate == SHIELD_CRACKED)
-		user << "<span class='notice'>The shield has a few cracks in it.</span class>"
-	if(shieldstate == SHIELD_BREAKING)
-		user << "<span class='danger'>The shield is breaking apart.</span class>"
-
-/obj/item/weapon/shield/riot/roman
-	name = "roman shield"
-	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
-	icon_state = "roman_shield"
-	item_state = "roman_shield"
-
-/obj/item/weapon/shield/riot/roman/prop
-	desc = "Made of cheap, lightweight plastic. Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
-	force = 3
-	throwforce = 3
-	block_limit = 9
-
-/obj/item/weapon/shield/riot/roman/prop/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
-	return 0
-
-/obj/item/weapon/shield/riot/buckler
-	name = "wooden buckler"
-	desc = "A medieval wooden buckler."
-	icon_state = "buckler"
-	item_state = "buckler"
-	materials = list()
-	origin_tech = "materials=1;combat=3;biotech=2"
-	burn_state = FLAMMABLE
-	block_limit = 15
-	block_chance = 30
+/*
+ * Energy Shield
+ */
 
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
-	desc = "A shield capable of stopping most melee attacks. Protects user from almost all energy projectiles. It can be retracted, expanded, and stored anywhere."
+	desc = "A shield capable of stopping most projectile and melee attacks. It can be retracted, expanded, and stored anywhere."
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "eshield0" // eshield1 for expanded
-	force = 3
-	throwforce = 3
-	throw_speed = 3
-	throw_range = 5
-	w_class = 1
-	origin_tech = "materials=4;magnets=5;syndicate=6"
+	slot_flags = SLOT_EARS
+	flags = CONDUCT
+	force = 3.0
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = ITEMSIZE_SMALL
+	origin_tech = list(TECH_MATERIAL = 4, TECH_MAGNET = 3, TECH_ILLEGAL = 4)
 	attack_verb = list("shoved", "bashed")
-	var/active = FALSE
-	var/on_force = 10
-	var/on_throwforce = 8
-	var/on_throw_speed = 2
-	var/on_w_class = 4
-	var/clumsy_check = 1
-	var/icon_state_base = "eshield"
+	var/active = 0
 
-/obj/item/weapon/shield/energy/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
-	if(active)
-		if(attack_type == UNARMED_ATTACK)
-			if(!check_for_positions(owner,AT))
-				return 0
-			else
-				return 1
-		else
-			return 0
-	else
-		return 0
+/obj/item/weapon/shield/energy/handle_shield(mob/user)
+	if(!active)
+		return 0 //turn it on first!
+	. = ..()
 
-/obj/item/weapon/shield/energy/IsReflect(def_zone)
-//	if(!check_for_positions(D,M))
-//		return 0
-	return (active)
+	if(.)
+		var/datum/effect/effect/system/spark_spread/spark_system = PoolOrNew(/datum/effect/effect/system/spark_spread)
+		spark_system.set_up(5, 0, user.loc)
+		spark_system.start()
+		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
 
-/obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
-	if((clumsy_check && (user.disabilities & CLUMSY)) && prob(50))
+/obj/item/weapon/shield/energy/get_block_chance(mob/user, var/damage, atom/damage_source = null, mob/attacker = null)
+	if(istype(damage_source, /obj/item/projectile))
+		var/obj/item/projectile/P = damage_source
+		if((is_sharp(P) && damage > 10) || istype(P, /obj/item/projectile/beam))
+			return (base_block_chance - round(damage / 3)) //block bullets and beams using the old block chance
+	return base_block_chance
+
+/obj/item/weapon/shield/energy/attack_self(mob/living/user as mob)
+	if ((CLUMSY in user.mutations) && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
 		user.take_organ_damage(5)
 	active = !active
-	icon_state = "[icon_state_base][active]"
+	if (active)
+		force = 10
+		update_icon()
+		w_class = ITEMSIZE_LARGE
+		slot_flags = null
+		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+		user << "<span class='notice'>\The [src] is now active.</span>"
 
-	if(active)
-		force = on_force
-		throwforce = on_throwforce
-		throw_speed = on_throw_speed
-		w_class = on_w_class
-		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
-		user << "<span class='notice'>[src] is now active.</span>"
 	else
-		force = initial(force)
-		throwforce = initial(throwforce)
-		throw_speed = initial(throw_speed)
-		w_class = initial(w_class)
-		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		force = 3
+		update_icon()
+		w_class = ITEMSIZE_TINY
+		slot_flags = SLOT_EARS
+		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
+		user << "<span class='notice'>\The [src] can now be concealed.</span>"
+
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+
 	add_fingerprint(user)
+	return
+
+/obj/item/weapon/shield/energy/update_icon()
+	icon_state = "eshield[active]"
+	if(active)
+		set_light(1.5, 1.5, "#006AFF")
+	else
+		set_light(0)
 
 /obj/item/weapon/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
+	icon = 'icons/obj/weapons.dmi'
 	icon_state = "teleriot0"
-	origin_tech = "materials=3;combat=4;engineering=4"
 	slot_flags = null
 	force = 3
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
-	w_class = 3
-	shieldhealth = 95
-	var/active = FALSE
-
-/obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	w_class = ITEMSIZE_NORMAL
+	var/active = 0
+/*
+/obj/item/weapon/shield/energy/IsShield()
 	if(active)
-		return ..()
-	return 0
-
+		return 1
+	else
+		return 0
+*/
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
 
 	if(active)
 		force = 8
 		throwforce = 5
 		throw_speed = 2
-		w_class = 4
+		w_class = ITEMSIZE_LARGE
 		slot_flags = SLOT_BACK
 		user << "<span class='notice'>You extend \the [src].</span>"
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		w_class = 3
+		w_class = ITEMSIZE_NORMAL
 		slot_flags = null
 		user << "<span class='notice'>[src] can now be concealed.</span>"
+
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+
 	add_fingerprint(user)
-
-
-/obj/item/weapon/shield/broken
-	name = "broken shield"
-	desc = "Not much to salvage... If wanna look like a badass, hang it on your wall and say you shot Captain America."
-	force = 2
-	throwforce = 3
-	throw_range = 5
-	w_class = 3
-	var/formershield
-
-/obj/item/weapon/shield/broken/proc/generateshield(formershield)
-	if(formershield)
-		src.icon_state = "broken-[formershield]"
-		src.item_state = "broken-[formershield]"
-	playsound(src, "shatter", 70, 1)
-
-/obj/item/weapon/shield/broken/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
-	return 0
-
-#undef SHIELD_NORMAL
-#undef SHIELD_CRACKED
-#undef SHIELD_BREAKING
+	return

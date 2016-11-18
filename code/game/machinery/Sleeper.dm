@@ -1,233 +1,293 @@
 /obj/machinery/sleep_console
-	name = "sleeper console"
+	name = "Sleeper Console"
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "console"
-	density = FALSE
-	anchored = TRUE
+	icon_state = "sleeperconsole"
+	var/obj/machinery/sleeper/sleeper
+	anchored = 1 //About time someone fixed this.
+	density = 0
+	dir = 8
+	use_power = 1
+	idle_power_usage = 40
+	interact_offline = 1
+	circuit = /obj/item/weapon/circuitboard/sleeper_console
+
+/obj/machinery/sleep_console/New()
+	..()
+	findsleeper()
+
+/obj/machinery/sleep_console/proc/findsleeper()
+	spawn(5)
+		var/obj/machinery/sleeper/sleepernew = null
+		for(dir in list(NORTH, EAST, SOUTH, WEST)) // Loop through every direction
+			sleepernew = locate(/obj/machinery/sleeper, get_step(src, dir)) // Try to find a scanner in that direction
+		if(sleepernew)
+			sleeper = sleepernew
+			sleepernew.console = src
+		return
+
+/obj/machinery/sleep_console/attack_ai(var/mob/user)
+	return attack_hand(user)
+
+/obj/machinery/sleep_console/attack_hand(var/mob/user)
+	if(..())
+		return 1
+
+	if(sleeper.panel_open)
+		user << "<span class='notice'>Close the maintenance panel first.</span>"
+		return
+
+	if(!sleeper)
+		findsleeper()
+		if(sleeper)
+			return sleeper.ui_interact(user)
+	else if(sleeper)
+		return sleeper.ui_interact(user)
+	else
+		user << "<span class='warning'>Sleeper not found!</span>"
+
+/obj/machinery/sleep_console/attackby(var/obj/item/I, var/mob/user)
+	if(computer_deconstruction_screwdriver(user, I))
+		return
+	else
+		return attack_hand(user)
+
+/obj/machinery/sleep_console/power_change()
+	..()
+	if(stat & (NOPOWER|BROKEN))
+		icon_state = "sleeperconsole-p"
+	else
+		icon_state = initial(icon_state)
 
 /obj/machinery/sleeper
 	name = "sleeper"
+	desc = "A fancy bed with built-in injectors, a dialysis machine, and a limited health scanner."
 	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	density = FALSE
-	anchored = TRUE
-	state_open = TRUE
-	var/emag_effect
-	var/datum/effect_system/spark_spread/spark_system
-	var/efficiency = 1
-	var/min_health = -25
-	var/list/available_chems
-	var/controls_inside = FALSE
-	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
-		list("omnizine")
-	)
+	icon_state = "sleeper_0"
+	density = 1
+	anchored = 1
+	circuit = /obj/item/weapon/circuitboard/sleeper
+	var/mob/living/carbon/human/occupant = null
+	var/list/available_chemicals = list("inaprovaline" = "Inaprovaline", "stoxin" = "Soporific", "paracetamol" = "Paracetamol", "anti_toxin" = "Dylovene", "dexalin" = "Dexalin")
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/filtering = 0
+	var/obj/machinery/sleep_console/console
+
+	use_power = 1
+	idle_power_usage = 15
+	active_power_usage = 200 //builtin health analyzer, dialysis machine, injectors.
 
 /obj/machinery/sleeper/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/sleeper(null)
-	B.apply_default_parts(src)
+	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module(src)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
+	component_parts += new /obj/item/weapon/reagent_containers/syringe(src)
+	component_parts += new /obj/item/weapon/reagent_containers/syringe(src)
+	component_parts += new /obj/item/weapon/reagent_containers/syringe(src)
+	component_parts += new /obj/item/stack/material/glass/reinforced(src, 2)
+
+	RefreshParts()
+
+/obj/machinery/sleeper/initialize()
 	update_icon()
-	spark_system = new /datum/effect_system/spark_spread()
-	spark_system.set_up(5, 0, src)
-	spark_system.attach(src)
 
-/obj/item/weapon/circuitboard/machine/sleeper
-	name = "circuit board (Sleeper)"
-	build_path = /obj/machinery/sleeper
-	origin_tech = "programming=3;biotech=2;engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/stack/sheet/glass = 1)
+/obj/machinery/sleeper/process()
+	if(stat & (NOPOWER|BROKEN))
+		return
 
-/obj/machinery/sleeper/RefreshParts()
-	var/E
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		E += B.rating
-	var/I
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		I += M.rating
-
-	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) * E
-	available_chems = list()
-	for(var/i in 1 to I)
-		available_chems |= possible_chems[i]
+	if(filtering > 0)
+		if(beaker)
+			if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
+				var/pumped = 0
+				for(var/datum/reagent/x in occupant.reagents.reagent_list)
+					occupant.reagents.trans_to_obj(beaker, 3)
+					pumped++
+				if(ishuman(occupant))
+					occupant.vessel.trans_to_obj(beaker, pumped + 1)
+		else
+			toggle_filter()
 
 /obj/machinery/sleeper/update_icon()
-	icon_state = initial(icon_state)
-	if(state_open)
-		icon_state += "-open"
+	icon_state = "sleeper_[occupant ? "1" : "0"]"
 
-/obj/machinery/sleeper/container_resist()
-	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
-		"<span class='notice'>You climb out of [src]!</span>")
-	open_machine()
+/obj/machinery/sleeper/ui_interact(var/mob/user, var/ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = outside_state)
+	var/data[0]
 
-/obj/machinery/sleeper/relaymove(mob/user)
-	container_resist()
+	data["power"] = stat & (NOPOWER|BROKEN) ? 0 : 1
 
-/obj/machinery/sleeper/open_machine()
-	if(!state_open && !panel_open)
-		..()
+	var/list/reagents = list()
+	for(var/T in available_chemicals)
+		var/list/reagent = list()
+		reagent["id"] = T
+		reagent["name"] = available_chemicals[T]
+		if(occupant)
+			reagent["amount"] = occupant.reagents.get_reagent_amount(T)
+		reagents += list(reagent)
+	data["reagents"] = reagents.Copy()
 
-/obj/machinery/sleeper/close_machine(mob/user)
-	if((isnull(user) || istype(user)) && state_open && !panel_open)
-		..(user)
-		if(occupant && occupant.stat != DEAD)
-			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
-
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash)
-		M.do_attack_animation(src)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
-		qdel(src)
-
-/obj/machinery/sleeper/emp_act(severity)
-	if(is_operational() && occupant)
-		open_machine()
-	..(severity)
-
-/obj/machinery/sleeper/blob_act(obj/effect/blob/B)
-	if(prob(75))
-		var/turf/T = get_turf(src)
-		for(var/atom/movable/A in src)
-			A.forceMove(T)
-			A.blob_act(B)
-		qdel(src)
-
-/obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
-		return
-	close_machine(target)
-
-/obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
-	if(!state_open && !occupant)
-		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(exchange_parts(user, I))
-		return
-	if(default_pry_open(I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	if(istype(I, /obj/item/weapon/wirecutters) && emag_effect)
-		user << "<span class='alert'>You begin mending seperated wires and cutting the useless ones...</span>"
-		spark_system.start()
-		playsound(user, "sparks", 50, 1)
-		if(do_after(user, 80/I.toolspeed, target = src))
-			user << "<span class='notice'>You mend some of the wires together and cut off the burnt out ones, allowing the sleeper to function properly.</span>"
-			emag_effect = !emag_effect
-			emagged = !emagged
-			return
-		else
-			return
-	return ..()
-
-/obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
-
-	if(emag_effect)
-		user << "<span class='danger'>You see a small line of smoke coming from inside of the sleeper and wires ripped apart creating brief electric sparks making you hesitate from touching it.</span>"
-		if(ui)
-			ui.close()
-		return
-
-	if(controls_inside && state == notcontained_state)
-		state = default_state // If it has a set of controls on the inside, make it actually controllable by the mob in it.
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
-		ui.open()
-
-/obj/machinery/sleeper/ui_data()
-	var/list/data = list()
-	data["occupied"] = occupant ? 1 : 0
-	data["open"] = state_open
-
-	data["chems"] = list()
-	for(var/chem in available_chems)
-		var/datum/reagent/R = chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
-
-	data["occupant"] = list()
 	if(occupant)
-		data["occupant"]["name"] = occupant.name
-		data["occupant"]["stat"] = occupant.stat
-		data["occupant"]["health"] = occupant.health
-		data["occupant"]["maxHealth"] = occupant.maxHealth
-		data["occupant"]["minHealth"] = config.health_threshold_dead
-		data["occupant"]["bruteLoss"] = occupant.getBruteLoss()
-		data["occupant"]["oxyLoss"] = occupant.getOxyLoss()
-		data["occupant"]["toxLoss"] = occupant.getToxLoss()
-		data["occupant"]["fireLoss"] = occupant.getFireLoss()
-		data["occupant"]["cloneLoss"] = occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = occupant.getBrainLoss()
-		data["occupant"]["reagents"] = list()
-		if(occupant.reagents.reagent_list.len)
-			for(var/datum/reagent/R in occupant.reagents.reagent_list)
-				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
-	return data
+		data["occupant"] = 1
+		switch(occupant.stat)
+			if(CONSCIOUS)
+				data["stat"] = "Conscious"
+			if(UNCONSCIOUS)
+				data["stat"] = "Unconscious"
+			if(DEAD)
+				data["stat"] = "<font color='red'>Dead</font>"
+		data["health"] = occupant.health
+		if(iscarbon(occupant))
+			var/mob/living/carbon/C = occupant
+			data["pulse"] = C.get_pulse(GETPULSE_TOOL)
+		data["brute"] = occupant.getBruteLoss()
+		data["burn"] = occupant.getFireLoss()
+		data["oxy"] = occupant.getOxyLoss()
+		data["tox"] = occupant.getToxLoss()
+	else
+		data["occupant"] = 0
+	if(beaker)
+		data["beaker"] = beaker.reagents.get_free_space()
+	else
+		data["beaker"] = -1
+	data["filtering"] = filtering
 
-/obj/machinery/sleeper/ui_act(action, params)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "sleeper.tmpl", "Sleeper UI", 600, 600, state = state)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+/obj/machinery/sleeper/Topic(href, href_list)
 	if(..())
+		return 1
+
+	if(usr == occupant)
+		usr << "<span class='warning'>You can't reach the controls from the inside.</span>"
 		return
-	switch(action)
-		if("door")
-			if(state_open)
-				close_machine()
-			else
-				open_machine()
-			. = TRUE
-		if("inject")
-			var/chem = params["chem"]
-			if(!is_operational() || !occupant)
-				return
-			if(occupant.health < min_health && chem != "epinephrine")
-				return
-			if(emagged)
-				for(var/reagent_id in available_chems)
-					occupant.reagents.add_reagent(reagent_id, 30)
-					audible_message("<span class='alert'>[src] begins to overloading and goes REEEEEEEEEEEEEEEEEEE!</span>")
-					emag_effect = 1
-					open_machine()
-					return
-			if(inject_chem(chem))
-				. = TRUE
 
-/obj/machinery/sleeper/proc/inject_chem(chem)
-	if((chem in available_chems) && chem_allowed(chem))
-		occupant.reagents.add_reagent(chem, 10)
-		return TRUE
+	add_fingerprint(usr)
 
-/obj/machinery/sleeper/proc/chem_allowed(chem)
+	if(href_list["eject"])
+		go_out()
+	if(href_list["beaker"])
+		remove_beaker()
+	if(href_list["filter"])
+		if(filtering != text2num(href_list["filter"]))
+			toggle_filter()
+	if(href_list["chemical"] && href_list["amount"])
+		if(occupant && occupant.stat != DEAD)
+			if(href_list["chemical"] in available_chemicals) // Your hacks are bad and you should feel bad
+				inject_chemical(usr, href_list["chemical"], text2num(href_list["amount"]))
+
+	return 1
+
+/obj/machinery/sleeper/attackby(var/obj/item/I, var/mob/user)
+	add_fingerprint(user)
+	if(default_deconstruction_screwdriver(user, I))
+		return
+	else if(default_deconstruction_crowbar(user, I))
+		return
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(!beaker)
+			beaker = I
+			user.drop_item()
+			I.loc = src
+			user.visible_message("<span class='notice'>\The [user] adds \a [I] to \the [src].</span>", "<span class='notice'>You add \a [I] to \the [src].</span>")
+		else
+			user << "<span class='warning'>\The [src] has a beaker already.</span>"
+		return
+
+/obj/machinery/sleeper/MouseDrop_T(var/mob/target, var/mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user)|| !ishuman(target))
+		return
+	go_in(target, user)
+
+/obj/machinery/sleeper/relaymove(var/mob/user)
+	..()
+	go_out()
+
+/obj/machinery/sleeper/emp_act(var/severity)
+	if(filtering)
+		toggle_filter()
+
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+
+	if(occupant)
+		go_out()
+
+	..(severity)
+/obj/machinery/sleeper/proc/toggle_filter()
+	if(!occupant || !beaker)
+		filtering = 0
+		return
+	filtering = !filtering
+
+/obj/machinery/sleeper/proc/go_in(var/mob/M, var/mob/user)
+	if(!M)
+		return
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(occupant)
+		user << "<span class='warning'>\The [src] is already occupied.</span>"
+		return
+
+	if(M == user)
+		visible_message("\The [user] starts climbing into \the [src].")
+	else
+		visible_message("\The [user] starts putting [M] into \the [src].")
+
+	if(do_after(user, 20))
+		if(occupant)
+			user << "<span class='warning'>\The [src] is already occupied.</span>"
+			return
+		M.stop_pulling()
+		if(M.client)
+			M.client.perspective = EYE_PERSPECTIVE
+			M.client.eye = src
+		M.loc = src
+		update_use_power(2)
+		occupant = M
+		update_icon()
+
+/obj/machinery/sleeper/proc/go_out()
 	if(!occupant)
 		return
-	var/amount = occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/health = occupant.health > min_health || chem == "epinephrine"
-	return amount && health
+	if(occupant.client)
+		occupant.client.eye = occupant.client.mob
+		occupant.client.perspective = MOB_PERSPECTIVE
+	occupant.loc = src.loc
+	occupant = null
+	for(var/atom/movable/A in src) // In case an object was dropped inside or something
+		if(A == beaker || A == circuit)
+			continue
+		if(A in component_parts)
+			continue
+		A.loc = src.loc
+	update_use_power(1)
+	update_icon()
+	toggle_filter()
 
-/obj/machinery/sleeper/emag_act(mob/user)
-	if(!emagged)
-		src.emagged = 1
-		user << "You breach the safety mechanics.."
+/obj/machinery/sleeper/proc/remove_beaker()
+	if(beaker)
+		beaker.loc = src.loc
+		beaker = null
+		toggle_filter()
 
+/obj/machinery/sleeper/proc/inject_chemical(var/mob/living/user, var/chemical, var/amount)
+	if(stat & (BROKEN|NOPOWER))
+		return
 
-/obj/machinery/sleeper/syndie
-	icon_state = "sleeper_s"
-	controls_inside = TRUE
-
-/obj/machinery/sleeper/syndie/emag_act(mob/user)
-	return
-
-
-/obj/machinery/sleeper/old
-	icon_state = "oldpod"
+	if(occupant && occupant.reagents)
+		if(occupant.reagents.get_reagent_amount(chemical) + amount <= 20)
+			use_power(amount * CHEM_SYNTH_ENERGY)
+			occupant.reagents.add_reagent(chemical, amount)
+			user << "Occupant now has [occupant.reagents.get_reagent_amount(chemical)] units of [available_chemicals[chemical]] in their bloodstream."
+		else
+			user << "The subject has too many chemicals."
+	else
+		user << "There's no suitable occupant in \the [src]."

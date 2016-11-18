@@ -1,168 +1,128 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
-/obj/item/device/mmi
-	name = "Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "mmi_empty"
-	w_class = 3
-	origin_tech = "biotech=2;programming=3;engineering=2"
-	var/braintype = "Cyborg"
-	var/obj/item/device/radio/radio = null //Let's give it a radio.
-	var/hacked = 0 //Whether or not this is a Syndicate MMI
-	var/mob/living/carbon/brain/brainmob = null //The current occupant.
-	var/mob/living/silicon/robot = null //Appears unused.
-	var/obj/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
-	var/clockwork = FALSE //If this is a soul vessel
+/obj/item/device/mmi/digital/New()
+	src.brainmob = new(src)
+	src.brainmob.add_language("Robot Talk")
+	src.brainmob.loc = src
+	src.brainmob.container = src
+	src.brainmob.stat = 0
+	src.brainmob.silent = 0
+	dead_mob_list -= src.brainmob
 
-/obj/item/device/mmi/update_icon()
-	if(brain)
-		if(istype(brain,/obj/item/organ/brain/alien))
-			if(brainmob && brainmob.stat == DEAD)
-				icon_state = "mmi_alien_dead"
-			else
-				icon_state = "mmi_alien"
-			braintype = "Xenoborg" //HISS....Beep.
-		else
-			if(brainmob && brainmob.stat == DEAD)
-				icon_state = "mmi_dead"
-			else
-				icon_state = "mmi_full"
-			braintype = "Cyborg"
-	else
-		icon_state = "mmi_empty"
-
-/obj/item/device/mmi/New()
-	..()
-	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = 0 //researching radio mmis turned the robofabs into radios because this didnt start as 0.
-
-
-
-/obj/item/device/mmi/attackby(obj/item/O, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O,/obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
-		if(brain)
-			user << "<span class='warning'>There's already a brain in the MMI!</span>"
-			return
-		if(!newbrain.brainmob)
-			user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain!</span>"
-			return
-
-		if(!user.unEquip(O))
-			return
-		var/mob/living/carbon/brain/B = newbrain.brainmob
-		if(!B.key)
-			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
-		visible_message("[user] sticks \a [newbrain] into \the [src].")
-
-		brainmob = newbrain.brainmob
-		newbrain.brainmob = null
-		brainmob.loc = src
-		brainmob.container = src
-		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
-			brainmob.stat = CONSCIOUS //we manually revive the brain mob
-			dead_mob_list -= brainmob
-			living_mob_list += brainmob
-
-		brainmob.reset_perspective()
-		if(clockwork)
-			add_servant_of_ratvar(brainmob, TRUE)
-		newbrain.loc = src //P-put your brain in it
-		brain = newbrain
-
-		name = "Man-Machine Interface: [brainmob.real_name]"
-		update_icon()
-
-		feedback_inc("cyborg_mmis_filled",1)
-
-		return
-
-	else if(brainmob)
-		O.attack(brainmob, user) //Oh noooeeeee
-		return
-	..()
-
-/obj/item/device/mmi/attack_self(mob/user)
-	if(!brain)
-		radio.on = !radio.on
-		user << "<span class='notice'>You toggle the MMI's radio system [radio.on==1 ? "on" : "off"].</span>"
-	else
-		user << "<span class='notice'>You unlock and upend the MMI, spilling the brain onto the floor.</span>"
-
-		brainmob.container = null //Reset brainmob mmi var.
-		brainmob.loc = brain //Throw mob into brain.
-		brainmob.stat = DEAD
-		brainmob.emp_damage = 0
-		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-		living_mob_list -= brainmob //Get outta here
-		dead_mob_list += brainmob
-		brain.brainmob = brainmob //Set the brain to use the brainmob
-		brainmob = null //Set mmi brainmob var to null
-
-		user.put_in_hands(brain) //puts brain in the user's hand or otherwise drops it on the user's turf
-		brain = null //No more brain in here
-
-		update_icon()
-		name = "Man-Machine Interface"
-
-/obj/item/device/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
-	if(!brainmob)
-		brainmob = new(src)
-	brainmob.name = L.real_name
-	brainmob.real_name = L.real_name
-	if(L.has_dna())
-		var/mob/living/carbon/C = L
-		if(!brainmob.dna)
-			brainmob.dna = new /datum/dna(brainmob)
-		C.dna.copy_dna(brainmob.dna)
-	brainmob.container = src
-
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
-		newbrain.loc = src
-		brain = newbrain
-	else if(!brain)
-		brain = new(src)
-		brain.name = "[L.real_name]'s brain"
-
-	name = "Man-Machine Interface: [brainmob.real_name]"
-	update_icon()
+/obj/item/device/mmi/digital/transfer_identity(var/mob/living/carbon/H)
+	brainmob.dna = H.dna
+	brainmob.timeofhostdeath = H.timeofdeath
+	brainmob.stat = 0
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
 	return
 
+/obj/item/device/mmi
+	name = "man-machine interface"
+	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
+	icon = 'icons/obj/assemblies.dmi'
+	icon_state = "mmi_empty"
+	w_class = ITEMSIZE_NORMAL
+	origin_tech = list(TECH_BIO = 3)
 
-/obj/item/device/mmi/verb/Toggle_Listening()
-	set name = "Toggle Listening"
-	set desc = "Toggle listening channel on or off."
-	set category = "MMI"
-	set src = usr.loc
-	set popup_menu = 0
+	req_access = list(access_robotics)
 
-	if(brainmob.stat)
-		brainmob << "<span class='warning'>Can't do that while incapacitated or dead!</span>"
-	if(!radio.on)
-		brainmob << "<span class='warning'>Your radio is disabled!</span>"
+	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
+
+	var/locked = 0
+	var/mob/living/carbon/brain/brainmob = null//The current occupant.
+	var/obj/item/organ/internal/brain/brainobj = null	//The current brain organ.
+	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
+
+	attackby(var/obj/item/O as obj, var/mob/user as mob)
+		if(istype(O,/obj/item/organ/internal/brain) && !brainmob) //Time to stick a brain in it --NEO
+
+			var/obj/item/organ/internal/brain/B = O
+			if(B.health <= 0)
+				user << "<span class='warning'>That brain is well and truly dead.</span>"
+				return
+			else if(!B.brainmob)
+				user << "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's useless.</span>"
+				return
+
+			user.visible_message("<span class='notice'>\The [user] sticks \a [O] into \the [src].</span>")
+
+			brainmob = B.brainmob
+			B.brainmob = null
+			brainmob.loc = src
+			brainmob.container = src
+			brainmob.stat = 0
+			dead_mob_list -= brainmob//Update dem lists
+			living_mob_list += brainmob
+
+			user.drop_item()
+			brainobj = O
+			brainobj.loc = src
+
+			name = "man-machine interface ([brainmob.real_name])"
+			icon_state = "mmi_full"
+
+			locked = 1
+
+			feedback_inc("cyborg_mmis_filled",1)
+
+			return
+
+		if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
+			if(allowed(user))
+				locked = !locked
+				user << "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>"
+			else
+				user << "<span class='warning'>Access denied.</span>"
+			return
+		if(brainmob)
+			O.attack(brainmob, user)//Oh noooeeeee
+			return
+		..()
+
+	//TODO: ORGAN REMOVAL UPDATE. Make the brain remain in the MMI so it doesn't lose organ data.
+	attack_self(mob/user as mob)
+		if(!brainmob)
+			user << "<span class='warning'>You upend the MMI, but there's nothing in it.</span>"
+		else if(locked)
+			user << "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>"
+		else
+			user << "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>"
+			var/obj/item/organ/internal/brain/brain
+			if (brainobj)	//Pull brain organ out of MMI.
+				brainobj.loc = user.loc
+				brain = brainobj
+				brainobj = null
+			else	//Or make a new one if empty.
+				brain = new(user.loc)
+			brainmob.container = null//Reset brainmob mmi var.
+			brainmob.loc = brain//Throw mob into brain.
+			living_mob_list -= brainmob//Get outta here
+			brain.brainmob = brainmob//Set the brain to use the brainmob
+			brainmob = null//Set mmi brainmob var to null
+
+			icon_state = "mmi_empty"
+			name = "Man-Machine Interface"
+
+	proc
+		transfer_identity(var/mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
+			brainmob = new(src)
+			brainmob.name = H.real_name
+			brainmob.real_name = H.real_name
+			brainmob.dna = H.dna
+			brainmob.container = src
+
+			name = "Man-Machine Interface: [brainmob.real_name]"
+			icon_state = "mmi_full"
+			locked = 1
+			return
+
+/obj/item/device/mmi/relaymove(var/mob/user, var/direction)
+	if(user.stat || user.stunned)
 		return
-
-	radio.listening = radio.listening==1 ? 0 : 1
-	brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
-
-/obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
-		return
-	else
-		switch(severity)
-			if(1)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(20,30), 30)
-			if(2)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
-			if(3)
-				brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
-		brainmob.emote("alarm")
-	..()
+	var/obj/item/weapon/rig/rig = src.get_rig()
+	if(rig)
+		rig.forced_move(direction, user)
 
 /obj/item/device/mmi/Destroy()
 	if(isrobot(loc))
@@ -171,28 +131,56 @@
 	if(brainmob)
 		qdel(brainmob)
 		brainmob = null
-	return ..()
-
-/obj/item/device/mmi/examine(mob/user)
 	..()
-	if(brainmob)
-		var/mob/living/carbon/brain/B = brainmob
-		if(!B.key || !B.mind || B.stat == DEAD)
-			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
 
-		else if(!B.client)
-			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
+/obj/item/device/mmi/radio_enabled
+	name = "radio-enabled man-machine interface"
+	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
+	origin_tech = list(TECH_BIO = 4)
 
-		else
-			user << "<span class='notice'>The MMI indicates the brain is active.</span>"
+	var/obj/item/device/radio/radio = null//Let's give it a radio.
 
+	New()
+		..()
+		radio = new(src)//Spawns a radio inside the MMI.
+		radio.broadcasting = 1//So it's broadcasting from the start.
 
-/obj/item/device/mmi/syndie
-	name = "Syndicate Man-Machine Interface"
-	desc = "Syndicate's own brand of MMI. It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs created with it, but doesn't fit in Nanotrasen AI cores."
-	origin_tech = "biotech=4;programming=4;syndicate=2"
-	hacked = 1
+	verb//Allows the brain to toggle the radio functions.
+		Toggle_Broadcasting()
+			set name = "Toggle Broadcasting"
+			set desc = "Toggle broadcasting channel on or off."
+			set category = "MMI"
+			set src = usr.loc//In user location, or in MMI in this case.
+			set popup_menu = 0//Will not appear when right clicking.
 
-/obj/item/device/mmi/syndie/New()
+			if(brainmob.stat)//Only the brainmob will trigger these so no further check is necessary.
+				brainmob << "Can't do that while incapacitated or dead."
+
+			radio.broadcasting = radio.broadcasting==1 ? 0 : 1
+			brainmob << "<span class='notice'>Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.</span>"
+
+		Toggle_Listening()
+			set name = "Toggle Listening"
+			set desc = "Toggle listening channel on or off."
+			set category = "MMI"
+			set src = usr.loc
+			set popup_menu = 0
+
+			if(brainmob.stat)
+				brainmob << "Can't do that while incapacitated or dead."
+
+			radio.listening = radio.listening==1 ? 0 : 1
+			brainmob << "<span class='notice'>Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.</span>"
+
+/obj/item/device/mmi/emp_act(severity)
+	if(!brainmob)
+		return
+	else
+		switch(severity)
+			if(1)
+				brainmob.emp_damage += rand(20,30)
+			if(2)
+				brainmob.emp_damage += rand(10,20)
+			if(3)
+				brainmob.emp_damage += rand(0,10)
 	..()
-	radio.on = 0

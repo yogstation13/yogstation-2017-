@@ -5,13 +5,12 @@
 // This was created for firing ranges, but I suppose this could have other applications - Doohl
 
 /obj/machinery/magnetic_module
-
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "floor_magnet-f"
-	name = "electromagnetic generator"
+	name = "Electromagnetic Generator"
 	desc = "A device that uses station power to create points of magnetic energy."
 	level = 1		// underfloor
-	layer = LOW_OBJ_LAYER
+	layer = 2.5
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 50
@@ -32,25 +31,19 @@
 /obj/machinery/magnetic_module/New()
 	..()
 	var/turf/T = loc
-	hide(T.intact)
+	hide(!T.is_plating())
 	center = T
 
 	spawn(10)	// must wait for map loading to finish
-		if(SSradio)
-			SSradio.add_object(src, freq, RADIO_MAGNETS)
+		if(radio_controller)
+			radio_controller.add_object(src, freq, RADIO_MAGNETS)
 
 	spawn()
 		magnetic_process()
 
-/obj/machinery/magnetic_module/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, freq)
-	. = ..()
-	center = null
-
 // update the invisibility and icon
-/obj/machinery/magnetic_module/hide(intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
+/obj/machinery/magnetic_module/hide(var/intact)
+	invisibility = intact ? 101 : 0
 	updateicon()
 
 // update the icon_state
@@ -67,7 +60,6 @@
 		icon_state = "[state][onstate]"
 
 /obj/machinery/magnetic_module/receive_signal(datum/signal/signal)
-
 	var/command = signal.data["command"]
 	var/modifier = signal.data["modifier"]
 	var/signal_code = signal.data["code"]
@@ -75,18 +67,13 @@
 
 		Cmd(command, modifier)
 
-
-
-/obj/machinery/magnetic_module/proc/Cmd(command, modifier)
-
+/obj/machinery/magnetic_module/proc/Cmd(var/command, var/modifier)
 	if(command)
 		switch(command)
 			if("set-electriclevel")
-				if(modifier)
-					electricity_level = modifier
+				if(modifier)	electricity_level = modifier
 			if("set-magneticfield")
-				if(modifier)
-					magnetic_field = modifier
+				if(modifier)	magnetic_field = modifier
 
 			if("add-elec")
 				electricity_level++
@@ -106,11 +93,9 @@
 					magnetic_field = 1
 
 			if("set-x")
-				if(modifier)
-					center_x = modifier
+				if(modifier)	center_x = modifier
 			if("set-y")
-				if(modifier)
-					center_y = modifier
+				if(modifier)	center_y = modifier
 
 			if("N") // NORTH
 				center_y++
@@ -128,16 +113,13 @@
 				center_y = rand(-max_dist, max_dist)
 
 			if("set-code")
-				if(modifier)
-					code = modifier
+				if(modifier)	code = modifier
 			if("toggle-power")
 				on = !on
 
 				if(on)
 					spawn()
 						magnetic_process()
-
-
 
 /obj/machinery/magnetic_module/process()
 	if(stat & NOPOWER)
@@ -148,7 +130,6 @@
 		electricity_level = 1
 	if(magnetic_field <= 0)
 		magnetic_field = 1
-
 
 	// Limitations:
 	if(abs(center_x) > max_dist)
@@ -167,19 +148,17 @@
 	else
 		use_power = 0
 
-
-		// Overload conditions:
-		/* // Eeeehhh kinda stupid
-		if(on)
-			if(electricity_level > 11)
-				if(prob(electricity_level))
-					explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
-					spawn(2)
-						qdel(src)
-		*/
+	// Overload conditions:
+	/* // Eeeehhh kinda stupid
+	if(on)
+		if(electricity_level > 11)
+			if(prob(electricity_level))
+				explosion(loc, 0, 1, 2, 3) // ooo dat shit EXPLODES son
+				spawn(2)
+					qdel(src)
+	*/
 
 	updateicon()
-
 
 /obj/machinery/magnetic_module/proc/magnetic_process() // proc that actually does the pulling
 	if(pulling) return
@@ -201,15 +180,17 @@
 
 	pulling = 0
 
-
-
+/obj/machinery/magnetic_module/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, freq)
+	..()
 
 /obj/machinery/magnetic_controller
-	name = "magnetic control console"
+	name = "Magnetic Control Console"
 	icon = 'icons/obj/airlock_machines.dmi' // uses an airlock machine icon, THINK GREEN HELP THE ENVIRONMENT - RECYCLING!
 	icon_state = "airlock_control_standby"
-	density = 0
-	anchored = 1
+	density = 1
+	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 45
 	var/frequency = 1449
@@ -219,7 +200,7 @@
 	var/autolink = 0 // if set to 1, can't probe for other magnets!
 
 	var/pathpos = 1 // position in the path
-	var/path = "w;e;e;w;s;n;n;s" // text path of the magnet
+	var/path = "NULL" // text path of the magnet
 	var/speed = 1 // lowest = 1, highest = 10
 	var/list/rpath = list() // real path of the magnet, used in iterator
 
@@ -233,37 +214,31 @@
 	..()
 
 	if(autolink)
-		for(var/obj/machinery/magnetic_module/M in machines)
+		for(var/obj/machinery/magnetic_module/M in world)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
 
 	spawn(45)	// must wait for map loading to finish
-		if(SSradio)
-			radio_connection = SSradio.add_object(src, frequency, RADIO_MAGNETS)
+		if(radio_controller)
+			radio_connection = radio_controller.add_object(src, frequency, RADIO_MAGNETS)
 
 
 	if(path) // check for default path
 		filter_path() // renders rpath
 
-/obj/machinery/magnetic_controller/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
-	. = ..()
-	magnets = null
-	rpath = null
 
 /obj/machinery/magnetic_controller/process()
 	if(magnets.len == 0 && autolink)
-		for(var/obj/machinery/magnetic_module/M in machines)
+		for(var/obj/machinery/magnetic_module/M in world)
 			if(M.freq == frequency && M.code == code)
 				magnets.Add(M)
 
 
-/obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/magnetic_controller/attack_ai(mob/user as mob)
+	return attack_hand(user)
 
-/obj/machinery/magnetic_controller/attack_hand(mob/user)
+/obj/machinery/magnetic_controller/attack_hand(mob/user as mob)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	user.set_machine(src)
@@ -292,15 +267,16 @@
 	onclose(user, "magnet")
 
 /obj/machinery/magnetic_controller/Topic(href, href_list)
-	if(..())
+	if(stat & (BROKEN|NOPOWER))
 		return
 	usr.set_machine(src)
+	add_fingerprint(usr)
 
 	if(href_list["radio-op"])
 
 		// Prepare signal beforehand, because this is a radio operation
 		var/datum/signal/signal = new
-		signal.transmission_method = TRANSMISSION_RADIO
+		signal.transmission_method = 1 // radio transmission
 		signal.source = src
 		signal.frequency = frequency
 		signal.data["code"] = code
@@ -339,7 +315,7 @@
 				if(speed <= 0)
 					speed = 1
 			if("setpath")
-				var/newpath = copytext(sanitize(input(usr, "Please define a new path!",,path) as text|null),1,MAX_MESSAGE_LEN)
+				var/newpath = sanitize(input(usr, "Please define a new path!",,path) as text|null)
 				if(newpath && newpath != "")
 					moving = 0 // stop moving
 					path = newpath
@@ -366,7 +342,7 @@
 
 		// Prepare the radio signal
 		var/datum/signal/signal = new
-		signal.transmission_method = TRANSMISSION_RADIO
+		signal.transmission_method = 1 // radio transmission
 		signal.source = src
 		signal.frequency = frequency
 		signal.data["code"] = code
@@ -404,7 +380,7 @@
 	// Generates the rpath variable using the path string, think of this as "string2list"
 	// Doesn't use params2list() because of the akward way it stacks entities
 	rpath = list() //  clear rpath
-	var/maximum_character = min( 50, length(path) ) // chooses the maximum length of the iterator. 50 max length
+	var/maximum_character = min(50, length(path)) // chooses the maximum length of the iterator. 50 max length
 
 	for(var/i=1, i<=maximum_character, i++) // iterates through all characters in path
 
@@ -414,3 +390,8 @@
 			rpath += copytext(path, i, i+1) // else, add to list
 
 		// there doesn't HAVE to be separators but it makes paths syntatically visible
+
+/obj/machinery/magnetic_controller/Destroy()
+	if(radio_controller)
+		radio_controller.remove_object(src, frequency)
+	..()

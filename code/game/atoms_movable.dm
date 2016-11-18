@@ -1,313 +1,231 @@
 /atom/movable
-	layer = OBJ_LAYER
+	layer = 3
+	appearance_flags = TILE_BOUND
 	var/last_move = null
 	var/anchored = 0
+	// var/elevation = 2    - not used anywhere
+	var/move_speed = 10
+	var/l_move_time = 1
+	var/m_flag = 1
 	var/throwing = 0
+	var/thrower
+	var/turf/throw_source = null
 	var/throw_speed = 2
 	var/throw_range = 7
+	var/moved_recently = 0
 	var/mob/pulledby = null
-	var/languages_spoken = 0 //For say() and Hear()
-	var/languages_understood = 0
-	var/identifier = null //Only used for AI tracking.
-	var/verb_say = "says"
-	var/verb_ask = "asks"
-	var/verb_exclaim = "exclaims"
-	var/verb_yell = "yells"
-	var/inertia_dir = 0
-	var/pass_flags = 0
-	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	glide_size = 8
-	appearance_flags = TILE_BOUND
+	var/item_state = null // Used to specify the item state for the on-mob overlays.
 
+	var/auto_init = 1
 
+/atom/movable/New()
+	..()
+	if(auto_init && ticker && ticker.current_state == GAME_STATE_PLAYING)
+		initialize()
 
-/atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
-	var/atom/oldloc = loc
-
-	if(loc != newloc)
-		if (!(direct & (direct - 1))) //Cardinal move
-			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			moving_diagonally = FIRST_DIAG_STEP
-			if (direct & 1)
-				if (direct & 4)
-					if (step(src, NORTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-				else if (direct & 8)
-					if (step(src, NORTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, NORTH)
-			else if (direct & 2)
-				if (direct & 4)
-					if (step(src, SOUTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-				else if (direct & 8)
-					if (step(src, SOUTH))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						moving_diagonally = SECOND_DIAG_STEP
-						. = step(src, SOUTH)
-			moving_diagonally = 0
-
-	if(!loc || (loc == oldloc && oldloc != newloc))
-		last_move = 0
-		return
-
-	if(.)
-		Moved(oldloc, direct)
-
-	last_move = direct
-
-	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
-		if(loc && direct && last_move == direct)
-			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
-				newtonian_move(last_move)
-
-	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
-		. = 0
-
-//Called after a successful Move(). By this point, we've already moved
-/atom/movable/proc/Moved(atom/OldLoc, Dir)
-	return 1
-
+/atom/movable/Del()
+	if(isnull(gcDestroyed) && loc)
+		testing("GC: -- [type] was deleted via del() rather than qdel() --")
+		crash_with("GC: -- [type] was deleted via del() rather than qdel() --") // stick a stack trace in the runtime logs
+//	else if(isnull(gcDestroyed))
+//		testing("GC: [type] was deleted via GC without qdel()") //Not really a huge issue but from now on, please qdel()
+//	else
+//		testing("GC: [type] was deleted via GC with qdel()")
+	..()
 
 /atom/movable/Destroy()
 	. = ..()
-	if(loc)
-		loc.handle_atom_del(src)
 	if(reagents)
 		qdel(reagents)
+		reagents = null
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
 	loc = null
-	invisibility = INVISIBILITY_ABSTRACT
-	if(pulledby)
-		pulledby.stop_pulling()
+	if (pulledby)
+		if (pulledby.pulling == src)
+			pulledby.pulling = null
+		pulledby = null
 
+/atom/movable/proc/initialize()
+	if(!isnull(gcDestroyed))
+		crash_with("GC: -- [type] had initialize() called after qdel() --")
 
-// Previously known as HasEntered()
-// This is automatically called when something enters your square
-/atom/movable/Crossed(atom/movable/AM)
+/atom/movable/Bump(var/atom/A, yes)
+	if(src.throwing)
+		src.throw_impact(A)
+		src.throwing = 0
+
+	spawn(0)
+		if ((A && yes))
+			A.last_bumped = world.time
+			A.Bumped(src)
+		return
+	..()
 	return
 
-/atom/movable/Bump(atom/A, yes) //the "yes" arg is to differentiate our Bump proc from byond's, without it every Bump() call would become a double Bump().
-	if((A && yes))
-		if(throwing)
-			throwing = 0
-			throw_impact(A)
-			. = 1
-			if(!A || qdeleted(A))
-				return
-		A.Bumped(src)
-
-
 /atom/movable/proc/forceMove(atom/destination)
+	if(loc == destination)
+		return 0
+	var/is_origin_turf = isturf(loc)
+	var/is_destination_turf = isturf(destination)
+	// It is a new area if:
+	//  Both the origin and destination are turfs with different areas.
+	//  When either origin or destination is a turf and the other is not.
+	var/is_new_area = (is_origin_turf ^ is_destination_turf) || (is_origin_turf && is_destination_turf && loc.loc != destination.loc)
+
+	var/atom/origin = loc
+	loc = destination
+
+	if(origin)
+		origin.Exited(src, destination)
+		if(is_origin_turf)
+			for(var/atom/movable/AM in origin)
+				AM.Uncrossed(src)
+			if(is_new_area && is_origin_turf)
+				origin.loc.Exited(src, destination)
+
 	if(destination)
-		if(pulledby)
-			pulledby.stop_pulling()
-		var/atom/oldloc = loc
-		if(oldloc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		destination.Entered(src, oldloc)
-		var/area/old_area = get_area(oldloc)
-		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
-		for(var/atom/movable/AM in destination)
-			if(AM == src)
-				continue
-			AM.Crossed(src)
-		Moved(oldloc, 0)
-		return 1
-	return 0
+		destination.Entered(src, origin)
+		if(is_destination_turf) // If we're entering a turf, cross all movable atoms
+			for(var/atom/movable/AM in loc)
+				if(AM != src)
+					AM.Crossed(src)
+			if(is_new_area && is_destination_turf)
+				destination.loc.Entered(src, origin)
+	return 1
 
-/mob/living/forceMove(atom/destination)
-	stop_pulling()
-	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
-	if(has_buckled_mobs())
-		unbuckle_all_mobs(force=1)
-	. = ..()
-	if(client)
-		reset_perspective(destination)
-	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+//called when src is thrown into hit_atom
+/atom/movable/proc/throw_impact(atom/hit_atom, var/speed)
+	if(istype(hit_atom,/mob/living))
+		var/mob/living/M = hit_atom
+		M.hitby(src,speed)
 
-/mob/living/carbon/brain/forceMove(atom/destination)
-	if(container)
-		container.forceMove(destination)
-	else //something went very wrong.
-		CRASH("Brainmob without container.")
+	else if(isobj(hit_atom))
+		var/obj/O = hit_atom
+		if(!O.anchored)
+			step(O, src.last_move)
+		O.hitby(src,speed)
 
+	else if(isturf(hit_atom))
+		src.throwing = 0
+		var/turf/T = hit_atom
+		if(T.density)
+			spawn(2)
+				step(src, turn(src.last_move, 180))
+			if(istype(src,/mob/living))
+				var/mob/living/M = src
+				M.turf_collision(T, speed)
 
-/mob/living/silicon/pai/forceMove(atom/destination)
-	if(card)
-		card.forceMove(destination)
-	else //something went very wrong.
-		CRASH("pAI without card")
+//decided whether a movable atom being thrown can pass through the turf it is in.
+/atom/movable/proc/hit_check(var/speed)
+	if(src.throwing)
+		for(var/atom/A in get_turf(src))
+			if(A == src) continue
+			if(istype(A,/mob/living))
+				if(A:lying) continue
+				src.throw_impact(A,speed)
+			if(isobj(A))
+				if(A.density && !A.throwpass)	// **TODO: Better behaviour for windows which are dense, but shouldn't always stop movement
+					src.throw_impact(A,speed)
 
-
-//Called whenever an object moves and by mobs when they attempt to move themselves through space
-//And when an object or action applies a force on src, see newtonian_move() below
-//Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
-//Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
-//movement_dir == 0 when stopping or any dir when trying to move
-/atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
-		return 1
-
-	if(pulledby)
-		return 1
-
-	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return 1
-
-	return 0
-
-/atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
-
-	if(!loc || Process_Spacemove(0))
-		inertia_dir = 0
-		return 0
-
-	inertia_dir = direction
-	if(!direction)
-		return 1
-
-	var/old_dir = dir
-	. = step(src, direction)
-	dir = old_dir
-
-/atom/movable/proc/checkpass(passflag)
-	return pass_flags&passflag
-
-/atom/movable/proc/throw_impact(atom/hit_atom)
-	return hit_atom.hitby(src)
-
-/atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
-	if(!anchored && hitpush)
-		step(src, AM.dir)
-	..()
-
-/atom/movable/proc/throw_at_fast(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
-	set waitfor = 0
-	throw_at(target, range, speed, thrower, spin, diagonals_first)
-
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
-	if(!target || !src || (flags & NODROP))
-		return 0
+/atom/movable/proc/throw_at(atom/target, range, speed, thrower)
+	if(!target || !src)	return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 
-	if(pulledby)
-		pulledby.stop_pulling()
+	src.throwing = 1
+	src.thrower = thrower
+	src.throw_source = get_turf(src)	//store the origin turf
 
-	throwing = 1
-	if(spin) //if we don't want the /atom/movable to spin.
-		SpinAnimation(5, 1)
-
-	var/dist_travelled = 0
-	var/next_sleep = 0
+	if(usr)
+		if(HULK in usr.mutations)
+			src.throwing = 2 // really strong throw!
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
-	var/dx = (target.x > src.x) ? EAST : WEST
-	var/dy = (target.y > src.y) ? NORTH : SOUTH
 
-	var/pure_diagonal = 0
-	if(dist_x == dist_y)
-		pure_diagonal = 1
+	var/dx
+	if (target.x > src.x)
+		dx = EAST
+	else
+		dx = WEST
 
-	if(dist_x <= dist_y)
-		var/olddist_x = dist_x
-		var/olddx = dx
-		dist_x = dist_y
-		dist_y = olddist_x
-		dx = dy
-		dy = olddx
+	var/dy
+	if (target.y > src.y)
+		dy = NORTH
+	else
+		dy = SOUTH
+	var/dist_travelled = 0
+	var/dist_since_sleep = 0
+	var/area/a = get_area(src.loc)
+	if(dist_x > dist_y)
+		var/error = dist_x/2 - dist_y
 
-	var/error = dist_x/2 - dist_y //used to decide whether our next move should be forward or diagonal.
-	var/atom/finalturf = get_turf(target)
-	var/hit = 0
-	var/init_dir = get_dir(src, target)
 
-	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
-		var/slept = 0
-		if(!istype(loc, /turf))
-			hit = 1
-			break
 
-		var/atom/step
-		if(dist_travelled < max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
-			step = get_step(src, get_dir(src, finalturf))
-		else
-			step = get_step(src, init_dir)
+		while(src && target &&((((src.x < target.x && dx == EAST) || (src.x > target.x && dx == WEST)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
+			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+			if(error < 0)
+				var/atom/step = get_step(src, dy)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				hit_check(speed)
+				error += dist_x
+				dist_travelled++
+				dist_since_sleep++
+				if(dist_since_sleep >= speed)
+					dist_since_sleep = 0
+					sleep(1)
+			else
+				var/atom/step = get_step(src, dx)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				hit_check(speed)
+				error -= dist_y
+				dist_travelled++
+				dist_since_sleep++
+				if(dist_since_sleep >= speed)
+					dist_since_sleep = 0
+					sleep(1)
+			a = get_area(src.loc)
+	else
+		var/error = dist_y/2 - dist_x
+		while(src && target &&((((src.y < target.y && dy == NORTH) || (src.y > target.y && dy == SOUTH)) && dist_travelled < range) || (a && a.has_gravity == 0)  || istype(src.loc, /turf/space)) && src.throwing && istype(src.loc, /turf))
+			// only stop when we've gone the whole distance (or max throw range) and are on a non-space tile, or hit something, or hit the end of the map, or someone picks it up
+			if(error < 0)
+				var/atom/step = get_step(src, dx)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				hit_check(speed)
+				error += dist_y
+				dist_travelled++
+				dist_since_sleep++
+				if(dist_since_sleep >= speed)
+					dist_since_sleep = 0
+					sleep(1)
+			else
+				var/atom/step = get_step(src, dy)
+				if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
+					break
+				src.Move(step)
+				hit_check(speed)
+				error -= dist_x
+				dist_travelled++
+				dist_since_sleep++
+				if(dist_since_sleep >= speed)
+					dist_since_sleep = 0
+					sleep(1)
 
-		if(!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
-			if(error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
-				step = get_step(src, dx)
-			error += (error < 0) ? dist_x/2 : -dist_y
-		if(!step) // going off the edge of the map makes get_step return null, don't let things go off the edge
-			break
-		Move(step, get_dir(loc, step))
-		if(!throwing) // we hit something during our move
-			hit = 1
-			break
-		dist_travelled++
-
-		if(dist_travelled > 600) //safety to prevent infinite while loop.
-			break
-		if(dist_travelled >= next_sleep)
-			slept = 1
-			next_sleep += speed
-			sleep(1)
-		if(!slept)
-			var/ticks_slept = TICK_CHECK
-			if(ticks_slept)
-				slept = 1
-				next_sleep += speed*(ticks_slept*world.tick_lag) //delay the next normal sleep
-
-		if(slept && hitcheck()) //to catch sneaky things moving on our tile while we slept
-			hit = 1
-			break
-
+			a = get_area(src.loc)
 
 	//done throwing, either because it hit something or it finished moving
-	throwing = 0
-	if(!hit)
-		for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
-			if(A == target)
-				hit = 1
-				throw_impact(A)
-				return 1
+	if(isobj(src)) src.throw_impact(get_turf(src),speed)
+	src.throwing = 0
+	src.thrower = null
+	src.throw_source = null
 
-		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
-	return 1
-
-/atom/movable/proc/prethrow_at(var/target) // If an item is thrown by a mob, but it's still currently held.
-	return;
-
-
-/atom/movable/proc/hitcheck()
-	for(var/atom/movable/AM in get_turf(src))
-		if(AM == src)
-			continue
-		if(AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER))
-			throwing = 0
-			throw_impact(AM)
-			return 1
 
 //Overlays
 /atom/movable/overlay
@@ -315,17 +233,13 @@
 	anchored = 1
 
 /atom/movable/overlay/New()
-	verbs.Cut()
-	return
+	for(var/x in src.verbs)
+		src.verbs -= x
+	..()
 
-/atom/movable/overlay/attackby(a, b, c)
+/atom/movable/overlay/attackby(a, b)
 	if (src.master)
-		return src.master.attackby(a, b, c)
-	return
-
-/atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
-		return src.master.attack_paw(a, b, c)
+		return src.master.attackby(a, b)
 	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
@@ -333,50 +247,50 @@
 		return src.master.attack_hand(a, b, c)
 	return
 
-/atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
-	for(var/m in buckled_mobs)
-		var/mob/living/buckled_mob = m
-		if(!buckled_mob.Move(newloc, direct))
-			loc = buckled_mob.loc
-			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
-			return 0
-	return 1
+/atom/movable/proc/touch_map_edge()
+	if(z in config.sealed_levels)
+		return
 
-/atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(mover in buckled_mobs)
-		return 1
-	return ..()
+	if(config.use_overmap)
+		overmap_spacetravel(get_turf(src), src)
+		return
 
+	var/move_to_z = src.get_transit_zlevel()
+	if(move_to_z)
+		z = move_to_z
 
-/atom/movable/proc/get_spacemove_backup()
-	var/atom/movable/dense_object_backup
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
-			continue
-		else if(isturf(A))
-			var/turf/turf = A
-			if(!turf.density)
-				continue
-			return turf
-		else
-			var/atom/movable/AM = A
-			if(!AM.CanPass(src) || AM.density)
-				if(AM.anchored)
-					return AM
-				dense_object_backup = AM
-				break
-	. = dense_object_backup
+		if(x <= TRANSITIONEDGE)
+			x = world.maxx - TRANSITIONEDGE - 2
+			y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-//called when a mob resists while inside a container that is itself inside something.
-/atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
-	return
+		else if (x >= (world.maxx - TRANSITIONEDGE + 1))
+			x = TRANSITIONEDGE + 1
+			y = rand(TRANSITIONEDGE + 2, world.maxy - TRANSITIONEDGE - 2)
 
-/atom/movable/proc/on_z_level_change()
-	for(var/atom/movable/A in contents)
-		A.on_z_level_change()
+		else if (y <= TRANSITIONEDGE)
+			y = world.maxy - TRANSITIONEDGE -2
+			x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
-/atom/movable/proc/on_pulledby(mob/new_pulledby, supress_message)
-	pulledby = new_pulledby
-	return
+		else if (y >= (world.maxy - TRANSITIONEDGE + 1))
+			y = TRANSITIONEDGE + 1
+			x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
+
+		if(ticker && istype(ticker.mode, /datum/game_mode/nuclear)) //only really care if the game mode is nuclear
+			var/datum/game_mode/nuclear/G = ticker.mode
+			G.check_nuke_disks()
+
+		spawn(0)
+			if(loc) loc.Entered(src)
+
+//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
+var/list/accessible_z_levels = list("1" = 5, "3" = 10, "4" = 15, "6" = 60)
+
+//by default, transition randomly to another zlevel
+/atom/movable/proc/get_transit_zlevel()
+	var/list/candidates = accessible_z_levels.Copy()
+	candidates.Remove("[src.z]")
+
+	if(!candidates.len)
+		return null
+	return text2num(pickweight(candidates))
+

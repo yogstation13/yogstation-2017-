@@ -1,99 +1,73 @@
-/mob/dead/observer/DblClickOn(var/atom/A, var/params)
-	if(client.prefs.afreeze)
-		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return
-	if(client.click_intercept)
-		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
-			return
+/client/var/inquisitive_ghost = 1
+/mob/observer/dead/verb/toggle_inquisition() // warning: unexpected inquisition
+	set name = "Toggle Inquisitiveness"
+	set desc = "Sets whether your ghost examines everything on click by default"
+	set category = "Ghost"
+	if(!client) return
+	client.inquisitive_ghost = !client.inquisitive_ghost
+	if(client.inquisitive_ghost)
+		src << "<span class='notice'>You will now examine everything you click on.</span>"
+	else
+		src << "<span class='notice'>You will no longer examine things you click on.</span>"
 
+/mob/observer/dead/DblClickOn(var/atom/A, var/params)
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
+		return
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
 			reenter_corpse()						// (cloning scanner, body bag, closet, mech, etc)
-			return									// seems legit.
-
-	// Things you might plausibly want to follow
-	if(istype(A, /atom/movable))
-		ManualFollow(A)
-
-	// Otherwise jump
-	else if(A.loc)
-		loc = get_turf(A)
-
-/mob/dead/observer/ClickOn(var/atom/A, var/params)
-	if(client.prefs.afreeze)
-		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return
-		
-	if(client.click_intercept)
-		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return
 
-	var/list/modifiers = params2list(params)
-	if(modifiers["shift"] && modifiers["middle"])
-		ShiftMiddleClickOn(A)
-		return
-	if(modifiers["middle"])
-		MiddleClickOn(A)
-		return
-	if(modifiers["shift"])
-		ShiftClickOn(A)
-		return
-	if(modifiers["alt"])
-		AltClickOn(A)
-		return
-	if(modifiers["ctrl"])
-		CtrlClickOn(A)
-		return
+	// Things you might plausibly want to follow
+	if(istype(A,/atom/movable))
+		ManualFollow(A)
+	// Otherwise jump
+	else
+		following = null
+		forceMove(get_turf(A))
 
-	if(world.time <= next_move)
+/mob/observer/dead/ClickOn(var/atom/A, var/params)
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
 		return
+	if(!canClick()) return
+	setClickCooldown(4)
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
-/atom/proc/attack_ghost(mob/dead/observer/user)
-	if(user.client)
-		if(IsAdminGhost(user))
-			attack_ai(user)
-		if(user.client.prefs.inquisitive_ghost)
-			user.examinate(src)
+/atom/proc/attack_ghost(mob/observer/dead/user as mob)
+	if(user.client && user.client.inquisitive_ghost)
+		user.examinate(src)
 	return
 
 // ---------------------------------------
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
 
-/obj/machinery/teleport/hub/attack_ghost(mob/user)
+/obj/machinery/teleport/hub/attack_ghost(mob/user as mob)
 	var/atom/l = loc
 	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
-	if(com && com.locked)
+	if(com.locked)
 		user.loc = get_turf(com.locked)
 
-/obj/effect/portal/attack_ghost(mob/user)
+/obj/effect/portal/attack_ghost(mob/user as mob)
 	if(target)
 		user.loc = get_turf(target)
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
+/obj/machinery/gateway/centerstation/attack_ghost(mob/user as mob)
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
 		user << "[src] has no destination."
 
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
+/obj/machinery/gateway/centeraway/attack_ghost(mob/user as mob)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
 		user << "[src] has no destination."
-
-/obj/item/weapon/storage/attack_ghost(mob/user)
-	orient2hud(user)
-	show_to(user)
-
-/obj/machinery/teleport/hub/attack_ghost(mob/user)
-	if(power_station && power_station.engaged && power_station.teleporter_console && power_station.teleporter_console.target)
-		user.Move(get_turf(power_station.teleporter_console.target))
-	return
 
 // -------------------------------------------
 // This was supposed to be used by adminghosts

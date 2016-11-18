@@ -1,70 +1,53 @@
+/obj/item/clothing/gloves/captain
+	desc = "Regal blue gloves, with a nice gold trim. Swanky."
+	name = "colony director's gloves"
+	icon_state = "captain"
+	item_state_slots = list(slot_r_hand_str = "blue", slot_l_hand_str = "blue")
 
-/obj/item/clothing/gloves/fingerless
-	name = "fingerless gloves"
-	desc = "Plain black gloves without fingertips for the hard working."
-	icon_state = "fingerless"
-	item_state = "fingerless"
-	item_color = null	//So they don't wash.
-	transfer_prints = TRUE
-	strip_delay = 40
-	put_on_delay = 20
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-
-/obj/item/clothing/gloves/botanic_leather
-	name = "botanist's leather gloves"
-	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."
-	icon_state = "leather"
-	item_state = "ggloves"
-	permeability_coefficient = 0.9
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	burn_state = FIRE_PROOF
-
-/obj/item/clothing/gloves/combat
-	name = "combat gloves"
-	desc = "These tactical gloves are fireproof and shock resistant."
+/obj/item/clothing/gloves/cyborg
+	desc = "beep boop borp"
+	name = "cyborg gloves"
 	icon_state = "black"
-	item_state = "bgloves"
+	item_state = "r_hands"
+	siemens_coefficient = 1.0
+
+/obj/item/clothing/gloves/swat
+	desc = "These tactical gloves are somewhat fire and impact-resistant."
+	name = "\improper SWAT Gloves"
+	icon_state = "black"
+	item_state = "swat"
+	siemens_coefficient = 0.50
+	permeability_coefficient = 0.05
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
+	desc = "These tactical gloves are somewhat fire and impact resistant."
+	name = "combat gloves"
+	icon_state = "black"
+	item_state = "swat"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
-	strip_delay = 80
 	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	min_cold_protection_temperature = GLOVES_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	burn_state = FIRE_PROOF
+	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/gloves/combat/stealth
-	name = "black gloves"
-	desc = "These gloves seem a bit more rubbery than normal."
+/obj/item/clothing/gloves/latex
+	name = "latex gloves"
+	desc = "Sterile latex gloves."
+	icon_state = "latex"
+	item_state_slots = list(slot_r_hand_str = "white", slot_l_hand_str = "white")
+	siemens_coefficient = 1.0 //thin latex gloves, much more conductive than fabric gloves (basically a capacitor for AC)
+	permeability_coefficient = 0.01
+	germ_level = 0
 
-/obj/item/clothing/gloves/bracer
-	name = "bone bracers"
-	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."
-	icon_state = "bracers"
-	item_state = "bracers"
-	item_color = null	//So they don't wash.
-	transfer_prints = TRUE
-	strip_delay = 40
-	put_on_delay = 20
-	body_parts_covered = ARMS
-	cold_protection = ARMS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	burn_state = FIRE_PROOF
-	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
-
-/obj/item/clothing/gloves/chitinhands
-	name = "chitin gauntlets"
-	desc = "The idea of badass sharp spikes sticking out of your elbows sounded great in theory."
-	icon_state = "chitinhands"
-	item_state = "chitinhands"
-	transfer_prints = TRUE
-	strip_delay = 40
-	put_on_delay = 20
-	body_parts_covered = ARMS
-	burn_state = FIRE_PROOF
-	armor = list(melee = 35, bullet = 50, laser = 45, energy = 30, bomb = 50, bio = 50, rad = 40)
+/obj/item/clothing/gloves/botanic_leather
+	desc = "These leather work gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
+	name = "botanist's leather gloves"
+	icon_state = "leather"
+	item_state_slots = list(slot_r_hand_str = "lightbrown", slot_l_hand_str = "lightbrown")
+	permeability_coefficient = 0.05
+	siemens_coefficient = 0.50 //thick work gloves

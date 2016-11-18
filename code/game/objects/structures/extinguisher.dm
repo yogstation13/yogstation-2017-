@@ -1,69 +1,63 @@
 /obj/structure/extinguisher_cabinet
 	name = "extinguisher cabinet"
 	desc = "A small wall mounted cabinet designed to hold a fire extinguisher."
-	icon = 'icons/obj/wallmounts.dmi'
+	icon = 'icons/obj/closet.dmi'
 	icon_state = "extinguisher_closed"
 	anchored = 1
 	density = 0
 	var/obj/item/weapon/extinguisher/has_extinguisher
 	var/opened = 0
 
-/obj/structure/extinguisher_cabinet/New(loc, ndir, building)
+/obj/structure/extinguisher_cabinet/New(var/loc, var/dir, var/building = 0)
 	..()
+
 	if(building)
-		dir = ndir
+		if(loc)
+			src.loc = loc
+
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
-		opened = 1
-		icon_state = "extinguisher_empty"
+		pixel_y = (dir & 3)? (dir ==1 ? -27 : 27) : 0
+		update_icon()
+		return
 	else
-		has_extinguisher = new /obj/item/weapon/extinguisher(src)
+		has_extinguisher = new/obj/item/weapon/extinguisher(src)
 
-/obj/structure/extinguisher_cabinet/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-			return
-		if(2)
-			if(prob(50))
-				if(has_extinguisher)
-					has_extinguisher.loc = src.loc
-				qdel(src)
-				return
-		if(3)
-			return
-
-
-/obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench) && !has_extinguisher)
-		user << "<span class='notice'>You start unsecuring [name]...</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		if(do_after(user, 60/I.toolspeed, target = src))
-			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			user << "<span class='notice'>You unsecure [name].</span>"
-			new /obj/item/wallframe/extinguisher_cabinet(loc)
-			qdel(src)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/O, mob/user)
+	if(isrobot(user))
 		return
-
-	if(isrobot(user) || isalien(user))
-		return
-	if(istype(I, /obj/item/weapon/extinguisher))
+	if(istype(O, /obj/item/weapon/extinguisher))
 		if(!has_extinguisher && opened)
-			if(!user.drop_item())
-				return
-			contents += I
-			has_extinguisher = I
-			user << "<span class='notice'>You place [I] in [src].</span>"
+			user.remove_from_mob(O)
+			contents += O
+			has_extinguisher = O
+			user << "<span class='notice'>You place [O] in [src].</span>"
 		else
 			opened = !opened
+	if(istype(O, /obj/item/weapon/wrench))
+		if(!has_extinguisher)
+			user << "<span class='notice'>You start to unwrench the extinguisher cabinet.</span>"
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 15))
+				user << "<span class='notice'>You unwrench the extinguisher cabinet.</span>"
+				new /obj/item/frame/extinguisher_cabinet( src.loc )
+				qdel(src)
+			return
 	else
 		opened = !opened
 	update_icon()
 
 
-/obj/structure/extinguisher_cabinet/attack_hand(mob/user)
-	if(isrobot(user) || isalien(user))
+/obj/structure/extinguisher_cabinet/attack_hand(mob/living/user)
+	if(isrobot(user))
 		return
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/temp = H.organs_by_name["r_hand"]
+		if (user.hand)
+			temp = H.organs_by_name["l_hand"]
+		if(temp && !temp.is_usable())
+			user << "<span class='notice'>You try to move your [temp.name], but cannot!</span>"
+			return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)
 		user << "<span class='notice'>You take [has_extinguisher] from [src].</span>"
@@ -83,16 +77,6 @@
 		opened = !opened
 	update_icon()
 
-/obj/structure/extinguisher_cabinet/attack_paw(mob/user)
-	attack_hand(user)
-	return
-
-/obj/structure/extinguisher_cabinet/AltClick(mob/living/user)
-	if(user.incapacitated() || !Adjacent(user) || !istype(user))
-		return
-	opened = !opened
-	update_icon()
-
 /obj/structure/extinguisher_cabinet/update_icon()
 	if(!opened)
 		icon_state = "extinguisher_closed"
@@ -104,10 +88,3 @@
 			icon_state = "extinguisher_full"
 	else
 		icon_state = "extinguisher_empty"
-
-/obj/item/wallframe/extinguisher_cabinet
-	name = "extinguisher cabinet frame"
-	desc = "Used for building wall-mounted extinguisher cabinets."
-	icon = 'icons/obj/apc_repair.dmi'
-	icon_state = "extinguisher_frame"
-	result_path = /obj/structure/extinguisher_cabinet

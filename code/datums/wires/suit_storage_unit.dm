@@ -1,42 +1,47 @@
 /datum/wires/suit_storage_unit
-	holder_type = /obj/machinery/suit_storage_unit
+	holder_type = /obj/machinery/suit_cycler
+	wire_count = 3
 
-/datum/wires/suit_storage_unit/New(atom/holder)
-	wires = list(
-		WIRE_HACK, WIRE_SAFETY,
-		WIRE_ZAP
-	)
-	add_duds(2)
-	..()
+var/const/SUIT_STORAGE_WIRE_ELECTRIFY	= 1
+var/const/SUIT_STORAGE_WIRE_SAFETY		= 2
+var/const/SUIT_STORAGE_WIRE_LOCKED		= 4
 
-/datum/wires/suit_storage_unit/interactable(mob/user)
-	var/obj/machinery/suit_storage_unit/SSU = holder
-	if(SSU.panel_open)
-		return TRUE
+/datum/wires/suit_storage_unit/CanUse(var/mob/living/L)
+	var/obj/machinery/suit_cycler/S = holder
+	if(!istype(L, /mob/living/silicon))
+		if(S.electrified)
+			if(S.shock(L, 100))
+				return 0
+	if(S.panel_open)
+		return 1
+	return 0
 
-/datum/wires/suit_storage_unit/get_status()
-	var/obj/machinery/suit_storage_unit/SSU = holder
-	var/list/status = list()
-	status += "The UV bulb is [SSU.uv_super ? "glowing" : "dim"]."
-	status += "The service light is [SSU.safeties ? "off" : "on"]."
-	return status
+/datum/wires/suit_storage_unit/GetInteractWindow()
+	var/obj/machinery/suit_cycler/S = holder
+	. += ..()
+	. += "<BR>The orange light is [S.electrified ? "off" : "on"].<BR>"
+	. += "The red light is [S.safeties ? "off" : "blinking"].<BR>"
+	. += "The yellow light is [S.locked ? "on" : "off"].<BR>"
 
-/datum/wires/suit_storage_unit/on_pulse(wire)
-	var/obj/machinery/suit_storage_unit/SSU = holder
-	switch(wire)
-		if(WIRE_HACK)
-			SSU.uv_super = !SSU.uv_super
-		if(WIRE_SAFETY)
-			SSU.safeties = !SSU.safeties
-		if(WIRE_ZAP)
-			SSU.shock(usr)
+/datum/wires/suit_storage_unit/UpdatePulsed(var/index)
+	var/obj/machinery/suit_cycler/S = holder
+	switch(index)
+		if(SUIT_STORAGE_WIRE_SAFETY)
+			S.safeties = !S.safeties
+		if(SUIT_STORAGE_WIRE_ELECTRIFY)
+			S.electrified = 30
+		if(SUIT_STORAGE_WIRE_LOCKED)
+			S.locked = !S.locked
 
-/datum/wires/suit_storage_unit/on_cut(wire, mend)
-	var/obj/machinery/suit_storage_unit/SSU = holder
-	switch(wire)
-		if(WIRE_HACK)
-			SSU.uv_super = !mend
-		if(WIRE_SAFETY)
-			SSU.safeties = mend
-		if(WIRE_ZAP)
-			SSU.shock(usr)
+/datum/wires/suit_storage_unit/UpdateCut(var/index, var/mended)
+	var/obj/machinery/suit_cycler/S = holder
+	switch(index)
+		if(SUIT_STORAGE_WIRE_SAFETY)
+			S.safeties = mended
+		if(SUIT_STORAGE_WIRE_LOCKED)
+			S.locked = mended
+		if(SUIT_STORAGE_WIRE_ELECTRIFY)
+			if(mended)
+				S.electrified = 0
+			else
+				S.electrified = -1

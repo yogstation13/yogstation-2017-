@@ -1,4 +1,4 @@
-//returns a reason if M is banned from rank, returns 0 otherwise
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 var/jobban_runonce			// Updates legacy bans with new info
 var/jobban_keylist[0]		//to store the keys & ranks
@@ -13,75 +13,47 @@ var/jobban_keylist[0]		//to store the keys & ranks
 	jobban_keylist.Add(text("[ckey] - [rank]"))
 	jobban_savebanfile()
 
-/proc/jobban_check_mob(mob/M, rank)
-	if (!M || !rank) return 0
-
-	/*var/list/tempList = jobban_list_for_mob(M)
-	return jobban_job_in_list(tempList, rank)*/
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM [format_table_name("ban")] WHERE ckey = '[get_ckey(M)]' AND job = '[rank]' AND (bantype = 'JOB_PERMABAN' OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND unbanned != 1")
-	query.Execute()
-
-	if(query.NextRow())
-		return 1
-
-	return 0
-
-/proc/jobban_job_in_list(jobList, rank)
-	if (!jobList || !rank) return 0
-
-	for (var/s in jobList)
-		if(s == rank)
-			return 1
-
-	return 0
-
-/proc/jobban_list_for_mob(mob/M)
-	if (!M) return 0
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT job FROM [format_table_name("ban")] WHERE ckey = '[get_ckey(M)]' AND (bantype = 'JOB_PERMABAN' OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND unbanned != 1")
-	query.Execute()
-
-	var/list/ckey_job_bans = list()
-
-	while(query.NextRow())
-		var/job = query.item[1]
-		ckey_job_bans.Add(job)
-
-	return ckey_job_bans
-
+//returns a reason if M is banned from rank, returns 0 otherwise
 /proc/jobban_isbanned(mob/M, rank)
-	if(!M || !istype(M) || !M.ckey)
-		return 0
+	if(M && rank)
+		/*
+		if(_jobban_isbanned(M, rank)) return "Reason Unspecified"	//for old jobban
+		*/
 
-	if(!M.client) //no cache. fallback to a DBQuery
-		var/DBQuery/query = dbcon.NewQuery("SELECT reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(M.ckey)]' AND job = '[sanitizeSQL(rank)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND unbanned = 1")
-		if(!query.Execute())
-			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
-			return
-		if(query.NextRow())
-			var/reason = query.item[1]
-			return reason ? reason : 1 //we don't want to return "" if there is no ban reason, as that would evaluate to false
-		else
-			return 0
+		if (guest_jobbans(rank))
+			if(config.guest_jobban && IsGuestKey(M.key))
+				return "Guest Job-ban"
+			if(config.usewhitelist && !check_whitelist(M))
+				return "Whitelisted Job"
 
-	if(!M.client.jobbancache)
-		jobban_buildcache(M.client)
-
-	if(rank in M.client.jobbancache)
-		var/reason = M.client.jobbancache[rank]
-		return (reason) ? reason : 1 //see above for why we need to do this
+		for (var/s in jobban_keylist)
+			if( findtext(s,"[M.ckey] - [rank]") == 1 )
+				var/startpos = findtext(s, "## ")+3
+				if(startpos && startpos<length(s))
+					var/text = copytext(s, startpos, 0)
+					if(text)
+						return text
+				return "Reason Unspecified"
 	return 0
 
-/proc/jobban_buildcache(client/C)
-	if(C && istype(C))
-		C.jobbancache = list()
-		var/DBQuery/query = dbcon.NewQuery("SELECT job, reason FROM [format_table_name("ban")] WHERE ckey = '[sanitizeSQL(C.ckey)]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND unbanned = 0")
-		if(!query.Execute())
-			log_game("SQL ERROR obtaining jobbans. Error : \[[query.ErrorMsg()]\]\n")
-			return
-		while(query.NextRow())
-			C.jobbancache[query.item[1]] = query.item[2]
+/*
+DEBUG
+/mob/verb/list_all_jobbans()
+	set name = "list all jobbans"
+
+	for(var/s in jobban_keylist)
+		world << s
+
+/mob/verb/reload_jobbans()
+	set name = "reload jobbans"
+
+	jobban_loadbanfile()
+*/
+
+/hook/startup/proc/loadJobBans()
+	jobban_loadbanfile()
+	return 1
+
 /proc/jobban_loadbanfile()
 	if(config.ban_legacy_system)
 		var/savefile/S=new("data/job_full.ban")
@@ -94,14 +66,14 @@ var/jobban_keylist[0]		//to store the keys & ranks
 			log_admin("jobban_keylist was empty")
 	else
 		if(!establish_db_connection())
-			world.log << "Database connection failed. Reverting to the legacy ban system."
-			diary << "Database connection failed. Reverting to the legacy ban system."
+			error("Database connection failed. Reverting to the legacy ban system.")
+			log_misc("Database connection failed. Reverting to the legacy ban system.")
 			config.ban_legacy_system = 1
 			jobban_loadbanfile()
 			return
 
 		//Job permabans
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM [format_table_name("ban")] WHERE bantype = 'JOB_PERMABAN' AND unbanned = 0")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_PERMABAN' AND isnull(unbanned)")
 		query.Execute()
 
 		while(query.NextRow())
@@ -111,7 +83,7 @@ var/jobban_keylist[0]		//to store the keys & ranks
 			jobban_keylist.Add("[ckey] - [job]")
 
 		//Job tempbans
-		var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM [format_table_name("ban")] WHERE bantype = 'JOB_TEMPBAN' AND unbanned = 0 AND expiration_time > Now()")
+		var/DBQuery/query1 = dbcon.NewQuery("SELECT ckey, job FROM erro_ban WHERE bantype = 'JOB_TEMPBAN' AND isnull(unbanned) AND expiration_time > Now()")
 		query1.Execute()
 
 		while(query1.NextRow())
@@ -128,16 +100,10 @@ var/jobban_keylist[0]		//to store the keys & ranks
 	jobban_remove("[M.ckey] - [rank]")
 	jobban_savebanfile()
 
+
 /proc/ban_unban_log_save(var/formatted_log)
 	text2file(formatted_log,"data/ban_unban_log.txt")
 
-/proc/jobban_updatelegacybans()
-	if(!jobban_runonce)
-		log_admin("Updating jobbanfile!")
-		// Updates bans.. Or fixes them. Either way.
-		for(var/T in jobban_keylist)
-			if(!T)	continue
-		jobban_runonce++	//don't run this update again
 
 /proc/jobban_remove(X)
 	for (var/i = 1; i <= length(jobban_keylist); i++)

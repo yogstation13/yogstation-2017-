@@ -2,13 +2,13 @@
 	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
-	item_state = "beacon"
+	item_state = "signaler"
 	var/code = "electronic"
-	origin_tech = "bluespace=1"
-	dog_fashion = null
+	origin_tech = list(TECH_BLUESPACE = 1)
 
-/obj/item/device/radio/beacon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/obj/item/device/radio/beacon/hear_talk()
 	return
+
 
 /obj/item/device/radio/beacon/send_hear()
 	return null
@@ -26,8 +26,24 @@
 	src.add_fingerprint(usr)
 	return
 
-/*
-//Probably a better way of doing this, I'm lazy.
-/obj/item/device/radio/beacon/bacon/proc/digest_delay()
-	spawn(600)
-		qdel(src)*/ //Bacon beacons are no more rip in peace
+
+/obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
+	proc/digest_delay()
+		spawn(600)
+			qdel(src)
+
+
+// SINGULO BEACON SPAWNER
+
+/obj/item/device/radio/beacon/syndicate
+	name = "suspicious beacon"
+	desc = "A label on it reads: <i>Activate to have a singularity beacon teleported to your location</i>."
+	origin_tech = list(TECH_BLUESPACE = 1, TECH_ILLEGAL = 7)
+
+/obj/item/device/radio/beacon/syndicate/attack_self(mob/user as mob)
+	if(user)
+		user << "<span class='notice'>Locked In</span>"
+		new /obj/machinery/power/singularity_beacon/syndicate( user.loc )
+		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
+		qdel(src)
+	return

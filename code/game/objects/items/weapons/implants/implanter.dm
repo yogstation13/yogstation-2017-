@@ -1,77 +1,134 @@
 /obj/item/weapon/implanter
 	name = "implanter"
-	desc = "A sterile automatic implant injector."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"
-	throw_speed = 3
+	throw_speed = 1
 	throw_range = 5
-	w_class = 2
-	origin_tech = "materials=2;biotech=3"
-	materials = list(MAT_METAL=600, MAT_GLASS=200)
+	w_class = ITEMSIZE_SMALL
 	var/obj/item/weapon/implant/imp = null
 
-
-/obj/item/weapon/implanter/update_icon()
-	if(imp)
-		icon_state = "implanter1"
-		origin_tech = imp.origin_tech
-	else
-		icon_state = "implanter0"
-		origin_tech = initial(origin_tech)
-
-
-/obj/item/weapon/implanter/attack(mob/living/carbon/M, mob/user)
-	if(!iscarbon(M))
-		return
-	if(user && imp)
-		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
-
-		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50)))
-			if(user && M && (get_turf(M) == T) && src && imp)
-				if(imp.implant(M, user))
-					if (M == user)
-						user << "<span class='notice'>You implant yourself.</span>"
-					else
-						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
-					imp = null
-					update_icon()
-
-/obj/item/weapon/implanter/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_hand() != W)
-			return
-		if(!in_range(src, user) && loc != user)
-			return
-		if(t)
-			name = "implanter ([t])"
-		else
-			name = "implanter"
-	else
+/obj/item/weapon/implanter/attack_self(var/mob/user)
+	if(!imp)
 		return ..()
+	imp.loc = get_turf(src)
+	user.put_in_hands(imp)
+	user << "<span class='notice'>You remove \the [imp] from \the [src].</span>"
+	name = "implanter"
+	imp = null
+	update()
+	return
 
-/obj/item/weapon/implanter/New()
+/obj/item/weapon/implanter/proc/update()
+	if (src.imp)
+		src.icon_state = "implanter1"
+	else
+		src.icon_state = "implanter0"
+	return
+
+/obj/item/weapon/implanter/attack(mob/M as mob, mob/user as mob)
+	if (!istype(M, /mob/living/carbon))
+		return
+	if (user && src.imp)
+		M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
+
+		user.setClickCooldown(DEFAULT_QUICK_COOLDOWN)
+		user.do_attack_animation(M)
+
+		var/turf/T1 = get_turf(M)
+		if (T1 && ((M == user) || do_after(user, 50)))
+			if(user && M && (get_turf(M) == T1) && src && src.imp)
+				M.visible_message("<span class='warning'>[M] has been implanted by [user].</span>")
+
+				admin_attack_log(user, M, "Implanted using \the [src.name] ([src.imp.name])", "Implanted with \the [src.name] ([src.imp.name])", "used an implanter, [src.name] ([src.imp.name]), on")
+
+				if(src.imp.implanted(M))
+					src.imp.loc = M
+					src.imp.imp_in = M
+					src.imp.implanted = 1
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						var/obj/item/organ/external/affected = H.get_organ(user.zone_sel.selecting)
+						affected.implants += src.imp
+						imp.part = affected
+
+						BITSET(H.hud_updateflag, IMPLOYAL_HUD)
+
+				src.imp = null
+				update()
+
+	return
+
+/obj/item/weapon/implanter/loyalty
+	name = "implanter-loyalty"
+
+/obj/item/weapon/implanter/loyalty/New()
+	src.imp = new /obj/item/weapon/implant/loyalty( src )
 	..()
-	spawn(1)
-		update_icon()
+	update()
+	return
 
+/obj/item/weapon/implanter/explosive
+	name = "implanter (E)"
 
-
+/obj/item/weapon/implanter/explosive/New()
+	src.imp = new /obj/item/weapon/implant/explosive( src )
+	..()
+	update()
+	return
 
 /obj/item/weapon/implanter/adrenalin
-	name = "implanter (adrenalin)"
+	name = "implanter-adrenalin"
 
 /obj/item/weapon/implanter/adrenalin/New()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
+	src.imp = new /obj/item/weapon/implant/adrenalin(src)
+	..()
+	update()
+	return
+
+/obj/item/weapon/implanter/compressed
+	name = "implanter (C)"
+	icon_state = "cimplanter1"
+
+/obj/item/weapon/implanter/compressed/New()
+	imp = new /obj/item/weapon/implant/compressed( src )
+	..()
+	update()
+	return
+
+/obj/item/weapon/implanter/compressed/update()
+	if (imp)
+		var/obj/item/weapon/implant/compressed/c = imp
+		if(!c.scanned)
+			icon_state = "cimplanter1"
+		else
+			icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter0"
+	return
+
+/obj/item/weapon/implanter/compressed/attack(mob/M as mob, mob/user as mob)
+	var/obj/item/weapon/implant/compressed/c = imp
+	if (!c)	return
+	if (c.scanned == null)
+		user << "Please scan an object with the implanter first."
+		return
 	..()
 
-
-/obj/item/weapon/implanter/emp
-	name = "implanter (EMP)"
-
-/obj/item/weapon/implanter/emp/New()
-	imp = new /obj/item/weapon/implant/emp(src)
-	..()
+/obj/item/weapon/implanter/compressed/afterattack(atom/A, mob/user as mob, proximity)
+	if(!proximity)
+		return
+	if(istype(A,/obj/item) && imp)
+		var/obj/item/weapon/implant/compressed/c = imp
+		if (c.scanned)
+			user << "<span class='warning'>Something is already scanned inside the implant!</span>"
+			return
+		c.scanned = A
+		if(istype(A.loc,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A.loc
+			H.remove_from_mob(A)
+		else if(istype(A.loc,/obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = A.loc
+			S.remove_from_storage(A)
+		A.loc.contents.Remove(A)
+		update()

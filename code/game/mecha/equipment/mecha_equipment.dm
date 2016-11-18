@@ -6,14 +6,27 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
-	origin_tech = "materials=2;engineering=2"
-	var/equip_cooldown = 0 // cooldown after use
-	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
+	origin_tech = list(TECH_MATERIAL = 2)
+	var/equip_cooldown = 0
+	var/equip_ready = 1
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
 	var/range = MELEE //bitflags
 	var/salvageable = 1
-	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
+	var/required_type = /obj/mecha //may be either a type or a list of allowed types
+
+
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(target=1)
+	sleep(equip_cooldown)
+	set_ready_state(1)
+	if(target && chassis)
+		return 1
+	return 0
+
+
+/obj/item/mecha_parts/mecha_equipment/New()
+	..()
+	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -28,36 +41,31 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/Destroy()
+/obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
 	if(chassis)
 		chassis.equipment -= src
+		listclearnulls(chassis.equipment)
 		if(chassis.selected == src)
 			chassis.selected = null
 		src.update_chassis_page()
-		chassis.occupant_message("<span class='danger'>The [src] is destroyed!</span>")
+		chassis.occupant_message("<font color='red'>The [src] is destroyed!</font>")
 		chassis.log_append_to_last("[src] is destroyed.",1)
 		if(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon))
 			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
 		else
 			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
-		chassis = null
-	return ..()
+	spawn
+		qdel(src)
+	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
 		log_message("Critical failure",1)
+	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis) return
-	var/txt = "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;"
-	if(chassis.selected == src)
-		txt += "<b>[src.name]</b>"
-	else if(selectable)
-		txt += "<a href='?src=\ref[chassis];select_equip=\ref[src]'>[src.name]</a>"
-	else
-		txt += "[src.name]"
-
-	return txt
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[chassis.selected==src?"<b>":"<a href='?src=\ref[chassis];select_equip=\ref[src]'>"][src.name][chassis.selected==src?"</b>":"</a>"]"
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_ranged()//add a distance restricted equipment. Why not?
 	return range&RANGED
@@ -73,43 +81,32 @@
 		return 0
 	if(!equip_ready)
 		return 0
-	if(crit_fail)
-		return 0
 	if(energy_drain && !chassis.has_charge(energy_drain))
 		return 0
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(atom/target)
-	return 0
+	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/start_cooldown()
-	set_ready_state(0)
-	chassis.use_power(energy_drain)
-	spawn(equip_cooldown)
-		set_ready_state(1)
-
-/obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target)
-	if(!chassis)
-		return
-	var/C = chassis.loc
-	set_ready_state(0)
-	chassis.use_power(energy_drain)
-	. = do_after(chassis.occupant, equip_cooldown, target=target)
-	set_ready_state(1)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected)
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M as obj)
+	if(M.equipment.len >= M.max_equip)
 		return 0
 
+	if (ispath(required_type))
+		return istype(M, required_type)
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
-	if(M.equipment.len<M.max_equip)
-		return 1
+	for (var/path in required_type)
+		if (istype(M, path))
+			return 1
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
+	return 0
+
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M as obj)
 	M.equipment += src
 	chassis = M
 	src.loc = M
 	M.log_message("[src] initialized.")
-	if(!M.selected && selectable)
+	if(!M.selected)
 		M.selected = src
 	src.update_chassis_page()
 	return
@@ -129,7 +126,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
 	if(href_list["detach"])
-		detach()
+		src.detach()
+	return
+
 
 /obj/item/mecha_parts/mecha_equipment/proc/set_ready_state(state)
 	equip_ready = state
@@ -146,12 +145,3 @@
 	if(chassis)
 		chassis.log_message("<i>[src]:</i> [message]")
 	return
-
-
-//Used for reloading weapons/tools etc. that use some form of resource
-/obj/item/mecha_parts/mecha_equipment/proc/rearm()
-	return 0
-
-
-/obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
-	return 0

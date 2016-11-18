@@ -5,58 +5,48 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
+	icon_dead = "shade_dead"
 	maxHealth = 50
 	health = 50
-	healable = 0
+	universal_speak = 1
 	speak_emote = list("hisses")
-	emote_hear = list("wails.","screeches.")
+	emote_hear = list("wails","screeches")
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches"
-	speak_chance = 1
 	melee_damage_lower = 5
 	melee_damage_upper = 15
-	attacktext = "metaphysically strikes"
+	attacktext = "drained the life from"
 	minbodytemp = 0
-	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	maxbodytemp = 4000
+	min_oxy = 0
+	max_co2 = 0
+	max_tox = 0
 	speed = -1
 	stop_automated_movement = 1
-	faction = list("cult")
+	status_flags = 0
+	faction = "cult"
 	status_flags = CANPUSH
-	flying = 1
-	loot = list(/obj/item/weapon/ectoplasm)
-	del_on_death = 1
-	deathmessage = "lets out a contented sigh as their form unwinds."
 
-/mob/living/simple_animal/shade/canSuicide()
-	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
-		return 0
-	return ..()
+/mob/living/simple_animal/shade/cultify()
+	return
 
-/mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
-	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
+/mob/living/simple_animal/shade/Life()
+	..()
+	OnDeathInLife()
 
-/mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
-		if(health < maxHealth)
-			adjustHealth(-25)
-			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
-					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-		else
-			M << "<span class='cult'>You cannot heal <b>[src]</b>, as it is unharmed!</span>"
-	else if(src != M)
-		..()
-
-/mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
+/mob/living/simple_animal/shade/attackby(var/obj/item/O as obj, var/mob/user as mob)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))
-		var/obj/item/device/soulstone/SS = O
-		SS.transfer_soul("SHADE", src, user)
-	else
-		..()
+		var/obj/item/device/soulstone/S = O;
+		S.transfer_soul("SHADE", src, user)
+		return
 
-/mob/living/simple_animal/shade/examine(mob/user)
-	. = ..()
-	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
-		user << "<span class='danger'>You can also tell that they've lost all conscious awareness and have become as engaging as a blank wall.</span>"
+/mob/living/simple_animal/shade/proc/OnDeathInLife()
+	if(stat == 2)
+		new /obj/item/weapon/ectoplasm (src.loc)
+		for(var/mob/M in viewers(src, null))
+			if((M.client && !( M.blinded )))
+				M.show_message("\red [src] lets out a contented sigh as their form unwinds. ")
+				ghostize()
+		qdel(src)
+		return

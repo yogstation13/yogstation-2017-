@@ -3,198 +3,133 @@
 	icon_state = "spark"
 	damage = 0
 	damage_type = BURN
-	flag = "energy"
+	check_armour = "energy"
+	var/flash_strength = 10
 
+
+//releases a burst of light on impact or after travelling a distance
+/obj/item/projectile/energy/flash
+	name = "chemical shell"
+	icon_state = "bullet"
+	damage = 5
+	kill_count = 15 //if the shell hasn't hit anything after travelling this far it just explodes.
+	var/flash_range = 0
+	var/brightness = 7
+	var/light_colour = "#ffffff"
+
+/obj/item/projectile/energy/flash/on_impact(var/atom/A)
+	var/turf/T = flash_range? src.loc : get_turf(A)
+	if(!istype(T)) return
+
+	//blind adjacent people
+	for (var/mob/living/carbon/M in viewers(T, flash_range))
+		if(M.eyecheck() < 1)
+			M.flash_eyes()
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				flash_strength *= H.species.flash_mod
+
+				if(flash_strength > 0)
+					H.confused = max(H.confused, flash_strength + 5)
+					H.eye_blind = max(H.eye_blind, flash_strength)
+					H.eye_blurry = max(H.eye_blurry, flash_strength + 5)
+
+
+	//snap pop
+	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	src.visible_message("<span class='warning'>\The [src] explodes in a bright flash!</span>")
+
+	var/datum/effect/effect/system/spark_spread/sparks = PoolOrNew(/datum/effect/effect/system/spark_spread)
+	sparks.set_up(2, 1, T)
+	sparks.start()
+
+	new /obj/effect/decal/cleanable/ash(src.loc) //always use src.loc so that ash doesn't end up inside windows
+	new /obj/effect/effect/smoke/illumination(T, 5, brightness, brightness, light_colour)
+
+//blinds people like the flash round, but can also be used for temporary illumination
+/obj/item/projectile/energy/flash/flare
+	damage = 10
+	flash_range = 1
+	brightness = 15
+	flash_strength = 20
+
+/obj/item/projectile/energy/flash/flare/on_impact(var/atom/A)
+	light_colour = pick("#e58775", "#ffffff", "#90ff90", "#a09030")
+
+	..() //initial flash
+
+	//residual illumination
+	new /obj/effect/effect/smoke/illumination(src.loc, rand(190,240) SECONDS, range=8, power=3, color=light_colour) //same lighting power as flare
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
-	color = "#FFFF00"
 	nodamage = 1
-	stun = 5
-	weaken = 5
-	stutter = 5
-	jitter = 20
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 7
+	taser_effect = 1
+	agony = 40
+	damage_type = HALLOSS
+	light_range = 2
+	light_power = 0.5
+	light_color = "#FFFFFF"
+	//Damage will be handled on the MOB side, to prevent window shattering.
 
-/obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
-		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-		sparks.set_up(1, 1, src)
-		sparks.start()
-	else if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.dna && C.dna.check_mutation(HULK))
-			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		else if(CANWEAKEN in C.status_flags)
-			spawn(5)
-				C.do_jitter_animation(jitter)
+/obj/item/projectile/energy/electrode/strong
+	agony = 55
 
-/obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
-	..()
-
-/obj/item/projectile/energy/net
-	name = "energy netting"
-	icon_state = "e_netting"
-	damage = 10
-	damage_type = STAMINA
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 10
-
-/obj/item/projectile/energy/net/New()
-	..()
-	SpinAnimation()
-
-/obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
-	if(isliving(target))
-		var/turf/Tloc = get_turf(target)
-		if(!locate(/obj/effect/nettingportal) in Tloc)
-			new/obj/effect/nettingportal(Tloc)
-	..()
-
-/obj/item/projectile/energy/net/on_range()
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
-	..()
-
-/obj/effect/nettingportal
-	name = "DRAGnet teleportation field"
-	desc = "A field of bluespace energy, locking on to teleport a target."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "dragnetfield"
-	anchored = 1
-	unacidable = 1
-
-/obj/effect/nettingportal/New()
-	..()
-	SetLuminosity(3)
-	var/obj/item/device/radio/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com in machines)
-		if(com.target)
-			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
-				teletarget = com.target
-	if(teletarget)
-		spawn(30)
-			for(var/mob/living/L in get_turf(src))
-				do_teleport(L, teletarget, 2)//teleport what's in the tile to the beacon
-			qdel(src)
-	else
-		spawn(30)
-			for(var/mob/living/L in get_turf(src))
-				do_teleport(L, L, 15) //Otherwise it just warps you off somewhere.
-			qdel(src)
-
-
-/obj/item/projectile/energy/trap
-	name = "energy snare"
-	icon_state = "e_snare"
-	nodamage = 1
-	weaken = 1
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 4
-
-/obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
-	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
-		new/obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(loc))
-	else if(iscarbon(target))
-		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(target))
-		B.Crossed(target)
-	..()
-
-/obj/item/projectile/energy/trap/on_range()
-	new/obj/item/weapon/restraints/legcuffs/beartrap/energy(loc)
-	..()
-
-/obj/item/projectile/energy/trap/cyborg
-	name = "Energy Bola"
-	icon_state = "e_snare"
-	nodamage = 1
-	weaken = 0
-	hitsound = 'sound/weapons/taserhit.ogg'
-	range = 10
-
-/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
-	if(!ismob(target) || blocked >= 100)
-		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-		sparks.set_up(1, 1, src)
-		sparks.start()
-		qdel(src)
-	if(iscarbon(target))
-		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
-		B.Crossed(target)
-	spawn(10)
-		qdel(src)
-	..()
-
-/obj/item/projectile/energy/trap/cyborg/on_range()
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(1, 1, src)
-	sparks.start()
-	qdel(src)
+/obj/item/projectile/energy/electrode/stunshot
+	name = "stunshot"
+	damage = 5
+	taser_effect = 1
+	agony = 80
 
 /obj/item/projectile/energy/declone
-	name = "radiation beam"
+	name = "declone"
 	icon_state = "declone"
-	damage = 20
+	nodamage = 1
 	damage_type = CLONE
-	irradiate = 10
+	irradiate = 40
+	light_range = 2
+	light_power = 0.5
+	light_color = "#33CC00"
 
-/obj/item/projectile/energy/dart //ninja throwing dart
+
+/obj/item/projectile/energy/dart
 	name = "dart"
 	icon_state = "toxin"
 	damage = 5
 	damage_type = TOX
-	weaken = 5
-	range = 7
+	agony = 120
+	check_armour = "energy"
 
-/obj/item/projectile/energy/bolt //ebow bolts
+
+/obj/item/projectile/energy/bolt
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 20
+	damage = 10
 	damage_type = TOX
 	nodamage = 0
-	stutter = 5
-	irradiate = 35
-	stun = 1
+	agony = 40
+	stutter = 10
 
-obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
-	..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.confused)//if they've already been shot
-			C.silent = 3 // if you can't hit another shot in 3 seconds you don't deserve the mute
-		C.confused = 3
 
 /obj/item/projectile/energy/bolt/large
+	name = "largebolt"
 	damage = 20
 
-/obj/item/ammo_casing/energy/plasma
-	projectile_type = /obj/item/projectile/plasma
-	select_name = "plasma burst"
-	fire_sound = 'sound/weapons/pulse.ogg'
 
-/obj/item/ammo_casing/energy/plasma/adv
-	projectile_type = /obj/item/projectile/plasma/adv
+/obj/item/projectile/energy/neurotoxin
+	name = "neuro"
+	icon_state = "neurotoxin"
+	damage = 5
+	damage_type = TOX
+	weaken = 5
 
-/obj/item/projectile/energy/shock_revolver
-	name = "shock bolt"
-	icon_state = "purple_laser"
-	var/chain
-
-/obj/item/ammo_casing/energy/shock_revolver/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
-	..()
-	var/obj/item/projectile/hook/P = BB
-	spawn(1)
-		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
-
-/obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
-	. = ..()
-	if(isliving(target))
-		tesla_zap(src, 3, 10000)
-	qdel(chain)
+/obj/item/projectile/energy/phoron
+	name = "phoron bolt"
+	icon_state = "energy"
+	damage = 20
+	damage_type = TOX
+	irradiate = 20
+	light_range = 2
+	light_power = 0.5
+	light_color = "#33CC00"

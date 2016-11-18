@@ -1,195 +1,219 @@
-/obj/item/clothing/shoes/proc/step_action() //this was made to rewrite clown shoes squeaking
+/obj/item/clothing/shoes/syndigaloshes
+	desc = "A pair of brown shoes. They seem to have extra grip."
+	name = "brown shoes"
+	icon_state = "brown"
+	permeability_coefficient = 0.05
+	item_flags = NOSLIP
+	origin_tech = list(TECH_ILLEGAL = 3)
+	var/list/clothing_choices = list()
+	siemens_coefficient = 0.8
+	species_restricted = null
 
-/obj/item/clothing/shoes/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is bashing their own head in with [src]! Ain't that a kick in the head?</span>")
-	for(var/i = 0, i < 3, i++)
-		sleep(3)
-		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
-	return(BRUTELOSS)
-
-/obj/item/clothing/shoes/sneakers/mime
+/obj/item/clothing/shoes/mime
 	name = "mime shoes"
-	icon_state = "mime"
-	item_color = "mime"
+	icon_state = "white"
 
-/obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
+/obj/item/clothing/shoes/swat
+	name = "\improper SWAT shoes"
+	desc = "When you want to turn up the heat."
+	icon_state = "swat"
+	item_state_slots = list(slot_r_hand_str = "swat", slot_l_hand_str = "swat")
+	force = 3
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	item_flags = NOSLIP
+	siemens_coefficient = 0.6
+	var/obj/item/weapon/material/hatchet/tacknife
+
+/obj/item/clothing/shoes/swat/attack_hand(var/mob/living/M)
+	if(tacknife)
+		tacknife.loc = get_turf(src)
+		if(M.put_in_active_hand(tacknife))
+			M << "<span class='notice'>You slide \the [tacknife] out of [src].</span>"
+			playsound(M, 'sound/weapons/flipblade.ogg', 40, 1)
+			tacknife = null
+			update_icon()
+		return
+	..()
+
+/obj/item/clothing/shoes/swat/attackby(var/obj/item/I, var/mob/living/M)
+	if(istype(I, /obj/item/weapon/material/hatchet/tacknife))
+		if(tacknife)
+			return
+		M.drop_item()
+		tacknife = I
+		I.loc = src
+		M << "<span class='notice'>You slide the [I] into [src].</span>"
+		playsound(M, 'sound/weapons/flipblade.ogg', 40, 1)
+		update_icon()
+	..()
+
+/obj/item/clothing/shoes/swat/update_icon()
+	if(tacknife)
+		icon_state = "swat_1"
+	else
+		icon_state = initial(icon_state)
+
+//Stolen from CM, refurbished to be less terrible.
+/obj/item/clothing/shoes/marine
 	name = "combat boots"
-	desc = "High speed, low drag combat boots."
+	desc = "Standard issue combat boots for combat scenarios or combat situations. All combat, all the time.  It can hold a Strategical knife."
 	icon_state = "jackboots"
-	item_state = "jackboots"
-	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0)
-	strip_delay = 70
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
+	item_state_slots = list(slot_r_hand_str = "jackboots", slot_l_hand_str = "jackboots")
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	siemens_coefficient = 0.6
+	var/obj/item/weapon/material/hatchet/tacknife
 
-/obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
-	name = "\improper SWAT boots"
-	desc = "High speed, no drag combat boots."
-	permeability_coefficient = 0.01
-	flags = NOSLIP
-	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30)
+/obj/item/clothing/shoes/marine/attack_hand(var/mob/living/M)
+	if(tacknife)
+		tacknife.loc = get_turf(src)
+		if(M.put_in_active_hand(tacknife))
+			M << "<span class='notice'>You slide \the [tacknife] out of [src].</span>"
+			playsound(M, 'sound/weapons/flipblade.ogg', 40, 1)
+			tacknife = null
+			update_icon()
+		return
+	..()
+
+/obj/item/clothing/shoes/marine/attackby(var/obj/item/I, var/mob/living/M)
+	if(istype(I, /obj/item/weapon/material/hatchet/tacknife))
+		if(tacknife)
+			return
+		M.drop_item()
+		tacknife = I
+		I.loc = src
+		M << "<span class='notice'>You slide the [I] into [src].</span>"
+		playsound(M, 'sound/weapons/flipblade.ogg', 40, 1)
+		update_icon()
+	..()
+
+/obj/item/clothing/shoes/marine/update_icon()
+	if(tacknife)
+		icon_state = "jackboots_1"
+	else
+		icon_state = initial(icon_state)
+
+/obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
+	name = "combat boots"
+	desc = "When you REALLY want to turn up the heat"
+	icon_state = "swat"
+	force = 5
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
+	item_flags = NOSLIP
+	siemens_coefficient = 0.6
+
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = FEET
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	strip_delay = 50
-	put_on_delay = 50
-	unacidable = 1
+	species_restricted = null
+	body_parts_covered = 0
+
+	wizard_garb = 1
 
 /obj/item/clothing/shoes/sandal/marisa
-	desc = "A pair of magic black shoes."
+	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
 	icon_state = "black"
-
-/obj/item/clothing/shoes/galoshes
-	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
-	name = "galoshes"
-	icon_state = "galoshes"
-	permeability_coefficient = 0.05
-	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+1
-	strip_delay = 50
-	put_on_delay = 50
-	burn_state = FIRE_PROOF
-
-/obj/item/clothing/shoes/galoshes/dry
-	name = "absorbent galoshes"
-	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
-	icon_state = "galoshes_dry"
-
-/obj/item/clothing/shoes/galoshes/dry/step_action()
-	var/turf/open/t_loc = get_turf(src)
-	if(istype(t_loc) && t_loc.wet)
-		t_loc.MakeDry(TURF_WET_WATER)
-		t_loc.wet_time = 0
+	body_parts_covered = FEET
 
 /obj/item/clothing/shoes/clown_shoes
-	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
+	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
 	name = "clown shoes"
 	icon_state = "clown"
-	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
-	item_color = "clown"
+	force = 0
 	var/footstep = 1	//used for squeeks whilst walking
-	can_hold_items = 1
-	valid_held_items = list(/obj/item/device/assembly/bikehorn,/obj/item/weapon/nullrod/clown)
+	species_restricted = null
 
-/obj/item/clothing/shoes/clown_shoes/step_action()
-	if(footstep > 1)
-		playsound(src, "clownstep", 50, 1)
-		footstep = 0
+/obj/item/clothing/shoes/clown_shoes/handle_movement(var/turf/walking, var/running)
+	if(running)
+		if(footstep >= 2)
+			footstep = 0
+			playsound(src, "clownstep", 50, 1) // this will get annoying very fast.
+		else
+			footstep++
 	else
-		footstep++
-
-/obj/item/clothing/shoes/pathtreads
-	name = "pathfinder treads"
-	desc = "Massive boots crafted to protect the user from the hot ashes of lavaland."
-	icon_state = "pathtreads"
-	item_state = "pathtreads"
-	strip_delay = 50
-	put_on_delay = 50
-	burn_state = FIRE_PROOF
-	heat_protection = FEET|LEGS
-	body_parts_covered = LEGS|FEET
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
-	can_hold_items = 1
-
-/obj/item/clothing/shoes/chitintreads
-	name = "chitin boots"
-	desc = "Compact boots crafted from a weaver's chitin with interlacing sinew."
-	icon_state = "chitentreads"
-	item_state = "chitentreads"
-	strip_delay = 50
-	put_on_delay = 50
-	body_parts_covered = LEGS|FEET
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
-	armor = list(melee = 35, bullet = 35, laser = 0, energy = 10, bomb = 25, bio = 0, rad = 0)
-
-/obj/item/clothing/shoes/jackboots
-	name = "jackboots"
-	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
-	icon_state = "jackboots"
-	item_state = "jackboots"
-	item_color = "hosred"
-	strip_delay = 50
-	put_on_delay = 50
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
-
-/obj/item/clothing/shoes/jackboots/fast
-	slowdown = -1
-
-/obj/item/clothing/shoes/winterboots
-	name = "winter boots"
-	desc = "Boots lined with 'synthetic' animal fur."
-	icon_state = "winterboots"
-	item_state = "winterboots"
-	cold_protection = FEET|LEGS
-	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET|LEGS
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
-	can_hold_items = 1
-
-/obj/item/clothing/shoes/workboots
-	name = "work boots"
-	desc = "Nanotrasen-issue Engineering lace-up work boots for the especially blue-collar."
-	icon_state = "workboots"
-	item_state = "jackboots"
-	strip_delay = 40
-	put_on_delay = 40
-	can_hold_items = 1
-
-/obj/item/clothing/shoes/workboots/mining
-	name = "mining boots"
-	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
-	icon_state = "explorer"
-	burn_state = FIRE_PROOF
+		playsound(src, "clownstep", 20, 1)
 
 /obj/item/clothing/shoes/cult
-	name = "nar-sian invoker boots"
+	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
 	icon_state = "cult"
-	item_state = "cult"
-	item_color = "cult"
-	cold_protection = FEET
-	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
-	heat_protection = FEET
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	item_state_slots = list(slot_r_hand_str = "cult", slot_l_hand_str = "cult")
+	force = 2
+	siemens_coefficient = 0.7
 
-/obj/item/clothing/shoes/cult/alt
-	name = "cultist boots"
-	icon_state = "cultalt"
+	cold_protection = FEET
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = FEET
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
+	species_restricted = null
+
+/obj/item/clothing/shoes/cult/cultify()
+	return
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
-	desc = "Shoes for a cyborg costume."
+	desc = "Shoes for a cyborg costume"
 	icon_state = "boots"
+
+/obj/item/clothing/shoes/slippers
+	name = "bunny slippers"
+	desc = "Fluffy!"
+	icon_state = "slippers"
+	force = 0
+	species_restricted = null
+	w_class = ITEMSIZE_SMALL
+
+/obj/item/clothing/shoes/slippers_worn
+	name = "worn bunny slippers"
+	desc = "Fluffy..."
+	icon_state = "slippers_worn"
+	item_state_slots = list(slot_r_hand_str = "slippers", slot_l_hand_str = "slippers")
+	force = 0
+	w_class = ITEMSIZE_SMALL
 
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
-	put_on_delay = 50
 
-/obj/item/clothing/shoes/roman
-	name = "roman sandals"
-	desc = "Sandals with buckled leather straps on it."
-	icon_state = "roman"
-	item_state = "roman"
-	strip_delay = 100
-	put_on_delay = 100
+/obj/item/clothing/shoes/swimmingfins
+	desc = "Help you swim good."
+	name = "swimming fins"
+	icon_state = "flippers"
+	item_state_slots = list(slot_r_hand_str = "galoshes", slot_l_hand_str = "galoshes")
+	item_flags = NOSLIP
+	slowdown = SHOES_SLOWDOWN+1
+	species_restricted = null
 
-/obj/item/clothing/shoes/griffin
-	name = "griffon boots"
-	desc = "A pair of costume boots fashioned after bird talons."
-	icon_state = "griffinboots"
-	item_state = "griffinboots"
-	can_hold_items = 1
+/obj/item/clothing/shoes/winterboots
+	name = "winter boots"
+	desc = "Boots lined with 'synthetic' animal fur."
+	icon_state = "winterboots"
+	cold_protection = FEET|LEGS
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
+	heat_protection = FEET|LEGS
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/shoes/fuzzy_slippers
-	name = "fuzzy bunny slippers"
-	desc = "No animals were harmed in the making of these fuzzy slippers"
-	icon_state = "fuzzyslippers"
-	item_state = "fuzzyslippers"
+/obj/item/clothing/shoes/flipflop
+	name = "flip flops"
+	desc = "A pair of foam flip flops. For those not afraid to show a little ankle."
+	icon_state = "thongsandal"
+
+/obj/item/clothing/shoes/athletic
+	name = "athletic shoes"
+	desc = "A pair of sleek atheletic shoes. Made by and for the sporty types."
+	icon_state = "sportshoe"
+	item_state_slots = list(slot_r_hand_str = "sportheld", slot_l_hand_str = "sportheld")
+
+/obj/item/clothing/shoes/skater
+	name = "skater shoes"
+	desc = "A pair of wide shoes with thick soles.  Designed for skating."
+	icon_state = "skatershoe"
+	item_state_slots = list(slot_r_hand_str = "skaterheld", slot_l_hand_str = "skaterheld")

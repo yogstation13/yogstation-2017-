@@ -1,101 +1,70 @@
 //NEVER USE THIS IT SUX	-PETETHEGOAT
-//IT SUCKS A BIT LESS -GIACOM
+//THE GOAT WAS RIGHT - RKF
 
-/obj/item/weapon/paint
-	gender= PLURAL
-	name = "paint"
-	desc = "Used to recolor floors and walls. Can not be removed by the janitor."
+var/global/list/cached_icons = list()
+
+/obj/item/weapon/reagent_containers/glass/paint
+	desc = "It's a paint bucket."
+	name = "paint bucket"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "paint_neutral"
-	item_color = "FFFFFF"
 	item_state = "paintcan"
-	w_class = 3
-	burn_state = FLAMMABLE
-	burntime = 5
-	var/paintleft = 10
+	matter = list(DEFAULT_WALL_MATERIAL = 200)
+	w_class = ITEMSIZE_NORMAL
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10,20,30,60)
+	volume = 60
+	unacidable = 0
+	flags = OPENCONTAINER
+	var/paint_type = "red"
 
-/obj/item/weapon/paint/red
-	name = "red paint"
-	item_color = "C73232" //"FF0000"
-	icon_state = "paint_red"
-
-/obj/item/weapon/paint/green
-	name = "green paint"
-	item_color = "2A9C3B" //"00FF00"
-	icon_state = "paint_green"
-
-/obj/item/weapon/paint/blue
-	name = "blue paint"
-	item_color = "5998FF" //"0000FF"
-	icon_state = "paint_blue"
-
-/obj/item/weapon/paint/yellow
-	name = "yellow paint"
-	item_color = "CFB52B" //"FFFF00"
-	icon_state = "paint_yellow"
-
-/obj/item/weapon/paint/violet
-	name = "violet paint"
-	item_color = "AE4CCD" //"FF00FF"
-	icon_state = "paint_violet"
-
-/obj/item/weapon/paint/black
-	name = "black paint"
-	item_color = "333333"
-	icon_state = "paint_black"
-
-/obj/item/weapon/paint/white
-	name = "white paint"
-	item_color = "FFFFFF"
-	icon_state = "paint_white"
-
-
-/obj/item/weapon/paint/anycolor
-	gender= PLURAL
-	name = "any color"
-	icon_state = "paint_neutral"
-
-	attack_self(mob/user)
-		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
-		if ((user.get_active_hand() != src || user.stat || user.restrained()))
-			return
-		switch(t1)
-			if("red")
-				item_color = "C73232"
-			if("blue")
-				item_color = "5998FF"
-			if("green")
-				item_color = "2A9C3B"
-			if("yellow")
-				item_color = "CFB52B"
-			if("violet")
-				item_color = "AE4CCD"
-			if("white")
-				item_color = "FFFFFF"
-			if("black")
-				item_color = "333333"
-		icon_state = "paint_[t1]"
-		add_fingerprint(user)
-		return
-
-
-/obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
-	if(!proximity) return
-	if(paintleft <= 0)
-		icon_state = "paint_empty"
-		return
-	if(!istype(target) || istype(target, /turf/open/space))
-		return
-	target.color = "#" + item_color
-	return
-
-/obj/item/weapon/paint/paint_remover
-	gender =  PLURAL
-	name = "paint remover"
-	icon_state = "paint_neutral"
-
-	afterattack(turf/target, mob/user,proximity)
+	afterattack(turf/simulated/target, mob/user, proximity)
 		if(!proximity) return
-		if(istype(target) && target.color != initial(target.color))
-			target.color = initial(target.color)
-		return
+		if(istype(target) && reagents.total_volume > 5)
+			user.visible_message("<span class='warning'>\The [target] has been splashed with something by [user]!</span>")
+			reagents.trans_to_turf(target, 5)
+		else
+			return ..()
+
+	New()
+		if(paint_type && lentext(paint_type) > 0)
+			name = paint_type + " " + name
+		..()
+		reagents.add_reagent("water", volume*3/5)
+		reagents.add_reagent("plasticide", volume/5)
+		if(paint_type == "white") //why don't white crayons exist
+			reagents.add_reagent("aluminum", volume/5)
+		else if (paint_type == "black")
+			reagents.add_reagent("carbon", volume/5)
+		else
+			reagents.add_reagent("crayon_dust_[paint_type]", volume/5)
+		reagents.handle_reactions()
+
+	red
+		icon_state = "paint_red"
+		paint_type = "red"
+
+	yellow
+		icon_state = "paint_yellow"
+		paint_type = "yellow"
+
+	green
+		icon_state = "paint_green"
+		paint_type = "green"
+
+	blue
+		icon_state = "paint_blue"
+		paint_type = "blue"
+
+	purple
+		icon_state = "paint_violet"
+		paint_type = "purple"
+
+	black
+		icon_state = "paint_black"
+		paint_type = "black"
+
+	white
+		icon_state = "paint_white"
+		paint_type = "white"
+

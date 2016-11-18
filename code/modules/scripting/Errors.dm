@@ -60,15 +60,6 @@
 		New(name, token/t)
 			message="Function '[name]' defined twice."
 
-	ParameterFunction
-		message = "You cannot use a function inside a parameter."
-
-		New(token/t)
-			var/line = "?"
-			if(t)
-				line = t.line
-			message = "[line]: [message]"
-
 /*
 	Class: runtimeError
 	An error thrown by the interpreter in running the script.

@@ -1,88 +1,57 @@
 /obj/item/weapon/gun/energy/taser
 	name = "taser gun"
-	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range."
+	desc = "The NT Mk30 NL is a small gun used for non-lethal takedowns. Produced by NT, it's actually a licensed version of a W-T design."
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
-	origin_tech = "combat=3"
-	ammo_x_offset = 3
+	fire_sound = 'sound/weapons/Taser.ogg'
+	projectile_type = /obj/item/projectile/beam/stun
 
-/obj/item/weapon/gun/energy/shock_revolver
-	name = "tesla gun"
-	desc = "An experimental gun based on an experimental engine, it's about as likely to kill it's operator as it is the target."
-	icon_state = "tesla"
-	item_state = "tesla"
-	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
-	origin_tech = "combat=4;materials=4;powerstorage=4"
-	can_flashlight = 0
-	pin = null
-	shaded_charge = 1
+/obj/item/weapon/gun/energy/taser/mounted
+	name = "mounted taser gun"
+	self_recharge = 1
+	use_external_power = 1
 
-/obj/item/weapon/gun/energy/gun/advtaser
-	name = "hybrid taser"
-	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
-	icon_state = "advtaser"
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
-	origin_tech = "combat=4"
-	ammo_x_offset = 2
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg
-	name = "cyborg taser"
-	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	can_flashlight = 0
-	can_charge = 0
-	var/recharge_time = 10
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
-	..()
-	START_PROCESSING(SSobj, src)
+/obj/item/weapon/gun/energy/taser/mounted/cyborg
+	name = "taser gun"
+	charge_cost = 400
+	recharge_time = 7 //Time it takes for shots to recharge (in ticks)
 
 
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/gun/energy/gun/advtaser/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	robocharge()
-
-	update_icon()
-
-/obj/item/weapon/gun/energy/disabler
-	name = "disabler"
-	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
-	icon_state = "disabler"
-	item_state = "combat=3"
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-	ammo_x_offset = 3
-
-/obj/item/weapon/gun/energy/disabler/cyborg
-	name = "cyborg disabler"
-	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
-	can_charge = 0
-	var/recharge_time = 4
+/obj/item/weapon/gun/energy/stunrevolver
+	name = "stun revolver"
+	desc = "A LAEP20 Zeus. Designed by Lawson Arms and produced under the wing of the FTU, several TSCs have been trying to get a hold of the blueprints for half a decade."
+	icon_state = "stunrevolver"
+	item_state = "stunrevolver"
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3, TECH_POWER = 2)
+	projectile_type = /obj/item/projectile/energy/electrode/strong
+	charge_cost = 300
 
 
-/obj/item/weapon/gun/energy/disabler/cyborg/New()
-	..()
-	START_PROCESSING(SSobj, src)
+/obj/item/weapon/gun/energy/crossbow
+	name = "mini energy-crossbow"
+	desc = "A weapon favored by many mercenary stealth specialists."
+	icon_state = "crossbow"
+	w_class = ITEMSIZE_SMALL
+	item_state = "crossbow"
+	origin_tech = list(TECH_COMBAT = 2, TECH_MAGNET = 2, TECH_ILLEGAL = 5)
+	matter = list(DEFAULT_WALL_MATERIAL = 2000)
+	slot_flags = SLOT_BELT
+	silenced = 1
+	fire_sound = 'sound/weapons/Genhit.ogg'
+	projectile_type = /obj/item/projectile/energy/bolt
+	charge_cost = 480
+	self_recharge = 1
+	charge_meter = 0
 
+/obj/item/weapon/gun/energy/crossbow/ninja
+	name = "energy dart thrower"
+	projectile_type = /obj/item/projectile/energy/dart
 
-/obj/item/weapon/gun/energy/disabler/cyborg/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/weapon/gun/energy/disabler/cyborg/process() //Every [recharge_time] ticks, recharge a shot for the cyborg
-	charge_tick++
-	if(charge_tick < recharge_time) return 0
-	charge_tick = 0
-
-	if(!power_supply) return 0 //sanity
-	robocharge()
-
-	update_icon()
-
+/obj/item/weapon/gun/energy/crossbow/largecrossbow
+	name = "energy crossbow"
+	desc = "A weapon favored by mercenary infiltration teams."
+	w_class = ITEMSIZE_LARGE
+	force = 10
+	matter = list(DEFAULT_WALL_MATERIAL = 200000)
+	projectile_type = /obj/item/projectile/energy/bolt/large

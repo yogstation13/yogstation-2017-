@@ -1,17 +1,15 @@
 // Script -> BYOND code procs
 #define SCRIPT_MAX_REPLACEMENTS_ALLOWED 200
-
-
 // --- List operations (lists known as vectors in n_script) ---
 
-// Creates a list out of all the arguments
+// Clone of list()
 /proc/n_list()
 	var/list/returnlist = list()
 	for(var/e in args)
 		returnlist.Add(e)
 	return returnlist
 
-// Picks one random item from the list
+// Clone of pick()
 /proc/n_pick()
 	var/list/finalpick = list()
 	for(var/e in args)
@@ -25,8 +23,8 @@
 
 	return pick(finalpick)
 
-// Gets/Sets a value at a key in the list
-/proc/n_listpos(list/L, pos, value)
+// Clone of list[]
+/proc/n_listpos(var/list/L, var/pos, var/value)
 	if(!istype(L, /list)) return
 	if(isnum(pos))
 		if(!value)
@@ -41,12 +39,12 @@
 		else
 			L[pos] = value
 
-// Copies the list into a new one
-/proc/n_listcopy(list/L, start, end)
+// Clone of list.Copy()
+/proc/n_listcopy(var/list/L, var/start, var/end)
 	if(!istype(L, /list)) return
 	return L.Copy(start, end)
 
-// Adds arg 2,3,4,5... to the end of list at arg 1
+// Clone of list.Add()
 /proc/n_listadd()
 	var/list/chosenlist
 	var/i = 1
@@ -60,7 +58,7 @@
 			if(chosenlist)
 				chosenlist.Add(e)
 
-// Removes arg 2,3,4,5... from list at arg 1
+// Clone of list.Remove()
 /proc/n_listremove()
 	var/list/chosenlist
 	var/i = 1
@@ -74,26 +72,34 @@
 			if(chosenlist)
 				chosenlist.Remove(e)
 
-// Cuts out a copy of a list
-/proc/n_listcut(list/L, start, end)
+// Clone of list.Cut()
+/proc/n_listcut(var/list/L, var/start, var/end)
 	if(!istype(L, /list)) return
 	return L.Cut(start, end)
 
-// Swaps two values in the list
-/proc/n_listswap(list/L, firstindex, secondindex)
+// Clone of list.Swap()
+/proc/n_listswap(var/list/L, var/firstindex, var/secondindex)
 	if(!istype(L, /list)) return
 	if(L.len >= secondindex && L.len >= firstindex)
 		return L.Swap(firstindex, secondindex)
 
-// Inserts a value into the list
-/proc/n_listinsert(list/L, index, element)
+// Clone of list.Insert()
+/proc/n_listinsert(var/list/L, var/index, var/element)
 	if(!istype(L, /list)) return
 	return L.Insert(index, element)
 
-// --- String methods ---
+// --- Miscellaneous functions ---
 
-//If list, finds a value in it, if text, finds a substring in it
-/proc/n_smartfind(haystack, needle, start = 1, end = 0)
+// Clone of sleep()
+/proc/delay(var/time)
+	sleep(time)
+
+// Clone of prob()
+/proc/prob_chance(var/chance)
+	return prob(chance)
+
+// Merge of list.Find() and findtext()
+/proc/smartfind(var/haystack, var/needle, var/start = 1, var/end = 0)
 	if(haystack && needle)
 		if(isobject(haystack))
 			if(istype(haystack, /list))
@@ -106,41 +112,64 @@
 				if(length(haystack) >= end && start > 0)
 					return findtext(haystack, needle, start, end)
 
-//Returns a substring of the string
-/proc/n_substr(string, start = 1, end = 0)
+// Clone of copytext()
+/proc/docopytext(var/string, var/start = 1, var/end = 0)
 	if(istext(string) && isnum(start) && isnum(end))
 		if(start > 0)
 			return copytext(string, start, end)
 
-//Returns the length of the string or list
-/proc/n_smartlength(container)
+// Clone of length()
+/proc/smartlength(var/container)
 	if(container)
 		if(istype(container, /list) || istext(container))
 			return length(container)
-	return 0
 
-//Lowercase all characters
-/proc/n_lower(string)
+// BY DONKIE~
+// String stuff
+/proc/n_lower(var/string)
 	if(istext(string))
 		return lowertext(string)
 
-//Uppercase all characters
-/proc/n_upper(string)
+/proc/n_upper(var/string)
 	if(istext(string))
 		return uppertext(string)
 
-//Converts a string to a list
-/proc/n_explode(string, separator = "")
-	if(istext(string) && (istext(separator) || isnull(separator)))
+/*
+//Makes a list where all indicies in a string is a seperate index in the list
+// JUST A HELPER DON'T ADD TO NTSCRIPT
+proc/string_tolist(var/string)
+	var/list/L = new/list()
+
+	var/i
+	for(i=1, i<=lentext(string), i++)
+		L.Add(copytext(string, i, i))
+
+	return L
+
+proc/string_explode(var/string, var/separator)
+	if(istext(string))
+		if(istext(separator) && separator == "")
+			return string_tolist(string)
+		var/i
+		var/lasti = 1
+		var/list/L = new/list()
+
+		for(i=1, i<=lentext(string)+1, i++)
+			if(copytext(string, i, i+1) == separator) // We found a separator
+				L.Add(copytext(string, lasti, i))
+				lasti = i+1
+
+		L.Add(copytext(string, lasti, lentext(string)+1)) // Adds the last segment
+
+		return L
+
+Just found out there was already a string explode function, did some benchmarking, and that function were a bit faster, sticking to that.
+*/
+proc/string_explode(var/string, var/separator)
+	if(istext(string) && istext(separator))
 		return splittext(string, separator)
 
-//Converts a list to a string
-/proc/n_implode(list/li, separator)
-	if(istype(li) && (istext(separator) || isnull(separator)))
-		return jointext(li, separator)
-
-//Repeats the string x times
-/proc/n_repeat(string, amount)
+proc/n_repeat(var/string, var/amount)
 	if(istext(string) && isnum(amount))
 		var/i
 		var/newstring = ""
@@ -153,8 +182,7 @@
 
 		return newstring
 
-//Reverses the order of the string. "Clown" becomes "nwolC"
-/proc/n_reverse(string)
+proc/n_reverse(var/string)
 	if(istext(string))
 		var/newstring = ""
 		var/i
@@ -165,91 +193,45 @@
 
 		return newstring
 
-// String -> Number
-/proc/n_str2num(string)
+// I don't know if it's neccesary to make my own proc, but I think I have to to be able to check for istext.
+proc/n_str2num(var/string)
 	if(istext(string))
 		return text2num(string)
 
-/proc/n_proper(string)
-	if(!istext(string))
-		return ""
-
-	return text("[][]", uppertext(copytext(string, 1, 2)), lowertext(copytext(string, 2)))
-
-// --- Number methods ---
-
-//Returns the highest value of the arguments
-//Need custom functions here cause byond's min and max runtimes if you give them a string or list.
-/proc/n_max()
-	if(args.len == 0)
-		return 0
-
-	var/max = args[1]
-	for(var/e in args)
-		if(isnum(e) && e > max)
-			max = e
-
-	return max
-
-//Returns the lowest value of the arguments
-/proc/n_min()
-	if(args.len == 0)
-		return 0
-
-	var/min = args[1]
-	for(var/e in args)
-		if(isnum(e) && e < min)
-			min = e
-
-	return min
-
-/proc/n_prob(chance)
-	return prob(chance)
-
-/proc/n_randseed(seed)
-	rand_seed(seed)
-	return 0
-
-/proc/n_rand(low, high)
-	if(isnull(low) && isnull(high))
-		return rand()
-
-	return rand(low, high)
-
-// Number -> String
-/proc/n_num2str(num)
+// Number shit
+proc/n_num2str(var/num)
 	if(isnum(num))
 		return num2text(num)
 
 // Squareroot
-/proc/n_sqrt(num)
+proc/n_sqrt(var/num)
 	if(isnum(num))
 		return sqrt(num)
 
 // Magnitude of num
-/proc/n_abs(num)
+proc/n_abs(var/num)
 	if(isnum(num))
 		return abs(num)
 
 // Round down
-/proc/n_floor(num)
+proc/n_floor(var/num)
 	if(isnum(num))
 		return round(num)
 
 // Round up
-/proc/n_ceil(num)
+proc/n_ceil(var/num)
 	if(isnum(num))
 		return round(num)+1
 
 // Round to nearest integer
-/proc/n_round(num)
+proc/n_round(var/num)
 	if(isnum(num))
 		if(num-round(num)<0.5)
 			return round(num)
 		return n_ceil(num)
 
 // Clamps N between min and max
-/proc/n_clamp(num, min=-1, max=1)
+proc/n_clamp(var/num, var/min=-1, var/max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		if(num<=min)
 			return min
@@ -258,62 +240,52 @@
 		return num
 
 // Returns 1 if N is inbetween Min and Max
-/proc/n_inrange(num, min=-1, max=1)
+proc/n_inrange(var/num, var/min=-1, var/max=1)
 	if(isnum(num)&&isnum(min)&&isnum(max))
 		return ((min <= num) && (num <= max))
+// END OF BY DONKIE :(
 
-// Returns the sine of num
-/proc/n_sin(num)
-	if(isnum(num))
-		return sin(num)
-
-// Returns the cosine of num
-/proc/n_cos(num)
-	if(isnum(num))
-		return cos(num)
-
-// Returns the arcsine of num
-/proc/n_asin(num)
-	if(isnum(num)&&-1<=num&&num<=1)
-		return arcsin(num)
-
-// Returns the arccosine of num
-/proc/n_acos(num)
-	if(isnum(num)&&-1<=num&&num<=1)
-		return arccos(num)
-
-// Returns the natural log of num
-/proc/n_log(num)
-	if(isnum(num)&&0<num)
-		return log(num)
-
-// Replace text
-/proc/n_replace(text, find, replacement)
-	if(istext(text) && istext(find) && istext(replacement))
-		var/find_len = length(find)
-		if(find_len < 1)	return text
-		. = ""
-		var/last_found = 1
+// Non-recursive
+// Imported from Mono string.ReplaceUnchecked
+/proc/string_replacetext(var/haystack,var/a,var/b)
+	if(istext(haystack)&&istext(a)&&istext(b))
+		var/i = 1
+		var/lenh=lentext(haystack)
+		var/lena=lentext(a)
+		//var/lenb=lentext(b)
 		var/count = 0
-		while(1)
-			count += 1
-			if(count >  SCRIPT_MAX_REPLACEMENTS_ALLOWED)
+		var/list/dat = list()
+		while (i < lenh)
+			var/found = findtext(haystack, a, i, 0)
+			//log_misc("findtext([haystack], [a], [i], 0)=[found]")
+			if (found == 0) // Not found
 				break
-			var/found = findtext(text, find, last_found, 0)
-			. += copytext(text, last_found, found)
-			if(found)
-				. += replacement
-				last_found = found + find_len
-				continue
-			return
-
-#undef SCRIPT_MAX_REPLACEMENTS_ALLOWED
-
-// --- Miscellaneous functions ---
-
-/proc/n_time()
-	return world.timeofday
-
-// Clone of sleep()
-/proc/n_delay(time)
-	sleep(time)
+			else
+				if (count < SCRIPT_MAX_REPLACEMENTS_ALLOWED)
+					dat+=found
+					count+=1
+				else
+					//log_misc("Script found [a] [count] times, aborted")
+					break
+			//log_misc("Found [a] at [found]! Moving up...")
+			i = found + lena
+		if (count == 0)
+			return haystack
+		//var/nlen = lenh + ((lenb - lena) * count)
+		var/buf = copytext(haystack,1,dat[1]) // Prefill
+		var/lastReadPos = 0
+		for (i = 1, i <= count, i++)
+			var/precopy = dat[i] - lastReadPos-1
+			//internal static unsafe void CharCopy (String target, int targetIndex, String source, int sourceIndex, int count)
+			//fixed (char* dest = target, src = source)
+			//CharCopy (dest + targetIndex, src + sourceIndex, count);
+			//CharCopy (dest + curPos, source + lastReadPos, precopy);
+			buf+=copytext(haystack,lastReadPos,precopy)
+			log_misc("buf+=copytext([haystack],[lastReadPos],[precopy])")
+			log_misc("[buf]")
+			lastReadPos = dat[i] + lena
+			//CharCopy (dest + curPos, replace, newValue.length);
+			buf+=b
+			log_misc("[buf]")
+		buf+=copytext(haystack,lastReadPos, 0)
+		return buf

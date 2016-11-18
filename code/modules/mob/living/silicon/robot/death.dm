@@ -1,38 +1,20 @@
-
-/mob/living/silicon/robot/spawn_gibs()
-	robogibs(loc, viruses)
-
-/mob/living/silicon/robot/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-r")
-
-
 /mob/living/silicon/robot/dust()
+	//Delete the MMI first so that it won't go popping out.
 	if(mmi)
 		qdel(mmi)
 	..()
 
-/mob/living/silicon/robot/spawn_dust()
-	new /obj/effect/decal/remains/robot(loc)
-
-/mob/living/silicon/robot/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-r")
+/mob/living/silicon/robot/ash()
+	if(mmi)
+		qdel(mmi)
+	..()
 
 /mob/living/silicon/robot/death(gibbed)
-	if(stat == DEAD)
-		return
-	if(!gibbed)
-		visible_message("<b>[src]</b> shudders violently for a moment before falling still, its eyes slowly darkening.")
-	locked = 0 //unlock cover
-	stat = DEAD
-	update_canmove()
-	if(camera && camera.status)
-		camera.toggle_cam(src,0)
-	update_headlamp(1) //So borg lights are disabled when killed.
-
-	uneq_all() // particularly to ensure sight modes are cleared
-
-	update_icons()
-
+	if(camera)
+		camera.status = 0
+	if(module)
+		var/obj/item/weapon/gripper/G = locate(/obj/item/weapon/gripper) in module
+		if(G) G.drop_item()
+	remove_robot_verbs()
 	sql_report_cyborg_death(src)
-
-	return ..()
+	..(gibbed,"shudders violently for a moment, then becomes motionless, its eyes slowly darkening.")

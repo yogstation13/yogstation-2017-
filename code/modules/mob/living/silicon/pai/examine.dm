@@ -1,29 +1,19 @@
-/mob/living/silicon/pai/examine()
+/mob/living/silicon/pai/examine(mob/user)
+	..(user, infix = ", personal AI")
 
-	set src in oview()
-
-	if(!usr || !src)	return
-	if((usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	var/msg = "<span class='info'>*---------*\nThis is \icon<b>[src][name], <i>a personal AI unit</i>!</b>"
-
-	if (canmove || resting)
-		msg += "\nA holographic projection resembling a [chassis] flickers about the unit, almost obscuring its card-shaped core suspended in its center."
-	else
-		msg += "\nA sleek card-shaped unit of carboncoat plastic, this unit is a container for an enigmatic personal AI unit. Who knows what being calls this humble shell its home?"
-
-	if (src.description)
-		msg += "\nA tag upon the unit's core reads: <i>[src.description]</i>."
-	else
-		msg += "\nA plain, unmarked tag upon the unit's core is clearly visible, though it contains no text."
-
+	var/msg = ""
 	switch(src.stat)
 		if(CONSCIOUS)
-			if(!src.client)	msg += "\nThe unit is unnaturally still, completely frozen in time.." //afk
-		if(UNCONSCIOUS)		msg += "\n<span class='warning'>A blue diagnostics screen with hundreds of lines of scrolling text covers its screen.</span>"
-		if(DEAD)			msg += "\n<span class='deadsay'>An ominous red ring glowers out from its shattered display screen.</span>"
-	msg += "\n*---------*</span>"
+			if(!src.client)	msg += "\nIt appears to be in stand-by mode." //afk
+		if(UNCONSCIOUS)		msg += "\n<span class='warning'>It doesn't seem to be responding.</span>"
+		if(DEAD)			msg += "\n<span class='deadsay'>It looks completely unsalvageable.</span>"
+	msg += "\n*---------*"
 
-	usr << msg
+	if(print_flavor_text()) msg += "\n[print_flavor_text()]\n"
+
+	if (pose)
+		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
+			pose = addtext(pose,".") //Makes sure all emotes end with a period.
+		msg += "\nIt is [pose]"
+
+	user << msg

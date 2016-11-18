@@ -1,113 +1,88 @@
+/*
+=== Item Click Call Sequences ===
+These are the default click code call sequences used when clicking on stuff with an item.
+
+Atoms:
+
+mob/ClickOn() calls the item's resolve_attackby() proc.
+item/resolve_attackby() calls the target atom's attackby() proc.
+
+Mobs:
+
+mob/living/attackby() after checking for surgery, calls the item's attack() proc.
+item/attack() generates attack logs, sets click cooldown and calls the mob's attacked_with_item() proc. If you override this, consider whether you need to set a click cooldown, play attack animations, and generate logs yourself.
+mob/attacked_with_item() should then do mob-type specific stuff (like determining hit/miss, handling shields, etc) and then possibly call the item's apply_hit_effect() proc to actually apply the effects of being hit.
+
+Item Hit Effects:
+
+item/apply_hit_effect() can be overriden to do whatever you want. However "standard" physical damage based weapons should make use of the target mob's hit_with_weapon() proc to
+avoid code duplication. This includes items that may sometimes act as a standard weapon in addition to having other effects (e.g. stunbatons on harm intent).
+*/
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'activate held object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	return
 
-// No comment
-/atom/proc/attackby(obj/item/W, mob/user, params)
-	return
-
-/obj/attackby(obj/item/I, mob/living/user, params)
-	return I.attack_obj(src, user)
-
-/mob/living/attackby(obj/item/I, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
-		var/sharpness = I.is_sharp()
-		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
-				harvest(user)
-			return 1
-	return I.attack(src, user)
-
-
-/obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(flags & NOBLUDGEON)
-		return
-	if(!force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
-	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
-
-	user.lastattacked = M
-	M.lastattacker = user
-
-	M.attacked_by(src, user)
-
-	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+//I would prefer to rename this to attack(), but that would involve touching hundreds of files.
+/obj/item/proc/resolve_attackby(atom/A, mob/user)
 	add_fingerprint(user)
+	return A.attackby(src, user)
 
-
-//the equivalent of the standard version of attack() but for object targets.
-/obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(flags & NOBLUDGEON)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(O)
-	O.attacked_by(src, user)
-
-
-
-/atom/movable/proc/attacked_by()
+// No comment
+/atom/proc/attackby(obj/item/W, mob/user)
 	return
 
-/obj/attacked_by(obj/item/I, mob/living/user)
-	if(I.force)
-		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+/atom/movable/attackby(obj/item/W, mob/user)
+	if(!(W.flags & NOBLUDGEON))
+		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
-/mob/living/attacked_by(obj/item/I, mob/living/user)
-	if(user != src)
-		user.do_attack_animation(src)
-	if(send_item_attack_message(I, user))
-		if(apply_damage(I.force, I.damtype))
-			if(I.damtype == BRUTE)
-				if(prob(33))
-					I.add_mob_blood(src)
-					var/turf/location = get_turf(src)
-					add_splatter_floor(location)
-					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-						user.add_mob_blood(src)
-	return 1
-
+/mob/living/attackby(obj/item/I, mob/user)
+	if(!ismob(user))
+		return 0
+	if(can_operate(src) && I.do_surgery(src,user)) //Surgery
+		return 1
+	if(attempt_vr(src,"vore_attackby",args)) return //VOREStation Code
+	return I.attack(src, user, user.zone_sel.selecting)
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
-
-/obj/item/proc/get_clamped_volume()
-	if(w_class)
-		if(force)
-			return Clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
-		else
-			return Clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
-
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
-	var/message_verb = "attacked"
-	if(I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
-	else if(!I.force)
+//I would prefer to rename this attack_as_weapon(), but that would involve touching hundreds of files.
+/obj/item/proc/attack(mob/living/M, mob/living/user, var/target_zone)
+	if(!force || (flags & NOBLUDGEON))
 		return 0
-	var/message_hit_area = ""
-	if(hit_area)
-		message_hit_area = " in the [hit_area]"
+	if(M == user && user.a_intent != I_HURT)
+		return 0
 
-	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
-	if(user in viewers(src, null))
-		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
-	visible_message("<span class='danger'>[attack_message]</span>",
-		"<span class='userdanger'>[attack_message]</span>")
+	/////////////////////////
+	user.lastattacked = M
+	M.lastattacker = user
+
+	if(!no_attack_log)
+		user.attack_log += "\[[time_stamp()]\]<font color='red'> Attacked [M.name] ([M.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+		M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
+		msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])" )
+	/////////////////////////
+
+	user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+	user.do_attack_animation(M)
+
+	var/hit_zone = M.resolve_item_attack(src, user, target_zone)
+	if(hit_zone)
+		apply_hit_effect(M, user, hit_zone)
+
 	return 1
 
-/mob/living/simple_animal/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
-	if(!I.force)
-		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
-						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
-	else if(I.force < force_threshold || I.damtype == STAMINA)
-		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
-					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
-	else
-		return ..()
+//Called when a weapon is used to make a successful melee attack on a mob. Returns the blocked result
+/obj/item/proc/apply_hit_effect(mob/living/target, mob/living/user, var/hit_zone)
+	user.break_cloak()
+	if(hitsound)
+		playsound(loc, hitsound, 50, 1, -1)
+
+	var/power = force
+	if(HULK in user.mutations)
+		power *= 2
+	return target.hit_with_weapon(src, user, power, hit_zone)
+

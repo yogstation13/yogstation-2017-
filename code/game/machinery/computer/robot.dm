@@ -1,161 +1,159 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/robotics
 	name = "robotics control console"
-	desc = "Used to remotely lockdown or detonate linked Cyborgs."
+	desc = "Used to remotely lockdown or detonate linked cyborgs."
+	icon = 'icons/obj/computer.dmi'
+	icon_keyboard = "tech_key"
 	icon_screen = "robot"
-	icon_keyboard = "rd_key"
+	light_color = "#a97faa"
 	req_access = list(access_robotics)
-	circuit = /obj/item/weapon/circuitboard/computer/robotics
-	var/temp = null
-	paiAllowed = 0 //Sorry, no powergaming the borgs
+	circuit = /obj/item/weapon/circuitboard/robotics
 
-/obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
-	if(!istype(R))
-		return 0
-	if(istype(user, /mob/living/silicon/ai))
-		if (R.connected_ai != user)
-			return 0
-	if(istype(user, /mob/living/silicon/robot))
-		if (R != user)
-			return 0
-	if(R.scrambledcodes)
-		return 0
-	return 1
+/obj/machinery/computer/robotics/attack_ai(var/mob/user as mob)
+	ui_interact(user)
 
-/obj/machinery/computer/robotics/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
+/obj/machinery/computer/robotics/attack_hand(var/mob/user as mob)
+	ui_interact(user)
 
-/obj/machinery/computer/robotics/interact(mob/user)
-	if (src.z > 6)
-		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
-		return
-	user.set_machine(src)
-	var/dat
-	var/robots = 0
-	for(var/mob/living/silicon/robot/R in mob_list)
-		if(!can_control(user, R))
-			continue
-		robots++
-		dat += "[R.name] |"
-		if(R.stat)
-			dat += " Not Responding |"
-		else if (!R.canmove)
-			dat += " Locked Down |"
-		else
-			dat += " Operating Normally |"
-		if (!R.canmove)
-		else if(R.cell)
-			dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
-		else
-			dat += " No Cell Installed |"
-		if(R.module)
-			dat += " Module Installed ([R.module.name]) |"
-		else
-			dat += " No Module Installed |"
-		if(R.connected_ai)
-			dat += " Slaved to [R.connected_ai.name] |"
-		else
-			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon) || IsAdminGhost(user))
-			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
-				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
-		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
-		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
-		dat += "<BR>"
+/obj/machinery/computer/robotics/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+	var/data[0]
+	data["robots"] = get_cyborgs(user)
+	data["is_ai"] = issilicon(user)
 
-	if(!robots)
-		dat += "No Cyborg Units detected within access parameters."
-		dat += "<BR>"
-		
-	var/drones = 0
-	for(var/mob/living/simple_animal/drone/D in mob_list)
-		if(D.hacked)
-			continue
-		drones++
-		dat += "[D.name] |"
-		if(D.stat)
-			dat += " Not Responding |"
-		dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
-		dat += "<BR>"
 
-	if(!drones)
-		dat += "No Drone Units detected within access parameters."
-
-	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "robot_control.tmpl", "Robotic Control Console", 400, 500)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
 		return
+	var/mob/user = usr
+	if(!src.allowed(user))
+		user << "Access Denied"
+		return
 
-	if (href_list["temp"])
-		src.temp = null
+	// Locks or unlocks the cyborg
+	if (href_list["lockdown"])
+		var/mob/living/silicon/robot/target = get_cyborg_by_name(href_list["lockdown"])
+		if(!target || !istype(target))
+			return
 
-	else if (href_list["killbot"])
-		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
-			if(can_control(usr, R))
-				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
-				if(choice == "Confirm" && can_control(usr, R) && !..())
-					if(R.syndicate && R.emagged)
-						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
-						if(R.connected_ai)
-							R.connected_ai << "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>"
-						R.ResetSecurityCodes()
-					else
-						message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) detonated [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)!</span>")
-						log_game("\<span class='notice'>[key_name(usr)] detonated [key_name(R)]!</span>")
-						if(R.connected_ai)
-							R.connected_ai << "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>"
-						R.self_destruct()
-		else
-			usr << "<span class='danger'>Access Denied.</span>"
+		if(isAI(user) && (target.connected_ai != user))
+			user << "Access Denied. This robot is not linked to you."
+			return
 
-	else if (href_list["stopbot"])
-		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
-			if(can_control(usr, R))
-				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
-				if(choice == "Confirm" && can_control(usr, R) && !..())
-					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
-					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
-					R.SetLockdown(!R.lockcharge)
-					R << "[!R.lockcharge ? "<span class='notice'>Your lockdown has been lifted!" : "<span class='alert'>You have been locked down!"]</span>"
-					if(R.connected_ai)
-						R.connected_ai << "[!R.lockcharge ? "<span class='notice'>NOTICE - Cyborg lockdown lifted" : "<span class='alert'>ALERT - Cyborg lockdown detected"]: <a href='?src=\ref[R.connected_ai];track=[html_encode(R.name)]'>[R.name]</a></span><br>"
+		if(isrobot(user))
+			user << "Access Denied."
+			return
 
-		else
-			usr << "<span class='danger'>Access Denied.</span>"
+		var/choice = input("Really [target.lockcharge ? "unlock" : "lockdown"] [target.name] ?") in list ("Yes", "No")
+		if(choice != "Yes")
+			return
 
-	else if (href_list["magbot"])
-		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-			if(istype(R) && !R.emagged && ((R.syndicate && R == usr)|| R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
-				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
-				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)]. using robotic console!")
-				R.SetEmagged(1)
-				if(is_special_character(R))
-					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
-		else
-			message_admins("EXPLOIT: [usr] attempted to emag a bot using robotics console without having the right to do so.")
-	else if (href_list["killdrone"])
-		if(src.allowed(usr))
-			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
-			if(D.hacked)
-				usr << "<span class='danger'>ERROR: [D] is not responding to external commands.</span>"
+		if(!target || !istype(target))
+			return
+
+		var/istraitor = target.mind.special_role
+		if (istraitor)
+			target.lockcharge = !target.lockcharge
+			if (target.lockcharge)
+				target << "Someone tried to lock you down!"
 			else
-				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, D)
-				s.start()
-				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
-				D.gib()
+				target << "Someone tried to lift your lockdown!"
+		else
+			target.canmove = !target.canmove
+			target.lockcharge = !target.canmove //when canmove is 1, lockcharge should be 0
+			target.lockdown = !target.canmove
+			if (target.lockcharge)
+				target << "You have been locked down!"
+			else
+				target << "Your lockdown has been lifted!"
+		message_admins("<span class='notice'>[key_name_admin(usr)] [istraitor ? "failed (target is traitor) " : ""][target.lockcharge ? "lockdown" : "release"] on [target.name]!</span>")
+		log_game("[key_name(usr)] attempted to [target.lockcharge ? "lockdown" : "release"] [target.name] on the robotics console!")
 
-	src.updateUsrDialog()
-	return
+
+	// Remotely hacks the cyborg. Only antag AIs can do this and only to linked cyborgs.
+	else if (href_list["hack"])
+		var/mob/living/silicon/robot/target = get_cyborg_by_name(href_list["hack"])
+		if(!target || !istype(target))
+			return
+
+		// Antag synthetic checks
+		if(!istype(user, /mob/living/silicon) || !(user.mind.special_role && user.mind.original == user))
+			user << "Access Denied"
+			return
+
+		if(target.emagged)
+			user << "Robot is already hacked."
+			return
+
+		var/choice = input("Really hack [target.name]? This cannot be undone.") in list("Yes", "No")
+		if(choice != "Yes")
+			return
+
+		if(!target || !istype(target))
+			return
+
+		message_admins("<span class='notice'>[key_name_admin(usr)] emagged [target.name] using the robotic console!</span>")
+		log_game("[key_name(usr)] emagged [target.name] using robotic console!")
+		target.emagged = 1
+		target << "<span class='notice'>Failsafe protocols overriden. New tools available.</span>"
+
+
+// Proc: get_cyborgs()
+// Parameters: 1 (operator - mob which is operating the console.)
+// Description: Returns NanoUI-friendly list of accessible cyborgs.
+/obj/machinery/computer/robotics/proc/get_cyborgs(var/mob/operator)
+	var/list/robots = list()
+
+	for(var/mob/living/silicon/robot/R in mob_list)
+		// Ignore drones
+		if(istype(R, /mob/living/silicon/robot/drone))
+			continue
+		// Ignore antagonistic cyborgs
+		if(R.scrambledcodes)
+			continue
+
+		var/list/robot = list()
+		robot["name"] = R.name
+		if(R.stat)
+			robot["status"] = "Not Responding"
+		else if (R.lockcharge)
+			robot["status"] = "Lockdown"
+		else
+			robot["status"] = "Operational"
+
+		if(R.cell)
+			robot["cell"] = 1
+			robot["cell_capacity"] = R.cell.maxcharge
+			robot["cell_current"] = R.cell.charge
+			robot["cell_percentage"] = round(R.cell.percent())
+		else
+			robot["cell"] = 0
+
+		robot["module"] = R.module ? R.module.name : "None"
+		robot["master_ai"] = R.connected_ai ? R.connected_ai.name : "None"
+		robot["hackable"] = 0
+		//Antag synths should be able to hack themselves and see their hacked status.
+		if(operator && isrobot(operator) && (operator.mind.special_role && operator.mind.original == operator) && (operator == R))
+			robot["hacked"] = R.emagged ? 1 : 0
+			robot["hackable"] = R.emagged? 0 : 1
+		// Antag AIs know whether linked cyborgs are hacked or not.
+		if(operator && isAI(operator) && (R.connected_ai == operator) && (operator.mind.special_role && operator.mind.original == operator))
+			robot["hacked"] = R.emagged ? 1 : 0
+			robot["hackable"] = R.emagged? 0 : 1
+		robots.Add(list(robot))
+	return robots
+
+// Proc: get_cyborg_by_name()
+// Parameters: 1 (name - Cyborg we are trying to find)
+// Description: Helper proc for finding cyborg by name
+/obj/machinery/computer/robotics/proc/get_cyborg_by_name(var/name)
+	if (!name)
+		return
+	for(var/mob/living/silicon/robot/R in mob_list)
+		if(R.name == name)
+			return R

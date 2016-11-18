@@ -1,6 +1,6 @@
 /obj/structure/closet/statue
 	name = "statue"
-	desc = "An incredibly lifelike marble carving."
+	desc = "An incredibly lifelike marble carving"
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	density = 1
@@ -13,28 +13,25 @@
 	var/timer = 240 //eventually the person will be freed
 
 /obj/structure/closet/statue/New(loc, var/mob/living/L)
-
-	if(ishuman(L) || ismonkey(L) || iscorgi(L))
+	if(L && (ishuman(L) || L.isMonkey() || iscorgi(L)))
 		if(L.buckled)
-			L.buckled.unbuckle_mob(L,force=1)
-		L.reset_perspective(src)
+			L.buckled = 0
+			L.anchored = 0
+		if(L.client)
+			L.client.perspective = EYE_PERSPECTIVE
+			L.client.eye = src
 		L.loc = src
-		L.disabilities += MUTE
-		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
-		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
-
+		L.sdisabilities |= MUTE
 		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		intialTox = L.getToxLoss()
 		intialFire = L.getFireLoss()
 		intialBrute = L.getBruteLoss()
 		intialOxy = L.getOxyLoss()
 		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			name = "statue of [H.name]"
-			H.bleedsuppress = 1
-			if(H.gender == "female")
+			name = "statue of [L.name]"
+			if(L.gender == "female")
 				icon_state = "human_female"
-		else if(ismonkey(L))
+		else if(L.isMonkey())
 			name = "statue of a monkey"
 			icon_state = "monkey"
 		else if(iscorgi(L))
@@ -46,12 +43,8 @@
 		qdel(src)
 		return
 
-	START_PROCESSING(SSobj, src)
+	processing_objects.Add(src)
 	..()
-	icon = L.icon
-	icon_state = L.icon_state
-	overlays = L.overlays
-	color = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 
 /obj/structure/closet/statue/process()
 	timer--
@@ -60,49 +53,25 @@
 		M.adjustFireLoss(intialFire - M.getFireLoss())
 		M.adjustBruteLoss(intialBrute - M.getBruteLoss())
 		M.setOxyLoss(intialOxy)
-		M.Stun(1) //So they can't do anything while petrified
-	if(timer <= 0)
+	if (timer <= 0)
 		dump_contents()
-		STOP_PROCESSING(SSobj, src)
+		processing_objects.Remove(src)
 		qdel(src)
 
 /obj/structure/closet/statue/dump_contents()
-
-	if(istype(src.loc, /mob/living/simple_animal/hostile/statue))
-		var/mob/living/simple_animal/hostile/statue/S = src.loc
-		src.loc = S.loc
-		if(S.mind)
-			for(var/mob/M in contents)
-				S.mind.transfer_to(M)
-				M.Weaken(5)
-				M << "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>"
-				break
-		qdel(S)
-
 
 	for(var/obj/O in src)
 		O.loc = src.loc
 
 	for(var/mob/living/M in src)
 		M.loc = src.loc
-		M.disabilities -= MUTE
+		M.sdisabilities &= ~MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
-		M.faction -= "mimic"
-		M.reset_perspective(null)
-
-/obj/structure/closet/statue/take_contents()
-	return
+		if(M.client)
+			M.client.eye = M.client.mob
+			M.client.perspective = MOB_PERSPECTIVE
 
 /obj/structure/closet/statue/open()
-	return
-
-/obj/structure/closet/statue/take_contents()
-	return
-
-/obj/structure/closet/statue/open()
-	return
-
-/obj/structure/closet/statue/insert()
 	return
 
 /obj/structure/closet/statue/close()
@@ -111,24 +80,33 @@
 /obj/structure/closet/statue/toggle()
 	return
 
-/obj/structure/closet/statue/bullet_act(obj/item/projectile/Proj)
-	health -= Proj.damage
+/obj/structure/closet/statue/proc/check_health()
 	if(health <= 0)
-		shatter()
+		for(var/mob/M in src)
+			shatter(M)
 
-/obj/structure/closet/statue/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		shatter()
+/obj/structure/closet/statue/bullet_act(var/obj/item/projectile/Proj)
+	health -= Proj.get_structure_damage()
+	check_health()
 
-/obj/structure/closet/statue/blob_act(obj/effect/blob/B)
-	shatter()
+	return
 
-/obj/structure/closet/statue/attacked_by(obj/item/I, mob/living/user)
-	if(I.damtype != STAMINA)
-		health -= I.force
+/obj/structure/closet/statue/attack_generic(var/mob/user, damage, attacktext, environment_smash)
+	if(damage && environment_smash)
+		for(var/mob/M in src)
+			shatter(M)
+
+/obj/structure/closet/statue/ex_act(severity)
+	for(var/mob/M in src)
+		M.ex_act(severity)
+		health -= 60 / severity
+		check_health()
+
+/obj/structure/closet/statue/attackby(obj/item/I as obj, mob/user as mob)
+	health -= I.force
+	user.do_attack_animation(src)
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
-	if(health <= 0)
-		shatter()
+	check_health()
 
 /obj/structure/closet/statue/MouseDrop_T()
 	return
@@ -145,18 +123,9 @@
 /obj/structure/closet/statue/update_icon()
 	return
 
-/obj/structure/closet/statue/proc/shatter()
-	for(var/mob/living/M in src)
-		M.dust()
+/obj/structure/closet/statue/proc/shatter(mob/user as mob)
+	if (user)
+		user.dust()
 	dump_contents()
-	visible_message("<span class='danger'>[src] shatters!.</span>")
+	visible_message("<span class='warning'>[src] shatters!.</span>")
 	qdel(src)
-
-/obj/structure/closet/statue/container_resist()
-	return
-
-/mob/living/proc/petrify()
-	if(istype(loc, /obj/structure/closet/statue)) //If they're already petrified
-		return 0
-	new /obj/structure/closet/statue(get_turf(src), src)
-	return 1

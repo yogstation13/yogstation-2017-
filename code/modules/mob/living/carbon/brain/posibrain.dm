@@ -1,166 +1,121 @@
-var/global/posibrain_notif_cooldown = 0
-
-/obj/item/device/mmi/posibrain
+/obj/item/device/mmi/digital/posibrain
 	name = "positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
-	w_class = 3
-	origin_tech = "biotech=3;programming=3;plasmatech=2"
-	var/notified = 0
+	w_class = ITEMSIZE_NORMAL
+	origin_tech = list(TECH_ENGINEERING = 4, TECH_MATERIAL = 4, TECH_BLUESPACE = 2, TECH_DATA = 4)
+
+	var/searching = 0
 	var/askDelay = 10 * 60 * 1
-	var/used = 0 //Prevents split personality virus. May be reset if personality deletion code is added.
-	brainmob = null
 	req_access = list(access_robotics)
+	locked = 0
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
-	braintype = "Android"
-	var/begin_activation_message = "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
-	var/success_message = "<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>"
-	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
-	var/new_role = "Positronic Brain"
-	var/welcome_message = "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>\n\
-	<b>You are a positronic brain, brought into existence aboard Space Station 13.\n\
-	As a synthetic intelligence, you answer to all crewmembers and the AI.\n\
-	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
-	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
-	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
-	var/list/fluff_names = list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD")
 
 
-/obj/item/device/mmi/posibrain/Topic(href, href_list)
-	if(href_list["activate"])
-		var/mob/dead/observer/ghost = usr
-		if(istype(ghost))
-			activate(ghost)
+/obj/item/device/mmi/digital/posibrain/attack_self(mob/user as mob)
+	if(brainmob && !brainmob.key && searching == 0)
+		//Start the process of searching for a new user.
+		user << "\blue You carefully locate the manual activation switch and start the positronic brain's boot process."
+		icon_state = "posibrain-searching"
+		src.searching = 1
+		src.request_player()
+		spawn(600) reset_search()
 
-/obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
-	if(!posibrain_notif_cooldown)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", 'sound/effects/ghost2.ogg', enter_link="<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action=NOTIFY_ATTACK)
-		posibrain_notif_cooldown = 1
-		spawn(askDelay) //Global one minute cooldown to avoid spam.
-			posibrain_notif_cooldown = 0
+/obj/item/device/mmi/digital/posibrain/proc/request_player()
+	for(var/mob/observer/dead/O in player_list)
+		if(!O.MayRespawn())
+			continue
+		if(jobban_isbanned(O, "AI") && jobban_isbanned(O, "Cyborg"))
+			continue
+		if(O.client)
+			if(O.client.prefs.be_special & BE_AI)
+				question(O.client)
 
-/obj/item/device/mmi/posibrain/attack_self(mob/user)
-	if(brainmob && !brainmob.key && !notified)
-		//Start the process of requesting a new ghost.
-		user << begin_activation_message
-		ping_ghosts("requested")
-		notified = 1
-		used = 0
-		update_icon()
-		spawn(askDelay) //Seperate from the global cooldown.
-			notified = 0
-			update_icon()
-			if(brainmob.client)
-				visible_message(success_message)
-			else
-				visible_message(fail_message)
-
-	return //Code for deleting personalities recommended here.
+/obj/item/device/mmi/digital/posibrain/proc/question(var/client/C)
+	spawn(0)
+		if(!C)	return
+		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "Yes", "No", "Never for this round")
+		if(response == "Yes")
+			response = alert(C, "Are you sure you want to play as a positronic brain?", "Positronic brain request", "Yes", "No")
+		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		if(response == "Yes")
+			transfer_personality(C.mob)
+		else if (response == "Never for this round")
+			C.prefs.be_special ^= BE_AI
 
 
-/obj/item/device/mmi/posibrain/attack_ghost(mob/user)
-	activate(user)
-
-//Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
-/obj/item/device/mmi/posibrain/proc/activate(mob/user)
-	if(used || (brainmob && brainmob.key) || jobban_isbanned(user,"posibrain"))
-		return
-
-	var/posi_ask = alert("Become a [name]? (Warning, You can no longer be cloned, and all past lives will be forgotten!)","Are you positive?","Yes","No")
-	if(posi_ask == "No" || qdeleted(src))
-		return
-	transfer_personality(user)
-
-/obj/item/device/mmi/posibrain/transfer_identity(mob/living/carbon/C)
-	name = "[initial(name)] ([C])"
-	brainmob.name = C.real_name
-	brainmob.real_name = C.real_name
-	brainmob.dna = C.dna
-	if(C.has_dna())
-		if(!brainmob.dna)
-			brainmob.dna = new /datum/dna(brainmob)
-		C.dna.copy_dna(brainmob.dna)
-	brainmob.timeofhostdeath = C.timeofdeath
-	brainmob.stat = CONSCIOUS
+/obj/item/device/mmi/digital/posibrain/transfer_identity(var/mob/living/carbon/H)
+	..()
 	if(brainmob.mind)
-		brainmob.mind.assigned_role = new_role
-	if(C.mind)
-		C.mind.transfer_to(brainmob)
-
-	brainmob.mind.remove_all_antag()
-	brainmob.mind.wipe_memory()
-	update_icon()
+		brainmob.mind.assigned_role = "Positronic Brain"
+	brainmob << "<span class='notify'>You feel slightly disoriented. That's normal when you're just a metal cube.</span>"
+	icon_state = "posibrain-occupied"
 	return
 
-/obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
-	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		candidate << "This brain has already been taken! Please try your possesion again later!"
+/obj/item/device/mmi/digital/posibrain/proc/transfer_personality(var/mob/candidate)
+	announce_ghost_joinleave(candidate, 0, "They are occupying a positronic brain now.")
+	src.searching = 0
+	src.brainmob.mind = candidate.mind
+	src.brainmob.ckey = candidate.ckey
+	src.brainmob.mind.reset()
+	src.name = "positronic brain ([src.brainmob.name])"
+	src.brainmob << "<b>You are a positronic brain, brought into existence on [station_name()].</b>"
+	src.brainmob << "<b>As a synthetic intelligence, you answer to all crewmembers, as well as the AI.</b>"
+	src.brainmob << "<b>Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
+	src.brainmob << "<b>Use say #b to speak to other artificial intelligences.</b>"
+	src.brainmob.mind.assigned_role = "Positronic Brain"
+
+	var/turf/T = get_turf_or_move(src.loc)
+	for (var/mob/M in viewers(T))
+		M.show_message("\blue The positronic brain chimes quietly.")
+	icon_state = "posibrain-occupied"
+
+/obj/item/device/mmi/digital/posibrain/proc/reset_search() //We give the players sixty seconds to decide, then reset the timer.
+
+	if(src.brainmob && src.brainmob.key) return
+	world.log << "Resetting Posibrain: [brainmob][brainmob ? ", [brainmob.key]" : ""]"
+
+	src.searching = 0
+	icon_state = "posibrain"
+
+	var/turf/T = get_turf_or_move(src.loc)
+	for (var/mob/M in viewers(T))
+		M.show_message("\blue The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?")
+
+/obj/item/device/mmi/digital/posibrain/examine(mob/user)
+	if(!..(user))
 		return
-	notified = 0
-	if(candidate.mind && !isobserver(candidate))
-		candidate.mind.transfer_to(brainmob)
-	else
-		brainmob.ckey = candidate.ckey
-	name = "[initial(name)] ([brainmob.name])"
-	brainmob << welcome_message
-	brainmob.mind.assigned_role = new_role
-	brainmob.stat = CONSCIOUS
-	dead_mob_list -= brainmob
-	living_mob_list += brainmob
-	if(clockwork)
-		add_servant_of_ratvar(brainmob, TRUE)
 
-	visible_message(new_mob_message)
-	update_icon()
-	used = 1
-
-
-/obj/item/device/mmi/posibrain/examine()
-
-	set src in oview()
-
-	if(!usr || !src)
-		return
-	if( (usr.disabilities & BLIND || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
+	var/msg = "<span class='info'>*---------*</span>\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
-	if(brainmob && brainmob.key)
-		switch(brainmob.stat)
+	if(src.brainmob && src.brainmob.key)
+		switch(src.brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)
-					msg += "It appears to be in stand-by mode.\n" //afk
-			if(DEAD)
-				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+				if(!src.brainmob.client)	msg += "It appears to be in stand-by mode.\n" //afk
+			if(UNCONSCIOUS)		msg += "<span class='warning'>It doesn't seem to be responsive.</span>\n"
+			if(DEAD)			msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
-		msg += "[dead_message]\n"
-	msg += "<span class='info'>*---------*</span>"
-	usr << msg
+		msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
+	msg += "</span><span class='info'>*---------*</span>"
+	user << msg
 	return
 
-/obj/item/device/mmi/posibrain/New()
-	brainmob = new(src)
-	brainmob.name = "[pick(fluff_names)]-[rand(100, 999)]"
-	brainmob.real_name = brainmob.name
-	brainmob.loc = src
-	brainmob.container = src
-	ping_ghosts("created")
+/obj/item/device/mmi/digital/posibrain/emp_act(severity)
+	if(!src.brainmob)
+		return
+	else
+		switch(severity)
+			if(1)
+				src.brainmob.emp_damage += rand(20,30)
+			if(2)
+				src.brainmob.emp_damage += rand(10,20)
+			if(3)
+				src.brainmob.emp_damage += rand(0,10)
 	..()
 
-
-/obj/item/device/mmi/posibrain/attackby(obj/item/O, mob/user)
-	return
-
-
-/obj/item/device/mmi/posibrain/update_icon()
-	if(notified)
-		icon_state = "[initial(icon_state)]-searching"
-		return
-	if(brainmob && brainmob.key)
-		icon_state = "[initial(icon_state)]-occupied"
-	else
-		icon_state = initial(icon_state)
+/obj/item/device/mmi/digital/posibrain/New()
+	..()
+	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+	src.brainmob.real_name = src.brainmob.name

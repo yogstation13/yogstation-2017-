@@ -1,11 +1,13 @@
-/obj/mecha/medical/New()
+/obj/mecha/medical/initialize()
 	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
+	var/turf/T = get_turf(src)
+	if(isPlayerLevel(T.z))
+		new /obj/item/mecha_parts/mecha_tracking(src)
 	return
 
 
 /obj/mecha/medical/mechturn(direction)
-	dir = direction
+	set_dir(direction)
 	playsound(src,'sound/mecha/mechmove01.ogg',40,1)
 	return 1
 

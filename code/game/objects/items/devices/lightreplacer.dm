@@ -15,7 +15,7 @@
 //
 // HOW TO REFILL THE DEVICE
 //
-// It will need to be manually refilled with lights.
+// It can be manually refilled or by clicking on a storage item containing lights.
 // If it's part of a robot module, it will charge when the Robot is inside a Recharge Station.
 //
 // EMAGGED FEATURES
@@ -41,7 +41,7 @@
 /obj/item/device/lightreplacer
 
 	name = "light replacer"
-	desc = "A device to automatically replace lights. Refill with broken or working lightbulbs, or sheets of glass."
+	desc = "A device to automatically replace lights. Refill with working lightbulbs or sheets of glass."
 
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
@@ -49,146 +49,97 @@
 
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	origin_tech = "magnets=3;engineering=4"
+	origin_tech = list(TECH_MAGNET = 3, TECH_MATERIAL = 2)
 
-	var/max_uses = 20
-	var/uses = 0
+	var/max_uses = 32
+	var/uses = 32
 	var/emagged = 0
 	var/failmsg = ""
-	// How much to increase per each glass?
-	var/increment = 5
-	// How much to take from the glass?
-	var/decrement = 1
-	var/charge = 1
-
-	// Eating used bulbs gives us bulb shards
-	var/bulb_shards = 0
-	// when we get this many shards, we get a free bulb.
-	var/shards_required = 4
+	var/charge = 0
 
 /obj/item/device/lightreplacer/New()
-	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
 	..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
-	..()
-	user << status_string()
+	if(..(user, 2))
+		user << "It has [uses] lights remaining."
 
-/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user, params)
-
-	if(istype(W, /obj/item/stack/sheet/glass))
-		var/obj/item/stack/sheet/glass/G = W
+/obj/item/device/lightreplacer/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/material) && W.get_material_name() == "glass")
+		var/obj/item/stack/G = W
 		if(uses >= max_uses)
 			user << "<span class='warning'>[src.name] is full.</span>"
 			return
-		else if(G.use(decrement))
-			AddUses(increment)
-			user << "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] light\s remaining.</span>"
+		else if(G.use(1))
+			AddUses(16) //Autolathe converts 1 sheet into 16 lights.
+			user << "<span class='notice'>You insert a piece of glass into \the [src.name]. You have [uses] light\s remaining.</span>"
 			return
 		else
-			user << "<span class='warning'>You need one sheet of glass to replace lights!</span>"
+			user << "<span class='warning'>You need one sheet of glass to replace lights.</span>"
 
 	if(istype(W, /obj/item/weapon/light))
-		var/new_bulbs = 0
 		var/obj/item/weapon/light/L = W
 		if(L.status == 0) // LIGHT OKAY
 			if(uses < max_uses)
-				if(!user.unEquip(W))
-					return
 				AddUses(1)
+				user << "You insert \the [L.name] into \the [src.name]. You have [uses] light\s remaining."
+				user.drop_item()
 				qdel(L)
-		else
-			if(!user.unEquip(W))
 				return
-			new_bulbs += AddShards(1)
-			qdel(L)
-		if(new_bulbs != 0)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-		user << "<span class='notice'>You insert the [L.name] into the [src.name]. " + status_string() + "</span>"
-		return
-
-	if(istype(W, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = W
-		var/found_lightbulbs = FALSE
-		var/replaced_something = TRUE
-
-		for(var/obj/item/I in S.contents)
-			if(istype(I,/obj/item/weapon/light))
-				var/obj/item/weapon/light/L = I
-				found_lightbulbs = TRUE
-				if(src.uses >= max_uses)
-					break
-				if(L.status == LIGHT_OK)
-					replaced_something = TRUE
-					AddUses(1)
-					qdel(L)
-
-				else if(L.status == LIGHT_BROKEN || L.status == LIGHT_BURNED)
-					replaced_something = TRUE
-					AddShards(1)
-					qdel(L)
-
-		if(!found_lightbulbs)
-			user << "<span class='warning'>\The [S] contains no bulbs.</span>"
+		else
+			user << "You need a working light."
 			return
-
-		if(!replaced_something && src.uses == max_uses)
-			user << "<span class='warning'>\The [src] is full!</span>"
-			return
-
-		user << "<span class='notice'>You fill \the [src] with lights from \the [S]. " + status_string() + "</span>"
-
-/obj/item/device/lightreplacer/emag_act()
-	if(!emagged)
-		Emag()
 
 /obj/item/device/lightreplacer/attack_self(mob/user)
-	user << status_string()
-
+	/* // This would probably be a bit OP. If you want it though, uncomment the code.
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.emagged)
+			src.Emag()
+			usr << "You shortcircuit the [src]."
+			return
+	*/
+	usr << "It has [uses] lights remaining."
 
 /obj/item/device/lightreplacer/update_icon()
 	icon_state = "lightreplacer[emagged]"
 
-/obj/item/device/lightreplacer/proc/status_string()
-	return "It has [uses] light\s remaining (plus [bulb_shards] fragment\s)."
 
-/obj/item/device/lightreplacer/proc/Use(mob/user)
+/obj/item/device/lightreplacer/proc/Use(var/mob/user)
 
 	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
 // Negative numbers will subtract
-/obj/item/device/lightreplacer/proc/AddUses(amount = 1)
-	uses = Clamp(uses + amount, 0, max_uses)
+/obj/item/device/lightreplacer/proc/AddUses(var/amount = 1)
+	uses = min(max(uses + amount, 0), max_uses)
 
-/obj/item/device/lightreplacer/proc/AddShards(amount = 1)
-	bulb_shards += amount
-	var/new_bulbs = round(bulb_shards / shards_required)
-	if(new_bulbs > 0)
-		AddUses(new_bulbs)
-	bulb_shards = bulb_shards % shards_required
-	return new_bulbs
-
-/obj/item/device/lightreplacer/proc/Charge(var/mob/user)
-	charge += 1
-	if(charge > 3)
+/obj/item/device/lightreplacer/proc/Charge(var/mob/user, var/amount = 1)
+	charge += amount
+	if(charge > 6)
 		AddUses(1)
-		charge = 1
+		charge = 0
 
-/obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
+/obj/item/device/lightreplacer/proc/ReplaceLight(var/obj/machinery/light/target, var/mob/living/U)
 
 	if(target.status != LIGHT_OK)
 		if(CanUse(U))
 			if(!Use(U)) return
-			U << "<span class='notice'>You replace the [target.fitting] with \the [src].</span>"
+			U << "<span class='notice'>You replace the [target.fitting] with the [src].</span>"
 
 			if(target.status != LIGHT_EMPTY)
-				var/new_bulbs = AddShards(1)
-				if(new_bulbs != 0)
-					U << "<span class='notice'>\The [src] has fabricated a new bulb from the broken bulbs it has stored. It now has [uses] uses.</span>"
-					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+
+				var/obj/item/weapon/light/L1 = new target.light_type(target.loc)
+				L1.status = target.status
+				L1.rigged = target.rigged
+				L1.brightness_range = target.brightness_range
+				L1.brightness_power = target.brightness_power
+				L1.brightness_color = target.brightness_color
+				L1.switchcount = target.switchcount
+				target.switchcount = 0
+				L1.update()
 
 				target.status = LIGHT_EMPTY
 				target.update()
@@ -198,7 +149,9 @@
 			target.status = L2.status
 			target.switchcount = L2.switchcount
 			target.rigged = emagged
-			target.brightness = L2.brightness
+			target.brightness_range = L2.brightness_range
+			target.brightness_power = L2.brightness_power
+			target.brightness_color = L2.brightness_color
 			target.on = target.has_power()
 			target.update()
 			qdel(L2)
@@ -211,52 +164,24 @@
 			U << failmsg
 			return
 	else
-		U << "<span class='warning'>There is a working [target.fitting] already inserted!</span>"
+		U << "There is a working [target.fitting] already inserted."
 		return
 
-/obj/item/device/lightreplacer/proc/Emag()
+/obj/item/device/lightreplacer/emag_act(var/remaining_charges, var/mob/user)
 	emagged = !emagged
 	playsound(src.loc, "sparks", 100, 1)
-	if(emagged)
-		name = "shortcircuited [initial(name)]"
-	else
-		name = initial(name)
 	update_icon()
+	return 1
 
 //Can you use it?
 
-/obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
+/obj/item/device/lightreplacer/proc/CanUse(var/mob/living/user)
 	src.add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1
 	else
 		return 0
-
-/obj/item/device/lightreplacer/afterattack(atom/T, mob/U, proximity)
-	if(!proximity)
-		return
-	if(!isturf(T))
-		return
-
-	var/used = FALSE
-	for(var/atom/A in T)
-		if(!CanUse(U))
-			break
-		used = TRUE
-		if(istype(A, /obj/machinery/light))
-			ReplaceLight(A, U)
-
-	if(!used)
-		U << failmsg
-
-/obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	J.put_in_cart(src, user)
-	J.myreplacer = src
-	J.update_icon()
-
-/obj/item/device/lightreplacer/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
 
 #undef LIGHT_OK
 #undef LIGHT_EMPTY

@@ -1,116 +1,129 @@
-/obj/item/clothing/shoes/sneakers
-
-/obj/item/clothing/shoes/sneakers/black
+/obj/item/clothing/shoes/black
 	name = "black shoes"
 	icon_state = "black"
-	item_color = "black"
 	desc = "A pair of black shoes."
 
 	cold_protection = FEET
-	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
+	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = FEET
-	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/shoes/sneakers/black/redcoat
-	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/brown
+/obj/item/clothing/shoes/brown
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
-	item_color = "brown"
 
-/obj/item/clothing/shoes/sneakers/brown/captain
-	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/brown/hop
-	item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/brown/ce
-	item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/brown/rd
-	item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/brown/cmo
-	item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/brown/qm
-	item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
-
-/obj/item/clothing/shoes/sneakers/blue
+/obj/item/clothing/shoes/blue
 	name = "blue shoes"
 	icon_state = "blue"
-	item_color = "blue"
 
-/obj/item/clothing/shoes/sneakers/green
+/obj/item/clothing/shoes/green
 	name = "green shoes"
 	icon_state = "green"
-	item_color = "green"
 
-/obj/item/clothing/shoes/sneakers/yellow
+/obj/item/clothing/shoes/yellow
 	name = "yellow shoes"
 	icon_state = "yellow"
-	item_color = "yellow"
 
-/obj/item/clothing/shoes/sneakers/purple
+/obj/item/clothing/shoes/purple
 	name = "purple shoes"
 	icon_state = "purple"
-	item_color = "purple"
 
-/obj/item/clothing/shoes/sneakers/brown
-	name = "brown shoes"
-	icon_state = "brown"
-	item_color = "brown"
-
-/obj/item/clothing/shoes/sneakers/red
+/obj/item/clothing/shoes/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
 	icon_state = "red"
-	item_color = "red"
 
-/obj/item/clothing/shoes/sneakers/white
+/obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.01
-	item_color = "white"
 
-/obj/item/clothing/shoes/sneakers/rainbow
+/obj/item/clothing/shoes/leather
+	name = "leather shoes"
+	desc = "A sturdy pair of leather shoes."
+	icon_state = "leather"
+
+/obj/item/clothing/shoes/rainbow
 	name = "rainbow shoes"
-	desc = "Very gay shoes."
+	desc = "Very colourful shoes."
 	icon_state = "rain_bow"
-	item_color = "rainbow"
 
-/obj/item/clothing/shoes/sneakers/orange
+/obj/item/clothing/shoes/flats
+	name = "black flats"
+	desc = "Sleek black flats."
+	icon_state = "flatsblack"
+	item_state_slots = list(slot_r_hand_str = "black", slot_l_hand_str = "black")
+
+/obj/item/clothing/shoes/flats/white
+	name = "white flats"
+	desc = "Shiny white flats."
+	icon_state = "flatswhite"
+	item_state_slots = list(slot_r_hand_str = "white", slot_l_hand_str = "white")
+
+/obj/item/clothing/shoes/flats/white/color
+	name = "flats"
+	desc = "Sleek flats."
+
+/obj/item/clothing/shoes/flats/red
+	name = "red flats"
+	desc = "Ruby red flats."
+	icon_state = "flatsred"
+	item_state_slots = list(slot_r_hand_str = "red", slot_l_hand_str = "red")
+
+/obj/item/clothing/shoes/flats/purple
+	name = "purple flats"
+	desc = "Royal purple flats."
+	icon_state = "flatspurple"
+	item_state_slots = list(slot_r_hand_str = "purple", slot_l_hand_str = "purple")
+
+/obj/item/clothing/shoes/flats/blue
+	name = "blue flats"
+	desc = "Sleek blue flats."
+	icon_state = "flatsblue"
+	item_state_slots = list(slot_r_hand_str = "blue", slot_l_hand_str = "blue")
+
+/obj/item/clothing/shoes/flats/brown
+	name = "brown flats"
+	desc = "Sleek brown flats."
+	icon_state = "flatsbrown"
+	item_state_slots = list(slot_r_hand_str = "brown", slot_l_hand_str = "brown")
+
+/obj/item/clothing/shoes/flats/orange
+	name = "orange flats"
+	desc = "Radiant orange flats."
+	icon_state = "flatsorange"
+	item_state_slots = list(slot_r_hand_str = "orange", slot_l_hand_str = "orange")
+
+/obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"
-	item_color = "orange"
+	var/obj/item/weapon/handcuffs/chained = null
 
-/obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
-	if (src.chained)
-		src.chained = null
-		src.slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/restraints/handcuffs( user.loc )
-		src.icon_state = "orange"
-	return
+/obj/item/clothing/shoes/orange/proc/attach_cuffs(var/obj/item/weapon/handcuffs/cuffs, mob/user as mob)
+	if (chained) return
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
+	user.drop_item()
+	cuffs.loc = src
+	chained = cuffs
+	slowdown = 15
+	icon_state = "orange1"
+
+/obj/item/clothing/shoes/orange/proc/remove_cuffs(mob/user as mob)
+	if (!chained) return
+
+	user.put_in_hands(chained)
+	chained.add_fingerprint(user)
+
+	slowdown = initial(slowdown)
+	icon_state = "orange"
+	chained = null
+
+/obj/item/clothing/shoes/orange/attack_self(mob/user as mob)
 	..()
-	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
-		//H = null
-		if (src.icon_state != "orange") return
-		if(istype(H, /obj/item/weapon/restraints/handcuffs/cable))
-			return 0
-		qdel(H)
-		src.chained = 1
-		src.slowdown = 15
-		src.icon_state = "orange1"
-	return
+	remove_cuffs(user)
 
-/obj/item/clothing/shoes/sneakers/orange/attack_hand(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && src.chained == 1)
-			user << "<span class='warning'>You need help taking these off!</span>"
-			return
+/obj/item/clothing/shoes/orange/attackby(H as obj, mob/user as mob)
 	..()
+	if (istype(H, /obj/item/weapon/handcuffs))
+		attach_cuffs(H, user)
