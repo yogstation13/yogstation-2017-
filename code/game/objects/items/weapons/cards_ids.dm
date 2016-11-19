@@ -14,7 +14,7 @@
 /obj/item/weapon/card
 	name = "card"
 	desc = "Does card things."
-	icon = 'icons/obj/card-id.dmi'
+	icon = 'icons/obj/card.dmi'
 	w_class = 1
 
 	var/list/files = list()
