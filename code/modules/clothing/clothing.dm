@@ -76,6 +76,7 @@
 //Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
+	materials = list(MAT_GLASS = 250)
 	icon = 'icons/obj/clothing/glasses.dmi'
 	w_class = 2
 	flags_cover = GLASSESCOVERSEYES

@@ -14,7 +14,7 @@
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
-	
+
 	var/obj/item/weapon/implant/krav_maga/KM = new(H)
 	KM.imp_in = H
 	KM.implanted = 1
@@ -170,7 +170,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	glasses =  /obj/item/clothing/glasses/meson/night
 	back = /obj/item/weapon/storage/backpack/industrial
-	belt = /obj/item/weapon/storage/belt/utility
+	belt = /obj/item/weapon/storage/belt/utility/full
 	/*
 	belt_contents = list(/obj/item/weapon/weldingtool/experimental=1,\
 		/obj/item/weapon/crowbar/red=1,\
@@ -208,10 +208,10 @@
 		/obj/item/weapon/gun/projectile/automatic/ar=1,\
 		/obj/item/ammo_box/magazine/m556=2,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
-		
+
 /datum/outfit/ert/inquisitor //FUCKEN XENOS
 	name = "ERT Religious Specialist"
-	
+
 	id = /obj/item/weapon/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
 	glasses = /obj/item/clothing/glasses/godeye
@@ -227,7 +227,7 @@
 	r_pocket = /obj/item/weapon/restraints/handcuffs/energy/cult
 	l_pocket = /obj/item/weapon/gun/energy/gun/mini
 	belt = /obj/item/weapon/storage/belt/security/full
-	
+
 /datum/outfit/ert/inquisitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
@@ -237,8 +237,8 @@
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
 	R.recalculateChannels()
-		
-	
+
+
 /datum/outfit/ert/inquisitor/alert
 	name = "ERT Religious Specialist - High Alert"
 
