@@ -495,7 +495,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering/tcomms
 	name = "signal technician's winter coat"
 	icon_state = "coatsignaltech"
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/device/analyzer,/obj/item/device/multitool,/obj/item/device/assembly/signaler)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/radio,/obj/item/device/analyzer,/obj/item/device/multitool,/obj/item/device/assembly/signaler)
 	hoodtype = /obj/item/clothing/head/winterhood/engineering/tcomms
 
 /obj/item/clothing/head/winterhood/engineering/tcomms

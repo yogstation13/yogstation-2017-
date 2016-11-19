@@ -195,4 +195,4 @@
 /obj/item/device/pda/signaltech
 	name = "telecomms PDA"
 	default_cartridge = /obj/item/weapon/cartridge/signal
-	icon_state = "pda-roboticist"
+	icon_state = "pda_tcomms"

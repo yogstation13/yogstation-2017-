@@ -66163,29 +66163,6 @@
 	},
 /turf/open/space,
 /area/space)
-"cAN" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/tcommsat/computer)
-"cAO" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plating,
-/area/tcommsat/computer)
 "cAP" = (
 /obj/machinery/power/apc{
 	cell_type = 5000;
@@ -66270,19 +66247,6 @@
 /area/ai_monitored/storage/secure{
 	name = "\improper Telecoms Satellite"
 	})
-"cBd" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/closed/wall/r_wall,
-/area/tcommsat/computer)
 "cBe" = (
 /obj/machinery/power/terminal{
 	icon_state = "term";
@@ -66372,17 +66336,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/space)
-"cBu" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/tcommsat/computer)
 "cBw" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 1
@@ -67560,12 +67513,6 @@
 /area/ai_monitored/storage/secure{
 	name = "\improper Telecoms Satellite"
 	})
-"cDO" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
 "cDQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -67665,40 +67612,6 @@
 /area/ai_monitored/storage/secure{
 	name = "\improper Telecoms Satellite"
 	})
-"cEc" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
-"cEd" = (
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
-"cEe" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
 "cEf" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold-r-f (EAST)";
@@ -67779,25 +67692,6 @@
 	temperature = 80
 	},
 /area/tcommsat/server)
-"cEo" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
-	},
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/machinery/camera{
-	c_tag = "Telecoms Teleporter";
-	dir = 4;
-	network = list("SS13","Telecoms")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
 "cEp" = (
 /obj/machinery/bluespace_beacon,
 /turf/open/floor/plasteel{
@@ -68410,10 +68304,37 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"eoi" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/tcommsat/computer)
 "fws" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
+	},
+/turf/closed/wall/r_wall,
+/area/tcommsat/computer)
+"fxY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
@@ -68423,6 +68344,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/incinerator)
+"gLZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
 "gMd" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecoms Life Support";
@@ -68450,6 +68377,21 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
+"hXF" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/turf/open/floor/plasteel{
+	icon_state = "vault";
+	dir = 8
+	},
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
 "iac" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	req_access_txt = 1
@@ -68547,6 +68489,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"lUG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
+/turf/closed/wall/r_wall,
+/area/tcommsat/computer)
 "meq" = (
 /obj/machinery/door/airlock/engineering{
 	name = "SMES Room";
@@ -68631,33 +68583,6 @@
 	icon_state = "warning"
 	},
 /area/engine/engineering)
-"ofP" = (
-/obj/structure/table,
-/obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/obj/machinery/camera{
-	c_tag = "Telecoms Storage";
-	dir = 2;
-	network = list("SS13","Telecoms")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/tcommsat/computer)
 "oZP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
@@ -68680,21 +68605,17 @@
 	icon_state = "floorgrime"
 	},
 /area/hydroponics/backroom)
-"wtJ" = (
-/obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/analyzer,
-/obj/item/weapon/stock_parts/subspace/analyzer,
-/obj/item/weapon/stock_parts/subspace/analyzer,
+"tOo" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /obj/structure/cable/yellow{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
+	icon_state = "1-8";
 	tag = ""
 	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
+/turf/closed/wall/r_wall,
 /area/tcommsat/computer)
 "wHN" = (
 /obj/item/weapon/gun/projectile/shotgun/riot{
@@ -68714,21 +68635,47 @@
 	dir = 8
 	},
 /area/ai_monitored/security/armory)
-"wRT" = (
+"xzY" = (
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/flashlight,
+/turf/open/floor/plating,
+/area/tcommsat/computer)
+"yRz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/machinery/pipedispenser,
 /obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
 	tag = ""
 	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
-"xzY" = (
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/flashlight,
-/turf/open/floor/plating,
+"zWz" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/micro_laser,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/machinery/camera{
+	c_tag = "Telecoms Storage";
+	dir = 2;
+	network = list("SS13","Telecoms")
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
 /area/tcommsat/computer)
 "ABd" = (
 /obj/structure/table/reinforced,
@@ -68754,11 +68701,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
-"BTn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector,
-/turf/open/floor/plating/airless,
-/area/maintenance/aft)
-"CFg" = (
+"BRu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
+	},
+/turf/closed/wall/r_wall,
+/area/tcommsat/computer)
+"BSp" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/subspace/treatment,
 /obj/item/weapon/stock_parts/subspace/treatment,
@@ -68777,16 +68733,21 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
-"DuT" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1
-	},
-/turf/open/floor/plasteel,
-/area/tcommsat/computer)
+"BTn" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector,
+/turf/open/floor/plating/airless,
+/area/maintenance/aft)
 "EiE" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -68799,15 +68760,6 @@
 /obj/machinery/light,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
-/area/tcommsat/computer)
-"EnD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/obj/machinery/pipedispenser,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
 /area/tcommsat/computer)
 "ELT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -68849,6 +68801,19 @@
 	},
 /turf/open/floor/plating/airless,
 /area/tcommsat/computer)
+"FBf" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "Ghz" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -68874,18 +68839,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
-"HBa" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
-	},
-/turf/open/floor/plasteel,
-/area/tcommsat/computer)
 "HJB" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68909,37 +68862,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
-"JPd" = (
-/obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/ansible,
-/obj/item/weapon/stock_parts/subspace/ansible,
-/obj/item/weapon/stock_parts/subspace/ansible,
-/obj/item/weapon/stock_parts/subspace/crystal,
-/obj/item/weapon/stock_parts/subspace/crystal,
-/obj/item/weapon/stock_parts/subspace/crystal,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/tcommsat/computer)
-"LNs" = (
+"JJn" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/machine/telecomms/bus,
 /obj/item/weapon/electronics/apc,
-/obj/machinery/power/apc{
-	cell_type = 5000;
-	dir = 2;
-	name = "Telecoms Satellite APC";
-	pixel_y = -24
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
 /obj/item/weapon/circuitboard/machine/telecomms/bus{
 	pixel_x = -5;
 	pixel_y = 5
@@ -68965,6 +68891,51 @@
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
+"JPd" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/subspace/ansible,
+/obj/item/weapon/stock_parts/subspace/ansible,
+/obj/item/weapon/stock_parts/subspace/ansible,
+/obj/item/weapon/stock_parts/subspace/crystal,
+/obj/item/weapon/stock_parts/subspace/crystal,
+/obj/item/weapon/stock_parts/subspace/crystal,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/tcommsat/computer)
+"LPN" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
+	},
+/turf/closed/wall/r_wall,
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
+"LXG" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/subspace/analyzer,
+/obj/item/weapon/stock_parts/subspace/analyzer,
+/obj/item/weapon/stock_parts/subspace/analyzer,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/tcommsat/computer)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -68977,6 +68948,29 @@
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
+"Pwp" = (
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 1;
+	name = "Telecoms Satellite APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "vault";
+	dir = 8
+	},
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
+"QnX" = (
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/tcommsat/computer)
 "QrA" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68992,18 +68986,28 @@
 /obj/machinery/hologram/holopad,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
-"QEp" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
+"Rof" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23;
+	pixel_y = 0
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/machinery/camera{
+	c_tag = "Telecoms Teleporter";
+	dir = 4;
+	network = list("SS13","Telecoms")
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
 	},
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "vault";
+	dir = 8
 	},
-/area/tcommsat/computer)
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
 "RBb" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Telecoms Control Room";
@@ -69042,6 +69046,45 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/maintenance/incinerator)
+"Syz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 2;
+	on = 1
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
+"UTU" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8";
+	tag = ""
+	},
+/turf/open/floor/plasteel{
+	icon_state = "vault";
+	dir = 8
+	},
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
 "VbF" = (
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -69057,6 +69100,27 @@
 	icon_state = "white"
 	},
 /area/toxins/lab)
+"VMR" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/start{
+	name = "Signal Technology"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0;
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "WDZ" = (
 /obj/structure/grille,
 /obj/structure/cable/yellow,
@@ -69087,20 +69151,6 @@
 /area/tcommsat/lounge{
 	name = "\improper Telecommunications Satellite Access"
 	})
-"Xxg" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/landmark/start{
-	name = "Signal Technology"
-	},
-/turf/open/floor/plasteel,
-/area/tcommsat/computer)
 "XXK" = (
 /obj/structure/table,
 /obj/item/weapon/folder/white,
@@ -106900,8 +106950,8 @@ cCC
 cDd
 cDA
 cCd
+gLZ
 cEb
-cBz
 cBz
 cBz
 ady
@@ -107151,14 +107201,14 @@ cAL
 fws
 kjR
 JPd
-LNs
+JJn
 cAC
 cBz
 cDe
 cBz
 cBc
-cEc
-cEo
+Pwp
+Rof
 cEv
 cBz
 ady
@@ -107406,15 +107456,15 @@ aaa
 aaa
 cAL
 cAC
-ofP
-QEp
-wRT
+zWz
+QnX
+QnX
 ZVG
 cEs
 EPv
 cEs
 cDN
-cEd
+hXF
 cEp
 cEw
 cBz
@@ -107663,15 +107713,15 @@ cAp
 cAA
 cAM
 cAC
-wtJ
-CFg
-EnD
-cAC
-DuT
-Xxg
-HBa
-cDO
-cEe
+LXG
+BSp
+yRz
+fxY
+FBf
+VMR
+Syz
+LPN
+UTU
 cEq
 cEx
 cBz
@@ -107918,9 +107968,9 @@ czU
 aaa
 cAq
 cAB
-cAN
-cBd
-cBu
+lUG
+BRu
+tOo
 cAS
 cBP
 cCf
@@ -108175,7 +108225,7 @@ aaC
 aaa
 cAq
 cAC
-cAO
+eoi
 cBe
 cBf
 cBE
