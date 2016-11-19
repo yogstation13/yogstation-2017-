@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Fixed being able to get more astroturf from grass than intended."

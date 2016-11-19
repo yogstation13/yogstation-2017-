@@ -1,7 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - rscadd: "Borer Control Panel installed to help admins control the flow of borers."
-  - tweak: "Changeling Panacea now ejects borers out of your body."
-  - tweak: "Shadowpeople are resistant to borer infections."
-  - bugfix: "Borers on-leave now properly delete the borer HUD from their victims."
