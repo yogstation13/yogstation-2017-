@@ -5,13 +5,14 @@
 
 	if(victim)
 		src << "<span class='warning'>You already have a host! leave this one if you want a new one.</span>"
+		return
 
 	if(stat == DEAD)
 		return
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/H in view(1,src))
-		if(H!=src && Adjacent(H))
+		if(H != src && Adjacent(H))
 			choices += H
 
 	var/mob/living/carbon/human/H = input(src,"Who do you wish to infect?") in null|choices
@@ -23,7 +24,7 @@
 
 	if(CanInfect(H))
 		src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
-		src.layer = MOB_LAYER
+		layer = MOB_LAYER
 		if(!do_mob(src, H, 30))
 			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 			return
@@ -52,6 +53,13 @@
 		return 0
 
 	return 1
+	var/unprotected = TRUE
+
+	if((H.wear_suit && (H.wear_suit.flags & THICKMATERIAL)) && (H.head && (H.head.flags & THICKMATERIAL)))
+		unprotected = FALSE
+		src << "<span class='warning'>[H] is wearing protective clothing! We can't get through!</span>"
+
+	return unprotected
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
 	set category = "Borer"
