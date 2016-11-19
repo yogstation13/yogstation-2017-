@@ -656,7 +656,7 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 							halitem.icon_state = "stunbaton"
 							halitem.name = "Stun Baton"
 						if(5) //emag
-							halitem.icon = 'icons/obj/card.dmi'
+							halitem.icon = 'icons/obj/card-id.dmi'
 							halitem.icon_state = "emag"
 							halitem.name = "Cryptographic Sequencer"
 						if(6) //flashbang
