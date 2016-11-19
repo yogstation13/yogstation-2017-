@@ -47,6 +47,10 @@
 		src << "<span class='warning'>This being has a strange presence, it would be unwise to enter their body."
 		return 0
 
+	if(isshadow(H))
+		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
+		return 0
+
 	return 1
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
@@ -269,6 +273,9 @@
 
 	if(!checkStrength())
 		return 0
+	if(client.prefs.afreeze)
+		src << "<span class='warning'>You are frozen by an administrator.</span>"
+		return
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 

@@ -195,6 +195,10 @@ var/total_borer_hosts_needed = 10
 
 	loc = get_turf(victim)
 
+	for(var/image/hud in victim.client.images)
+		if(hud.icon_state == "borer")
+			client.images -= hud
+
 	victim.borer = null
 	victim = null
 	reset_perspective(null)
