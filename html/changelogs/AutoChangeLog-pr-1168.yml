@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "Borers can now longer use *collapse or *surrender."
+  - tweak: "Borers cannot speak while docile (when sugar is in their hosts blood)"
+  - tweak: "Borers can no longer infect people wearing thick clothing on their head AND suit storage. (riot suits, bio suits, bee suits, hardsuits, spacesuits, etc)"
