@@ -269,3 +269,10 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+/datum/map_template/ruin/lavaland/chemistry
+	name= "Abandoned Chemistry Lab"
+	id = "chemistry"
+	description = "A seemingly innocent-looking lab, with an assault pod outside..."
+	suffix = "lavaland_surface_chemistry.dmm"
+	allow_duplicates = FALSE
+	cost = 10
