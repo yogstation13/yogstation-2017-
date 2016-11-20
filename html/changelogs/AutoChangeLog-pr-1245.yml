@@ -1,0 +1,4 @@
+author: utahclock
+delete-after: True
+changes: 
+  - bugfix: "Icon Fix, Personal Closets in dorms."
