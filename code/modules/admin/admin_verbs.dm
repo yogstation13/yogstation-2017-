@@ -87,7 +87,8 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/check_ruins
+	/client/proc/check_ruins,
+	/datum/admins/proc/borer_panel
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -171,7 +172,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
-	/client/proc/check_ruins
+	/client/proc/check_ruins,
+	/datum/admins/proc/borer_panel
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -260,7 +262,8 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/check_ruins
+	/client/proc/check_ruins,
+	/datum/admins/proc/borer_panel,
 	)
 
 /client/proc/add_admin_verbs()
