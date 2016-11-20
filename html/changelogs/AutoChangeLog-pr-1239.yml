@@ -1,6 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - rscadd: "The weak advanced baton can now be used by non-abductors."
-  - tweak: "Fixed a few components to probe mode."
-  - tweak: "Lowered research levels on weak advanced baton."
