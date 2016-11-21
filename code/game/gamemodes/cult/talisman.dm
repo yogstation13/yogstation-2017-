@@ -377,15 +377,16 @@
 /obj/item/weapon/paper/talisman/construction/attack(mob/M, mob/living/user)
 	if(iscultist(user))
 		if(isconstruct(M))
-			if(M.health < M.maxHealth)
-				M.adjustHealth(-40)
-				if(M != user)
+			var/mob/living/simple_animal/hostile/construct/CM = M
+			if(CM.health < CM.maxHealth)
+				CM.adjustHealth(-40)
+				if(CM != user)
 					Beam(user,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-					M.visible_message("<span class='danger'>[user] repairs some of \the <b>[M]'s</b> dents.</span>", \
-						"<span class='cult'>You repair some of <b>[M]'s</b> dents, leaving <b>[src]</b> at <b>[M.health]/[M.maxHealth]</b> health.</span>")
+					CM.visible_message("<span class='danger'>[user] repairs some of \the <b>[CM]'s</b> dents.</span>", \
+						"<span class='cult'>You repair some of <b>[CM]'s</b> dents, leaving <b>[CM]</b> at <b>[CM.health]/[CM.maxHealth]</b> health.</span>")
 					uses--
 					if(uses <= 0)
-						talisman_consumed()
+						talisman_consumed(user)
 
 
 /obj/item/weapon/paper/talisman/construction/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
@@ -399,7 +400,7 @@
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
 				if(uses <= 0)
-					talisman_consumed()
+					talisman_consumed(user)
 			else if(istype(T, /turf/closed/wall/r_wall))
 				user << "<span class='cultitalic'>This talisman cannot affect such a powerful wall.</span>"
 				log_game("Construct talisman failed - not a valid target")
@@ -409,7 +410,7 @@
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
 				if(uses <= 0)
-					talisman_consumed()
+					talisman_consumed(user)
 					
 		else if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/S = target
@@ -419,7 +420,7 @@
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
 				if(uses <= 0)
-					talisman_consumed()
+					talisman_consumed(user)
 						
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/S = target
@@ -430,7 +431,7 @@
 			user << sound('sound/effects/magic.ogg',0,1,25)
 			uses--
 			if(uses <= 0)
-				talisman_consumed()
+				talisman_consumed(user)
 				
 		else if(istype(target, /obj/item/stack/sheet/rglass))
 			var/obj/item/stack/sheet/S = target
@@ -440,7 +441,7 @@
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
 				if(uses <= 0)
-					talisman_consumed()
+					talisman_consumed(user)
 					
 		else
 			user << "<span class='cultitalic'>The talisman will only work on metal, reinforced glass, plasteel, constructs, or walls.</span>"
@@ -494,7 +495,7 @@
 	else
 		user << "<span class='warning'>[C] is already bound.</span>"
 	if(uses <= 0)
-		talisman_consumed()
+		talisman_consumed(user)
 	return
 	
 /obj/item/weapon/paper/talisman/shackle/proc/FuckRatvar(mob/living/carbon/C, mob/living/user)
@@ -519,7 +520,8 @@
 							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
 	. = ..()
 	
-/obj/item/weapon/paper/talisman/proc/talisman_consumed()
+/obj/item/weapon/paper/talisman/proc/talisman_consumed(mob/living/user)
 	if(uses <= 0)
-		user.drop_item()
+		if(user)
+			user.drop_item()
 		qdel(src)
