@@ -168,16 +168,16 @@ obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.confused)//if they've already been shot
-			C.silent = 6 // if you can't hit another shot in 3 seconds you don't deserve the mute
+			C.silent = 6 // if you can't hit another shot in 6 seconds you don't deserve the mute
 		C.confused = 3
 		if(!(RADIMMUNE in H.dna.species.specflags))
-				H.randmuti()
-					if(prob(80))
-						if(prob(90))
-							H.randmutb()
-						else
-							H.randmutg()
-						H.domutcheck()
+			H.randmuti()
+			if(prob(80))
+				if(prob(90))
+					H.randmutb()
+				else
+					H.randmutg()
+			H.domutcheck()
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
