@@ -519,8 +519,7 @@
 							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
 	. = ..()
 	
-/obj/item/weapon/paper/talisman/talisman_consumed()
+/obj/item/weapon/paper/talisman/proc/talisman_consumed()
 	if(uses <= 0)
-		ser.drop_item()
+		user.drop_item()
 		qdel(src)
-	return
