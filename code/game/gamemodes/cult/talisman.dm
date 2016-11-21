@@ -374,19 +374,18 @@
 		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
 
-/obj/item/weapon/paper/talisman/construction/attack(mob/M,mob/living/user)
+/obj/item/weapon/paper/talisman/construction/attack(mob/M, mob/living/user)
 	if(iscultist(user))
-		if(istype(target, /mob/living/simple_animal/M)
-			if(istype(M, /mob/living/simple_animal/hostile/construct))
-				if(health < maxHealth)
-					adjustHealth(-40)
-					if(src != user)
-						Beam(user,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-						M.visible_message("<span class='danger'>[user] repairs some of \the <b>[src]'s</b> dents.</span>", \
-						  	 "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-						uses--
-						if(uses <= 0)
-							talisman_consumed()
+		if(isconstruct(M))
+			if(M.health < M.maxHealth)
+				adjustHealth(-40)
+				if(M != user)
+					Beam(user,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+					M.visible_message("<span class='danger'>[user] repairs some of \the <b>[M]'s</b> dents.</span>", \
+						"<span class='cult'>You repair some of <b>[M]'s</b> dents, leaving <b>[src]</b> at <b>[M.health]/[M.maxHealth]</b> health.</span>")
+					uses--
+					if(uses <= 0)
+						talisman_consumed()
 						   
 /obj/item/weapon/paper/talisman/construct/attack(obj/M,mob/living/user)
 	if(iscultist(user))
