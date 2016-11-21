@@ -393,28 +393,28 @@
 		log_game("Construct talisman failed - not a valid target")
 			
 
-/obj/item/weapon/paper/talisman/construction/afterattack(turf/closed/wall, mob/living/user, proximity_flag, click_parameters)
+/obj/item/weapon/paper/talisman/construction/afterattack(turf/closed/wall/target, mob/living/user, proximity_flag, click_parameters)
 	..()
 	if(proximity_flag && iscultist(user))
-		if(istype(target, /turf/closed/wall))
-			var/turf/T = get_turf(target)
-				if(istype(target, /turf/closed/wall/mineral/cult)
-					break_wall()
-					log_game("Construct talisman destroyed a wall, used by [user.ckey]")
-					user << sound('sound/effects/magic.ogg',0,1,25)
-					uses--
-						if(uses <= 0)
-							talisman_consumed()
-				if(istype(target, /turf/closed/wall/r_wall)
-					user << "<span class='cultitalic'>This talisman cannot affect such a powerful wall.</span>"
-					log_game("Construct talisman failed - not a valid target")
-				else
-					src.ChangeTurf(/turf/closed/wall/mineral/cult)
-					user << "<span class='cultitalic'>You turn the [src] into a cult wall with the talisman's vile magicks.</span>"
-					user << sound('sound/effects/magic.ogg',0,1,25)
-					uses--
-					if(uses <= 0)
-						talisman_consumed()
+		if(istype(target)
+			var/turf/closed/wall/T = target
+			if(istype(T, /turf/closed/wall/mineral/cult)
+				T.break_wall()
+				log_game("Construct talisman destroyed a wall, used by [user.ckey]")
+				user << sound('sound/effects/magic.ogg',0,1,25)
+				uses--
+				if(uses <= 0)
+					talisman_consumed()
+			else if(istype(T, /turf/closed/wall/r_wall)
+				user << "<span class='cultitalic'>This talisman cannot affect such a powerful wall.</span>"
+				log_game("Construct talisman failed - not a valid target")
+			else
+				T.ChangeTurf(/turf/closed/wall/mineral/cult)
+				user << "<span class='cultitalic'>You turn the [src] into a cult wall with the talisman's vile magicks.</span>"
+				user << sound('sound/effects/magic.ogg',0,1,25)
+				uses--
+				if(uses <= 0)
+					talisman_consumed()
 
 		
 
@@ -422,28 +422,25 @@
 	..()
 	if(proximity_flag && iscultist(user))
 		if(istype(target, /obj/item/stack/sheet/metal))
-			var/turf/T = get_turf(target)
 			if(target.use(25))
-				new /obj/structure/constructshell(T)
+				new /obj/structure/constructshell(get_turf(target))
 				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
 				if(uses <= 0)
 						talisman_consumed()
-		if(istype(target, /obj/item/stack/sheet/plasteel))
+		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/quantity = target.amount
-			var/turf/T = get_turf(target)
-			new /obj/item/stack/sheet/runed_metal(T,quantity)
+			new /obj/item/stack/sheet/runed_metal(get_turf(target), quantity)
 			target.use(quantity)
 			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
 			user << sound('sound/effects/magic.ogg',0,1,25)
 			uses--
 			if(uses <= 0)
 						talisman_consumed()
-		if(istype(target, /obj/item/stack/sheet/rglass))
-			var/turf/T = get_turf(target)
+		else if(istype(target, /obj/item/stack/sheet/rglass))
 			if(target.use(25))
-				new /obj/item/device/soulstone(T)
+				new /obj/item/device/soulstone(get_turf(target))
 				user <<"<span class='warning'>The talisman clings to the glass, forcing it to contract and twist, turning a bloody red!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
