@@ -2372,7 +2372,7 @@
 		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 
-	else if(href_list["borer")
+	else if(href_list["borer"])
 		if(!check_rights(R_ADMIN))
 			return
 		borer_panel()
