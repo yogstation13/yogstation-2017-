@@ -419,7 +419,7 @@
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				uses--
 				if(uses <= 0)
-						talisman_consumed()
+					talisman_consumed()
 						
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/S = target
