@@ -170,14 +170,14 @@ obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 		if(C.confused)//if they've already been shot
 			C.silent = 6 // if you can't hit another shot in 6 seconds you don't deserve the mute
 		C.confused = 3
-		if(!(RADIMMUNE in H.dna.species.specflags))
-			H.randmuti()
+		if(!(RADIMMUNE in C.dna.species.specflags))
+			randmuti(C)
 			if(prob(80))
 				if(prob(90))
-					H.randmutb()
+					randmutb(C)
 				else
-					H.randmutg()
-			H.domutcheck()
+					randmutg(C)
+			C.domutcheck()
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
