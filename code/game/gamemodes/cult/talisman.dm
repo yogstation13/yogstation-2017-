@@ -179,9 +179,10 @@
 	
 /obj/item/weapon/paper/talisman/rune_alert/invoke(mob/living/user, successfuluse = 1)
 	. = ..()
-	for(var/mob/M in mob_list)
-		if(iscultist(M))
-			M << "<span class='cultlarge'><b>GET AROUND THE DAMN RUNE ALREADY!</b></span>"
+	if(ticker.mode && ticker.mode.cult)
+		for(var/M in ticker.mode.cult)
+			var/mob/CM = M
+			CM << "<span class='cultlarge'><b>GET AROUND THE DAMN RUNE ALREADY!</b></span>"
 
 /obj/item/weapon/paper/talisman/true_sight
 	cultist_name = "Talisman of Veiling"
