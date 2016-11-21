@@ -396,7 +396,7 @@
 /obj/item/weapon/paper/talisman/construction/afterattack(turf/closed/wall/target, mob/living/user, proximity_flag, click_parameters)
 	..()
 	if(proximity_flag && iscultist(user))
-		if(istype(target)
+		if(istype(target))
 			var/turf/closed/wall/T = target
 			if(istype(T, /turf/closed/wall/mineral/cult)
 				T.break_wall()
