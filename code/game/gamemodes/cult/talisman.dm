@@ -378,7 +378,7 @@
 	if(iscultist(user))
 		if(isconstruct(M))
 			if(M.health < M.maxHealth)
-				adjustHealth(-40)
+				M.adjustHealth(-40)
 				if(M != user)
 					Beam(user,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 					M.visible_message("<span class='danger'>[user] repairs some of \the <b>[M]'s</b> dents.</span>", \
