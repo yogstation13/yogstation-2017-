@@ -9,10 +9,6 @@
 		return
 	usr.say(message)
 
-
-
-
-
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
@@ -22,10 +18,6 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 	say(message) //only carbons actually whisper, everything else just talks
-
-
-
-
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
@@ -38,7 +30,6 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message)
-
 
 /mob/proc/say_dead(var/message)
 	var/name = real_name
