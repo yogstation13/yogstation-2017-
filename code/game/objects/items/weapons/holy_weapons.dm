@@ -63,7 +63,7 @@
 	w_class = 5
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	attack_verb = list("sears", "commands", "instructs")
+	attack_verb = list("sears", "commanded", "instructed")
 	var/message
 	var/cooldown
 
@@ -148,22 +148,22 @@
 
 	user.Stun(50)
 
-	user.say("So shut your eyes while mother sings")
+	user.say("So shut your eyes while mother sings,")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 	sleep(15)
 	user.say("Of wonderful sights that be,")
 	playsound(loc, 'sound/effects/splat.ogg', 70, 1)
 	sleep(15)
-	user.say("And you shall see the beautiful things")
+	user.say("And you shall see the beautiful things,")
 	playsound(loc, 'sound/effects/splat.ogg', 80, 1)
 	sleep(15)
 	user.say("As you rock in the misty sea,")
 	playsound(loc, 'sound/effects/splat.ogg', 90, 1)
 	sleep(15)
-	user.say("Where the old shoe rocked the fishermen three")
+	user.say("Where the old shoe rocked the fishermen three,")
 	playsound(loc, 'sound/effects/splat.ogg', 110, 1)
 	sleep(15)
-	user.say("Wynken, Blynken, and Nod")
+	user.say("Wynken, Blynken, and Nod.")
 	return (BRUTELOSS)
 
 /obj/item/weapon/nullrod/staff
@@ -333,7 +333,7 @@
 	
 /obj/item/weapon/nullrod/scythe/attack_self(mob/user)
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
-		user.add_atom_colour(#000000)
+		user.add_atom_colour("#000000")
 
 /obj/item/weapon/nullrod/scythe/vibro
 	icon_state = "hfrequency0"
