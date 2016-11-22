@@ -188,7 +188,6 @@
 
 	src << "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>"
 
-
 	if(victim.stat != DEAD)
 		host << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
 
