@@ -52,6 +52,10 @@
 		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
 		return 0
 
+	if(!H.mind.active)
+		src << "<span class='warning'>[H] does not have an active mind.</span>"
+		return 0
+
 	return 1
 	var/unprotected = TRUE
 
@@ -183,6 +187,7 @@
 		return
 
 	src << "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>"
+
 
 	if(victim.stat != DEAD)
 		host << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
