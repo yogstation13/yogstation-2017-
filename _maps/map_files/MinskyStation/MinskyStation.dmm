@@ -3377,7 +3377,7 @@
 "bmW" = (/obj/machinery/atmospherics/components/unary/tank/air,/turf/open/floor/plating,/area/engine/break_room{name = "Engineering Control"})
 "bmX" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/medical/medbay2{name = "Surgical Suite"})
 "bmY" = (/obj/machinery/atmospherics/components/unary/cryo_cell,/turf/open/floor/plasteel/whitebot/delivery,/area/medical/cryo)
-"bmZ" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{pixel_x = 7; pixel_y = -6; step_x = 0; step_y = 0},/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{pixel_x = 5; pixel_y = 5},/turf/open/floor/plasteel/white,/area/medical/cryo)
+"bmZ" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{pixel_x = 7; pixel_y = -6},/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{pixel_x = 5; pixel_y = 5},/turf/open/floor/plasteel/white,/area/medical/cryo)
 "bna" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0; tag = ""},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/white,/area/medical/sleeper)
 "bnb" = (/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plasteel/white,/area/medical/sleeper)
 "bnc" = (/obj/structure/window/reinforced{dir = 8},/obj/machinery/sleeper{dir = 4; icon_state = "sleeper-open"},/turf/open/floor/plasteel/white/side{dir = 8},/area/medical/sleeper)
