@@ -24,7 +24,7 @@
 #define isshadow(A) (is_species(A, /datum/species/shadow))
 #define isshadowling(A) (is_species(A, /datum/species/shadow/ling))
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
-#define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftian))
+#define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftain))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
