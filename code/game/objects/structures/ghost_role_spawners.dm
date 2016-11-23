@@ -40,7 +40,6 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
 	death = FALSE
@@ -56,12 +55,30 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+		H.languages_spoken |= ASHWALKER
+		H.languages_understood |= ASHWALKER
+	//	H.weather_immunities |= "ash"
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+
+/obj/effect/mob_spawn/human/ash_walker/chief
+	name = "chief ashwalker egg"
+	mob_species = /datum/species/lizard/ashwalker/chieftian
+	helmet = /obj/item/clothing/head/helmet/gladiator
+	var/mob/living/simple_animal/hostile/spawner/ash_walker/nest
+
+/obj/effect/mob_spawn/human/ash_walker/chief/special(mob/living/new_spawn)
+	..()
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.languages_spoken |= HUMAN
+		H.languages_understood |= HUMAN
+	if(nest)
+		nest.chief = new_spawn
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
