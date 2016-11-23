@@ -67,7 +67,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/chief
 	name = "chief ashwalker egg"
-	mob_species = /datum/species/lizard/ashwalker/chieftian
+	mob_species = /datum/species/lizard/ashwalker/chieftain
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	var/mob/living/simple_animal/hostile/spawner/ash_walker/nest
 
