@@ -22,6 +22,8 @@
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define isabomination(A) (is_species(A, /datum/species/abomination))
+#define isshadow(A) (is_species(A, /datum/species/shadow))
+#define isshadowling(A) (is_species(A, /datum/species/shadow/ling))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 

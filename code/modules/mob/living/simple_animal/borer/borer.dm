@@ -1,6 +1,7 @@
 
 var/list/mob/living/simple_animal/borer/borers = list()
 var/total_borer_hosts_needed = 10
+var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surrenders")
 
 /mob/living/simple_animal/borer
 	name = "Cortical Borer"
@@ -127,6 +128,9 @@ var/total_borer_hosts_needed = 10
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
+	if(staminaloss) // stamina loss will mute borers
+		return
+
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
@@ -138,6 +142,16 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You cannot speak without a host!</span>"
 		return
 	if(dd_hasprefix(message, "*"))
+		var/pass = TRUE
+		for(var/M in banned_borer_emotes)
+			if(M == message)
+				src << "<span class='warning'>You don't have the strength to do this...</span>"
+			//	src << "Nice try, asshole."
+				pass = FALSE
+				break
+
+		if(!pass)
+			return
 		message = copytext(message,2)
 		victim.say(message)
 		return
@@ -191,6 +205,10 @@ var/total_borer_hosts_needed = 10
 		detatch()
 
 	loc = get_turf(victim)
+
+	for(var/image/hud in victim.client.images)
+		if(hud.icon_state == "borer")
+			client.images -= hud
 
 	victim.borer = null
 	victim = null
@@ -289,3 +307,12 @@ var/total_borer_hosts_needed = 10
 	M << "<span class='notice'>You feel the sweet embrace of dopamine that surges through your brain as it's suddenly relieved of a foreign parasite.</span>"
 	qdel(src)
 	..()
+
+
+/mob/living/simple_animal/borer/proc/checkStrength()
+	if(weakened || stunned)
+		src << "<span class='warning'>You lack the strength to do this.</span>"
+		return FALSE
+
+	else
+		return TRUE
