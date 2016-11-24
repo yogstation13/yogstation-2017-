@@ -956,7 +956,7 @@ datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 
 /datum/species/golem/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
 	switch(proj_type)
-		if(/obj/item/projectile/bullet) || istype(P, /obj/item/projectile/kinetic))
+		if(/obj/item/projectile/bullet) || (/obj/item/projectile/kinetic)
 			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
 			H.visible_message("<span class='danger'>The bullet sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The bullet sinks harmlessly in [H]'s sandy body!</span>")
@@ -989,7 +989,7 @@ datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 	
 /datum/species/golem/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
 	switch(proj_type)
-		if(/obj/item/projectile/magic))
+		if(/obj/item/projectile/magic)
 			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
 			H.visible_message("<span class='danger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>", \
 			"<span class='userdanger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>")
