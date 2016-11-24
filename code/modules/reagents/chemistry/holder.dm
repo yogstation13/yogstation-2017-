@@ -458,7 +458,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants") || M.reagents.has_reagent("lesserephedrine"))
 			return 1
 		else
 			M.status_flags -= GOTTAGOFAST

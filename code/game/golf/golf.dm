@@ -78,6 +78,7 @@
 	if(istype(O, /obj/item/golfclub))
 		var/turf/throw_at = get_ranged_target_turf(src, get_dir(user, src), 3 )
 		throw_at_fast(throw_at, 3 , 2)
+		user.changeNext_move(CLICK_CD_RANGE*2)
 
 /obj/item/golfclub
 	desc = "A club for the game of golf."
