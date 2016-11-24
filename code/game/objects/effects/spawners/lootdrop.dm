@@ -168,3 +168,37 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/lootdrop/ores
+	name = "random ore spawner"
+	lootcount = 2
+	lootdoubles = 0
+	loot = list(
+				/obj/item/weapon/ore/uranium = 5,
+				/obj/item/weapon/ore/iron = 25,
+				/obj/item/weapon/ore/plasma = 10,
+				/obj/item/weapon/ore/silver = 10,
+				/obj/item/weapon/ore/gold = 5,
+				/obj/item/weapon/ore/diamond = 5,
+				)
+
+/obj/effect/spawner/lootdrop/ores/generous
+	name = "generous ore spawner"
+	lootdoubles = 1
+	loot = list(
+				/obj/item/weapon/ore/uranium = 25,
+				/obj/item/weapon/ore/iron = 30,
+				/obj/item/weapon/ore/plasma = 25,
+				/obj/item/weapon/ore/silver = 25,
+				/obj/item/weapon/ore/gold = 25,
+				/obj/item/weapon/ore/diamond = 15,
+				)
+
+/obj/effect/spawner/lootdrop/bananium
+	name = "bananium ore spawner"
+	loot = list(
+				/obj/item/weapon/ore/bananium = 10)
+
+
+
+
