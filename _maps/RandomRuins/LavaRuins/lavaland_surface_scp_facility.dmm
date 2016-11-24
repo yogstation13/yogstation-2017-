@@ -3,10 +3,10 @@
 /turf/template_noop,
 /area/template_noop)
 "ab" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/indestructible/rock,
 /area/ruin/unpowered)
 "ac" = (
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
 "ad" = (
 /obj/structure/rack,
@@ -204,10 +204,14 @@
 	},
 /area/ruin/unpowered)
 "aJ" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/highsecurity,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "aK" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/indestructible/rock,
+/area/ruin/unpowered)
+"aL" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
@@ -215,14 +219,14 @@
 	dir = 1
 	},
 /area/ruin/unpowered)
-"aL" = (
+"aM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/tile/plasteel,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"aM" = (
+"aN" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHWEST)";
 	icon_state = "tracks";
@@ -234,12 +238,12 @@
 	dir = 1
 	},
 /area/ruin/unpowered)
-"aN" = (
+"aO" = (
 /obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"aO" = (
+"aP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods{
 	amount = 50
@@ -248,70 +252,77 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"aP" = (
+"aQ" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/tree,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"aR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/rods,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"aQ" = (
+"aS" = (
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"aR" = (
+"aT" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"aS" = (
+"aU" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"aT" = (
+"aV" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"aU" = (
+"aW" = (
 /obj/effect/decal/cleanable/cobweb{
 	tag = "icon-cobweb2";
 	icon_state = "cobweb2"
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered)
-"aV" = (
+"aX" = (
 /obj/structure/sign/kiddieplaque{
 	desc = "WARNING. ACCESS IS LIMITED TO NANOTRASEN LEVEL 5-B PERSONNEL. IF YOU ARE NOT AUTHORIZED PERSONNEL AND ARE READING THIS, PLEASE INFORM YOUR LOCAL STATION COMMANDER OF A LEVEL XK-BREACH OF SITE- *the rest of the plaque is destroyed*";
 	name = "A dusty plaque"
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"aW" = (
+"aY" = (
 /obj/structure/girder/displaced,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"aX" = (
+"aZ" = (
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered)
-"aY" = (
+"ba" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"aZ" = (
+"bb" = (
 /obj/structure/table,
 /obj/item/device/radio,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"ba" = (
+"bc" = (
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bb" = (
+"bd" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating{
 	dir = 4;
@@ -321,11 +332,11 @@
 	temperature = 2.7
 	},
 /area/ruin/unpowered)
-"bc" = (
+"be" = (
 /obj/structure/sign/pods,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"bd" = (
+"bf" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -334,18 +345,14 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"be" = (
+"bg" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"bf" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/ruin/unpowered)
-"bg" = (
+"bh" = (
 /mob/living/simple_animal/hostile/carp/eyeball{
 	health = 75;
 	maxHealth = 75;
@@ -354,7 +361,7 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered)
-"bh" = (
+"bi" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
@@ -362,7 +369,7 @@
 	dir = 1
 	},
 /area/ruin/unpowered)
-"bi" = (
+"bj" = (
 /obj/structure/girder/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -370,7 +377,7 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"bj" = (
+"bk" = (
 /turf/open/floor/plating{
 	dir = 4;
 	icon_state = "warnplate";
@@ -379,44 +386,53 @@
 	temperature = 2.7
 	},
 /area/ruin/unpowered)
-"bk" = (
+"bl" = (
 /obj/machinery/door/poddoor/shutters,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bl" = (
+"bm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bm" = (
+"bn" = (
 /obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/corpse/damaged,
 /turf/open/floor/engine,
 /area/ruin/unpowered)
-"bn" = (
+"bo" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bo" = (
-/obj/machinery/door/airlock/highsecurity,
-/turf/closed/wall/r_wall,
-/area/ruin/unpowered)
 "bp" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/closed/indestructible/opshuttle,
+/area/ruin/unpowered)
+"bq" = (
 /obj/item/clothing/suit/cultrobes,
 /obj/item/clothing/head/culthood,
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered)
-"bq" = (
+"br" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"br" = (
+"bs" = (
 /obj/item/stack/cable_coil/yellow,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bs" = (
+"bt" = (
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bt" = (
+"bu" = (
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered)
+"bv" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"bw" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -424,34 +440,8 @@
 	icon_state = "tracks";
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/mob_spawn/human/corpse/damaged,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
-"bu" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	tag = "icon-tracks (WEST)";
-	icon_state = "tracks";
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
-"bv" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	tag = "icon-tracks (EAST)";
-	icon_state = "tracks";
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/ruin/unpowered)
-"bw" = (
-/obj/effect/decal/cleanable/blood/tracks{
-	tag = "icon-tracks (EAST)";
-	icon_state = "tracks";
-	dir = 4
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /area/ruin/unpowered)
 "bx" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -459,7 +449,7 @@
 	icon_state = "tracks";
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "by" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -467,7 +457,7 @@
 	icon_state = "tracks";
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "bz" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -476,6 +466,32 @@
 	dir = 4
 	},
 /turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"bA" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	tag = "icon-tracks (WEST)";
+	icon_state = "tracks";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"bB" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	tag = "icon-tracks (EAST)";
+	icon_state = "tracks";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"bC" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	tag = "icon-tracks (EAST)";
+	icon_state = "tracks";
+	dir = 4
+	},
+/turf/open/floor/plating{
 	dir = 4;
 	icon_state = "warnplate";
 	luminosity = 2;
@@ -483,7 +499,7 @@
 	temperature = 2.7
 	},
 /area/ruin/unpowered)
-"bA" = (
+"bD" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
@@ -494,7 +510,7 @@
 	icon_state = "platingdmg3"
 	},
 /area/ruin/unpowered)
-"bB" = (
+"bE" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (EAST)";
 	icon_state = "tracks";
@@ -502,7 +518,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bC" = (
+"bF" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTHEAST)";
 	icon_state = "tracks";
@@ -510,11 +526,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bD" = (
+"bG" = (
 /obj/structure/sign/securearea,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"bE" = (
+"bH" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
 	icon_state = "tracks";
@@ -522,33 +538,33 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bF" = (
+"bI" = (
 /obj/structure/girder/reinforced,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"bG" = (
+"bJ" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bH" = (
+"bK" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/circuitboard/machine/cyborgrecharger,
 /obj/item/weapon/crowbar,
 /obj/item/weapon/weldingtool,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bI" = (
+"bL" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (EAST)";
 	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/ruin/unpowered)
-"bJ" = (
+"bM" = (
 /obj/structure/sign/directions/medical{
 	dir = 4;
 	icon_state = "direction_med";
@@ -558,57 +574,57 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/unpowered)
-"bK" = (
+"bN" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bL" = (
+"bO" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bM" = (
+"bP" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bN" = (
+"bQ" = (
 /obj/effect/decal/cleanable/robot_debris/gib,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bO" = (
+"bR" = (
 /obj/structure/sign/directions/evac{
 	tag = "icon-direction_evac (NORTH)";
 	icon_state = "direction_evac";
 	dir = 1
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"bP" = (
+"bS" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bQ" = (
+"bT" = (
 /turf/open/floor/plasteel/yellow/corner,
 /area/ruin/unpowered)
-"bR" = (
+"bU" = (
 /obj/item/trash/deadmouse,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bS" = (
+"bV" = (
 /obj/machinery/doppler_array{
 	desc = "A rusty old machine.";
 	name = "Seismic Warning System"
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bT" = (
+"bW" = (
 /obj/item/weapon/screwdriver,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bU" = (
+"bX" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bV" = (
+"bY" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
 	icon_state = "direction_sec";
@@ -618,7 +634,7 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"bW" = (
+"bZ" = (
 /obj/structure/girder/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
@@ -626,15 +642,15 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"bX" = (
+"ca" = (
 /obj/item/ammo_casing/c9mm,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"bY" = (
+"cb" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"bZ" = (
+"cc" = (
 /obj/structure/frame/computer,
 /obj/item/weapon/paper{
 	info = "THIS IS AN AUTOMATIC REPORT GENERATED BY THE SEISMIC WARNING SYSTEM (c). \[br] \[br] SLIGHT QUAKES HAVE BEEN DETECTED TO THE SOUTHEAST. OUR CURRENT ALGORITHM SUGGESTS THE SEISMIC INSTABILITY WILL SPREAD TO YOUR CURRENT LOCATION. \[br] \[br] WE PREDICT A 67.2% CHANCE OF A SIGNIFICANT EARTHQUAKE AT YOUR PRESENT LOCATION IN SIX TO TWELVE HOURS. PLEASE PROCEED WITH EARTHQUAKE THREAT PROTOCOL AS STATED IN PAGE 515 SECTION 61-X OF YOUR AOC SITE MANUAL.";
@@ -642,16 +658,16 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"ca" = (
+"cd" = (
 /obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/asteroid/goliath,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"cb" = (
+"ce" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"cc" = (
+"cf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -659,98 +675,102 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"cd" = (
+"cg" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"ce" = (
+"ch" = (
 /obj/item/ammo_casing/c9mm,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"cf" = (
+"ci" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"cg" = (
+"cj" = (
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/plasteel/black,
+/area/ruin/unpowered)
+"ck" = (
 /turf/open/floor/plasteel/darkblue/corner,
 /area/ruin/unpowered)
-"ch" = (
+"cl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/darkblue/corner,
 /area/ruin/unpowered)
-"ci" = (
+"cm" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/item/ammo_casing/c9mm,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cj" = (
+"cn" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/lights/tubes,
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"ck" = (
+"co" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"cl" = (
+"cp" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/extinguisher,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"cm" = (
+"cq" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
 	icon_state = "darkbluecorners";
 	dir = 4
 	},
 /area/ruin/unpowered)
-"cn" = (
+"cr" = (
 /obj/structure/girder/reinforced,
 /turf/open/space,
 /area/ruin/unpowered)
-"co" = (
+"cs" = (
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cp" = (
+"ct" = (
 /obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cq" = (
+"cu" = (
 /obj/structure/sign/directions/evac{
 	tag = "icon-direction_evac (WEST)";
 	icon_state = "direction_evac";
 	dir = 8
 	},
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"cr" = (
+"cv" = (
 /obj/structure/sink,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"cs" = (
+"cw" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/unpowered)
-"ct" = (
+"cx" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/unpowered)
-"cu" = (
+"cy" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/unpowered)
-"cv" = (
+"cz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/space,
 /area/ruin/unpowered)
-"cw" = (
+"cA" = (
 /obj/structure/girder/reinforced,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -760,11 +780,11 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"cx" = (
+"cB" = (
 /obj/item/ammo_casing/n762,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cy" = (
+"cC" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (NORTH)";
 	icon_state = "tracks";
@@ -773,7 +793,7 @@
 /obj/item/ammo_casing/shotgun/buckshot,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cz" = (
+"cD" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
@@ -783,14 +803,14 @@
 	dir = 4
 	},
 /area/ruin/unpowered)
-"cA" = (
+"cE" = (
 /turf/open/floor/plasteel/blue/corner{
 	tag = "icon-bluecorner (EAST)";
 	icon_state = "bluecorner";
 	dir = 4
 	},
 /area/ruin/unpowered)
-"cB" = (
+"cF" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/blue/corner{
 	tag = "icon-bluecorner (EAST)";
@@ -798,11 +818,11 @@
 	dir = 4
 	},
 /area/ruin/unpowered)
-"cC" = (
+"cG" = (
 /obj/structure/sign/biohazard,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"cD" = (
+"cH" = (
 /obj/machinery/shower{
 	desc = "A showerhead found in school science labs and medbays alike, used to quickly wash off any dangerous fluids covering a person.";
 	name = "emergency shower";
@@ -810,19 +830,19 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered)
-"cE" = (
+"cI" = (
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered)
-"cF" = (
+"cJ" = (
 /obj/item/weapon/soap/nanotrasen,
 /obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered)
-"cG" = (
+"cK" = (
 /obj/structure/sign/xeno_warning_mining,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"cH" = (
+"cL" = (
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
@@ -832,23 +852,27 @@
 	dir = 4
 	},
 /area/ruin/unpowered)
-"cI" = (
+"cM" = (
 /obj/structure/grille,
 /obj/item/weapon/shard,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"cJ" = (
+"cN" = (
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/unpowered)
-"cK" = (
+"cO" = (
 /obj/item/weapon/paper/scp_research,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"cL" = (
+"cP" = (
+/mob/living/simple_animal/imp,
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/unpowered)
+"cQ" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
-"cM" = (
+"cR" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -863,7 +887,7 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"cN" = (
+"cS" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -878,7 +902,7 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"cO" = (
+"cT" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	tag = "icon-tracks (SOUTHEAST)";
 	icon_state = "tracks";
@@ -886,65 +910,66 @@
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cP" = (
+"cU" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"cQ" = (
+"cV" = (
 /obj/machinery/door/airlock/science,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered)
-"cR" = (
+"cW" = (
 /obj/item/weapon/folder/blue{
 	name = "Research Notes - Objects 15-20"
 	},
 /turf/open/floor/plasteel/darkblue,
 /area/ruin/unpowered)
-"cS" = (
+"cX" = (
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
 /obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/human/corpse/damaged,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"cT" = (
+"cY" = (
 /turf/open/floor/plasteel/blue/corner{
 	tag = "icon-bluecorner (WEST)";
 	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/ruin/unpowered)
-"cU" = (
+"cZ" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
 /turf/open/floor/plasteel/blue/corner,
 /area/ruin/unpowered)
-"cV" = (
+"da" = (
 /turf/open/floor/plasteel/blue/corner,
 /area/ruin/unpowered)
-"cW" = (
+"db" = (
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel/blue/corner,
 /area/ruin/unpowered)
-"cX" = (
+"dc" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"cY" = (
+"dd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/white,
 /area/ruin/unpowered)
-"cZ" = (
+"de" = (
 /obj/structure/sign/science,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"da" = (
+"df" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
@@ -952,12 +977,12 @@
 	dir = 4
 	},
 /area/ruin/unpowered)
-"db" = (
+"dg" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
-"dc" = (
+"dh" = (
 /obj/machinery/door/airlock/glass{
 	name = "Staff Room"
 	},
@@ -965,20 +990,20 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dd" = (
+"di" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/ruin/unpowered)
-"de" = (
+"dj" = (
 /obj/structure/bedsheetbin,
 /obj/structure/table,
 /turf/open/floor/plasteel/whiteblue/side,
 /area/ruin/unpowered)
-"df" = (
+"dk" = (
 /obj/structure/sign/directions/engineering,
-/turf/closed/wall/r_wall,
+/turf/closed/indestructible/opshuttle,
 /area/ruin/unpowered)
-"dg" = (
+"dl" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
@@ -986,54 +1011,54 @@
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"dh" = (
+"dm" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/britcup,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/ruin/unpowered)
-"di" = (
+"dn" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dj" = (
+"do" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dk" = (
+"dp" = (
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dl" = (
+"dq" = (
 /obj/item/trash/chips,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dm" = (
+"dr" = (
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dn" = (
+"ds" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/analyzer,
 /turf/open/floor/plasteel/black,
 /area/ruin/unpowered)
-"do" = (
+"dt" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dp" = (
+"du" = (
 /obj/structure/chair{
 	dir = 4
 	},
@@ -1041,13 +1066,13 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dq" = (
+"dv" = (
 /obj/structure/table/glass,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dr" = (
+"dw" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper{
 	info = "\[center]\[large]Anomalous Object Containment \[AOC] Site 21 \[/large]\[/center] \[br] \[center]Status Report on 11. 8. 2489 at 8:09 AM Lavaland Time\[/center] \[br] \[br] Nothing unusual to report. Seismic Warning System's blaring about a quake coming in soon, but Scott told me he'd fix it by the weekend. We've had to reschedule some experiments to the next Wednesday due to some broken equipment, but nothing major to worry about. \[br] Signed: Dr. James Walker";
@@ -1057,7 +1082,7 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"ds" = (
+"dx" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
@@ -1065,7 +1090,7 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dt" = (
+"dy" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -1073,7 +1098,7 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"du" = (
+"dz" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/food/drinks/coffee,
 /obj/item/clothing/mask/cigarette,
@@ -1081,33 +1106,33 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dv" = (
+"dA" = (
 /obj/machinery/status_display,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dw" = (
+"dB" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dx" = (
+"dC" = (
 /obj/item/trash/raisins,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dy" = (
+"dD" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dz" = (
+"dE" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
 	pixel_y = 2;
@@ -1118,25 +1143,25 @@
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dA" = (
+"dF" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dB" = (
+"dG" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dC" = (
+"dH" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
 	},
 /area/ruin/unpowered)
-"dD" = (
+"dI" = (
 /obj/structure/closet/wardrobe/science_white,
 /turf/open/floor/plasteel{
 	icon_state = "barber"
@@ -1393,7 +1418,7 @@ aa
 ab
 ab
 ab
-bd
+bf
 ac
 ab
 ab
@@ -1432,7 +1457,7 @@ ab
 as
 as
 as
-bt
+bw
 as
 as
 as
@@ -1445,7 +1470,7 @@ ab
 ab
 ab
 ac
-bd
+bf
 ac
 ab
 ab
@@ -1484,7 +1509,7 @@ ab
 as
 as
 as
-bu
+bx
 as
 as
 aa
@@ -1497,7 +1522,7 @@ ab
 ab
 ab
 ac
-bd
+bf
 ac
 ab
 ab
@@ -1536,7 +1561,7 @@ ab
 as
 as
 as
-bv
+by
 as
 aa
 aa
@@ -1549,7 +1574,7 @@ ab
 ab
 ab
 ac
-bd
+bf
 ac
 ab
 ab
@@ -1587,9 +1612,9 @@ ab
 ac
 ac
 az
-bq
-bw
-bD
+br
+bz
+bG
 ab
 aa
 aa
@@ -1637,10 +1662,10 @@ at
 ab
 ab
 ac
-aY
-aQ
-aQ
-bx
+ba
+aS
+aS
+bA
 ac
 ab
 ab
@@ -1689,10 +1714,10 @@ at
 ab
 ab
 ac
-aZ
-aQ
-aQ
-bx
+bb
+aS
+aS
+bA
 ac
 ab
 ab
@@ -1740,11 +1765,11 @@ at
 at
 ab
 ab
-aV
-ba
-aQ
-br
-by
+aX
+bc
+aS
+bs
+bB
 ac
 ab
 ab
@@ -1793,10 +1818,10 @@ at
 ab
 ab
 ac
-bb
-bj
-bj
-bz
+bd
+bk
+bk
+bC
 ac
 ab
 ab
@@ -1806,15 +1831,15 @@ ab
 ab
 ab
 ab
-cw
+cA
 ac
-di
-dk
-dk
-dk
-dk
-dk
-dy
+dn
+dp
+dp
+dp
+dp
+dp
+dD
 ac
 ab
 ab
@@ -1845,10 +1870,10 @@ at
 ab
 ab
 ac
-bc
-bk
-bk
-bA
+be
+bl
+bl
+bD
 ac
 ac
 ac
@@ -1856,17 +1881,17 @@ ac
 ac
 ac
 ac
-cw
-cM
-cS
+cA
+cR
+cX
 ac
-dj
-dk
+do
 dp
+du
+du
+du
 dp
-dp
-dk
-dz
+dE
 ac
 ab
 ab
@@ -1897,28 +1922,28 @@ at
 ab
 ab
 ac
-bd
-bl
-bs
-bB
-bs
-bs
-bP
-bX
-bs
-bs
-co
-cx
-cN
-bd
-db
-dk
-do
-dq
-du
-dw
-dk
-dA
+bf
+bm
+bt
+bE
+bt
+bt
+bS
+ca
+bt
+bt
+cs
+cB
+cS
+bf
+dg
+dp
+dt
+dv
+dz
+dB
+dp
+dF
 ac
 ab
 ab
@@ -1949,28 +1974,28 @@ ab
 ab
 ab
 aA
-bd
-bl
-aQ
-bC
-bE
-bE
-bE
-bY
-cd
-ci
-bY
-cy
-cO
-bs
-dc
-dk
-do
-dr
+bf
+bm
+aS
+bF
+bH
+bH
+bH
+cb
+cg
+cm
+cb
+cC
+cT
+bt
+dh
+dp
+dt
+dw
+dA
 dv
-dq
-dk
-dB
+dp
+dG
 ac
 ab
 ab
@@ -2001,28 +2026,28 @@ ab
 ab
 ab
 ab
-be
-bl
-bl
-bs
-bs
-bs
-bQ
-aQ
-ce
-bP
-cp
-bs
-bs
-cT
-db
-dl
-do
-ds
+bg
+bm
+bu
+bt
+bt
+bt
+bT
+aS
+ch
+bS
+ct
+bt
+bt
+cY
+dg
 dq
-dq
-dk
-dC
+dt
+dx
+dv
+dv
+dp
+dH
 ac
 ab
 ab
@@ -2054,27 +2079,27 @@ ab
 ab
 ac
 aA
-bl
-bl
+bm
+bm
 ab
-bF
+bI
 ac
 ac
-aR
+aT
 ac
 ac
-cq
-cz
-cP
+cu
+cD
 cU
+cZ
 ac
-dm
-dk
-dt
-dt
-dt
-dx
-dD
+dr
+dp
+dy
+dy
+dy
+dC
+dI
 ac
 ab
 ab
@@ -2105,28 +2130,28 @@ ab
 ab
 ab
 ac
-bf
+aK
 aE
-bf
+aK
 ab
 ac
-bK
-bR
-aQ
-aQ
-cj
+bN
+bU
+aS
+aS
+cn
 ac
-cA
-aQ
-cV
+cE
+aS
+da
 ac
-dm
-dk
-dk
-dk
-dk
-dk
-dD
+dr
+dp
+dp
+dp
+dp
+dp
+dI
 ac
 ab
 ab
@@ -2162,15 +2187,15 @@ ab
 ab
 ab
 ac
-bL
-aQ
-aQ
-aQ
-ck
+bO
+aS
+aS
+aS
+co
 ac
-cA
-bs
-aQ
+cE
+bt
+aS
 ac
 ac
 ac
@@ -2214,15 +2239,15 @@ ab
 ab
 ab
 ac
-bM
-bS
-bZ
-aQ
-cl
+bP
+bV
+cc
+aS
+cp
 ac
-cA
-bl
-cV
+cE
+bm
+da
 ac
 ab
 ab
@@ -2272,9 +2297,9 @@ ac
 ac
 ac
 ac
-cB
-bs
-cW
+cF
+bt
+db
 ac
 ab
 ab
@@ -2324,9 +2349,9 @@ ab
 ab
 ab
 ac
-cC
-cQ
-cX
+cG
+cV
+dc
 ac
 ac
 ab
@@ -2376,10 +2401,10 @@ ac
 ab
 ab
 ac
-cD
-cE
-cE
-dd
+cH
+cI
+cI
+di
 ac
 ab
 ab
@@ -2421,17 +2446,17 @@ ab
 ab
 ab
 ac
-bG
-bN
-bT
-bn
+bJ
+bQ
+bW
+bo
 ab
 ab
-cr
-cE
-cE
-cE
-dd
+cv
+cI
+cI
+cI
+di
 ac
 ab
 ab
@@ -2473,17 +2498,17 @@ ab
 ab
 ab
 ab
-bH
+bK
 ap
 ap
-bn
+bo
 ab
 ab
 ac
-cF
-cE
-cY
-de
+cJ
+cI
+dd
+dj
 ac
 ab
 ab
@@ -2532,10 +2557,10 @@ ap
 ac
 ac
 ac
-cG
-cQ
-cZ
-df
+cK
+cV
+de
+dk
 ac
 ac
 ac
@@ -2579,16 +2604,16 @@ aC
 aC
 aC
 ac
-bU
+bX
 ap
 ap
 ap
-aQ
-bn
+aS
+bo
 ap
-bn
-bn
-dn
+bo
+bo
+ds
 aE
 aA
 ab
@@ -2621,7 +2646,7 @@ aA
 aE
 ab
 ab
-aQ
+aS
 ac
 aC
 aC
@@ -2633,13 +2658,13 @@ aC
 ac
 ap
 ap
-cf
-aQ
-aQ
+ci
+aS
+aS
 ap
 ap
-bn
-bn
+bo
+bo
 aA
 aA
 ab
@@ -2672,8 +2697,8 @@ aE
 aB
 aB
 ac
-aQ
-aQ
+aS
+aS
 ac
 aC
 aC
@@ -2683,14 +2708,14 @@ aC
 aC
 aC
 ac
-aQ
-ca
-ap
-cm
-cm
-cH
-aQ
-da
+aS
+cd
+cj
+cq
+cq
+cL
+aS
+df
 aE
 ab
 ab
@@ -2724,23 +2749,23 @@ aB
 aB
 aC
 ac
-aQ
-aQ
-aT
+aS
+aS
+aV
 aC
 aC
-bg
+bh
 aC
 aC
 aC
 aC
 ac
 ap
-cb
-cg
+ce
+ck
 ac
 ac
-cI
+cM
 ab
 ab
 ab
@@ -2776,24 +2801,24 @@ aC
 aC
 aC
 ac
-aQ
-aQ
+aS
+aS
 av
 aC
 aC
 aC
-bm
-bm
+bn
+bv
 aC
 aC
 ac
 ap
 ap
-cg
-cn
-cs
-cJ
-cR
+ck
+cr
+cw
+cN
+cW
 av
 av
 ab
@@ -2828,25 +2853,25 @@ aC
 aC
 aC
 ac
-aQ
 aS
+aU
 ac
 aC
 aC
 aB
 aC
-bm
+bv
 aC
 aC
 ac
-bn
-aQ
-cg
+bo
+aS
+ck
 ac
-ct
-cK
-cJ
-cJ
+cx
+cO
+cN
+cN
 aw
 ab
 ab
@@ -2880,10 +2905,10 @@ aC
 aC
 aC
 ac
-aQ
 aS
-ac
 aU
+ac
+aW
 aC
 aC
 aC
@@ -2891,15 +2916,15 @@ aC
 aC
 aC
 ac
-bV
-aQ
-cg
+bY
+aS
+ck
 ac
-aQ
-cJ
-cJ
-cJ
-dg
+aS
+cP
+cN
+cN
+dl
 ab
 ab
 ab
@@ -2932,7 +2957,7 @@ aw
 av
 av
 ac
-aR
+aT
 ab
 ac
 ac
@@ -2942,16 +2967,16 @@ az
 ac
 ac
 ac
-bO
+bR
 ap
 ap
-cg
+ck
 ac
-cu
-cu
-cu
-cu
-dh
+cy
+cy
+cy
+cy
+dm
 ab
 ab
 ab
@@ -2980,30 +3005,30 @@ as
 aD
 aD
 aI
-aK
-aM
+aL
+aN
 aD
 aD
 ap
 ab
 ab
 ab
-aW
-bh
+aY
+bi
 ap
 aD
 aD
 aD
 aD
-aQ
+aS
 ap
-ch
+cl
 ac
-cv
-cv
-cv
-cv
-cv
+cz
+cz
+cz
+cz
+cz
 ab
 ab
 at
@@ -3033,7 +3058,7 @@ as
 ap
 ap
 ap
-aN
+aO
 ap
 ap
 ap
@@ -3041,15 +3066,15 @@ ab
 ab
 ab
 ab
-bi
-bn
+bj
+bo
 ap
 ap
 ap
 ap
 ap
-bn
-bn
+bo
+bo
 ac
 ab
 as
@@ -3094,13 +3119,13 @@ ab
 ab
 aE
 aE
-bn
-aQ
-aQ
-bI
-bI
+bo
+aS
+aS
+bL
+bL
 aE
-cc
+cf
 aE
 ac
 ab
@@ -3137,7 +3162,7 @@ ac
 as
 ac
 aE
-aO
+aP
 aE
 aE
 ab
@@ -3146,17 +3171,17 @@ ac
 ac
 ac
 ac
-bo
+bp
 ac
 ac
 ac
 ac
-bW
+bZ
 ab
 ab
 ab
 ab
-cL
+cQ
 as
 as
 at
@@ -3188,9 +3213,9 @@ as
 as
 as
 aJ
-aL
+aM
 aE
-aE
+aQ
 aE
 ab
 ab
@@ -3201,7 +3226,7 @@ aC
 aC
 aC
 aC
-bJ
+bM
 ac
 ab
 ab
@@ -3239,19 +3264,19 @@ at
 at
 as
 as
-aJ
-ac
+aK
+ab
 aE
-aP
+aR
 aE
 ab
 ab
 ac
 aC
 aC
-aX
+aZ
 aC
-aX
+aZ
 aC
 aC
 ac
@@ -3292,18 +3317,18 @@ at
 at
 at
 as
-as
-ac
-ac
+ab
+ab
+ab
 as
 ab
 ab
 ac
 aC
-aX
-aX
-aX
-aX
+aZ
+aZ
+aZ
+aZ
 aC
 aC
 ac
@@ -3345,18 +3370,18 @@ at
 at
 at
 as
-as
-as
-as
+ab
+ab
+ab
 ab
 ab
 ac
 aC
 aC
-aX
-bp
-aX
-aX
+aZ
+bq
+aZ
+aZ
 aC
 ac
 ab
@@ -3399,15 +3424,15 @@ at
 at
 as
 as
-as
+ab
 ab
 ab
 ac
 aw
 aC
-aX
-aX
-aX
+aZ
+aZ
+aZ
 aC
 aC
 ac
@@ -3457,10 +3482,10 @@ ab
 ab
 av
 aw
-aX
+aZ
 aC
-aX
-aX
+aZ
+aZ
 aC
 ac
 ab

@@ -269,3 +269,10 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+/datum/map_template/ruin/lavaland/scp_facility
+	name = "Anomalous Object Site"
+	id = "scp_facility"
+	description = "An abandoned storage site for dangerous and paranormal objects and creatures."
+	suffix = "lavaland_surface_scp_facility.dmm"
+	allow_duplicates = FALSE
+	cost = 20
