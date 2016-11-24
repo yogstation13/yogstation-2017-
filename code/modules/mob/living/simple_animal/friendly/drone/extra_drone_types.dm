@@ -109,10 +109,11 @@
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 	
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
- 	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
 		try_reactivate(user)
- 	else
- 		..()
+	else
+		..()
+
 /mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
 	return 0
 
