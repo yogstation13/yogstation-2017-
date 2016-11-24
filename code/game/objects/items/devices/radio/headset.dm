@@ -198,6 +198,7 @@
 
 /obj/item/device/radio/headset/headset_cargo
 	name = "supply radio headset"
+	desc = "A headset used by the QM and his slaves. \nTo access the supply channel, use :u. For science use :n"
 	icon_state = "cargo_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_cargo
