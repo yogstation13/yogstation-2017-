@@ -160,7 +160,7 @@
 	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
-	deductcharge(1000 * severity)
+	deductcharge(round(power_supply.charge / severity))
 	..()
 
 //Makeshift stun baton. Replacement for stun gloves.
