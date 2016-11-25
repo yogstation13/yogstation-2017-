@@ -186,7 +186,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	burnmod = 1.05
 	heatmod = 1.05
 	invis_sight = SEE_INVISIBLE_MINIMUM
-	disguise_fail_health = 75
 	var/last_eat_message = -EATING_MESSAGE_COOLDOWN
 	
 
@@ -301,7 +300,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	id = "plant"
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
-	attack_verb = "slice"
+	attack_verb = "slic" //slice makes it 'sliceed' since it adds an ed on later so slic is the way to fix
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.5
@@ -954,13 +953,12 @@ datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 		new /obj/item/weapon/ore/glass(get_turf(H))
 	qdel(H)
 
-/datum/species/golem/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
-	switch(proj_type)
-		if(/obj/item/projectile/bullet) || (/obj/item/projectile/kinetic)
-			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
-			H.visible_message("<span class='danger'>The bullet sinks harmlessly in [H]'s sandy body!</span>", \
-			"<span class='userdanger'>The bullet sinks harmlessly in [H]'s sandy body!</span>")
-			return 2
+/datum/species/golem/sand/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
+	if(istype(/obj/item/projectile/bullet) || (/obj/item/projectile/kinetic))
+		playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
+		H.visible_message("<span class='danger'>The bullet sinks harmlessly in [H]'s sandy body!</span>", \
+		"<span class='userdanger'>The bullet sinks harmlessly in [H]'s sandy body!</span>")
+		return 2
 	return 0
 	
 /datum/species/golem/mythril
@@ -988,13 +986,12 @@ datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 	qdel(H)
 	
 /datum/species/golem/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
-	switch(proj_type)
-		if(/obj/item/projectile/magic)
-			playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
-			H.visible_message("<span class='danger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>", \
-			"<span class='userdanger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>")
-			return 2
-	return 0
+	if(istype(/obj/item/projectile/magic))
+		playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
+		H.visible_message("<span class='danger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>", \
+		"<span class='userdanger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>")
+		return 2
+	return 
 	
 
  
