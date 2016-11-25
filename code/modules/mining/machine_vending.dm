@@ -159,7 +159,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer's Webbing", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer's Webbing", "Resonator", "Mining Drone", "Advanced Scanner and Weather Detector")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
@@ -171,8 +171,9 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Advanced Scanner")
+		if("Advanced Scanner and Weather Detector")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+			new /obj/item/device/barometer(src.loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)

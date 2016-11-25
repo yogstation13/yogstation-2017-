@@ -346,6 +346,7 @@
 /obj/item/device/barometer
 	name = "barometer"
 	desc = "A persistent device used for tracking weather and storms. IN SPACE!"
+	icon_state = "barometer"
 	var/datum/weather/weather // will update everytime the controller changes
 	var/cooldown
 	var/accuracy // 0 is the best accuracy. Accuracy works like this: The time that you get is set off from the accuracy time, and it has a chance of being -5 or +5 of that as well. So multiple tests are required to getting it.
