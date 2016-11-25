@@ -255,7 +255,7 @@
 	pocket1 = /obj/item/device/radio/off
 	back = /obj/item/weapon/storage/backpack
 	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
-	implants = list(/obj/item/weapon/implant/mindshield)
+	implants = list(/obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/exile)
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
