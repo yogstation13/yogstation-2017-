@@ -234,3 +234,11 @@
 	allow_duplicates = FALSE
 	cost = 5
 
+/datum/map_template/ruin/lavaland/travellingbard
+	name = "Travelling Bard"
+	id = "travellingbard"
+	description = "A travelling space bard who only wishes to tell tales of adventure and play catchy songs"
+	suffix = "lavaland_surface_travellingbard.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
