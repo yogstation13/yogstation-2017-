@@ -229,6 +229,15 @@
 	item_state = "cent_headset_alt"
 	keyslot = null
 
+/obj/item/device/radio/headset/headset_merc
+	name = "private radio headset"
+	desc = "A headset jacked by mercenaries to talk on a universal private channel"
+	icon_state = "cent_headset"
+	flags = EARBANGPROTECT
+	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
+
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/device/encryptionkey/ai
