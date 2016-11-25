@@ -1,5 +1,7 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
+var/list/barometers = list()
+
 /obj/machinery/lavaland_controller
 	name = "weather control machine"
 	desc = "Controls the weather."
@@ -18,8 +20,16 @@
 	else
 		LAVA = new /datum/weather/ash_storm
 	ongoing_weather = LAVA
+	transmit_signal(LAVA)
 	LAVA.weather_start_up()
 	ongoing_weather = null
+
+/obj/machinery/lavaland_controller/proc/transmit_signal(datum/weather/weather)
+	if(!weather)
+		return
+
+	for(var/obj/item/device/barometer/B in barometers)
+		B.weather = weather
 
 /obj/machinery/lavaland_controller/Destroy(force)
 	if(force)

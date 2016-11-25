@@ -340,6 +340,30 @@
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
 
+// Barometer!
+// attack_self() is in weather.dm
+
+/obj/item/device/barometer
+	name = "barometer"
+	desc = "A persistent device used for tracking weather and storms. IN SPACE!"
+	var/datum/weather/weather // will update everytime the controller changes
+	var/cooldown
+	var/accuracy // 0 is the best accuracy. Accuracy works like this: The time that you get is set off from the accuracy time, and it has a chance of being -5 or +5 of that as well. So multiple tests are required to getting it.
+
+/obj/item/device/barometer/New()
+	..()
+	barometers += src
+
+/obj/item/device/barometer/mining
+	desc = "A special device used for tracking ash storms."
+
+///obj/item/device/barometer/mining/adv
+//	desc = "A barometer that's almost ALWAYS right!"
+
+/obj/item/device/barometer/tribal
+	desc = "A device handed down from ashwalker to ashwalker. This tool is used to speak with the wind, translate it's whispers, and figure out when a storm will hit."
+	accuracy = 20
+
 //Pod turfs and objects
 
 
