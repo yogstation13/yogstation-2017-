@@ -52,6 +52,10 @@
 		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
 		return 0
 
+	if(!H.mind.active)
+		src << "<span class='warning'>[H] does not have an active mind.</span>"
+		return 0
+
 	return 1
 	var/unprotected = TRUE
 
