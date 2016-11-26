@@ -1,0 +1,4 @@
+author: Stealthkibbler
+delete-after: True
+changes: 
+  - bugfix: "Clown Facility ruin no longer has falsewalls leading to space and the useless energy saw has been replaced with a normal circular saw."
