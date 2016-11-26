@@ -33,6 +33,7 @@
 "G" = (/obj/item/weapon/shard,/obj/effect/decal/cleanable/blood/splatter,/obj/effect/mob_spawn/human/corpse/damaged,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "H" = (/obj/item/weapon/pickaxe,/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "I" = (/obj/item/weapon/pickaxe,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
+"J" = (/obj/effect/decal/cleanable/blood/tracks,/obj/effect/spawner/lootdrop/ores,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaa
@@ -42,7 +43,7 @@ aciioiipdqqqqqa
 abrccccdbsqqqta
 uvqqqqqqqwqqqxa
 qqqqqyyyyzAqqBa
-qqqqCyDDDEqqqqa
+qqqqCyDDDJqqqqa
 uuqqEyDFDEqAqaa
 aaqqEyDDDGqqqaa
 aauqEyyyyyqquaa
