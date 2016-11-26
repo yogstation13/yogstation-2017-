@@ -72,8 +72,8 @@
 		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return 0
 	if(ishuman(user))
-		var/mob/living/carbon/human/H = user //it only works with H for some reason
-		if(H.dna.species.id == "abomination")
+		var/mob/living/carbon/human/H = user
+		if(isabomination(H))
 			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
 			return 0
 	return 1

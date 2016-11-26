@@ -1,14 +1,3 @@
-/obj/effect/proc_holder/spell/proc/abomination_check(mob/usr)
-	if(!ishuman(usr))
-		return 0
-	var/mob/living/carbon/human/H = usr
-	if(H.dna.species.id == "abomination")
-		return 1
-	else
-		usr << "You can't use this in your current form."
-		return 0
-
-
 
 /obj/effect/proc_holder/spell/aoe_turf/abomination/screech //Stuns anyone in view range.
 	name = "Screech"
@@ -20,7 +9,7 @@
 	sound = 'sound/effects/creepyshriek.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/abomination/screech/cast(list/targets,mob/user = usr)
-	if(!abomination_check(user))
+	if(!isabomination(user))
 		revert_cast()
 		return
 	playMagSound()
@@ -51,7 +40,7 @@
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend/cast(mob/living/carbon/human/user)
-	if(!abomination_check(user))
+	if(!isabomination(user))
 		return
 	user.visible_message("<span class='warning'>[usr]'s skin shifts and pulses, any damage rapidly vanishing!</span>")
 	spawn(0)
@@ -79,7 +68,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets,mob/user)
-	if(!abomination_check(user))
+	if(!isabomination(user))
 		return
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
@@ -177,7 +166,7 @@
 			user << "<span class='warning'>You decide not to revert."
 			return
 		if("Yes")
-			if(!abomination_check(usr))
+			if(!isabomination(usr))
 				user << "<span class='warning'>You're already reverted!</span>"
 				for(var/spell in user.mind.spell_list)
 					if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
