@@ -57,7 +57,6 @@
 		if(duration_timer)
 			duration_timer--
 
-
 /datum/weather/proc/weather_main()
 	update_areas()
 	for(var/mob/M in player_list)
@@ -118,24 +117,37 @@
 				N.opacity = 0
 
 /obj/item/device/barometer/attack_self(mob/user)
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 100)
 	if(world.time < cooldown)
 		user << "<span class='warning'>[src] is prepraring itself.</span>"
 		return 0
-	if(!weather)
-		user << "<span class='warning'>[src] was unable to trace any weather patterns! You should take some time to wait..</span>"
-		return 0
-	if(weather.stage == (MAIN_STAGE || WIND_DOWN_STAGE))
-		user << "<span class='warning'>[src] can't trace anything while the storms are [weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
+	if(!controller.ongoing_weather)
+		var/fixed = controller.weather_cooldown - world.time
+		if(fixed < 0)
+			user << "<span class='warning'>[src] was unable to trace any weather patterns! You should try again later...</span>"
+			return 0
+		else
+			fixed = butchertime(round(fixed / 10))
+			user << "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>"
+	if(controller.ongoing_weather.stage == (MAIN_STAGE || WIND_DOWN_STAGE))
+		user << "<span class='warning'>[src] can't trace anything while the storms are [controller.ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
 		return 0
 
-	cooldown = world.time + 50
-	playsound(get_turf(src), 'sound/effects/pop.ogg', 100)
-	var/time = weather.duration_timer
-	if(accuracy)
-		var/inaccurate = round(accuracy*(1/3))
-		if(prob(50))
-			time -= inaccurate
-		if(prob(50))
-			time += inaccurate
+	cooldown = world.time + 25
+	var/time = butchertime(controller.ongoing_weather.duration_timer)
 
-	user << "<span class='notice'>The next [weather] will hit in [round(time)] seconds.</span>"
+	user << "<span class='notice'>The next [controller.ongoing_weather] will hit in [round(time)] seconds.</span>"
+
+/obj/item/device/barometer/proc/butchertime(amount)
+	if(amount)
+		if(accuracy)
+			var/time = amount
+			var/inaccurate = round(accuracy*(1/3))
+			if(prob(50))
+				time -= inaccurate
+			if(prob(50))
+				time += inaccurate
+
+			return time
+		else
+			return amount

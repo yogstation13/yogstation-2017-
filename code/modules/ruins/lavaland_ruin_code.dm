@@ -29,7 +29,7 @@ var/list/barometers = list()
 		return
 
 	for(var/obj/item/device/barometer/B in barometers)
-		B.weather = weather
+		B.controller = src
 
 /obj/machinery/lavaland_controller/Destroy(force)
 	if(force)
