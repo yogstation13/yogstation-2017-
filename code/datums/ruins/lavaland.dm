@@ -80,7 +80,7 @@
 	description = "A place of shelter for a lone hermit, scraping by to live another day."
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
-	cost = 5
+	cost = 0
 
 /datum/map_template/ruin/lavaland/syndicatepod
 	name = "Syndicate Pod"
@@ -96,7 +96,7 @@
 	description = "They went searching for madness, instead it found them."
 	suffix = "lavaland_surface_clownfacility.dmm"
 	allow_duplicates = FALSE
-	cost = 20
+	cost = 10
 
 /datum/map_template/ruin/lavaland/mimingdrill
 	name = "Miming Drill"
@@ -104,7 +104,7 @@
 	description = "A silent mining operation, its workers died as they lived."
 	suffix = "lavaland_surface_mimingdrill.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/ntsurveyor
 	name = "Nanotrasen Surveyor"
@@ -120,7 +120,7 @@
 	description = "While mystery enshrouds as to why this place is here, the real question is should you wear the carp hardsuit..or the engineering one?"
 	suffix = "lavaland_surface_researchoutpost.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/cugganscove
 	name = "Cuggans Cove"
@@ -144,7 +144,7 @@
 	description = "Abductors are not a rare sight in remote and sparsely populated regions of the galaxy, however no being has managed to survive an encounter with a terrorship, but who ever thought a primitive spear could be so robust?"
 	suffix = "lavaland_surface_abductorterrorship.dmm"
 	allow_duplicates = FALSE
-	cost = 20
+	cost = 10
 
 /datum/map_template/ruin/lavaland/cultritual
 	name = "Cult Ritual"
@@ -152,7 +152,7 @@
 	description = "A group of mortal cultist nerds sacrifice their souls to become one with the realm of medieval fantasy and fiction causing a tear in the fabric of reality."
 	suffix = "lavaland_surface_cultritual.dmm"
 	allow_duplicates = FALSE
-	cost = 15
+	cost = 10
 
 /datum/map_template/ruin/lavaland/cursedtoyshop
 	name = "Cursed Toy Shop"
@@ -168,7 +168,7 @@
 	description = "More tentacles than one of my japanese animes"
 	suffix = "lavaland_surface_goliathmound.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/I
 	name = "Necromancer Tower"
@@ -176,7 +176,7 @@
 	description = "It contains the secrets of life and death"
 	suffix = "lavaland_surface_I.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/legionbarracks
 	name = "Legion Barracks"
@@ -184,7 +184,7 @@
 	description = "Once a structure containing stalwart soldiers, it now contains their lost souls"
 	suffix = "lavaland_surface_legionbarracks.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/medical
 	name = "Orion Medical Outpost"
@@ -192,7 +192,7 @@
 	description = "One of the Orion Medical Outposts was teleported after a bluespace anomaly"
 	suffix = "lavaland_surface_medical.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 15
 
 /datum/map_template/ruin/lavaland/mercship
 	name = "Mercenary Ship"
@@ -200,7 +200,7 @@
 	description = "A mercenary ship willing to complete various tasks in exchange for currency or goods"
 	suffix = "lavaland_surface_mercship.dmm"
 	allow_duplicates = FALSE
-	cost = 20
+	cost = 25
 
 /datum/map_template/ruin/lavaland/russianbunker
 	name = "Russian Bunker"
@@ -216,7 +216,7 @@
 	description = "These watchers were left here to guard some ancient artifact"
 	suffix = "lavaland_surface_watcherspiral.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/weavernest
 	name = "Weaver Nest"
@@ -224,7 +224,7 @@
 	description = "An eerie cavern full of deadly Marrow Weavers and the corpses of their victims"
 	suffix = "lavaland_surface_weavernest.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 5
 
 /datum/map_template/ruin/lavaland/wizardden
 	name = "Wizard Den"
