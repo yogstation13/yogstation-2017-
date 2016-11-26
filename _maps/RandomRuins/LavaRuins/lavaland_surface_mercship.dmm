@@ -10,7 +10,7 @@
 "aj" = (/turf/closed/wall/shuttle,/area/ruin/powered{name = "Mercenary Ship"})
 "ak" = (/obj/machinery/door/airlock/glass_external,/obj/machinery/door/poddoor{id = "mercairlock"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/white,/area/ruin/powered{name = "Mercenary Ship"})
 "al" = (/turf/closed/wall/shuttle/smooth/nodiagonal,/area/ruin/powered{name = "Mercenary Ship"})
-"am" = (/obj/machinery/button/door{pixel_x = 25},/turf/open/floor/plasteel/white,/area/ruin/powered{name = "Mercenary Ship"})
+"am" = (/obj/machinery/button/door{id = "mercairlock"; pixel_x = 25},/turf/open/floor/plasteel/white,/area/ruin/powered{name = "Mercenary Ship"})
 "an" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/white,/area/ruin/powered{name = "Mercenary Ship"})
 "ao" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/open/floor/plasteel/white,/area/ruin/powered{name = "Mercenary Ship"})
 "ap" = (/obj/structure/table/reinforced,/obj/item/device/assembly/flash,/obj/item/device/assembly/flash,/obj/item/device/assembly/flash,/obj/item/device/assembly/flash,/obj/item/device/assembly/flash,/obj/item/device/assembly/flash,/obj/item/device/assembly/flash,/turf/open/floor/plasteel/white,/area/ruin/powered{name = "Mercenary Ship"})
