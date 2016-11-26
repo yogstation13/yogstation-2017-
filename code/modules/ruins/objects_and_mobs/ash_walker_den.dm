@@ -35,6 +35,8 @@
 			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
 			if(istype(H,/mob/living/simple_animal/hostile/megafauna/dragon))
 				meat_counter += 20
+			else if(ischiefwalker(H)) // the nest has reconnected with the chief, reuniting them one final time.
+				weepcycle -= 5
 			else
 				meat_counter ++
 			for(var/obj/item/W in H)
@@ -52,5 +54,7 @@
 	blossom_hero()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/proc/blossom_hero()
+	var/turf/T = get_turf(src)
 	var/obj/effect/mob_spawn/human/ash_walker/chief/hero = new(src.loc)
+	hero.loc = T
 	hero.nest = src
