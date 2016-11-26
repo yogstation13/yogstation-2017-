@@ -46,3 +46,6 @@
 /area/ruin/onehalf/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+
+/area/ruin/powered/mercenary_ship
+	name = "Mercenary Ship"
