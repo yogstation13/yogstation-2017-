@@ -96,6 +96,5 @@
 		for(var/client/C in admins)
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-		msg += "<span class='info'>Adminhelp tickets are also sent to discord. If no admins are available in game adminhelp anyways and an admin on discord will see it and respond.</span>"
 	src << msg
 
