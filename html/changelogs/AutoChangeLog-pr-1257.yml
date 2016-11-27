@@ -1,0 +1,4 @@
+author: utahclock
+delete-after: True
+changes: 
+  - bugfix: "Fixes necrostone not stating who the user was, the message is now displayed."
