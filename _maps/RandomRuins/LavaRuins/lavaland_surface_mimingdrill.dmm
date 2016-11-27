@@ -11,7 +11,7 @@
 "k" = (/obj/structure/closet,/obj/item/clothing/mask/gas/mime,/obj/item/clothing/shoes/sneakers/mime,/obj/item/clothing/under/rank/mime,/obj/item/weapon/storage/backpack/mime,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "l" = (/obj/structure/closet/crate,/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "m" = (/obj/structure/table_frame,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
-"n" = (/obj/structure/table,/obj/item/weapon/pickaxe/drill,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
+"n" = (/obj/structure/table,/obj/item/weapon/pickaxe/drill/diamonddrill,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "o" = (/obj/machinery/door/airlock/silver,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
 "p" = (/obj/item/chair,/turf/open/floor/mineral/silver,/area/ruin/unpowered)
 "q" = (/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
