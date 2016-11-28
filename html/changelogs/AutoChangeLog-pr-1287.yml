@@ -1,0 +1,4 @@
+author: utahclock
+delete-after: True
+changes: 
+  - tweak: "removes the message that ahelps are sent to IRC."
