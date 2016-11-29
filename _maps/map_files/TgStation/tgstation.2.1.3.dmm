@@ -17893,22 +17893,10 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/chapel/main)
-"aHQ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
-/area/shuttle/escape)
 "aHR" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/escape)
-"aHS" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
 /area/shuttle/escape)
 "aHT" = (
 /obj/effect/landmark{
@@ -30846,21 +30834,9 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/maintenance/asmaint2)
-"bky" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/escape)
 "bkz" = (
 /obj/machinery/iv_drip,
 /turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"bkA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
 /area/shuttle/escape)
 "bkB" = (
 /obj/machinery/conveyor{
@@ -69024,6 +69000,13 @@
 	icon_state = "hydrofloor"
 	},
 /area/hydroponics)
+"rzn" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f5";
+	dir = 2
+	},
+/area/shuttle/escape)
 "snF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -69036,6 +69019,21 @@
 	icon_state = "floorgrime"
 	},
 /area/hydroponics/backroom)
+"tqN" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/area/shuttle/escape)
+"tys" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f9";
+	dir = 2
+	},
+/area/shuttle/escape)
 "wHN" = (
 /obj/item/weapon/gun/projectile/shotgun/riot{
 	pixel_x = 3;
@@ -69102,6 +69100,13 @@
 	icon_state = "white"
 	},
 /area/toxins/lab)
+"VCL" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f6";
+	dir = 2
+	},
+/area/shuttle/escape)
 "WDZ" = (
 /obj/structure/grille,
 /obj/structure/cable/yellow,
@@ -120415,7 +120420,7 @@ aaa
 aaa
 aaa
 aaa
-aHQ
+VCL
 aKM
 aHR
 aKM
@@ -120436,7 +120441,7 @@ aKM
 aHR
 aKM
 aKM
-bky
+rzn
 aaa
 ady
 aaa
@@ -120671,7 +120676,7 @@ aaC
 aaa
 aaa
 aaa
-aHQ
+VCL
 aNW
 aPg
 aQy
@@ -120694,7 +120699,7 @@ aKN
 bdX
 bdX
 aNY
-bky
+rzn
 aaC
 aaA
 aaa
@@ -120926,7 +120931,7 @@ aaa
 aaa
 aCa
 aaa
-aHQ
+VCL
 aHR
 bff
 aNW
@@ -121182,7 +121187,7 @@ aaa
 aaa
 aaa
 aCa
-aHQ
+VCL
 aDo
 cFF
 cFI
@@ -122724,7 +122729,7 @@ aaa
 aaa
 aaa
 aCa
-aHS
+tqN
 cFE
 cFH
 cFL
@@ -122982,7 +122987,7 @@ aaa
 aaa
 aCa
 aaa
-aHS
+tqN
 aHR
 aTp
 aNW
@@ -123241,7 +123246,7 @@ aaC
 aaa
 aaa
 aaa
-aHS
+tqN
 aNW
 cFD
 aKP
@@ -123264,7 +123269,7 @@ aWy
 bfc
 bgi
 aNY
-bkA
+tys
 aaC
 aaA
 aaa
@@ -123499,7 +123504,7 @@ aaa
 aaa
 aaa
 aaa
-aHS
+tqN
 aKM
 aHR
 aKM
@@ -123520,7 +123525,7 @@ bff
 aHR
 aKM
 aKM
-bkA
+tys
 aaa
 ady
 aaa
