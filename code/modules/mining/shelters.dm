@@ -14,12 +14,10 @@
 /datum/map_template/shelter/proc/check_deploy(turf/deploy_location)
 	if(!deploy_location)
 		return SHELTER_DEPLOY_BAD_AREA
-	if(deploy_location.z == ZLEVEL_STATION)
-		return SHELTER_DEPLOY_BAD_AREA
 	var/affected = get_affected_turfs(deploy_location, centered=TRUE)
 	for(var/turf/T in affected)
 		var/area/A = get_area(T)
-		if(is_type_in_typecache(A, banned_areas))
+		if(is_type_in_typecache(A, banned_areas) || ((deploy_location.z == ZLEVEL_STATION) && !istype(A, /area/space)) )
 			return SHELTER_DEPLOY_BAD_AREA
 
 		var/banned = is_type_in_typecache(T, blacklisted_turfs)
