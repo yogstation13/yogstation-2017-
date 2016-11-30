@@ -135,6 +135,7 @@
 		else
 			retreat_distance = initial(retreat_distance)
 			minimum_distance = initial(minimum_distance)
+			projectiletype = /obj/item/projectile/neurotox
 
 
 /mob/living/simple_animal/hostile/alien/queen
