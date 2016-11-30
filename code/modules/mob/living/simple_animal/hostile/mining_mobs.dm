@@ -821,7 +821,7 @@
 				"<span class='danger'>[src] drools some toxic goo [L]'s innards...</span>",
 				"<span class='danger'>Before sucking out the slurry of bone marrow and flesh, healing itself!</span>",
 				"<span class-'userdanger>You liquefy [L]'s innards with your venom and suck out the resulting slurry, revitalizing yourself.</span>")
-			adjustBruteLoss(-target.maxHealth/2)
+			adjustBruteLoss(-L.maxHealth/2)
 			if(ishuman(L))
 				var/mob/living/carbon/human/H = target
 				for(var/obj/item/bodypart/B in H.bodyparts)
