@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - experiment: "Chameleon items now have a UI that allows you to quickly select default outfits for all jobs."
