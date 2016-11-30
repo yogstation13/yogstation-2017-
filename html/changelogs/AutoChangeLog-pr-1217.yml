@@ -1,0 +1,6 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - tweak: "Stimulant syringes (stimpacks) now hold 60u of stimulants, up from 50."
+  - tweak: "Stimulant syringes now inject 20u per inject, down from 50."
+  - tweak: "Stimulants cost 8 tc, down from 10."
