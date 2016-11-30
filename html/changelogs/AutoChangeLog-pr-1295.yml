@@ -1,0 +1,4 @@
+author: monster860
+delete-after: True
+changes: 
+  - bugfix: "Emergency shuttle corners in transit no longer show normal space as opposed to transit space. Why this wasn't fixed before is beyond me."
