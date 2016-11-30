@@ -1,0 +1,4 @@
+author: Stealthkibbler
+delete-after: True
+changes: 
+  - bugfix: "Space Ninjas mask now shows correctly on its mob sprite."
