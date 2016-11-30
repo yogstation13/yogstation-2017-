@@ -55,7 +55,7 @@
 		var/list/can_see = view(src, 10)
 			for(var/mob/living/C in can_see)
 				if(C.stat == DEAD && istype(C,/mob/living/simple_animal/hostile/carp))
-					enemies = |= C
+					enemies |= C
 				else
 					return
 				
