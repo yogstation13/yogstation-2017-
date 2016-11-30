@@ -864,10 +864,10 @@
 
 /obj/item/weapon/storage/box/chameleon/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/storage/box
-	chameleon_action.chameleon_name = "Box"
-	chameleon_action.initialize_disguises()
+	chameleon = new /datum/chameleon(src)
+	chameleon.chameleon_type = /obj/item/weapon/storage/box
+	chameleon.chameleon_name = "Box"
+	chameleon.initialize_disguises()
 
 
 /obj/item/weapon/storage/box/chameleon/examine(mob/user)
