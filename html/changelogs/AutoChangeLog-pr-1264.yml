@@ -1,4 +1,0 @@
-author: utahclock
-delete-after: True
-changes: 
-  - tweak: "Tweaks borers so that SSD and bodies left behind from cloning can no longer be infected."
