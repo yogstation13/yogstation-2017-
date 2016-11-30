@@ -356,7 +356,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 				switch (T.lighting_lumcount)
 					if (0.1 to 3)
 						//very low light
-						regen(-2, H)
+						regen(-1.5, H)
 						if (prob(10))
 							H << "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
 					if (3.1 to 6)
@@ -382,7 +382,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 				//no light, this is baaaaaad
 				if (prob(8))
 					H << "<span class='userdanger'>Darkness! Your insides churn and your skin screams in pain!</span>"
-				regen(-2.5, H)
+				regen(-2, H)
 	else
 		if(H.loc != /obj/mecha)
 			//inside a container or something else, inflict low-level light degen
