@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - tweak: "When you remove a borer vessel from someones brain, there'll be an extra check that ensures the borer will be removed."
+  - tweak: "Borer Vessels no longer qdel, so you can stare at their ugliness."
