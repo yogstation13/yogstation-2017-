@@ -400,23 +400,17 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.take_overall_damage(1,0)
 
 /datum/species/plant/proc/regen(var/light, mob/living/carbon/human/H)
-	world << "1"
 	if(light < 0)
 		H.adjustOxyLoss(-1.5 * light) //example: -1.5 * -2 = 3. So do 3 oxy damage.
-		world << "2"
 	else if (light > 0)
-		world << "6"
 		if(H.nutrition > 100) //If the person is hungry, they wont regen because that'd be more efficient with nutriment use.
 			H.adjustToxLoss(-0.5 * light)
 			H.adjustOxyLoss(-0.5 * light)
 			H.heal_overall_damage(1 * light, 1 * light) //Just heal them in-case something breaks
-			world << "3"
-			if((!H.health == H.maxHealth) && (prob(50))) //We use nutrition to heal, but not when we are already at full health
+			if((!H.health == H.maxHealth) && (prob(10))) //We use nutrition to heal, but not when we are already at full health
 				H.nutrition -= 2
-				world << "4"
 		return
 	else
-		world << "5"
 		return //Should only be when it's zero, so nothing really happens.
 
 
