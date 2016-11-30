@@ -51,17 +51,7 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/dolphin/handle_automated_action()
-	if(..())
-		var/list/can_see = view(src, 10)
-			for(var/mob/living/C in can_see)
-				if(C.stat == DEAD && istype(C,/mob/living/simple_animal/hostile/carp))
-					enemies |= C
-				else
-					return
-				
-				
-/*
-/mob/living/simple_animal/hostile/retaliate/dolphin/say_quote(input)//I thought about using a new language, but then the dolphin wouldn't be able to understand its masters.
-	var/new_input = pick("eeeeh eeh eeh!", "eeh eeh eeh!", "eeh eeeeeeh ehh!", "eeh eeh eeeeeeh!", "eeh eeeeeeeh!")
-	return ..(new_input)
-*/
+	if(..())	
+		for(var/mob/living/simple_animal/hostile/carp/C in view(src, 10))
+			if(C.stat != DEAD)
+				enemies |= C
