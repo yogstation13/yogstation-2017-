@@ -784,18 +784,18 @@
 	var/poison_type = "????"
 	var/poison_per_bite = 5
 	var/buttmad = 0
- 	var/melee_damage_lower_angery0 = 13
- 	var/melee_damage_upper_angery0 = 16
- 	var/melee_damage_lower_angery1 = 15
- 	var/melee_damage_upper_angery1 = 20
+	var/melee_damage_lower_angery0 = 13
+	var/melee_damage_upper_angery0 = 16
+	var/melee_damage_lower_angery1 = 15
+	var/melee_damage_upper_angery1 = 20
 	
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
 	if(buttmad == 0)
 		if(health < maxHealth/3)
 			buttmad = 1
 			visible_message("<span class='danger'>[src] chitters in rage, baring its fangs!</span>")
-			melee_damage_lower = melee_damage_lower_rage1
-			melee_damage_upper = melee_damage_upper_rage1
+			melee_damage_lower = melee_damage_lower_angery1
+			melee_damage_upper = melee_damage_upper_angery1
 			move_to_delay = 8
 			speed = 3
 			poison_type = "spore"
@@ -804,8 +804,8 @@
 		if(health == maxHealth)
 			buttmad = 0
 			visible_message("<span class='notice'>[src] seems to have calmed down, but not by much.</span>")
-			melee_damage_lower = melee_damage_lower_rage0
-			melee_damage_upper = melee_damage_upper_rage0
+			melee_damage_lower = melee_damage_lower_angery0
+			melee_damage_upper = melee_damage_upper_angery0
 			poison_type = initial(poison_type)
 			poison_per_bite = initial(poison_per_bite)
 	..()
@@ -816,16 +816,16 @@
 		var/mob/living/L = target
 		if(target.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
-		if(target.stat == DEAD)
+		if(L.stat == DEAD)
 			src.visible_message(
-				"<span class='danger'>[src] drools some toxic goo [target]'s innards...</span>",
+				"<span class='danger'>[src] drools some toxic goo [L]'s innards...</span>",
 				"<span class='danger'>Before sucking out the slurry of bone marrow and flesh, healing itself!</span>",
-				"<span class-'userdanger>You liquefy [target]'s innards with your venom and suck out the resulting slurry, revitalizing yourself.</span>")
+				"<span class-'userdanger>You liquefy [L]'s innards with your venom and suck out the resulting slurry, revitalizing yourself.</span>")
 			adjustBruteLoss(-target.maxHealth/2)
-			if(ishuman(target))
+			if(ishuman(L))
 				var/mob/living/carbon/human/H = target
-				for(var/obj/item/bodypart/B in target.bodyparts)
-					if(B.body_zone = "chest")
+				for(var/obj/item/bodypart/B in H.bodyparts)
+					if(B.body_zone == "chest")
 						B.dismember()
 				
 
