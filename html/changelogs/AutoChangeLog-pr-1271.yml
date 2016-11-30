@@ -1,0 +1,5 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "Stunprods have spontaneously stopped obeying the laws of physics and now outside a backpack despite being made of small parts that fit inside one easily."
+  - rscadd: "Nanotrasen manufacturing is using less-EMP shielded cells in their stunbatons, citing cost reasons for the reduction."
