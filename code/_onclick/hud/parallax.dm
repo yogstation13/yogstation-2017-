@@ -178,11 +178,13 @@
 	if(A != C.movingmob)
 		if(C.movingmob != null)
 			C.movingmob.mobs_in_contents -= C.mob
+		if(!A.mobs_in_contents)
+			A.mobs_in_contents = list()
 		A.mobs_in_contents += C.mob
 		C.movingmob = A
 
 /atom/movable/proc/update_parallax_contents()
-	if(mobs_in_contents.len) // This is 5x faster if the list is empty, which it is 99% of the time
+	if(mobs_in_contents && mobs_in_contents.len) // This is 5x faster if the list is empty, which it is 99% of the time
 		for(var/mob/M in mobs_in_contents)
 			if(M.client && M.hud_used)
 				M.hud_used.update_parallax()
