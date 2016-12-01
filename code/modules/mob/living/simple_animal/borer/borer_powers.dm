@@ -207,9 +207,6 @@
 		if(victim.mind)
 			host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
 			host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
-		for(var/image/hud in victim.client.images)
-			if(hud.icon_state == "borer")
-				victim.client.images -= hud
 		leave_victim()
 
 
