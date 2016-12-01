@@ -160,9 +160,11 @@ MASS SPECTROMETER
 	if (M.getCloneLoss())
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
+		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of stabilizing chemicals.</span>"
+	if(M.heart_attack = TRUE)
+		user << "\t<span class='alert'>Subject is having a heart attack!</span>"
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
-		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
+		user << "\t<span class='alert'>Subject brain function is non-existent.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if (M.getBrainLoss() >= 10)
@@ -305,6 +307,9 @@ MASS SPECTROMETER
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/BZ_concentration = env_gases["bz"][MOLES]/total_moles
+		var/agent_b_concentration = env_gases["agent_b"][MOLES]/total_moles
+		var/n2o_concentration = env_gases["n2o"][MOLES]/total_moles
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -326,6 +331,18 @@ MASS SPECTROMETER
 			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+		if(n2o_concentration > 0.01)
+			user << "<span class='alert'>N2O: [round(n2o_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>N2O: [round(n2o_concentration*100, 0.01)] %</span>"
+		if(agent_b_concentration > 0.005)
+			user << "<span class='alert'>AGENT B: [round(agent_b_concentration*100, 0.01)] %. Remove flammable materials.</span>"
+		else
+			user << "<span class='info'>AGENT B: [round(agent_b_concentration*100, 0.01)] %</span>"
+		if(BZ_concentration > 0.01)
+			user << "<span class='alert'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
 
 
 		for(var/id in env_gases)
@@ -425,6 +442,16 @@ MASS SPECTROMETER
 		user << "<span class='warning'>Warning: slime is hungry</span>"
 	user << "Electric change strength: [T.powerlevel]"
 	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
+	if (T.rabid = 1)
+		user << "<span class='warning'>Warning: Slime is rabid!</span>"
+	if (T.attacked = 10)
+		user << "<span class='warning'>Warning: Slime was just attacked!</span>"
+	else if(T.attacked < 10)
+		user << "<span class='warning'>Warning: Slime was attacked recently.</span>"
+	else if(T.attacked < 5)
+		user << "<span class='warning'>Warning: Slime was attacked a short period of time ago.</span>"
+	else if(T.attacked < 1)
+		user << "Slime appears agitated due to prior agression.</span>"
 	if (T.slime_mutation[4] == T.colour)
 		user << "This slime does not evolve any further."
 	else
@@ -439,5 +466,28 @@ MASS SPECTROMETER
 			user << "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]"
 			user << "Genetic destability: [T.mutation_chance] % chance of mutation on splitting"
 	if (T.cores > 1)
-		user << "Anomalious slime core amount detected"
+		user << "Anomalious slime core amount detected."
+	if (T.mutator_used == TRUE)
+		user << "Slime has been fed a mutative chemical and cannot accept any more mutation potions."
+	if (T.Friends && T.Friends.len)
+		user << "<span class='notice'>Slime has formed lasting bonds with these organisms:</span>"
+			for (var/mob/M in T.Friends)
+				user << "<span class='notice'>[M.name]</span>"
+			else
+				if(prob(1))
+					user << "<span class='notice'>This slime is as lonely as you are.</span>"
+				else
+					user << "<span class='notice'>Slime has no lasting bonds with any organisms.</span>"
+	if(T.bodytemperature < (T0C + 5))
+		user << "<span class='notice'>Slime is beginning to suffer under cold temperature.:</span>"
+	else if(T.bodytemperature <= (T0C - 40)) // stun temperature
+		user << "<span class='notice'>Slime is paralyzed due to cold.</span>"
+	else if(T.bodytemperature <= (T0C - 50))
+		user << "<span class='notice'>Slime is dying due to cold temperature.</span>"
+	else if(T.bodytemperature <= 50)
+		user << "<span class='notice'>Slime is dying extremely fast due to cold temperature.</span>"
+	if (T.docile)
+		user << "<span class='notice'>Slime is docile and cannot evolve or feed.</span>"
+	if (T.stat == UNCONSCIOUS && stasis)
+		user << "<span class='notice'>Slime is in stasis due to high concentrations of BZ in the air.</span>"
 	user << "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
