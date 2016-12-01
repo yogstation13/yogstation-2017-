@@ -96,7 +96,7 @@
 	..(user, 1)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 	visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!", ";Sometimes I wonder. Why do I smash everything I touch and scream about it? Do I have underlying mental issues? AAAAAARGH!!"))
 	take_damage(rand(180,280), BRUTE, 0)
 	return 1
 
