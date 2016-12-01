@@ -442,9 +442,9 @@ MASS SPECTROMETER
 		user << "<span class='warning'>Warning: slime is hungry</span>"
 	user << "Electric change strength: [T.powerlevel]"
 	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
-	if (T.rabid = 1)
+	if (T.rabid == 1)
 		user << "<span class='warning'>Warning: Slime is rabid!</span>"
-	if (T.attacked = 10)
+	if (T.attacked == 10)
 		user << "<span class='warning'>Warning: Slime was just attacked!</span>"
 	else if(T.attacked < 10)
 		user << "<span class='warning'>Warning: Slime was attacked recently.</span>"
@@ -473,11 +473,11 @@ MASS SPECTROMETER
 		user << "<span class='notice'>Slime has formed lasting bonds with these organisms:</span>"
 			for (var/mob/M in T.Friends)
 				user << "<span class='notice'>[M.name]</span>"
-			else
-				if(prob(1))
-					user << "<span class='notice'>This slime is as lonely as you are.</span>"
-				else
-					user << "<span class='notice'>Slime has no lasting bonds with any organisms.</span>"
+	else
+		if(prob(1))
+			user << "<span class='notice'>This slime is as lonely as you are.</span>"
+		else
+			user << "<span class='notice'>Slime has no lasting bonds with any organisms.</span>"
 	if(T.bodytemperature < (T0C + 5))
 		user << "<span class='notice'>Slime is beginning to suffer under cold temperature.:</span>"
 	else if(T.bodytemperature <= (T0C - 40)) // stun temperature
