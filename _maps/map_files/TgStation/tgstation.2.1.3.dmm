@@ -69168,7 +69168,7 @@
 	name = "blobstart"
 	},
 /turf/open/floor/plating,
-/area/toxins/mixing)
+/area/maintenance/asmaint2)
 "Yov" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -69383,7 +69383,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/space)
+/area/toxins/mixing)
 "YoS" = (
 /obj/structure/grille,
 /obj/machinery/meter{
@@ -69393,7 +69393,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/space)
+/area/toxins/mixing)
 "YoT" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -120207,7 +120207,7 @@ aaa
 aaa
 aaa
 aaa
-adC
+bny
 csk
 bGW
 YoB
@@ -120462,9 +120462,9 @@ aaa
 aaa
 aaa
 aaa
-Yoq
-Yoq
-bFq
+aaa
+aaa
+bny
 You
 bCl
 YoC
@@ -120479,7 +120479,7 @@ bMO
 bJO
 bJO
 bXj
-YoH
+bQO
 bYD
 bZG
 bYE
@@ -120718,7 +120718,7 @@ aaa
 aaa
 aaa
 aaa
-Yoo
+bAZ
 bCl
 bDT
 bDT
@@ -120736,7 +120736,7 @@ bTl
 bJO
 bJO
 bXj
-YoH
+bQO
 bYE
 bZH
 bYF
@@ -120975,7 +120975,7 @@ aaa
 aaa
 aaa
 aaa
-Yop
+bBa
 bCm
 bDU
 bFm
@@ -121232,7 +121232,7 @@ aaa
 aaa
 aaa
 aaa
-Yop
+bBa
 bCn
 bDV
 bFn
@@ -121250,7 +121250,7 @@ bTn
 bFq
 bFq
 bFq
-adC
+bFq
 bYE
 bZH
 bYF
@@ -121489,7 +121489,7 @@ aaA
 aaA
 aaA
 aaA
-Yop
+bBa
 bCo
 bDW
 bFo
@@ -121746,7 +121746,7 @@ aaa
 aaa
 aaa
 aaa
-Yop
+bBa
 bCp
 bDX
 bFp
@@ -122003,10 +122003,10 @@ aaA
 aaa
 aaa
 aaa
-Yoo
-Yor
-Yos
-Yos
+bAZ
+bCq
+bDT
+bDT
 Yov
 bHd
 bIf
@@ -122272,12 +122272,12 @@ bJO
 bMO
 bOt
 bFq
-YoH
-YoH
-YoH
-adC
-YoN
-adC
+bQO
+bQO
+bQO
+bFq
+bVR
+bFq
 aaa
 aaa
 aaa
@@ -122521,14 +122521,14 @@ aaa
 aaa
 aaa
 aaa
-Yow
-adC
-adC
-adC
-adC
-adC
-adC
-adC
+bHe
+bFq
+bFq
+bFq
+bFq
+bFq
+bFq
+bFq
 aaA
 aaA
 aaA
