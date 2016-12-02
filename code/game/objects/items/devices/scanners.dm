@@ -337,7 +337,7 @@ MASS SPECTROMETER
 			user << "<span class='alert'>AGENT B: [round(agent_b_concentration*100, 0.01)] %. Remove flammable materials.</span>"
 		else
 			user << "<span class='info'>AGENT B: [round(agent_b_concentration*100, 0.01)] %</span>"
-		if(BZ_concentration > 0.01)
+		if(bz_concentration > 0.01)
 			user << "<span class='alert'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
@@ -469,8 +469,8 @@ MASS SPECTROMETER
 		user << "Slime has been fed a mutative chemical and cannot accept any more mutation potions."
 	if (T.Friends && T.Friends.len)
 		user << "<span class='notice'>Slime has formed lasting bonds with these organisms:</span>"
-			for (var/mob/mob in T.Friends)
-				user << "<span class='notice'>[mob.name]</span>"
+		for (var/mob/mob in T.Friends)
+			user << "<span class='notice'>[mob.name]</span>"
 	else
 		if(prob(1))
 			user << "<span class='notice'>This slime is as lonely as you are.</span>"
