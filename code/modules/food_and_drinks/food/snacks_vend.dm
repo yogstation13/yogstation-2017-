@@ -63,3 +63,23 @@
 	trash = /obj/item/trash/syndi_cakes
 	list_reagents = list("nutriment" = 4, "doctorsdelight" = 5)
 	filling_color = "#F5F5DC"
+
+/obj/item/weapon/reagent_containers/food/snacks/toritose
+	name = "toritose"
+	desc = "An excellent snack when you need it, however it can become real salty fast. Hopefully stands on it's own in the market."
+//	icon_state = "chips"
+//	trash = /obj/item/trash
+	bitesize = 25
+	list_reagents = list("nutriment" = 1, "sugar" = 1)
+	junkiness = 20
+//	filling_color
+
+/obj/item/weapon/reagent_containers/food/snacks/borer
+	name = "borer yummies"
+	desc = "So good they'll squeeze your brains out!"
+//	icon_state = "chips"
+//	trash = /obj/item/trash
+	bitesize = 2
+	list_reagents = list("nutriment" = 5, "sugar" = 2)
+	junkiness = 25
+//	filling_color
