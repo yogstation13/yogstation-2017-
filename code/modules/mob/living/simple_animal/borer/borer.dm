@@ -88,6 +88,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 			if(victim && victim.client)
 				victim.client.images += image('icons/mob/hud.dmi',B.victim,"borer")
 
+
 	if(victim)
 		if(stat != DEAD)
 			if(victim.stat == DEAD)
@@ -208,7 +209,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 
 	for(var/image/hud in victim.client.images)
 		if(hud.icon_state == "borer")
-			client.images -= hud
+			victim.client.images -= hud
 
 	victim.borer = null
 	victim = null
