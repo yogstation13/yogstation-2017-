@@ -42826,17 +42826,13 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bHd" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline/corner{
-	dir = 1
-	},
 /obj/machinery/meter{
 	name = "Heat Exchanger"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	color = "#000000"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -43312,15 +43308,11 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bIf" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 1;
 	name = "Heat Exchanger input"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44223,15 +44215,11 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bJP" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/meter{
 	name = "Heat Exchanger output"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44259,15 +44247,11 @@
 	},
 /area/toxins/mixing)
 "bJR" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 2;
 	name = "output valve"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44297,15 +44281,11 @@
 	},
 /area/toxins/mixing)
 "bJT" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 1;
 	name = "input valve"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44317,15 +44297,11 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bJV" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/meter{
 	name = "Heat Exchanger input"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44995,18 +44971,11 @@
 	},
 /area/toxins/mixing)
 "bLo" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 6
-	},
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warningline{
-	dir = 4
+/turf/open/floor/plating/warnplate{
+	dir = 6
 	},
 /area/toxins/mixing)
 "bLp" = (
@@ -69130,8 +69099,12 @@
 	icon_state = "white"
 	},
 /area/medical/sleeper)
+"Yom" = (
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/toxins/mixing)
 "Yon" = (
-/turf/open/floor/plasteel,
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
 	input_tag = "burn_in";
@@ -69139,8 +69112,8 @@
 	output_tag = "burn_out";
 	sensors = list("burn_sensor" = "Tank")
 	},
-/turf/open/floor/plasteel/warningline{
-	dir = 1
+/turf/open/floor/plasteel/warning{
+	dir = 5
 	},
 /area/toxins/mixing)
 "Yoo" = (
@@ -69226,7 +69199,6 @@
 /turf/closed/wall/r_wall,
 /area/toxins/mixing)
 "YoA" = (
-/turf/open/floor/plasteel,
 /obj/machinery/camera{
 	c_tag = "Toxins Mixing Room North";
 	network = list("SS13","RD")
@@ -69236,36 +69208,27 @@
 /obj/item/weapon/screwdriver{
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel/warning{
 	dir = 1
 	},
 /area/toxins/mixing)
 "YoB" = (
-/turf/open/floor/plasteel,
-/turf/open/floor/plasteel/warningline{
-	dir = 1
+/turf/open/floor/plasteel/warning{
+	dir = 5
 	},
 /area/toxins/mixing)
 "YoC" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "Heat Exchanger output"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
 "YoD" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	airpump_tag = "tox_airlock_pump";
 	exterior_door_tag = "tox_airlock_exterior";
@@ -69280,15 +69243,11 @@
 	name = "Output"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
 "YoE" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/button/door{
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
@@ -69305,7 +69264,7 @@
 	name = "Input"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -120230,8 +120189,8 @@ bny
 csk
 bGW
 YoB
-bJO
-bJO
+Yom
+Yom
 bML
 bOo
 bPF
@@ -120744,8 +120703,8 @@ bDT
 bGX
 Yoz
 Yon
-bJO
-bJO
+Yom
+Yom
 bMM
 bOp
 bPG
@@ -121002,7 +120961,7 @@ bGY
 bFm
 YoD
 bJR
-bLq
+bLo
 bMN
 bOq
 bPH
@@ -121258,8 +121217,8 @@ bFn
 bGZ
 bId
 YoB
-bJO
-bJO
+Yom
+Yom
 bMO
 bMM
 bPI
@@ -121516,7 +121475,7 @@ bHa
 bFm
 YoE
 bJT
-bLq
+bLo
 bMO
 bMM
 bPJ
@@ -121772,8 +121731,8 @@ bFp
 bHb
 bAZ
 YoB
-bJO
-bJO
+Yom
+Yom
 bMO
 bOr
 bFq
@@ -122030,7 +121989,7 @@ Yov
 bHd
 bIf
 bJV
-bLq
+bLo
 bMO
 bOs
 bFq
