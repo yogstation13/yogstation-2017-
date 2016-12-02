@@ -161,8 +161,6 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of stabilizing chemicals.</span>"
-	if(M.heart_attack = TRUE)
-		user << "\t<span class='alert'>Subject is having a heart attack!</span>"
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		user << "\t<span class='alert'>Subject brain function is non-existent.</span>"
 	else if (M.getBrainLoss() >= 60)
@@ -307,7 +305,7 @@ MASS SPECTROMETER
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
-		var/BZ_concentration = env_gases["bz"][MOLES]/total_moles
+		var/bz_concentration = env_gases["bz"][MOLES]/total_moles
 		var/agent_b_concentration = env_gases["agent_b"][MOLES]/total_moles
 		var/n2o_concentration = env_gases["n2o"][MOLES]/total_moles
 		environment.garbage_collect()
@@ -471,8 +469,8 @@ MASS SPECTROMETER
 		user << "Slime has been fed a mutative chemical and cannot accept any more mutation potions."
 	if (T.Friends && T.Friends.len)
 		user << "<span class='notice'>Slime has formed lasting bonds with these organisms:</span>"
-			for (var/mob/M in T.Friends)
-				user << "<span class='notice'>[M.name]</span>"
+			for (var/mob/mob in T.Friends)
+				user << "<span class='notice'>[mob.name]</span>"
 	else
 		if(prob(1))
 			user << "<span class='notice'>This slime is as lonely as you are.</span>"
@@ -488,6 +486,6 @@ MASS SPECTROMETER
 		user << "<span class='notice'>Slime is dying extremely fast due to cold temperature.</span>"
 	if (T.docile)
 		user << "<span class='notice'>Slime is docile and cannot evolve or feed.</span>"
-	if (T.stat == UNCONSCIOUS && stasis)
-		user << "<span class='notice'>Slime is in stasis due to high concentrations of BZ in the air.</span>"
+	if (T.stat == UNCONSCIOUS)
+		user << "<span class='notice'>Slime is in stasis.</span>"
 	user << "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
