@@ -2,6 +2,7 @@
 	var/list/parallax_layers = list()
 	var/obj/screen/parallax_pmaster/parallax_pmaster
 	var/obj/screen/parallax_space_whitifier/parallax_space_whitifier
+	var/obj/screen/parallax_fixer/parallax_fixer
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/do_smoothing = 1
@@ -16,10 +17,12 @@
 		C.parallax_layers += new /obj/screen/parallax_layer/layer_2
 		C.parallax_pmaster = new
 		C.parallax_space_whitifier = new
+		C.parallax_fixer = new
 	for(var/obj/O in C.parallax_layers)
 		C.screen |= O
 		C.screen |= C.parallax_pmaster
 		C.screen |= C.parallax_space_whitifier
+		C.screen |= C.parallax_fixer
 
 // This sets which way the current shuttle is moving
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir)
@@ -243,4 +246,9 @@
 		1, 1, 1, 1,
 		0, 0, 0, 0
 		)
+	screen_loc = "CENTER-7,CENTER-7"
+
+/obj/screen/parallax_fixer
+	plane = PLANE_SPACE
+	alpha = 0
 	screen_loc = "CENTER-7,CENTER-7"
