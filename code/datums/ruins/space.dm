@@ -168,3 +168,10 @@
 		of the area exists in any record. After all, it's not like \
 		some doofus with an EVA suit and jetpack can just waltz around \
 		in space and find it..."
+
+/datum/map_template/ruin/space/spacehotel
+	id = "spacehotel"
+	suffix = "spacehotel.dmm"
+	name = "The Twin-Nexus Hotel"
+	description = "A interstellar hotel, where the weary spaceman can rest their head \
+		 and relax, assured that the residental staff will not murder them in their sleep. Probably."

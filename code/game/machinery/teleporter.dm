@@ -295,6 +295,11 @@
 	if(z == ZLEVEL_CENTCOM)
 		M << "You can't use this here."
 	if(is_ready())
+		if(istype(M, /mob/living/carbon))
+			for(var/obj/item/weapon/implant/exile/E in M)//Checking that there is an exile implant in the contents
+				if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
+					M << "\black The teleporter has detected your exile implant and is blocking your entry."
+					return
 		teleport(M)
 		use_power(5000)
 	return
