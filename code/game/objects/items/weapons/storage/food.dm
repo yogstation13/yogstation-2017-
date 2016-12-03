@@ -17,8 +17,9 @@
 
 /obj/item/weapon/storage/byummie/New()
 	..()
-	while(var/i, i < 4, i++)
-		var/obj/item/weapon/reagent_containers/food/snacks/borer/B = new(src)
+	var/obj/item/weapon/reagent_containers/food/snacks/borer/B
+	for(var/i, i < 4, i++)
+		B = new(src)
 		B.icon_state = rand("redyum", "greenyum", "blueyum", "yellowyum")
 		switch(B.icon_state)
 			if("redyum")
