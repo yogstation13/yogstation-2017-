@@ -9,7 +9,7 @@
 
 /obj/item/weapon/storage/byummie
 	name = "borer yummies"
-	desc "These'll squeeze your brains out, and make your mind go poppin!"
+	desc = "These'll squeeze your brains out, and make your mind go poppin!"
 	storage_slots = 4 // obviously nanotrasen brand
 	icon_state = "byummie"
 	w_class = 1
@@ -20,7 +20,7 @@
 	var/obj/item/weapon/reagent_containers/food/snacks/borer/B
 	for(var/i, i < 4, i++)
 		B = new(src)
-		B.icon_state = rand("redyum", "greenyum", "blueyum", "yellowyum")
+		B.icon_state = pick("redyum", "greenyum", "blueyum", "yellowyum")
 		switch(B.icon_state)
 			if("redyum")
 				B.desc = "A cherry flavoured yummie! This'll do the trick!"

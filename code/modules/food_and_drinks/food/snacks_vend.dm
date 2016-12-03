@@ -70,7 +70,7 @@
 	icon_state = "toritose"
 	trash = /obj/item/trash/toritose
 	bitesize = 25
-	list_reagents = list("nutriment" = 1, "sugar" = 1, "sodiumchlorid" = 5)
+	list_reagents = list("nutriment" = 1, "sugar" = 1, "sodiumchloride" = 5)
 	junkiness = 21
 	filling_color = "#FF0000"
 
