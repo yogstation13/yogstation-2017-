@@ -1,0 +1,73 @@
+"a" = (/turf/open/space/transit,/area/space)
+"b" = (/turf/closed/indestructible/opshuttle,/area/space)
+"c" = (/obj/structure/grille,/obj/structure/window/shuttle/survival_pod,/turf/open/floor/plasteel/cult,/area/space)
+"d" = (/turf/open/floor/light,/area/space)
+"e" = (/turf/open/floor/plasteel/cult,/area/space)
+"f" = (/obj/machinery/light,/turf/open/floor/light,/area/space)
+"g" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/cult,/area/space)
+"h" = (/obj/machinery/computer,/turf/open/floor/plasteel/cult,/area/space)
+"i" = (/obj/structure/chair,/turf/open/floor/plasteel/cult,/area/space)
+"j" = (/obj/structure/table/reinforced,/turf/open/floor/light,/area/space)
+"k" = (/obj/machinery/light,/turf/open/floor/plasteel/cult,/area/space)
+"l" = (/obj/machinery/door/airlock/survival_pod,/turf/open/floor/plasteel/cult,/area/space)
+"m" = (/turf/open/floor/plasteel/circuit,/area/space)
+"n" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"o" = (/obj/structure/lattice/catwalk,/turf/open/space,/area/space)
+"p" = (/obj/machinery/door/airlock/survival_pod,/turf/open/floor/plasteel/podhatch,/area/space)
+"q" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/circuit/off,/area/space)
+"r" = (/turf/open/floor/plasteel/black,/area/space)
+"s" = (/obj/structure/table/reinforced,/obj/item/clothing/head/helmet/skull,/turf/open/floor/plasteel/circuit/off,/area/space)
+"t" = (/obj/machinery/computer/security/telescreen,/turf/closed/indestructible/opshuttle,/area/space)
+"u" = (/turf/open/floor/plasteel/circuit/off,/area/space)
+"v" = (/obj/item/wallframe/extinguisher_cabinet,/turf/closed/indestructible/opshuttle,/area/space)
+"w" = (/obj/structure/chair,/turf/open/floor/plasteel/circuit/off,/area/space)
+"x" = (/obj/structure/table/reinforced,/obj/item/weapon/kitchen/knife,/obj/machinery/light,/turf/open/floor/plasteel/circuit/off,/area/space)
+"y" = (/obj/structure/table/reinforced,/obj/machinery/light,/turf/open/floor/plasteel/circuit/off,/area/space)
+"z" = (/obj/structure/closet/statue,/turf/open/floor/plasteel/cult,/area/space)
+"A" = (/obj/structure/closet/crate,/turf/open/floor/plasteel/cult,/area/space)
+"B" = (/obj/machinery/gibber,/turf/open/floor/plasteel/cult,/area/space)
+"C" = (/obj/structure/shuttle/engine/propulsion,/turf/open/space,/area/space)
+"D" = (/obj/machinery/sleeper/old,/turf/open/floor/plasteel/cult,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabccccccbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabdeeeedbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabfggggggfbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabgeehheegbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabheeiieehbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabieeeeeeibaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabeeeeeeeebaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabjeeeeeejbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabgjkeekjgbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabbbbllbbbbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabdeeeeeeeedbaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabeeeeeeeeeebaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmmnnoonnmmbaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmonbppbnombaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmobqrrsbombaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmoturrutombaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmovwrrwvombaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmoburrubombaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmobxrrybombaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabmmnbppbnmmbaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabeennoonneebaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabdekeeeekedbaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabbbbllbbbbaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabgbzeddezbAbaaaaaaaaaaaaaaaa
+aaaaaaaaaaabgebeddddebeAbaaaaaaaaaaaaaaa
+aaaaaaaaaaabBeleeddeeleAbaaaaaaaaaaaaaaa
+aaaaaaaaaaabgebbbllbbbeAbaaaaaaaaaaaaaaa
+aaaaaaaaaaaCbgbDeeeeDbAbCaaaaaaaaaaaaaaa
+aaaaaaaaaaaaCbbDeggeDbbCaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaCbDkeekDbCaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabbbbbbbbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaCCCCCCCCaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
