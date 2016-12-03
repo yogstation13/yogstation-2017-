@@ -269,3 +269,19 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/aicore
+	name = "Abandoned AI Core"
+	id = "abandonedaicore"
+	description = "An abandoned AI core facility long forgotten about."
+	suffix = "lavaland_surface_abandoned_core.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/vending
+	name = "Hall of Vending"
+	id = "hallofvending"
+	description = "A hallway loaded with every vending machine that you could ever want."
+	suffix = "lavaland_surface_hall_of_vending.dmm"
+	allow_duplicates = FALSE
+	cost = 5
