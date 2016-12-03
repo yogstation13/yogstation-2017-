@@ -56,7 +56,6 @@
 		src << "<span class='warning'>[H] does not have an active mind.</span>"
 		return 0
 
-	return 1
 	var/unprotected = TRUE
 
 	if((H.wear_suit && (H.wear_suit.flags & THICKMATERIAL)) && (H.head && (H.head.flags & THICKMATERIAL)))
