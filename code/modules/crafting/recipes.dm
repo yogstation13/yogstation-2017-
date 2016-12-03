@@ -491,12 +491,12 @@
 				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
-
-/datum/crafting_recipe/heartprotector
+/* NOTE: Needs a sprite
+/datum/crafting_recipe/barometer
 	name = "Sinew Barometer"
 	result = /obj/item/device/barometer/tribal
 	time = 40
 	reqs = list(/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
 				/obj/item/stack/sheet/bone = 2,
 				/obj/item/stack/sheet/mineral/mythril = 1)
-	category = CAT_PRIMAL
+	category = CAT_PRIMAL */
