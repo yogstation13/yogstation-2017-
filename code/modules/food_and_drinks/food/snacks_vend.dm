@@ -66,20 +66,18 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/toritose
 	name = "toritose"
-	desc = "An excellent snack when you need it, however it can become real salty fast. Hopefully stands on it's own in the market."
-//	icon_state = "chips"
-//	trash = /obj/item/trash
+	desc = "An excellent snack when you need it, however they become salty real fast. Hopefully stands on it's own in the market."
+	icon_state = "toritose"
+	trash = /obj/item/trash/toritose
 	bitesize = 25
-	list_reagents = list("nutriment" = 1, "sugar" = 1)
-	junkiness = 20
-//	filling_color
+	list_reagents = list("nutriment" = 1, "sugar" = 1, "sodiumchlorid" = 5)
+	junkiness = 21
+	filling_color = "#FF0000"
 
 /obj/item/weapon/reagent_containers/food/snacks/borer
 	name = "borer yummies"
 	desc = "So good they'll squeeze your brains out!"
-//	icon_state = "chips"
-//	trash = /obj/item/trash
+	icon_state = "chips"
 	bitesize = 2
-	list_reagents = list("nutriment" = 5, "sugar" = 2)
-	junkiness = 25
-//	filling_color
+	list_reagents = list("nutriment" = 1, "sugar" = 2)
+	junkiness = 12
