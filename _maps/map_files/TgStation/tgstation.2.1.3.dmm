@@ -42816,15 +42816,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/toxins/mixing)
-"bHc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	name = "Heat Exchanger output"
-	},
-/turf/open/floor/plasteel,
-/area/toxins/mixing)
 "bHd" = (
 /turf/open/floor/plating,
 /turf/open/floor/plasteel/warningline/corner{
@@ -43301,15 +43292,6 @@
 	req_access_txt = "8"
 	},
 /turf/open/floor/engine,
-/area/toxins/mixing)
-"bIe" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 5
-	},
-/obj/machinery/meter{
-	name = "Heat Exchanger output"
-	},
-/turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bIf" = (
 /turf/open/floor/plating,
@@ -44235,29 +44217,6 @@
 	dir = 4
 	},
 /area/toxins/mixing)
-"bJQ" = (
-/obj/machinery/embedded_controller/radio/airlock_controller{
-	airpump_tag = "tox_airlock_pump";
-	exterior_door_tag = "tox_airlock_exterior";
-	id_tag = "tox_airlock_control";
-	interior_door_tag = "tox_airlock_interior";
-	pixel_x = 0;
-	pixel_y = 24;
-	sanitize_external = 1;
-	sensor_tag = "tox_airlock_sensor"
-	},
-/obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/atmospherics/pipe/simple{
-	color = "#000000";
-	dir = 4;
-	pipe_color = "#000000"
-	},
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "warnwhite";
-	tag = "icon-warnwhite (NORTHEAST)"
-	},
-/area/toxins/mixing)
 "bJR" = (
 /turf/open/floor/plating,
 /turf/open/floor/plasteel/warningline{
@@ -44269,31 +44228,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	dir = 4
-	},
-/area/toxins/mixing)
-"bJS" = (
-/obj/machinery/button/door{
-	id = "mixvent";
-	name = "Mixing Room Vent Control";
-	pixel_x = 5;
-	pixel_y = 25;
-	req_access_txt = "7"
-	},
-/obj/machinery/button/ignition{
-	id = "mixingsparker";
-	pixel_x = -5;
-	pixel_y = 25
-	},
-/obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/atmospherics/pipe/simple{
-	color = "#000000";
-	dir = 4;
-	pipe_color = "#000000"
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-warnwhite (NORTHEAST)";
-	icon_state = "warnwhite";
-	dir = 5
 	},
 /area/toxins/mixing)
 "bJT" = (
@@ -44308,13 +44242,6 @@
 /turf/open/floor/plasteel/warningline{
 	dir = 4
 	},
-/area/toxins/mixing)
-"bJU" = (
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 8;
-	name = "Heat Exchanger input"
-	},
-/turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bJV" = (
 /turf/open/floor/plating,
@@ -44984,16 +44911,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
-"bLn" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4;
-	name = "output connector port"
-	},
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "warning"
-	},
-/area/toxins/mixing)
 "bLo" = (
 /turf/open/floor/plating,
 /turf/open/floor/plasteel/warningline{
@@ -45009,19 +44926,6 @@
 	dir = 4
 	},
 /area/toxins/mixing)
-"bLp" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
-/obj/machinery/meter{
-	name = "Output"
-	},
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "warnwhite";
-	tag = "icon-warnwhite (NORTHEAST)"
-	},
-/area/toxins/mixing)
 "bLq" = (
 /turf/open/floor/plating,
 /turf/open/floor/plasteel/warningline{
@@ -45032,48 +44936,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	dir = 8
-	},
-/area/toxins/mixing)
-"bLr" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 5
-	},
-/obj/machinery/meter{
-	name = "Input"
-	},
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warnwhite";
-	tag = "icon-warnwhite (NORTHEAST)"
-	},
-/area/toxins/mixing)
-"bLs" = (
-/obj/machinery/atmospherics/components/binary/valve{
-	dir = 4;
-	name = "input valve"
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "warning"
-	},
-/area/toxins/mixing)
-"bLt" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8;
-	name = "input connector port"
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "warning"
-	},
-/area/toxins/mixing)
-"bLu" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warning"
 	},
 /area/toxins/mixing)
 "bLv" = (
@@ -49378,12 +49240,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
-"bTk" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/toxins/mixing)
 "bTl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -50074,32 +49930,6 @@
 	dir = 5
 	},
 /area/toxins/mixing)
-"bUK" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 6
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/toxins/mixing)
-"bUL" = (
-/obj/machinery/meter{
-	name = "Space Cooler output"
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 10
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-warnwhitecorner";
-	icon_state = "warnwhitecorner";
-	dir = 2
-	},
-/area/toxins/mixing)
 "bUM" = (
 /obj/machinery/door/window/southleft{
 	name = "Mass Driver Door";
@@ -50615,26 +50445,6 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/warningline{
 	dir = 4
-	},
-/area/toxins/mixing)
-"bVM" = (
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 1;
-	name = "Space Cooler output"
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "warnwhite"
-	},
-/area/toxins/mixing)
-"bVN" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1;
-	layer = 2.9
-	},
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warnwhite"
 	},
 /area/toxins/mixing)
 "bVO" = (
@@ -69069,6 +68879,18 @@
 	dir = 8
 	},
 /area/gateway)
+"ABC" = (
+/obj/structure/grille,
+/obj/machinery/meter{
+	layer = 3.5;
+	name = "Space Cooler"
+	},
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/toxins/mixing)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -69081,6 +68903,14 @@
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
+"RXy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/toxins/mixing)
 "Sup" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -69143,34 +68973,6 @@
 	dir = 1
 	},
 /area/toxins/mixing)
-"Yoo" = (
-/turf/closed/wall/r_wall,
-/area/space)
-"Yop" = (
-/obj/machinery/door/poddoor{
-	id = "mixvent";
-	name = "Mixer Room Vent"
-	},
-/turf/open/floor/engine/vacuum,
-/area/space)
-"Yoq" = (
-/turf/open/space,
-/area/toxins/mixing)
-"Yor" = (
-/obj/machinery/atmospherics/pipe/simple{
-	color = "#000000";
-	dir = 10;
-	pipe_color = "#000000"
-	},
-/turf/closed/wall/r_wall,
-/area/space)
-"Yos" = (
-/obj/machinery/atmospherics/pipe/simple{
-	color = "#000000";
-	pipe_color = "#000000"
-	},
-/turf/closed/wall/r_wall,
-/area/space)
 "Yot" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -69198,12 +69000,6 @@
 	},
 /turf/closed/wall,
 /area/toxins/mixing)
-"Yow" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/space)
 "Yox" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	req_access_txt = 1
@@ -69327,11 +69123,6 @@
 	icon_state = "white"
 	},
 /area/toxins/mixing)
-"YoH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
 "YoI" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -69371,13 +69162,6 @@
 	dir = 8
 	},
 /area/toxins/mixing)
-"YoN" = (
-/obj/machinery/door/poddoor{
-	id = "toxinsdriver";
-	name = "toxins launcher bay door"
-	},
-/turf/open/floor/plating,
-/area/space)
 "YoO" = (
 /turf/open/space,
 /area/toxins/test_area)
@@ -69399,16 +69183,6 @@
 /area/toxins/test_area)
 "YoR" = (
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/toxins/mixing)
-"YoS" = (
-/obj/structure/grille,
-/obj/machinery/meter{
-	layer = 3.5;
-	name = "Space Cooler"
-	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -69453,6 +69227,14 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"YUy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/toxins/mixing)
 
 (1,1,1) = {"
 aaa
@@ -120498,7 +120280,7 @@ bMO
 bJO
 bJO
 bXj
-bQO
+RXy
 bYD
 bZG
 bYE
@@ -120755,7 +120537,7 @@ bTl
 bJO
 bJO
 bXj
-bQO
+YUy
 bYE
 bZH
 bYF
@@ -121012,7 +120794,7 @@ bTm
 YoK
 YoM
 YoP
-YoS
+ABC
 bYF
 bZG
 bYE
