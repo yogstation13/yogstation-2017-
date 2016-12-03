@@ -171,8 +171,7 @@
 	chameleon_action.chameleon_blacklist = list(/obj/item/clothing/under/shadowling,
 		/obj/item/clothing/under/changeling,
 		/obj/item/clothing/under/color/random,
-		/obj/item/clothing/under/golem,
-		/obj/item/clothing/under/predator)
+		/obj/item/clothing/under/golem)
 	chameleon_action.chameleon_name = "Jumpsuit"
 	chameleon_action.initialize_disguises()
 

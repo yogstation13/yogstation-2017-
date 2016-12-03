@@ -1354,6 +1354,7 @@
 #include "code\modules\mob\living\carbon\alien\humanoid\inventory.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\life.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\queen.dm"
+#include "code\modules\mob\living\carbon\alien\humanoid\tail.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\update_icons.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\drone.dm"
 #include "code\modules\mob\living\carbon\alien\humanoid\caste\hunter.dm"

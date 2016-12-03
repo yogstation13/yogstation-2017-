@@ -18,13 +18,13 @@ var/list/turf/xenomorphweeds = list()
 
 	var/queensuffix
 
-/datum/game_mode/proc/checkHive()
+/datum/game_mode/proc/checkHive() // if it returns 0 - it can be anything. else it returns a caste
 	var/hcount = xenomorphs.len["HUNTERS"]
 	var/scount = xenomorphs.len["SENITELS"]
 	var/dcount = xenomorphs.len["DRONES"]
 
 	if(!hcount || !scount || !dcount)
-		return 0 //"anything"
+		return 0
 
 
 	if(hcount == (scount && dcount))
@@ -69,8 +69,8 @@ var/list/turf/xenomorphweeds = list()
 	uninhabitable planet. Nanotrasen has identified the same creatures to be inhabitating SS13 but, was too late \
 	to cancel the next shift.\n<B>Xenomorphs</B>: Restore the Queen's glory and take over the station! Turn it into your \
 	own colony! Planting weeds increases the growth of her colony, however make sure to use strategy to outsmart \
-	the puny meatbags! Always listen to the queen. You may never disobey her.\n<B>Personnel</B> : Stop the xenomorphs at \
-	all costs! Burn down their weeds and stop the takeover!</B>"
+	those puny meatbags! Always listen to your queen. You cannot disobey her.\n<B>Personnel</B> : Stop the xenomorphs at \
+	all costs! Burn down their weeds and stop the takeover! Save Space Station 13!</B>"
 
 /datum/game_mode/proc/Xregister(var/datum/mind/M)
 	if(!M)
@@ -139,9 +139,8 @@ var/list/turf/xenomorphweeds = list()
 // than a 50/50 shot at hunter or sentinel
 // drone can only be chosen when a hunter or sentinel has already been
 
-
 /datum/game_mode/xenomorph/pre_setup()
-	var/player_count = num_players()
+	var/player_count = 10
 	var/xeno_count = max(1, round(num_players()/player_count))
 
 	var/list/datum/mind/hive = pick_candidate(amount = xeno_count)
@@ -186,7 +185,6 @@ var/list/turf/xenomorphweeds = list()
 
 		else
 			continue
-
 	return 1
 
 /datum/game_mode/xenomorph/post_setup()
@@ -220,19 +218,21 @@ var/list/turf/xenomorphweeds = list()
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
 
 	var/colony
+	var/mob/living/carbon/alien/alien
 
-	for(var/mob/living/carbon/alien/A in xenomorphs)
-		if(A.mind.assigned_role == "xeno queen")
-			colony = A.HD.colony_suffix
-			queensuffix = A.HD.colony_suffix
+	for(var/datum/mind/M in xenomorphs)
+		alien = M.current
+		colony = alien.HD.colony_suffix
+		queensuffix = alien.HD.colony_suffix
 
 	if(colony)
-		for(var/mob/living/carbon/alien/aliens in xenomorphs)
+		for(var/datum/mind/xenos in xenomorphs)
 			if(colony)
-				aliens.HD.colony_suffix = colony
-
+				alien = xenos.current
+				alien.HD.colony_suffix = colony
 	else
-		message_admins("ERROR: Queen failed to configure a colony suffix.")
+		message_admins("ERROR: Queen failed to configure a colony suffix. Reloading the queensuffix. Please check the mode under TICKER.")
+		update_queen_suffix()
 
 	return ..()
 
@@ -271,43 +271,65 @@ var/list/turf/xenomorphweeds = list()
 	else
 		message_admins("ERROR: [ticker.mode] has failed to greet and transform [hbrain.current] / [hbrain.current.ckey]. Contact a coder!")
 
+/datum/game_mode/xenomorph/proc/check_for_ERT()
+//	return 0 // testing
+	var/totalcrew = 0
+	var/deadcrew = 0
+	var/alivecrew = 0
+	for(var/mob/living/carbon/human/M in mob_list)
+		if(M.get_assignment() && M.job)
+			totalcrew++
+			if(M.stat == DEAD)
+				deadcrew++
+			else
+				alivecrew++
+	message_admins("total crew: [totalcrew]")
+	var/centcommexpectation = alivecrew * 1/8
+	message_admins("this is centcomms exxpectation: [centcommexpectation]")
+	if(centcommexpectation < 1)
+		centcommexpectation = 1
+	message_admins("this is centcomms exxpectation: [centcommexpectation]")
+	if(ERTlaunch)
+		return
+	if(alivecrew <= centcommexpectation)
+		ERTlaunch = TRUE
+		message_admins("An AI admin is automatically assembling an ERT squad due to the crew's casualty rate: [deadcrew]/[totalcrew] crewmembers dead.")
+		var/type = "Amber: Full ERT (Armoury Access)"
+		var/num = 7
+		var/obj = "Assist the crew, call the emergency shuttle, collect and report casualities, and exterminate the xenomorphs"
+		makeEmergencyresponseteam(TRUE, type, num, obj)
+		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
+
 /datum/game_mode/xenomorph/check_finished()
+	..()
+
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		return TRUE
 
 	if(calculateXenos(justqueen = TRUE) == 2)
 		SSshuttle.emergency.mode = SHUTTLE_IDLE
 
-	if(ERTlaunch)
-		..()
-		return
+	if(!ERTlaunch) // Has an ERT already been sent?
+		check_for_ERT()
 
-	var/totalcrew
-	var/deadcrew
-	var/alivecrew
-	for(var/mob/living/carbon/human/M in mob_list)
-		if(M.get_assignment())
-			totalcrew++
-			if(M.stat == DEAD)
-				deadcrew++
-			else
-				alivecrew++
-
-	var/centcommexpectation = totalcrew * 1/8
-	if(alivecrew >= centcommexpectation)
-		message_admins("An AI admin is automatically assembling an ERT squad due to the crew's casualty rate: [deadcrew]/[totalcrew] crewmembers dead.")
-		var/datum/admins/ai_admin = new /datum/admins
-
-		ai_admin.makeEmergencyresponseteam(AI = TRUE, "Amber: Full ERT (Armoury Access)", 7, "Assist the crew, call the emergency shuttle, collect and report casualities, and exterminate the xenomorphs")
-		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/shuttledock.ogg', "Alert - Nanotrasen")
-		ERTlaunch = TRUE
+	update_queen_suffix()
 
 	if(!calculateXenos())
 		return FALSE
 	else
 		return TRUE
 
-	..()
+/datum/game_mode/xenomorph/proc/update_queen_suffix()
+	if(queensuffix)
+		return
+
+	var/mob/living/carbon/alien/A
+
+	for(var/datum/mind/M in xenomorphs["QUEEN"])
+		if(istype(M.current, /mob/living/carbon/alien))
+			A = M.current
+
+	queensuffix = A.HD.colony_suffix
 
 /datum/game_mode/xenomorph/declare_completion()
 	if(alien_weed_control_count <= xenomorphweeds.len)
@@ -344,7 +366,7 @@ var/list/turf/xenomorphweeds = list()
 
 //helpers
 
-/datum/game_mode/xenomorph/proc/calculateXenos(var/justqueen) // are the hive alive? 0 - yes, 1 - no
+/datum/game_mode/xenomorph/proc/calculateXenos(var/justqueen) // is the hive alive? 0 - yes, 1 - no
 	var/hive
 	var/datum/mind/M = findQueen(1)
 
@@ -353,7 +375,7 @@ var/list/turf/xenomorphweeds = list()
 			return M.current
 		if(M.current)
 			if(M.current.stat != DEAD)
-				return FALSE // false if queens alive. however, if not than it's up to the hiv
+				return FALSE // false if queens alive. however, if not than it's up to whether there's even 1 xenomorph alive
 	else
 		return TRUE
 
@@ -369,7 +391,7 @@ var/list/turf/xenomorphweeds = list()
 
 
 
-/datum/game_mode/xenomorph/proc/findQueen(var/mind) // 1 yes, 0 no
+/datum/game_mode/xenomorph/proc/findQueen(var/mind) // 1 yes i found her, 0 no shes out with another hive again
 	var/queen
 	for(var/datum/mind/M in xenomorphs["QUEEN"])
 		if(mind)
@@ -381,7 +403,7 @@ var/list/turf/xenomorphweeds = list()
 
 
 /datum/objective/weedconquer
-	explanation_text = "Take over the station by planting alien weeds!"
+	explanation_text = "Conquer the station!"
 
 /datum/objective/weedconquer/check_completion()
 	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph))

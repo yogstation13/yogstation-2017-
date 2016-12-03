@@ -14,6 +14,7 @@
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
 	var/tackle_chance = 3
+	var/obj/item/weapon/xenomorphtail/tail
 //	pressure_resistance = -5
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated

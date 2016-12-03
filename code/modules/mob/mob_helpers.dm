@@ -305,9 +305,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 //converts intent-strings into numbers and back
-/proc/intent_numeric(argument)
+/proc/intent_numeric(argument, alien)
 	if(istext(argument))
 		switch(argument)
+			if("sting")
+				return 4
 			if("help")
 				return 0
 			if("disarm")
@@ -324,22 +326,34 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				return "disarm"
 			if(2)
 				return "grab"
-			else
+			if(3)
 				return "harm"
+			else if(alien)
+				return "sting"
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
+	var/stinger = FALSE
+	var/intentlimit = 4
+
+	if(isalienadult(src))
+		stinger = TRUE
+		intentlimit++
+
 	if(ishuman(src) || isalienadult(src) || isbrain(src))
 		switch(input)
 			if("help", "disarm", "grab", "harm")
 				a_intent = input
 			if("right")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 1) % 4)
+				message_admins("Original is [intent_numeric(a_intent, stinger)]!!")
+				message_admins("[intent_numeric(a_intent, stinger) + 1] is what is getting sent.")
+				message_admins("[intent_numeric((intent_numeric(a_intent, stinger) + 1) % intentlimit, stinger)] is what came out.")
+				a_intent = intent_numeric((intent_numeric(a_intent, stinger) + 1) % intentlimit, stinger)
 			if("left")
-				a_intent = intent_numeric((intent_numeric(a_intent) + 3) % 4)
+				a_intent = intent_numeric((intent_numeric(a_intent, stinger) + 3) % intentlimit, stinger)
 
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"

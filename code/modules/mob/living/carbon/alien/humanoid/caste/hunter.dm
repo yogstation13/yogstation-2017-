@@ -10,12 +10,13 @@
 /mob/living/carbon/alien/humanoid/hunter/New()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small
 	internal_organs += new /obj/item/organ/alien/neurotoxinthroat/frail
+	tail = new /obj/item/weapon/xenomorphtail/hunter(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/sneak)
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	if(prob(25))
+	if(prob(50))
 		. = -1
 	. += ..()
 

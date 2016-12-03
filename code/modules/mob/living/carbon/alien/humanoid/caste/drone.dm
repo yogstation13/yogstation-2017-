@@ -11,6 +11,7 @@
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/neurotoxinthroat/normal
+	tail = new /obj/item/weapon/xenomorphtail/drone(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
 	..()

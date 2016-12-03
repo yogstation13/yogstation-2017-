@@ -23,6 +23,7 @@
 		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=18'>Make Deathsquad Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
 		"}
@@ -437,8 +438,7 @@
 	return 0
 
 // CENTCOM RESPONSE TEAM
-/datum/admins/proc/makeEmergencyresponseteam(var/AI = FALSE, alertlevel, squadnumber, objective)
-
+/proc/makeEmergencyresponseteam(var/AI, alertlevel, squadnumber, objective)
 	var/alert
 	var/teamsize
 	var/mission
@@ -450,27 +450,20 @@
 	if(!alert)
 		return
 	switch(alert)
-		if("Delta: Deathsquad")
-			return makeDeathsquad()
 		if("Red: Elite ERT (Armoury Access + Pulse Weapons)")
 			alert = "Red"
 		if("Amber: Full ERT (Armoury Access)")
 			alert = "Amber"
 		if("Blue: Light ERT (No Armoury Access)")
 			alert = "Blue"
-		if("Green: Centcom Official")
-			return makeOfficial()
-
 	if(!AI)
 		teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 		mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")
 	else
 		teamsize = squadnumber
 		mission = objective
-
 	if(!teamsize)
 		teamsize = rand(1,7)
-
 	if(!mission)
 		mission = "Assist the station."
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Code [alert] Nanotrasen Emergency Response Team?", "deathsquad", null)

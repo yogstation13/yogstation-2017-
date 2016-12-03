@@ -49,4 +49,11 @@
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 					visible_message("<span class='danger'>[M] has tried to disarm [src]!</span>", \
 						"<span class='userdanger'>[M] has tried to disarm [src]!</span>")
+		if(M.a_intent == "sting")
+			if(M.tail)
+				visible_message("<span class='danger'>[M]'s tail swoops down and punctures [src]!</span>", \
+				"<span class='userdanger'>[M] punctures [src] with it's tail!</span>")
+				M.tail.attack(src, M)
+			else
+				M << "<span class='aliennotice'>You cannot use this intent.</span>"
 	return

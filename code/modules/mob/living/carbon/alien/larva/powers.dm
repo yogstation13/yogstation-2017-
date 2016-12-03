@@ -51,6 +51,9 @@
 
 		var/registerAntag // whether we'll register this into the xenomorph mode or not.
 
+		if(!L.HD)
+			L.HD = new(L)
+
 		if(L.HD.colony_suffix) // dirty checks, but hey what can you do
 			if(ticker && istype(ticker.mode, /datum/game_mode/xenomorph))
 				if(compareAlienSuffix(L.HD.colony_suffix, ticker.mode.queensuffix))

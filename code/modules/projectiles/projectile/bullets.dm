@@ -232,6 +232,7 @@
 	damage_type = BURN
 	damage = 5
 
+
 /obj/item/projectile/bullet/neurospit/on_hit(atom/target, blocked = 0)
 	if(isalien(target))
 		nodamage = 1
@@ -281,10 +282,10 @@
 
 		var/mob/living/carbon/human/H = target
 		if(H.dna.species.armor > damage*2) // species like golems are resistant to the alien acid
-			damage -= 5
+			damage -= round((damage/2))
 		else
-			H.acid_act(damage,damage,damage*10)
-			// we take off some of the load because most of the damage comes from the acid_act()
+			H.acid_act(damage,damage,damage)
+			// we take off the load because most of the damage comes from the acid_act()
 			nodamage = 1
 			damage = 0
 
@@ -298,7 +299,7 @@
 		new /obj/effect/acid(turf, turf)
 
 /obj/item/projectile/bullet/neurospit/proc/failText(var/target)
-	visible_message("[src] slaps against [target], and the mixture begins to bubble! Nothing happens, and the [target] withstands the heat.", "[src] slaps against [target].")
+	visible_message("<span class='warning'>[src] slaps against [target], and the mixture begins to bubble! Nothing happens, and the [target] withstands the heat.</span>", "<span class='warning'>[src] slaps against [target].</span>")
 
 
 /obj/item/projectile/bullet/neurospit/average
