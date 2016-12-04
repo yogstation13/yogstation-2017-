@@ -25,7 +25,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
-	/client/proc/stop_sounds
+	/client/proc/stop_sounds,
+	/client/proc/rejuv_all
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -184,7 +185,7 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/create_poll
 	)
 var/list/admin_verbs_rejuv = list(
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
 	)
 
 //verbs which can be hidden - needs work
@@ -916,7 +917,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[src] toggled the restart vote on.")
 
 /client/proc/rejuv_all()
-	set name = "Rejuvinate everyone"
+	set name = "Revive All"
 	set category = "Fun"
 	set desc = "Rejuvinate every mob/living."
 	var/revive_count = 0
@@ -928,7 +929,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	for(var/mob/living/M in world)
-		M.revive()
+		M.revive(full_heal = 1, admin_revive = 1)
 		revive_count++
 
 	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
@@ -946,3 +947,5 @@ var/list/admin_verbs_hideable = list(
 		var/list/L = V
 		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
 	usr << browse(dat, "window=checkruin;size=350x500")
+
+
