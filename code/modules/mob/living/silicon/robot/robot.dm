@@ -184,14 +184,21 @@
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
-			icon_state = "robot"
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Eve", "Droid")
+			switch(icontype)
+				if("Eve")
+					icon_state = "eve"
+				if("Droid")
+					icon_state = "droid"
+				else
+					icon_state = "robot"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich", "Eve")
 			switch(icontype)
 				if("Waitress")
 					icon_state = "service_female"
@@ -204,6 +211,8 @@
 				if("Rich")
 					icon_state = "maximillion"
 					animation_length=60
+				if ("Eve")
+					icon_state = "eve"
 				else
 					icon_state = "service_male"
 					animation_length=43
@@ -213,15 +222,22 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "minerborg"
-			animation_length = 30
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Brown", "Miner Droid")
+			switch(icontype)
+				if("Brown")
+					icon_state = "minerborg-brown"
+				if("Miner Droid")
+					icon_state = "droid-miner"
+				else
+					icon_state = "minerborg"
+					animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
-			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen")
+			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen", "Medical Droid","Blue")
 			if(!icontype) return
 			hands.icon_state = "medical"
 			switch(icontype)
@@ -234,6 +250,10 @@
 				if("Smile Screen")
 					icon_state = "mediborg+smile"
 					animation_length = 28
+				if("Medical Droid")
+					icon_state = "droid-medical"
+				if("Blue")
+					icon_state = "mediborg-blue"
 				else
 					icon_state = "mediborg"
 					animation_length = 34
@@ -263,15 +283,23 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			icon_state = "engiborg"
-			animation_length = 45
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Wall-E", "Yellow")
+			if(!icontype) return
+			switch(icontype)
+				if("Wall-E")
+					icon_state = "wall-eng"
+				if ("Yellow")
+					icon_state = "engiborg-yellow"
+				else
+					icon_state = "engiborg"
+					animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 			magpulse = 1
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
-			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal")
+			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal", "Purple")
 			if(!icontype) return
 			hands.icon_state = "janitor"
 			switch(icontype)
@@ -281,6 +309,8 @@
 				if("Disposal")
 					icon_state = "disposalbot"
 					animation_length = 6
+				if("Purple")
+					icon_state = "janiborg-purple"
 				else
 					icon_state = "janiborg"
 					animation_length = 22
@@ -889,6 +919,26 @@
 				overlays += "eyes-medihover[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("disposalbot")
 				overlays += "eyes-disposalbot[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("eve")
+				overlays += "eyes-eve[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("wall-eng")
+				overlays += "eyes-wall-eng[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("minerborg-brown")
+				overlays += "eyes-minerborg-brown[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid-miner")
+				overlays += "eyes-droid-miner[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid-medical")
+				overlays += "eyes-droid-medical[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid")
+				overlays += "eyes-droid[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("mediborg-blue")
+				overlays += "eyes-mediborg-blue[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("janiborg-purple")
+				overlays += "eyes-janiborg-purple[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("secborg-red")
+				overlays += "eyes-secborg-red[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("engiborg-yellow")
+				overlays += "eyes-engiborg-yellow[is_servant_of_ratvar(src) ? "_r" : ""]"
 			else
 				overlays += "eyes"
 				state_name = "serviceborg"
