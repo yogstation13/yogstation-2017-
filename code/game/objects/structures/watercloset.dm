@@ -218,7 +218,7 @@
 	..()
 	if(on)
 		if(isliving(O))
-			return
+			wash_mob(O)
 		else
 			wash_obj(O)
 
