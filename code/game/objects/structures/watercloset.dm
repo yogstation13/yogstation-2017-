@@ -218,11 +218,6 @@
 	..()
 	if(on)
 		if(isliving(O))
-			var/mob/living/L = O
-			if(wash_mob(L)) //it's a carbon mob.
-				var/mob/living/carbon/C = L
-				C.slip(4,2,null,NO_SLIP_WHEN_WALKING)
-		else
 			wash_obj(O)
 
 
