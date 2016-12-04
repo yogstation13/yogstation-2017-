@@ -43,9 +43,10 @@
 	metabolization_rate = 4
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
-	M.adjust_fire_stacks(2)
-	var/burndmg = max(0.3*M.fire_stacks, 0.3)
+	M.adjust_fire_stacks(4)
+	var/burndmg = max(0.4*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
+	M.IgniteMob()
 	..()
 	. = 1
 
@@ -76,7 +77,6 @@
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
 				PoolOrNew(/obj/effect/hotspot, M.loc)
-
 /datum/reagent/sorium
 	name = "Sorium"
 	id = "sorium"
@@ -142,6 +142,7 @@
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
 	M.adjustFireLoss(burndmg, 0)
+	M.IgniteMob()
 	..()
 	. = 1
 
