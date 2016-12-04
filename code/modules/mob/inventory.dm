@@ -63,6 +63,8 @@
 /mob/proc/put_in_hand_check(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return 0
+	if(isabomination(src))
+		return 0
 	if(!istype(W))
 		return 0
 	return 1
