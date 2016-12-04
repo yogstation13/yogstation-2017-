@@ -218,7 +218,9 @@
 	..()
 	if(on)
 		if(isliving(O))
-			wash_obj(O)
+			return
+		else
+			wash_obj(0)
 
 
 /obj/machinery/shower/proc/wash_obj(atom/movable/O)
