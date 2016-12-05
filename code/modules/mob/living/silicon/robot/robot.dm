@@ -184,12 +184,14 @@
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Eve", "Droid")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Eve", "Droid", "Standard")
 			switch(icontype)
 				if("Eve")
 					icon_state = "eve"
 				if("Droid")
 					icon_state = "droid"
+				if("Standard")
+					icon_state = "robot"
 				else
 					icon_state = "robot"
 			modtype = "Stand"
@@ -222,12 +224,15 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Brown", "Miner Droid")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Brown", "Miner Droid", "Minerborg")
 			switch(icontype)
 				if("Brown")
 					icon_state = "minerborg-brown"
 				if("Miner Droid")
 					icon_state = "droid-miner"
+				if("Minerborg")
+					icon_state = "minerborg"
+					animation_length = 30
 				else
 					icon_state = "minerborg"
 					animation_length = 30
@@ -283,13 +288,16 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Wall-E", "Yellow")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Wall-E", "Yellow", "Engiborg")
 			if(!icontype) return
 			switch(icontype)
 				if("Wall-E")
 					icon_state = "wall-eng"
 				if ("Yellow")
 					icon_state = "engiborg-yellow"
+				if ("Engiborg")
+					icon_state = "engiborg"
+					animation_length = 45
 				else
 					icon_state = "engiborg"
 					animation_length = 45
