@@ -392,6 +392,10 @@
 	name = "paper- Smelting Operations Closed"
 	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
+/obj/item/weapon/paper/morgue
+	name = "paper- 'Morgue Guide'"
+	info = "Since Space OSHA lawsuits cost a lot, we've printed this guide to make sure you don't send any more sleeping people to the gibber. <br> <br> The morgue tray lights have different colours based on what's inside: <br> <br> <b>Pale:</b> Empty <br> <br> <b>Red:</b> Uncloneable corpse (send these to the chef) <br> <br> <b>Blue:</b> Cloneable corpse (send these to cloning) <br> <br> <b>Yellow:</b> Non-biological objects inside <br> <br> <small>Note: morgue trays are not your personal lockers.</small>"
+
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
