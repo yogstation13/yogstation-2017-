@@ -447,7 +447,7 @@
 
 /datum/reagent/stableslimetoxin/pod
 	name = "Podperson Mutation Toxin"
- 	id = "podmutationtoxin"
+	id = "podmutationtoxin"
 	description = "A vegetalizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/pod
@@ -535,7 +535,7 @@
 	id = "plasmamutationtoxin"
 	description = "A plasma-based toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
- 	race = /datum/species/plasmaman
+	race = /datum/species/plasmaman
 	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
 
 /datum/reagent/stableslimetoxin/unstable //PSYCH
