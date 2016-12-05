@@ -25,8 +25,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
-	/client/proc/stop_sounds,
-	/client/proc/rejuv_all
+	/client/proc/stop_sounds
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -186,6 +185,7 @@ var/list/admin_verbs_permissions = list(
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character,
+	/client/proc/rejuv_all
 	)
 
 //verbs which can be hidden - needs work
