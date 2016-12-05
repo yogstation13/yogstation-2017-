@@ -453,7 +453,8 @@
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
 	if(prob(15))
 		M.losebreath += 1
-	if(prob(20))
+		M.silent = max(M.silent, 3)
+	if(prob(10))
 		M << "You feel horrendously weak!"
 		M.Stun(2, 0)
 		M.adjustToxLoss(2*REM, 0)
