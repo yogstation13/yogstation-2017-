@@ -566,7 +566,7 @@
 	M.adjustStaminaLoss(10*REM, 0)
 	if(prob(10))
 		M.adjustBrainLoss(1*REM)
-	if(prob(15)
+	if(prob(15))
 		M.Stun(2, 0)
 	..()
 	. = 1
