@@ -450,7 +450,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
 
-/datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
+/datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M)
 	if(prob(15))
 		M.losebreath += 1
 		M.silent = max(M.silent, 3)
@@ -624,7 +624,7 @@
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 2.75
 
-/datum/reagent/toxin/coniine/on_mob_life(mob/living/M)
+/datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M)
 	M.losebreath += 5
 	M.silent = max(M.silent, 3)
 	return ..()
