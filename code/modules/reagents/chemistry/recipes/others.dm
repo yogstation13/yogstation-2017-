@@ -313,7 +313,7 @@
 /datum/chemical_reaction/plant_mutation_toxin
 	name = "Phytosian Mutation Toxin"
 	id = "phytosianmutationtoxin"
-	results = list("phytosianmutationtoxin" = 1
+	results = list("phytosianmutationtoxin" = 1)
 	required_reagents = list("unstablemutationtoxin" = 1, "robustharvestnutriment" = 1)
 
 /datum/chemical_reaction/flytosian_mutation_toxin
