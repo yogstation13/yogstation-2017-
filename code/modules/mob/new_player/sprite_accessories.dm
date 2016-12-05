@@ -1405,3 +1405,13 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/leaves
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/leaves/classic
+	name = "Classic"
+	icon_state = "classic"
+	gender_specific = 1
+
+
