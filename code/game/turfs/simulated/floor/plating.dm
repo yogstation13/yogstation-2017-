@@ -214,12 +214,6 @@
 	var/processing = 0
 	luminosity = 1
 	flags = 0
-	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
- 	//if anything matching this typecache is found in the lava, we don't burn things
-
- /turf/open/floor/plating/lava/New()
- 	..()
- 	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -241,19 +235,8 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
-
-/turf/open/floor/plating/lava/proc/is_safe()
- 	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
- 	return LAZYLEN(found_safeties)
-
-
-
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
-
- 	if(is_safe())
- 		return FALSE
-
 	var/thing_to_check = src
 	if (AM)
 		thing_to_check = list(AM)

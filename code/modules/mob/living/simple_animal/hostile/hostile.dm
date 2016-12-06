@@ -1,7 +1,6 @@
 /mob/living/simple_animal/hostile
 	faction = list("hostile")
 	stop_automated_movement_when_pulled = 0
-	obj_damage = 40
 	environment_smash = 1 //Set to 1 to break closets,tables,racks, etc; 2 for walls; 3 for rwalls
 	var/atom/target
 	var/ranged = 0
@@ -13,17 +12,6 @@
 	var/list/friends = list()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
-
-//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
-	var/list/environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade) //turned into a typecache in New()
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
@@ -40,32 +28,20 @@
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
-	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
-	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
-	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
+	var/list/wanted_objects = list() //A list of objects that will be checked against to attack, should we have search_objects enabled
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
+
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
-	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
-
-	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
-	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
 
 /mob/living/simple_animal/hostile/New()
 	..()
-
 	if(!targets_from)
 		targets_from = src
-	environment_target_typecache = typecacheof(environment_target_typecache)
-	wanted_objects = typecacheof(wanted_objects)
 
-
-/mob/living/simple_animal/hostile/Destroy()
-	targets_from = null
-	return ..()
 
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
@@ -88,17 +64,10 @@
 				AIStatus = AI_IDLE				// otherwise we go idle
 	return 1
 
-/mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
-		FindTarget(list(user), 1)
-	return ..()
-
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
-		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer), 1)
+	if(!target && AIStatus != AI_OFF && !client)
 		Goto(P.starting, move_to_delay, 3)
-	return ..()
+	..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
@@ -169,7 +138,14 @@
 		return 0
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
+	if(stop_automated_movement_when_pulled && pulledby && !ranged && !Adjacent(the_target))
+		return 0
 	if(search_objects < 2)
+		if(istype(the_target, /obj/mecha))
+			var/obj/mecha/M = the_target
+			if(M.occupant)//Just so we don't attack empty mechs
+				if(CanAttack(M.occupant))
+					return 1
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check(L)
@@ -186,34 +162,14 @@
 				if(faction_check && !attack_same)
 					return 0
 			return 1
-
-		if(istype(the_target, /obj/mecha))
-			var/obj/mecha/M = the_target
-			if(M.occupant)//Just so we don't attack empty mechs
-				if(CanAttack(M.occupant))
-					return 1
-
-		if(istype(the_target, /obj/machinery/porta_turret))
-			var/obj/machinery/porta_turret/P = the_target
-			if(P.faction in faction)
-				return 0
-			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-				return 0
-			if(P.stat & BROKEN) //Or turrets that are already broken
-				return 0
-			return 1
-
-
 	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
+		if(is_type_in_list(the_target, wanted_objects))
 			return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
-	LosePatience()
 	if(target != null)
-		GainPatience()
 		Aggro()
 		return 1
 
@@ -223,34 +179,31 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
-		if(target.z != z)
-			LoseTarget()
-			return 0
 		var/target_distance = get_dist(targets_from,target)
-		if(ranged) //We ranged? Shoot at em
-			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
+		if(ranged)//We ranged? Shoot at em
+			if(target_distance >= 2 && ranged_cooldown <= world.time)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
-			return 1
-		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
+		if(!(stop_automated_movement_when_pulled && pulledby))
+			if(!Process_Spacemove()) // Drifting
+				walk(src,0)
+				return 1
+			if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
+				if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+					walk_away(src,target,retreat_distance,move_to_delay)
+				else
+					Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
 			else
-				Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
-		else
-			Goto(target,move_to_delay,minimum_distance)
+				Goto(target,move_to_delay,minimum_distance)
 		if(target)
-			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
+			if(isturf(targets_from.loc) && target.Adjacent(targets_from))	//If they're next to us, attack
 				AttackingTarget()
-				GainPatience()
 			return 1
 		return 0
-	if(environment_smash)
-		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
+	if(environment_smash && !(stop_automated_movement_when_pulled && pulledby))
+		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
 			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
 				OpenFire(target)
-			if(environment_smash >= 2) //If we're capable of smashing through walls, forget about vision completely after finding our target
+			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
 				return 1
@@ -267,17 +220,16 @@
 	. = ..()
 	if(!ckey && !stat && search_objects < 3 && damage > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
+			search_objects = 0
 			target = null
-			LoseSearchObjects()
 		if(AIStatus == AI_IDLE)
 			AIStatus = AI_ON
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
-
-/mob/living/simple_animal/hostile/proc/AttackingTarget()
-	target.attack_animal(src)
+/mob/living/simple_animal/hostile/AttackingTarget(atom/T = target) //this override does do something, it sets the default to target
+	..(T)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -302,15 +254,12 @@
 	LoseTarget()
 	..(gibbed)
 
-/mob/living/simple_animal/hostile/proc/summon_backup(distance, exact_faction_match)
+/mob/living/simple_animal/hostile/proc/summon_backup(distance)
 	do_alert_animation(src)
 	playsound(loc, 'sound/machines/chime.ogg', 50, 1, -1)
 	for(var/mob/living/simple_animal/hostile/M in oview(distance, targets_from))
 		var/list/L = M.faction&faction
-		var/success = L.len
-		if(exact_faction_match)
-			success = (L.len == faction.len) //since the above op is &, an exact match would be of the same length
-		if(success)
+		if(L.len)
 			if(M.AIStatus == AI_OFF)
 				return
 			else
@@ -343,37 +292,41 @@
 		return
 	var/turf/startloc = get_turf(targets_from)
 	if(casingtype)
-		var/obj/item/ammo_casing/casing = new casingtype(startloc)
+		var/obj/item/ammo_casing/casing = new casingtype
 		playsound(src, projectilesound, 100, 1)
-		casing.fire_casing(targeted_atom, src, null, null, null, zone_override = ran_zone())
+		casing.fire(targeted_atom, src, zone_override = ran_zone())
+		casing.loc = startloc
 	else if(projectiletype)
-		var/obj/item/projectile/P = new projectiletype(startloc)
-		playsound(src, projectilesound, 100, 1)
-		P.current = startloc
-		P.starting = startloc
-		P.firer = src
-		P.yo = targeted_atom.y - startloc.y
-		P.xo = targeted_atom.x - startloc.x
-		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
-			newtonian_move(get_dir(targeted_atom, targets_from))
-		P.original = targeted_atom
-		P.fire()
-		return P
+		return FireProjectile(projectiletype, projectilesound, targeted_atom, startloc)
 
+/mob/living/simple_animal/hostile/proc/FireProjectile(projectiletype, sound, atom/targeted_atom, turf/startloc)
+	var/obj/item/projectile/P = new projectiletype(startloc)
+	if(sound)
+		playsound(src, sound, 100, 1)
+	P.current = startloc
+	P.starting = startloc
+	P.firer = src
+	P.yo = targeted_atom.y - startloc.y
+	P.xo = targeted_atom.x - startloc.x
+	if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
+		newtonian_move(get_dir(targeted_atom, targets_from))
+	P.original = targeted_atom
+	P.fire()
+	return P
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in cardinal)
 			var/turf/T = get_step(targets_from, dir)
-			if(iswallturf(T) || ismineralturf(T))
+			if(istype(T, /turf/closed/wall) || istype(T, /turf/closed/mineral))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(is_type_in_typecache(A, environment_target_typecache))
+				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/girder))
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
@@ -393,12 +346,17 @@
 		return 1
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
+	if(harness && harness.on_ranged_attack(src, A, params))
+		return
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
 	..()
 
-
+/mob/living/simple_animal/hostile/on_pulledby(mob/new_pulledby, supress_message)
+	..()
+	if(stop_automated_movement_when_pulled)
+		walk_to(src, 0)
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)
@@ -414,28 +372,3 @@
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(var/list/possible_targets)
 	return !FindTarget(possible_targets, 1)
-
-
-//These two procs handle losing our target if we've failed to attack them for
-//more than lose_patience_timeout deciseconds, which probably means we're stuck
-/mob/living/simple_animal/hostile/proc/GainPatience()
-	if(lose_patience_timeout)
-		LosePatience()
-		lose_patience_timer_id = addtimer(src, "LoseTarget", lose_patience_timeout)
-
-
-/mob/living/simple_animal/hostile/proc/LosePatience()
-	deltimer(lose_patience_timer_id)
-
-
-//These two procs handle losing and regaining search_objects when attacked by a mob
-/mob/living/simple_animal/hostile/proc/LoseSearchObjects()
-	search_objects = 0
-	deltimer(search_objects_timer_id)
-	search_objects_timer_id = addtimer(src, "RegainSearchObjects", search_objects_regain_time)
-
-
-/mob/living/simple_animal/hostile/proc/RegainSearchObjects(value)
-	if(!value)
-		value = initial(search_objects)
-	search_objects = value
