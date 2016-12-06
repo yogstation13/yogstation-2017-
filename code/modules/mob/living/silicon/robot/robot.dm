@@ -184,10 +184,8 @@
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Eve", "Droid", "Standard")
+			var/icontype = input("Select an icon!", "Robot", null, null) in list("Droid", "Standard")
 			switch(icontype)
-				if("Eve")
-					icon_state = "eve"
 				if("Droid")
 					icon_state = "droid"
 				if("Standard")
@@ -242,7 +240,7 @@
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
-			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen", "Medical Droid","Blue")
+			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen", "Medical Droid","Blue", "Eve")
 			if(!icontype) return
 			hands.icon_state = "medical"
 			switch(icontype)
@@ -259,6 +257,8 @@
 					icon_state = "droid-medical"
 				if("Blue")
 					icon_state = "mediborg-blue"
+				if("Eve")
+					icon_state = "eve"
 				else
 					icon_state = "mediborg"
 					animation_length = 34
