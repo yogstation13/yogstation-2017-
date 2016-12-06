@@ -186,6 +186,7 @@ var/list/admin_verbs_permissions = list(
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character,
+	/client/proc/rejuv_all
 	)
 
 //verbs which can be hidden - needs work
