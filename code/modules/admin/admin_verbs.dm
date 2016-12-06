@@ -25,13 +25,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
-<<<<<<< master
 	/client/proc/stop_sounds
-=======
-	/client/proc/stop_sounds,
-	/client/proc/rejuv_all,
-	/client/proc/admin_pick_random_player
->>>>>>> local
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -94,7 +88,8 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
 	/client/proc/check_ruins,
-	/datum/admins/proc/borer_panel
+	/datum/admins/proc/borer_panel,
+	/client/proc/admin_pick_random_player
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -190,7 +185,7 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/create_poll
 	)
 var/list/admin_verbs_rejuv = list(
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
 	)
 
 //verbs which can be hidden - needs work
@@ -922,7 +917,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[src] toggled the restart vote on.")
 
 /client/proc/rejuv_all()
-	set name = "Rejuvinate everyone"
+	set name = "Revive All"
 	set category = "Fun"
 	set desc = "Rejuvinate every mob/living."
 	var/revive_count = 0
@@ -934,7 +929,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	for(var/mob/living/M in world)
-		M.revive()
+		M.revive(full_heal = 1, admin_revive = 1)
 		revive_count++
 
 	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
@@ -952,8 +947,6 @@ var/list/admin_verbs_hideable = list(
 		var/list/L = V
 		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
 	usr << browse(dat, "window=checkruin;size=350x500")
-<<<<<<< master
-=======
 
 
 /client/proc/admin_pick_random_player()
@@ -962,7 +955,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Picks a random logged-in player and brings up their player panel."
 
 
-	var/what_group = input(src, "What group would you like to pick from?", "Selection", "Everyone") as null|anything in list("Everyone", "Traitors Only", "Non-Traitors Only")
+	var/what_group = input(src, "What group would you like to pick from?", "Selection", "Everyone") as null|anything in list("Everyone", "Antags Only", "Non-Antags Only")
 	if (!what_group)
 		return
 	var/choose_from_dead = input(src, "What group would you like to pick from?", "Selection", "Everyone") as null|anything in list("Everyone", "Living Only", "Dead Only")
@@ -974,9 +967,9 @@ var/list/admin_verbs_hideable = list(
 		if (!M.client || istype(M, /mob/new_player))
 			continue
 		if (what_group != "Everyone")
-			if ((what_group == "Traitors Only") && ROLE_TRAITOR)
+			if ((what_group == "Antags Only") && !M.mind.special_role)
 				continue
-			else if ((what_group == "Non-Traitors Only") && !ROLE_TRAITOR)
+			else if ((what_group == "Non-Antags Only") && M.mind.special_role)
 				continue
 		if (choose_from_dead != "Everyone")
 			if ((choose_from_dead == "Living Only") && M.stat)
@@ -992,4 +985,3 @@ var/list/admin_verbs_hideable = list(
 	var/chosen_player = pick(player_pool)
 	src << "[chosen_player] Has been chosen"
 	holder.show_player_panel(chosen_player)
->>>>>>> local
