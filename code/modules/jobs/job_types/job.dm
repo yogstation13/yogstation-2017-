@@ -81,6 +81,9 @@
 		if(3)//pip-boy
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
 			PDA.icon_state = "pda-pipboy"
+		if(4)//rainbow
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
+			PDA.icon_state = "pda-rainbow"
 			PDA.slot_flags |= SLOT_GLOVES
 
 
