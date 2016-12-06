@@ -73,6 +73,8 @@
 	//Breathing!
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0
+	var/safe_nitrogen_min = 0
+	var/safe_nitrogen_max = 0
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
@@ -335,6 +337,10 @@
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
 
+	if("tail_vox" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_vox"
+
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
@@ -391,6 +397,8 @@
 					S = tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
 					S.= animated_tails_list_human[H.dna.features["tail_human"]]
+				if("tail_vox")
+					S = tails_list_vox[H.dna.features["tail_vox"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
 				if("waggingspines")
@@ -414,7 +422,7 @@
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "tail_vox")
 				bodypart = "tail"
 			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
 				bodypart = "waggingtail"
@@ -1299,12 +1307,13 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
+	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz", "n2")
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
+	var/N2_pp = breath.get_breath_partial_pressure(breath_gases["n2"][MOLES])
 
 
 	//-- OXY --//
@@ -1370,6 +1379,33 @@
 	//Exhale
 	breath_gases["co2"][MOLES] -= gas_breathed
 	breath_gases["o2"][MOLES] += gas_breathed
+	gas_breathed = 0
+
+	//-- N2 --//
+	//Too much nitrogen! //Yes, some species may not like it.
+	if(safe_nitrogen_max)
+		if(N2_pp > safe_nitrogen_max && !(NOBREATH in specflags))
+			var/ratio = (breath_gases["n2"][MOLES]/safe_nitrogen_max) * 10
+			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+		else
+			H.clear_alert("too_much_oxy")
+
+	//Too little nitrogen! //used for Vox
+	if(safe_nitrogen_min)
+		if(N2_pp < safe_nitrogen_min)
+			gas_breathed = handle_too_little_breath(H,N2_pp,safe_nitrogen_min,breath_gases["n2"][MOLES])
+			H.throw_alert("oxy", /obj/screen/alert/oxy)
+		else
+			H.failed_last_breath = 0
+			if(H.getOxyLoss())
+				H.adjustOxyLoss(-5)
+			gas_breathed = breath_gases["n2"][MOLES]
+			H.clear_alert("oxy")
+
+	//Exhale
+	breath_gases["n2"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
