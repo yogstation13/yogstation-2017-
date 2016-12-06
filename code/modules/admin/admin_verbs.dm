@@ -969,11 +969,7 @@ var/list/admin_verbs_hideable = list(
 		if (what_group != "Everyone")
 			if ((what_group == "Antags Only") && !M.mind.special_role)
 				continue
-<<<<<<< playerpick
 			else if ((what_group == "Non-Antags Only") && M.mind.special_role)
-=======
-			else if ((what_group == "Non-Antags Only") && M.mind.special_role.)
->>>>>>> local
 				continue
 		if (choose_from_dead != "Everyone")
 			if ((choose_from_dead == "Living Only") && M.stat)
