@@ -588,6 +588,7 @@
 	var/realProc
 	var/cooldownMax = 60
 	var/cooldown
+	var/note //In case you need to store something
 
 /obj/item/weapon/relic/New()
 	..()
@@ -601,7 +602,7 @@
 	revealed = TRUE
 	name = realName
 	cooldownMax = rand(60,300)
-	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon","fakeclone")
 	origin_tech = pick("engineering=[rand(2,5)]","magnets=[rand(2,5)]","plasmatech=[rand(2,5)]","programming=[rand(2,5)]","powerstorage=[rand(2,5)]")
 
 /obj/item/weapon/relic/attack_self(mob/user)
@@ -707,3 +708,30 @@
 		message_admins("[RelicType] relic activated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")
+
+/obj/item/weapon/relic/proc/humanclone(mob/user)
+	var/original_icon_state = icon_state
+	var/datum/effect_system/spark_spread/sparks
+	if(!note)
+		user << "<span class='danger'>[src] begins to glow!</span>"
+		spawn(rand(50, 100))
+			icon_state = ""
+			overlays += image(user.icon, user.icon_state)
+			overlays += user.overlays
+			name = user.name
+			sparks.set_up(1, 1, src)
+			sparks.start()
+			note = 1
+	if(note)
+		user << "<span class='danger'>[src] begins to dim!</span>"
+		icon_state = original_icon_state
+		overlays.Cut()
+		name = realName
+		sparks.set_up(1, 1, src)
+		sparks.start()
+		note = 0
+
+
+
+
+
