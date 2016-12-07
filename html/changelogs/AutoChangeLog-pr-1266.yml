@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "The Hermit now has 50 blocks of mythril avaliable to him - intended so he can get out more and create sinew tents."
+  - rscadd: "The NT surveyor now comes with a few circuitboards."
