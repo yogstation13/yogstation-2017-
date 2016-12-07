@@ -305,9 +305,9 @@ MASS SPECTROMETER
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
-		var/bz_concentration = env_gases["bz"][MOLES]/total_moles
-		var/agent_b_concentration = env_gases["agent_b"][MOLES]/total_moles
-		var/n2o_concentration = env_gases["n2o"][MOLES]/total_moles
+		var/bz_concentration = env_gases["bz"] ? env_gases["bz"][MOLES]/total_moles : 0
+		var/agent_b_concentration = env_gases["agent_b"] ? env_gases["agent_b"][MOLES]/total_moles : 0
+		var/n2o_concentration = env_gases["n2o"] ? env_gases["n2o"][MOLES]/total_moles : 0
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -442,14 +442,16 @@ MASS SPECTROMETER
 	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
 	if (T.rabid == 1)
 		user << "<span class='warning'>Warning: Slime is rabid!</span>"
+
 	if (T.attacked == 10)
 		user << "<span class='warning'>Warning: Slime was just attacked!</span>"
-	else if(T.attacked < 10)
-		user << "<span class='warning'>Warning: Slime was attacked recently.</span>"
-	else if(T.attacked < 5)
-		user << "<span class='warning'>Warning: Slime was attacked a short period of time ago.</span>"
 	else if(T.attacked < 1)
 		user << "Slime appears agitated due to prior agression.</span>"
+	else if(T.attacked < 5)
+		user << "<span class='warning'>Warning: Slime was attacked a short period of time ago.</span>"
+	else if(T.attacked < 10)
+		user << "<span class='warning'>Warning: Slime was attacked recently.</span>"
+
 	if (T.slime_mutation[4] == T.colour)
 		user << "This slime does not evolve any further."
 	else
