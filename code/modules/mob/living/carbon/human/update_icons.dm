@@ -427,7 +427,19 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_mask]
 		inv.update_icon()
+	if(wear_mask && (istype(wear_mask, /obj/item/clothing/mask)))
+		var/image/standing
+		if(wear_mask.icon_override)
+			standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = wear_mask.icon_override)
+		else if(wear_mask.sprite_sheets && wear_mask.sprite_sheets[dna.species.name])
+			standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = wear_mask.sprite_sheets[dna.species.name])
+		else
+			standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
+		overlays_standing[FACEMASK_LAYER]	= standing
+	else
+		overlays_standing[FACEMASK_LAYER]	= null
 	update_mutant_bodyparts()
+	apply_overlay(FACEMASK_LAYER)
 
 /mob/living/carbon/human/update_inv_handcuffed()
 	remove_overlay(HANDCUFF_LAYER)

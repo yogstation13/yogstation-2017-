@@ -13,6 +13,10 @@
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	burn_state = FIRE_PROOF
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/mask.dmi'
+		)
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)

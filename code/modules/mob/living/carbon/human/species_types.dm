@@ -168,8 +168,13 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	eyes = "vox_eyes"
 	id = "vox"
 	say_mod = "caws"
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
 	safe_oxygen_min = 0
-	safe_oxygen_max = 2
+	safe_oxygen_max = 1
 	safe_nitrogen_min = 16
 	specflags = list(EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_vox")
