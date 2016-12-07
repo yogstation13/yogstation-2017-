@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "CLF3 and Phlogistion will now constantly ignite you when they're in your system."
