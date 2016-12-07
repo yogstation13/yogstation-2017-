@@ -15,6 +15,9 @@
 
 /obj/machinery/abductor/gland_dispenser/New()
 	gland_types = subtypesof(/obj/item/organ/gland)
+	for(var/obj/item/organ/gland/G in gland_types)
+		if(G.banned)
+			gland_types -= G
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)

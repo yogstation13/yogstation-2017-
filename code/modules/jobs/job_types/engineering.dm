@@ -161,3 +161,6 @@ Signal Technician
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/engineering
 	box = /obj/item/weapon/storage/box/engineer
 	pda_slot = slot_l_store
+
+/datum/job/signal_tech/config_check()
+	return 0
