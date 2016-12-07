@@ -59,7 +59,7 @@
 "bg" = (/obj/structure/table/wood,/obj/item/toy/figure/dsquad{pixel_x = 5},/obj/item/toy/figure/ninja,/turf/open/floor/wood,/area/ruin/powered)
 "bh" = (/turf/open/floor/wood{icon_state = "wood-broken7"},/area/ruin/powered)
 "bi" = (/obj/structure/table/wood,/obj/item/toy/spinningtoy,/turf/open/floor/wood,/area/ruin/powered)
-"bj" = (/obj/structure/table/wood,/obj/item/clothing/mask/facehugger/lamarr{pixel_y = 7},/turf/open/floor/wood,/area/ruin/powered)
+"bj" = (/obj/structure/table/wood,/obj/item/clothing/mask/facehugger/toy{pixel_y = 7},/turf/open/floor/wood,/area/ruin/powered)
 "bk" = (/obj/structure/table/wood,/obj/item/toy/minimeteor,/obj/item/toy/minimeteor{pixel_x = -6; pixel_y = -5},/obj/item/toy/minimeteor{pixel_x = -9; pixel_y = 6},/obj/item/toy/minimeteor{pixel_x = 4; pixel_y = 2},/obj/item/toy/minimeteor,/obj/item/toy/minimeteor{pixel_x = 7; pixel_y = -5},/obj/item/toy/minimeteor{pixel_x = 6; pixel_y = 4},/turf/open/floor/wood,/area/ruin/powered)
 "bl" = (/obj/machinery/newscaster,/turf/closed/wall/mineral/wood,/area/ruin/powered)
 "bm" = (/obj/machinery/vending/wallmed{name = "Emergency NanoMed"; pixel_x = 0; pixel_y = 0; req_access_txt = "0"; use_power = 0},/turf/closed/wall/mineral/wood,/area/ruin/powered)

@@ -13,7 +13,7 @@
 "m" = (/obj/structure/shuttle/engine/heater{dir = 8},/turf/closed/wall/shuttle,/area/ruin/powered)
 "n" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/brute{pixel_x = -6; pixel_y = 5},/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/toxin{pixel_x = 3; pixel_y = 5},/turf/open/floor/wood,/area/ruin/powered)
 "o" = (/obj/machinery/light,/turf/open/floor/wood,/area/ruin/powered)
-"p" = (/obj/structure/table,/obj/item/device/instrument/violin,/obj/item/ship_in_a_bottle,/obj/item/weapon/storage/backpack/dufflebag/clown,/obj/item/weapon/oar,/turf/open/floor/wood,/area/ruin/powered)
+"p" = (/obj/structure/table,/obj/item/device/instrument/violin,/obj/item/ship_in_a_bottle,/obj/item/weapon/storage/backpack/dufflebag/clown,/turf/open/floor/wood,/area/ruin/powered)
 "q" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/vault,/area/ruin/powered)
 "r" = (/obj/structure/table,/obj/item/weapon/tank/internals/emergency_oxygen/double,/obj/item/clothing/mask/breath,/obj/item/device/flashlight/lantern{pixel_x = -7},/obj/item/device/gps/mining{pixel_x = 6},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/wood,/area/ruin/powered)
 "s" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/coffee,/obj/item/weapon/reagent_containers/food/drinks/coffee{pixel_x = 9; pixel_y = 7},/obj/item/weapon/reagent_containers/food/drinks/coffee{pixel_x = 7},/obj/item/weapon/reagent_containers/food/drinks/coffee{pixel_x = 8; pixel_y = 4},/obj/item/weapon/reagent_containers/food/snacks/burger/bigbite{pixel_x = -3},/turf/open/floor/wood,/area/ruin/powered)

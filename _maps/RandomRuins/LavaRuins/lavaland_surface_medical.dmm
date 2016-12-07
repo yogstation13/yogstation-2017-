@@ -19,7 +19,7 @@
 "as" = (/obj/structure/bed,/obj/item/weapon/bedsheet/medical,/obj/effect/mob_spawn/human/orion_doctor,/mob/living/carbon/monkey,/turf/open/floor/carpet,/area/ruin/powered)
 "at" = (/obj/structure/toilet{dir = 4},/turf/open/floor/plasteel/bar,/area/ruin/powered)
 "au" = (/obj/effect/mob_spawn/human/orion_doctor,/turf/open/floor/plasteel/bar,/area/ruin/powered)
-"av" = (/obj/structure/table,/obj/item/weapon/storage/bag/chemistry,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/syringe/bluespace,/turf/open/floor/plasteel/white,/area/ruin/powered)
+"av" = (/obj/structure/table,/obj/item/weapon/storage/bag/chemistry,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/syringe/bluespace,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "aw" = (/obj/machinery/chem_dispenser,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "ax" = (/obj/machinery/chem_master,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "ay" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/window/southleft,/mob/living/carbon/monkey,/turf/open/floor/plasteel/white,/area/ruin/powered)
@@ -53,7 +53,7 @@
 "ba" = (/obj/machinery/atmospherics/pipe/simple{dir = 10},/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bb" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal,/obj/item/weapon/reagent_containers/glass/beaker/large/charcoal,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bc" = (/obj/machinery/door/airlock/shuttle{name = "Cryogenics"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/white,/area/ruin/powered)
-"bd" = (/obj/machinery/atmospherics/pipe/simple,/obj/structure/table,/obj/item/weapon/storage/box/beakers,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/glass/beaker/large,/obj/item/weapon/reagent_containers/glass/beaker/large,/turf/open/floor/plasteel/white,/area/ruin/powered)
+"bd" = (/obj/machinery/atmospherics/pipe/simple,/obj/structure/table,/obj/item/weapon/storage/box/beakers,/obj/item/weapon/reagent_containers/glass/beaker/large,/obj/item/weapon/reagent_containers/glass/beaker/large,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "be" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bf" = (/obj/machinery/atmospherics/pipe/simple{dir = 6},/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bg" = (/obj/machinery/atmospherics/pipe/manifold{dir = 1},/turf/open/floor/plasteel/white,/area/ruin/powered)
@@ -70,7 +70,7 @@
 "br" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1; layer = 2.9},/obj/machinery/portable_atmospherics/canister/oxygen,/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/window/northright,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bs" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer{dir = 1},/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bt" = (/obj/machinery/iv_drip,/turf/open/floor/plasteel/white,/area/ruin/powered)
-"bu" = (/obj/structure/table,/obj/item/weapon/defibrillator,/turf/open/floor/plasteel/white,/area/ruin/powered)
+"bu" = (/obj/structure/table,/obj/item/weapon/defibrillator/loaded,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bv" = (/obj/machinery/door/airlock/shuttle{name = "Cloning"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/white,/area/ruin/powered)
 "bw" = (/turf/open/floor/plasteel/blueyellow,/area/ruin/powered)
 "bx" = (/obj/machinery/door/airlock/shuttle{name = "Foyer Desk"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/blueyellow,/area/ruin/powered)
@@ -98,24 +98,26 @@
 "bT" = (/obj/machinery/door/airlock/glass_large,/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
 "bU" = (/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
 "bV" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/grille,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"bW" = (/obj/effect/mob_spawn/human/orion_security,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"bX" = (/obj/structure/table,/obj/item/weapon/gun/energy/gun/advtaser,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"bY" = (/obj/structure/bed/roller,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
-"bZ" = (/obj/structure/chair/office/light,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"ca" = (/obj/structure/chair/office/light{dir = 4},/turf/open/floor/plasteel/red,/area/ruin/powered)
-"cb" = (/obj/structure/table,/obj/item/weapon/storage/box/handcuffs,/obj/item/weapon/shield/riot,/obj/item/weapon/melee/baton/loaded,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"cc" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
-"cd" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/obj/item/weapon/reagent_containers/food/snacks/donut/jelly{pixel_x = -6; pixel_y = 5},/turf/open/floor/plasteel/red,/area/ruin/powered)
-"ce" = (/obj/structure/closet{name = "Contraband Locker"},/obj/item/clothing/head/collectable/HoS,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"cf" = (/obj/structure/closet{name = "Contraband Locker"},/turf/open/floor/plasteel/red,/area/ruin/powered)
-"cg" = (/obj/structure/table,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/gauze,/obj/item/stack/medical/ointment,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"ch" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/red,/area/ruin/powered)
-"ci" = (/obj/structure/sign/bluecross_2,/turf/closed/wall/shuttle/smooth,/area/ruin/powered)
-"cj" = (/obj/machinery/door/airlock/glass_large{name = "Orion Medical Outpost V"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
-"ck" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"cl" = (/obj/item/weapon/emptysandbag,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"cm" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
-"cn" = (/obj/item/weapon/emptysandbag,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
+"bW" = (/obj/item/device/flashlight/seclite,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"bX" = (/obj/item/weapon/tank/internals/emergency_oxygen/double,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"bY" = (/obj/effect/mob_spawn/human/orion_security,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"bZ" = (/obj/structure/table,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"ca" = (/obj/structure/bed/roller,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
+"cb" = (/obj/structure/chair/office/light,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"cc" = (/obj/structure/chair/office/light{dir = 4},/turf/open/floor/plasteel/red,/area/ruin/powered)
+"cd" = (/obj/structure/table,/obj/item/weapon/storage/box/handcuffs,/obj/item/weapon/shield/riot,/obj/item/weapon/melee/baton/loaded,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"ce" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
+"cf" = (/obj/structure/table,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/obj/item/weapon/reagent_containers/food/snacks/donut/jelly{pixel_x = -6; pixel_y = 5},/turf/open/floor/plasteel/red,/area/ruin/powered)
+"cg" = (/obj/structure/closet{name = "Contraband Locker"},/obj/item/clothing/head/collectable/HoS,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"ch" = (/obj/structure/closet{name = "Contraband Locker"},/obj/item/weapon/storage/belt/security,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"ci" = (/obj/structure/table,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/gauze,/obj/item/stack/medical/ointment,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"cj" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/red,/area/ruin/powered)
+"ck" = (/obj/structure/sign/bluecross_2,/turf/closed/wall/shuttle/smooth,/area/ruin/powered)
+"cl" = (/obj/machinery/door/airlock/glass_large{name = "Orion Medical Outpost V"},/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
+"cm" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"cn" = (/obj/item/weapon/emptysandbag,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"co" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
+"cp" = (/obj/item/weapon/emptysandbag,/turf/open/floor/plasteel/cmo,/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -139,11 +141,11 @@ aaaaaaaaabbCaiaibkabbwbwbDbybybEbFanababababaaaaaa
 aaaaaaaaabbGbHbIbkabbwbJbKbybybLbFabaaaaaaaaaaaaaa
 aaaaaaabababababababbwbMbNbybybybFabaaaaaaaaaaaaaa
 aaaaaaabbObPbQbPbRabbSabababbTbUababaaaaaaaaaaaaaa
-aaaaaaabbObPbVbPbPbWbPbXabbYbybybYabaaaaaaaaaaaaaa
-aaaaaaabbObPbVbZbPbPcacbabccbybybYabaaaaaaaaaaaaaa
-aaaaaaabbObPbVcdcecfcgchabcicjbUcianaaaaaaaaaaaaaa
-aaaaaaanababababababababanbybybybyckbybybyabaaaaaa
-aaaaaaaaaaaaaaaaaackckckbyclcmcnbyclbyckckckaaaaaa
-aaaaaaaaaaaaaaaaaackabbybybyclbyabbyabckckckaaaaaa
-aaaaaaaaaaaaaaaaaackckckckabckckckckckckckaaaaaaaa
+aaaaaaabbObPbVbWbXbYbPbZabcabybycaabaaaaaaaaaaaaaa
+aaaaaaabbObPbVcbbPbPcccdabcebybycaabaaaaaaaaaaaaaa
+aaaaaaabbObPbVcfcgchcicjabckclbUckanaaaaaaaaaaaaaa
+aaaaaaanababababababababanbybybybycmbybybyabaaaaaa
+aaaaaaaaaaaaaaaaaacmcmcmbycncocpbycnbycmcmcmaaaaaa
+aaaaaaaaaaaaaaaaaacmabbybybycnbyabbyabcmcmcmaaaaaa
+aaaaaaaaaaaaaaaaaacmcmcmcmabcmcmcmcmcmcmcmaaaaaaaa
 "}

@@ -233,13 +233,15 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/weapon/gun/projectile/shotgun/lethal
-	belt = /obj/item/weapon/storage/belt/security
+	belt = /obj/item/weapon/gun/energy/gun/advtaser
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	helmet = /obj/item/clothing/head/helmet/swat
 	mask = /obj/item/clothing/mask/gas
 	flavour_text = "You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law."
 	id_job = "Security Officer"
 	id_access = "Security Officer"
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen/double
+	pocket2 = /obj/item/device/flashlight/seclite
 	has_id = 1
 	roundstart = FALSE
 	death = FALSE
