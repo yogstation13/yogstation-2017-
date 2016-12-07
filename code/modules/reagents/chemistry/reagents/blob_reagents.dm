@@ -85,7 +85,7 @@
 	var/effectivedamage = damage
 	if(damage_type == BRUTE)
 		effectivedamage = damage * 2
-	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(50))
+	if(damage_type == BURN && effectivedamage > 0 && original_health - effectivedamage > 0 && prob(40))
 		var/obj/effect/blob/newB = B.expand(null, null, 0)
 		if(newB)
 			newB.health = original_health - effectivedamage
@@ -101,7 +101,7 @@
 /datum/reagent/blob/shifting_fragments
 	name = "Shifting Fragments"
 	id = "shifting_fragments"
-	description = "will do medium brute damage and shift away from damage."
+	description = "will do medium brute damage, is weak to brute, and will shift away from damage."
 	shortdesc = "will do medium brute damage."
 	analyzerdescdamage = "Does medium brute damage."
 	analyzerdesceffect = "When attacked, may shift away from the attacker."
@@ -118,6 +118,9 @@
 		B.forceMove(T)
 
 /datum/reagent/blob/shifting_fragments/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
+	var/effectivedamage = damage
+	if(damage_type == BRUTE)
+		effectivedamage = damage * 2
 	if(cause && damage > 0 && original_health - damage > 0 && prob(40))
 		var/list/blobstopick = list()
 		for(var/obj/effect/blob/OB in orange(1, B))
@@ -147,7 +150,7 @@
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BURN)
 	if(M)
-		M.adjustStaminaLoss(0.6*reac_volume)
+		M.adjustStaminaLoss(0.5*reac_volume)
 
 /datum/reagent/blob/energized_fibers/tesla_reaction(obj/effect/blob/B, power)
 	return 0
@@ -160,7 +163,7 @@
 /datum/reagent/blob/boiling_oil
 	name = "Boiling Oil"
 	id = "boiling_oil"
-	description = "will do medium burn damage and set targets on fire, but is weak to water."
+	description = "will do medium burn damage and set targets on fire, but takes massive damage from water."
 	shortdesc = "will do medium burn damage and set targets on fire."
 	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
 	analyzerdesceffect = "Takes damage from water and other extinguishing liquids."
@@ -175,12 +178,12 @@
 	M.adjust_fire_stacks(round(reac_volume/10))
 	M.IgniteMob()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BURN)
+		M.apply_damage(0.8*reac_volume, BURN)
 	if(iscarbon(M))
 		M.emote("scream")
 
 /datum/reagent/blob/boiling_oil/extinguish_reaction(obj/effect/blob/B)
-	B.take_damage(rand(1, 3), BURN)
+	B.take_damage(rand(4, 6), BURN)
 
 //does burn and toxin damage, explodes into flame when hit with burn damage
 /datum/reagent/blob/flammable_goo
@@ -199,7 +202,7 @@
 /datum/reagent/blob/flammable_goo/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.adjust_fire_stacks(round(reac_volume/8)) //apply, but don't ignite
-	M.apply_damage(0.4*reac_volume, TOX)
+	M.apply_damage(0.5*reac_volume, TOX)
 	if(M)
 		M.apply_damage(0.4*reac_volume, BURN)
 
@@ -282,7 +285,7 @@
 		O.blob_mobs.Add(BS)
 		BS.Zombify(M)
 	if(M)
-		M.apply_damage(0.6*reac_volume, TOX)
+		M.apply_damage(0.7*reac_volume, TOX)
 
 //toxin, stamina, and some bonus spore toxin
 /datum/reagent/blob/envenomed_filaments
@@ -319,9 +322,9 @@
 		M.reagents.add_reagent("poisonous_strands", 0.12*reac_volume)
 
 /datum/reagent/blob/poisonous_strands/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(1.3*REM)
-	M.adjustFireLoss(1.3*REM)
-	M.adjustToxLoss(1.3*REM)
+	M.adjustBruteLoss(1*REM)
+	M.adjustFireLoss(1*REM)
+	M.adjustToxLoss(1*REM)
 	..()
 
 //does oxygen damage, randomly pushes or pulls targets
@@ -353,7 +356,7 @@
 
 /datum/reagent/blob/lexorin_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.losebreath += round(0.2*reac_volume)
+	M.losebreath += round(0.1*reac_volume)
 	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.6*reac_volume, OXY)
@@ -390,7 +393,9 @@
 		if(damage_type == BRUTE)
 			return 0 //no-sell the explosion we do not take damage
 		if(damage_type == BURN)
-			return damage * 1.5 //take more from fire, tesla, and flashbangs
+			return damage * 2 //take more from fire, tesla, and flashbangs
+		if(damage_type == BRUTE)
+			return damage * 2
 	return ..()
 
 //does semi-random brute damage and reacts to brute damage
@@ -408,7 +413,7 @@
 
 /datum/reagent/blob/reactive_gelatin/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	var/damage = rand(5, 35)/25
+	var/damage = rand(5, 25)/25
 	M.apply_damage(damage*reac_volume, BRUTE)
 
 /datum/reagent/blob/reactive_gelatin/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -491,12 +496,12 @@
 
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.1*reac_volume, BRUTE)
+	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M && reac_volume)
 		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
 			if(M)
 				B.blob_attack_animation(M) //show them they're getting a bad time
-				M.apply_damage(0.3*reac_volume, BRUTE)
+				M.apply_damage(0.4*reac_volume, BRUTE)
 
 /datum/reagent/blob/synchronous_mesh/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause)) //the cause isn't fire or bombs, so split the damage
@@ -509,7 +514,7 @@
 				C.take_damage(damage/damagesplit, CLONE, B, 0)
 		return damage / damagesplit
 	else
-		return damage * 1.25
+		return damage * 1
 
 //does brute damage through armor and bio resistance
 /datum/reagent/blob/penetrating_spines
@@ -540,12 +545,12 @@
 	reac_volume = ..()
 	if(O && ishuman(M) && M.stat == UNCONSCIOUS)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
-		var/points = rand(8, 13)
+		var/points = rand(10, 13)
 		O.add_points(points)
 		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
 		M.death()
 	if(M)
-		M.apply_damage(0.6*reac_volume, BRUTE)
+		M.apply_damage(0.5*reac_volume, BRUTE)
 
 //does low brute damage, oxygen damage, and stamina damage and wets tiles when damaged
 /datum/reagent/blob/pressurized_slime
@@ -570,7 +575,7 @@
 		M.ExtinguishMob()
 	M.apply_damage(0.4*reac_volume, BRUTE)
 	if(M)
-		M.apply_damage(0.4*reac_volume, OXY)
+		M.apply_damage(0.3*reac_volume, OXY)
 
 
 /datum/reagent/blob/pressurized_slime/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
@@ -585,7 +590,7 @@
 /datum/reagent/blob/pressurized_slime/proc/extinguisharea(obj/effect/blob/B, probchance)
 	for(var/turf/open/T in range(1, B))
 		if(prob(probchance))
-			T.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
+			T.MakeSlippery(min_wet_time = 4, wet_time_to_add = 1)
 			for(var/obj/O in T)
 				O.extinguish()
 			for(var/mob/living/L in T)
@@ -620,7 +625,7 @@
 /datum/reagent/blob/b_sorium/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	reagent_vortex(M, 1, reac_volume)
-	M.apply_damage(0.3*reac_volume, BRUTE)
+	M.apply_damage(0.2*reac_volume, BRUTE)
 
 /datum/reagent/blob/proc/reagent_vortex(mob/living/M, setting_type, reac_volume)
 	if(M && reac_volume)
@@ -670,12 +675,12 @@
 
 /datum/reagent/blob/disorienting_fluid/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.rad_act(0.3*reac_volume)
-	M.apply_damage(0.3*reac_volume, TOX)
-	M.eye_blind = 1
-	M.ear_deaf = 10
+	M.rad_act(0.2*reac_volume)
+	M.apply_damage(0.2*reac_volume, TOX)
+	M.eye_blind = 0.5
+	M.ear_deaf = 5
 	M.eye_blurry = 10
-	if(prob(10))
+	if(prob(5))
 		M.disabilities |= CLUMSY
 
 /datum/reagent/blob/proc/send_message(mob/living/M)
