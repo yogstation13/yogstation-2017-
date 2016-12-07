@@ -10,6 +10,7 @@ var/const/BRIG				=(1<<5)
 var/const/CHIEF				=(1<<6)
 var/const/ENGINEER			=(1<<7)
 var/const/ATMOSTECH			=(1<<8)
+var/const/SIGNALTECH		=(1<<9)
 var/const/AI				=(1<<10)
 var/const/CYBORG			=(1<<11)
 
@@ -75,6 +76,7 @@ var/list/engineering_positions = list(
 	"Chief Engineer",
 	"Station Engineer",
 	"Atmospheric Technician",
+	"Signal Technician"
 )
 
 
