@@ -79,6 +79,7 @@
 
 	usr << "\"[msg]\" becomes: \"[pretty_filter(msg)]\"."
 
+
 // Enter a piece of text and have it tested against the filter list
 /client/proc/add_pretty_filter(line as text)
 	set category = "Special Verbs"
@@ -104,5 +105,6 @@
 
 		var/regex/R = new(pattern, "ig")
 		text = R.Replace(text, replacement)
+		message_admins("[usr] : [pattern] filtered")
 
 	return text
