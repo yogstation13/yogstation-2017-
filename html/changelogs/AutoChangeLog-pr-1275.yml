@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "Blocking melee and unarmed attacks will now give you a message on what happened."
+  - tweak: "Blocking hulk punches with riot shields no longer weakens you. However the shield will still wind up out of your hand, and the hulk punch will land on you."
