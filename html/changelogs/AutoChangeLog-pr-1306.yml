@@ -1,4 +1,0 @@
-author: utahclock
-delete-after: True
-changes: 
-  - rscadd: "adds an admin message if a pretty filter is applied."

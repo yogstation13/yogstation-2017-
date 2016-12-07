@@ -1,5 +1,0 @@
-author: monster860
-delete-after: True
-changes: 
-  - rscadd: "Adds space parallax."
-  - rscadd: "Adds launch animations to shuttles using parallax."

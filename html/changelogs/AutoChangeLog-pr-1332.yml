@@ -1,6 +1,0 @@
-author: matskuman5
-delete-after: True
-changes: 
-  - bugfix: "People now slip on the wet tiles created by showers, not the showers themselves."
-  - bugfix: "This makes the high-friction tile in medbay actually do something useful!"
-  - bugfix: "Thanks to Skull123 and Alek2ander for the help, and to Utahclock for the report."
