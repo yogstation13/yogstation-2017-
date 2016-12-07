@@ -218,7 +218,7 @@
 	back = /obj/item/weapon/storage/backpack/medic
 	belt = /obj/item/weapon/storage/belt/medical
 	glasses = /obj/item/clothing/glasses/hud/health
-	flavour_text = "<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if theres anyone out there who needs help</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help</b>"
 	id_job = "Medical Doctor"
 	has_id = 1
 	roundstart = FALSE
