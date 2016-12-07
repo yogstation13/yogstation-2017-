@@ -56,8 +56,13 @@
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
-	no_destination_swap = 1
 	notification = SUPP_FREQ
+
+/obj/machinery/computer/shuttle/mining/Topic(href, href_list)
+    ..()
+    if(href_list["move"])
+        investigate_log("[key_name(usr)] has moved the mining shuttle", "cargo")
+
 
 /*********************Pickaxe & Drills**************************/
 
