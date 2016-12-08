@@ -40,3 +40,11 @@
 	item_state = "m_mask"
 	permeability_coefficient = 0.01
 	put_on_delay = 10
+
+/*/obj/item/clothing/mask/breath/vox
+	desc = "A weirdly-shaped breath mask."
+	name = "vox breath mask"
+	icon_state = "voxmask"
+	permeability_coefficient = 0.01
+	species_restricted = list("Vox")
+	actions_types = list()*/

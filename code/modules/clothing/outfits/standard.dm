@@ -324,6 +324,12 @@
 	r_hand= /obj/item/weapon/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
+/datum/outfit/vox
+	name = "Vox"
+
+	r_hand= /obj/item/weapon/tank/internals/emergency_oxygen/vox
+	mask = /obj/item/clothing/mask/breath
+
 /datum/outfit/death_commando
 	name = "Death Commando"
 

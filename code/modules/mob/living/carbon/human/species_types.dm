@@ -186,7 +186,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	roundstart = 1
 
-
+/datum/species/vox/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/datum/outfit/vox/O = new /datum/outfit/vox
+	H.equipOutfit(O, visualsOnly)
+	H.internal = H.r_hand
+	H.update_internals_hud_icon(1)
+	return 0
 
 /*
  ANDROIDS

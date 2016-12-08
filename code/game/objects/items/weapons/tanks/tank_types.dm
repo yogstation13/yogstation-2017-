@@ -147,8 +147,6 @@
 	air_contents.gases["plasma"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
-
-
 /*
  * Emergency Oxygen
  */
@@ -179,3 +177,17 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 10
+
+//Vox N2
+/obj/item/weapon/tank/internals/emergency_oxygen/vox
+	name = "vox specialized nitrogen tank"
+	desc = "A high-tech nitrogen tank designed specifically for Vox."
+	icon_state = "emergency_vox"
+	item_state = "emergency_vox"
+	volume = 25
+
+/obj/item/weapon/tank/internals/emergency_oxygen/vox/New()
+	..()
+	air_contents.assert_gas("n2")
+	air_contents.gases["n2"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	air_contents.gases["o2"][MOLES] -= (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
