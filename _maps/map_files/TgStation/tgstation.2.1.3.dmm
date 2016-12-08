@@ -69178,6 +69178,12 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
+"Zyo" = (
+/obj/effect/landmark/start{
+	name = "Mining Medic"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "Zyp" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Teleporter Room";
@@ -91455,7 +91461,7 @@ bJZ
 bLC
 bMU
 bJZ
-bJZ
+Zyo
 bBh
 aaa
 aaa
