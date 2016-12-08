@@ -19,6 +19,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 	can_adjust = 1
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/rank/research_director/turtleneck
 	desc = "A dark purple turtleneck and tan khakis, for a director with a superior sense of style."
@@ -29,6 +31,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 	can_adjust = 1
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/rank/scientist
 	desc = "It's made of a special fiber that provides minor protection against biohazards. It has markings that denote the wearer as a scientist."
@@ -129,3 +133,5 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null

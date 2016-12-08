@@ -57,6 +57,10 @@
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
 	var/cold_level_2 = 200  // Cold damage level 2 below this point.
 	var/cold_level_3 = 120  // Cold damage level 3 below this point.
+	var/heat_level_1 = 360  // Heat damage level 1 above this point.
+	var/heat_level_2 = 400  // Heat damage level 2 above this point.
+	var/heat_level_3 = 460 // Heat damage level 3 above this point; used for body temperature
+	var/heat_level_3_breathe = 1000 // Heat damage level 3 above this point; used for breathed air temperature
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -1512,13 +1516,13 @@
 
 		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
-				if(360 to 400)
+				if(heat_level_1 to heat_level_2)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
 					H.lastburntype = "hotburn"
-				if(400 to 1000)
+				if(heat_level_2 to heat_level_3_breathe)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
 					H.lastburntype = "hotburn"
-				if(1000 to INFINITY)
+				if(heat_level_3_breathe to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
 					H.lastburntype = "hotburn"
 
@@ -1548,33 +1552,34 @@
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTTEMP in specflags))
+	if(H.bodytemperature > heat_level_1 && !(RESISTTEMP in specflags))
 		//Body temperature is too hot.
 		switch(H.bodytemperature)
-			if(360 to 400)
+			if(heat_level_1 to heat_level_2)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
-			if(400 to 460)
+			if(heat_level_2 to heat_level_3)
 				H.throw_alert("temp", /obj/screen/alert/hot, 2)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-			if(460 to INFINITY)
+			if(heat_level_3 to INFINITY)
 				H.throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(H.on_fire)
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
 	else if(H.bodytemperature < cold_level_1 && !(mutations_list[COLDRES] in H.dna.mutations))
-		if(H.bodytemperature >= cold_level_2 && H.bodytemperature <= cold_level_1)
-			H.throw_alert("temp", /obj/screen/alert/cold, 1)
-			H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-		if(H.bodytemperature >= cold_level_3 && H.bodytemperature < cold_level_2)
-			H.throw_alert("temp", /obj/screen/alert/cold, 2)
-			H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-		if(H.bodytemperature > -INFINITY && H.bodytemperature < cold_level_3)
-			H.throw_alert("temp", /obj/screen/alert/cold, 3)
-			H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-		else
-			H.clear_alert("temp")
+		switch(H.bodytemperature)
+			if(cold_level_1 to cold_level_2)
+				H.throw_alert("temp", /obj/screen/alert/cold, 1)
+				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
+			if(cold_level_2 to cold_level_3)
+				H.throw_alert("temp", /obj/screen/alert/cold, 2)
+				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+			if(cold_level_3 to -INFINITY)
+				H.throw_alert("temp", /obj/screen/alert/cold, 3)
+				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+			else
+				H.clear_alert("temp")
 
 	else
 		H.clear_alert("temp")

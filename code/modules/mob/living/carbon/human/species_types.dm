@@ -176,7 +176,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	safe_oxygen_min = 0
 	safe_oxygen_max = 1
 	safe_nitrogen_min = 16
-	specflags = list(EYECOLOR,LIPS)
+	specflags = list(EYECOLOR,LIPS,NOSCAN)
 	mutant_bodyparts = list("tail_vox")
 	default_features = list("tail" = "Vox")
 	attack_verb = "claw"

@@ -23,6 +23,10 @@ Contains:
 	flags_inv = HIDEFACE|HIDEEARS|HIDEHAIR
 	permeability_coefficient = 0.01
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/helmet.dmi'
+		)
 
 /obj/item/clothing/suit/space/captain
 	name = "captain's space suit"
@@ -32,6 +36,10 @@ Contains:
 	w_class = 4
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
 	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/suit.dmi'
+		)
 
 
 	//Death squad armored space suits, not hardsuits!
@@ -274,7 +282,7 @@ Contains:
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
-	
+
 /obj/item/clothing/suit/space/hardsuit/freedom/New()
 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
 	..()

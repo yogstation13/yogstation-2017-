@@ -7,6 +7,10 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	put_on_delay = 12
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/mask.dmi'
+		)
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -24,6 +28,8 @@
 	icon_state = "cloth_muzzle"
 	item_state = "cloth_muzzle"
 	put_on_delay = 16
+	species_fit = null
+	sprite_sheets = null
 
 /datum/crafting_recipe/cloth_muzzle
 	name = "cloth muzzle"
@@ -47,6 +53,10 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
 	actions_types = list(/datum/action/item_action/adjust)
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/mask.dmi'
+		)
 
 /obj/item/clothing/mask/surgical/attack_self(mob/user)
 	adjustmask(user)
@@ -56,6 +66,10 @@
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/mask.dmi'
+		)
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
@@ -130,6 +144,10 @@
 	slot_flags = SLOT_MASK
 	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/mask.dmi'
+		)
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)

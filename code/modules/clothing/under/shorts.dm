@@ -29,3 +29,5 @@
 /obj/item/clothing/under/shorts/purple
 	icon_state = "purpleshorts"
 	item_color = "purpleshorts"
+	species_fit = null
+	sprite_sheets = null

@@ -29,6 +29,8 @@
 	icon_state = "camogreen"
 	item_state = "g_suit"
 	item_color = "camogreen"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"

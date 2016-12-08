@@ -65,3 +65,5 @@
 	icon_state = "cmagboots0"
 	magboot_state = "cmagboots"
 	slowdown_active = 1
+	species_fit = null
+	sprite_sheets = null

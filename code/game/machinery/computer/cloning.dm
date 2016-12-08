@@ -353,6 +353,11 @@
 	if (!istype(subject))
 		scantemp = "<font class='bad'>Unable to locate valid genetic data.</font>"
 		return
+	if (subject.dna.species)
+		var/datum/species/S = subject.dna.species
+		if(S.specflags & NOSCAN)
+			scantemp = "<font class='bad'>Error: Subject's species is incompatible.</font>"
+			return
 	if (!subject.getorgan(/obj/item/organ/brain))
 		scantemp = "<font class='bad'>No signs of intelligence detected.</font>"
 		return

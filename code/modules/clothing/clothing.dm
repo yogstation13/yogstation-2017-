@@ -168,6 +168,10 @@ BLIND     // can't see anything
 	var/transfer_prints = FALSE
 	strip_delay = 20
 	put_on_delay = 40
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/gloves.dmi'
+		)
 
 
 /obj/item/clothing/gloves/worn_overlays(var/isinhands = FALSE)
@@ -268,7 +272,10 @@ BLIND     // can't see anything
 	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
 	var/obj/held_item
 	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade, /obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
-
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/shoes.dmi'
+		)
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
 	. = list()
@@ -407,6 +414,10 @@ BLIND     // can't see anything
 	var/adjusted = 0
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
 	var/obj/item/clothing/tie/hastie = null
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/uniform.dmi'
+		)
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()

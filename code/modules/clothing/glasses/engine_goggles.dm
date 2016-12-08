@@ -10,6 +10,8 @@
 	var/mode = 0	//0 - regular mesons mode	1 - t-ray mode
 	var/invis_objects = list()
 	var/range = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	mode = !mode

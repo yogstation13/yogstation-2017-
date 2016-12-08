@@ -7,6 +7,8 @@
 	var/on = 0
 	var/datum/material_container/bananium
 	actions_types = list(/datum/action/item_action/toggle)
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
 	..()

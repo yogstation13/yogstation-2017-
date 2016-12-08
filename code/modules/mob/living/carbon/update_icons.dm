@@ -117,9 +117,14 @@
 		inv.update_icon()
 
 	if(back)
-		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
-		overlays_standing[BACK_LAYER] = standing
-		update_hud_back(back)
+		var/image/standing
+		if(back.icon_override)
+			standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = back.icon_override)
+		else if(back.sprite_sheets && back.sprite_sheets[dna.species.name])
+			standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = back.sprite_sheets[dna.species.name])
+		else
+			standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
+		overlays_standing[BACK_LAYER]	= standing
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
