@@ -31,6 +31,10 @@
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
 		return 0
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onMachineTick()
 	return 1
 
 /obj/machinery/computer/emp_act(severity)

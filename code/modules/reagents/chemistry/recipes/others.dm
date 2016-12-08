@@ -517,3 +517,10 @@
 	result = "royal_bee_jelly"
 	required_reagents = list("mutagen" = 10, "honey" = 40)
 	result_amount = 5
+
+/datum/chemical_reaction/laughter
+	name = "laughter"
+	id = "laughter"
+	result = "laughter"
+	required_reagents = list("banana" = 1, "sugar" = 1)
+	result_amount = 2

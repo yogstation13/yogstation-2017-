@@ -15,8 +15,9 @@
 	var/decay = 0
 
 /obj/item/organ/New()
+	..()
 	if(decay_time)
-		SSobj.processing += src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/organ/process()
 	handle_decay()
@@ -37,7 +38,7 @@
 		if(temperature > T0C - 10)
 			decay = min(decay_time, decay + 1)
 	if(decay >= decay_time)
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0)
 	if(!iscarbon(M) || owner == M)
@@ -496,10 +497,10 @@
 
 /obj/item/organ/shadowtumor/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/shadowtumor/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/organ/shadowtumor/process()

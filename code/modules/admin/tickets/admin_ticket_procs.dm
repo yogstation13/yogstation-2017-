@@ -203,11 +203,14 @@
 
 	if(resolved && ticker.delay_end)
 		if(unresolvedCount == 0)
-			if(alert(usr, "You have resolved the last ticket (the server restart is currently delayed!). Would you like to restart the server now?", "Restart Server", "Restart", "Cancel") == "Restart")
-				ticker.delay_end = 0
-				world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)
+			if(check_rights_for(get_client(usr), R_TICKET)) //Only admins get to select whether to restart server or not
+				if(alert(usr, "You have resolved the last ticket (the server restart is currently delayed!). Would you like to restart the server now?", "Restart Server", "Restart", "Cancel") == "Restart")
+					ticker.delay_end = 0
+					world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)
+				else
+					message_admins("[usr.key] has closed the last ticket but chose not to restart the server. You can <A HREF='?_src_=holder;adminserverrestart=1'>restart the server</a> manually, if you choose to do so.")
 			else
-				usr << "<span class='ticket-status'>You chose not to restart the server. If you do not have permissions to restart the server normally, you can still do so by making a new ticket and resolving it again.</span>"
+				message_admins("[usr.key] closed their ticket which was the last ticket. Server can now be <A HREF='?_src_=holder;adminserverrestart=1'>restarted</a>.")
 
 	if(resolved)
 		if(!establish_db_connection())
@@ -258,12 +261,15 @@
 					<a href='?src=\ref[src];user=\ref[usr];action=monitor_admin_ticket;ticket=\ref[src]' class='monitor-button'><img border='0' width='16' height='16' class='uiIcon16 icon-pin-s' /> <span>[!is_monitor(usr.client) ? "Un" : ""]Monitor</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=resolve_admin_ticket;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[resolved ? "Un" : ""]Resolve</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=administer_admin_ticket;ticket=\ref[src]' class='admin-button'><img border='0' width='16' height='16' class='uiIcon16 icon-flag' /> <span>Administer</span></a>
+					<a href='?src=\ref[src];user=\ref[usr];action=toggle_popup;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[force_popup ? "De" : ""]Activate popups</span></a>
 				</p>"}
 		if(owner && owner.mob)
 			if(owner.mob.mind && owner.mob.mind.assigned_role)
 				content += "<p class='user-info-bar'>Role: [owner.mob.mind.assigned_role]</p>"
 				if(owner.mob.mind.special_role)
 					content += "<p class='user-info-bar'>Antagonist: [owner.mob.mind.special_role]</p>"
+				else if(iscaptive(owner.mob))
+					content += "<p class='user-info-bar>This player's body is in control of [owner.mob.getBorer(1)] ((<A HREF='?_src_=holder;adminmoreinfo=\ref[owner.mob.getBorer(1)]'>?</A>))</p>"
 				else
 					content += "<p class='user-info-bar'>Antagonist: No</p>"
 

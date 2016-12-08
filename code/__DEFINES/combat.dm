@@ -37,6 +37,7 @@
 #define DISFIGURED			10
 #define XENO_HOST			11	//Tracks whether we're gonna be a baby alien's mummy.
 #define GODMODE				12
+#define NOCRIT				13	//if they're immune to crit, currently only used with stimulants reagent
 
 
 //Grab levels
@@ -70,9 +71,7 @@
 #define UNARMED_ATTACK 2
 #define PROJECTILE_ATTACK 3
 #define THROWN_PROJECTILE_ATTACK 4
-#define THROWN_PROJECTILE_ATTACK 4
 #define HULK_ATTACK 5
-
 
 //Gun Stuff
  #define SAWN_INTACT  0
@@ -81,3 +80,9 @@
  #define WEAPON_LIGHT 0
  #define WEAPON_MEDIUM 1
  #define WEAPON_HEAVY 2
+
+ // Intent stuff
+ #define HARM "harm"
+ #define DISARM "disarm"
+ #define GRAB "grab"
+ #define HELP "help"

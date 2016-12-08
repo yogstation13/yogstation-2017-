@@ -218,10 +218,7 @@
 	..()
 	if(on)
 		if(isliving(O))
-			var/mob/living/L = O
-			if(wash_mob(L)) //it's a carbon mob.
-				var/mob/living/carbon/C = L
-				C.slip(4,2,null,NO_SLIP_WHEN_WALKING)
+			wash_mob(O)
 		else
 			wash_obj(O)
 
@@ -265,6 +262,8 @@
 			var/washmask = 1
 			var/washears = 1
 			var/washglasses = 1
+
+			M.color = null //Washes off the colorful reagent color, mainly a counter to the clowns rainbow crayon
 
 			if(H.wear_suit)
 				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)

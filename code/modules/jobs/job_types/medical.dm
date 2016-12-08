@@ -205,7 +205,6 @@ Mining Medic
 	name = "Mining Medic"
 	backpack_contents = list(/obj/item/roller = 1,\
 		/obj/item/weapon/kitchen/knife/combat/survival = 1)
-
 	belt = /obj/item/device/pda/medical
 	ears = /obj/item/device/radio/headset_medcargo
 	shoes = /obj/item/clothing/shoes/workboots/mining

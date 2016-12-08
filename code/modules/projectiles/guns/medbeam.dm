@@ -18,7 +18,7 @@
 
 /obj/item/weapon/gun/medbeam/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/medbeam/dropped(mob/user)
 	..()
@@ -26,6 +26,10 @@
 
 /obj/item/weapon/gun/medbeam/equipped(mob/user)
 	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/attack_self(mob/user)
+	user <<"<span class='notice'>You disable the beam.</span>"
 	LoseTarget()
 
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
@@ -55,7 +59,7 @@
 /obj/item/weapon/gun/medbeam/process()
 
 	var/source = loc
-	if(!mounted && !ishuman(source))
+	if(!mounted && !isliving(source))
 		LoseTarget()
 		return
 
@@ -125,4 +129,4 @@
 
 /obj/item/weapon/gun/medbeam/mech/New()
 	..()
-	SSobj.processing -= src //Mech mediguns do not process until installed, and are controlled by the holder obj
+	STOP_PROCESSING(SSobj, src) //Mech mediguns do not process until installed, and are controlled by the holder obj

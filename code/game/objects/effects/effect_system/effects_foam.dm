@@ -13,6 +13,7 @@
 	animate_movement = 0
 	var/metal = 0
 	var/lifetime = 40
+	var/reagent_divisor = 5
 
 
 /obj/effect/particle_effect/foam/metal
@@ -29,16 +30,16 @@
 /obj/effect/particle_effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 /obj/effect/particle_effect/foam/Destroy()
-	SSfastprocess.processing.Remove(src)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
-	SSfastprocess.processing.Remove(src)
+	STOP_PROCESSING(SSfastprocess, src)
 	if(metal)
 		var/obj/structure/foamedmetal/M = new(src.loc)
 		M.metal = metal
@@ -54,18 +55,24 @@
 		kill_foam()
 		return
 
-	var/fraction = 1/initial(lifetime)
+	var/fraction = 1/initial(reagent_divisor)
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
-		reagents.reaction(O, VAPOR, fraction)
+		if(isturf(O.loc))
+			var/turf/T = O.loc
+			if(T.intact && O.level == 1) //hidden under the floor
+				continue
+		if(lifetime % reagent_divisor)
+			reagents.reaction(O, VAPOR, fraction)
 	var/hit = 0
 	for(var/mob/living/L in range(0,src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
-	reagents.reaction(T, VAPOR, fraction)
+	if(lifetime % reagent_divisor)
+		reagents.reaction(T, VAPOR, fraction)
 
 	if(--amount < 0)
 		return
@@ -76,8 +83,9 @@
 		return 0
 	if(!istype(L))
 		return 0
-	var/fraction = 1/initial(lifetime)
-	reagents.reaction(L, VAPOR, fraction)
+	var/fraction = 1/initial(reagent_divisor)
+	if(lifetime % reagent_divisor)
+		reagents.reaction(L, VAPOR, fraction)
 	lifetime--
 	return 1
 
@@ -118,7 +126,7 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect_system/foam_spread
-	var/amount = 10		// the size of the foam spread.
+	var/amount = 15		// the size of the foam spread.
 	var/obj/chemholder
 	effect_type = /obj/effect/particle_effect/foam
 	var/metal = 0
@@ -147,7 +155,7 @@
 		location = get_turf(loca)
 
 	amount = round(sqrt(amt / 2), 1)
-	carry.copy_to(chemholder, 4*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
+	carry.copy_to(chemholder, 6*carry.total_volume) //The foam holds 4 times the total reagents volume for balance purposes.
 
 /datum/effect_system/foam_spread/metal/set_up(amt=5, loca, datum/reagents/carry = null, metaltype)
 	..()

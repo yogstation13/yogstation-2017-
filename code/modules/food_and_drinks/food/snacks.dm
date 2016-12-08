@@ -30,13 +30,18 @@
 		if(trash)
 			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
 				var/obj/item/weapon/reagent_containers/food/snacks/grown/G = src
-				var/obj/item/TrashItem = new trash(usr, G.seed)
-				usr.put_in_hands(TrashItem)
+				var/obj/item/TrashItem = new trash(usr.loc, G.seed)
+				if(usr.can_equip(TrashItem, slot_l_hand) || usr.can_equip(TrashItem, slot_r_hand))
+					usr.put_in_hands(TrashItem)
 			else if(ispath(trash,/obj/item))
-				var/obj/item/TrashItem = new trash(usr)
-				usr.put_in_hands(TrashItem)
+				var/obj/item/TrashItem = new trash(usr.loc)
+				if(usr.can_equip(TrashItem, slot_l_hand) || usr.can_equip(TrashItem, slot_r_hand))
+					usr.put_in_hands(TrashItem)
 			else if(istype(trash,/obj/item))
-				usr.put_in_hands(trash)
+				var/obj/item/I = trash
+				I.forceMove(usr.loc)
+				if(usr.can_equip(I, slot_l_hand) || usr.can_equip(I, slot_r_hand))
+					usr.put_in_hands(I)
 		qdel(src)
 	return
 
@@ -155,17 +160,18 @@
 			return 1
 
 //Called when you finish tablecrafting a snack.
-/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/weapon/reagent_containers/food/snacks/CheckParts(list/parts_list, datum/crafting_recipe/food/R)
 	..()
 	reagents.reagent_list.Cut()
 	for(var/obj/item/weapon/reagent_containers/RC in contents)
 		RC.reagents.trans_to(reagents, RC.reagents.maximum_volume)
-	contents_loop:
-		for(var/A in contents)
-			for(var/B in initial(R.parts))
-				if(istype(A, B))
-					continue contents_loop
-			qdel(A)
+	if(istype(R))
+		contents_loop:
+			for(var/A in contents)
+				for(var/B in R.real_parts)
+					if(istype(A, B))
+						continue contents_loop
+				qdel(A)
 	feedback_add_details("food_made","[type]")
 	if(bonus_reagents.len)
 		for(var/r_id in bonus_reagents)

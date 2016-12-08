@@ -49,6 +49,7 @@
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
+	// attack_verb = list("emagged", "hacked", "glitched") //might cause some problems with trying to emag borgs, will be excluded until someone resolves it
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
@@ -77,6 +78,7 @@
 	icon_state = "id"
 	item_state = "card-id"
 	slot_flags = SLOT_ID
+	attack_verb = list("identified", "slapped")
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
@@ -114,17 +116,20 @@ update_label("John Doe", "Clowny")
 		return
 
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	ID_fluff()
 
 /obj/item/weapon/card/id/silver
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
-	icon_state = "silver"
+	attack_verb = list("promoted", "slapped", "identified")
+	icon_state = "id_silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
-	icon_state = "gold"
+	attack_verb = list("promoted", "honored", "identified", "slapped")
+	icon_state = "id_gold"
 	item_state = "gold_id"
 
 /obj/item/weapon/card/id/syndicate
@@ -134,10 +139,11 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/card/id
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
+	chameleon = new /datum/chameleon(src)
+	chameleon.include_basetype = 1
+	chameleon.chameleon_type = /obj/item/weapon/card/id
+	chameleon.chameleon_name = "ID Card"
+	chameleon.initialize_disguises()
 
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
 	if(!proximity)
@@ -186,7 +192,8 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
-	icon_state = "gold"
+	attack_verb = list("spared", "promoted", "honored", "identified", "slapped")
+	icon_state = "id_gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
@@ -199,6 +206,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
 	desc = "An ID straight from Cent. Com."
+	attack_verb = list("inspected", "identified", "slapped")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -211,6 +219,7 @@ update_label("John Doe", "Clowny")
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
+	attack_verb = list("responded to","identified", "slapped")
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
@@ -241,6 +250,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
+	attack_verb = list("arrested", "cuffed", "took freedom from", "imprisoned", "identified", "slapped")
 	icon_state = "orange"
 	item_state = "orange-id"
 	assignment = "Prisoner"
@@ -282,3 +292,116 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
 	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+
+
+/obj/item/weapon/card/id/proc/ID_fluff()
+	overlays.Cut()
+	switch(assignment)
+		if("Captain")
+			overlays += "captain"
+			overlays += "gold"
+		if("Head of Personnel")
+			overlays += "civillian"
+			overlays += "silver"
+		if("Head of Security")
+			overlays += "security"
+			overlays += "silver"
+		if("Chief Engineer")
+			overlays += "engineering"
+			overlays += "silver"
+		if("Research Director")
+			overlays += "science"
+			overlays += "silver"
+		if("Chief Medical Officer")
+			overlays += "medical"
+			overlays += "silver"
+		if("Station Engineer")
+			overlays += "engineering"
+			overlays += "yellow"
+		if("Atmospheric Technician")
+			overlays += "engineering"
+			overlays += "white"
+		if("Medical Doctor")
+			overlays += "medical"
+			overlays += "blue"
+		if("Geneticist")
+			overlays += "medical"
+			overlays += "purple"
+		if("Virologist")
+			overlays += "medical"
+			overlays += "green"
+		if("Chemist")
+			overlays += "medical"
+			overlays += "orange"
+		if("Paramedic")
+			overlays += "medical"
+			overlays += "white"
+		if("Psychiatrist")
+			overlays += "medical"
+			overlays += "brown"
+		if("Scientist")
+			overlays += "science"
+			overlays += "purple"
+		if("Roboticist")
+			overlays += "science"
+			overlays += "black"
+		if("Quartermaster")
+			overlays += "cargo"
+			overlays += "silver" //stfu
+		if("Cargo Technician")
+			overlays += "cargo"
+			overlays += "brown"
+		if("Shaft Miner")
+			overlays += "cargo"
+			overlays += "black"
+		if("Bartender")
+			overlays += "civillian"
+			overlays += "red"
+		if("Botanist")
+			overlays += "civillian"
+			overlays += "orange"
+		if("Cook")
+			overlays += "civillian"
+			overlays += "white"
+		if("Janitor")
+			overlays += "civillian"
+			overlays += "purple"
+		if("Librarian")
+			overlays += "civillian"
+			overlays += "brown"
+		if("Chaplain")
+			overlays += "civillian"
+			overlays += "black"
+		if("Clown")
+			overlays += "clown"
+			overlays += "rainbow"
+		if("Mime")
+			overlays += "mime"
+			overlays += "white"
+		if("Clerk")
+			overlays += "civillian"
+			overlays += "blue"
+		if("Tourist")
+			overlays += "civillian"
+			overlays += "yellow"
+		if("Warden")
+			overlays += "security"
+			overlays += "black"
+		if("Security Officer")
+			overlays += "security"
+			overlays += "red"
+		if("Detective")
+			overlays += "security"
+			overlays += "brown"
+		if("Lawyer")
+			overlays += "security"
+			overlays += "purple"
+		else //If it's an assistant or some unknown job, make it a classic green ID
+			overlays += "civillian"
+			overlays += "green"
+
+
+
+
+
+

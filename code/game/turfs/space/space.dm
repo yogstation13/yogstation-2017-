@@ -3,6 +3,7 @@
 	icon_state = "0"
 	name = "\proper space"
 	intact = 0
+	plane = PLANE_SPACE
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
@@ -32,6 +33,9 @@
 	. = ..()
 
 /turf/open/space/TakeTemperature(temp)
+
+/turf/open/space/RemoveLattice()
+	return
 
 /turf/open/space/AfterChange()
 	..()

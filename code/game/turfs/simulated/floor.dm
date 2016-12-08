@@ -28,6 +28,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
+	flags = GIRDERABLE
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
@@ -180,7 +181,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/engine/cult)
 
-/turf/simulated/floor/attack_animal(mob/living/simple_animal/M)
+/turf/open/floor/attack_animal(mob/living/simple_animal/M)
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))//only cult things can interact with floors so far
 		if(istype(src, /turf/open/floor/engine/cult))
 			return

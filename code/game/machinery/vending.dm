@@ -10,6 +10,12 @@
 	var/max_amount = 0
 	var/display_color = "blue"
 
+/datum/data/vending_product/New()
+	..()
+	display_color = pick("red","blue","green")
+
+/datum/data/vending_product/proc/spawn_product(loc)
+	return new product_path(loc)
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
@@ -155,16 +161,19 @@
 			var/amount = productlist[category][typepath]
 			if(isnull(amount))
 				amount = 0
+			var/datum/data/vending_product/R
+			if(ispath(typepath, /datum/data/vending_product))
+				R = new typepath()
+			else
+				var/atom/temp = new typepath()
+				R = new /datum/data/vending_product()
+				R.product_name = initial(temp.name)
+				R.product_path = typepath
 
-			var/atom/temp = new typepath(null)
-			var/datum/data/vending_product/R = new /datum/data/vending_product()
-			R.product_name = initial(temp.name)
-			R.product_path = typepath
 			R.category = category
 			if(!start_empty)
 				R.amount = amount
 			R.max_amount = amount
-			R.display_color = pick("red","blue","green")
 
 			if(hidden)
 				hidden_records += R
@@ -481,7 +490,7 @@
 		vend_ready = 0 //One thing at a time!!
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
-		if(!R || !istype(R) || !R.product_path)
+		if(!istype(R))
 			vend_ready = 1
 			return
 
@@ -530,7 +539,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		spawn(vend_delay)
-			new R.product_path(get_turf(src))
+			R.spawn_product(get_turf(src))
 			vend_ready = 1
 			return
 
@@ -587,12 +596,9 @@
 	for(var/datum/data/vending_product/R in product_records)
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
-		var/dump_path = R.product_path
-		if(!dump_path)
-			continue
 
 		while(R.amount>0)
-			new dump_path(loc)
+			R.spawn_product(get_turf(src))
 			R.amount--
 		continue
 
@@ -610,12 +616,9 @@
 	for(var/datum/data/vending_product/R in product_records)
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
-		var/dump_path = R.product_path
-		if(!dump_path)
-			continue
 
 		R.amount--
-		throw_item = new dump_path(loc)
+		throw_item = R.spawn_product(get_turf(src))
 		break
 	if(!throw_item)
 		return 0
@@ -716,7 +719,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "snack"
 	products = list("Snacks" = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6))
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6, /obj/item/weapon/reagent_containers/food/snacks/toritose = 6, /obj/item/weapon/storage/byummie = 3))
 	contraband = list("Snacks" = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6))
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
@@ -757,7 +760,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "cart"
 	icon_deny = "cart-deny"
 	products = list("Cartridges" = list(/obj/item/weapon/cartridge/medical = 10,/obj/item/weapon/cartridge/engineering = 10,/obj/item/weapon/cartridge/security = 10,
-					/obj/item/weapon/cartridge/janitor = 10,/obj/item/weapon/cartridge/signal/toxins = 10,/obj/item/device/pda/heads = 10,
+					/obj/item/weapon/cartridge/janitor = 10,/obj/item/weapon/cartridge/toxins = 10,/obj/item/device/pda/heads = 10,
 					/obj/item/weapon/cartridge/captain = 3,/obj/item/weapon/cartridge/quartermaster = 10))
 
 /obj/machinery/vending/liberationstation
@@ -913,12 +916,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
 					/obj/item/clothing/suit/poncho/green = 1, /obj/item/clothing/suit/poncho/red = 1,
 					/obj/item/clothing/under/maid = 1, /obj/item/clothing/under/janimaid = 1,/obj/item/clothing/glasses/cold=1,/obj/item/clothing/glasses/heat=1,
-					/obj/item/clothing/suit/whitedress = 1,
+					/obj/item/clothing/suit/whitedress = 1, /obj/item/clothing/glasses/sunglasses/cheap = 1,
 					/obj/item/clothing/under/jester = 1, /obj/item/clothing/head/jester = 1,
 					/obj/item/clothing/suit/hooded/carp_costume = 1,
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
 					/obj/item/clothing/suit/snowman = 1,
-					/obj/item/clothing/head/snowman = 1))
+					/obj/item/clothing/head/snowman = 1,
+					/obj/item/clothing/suit/beekeeper_suit/clown = 1,
+					/obj/item/clothing/head/beekeeper_head/clown = 1))
 	contraband = list("Clothing" = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2))
 	premium = list("Clothing" = list(/obj/item/clothing/under/ronaldmcdonald = 1, /obj/item/clothing/suit/hgpirate = 2, /obj/item/clothing/head/hgpiratecap = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1))
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
@@ -995,7 +1000,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_delay = 15
 	vend_reply = "Thank you for using the ClothesMate!"
-	products = list("Clothing" = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
+	products = list("Clothing" = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1, /obj/item/clothing/glasses/sunglasses/cheap=3, /obj/item/clothing/glasses/meson/gar/cheap=2,
 	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
 	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
 	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
@@ -1046,12 +1051,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 									/obj/item/weapon/storage/photo_album = 5,
 									/obj/item/weapon/storage/photobook = 5,
 									/obj/item/weapon/storage/bag/photo = 5),
-					"Clothing" = list(/obj/item/clothing/under/color/random = 4,
-									/obj/item/clothing/shoes/sneakers/random = 4,
+					"Clothing" = list(/datum/data/vending_product/random/uniform = 4,
+									/datum/data/vending_product/random/shoes = 4,
 									/obj/item/weapon/storage/backpack = 4,
-									/obj/item/clothing/suit/toggle/labcoat/random = 2,
-									/obj/item/clothing/suit/random = 2,
-									/obj/item/clothing/gloves/color/random = 4),
+									/datum/data/vending_product/random/labcoat = 2,
+									/datum/data/vending_product/random/suit = 2,
+									/datum/data/vending_product/random/gloves = 4),
 					"Medical" = list(/obj/item/weapon/reagent_containers/syringe = 3,
 									/obj/item/weapon/reagent_containers/pill/patch/styptic = 2,
 									/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 2,
@@ -1094,8 +1099,58 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					"Clothing" = list(),
 					"Medical" = list(),
 					"Tools" = list(/obj/item/device/multitool = 1),
-					"PDAs and Cartridges" = list(/obj/item/device/pda/shiny = 1))
+					"PDAs and Cartridges" = list(/obj/item/device/pda/clear = 1))
 
+/datum/data/vending_product/random
+	product_name = "random item"
+	var/list/items = list()
+
+/datum/data/vending_product/random/spawn_product(loc)
+	if(items && items.len)
+		var/picked = pick(items)
+		return new picked(loc)
+
+/datum/data/vending_product/random/labcoat
+	product_name = "random labcoat"
+	items = list(/obj/item/clothing/suit/toggle/labcoat/emt,
+		/obj/item/clothing/suit/toggle/labcoat/mad,
+		/obj/item/clothing/suit/toggle/labcoat/genetics,
+		/obj/item/clothing/suit/toggle/labcoat/chemist,
+		/obj/item/clothing/suit/toggle/labcoat/virologist,
+		/obj/item/clothing/suit/toggle/labcoat/science)
+
+/datum/data/vending_product/random/shoes
+	product_name = "random sneakers"
+
+/datum/data/vending_product/random/shoes/New()
+	..()
+	items = subtypesof(/obj/item/clothing/shoes/sneakers)
+
+/datum/data/vending_product/random/uniform
+	product_name ="random jumpsuit"
+
+/datum/data/vending_product/random/uniform/New()
+	items = subtypesof(/obj/item/clothing/under/color)
+
+/datum/data/vending_product/random/suit
+	product_name = "random suit"
+	items = list(/obj/item/clothing/suit/apron,
+		/obj/item/clothing/suit/apron/surgical,
+		/obj/item/clothing/suit/toggle/lawyer,
+		/obj/item/clothing/suit/toggle/lawyer/purple,
+		/obj/item/clothing/suit/toggle/lawyer/black,
+		/obj/item/clothing/suit/security/officer)
+
+/datum/data/vending_product/random/gloves
+	product_name = "random gloves"
+	items = list(/obj/item/clothing/gloves/color/orange,
+		/obj/item/clothing/gloves/color/red,
+		/obj/item/clothing/gloves/color/blue,
+		/obj/item/clothing/gloves/color/purple,
+		/obj/item/clothing/gloves/color/green,
+		/obj/item/clothing/gloves/color/grey,
+		/obj/item/clothing/gloves/color/light_brown,
+		/obj/item/clothing/gloves/color/brown)
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

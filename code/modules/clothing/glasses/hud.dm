@@ -68,11 +68,11 @@
 
 /obj/item/clothing/glasses/hud/security/examine(mob/user)
 	. = ..()
-	user << "<span class='notice'>To operate the criminal status of someone in range, hold CTRL + ALT and click on the target.</span>"
+	user << "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>"
 	user << "<span class='notice'>To add crimes to a person, hold CTRL + SHIFT and click on the target</span>"
 
 /obj/item/clothing/glasses/hud/security/chameleon
-	name = "Chamleon Security HUD"
+	name = "Chameleon Security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
 	flash_protect = 1
 

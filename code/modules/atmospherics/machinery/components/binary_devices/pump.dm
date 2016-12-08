@@ -26,12 +26,17 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	var/adminlog = 0
+
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = 1
+
 
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
+	if(adminlog == 1)
+		message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) destroyed protected device '[src]'. <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a> This alert will not show again for this device.")
 	if(radio_connection)
 		radio_connection = null
 	return ..()
@@ -84,7 +89,7 @@ Thus, the two variables affect pump operation are set in New():
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
 	signal.data = list(
@@ -121,6 +126,8 @@ Thus, the two variables affect pump operation are set in New():
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 			. = TRUE
+			if(adminlog == 1)
+				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has toggled [src] [on ? "ON" : "OFF"]. ([loc.x],[loc.y],[loc.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a>")
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
@@ -136,6 +143,8 @@ Thus, the two variables affect pump operation are set in New():
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
+
+
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -160,6 +169,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		
 
 	if("status" in signal.data)
 		broadcast_status()

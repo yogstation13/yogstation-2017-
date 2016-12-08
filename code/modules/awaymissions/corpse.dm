@@ -401,6 +401,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/shorts/red
 	pocket1 = /obj/item/weapon/storage/wallet/random
+	glasses = /obj/item/clothing/glasses/sunglasses/cheap
 
 /obj/effect/mob_spawn/human/beach/alive
 	death = FALSE

@@ -895,6 +895,11 @@
 	if(!area.requires_power)
 		return
 
+	if(software)
+		for(var/V in software)
+			var/datum/software/M = V
+			M.onMachineTick()
+
 	/*
 	if (equipment > 1) // off=0, off auto=1, on=2, on auto=3
 		use_power(src.equip_consumption, EQUIP)

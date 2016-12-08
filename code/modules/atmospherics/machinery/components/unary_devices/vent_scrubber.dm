@@ -105,7 +105,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 	signal.data = list(
 		"tag" = id_tag,
@@ -175,8 +175,10 @@
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
+			if(!removed)
+				return
 			var/list/removed_gases = removed.gases
-			if (isnull(removed)) //in space
+			if(!removed_gases)
 				return
 
 			//Filter it

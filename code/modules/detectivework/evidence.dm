@@ -64,21 +64,30 @@
 	w_class = I.w_class
 	return 1
 
+/obj/item/weapon/evidencebag/attack_self_tk(mob/user)
+	empty()
+
 /obj/item/weapon/evidencebag/attack_self(mob/user)
 	if(contents.len)
-		var/obj/item/I = contents[1]
+		var/obj/item/I = empty()
 		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>",\
 		"<span class='italics'>You hear someone rustle around in a plastic bag, and remove something.</span>")
-		overlays.Cut()	//remove the overlays
 		user.put_in_hands(I)
-		w_class = 1
-		icon_state = "evidenceobj"
-		desc = "An empty evidence bag."
-
 	else
 		user << "[src] is empty."
 		icon_state = "evidenceobj"
 	return
+
+/obj/item/weapon/evidencebag/proc/empty()
+	var/obj/item/I = null
+	if(contents.len)
+		I = contents[1]
+		overlays.Cut()	//remove the overlays
+		I.forceMove(loc)
+		w_class = 1
+		icon_state = "evidenceobj"
+		desc = "An empty evidence bag."
+	return I
 
 /obj/item/weapon/storage/box/evidence
 	name = "evidence bag box"

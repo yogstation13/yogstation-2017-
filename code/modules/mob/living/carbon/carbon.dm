@@ -236,13 +236,9 @@
 					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	if(I && I.prethrow_at(target))
-		return
-
-	if(!(I && istype(I)))
-		return //Grab processing has a chance of returning null
 	else if(!(I.flags & (NODROP|ABSTRACT)))
+		if(I.prethrow_at(target))
+			return
 		thrown_thing = I
 		unEquip(I)
 
@@ -729,6 +725,8 @@
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
+				if(NOCRIT in status_flags)//no crit when you're stimmed
+					return
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()

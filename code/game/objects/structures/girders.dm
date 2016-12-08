@@ -13,6 +13,7 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
+	var/health = 100
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -40,7 +41,8 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
-			if(!istype(loc, /turf/open/floor))
+			var/turf/T = loc
+			if(!istype(T, /turf/open) || !(T.flags & GIRDERABLE))
 				user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -255,6 +257,38 @@
 		else
 			return 0
 
+
+/obj/structure/girder/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	visible_message("[user] swings at [src]!")
+	var/dmg = health - user.melee_damage_upper
+	health = dmg
+
+	if(health <= 0)
+		dismantle()
+
+	if(user.environment_smash)
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+
+
+/obj/structure/girder/attack_hulk(mob/user)
+	..(user, 1)
+	if(prob(health))
+		dismantle()
+	else if (health <= 0)
+		dismantle()
+	else
+		health -= 30
+
+
+/obj/structure/girder/proc/dismantle()
+	var/obj/item/stack/sheet/metal/M = new (loc, 2)
+	M.visible_message("[src] shatters into [M]!")
+	qdel(src)
+
+
+
 /obj/structure/girder/CanAStarPass(ID, dir, caller)
 	. = !density
 	if(ismovableatom(caller))
@@ -297,6 +331,7 @@
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
+	health = 200
 
 /obj/structure/girder/reinforced/ex_act(severity, target)
 	switch(severity)
