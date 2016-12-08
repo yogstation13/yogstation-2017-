@@ -55571,12 +55571,11 @@
 	},
 /area/security/checkpoint/engineering)
 "cfu" = (
-/obj/machinery/suit_storage_unit/atmos,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "warning"
+/obj/effect/landmark/start{
+	name = "Mining Medic"
 	},
-/area/atmos)
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "cfv" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/wall,
@@ -68646,10 +68645,10 @@
 /area/tcommsat/computer)
 "cEG" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
 /obj/machinery/computer/telecomms/traffic{
 	network = "tcommsat"
 	},
+/turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "cEH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -91383,7 +91382,7 @@ bJZ
 bLC
 bMU
 bJZ
-bJZ
+cfu
 bBh
 aaa
 aaa

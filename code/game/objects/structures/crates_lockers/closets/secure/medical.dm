@@ -99,7 +99,6 @@
 
 /obj/structure/closet/secure_closet/mmedical/New()
 	..()
-	sleep(2)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
@@ -108,9 +107,10 @@
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/weapon/cartridge/medical(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
-	new /obj/item/weapon/storage/firstaid/regular(src)
-	new /obj/item/weapon/storage/firstaid/o2(src)
-	return
+	new /obj/item/weapon/storage/firstaid/toxin(src)
+	new /obj/item/weapon/storage/belt/medical(src)
+	new /obj/item/weapon/pickaxe(src)
+	new /obj/item/device/sensor_device(src)
 
 /obj/structure/closet/secure_closet/paramedic
 	name = "paramedical closet"
