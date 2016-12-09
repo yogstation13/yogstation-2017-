@@ -19,7 +19,7 @@
 	var/process = 0
 	circuit = /obj/item/weapon/circuitboard/computer/telecomms/comm_traffic
 
-	req_access = list(access_tcomsat)
+	req_access = list(access_tcomadmin)
 
 /obj/machinery/computer/telecomms/traffic/proc/stop_editing()
 	if(editingcode)

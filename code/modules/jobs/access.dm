@@ -10,7 +10,7 @@
 /var/const/access_tox_storage = 8
 /var/const/access_genetics = 9
 /var/const/access_engine = 10
-/var/const/access_engine_equip= 11
+/var/const/access_engine_equip = 11
 /var/const/access_maint_tunnels = 12
 /var/const/access_external_airlocks = 13
 /var/const/access_emergency_storage = 14
@@ -58,13 +58,14 @@
 /var/const/access_hos = 58
 /var/const/access_RC_announce = 59 //Request console announcements
 /var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
-/var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
+/var/const/access_tcomsat = 61 // has access to the telecomms machinery
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
 /var/const/access_mineral_storeroom = 64
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_paramedic = 67
+/var/const/access_tcomadmin = 68 // has access to the telecomms computers
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -231,7 +232,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic, access_manufacturing)
+	            access_keycard_auth, access_tcomsat, access_tcomadmin, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic, access_manufacturing)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -263,7 +264,7 @@
 		if(4) //research
 			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd)
 		if(5) //engineering and maintenance
-			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_minisat, access_ce)
+			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_tcomadmin, access_minisat, access_ce)
 		if(6) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
 		if(7) //command
@@ -408,6 +409,8 @@
 			return "Keycode Auth."
 		if(access_tcomsat)
 			return "Telecommunications"
+		if(access_tcomadmin)
+			return "Telecomms Admin"
 		if(access_gateway)
 			return "Gateway"
 		if(access_sec_doors)
@@ -445,7 +448,7 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
+				"Atmospheric Technician", "Signal Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
 				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Mining Medic", "Paramedic", "Psychiatrist", "Clerk", "Tourist", "Space Bartender")
 
 /proc/get_all_job_icons() //For all existing HUD icons

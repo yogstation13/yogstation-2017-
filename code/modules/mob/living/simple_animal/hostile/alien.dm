@@ -12,6 +12,7 @@
 	response_disarm = "shoves"
 	response_harm = "slaps"
 	speed = 0
+	weather_immunities = list("lava","ash")
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
 							/obj/item/organ/alien/plasmavessel/small/tiny = 1,
@@ -38,7 +39,7 @@
 	gold_core_spawnable = 0
 	death_sound = 'sound/voice/hiss6.ogg'
 	dismember_chance = 15
-	force_threshold = 3
+	force_threshold = 7
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 	var/alien_state
 
@@ -100,11 +101,12 @@
 	desc = "The hive-guardian caste of the xenomorph species. Has very accurate spit."
 	health = 200
 	maxHealth = 200
-	melee_damage_lower = 19
-	melee_damage_upper = 19
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
+	force_threshold = 5
 	projectiletype = /obj/item/projectile/neurotox
 	projectilesound = 'sound/weapons/pierce.ogg'
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
@@ -113,7 +115,27 @@
 							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1)
+							
 
+/mob/living/simple_animal/hostile/alien/sentinel/adjustHealth(amount)
+	. = ..()
+	if(health < (maxHealth/3))
+		alien_state = ALIEN_HAUL_ASS
+	else
+		alien_state = 0
+
+/mob/living/simple_animal/hostile/alien/sentinel/Life()
+	. = ..()
+	if(.)
+		if(alien_state == ALIEN_HAUL_ASS)
+			retreat_distance = 7
+			minimum_distance = 7
+			rapid = 1
+			projectiletype = /obj/item/projectile/neurotox/panic
+		else
+			retreat_distance = initial(retreat_distance)
+			minimum_distance = initial(minimum_distance)
+			projectiletype = /obj/item/projectile/neurotox
 
 
 /mob/living/simple_animal/hostile/alien/queen
@@ -130,6 +152,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	move_to_delay = 4
+	force_threshold = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 2)
 	projectiletype = /obj/item/projectile/neurotox/heavy
@@ -167,9 +190,11 @@
 	bubble_icon = "alienroyal"
 	desc = "The bigger momma. Rules over all the queens below it, and their hives by extention. Hobbies include: murder."
 	move_to_delay = 4
-	maxHealth = 600
-	health = 600
+	maxHealth = 900
+	health = 900
 	environment_smash = 3
+	force_threshold = 15
+	rapid = 1
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
 							/obj/item/organ/alien/plasmavessel/large/queen = 1,
@@ -181,7 +206,6 @@
 							/obj/item/organ/brain/alien = 1) //only the queen is smart
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 0
-	force_threshold = 8
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob/bitchslap
 
 /mob/living/simple_animal/hostile/alien/queen/large/New()
@@ -252,7 +276,13 @@
 
 /obj/item/projectile/neurotox //base format,
 	name = "neurotoxin"
-	damage = 30
+	damage = 20
+	stamina = 15
+	icon_state = "toxin"
+	
+/obj/item/projectile/neurotox/panic //sentinels swap to kill mode
+	name = "neurotoxin"
+	damage = 35
 	icon_state = "toxin"
 
 /obj/item/projectile/neurotox/superlight //drones, self defense
@@ -265,7 +295,10 @@
 	name = "heavy neurotoxin"
 	damage = 45
 	icon_state = "toxin"
+	stamina = 10
 	armour_penetration = 40
+
+
 
 /obj/item/projectile/neurotox/admin //murderboning admins
 	name = "absurdly overpowered acid"

@@ -66,6 +66,7 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
+	var/datum/chameleon_browse/chameleon_browse = null
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -74,6 +75,8 @@
 
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	if(chameleon_browse)
+		chameleon_browse.move_to_mob(current, new_character)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
