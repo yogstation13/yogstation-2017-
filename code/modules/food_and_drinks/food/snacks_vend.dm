@@ -66,7 +66,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/toritose
 	name = "toritos"
-	desc = "An excellent snack for an occassion it, however they become salty real fast. Hopefully stands on it's own in the market."
+	desc = "An elegant snack for a civilized time. Be careful however, for the snack can become incredibly salty. Hopefully stands on it's own in the market."
 	icon_state = "toritose"
 	trash = /obj/item/trash/toritose
 	bitesize = 25
