@@ -116,6 +116,7 @@
 	new /obj/item/weapon/cartridge/medical(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/weapon/storage/firstaid/toxin(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/device/sensor_device(src)
