@@ -186,7 +186,8 @@
 	desc = "Used by ash walkers to travel long distances across lavaland's perilous landscape."
 	icon_state = "pathhead"
 	item_state = "pathhead"
-	flags_cover = HEAD
+	flags_cover = HEAD | NOODROP
 	burn_state = FIRE_PROOF
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flags = ASH_IMMUNE

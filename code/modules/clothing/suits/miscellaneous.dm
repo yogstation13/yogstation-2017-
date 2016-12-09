@@ -531,6 +531,7 @@
 	desc = "A massive cloak that protects the wearer from concentrated burns with it's layered sinew."
 	icon_state = "pathcloak"
 	item_state = "pathcloak"
+	flags = ASH_IMMUNE
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	burn_state = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT

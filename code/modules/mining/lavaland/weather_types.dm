@@ -105,6 +105,7 @@
 		var/thermal_protection = H.get_thermal_protection()
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 			return
-		if((istype(H.wear_suit,/obj/item/clothing/suit/hooded/pathfinder)) && (istype(H.head, /obj/item/clothing/head/helmet/kasa)))
-			return
+		if(H.wear_suit && H.head)
+			if((H.wear_suit.flags & ASH_IMMUNE) && (H.head.flags & ASH_IMMUNE))
+				return
 	L.adjustFireLoss(4)
