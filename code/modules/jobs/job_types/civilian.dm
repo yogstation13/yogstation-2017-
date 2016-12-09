@@ -102,6 +102,7 @@ Mime
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/mime(null))
 		H.mind.miming = 1
 
 	H.rename_self("mime")
@@ -205,7 +206,7 @@ Tourist
 	ears = /obj/item/device/radio/headset
 	belt = /obj/item/device/pda
 	backpack_contents = list(/obj/item/device/camera_film, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c20)
-	r_hand =  /obj/item/device/camera 
+	r_hand =  /obj/item/device/camera
 	l_pocket = /obj/item/device/camera_film
 	r_pocket = /obj/item/device/camera_film
 
