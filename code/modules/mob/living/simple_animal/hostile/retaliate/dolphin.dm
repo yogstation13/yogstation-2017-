@@ -17,7 +17,6 @@
 	maxHealth = 25
 	health = 25
 	a_intent = "harm"
-
 	environment_smash = 0
 	harm_intent_damage = 8
 	melee_damage_lower = 15
@@ -32,7 +31,7 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 
-	faction = list("carp", "dolphin")//why do carps not attack dolphins again?
+	faction = list("dolphin")//why do carps not attack dolphins again? //i dunno now they do
 	flying = 1
 
 /mob/living/simple_animal/hostile/retaliate/dolphin/Process_Spacemove(movement_dir = 0)
@@ -51,8 +50,8 @@
 		qdel(W)
 		qdel(src)
 
-/*
-/mob/living/simple_animal/hostile/retaliate/dolphin/say_quote(input)//I thought about using a new language, but then the dolphin wouldn't be able to understand its masters.
-	var/new_input = pick("eeeeh eeh eeh!", "eeh eeh eeh!", "eeh eeeeeeh ehh!", "eeh eeh eeeeeeh!", "eeh eeeeeeeh!")
-	return ..(new_input)
-*/
+/mob/living/simple_animal/hostile/retaliate/dolphin/handle_automated_action()
+	if(..())	
+		for(var/mob/living/simple_animal/hostile/carp/C in view(src, 10))
+			if(C.stat != DEAD)
+				enemies |= C

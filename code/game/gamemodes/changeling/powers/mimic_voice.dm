@@ -3,7 +3,7 @@
 	desc = "We shape our vocal glands to sound like a desired voice."
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
 	chemical_cost = 0 //constant chemical drain hardcoded
-	dna_cost = 1
+	dna_cost = 0
 	req_human = 1
 
 
