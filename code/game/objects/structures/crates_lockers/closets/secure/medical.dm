@@ -110,6 +110,7 @@
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/weapon/defibrillator(src)
 	new /obj/item/clothing/under/rank/mmedical(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/weapon/cartridge/medical(src)
@@ -118,6 +119,7 @@
 	new /obj/item/weapon/storage/belt/medical(src)
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/device/sensor_device(src)
+	new /obj/item/weapon/storage/box/bodybags(src)
 
 /obj/structure/closet/secure_closet/paramedic
 	name = "paramedical closet"
