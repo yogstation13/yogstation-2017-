@@ -51,6 +51,7 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
+	new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -58,6 +59,8 @@
 		H.languages_spoken |= ASHWALKER
 		H.languages_understood |= ASHWALKER
 		H.weather_immunities |= "ash"
+	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+	ashhud.join_hud(new_spawn)
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
@@ -80,6 +83,11 @@
 		H.languages_understood |= HUMAN
 	if(nest)
 		nest.chief = new_spawn
+	if(new_spawn.client)
+		new_spawn.client.images += image('icons/mob/hud.dmi',new_spawn,"hudchieftain")
+	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+	ashhud.join_hud(new_spawn)
+	ticker.mode.set_antag_hud(new_spawn, "hudchieftain")
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
