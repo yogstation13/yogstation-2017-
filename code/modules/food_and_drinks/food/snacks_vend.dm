@@ -65,8 +65,8 @@
 	filling_color = "#F5F5DC"
 
 /obj/item/weapon/reagent_containers/food/snacks/toritose
-	name = "toritose"
-	desc = "An excellent snack when you need it, however they become salty real fast. Hopefully stands on it's own in the market."
+	name = "toritos"
+	desc = "An excellent snack for an occassion it, however they become salty real fast. Hopefully stands on it's own in the market."
 	icon_state = "toritose"
 	trash = /obj/item/trash/toritose
 	bitesize = 25
