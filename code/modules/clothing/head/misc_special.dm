@@ -190,4 +190,4 @@
 	burn_state = FIRE_PROOF
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flags = ASH_IMMUNE | NOODROP
+	flags = ASH_IMMUNE | NODROP
