@@ -544,6 +544,8 @@
 	analyzerdescdamage = "Does medium freezing damage and kills unconscious humans, reaping resources from them."
 	color = "#8BA6E9"
 	complementary_color = "#E9CE8B"
+	message = "The blob splashes you with an icy liquid"
+	message_living = ", and you feel as cold as death"
 
 /datum/reagent/blob/frost_nexuses/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
