@@ -47,15 +47,14 @@
 			M << "<span class='warning'><B>[start_up_message]</B></span>"
 			if(start_up_sound)
 				M << start_up_sound
-	duration_timer = (start_up_time / 20) // subbed from /10 ) -15
+	duration_timer = start_up_time / 10
 	sleep(start_up_time)
 	stage = MAIN_STAGE
 	weather_main()
 
 /datum/weather/process()
-	spawn(1)
-		if(duration_timer)
-			duration_timer--
+	if(duration_timer)
+		duration_timer--
 
 /datum/weather/proc/weather_main()
 	update_areas()
@@ -121,6 +120,9 @@
 	if(world.time < cooldown)
 		user << "<span class='warning'>[src] is prepraring itself.</span>"
 		return 0
+	if(!controller)
+		user << "<span class='warning'>[src] needs time to sync with the local weather patterns.</span>"
+		return 0
 	if(!controller.ongoing_weather)
 		var/fixed = controller.weather_cooldown - world.time
 		if(fixed < 0)
@@ -129,13 +131,19 @@
 		else
 			fixed = butchertime(round(fixed / 10))
 			user << "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>"
-	if(controller.ongoing_weather.stage == (MAIN_STAGE || WIND_DOWN_STAGE))
-		user << "<span class='warning'>[src] can't trace anything while the storms are [controller.ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
+	else if(controller.ongoing_weather.stage & (MAIN_STAGE | WIND_DOWN_STAGE))
+		user << "<span class='warning'>[src] can't trace anything while the storm is [controller.ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
 		return 0
 
-	cooldown = world.time + 25
+	var/cooldowner = 250
+	if(controller.ongoing_weather.purely_aesthetic)
+		user << "<span class='warning'>[src] says that the next storm will breeze on by.</span>"
+		cooldown = world.time + cooldowner*4
+		ping(cooldowner*4)
+		return
+	cooldown = world.time + cooldowner
+	ping(cooldowner)
 	var/time = butchertime(controller.ongoing_weather.duration_timer)
-
 	user << "<span class='notice'>The next [controller.ongoing_weather] will hit in [round(time)] seconds.</span>"
 
 /obj/item/device/barometer/proc/butchertime(amount)
@@ -147,7 +155,6 @@
 				time -= inaccurate
 			if(prob(50))
 				time += inaccurate
-
 			return time
 		else
 			return amount

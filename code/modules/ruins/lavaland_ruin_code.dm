@@ -28,8 +28,10 @@ var/list/barometers = list()
 	if(!weather)
 		return
 
+	listclearnulls(barometers)
 	for(var/obj/item/device/barometer/B in barometers)
-		B.controller = src
+		if(B)
+			B.controller = src
 
 /obj/machinery/lavaland_controller/Destroy(force)
 	if(force)
