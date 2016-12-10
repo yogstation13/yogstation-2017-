@@ -219,6 +219,15 @@ This file contains the arcane tome files.
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
 			var/area/A = get_area(src)
+			var/list/clearlist = list(
+									/area/solar,
+									/area/toxins/test_area,
+									/area/maintenance)
+			if(!A.valid_territory)
+				if(!(A in clearlist))
+					user << "<span class='warning'>The Geometer cannot be opened \
+						in such a ridiciolous place!</span>"
+						return
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
@@ -242,6 +251,9 @@ This file contains the arcane tome files.
 				N.icon_state = "shield-red"
 				N.health = 60
 				shields |= N
+			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+				P.visible_message("[P] begins to go haywire until it corrects itself, but in a split second erects its pointer towards a certain direction.")
+				P.the_disk = user //get_turf(user): break glass if imbalanced. -Super
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
