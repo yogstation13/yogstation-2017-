@@ -132,7 +132,7 @@
 		if(target == user)
 			if(user.job == "Mime")
 				if(uses < 3)
-					user << "<span class='warning'>You've got to have more chargers than that!</span>"
+					user << "<span class='warning'>You've got to have more charges than that!</span>"
 					return
 				uses = 0 // we sacrifice all of our uses!
 				var/passes = 5
