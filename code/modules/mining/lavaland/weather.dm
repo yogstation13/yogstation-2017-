@@ -127,11 +127,11 @@
 		var/fixed = controller.weather_cooldown - world.time
 		if(fixed < 0)
 			user << "<span class='warning'>[src] was unable to trace any weather patterns! You should try again later...</span>"
-			return 0
 		else
 			fixed = butchertime(round(fixed / 10))
 			user << "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>"
-	else if(controller.ongoing_weather.stage & (MAIN_STAGE | WIND_DOWN_STAGE))
+		return 0
+	if((controller.ongoing_weather.stage == MAIN_STAGE) || (controller.ongoing_weather.stage == WIND_DOWN_STAGE))
 		user << "<span class='warning'>[src] can't trace anything while the storm is [controller.ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
 		return 0
 
