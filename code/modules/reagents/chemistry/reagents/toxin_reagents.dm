@@ -77,7 +77,7 @@
 	if(!istype(M, /mob/living))
 		return
 	if(method == TOUCH || method == VAPOR)
-		M.adjust_fire_stacks(reac_volume / 5)
+		M.adjust_fire_stacks(reac_volume / 2)
 		return
 	..()
 
@@ -98,10 +98,12 @@
 			. = FALSE
 
 	if(.)
-		M.adjustOxyLoss(5, 0)
+		M.adjustOxyLoss(6, 0)
 		if(C)
-			C.losebreath += 2
-		if(prob(20))
+			C.losebreath += 3
+			if(prob(10))
+				C.silent = max(C.silent, 3)
+		if(prob(40))
 			M.emote("gasp")
 	..()
 
@@ -113,24 +115,25 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
-	if(prob(10))
+	if(prob(50))
 		M << "<span class='danger'>Your insides are burning!</span>"
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustToxLoss(50*REM, 0)
 		. = 1
-	else if(prob(40))
-		M.heal_organ_damage(5*REM,0, 0)
+	else if(prob(50))
+		M.adjustCloneLoss(50*REM, 0)
+		M << "<span class='danger'>You're melting away!</span>"
 		. = 1
 	..()
 
 /datum/reagent/toxin/minttoxin
 	name = "Mint Toxin"
 	id = "minttoxin"
-	description = "Useful for dealing with undesirable customers."
+	description = "This stuff wiped out the space-americas a long time ago."
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(M.disabilities & FAT)
+	if(M.nutrition >= NUTRITION_LEVEL_FULL)
 		M.gib()
 	return ..()
 
@@ -144,19 +147,23 @@
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "A strong neurotoxin that puts the subject into a death-like state for a short period of time."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
-	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5*REM, 0)
-	M.Weaken(5, 0)
-	M.silent = max(M.silent, 5)
-	M.tod = worldtime2text()
-	..()
-	. = 1
+	switch(current_cycle)
+		if(1 to 20)
+			M.status_flags |= FAKEDEATH
+			M.adjustOxyLoss(0.5*REM, 0)
+			M.Weaken(5, 0)
+			M.silent = max(M.silent, 5)
+			M.tod = worldtime2text()
+			..()
+			. = 1
+		if(20 to INFINITY)
+			return
 
 /datum/reagent/toxin/zombiepowder/on_mob_delete(mob/M)
 	M.status_flags -= FAKEDEATH
@@ -170,7 +177,8 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M)
-	M.hallucination += 10
+	M.hallucination += 30
+	M.adjustBrainLoss(4)
 	return ..()
 
 /datum/reagent/toxin/plantbgone
@@ -224,12 +232,13 @@
 	id = "spore"
 	description = "A natural toxin produced by blob spores that inhibits vision when ingested."
 	color = "#9ACD32"
-	toxpwr = 1
+	toxpwr = 2
 
 /datum/reagent/toxin/spore/on_mob_life(mob/living/M)
 	M.damageoverlaytemp = 60
 	M.update_damage_hud()
-	M.blur_eyes(3)
+	M.blur_eyes(5)
+	M.Dizzy(3)
 	return ..()
 
 /datum/reagent/toxin/spore_burning
@@ -240,7 +249,7 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/spore_burning/on_mob_life(mob/living/M)
-	M.adjust_fire_stacks(2)
+	M.adjust_fire_stacks(4)
 	M.IgniteMob()
 	return ..()
 
@@ -251,17 +260,18 @@
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/M)
 	switch(current_cycle)
-		if(1 to 10)
+		if(1 to 9)
 			M.confused += 2
 			M.drowsyness += 2
-		if(10 to 50)
+			M.adjustStaminaLoss(2*REM, 0)
+		if(9 to 30)
 			M.Sleeping(2, 0)
 			. = 1
-		if(51 to INFINITY)
+		if(31 to INFINITY)
 			M.Sleeping(2, 0)
 			M.adjustToxLoss((current_cycle - 50)*REM, 0)
 			. = 1
@@ -431,11 +441,11 @@
 
 /datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
 	if(M.brainloss + M.toxloss <= 60)
-		M.adjustBrainLoss(1*REM)
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustBrainLoss(3*REM)
+		M.adjustToxLoss(1.5*REM, 0)
 		. = 1
-	if(current_cycle >= 18)
-		M.Sleeping(2, 0)
+	if(current_cycle = 5)
+		M.Sleeping(4, 0)
 		. = 1
 	..()
 
@@ -446,16 +456,18 @@
 	reagent_state = LIQUID
 	color = "#00B4FF"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
-	toxpwr = 1.25
+	toxpwr = 2
 
 /datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
 	if(prob(5))
-		M.losebreath += 1
+		M.losebreath += 3
 	if(prob(8))
 		M << "You feel horrendously weak!"
-		M.Stun(2, 0)
-		M.adjustToxLoss(2*REM, 0)
+		M.Stun(0.5, 0)
+		M.adjustToxLoss(3*REM, 0)
 	return ..()
+	
+	
 
 /datum/reagent/toxin/questionmark // food poisoning
 	name = "Bad Food"
@@ -465,6 +477,100 @@
 	color = "#d6d6d8"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
+	
+/datum/reagent/toxin/replitium
+	name = "Replitium"
+	id = "replitium"
+	description = "A chemical that, while only mildly toxic, continually replicates in the afflicted victim's bloodstream to make more of itself."
+	color = "#CF3600"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0.2
+
+/datum/reagent/toxin/replitium/on_mob_life(mob/living/M)
+	if(prob(80))
+		holder.add_reagent("replitium", pick(2,5)) //random small amounts, but since every bit counts...
+	if(holder.has_reagent("calomel"))
+		holder.remove_reagent("replitium", 600*REM) //calomel treats this otherwise awful abomination
+
+/datum/reagent/toxin/hemoharrigium
+	name = "Hemoharragium"
+	id = "hemoharragium"
+	description = "A debilitating poison that corrodes the blood vessels, causing massive internal bleeding."
+	reagent_state = LIQUID
+	color = "#FF0000" //just #FFFuck me up fam
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM //decays quickly
+	toxpwr = 0
+	
+/datum/reagent/toxin/hemoharragium/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.blood_volume > 0)
+			H.blood_volume -= rand(1, 3)
+	..()
+	
+/* This bugs graphics horribly for any client and ruins smoothing/etc
+/datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
+	name = "Rotatium"
+	id = "rotatium"
+	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	reagent_state = LIQUID
+	color = "#FFFF00" //RGB: 255, 255, 0 Bright ass yellow
+	metabolization_rate = 0.6 * REAGENTS_METABOLISM
+	toxpwr = 0
+	var/rotate_timer = 0
+
+/datum/reagent/toxin/rotatium/on_mob_life(mob/living/M)
+	rotate_timer++
+	if(M.reagents.get_reagent_amount("rotatium") < 2)
+		M.client.dir = NORTH
+		..()
+		return
+	if(rotate_timer >= rand(5,30)) //Random rotations are wildly unpredictable and hilarious
+		rotate_timer = 0
+		M.client.dir = pick(NORTH, EAST, SOUTH, WEST)
+	..()
+
+/datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
+	M.client.dir = NORTH
+	..()
+*/
+
+/datum/reagent/toxin/maloculin
+	name = "Maloculin"
+	id = "maloculin"
+	description = "Causes the vitreous in the eye to solidify as long as it's in the system of the victim, causing blindness."
+	reagent_state = LIQUID
+	color = "#d6d6d8"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	toxpwr = 0
+		
+/datum/reagent/toxin/maloculin/on_mob_life(mob/living/M)
+	if(holder.has_reagent("oculine"))
+		holder.remove_reagent("maloculin", 8*REM)
+		if(prob(5))
+			M << "<span class='userdanger'>The burning in your eyes subsides.</span>"
+	switch(current_cycle)
+		if(1 to 15)
+			M.blur_eyes(10)
+			M.adjust_eye_damage(1)
+			if(prob(5))
+				M << "<span class='userdanger'>Your eyes burn!</span>"
+		if(15 to 30)
+			M.blur_eyes(15)
+			M.adjust_eye_damage(3)
+			if(prob(10))
+				M << "<span class='userdanger'>Your feel a stabbing pain in your eyes!</span>"
+		if(30 to 60)
+			M.blur_eyes(20)
+			M.adjust_eye_damage(5)
+			if(M.eye_damage >= 30)
+				M.become_nearsighted()
+				if(prob(M.eye_damage - 10 + 1))
+					if(M.become_blind())
+						M << "<span class='userdanger'>You go blind!</span>"
+		if(60 to INFINITY)
+			M.become_blind()
+	
 
 /datum/reagent/toxin/itching_powder
 	name = "Itching Powder"
@@ -492,7 +598,11 @@
 		M << "You scratch at your arm."
 		M.adjustBruteLoss(0.2*REM, 0)
 		. = 1
-	if(prob(3))
+	if(prob(1))
+		M << "You scratch too hard!"
+		M.adjustBruteLoss(10*REM,0)
+		. = 1 //lol
+	if(prob(2))
 		M.reagents.add_reagent("histamine",rand(1,3))
 		M.reagents.remove_reagent("itching_powder",1.2)
 		return
@@ -505,7 +615,7 @@
 	reagent_state = LIQUID
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 2.5
+	toxpwr = 0
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/M)
 	if(prob(25))
@@ -517,7 +627,7 @@
 				. = 1
 			if(2)
 				M.losebreath += 10
-				M.adjustOxyLoss(rand(5,25), 0)
+				M.adjustOxyLoss(rand(10), 0)
 				. = 1
 			if(3)
 				if(istype(M, /mob/living/carbon/human))
@@ -542,7 +652,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
-	if(current_cycle >= 10)
+	if(current_cycle >= 5)
 		M.Paralyse(2, 0)
 		. = 1
 	if(prob(20))
@@ -559,9 +669,9 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/M)
-	if(current_cycle >= 10)
+	if(current_cycle >= 5)
 		M.Sleeping(2, 0)
-	M.adjustStaminaLoss(10*REM, 0)
+	M.adjustStaminaLoss(20*REM, 0)
 	..()
 	. = 1
 
@@ -575,7 +685,7 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/sulfonal/on_mob_life(mob/living/M)
-	if(current_cycle >= 22)
+	if(current_cycle >= 13)
 		M.Sleeping(2, 0)
 	return ..()
 
@@ -632,6 +742,12 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
+		var/obj/item/organ/lungs/L = M.getorganslot("lungs")
+		if(L)
+			L.decay += 5
+			if(L.decay >= 100)
+				L.Remove(M)
+				qdel(L)
 		M.Weaken(3, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
@@ -640,7 +756,7 @@
 /datum/reagent/toxin/heparin //Based on a real-life anticoagulant. I'm not a doctor, so this won't be realistic.
 	name = "Heparin"
 	id = "heparin"
-	description = "A powerful anticoagulant. Victims will bleed uncontrollably and suffer scaling bruising."
+	description = "A powerful anticoagulant, used to treat cardiac issues and stop clotting."
 	reagent_state = LIQUID
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
@@ -651,6 +767,8 @@
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
 		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
+		if(H.heart_attack)
+			H.heart_attack = 0 // treats myocardial infarction
 		. = 1
 	return ..() || .
 
@@ -679,7 +797,7 @@
 	description = "A powerful toxin that mimicks the patterns of punctured skin, matching their pigments and shapes, and spreading it around the body. Unlike other toxins, it only has short side effects like possible hunger. Easy now, it doesn't make them have a crutch for brains."
 	color = "#FFB9D2"
 	metabolization_rate = 0.3
-	toxpwr = 0 // the only side effect is loss of nutrition
+	toxpwr = 0
 
 //ACID
 
@@ -697,10 +815,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustFireLoss(min(6*toxpwr, reac_volume * toxpwr))
 		return
 	if(method == INJECT)
-		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustFireLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
 	C.acid_act(acidpwr, toxpwr, reac_volume)
 
@@ -729,6 +847,57 @@
 	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
 	. = 1 // When the blitzkrieg raged and the bodies stank
 	..() // Pleased to meet you, hope you guess my name
+	
+/datum/reagent/toxin/acid/flaacid
+	name = "Floroantimonic Acid"
+	id = "flacid"
+	description = "A highly illegal, dangerous substance, floroantimonic acid is an incredible superacid, capable of melting even glass and plastic."
+	color = "#79726C"
+	toxpwr = 0
+	acidpwr = 300 //it's a superacid, do you people know this shit
+
+/datum/reagent/toxin/acid/flaacid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
+	reac_volume = round(reac_volume, 0.1)
+	if((method == INGEST) || (method == INJECT))
+		C.adjustFireLoss(5*REM, 0)
+		return
+
+/datum/reagent/toxin/acid/flaacid/on_mob_life(mob/living/M)
+	if(prob(30))
+		M.adjustFireLoss(current_cycle/5, 0)
+		. = 1
+		..()
+	if(method == INGEST)
+		if(prob(20))
+			var/obj/item/organ/tongue/T = M.getorganslot("tongue")
+			if(T)
+				T.Remove(M)
+				qdel(T)
+			var/obj/item/organ/lungs/L = M.getorganslot("lungs")
+			if(L)
+				L.decay += 8
+				if(L.decay >= 100)
+					L.Remove(M)
+					qdel(L)
+			M << "Your insides are melting away!."
+	if(method == INJECT)
+		. = TRUE
+		var/mob/living/carbon/C
+		if(iscarbon(M))
+			C = M
+			CHECK_DNA_AND_SPECIES(C)
+			if(NOBLOOD in C.dna.species.specflags)
+				. = FALSE
+			if(BLOOD_VOLUME_SURVIVE to 0) //they have no blood in them/low enough not to matter
+				. = FALSE
+	if(.)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H << "<span class='userwarning'>Your blood boils away!</span>"
+			H.blood_volume = max(H.blood_volume - 50, 0)
+				
+			
+		
 
 /datum/reagent/toxin/peaceborg/confuse
 	name = "Dizzying Solution"
