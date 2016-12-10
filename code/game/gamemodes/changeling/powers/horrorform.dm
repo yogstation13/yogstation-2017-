@@ -79,7 +79,7 @@
 			H.set_species(/datum/species/abomination)
 			changeling.mimicing = ""
 			changeling.chem_recharge_rate = 0
-			changeling.chem_recharge_slowdown = (12/changeling.absorbedcount)
+			changeling.chem_recharge_slowdown = (18/changeling.absorbedcount)
 
 //hulk
 			var/datum/mutation/human/HM = mutations_list[HULK]
