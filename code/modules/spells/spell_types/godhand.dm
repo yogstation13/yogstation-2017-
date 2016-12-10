@@ -131,6 +131,9 @@
 	if(iscarbon(target))
 		if(target == user)
 			if(user.job == "Mime")
+				if(uses < 3)
+					user << "<span class='warning'>You've got to have more chargers than that!</span>"
+					return
 				uses = 0 // we sacrifice all of our uses!
 				var/passes = 5
 				while(passes > 0)
