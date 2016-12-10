@@ -114,6 +114,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	heatmod = 1.5
+	can_grab_items = FALSE //no picking stuff up grr
 	blacklisted = 1
 
 /datum/species/abomination/on_species_gain(mob/living/carbon/C, datum/species/old_species)

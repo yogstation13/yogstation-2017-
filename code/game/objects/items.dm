@@ -265,8 +265,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 	if(anchored)
 		return
-	if(isabomination(user))
-		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
