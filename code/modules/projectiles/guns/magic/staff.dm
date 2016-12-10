@@ -59,3 +59,9 @@
 	item_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
+
+/obj/item/weapon/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0
+	return ..()
+
