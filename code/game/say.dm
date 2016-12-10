@@ -16,7 +16,7 @@ var/list/freqtospan = list(
 	"1337" = "centcomradio"
 	)
 
-/atom/movable/proc/say(message, languages = languages_spoken)
+/atom/movable/proc/say(message, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	if(!can_speak())
 		return
 	if(message == "" || !message)
@@ -177,3 +177,22 @@ var/list/freqtospan = list(
 /atom/movable/virtualspeaker/Destroy()
 	..()
 	return QDEL_HINT_PUTINPOOL
+
+/proc/get_virtual_speaker_for(atom/movable/AM, obj/item/device/radio/radio)
+	if(!AM)
+		return null
+	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker, null)
+	virt.name = AM.name
+	virt.languages_spoken = AM.languages_spoken
+	virt.languages_understood = AM.languages_understood
+	virt.identifier = AM.identifier
+	virt.source = AM
+	virt.radio = radio
+	virt.verb_say = AM.verb_say
+	virt.verb_ask = AM.verb_ask
+	virt.verb_exclaim = AM.verb_exclaim
+	virt.verb_yell = AM.verb_yell
+	if(ismob(AM))
+		var/mob/M = AM
+		virt.job = M.job
+	return virt

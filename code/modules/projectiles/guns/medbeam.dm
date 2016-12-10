@@ -59,7 +59,7 @@
 /obj/item/weapon/gun/medbeam/process()
 
 	var/source = loc
-	if(!mounted && !ishuman(source))
+	if(!mounted && !isliving(source))
 		LoseTarget()
 		return
 

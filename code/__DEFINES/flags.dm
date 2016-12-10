@@ -37,6 +37,7 @@
 
 //turf-only flags
 #define NOJAUNT		1
+#define GIRDERABLE	2
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

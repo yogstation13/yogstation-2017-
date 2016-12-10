@@ -91,7 +91,7 @@
 	if(!current_wizard)
 		return
 	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [current_wizard.real_name]?", "Wizard Academy Defender", null, 0, 300, current_wizard)
 		var/mob/dead/observer/chosen = null
 
 		if(candidates.len)

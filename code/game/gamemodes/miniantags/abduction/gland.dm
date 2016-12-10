@@ -13,6 +13,7 @@
 	var/uses // -1 For inifinite
 	var/human_only = 0
 	var/active = 0
+	var/banned // abductors can't pick this one up.
 
 /obj/item/organ/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -166,11 +167,15 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	var/list/magic_yolk = list("mindbreaker", "chloralhydrate", "tiresolution", "spraytan", "space_drugs", "colorful_reagent", "laughter", "godblood")
+
+/obj/item/organ/gland/egg/New()
+	magic_yolk = pick(magic_yolk)
 
 /obj/item/organ/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
-	egg.reagents.add_reagent("sacid",20)
+	egg.reagents.add_reagent(magic_yolk,20)
 	egg.desc += " It smells bad."
 
 /obj/item/organ/gland/bloody
@@ -194,6 +199,7 @@
 	cooldown_high = 600
 	human_only = 1
 	uses = 1
+	banned = TRUE
 
 /obj/item/organ/gland/bodysnatch/activate()
 	owner << "<span class='warning'>You feel something moving around inside you...</span>"
@@ -245,6 +251,7 @@
 	cooldown_high = 3000
 	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
 	uses = 1
+	banned = TRUE
 
 /obj/item/organ/gland/plasma/activate()
 	owner << "<span class='warning'>You feel bloated.</span>"
