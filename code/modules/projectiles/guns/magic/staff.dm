@@ -59,4 +59,3 @@
 	item_state = "honker"
 	max_charges = 4
 	recharge_rate = 8
-
