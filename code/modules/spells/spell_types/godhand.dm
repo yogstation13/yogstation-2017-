@@ -119,7 +119,7 @@
 	item_state = "nothing"
 	var/uses = 3
 	var/list/things = list()
-	var/list/blacklist = (
+	var/list/blacklist = list (
 						/obj/item/weapon/bombcore,
 						/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,
 						/obj/item/weapon/grenade,
