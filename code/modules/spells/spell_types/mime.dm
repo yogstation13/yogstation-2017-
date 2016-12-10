@@ -67,7 +67,7 @@
 /obj/effect/proc_holder/spell/targeted/touch/mime
 	name = "Invisible Touch"
 	desc = "It dissapeared!"
-	hand_path = "/obj/item/weapon/melee/touch_attack/nothing"
+	hand_path = "/obj/item/weapon/melee/touch_attack/nothing/roundstart" // there is a non roundstart version. can be found in godhand.dmi
 	panel = "Mime"
 
 	invocation_type = "emote"

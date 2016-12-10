@@ -119,6 +119,14 @@
 	item_state = "nothing"
 	var/uses = 3
 	var/list/things = list()
+	var/list/blacklist = (
+						/obj/item/weapon/bombcore,
+						/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,
+						/obj/item/weapon/grenade,
+						/obj/machinery/nuclearbomb/selfdestruct,
+						/obj/item/weapon/gun/
+						)
+	var/useblacklist = FALSE
 
 /obj/item/weapon/melee/touch_attack/nothing/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
@@ -126,8 +134,13 @@
 	if(user.lying || user.handcuffed)
 		return
 	if(!uses)
+		user << "<span class='warning'>Whatever was attached to your hand has faded away. All of it's charges extinguished.</span>"
 		qdel(src)
 		return
+	if(useblacklist)
+		if(target in blacklist)
+			user << "<span class='warning'>[target] is too dangerous to mess with!</span>"
+			return
 	if(iscarbon(target))
 		if(target == user)
 			if(user.job == "Mime")
@@ -170,3 +183,6 @@
 		spawn(150)
 			if(target)
 				target.alpha = initial(target.alpha)
+
+/obj/item/weapon/melee/touch_attack/nothing/roundstart
+	useblacklist = TRUE
