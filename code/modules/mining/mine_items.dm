@@ -357,8 +357,8 @@
 	barometers += src
 
 /obj/item/device/barometer/Destroy()
-	..()
 	barometers -= src
+	return ..()
 
 /obj/item/device/barometer/proc/ping(time)
 	spawn(time)
