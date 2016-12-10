@@ -13,6 +13,10 @@
 	strip_delay = 60
 	burn_state = FIRE_PROOF
 	flags_cover = HEADCOVERSEYES
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/helmet.dmi'
+		)
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
@@ -53,6 +57,8 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
 	if(can_toggle && !user.incapacitated())
@@ -86,6 +92,8 @@
 	toggle_cooldown = 20
 	active_sound = 'sound/items/WEEOO1.ogg'
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/justice/escape
 	name = "alarm helmet"
@@ -107,6 +115,8 @@
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 80
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -127,6 +137,8 @@
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	strip_delay = 80
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/roman
 	name = "roman helmet"
@@ -138,12 +150,16 @@
 	item_state = "roman"
 	strip_delay = 100
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/roman/legionaire
 	name = "roman legionaire helmet"
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/gladiator
 	name = "gladiator helmet"
@@ -153,6 +169,8 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/redtaghelm
 	name = "red laser tag helmet"
@@ -163,6 +181,8 @@
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/bluetaghelm
 	name = "blue laser tag helmet"
@@ -173,6 +193,8 @@
 	armor = list(melee = 15, bullet = 10, laser = 20,energy = 10, bomb = 20, bio = 0, rad = 0)
 	// Offer about the same protection as a hardhat.
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/knight
 	name = "medieval helmet"
@@ -185,6 +207,8 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
 	dog_fashion = null
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
@@ -213,6 +237,8 @@
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/head/helmet/kasa
 	name = "pathfinder kasa"
@@ -223,6 +249,8 @@
 	burn_state = FIRE_PROOF
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	species_fit = null
+	sprite_sheets = null
 
 //LightToggle
 

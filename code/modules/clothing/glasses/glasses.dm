@@ -19,6 +19,10 @@
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	invis_view = SEE_INVISIBLE_MINIMUM
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"
@@ -77,12 +81,20 @@
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
 	desc = "Such a dapper eyepiece!"
 	icon_state = "monocle"
 	item_state = "headset" // lol
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/material
 	name = "Optical Material Scanner"
@@ -91,6 +103,10 @@
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"
 	vision_flags = SEE_OBJS
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/material/mining
 	name = "Optical Material Scanner"
@@ -118,6 +134,10 @@
 	icon_state = "glasses"
 	item_state = "glasses"
 	vision_correction = 1 //corrects nearsightedness
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/regular/hipster
 	name = "Prescription Glasses"
@@ -166,6 +186,8 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/glasses/sunglasses/garb/supergarb
 	desc = "Believe in us humans."
@@ -194,6 +216,8 @@
 	item_state = "gar"
 	force = 12
 	throwforce = 12
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -206,6 +230,10 @@
 	tint = 2
 	flags_cover = GLASSESCOVERSEYES
 	visor_flags_inv = HIDEEYES
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -243,6 +271,10 @@
 	vision_flags = SEE_MOBS
 	invis_view = 2
 	flash_protect = 0
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	thermal_overload()

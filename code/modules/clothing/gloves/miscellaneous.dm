@@ -56,6 +56,8 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
 	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/gloves/chitinhands
 	name = "chitin gauntlets"
@@ -68,3 +70,5 @@
 	body_parts_covered = ARMS
 	burn_state = FIRE_PROOF
 	armor = list(melee = 35, bullet = 50, laser = 45, energy = 30, bomb = 50, bio = 50, rad = 40)
+	species_fit = null
+	sprite_sheets = null

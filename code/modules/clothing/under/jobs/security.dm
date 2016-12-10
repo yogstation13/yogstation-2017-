@@ -67,6 +67,8 @@
 	item_state = "greydet"
 	item_color = "greydet"
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null
 
 /*
  * Head of Security
@@ -104,6 +106,9 @@
 	item_state = "officerblueclothes"
 	item_color = "officerblueclothes"
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null
+
 
 /obj/item/clothing/under/rank/head_of_security/navyblue
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Head of Security."
@@ -112,6 +117,8 @@
 	item_state = "hosblueclothes"
 	item_color = "hosblueclothes"
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/rank/warden/navyblue
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
@@ -120,3 +127,5 @@
 	item_state = "wardenblueclothes"
 	item_color = "wardenblueclothes"
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null

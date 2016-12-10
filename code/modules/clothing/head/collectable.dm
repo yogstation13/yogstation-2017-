@@ -69,6 +69,10 @@
 	icon_state = "welding"
 	item_state = "welding"
 	burn_state = FIRE_PROOF
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/head.dmi'
+		)
 
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"

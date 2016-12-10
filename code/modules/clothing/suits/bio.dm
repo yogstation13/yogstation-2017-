@@ -29,6 +29,10 @@
 	put_on_delay = 70
 	unacidable = 1
 	burn_state = FIRE_PROOF
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/suit.dmi'
+		)
 
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general
@@ -88,3 +92,5 @@
 	item_state = "bio_suit"
 	strip_delay = 40
 	put_on_delay = 20
+	species_fit = null
+	sprite_sheets = null

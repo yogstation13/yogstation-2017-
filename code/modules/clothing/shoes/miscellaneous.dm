@@ -57,6 +57,8 @@
 	name = "absorbent galoshes"
 	desc = "A pair of orange rubber boots, designed to prevent slipping on wet surfaces while also drying them."
 	icon_state = "galoshes_dry"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/galoshes/dry/step_action()
 	var/turf/open/t_loc = get_turf(src)
@@ -94,6 +96,8 @@
 	body_parts_covered = LEGS|FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	can_hold_items = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/chitintreads
 	name = "chitin boots"
@@ -106,6 +110,8 @@
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
 	armor = list(melee = 35, bullet = 35, laser = 0, energy = 10, bomb = 25, bio = 0, rad = 0)
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
@@ -131,6 +137,8 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	can_hold_items = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -146,6 +154,8 @@
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
 	burn_state = FIRE_PROOF
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
@@ -161,6 +171,8 @@
 /obj/item/clothing/shoes/cult/alt
 	name = "cultist boots"
 	icon_state = "cultalt"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"

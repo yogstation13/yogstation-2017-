@@ -98,8 +98,14 @@
 	remove_overlay(FACEMASK_LAYER)
 	if(istype(wear_mask, /obj/item/clothing/mask))
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			var/image/standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
-			overlays_standing[FACEMASK_LAYER] = standing
+			var/image/standing
+			if(wear_mask.icon_override)
+				standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = wear_mask.icon_override)
+			else if(wear_mask.sprite_sheets && wear_mask.sprite_sheets[dna.species.name])
+				standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = wear_mask.sprite_sheets[dna.species.name])
+			else
+				standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
+			overlays_standing[FACEMASK_LAYER]	= standing
 		update_hud_wear_mask(wear_mask)
 	apply_overlay(FACEMASK_LAYER)
 
@@ -111,16 +117,27 @@
 		inv.update_icon()
 
 	if(back)
-		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
-		overlays_standing[BACK_LAYER] = standing
-		update_hud_back(back)
+		var/image/standing
+		if(back.icon_override)
+			standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = back.icon_override)
+		else if(back.sprite_sheets && back.sprite_sheets[dna.species.name])
+			standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = back.sprite_sheets[dna.species.name])
+		else
+			standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
+		overlays_standing[BACK_LAYER]	= standing
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
-		var/image/standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
-		overlays_standing[HEAD_LAYER] = standing
+		var/image/standing
+		if(head.icon_override)
+			standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = head.icon_override)
+		else if(head.sprite_sheets && head.sprite_sheets[dna.species.name])
+			standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = head.sprite_sheets[dna.species.name])
+		else
+			standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		overlays_standing[HEAD_LAYER]	= standing
 		update_hud_head(head)
 	apply_overlay(HEAD_LAYER)
 

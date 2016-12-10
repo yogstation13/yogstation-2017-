@@ -162,7 +162,36 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 						"<span class='userdanger'>You throw up on the floor!</span>")
 
 
+//Vox
+/datum/species/vox
+	name = "Vox"
+	eyes = "vox_eyes"
+	id = "vox"
+	say_mod = "caws"
+	cold_level_1 = 80
+	cold_level_2 = 50
+	cold_level_3 = 0
+	warning_low_pressure = 50
+	hazard_low_pressure = 0
+	safe_oxygen_min = 0
+	safe_oxygen_max = 1
+	safe_nitrogen_min = 16
+	specflags = list(EYECOLOR,LIPS,NOSCAN)
+	mutant_bodyparts = list("tail_vox")
+	default_features = list("tail" = "Vox")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	roundstart = 1
 
+/datum/species/vox/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/datum/outfit/vox/O = new /datum/outfit/vox
+	H.equipOutfit(O, visualsOnly)
+	H.internal = H.r_hand
+	H.update_internals_hud_icon(1)
+	return 0
 
 /*
  ANDROIDS

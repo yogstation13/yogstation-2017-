@@ -21,6 +21,8 @@
 	item_state = "ek"
 	item_color = "ek"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
@@ -145,6 +147,8 @@
 	fitted = NO_FEMALE_UNIFORM
 	body_parts_covered = CHEST|GROIN|LEGS
 	armor = list (melee = 15, bullet = 15, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/tatters
 	name = "sinew tatters"
@@ -154,6 +158,8 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
 	body_parts_covered = CHEST|GROIN|LEGS
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -175,6 +181,8 @@
 	icon_state = "cloud"
 	item_color = "cloud"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/gimmick/rank/captain/suit
 	name = "captain's suit"
@@ -269,6 +277,8 @@
 	icon_state = "burial"
 	item_state = "burial"
 	item_color = "burial"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
@@ -288,6 +298,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/blueskirt/redskirt
 	name = "red skirt"
@@ -295,6 +307,8 @@
 	icon_state = "redskirt"
 	item_color = "redskirt"
 	item_state = "r_suit"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
@@ -311,18 +325,24 @@
 	icon_state = "schoolgirlred"
 	item_state = "schoolgirlred"
 	item_color = "schoolgirlred"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/schoolgirl/green
 	name = "green schoolgirl uniform"
 	icon_state = "schoolgirlgreen"
 	item_state = "schoolgirlgreen"
 	item_color = "schoolgirlgreen"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/schoolgirl/orange
 	name = "orange schoolgirl uniform"
 	icon_state = "schoolgirlorange"
 	item_state = "schoolgirlorange"
 	item_color = "schoolgirlorange"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/overalls
 	name = "laborer's overalls"
@@ -412,6 +432,8 @@
 	item_state = "r_suit"
 	item_color = "hos_parade_male"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/hosparadefem
 	name = "head of security's parade uniform"
@@ -421,6 +443,8 @@
 	item_color = "hos_parade_fem"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/assistantformal
 	name = "assistant's formal uniform"
@@ -475,6 +499,8 @@
 	body_parts_covered = CHEST|GROIN
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/janimaid
 	name = "maid uniform"
@@ -525,6 +551,8 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 1
 	alt_covers_chest = 1
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/jester
 	name = "jester suit"
@@ -532,6 +560,8 @@
 	icon_state = "jester"
 	item_color = "jester"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/plasmaman
 	name = "Plasma-man Jumpsuit"
@@ -593,6 +623,8 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/tourist
 	name = "Hawaiian shirt"
@@ -609,3 +641,5 @@
 	item_state = "ronald"
 	item_color = "ronald"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null

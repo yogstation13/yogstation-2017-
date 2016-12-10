@@ -4,6 +4,10 @@
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
 	var/hud_type = null
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	if(hud_type && slot == slot_glasses)

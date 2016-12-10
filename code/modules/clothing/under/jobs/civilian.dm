@@ -56,6 +56,8 @@
 	item_state = "clerk"
 	item_color = "clerk"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
@@ -188,3 +190,5 @@
 	item_state = "explorer"
 	item_color = "explorer"
 	can_adjust = 0
+	species_fit = null
+	sprite_sheets = null

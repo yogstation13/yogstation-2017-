@@ -54,6 +54,17 @@
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
+	var/cold_level_1 = 260  // Cold damage level 1 below this point.
+	var/cold_level_2 = 200  // Cold damage level 2 below this point.
+	var/cold_level_3 = 120  // Cold damage level 3 below this point.
+	var/heat_level_1 = 360  // Heat damage level 1 above this point.
+	var/heat_level_2 = 400  // Heat damage level 2 above this point.
+	var/heat_level_3 = 460 // Heat damage level 3 above this point; used for body temperature
+	var/heat_level_3_breathe = 1000 // Heat damage level 3 above this point; used for breathed air temperature
+	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
+	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
+	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
+	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 	var/exotic_damage_overlay = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
@@ -73,6 +84,8 @@
 	//Breathing!
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_oxygen_max = 0
+	var/safe_nitrogen_min = 0
+	var/safe_nitrogen_max = 0
 	var/safe_co2_min = 0
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
@@ -335,6 +348,10 @@
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
 
+	if("tail_vox" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_vox"
+
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
@@ -391,6 +408,8 @@
 					S = tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
 					S.= animated_tails_list_human[H.dna.features["tail_human"]]
+				if("tail_vox")
+					S = tails_list_vox[H.dna.features["tail_vox"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
 				if("waggingspines")
@@ -414,7 +433,7 @@
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "tail_vox")
 				bodypart = "tail"
 			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
 				bodypart = "waggingtail"
@@ -1299,12 +1318,13 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
+	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz", "n2")
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
+	var/N2_pp = breath.get_breath_partial_pressure(breath_gases["n2"][MOLES])
 
 
 	//-- OXY --//
@@ -1312,8 +1332,8 @@
 	//Too much oxygen! //Yes, some species may not like it.
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
-			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
-			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 1000
+			H.adjustToxLoss(Clamp(ratio,tox_breath_dam_min,tox_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
 			H.clear_alert("too_much_oxy")
@@ -1370,6 +1390,33 @@
 	//Exhale
 	breath_gases["co2"][MOLES] -= gas_breathed
 	breath_gases["o2"][MOLES] += gas_breathed
+	gas_breathed = 0
+
+	//-- N2 --//
+	//Too much nitrogen! //Yes, some species may not like it.
+	if(safe_nitrogen_max)
+		if(N2_pp > safe_nitrogen_max && !(NOBREATH in specflags))
+			var/ratio = (breath_gases["n2"][MOLES]/safe_nitrogen_max) * 10
+			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+		else
+			H.clear_alert("too_much_oxy")
+
+	//Too little nitrogen! //used for Vox
+	if(safe_nitrogen_min)
+		if(N2_pp < safe_nitrogen_min)
+			gas_breathed = handle_too_little_breath(H,N2_pp,safe_nitrogen_min,breath_gases["n2"][MOLES])
+			H.throw_alert("oxy", /obj/screen/alert/oxy)
+		else
+			H.failed_last_breath = 0
+			if(H.getOxyLoss())
+				H.adjustOxyLoss(-5)
+			gas_breathed = breath_gases["n2"][MOLES]
+			H.clear_alert("oxy")
+
+	//Exhale
+	breath_gases["n2"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
 
@@ -1457,25 +1504,25 @@
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
-				if(-INFINITY to 120)
+				if(-INFINITY to cold_level_3)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
 					H.lastburntype = "coldburn"
-				if(120 to 200)
+				if(cold_level_3 to cold_level_2)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
 					H.lastburntype = "coldburn"
-				if(200 to 260)
+				if(cold_level_2 to cold_level_1)
 					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
 					H.lastburntype = "coldburn"
 
 		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
-				if(360 to 400)
+				if(heat_level_1 to heat_level_2)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
 					H.lastburntype = "hotburn"
-				if(400 to 1000)
+				if(heat_level_2 to heat_level_3_breathe)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
 					H.lastburntype = "hotburn"
-				if(1000 to INFINITY)
+				if(heat_level_3_breathe to INFINITY)
 					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
 					H.lastburntype = "hotburn"
 
@@ -1505,30 +1552,30 @@
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTTEMP in specflags))
+	if(H.bodytemperature > heat_level_1 && !(RESISTTEMP in specflags))
 		//Body temperature is too hot.
 		switch(H.bodytemperature)
-			if(360 to 400)
+			if(heat_level_1 to heat_level_2)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
-			if(400 to 460)
+			if(heat_level_2 to heat_level_3)
 				H.throw_alert("temp", /obj/screen/alert/hot, 2)
 				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-			if(460 to INFINITY)
+			if(heat_level_3 to INFINITY)
 				H.throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(H.on_fire)
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
+	else if(H.bodytemperature < cold_level_1 && !(mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
-			if(200 to 260)
+			if(cold_level_1 to cold_level_2)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)
 				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-			if(120 to 200)
+			if(cold_level_2 to cold_level_3)
 				H.throw_alert("temp", /obj/screen/alert/cold, 2)
 				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-			if(-INFINITY to 120)
+			if(cold_level_3 to -INFINITY)
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
 			else
@@ -1542,26 +1589,25 @@
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-	switch(adjusted_pressure)
-		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!(RESISTTEMP in specflags))
-				H.lastbrutetype = "pressure"
-				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
-			else
-				H.clear_alert("pressure")
-		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
-		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert("pressure")
-		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+	if(adjusted_pressure >= hazard_high_pressure)
+		if(!(RESISTTEMP in specflags))
+			H.lastbrutetype = "pressure"
+			H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
-				H.clear_alert("pressure")
-			else
-				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+			H.clear_alert("pressure")
+	else if(adjusted_pressure >= warning_high_pressure)
+		H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+	else if(adjusted_pressure >= warning_low_pressure)
+		H.clear_alert("pressure")
+	else if(adjusted_pressure >= hazard_low_pressure)
+		H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+	else
+		if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
+			H.clear_alert("pressure")
+		else
+			H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
 
 //////////
 // FIRE //

@@ -58,7 +58,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "tail_vox" = "Vox", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -269,6 +269,15 @@ var/list/preferences_datums = list()
 					dat += "<h3>Tail</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("tail_vox" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Tail</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=tail_vox;task=input'>[features["tail_vox"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -1026,6 +1035,12 @@ var/list/preferences_datums = list()
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
 					if(new_tail)
 						features["tail_human"] = new_tail
+
+				if("tail_vox")
+					var/new_tail
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_vox
+					if(new_tail)
+						features["tail_vox"] = new_tail
 
 				if("snout")
 					var/new_snout
