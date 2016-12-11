@@ -1,0 +1,12 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Credit to Adam for most of these ideas, and Stealthkibbler for the chieftain egg sprite!"
+  - rscadd: "Ashwalkers are now ash immune!"
+  - rscadd: "Ashwalkers now have a leader! All hail the nercopolis and her chosen son the Chieftain!"
+  - rscadd: "Ashwalkers can no longer speak english. They have their own language."
+  - rscadd: "Ashwalkers can no longer operate or use machinery."
+  - rscadd: "Chieftains are more intelligent than your average ashwalker. They can operate machinery with ease, and are able to speak human."
+  - rscadd: "When a chieftain dies, the main nest will take 30 seconds to automatically spawn another chieftain egg."
+  - rscadd: "When a Chieftain Ashwalker is sacrificed, they speed up the process to spawn another chieftain egg."
+  - rscadd: "Credit to StealthKibbler for the Chieftain HUD sprite!"
