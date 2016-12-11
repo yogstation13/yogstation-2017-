@@ -35,6 +35,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/list/actions = list() //list of /datum/action's that this item has.
 	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
+	var/datum/chameleon/chameleon = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -142,6 +143,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(ismob(loc))
 		var/mob/m = loc
 		m.unEquip(src, 1)
+	qdel(chameleon)
 	for(var/X in actions)
 		qdel(X)
 	if(module_holder)
@@ -263,6 +265,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 	if(anchored)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -370,7 +376,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	
+
 	if(ismodule(W))
 		if(!module_holder)
 			user << "<span class='warning'>This equipment doesn't support modules.</span>"
@@ -381,7 +387,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			user << "<span class='warning'>[return_value]</span>"
 		else
 			user << "<span class='notice'>You successfully install \the [module.name] into [src]."
-	
+
 	if(ismodholder(W))
 		if(module_holder)
 			user << "<span class='notice'>There's already a module holder installed!</span>"
@@ -402,6 +408,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
+	if(chameleon)
+		chameleon.deregister()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -433,12 +441,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	if(chameleon)
+		chameleon.register(user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 
 /obj/item/proc/unequipped(mob/user)
+	if(chameleon)
+		chameleon.deregister()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
