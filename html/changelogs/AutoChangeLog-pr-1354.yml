@@ -1,0 +1,4 @@
+author: matskuman5
+delete-after: True
+changes: 
+  - bugfix: "Added a missing red light to the morgue tray sprite."
