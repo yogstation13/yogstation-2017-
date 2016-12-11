@@ -88,8 +88,7 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
 	/client/proc/check_ruins,
-	/datum/admins/proc/borer_panel,
-	/client/proc/admin_pick_random_player
+	/datum/admins/proc/borer_panel
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
