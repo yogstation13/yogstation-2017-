@@ -336,6 +336,40 @@
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
 
+
+// ************************* Barometer! ******************************
+// attack_self() is in weather.dm
+
+/obj/item/device/barometer
+	name = "barometer"
+	desc = "A persistent device used for tracking weather and storm patterns. IN SPACE!"
+	icon_state = "barometer"
+	var/obj/machinery/lavaland_controller/controller // used to update the weather and such
+	var/cooldown
+	var/accuracy // 0 is the best accuracy.
+
+/obj/item/device/barometer/New()
+	..()
+	barometers += src
+
+/obj/item/device/barometer/Destroy()
+	barometers -= src
+	return ..()
+
+/obj/item/device/barometer/proc/ping(time)
+	spawn(time)
+		if(isliving(loc))
+			var/mob/living/L = loc
+			L << "<span class='notice'>[src] is ready!</span>"
+		playsound(get_turf(src), 'sound/machines/click.ogg', 100)
+
+/obj/item/device/barometer/mining
+	desc = "A special device used for tracking ash storms."
+
+/obj/item/device/barometer/tribal
+	desc = "A device handed down from ashwalker to ashwalker. This tool is used to speak with the wind, translate it's whispers, and figure out when a storm will hit."
+	accuracy = 20
+
 //Pod turfs and objects
 
 

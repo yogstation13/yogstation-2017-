@@ -183,6 +183,7 @@
 		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/ore/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/food/drinks,
+		/obj/item/device/barometer,
 
 
 		)
