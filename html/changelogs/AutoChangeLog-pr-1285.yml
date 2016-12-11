@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Weather detectors can now be purchased at your local mining vendor or can come in a bundle with an advanced mining scanner!"
+  - rscadd: "Credit goes out to Silvaplex512 for creating the barometer sprite!"
