@@ -140,6 +140,7 @@
 
 	changeling.isabsorbing = 0
 	changeling.canrespec = 1
+	changeling.absorbedcount++
 	for(var/obj/item/I in target) //drops all items
 		target.unEquip(I)
 	new /obj/effect/decal/remains/human(target.loc)

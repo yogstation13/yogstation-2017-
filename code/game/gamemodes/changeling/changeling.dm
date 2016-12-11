@@ -398,7 +398,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return
 
 	stored_profiles += prof
-	absorbedcount++
 
 /datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
 	var/datum/changelingprofile/prof = create_profile(H, protect)

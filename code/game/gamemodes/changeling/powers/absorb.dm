@@ -103,6 +103,7 @@
 
 	target.death(0)
 	target.Drain()
+	changeling.absorbedcount++
 	return 1
 
 
