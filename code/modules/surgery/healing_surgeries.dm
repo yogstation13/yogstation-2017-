@@ -33,11 +33,11 @@
 		if (heal_limb)
 			switch (dressing_type)
 				if ("brute")
-					heal_limb.heal_damage(65, 0, 0) //brute
+					heal_limb.heal_damage(85, 0, 0) //brute
 				if ("burn")
-					heal_limb.heal_damage(0, 65, 0) //burn
+					heal_limb.heal_damage(0, 85, 0) //burn
 				if ("both")
-					heal_limb.heal_damage(45, 45, 0) //both
+					heal_limb.heal_damage(65, 65, 0) //both
 		else
 			user << "There's no limb there to dress!"
 			return 0
@@ -55,8 +55,8 @@
 	return 1
 
 /datum/surgery_step/apply_dressing/burn
-	name = "apply ointment"
-	implements = list(/obj/item/stack/medical/ointment = 100, /obj/item/medical/bandage/improvised_soaked = 65, /obj/item/clothing/torncloth = 25)
+	name = "apply bandage"
+	implements = list(/obj/item/medical/bandage/burn = 100, /obj/item/medical/bandage/improvised_soaked = 65, /obj/item/clothing/torncloth = 25)
 	time = 24
 	dressing_type = "burn"
 
