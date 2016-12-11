@@ -1,0 +1,4 @@
+author: utahclock
+delete-after: True
+changes: 
+  - rscadd: "Adds logging for admins to see who sent the mining shuttle"
