@@ -722,7 +722,7 @@
 			note = 1
 	if(note)
 		user << "<span class='danger'>[src] begins to dim!</span>"
-		icon_state = original_icon_state
+		icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
 		overlays.Cut()
 		name = realName
 		throwSmoke(get_turf(src))
