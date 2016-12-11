@@ -297,7 +297,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/reverting = 0
+	var/reverting = 0 //if they're turning back from horrorform
+	var/transforming = FALSE //if they're turning into horrorform
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 
