@@ -64,4 +64,4 @@ var/list/donor_start_items = list(\
 						/obj/item/clothing/shoes/fuzzy_slippers
 						)
 
-var/list/donor_pdas = list("Normal", "Transparent", "Pip Boy")
+var/list/donor_pdas = list("Normal", "Transparent", "Pip Boy", "Rainbow")
