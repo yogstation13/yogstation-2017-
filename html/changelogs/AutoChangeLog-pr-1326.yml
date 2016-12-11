@@ -1,0 +1,4 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscdel: "Shambling Abominations cannot pick up items anymore."
