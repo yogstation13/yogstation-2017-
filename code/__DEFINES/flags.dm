@@ -76,22 +76,14 @@
 #define EASYDISMEMBER	20
 #define EASYLIMBATTACHMENT 21
 #define TOXINLOVER		22
+#define NOMACHINERY		23
 
 #define FLYING	65536
 
 /*
-	These defines are used specifically with the atom/movable/languages bitmask.
-	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
+	Language defines were moved to language.dm
 */
-#define HUMAN 1
-#define MONKEY 2
-#define ALIEN 4
-#define ROBOT 8
-#define SLIME 16
-#define DRONE 32
-#define SWARMER 64
-#define PREDATOR 128
-#define RATVAR 128
+
 
 // Flags for reagents
 #define REAGENT_NOREACT 1
