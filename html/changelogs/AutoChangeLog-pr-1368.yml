@@ -1,7 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - tweak: "Slightly buffed blob resistance to burn damage."
-  - tweak: "Combined some slightly less useful blob types to form new ones."
-  - rscadd: "Reactive Spines- Repels brute damage and penetrates armor"
-  - rscadd: "Frost Nexuses- Freezes victims and kills unconscious humans for more blobpoints."

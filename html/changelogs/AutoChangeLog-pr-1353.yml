@@ -1,5 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "NT has updated their analyzers with better programs. Slime scanners will detect if a slime is rabid, who it's friends are, if it was fed a mutation potion, if the slime is in stasis, if it was attacked, and more. Health analyzers will alert you if your patient is having a heart attack. Analyzers will detect more gas types."
-  - rscadd: "This isn't really related to anything but did you know that if you give a slime morphine or frost oil it slows down, and you can become better friends with a slime by feeding it plasma? Or just order it to attack people by saying 'attack (person's full name.) Seriously, I was surprised to find a lot of this stuff out."
