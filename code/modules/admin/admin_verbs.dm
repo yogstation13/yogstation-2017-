@@ -121,7 +121,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all
+	/client/proc/polymorph_all,
+	/client/proc/admin_pick_random_player
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -985,4 +986,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/chosen_player = pick(player_pool)
 	src << "[chosen_player] Has been chosen"
-	holder.show_player_panel(chosen_player)
+  holder.show_player_panel(chosen_player)
+
+	
+

@@ -19,7 +19,7 @@
 	if(user.health < 35)//amount of health that makes you revert
 		user << "<span class='warning'>We are too hurt to sustain such power.</span>"
 		return
-	if(H.dna.species.id == "abomination")//can't transform twice at once
+	if(isabomination(H))//can't transform twice at once
 		user << "<span class='warning'>You're already transformed!</span>"
 		return
 	var/transform_or_no=alert(user,"Are you sure you want to transform?",,"Yes","No")
@@ -28,7 +28,7 @@
 			user << "<span class='warning'>You opt not to transform."
 			return
 		if("Yes")
-			if(H.dna.species.id == "abomination")
+			if(isabomination(H))
 				user << "<span class='warning'>You're already transformed!</span>"
 				return
 			if(changeling.geneticdamage > 15)

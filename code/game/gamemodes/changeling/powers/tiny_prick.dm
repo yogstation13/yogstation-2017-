@@ -46,7 +46,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user //it only works with H for some reason
-		if(H.dna.species.id == "abomination")
+		if(isabomination(H))
 			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
 			return
 	return 1
