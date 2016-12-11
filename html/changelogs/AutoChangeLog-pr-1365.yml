@@ -1,0 +1,5 @@
+author: matskuman5
+delete-after: True
+changes: 
+  - tweak: "Healing surgeries have been slightly buffed."
+  - tweak: "The burn healing surgery now requires a burn bandage instead of ointment."
