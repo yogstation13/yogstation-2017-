@@ -710,7 +710,6 @@
 	investigate_log(log_msg, "experimentor")
 
 /obj/item/weapon/relic/proc/humanClone(mob/user)
-	var/original_icon_state = icon_state
 	if(!note)
 		user << "<span class='danger'>[src] begins to glow!</span>"
 		spawn(rand(50, 100))
