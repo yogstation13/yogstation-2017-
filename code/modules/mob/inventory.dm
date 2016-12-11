@@ -63,6 +63,10 @@
 /mob/proc/put_in_hand_check(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return 0
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return 0
 	if(!istype(W))
 		return 0
 	return 1

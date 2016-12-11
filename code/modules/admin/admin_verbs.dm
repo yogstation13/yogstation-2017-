@@ -951,6 +951,7 @@ var/list/admin_verbs_hideable = list(
 	usr << browse(dat, "window=checkruin;size=350x500")
 
 
+
 /client/proc/admin_pick_random_player()
 	set category = "Admin"
 	set name = "Pick Random Player"
@@ -990,3 +991,4 @@ var/list/admin_verbs_hideable = list(
 
 	
 
+r
