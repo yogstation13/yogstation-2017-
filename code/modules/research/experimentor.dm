@@ -736,12 +736,13 @@
 			while((BP.brute_dam) < 40) //Approximately 4 seconds. Can be pretty lethal.
 				if(src.loc == user)
 					BP.brute_dam += 4
+					H << "<span class='warning'>[src] stabs your [BP.name]!!</span>"
 					sleep(4)
 					playsound(src,'sound/weapons/bladeslice.ogg',40,1) //This'll better fucking alert you.
 				else
 					return //This will lag extremely bad if you don't.
 			note = 0
-			if(rand(60))
+			if(prob(60))
 				BP.dismember(BRUTE)
 				playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
 				warn_admins(user, "Cutter")
