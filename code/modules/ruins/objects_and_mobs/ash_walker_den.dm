@@ -14,8 +14,7 @@
 	del_on_death = 1
 	var/meat_counter
 	var/mob/living/carbon/human/chief = null
-	var/weepcycle = 60
-	var/forceSpawn // the chief can only be force-respawned with no downsides one time
+	var/weepcycle = 30
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/Life()
 	..()
@@ -24,18 +23,14 @@
 		spawn_mob()
 	if(chief)
 		if(chief.stat == DEAD)
-			if(prob(rand(5,30)))
+			if(prob(rand(5,60)))
 				visible_message("<span class='warning'>[src] begins to rock back and forth, and weep in silence. It appears to have lost connection to it's chief.</span>")
 			if(weepcycle != 0)
 				weepcycle--
 			else
-				if(meatcounter > ASH_WALKER_SPAWN_THRESHOLD)
-					blossom_hero()
-				else if(!forceSpawn)
-					forceSpawn = TRUE
-					blossom_hero
-					visible_message("<span class='warning'>[src] shakes uncontrollably until an egg pops out from underneath it.</span>")
-
+				blossom_hero()
+				chief = null
+				weepcycle = 30
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/proc/consume()
 	for(var/mob/living/H in view(src,1)) //Only for corpse right next to/on same tile
@@ -67,8 +62,6 @@
 	blossom_hero()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/proc/blossom_hero()
-	chief = null
-	weepcycle = 60
 	var/turf/T = get_turf(src)
 	var/obj/effect/mob_spawn/human/ash_walker/chief/hero = new(src.loc)
 	hero.loc = T

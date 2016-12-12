@@ -984,7 +984,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/hostile/asteroid/gutluncha/AttackingTarget()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/AttackingTarget()
 	if(is_type_in_list(target,wanted_objects)) //we eats
 		udder.generateMilk()
 		regenerate_icons()
@@ -1005,8 +1005,8 @@
 		reagents.add_reagent("cream", rand(2, 5))
 	if(prob(45))
 		reagents.add_reagent("salglu_solution", rand(2,5))
-	if(prob(8))
-		reagents.add_reagent("omnizine", rand(10,15))
+	if(prob(5))
+		reagents.add_reagent("omnizine", rand(2,5))
 
 
 //Male gutlunch. They're smaller and more colorful!
