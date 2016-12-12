@@ -430,11 +430,13 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/neurotoxin2/on_mob_life(mob/living/M)
-	if(M.brainloss + M.toxloss <= 60)
-		M.adjustBrainLoss(1*REM)
-		M.adjustToxLoss(1*REM, 0)
-		. = 1
-	if(current_cycle >= 18)
+	if(current_cycle >= 6)
+		M.confused = 1
+		if(M.toxloss <= 80)
+			M.adjustBrainLoss(1*REM)
+			M.adjustToxLoss(1*REM, 0)
+			. = 1
+	if(current_cycle >= 16)
 		M.Sleeping(2, 0)
 		. = 1
 	..()
@@ -448,10 +450,11 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
 
-/datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
-	if(prob(5))
+/datum/reagent/toxin/cyanide/on_mob_life(mob/living/carbon/M)
+	if(prob(15))
 		M.losebreath += 1
-	if(prob(8))
+		M.silent = max(M.silent, 3)
+	if(prob(10))
 		M << "You feel horrendously weak!"
 		M.Stun(2, 0)
 		M.adjustToxLoss(2*REM, 0)
@@ -505,7 +508,7 @@
 	reagent_state = LIQUID
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	toxpwr = 2.5
+	toxpwr = 2
 
 /datum/reagent/toxin/initropidril/on_mob_life(mob/living/M)
 	if(prob(25))
@@ -542,17 +545,17 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
-	if(current_cycle >= 10)
+	if(current_cycle >= 5)
 		M.Paralyse(2, 0)
 		. = 1
 	if(prob(20))
-		M.losebreath += 4
+		M.losebreath += 20
 	..()
 
 /datum/reagent/toxin/sodium_thiopental
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
-	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
+	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness while doing brain damage and random stuns."
 	reagent_state = LIQUID
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -562,6 +565,10 @@
 	if(current_cycle >= 10)
 		M.Sleeping(2, 0)
 	M.adjustStaminaLoss(10*REM, 0)
+	if(prob(10))
+		M.adjustBrainLoss(1*REM)
+	if(prob(15))
+		M.Stun(2, 0)
 	..()
 	. = 1
 
@@ -615,10 +622,11 @@
 	reagent_state = LIQUID
 	color = "#7DC3A0"
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
-	toxpwr = 1.75
+	toxpwr = 2.75
 
-/datum/reagent/toxin/coniine/on_mob_life(mob/living/M)
+/datum/reagent/toxin/coniine/on_mob_life(mob/living/carbon/M)
 	M.losebreath += 5
+	M.silent = max(M.silent, 3)
 	return ..()
 
 /datum/reagent/toxin/curare
@@ -676,10 +684,10 @@
 /datum/reagent/toxin/capilletum
 	name = "Capilletum"
 	id = "capilletum"
-	description = "A powerful toxin that mimicks the patterns of punctured skin, matching their pigments and shapes, and spreading it around the body. Unlike other toxins, it only has short side effects like possible hunger. Easy now, it doesn't make them have a crutch for brains."
+	description = "A powerful toxin that mimics the patterns of punctured skin, matching their pigments and shapes, and spreading it around the body. Unlike other toxins, it only has short side effects like possible hunger. Easy now, it doesn't make them have a crutch for brains."
 	color = "#FFB9D2"
 	metabolization_rate = 0.3
-	toxpwr = 0 // the only side effect is loss of nutrition
+	toxpwr = 0
 
 //ACID
 

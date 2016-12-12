@@ -130,6 +130,7 @@
 	icon_state = "orb"
 	luminosity = 9
 	layer = ABOVE_ALL_MOB_LAYER
+	burn_state = LAVA_PROOF
 
 /obj/item/device/warp_cube
 	name = "blue cube"
