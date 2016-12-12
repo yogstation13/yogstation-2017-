@@ -599,7 +599,7 @@ for(var/t in test_times)
 			return "#FFFF00"
 		if("red")
 			return "#FF0000"
-		if("blue")
+		if("blue" || "cyan")
 			return "#0080FF"
 		if("light_blue")
 			return "#00FFFF"
