@@ -8,6 +8,7 @@
  *			worldtime2text
  *			text2dir_extended & dir2text_short
  *			list2string  //LEGACY SUPPORT FOR YOGS, USE jointext() instead!!!
+ *          color2code
  */
 
 //Returns an integer given a hex input, supports negative values "-ff"
@@ -591,3 +592,21 @@ for(var/t in test_times)
 /proc/list2string( l[], sep )
     for( var/x = 1 to l.len )
         . += ( l[x] + (x < l.len ? sep :null) )
+
+/proc/color2code(color)
+	switch(color)
+		if("yellow") return "#FFFF00"
+		if("red") return "#FF0000"
+		if("blue") return "#0080FF"
+		if("light_blue") return "#00FFFF"
+		if("cyan") return "#00FFFF"
+		if("dark_blue") return "#0000FF"
+		if("lime") return "#00FF00"
+		if("green") return "#04B404"
+		if("orange") return "#FF8000"
+		if("purple") return "#A901DB"
+		if("light_pink") return "#F5A9A9"
+		if("pink") return "#FF00BF"
+		if("brown") return "#8A4B08"
+		if("black") return "#000000"
+		if("white")	return "FFFFFF"
