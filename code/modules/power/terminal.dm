@@ -68,7 +68,9 @@
 						s.set_up(5, 1, master)
 						s.start()
 						return
-					new /obj/item/stack/cable_coil(loc, 10)
+					var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 10)
+					CC.item_color = wiring_color
+					CC.update_icon()
 					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
 					qdel(src)
 
