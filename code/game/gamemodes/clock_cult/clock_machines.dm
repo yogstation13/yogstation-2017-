@@ -288,7 +288,7 @@
 				else if(!H.stat)
 					if(H.getBrainLoss() >= 100)
 						H.Paralyse(5)
-						H << "<span class='sevtug'>[text2ratvar(pick(convert_messages))]</span>"
+						H << "<span class='sevtug'>(pick(convert_messages))</span>"
 					else
 						H.adjustBrainLoss(100)
 						H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
@@ -304,15 +304,15 @@
 				var/targethallu = H.hallucination
 				var/targetdruggy = H.druggy
 				if(distance >= 4 && prob(falloff_distance))
-					H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
+					H << "<span class='sevtug_small'>(pick(mania_messages))</span>"
 				H.playsound_local(T, hum, sound_distance, 1)
 				switch(distance)
 					if(2 to 3)
 						if(prob(falloff_distance))
 							if(prob(falloff_distance))
-								H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
+								H << "<span class='sevtug_small'>(pick(mania_messages))</span>"
 							else
-								H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
+								H << "<span class='sevtug'>(pick(compel_messages))</span>"
 						if(targetbrainloss <= 50)
 							H.adjustBrainLoss(50 - targetbrainloss) //got too close had brain eaten
 						if(targetdruggy <= 100)
@@ -349,11 +349,11 @@
 						if(targetbrainloss <= 99)
 							if(prob(falloff_distance))
 								if(prob(falloff_distance))
-									H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
+									H << "<span class='sevtug'>(pick(compel_messages))</span>"
 								else if(prob(falloff_distance))
-									H << "<span class='sevtug'>[text2ratvar(pick(close_messages))]</span>"
+									H << "<span class='sevtug'>(pick(close_messages))</span>"
 								else
-									H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
+									H << "<span class='sevtug_small'>(pick(mania_messages))</span>"
 							H.adjustBrainLoss(99 - targetbrainloss)
 						if(targetdruggy <= 150)
 							H.adjust_drugginess(15)
@@ -542,7 +542,7 @@
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
 	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
-	var/hierophant_cost = 50 //how much it costs to broadcast with large text
+	var/hierophant_cost = 0 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 	var/gateway_active = FALSE
 
