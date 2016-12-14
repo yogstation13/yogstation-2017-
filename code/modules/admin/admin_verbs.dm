@@ -986,7 +986,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/chosen_player = pick(player_pool)
 	src << "[chosen_player] Has been chosen"
-  holder.show_player_panel(chosen_player)
+        holder.show_player_panel(chosen_player)
 
 	
 
