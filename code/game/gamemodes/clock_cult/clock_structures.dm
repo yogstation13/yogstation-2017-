@@ -890,7 +890,7 @@
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 				L.visible_message("<span class='warning'>[L] shines a brilliant blue as vitality floods out of it!</span>")
-				L << "<span class='inathneq_large'>\("Are you so callous as to waste the lives of others to preserve your own?")\"</span>"
+				L << "<span class='inathneq_large'>("Are you so callous as to waste the lives of others to preserve your own?")\"</span>"
 				if(vitality <= 0)
 					qdel(src)
 				
