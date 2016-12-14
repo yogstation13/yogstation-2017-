@@ -34,7 +34,7 @@
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
-#define ASH_IMMUNE 65536
+#define ASH_IMMUNE 1024
 
 //turf-only flags
 #define NOJAUNT		1
