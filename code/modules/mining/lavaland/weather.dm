@@ -30,6 +30,12 @@
 	var/list/impacted_areas = list()
 	var/immunity_type = "storm"
 
+	var/duration_timer // handled in process_time()
+
+/datum/weather/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
 /datum/weather/proc/weather_start_up()
 	for(var/area/N in get_areas(area_type))
 		if(N.z == target_z)
@@ -41,10 +47,14 @@
 			M << "<span class='warning'><B>[start_up_message]</B></span>"
 			if(start_up_sound)
 				M << start_up_sound
+	duration_timer = start_up_time / 10
 	sleep(start_up_time)
 	stage = MAIN_STAGE
 	weather_main()
 
+/datum/weather/process()
+	if(duration_timer)
+		duration_timer--
 
 /datum/weather/proc/weather_main()
 	update_areas()
@@ -65,7 +75,6 @@
 
 	stage = WIND_DOWN_STAGE
 	weather_wind_down()
-
 
 /datum/weather/proc/weather_wind_down()
 	update_areas()
@@ -105,3 +114,47 @@
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
 				N.invisibility = INVISIBILITY_MAXIMUM
 				N.opacity = 0
+
+/obj/item/device/barometer/attack_self(mob/user)
+	playsound(get_turf(src), 'sound/effects/pop.ogg', 100)
+	if(world.time < cooldown)
+		user << "<span class='warning'>[src] is prepraring itself.</span>"
+		return 0
+	if(!controller)
+		user << "<span class='warning'>[src] needs time to sync with the local weather patterns.</span>"
+		return 0
+	if(!controller.ongoing_weather)
+		var/fixed = controller.weather_cooldown - world.time
+		if(fixed < 0)
+			user << "<span class='warning'>[src] was unable to trace any weather patterns! You should try again later...</span>"
+		else
+			fixed = butchertime(round(fixed / 10))
+			user << "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>"
+		return 0
+	if((controller.ongoing_weather.stage == MAIN_STAGE) || (controller.ongoing_weather.stage == WIND_DOWN_STAGE))
+		user << "<span class='warning'>[src] can't trace anything while the storm is [controller.ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
+		return 0
+
+	var/cooldowner = 250
+	if(controller.ongoing_weather.purely_aesthetic)
+		user << "<span class='warning'>[src] says that the next storm will breeze on by.</span>"
+		cooldown = world.time + cooldowner*4
+		ping(cooldowner*4)
+		return
+	cooldown = world.time + cooldowner
+	ping(cooldowner)
+	var/time = butchertime(controller.ongoing_weather.duration_timer)
+	user << "<span class='notice'>The next [controller.ongoing_weather] will hit in [round(time)] seconds.</span>"
+
+/obj/item/device/barometer/proc/butchertime(amount)
+	if(amount)
+		if(accuracy)
+			var/time = amount
+			var/inaccurate = round(accuracy*(1/3))
+			if(prob(50))
+				time -= inaccurate
+			if(prob(50))
+				time += inaccurate
+			return time
+		else
+			return amount

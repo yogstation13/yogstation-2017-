@@ -371,8 +371,6 @@
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
-	else
-		return attack_hand(user)
 	return
 
 /turf/closed/mineral/proc/gets_drilled()

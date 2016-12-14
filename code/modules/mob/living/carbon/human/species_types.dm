@@ -31,15 +31,6 @@
 		return 0
 	return ..()
 
-
-/datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "mutationtoxin")
-		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.set_species(/datum/species/jelly/slime)
-		H.reagents.del_reagent(chem.type)
-		H.faction |= "slime"
-		return 1
-
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -129,6 +120,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,NOMACHINERY)
+
+/datum/species/lizard/ashwalker/chieftain
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 
 /datum/species/lizard/fly
