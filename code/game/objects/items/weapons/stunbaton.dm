@@ -160,7 +160,8 @@
 	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
-	deductcharge(1000 / severity)
+	if(bcell)
+		deductcharge(round(bcell.charge / severity))
 	..()
 
 //Makeshift stun baton. Replacement for stun gloves.
@@ -170,6 +171,7 @@
 	icon_state = "stunprod_nocell"
 	item_state = "prod"
 	force = 3
+	w_class = 4
 	throwforce = 5
 	stunforce = 5
 	hitcost = 2500

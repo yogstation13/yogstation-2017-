@@ -1307,4 +1307,28 @@ var/list/preferences_datums = list()
 		character.update_hair()
 		character.update_body_parts()
 
+/datum/preferences/proc/copy_from(mob/living/carbon/human/character)
+	if(!character)
+		return
+	real_name = character.real_name
+
+	gender = character.gender
+	age = character.age
+
+	eye_color = character.eye_color
+	hair_color = character.hair_color
+	facial_hair_color = character.facial_hair_color
+
+	skin_tone = character.skin_tone
+	hair_style = character.hair_style
+	facial_hair_style = character.facial_hair_style
+	underwear = character.underwear
+	undershirt = character.undershirt
+	socks = character.socks
+
+	backbag = character.backbag
+	if(character.dna)
+		features = character.dna.features.Copy()
+		pref_species = character.dna.species
+
 #undef DONOR_CHARACTER_SLOTS

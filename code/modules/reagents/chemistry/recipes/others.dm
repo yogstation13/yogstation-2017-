@@ -272,6 +272,149 @@
 		if(D)
 			D.Devolve()
 
+		////////////////////////////////// Mutation Toxins ///////////////////////////////////
+
+/datum/chemical_reaction/stable_mutation_toxin
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
+	result = "stablemutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "blood" = 1) //classic
+
+/datum/chemical_reaction/lizard_mutation_toxin
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	result = "lizardmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "radium" = 1) //mutant
+
+/datum/chemical_reaction/fly_mutation_toxin
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	result = "flymutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "mutagen" = 1) //VERY mutant
+
+/datum/chemical_reaction/lizardfly_mutation_toxin
+	name = "Unafly Mutation Toxin"
+	id = "unaflymutationtoxin"
+	result = "unaflymutationtoxin"
+	result_amount = 1
+	required_reagents = list("flymutationtoxin" = 1, "lizardmutationtoxin" = 1)
+
+/datum/chemical_reaction/android_mutation_toxin
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	result = "androidmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "teslium" = 1) //beep boop
+
+/datum/chemical_reaction/androidfly_mutation_toxin
+	name = "Flyternis Mutation Toxin"
+	id = "flyternismutationtoxin"
+	result = "flyternismutationtoxin"
+	result_amount = 1
+	required_reagents = list("flymutationtoxin" = 1, "androidmutationtoxin" = 1)
+
+/datum/chemical_reaction/plant_mutation_toxin
+	name = "Phytosian Mutation Toxin"
+	id = "phytosianmutationtoxin"
+	result = "phytosianmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "robustharvestnutriment" = 1)
+
+/datum/chemical_reaction/flytosian_mutation_toxin
+	name = "Flytosian Mutation Toxin"
+	id = "flytosianmutationtoxin"
+	result = "flytosianmutationtoxin"
+	result_amount = 1
+	required_reagents = list("flymutationtoxin" = 1, "phytosianmutationtoxin" = 1)
+
+
+/datum/chemical_reaction/jelly_mutation_toxin
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	result = "jellymutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "slimejelly" = 1) //why would you even make this
+
+/datum/chemical_reaction/abductor_mutation_toxin
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	result = "abductormutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "morphine" = 1)
+
+
+/datum/chemical_reaction/pod_mutation_toxin
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	result = "podmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "eznutriment" = 1) //plant food
+
+/datum/chemical_reaction/golem_mutation_toxin
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	result = "golemmutationtoxin"
+	required_reagents = list("unstablemutationtoxin" = 1, "silver" = 1) //not too hard to get but also not just there in xenobio
+	result_amount = 1
+
+/datum/chemical_reaction/synth_mutation_toxin
+	name = "Synth Mutation Toxin"
+	id = "synthmutationtoxin"
+	result = "synthmutationtoxin"
+	required_reagents = list("androidmutationtoxin" = 1, "teslium" = 1)
+	result_amount = 1
+
+
+//BLACKLISTED RACES
+/datum/chemical_reaction/skeleton_mutation_toxin
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	result = "skeletonmutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "milk" = 1) //good for yer bones
+	result_amount = 1
+
+/datum/chemical_reaction/zombie_mutation_toxin
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	result = "zombiemutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "toxin" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/ash_mutation_toxin //ash lizard
+	name = "Ash Mutation Toxin"
+	id = "ashmutationtoxin"
+	result = "ashmutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "lizardmutationtoxin" = 1, "ash" = 1)
+	result_amount = 1
+
+
+//DANGEROUS RACES
+/datum/chemical_reaction/plasma_mutation_toxin
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	result = "plasmamutationtoxin"
+	result_amount = 1
+	required_reagents = list("skeletonmutationtoxin" = 1, "plasma" = 1, "uranium" = 1) //this is very fucking powerful, so it's hard to make
+
+/datum/chemical_reaction/shadow_mutation_toxin
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	result = "shadowmutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "liquid_dark_matter" = 1, "holywater" = 1)
+	result_amount = 1
+
+//Technically a mutation toxin
+/datum/chemical_reaction/mulligan
+	name = "Mulligan"
+	id = "mulligan"
+	result = "mulligan"
+	required_reagents = list("humanmutationtoxin" = 1, "mutagen" = 1)
+	result_amount = 1
+
+
 
 
 ////////////////////////////////// foam and foam precursor ///////////////////////////////////////////////////

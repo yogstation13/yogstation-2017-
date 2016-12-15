@@ -44,6 +44,7 @@
 #define ANTAG_HUD_CYBERMEN		21
 #define DATA_HUD_CYBERMEN_HACK	22
 #define ANTAG_HUD_SUMMON_MAGIC	23
+#define ANTAG_HUD_ASHWALKER 24
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

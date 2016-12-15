@@ -46,7 +46,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user //it only works with H for some reason
-		if(H.dna.species.id == "abomination")
+		if(isabomination(H))
 			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
 			return
 	return 1
@@ -148,7 +148,7 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	addtimer(src, "remove_fake", rand(450, 800), target, blade)
+	addtimer(src, "remove_fake", rand(450, 800), FALSE, target, blade)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1

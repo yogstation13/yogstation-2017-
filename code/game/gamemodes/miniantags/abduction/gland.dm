@@ -13,6 +13,7 @@
 	var/uses // -1 For inifinite
 	var/human_only = 0
 	var/active = 0
+	var/banned // abductors can't pick this one up.
 
 /obj/item/organ/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -198,6 +199,7 @@
 	cooldown_high = 600
 	human_only = 1
 	uses = 1
+	banned = TRUE
 
 /obj/item/organ/gland/bodysnatch/activate()
 	owner << "<span class='warning'>You feel something moving around inside you...</span>"
@@ -249,6 +251,7 @@
 	cooldown_high = 3000
 	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
 	uses = 1
+	banned = TRUE
 
 /obj/item/organ/gland/plasma/activate()
 	owner << "<span class='warning'>You feel bloated.</span>"

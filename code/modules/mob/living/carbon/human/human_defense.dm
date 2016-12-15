@@ -67,6 +67,12 @@
 			return 2
 	return (..(P , def_zone))
 
+/mob/living/carbon/human/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
+	if(affecting && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
+		affecting.dismember(P.damtype)
+
+
 /mob/living/carbon/human/proc/check_reflect(def_zone, mob/living/shooter, mob/defense, previousdir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	var/mob/living/newshooter = new /mob/living/carbon/human
 	newshooter.dir = previousdir
