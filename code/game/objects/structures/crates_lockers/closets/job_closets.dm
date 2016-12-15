@@ -208,6 +208,24 @@
 		new /obj/item/clothing/head/hardhat(src)
 	return
 
+/obj/structure/closet/wardrobe/tcomms
+	name = "signal tech wardrobe"
+	icon_door = "tcomms_wardrobe"
+
+/obj/structure/closet/wardrobe/tcomms/New()
+	..()
+	contents = list()
+	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
+	new /obj/item/weapon/storage/backpack/industrial(src)
+	new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/hooded/wintercoat/engineering/tcomms(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/signal_tech(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/shoes/workboots(src)
+	return
+
 /obj/structure/closet/wardrobe/white/medical
 	name = "medical doctor's wardrobe"
 

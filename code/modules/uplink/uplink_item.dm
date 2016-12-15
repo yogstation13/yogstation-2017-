@@ -714,7 +714,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection. You also cannot be put into critical as long as the stimulants are in your body."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
-	cost = 10
+	cost = 8
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan

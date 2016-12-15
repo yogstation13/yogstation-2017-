@@ -139,10 +139,11 @@ update_label("John Doe", "Clowny")
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/card/id
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
+	chameleon = new /datum/chameleon(src)
+	chameleon.include_basetype = 1
+	chameleon.chameleon_type = /obj/item/weapon/card/id
+	chameleon.chameleon_name = "ID Card"
+	chameleon.initialize_disguises()
 
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
 	if(!proximity)

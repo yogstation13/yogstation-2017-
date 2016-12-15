@@ -52,7 +52,10 @@
 		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
 		return 0
 
-	return 1
+	if(!H.mind.active)
+		src << "<span class='warning'>[H] does not have an active mind.</span>"
+		return 0
+
 	var/unprotected = TRUE
 
 	if((H.wear_suit && (H.wear_suit.flags & THICKMATERIAL)) && (H.head && (H.head.flags & THICKMATERIAL)))
@@ -203,8 +206,8 @@
 		if(victim.mind)
 			host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
 			host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
-
 		leave_victim()
+
 
 
 /mob/living/simple_animal/borer/verb/jumpstart()

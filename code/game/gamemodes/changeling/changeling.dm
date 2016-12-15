@@ -17,7 +17,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -297,7 +297,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/reverting = 0
+	var/reverting = 0 //if they're turning back from horrorform
+	var/transforming = FALSE //if they're turning into horrorform
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 
