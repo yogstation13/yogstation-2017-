@@ -41,7 +41,7 @@
 	SSshuttle.emergencyNoEscape = TRUE
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
-	for(var/M in mob_list)
+	for{var/M in mob_list}
 		M << "<span class=large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
