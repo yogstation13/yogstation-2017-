@@ -190,7 +190,7 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
-	icon_state = "cuff_white"
+	icon_state = "cuff_cable"
 	item_state = "coil_white"
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s

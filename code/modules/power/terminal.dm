@@ -82,8 +82,8 @@
 		return ..()
 
 /obj/machinery/power/terminal/connect_to_network()
-	..()
 	add_wires()
+	return ..()
 
 /obj/machinery/power/terminal/proc/add_wires()
 	if(master)
