@@ -13,7 +13,7 @@
 	var/mob/living/carbon/human/H = user
 	if(user.stat || !ishuman(user))
 		return
-	if(changeling.absorbedcount < 2)//at least one absorbed
+	if(changeling.absorbedcount < 1)
 		user << "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>"
 		return
 	if(changeling.chem_charges < 20)//no spamming it with 5 chems, you won't get anything done anyway
