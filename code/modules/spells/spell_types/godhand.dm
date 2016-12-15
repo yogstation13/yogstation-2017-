@@ -154,9 +154,9 @@
 						break
 					passes--
 					user.alpha = 0
-					sleep(5)
+					sleep(3)
 					user.alpha = initial(user.alpha)
-					sleep(1)
+					sleep(2)
 			else
 				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
 		else
@@ -180,9 +180,11 @@
 		user << "<span class='warning'>You poke [target] extinguishing one of your charges.</span>"
 		uses--
 		target.alpha = 0
-		spawn(150)
-			if(target)
-				target.alpha = initial(target.alpha)
+		addtimer(src, "reverttarget",80, FALSE, target)
+
+/obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
+	if(A)
+		A.alpha = initial(A.alpha)
 
 /obj/item/weapon/melee/touch_attack/nothing/roundstart
 	useblacklist = TRUE

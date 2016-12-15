@@ -78,3 +78,11 @@
 	cooldown_min = 500
 
 	action_icon_state = "nothing"
+
+
+/obj/effect/proc_holder/spell/targeted/touch/mime/Click()
+	if(usr && usr.mind)
+		if(!usr.mind.miming)
+			usr << "<span class='notice'>You've don't remember how to perform this... It probably takes dedication.</span>"
+			return
+	..()
