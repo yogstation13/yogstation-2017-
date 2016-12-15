@@ -166,6 +166,7 @@
 	if(module)
 		return
 
+	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
@@ -173,7 +174,6 @@
 		modulelist += "Security"
 
 	designation = input("Please, select a module!", "Robot", null, null) in modulelist
-	var/animation_length = 0
 
 	if(module)
 		return
@@ -184,92 +184,31 @@
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Droid", "Standard")
-			switch(icontype)
-				if("Droid")
-					icon_state = "droid"
-				if("Standard")
-					icon_state = "robot"
-				else
-					icon_state = "robot"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich", "Eve")
-			switch(icontype)
-				if("Waitress")
-					icon_state = "service_female"
-					animation_length=45
-				if("Kent")
-					icon_state = "toiletbot"
-				if("Bro")
-					icon_state = "brobot"
-					animation_length=54
-				if("Rich")
-					icon_state = "maximillion"
-					animation_length=60
-				if ("Eve")
-					icon_state = "eve"
-				else
-					icon_state = "service_male"
-					animation_length=43
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Brown", "Miner Droid", "Minerborg")
-			switch(icontype)
-				if("Brown")
-					icon_state = "minerborg-brown"
-				if("Miner Droid")
-					icon_state = "droid-miner"
-				if("Minerborg")
-					icon_state = "minerborg"
-					animation_length = 30
-				else
-					icon_state = "minerborg"
-					animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
-			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen", "Medical Droid","Blue", "Eve")
-			if(!icontype) return
 			hands.icon_state = "medical"
-			switch(icontype)
-				if("Mediborg")
-					icon_state = "mediborg"
-					animation_length = 34
-				if("Medihover")
-					icon_state = "medihover"
-					animation_length = 8
-				if("Smile Screen")
-					icon_state = "mediborg+smile"
-					animation_length = 28
-				if("Medical Droid")
-					icon_state = "droid-medical"
-				if("Blue")
-					icon_state = "mediborg-blue"
-				if("Eve")
-					icon_state = "eve"
-				else
-					icon_state = "mediborg"
-					animation_length = 34
 			status_flags -= CANPUSH
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			icon_state = "secborg"
-			animation_length = 28
 			modtype = "Sec"
 			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags -= CANPUSH
@@ -278,8 +217,6 @@
 		if("Peacekeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			hands.icon_state = "standard"
-			icon_state = "peaceborg"
-			animation_length = 54
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 			status_flags -= CANPUSH
@@ -288,71 +225,31 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Wall-E", "Yellow", "Engiborg")
-			if(!icontype) return
-			switch(icontype)
-				if("Wall-E")
-					icon_state = "wall-eng"
-				if ("Yellow")
-					icon_state = "engiborg-yellow"
-				if ("Engiborg")
-					icon_state = "engiborg"
-					animation_length = 45
-				else
-					icon_state = "engiborg"
-					animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 			magpulse = 1
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
-			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal", "Purple")
-			if(!icontype) return
 			hands.icon_state = "janitor"
-			switch(icontype)
-				if("Janiborg")
-					icon_state = "janiborg"
-					animation_length = 22
-				if("Disposal")
-					icon_state = "disposalbot"
-					animation_length = 6
-				if("Purple")
-					icon_state = "janiborg-purple"
-				else
-					icon_state = "janiborg"
-					animation_length = 22
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
 		if("Clown")
 			module = new /obj/item/weapon/robot_module/clown(src)
-			var/icontype = input("Select an icon!", "Robot", "Clown") in list("Clown", "Wizard Bot", "Wizard Borg","Chicken")
-			if(!icontype) return
 			hands.icon_state = "standard"
-			switch(icontype)
-				if("Clown")
-					icon_state = "ClownBot"
-					animation_length= 8
-					modtype = "Clown"
-				if("Wizard Bot")
-					icon_state = "WizardBot"
-					animation_length = 1
-					modtype = "Wizard"
-				if("Wizard Borg")
-					icon_state = "WizardBorg"
-					animation_length = 1
-					modtype = "Wizard"
-				if("Chicken")
-					icon_state = "ChickenBot"
-					animation_length = 1
-					modtype = "Chicken"
-				else
-					icon_state = "ClownBot"
-					animation_length = 8
 			modtype = "Clown"
 			feedback_inc("cyborg_clown",1)
-
+	if(!module)
+		return
+	var/list/skinOptions = module.skins.Copy()
+	if(is_donator(src))
+		skinOptions += module.donator_skins
+	var/icontype = input("Select an icon!", "Robot", null, null) in skinOptions
+	if(!icontype)
+		icontype = skinOptions[1]
+	icon_state = skinOptions[icontype]
+	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
 	transform_animation(animation_length)
 
 	notify_ai(2)
