@@ -1,4 +1,0 @@
-author: utahclock
-delete-after: True
-changes: 
-  - rscadd: "Adds a player picker for admins."

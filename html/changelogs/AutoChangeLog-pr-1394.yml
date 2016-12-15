@@ -1,4 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - bugfix: "Fixes transformation toxins. Mixing the reagents now actually gives you your chem."

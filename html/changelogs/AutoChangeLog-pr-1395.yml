@@ -1,8 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - rscadd: "Makes terminal wires customized"
-  - rscadd: "Adds a color2code converter"
-  - rscadd: "Colored cuffs. They are colored based on the cable they were made of."
-  - tweak: "You now craft cable cuffs by clicking cable in-hand"
-  - tweak: "Removed the fading terminal sprite and gave it alpha instead"
