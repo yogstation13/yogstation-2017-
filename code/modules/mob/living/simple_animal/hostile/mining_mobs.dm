@@ -816,7 +816,7 @@
 		var/mob/living/L = target
 		if(target.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
-		if((L.stat == DEAD) && (health < maxHealth) && ishuman(L)
+		if((L.stat == DEAD) && (health < maxHealth) && ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/foundorgans = 0
 			for(var/obj/item/organ/O in H.internal_organs)
