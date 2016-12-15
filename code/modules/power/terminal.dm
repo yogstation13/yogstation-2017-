@@ -82,8 +82,8 @@
 		return ..()
 
 /obj/machinery/power/terminal/connect_to_network()
-	..()
 	add_wires()
+	return ..()
 
 /obj/machinery/power/terminal/proc/add_wires()
 	if(master)
@@ -92,3 +92,4 @@
 		var/image/I = new('icons/obj/power.dmi', "term_wire")
 		I.color = color2code(wiring_color)
 		overlays += I
+		return
