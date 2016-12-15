@@ -249,7 +249,7 @@ This file contains the arcane tome files.
 				N.health = 60
 				shields |= N
 			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-				P.visible_message("<span class='warning'>[P]'s pointer spins around rapidly until it slowly stops clearly detecting an ominous presence.</span>")
+				P.visible_message("<span class='warning'>[P]'s pointer spins around rapidly until it slowly stops, clearly detecting an ominous presence.</span>")
 				P.the_disk = user //get_turf(user): break glass if imbalanced. -Super
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
