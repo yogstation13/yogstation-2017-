@@ -92,4 +92,3 @@
 		var/image/I = new('icons/obj/power.dmi', "term_wire")
 		I.color = color2code(wiring_color)
 		overlays += I
-		return
