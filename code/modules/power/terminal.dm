@@ -66,7 +66,6 @@
 						s.start()
 						return
 					var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 10)
-					CC.item_color = wiring_color
 					CC.update_icon()
 					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
 					qdel(src)
