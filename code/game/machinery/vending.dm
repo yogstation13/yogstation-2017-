@@ -441,9 +441,6 @@
 		if(!R.module || !R.module.vending_access)
 			usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
 			return
-	else
-		usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
-		return
 
 	if(href_list["remove_coin"])
 		if(!coin)
