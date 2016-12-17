@@ -14,10 +14,9 @@
 	harm_intent_damage = 5
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	attack_same = 2
+	//faction = list("snowman") uncomment if you want to make it hostile.
 	attacktext = "thumps"
-	attack_sound = 'sound/weapons/bite.ogg'
-	faction = list("snowman")
+	attack_sound = 'sound/weapons/genhit.ogg'
 	environment_smash = 0
 	stat_attack = 2
 	mouse_opacity = 1
@@ -25,5 +24,5 @@
 	ventcrawler = 2
 	robust_searching = 1
 	unique_name = 1
-	speak_emote = list("squeaks")
-	deathmessage = "fainted."
+	speak_emote = list("Bellows")
+	deathmessage = "Melted."
