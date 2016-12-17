@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/snowman
+/mob/living/simple_animal/snowman //change to hostile if you want it to be hostile.
 	name = "snowman"
 	desc = "It's made from snow!"
 	icon_state = "snowman"
@@ -18,11 +18,9 @@
 	attacktext = "thumps"
 	attack_sound = 'sound/weapons/genhit.ogg'
 	environment_smash = 0
-	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
 	ventcrawler = 2
-	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("Bellows")
 	deathmessage = "Melted."
