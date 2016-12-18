@@ -225,6 +225,7 @@
 	damage_type = BRUTE
 	damage = 4
 	range = 5
+	dismemberment = 20
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
