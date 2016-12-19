@@ -790,7 +790,7 @@
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
-			force += 23 //40 damage if ratvar isn't alive, 53 if he is
+			force += 40 //40 damage if ratvar isn't alive, 53 if he is
 			user.stop_pulling()
 
 	if(impaling)
@@ -804,10 +804,10 @@
 		add_fingerprint(user)
 	else //todo yell at someone to make attack() use proper return values
 		..()
-	else if(!target.null_rod_check())
+	if(!target.null_rod_check())
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
-		if(S.stat != DEAD)
+			if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
 			S.adjustFireLoss(37)
 		else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
