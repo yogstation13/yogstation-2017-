@@ -82,9 +82,10 @@
 			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling/abomination(user), slot_glasses)
 			H.set_species(/datum/species/abomination)
 			changeling.mimicing = ""
-			changeling.chem_recharge_slowdown = 3
 			changeling.chem_recharge_rate = 0
 			changeling.chem_recharge_slowdown = (18/changeling.absorbedcount)
+			if(changeling.chem_recharge_slowdown < 2)
+				changeling.chem_recharge_slowdown = 2
 			changeling.transforming = FALSE
 
 //hulk

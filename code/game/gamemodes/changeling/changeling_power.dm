@@ -59,7 +59,7 @@
 	if(c.chem_charges<chemical_cost)
 		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
 		return 0
-	if(c.absorbedcount<req_dna)
+	if(c.profilecount<req_dna)
 		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
 		return 0
 	if(req_stat < user.stat)

@@ -180,7 +180,7 @@
 	add_logs(user, target, "stung", "extraction sting")
 	if((user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.remove_profile(target)
-		user.mind.changeling.absorbedcount--
+		user.mind.changeling.profilecount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
 	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
 	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
