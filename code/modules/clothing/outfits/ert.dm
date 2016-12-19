@@ -105,8 +105,6 @@
 		/obj/item/weapon/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/storage/box/emps=1,\
-		/obj/item/weapon/gun/projectile/automatic/ar=1,\
-		/obj/item/ammo_box/magazine/m556=2,\
 		/obj/item/weapon/gun/energy/pulse/carbine/loyalpin=1)
 	belt = /obj/item/weapon/storage/belt/military/assault
 	/*
