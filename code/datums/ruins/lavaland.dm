@@ -194,14 +194,6 @@
 	allow_duplicates = FALSE
 	cost = 15
 
-/datum/map_template/ruin/lavaland/mercship
-	name = "Mercenary Ship"
-	id = "mercship"
-	description = "A mercenary ship willing to complete various tasks in exchange for currency or goods"
-	suffix = "lavaland_surface_mercship.dmm"
-	allow_duplicates = FALSE
-	cost = 25
-
 /datum/map_template/ruin/lavaland/russianbunker
 	name = "Russian Bunker"
 	id = "russianbunker"
