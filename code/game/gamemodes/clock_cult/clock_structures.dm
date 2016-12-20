@@ -795,16 +795,15 @@ return 1
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(isloyal(L))
 		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-	        L << "<span class='sevtug'>("You will be mine and his. This puny trinket will not stop me.")</span>")
+		L.visible_message("<span class='warning'>[L] visibly trembles!</span>")
+	        L << "<span class='sevtug'>("You will be mine and his. This puny trinket will not stop me.")</span>"
 		for(var/obj/item/weapon/implant/mindshield/M in L)
 			if(M.implanted)
 				qdel(M)
 	if(null_rod_check(L))
 		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] looks entirely unaffected by the sigil!</span>",\
-		L << "<span class='sevtug'>("A void weapon? How do they expect me to get through this?")</span>")
-
+		L.visible_message("<span class='warning'>[L] looks entirely unaffected by the sigil!</span>")
+		L << "<span class='sevtug'>("A void weapon? How do they expect me to get through this?")</span>"
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
