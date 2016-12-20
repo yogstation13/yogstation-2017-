@@ -14,7 +14,7 @@
 			message_admins("EXPLOIT \[admin_ticket\]: [M] attempted to view a ticket, the ref supplied was not a ticket.")
 			return
 
-		if(!C.check_rights(R_BASIC) && !compare_ckey(M, T.owner_ckey))
+		if(!C.holder && !compare_ckey(M, T.owner_ckey))
 			message_admins("EXPLOIT \[admin_ticket\]: [M] attempted to view a ticket, they are not an admin or the owner of the ticket.")
 			return
 
