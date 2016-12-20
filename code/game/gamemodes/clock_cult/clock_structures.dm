@@ -647,7 +647,7 @@
 	their prowess. After a lost battle with Nar-Sian cultists, Inath-neq was struck down and stated in her dying breath, \
 	\"The Resonant Cogs shall not fall silent this day, but will come together to form a wheel that shall never stop turning.\" Ratvar, touched by this, granted Inath-neq an eternal body and \
 	merged her soul with those of the Cogs slain with her on the battlefield."
-	icon = 'icons/effects/187x381.dmi	
+	icon = 'icons/effects/187x381.dmi'	
 icon_state = "inath-neq"
 	pixel_x = -77
 	pixel_y = -174
@@ -678,7 +678,7 @@ icon_state = "inath-neq"
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
-			if(!is_servant_of_ratvar(L) || is_servant_of_ratvar(L) && affects_servants) && L.mind && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab))				
+			if((!is_servant_of_ratvar(L) || is_servant_of_ratvar(L) && affects_servants)) && L.mind && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab))				
 var/obj/item/I = L.null_rod_check()
 				if(I)
 					L.visible_message("<span class='warning'>[L]'s [I.name] glows a brilliant white, protecting them from [src]'s effects!</span>", \
