@@ -678,8 +678,8 @@ icon_state = "inath-neq"
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
-			if(!is_servant_of_ratvar(L) || is_servant_of_ratvar(L) && affects_servants) && L.mind && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab)
-				var/obj/item/I = L.null_rod_check()
+			if(!is_servant_of_ratvar(L) || is_servant_of_ratvar(L) && affects_servants) && L.mind && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab))				
+var/obj/item/I = L.null_rod_check()
 				if(I)
 					L.visible_message("<span class='warning'>[L]'s [I.name] glows a brilliant white, protecting them from [src]'s effects!</span>", \
 					"<span class='userdanger'>Your [I.name] glows a brilliant white, protecting you!</span>")
