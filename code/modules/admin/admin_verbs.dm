@@ -7,7 +7,7 @@ var/list/admin_verbs_default = list(
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/dsay					/*talk in deadchat using our ckey/fakekey*/
 	)
-	var/list/admin_verbs_basic = list(
+var/list/admin_verbs_basic = list(
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
