@@ -677,7 +677,7 @@ var/global/list/possible_items_special = list()
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
+	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.profilecount >= target_amount))
 		return 1
 	else
 		return 0
