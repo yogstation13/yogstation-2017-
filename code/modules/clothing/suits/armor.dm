@@ -117,16 +117,6 @@
 	armor = list(melee = 50, bullet = 25, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
-/obj/item/clothing/suit/armor/pathfinder
-	name = "pathfinder cloak"
-	desc = "A massive cloak that protects the wearer from concentrated burns with it's layered sinew."
-	icon_state = "pathcloak"
-	item_state = "pathcloak"
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
-	burn_state = FIRE_PROOF
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|ARMS|HANDS
-
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
 	desc = "A bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
