@@ -1,0 +1,4 @@
+author: matskuman5
+delete-after: True
+changes: 
+  - tweak: "The QM cloak's description no longer falsely says it can be worn on your back."
