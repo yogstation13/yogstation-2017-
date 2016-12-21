@@ -64,6 +64,7 @@
 /obj/machinery/golfhole/puttinggreen
 	desc = "The captain's putting green for the game of golf. Try to score a hole in one."
 	icon_state = "puttinggreen"
+	anchored = 1
 
 
 /obj/item/golfball
@@ -86,7 +87,9 @@
 	icon = 'code/game/golf/golfstuff.dmi'
 	icon_state ="golfclub"
 	force = 8
+	throwforce = 8
 	attack_verb = list("smacked", "struck")
+	hitsound = "sound/weapons/genhit1"
 
 /obj/structure/closet/golf
 	name = "golf supplies closet"
