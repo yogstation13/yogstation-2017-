@@ -6,6 +6,7 @@
 	item_state = "electronic"
 	flags = CONDUCT
 
+	var/vending_access = FALSE
 	var/list/modules = list()
 	var/obj/item/emag = null
 	var/list/storages = list()
@@ -283,6 +284,7 @@
 
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
+	vending_access = TRUE
 	skins = list("Waitress" = "service_female", "Bro" = "brobot", "Butler" = "service_male", "Kent" = "toiletbot", "Rich" = "maximillion")
 	donator_skins = list("Eve" = "eve")
 
