@@ -124,9 +124,18 @@
 						/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,
 						/obj/item/weapon/grenade,
 						/obj/machinery/nuclearbomb/selfdestruct,
-						/obj/item/weapon/gun/
+						/obj/item/weapon/gun/,
+						/obj/item/weapon/disk/nuclear,
+						/obj/item/weapon/storage,
+						/obj/structure/closet
 						)
 	var/useblacklist = FALSE
+
+/obj/item/weapon/melee/touch_attack/nothing/Destroy()
+	for(var/obj/O in things)
+		if(!O.alpha)
+			reverttarget(O)
+	..()
 
 /obj/item/weapon/melee/touch_attack/nothing/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(!proximity)
@@ -169,8 +178,9 @@
 				target.alpha = 0
 			else
 				target.alpha = initial(target.alpha)
+			if(!(target in things))// to be restored later
+				things += target
 			return
-
 		if((target in things))
 			user << "<span class='warning'>You can't use this on the same thing more than once!</span>"
 			return
