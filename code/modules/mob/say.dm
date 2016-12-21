@@ -5,7 +5,7 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message) //Immersive pretty filters
-		usr << "<span class='notice'>You fumble over your words.</span>"
+		usr << "<span class='notice'>You fumble over your words. ((see rule 0.1.1))</span>"
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
 		return
 	log_say("[name] : [message]")
