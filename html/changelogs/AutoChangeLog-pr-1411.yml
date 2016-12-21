@@ -1,0 +1,5 @@
+author: utahclock
+delete-after: True
+changes: 
+  - tweak: "Hulk and TK now require thier blocks to be E00 or higher."
+  - tweak: "Hulk and TK now have 5% less chance to manifest."
