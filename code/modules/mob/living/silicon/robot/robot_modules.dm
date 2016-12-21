@@ -10,6 +10,9 @@
 	var/obj/item/emag = null
 	var/list/storages = list()
 
+	var/list/skins = list()
+	var/list/donator_skins = list()
+
 /obj/item/weapon/robot_module/Destroy()
 	modules.Cut()
 	emag = null
@@ -122,6 +125,7 @@
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
+	skins = list("Standard" = "robot", "Droid" = "droid")
 
 /obj/item/weapon/robot_module/standard/New()
 	..()
@@ -139,6 +143,8 @@
 
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
+	skins = list("Mediborg" = "mediborg", "Medihover" = "medihover", "Smile Screen" = "mediborg+smile", "Medical Droid" = "droid-medical","Blue" = "mediborg-blue")
+	donator_skins = list("Eve" = "eve")
 
 /obj/item/weapon/robot_module/medical/New()
 	..()
@@ -166,6 +172,8 @@
 
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
+	skins = list("Yellow" = "engiborg-yellow", "Engiborg" = "engiborg")
+	donator_skins = list("Wall-E" = "wall-eng")
 
 /obj/item/weapon/robot_module/engineering/New()
 	..()
@@ -200,6 +208,7 @@
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
+	skins = list("Secborg" = "secborg")
 
 /obj/item/weapon/robot_module/security/New()
 	..()
@@ -223,6 +232,7 @@
 
 /obj/item/weapon/robot_module/peacekeeper
 	name = "peacekeeper robot module"
+	skins = list("Peaceborg" = "peaceborg")
 
 /obj/item/weapon/robot_module/peacekeeper/New()
 	..()
@@ -237,6 +247,7 @@
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
+	skins = list("Janiborg" = "janiborg", "Disposal" = "disposalbot", "Purple" = "janiborg-purple")
 	var/obj/item/weapon/reagent_containers/spray/drying_agent
 
 /obj/item/weapon/robot_module/janitor/New()
@@ -272,6 +283,8 @@
 
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
+	skins = list("Waitress" = "service_female", "Bro" = "brobot", "Butler" = "service_male", "Kent" = "toiletbot", "Rich" = "maximillion")
+	donator_skins = list("Eve" = "eve")
 
 /obj/item/weapon/robot_module/butler/New()
 	..()
@@ -300,6 +313,8 @@
 
 /obj/item/weapon/robot_module/miner
 	name = "miner robot module"
+	skins = list("Brown" = "minerborg", "Miner Droid" = "droid-miner", "Minerborg" = "minerborg")
+	donator_skins = list("Wall-E" = "wall-eng")
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
@@ -318,6 +333,7 @@
 
 /obj/item/weapon/robot_module/clown
 	name = "clown robot module"
+	skins = list("Clown" = "ClownBot", "Wizard Bot" = "WizardBot", "Wizard Borg" = "WizardBorg", "Chicken" = "ChickenBot")
 
 /obj/item/weapon/robot_module/clown/New()
 	..()

@@ -166,6 +166,7 @@
 	if(module)
 		return
 
+	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
@@ -173,7 +174,6 @@
 		modulelist += "Security"
 
 	designation = input("Please, select a module!", "Robot", null, null) in modulelist
-	var/animation_length = 0
 
 	if(module)
 		return
@@ -184,67 +184,31 @@
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
 			hands.icon_state = "standard"
-			icon_state = "robot"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
-			var/icontype = input("Select an icon!", "Robot", null, null) in list("Waitress", "Bro", "Butler", "Kent", "Rich")
-			switch(icontype)
-				if("Waitress")
-					icon_state = "service_female"
-					animation_length=45
-				if("Kent")
-					icon_state = "toiletbot"
-				if("Bro")
-					icon_state = "brobot"
-					animation_length=54
-				if("Rich")
-					icon_state = "maximillion"
-					animation_length=60
-				else
-					icon_state = "service_male"
-					animation_length=43
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "minerborg"
-			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
-			var/icontype = input("Select an icon!", "Robot", "Mediborg") in list("Mediborg" , "Medihover", "Smile Screen")
-			if(!icontype) return
 			hands.icon_state = "medical"
-			switch(icontype)
-				if("Mediborg")
-					icon_state = "mediborg"
-					animation_length = 34
-				if("Medihover")
-					icon_state = "medihover"
-					animation_length = 8
-				if("Smile Screen")
-					icon_state = "mediborg+smile"
-					animation_length = 28
-				else
-					icon_state = "mediborg"
-					animation_length = 34
 			status_flags -= CANPUSH
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
-			icon_state = "secborg"
-			animation_length = 28
 			modtype = "Sec"
 			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 			status_flags -= CANPUSH
@@ -253,8 +217,6 @@
 		if("Peacekeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			hands.icon_state = "standard"
-			icon_state = "peaceborg"
-			animation_length = 54
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 			status_flags -= CANPUSH
@@ -263,58 +225,31 @@
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
-			icon_state = "engiborg"
-			animation_length = 45
 			modtype = "Eng"
 			feedback_inc("cyborg_engineering",1)
 			magpulse = 1
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
-			var/icontype = input("Select an icon!", "Robot", "Janiborg") in list("Janiborg", "Disposal")
-			if(!icontype) return
 			hands.icon_state = "janitor"
-			switch(icontype)
-				if("Janiborg")
-					icon_state = "janiborg"
-					animation_length = 22
-				if("Disposal")
-					icon_state = "disposalbot"
-					animation_length = 6
-				else
-					icon_state = "janiborg"
-					animation_length = 22
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
 		if("Clown")
 			module = new /obj/item/weapon/robot_module/clown(src)
-			var/icontype = input("Select an icon!", "Robot", "Clown") in list("Clown", "Wizard Bot", "Wizard Borg","Chicken")
-			if(!icontype) return
 			hands.icon_state = "standard"
-			switch(icontype)
-				if("Clown")
-					icon_state = "ClownBot"
-					animation_length= 8
-					modtype = "Clown"
-				if("Wizard Bot")
-					icon_state = "WizardBot"
-					animation_length = 1
-					modtype = "Wizard"
-				if("Wizard Borg")
-					icon_state = "WizardBorg"
-					animation_length = 1
-					modtype = "Wizard"
-				if("Chicken")
-					icon_state = "ChickenBot"
-					animation_length = 1
-					modtype = "Chicken"
-				else
-					icon_state = "ClownBot"
-					animation_length = 8
 			modtype = "Clown"
 			feedback_inc("cyborg_clown",1)
-
+	if(!module)
+		return
+	var/list/skinOptions = module.skins.Copy()
+	if(is_donator(src))
+		skinOptions += module.donator_skins
+	var/icontype = input("Select an icon!", "Robot", null, null) in skinOptions
+	if(!icontype)
+		icontype = skinOptions[1]
+	icon_state = skinOptions[icontype]
+	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
 	transform_animation(animation_length)
 
 	notify_ai(2)
@@ -889,6 +824,26 @@
 				overlays += "eyes-medihover[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("disposalbot")
 				overlays += "eyes-disposalbot[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("eve")
+				overlays += "eyes-eve[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("wall-eng")
+				overlays += "eyes-wall-eng[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("minerborg-brown")
+				overlays += "eyes-minerborg-brown[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid-miner")
+				overlays += "eyes-droid-miner[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid-medical")
+				overlays += "eyes-droid-medical[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid")
+				overlays += "eyes-droid[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("mediborg-blue")
+				overlays += "eyes-mediborg-blue[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("janiborg-purple")
+				overlays += "eyes-janiborg-purple[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("secborg-red")
+				overlays += "eyes-secborg-red[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("engiborg-yellow")
+				overlays += "eyes-engiborg-yellow[is_servant_of_ratvar(src) ? "_r" : ""]"
 			else
 				overlays += "eyes"
 				state_name = "serviceborg"
