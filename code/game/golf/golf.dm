@@ -89,7 +89,7 @@
 	force = 8
 	throwforce = 8
 	attack_verb = list("smacked", "struck")
-	hitsound = 'sound/weapons/genhit1'
+	hitsound = 'sound/weapons/genhit1.ogg'
 
 /obj/structure/closet/golf
 	name = "golf supplies closet"
