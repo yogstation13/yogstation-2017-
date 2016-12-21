@@ -130,50 +130,78 @@
 	name = "Virus Food"
 	id = "virusfood"
 	result = "virusfood"
-	required_reagents = list("water" = 5, "milk" = 5)
 	result_amount = 15
+	required_reagents = list("water" = 5, "milk" = 5)
 
 /datum/chemical_reaction/virus_food_mutagen
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
 	result = "mutagenvirusfood"
-	required_reagents = list("mutagen" = 1, "virusfood" = 1)
 	result_amount = 1
+	required_reagents = list("mutagen" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_synaptizine
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-	result = "synaptizinevirusfood"
-	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
+	result ="synaptizinevirusfood"
 	result_amount = 1
+	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma
 	name = "virus plasma"
 	id = "plasmavirusfood"
 	result = "plasmavirusfood"
-	required_reagents = list("plasma" = 1, "virusfood" = 1)
 	result_amount = 1
+	required_reagents = list("plasma" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	result = "weakplasmavirusfood"
-	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
 	result_amount = 2
+	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	name = "sucrose agar"
 	id = "sugarvirusfood"
 	result = "sugarvirusfood"
-	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
 	result_amount = 2
+	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_mutagen_salineglucose
 	name = "sucrose agar"
 	id = "salineglucosevirusfood"
 	result = "sugarvirusfood"
-	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
 	result_amount = 2
+	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
+
+/datum/chemical_reaction/virus_food_uranium
+	name = "Decaying uranium gel"
+	id = "uraniumvirusfood"
+	result = "uraniumvirusfood"
+	result_amount = 1
+	required_reagents = list("uranium" = 1, "virusfood" = 1)
+
+/datum/chemical_reaction/virus_food_uranium_plasma
+	name = "Unstable uranium gel"
+	id = "uraniumvirusfood_plasma"
+	result = "uraniumplasmavirusfood_unstable"
+	result_amount = 1
+	required_reagents = list("uranium" = 5, "plasmavirusfood" = 1)
+
+/datum/chemical_reaction/virus_food_uranium_plasma_gold
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_gold"
+	result = "uraniumplasmavirusfood_stable"
+	result_amount = 1
+	required_reagents = list("uranium" = 10, "gold" = 10, "plasma" = 1)
+
+/datum/chemical_reaction/virus_food_uranium_plasma_silver
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_silver"
+	result = "uraniumplasmavirusfood_stable"
+	result_amount = 1
+	required_reagents = list("uranium" = 10, "silver" = 10, "plasma" = 1)
 
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
@@ -256,6 +284,30 @@
 	required_reagents = list("synaptizinevirusfood" = 1)
 	level_min = 1
 	level_max = 1
+
+/datum/chemical_reaction/mix_virus/mix_virus_10
+
+	name = "Mix Virus 10"
+	id = "mixvirus10"
+	required_reagents = list("uraniumvirusfood" = 5)
+	level_min = 6
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_11
+
+	name = "Mix Virus 11"
+	id = "mixvirus11"
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
+	level_min = 7
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_12
+
+	name = "Mix Virus 12"
+	id = "mixvirus12"
+	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
+	level_min = 8
+	level_max = 8
 
 /datum/chemical_reaction/mix_virus/rem_virus
 

@@ -21,14 +21,14 @@ BONUS
 	stealth = 3
 	resistance = 4
 	stage_speed = 4
-	transmittable = 5
+	transmittable = -4
 	level = 5
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 2))
 		var/mob/living/M = A.affected_mob
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(1)
