@@ -250,7 +250,7 @@ This file contains the arcane tome files.
 				shields |= N
 			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
 				P.visible_message("<span class='warning'>[P]'s pointer spins around rapidly until it slowly stops, clearly detecting an ominous presence.</span>")
-				P.the_disk = user //get_turf(user): break glass if imbalanced. -Super
+				P.the_disk = get_turf(user)
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
@@ -277,5 +277,4 @@ This file contains the arcane tome files.
 	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
 	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-		P.visible_message("<span class=warning'>[P] begins rattling, but it's pointer remains unmoved in it's pecuilar direction.</span>")
-		P.the_disk = get_turf(user) // now we can locate where the damn rune is
+		P.visible_message("<span class='warning'>[P] begins rattling, but it's pointer remains unmoved in it's pecuilar direction.</span>")
