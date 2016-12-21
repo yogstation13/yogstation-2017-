@@ -411,3 +411,30 @@
 			<b>4.</b> If you feel it necessary, detonation of a collar will kill the person wearing it while also destroying the collar.<br>\
 			<b>5.</b> The implant allows you to check status and bind collars to you, so they detonate when you die, or act like you do. Click the detonator in-hand to sync<br>\
 			<i>Do not use bomb collars solely for executions! They are expensive and not easily replacable - use lethal injections instead.</i>"
+/obj/item/weapon/paper/scp_research
+	name = "Research Notes: Objects 15-25"
+	info = "<b>AO-15:</b><br><br>\
+	        Security: High <br>\
+	        Info: Strange creature extracted from an old mining asteroid. Dark skin, piercing red eyes. Highly aggressive. Appears to be sentient. <br> <br>\
+	        <b>AO-16:</b><br><br>\
+	        Security: Medium <br>\
+	        Info: A hood and robes. Red colour. Emanates a dark-energy field that engraves all material near it with undeciphered patterns. Believed to be connected to the cult of <b>REDACTED</b> <br> <br>\
+	        <b>AO-17:</b><br><br>\
+	        Security: Apollyon <br>\
+	        Info: <b>REDACTED</b> has been linked to <b>REDACTED</b> not to be activated in any circumstances, including <b>REDACTED</b>. <i>CentCom note: Site 21 lacks required security measures. Transfer to site 11-X scheduled for <b>REDACTED</b>. <br> <br>\
+	        <i>Several paragraphs are covered with black highlighter...</i> <br> <br>\
+	        <b>AO-21:</b><br><br>\
+	        Security: Low <br>\
+	        Info: Ocular gland extracted from AO-6 during experiment EX-56b. Highly aggressive. After breach 91-A subject was neutralized with a solution of poisons. Subject is to be injected with the solution every half-hour to keep it in a semi-comatose state. Solution recipe stored at Site 11-X archives. <br> <br>\
+	        <i>The rest of the paper is covered in scribbles of strange symbols, made of dried blood.</i>"
+
+
+
+
+
+
+
+
+
+
+
