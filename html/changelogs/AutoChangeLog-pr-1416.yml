@@ -1,4 +1,0 @@
-author: oisin100
-delete-after: True
-changes: 
-  - rscdel: "Admins no longer have the stickyban verb, Rejoice!"
