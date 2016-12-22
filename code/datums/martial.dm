@@ -513,7 +513,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, attack_type)
 	if(wielded)
 		if(attack_type == PROJECTILE_ATTACK)
 			final_block_chance = 0 //Don't use a stick against fucking bullets and lasers
