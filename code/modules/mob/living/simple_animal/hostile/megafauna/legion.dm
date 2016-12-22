@@ -13,6 +13,7 @@
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	dismember_chance = 0 //no dismember because of spammy legion heads
 	speed = 2
 	ranged = 1
 	flying = 1

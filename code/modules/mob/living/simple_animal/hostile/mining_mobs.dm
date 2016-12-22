@@ -781,7 +781,7 @@
 	pass_flags = PASSTABLE
 	attack_sound = 'sound/weapons/bite.ogg'
 	deathmessage = "rolls over, frothing at the mouth before stilling."
-	var/poison_type = "badfood"
+	var/poison_type = "toxin"
 	var/poison_per_bite = 5
 	var/buttmad = 0
 	var/melee_damage_lower_angery0 = 13
