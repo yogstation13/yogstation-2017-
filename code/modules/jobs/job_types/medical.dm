@@ -198,7 +198,7 @@ Mining Medic
 
 	outfit = /datum/outfit/job/miningmedic
 
-	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
 	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
 /datum/outfit/job/miningmedic
@@ -207,7 +207,7 @@ Mining Medic
 		/obj/item/weapon/kitchen/knife/combat/survival = 1,\
 		/obj/item/weapon/survivalcapsule = 1)
 	belt = /obj/item/device/pda/medical
-	ears = /obj/item/device/radio/headset_medcargo
+	ears = /obj/item/device/radio/headset/headset_medcargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	uniform = /obj/item/clothing/under/rank/miner/medic
 	l_hand = /obj/item/weapon/storage/firstaid/regular

@@ -194,9 +194,9 @@
 /obj/item/clothing/under/rank/miner/medic
 	desc = "A verstile blue and white uniform for honored to hard working recovery medics in hazardous environments. It has minor protection against biohazards."
 	name = "recovery medic's jumpsuit"
-	icon_state = "rm_explorer"
-	item_state = "rm_explorer"
-	item_color = "rm_explorer"
+	icon_state = "recovery"
+	item_state = "recovery"
+	item_color = "recovery"
 	can_adjust = 0
 	sensor_mode = 3
 	random_sensor = 0
