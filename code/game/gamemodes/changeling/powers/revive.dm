@@ -9,6 +9,7 @@
 	user.status_flags -= FAKEDEATH
 	user.tod = null
 	user.revive(full_heal = 1)
+	user.regenerate_limbs(1)
 	user << "<span class='notice'>We have regenerated.</span>"
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
