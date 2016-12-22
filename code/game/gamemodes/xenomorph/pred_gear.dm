@@ -55,6 +55,7 @@
 	throw_speed = 1
 
 /obj/item/weapon/twohanded/spear/combistick/examine(mob/user)
+	..()
 	if(ispredator(user))
 		user << "<span class='alien'>The Combistick is telescopic, making it relatively small and easy to store when not in use \
 	but extending to its full length when required in combat. It is made of incredibly light, sharp, thin \

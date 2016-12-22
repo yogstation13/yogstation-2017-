@@ -10,12 +10,10 @@ var/list/colony_database = list()
 	var/species = null
 	var/changetraits = FALSE
 	var/list/traits = list("name" = null, "desc" = null, "see_in_the_dark" = null, "heat_protection" = null)
-	var/gamemode
 
-
-/datum/huggerdatum/proc/assemble()
-	return
-
+/datum/huggerdatum/proc/assemble(var/suffix)
+	if(suffix)
+		colony_suffix = suffix
 
 /datum/huggerdatum/default/New(var/mob/living/carbon/alien/origin, var/spec)
 	name = "[origin.name]"
@@ -24,7 +22,6 @@ var/list/colony_database = list()
 	if(spec)
 		if(spec != "human")
 			choseTraits(spec)
-
 
 /datum/huggerdatum/proc/choseTraits(var/datum/species/S)
 	if(!S)
@@ -42,7 +39,7 @@ var/list/colony_database = list()
 
 		if("pred")
 			traits["name"] = "PredXenomorph ([randomdigit])"
-			traits["desc"] = "A disturbing fusion between two species that should have never interacted. There are significant signs of birth defect, such as splitting of the jaw, awkward stubby tail, and how the xenomorphic lifeform has managed to grow hair."
+			traits["desc"] = "A disturbing fusion between two evolutionary abstract species that should have never interacted. There are significant signs of birth defect, such as splitting of the jaw, awkward stubby tail, and how the xenomorphic lifeform has managed to grow hair."
 			traits["heat_protection"] = 0.2
 			changetraits = TRUE
 

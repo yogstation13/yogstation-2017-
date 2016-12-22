@@ -348,9 +348,9 @@
 /datum/reagent/toxin/xenotoxin/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(2*REM)
 	if(M.staminaloss > 20)
-		M.Sleeping(2, 0)
+		if(!M.reagents.has_reagent("epinephrine"))
+			M.Sleeping(2, 0)
 	..()
-
 
 /datum/reagent/toxin/polonium
 	name = "Polonium"

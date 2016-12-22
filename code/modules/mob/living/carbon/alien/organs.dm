@@ -310,8 +310,8 @@
 		return
 	user.next_click = world.time + 6
 	user.face_atom(target)
-	if(user.getPlasma() < p_cost*5)
-		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
+	if(user.getPlasma() < p_cost*2)
+		user << "<span class='warning'>You need at least [p_cost*2] plasma to spit.</span>"
 		return
 
 	var/obj/item/organ/alien/neurotoxinthroat/throat = user.getorganslot("throatcanal")

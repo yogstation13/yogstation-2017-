@@ -166,3 +166,20 @@
 		return 0
 
 	return .
+
+/mob/living/carbon/human/update_icons()
+	if(m_intent == "walk")
+		for(var/mob/living/carbon/alien/A in mob_list)
+			var/masked = TRUE// determines if we can mask ourselves from any noise possible
+			for(var/obj/effect/noise/N in noise_database)
+				if(masked == FALSE)
+					break
+				if((src in N.crossed))
+					masked = FALSE
+			if(!masked)
+				return ..()
+			if(thermalOverlay)
+				A.client.images -= thermalOverlay
+			var/I = image('icons/effects/effects.dmi', loc = src, icon_state = "invsthermal")
+			A.client.images |= I
+	return ..()

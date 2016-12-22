@@ -73,6 +73,7 @@
 #define EASYDISMEMBER	20
 #define EASYLIMBATTACHMENT 21
 #define TOXINLOVER		22
+#define NOCLONE			24
 
 #define FLYING	65536
 

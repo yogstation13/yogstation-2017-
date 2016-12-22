@@ -117,7 +117,7 @@
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
 	else
-		playsound(user, fire_sound, 50, 1)
+		playsound(user, fire_sound, 50, 1, sNoise = 200, sNoiseDesc = "A recent gunshot has created a powerful sound...", sNoiseMult = 3)
 		if(!message)
 			return
 		if(pointblank)

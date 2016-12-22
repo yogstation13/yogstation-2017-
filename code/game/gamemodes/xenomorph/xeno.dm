@@ -105,7 +105,6 @@ var/list/turf/xenomorphweeds = list()
 	M.assigned_role = "xeno queen"
 	M.special_role = "xeno queen"
 
-
 /datum/game_mode/xenomorph/proc/AddHunter(var/datum/mind/M)
 	if(!Xregister(M))
 		return
@@ -115,7 +114,6 @@ var/list/turf/xenomorphweeds = list()
 	M.assigned_role = "xeno hunter"
 	M.special_role = "xeno hunter"
 
-
 /datum/game_mode/xenomorph/proc/AddSenitel(var/datum/mind/M)
 	if(!Xregister(M))
 		return
@@ -124,7 +122,6 @@ var/list/turf/xenomorphweeds = list()
 	xenomorphs += M
 	M.assigned_role = "xeno sentinel"
 	M.special_role = "xeno sentinel"
-
 
 /datum/game_mode/xenomorph/proc/AddDrone(var/datum/mind/M)
 	if(!Xregister(M))
@@ -220,7 +217,7 @@ var/list/turf/xenomorphweeds = list()
 	var/colony
 	var/mob/living/carbon/alien/alien
 
-	for(var/datum/mind/M in xenomorphs)
+	for(var/datum/mind/M in xenomorphs["QUEEN"])
 		alien = M.current
 		colony = alien.HD.colony_suffix
 		queensuffix = alien.HD.colony_suffix
@@ -262,6 +259,7 @@ var/list/turf/xenomorphweeds = list()
 		l.mind.objectives += W
 		l.mind.special_role = hbrain.special_role
 		l.mind.assigned_role = hbrain.assigned_role
+		hbrain.current = l
 		l << "<span class='alertalien'>You are a <B>[role]</B>!</span>"
 		l << "<B><span class='alien'>Objective #1</B>: [W.explanation_text]</span>"
 		var/mob/living/carbon/alien/A = l
@@ -272,7 +270,6 @@ var/list/turf/xenomorphweeds = list()
 		message_admins("ERROR: [ticker.mode] has failed to greet and transform [hbrain.current] / [hbrain.current.ckey]. Contact a coder!")
 
 /datum/game_mode/xenomorph/proc/check_for_ERT()
-//	return 0 // testing
 	var/totalcrew = 0
 	var/deadcrew = 0
 	var/alivecrew = 0
@@ -312,7 +309,7 @@ var/list/turf/xenomorphweeds = list()
 	if(!ERTlaunch) // Has an ERT already been sent?
 		check_for_ERT()
 
-	update_queen_suffix()
+//	update_queen_suffix()
 
 	if(!calculateXenos())
 		return FALSE

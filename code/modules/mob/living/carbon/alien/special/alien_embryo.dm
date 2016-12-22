@@ -131,8 +131,22 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			new_xeno.canmove = 1
 			new_xeno.notransform = 0
 			new_xeno.invisibility = 0
+			new_xeno.HD = new(new_xeno)
+			new_xeno.HD.assemble("[colony]")
 		if(gib_on_success)
-			owner.gib()
+			owner.overlays -= overlay
+			var/overlay2 = image('icons/mob/alien.dmi', loc = owner, icon_state = "bursted_lie")
+			if(istype(owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner
+				var/obj/item/bodypart/B = H.get_bodypart("chest")
+				B.take_damage(200)
+				H.dna.species.specflags += NOCLONE
+			else
+				owner.adjustBruteLoss(200)
+				owner.updatehealth()
+
+			owner.overlays += overlay2
+
 		else
 			owner.adjustBruteLoss(40)
 			owner.overlays -= overlay

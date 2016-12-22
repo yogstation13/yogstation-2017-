@@ -47,6 +47,7 @@
 		I.Insert(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
+	overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
@@ -236,4 +237,3 @@ Des: Removes all infected images from the alien.
 
 	if(see_override)
 		see_invisible = see_override
-
