@@ -192,7 +192,7 @@
 	random_sensor = 0
 
 /obj/item/clothing/under/rank/miner/medic
-	desc = "A verstile blue and white uniform for honored to hard working recovery medics in hazardous environments. It has minor protection against biohazards."
+	desc = "A verstile blue and white uniform honored to hard working recovery medics in hazardous environments. It has minor protection against biohazards."
 	name = "recovery medic's jumpsuit"
 	icon_state = "recovery"
 	item_state = "recovery"
