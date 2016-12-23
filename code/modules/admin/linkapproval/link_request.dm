@@ -13,9 +13,10 @@
 			usr << "<span class='boldnotice'>Error: This link is already under approval.</span>"
 			return
 
-		if(ckey(test.poster) == ckey(usr))
-			usr << "<span class='boldnotice'>Error: You already have a link waiting for approval.</span>"
-			return
+		//if(ckey(test.poster) == ckey(usr))
+			//usr << "<span class='boldnotice'>Error: You already have a link waiting for approval.</span>"
+			//return
+			//This causes some bugs
 
 	var/datum/link_approval/link = new /datum/link_approval(hyperlink)
 	link_approval_list += link
