@@ -81,6 +81,12 @@
 		radio.on = 1
 	..()
 
+/mob/living/simple_animal/hostile/mining_drone/Moved(atom/OldLoc, Dir)
+	..()
+	if(ckey || mode == MINEDRONE_COLLECT)
+		for(var/obj/item/weapon/ore/O in src.loc)
+			O.loc = src
+
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
@@ -139,6 +145,9 @@
 	ranged = 0
 	minimum_distance = 1
 	retreat_distance = null
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	a_intent = "harm"
 	icon_state = "mining_drone"
 	src << "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>"
 
@@ -154,6 +163,9 @@
 	ranged = 1
 	retreat_distance = 1
 	minimum_distance = 2
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	a_intent = "harm"
 	icon_state = "mining_drone_offense"
 	src << "<span class='info'>You are set to attack mode. You can now attack from range.</span>"
 
@@ -169,6 +181,9 @@
 	ranged = 0
 	minimum_distance = 0
 	retreat_distance = null
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	a_intent = "help"
 	icon_state = "mining_drone_idle"
 	src << "<span class='info'>You are set to idle mode. You can now be repaired.</span>"
 
@@ -183,6 +198,9 @@
 	retreat_distance = 1
 	minimum_distance = 2
 	environment_smash = 1
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	a_intent = "harm"
 	stop_automated_movement_when_pulled = 0
 	projectiletype = /obj/item/projectile/kinetic/traitor //double the damage. Very lethal in space, mildly lethal otherwise
 	icon_state = "mining_drone_emag"

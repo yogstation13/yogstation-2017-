@@ -88,6 +88,10 @@
 
 #define ispredator(A) (istype(A, /mob/living/carbon/human/predator))
 
+#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+
+#define iscaptive(A) (istype(A, /mob/living/captive_brain))
+
 // ASSEMBLY HELPERS
 
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

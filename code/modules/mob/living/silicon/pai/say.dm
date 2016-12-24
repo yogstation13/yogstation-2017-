@@ -5,4 +5,6 @@
 		..(msg)
 
 /mob/living/silicon/pai/binarycheck()
+	if(radio && radio.translate_binary)
+		return 1
 	return 0

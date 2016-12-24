@@ -19,13 +19,17 @@
 		//pai died via wiping
 		T.visible_message("<span class='danger'>A shrill electronic screeching emanates from [src], moments before its screen falls inexplicably dark.</span>",
 		"<span class='danger'>A terrible electronic-sounding shriek echoes in the air from nearby.</span>")
-
+	else if (emitter_OD)
+		//died while emitters are overloaded from beacon software
+		T.visible_message("<span class='danger'>With a terrible squealing whine, [src]'s holographic emitters suddenly and catastrophically fail in a surprisingly large fireball, immediately turning the card into a plume of ash.</span>")
+		new /obj/effect/decal/cleanable/ash(loc)
 
 	card.overlays.Cut()
 	card.overlays += "pai-off"
 	canmove = 0
 	did_suicide = 0
 	wiped = 0
+	emitter_OD = 0
 	stat = DEAD
 
 	update_sight()

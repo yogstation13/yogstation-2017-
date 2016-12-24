@@ -34241,15 +34241,18 @@
 	name = "Customs"
 	})
 "bdp" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Gift Shop APC";
+	pixel_x = 0;
+	pixel_y = 24
+	},
 /obj/structure/cable/yellow{
-	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/gateway)
 "bdq" = (
 /obj/item/stack/sheet/cardboard,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -47163,11 +47166,6 @@
 	dir = 2;
 	initialize_directions = 11
 	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry{
 	name = "Arrivals"
@@ -48311,11 +48309,6 @@
 	name = "Arrivals"
 	})
 "bzH" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
@@ -48329,13 +48322,6 @@
 "bzI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	freerange = 0;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = 0;
-	pixel_y = -25
 	},
 /turf/open/floor/plasteel{
 	icon_state = "arrival";
@@ -49534,20 +49520,15 @@
 	name = "\improper MiniSat Exterior"
 	})
 "bBA" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock{
-	name = "Port Emergency Storage";
-	req_access_txt = "0"
+/obj/structure/table/reinforced/brass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "giftshop";
+	name = "gift shop shutters"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/gateway)
 "bBB" = (
 /turf/closed/wall,
 /area/security/vacantoffice)
@@ -50427,7 +50408,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	initialize_directions = 11
+	},
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "arrival"
@@ -50436,18 +50420,29 @@
 	name = "Arrivals"
 	})
 "bDi" = (
-/obj/effect/decal/cleanable/cobweb2,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/obj/machinery/camera{
+	c_tag = "Virology - Entrance";
+	dir = 8;
+	network = list("SS13","Medbay")
+	},
+/obj/machinery/button/door{
+	desc = "A remote control switch for the gift shop shutters.";
+	id = "giftshop";
+	name = "Shutter control";
+	normaldoorcontrol = 0;
+	pixel_x = 26;
+	pixel_y = 0;
+	req_access_txt = "36"
+	},
+/obj/structure/flora/kirbyplants,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "bDj" = (
 /obj/structure/table/wood,
-/obj/machinery/light_switch{
-	pixel_x = -28;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/weapon/folder,
 /turf/open/floor/wood,
@@ -51350,29 +51345,34 @@
 	name = "Arrivals"
 	})
 "bEN" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "bEO" = (
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/gateway)
 "bEP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -51386,6 +51386,10 @@
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
+	},
+/obj/machinery/light_switch{
+	pixel_x = -28;
+	pixel_y = 0
 	},
 /turf/open/floor/wood,
 /area/security/vacantoffice)
@@ -52293,25 +52297,27 @@
 	})
 "bGu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
 	},
-/obj/item/weapon/storage/box/lights/mixed,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/gateway)
 "bGv" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
+/obj/structure/table/glass,
+/obj/machinery/airalarm{
+	dir = 1;
+	icon_state = "alarm0";
+	pixel_y = -22
 	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/obj/effect/spawner/lootdrop/toy_mech,
+/obj/item/device/toy_mech_remote,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "bGw" = (
 /obj/machinery/light_construct{
 	dir = 8
@@ -54528,13 +54534,11 @@
 	name = "Arrivals"
 	})
 "bJQ" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
+/obj/machinery/vending/autodrobe,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/gateway)
 "bJR" = (
 /obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
@@ -55400,20 +55404,22 @@
 	name = "\improper Telecoms Control Room"
 	})
 "bLr" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "12;27;37"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/obj/machinery/door/airlock{
+	name = "Gift Shop";
+	req_access_txt = "36"
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "bLs" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -55465,41 +55471,33 @@
 	name = "Arrivals"
 	})
 "bLx" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "12;27;37"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
-"bLy" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/door/airlock{
+	name = "Gift Shop";
+	req_access_txt = "36"
 	},
+/turf/open/floor/plating,
+/area/gateway)
+"bLy" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 2
 	},
-/turf/open/floor/plating{
-	dir = 8;
-	icon_state = "warnplate"
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
+/area/gateway{
+	name = "Gift Shop"
 	})
 "bLz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
 "bLA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -56440,17 +56438,14 @@
 	name = "Arrivals"
 	})
 "bNh" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
 	},
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/area/gateway)
 "bNi" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -57763,17 +57758,18 @@
 	name = "\improper Corporate Showroom"
 	})
 "bPp" = (
-/obj/item/weapon/tank/internals/air,
-/obj/item/weapon/tank/internals/air,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/table/glass,
+/obj/item/device/instrument/guitar,
+/obj/item/device/instrument/violin{
+	pixel_x = 8;
+	pixel_y = 8
 	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2{
-	name = "Port Maintenance"
-	})
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
 "bPq" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
@@ -64889,7 +64885,9 @@
 	name = "Aft Maintenance"
 	})
 "cbd" = (
-/obj/machinery/vending/medical,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	dir = 9;
 	icon_state = "whiteblue"
@@ -65506,22 +65504,20 @@
 	name = "Aft Maintenance"
 	})
 "ccg" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/computer/med_data,
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/obj/structure/mopbucket,
-/obj/item/weapon/mop,
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cch" = (
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/item/weapon/hand_labeler,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cci" = (
 /obj/item/weapon/cigbutt,
@@ -65529,33 +65525,22 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 4
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "ccj" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
-	location = "Medbay"
-	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/window/northleft{
-	dir = 8;
-	name = "MuleBot Access";
-	req_access_txt = "50"
+/obj/machinery/door/airlock{
+	name = "Paramedicine";
+	req_access_txt = "67"
 	},
 /turf/open/floor/plasteel{
-	icon_state = "delivery"
+	icon_state = "white"
 	},
 /area/medical/medbay2{
 	name = "Medbay Storage"
@@ -66746,56 +66731,48 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0";
-	req_one_access_txt = "12;5"
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cdQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/hand_labeler_refill,
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 8
+/obj/effect/landmark/start{
+	name = "Paramedic"
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cdR" = (
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/trash/candy,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/clothing/tie/stethoscope,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cdS" = (
-/obj/item/weapon/storage/box/lights/mixed,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cdT" = (
-/obj/item/weapon/tank/internals/air,
-/obj/item/weapon/tank/internals/air,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/mask/breath,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -66803,21 +66780,21 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
+/obj/machinery/light/small{
 	dir = 4
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cdU" = (
-/obj/machinery/door/airlock{
-	name = "Medbay Emergency Storage";
-	req_access_txt = "5"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/medical/medbay2{
 	name = "Medbay Storage"
@@ -67763,8 +67740,19 @@
 	name = "Aft Maintenance"
 	})
 "cfw" = (
-/obj/item/trash/semki,
-/turf/open/floor/plating,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating{
+	icon_state = "warnplate";
+	dir = 4
+	},
 /area/maintenance/aft{
 	name = "Aft Maintenance"
 	})
@@ -67781,33 +67769,31 @@
 	name = "Aft Maintenance"
 	})
 "cfz" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
+/obj/structure/closet/secure_closet/paramedic,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
 	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cfA" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
+/obj/structure/closet/secure_closet/paramedic,
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/obj/structure/closet/firecloset,
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
 	})
 "cfB" = (
 /obj/machinery/light_switch{
 	pixel_x = -26;
 	pixel_y = 0
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/structure/closet/l3closet,
+/obj/machinery/vending/medical,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -69364,12 +69350,12 @@
 	name = "Aft Maintenance"
 	})
 "chQ" = (
-/obj/structure/closet/crate,
-/obj/item/weapon/reagent_containers/dropper,
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
-	})
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 2;
+	initialize_directions = 11
+	},
+/turf/closed/wall,
+/area/medical/surgery)
 "chR" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -69377,23 +69363,22 @@
 	name = "Aft Maintenance"
 	})
 "chS" = (
-/obj/structure/closet/wardrobe/pjs,
-/turf/open/floor/plasteel{
-	icon_state = "vault"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/area/medical/sleeper{
-	name = "Sleepers"
+/turf/closed/wall,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "chT" = (
-/obj/structure/closet/wardrobe/pjs,
-/obj/machinery/airalarm{
-	pixel_y = 24
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
-/turf/open/floor/plasteel{
-	icon_state = "vault"
-	},
-/area/medical/sleeper{
-	name = "Sleepers"
+/turf/closed/wall,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "chU" = (
 /obj/machinery/computer/med_data,
@@ -70165,6 +70150,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -70917,6 +70905,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
+/obj/structure/closet/wardrobe/pjs,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -80512,12 +80501,12 @@
 /area/crew_quarters/hor)
 "czd" = (
 /obj/structure/table,
-/obj/item/weapon/cartridge/signal/toxins,
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/weapon/cartridge/toxins,
+/obj/item/weapon/cartridge/toxins{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/weapon/cartridge/toxins{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -85750,8 +85739,9 @@
 	name = "Medbay Aft"
 	})
 "cHc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	tag = "icon-manifold-r-f (EAST)";
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 10;
@@ -86403,6 +86393,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
 	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
 /turf/open/floor/plasteel{
 	dir = 9;
@@ -87094,53 +87087,42 @@
 	name = "Medbay Aft"
 	})
 "cJb" = (
-/obj/machinery/door/airlock{
-	name = "Medical Surplus Storeroom";
-	req_access_txt = "5"
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/wood{
+	id_tag = "Psych";
+	name = "Psychiatrist's Office"
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJc" = (
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/machinery/airalarm{
+	pixel_y = 24
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJd" = (
-/obj/structure/table,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/item/weapon/storage/backpack/dufflebag/med,
-/obj/item/device/flashlight/pen{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJe" = (
-/obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
-/obj/item/device/healthanalyzer,
-/obj/item/clothing/glasses/eyepatch,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/structure/bookcase,
+/obj/item/weapon/book/manual/chef_recipes,
+/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/weapon/book/manual/wiki/infections,
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJf" = (
 /obj/structure/disposalpipe/segment,
@@ -87652,11 +87634,9 @@
 	name = "Medbay Aft"
 	})
 "cJQ" = (
-/obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
+/obj/structure/flora/kirbyplants{
+	layer = 4.1
 	},
-/obj/structure/table/glass,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "whitehall"
@@ -87665,50 +87645,39 @@
 	name = "Medbay Aft"
 	})
 "cJR" = (
-/obj/structure/sink{
-	icon_state = "sink";
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJS" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/structure/chair/comfy,
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJT" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 8;
-	pixel_y = 2
+/obj/structure/table/wood,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 0;
-	pixel_y = 0
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
 	},
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/structure/sign/biohazard{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cJU" = (
 /obj/structure/disposalpipe/segment{
@@ -88301,44 +88270,41 @@
 	name = "Aft Maintenance"
 	})
 "cKM" = (
-/obj/structure/bed/roller,
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip{
-	density = 0
-	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/closed/wall,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cKN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
+/obj/structure/table/wood,
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cKO" = (
-/obj/item/clothing/gloves/color/latex/nitrile,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
+/obj/structure/table/wood,
+/obj/item/device/flashlight/lamp/green{
+	dir = 6;
+	on = 0;
+	pixel_x = -3;
+	pixel_y = 8
 	},
-/obj/item/clothing/suit/toggle/labcoat,
-/obj/item/clothing/suit/apron/surgical,
-/obj/item/clothing/mask/surgical,
-/obj/item/clothing/mask/breath/medical,
-/turf/open/floor/plating{
-	icon_state = "platingdmg2"
+/obj/item/weapon/paper_bin{
+	pixel_y = 5
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/item/weapon/pen{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cKP" = (
 /obj/structure/disposalpipe/segment,
@@ -88860,54 +88826,66 @@
 	name = "Aft Maintenance"
 	})
 "cLF" = (
-/obj/structure/rack{
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/flora/kirbyplants{
+	desc = "The therapy plant. His leafy limbs do not judge, they simply listen.";
+	icon_state = "plant-24";
+	layer = 4.1;
+	name = "Felix"
+	},
+/obj/machinery/firealarm{
 	dir = 8;
-	layer = 2.9
+	pixel_x = -26;
+	pixel_y = 28
 	},
-/obj/item/weapon/screwdriver{
-	pixel_y = 6
-	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/storage/pill_bottle,
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cLG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
+/obj/structure/chair/comfy/brown{
+	buildstackamount = 0;
+	dir = 1
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/obj/effect/landmark/start{
+	name = "Psychiatrist"
+	},
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cLH" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 4
+/obj/structure/table/wood,
+/obj/machinery/computer/med_data/laptop,
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
 	},
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cLI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Medical Surplus Storeroom";
-	req_access_txt = "12";
-	req_one_access_txt = "0"
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft{
-	name = "Aft Maintenance"
+/turf/closed/wall,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
 	})
 "cLJ" = (
 /obj/structure/disposalpipe/segment,
@@ -89976,6 +89954,16 @@
 /obj/structure/disposalpipe/junction{
 	dir = 8;
 	icon_state = "pipe-j2"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Psychiatrist's Office APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
 	},
 /turf/open/floor/plating{
 	icon_state = "warnplate"
@@ -93725,15 +93713,18 @@
 	},
 /area/chapel/main)
 "cTo" = (
-/obj/machinery/camera{
-	c_tag = "Chapel - Port";
-	dir = 4;
-	network = list("SS13")
+/obj/structure/window/reinforced/tinted{
+	dir = 5;
+	health = 120;
+	icon_state = "twindow";
+	reinf = 0
 	},
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
-/area/chapel/main)
+/obj/structure/grille,
+/turf/open/floor/wood,
+/area/medical/exam_room{
+	ambientsounds = list('sound/ambience/shore.ogg');
+	name = "\improper Psychiatrist's Office"
+	})
 "cTp" = (
 /obj/item/device/flashlight/lantern{
 	pixel_y = 7
@@ -100624,6 +100615,270 @@
 	icon_state = "swall2"
 	},
 /area/shuttle/escape)
+"dgi" = (
+/obj/structure/table,
+/obj/item/device/gps,
+/obj/item/device/gps{
+	pixel_x = 2
+	},
+/obj/item/device/gps{
+	gpstag = "AUX0"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgh" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid{
+	pixel_x = 1
+	},
+/obj/item/weapon/storage/firstaid{
+	pixel_x = -1
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgg" = (
+/obj/structure/closet/secure_closet/paramedic,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgf" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 2
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dge" = (
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgd" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 2;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgc" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	req_access_txt = 1
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4";
+	tag = "90Curve"
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Paramedic Staging Area APC";
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgb" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Paramedicine Maintenance";
+	req_access_txt = "67";
+	req_one_access_txt = "67"
+	},
+/turf/open/floor/plating,
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dga" = (
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/structure/closet/l3closet,
+/obj/machinery/camera{
+	c_tag = "Brig West"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dfZ" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dfY" = (
+/turf/closed/wall,
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dfX" = (
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	dir = 4;
+	freq = 1400;
+	location = "Medbay"
+	},
+/obj/machinery/door/window/northleft{
+	base_state = "up";
+	dir = 1;
+	name = "MuleBot Access";
+	req_access_txt = "50"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "delivery"
+	},
+/area/medical/medbay2{
+	name = "Medbay Storage"
+	})
+"dfW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/gateway)
+"dfV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfU" = (
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfS" = (
+/obj/item/weapon/cigbutt,
+/obj/machinery/vending/gifts,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfQ" = (
+/obj/structure/table/glass,
+/obj/effect/spawner/lootdrop/toy_mech,
+/obj/item/device/toy_mech_remote,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"dfP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	icon_state = "comfychair"
+	},
+/obj/effect/landmark/start{
+	name = "Clerk"
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"dfO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"dfN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/gateway)
+"dfM" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "giftshop";
+	name = "gift shop shutters"
+	},
+/turf/open/floor/plating,
+/area/gateway)
+"dfL" = (
+/obj/structure/table/reinforced/brass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "giftshop";
+	name = "gift shop shutters"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/gateway)
 
 (1,1,1) = {"
 aaa
@@ -114116,15 +114371,15 @@ bdm
 bvW
 bxN
 bzG
-alQ
-alQ
-alQ
-alQ
-alQ
-alQ
+bPx
+dfN
+bPx
+bPx
+bPx
+bPx
 bLx
-alQ
-alQ
+bPx
+bPx
 alQ
 bRR
 asj
@@ -114374,14 +114629,14 @@ bpI
 bxO
 bzH
 bBA
-byb
+dfO
 bEN
 bGu
 bLr
-bBG
+dfR
 bLy
 bNh
-bdp
+bPx
 bdp
 bRS
 bzX
@@ -114630,15 +114885,15 @@ bur
 bpJ
 bxP
 bzI
-alQ
-auR
+dfL
+dfP
 bEO
 bGv
-alQ
-apH
+bPx
+dfS
 bLz
-alI
-aqS
+dfU
+bPx
 aqW
 bRR
 aHo
@@ -114887,15 +115142,15 @@ bcd
 bcd
 bxQ
 blM
-alQ
+dfM
 bDi
 bPp
-aku
-alQ
+dfQ
+bPx
 bJQ
-bLA
-aLU
-aLU
+dfT
+dfV
+dfW
 aLU
 bRT
 aLU
@@ -120561,7 +120816,7 @@ bZS
 cbc
 ccd
 cdN
-cfv
+dgc
 cuq
 cfv
 ciX
@@ -120815,12 +121070,12 @@ bDw
 bwh
 bYp
 bZT
-bVE
-cce
-cdO
-cfw
-cgG
-chQ
+dfY
+dfY
+dgb
+dfY
+dfY
+dfY
 ciY
 cko
 clO
@@ -121072,14 +121327,14 @@ bSd
 bwh
 cnY
 bZU
-bVE
-bVE
+dfY
+dfZ
 cdP
-bVE
-bVE
-chR
-ciZ
-cko
+dgd
+dgg
+cdR
+cfw
+chQ
 clP
 cno
 cow
@@ -121329,12 +121584,12 @@ bVM
 bwh
 bYp
 alI
-bVE
-ccf
+dfY
+dga
 cdQ
-cfx
-cgH
-cgH
+dge
+dgh
+dfY
 cja
 cko
 ckm
@@ -121586,12 +121841,12 @@ bVN
 bwh
 bYp
 aqS
-bVE
+dfY
 ccg
-cdR
-cfy
+cdP
+dgf
+dgi
 cgH
-chS
 cjb
 ckq
 clQ
@@ -121843,12 +122098,12 @@ bVO
 atG
 bYq
 bZV
-bVE
+dfY
 cch
 cdS
 cfz
 cgH
-chT
+cgH
 cjc
 ckr
 clR
@@ -122100,7 +122355,7 @@ auR
 alI
 aYQ
 aqW
-bVE
+dfY
 cci
 cdT
 cfA
@@ -122613,7 +122868,7 @@ bwh
 bVP
 bXk
 bYs
-bZW
+dfX
 cbd
 cck
 cdV
@@ -123928,12 +124183,12 @@ cAg
 cFc
 cGf
 cAg
-bVE
+chS
 cJb
-bVE
-bVE
-bVE
-bVE
+cTo
+cKM
+cKM
+cKM
 cNr
 bVE
 cOX
@@ -124185,12 +124440,12 @@ cEn
 cFd
 cGg
 cHd
-bVE
+chS
 cJc
 cJR
-cKM
+cJR
 cLF
-bVE
+cKM
 cNs
 cOn
 cOY
@@ -124442,12 +124697,12 @@ cEo
 cFe
 cGh
 cHe
-bVE
+chT
 cJd
 cJS
 cKN
 cLG
-bVE
+cKM
 cSo
 bVE
 cOZ
@@ -124699,12 +124954,12 @@ cEp
 cFf
 cGi
 cHf
-bVE
+cKM
 cJe
 cJT
 cKO
 cLH
-bVE
+cKM
 cNr
 bVE
 cPa
@@ -124958,10 +125213,10 @@ cGj
 cEq
 cEq
 cEq
-bVE
-bVE
+cKM
+cKM
 cLI
-bVE
+cKM
 cNu
 bVE
 cPb
