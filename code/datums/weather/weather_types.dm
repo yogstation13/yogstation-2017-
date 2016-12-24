@@ -90,6 +90,8 @@
 
 	probability = 90
 
+	barometer_predictable = TRUE
+
 /datum/weather/ash_storm/impact(mob/living/L)
 	if(istype(L.loc, /obj/mecha))
 		return

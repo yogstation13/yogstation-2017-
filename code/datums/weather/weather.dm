@@ -38,13 +38,16 @@
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
 
+	var/barometer_predictable = FALSE
+	var/next_hit_time = 0 //For barometers to know when the next storm will hit
+
 /datum/weather/New()
 	..()
 	SSweather.existing_weather |= src
 
 /datum/weather/Destroy()
 	SSweather.existing_weather -= src
-	..()
+	return ..()
 
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
@@ -64,6 +67,7 @@
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
 	addtimer(src, "start", telegraph_duration)
+	next_hit_time = world.time + telegraph_duration
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
