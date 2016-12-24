@@ -66,3 +66,7 @@
 	burn_state = FIRE_PROOF
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
+
+/obj/item/trash/toritose
+	name = "toritos"
+	icon_state = "toritose"

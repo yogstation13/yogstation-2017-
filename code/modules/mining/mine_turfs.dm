@@ -160,7 +160,7 @@
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Gibtonite"
+	scan_state = "rock_Uranium"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
@@ -371,8 +371,6 @@
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
-	else
-		return attack_hand(user)
 	return
 
 /turf/closed/mineral/proc/gets_drilled()
@@ -557,64 +555,6 @@
 
 /turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
 	return
-
-//////////////CHASM//////////////////
-
-/turf/open/chasm
-	name = "chasm"
-	desc = "Watch your step."
-	baseturf = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
-	icon = 'icons/turf/floors/Chasms.dmi'
-	icon_state = "smooth"
-	var/drop_x = 1
-	var/drop_y = 1
-	var/drop_z = 1
-
-
-/turf/open/chasm/Entered(atom/movable/AM)
-	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
-		return
-	if(istype(AM, /atom/movable/light/dim))
-		return
-	if(istype(AM, /obj/effect/portal))
-		// Portals aren't affected by gravity. Probably.
-		return
-	// Flies right over the chasm
-	if(istype(AM, /mob/living/simple_animal))
-		// apparently only simple_animals can fly??
-		var/mob/living/simple_animal/SA = AM
-		if(SA.flying)
-			return
-	if(istype(AM, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = AM
-		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
-			var/obj/item/device/wormhole_jaunter/J = H.belt
-			// To freak out any bystanders
-			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
-			J.chasm_react(H)
-			return
-		if(H.dna.species && (FLYING in H.dna.species.specflags))
-			return
-	drop(AM)
-
-
-/turf/open/chasm/proc/drop(atom/movable/AM)
-	/*visible_message("[AM] falls into [src]!")
-	qdel(AM)*/
-	AM.forceMove(locate(drop_x, drop_y, drop_z))
-	AM.visible_message("<span class='boldwarning'>[AM] falls from above!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
-		L.Weaken(5)
-		L.adjustBruteLoss(30)
-
-/turf/open/chasm/straight_down/New()
-	..()
-	drop_x = x
-	drop_y = y
-	if(z+1 <= world.maxz)
-		drop_z = z+1
 
 /**********************Lavaland Turfs**************************/
 

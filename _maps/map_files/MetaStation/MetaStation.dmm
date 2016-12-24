@@ -5641,7 +5641,7 @@
 	pixel_x = 6;
 	pixel_y = 28
 	},
-/obj/item/weapon/restraints/handcuffs/cable/pink,
+/obj/item/weapon/restraints/handcuffs/cable,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -28936,7 +28936,8 @@
 /area/turret_protected/ai)
 "aVm" = (
 /obj/machinery/power/smes{
-	charge = 5e+006
+	charge = 5e+006;
+	output_level = 53000
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -77274,7 +77275,7 @@
 	})
 "cum" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs/cable/white,
+/obj/item/weapon/restraints/handcuffs/cable,
 /obj/item/weapon/gun/syringe,
 /turf/open/floor/plating,
 /area/maintenance/aft{
@@ -100615,76 +100616,171 @@
 	icon_state = "swall2"
 	},
 /area/shuttle/escape)
-"dgi" = (
-/obj/structure/table,
-/obj/item/device/gps,
-/obj/item/device/gps{
-	pixel_x = 2
+"dfL" = (
+/obj/structure/table/reinforced/brass,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "giftshop";
+	name = "gift shop shutters"
 	},
-/obj/item/device/gps{
-	gpstag = "AUX0"
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/gateway)
+"dfM" = (
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "giftshop";
+	name = "gift shop shutters"
+	},
+/turf/open/floor/plating,
+/area/gateway)
+"dfN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/gateway)
+"dfO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dgh" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid{
-	pixel_x = 1
-	},
-/obj/item/weapon/storage/firstaid{
-	pixel_x = -1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dgg" = (
-/obj/structure/closet/secure_closet/paramedic,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dgf" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 2
-	},
-/obj/item/weapon/storage/firstaid/toxin,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dge" = (
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dgd" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 2;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/machinery/light/small{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
 	dir = 8
 	},
+/area/gateway)
+"dfP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	icon_state = "comfychair"
+	},
+/obj/effect/landmark/start{
+	name = "Clerk"
+	},
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"dfQ" = (
+/obj/structure/table/glass,
+/obj/effect/spawner/lootdrop/toy_mech,
+/obj/item/device/toy_mech_remote,
+/turf/open/floor/plasteel{
+	tag = "icon-greenyellowfull (WEST)";
+	icon_state = "greenyellowfull";
+	dir = 8
+	},
+/area/gateway)
+"dfR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfS" = (
+/obj/item/weapon/cigbutt,
+/obj/machinery/vending/gifts,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfU" = (
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/gateway)
+"dfW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/gateway)
+"dfX" = (
+/obj/structure/plasticflaps{
+	opacity = 1
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	dir = 4;
+	freq = 1400;
+	location = "Medbay"
+	},
+/obj/machinery/door/window/northleft{
+	base_state = "up";
+	dir = 1;
+	name = "MuleBot Access";
+	req_access_txt = "50"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "delivery"
+	},
+/area/medical/medbay2{
+	name = "Medbay Storage"
+	})
+"dfY" = (
+/turf/closed/wall,
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dfZ" = (
+/obj/structure/closet/firecloset,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dga" = (
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/obj/structure/closet/l3closet,
+/obj/machinery/camera{
+	c_tag = "Brig West"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgb" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Paramedicine Maintenance";
+	req_access_txt = "67";
+	req_one_access_txt = "67"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/storage/emergency{
 	name = "Paramedic Staging Area"
 	})
@@ -100714,171 +100810,81 @@
 /area/storage/emergency{
 	name = "Paramedic Staging Area"
 	})
-"dgb" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Paramedicine Maintenance";
-	req_access_txt = "67";
-	req_one_access_txt = "67"
-	},
-/turf/open/floor/plating,
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dga" = (
-/obj/machinery/airalarm{
-	pixel_y = 22
-	},
-/obj/structure/closet/l3closet,
-/obj/machinery/camera{
-	c_tag = "Brig West"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dfZ" = (
-/obj/structure/closet/firecloset,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dfY" = (
-/turf/closed/wall,
-/area/storage/emergency{
-	name = "Paramedic Staging Area"
-	})
-"dfX" = (
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
-	location = "Medbay"
-	},
-/obj/machinery/door/window/northleft{
-	base_state = "up";
-	dir = 1;
-	name = "MuleBot Access";
-	req_access_txt = "50"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "delivery"
-	},
-/area/medical/medbay2{
-	name = "Medbay Storage"
-	})
-"dfW" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/gateway)
-"dfV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/gateway)
-"dfU" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/gateway)
-"dfT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/gateway)
-"dfS" = (
-/obj/item/weapon/cigbutt,
-/obj/machinery/vending/gifts,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/gateway)
-"dfR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/gateway)
-"dfQ" = (
-/obj/structure/table/glass,
-/obj/effect/spawner/lootdrop/toy_mech,
-/obj/item/device/toy_mech_remote,
-/turf/open/floor/plasteel{
-	tag = "icon-greenyellowfull (WEST)";
-	icon_state = "greenyellowfull";
-	dir = 8
-	},
-/area/gateway)
-"dfP" = (
+"dgd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
+	dir = 2;
 	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
-/obj/structure/chair/comfy/beige{
-	dir = 1;
-	icon_state = "comfychair"
-	},
-/obj/effect/landmark/start{
-	name = "Clerk"
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-greenyellowfull (WEST)";
-	icon_state = "greenyellowfull";
+/obj/machinery/light/small{
 	dir = 8
 	},
-/area/gateway)
-"dfO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dge" = (
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgf" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 2
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgg" = (
+/obj/structure/closet/secure_closet/paramedic,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgh" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid{
+	pixel_x = 1
+	},
+/obj/item/weapon/storage/firstaid{
+	pixel_x = -1
+	},
+/obj/item/clothing/glasses/hud/health,
+/obj/item/clothing/glasses/hud/health,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
+"dgi" = (
+/obj/structure/table,
+/obj/item/device/gps,
+/obj/item/device/gps{
+	pixel_x = 2
+	},
+/obj/item/device/gps{
+	gpstag = "AUX0"
 	},
 /turf/open/floor/plasteel{
-	tag = "icon-greenyellowfull (WEST)";
-	icon_state = "greenyellowfull";
-	dir = 8
+	icon_state = "white"
 	},
-/area/gateway)
-"dfN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/gateway)
-"dfM" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "giftshop";
-	name = "gift shop shutters"
-	},
-/turf/open/floor/plating,
-/area/gateway)
-"dfL" = (
-/obj/structure/table/reinforced/brass,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "giftshop";
-	name = "gift shop shutters"
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/gateway)
+/area/storage/emergency{
+	name = "Paramedic Staging Area"
+	})
 
 (1,1,1) = {"
 aaa

@@ -57,6 +57,13 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1
+	notification = SUPP_FREQ
+
+/obj/machinery/computer/shuttle/mining/Topic(href, href_list)
+    ..()
+    if(href_list["move"])
+        investigate_log("[key_name(usr)] has moved the mining shuttle", "cargo")
+
 
 /*********************Pickaxe & Drills**************************/
 
@@ -264,10 +271,6 @@
 
 		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
 
-		var/turf/T = deploy_location
-		if(T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND)//only report capsules away from the mining/lavaland level
-			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 		template.load(deploy_location, centered = TRUE)
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
@@ -338,6 +341,40 @@
 		template.load(deploy_location, centered = TRUE)
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
+
+
+// ************************* Barometer! ******************************
+// attack_self() is in weather.dm
+
+/obj/item/device/barometer
+	name = "barometer"
+	desc = "A persistent device used for tracking weather and storm patterns. IN SPACE!"
+	icon_state = "barometer"
+	var/obj/machinery/lavaland_controller/controller // used to update the weather and such
+	var/cooldown
+	var/accuracy // 0 is the best accuracy.
+
+/obj/item/device/barometer/New()
+	..()
+	barometers += src
+
+/obj/item/device/barometer/Destroy()
+	barometers -= src
+	return ..()
+
+/obj/item/device/barometer/proc/ping(time)
+	spawn(time)
+		if(isliving(loc))
+			var/mob/living/L = loc
+			L << "<span class='notice'>[src] is ready!</span>"
+		playsound(get_turf(src), 'sound/machines/click.ogg', 100)
+
+/obj/item/device/barometer/mining
+	desc = "A special device used for tracking ash storms."
+
+/obj/item/device/barometer/tribal
+	desc = "A device handed down from ashwalker to ashwalker. This tool is used to speak with the wind, translate it's whispers, and figure out when a storm will hit."
+	accuracy = 20
 
 //Pod turfs and objects
 

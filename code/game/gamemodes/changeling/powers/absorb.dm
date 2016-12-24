@@ -56,7 +56,7 @@
 
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)
-		changeling.absorbedcount--
+		changeling.profilecount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
 	changeling.add_new_profile(target, user)
 
@@ -91,9 +91,11 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
+			changeling.profilecount += (target.mind.changeling.absorbedcount)
 
 			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
+			target.mind.changeling.profilecount = 0
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
@@ -103,6 +105,7 @@
 
 	target.death(0)
 	target.Drain()
+	changeling.absorbedcount++
 	return 1
 
 

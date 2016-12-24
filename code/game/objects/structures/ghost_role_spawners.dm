@@ -40,28 +40,54 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>, and is lead by The Chieftain. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>"
+	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
+	new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+		H.languages_spoken = ASHWALKER
+		H.languages_understood = ASHWALKER
+		H.weather_immunities |= "ash"
+	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+	ashhud.join_hud(new_spawn)
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+
+/obj/effect/mob_spawn/human/ash_walker/chief
+	name = "chief ashwalker egg"
+	icon_state = "hero_egg"
+	mob_species = /datum/species/lizard/ashwalker/chieftain
+	helmet = /obj/item/clothing/head/helmet/gladiator
+	var/mob/living/simple_animal/hostile/spawner/ash_walker/nest
+
+/obj/effect/mob_spawn/human/ash_walker/chief/special(mob/living/new_spawn)
+	..()
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.languages_spoken |= HUMAN
+		H.languages_understood |= HUMAN
+	if(nest)
+		nest.chief = new_spawn
+	if(new_spawn.client)
+		new_spawn.client.images += image('icons/mob/hud.dmi',new_spawn,"hudchieftain")
+	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+	ashhud.join_hud(new_spawn)
+	ticker.mode.set_antag_hud(new_spawn, "hudchieftain")
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
@@ -227,16 +253,20 @@
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you. You remember that you were convicted of "
+	var/crime
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.real_name = "NTP #LL-0[rand(111,999)]"
 	L.name = L.real_name
+	L.add_memory("You were convicted of [crime].")
 
 /obj/effect/mob_spawn/human/prisoner_transport/New()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
-	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
+	crime = pick(crimes)
+	flavour_text += "[crime]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
 	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")] by whatever means necessary.</b>."
+	objectives = "Find a way to rehabilitate yourself, or choose to commit [crime] and nothing higher."
 	..()
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()

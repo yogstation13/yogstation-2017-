@@ -8,6 +8,7 @@
  *			worldtime2text
  *			text2dir_extended & dir2text_short
  *			list2string  //LEGACY SUPPORT FOR YOGS, USE jointext() instead!!!
+ *          color2code
  */
 
 //Returns an integer given a hex input, supports negative values "-ff"
@@ -488,47 +489,31 @@ for(var/t in test_times)
 /proc/color2hex(color)	//web colors
 	if(!color)
 		return "#000000"
-
-	switch(color)
-		if("white")
-			return "#FFFFFF"
-		if("black")
-			return "#000000"
-		if("gray")
-			return "#808080"
-		if("brown")
-			return "#A52A2A"
-		if("red")
-			return "#FF0000"
-		if("darkred")
-			return "#8B0000"
-		if("crimson")
-			return "#DC143C"
-		if("orange")
-			return "#FFA500"
-		if("yellow")
-			return "#FFFF00"
-		if("green")
-			return "#008000"
-		if("lime")
-			return "#00FF00"
-		if("darkgreen")
-			return "#006400"
-		if("cyan")
-			return "#00FFFF"
-		if("blue")
-			return "#0000FF"
-		if("navy")
-			return "#000080"
-		if("teal")
-			return "#008080"
-		if("purple")
-			return "#800080"
-		if("indigo")
-			return "#4B0082"
-		else
-			return "#FFFFFF"
-
+	var/hex
+	var/static/list/color2hexes = list(
+	"white"		= "#FFFFFF",
+	"black"		= "#000000",
+	"gray"		= "#808080",
+	"brown"		= "#A52A2A",
+	"red"		= "#FF0000",
+	"darkred"	= "#8B0000",
+	"crimson"	= "#DC143C",
+	"orange"	= "#FFA500",
+	"yellow"	= "#FFFF00",
+	"green"		= "#008000",
+	"lime"		= "#00FF00",
+	"darkgreen"	= "#006400",
+	"cyan"		= "#00FFFF",
+	"blue"		= "#0000FF",
+	"navy"		= "#000080",
+	"teal"		= "#008080",
+	"purple"	= "#800080",
+	"indigo"	= "#4B0082"
+	)
+	hex = color2hexes[color]
+	if(!hex)
+		hex = "#FFFFFF"
+	return hex
 
 //This is a weird one:
 //It returns a list of all var names found in the string
@@ -591,3 +576,21 @@ for(var/t in test_times)
 /proc/list2string( l[], sep )
     for( var/x = 1 to l.len )
         . += ( l[x] + (x < l.len ? sep :null) )
+
+/proc/color2code(color)
+	switch(color)
+		if("yellow") return "#FFFF00"
+		if("red") return "#FF0000"
+		if("blue") return "#0080FF"
+		if("light_blue") return "#00FFFF"
+		if("cyan") return "#00FFFF"
+		if("dark_blue") return "#0000FF"
+		if("lime") return "#00FF00"
+		if("green") return "#04B404"
+		if("orange") return "#FF8000"
+		if("purple") return "#A901DB"
+		if("light_pink") return "#F5A9A9"
+		if("pink") return "#FF00BF"
+		if("brown") return "#8A4B08"
+		if("black") return "#000000"
+		if("white")	return "FFFFFF"

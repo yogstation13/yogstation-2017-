@@ -161,7 +161,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						dat += "<li><a href='byond://?src=\ref[src];choice=41'><img src=pda_notes.png> View Crew Manifest</a></li>"
 					if(cartridge.functions & PDA_STATUS_DISPLAY_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=42'><img src=pda_status.png> Set Status Display</a></li>"
-					if (cartridge.functions & PDA_SPECIAL_SLAVE_FUNCTIONS)
+					if (cartridge.special_functions & PDA_SPECIAL_SLAVE_FUNCTIONS)
 						dat += "<li><a href='byond://?src=\ref[src];choice=48'><img src=pda_signaler.png> Slavemaster 2000</a></li>"
 
 					dat += "</ul>"
@@ -618,9 +618,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if("1")		// Configure pAI device
 						pai.attack_self(U)
 					if("2")		// Eject pAI device
-						var/turf/T = get_turf(src.loc)
-						if(T)
-							pai.loc = T
+						if(Adjacent(usr))
+							usr.put_in_hands(pai)
+							pai = null
+						else
+							var/turf/T = get_turf(src)
+							if(T)
+								pai.forceMove(T)
+								pai = null
 
 //DEBUG/ADMIN FUNCTIONS===================================
 			if("create_virus")
