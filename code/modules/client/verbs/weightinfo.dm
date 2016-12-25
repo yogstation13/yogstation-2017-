@@ -1,4 +1,4 @@
-/client/verb/weightstats()
+/*/client/verb/weightstats()
 	set name = "Antag Weight Stats"
 	set category = "OOC"
 	set desc = "Shows information about your current antagonist weight."
@@ -43,3 +43,6 @@
 		src << "(Some statistics are cached for performance purposes, and may be slightly inaccurate.)"
 	else
 		src << "No database connection detected!"
+*/
+
+//Also uncomment code\modules\client\client_procs line 284
