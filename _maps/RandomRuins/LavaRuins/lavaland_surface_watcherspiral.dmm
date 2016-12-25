@@ -1,0 +1,27 @@
+"a" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
+"b" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
+"c" = (/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
+"d" = (/turf/closed/wall/mineral/sandstone,/area/ruin/unpowered)
+"e" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"f" = (/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
+"g" = (/mob/living/simple_animal/hostile/asteroid/basilisk/watcher{environment_smash = 0; wander = 0},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"h" = (/obj/structure/closet/crate/necropolis/tendril,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"i" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaabaaaaaaaa
+abcabacbacbaaaa
+aaaabaaaaaaacba
+aacababbabbaaba
+aabaaaabaaaabba
+aaaaadededbaaaa
+abcabdeeedbafaa
+aaaabdghgeaabba
+abcabeeeeiaaaaa
+aaaaaeddedaabaa
+aabbbabaaaafaaa
+aabfaababbbbaaa
+aabababaaaaaaba
+aaaabaaacabbaba
+aaaaaaaabaaaaaa
+"}
