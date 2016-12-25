@@ -148,7 +148,7 @@
 	desc = "A versatile chest rig, cherished by miners and hunters alike."
 	icon_state = "explorer1"
 	item_state = "explorer1"
-	storage_slots = 5
+	storage_slots = 6
 	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
 	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
@@ -184,8 +184,6 @@
 		/obj/item/weapon/ore/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/device/barometer,
-
-
 		)
 
 /obj/item/weapon/storage/belt/mining/alt

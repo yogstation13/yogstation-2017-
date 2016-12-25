@@ -10,6 +10,37 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
+	// ore is spawned first so it stays at the bottom. your prize is presented on a pile of it.
+	var/random_ore_spawner = pick(1,2,3,4,5)
+	switch(random_ore_spawner)
+		if(1)
+			for(var/i, i>10, i++)
+				new /obj/item/weapon/ore/uranium(src)
+		if(2)
+			for(var/i, i>50, i++)
+				new /obj/item/weapon/ore/iron(src)
+				if(prob(80))
+					new /obj/item/weapon/ore/glass/basalt(src)
+				else
+					new /obj/item/weapon/ore/glass(src)
+			if(prob(1))
+				new /obj/item/weapon/ore/bananium(src)
+
+		if(3)
+			for(var/i, i>30, i++)
+				new /obj/item/weapon/ore/plasma(src)
+
+		if(4)
+			for(var/i, i>15, i++)
+				if(prob(50))
+					new /obj/item/weapon/ore/silver(src)
+				else
+					new /obj/item/weapon/ore/gold(src)
+
+		if(5)
+			for(var/i, i>5, i++)
+				new /obj/item/weapon/ore/diamond(src)
+
 	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
@@ -34,6 +65,13 @@
 			new /obj/item/clothing/head/magus(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
+			if(prob(50))
+				new /obj/item/organ/alien/hivenode(src)
+			else
+				new /obj/item/organ/alien/plasmavessel/small(src)
+			new /obj/item/stack/sheet/animalhide/xeno(src)
+			new /obj/item/stack/sheet/animalhide/xeno(src)
+			new /obj/item/stack/sheet/animalhide/xeno(src)
 		if(10)
 			new /obj/item/weapon/rune_scimmy(src)
 		if(11)
@@ -69,7 +107,6 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(25)
 			new /obj/item/organ/heart/cursed/wizard(src)
-
 
 //Spooky special loot
 
