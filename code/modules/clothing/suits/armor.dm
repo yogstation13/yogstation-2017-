@@ -93,7 +93,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	flags = THICKMATERIAL
 	strip_delay = 80
@@ -114,7 +114,7 @@
 	icon_state = "chitenplate"
 	item_state = "chitenplate"
 	blood_overlay_type = "armor"
-	armor = list(melee = 65, bullet = 35, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
+	armor = list(melee = 50, bullet = 25, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /obj/item/clothing/suit/armor/pathfinder
@@ -143,7 +143,7 @@
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 10, laser = 60, energy = 50, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 10, laser = 80, energy = 80, bomb = 0, bio = 0, rad = 0)
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
