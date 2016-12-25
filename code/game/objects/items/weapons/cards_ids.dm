@@ -257,6 +257,7 @@ update_label("John Doe", "Clowny")
 	registered_name = "Scum"
 	var/goal = 0 //How far from freedom?
 	var/points = 0
+	var/savedlocker
 
 /obj/item/weapon/card/id/prisoner/attack_self(mob/user)
 	usr << "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
@@ -288,6 +289,25 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
+
+
+/obj/item/weapon/card/id/prisoner/basic
+	name = "Prisoner #13"
+	registered_name
+	var/registered = FALSE
+
+
+/obj/item/weapon/card/id/prisoner/basic/attack_self(mob/user)
+	if(!registered)
+		var/nolongeraman = input(user, "Assign a number?", "Select Prisoner Number") as null|num
+		if(!nolongeraman)
+			return
+
+		name += "-[nolongeraman]"
+		registered_name += "-[nolongeraman]"
+		registered = TRUE
+	else
+		return ..()
 
 /obj/item/weapon/card/id/mining
 	name = "mining ID"

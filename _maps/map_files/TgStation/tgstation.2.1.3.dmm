@@ -1143,7 +1143,7 @@
 	},
 /area/ai_monitored/security/armory)
 "aco" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/gulag,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -7674,6 +7674,7 @@
 	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/gulag,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "anF" = (
@@ -8058,6 +8059,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/gulag,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "aop" = (
@@ -8429,6 +8431,7 @@
 /area/security/processing)
 "aoW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/gulag,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "aoX" = (
