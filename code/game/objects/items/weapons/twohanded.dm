@@ -275,7 +275,7 @@
 
 /obj/item/weapon/twohanded/dualsaber/attack_hulk(mob/living/carbon/human/user)  //In case thats just so happens that it is still activated on the groud, prevents hulk from picking it up
 	if(wielded)
-		user << "<span class='warning'>You can't pick up such dangerous item with your meaty hands without losing fingers, better not to!</span>"
+		user << "<span class='warning'>Your hands are too clumsy to pick this up safely.</span>"
 		return 1
 
 /obj/item/weapon/twohanded/dualsaber/wield(mob/living/carbon/M) //Specific wield () hulk checks due to reflection chance for balance issues and switches hitsounds.
@@ -283,7 +283,6 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
-	sharpness = IS_SHARP
 	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
