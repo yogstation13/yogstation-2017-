@@ -1,0 +1,26 @@
+/mob/living/simple_animal/snowman //change to hostile if you want it to be hostile.
+	name = "snowman"
+	desc = "It's made from snow!"
+	icon_state = "snowman"
+	icon_living = "snowman"
+	icon_dead = "snowman_dead"
+	speak_chance = 0
+	turns_per_move = 1
+	maxHealth = 100
+	health = 100
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "whacks"
+	harm_intent_damage = 5
+	melee_damage_lower = 1
+	melee_damage_upper = 1
+	//faction = list("snowman") uncomment if you want to make it hostile.
+	attacktext = "thumps"
+	attack_sound = 'sound/weapons/genhit.ogg'
+	environment_smash = 0
+	mouse_opacity = 1
+	speed = 1
+	ventcrawler = 2
+	unique_name = 1
+	speak_emote = list("Bellows")
+	deathmessage = "Melted."

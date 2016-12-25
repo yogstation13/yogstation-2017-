@@ -460,3 +460,6 @@
 	icon_state = "warningsandeffect"
 /turf/open/floor/plasteel/sandeffect/warning/corner
 	icon_state = "warningsandeffectcorners"
+
+/turf/open/floor/plasteel/snow
+	icon_state = "snow"
