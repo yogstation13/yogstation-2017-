@@ -338,8 +338,8 @@
 	weaken = 2
 	breakouttime = 80
 	var/charges = 6
-	var/accessed
-	var/used
+	var/accessed // whether it's activated or not
+	var/used // one time use.
 
 /obj/item/weapon/restraints/legcuffs/bola/sec/attack_self(mob/user)
 	if(!(ishuman(user)))
@@ -388,9 +388,9 @@
 			user << 'sound/magic/lightningbolt.ogg'
 			playsound(get_turf(user), 'sound/weapons/taser.ogg', 50, 1)
 			carbon << "<span class='warning'>[src] goes off shooting an electric shock wave up your body!</spam>"
-			carbon.Stun(5)
-			carbon.Weaken(5)
-			carbon.apply_effect(STUTTER, 5)
+			carbon.Stun(charges)
+			carbon.Weaken(charges)
+			carbon.apply_effect(STUTTER, charges)
 			carbon.do_jitter_animation(50)
-			carbon.electrocute_act(2, "[src]")
+			carbon.electrocute_act(0, "[src]")
 			charges--
