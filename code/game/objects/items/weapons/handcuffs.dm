@@ -331,3 +331,66 @@
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
 	weaken = 1
+
+/obj/item/weapon/restraints/legcuffs/bola/sec // security variant
+	name = "electric bola"
+	desc = "A restraining device designed to restrain targets, and give them punishment for moving. Activate in hand before use."
+	weaken = 2
+	breakouttime = 80
+	var/charges = 6
+	var/accessed
+	var/used
+
+/obj/item/weapon/restraints/legcuffs/bola/sec/attack_self(mob/user)
+	if(!(ishuman(user)))
+		return
+
+	var/mob/living/carbon/human/H = user
+	var/obj/item/weapon/card/id/I = H.get_idcard()
+
+	if(!I)
+		user << "<span class='warning'>You need ID to operate [src]!</span>"
+		return
+
+	if((1 in I.access))
+		accessed = !accessed
+		user << "<span class='notice'>You toggle [src] [accessed ? "on" : "off"].</span>"
+	else
+		user << "<span class='warning'>You don't have the access to use this!</span>"
+		if(isliving(user))
+			var/mob/living/L = user
+			L.electrocute_act(1, "[src]")
+			L.Weaken(1)
+			PoolOrNew(/obj/effect/particle_effect/sparks, loc)
+
+/obj/item/weapon/restraints/legcuffs/bola/sec/throw_impact(atom/hit_atom)
+	if(used)
+		visible_message("[src] knocks into [hit_atom]. It has already been used")
+		return
+
+	if(iscarbon(hit_atom))
+		if(!accessed)
+			visible_message("<span class='warning'>[src] hits [hit_atom], but is knocked over. [src] is offline!</span>")
+			return
+
+	if(..())
+		used = TRUE
+		accessed = FALSE
+
+/obj/item/weapon/restraints/legcuffs/bola/sec/cuff_act(mob/user)
+	if(user)
+		PoolOrNew(/obj/effect/particle_effect/sparks, loc)
+		if(!charges)
+			user << "<span class='warning'>As [src] slowly diminishes your legs feel a whole lot lighter... AND THAN ZAP!</span>"
+			qdel(src)
+		if(iscarbon(user))
+			var/mob/living/carbon = user
+			user << 'sound/magic/lightningbolt.ogg'
+			playsound(get_turf(user), 'sound/weapons/taser.ogg', 50, 1)
+			carbon << "<span class='warning'>[src] goes off shooting an electric shock wave up your body!</spam>"
+			carbon.Stun(5)
+			carbon.Weaken(5)
+			carbon.apply_effect(STUTTER, 5)
+			carbon.do_jitter_animation(50)
+			carbon.electrocute_act(2, "[src]")
+			charges--

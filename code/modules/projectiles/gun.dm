@@ -57,9 +57,8 @@
 
 	//Zooming
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
-	var/zoomed = FALSE //Zoom toggle
 	var/zoom_amt = 3 //Distance in TURFs to move the user's screen forward (the "zoom" effect)
-	var/datum/action/toggle_scope_zoom/azoom
+//	var/obj/item/scope/scope = null // generates with zoomable.
 
 
 /obj/item/weapon/gun/New()
@@ -69,7 +68,11 @@
 	if(F)
 		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
 		new /datum/action/item_action/toggle_gunlight(src)
-	build_zooming()
+	if(zoomable)
+		var/datum/action/item_action/toggle_scope_zoom/zoomd = new /datum/action/item_action/toggle_scope_zoom(src)
+		var/obj/item/scope/scope = new(src)
+		scope.zoom_amt = zoom_amt
+		zoomd.scope = scope
 
 
 /obj/item/weapon/gun/CheckParts(list/parts_list)
@@ -358,8 +361,6 @@ obj/item/weapon/gun/proc/newshot()
 		if(F.on)
 			user.AddLuminosity(F.brightness_on)
 			SetLuminosity(0)
-	if(azoom)
-		azoom.Grant(user)
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
@@ -367,10 +368,9 @@ obj/item/weapon/gun/proc/newshot()
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
-	zoom(user,FALSE)
-	if(azoom)
-		azoom.Remove(user)
-
+	var/obj/item/scope/scope = locate() in src
+	if(scope)
+		scope.zoom(user,FALSE)
 
 /obj/item/weapon/gun/AltClick(mob/user)
 	..()
@@ -439,71 +439,6 @@ obj/item/weapon/gun/proc/newshot()
 	if(pin)
 		qdel(pin)
 	pin = new /obj/item/device/firing_pin
-
-/////////////
-// ZOOMING //
-/////////////
-
-/datum/action/toggle_scope_zoom
-	name = "Toggle Scope"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING
-	button_icon_state = "sniper_zoom"
-	var/obj/item/weapon/gun/gun = null
-
-/datum/action/toggle_scope_zoom/Trigger()
-	gun.zoom(owner)
-
-/datum/action/toggle_scope_zoom/IsAvailable()
-	. = ..()
-	if(!. && gun)
-		gun.zoom(owner, FALSE)
-
-/datum/action/toggle_scope_zoom/Remove(mob/living/L)
-	gun.zoom(L, FALSE)
-	..()
-
-
-/obj/item/weapon/gun/proc/zoom(mob/living/user, forced_zoom)
-	if(!user || !user.client)
-		return
-
-	switch(forced_zoom)
-		if(FALSE)
-			zoomed = FALSE
-		if(TRUE)
-			zoomed = TRUE
-		else
-			zoomed = !zoomed
-
-	if(zoomed)
-		var/_x = 0
-		var/_y = 0
-		switch(user.dir)
-			if(NORTH)
-				_y = zoom_amt
-			if(EAST)
-				_x = zoom_amt
-			if(SOUTH)
-				_y = -zoom_amt
-			if(WEST)
-				_x = -zoom_amt
-
-		user.client.pixel_x = world.icon_size*_x
-		user.client.pixel_y = world.icon_size*_y
-	else
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
-
-
-//Proc, so that gun accessories/scopes/etc. can easily add zooming.
-/obj/item/weapon/gun/proc/build_zooming()
-	if(azoom)
-		return
-
-	if(zoomable)
-		azoom = new()
-		azoom.gun = src
-
 
 /obj/item/weapon/gun/burn()
 	if(pin)
