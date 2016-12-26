@@ -470,7 +470,7 @@
 /turf/open/floor/plasteel/facility/facilitywarning
 	icon_state = "warningline"
 /turf/open/floor/plasteel/facility/facilitycarpet
-	icon_state = "carpet"	icon_state = "warningsandeffectcorners"
+	icon_state = "carpet"
 
 /turf/open/floor/plasteel/snow
 	icon_state = "snow"
