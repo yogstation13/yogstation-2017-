@@ -131,7 +131,7 @@
 
 /* 			******************* CHRISTMAS ROLE DEFINES ***************************
  Santa - Runs around, gives people presents, assigns bad people to the naughty list, hears all.
- Grinch - Runs around, destroys Christmas, turns good presents / gifsts into SORDs, the worst creation ever.
+ Grinch - Runs around, destroys Christmas, turns good presents / gifts into SORDs, the worst creation ever.
  Krampus - Runs around, punishes those who are naughty, is in your worst nightmare.
 
 */
@@ -210,7 +210,7 @@ var/krampusweak
 	telespell.clothes_req = 0 //santa robes aren't actually magical.
 	santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
 
-	santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. and to dictate whether someone is naughty or nice. You can conjure more presents using a spell, and there are several presents in your bag. Merry Christmas!</span>"
+	santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You also have the duty of dictating whether someone is naughty or nice. You can conjure more presents using a spell, and there are several presents in your bag. Merry Christmas!</span>"
 	santa << "<span class='boldannounce'><span class='warning'>The Christmas Krampus</span> is here to punish naughty children. One of your spells allows you to summon coal. By placing someones name in that coal, you assign them to the naughty list.</span>"
 
 /datum/species/whatchamaycallit
@@ -403,7 +403,7 @@ var/krampusweak
 
 /datum/round_event/holidayrole/krampus
 	var/mob/living/carbon/human/krampus
-	windowtext1 = "Krampus has been summoned"
+	windowtext1 = "Krampus has been summoned."
 	windowtext2 = "Do you wish to prey on the naughty?"
 
 /datum/species/demon
@@ -484,12 +484,12 @@ var/krampusweak
 	eth.clothes_req = 0
 	krampus.mind.AddSpell(eth)
 
-	krampus << "<span class='boldannounce'>You are the Christmas Krampus! Your job is to punish the naughty personell of SS13, and to bring sinners to justice by turning them into your puppets!</span>"
+	krampus << "<span class='boldannounce'>You are the Christmas Krampus! Your job is to punish the naughty personnel of SS13, and to bring sinners to justice by turning them into your puppets!</span>"
 	krampus << "<span class='notice'>While you are an antagonist, you are not here to kill or attack anyone. Your purpose is only to punish naughty children.</span>"
 
 	// CHRIST-, I MEAN... KRAMPUS DOES NOT LAST FOREVER
 	spawn(10000)
-		activekrampus << "<span class='warning'>You can feel your power crumbling...It is almost time to vanish. You will retreat to your lair for the rest of the shift very soon</span>"
+		activekrampus << "<span class='warning'>You can feel your power crumbling...It is almost time to vanish. Soon you'll be forced to retreat for the rest of the shift.</span>"
 		spawn(5000)
 			joy_to_the_world_krampus_has_fallen()
 
@@ -519,7 +519,7 @@ var/krampusweak
 				for(var/mob/M in stored_mobs)
 					user << "<span class='notice'>[M], the [M.job], is sitting inside.</span>"
 				return
-		user << "<span class='warning'>You slowly lookin inside....</span><span clsss='genesisred'>AND A BLAST FLIES \
+		user << "<span class='warning'>You slowly look inside....</span><span clsss='genesisred'>AND A BLAST FLIES \
 			THROUGH YOUR SOUL AS IT'S MERGED WITH THE FOUL DEMONS OF THE UNDERWORLD!</span>"
 		if(isliving(user))
 			var/mob/living/L = user
@@ -614,12 +614,14 @@ var/krampusweak
 	..()
 	desc = "It won't stop staring."
 
+/*
 /obj/item/toy/figure/cursed/attack_self(mob/user)
 	user << "<span class='notice'>You scramble [src].</span>"
 	var/obj/item/toy/figure/F =  pick(subtypesof(/obj/item/toy/figure))
 	F = new F.type(src)
 	icon_state = F.icon_state
 	qdel(F)
+*/
 
 /obj/item/toy/figure/cursed/attackby(obj/item/weapon/W, mob/user, params)
 	if(!iskrampus(user))
