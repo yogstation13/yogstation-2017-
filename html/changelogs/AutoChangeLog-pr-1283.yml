@@ -1,0 +1,14 @@
+author: Stealthkibbler
+delete-after: True
+changes: 
+  - rscadd: "13 new ruins, most replacing old outdated ruins."
+  - rscadd: "around 10 new ghost roles, replacing a few old ones."
+  - rscdel: "A lot of the old ruins that we've had since we ported lavaland are gone and have been replaced with the newer ones."
+  - rscadd: "Cosmic Ashwalker now spawns in one of the new ruins, a very hardcore role similar to that of the hermite."
+  - rscadd: "The travelling bard now spawns on Lavaland and is expected to make his way to the station in hopes of entertaining the crew with his epic tales and songs."
+  - rscadd: "The Syndicate now have a Xenomorph testing facility on Lavaland, the purpose of this is to tutor players on the dangers of xenos while also giving players the chance to play as the xenos and learn how they work. This should hopefully make more players accustomed to xeno rounds when they occur."
+  - tweak: "Clown Biodome now has more clown related loot."
+  - rscadd: "There are 4 new mob themed ruins, a Weaver nest, Goliath Mound, Watcher Spiral and a Legion Barracks, each with their own basic theme and loot to plunder.  These are difficult ruins to raid and only experienced miners should attempt them."
+  - tweak: "Animal Hospital ruin has been reworked into the Orion Medical Outpost, it now functions as a medical tutorial ruin and also spawns with an Orion Space Security Officer to protect it from walkers and mobs."
+  - rscadd: "Ported the Syndicate recon outpost from tg which will allow players to experiment with making deadly diseases and chemical concoctions. The ruin also has its own radio setup so the communications officer can work with syndies and elude the crew of the station."
+  - bugfix: "Space Bar will no longer mimic teleporter beacons and players can now exit its z-level since it uses a teleporter now"

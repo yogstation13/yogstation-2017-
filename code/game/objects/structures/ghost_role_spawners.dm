@@ -56,8 +56,8 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
-		H.languages_spoken |= ASHWALKER
-		H.languages_understood |= ASHWALKER
+		H.languages_spoken = ASHWALKER
+		H.languages_understood = ASHWALKER
 		H.weather_immunities |= "ash"
 	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
 	ashhud.join_hud(new_spawn)

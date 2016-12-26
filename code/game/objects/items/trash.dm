@@ -74,7 +74,7 @@
 /obj/item/trash/coal
 	name = "coal"
 	desc = "Gifted to the naughty."
-	icon_state = ""
+	icon_state = "coal"
 	var/assigned
 
 /obj/item/trash/coal/attack_self(mob/user)
