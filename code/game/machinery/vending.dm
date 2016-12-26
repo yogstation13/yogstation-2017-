@@ -685,7 +685,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice = 4,/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice = 4,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater = 15,
-					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 10),
+					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 10, /obj/item/weapon/reagent_containers/food/drinks/bottle/eggnog = 5),
 					"Glasses" = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/weapon/reagent_containers/food/drinks/flask = 3))
 	contraband = list("Girly Drinks" = list(/obj/item/weapon/reagent_containers/food/drinks/mug/tea = 12))
 	vend_delay = 15

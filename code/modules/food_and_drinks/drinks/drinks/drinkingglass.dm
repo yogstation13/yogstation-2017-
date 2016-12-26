@@ -617,6 +617,10 @@
 				icon_state = "shotglassgreen"
 				name = "shot of absinthe"
 				desc = "I am stuck in the cycles of my guilt..."
+			if ("eggnog")
+				icon_state = "shotglasscream"
+				name = "christmas miracle"
+				desc = "It's beginning to look a lot like Christmas."
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of... what?"

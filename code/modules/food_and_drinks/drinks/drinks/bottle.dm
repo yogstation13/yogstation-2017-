@@ -298,6 +298,14 @@
 	isGlass = 0
 	list_reagents = list("orangejuice" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/eggnog
+	name = "Eggnog"
+	desc = "Have a holly-jolly Christmas. It's the best time of the year!"
+	icon_state = "eggnog"
+	item_state = "carton"
+	isGlass = 0
+	list_reagents = list("eggnog" = 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
