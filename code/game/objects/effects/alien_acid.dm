@@ -65,6 +65,8 @@
 		else
 			qdel(target)
 
+		qdel(src)
+
 		return
 
 	x = target.x
