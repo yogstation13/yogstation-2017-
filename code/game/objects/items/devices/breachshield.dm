@@ -27,9 +27,9 @@
 	addtimer(src, "triggershield", 100)
 
 /obj/item/device/breachshield/proc/triggershield()
+	visible_message("<span class='warning'>Blue shields begin to inflate from the bottom of [src].</span>")
 	for(var/turf/T in orange(1, src))
 		var/obj/machinery/shield/S = new(T)
-		visible_message("<span class='warning'>[S] slowly grows from [src] like a balloon.</span>")
 		S.health = 20
 		playsound(T, 'sound/effects/phasein.ogg', 100)
 
