@@ -86,7 +86,7 @@
 	return ..()
 
 /obj/machinery/power/terminal/proc/add_wires()
-	if(master)
+	if(istype(master, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/APC = src.master
 		wiring_color = APC.wiring_color
 		var/image/I = new('icons/obj/power.dmi', "term_wire")

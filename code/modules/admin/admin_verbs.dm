@@ -92,8 +92,8 @@ var/list/admin_verbs_admin = list(
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
-	/client/proc/DB_ban_panel,
-	/client/proc/stickybanpanel
+	/client/proc/DB_ban_panel/*,
+	/client/proc/stickybanpanel*/
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,

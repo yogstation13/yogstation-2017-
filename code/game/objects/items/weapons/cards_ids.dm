@@ -251,7 +251,7 @@ update_label("John Doe", "Clowny")
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
 	attack_verb = list("arrested", "cuffed", "took freedom from", "imprisoned", "identified", "slapped")
-	icon_state = "orange"
+	icon_state = "id_orange"
 	item_state = "orange-id"
 	assignment = "Prisoner"
 	registered_name = "Scum"
