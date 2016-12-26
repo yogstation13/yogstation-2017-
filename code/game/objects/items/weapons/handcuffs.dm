@@ -359,7 +359,7 @@
 		user << "<span class='warning'>You don't have the access to use this!</span>"
 		if(isliving(user))
 			var/mob/living/L = user
-			L.electrocute_act(1, "[src]")
+			L.electrocute_act(0, "[src]")
 			L.Weaken(1)
 			PoolOrNew(/obj/effect/particle_effect/sparks, loc)
 
