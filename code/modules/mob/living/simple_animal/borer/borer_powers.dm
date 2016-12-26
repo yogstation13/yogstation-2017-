@@ -422,7 +422,7 @@ mob/living/carbon/proc/release_control()
 		return
 
 	if(borer.chemicals >= 100)
-		var/list/candidates = get_candidates(ROLE_BORER, null, ROLE_BORER)
+		var/list/candidates = get_candidates(ROLE_BORER, null, ROLE_BORER) // we use this to FIND candidates. not neccessairly use them.
 		for(var/client/C in candidates)
 			if(!(C.prefs.toggles & MIDROUND_ANTAG))
 				candidates -= C
@@ -430,15 +430,15 @@ mob/living/carbon/proc/release_control()
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
 
-		var/client/C = pick(candidates)
-
 		borer.chemicals -= 100
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
 		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
-		newborer.transfer_personality(C)
+		var/list/mob/dead/observer/Bcandidates = pollCandidatesForMob("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 100, newborer)
+		var/client/B = pick(Bcandidates)
+		newborer.key = B.key
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 	else
