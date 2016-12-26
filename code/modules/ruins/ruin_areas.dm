@@ -46,3 +46,9 @@
 /area/ruin/onehalf/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+
+/area/ruin/powered/mercenary_ship
+	name = "Mercenary Ship"
+
+/area/ruin/powered/syndicate_lava_base
+	name = "Secret Base"
