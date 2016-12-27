@@ -537,7 +537,7 @@ var/krampusweak
 	if(target.stat == DEAD)
 		user << "<span class='warning'>You can't drop dead bodies into your bag.</span>"
 		return
-	if(target.stat = UNCONSCIOUS)
+	if(target.stat == UNCONSCIOUS)
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.health <= 0)
