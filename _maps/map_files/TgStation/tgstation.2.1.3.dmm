@@ -28677,8 +28677,8 @@
 /obj/item/golfball,
 /obj/item/golfball,
 /obj/item/golfball,
-/obj/item/golfclub,
-/obj/item/golfclub,
+/obj/item/weapon/golfclub,
+/obj/item/weapon/golfclub,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bfS" = (
@@ -44894,6 +44894,18 @@
 	tag = "icon-warnplate (SOUTHEAST)";
 	icon_state = "warnplate";
 	dir = 6
+	},
+/area/toxins/mixing)
+"bLq" = (
+/turf/open/floor/plating,
+/turf/open/floor/plasteel/warningline{
+	dir = 6
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/turf/open/floor/plasteel/warningline{
+	dir = 8
 	},
 /area/toxins/mixing)
 "bLv" = (
@@ -65265,6 +65277,30 @@
 /area/tcommsat/lounge{
 	name = "\improper Telecommunications Satellite Access"
 	})
+"czw" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the telecoms satellite.";
+	dir = 2;
+	name = "Telecoms Satellite Monitor";
+	network = list("Telecoms");
+	pixel_x = 0;
+	pixel_y = 29
+	},
+/obj/effect/landmark/start{
+	name = "Signal Technician"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/tcommsat/lounge{
+	name = "\improper Telecommunications Satellite Access"
+	})
 "czx" = (
 /obj/machinery/computer/telecomms/monitor{
 	network = "tcommsat"
@@ -67581,6 +67617,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
+"cEE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair/office/dark,
+/obj/effect/landmark/start{
+	name = "Signal Technician"
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "cEF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -68404,6 +68450,25 @@
 	dir = 8
 	},
 /area/ai_monitored/security/armory)
+"ylg" = (
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 8;
+	name = "Telecoms Satellite APC";
+	pixel_x = -24;
+	pixel_y = 0
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "vault";
+	dir = 8
+	},
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
 "zsJ" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/subspace/analyzer,
@@ -68412,16 +68477,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/tcommsat/computer)
-"zDS" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/chair/office/dark,
-/obj/effect/landmark/start{
-	name = "Signal Technician"
-	},
-/turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "ABd" = (
 /obj/structure/table/reinforced,
@@ -68459,25 +68514,6 @@
 	tag = "loading"
 	},
 /area/tcommsat/computer)
-"CLL" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
-	dir = 8;
-	name = "Telecoms Satellite APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
 "CYQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68550,30 +68586,6 @@
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
-"GNP" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the telecoms satellite.";
-	dir = 2;
-	name = "Telecoms Satellite Monitor";
-	network = list("Telecoms");
-	pixel_x = 0;
-	pixel_y = 29
-	},
-/obj/effect/landmark/start{
-	name = "Signal Technician"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/tcommsat/lounge{
-	name = "\improper Telecommunications Satellite Access"
-	})
 "HNV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light{
@@ -68771,20 +68783,6 @@
 	dir = 8
 	},
 /turf/closed/wall/r_wall,
-/area/tcommsat/computer)
-"UUd" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/landmark/start{
-	name = "Signal Technician"
-	},
-/turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "VbF" = (
 /obj/item/device/radio/intercom{
@@ -69140,6 +69138,20 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"YXJ" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/start{
+	name = "Signal Technician"
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "Zyo" = (
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -102253,7 +102265,7 @@ cxO
 cyn
 aaa
 cvn
-GNP
+czw
 czS
 cnp
 cAm
@@ -107151,7 +107163,7 @@ cBz
 cDe
 cBz
 cBc
-CLL
+ylg
 maO
 cEv
 cBz
@@ -107662,7 +107674,7 @@ RFx
 jKT
 cAC
 wHK
-UUd
+YXJ
 DYF
 cDO
 cEe
@@ -108439,7 +108451,7 @@ cDQ
 cEh
 cEt
 cEz
-zDS
+cEE
 cEL
 cAS
 ady
