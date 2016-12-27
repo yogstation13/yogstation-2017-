@@ -180,6 +180,9 @@
 				return ..()
 			if(thermalOverlay)
 				A.client.images -= thermalOverlay
-			var/I = image('icons/effects/effects.dmi', loc = src, icon_state = "invsthermal")
+			var/image/I = image(getInvsThermalIcon(new/icon(icon,icon_state)), loc = src)
+		//	image('icons/effects/effects.dmi', loc = src, icon_state = "invsthermal")
 			A.client.images |= I
+			thermalOverlay = I
+			thermalOverlay.override = 1
 	return ..()

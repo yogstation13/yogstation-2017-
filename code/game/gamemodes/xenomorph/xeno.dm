@@ -303,8 +303,12 @@ var/list/turf/xenomorphweeds = list()
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		return TRUE
 
-	if(calculateXenos(justqueen = TRUE) == 2)
+	if(calculateXenos(1) == DEAD)
 		SSshuttle.emergency.mode = SHUTTLE_IDLE
+		priority_announce("The Emergency Shuttle can now be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
+	else if (SSshuttle.emergency.mode == SHUTTLE_IDLE && calculateXenos(1) != DEAD)
+		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+		priority_announce("The Emergency Shuttle can no longer be called..", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 
 	if(!ERTlaunch) // Has an ERT already been sent?
 		check_for_ERT()

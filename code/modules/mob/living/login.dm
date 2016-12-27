@@ -20,3 +20,13 @@
 	if(ranged_ability)
 		client.click_intercept = ranged_ability
 		src << "<span class='notice'>You currently have <b>[ranged_ability.name]</b> active!</span>"
+
+	UpdateAlienThermal()
+
+/mob/living/proc/UpdateAlienThermal()
+	thermalOverlay = image(getThermalIcon(new/icon(icon,icon_state)), loc = src)
+	thermalOverlay.override = 1
+
+	for(var/mob/living/L in mob_list)
+		if(isalien(L))
+			L.client.images |= thermalOverlay

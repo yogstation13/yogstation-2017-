@@ -26,6 +26,7 @@ Sorry Giacom. Please don't be mad :(
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
+	UpdateAlienThermal()
 
 
 /mob/living/prepare_huds()
@@ -1056,3 +1057,20 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form to [new_mob]!</span>"
+
+/mob/living/carbon/alien/proc/UpdateThermalEffects()
+	if(!client)
+		return
+
+	for(var/i in client.images)
+		client.images.Remove(i)
+
+	for(var/mob/living/L in mob_list)
+		if(isalien(L))
+			return
+		L.thermalOverlay = image(getThermalIcon(new/icon(L.icon,L.icon_state)), loc = L)
+		L.thermalOverlay.override = 1
+		client.images |= L.thermalOverlay
+
+	if(client)
+		overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)

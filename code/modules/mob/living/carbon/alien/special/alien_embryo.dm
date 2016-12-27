@@ -33,25 +33,25 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 /obj/item/organ/body_egg/alien_embryo/New()
 	..()
+	embryo = new /mob/living/carbon/brain/alien(src)
 	if(findClient())
 		premature = TRUE
 
 /obj/item/organ/body_egg/alien_embryo/proc/findClient()
-	if(!owner) return
+	if(!owner)
+		return
 	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET, "alien candidate")
 	var/client/C = null
 
+	sleep(50)
 	if(candidates.len)
 		C = pick(candidates)
 	else
 		return 1
 
-	if(C)
-		embryo = new /mob/living/carbon/brain/alien(src)
-		embryo << "<span class='alertalien'>Darkness surrounds you, and you grow bigger as you drain the nutrients out of your host. In time you'll soon be a fully grown...</span>"
-		embryo << "<span class='alertalien'>For now you are only a fetush slowly regenerating...</span>"
-
 	embryo.key = C.key
+	embryo << "<span class='alertalien'>Darkness surrounds you, and you grow bigger as you drain the nutrients out of your host. In time you'll soon be a fully grown...</span>"
+	embryo << "<span class='alertalien'>For now you are only a fetush slowly regenerating...</span>"
 
 /obj/item/organ/body_egg/alien_embryo/prepare_eat()
 	var/obj/S = ..()
@@ -102,8 +102,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 				return
 		AttemptGrow()
 
-
-
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
 
 	if(premature == TRUE)
@@ -144,9 +142,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			else
 				owner.adjustBruteLoss(200)
 				owner.updatehealth()
-
 			owner.overlays += overlay2
-
 		else
 			owner.adjustBruteLoss(40)
 			owner.overlays -= overlay
