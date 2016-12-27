@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "Perspective bug with borers is fixed. They can safely leave dead/braindead hosts."
+  - bugfix: "Puked out borers will no longer force ghosts with BE_BORER into them."
