@@ -87,7 +87,7 @@
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
 			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
-			"Why doesn’t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+			"Why doesnâ€™t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
 		cracked = 1
@@ -255,6 +255,7 @@ var/krampusweak
 /datum/round_event/holidayrole/grinch/dressup(var/mob/M)
 	grinch = new /mob/living/carbon/human(pick(latejoin))
 	grinch.key = M.key
+	chosen = TRUE
 	qdel(M)
 
 	grinch << "<span class='green'>Oh... you're a mean one.</span>"
@@ -415,7 +416,6 @@ var/krampusweak
 	specflags = list(NOBREATH,NOGUNS,NODISMEMBER)
 	burnmod = 2.1 // hey krampus, your horns are as crooked as your soul.
 	brutemod = 2.1
-	speedmod = 2
 	invis_sight = SEE_INVISIBLE_MINIMUM
 
 /datum/species/demon/spec_life(mob/living/carbon/human/H)
@@ -449,6 +449,7 @@ var/krampusweak
 	krampus = new /mob/living/carbon/human(pick(latejoin))
 	activekrampus = krampus
 	krampus.key = M.key
+	chosen = TRUE
 	qdel(M)
 
 	krampus.set_species(/datum/species/demon, 1)
