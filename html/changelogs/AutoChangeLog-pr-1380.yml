@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - tweak: "DEATH TO CULT BASES IN SPACE."
+  - tweak: "Summon Nar'Sie runes can no longer be created in invalid territories like space."
+  - tweak: "Making a base anywhere will carry over whether that area is valid territory or not. In other words, you can no longer summon nairse in space bases."
