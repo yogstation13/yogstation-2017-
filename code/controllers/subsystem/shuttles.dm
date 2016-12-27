@@ -122,12 +122,12 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them half the current time.
 		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
-	else if seclevel2num(get_security_level()) = SEC_LEVEL_GREEN) //theres no threat, come in 1.5 time
+	else if(seclevel2num(get_security_level()) = SEC_LEVEL_GREEN)) //theres no threat, come in 1.5 time
 		emergency.request(null, 1.5, signal_origin, html_decode(emergency_reason), 1)
-	else if seclevel2num(get_security_level()) = SEC_LEVEL_DELTA)
-		emergency.request(null, 0.1, signal_origin, html_decode(emergency)reason), 1)
+	else if(seclevel2num(get_security_level()) = SEC_LEVEL_DELTA))
+		emergency.request(null, 0.1, signal_origin, html_decode(emergency_reason), 1)
 	else
-		emergency.request(null, 1.0, signal_origin, html_decode(emergency)reason), 0)
+		emergency.request(null, 1.0, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
