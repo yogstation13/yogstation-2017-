@@ -26,10 +26,8 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	icon_state = "purple"
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "ah" = (
@@ -250,6 +248,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = -28
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -564,19 +563,39 @@
 	},
 /area/mine/laborcamp)
 "bn" = (
-/obj/structure/ore_box,
-/turf/open/floor/plasteel/brown{
-	tag = "icon-brown (SOUTHWEST)";
-	icon_state = "brown";
-	dir = 10;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/mine/living_quarters)
 "bo" = (
-/obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = -3;
+	pixel_y = -3
 	},
+/obj/item/weapon/reagent_containers/blood/AMinus,
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/machinery/camera{
+	c_tag = "Sleeper Room";
+	dir = 1;
+	network = list("MINE")
+	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/mine/living_quarters)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -659,12 +678,8 @@
 	},
 /area/mine/laborcamp)
 "bv" = (
-/obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 6;
-	icon_state = "brown"
-	},
+/obj/structure/closet/secure_closet/mmedical,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/mine/living_quarters)
 "bw" = (
 /obj/machinery/door/airlock/maintenance{
@@ -1042,11 +1057,8 @@
 	},
 /area/mine/living_quarters)
 "cd" = (
-/obj/machinery/mineral/equipment_vendor,
-/turf/open/floor/plasteel/brown{
-	tag = "icon-brown (NORTHWEST)";
-	icon_state = "brown";
-	dir = 9;
+/obj/structure/bookcase,
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
@@ -1251,12 +1263,12 @@
 	},
 /area/mine/production)
 "cy" = (
-/obj/machinery/door/airlock/mining{
-	name = "Mining Station Storage";
-	req_access_txt = "48"
+/obj/machinery/door/airlock/glass_medical{
+	id_tag = "MedbayFoyer";
+	name = "Medbay";
+	req_access_txt = "5"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
@@ -1369,14 +1381,12 @@
 	},
 /area/mine/production)
 "cJ" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel/purple/corner{
+/obj/machinery/sleeper,
+/turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	icon_state = "purplecorner"
+	icon_state = "whiteblue";
+	tag = "icon-whiteblue (NORTH)"
 	},
 /area/mine/living_quarters)
 "cK" = (
@@ -1466,11 +1476,9 @@
 	},
 /area/mine/living_quarters)
 "cU" = (
-/obj/structure/ore_box,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "purple"
+/obj/structure/table/glass,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "cV" = (
@@ -1520,16 +1528,14 @@
 	},
 /area/mine/living_quarters)
 "da" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel/purple/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/structure/chair/office/dark{
+	dir = 8
 	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/mine/living_quarters)
 "db" = (
-/obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel/brown{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/mine/living_quarters)
 "dc" = (
 /obj/structure/chair{
@@ -1683,10 +1689,10 @@
 	},
 /area/mine/living_quarters)
 "dq" = (
-/turf/closed/wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
+/obj/structure/closet/secure_closet/mmedical,
+/obj/machinery/light,
+/turf/open/floor/plasteel/whiteblue/side,
+/area/mine/living_quarters)
 "dr" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "gulag"
@@ -1728,11 +1734,11 @@
 	},
 /area/mine/eva)
 "dw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
+/obj/structure/closet/secure_closet/miner,
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
+/area/mine/living_quarters)
 "dx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating{
@@ -2123,10 +2129,15 @@
 	},
 /area/mine/living_quarters)
 "en" = (
+/obj/machinery/camera{
+	c_tag = "Storage";
+	dir = 2;
+	network = list("MINE")
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
+/area/mine/living_quarters)
 "eo" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/bar{
@@ -2249,40 +2260,53 @@
 	},
 /area/mine/maintenance)
 "eA" = (
+/obj/structure/closet/secure_closet/miner,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	pixel_y = 23
-	},
-/obj/machinery/iv_drip,
-/turf/open/floor/plasteel/whiteblue/side{
+/turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	icon_state = "whiteblue";
-	tag = "icon-whiteblue (NORTH)"
+	icon_state = "purplecorner"
 	},
 /area/mine/living_quarters)
 "eB" = (
-/turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/blood/AMinus,
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/machinery/camera{
+	c_tag = "Sleeper Room";
 	dir = 1;
-	icon_state = "whiteblue";
-	tag = "icon-whiteblue (NORTH)"
+	network = list("MINE")
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "eC" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 5;
-	icon_state = "whiteblue";
-	tag = "icon-whiteblue (NORTHEAST)"
+/obj/structure/ore_box,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "eD" = (
@@ -2401,36 +2425,12 @@
 	},
 /area/mine/maintenance)
 "eQ" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/machinery/camera{
-	c_tag = "Sleeper Room";
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/whiteblue/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
-	network = list("MINE")
-	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	icon_state = "whiteblue";
+	tag = "icon-whiteblue (NORTH)"
 	},
 /area/mine/living_quarters)
 "eR" = (
@@ -2442,18 +2442,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "eT" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/whiteblue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	icon_state = "whiteblue";
-	tag = "icon-whiteblue (EAST)"
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "eU" = (
@@ -2552,13 +2551,11 @@
 	},
 /area/mine/living_quarters)
 "fc" = (
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = null;
-	name = "Infirmary";
-	req_access_txt = "0"
+/obj/machinery/door/airlock/mining{
+	name = "Mining Station Storage";
+	req_access_txt = "48"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white{
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
@@ -2568,10 +2565,12 @@
 	dir = 2;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel/brown{
+/obj/machinery/washing_machine,
+/turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 5;
-	icon_state = "brown"
+	icon_state = "whiteblue";
+	tag = "icon-whiteblue (NORTHEAST)"
 	},
 /area/mine/living_quarters)
 "fe" = (
@@ -2779,13 +2778,12 @@
 	},
 /area/mine/living_quarters)
 "fB" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/purple/corner{
+/obj/vehicle/atv,
+/turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	icon_state = "purplecorner"
+	dir = 1;
+	icon_state = "whiteblue";
+	tag = "icon-whiteblue (NORTH)"
 	},
 /area/mine/living_quarters)
 "fC" = (
@@ -8715,7 +8713,7 @@ af
 af
 af
 ab
-ab
+al
 af
 af
 af
@@ -9485,7 +9483,7 @@ af
 af
 ab
 ab
-ab
+al
 ab
 ab
 ab
@@ -10518,9 +10516,9 @@ fv
 fq
 ee
 fB
-fj
+eR
 da
-ei
+ee
 ab
 af
 af
@@ -10774,10 +10772,10 @@ fl
 fw
 cs
 cy
-fo
-cV
-db
-ei
+eQ
+eT
+dq
+ee
 ab
 af
 af
@@ -11029,12 +11027,12 @@ eO
 eh
 fm
 bg
-cu
+fj
 ee
 cJ
-fj
+eR
 bo
-ei
+ee
 ab
 al
 al
@@ -11290,7 +11288,7 @@ cv
 ee
 fd
 ag
-bv
+db
 ee
 al
 ed
@@ -11535,8 +11533,8 @@ af
 af
 af
 af
-ab
-ab
+af
+ee
 eh
 eh
 eh
@@ -11793,10 +11791,10 @@ af
 af
 af
 af
-ab
 ee
+dw
 eA
-eQ
+dw
 ee
 fj
 bg
@@ -12050,10 +12048,10 @@ af
 af
 af
 af
-ab
-ei
-eB
-eR
+ee
+en
+fj
+fj
 fb
 fk
 bg
@@ -12307,9 +12305,9 @@ af
 af
 af
 af
-ab
-ei
-eB
+ee
+fj
+fj
 eS
 fc
 fo
@@ -12564,10 +12562,10 @@ ab
 af
 af
 al
-ed
 ee
+eo
 eC
-eT
+eC
 fb
 fm
 bg
