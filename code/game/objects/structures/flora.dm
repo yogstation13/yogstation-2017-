@@ -56,6 +56,11 @@
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 
+/obj/structure/flora/smallxmas
+	name = "small xmas tree"
+	icon = 'icons/obj/flora/plants.dmi'
+	icon_state = "xtree"
+
 /obj/structure/festivus
 	name = "festivus pole"
 	icon = 'icons/obj/flora/pinetrees.dmi'

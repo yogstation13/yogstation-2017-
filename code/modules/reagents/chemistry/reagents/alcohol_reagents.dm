@@ -747,3 +747,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Unidentifiable mixture. Unmeasurably high alcohol content."
 	color = rgb(51, 19, 3) //Sickly brown
 	boozepwr = 300 //I warned you
+
+/datum/reagent/consumable/ethanol/eggnog
+	name = "Eggnog"
+	id = "eggnog"
+	description = "Delicious!"
+	color = "#DFDFDF"
+	boozepwr = 25

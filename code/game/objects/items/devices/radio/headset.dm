@@ -154,6 +154,13 @@
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
 
+/obj/item/device/radio/headset/heads/captain/santa
+	name = "santas magical ear"
+	desc = "He knows if you've been bad or good. So be good for goodness sake! Also report this to a coder if you can actually read this."
+	icon_state = null
+	item_state = null
+	flags = EARBANGPROTECT | NODROP | ABSTRACT
+
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
 	desc = "Headset of the fellow who keeps society marching towards technological singularity. \nTo access the science channel, use :n. For command, use :c. For supply use :u."

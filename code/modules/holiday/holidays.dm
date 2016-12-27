@@ -304,9 +304,9 @@
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 23
+	begin_day = 25
 	begin_month = DECEMBER
-	end_day = 25
+	end_day = 28
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"

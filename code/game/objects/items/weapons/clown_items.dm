@@ -63,6 +63,13 @@
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
+			var/mob/M = locate() in target
+			if(M)
+				if(M.stat != DEAD)
+					user << "<span class='warning'>It's a little tough...</span>"
+					return
+				else
+					user << "<span class='warning'>You hear very tiny screaming from a distance.</span>"
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here

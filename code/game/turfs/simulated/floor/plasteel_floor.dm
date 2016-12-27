@@ -471,3 +471,6 @@
 	icon_state = "warningline"
 /turf/open/floor/plasteel/facility/facilitycarpet
 	icon_state = "carpet"
+
+/turf/open/floor/plasteel/snow
+	icon_state = "snow"
