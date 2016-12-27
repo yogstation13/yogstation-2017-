@@ -447,6 +447,7 @@
 #include "code\game\machinery\mass_driver.dm"
 #include "code\game\machinery\navbeacon.dm"
 #include "code\game\machinery\newscaster.dm"
+#include "code\game\machinery\notele.dm"
 #include "code\game\machinery\overview.dm"
 #include "code\game\machinery\PDApainter.dm"
 #include "code\game\machinery\recharger.dm"
