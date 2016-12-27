@@ -13,7 +13,6 @@
 	var/uses // -1 For inifinite
 	var/human_only = 0
 	var/active = 0
-	var/banned // abductors can't pick this one up.
 
 /obj/item/organ/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -194,23 +193,6 @@
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
 
-/obj/item/organ/gland/bodysnatch
-	cooldown_low = 600
-	cooldown_high = 600
-	human_only = 1
-	uses = 1
-	banned = TRUE
-
-/obj/item/organ/gland/bodysnatch/activate()
-	owner << "<span class='warning'>You feel something moving around inside you...</span>"
-	//spawn cocoon with clone greytide snpc inside
-	if(ishuman(owner))
-		var/obj/effect/cocoon/abductor/C = new (get_turf(owner))
-		C.Copy(owner)
-		C.Start()
-	owner.gib()
-	return
-
 /obj/effect/cocoon/abductor
 	name = "slimy cocoon"
 	desc = "Something is moving inside."
@@ -245,24 +227,3 @@
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc
 		qdel(src)
-
-/obj/item/organ/gland/plasma
-	cooldown_low = 2400
-	cooldown_high = 3000
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
-	uses = 1
-	banned = TRUE
-
-/obj/item/organ/gland/plasma/activate()
-	owner << "<span class='warning'>You feel bloated.</span>"
-	sleep(150)
-	if(!owner) return
-	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
-	sleep(50)
-	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] explodes in a cloud of plasma!</span>")
-	var/turf/open/T = get_turf(owner)
-	if(istype(T))
-		T.atmos_spawn_air("plasma=300;TEMP=[T20C]")
-	owner.gib()
-	return
