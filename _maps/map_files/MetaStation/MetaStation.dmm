@@ -5641,7 +5641,7 @@
 	pixel_x = 6;
 	pixel_y = 28
 	},
-/obj/item/weapon/restraints/handcuffs/cable/pink,
+/obj/item/weapon/restraints/handcuffs/cable,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -77275,7 +77275,7 @@
 	})
 "cum" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs/cable/white,
+/obj/item/weapon/restraints/handcuffs/cable,
 /obj/item/weapon/gun/syringe,
 /turf/open/floor/plating,
 /area/maintenance/aft{

@@ -68,5 +68,35 @@
 	return
 
 /obj/item/trash/toritose
-	name = "toritose"
+	name = "toritos"
 	icon_state = "toritose"
+
+/obj/item/trash/coal
+	name = "coal"
+	desc = "Gifted to the naughty."
+	icon_state = "coal"
+	var/assigned
+
+/obj/item/trash/coal/attack_self(mob/user)
+	if(user.mind)
+		if(user.mind.assigned_role == "Santa")
+			if(assigned)
+				user << "<span class='warning'>[src] hwas assigned to [src].</span>"
+				return
+			user << "<span class='warning'>Who do you want to assign this too?</span>"
+			var/naughty = reject_bad_name(input(user, "Assign someone to the naughty list.", "Naughty Inscription", name),1)
+			if(!naughty)
+				return
+			var/accepted
+			for(var/mob/M in mob_list)
+				if(M.name == "[naughty]")
+					accepted = TRUE
+					assigned = M.name
+					desc = "It has [M.name]'s name on it."
+					naughty_list += M
+
+			if(!accepted)
+				user << "<span class='warning'>You either have the wrong person, or you've spelled their name wrong. Effect cancelled.</span>"
+				return
+
+			user << "<span class='warning'>You have successfully added [naughty] to the naughty list.</span>"

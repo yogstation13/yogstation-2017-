@@ -482,7 +482,7 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-		S.reagents.add_reagent("????", 5)
+		S.reagents.add_reagent("badfood", 5)
 	return S
 
 /obj/item/organ/shadowtumor

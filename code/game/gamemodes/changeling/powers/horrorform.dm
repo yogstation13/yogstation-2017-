@@ -13,8 +13,11 @@
 	var/mob/living/carbon/human/H = user
 	if(user.stat || !ishuman(user))
 		return
-	if(changeling.absorbedcount < 6)//you start with 1 DNA
-		user << "<span class='warning'>We must absorb five lifeforms before being able to use this ability.</span>"
+	if(changeling.absorbedcount < 1)
+		user << "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>"
+		return
+	if(changeling.chem_charges < 20)//no spamming it with 5 chems, you won't get anything done anyway
+		user << "<span class='warning'>We require sufficient chemicals to use this ability.</span>"
 		return
 	if(user.health < 35)//amount of health that makes you revert
 		user << "<span class='warning'>We are too hurt to sustain such power.</span>"
@@ -78,7 +81,11 @@
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/muzzle/abomination(user), slot_wear_mask)
 			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling/abomination(user), slot_glasses)
 			H.set_species(/datum/species/abomination)
-			changeling.chem_recharge_slowdown = 3
+			changeling.mimicing = ""
+			changeling.chem_recharge_rate = 0
+			changeling.chem_recharge_slowdown = (18/changeling.absorbedcount)
+			if(changeling.chem_recharge_slowdown < 2)
+				changeling.chem_recharge_slowdown = 2
 			changeling.transforming = FALSE
 
 //hulk
@@ -163,6 +170,7 @@
 
 
 	if(changeling.reverting == 1)
+		changeling.chem_recharge_rate = 1
 		changeling.chem_recharge_slowdown = 0
 		for(var/obj/item/I in user) // removes any item, the only thing I can think of is cuffs
 			user.unEquip(I)

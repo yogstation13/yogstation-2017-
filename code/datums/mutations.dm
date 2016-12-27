@@ -117,8 +117,8 @@
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 15
-	lowest_value = 256 * 12
+	get_chance = 10
+	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 25
@@ -152,8 +152,8 @@
 
 	name = "Telekinesis"
 	quality = POSITIVE
-	get_chance = 20
-	lowest_value = 256 * 12
+	get_chance = 15
+	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 	limb_req = "head"
 

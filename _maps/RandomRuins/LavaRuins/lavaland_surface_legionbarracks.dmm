@@ -1,0 +1,40 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
+"b" = (/turf/closed/wall/mineral/sandstone,/area/ruin/unpowered)
+"c" = (/mob/living/simple_animal/hostile/asteroid/hivelord/legion,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"d" = (/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"e" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"f" = (/obj/structure/bed,/obj/item/weapon/bedsheet/yellow,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"g" = (/obj/structure/table,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"h" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/spidereggsham,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"i" = (/obj/item/device/flashlight/flare/torch,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"j" = (/obj/structure/table,/obj/item/clothing/head/helmet/roman/legionaire,/obj/item/device/flashlight/flare/torch,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"k" = (/obj/structure/mineral_door/sandstone,/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"l" = (/obj/structure/mineral_door/sandstone,/obj/structure/fans/tiny/invisible,/turf/open/space,/area/ruin/unpowered)
+"m" = (/mob/living/simple_animal/hostile/asteroid/hivelord/legion,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"n" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
+"o" = (/obj/structure/rack,/obj/item/clothing/head/helmet/roman,/obj/item/clothing/shoes/roman,/obj/item/clothing/under/roman,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"p" = (/obj/structure/rack,/obj/item/weapon/claymore{desc = "It's cracked and blunted"; force = 21; name = "Ancient Sword"},/obj/item/weapon/shield/riot/roman{block_chance = 25; desc = "Bears an inscription on the inside: <i>\"Necropolis venio domus\"</i>."; name = "battered shield"},/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"q" = (/obj/structure/bed,/obj/item/weapon/bedsheet/brown,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"r" = (/obj/structure/bed,/obj/item/weapon/bedsheet/brown,/mob/living/simple_animal/hostile/asteroid/hivelord/legion,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"s" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"t" = (/obj/structure/table,/obj/item/device/flashlight/flare/torch,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+"u" = (/obj/structure/rack,/obj/item/clothing/head/helmet/roman/legionaire,/obj/item/clothing/under/roman,/obj/item/clothing/shoes/roman,/turf/open/floor/plasteel/airless/asteroid,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaa
+aabbbbbbbbbbbaa
+aabcdedbfddfbaa
+aabdghdbdcddbaa
+aabidecbfddjbaa
+aabbbkbbbblbbaa
+aabdedmdddddbna
+aabdceddemddknn
+aabedeimddeebnn
+abbbkbbbbbkbbba
+abodddpbqdddrba
+abomddpbrdddrba
+aboeedpbqdsdqba
+abocimpbqmtdqba
+abbuuubbbbbbbba
+aabbbbbaaaaaaaa
+"}

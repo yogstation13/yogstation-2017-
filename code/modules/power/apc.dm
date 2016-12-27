@@ -92,6 +92,7 @@
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
 	var/health = 50
+	var/wiring_color = "yellow"
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
@@ -481,6 +482,7 @@
 					return
 				C.use(10)
 				user << "<span class='notice'>You add cables to the APC frame.</span>"
+				wiring_color = C.item_color
 				make_terminal()
 				terminal.connect_to_network()
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)

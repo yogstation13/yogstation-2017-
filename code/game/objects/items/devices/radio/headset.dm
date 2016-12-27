@@ -161,6 +161,13 @@
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
 
+/obj/item/device/radio/headset/heads/captain/santa
+	name = "santas magical ear"
+	desc = "He knows if you've been bad or good. So be good for goodness sake! Also report this to a coder if you can actually read this."
+	icon_state = null
+	item_state = null
+	flags = EARBANGPROTECT | NODROP | ABSTRACT
+
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
 	desc = "Headset of the fellow who keeps society marching towards technological singularity. \nTo access the science channel, use :n. For command, use :c. For supply use :u."
@@ -235,6 +242,15 @@
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
+
+/obj/item/device/radio/headset/headset_merc
+	name = "private radio headset"
+	desc = "A headset jacked by mercenaries to talk on a universal private channel"
+	icon_state = "cent_headset"
+	flags = EARBANGPROTECT
+	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "

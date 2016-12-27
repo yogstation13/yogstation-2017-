@@ -153,7 +153,7 @@ Doesn't work on other aliens/AI.*/
 		else if(istype(target, /turf))
 			var/turf/T = target
 			// R FLOOR
-			if(istype(T, /turf/open/floor/engine))
+			if(istype(T, /turf/open/floor/engine) || istype(T,  /turf/closed/wall/facility) || istype(T, /turf/open/floor/plasteel/facility/facilitywhite) || istype(T, /turf/open/floor/plasteel/facility/facilitydarkred) || istype(T, /turf/open/floor/plasteel/facility/facilityblack) || istype(T, /turf/open/floor/plasteel/facility/facilitywarning) || istype(T, /turf/open/floor/plasteel/facility/facilitycarpet))
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
 		else// Not a type we can acid.
