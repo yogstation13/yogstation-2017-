@@ -460,9 +460,9 @@
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
-/datum/reagent/toxin/questionmark // food poisoning
+/datum/reagent/toxin/badfood // food poisoning
 	name = "Bad Food"
-	id = "????"
+	id = "badfood"
 	description = "????"
 	reagent_state = LIQUID
 	color = "#d6d6d8"
