@@ -87,7 +87,7 @@ This file's folder contains:
 	if(!silent)
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-		whim without hesitation.</span>")
+		whim without hesitation. If you need help, read https://forums.yogstation.net/index.php?threads/how-to-clock-cult-for-morons.12083/.</span>")
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"

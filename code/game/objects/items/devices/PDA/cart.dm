@@ -229,6 +229,7 @@
 /obj/item/weapon/cartridge/slavemaster
 	name = "\improper Slavemaster-2000 cartridge"
 	icon_state = "cart"
+	special_functions = PDA_SPECIAL_SLAVE_FUNCTIONS
 
 /obj/item/weapon/cartridge/admin
 	name = "\improper H4XMAST3R cartridge"
@@ -993,7 +994,7 @@
 			return
 
 		if("Detonate Slave")
-			if(functions & PDA_SPECIAL_SLAVE_FUNCTIONS)
+			if(special_functions & PDA_SPECIAL_SLAVE_FUNCTIONS)
 				if(imp)
 					if(ismob(imp.loc))
 						var/mob/detonated = imp.loc

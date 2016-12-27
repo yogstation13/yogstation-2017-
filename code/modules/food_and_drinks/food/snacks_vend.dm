@@ -65,11 +65,10 @@
 	filling_color = "#F5F5DC"
 
 /obj/item/weapon/reagent_containers/food/snacks/toritose
-	name = "toritose"
-	desc = "An excellent snack when you need it, however they become salty real fast. Hopefully stands on it's own in the market."
+	name = "toritos"
+	desc = "An elegant snack for a civilized time. Be careful however, for the snack can become incredibly salty. Hopefully stands on it's own in the market."
 	icon_state = "toritose"
 	trash = /obj/item/trash/toritose
-	bitesize = 25
 	list_reagents = list("nutriment" = 1, "sugar" = 1, "sodiumchloride" = 5)
 	junkiness = 21
 	filling_color = "#FF0000"

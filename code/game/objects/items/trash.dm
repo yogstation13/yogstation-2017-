@@ -68,5 +68,5 @@
 	return
 
 /obj/item/trash/toritose
-	name = "toritose"
+	name = "toritos"
 	icon_state = "toritose"

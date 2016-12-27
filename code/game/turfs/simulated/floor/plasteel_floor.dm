@@ -460,3 +460,14 @@
 	icon_state = "warningsandeffect"
 /turf/open/floor/plasteel/sandeffect/warning/corner
 	icon_state = "warningsandeffectcorners"
+
+/turf/open/floor/plasteel/facility/facilitywhite
+	icon_state = "white"
+/turf/open/floor/plasteel/facility/facilitydarkred
+	icon_state = "darkredfull"
+/turf/open/floor/plasteel/facility/facilityblack
+	icon_state = "dark"
+/turf/open/floor/plasteel/facility/facilitywarning
+	icon_state = "warningline"
+/turf/open/floor/plasteel/facility/facilitycarpet
+	icon_state = "carpet"

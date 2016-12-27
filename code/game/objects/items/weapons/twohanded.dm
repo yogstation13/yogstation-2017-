@@ -29,7 +29,7 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 
-/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
+/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
 	wielded = 0
@@ -41,12 +41,11 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(isrobot(user))
-		user << "<span class='notice'>You free up your module.</span>"
-	else if(istype(src, /obj/item/weapon/twohanded/required))
-		user << "<span class='notice'>You drop \the [name].</span>"
-	else
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(show_message)
+		if(isrobot(user))
+			user << "<span class='notice'>You free up your module.</span>"
+		else
+			user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
@@ -92,12 +91,14 @@
 
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
+	if(!wielded)
+		return
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
 			O.unwield(user)
-	return	unwield(user)
+	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -124,7 +125,7 @@
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required/
+/obj/item/weapon/twohanded/required
 	w_class = 5
 
 /obj/item/weapon/twohanded/required/attack_self()
@@ -139,15 +140,30 @@
 /obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
 	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
 	if(get_dist(src,user) > 1)
-		return 0
+		return
 	if(H != null)
 		user << "<span class='notice'>\The [src] is too cumbersome to carry in one hand!</span>"
 		return
 	wield(user)
 	..()
 
+/obj/item/weapon/twohanded/required/equipped(mob/user, slot)
+	..()
+	if((slot == slot_l_hand) || (slot == slot_r_hand))
+		wield(user)
+	else
+		unwield(user)
 
-/obj/item/weapon/twohanded/
+/obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
+	..()
+	if(!wielded)
+		user.unEquip(src)
+
+/obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(show_message)
+		user << "<span class='notice'>You drop [src].</span>"
+	..(user, FALSE)
+	user.unEquip(src)
 
 /*
  * Fireaxe
@@ -283,10 +299,11 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
-	sharpness = IS_SHARP
-	w_class = w_class_on
 	..()
-	hitsound = 'sound/weapons/blade1.ogg'
+	if(wielded)
+		hitsound = 'sound/weapons/blade1.ogg'
+		sharpness = IS_SHARP
+		w_class = w_class_on
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
