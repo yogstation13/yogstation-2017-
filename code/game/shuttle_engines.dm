@@ -23,6 +23,7 @@
 
 /obj/structure/shuttle/engine/propulsion/burst
 	name = "burst"
+	icon_state = "burst_s"
 
 /obj/structure/shuttle/engine/propulsion/burst/left
 	name = "left"

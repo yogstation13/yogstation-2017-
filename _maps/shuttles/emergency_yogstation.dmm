@@ -68,10 +68,11 @@
 "bp" = (/obj/machinery/vending/snack,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "bq" = (/obj/structure/closet/crate,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
 "br" = (/turf/closed/wall/shuttle{icon_state = "swall_s5"; dir = 2},/area/shuttle/escape)
-"bs" = (/turf/closed/wall/shuttle{icon_state = "swall15"; dir = 2},/area/shuttle/escape)
-"bt" = (/turf/closed/wall/shuttle{icon_state = "swall_s9"; dir = 2},/area/shuttle/escape)
+"bs" = (/turf/closed/wall/shuttle{icon_state = "swall_s9"; dir = 2},/area/shuttle/escape)
+"bt" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_l"},/turf/open/floor/plating/airless,/area/shuttle/escape)
 "bu" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"bv" = (/turf/closed/wall/shuttle{icon_state = "swall1"; dir = 2},/area/shuttle/escape)
+"bv" = (/obj/structure/shuttle/engine/propulsion,/turf/closed/wall/shuttle{icon_state = "swall1"; dir = 2},/area/shuttle/escape)
+"bw" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/open/floor/plating/airless,/area/shuttle/escape)
 
 (1,1,1) = {"
 aaaaaaabacacacacacadaaaaaa
@@ -99,6 +100,6 @@ aBaIaGaGaGbgaBamamavaxaxaq
 acaIaGbjaGaiacamaXaBbkbkac
 aBblaGbmaGbgaBamamaZbnbnaB
 aBblaGaGaGbgaBbobpaBbqbqaB
-brayacacacacbsacacacacaybt
-aabrbububububvbububububtaa
+brayacacacacawacacacacaybs
+aabrbtbubububvbubububwbsaa
 "}
