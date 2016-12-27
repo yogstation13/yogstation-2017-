@@ -2778,6 +2778,7 @@
 	},
 /area/mine/living_quarters)
 "fB" = (
+/obj/vehicle/atv,
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
