@@ -5659,11 +5659,11 @@
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/ctf)
 "rf" = (
-/obj/item/weapon/twohanded/required/ctf/blue,
+/obj/item/weapon/twohanded/ctf/blue,
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/ctf)
 "rg" = (
-/obj/item/weapon/twohanded/required/ctf/red,
+/obj/item/weapon/twohanded/ctf/red,
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/ctf)
 "rh" = (
