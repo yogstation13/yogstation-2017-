@@ -163,9 +163,11 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	victim << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
 	src << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
 
-/mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
-	healthscan(usr, M)
-	chemscan(usr, M)
+/mob/living/simple_animal/borer/UnarmedAttack(atom/A)
+	if(isliving(A))
+		var/mob/living/M = A
+		healthscan(usr, M)
+		chemscan(usr, M)
 	return
 
 /mob/living/simple_animal/borer/ex_act()
