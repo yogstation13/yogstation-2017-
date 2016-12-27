@@ -206,10 +206,10 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		detatch()
 
 	loc = get_turf(victim)
-
-	for(var/image/hud in victim.client.images)
-		if(hud.icon_state == "borer")
-			victim.client.images -= hud
+	if(victim.client)
+		for(var/image/hud in victim.client.images)
+			if(hud.icon_state == "borer")
+				victim.client.images -= hud
 
 	victim.borer = null
 	victim = null
