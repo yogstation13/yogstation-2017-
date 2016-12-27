@@ -420,8 +420,7 @@
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
 				 /obj/item/stack/sheet/sinew = 2,
-				 /obj/item/stack/sheet/mineral/sandstone = 6,
-				 /obj/item/stack/sheet/mineral/mythril = 1)
+				 /obj/item/stack/sheet/mineral/sandstone = 6)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindertreads
@@ -454,9 +453,9 @@
 	name = "Chitin Boots"
 	result = /obj/item/clothing/shoes/chitintreads
 	time = 40
-	reqs = list(/obj/item/stack/sheet/bone = 1,
-				/obj/item/stack/sheet/animalhide/weaver_chitin = 1,
-				/obj/item/stack/sheet/sinew = 1,
+	reqs = list(/obj/item/stack/sheet/bone = 3,
+				/obj/item/stack/sheet/animalhide/weaver_chitin = 2,
+				/obj/item/stack/sheet/sinew = 2,
 				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL
 
@@ -464,9 +463,9 @@
 	name = "Chitin Plate Armor"
 	result = /obj/item/clothing/suit/armor/chitinplate
 	time = 100
-	reqs = list (/obj/item/stack/sheet/bone = 5,
-				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
-				 /obj/item/stack/sheet/sinew = 3,
+	reqs = list (/obj/item/stack/sheet/bone = 6,
+				 /obj/item/stack/sheet/animalhide/weaver_chitin = 3,
+				 /obj/item/stack/sheet/sinew = 6,
 				 /obj/item/stack/sheet/mineral/mythril = 1,
 				 /obj/item/clothing/suit/armor/bone = 1)
 	category = CAT_PRIMAL
@@ -475,8 +474,8 @@
 	name = "Chitin Gauntlets"
 	result = /obj/item/clothing/gloves/chitinhands
 	time = 30
-	reqs = list (/obj/item/stack/sheet/bone = 3,
-				 /obj/item/stack/sheet/animalhide/weaver_chitin = 1,
+	reqs = list (/obj/item/stack/sheet/bone = 6,
+				 /obj/item/stack/sheet/animalhide/weaver_chitin = 2,
 				 /obj/item/stack/sheet/sinew = 1,
 				 /obj/item/stack/sheet/mineral/mythril = 1,
 				 /obj/item/clothing/gloves/bracer = 1)
