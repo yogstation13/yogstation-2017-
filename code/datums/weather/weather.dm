@@ -73,6 +73,7 @@
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
 	addtimer(src, "start", telegraph_duration)
+	next_hit_time = world.time + telegraph_duration
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
