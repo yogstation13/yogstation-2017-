@@ -21,7 +21,7 @@ z9 = empty space
 
 		#define MINETYPE "lavaland"
 
-        #include "map_files\TgStation\tgstation.2.1.3.dmm"
+        #include "map_files\MinskyStation\MinskyStation.dmm"
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
         #include "map_files\generic\z4.dmm"
