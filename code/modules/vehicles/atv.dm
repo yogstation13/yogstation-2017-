@@ -8,21 +8,57 @@
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
+	var/datum/action/atvlight/vlight
 
+/obj/vehicle/atv/examine(mob/user)
+	..()
+	if(vlight)
+		if(vlight.toggle)
+			user << "<span class='notice'>The lights are on.</span>"
+		else
+			user << "<span class='notice'>The lights are off.</span>"
 
 /obj/vehicle/atv/New()
 	..()
 	if(!atvcover)
 		atvcover = image("icons/obj/vehicles.dmi", "atvcover")
 		atvcover.layer = ABOVE_MOB_LAYER
+	vlight = new(loc, src)
 
+/datum/action/atvlight
+	name = "Toggle ATV Light"
+	desc = "Click on. Click off."
+	button_icon_state = "mech_lights_off"
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_LYING | AB_CHECK_STUNNED | AB_CHECK_RESTRAINED
+	var/toggle
+	var/obj/vehicle/atv/ATV
 
-obj/vehicle/atv/post_buckle_mob(mob/living/M)
+/datum/action/atvlight/New(loc, pATV)
+	..()
+	if(!pATV)
+		qdel(src)
+	ATV = pATV
+
+/datum/action/atvlight/Trigger()
+	if(!..())
+		return 0
+	if(ATV)
+		toggle = !toggle
+		if(toggle)
+			ATV.AddLuminosity(8)
+			ATV.visible_message("<span class='notice'>[ATV]'s lights blink on.</span>"
+		else
+			ATV.AddLuminosity(-8)
+			ATV.visible_message("<span class='notice'>[ATV]'s lights slowly diminish.</span>")
+	return 1
+
+/obj/vehicle/atv/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
 		overlays += atvcover
+		vlight.Grant(M)
 	else
 		overlays -= atvcover
-
+		vlight.Remove(M)
 
 /obj/vehicle/atv/handle_vehicle_layer()
 	if(dir == SOUTH)

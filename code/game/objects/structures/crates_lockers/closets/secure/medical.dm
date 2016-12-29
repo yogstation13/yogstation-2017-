@@ -122,6 +122,7 @@
 	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/device/sensor_device(src)
 	new /obj/item/weapon/storage/box/bodybags(src)
+	new /obj/item/clothing/glasses/hud/health/optical(src)
 	var/obj/item/key/K = new(src)
 	K.name = "ATV key"
 
