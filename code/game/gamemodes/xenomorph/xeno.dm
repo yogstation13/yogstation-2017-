@@ -14,6 +14,9 @@ var/list/turf/xenomorphweeds = list()
 	"DRONES" = list ()
 	)
 
+	// "xenomorphs" list saves mind datums. not mobs.
+
+
 	var/list/datum/mind/predators = list()
 
 	var/queensuffix
@@ -308,7 +311,7 @@ var/list/turf/xenomorphweeds = list()
 		priority_announce("The Emergency Shuttle can now be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 	else if (SSshuttle.emergency.mode == SHUTTLE_IDLE && calculateXenos(1) != DEAD)
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
-		priority_announce("The Emergency Shuttle can no longer be called..", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
+		priority_announce("The Emergency Shuttle can no longer be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 
 	if(!ERTlaunch) // Has an ERT already been sent?
 		check_for_ERT()
@@ -339,9 +342,19 @@ var/list/turf/xenomorphweeds = list()
 			world << "<FONT size = 5><B>Xenomorphs Major Win!</B></FONT>"
 			world << "<B>The entire station was taken over by alien weeds.</B>"
 		else
-			feedback_set_details("round_end_result","win - xenomorphs took over, even after death")
+			feedback_set_details("round_end_result","win - xenomorphs exterminated, but weeds took over")
 			world << "<FONT size = 5><B>Xenomorphs Minor Win!</B></FONT>"
 			world << "<B>The station was taken over by alien weeds but, the xenomorphs were exterminated.</B>"
+
+	else if(station_was_nuked)
+		if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+			feedback_set_details("round_end_result", "neutral win - nuked xenos")
+			world << "<FONT size = 5><B>Nuclear Win!</B></FONT>"
+			world << "<B>The crew evacuated, but had to nuke their station to get rid of the xenomorphs.</B>"
+		else
+			feedback_set_details("round_end_result", "neutral win - nuked themselves")
+			world << "<FONT size = 5><B>Neutral Win!</B></FONT>"
+			world << "<B>The crew nuked the station without evacuating to get rid of the xenomorphs!</B>"
 
 	else if (alien_weed_control_count > xenomorphweeds.len)
 		if(!calculateXenos())
@@ -352,16 +365,6 @@ var/list/turf/xenomorphweeds = list()
 			feedback_set_details("round_end_result","lose - the xenomorphs were exterminated")
 			world << "<FONT size = 5><B>Crew Major Win!</B></FONT>"
 			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak!</B>"
-
-	else if(station_was_nuked)
-		if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-			feedback_set_details("round_end_result", "neutral win - nuked xenos")
-			world << "<FONT size = 5><B>Nuclear Win!</B></FONT>"
-			world << "<B>The crew evacuated but, had to nuke their station to get rid of the xenomorphs.</B>"
-		else
-			feedback_set_details("round_end_result", "neutral win - nuked themselves")
-			world << "<FONT size = 5><B>Neutral Win!</B></FONT>"
-			world << "<B>The crew nuked the station without evacuating to get rid of the xenomorphs!</B>"
 	..()
 	return
 

@@ -45,3 +45,13 @@ var/list/noise_database = list()
 		crossed += AM
 		spawn(100)
 			crossed -= AM
+
+/obj/effect/noise/process()
+	..()
+	search_for_walkers()
+
+/obj/effect/noise/proc/search_for_walkers() // not the dead kind...
+	for(var/mob/living/carbon/human/H in orange(1, src))
+		if(H)
+			if(H.m_intent == "walk")
+				H.UpdateAlienThermal()

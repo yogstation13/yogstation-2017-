@@ -16,7 +16,7 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	if(prob(50))
+	if(prob(80))
 		. = -1
 	. += ..()
 

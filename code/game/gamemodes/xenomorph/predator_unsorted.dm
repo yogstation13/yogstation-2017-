@@ -39,13 +39,6 @@
 	facial_hair_style = "Shaved"
 	update_icons()
 
-/mob/living/carbon/human/predator/Stat()
-	..()
-	statpanel("Status")
-	stat(null, text("Intent: []", a_intent))
-	stat(null, text("Move Mode: []", m_intent))
-	return
-
 /mob/living/carbon/human/predator/IsAdvancedToolUser()
 	return 1
 

@@ -886,6 +886,17 @@
 	staticOverlay.override = 1
 	staticOverlays["animal"] = staticOverlay
 
+/mob/living/carbon/human/UpdateAlienThermal()
+	if(thermalOverlay)
+		RemoveAlienThermal()
+
+	thermalOverlay = image(icon('icons/effects/effects.dmi', "thermal"), loc = src)
+	thermalOverlay.override = 1
+
+	for(var/mob/living/carbon/alien/A in mob_list)
+		if(A.client)
+			A.client.images |= thermalOverlay
+
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))

@@ -20,13 +20,15 @@ Sorry Giacom. Please don't be mad :(
 				else //no choice? force static
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
+
+	if(!thermalOverlay)
+		UpdateAlienThermal()
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
-	UpdateAlienThermal()
 
 
 /mob/living/prepare_huds()
@@ -47,6 +49,7 @@ Sorry Giacom. Please don't be mad :(
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
+	RemoveAlienThermal()
 	return QDEL_HINT_HARDDEL_NOW
 
 
@@ -1067,10 +1070,7 @@ Sorry Giacom. Please don't be mad :(
 
 	for(var/mob/living/L in mob_list)
 		if(isalien(L))
-			return
+			continue
 		L.thermalOverlay = image(getThermalIcon(new/icon(L.icon,L.icon_state)), loc = L)
 		L.thermalOverlay.override = 1
 		client.images |= L.thermalOverlay
-
-	if(client)
-		overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)

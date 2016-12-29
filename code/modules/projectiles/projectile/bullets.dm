@@ -289,9 +289,6 @@
 			nodamage = 1
 			damage = 0
 
-
-
-
 /obj/item/projectile/bullet/neurospit/proc/splashAcid(var/obj/item/item, var/turf/turf)
 	if(item)
 		new /obj/effect/acid(get_turf(item), item)

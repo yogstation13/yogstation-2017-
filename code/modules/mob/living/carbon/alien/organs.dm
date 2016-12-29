@@ -213,14 +213,11 @@
 		if(neurotoxinStorage == neurotoxinStorageLimit)
 			drool()
 
-
 /obj/item/organ/alien/neurotoxinthroat/proc/drool()
 	if(!owner)
 		return
 
-	var/obj/effect/decal/cleanable/xenodrool/XT = new /obj/effect/decal/cleanable/xenodrool(owner.loc)
-	var/turf/T = get_turf(owner)
-	XT.loc = T.loc
+	new /obj/effect/decal/cleanable/xenodrool(get_turf(owner))
 
 /obj/item/organ/alien/neurotoxinthroat/proc/start_ache()
 	ache = TRUE
@@ -231,7 +228,7 @@
 
 /obj/item/organ/alien/neurotoxinthroat/Insert(mob/living/carbon/M)
 	..()
-	M.Stat(null, "Throat Canal Storage: [neurotoxinStorage]/[neurotoxinStorageLimit]")
+	M.Stat("Throat Canal Storage:", "[neurotoxinStorage]/[neurotoxinStorageLimit]")
 
 /obj/item/organ/alien/neurotoxinthroat/frail
 	name = "weak xenomorphic throat canal"
@@ -347,14 +344,17 @@
 		message_admins("ERROR: (2) Canceling [user] ([user.ckey])'s shot right now.")
 		return
 
-
 	A.current = U
-	A.preparePixelProjectile(target, get_turf(target), user, params)
-	A.fire()
+	if(istype(target, /turf/) || istype(target, /obj))
+		if(target in view(1, user))
+			A.splashAcid(target)
+	else
+		A.preparePixelProjectile(target, get_turf(target), user, params)
+		A.fire()
+
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost*5)
 	throat.neurotoxinStorage = 0
-
 	return 1
 
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)

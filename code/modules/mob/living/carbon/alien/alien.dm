@@ -166,8 +166,6 @@ Des: Gives the client of the alien an image on each infected mob.
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 					client.images += I
-	return
-
 
 /*----------------------------------------
 Proc: RemoveInfectionImages()
@@ -178,7 +176,6 @@ Des: Removes all infected images from the alien.
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				qdel(I)
-	return
 
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
