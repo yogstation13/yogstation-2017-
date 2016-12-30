@@ -251,6 +251,9 @@
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
+		var/obj/item/whoopee/W = locate() in src
+		if(W)
+			W.forceMove(get_turf(src))
 		qdel(src)
 
 /obj/structure/chair/stool/bar
