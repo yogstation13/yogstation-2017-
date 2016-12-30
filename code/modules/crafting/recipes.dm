@@ -419,9 +419,7 @@
 	result = /obj/item/weapon/sinew_tent
 	time = 30
 	reqs = list(/obj/item/stack/sheet/bone = 3,
-				 /obj/item/stack/sheet/sinew = 2,
-				 /obj/item/stack/sheet/mineral/sandstone = 6,
-				 /obj/item/stack/sheet/mineral/mythril = 1)
+				 /obj/item/stack/sheet/sinew = 4)
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pathfindertreads

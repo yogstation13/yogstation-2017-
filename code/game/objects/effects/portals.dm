@@ -17,12 +17,12 @@
 /obj/effect/portal/Bumped(mob/M as mob|obj)
 	src.teleport(M)
 
-/obj/effect/portal/New(loc, turf/target, creator, lifespan=300)
+/obj/effect/portal/New(loc, turf/target, creator, lifespan=300, precise)
 	portals += src
 	src.loc = loc
 	src.target = target
 	src.creator = creator
-	var/area/A = target.loc
+	var/area/A = get_area(target)
 	if(A.noteleport) // No point in persisting if the target is unreachable.
 		qdel(src)
 		return
@@ -31,6 +31,8 @@
 	if(lifespan > 0)
 		spawn(lifespan)
 			qdel(src)
+	if(precise)
+		precision = precise
 	return
 
 /obj/effect/portal/Destroy()

@@ -1,5 +1,9 @@
 var/list/GPS_list = list()
 
+#define ADJACENT "red"
+#define CLOSE "blue"
+#define AWAY "white"
+
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
@@ -15,6 +19,7 @@ var/list/GPS_list = list()
 	var/channel = "common"
 	var/emagged = 0
 	var/savedlocation // preferably filled with x,y,z
+	var/intelligent
 
 /obj/item/device/gps/New()
 	..()
@@ -81,7 +86,15 @@ var/list/GPS_list = list()
 			if((G.emagged || G.emped) == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else if(G.tracking)
-				t += "<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
+				var/color = AWAY
+				if(intelligent)
+					if(get_dist(user, pos) <= 20)
+						color = ADJACENT
+					else if (get_dist(user, pos) <= 40)
+						color = CLOSE
+					else
+						color = AWAY
+				t += "<span class='[color]'<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])</span>"
 			else
 				continue
 	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 350))
@@ -142,6 +155,7 @@ var/list/GPS_list = list()
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 	channel = "lavaland"
+	intelligent = TRUE
 
 /obj/item/device/gps/internal
 	icon_state = null

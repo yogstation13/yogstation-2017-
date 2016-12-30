@@ -46,7 +46,7 @@
 /var/const/access_theatre = 46
 /var/const/access_research = 47
 /var/const/access_mining = 48
-/var/const/access_mining_office = 49 //not in use
+/var/const/access_mining_lockers = 49 //not in use
 /var/const/access_mailsorting = 50
 /var/const/access_mint = 51
 /var/const/access_mint_vault = 52

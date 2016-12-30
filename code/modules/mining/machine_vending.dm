@@ -16,35 +16,35 @@
 	anchored = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		400, TOOL),
+		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800, TOOL),
 		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400, TOOL),
-		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		150, TOOL),
+		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400, TOOL),
 		new /datum/data/mining_equipment("Barometer",			/obj/item/device/barometer/mining,										300, TOOL),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										400, TOOL),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750, TOOL),
 		new /datum/data/mining_equipment("One-Use Ore Capsule",	/obj/item/orecapsule,													100, TOOL),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500, MEDS),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600, MEDS),
 		new /datum/data/mining_equipment("Fire First-Aid Kit",	/obj/item/weapon/storage/firstaid/fire,									600, MEDS),
 		new /datum/data/mining_equipment("Toxin First-Aid Kit",	/obj/item/weapon/storage/firstaid/toxin,								600, MEDS),
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    	50, MEDS),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				  		500, MEDS),
+		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				  		200, MEDS),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining/alt,								500, EQUIP),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600, EQUIP),
-		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            1750, EQUIP),
+		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            2500, EQUIP),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								1000, EQUIP),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750, WEAPON),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		750, WEAPON),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		750, WEAPON),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		750, WEAPON),
-		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		1000, WEAPON),
+		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		1500, WEAPON),
 		new /datum/data/mining_equipment("Plasma Cutter" ,		/obj/item/weapon/gun/energy/plasmacutter,								1500, WEAPON),
-		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		1000, WEAPON),
-		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		200, DRONE),
+		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		2000, WEAPON),
+		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		500, DRONE),
 		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_upgrade,      			   			   		400, DRONE),
 		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_upgrade/health,      			   	       		400, DRONE),
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_upgrade/cooldown,      			   	   		600, DRONE),
-		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		700, DRONE),
-		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		200, MISC),
+		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000, DRONE),
+		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		800, MISC),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000, MISC),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   		500, MISC),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		200, MISC),
@@ -62,10 +62,11 @@
 	var/cost = 0
 	var/category
 
-/datum/data/mining_equipment/New(name, path, cost)
-	src.equipment_name = name
-	src.equipment_path = path
-	src.cost = cost
+/datum/data/mining_equipment/New(name, path, pcost, cat)
+	equipment_name = name
+	equipment_path = path
+	cost = pcost
+	category = cat
 
 /obj/machinery/mineral/equipment_vendor/New()
 	..()
@@ -105,16 +106,21 @@
 	else
 		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
 	dat += "</div>"
-	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='200'>"
+	dat += "<br><b>Equipment point cost list:</b><BR>"//<table border='0' width='200'>
 	for(var/datum/data/mining_equipment/prize in prize_list)
-		categories[prize.category] = prize
+		var/list/L = categories[prize.category]
+		if(L)
+			L += prize
+		else
+			categories[prize.category] = list(prize)
+
 	for(var/a in categories)
-		dat += "<h2>[a]</h2>"
-		dat += "<div class='statusDisplay'>"
-		for(var/datum/data/mining_equipment/equip in a[categories])
-			dat += "<tr><td>[equip.equipment_name]</td><td>[equip.cost]</td><td><A href='?src=\ref[src];purchase=\ref[equip]'>Purchase</A></td></tr>"
-		dat += "</div>"
-	dat += "</table>"
+		dat += "<h3>[a]</h3>"
+		dat += "<div class='statusDisplay'><ul>" // use to be commented out
+		for(var/datum/data/mining_equipment/prize in categories[a])
+			dat += "<li><tr><td>[prize.equipment_name]</td><td>[prize.cost]</td><td><A href='?src=\ref[src];purchase=\ref[prize]'>Purchase</A></td></tr></li>"
+		dat += "</ul></div>"
+		dat += "<br>" //</table> went before that br
 
 	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 350)
 	popup.set_content(dat)

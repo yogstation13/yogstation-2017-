@@ -1306,6 +1306,7 @@
 #include "code\modules\mining\lavaland\lavaland_areas.dm"
 #include "code\modules\mining\lavaland\necropolis_chests.dm"
 #include "code\modules\mining\lavaland\ruins\gym.dm"
+#include "code\modules\mining\mine_equipment\barometer.dm"
 #include "code\modules\mining\mine_equipment\equipment.dm"
 #include "code\modules\mining\mine_equipment\hivelordstabilizer.dm"
 #include "code\modules\mining\mine_equipment\jaunter.dm"

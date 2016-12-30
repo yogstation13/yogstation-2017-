@@ -32,10 +32,11 @@
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
 	icon_state = "mining"
-	req_access = list(access_mining)
+	req_access = list(access_mining_lockers)
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
+	new /obj/item/device/gps/mining(src)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
@@ -54,40 +55,6 @@
 	desc = "A mining car. This one doesn't work on rails, but has to be dragged."
 	name = "Mining car (not for rails)"
 	icon_state = "miningcar"
-
-
-// ************************* Barometer! ******************************
-// attack_self() is in weather.dm
-
-/obj/item/device/barometer
-	name = "barometer"
-	desc = "A persistent device used for tracking weather and storm patterns. IN SPACE!"
-	icon_state = "barometer"
-	var/obj/machinery/lavaland_controller/controller // used to update the weather and such
-	var/cooldown
-	var/accuracy // 0 is the best accuracy.
-
-/obj/item/device/barometer/New()
-	..()
-	barometers += src
-
-/obj/item/device/barometer/Destroy()
-	barometers -= src
-	return ..()
-
-/obj/item/device/barometer/proc/ping(time)
-	spawn(time)
-		if(isliving(loc))
-			var/mob/living/L = loc
-			L << "<span class='notice'>[src] is ready!</span>"
-		playsound(get_turf(src), 'sound/machines/click.ogg', 100)
-
-/obj/item/device/barometer/mining
-	desc = "A special device used for tracking ash storms."
-
-/obj/item/device/barometer/tribal
-	desc = "A device handed down from ashwalker to ashwalker. This tool is used to speak with the wind, translate it's whispers, and figure out when a storm will hit."
-	accuracy = 20
 
 //Computer
 /obj/item/device/gps/computer

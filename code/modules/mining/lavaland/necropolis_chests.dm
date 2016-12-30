@@ -38,7 +38,7 @@
 					new /obj/item/weapon/ore/gold(src)
 
 		if(5)
-			for(var/i, i>5, i++)
+			for(var/i, i>2, i++)
 				new /obj/item/weapon/ore/diamond(src)
 
 	var/loot = rand(1,25)

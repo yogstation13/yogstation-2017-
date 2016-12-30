@@ -51,6 +51,12 @@
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
 			return 0
+		if(istype(H.belt, /obj/item/weapon/storage/belt/mining))
+			var/obj/item/weapon/storage/belt/mining/M = H.belt
+			var/obj/item/device/wormhole_jaunter/jaunter = locate() in M
+			if(jaunter)
+				visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
+				jaunter.chasm_react(H)
 		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
 			return 0
 	return 1
