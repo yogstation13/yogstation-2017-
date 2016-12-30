@@ -244,6 +244,9 @@ This file's folder contains:
 	var/slot = "At your feet"
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
+		if (L.mind.assigned_role == "Clown")
+			L << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			L.dna.remove_mutation(CLOWNMUT)
 		if(H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 			var/obj/item/weapon/storage/backpack/B = H.back
 			new/obj/item/clockwork/slab/starter(B)
@@ -253,7 +256,7 @@ This file's folder contains:
 	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
 	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
-	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
+	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information, or read the guide at https://forums.yogstation.net/index.php?threads/how-to-clock-cult-for-morons.12083/.</i>"
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
@@ -262,6 +265,9 @@ This file's folder contains:
 	var/datum/mind/M = L.mind
 	M.current << "<b>This is Ratvar's will:</b> [clockwork_explanation]"
 	M.memory += "<b>Ratvar's will:</b> [clockwork_explanation]<br>"
+	if (M.mind.assigned_role == "Clown")
+			M << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			M.dna.remove_mutation(CLOWNMUT)
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
