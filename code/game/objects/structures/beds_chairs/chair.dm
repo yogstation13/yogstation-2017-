@@ -15,10 +15,25 @@
 	..()
 	handle_layer()
 
+/obj/structure/chair/user_buckle_mob(mob/living/M, mob/user)
+	. = ..()
+	if(.)
+		var/obj/item/whoopee/W = locate() in src
+		if(W)
+			if(M)
+				M.visible_message("<span class='notice'>You hear a very disturbing noise come from under [M]",\
+					"<span class='notice'>Something was wrong with [src].</span>")
+				playsound(get_turf(src),pick(W.fnoises),50)
+				W.forceMove(get_turf(src))
+				desc = initial(desc)
+	return .
+
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
 	if(buildstacktype && (!(flags & NODECONSTRUCT)))
 		new buildstacktype(loc,buildstackamount)
+	for(var/obj/item/whoopee/W in src)
+		W.forceMove(get_turf(src))
 	..()
 
 /obj/structure/chair/attack_paw(mob/user)
@@ -67,6 +82,19 @@
 		SK.loc = E
 		SK.master = E
 		qdel(src)
+	else if(istype(W, /obj/item/whoopee))
+		if(istype(src, /obj/structure/chair/stool))
+			return
+		var/obj/item/whoopee/whoo = locate() in src
+		if(whoo)
+			user << "<span class='warning'>There's already a cushion over this seat!</span>"
+			return
+		user << "<span class='warning'>You softly place [W] ontop of [src].</span>"
+		desc = "[desc]. There seems to be [W] sitting on top already."
+		if(user.drop_item())
+			W.forceMove(src)
+		else
+			user << "<span class='warning'>Seems like [W] is stuck to your hand.</span>"
 	else
 		return ..()
 
