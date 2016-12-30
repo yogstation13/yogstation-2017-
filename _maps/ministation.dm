@@ -49,7 +49,7 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 #if !defined(MAP_FILE)
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
-		#define TITLESCREEN_ALT "title_2"
+		#define TITLESCREEN_ALT null
 
 		#define MINETYPE "mining"
 
