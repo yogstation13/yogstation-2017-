@@ -1,0 +1,4 @@
+author: Stealthkibbler
+delete-after: True
+changes: 
+  - bugfix: "Xenomorph Larva now give a prompt when attempting to grab a ghost for bursting. If the prompt gets intrusive on your ghastly observing consider disabling the xenomorph pref. Thanks to Super and Cruix for supplying the code on this one <3"
