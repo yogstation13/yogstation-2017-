@@ -1,5 +1,0 @@
-author: Super3222
-delete-after: True
-changes: 
-  - tweak: "Telescience now respects areas that restrict teleportation"
-  - rscadd: "Blueprints for the anti teleportation machine have spread across the galaxy. Everyone wants their hands on one."
