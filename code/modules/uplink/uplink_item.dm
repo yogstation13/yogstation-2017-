@@ -189,10 +189,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 	surplus = 50
 
-/datum/uplink_item/dangerous/carbine/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
-	include_modes = list(/datum/game_mode/gang)
-
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
@@ -217,17 +213,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	cost = 11
+	cost = 9
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
-			stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/weapon/flamethrower/full/tank
-	cost = 7
-	surplus = 40
+	name = "Back-mounted High-power Flamethrower"
+	desc = "A compact back-mounted sprayer that comes pre-loaded with a cocktail of flammable chemicals. Use with caution."
+	item = /obj/item/weapon/watertank/operator
+	cost = 20
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/sword
@@ -315,7 +310,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			organic host as a home base and source of fuel."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 25
 
 // Ammunition
@@ -551,7 +546,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
-	cost = 3
+	cost = 2
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/gang)
 
@@ -724,7 +719,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
 	surplus = 30
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang, /datum/game_mode/traitor/double_agents) 
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
@@ -833,7 +828,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/device/encryptionkey/binary
-	cost = 4
+	cost = 2
 	surplus = 75
 
 /datum/uplink_item/device_tools/encryptionkey
