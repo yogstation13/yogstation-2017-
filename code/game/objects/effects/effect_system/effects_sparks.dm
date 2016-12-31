@@ -38,6 +38,7 @@
 		if(istype(A, /obj/structure/reagent_dispensers/fueltank))
 			var/obj/structure/reagent_dispensers/fueltank/F = A
 			F.boom()
+	..()
 
 /datum/effect_system/spark_spread
 	effect_type = /obj/effect/particle_effect/sparks
