@@ -64,9 +64,6 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
-	if(!check_rights(R_BASIC))
-		src << "<font color='red'>Error: Admin-PM: Only administrators may use this command.</font>"
-		return
 	var/client/C
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
