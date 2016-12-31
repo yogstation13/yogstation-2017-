@@ -1100,12 +1100,12 @@
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/darts/combat{
+/obj/item/weapon/storage/box/darts_combat{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/darts/anti_hulk,
-/obj/item/weapon/storage/box/darts/sleepy{
+/obj/item/weapon/storage/box/darts_anti_hulk,
+/obj/item/weapon/storage/box/darts_sleepy{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -43091,7 +43091,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/rxglasses,
-/obj/item/weapon/storage/box/darts/sleepy,
+/obj/item/weapon/storage/box/darts_sleepy,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -47745,7 +47745,7 @@
 /obj/structure/table,
 /obj/item/weapon/pen,
 /obj/item/clothing/tie/stethoscope,
-/obj/item/weapon/storage/box/darts/anti_hulk,
+/obj/item/weapon/storage/box/darts_anti_hulk,
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel{
 	icon_state = "barber"

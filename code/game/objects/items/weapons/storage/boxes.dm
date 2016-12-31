@@ -655,12 +655,12 @@
 	new /obj/item/dart_casing(src)
 	new /obj/item/dart_casing(src)
 
-/obj/item/weapon/storage/box/darts/sleepy
+/obj/item/weapon/storage/box/darts_sleepy
 	name = "box of sleepy darts"
 	desc = "A box filled with morphine filled darts."
 	icon_state = "sleepy_darts"
 
-/obj/item/weapon/storage/box/darts/sleepy/New() //For anyone wanting to add more boxes: New(var/loc, var/reagent_type, var/amount = 15, allow reload, max_chemicals)
+/obj/item/weapon/storage/box/darts_sleepy/New() //For anyone wanting to add more boxes: New(var/loc, var/reagent_type, var/amount = 15, allow reload, max_chemicals)
 	new /obj/item/dart_casing/medical(src, "morphine")
 	new /obj/item/dart_casing/medical(src, "morphine")
 	new /obj/item/dart_casing/medical(src, "morphine")
@@ -669,12 +669,12 @@
 	new /obj/item/dart_casing/medical(src, "morphine")
 	new /obj/item/dart_casing/medical(src, "morphine")
 
-/obj/item/weapon/storage/box/darts/anti_hulk
+/obj/item/weapon/storage/box/darts_anti_hulk
 	name = "box of anti-hulk darts"
 	desc = "A box filled with mutadone filled darts. One shot is enough to defeat a hulk."
 	icon_state = "hulk_darts"
 
-/obj/item/weapon/storage/box/darts/anti_hulk/New()
+/obj/item/weapon/storage/box/darts_anti_hulk/New()
 	new /obj/item/dart_casing/combat(src,"mutadone")
 	new /obj/item/dart_casing/combat(src,"mutadone")
 	new /obj/item/dart_casing/combat(src,"mutadone")
@@ -682,12 +682,12 @@
 	new /obj/item/dart_casing/combat(src,"mutadone")
 	new /obj/item/dart_casing/combat(src,"mutadone")
 
-/obj/item/weapon/storage/box/darts/combat
+/obj/item/weapon/storage/box/darts_combat
 	name = "box of combat darts"
 	desc = "A box filled with empty combat syringe gun ammo."
 	icon_state = "darts_combat"
 
-/obj/item/weapon/storage/box/darts/combat/New()
+/obj/item/weapon/storage/box/darts_combat/New()
 	new /obj/item/dart_casing/combat(src)
 	new /obj/item/dart_casing/combat(src)
 	new /obj/item/dart_casing/combat(src)
