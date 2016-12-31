@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "The bo staff will now always block any form of melee attack, similar to the riot shield, and has a 10% chance to knock the opponent out outright where previously it only stunned them on a 10% chance. It also fits in your backpack."
