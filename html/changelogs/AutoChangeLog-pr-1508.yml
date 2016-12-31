@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "ATV's now have toggable lights."
+  - rscadd: "Mining Medics spawn with optical health huds."
