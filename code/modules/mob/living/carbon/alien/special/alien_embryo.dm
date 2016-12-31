@@ -7,6 +7,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	icon = 'icons/mob/alien.dmi'
 	icon_state = "larva0_dead"
 	var/stage = 0
+	var/growing = FALSE
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -66,8 +67,15 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 
 
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
-	if(!owner) return
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a larva?", ROLE_ALIEN, null, ROLE_ALIEN, 200, src)
+	if(growing)
+		return
+	if(!owner)
+		return
+	growing = TRUE
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as an alien larva?", ROLE_ALIEN, null, ROLE_ALIEN, 200, src)
+	growing = FALSE
+	if(!owner)
+		return
 	var/client/C = null
 
 	// To stop clientless larva, we will check that our host has a client
@@ -76,7 +84,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	// to 4, so we don't do a process heavy check everytime.
 
 	if(candidates.len)
-		C = pick(candidates)
+		var/mob/dead/observer/O = pick(candidates)
+		C = O.client
 	else if(owner.client && !(jobban_isbanned(owner, "alien candidate") || jobban_isbanned(owner, "Syndicate")))
 		C = owner.client
 	else
@@ -93,6 +102,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	new_xeno.canmove = 0 //so we don't move during the bursting animation
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+	growing = TRUE
 	spawn(6)
 		if(new_xeno)
 			new_xeno.canmove = 1
