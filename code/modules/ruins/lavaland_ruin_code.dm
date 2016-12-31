@@ -238,12 +238,12 @@ var/list/barometers = list()
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	suit = /obj/item/clothing/suit/toggle/labcoat
-	back = /obj/item/weapon/storage/backpack
+	back = /obj/item/weapon/storage/backpack/dufflebag/syndie
 	belt = /obj/item/weapon/gun/energy/gun/mini
 	r_hand = /obj/item/weapon/card/id/syndicate
 	pocket1 = /obj/item/weapon/crowbar/red
 	radio = /obj/item/device/radio/headset/syndicate/alt
-	flavour_text = "<font size=3><b></b></font><b>You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. The egg chamber is located in the bottom right of the facility right beneath the prisoner cells, don't worry about them resisting; they have lost their will to think. The combat environment room is in the bottom left of the facility while surgery and containment is right below where your sleeper is installed. How you go about testing is up to you and your accomplices, however you are to exercise extreme caution, these lifeforms are not dumb animals; should any damage be sustained to the facility there is some spare construction materials in the observation room. DO NOT under any circumstances attempt to leave the Facility."
+	flavour_text = "<font size=3><b></b></font><b>You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. Familiarize yourself with the facility and its rooms before beginning experimentation, you have access to various and numerous materials, gadgets and machinery to aid you and your colleagues in experimentation. DO NOT under any circumstances leave or abandon the Facility."
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
