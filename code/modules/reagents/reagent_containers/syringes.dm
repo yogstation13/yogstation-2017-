@@ -13,7 +13,6 @@
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
 	var/allow_ammo = 1  //If we allow it to be used in the darts
-	var/piercing
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/reagent_containers/syringe/New()
@@ -272,6 +271,7 @@
 	name = "medical dart"
 	icon_state = "dart_0_medical"
 	purpose = "medical"
+	max_chemicals = 3
 	projectile_type = /obj/item/projectile/bullet/dart/syringe/medical
 
 /obj/item/dart_casing/combat
@@ -279,7 +279,7 @@
 	icon_state = "dart_0_combat"
 	purpose = "combat"
 	allow_reload = 1
-	max_chemicals = 2
+	max_chemicals = 5
 	projectile_type = /obj/item/projectile/bullet/dart/syringe/combat
 
 /obj/item/dart_casing/attackby(obj/item/I, mob/user)
