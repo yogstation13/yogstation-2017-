@@ -53,7 +53,7 @@ var/global/BSACooldown = 0
 		if(config.use_antag_tokens)
 			body += "<b>Antag Tokens</b> = [C.antag_tokens] \[ <a href='?_src_=holder;antag_token_decrease=\ref[M]'>- Less -</a> | <a href='?_src_=holder;antag_token_increase=\ref[M]'>+ More +</a> \]<br>"
 
-		if(check_rights(R_PERMISSIONS))
+		if(check_rights(R_PERMISSIONS, FALSE))
 			body += "<b>Whitelisted</b> = [C.is_whitelisted ? "Yes" : "No"] \[ <a href='?_src_=holder;toggle_whitelisted=\ref[M]'>Toggle</a> \]<br>"
 
 		body += "<b>Credits</b> = [C.credits]<br><br>"
