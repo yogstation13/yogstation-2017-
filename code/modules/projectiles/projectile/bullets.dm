@@ -211,7 +211,6 @@
 
 /obj/item/projectile/bullet/dart/syringe/combat
 	icon_state = "dart_proj_combat"
-	piercing = 1
 
 /obj/item/projectile/bullet/dart/syringe/medical
 	icon_state = "dart_proj_medical"
