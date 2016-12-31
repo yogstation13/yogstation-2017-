@@ -640,6 +640,62 @@
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 	new /obj/item/ammo_casing/shotgun/beanbag(src)
 
+/obj/item/weapon/storage/box/darts
+	name = "box of darts"
+	desc = "A box filled with empty syringe gun ammo."
+	icon_state = "darts"
+
+
+/obj/item/weapon/storage/box/darts/New()
+	..()
+	new /obj/item/dart_casing(src)
+	new /obj/item/dart_casing(src)
+	new /obj/item/dart_casing(src)
+	new /obj/item/dart_casing(src)
+	new /obj/item/dart_casing(src)
+	new /obj/item/dart_casing(src)
+
+/obj/item/weapon/storage/box/darts/sleepy
+	name = "box of sleepy darts"
+	desc = "A box filled with morphine filled darts."
+	icon_state = "sleepy_darts"
+
+/obj/item/weapon/storage/box/darts/sleepy/New() //For anyone wanting to add more boxes: New(var/loc, var/reagent_type, var/amount = 15, allow reload, max_chemicals)
+	new /obj/item/dart_casing/medical(src, "morphine")
+	new /obj/item/dart_casing/medical(src, "morphine")
+	new /obj/item/dart_casing/medical(src, "morphine")
+	if(prob(50)) new /obj/item/dart_casing/medical(src, "neurotoxin")
+	else new /obj/item/dart_casing/medical(src, "morphine")
+	new /obj/item/dart_casing/medical(src, "morphine")
+	new /obj/item/dart_casing/medical(src, "morphine")
+
+/obj/item/weapon/storage/box/darts/anti_hulk
+	name = "box of anti-hulk darts"
+	desc = "A box filled with mutadone filled darts. One shot is enough to defeat a hulk."
+	icon_state = "hulk_darts"
+
+/obj/item/weapon/storage/box/darts/anti_hulk/New()
+	new /obj/item/dart_casing/combat(src,"mutadone")
+	new /obj/item/dart_casing/combat(src,"mutadone")
+	new /obj/item/dart_casing/combat(src,"mutadone")
+	new /obj/item/dart_casing/combat(src,"mutadone")
+	new /obj/item/dart_casing/combat(src,"mutadone")
+	new /obj/item/dart_casing/combat(src,"mutadone")
+
+/obj/item/weapon/storage/box/darts/combat
+	name = "box of combat darts"
+	desc = "A box filled with empty combat syringe gun ammo."
+	icon_state = "darts_combat"
+
+/obj/item/weapon/storage/box/darts/combat/New()
+	new /obj/item/dart_casing/combat(src)
+	new /obj/item/dart_casing/combat(src)
+	new /obj/item/dart_casing/combat(src)
+	new /obj/item/dart_casing/combat(src)
+	new /obj/item/dart_casing/combat(src)
+	new /obj/item/dart_casing/combat(src)
+
+
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
 #define SYNDI "SyndiSnacks"
@@ -877,5 +933,7 @@
 
 /obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
 	return
+
+
 
 

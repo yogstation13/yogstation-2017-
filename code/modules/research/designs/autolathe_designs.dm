@@ -535,6 +535,14 @@
 	build_path = /obj/item/weapon/reagent_containers/syringe
 	category = list("initial", "Medical")
 
+/datum/design/medicaldart
+	name = "Medical Dart"
+	id = "medicaldart"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 20)
+	build_path = /obj/item/dart_casing/medical
+	category = list("initial", "Medical")
+
 /datum/design/prox_sensor
 	name = "Proximity sensor"
 	id = "prox_sensor"

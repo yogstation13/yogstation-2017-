@@ -1100,6 +1100,15 @@
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/darts/combat{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/darts/anti_hulk,
+/obj/item/weapon/storage/box/darts/sleepy{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -1109,6 +1118,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
+/obj/item/weapon/gun/syringe/rapidsyringe,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -35160,6 +35170,7 @@
 	},
 /obj/item/weapon/book/manual/wiki/chemistry,
 /obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/weapon/storage/box/darts,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -43080,6 +43091,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/rxglasses,
+/obj/item/weapon/storage/box/darts/sleepy,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -47733,6 +47745,7 @@
 /obj/structure/table,
 /obj/item/weapon/pen,
 /obj/item/clothing/tie/stethoscope,
+/obj/item/weapon/storage/box/darts/anti_hulk,
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel{
 	icon_state = "barber"

@@ -206,12 +206,17 @@
 //This one is for future syringe guns update
 /obj/item/projectile/bullet/dart/syringe
 	name = "syringe"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "syringeproj"
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "dart_proj_medical"
 
-//Piercing Syringe
-/obj/item/projectile/bullet/dart/syringe/piercing
+/obj/item/projectile/bullet/dart/syringe/combat
+	icon_state = "dart_proj_combat"
 	piercing = 1
+
+/obj/item/projectile/bullet/dart/syringe/medical
+	icon_state = "dart_proj_medical"
+
+
 
 /obj/item/projectile/bullet/neurotoxin
 	name = "neurotoxin spit"
