@@ -130,6 +130,13 @@
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_medsci
 
+/obj/item/device/radio/headset/headset_medcargo
+	name = "mining medic radio headset"
+	desc = "A headset that is a result of the mating between medical and cargo. \nTo access the medical channel, use :m. For cargo, use :u."
+	icon_state = "med_headset"
+	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_medsup
+
 /obj/item/device/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel. \nTo access the command channel, use :c."
@@ -153,6 +160,13 @@
 	flags = EARBANGPROTECT
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
+
+/obj/item/device/radio/headset/heads/captain/santa
+	name = "santas magical ear"
+	desc = "He knows if you've been bad or good. So be good for goodness sake! Also report this to a coder if you can actually read this."
+	icon_state = null
+	item_state = null
+	flags = EARBANGPROTECT | NODROP | ABSTRACT
 
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"

@@ -332,7 +332,7 @@ RCD
 					return 1
 				return 0
 
-			if(istype(A, /turf/open/floor))
+			if(istype(A, /turf/open/floor) && (A.flags & GIRDERABLE))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start building wall...</span>"

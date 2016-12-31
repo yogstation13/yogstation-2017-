@@ -760,7 +760,8 @@
 	if(B)
 		B.damaged_brain = 0
 	for(var/datum/disease/D in viruses)
-		D.cure(0)
+		if (D.severity != NONTHREAT)
+			D.cure(0)
 	if(admin_revive)
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory

@@ -84,6 +84,7 @@
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+	var/has_fluff
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
@@ -295,113 +296,52 @@ update_label("John Doe", "Clowny")
 
 
 /obj/item/weapon/card/id/proc/ID_fluff()
+	var/job = assignment
+	var/list/idfluff = list(
+	"Assistant" = list("civillian","green"),
+	"Captain" = list("captain","gold"),
+	"Head of Personnel" = list("civillian","silver"),
+	"Head of Security" = list("security","silver"),
+	"Chief Engineer" = list("engineering","silver"),
+	"Research Director" = list("science","silver"),
+	"Chief Medical Officer" = list("medical","silver"),
+	"Station Engineer" = list("engineering","yellow"),
+	"Atmospheric Technician" = list("engineering","white"),
+	"Signal Technician" = list("engineering","green"),
+	"Medical Doctor" = list("medical","blue"),
+	"Geneticist" = list("medical","purple"),
+	"Virologist" = list("medical","green"),
+	"Chemist" = list("medical","orange"),
+	"Paramedic" = list("medical","white"),
+	"Psychiatrist" = list("medical","brown"),
+	"Scientist" = list("science","purple"),
+	"Roboticist" = list("science","black"),
+	"Quartermaster" = list("cargo","silver"),
+	"Cargo Technician" = list("cargo","brown"),
+	"Shaft Miner" = list("cargo","black"),
+	"Mining Medic" = list("cargo","blue"),
+	"Bartender" = list("civillian,","black"),
+	"Botanist" = list("civillian","blue"),
+	"Cook" = list("civillian","white"),
+	"Janitor" = list("civillian","purple"),
+	"Librarian" = list("civillian","purple"),
+	"Chaplain" = list("civillian","black"),
+	"Clown" = list("clown","rainbow"),
+	"Mime" = list("mime","white"),
+	"Clerk" = list("civillian","blue"),
+	"Tourist" = list("civillian","yellow"),
+	"Warden" = list("security","black"),
+	"Security Officer" = list("security","red"),
+	"Detective" = list("security","brown"),
+	"Lawyer" = list("security","purple")
+	)
+	if(job in idfluff)
+		has_fluff = 1
+	else
+		if(has_fluff)
+			return
+		else
+			job = "Assistant" //Loads up the basic green ID
 	overlays.Cut()
-	switch(assignment)
-		if("Captain")
-			overlays += "captain"
-			overlays += "gold"
-		if("Head of Personnel")
-			overlays += "civillian"
-			overlays += "silver"
-		if("Head of Security")
-			overlays += "security"
-			overlays += "silver"
-		if("Chief Engineer")
-			overlays += "engineering"
-			overlays += "silver"
-		if("Research Director")
-			overlays += "science"
-			overlays += "silver"
-		if("Chief Medical Officer")
-			overlays += "medical"
-			overlays += "silver"
-		if("Station Engineer")
-			overlays += "engineering"
-			overlays += "yellow"
-		if("Atmospheric Technician")
-			overlays += "engineering"
-			overlays += "white"
-		if("Medical Doctor")
-			overlays += "medical"
-			overlays += "blue"
-		if("Geneticist")
-			overlays += "medical"
-			overlays += "purple"
-		if("Virologist")
-			overlays += "medical"
-			overlays += "green"
-		if("Chemist")
-			overlays += "medical"
-			overlays += "orange"
-		if("Paramedic")
-			overlays += "medical"
-			overlays += "white"
-		if("Psychiatrist")
-			overlays += "medical"
-			overlays += "brown"
-		if("Scientist")
-			overlays += "science"
-			overlays += "purple"
-		if("Roboticist")
-			overlays += "science"
-			overlays += "black"
-		if("Quartermaster")
-			overlays += "cargo"
-			overlays += "silver" //stfu
-		if("Cargo Technician")
-			overlays += "cargo"
-			overlays += "brown"
-		if("Shaft Miner")
-			overlays += "cargo"
-			overlays += "black"
-		if("Bartender")
-			overlays += "civillian"
-			overlays += "red"
-		if("Botanist")
-			overlays += "civillian"
-			overlays += "orange"
-		if("Cook")
-			overlays += "civillian"
-			overlays += "white"
-		if("Janitor")
-			overlays += "civillian"
-			overlays += "purple"
-		if("Librarian")
-			overlays += "civillian"
-			overlays += "brown"
-		if("Chaplain")
-			overlays += "civillian"
-			overlays += "black"
-		if("Clown")
-			overlays += "clown"
-			overlays += "rainbow"
-		if("Mime")
-			overlays += "mime"
-			overlays += "white"
-		if("Clerk")
-			overlays += "civillian"
-			overlays += "blue"
-		if("Tourist")
-			overlays += "civillian"
-			overlays += "yellow"
-		if("Warden")
-			overlays += "security"
-			overlays += "black"
-		if("Security Officer")
-			overlays += "security"
-			overlays += "red"
-		if("Detective")
-			overlays += "security"
-			overlays += "brown"
-		if("Lawyer")
-			overlays += "security"
-			overlays += "purple"
-		else //If it's an assistant or some unknown job, make it a classic green ID
-			overlays += "civillian"
-			overlays += "green"
-
-
-
-
-
-
+	overlays += idfluff[job][1]
+	overlays += idfluff[job][2]

@@ -115,7 +115,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = 5
-	flags = ABSTRACT
+	flags = ABSTRACT | NODROP
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
