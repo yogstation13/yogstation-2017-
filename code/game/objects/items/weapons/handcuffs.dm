@@ -337,47 +337,56 @@
 	desc = "A restraining device designed to restrain targets, and give them punishment for moving. Activate in hand before use."
 	weaken = 2
 	breakouttime = 80
-	var/charges = 6
-	var/accessed // whether it's activated or not
-	var/used // one time use.
+	var/charges = 1
+	var/maxcharges = 6
+	var/accessed // whether its charging
+	var/chargethreshold = 100
+
+/obj/item/weapon/restraints/legcuffs/bola/sec/examine(mob/user)
+	..()
+	user << "<span class='notice'>[src] has [charges] charges.</span>"
 
 /obj/item/weapon/restraints/legcuffs/bola/sec/attack_self(mob/user)
 	if(!(ishuman(user)))
 		return
+	user << "<span class='warning'>You begin to charge [src]. ((Keep it in your hand while it's charging. Each spark you hear means that it's power is growing.))</span>"
+	PoolOrNew(/obj/effect/particle_effect/sparks, loc)
+	addtimer(src, "charge", chargethreshold, TRUE, user)
 
-	var/mob/living/carbon/human/H = user
-	var/obj/item/weapon/card/id/I = H.get_idcard()
-
-	if(!I)
-		user << "<span class='warning'>You need ID to operate [src]!</span>"
-		return
-
-	if((1 in I.access))
-		accessed = !accessed
-		user << "<span class='notice'>You toggle [src] [accessed ? "on" : "off"].</span>"
-	else
-		user << "<span class='warning'>You don't have the access to use this!</span>"
-		if(isliving(user))
-			var/mob/living/L = user
-			L.electrocute_act(0, "[src]")
-			L.Weaken(1)
-			PoolOrNew(/obj/effect/particle_effect/sparks, loc)
-
-/obj/item/weapon/restraints/legcuffs/bola/sec/throw_impact(atom/hit_atom)
-	if(used)
-		visible_message("[src] knocks into [hit_atom]. It has already been used")
-		return
-
-	if(iscarbon(hit_atom))
-		if(!accessed)
-			visible_message("<span class='warning'>[src] hits [hit_atom], but is knocked over. [src] is offline!</span>")
+/obj/item/weapon/restraints/legcuffs/bola/sec/proc/charge(mob/user, killcheck)
+	if(user)
+		if(charges >= maxcharges)
+			user << "<span class='notice'>[src] cannot be charged any further!</span>"
 			return
 
+		PoolOrNew(/obj/effect/particle_effect/sparks, loc)
+		if(user.l_hand == src || user.r_hand == src)
+			charges++
+			user << "<span class='warning'>[src] gains another charge!</span>"
+			visible_message("<span class='warning'>[src] gains another charge</span>")
+			addtimer(src, "charge", chargethreshold, TRUE, user)
+			addtimer(src, "charge", 1000, TRUE, user, 1)
+		else
+			src << "<span class='warning'>[src]'s light slowly becomes dim.</span>"
+			if(killcheck)
+				charges = 1
+	else
+		visible_message("<span class='warning'>[src] dies out!</span>")
+		charges = 1
+
+/obj/item/weapon/restraints/legcuffs/bola/sec/throw_impact(atom/hit_atom)
 	if(..())
-		used = TRUE
-		accessed = FALSE
+		accessed = TRUE
+		chargethreshold += 200
+		hit_atom << "<span class='warning'>You hear a beep come from [src] strapped around your leg.</span>"
+		addtimer(src, "releasebolt", 100, TRUE)
+
+/obj/item/weapon/restraints/legcuffs/bola/sec/proc/releasebolt()
+	accessed = FALSE
 
 /obj/item/weapon/restraints/legcuffs/bola/sec/cuff_act(mob/user)
+	if(accessed)
+		return
 	if(user)
 		PoolOrNew(/obj/effect/particle_effect/sparks, loc)
 		if(!charges)
