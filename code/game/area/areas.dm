@@ -20,6 +20,7 @@ var/list/atmos_alert_listeners = list()
 var/list/fire_alert_listeners = list()
 var/list/burglar_alert_listeners = list()
 var/list/motion_alert_listeners = list()
+var/list/hotline_alert_listeners = list()
 
 /datum/alert_listener
 
