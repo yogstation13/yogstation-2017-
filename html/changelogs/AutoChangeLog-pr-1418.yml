@@ -1,0 +1,5 @@
+author: matskuman5
+delete-after: True
+changes: 
+  - tweak: "The ERT commander now only gets the ARG rifle on red alert.
+tweak. Red alert ERT security members no longer spawn with a useless ARG along with their plasma rifles."
