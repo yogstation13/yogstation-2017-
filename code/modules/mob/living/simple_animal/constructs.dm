@@ -65,14 +65,6 @@
 	else if(src != M)
 		..()
 
-/mob/living/simple_animal/hostile/construct/AttackingSelf()
-	if(health < maxHealth)
-		adjustHealth(-5)
-		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
-					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
-	else
-		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
-
 /mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
 	return 1
 
@@ -235,6 +227,14 @@
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+/mob/living/simple_animal/hostile/construct/builder/AttackingSelf()
+	if(health < maxHealth)
+		adjustHealth(-5)
+		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
+					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
+	else
+		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

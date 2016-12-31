@@ -9,6 +9,7 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+			John hates all of you.<BR>
 			<BR>
 			"}
 
@@ -438,8 +439,7 @@
 				L.fix()
 
 		if("floorlava")
-			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
-			storm.weather_start_up()
+			SSweather.run_weather("the floor is lava")
 
 		if("virus")
 			if(!check_rights(R_FUN))

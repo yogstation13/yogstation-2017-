@@ -449,21 +449,21 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-	w_class = 4
+	w_class = 3
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 24
+	force_wielded = 30
 	throwforce = 20
 	throw_speed = 2
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
-	block_chance = 50
+	block_chance = 100
 
 /obj/item/weapon/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
 	return
-
+	
 /obj/item/weapon/twohanded/bostaff/attack(mob/target, mob/living/user)
 	add_fingerprint(user)
 	if((CLUMSY in user.disabilities) && prob(50))
@@ -498,11 +498,11 @@
 		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
 							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
-		H.adjustStaminaLoss(rand(13,20))
+		H.adjustStaminaLoss(rand(19,25))
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
-			H.Weaken(4)
+			H.emote("collapse")
 		if(H.staminaloss && !H.sleeping)
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= config.health_threshold_crit && !H.stat)
@@ -513,7 +513,9 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, attack_type)
 	if(wielded)
+		if(attack_type == PROJECTILE_ATTACK)
+			final_block_chance = 0 //Don't use a stick against fucking bullets and lasers
 		return ..()
 	return 0

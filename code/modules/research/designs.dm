@@ -386,6 +386,16 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 
+/datum/design/optical_health_hud
+	name = "Optical Health HUD"
+	desc = "A health HUD with engaged optical meson scanners."
+	id = "optical_health_hud"
+	req_tech = list("engineering" = 4, "biotech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 600)
+	build_path = /obj/item/clothing/glasses/hud/health/optical
+	category = list("Equipment")
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////

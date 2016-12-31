@@ -63,10 +63,10 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
-	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
-	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
-	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
+	var/wikiurl = "https://wiki.yogstation.net/" // Default wiki link.
+	var/forumurl = "https://www.yogstation.net/" //default forums
+	var/rulesurl = "http://forums.yogstation.net/index.php?pages/rules/" // default rules
+	var/githuburl = "https://github.com/yogstation13/yogstation" //default github
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
