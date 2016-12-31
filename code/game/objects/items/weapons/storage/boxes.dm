@@ -661,6 +661,7 @@
 	icon_state = "sleepy_darts"
 
 /obj/item/weapon/storage/box/darts_sleepy/New() //For anyone wanting to add more boxes: New(var/loc, var/reagent_type, var/amount = 15, allow reload, max_chemicals)
+	..()
 	new /obj/item/dart_casing/medical(src, "morphine")
 	new /obj/item/dart_casing/medical(src, "morphine")
 	new /obj/item/dart_casing/medical(src, "morphine")
@@ -675,6 +676,7 @@
 	icon_state = "hulk_darts"
 
 /obj/item/weapon/storage/box/darts_anti_hulk/New()
+	..()
 	new /obj/item/dart_casing/combat(src,"mutadone")
 	new /obj/item/dart_casing/combat(src,"mutadone")
 	new /obj/item/dart_casing/combat(src,"mutadone")
@@ -688,6 +690,7 @@
 	icon_state = "darts_combat"
 
 /obj/item/weapon/storage/box/darts_combat/New()
+	..()
 	new /obj/item/dart_casing/combat(src)
 	new /obj/item/dart_casing/combat(src)
 	new /obj/item/dart_casing/combat(src)
