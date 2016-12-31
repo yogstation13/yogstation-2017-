@@ -279,6 +279,7 @@
 	icon_state = "dart_0_combat"
 	purpose = "combat"
 	allow_reload = 1
+	max_chemicals = 2
 	projectile_type = /obj/item/projectile/bullet/dart/syringe/combat
 
 /obj/item/dart_casing/attackby(obj/item/I, mob/user)
