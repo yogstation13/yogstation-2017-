@@ -33,7 +33,7 @@
 			new /obj/item/clothing/suit/magusred(src)
 			new /obj/item/clothing/head/magus(src)
 		if(9)
-			new /obj/item/organ/brain/alien(src)
+			new /obj/item/weapon/greentext(src)
 		if(10)
 			new /obj/item/weapon/rune_scimmy(src)
 		if(11)
