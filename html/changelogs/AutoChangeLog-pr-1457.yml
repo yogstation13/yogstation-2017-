@@ -1,0 +1,6 @@
+author: matskuman5
+delete-after: True
+changes: 
+  - tweak: "You can now have multiple links awaiting approval at the same time."
+  - tweak: "This means you no longer have to wait the entire round for admins to notice your link before you can get a new one approved."
+  - bugfix: "This should ALSO fix some bugs regarding people not being able to use the function at all."
