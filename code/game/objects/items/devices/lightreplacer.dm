@@ -200,6 +200,7 @@
 			target.rigged = emagged
 			target.brightness = L2.brightness
 			target.on = target.has_power()
+			target.color = "#FFFFFF" // New tube, new colour.
 			target.update()
 			qdel(L2)
 

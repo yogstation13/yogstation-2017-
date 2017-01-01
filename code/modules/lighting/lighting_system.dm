@@ -43,7 +43,14 @@
 	var/luminosity = 0
 	var/cap = 0
 	var/changed = 0
-	var/list/effect = list()
+
+	// I'd love to use a string for this, but that's processing time wasted. Much cheaper just to use 3 ints.
+	var/r = 1
+	var/g = 1
+	var/b = 1
+	var/list/effect_r = list()
+	var/list/effect_g = list()
+	var/list/effect_b = list()
 	var/__x = 0		//x coordinate at last update
 	var/__y = 0		//y coordinate at last update
 
@@ -103,13 +110,15 @@
 
 //Remove current effect
 /datum/light_source/proc/remove_effect().
-	for(var/turf/T in effect)
-		T.update_lumcount(-effect[T])
+	for(var/turf/T in effect_r)
+		T.update_lumcount(-effect_r[T], -effect_g[T], -effect_b[T]) // This conveniently loops just through the one list, but unless everything stops making sence, R,G,B should have the same keys.
 
 		if(T.affecting_lights && T.affecting_lights.len)
 			T.affecting_lights -= src
 
-	effect.Cut()
+	effect_r.Cut()
+	effect_g.Cut()
+	effect_b.Cut()
 
 //Apply a new effect.
 /datum/light_source/proc/add_effect()
@@ -121,7 +130,9 @@
 		owner.luminosity = 0
 		return 0
 
-	effect = list()
+	effect_r = list()
+	effect_g = list()
+	effect_b = list()
 	var/turf/To = get_turf(owner)
 
 
@@ -152,8 +163,29 @@
 		var/delta_lumcount = Clamp(center_strength * (range - distance) / range, 0, LIGHTING_CAP)
 
 		if(delta_lumcount > 0)
-			effect[T] = delta_lumcount
-			T.update_lumcount(delta_lumcount)
+
+			var/max_col = max(r,g,b)
+			var/addR = 0
+			var/addG = 0
+			var/addB = 0
+			if(max_col<=0) // Because Dividing by 0 will crash us. And I don't trust user input.
+				addR = 1/3
+				addG = 1/3
+				addB = 1/3
+			else
+				addR = r/max_col
+				addG = g/max_col
+				addB = b/max_col
+
+
+			addR *= delta_lumcount
+			addG *= delta_lumcount
+			addB *= delta_lumcount
+
+			effect_r[T] = addR
+			effect_g[T] = addG
+			effect_b[T] = addB
+			T.update_lumcount(addR,addG,addB)
 
 			if(!T.affecting_lights)
 				T.affecting_lights = list()
@@ -215,6 +247,14 @@
 
 	light.UpdateLuminosity(new_luminosity, new_cap)
 
+/atom/proc/SetLightColor(col)
+	if (!light)
+		light = new(src)
+	light.r = hex2num(copytext(col,2,4))
+	light.g = hex2num(copytext(col,4,6))
+	light.b = hex2num(copytext(col,6,0))
+	light.changed()
+
 /atom/proc/AddLuminosity(delta_luminosity)
 	if(light)
 		SetLuminosity(light.luminosity + delta_luminosity)
@@ -240,7 +280,7 @@
 	icon_state = LIGHTING_ICON_STATE
 	layer = LIGHTING_LAYER
 	mouse_opacity = 0
-	blend_mode = BLEND_OVERLAY
+	blend_mode = BLEND_MULTIPLY
 	invisibility = INVISIBILITY_LIGHTING
 	color = "#000"
 	luminosity = 0
@@ -263,7 +303,9 @@
 	layer = TURF_LAYER // Don't darken things on top of the turf.
 
 /turf
-	var/lighting_lumcount = 0
+	var/r_lumcount = 0
+	var/g_lumcount = 0
+	var/b_lumcount = 0
 	var/lighting_changed = 0
 	var/atom/movable/light/lighting_object //Will be null for space turfs and anything in a static lighting area
 	var/atom/movable/light/dim/light_dim  // Used for shadowlings and night vision and stuffs, to show pure black areas, but make them still visible... So to speak...
@@ -279,11 +321,13 @@
 	if(light)
 		qdel(light)
 
-	var/old_lumcount = lighting_lumcount - initial(lighting_lumcount)
+	var/old_r_lumcount = r_lumcount - initial(r_lumcount)
+	var/old_g_lumcount = g_lumcount - initial(g_lumcount)
+	var/old_b_lumcount = b_lumcount - initial(b_lumcount)
 	var/oldbaseturf = baseturf
 
 	var/list/our_lights //reset affecting_lights if needed
-	if(opacity != initial(path:opacity) && old_lumcount)
+	if(opacity != initial(path:opacity) && (old_r_lumcount || old_g_lumcount || old_b_lumcount))
 		UpdateAffectingLights()
 
 	if(affecting_lights)
@@ -294,7 +338,7 @@
 	affecting_lights = our_lights
 
 	lighting_changed = 1 //Don't add ourself to SSlighting.changed_turfs
-	update_lumcount(old_lumcount)
+	update_lumcount(old_r_lumcount, old_g_lumcount, old_b_lumcount)
 	baseturf = oldbaseturf
 	lighting_object = locate() in src
 	init_lighting()
@@ -302,14 +346,18 @@
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
-/turf/proc/update_lumcount(amount)
-	lighting_lumcount += amount
+/turf/proc/update_lumcount(r, g, b)
+	r_lumcount += r
+	g_lumcount += g
+	b_lumcount += b
 	if(!lighting_changed)
 		SSlighting.changed_turfs += src
 		lighting_changed = 1
 
-/turf/open/space/update_lumcount(amount) //Keep track in case the turf becomes a floor at some point, but don't process.
-	lighting_lumcount += amount
+/turf/open/space/update_lumcount(r,g,b) //Keep track in case the turf becomes a floor at some point, but don't process.
+	r_lumcount += r
+	g_lumcount += g
+	b_lumcount += b
 
 /turf/proc/init_lighting()
 	var/area/A = loc
@@ -339,29 +387,28 @@
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
-		var/newalpha
-		if(lighting_lumcount <= 0)
-			newalpha = 255
+		var/newcolor
+		if(r_lumcount + g_lumcount + b_lumcount <= 0)
+			newcolor = "#000000"
 		else
-			if(lighting_lumcount < LIGHTING_CAP)
-				var/num = Clamp(lighting_lumcount * LIGHTING_CAP_FRAC, 0, 255)
-				newalpha = 255-num
-			else //if(lighting_lumcount >= LIGHTING_CAP)
-				newalpha = 0
-		if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
-			newalpha = 255
-		if(lighting_object.alpha != newalpha)
+			var/max_val = max(r_lumcount,g_lumcount,b_lumcount)
+
+			var/R = r_lumcount / max_val
+			var/G = g_lumcount / max_val
+			var/B = b_lumcount / max_val
+
+			var/val = (Clamp(r_lumcount + g_lumcount + b_lumcount, 0, LIGHTING_CAP)/LIGHTING_CAP)*255
+			R *= val
+			G *= val
+			B *= val
+
+			newcolor = "#" + num2hex(R) + num2hex(G) + num2hex(B)
+		if(lighting_object.color != newcolor)
 			if(instantly)
-				lighting_object.alpha = newalpha
+				lighting_object.color = newcolor
 			else
-				animate(lighting_object, alpha = newalpha, time = LIGHTING_TIME)
-			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
-				luminosity = 0
-				lighting_object.luminosity = 0
-			else
-				luminosity = 1
-				lighting_object.luminosity = 1
-		light_dim.alpha = (get_lumcount() <= 0.3) * 128 // We're only visible if the lighting lumcount is less than what shadowlings can walk through.
+				animate(lighting_object, color = newcolor, time = LIGHTING_TIME)
+
 
 	lighting_changed = 0
 
@@ -369,7 +416,8 @@
 	. = LIGHTING_CAP
 	var/area/A = src.loc
 	if(IS_DYNAMIC_LIGHTING(A))
-		. = src.lighting_lumcount
+		. = src.r_lumcount + src.g_lumcount + src.b_lumcount
+	return .
 
 /area
 	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
@@ -385,7 +433,7 @@
 	luminosity = 0
 	for(var/turf/T in src.contents)
 		T.init_lighting()
-		T.update_lumcount(0)
+		T.update_lumcount(0,0,0)
 
 #undef LIGHTING_CIRCULAR
 #undef LIGHTING_ICON

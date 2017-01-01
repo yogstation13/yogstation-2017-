@@ -220,6 +220,7 @@
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = 1)
 
+	SetLightColor(color)
 	update_icon()
 	if(on)
 		if(!light || light.luminosity != brightness)
@@ -275,6 +276,12 @@
 
 /obj/machinery/light/attackby(obj/item/W, mob/living/user, params)
 
+	if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/can = W
+		color = can.paint_color
+		update()
+		return
+
 	//Light replacer code
 	if(istype(W, /obj/item/device/lightreplacer))
 		var/obj/item/device/lightreplacer/LR = W
@@ -296,6 +303,7 @@
 				rigged = L.rigged
 				brightness = L.brightness
 				on = has_power()
+				color = L.color
 				update()
 
 				qdel(L)
@@ -455,6 +463,8 @@
 	L.update()
 	L.add_fingerprint(user)
 	L.loc = loc
+	L.color = color
+	color = "#FFFFFF"
 
 	user.put_in_active_hand(L)	//puts it in our active hand
 

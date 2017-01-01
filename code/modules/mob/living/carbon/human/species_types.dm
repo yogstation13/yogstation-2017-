@@ -348,33 +348,54 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 						H.heal_overall_damage(0.2, 0.2)
 						return
 
-			if (T.lighting_lumcount)
-				switch (T.lighting_lumcount)
+			if (T.get_lumcount() || H.dna.features["mcolor"]=="000") // if they're black, how will they eat light..? Also saves doing the div/0 check.
+				var/R = hex2num(copytext(H.dna.features["mcolor"],1,2))
+				var/G = hex2num(copytext(H.dna.features["mcolor"],2,3))
+				var/B = hex2num(copytext(H.dna.features["mcolor"],3,0))
+
+				var/max_col = max(R,G,B)
+				R /= max_col
+				G /= max_col
+				B /= max_col
+
+				var/food_R = T.r_lumcount * R
+				var/food_G = T.g_lumcount * G
+				var/food_B = T.b_lumcount * B
+
+				var/light_exposed = (food_R + food_G + food_B) * 3 // Because of the fact that it uses their 'colour', not their value or saturation, they will always be limited to a third of the food they used to. So we multiply it by three.
+
+				switch (light_exposed)
+					if (-INFINITY to 0.1)
+						H.nutrition -= 3
+						if (prob(8))
+							H << "<span class='userdanger'>Darkness! Your insides churn and your skin screams in pain!</span>"
+						H.adjustOxyLoss(3)
+						H.adjustToxLoss(1)
 					if (0.1 to 3)
 						//very low light
-						H.nutrition -= T.lighting_lumcount/1.5
+						H.nutrition -= light_exposed/1.5
 						if (prob(10))
 							H << "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
 						H.adjustOxyLoss(3)
-					if (3.1 to 6)
+					if (3 to 6)
 						//low light
-						H.nutrition -= T.lighting_lumcount/2
+						H.nutrition -= light_exposed/2
 						if (prob(3))
 							H << "<span class='warning'>The ambient light levels are too low. Your breath is coming more slowly as your insides struggle to keep up on their own.</span>"
 							H.adjustOxyLoss(6)
-					if (6.1 to 10)
+					if (6 to 10)
 						//medium, average, doing nothing for now
-						H.nutrition += T.lighting_lumcount/10
-					if (10.1 to 22)
+						H.nutrition += light_exposed/10
+					if (10 to 22)
 						//high light, regen here
-						H.nutrition += T.lighting_lumcount/6
+						H.nutrition += light_exposed/6
 						if (H.stat != UNCONSCIOUS && H.stat != DEAD)
 							H.adjustToxLoss(-0.5)
 							H.adjustOxyLoss(-0.5)
 							H.heal_overall_damage(1, 1)
-					if (22.1 to INFINITY)
+					if (22 to INFINITY)
 						//super high light
-						H.nutrition += T.lighting_lumcount/4
+						H.nutrition += light_exposed/4
 						if (H.stat != UNCONSCIOUS && H.stat != DEAD)
 							H.adjustToxLoss(-1)
 							H.adjustOxyLoss(-0.5)
