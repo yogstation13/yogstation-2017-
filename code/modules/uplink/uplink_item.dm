@@ -139,7 +139,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
 	item = /obj/item/weapon/gun/projectile/revolver
-	cost = 11
+	cost = 13
 	surplus = 50
 
 /datum/uplink_item/dangerous/shotgun
@@ -203,7 +203,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/projectile/shotgun/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
-
+/*
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Radiation Crossbow"
 	desc = "A short bow mounted across a tiller in miniature. Small enough to \
@@ -216,7 +216,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 9
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
+*/
 /datum/uplink_item/dangerous/flamethrower
 	name = "Back-mounted High-power Flamethrower"
 	desc = "A compact back-mounted sprayer that comes pre-loaded with a cocktail of flammable chemicals. Use with caution."
