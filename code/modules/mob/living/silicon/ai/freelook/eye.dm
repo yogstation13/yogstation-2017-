@@ -24,6 +24,7 @@
 		cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
+		update_parallax_contents()
 		//Holopad
 		if(istype(ai.current, /obj/machinery/hologram/holopad))
 			var/obj/machinery/hologram/holopad/H = ai.current
@@ -38,8 +39,10 @@
 	return null
 
 /mob/camera/aiEye/Destroy()
-	ai = null
-	return ..()
+	if(ai)
+		return
+	else
+		return ..()
 
 /atom/proc/move_camera_by_click()
 	if(istype(usr, /mob/living/silicon/ai))

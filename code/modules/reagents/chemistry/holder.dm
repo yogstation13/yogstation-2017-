@@ -23,7 +23,7 @@ var/const/INJECT = 5 //injection
 	maximum_volume = maximum
 
 	if(!(flags & REAGENT_NOREACT))
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
@@ -60,7 +60,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/Destroy()
 	. = ..()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
@@ -130,6 +130,8 @@ var/const/INJECT = 5 //injection
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if(!target || !total_volume)
 		return
+	if(amount < 0)
+		return
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
@@ -181,6 +183,8 @@ var/const/INJECT = 5 //injection
 	if (!target)
 		return
 	if (!target.reagents || src.total_volume<=0 || !src.get_reagent_amount(reagent))
+		return
+	if(amount < 0)
 		return
 
 	var/datum/reagents/R = target.reagents
@@ -293,7 +297,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/process()
 	if(flags & REAGENT_NOREACT)
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	for(var/reagent in reagent_list)
@@ -305,9 +309,9 @@ var/const/INJECT = 5 //injection
 		// Order is important, process() can remove from processing if
 		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
@@ -431,6 +435,7 @@ var/const/INJECT = 5 //injection
 			reagent_list -= R
 			update_total()
 			my_atom.on_reagent_change()
+			check_slowdown(my_atom)
 			check_ignoreslow(my_atom)
 			check_gofast(my_atom)
 			check_goreallyfast(my_atom)
@@ -441,21 +446,36 @@ var/const/INJECT = 5 //injection
 		if(M.reagents.has_reagent("morphine")||M.reagents.has_reagent("ephedrine"))
 			return 1
 		else
-			M.status_flags &= ~IGNORESLOWDOWN
+			M.status_flags -= IGNORESLOWDOWN
+
+/datum/reagents/proc/check_slowdown(mob/M)  //SLOWDOWN is halfway in between GOTTAGOFAST and GOTTAGOREALLYFAST.  IGNORESLOWDOWN cancels it.
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("bolamine"))
+			return 1
+		else
+			M.status_flags -= SLOWDOWN
+
 
 /datum/reagents/proc/check_gofast(mob/M)
 	if(istype(M, /mob))
-		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants"))
+		if(M.reagents.has_reagent("unholywater")||M.reagents.has_reagent("nuka_cola")||M.reagents.has_reagent("stimulants") || M.reagents.has_reagent("lesserephedrine"))
 			return 1
 		else
-			M.status_flags &= ~GOTTAGOFAST
+			M.status_flags -= GOTTAGOFAST
 
 /datum/reagents/proc/check_goreallyfast(mob/M)
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("methamphetamine"))
 			return 1
 		else
-			M.status_flags &= ~GOTTAGOREALLYFAST
+			M.status_flags -= GOTTAGOREALLYFAST
+
+/datum/reagents/proc/check_nocrit(mob/M)
+	if(istype(M, /mob))
+		if(M.reagents.has_reagent("stimulants"))
+			return 1
+		else
+			M.status_flags -= NOCRIT
 
 /datum/reagents/proc/update_total()
 	total_volume = 0
@@ -494,7 +514,9 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
-		return 1
+		return FALSE
+	if(amount < 0)
+		return FALSE
 	update_total()
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
@@ -510,7 +532,7 @@ var/const/INJECT = 5 //injection
 			R.on_merge(data)
 			if(!no_react)
 				handle_reactions()
-			return 0
+			return TRUE
 
 	var/datum/reagent/D = chemical_reagents_list[reagent]
 	if(D)
@@ -534,7 +556,7 @@ var/const/INJECT = 5 //injection
 	if(!no_react)
 		handle_reactions()
 
-	return 1
+	return TRUE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)
@@ -542,9 +564,12 @@ var/const/INJECT = 5 //injection
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
-
+	if(isnull(amount))
+		return FALSE
 	if(!isnum(amount))
-		return 1
+		return FALSE
+	if(amount < 0)
+		return FALSE
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -554,9 +579,9 @@ var/const/INJECT = 5 //injection
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			my_atom.on_reagent_change()
-			return 0
+			return TRUE
 
-	return 1
+	return FALSE
 
 /datum/reagents/proc/has_reagent(reagent, amount = -1)
 	for(var/_reagent in reagent_list)

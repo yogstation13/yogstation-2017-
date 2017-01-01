@@ -14,8 +14,6 @@
 		return 1
 	if(H.dna.species.id == "l_shadowling" && is_thrall(H))
 		return 1
-	if(!is_shadow_or_thrall(usr))
-		usr << "<span class='warning'>You can't wrap your head around how to do this.</span>"
 	else if(is_thrall(usr))
 		usr << "<span class='warning'>You aren't powerful enough to do this.</span>"
 	else if(is_shadow(usr))
@@ -164,8 +162,7 @@
 				return F.brightness_on //Necessary because flashlights become 0-luminosity when held.  I don't make the rules of lightcode.
 			F.on = 0
 			F.broken = 1
-			spawn(100)
-				F.broken = 0
+			addtimer(F, "fix_light", 100)
 			F.update_brightness()
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
@@ -175,6 +172,15 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(mob/living/H)
 	var/blacklistLuminosity = 0
+	if(istype(H, /mob/living/simple_animal/drone))
+		var/mob/living/simple_animal/drone/D = H
+		D.light_on = 2
+		blacklistLuminosity -= D.luminosity
+	else if(istype(H, /mob/living/simple_animal/hostile/mining_drone))
+		var/mob/living/simple_animal/hostile/mining_drone/D = H
+		D.light_on = 2
+		blacklistLuminosity -= D.luminosity
+		addtimer(D, "fix_light", 600)
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
 	H.SetLuminosity(blacklistLuminosity) //I hate lightcode for making me do it this way
@@ -424,6 +430,9 @@
 				return
 
 		enthralling = 0
+		if(is_shadow_or_thrall(target))
+			user << "<span class='shadowling'><b>[target.real_name]</b> is already a thrall...</span>"
+			return
 		user << "<span class='shadowling'>You have enthralled <b>[target.real_name]</b>!</span>"
 		target.visible_message("<span class='big'>[target] looks to have experienced a revelation!</span>", \
 							   "<span class='warning'>False faces all d<b>ark not real not real not--</b></span>")
@@ -874,6 +883,7 @@
 /obj/effect/proc_holder/spell/self/lesser_shadow_walk/cast(mob/living/carbon/human/user)
 	user.visible_message("<span class='warning'>[user] suddenly fades away!</span>", "<span class='shadowling'>You veil yourself in darkness, making you harder to see.</span>")
 	user.alpha = 10
+	src = null
 	sleep(40)
 	user.visible_message("<span class='warning'>[user] appears from nowhere!</span>", "<span class='shadowling'>Your shadowy guise slips away.</span>")
 	user.alpha = initial(user.alpha)
@@ -900,6 +910,10 @@
 		user.dna.species.darksight = 0
 		user.dna.species.invis_sight = initial(user.dna.species.invis_sight)
 	user.update_sight()
+
+/obj/effect/proc_holder/spell/self/thrall_vision/Removed(datum/mind/M)
+	if(active && M && M.current)
+		cast(M.current) //turn it off
 
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind //Lets a thrall talk with their allies
@@ -949,10 +963,6 @@
 		revert_cast()
 		return
 	for(var/mob/living/boom in targets)
-		if(is_shadow_or_thrall(boom))
-			user << "<span class='warning'>Making an ally explode seems unwise.<span>"
-			revert_cast()
-			return
 		user.visible_message("<span class='warning'>[user]'s markings flare as they gesture at [boom]!</span>", \
 							"<span class='shadowling'>You direct a lance of telekinetic energy into [boom].</span>")
 		sleep(4)
@@ -1045,8 +1055,6 @@
 
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/human/target in T.contents)
-			if(is_shadow_or_thrall(target))
-				continue
 			target << "<span class='userdanger'>You are struck by a bolt of lightning!</span>"
 			playsound(target, 'sound/magic/LightningShock.ogg', 50, 1)
 			target.Weaken(8)

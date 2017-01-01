@@ -30,6 +30,9 @@
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
 	var/mob/living/carbon/human/target = user.pulling
+	var/absorbtimer = (16 - changeling.absorbedcount) * 10 //the more people you eat, the faster you can absorb
+	if(absorbtimer < 50)
+		absorbtimer = 50 //lowest you can get it is 5 seconds
 	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
@@ -43,7 +46,7 @@
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
-		if(!do_mob(user, target, 150))
+		if(!do_mob(user, target, absorbtimer))
 			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
 			changeling.isabsorbing = 0
 			return
@@ -53,7 +56,7 @@
 
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)
-		changeling.absorbedcount--
+		changeling.profilecount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
 	changeling.add_new_profile(target, user)
 
@@ -88,9 +91,11 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
+			changeling.profilecount += (target.mind.changeling.absorbedcount)
 
 			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
+			target.mind.changeling.profilecount = 0
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)
@@ -100,6 +105,7 @@
 
 	target.death(0)
 	target.Drain()
+	changeling.absorbedcount++
 	return 1
 
 

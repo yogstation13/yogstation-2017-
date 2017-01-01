@@ -11,6 +11,7 @@
 	required_players = 15
 	var/max_teams = 4
 	abductor_teams = 1
+	prob_traitor_ai = 18
 	var/list/datum/mind/scientists = list()
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
@@ -210,7 +211,7 @@
 /datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
 	var/radio_freq = SYND_FREQ
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
+	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt/abductor(agent)
 	R.set_frequency(radio_freq)
 	agent.equip_to_slot_or_del(R, slot_ears)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), slot_shoes)
@@ -265,7 +266,6 @@
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
-				SSshuttle.emergency.request(null, 0.5)
 				finished = 1
 				return ..()
 	return ..()

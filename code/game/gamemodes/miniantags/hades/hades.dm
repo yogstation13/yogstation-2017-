@@ -12,7 +12,7 @@
 	icon_living = "EvilPope"
 	speed = 1
 	a_intent = "harm"
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	attack_sound = 'sound/magic/MAGIC_MISSILE.ogg'
 	death_sound = 'sound/magic/Teleport_diss.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -201,9 +201,7 @@
 							src.say("Your sin will be punished, [sinPerson]!")
 							var/sinPersonspecies = pick(species_list)
 							var/newtype = species_list[sinPersonspecies]
-							var/datum/species/old_species = sinPerson.dna.species
 							sinPerson.set_species(newtype)
-							sinPerson.dna.species.admin_set_species(sinPerson,old_species)
 					if("Sloth")
 						src.say("Your sin, [sinPerson], is Sloth.")
 						if(prob(50))

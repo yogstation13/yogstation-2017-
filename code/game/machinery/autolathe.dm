@@ -128,8 +128,9 @@
 		busy = 1
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
-			files.AddDesign2Known(D.blueprint)
-
+			for(var/B in D.blueprints)
+				if(B)
+					files.AddDesign2Known(B)
 		busy = 0
 		return 1
 
@@ -342,6 +343,9 @@
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D)
+	if(D.make_reagents.len)
+		return 0
+
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff)))

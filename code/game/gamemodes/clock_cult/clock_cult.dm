@@ -1,6 +1,6 @@
 /*
 
-CLOCKWORK CULT: Based off of the failed pull requests from vgstation
+CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
 While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
 Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
@@ -8,12 +8,7 @@ Imprisoned within a massive construct known as the Celestial Derelict - or Reebe
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
 Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
 
-This is a team-based gamemode.
-
-There are three possible objectives the Enlightened - Ratvar's minions - can have:
-	1. Ensure X amount of Enlightened escape the station through the shuttle or otherwise.
-	2. Convert all silicon lifeforms on the station to Ratvar's cause.
-	3. Summon Ratvar via construction of a Gateway.
+This is a team-based gamemode, and the team's objective is shared by all cultists. It can include summoning Ratvar, escaping on the shuttle, or converting the AI and its cyborgs.
 
 The clockwork version of an arcane tome is the clockwork slab.
 While it can perform certain actions, it consumes a resource called components.
@@ -23,11 +18,13 @@ Game-wise, clockwork slabs will generate components over time, with more powerfu
 This file's folder contains:
 	__clock_defines.dm: Defined variables
 	clock_cult.dm: Core gamemode files.
+	clock_items.dm: Items (excluding the proselytizer).
+	clock_machines.dm: Machinery like the mending motor.
 	clock_mobs.dm: Hostile and benign clockwork creatures.
-	clock_items.dm: Items
-	clock_structures.dm: Structures and effects
+	clock_proselytizer: The clockwork proselytizer and all of its special interactions.
 	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
 	clock_scripture.dm: Scripture and rites.
+	clock_structures.dm: Structures and effects
 	clock_unsorted.dm: Anything else with no place to be
 
 */
@@ -44,21 +41,23 @@ This file's folder contains:
 		return 0
 	if(!M.mind)
 		return 0
-	if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+	if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 		return 0
-	if(iscultist(M))
+	if(iscultist(M) || isconstruct(M))
 		return 0
-	if(isconstruct(M))
-		return 0
+	if(isbrain(M))
+		return 1
+	if(ishuman(M))
+		if(isloyal(M) || (M.mind.assigned_role in list("Captain", "Chaplain")))
+			return 0
+		return 1
 	if(isguardian(M))
 		var/mob/living/simple_animal/hostile/guardian/G = M
-		if(!is_servant_of_ratvar(G.summoner))
-			return 0 //can't convert it unless the owner is converted
-	if(isloyal(M))
-		return 0
-	if(M.mind.enslaved_to)
-		return 0
-	return 1
+		if(is_servant_of_ratvar(G.summoner))
+			return 1 //can't convert it unless the owner is converted
+	if(issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+		return 1
+	return 0
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
 	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
@@ -88,11 +87,15 @@ This file's folder contains:
 	if(!silent)
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
-		whim without hesitation.</span>")
+		whim without hesitation. If you need help, read https://forums.yogstation.net/index.php?threads/how-to-clock-cult-for-morons.12083/.</span>")
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
+	M.languages_spoken |= RATVAR
+	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
+	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
+	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))
@@ -107,6 +110,8 @@ This file's folder contains:
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		C.present_tasks(M) //Memorize the objectives
+	M.throw_alert("clockinfo", /obj/screen/alert/clockwork/infodump)
+	cache_check(M)
 	return 1
 
 /proc/remove_servant_of_ratvar(mob/living/M, silent = FALSE)
@@ -120,7 +125,14 @@ This file's folder contains:
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
-	M.verbs -= /mob/living/carbon/human/proc/function_call //Removes any bound Ratvarian spears
+	M.languages_spoken &= ~RATVAR
+	M.languages_understood &= ~RATVAR
+	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
+	M.clear_alert("clockinfo")
+	M.clear_alert("nocache")
+	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
+		qdel(F)
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))
@@ -132,18 +144,6 @@ This file's folder contains:
 		S.show_laws()
 	return 1
 
-/proc/send_hierophant_message(mob/user, message, large)
-	if(!user || !message || !ticker || !ticker.mode)
-		return 0
-	var/parsed_message = "<span class='[large ? "big_brass":"heavy_brass"]'>Servant [user.name == user.real_name ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[large ? "large_brass":"brass"]'>\"[message]\"</span>"
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [parsed_message]"
-		else if(is_servant_of_ratvar(M))
-			M << parsed_message
-	return 1
-
 ///////////////
 // GAME MODE //
 ///////////////
@@ -152,8 +152,8 @@ This file's folder contains:
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
-	var/clockwork_objective = "escape" //The objective that the servants must fulfill
-	var/clockwork_explanation = "Ensure that the meme levels of the station remain high." //The description of the current objective
+	var/clockwork_objective = "gateway" //The objective that the servants must fulfill
+	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
@@ -165,7 +165,9 @@ This file's folder contains:
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
-	var/servants_to_serve = list()
+	prob_traitor_ai = 18
+	var/list/servants_to_serve = list()
+	var/roundstart_player_count
 
 /datum/game_mode/clockwork_cult/announce()
 	world << "<b>The game mode is: Clockwork Cult!</b>"
@@ -178,15 +180,23 @@ This file's folder contains:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = max(1, round(num_players() / 10)) //Guaranteed one cultist - otherwise, about one cultist for every ten players
-	while(starter_servants)
-		var/datum/mind/servant = pick_candidate()
+	var/starter_servants = max(required_enemies, round(num_players() / 10)) //Guaranteed <required_enemies> cultist(s) - otherwise, about one cultist for every ten players
+
+	roundstart_player_count = num_players()
+
+	var/list/datum/mind/followers_of_holy_light = pick_candidate(amount = starter_servants)
+	update_not_chosen_candidates()
+
+	for(var/v in followers_of_holy_light)
+		var/datum/mind/servant = v
 		servants_to_serve += servant
-		antag_candidates -= servant
 		modePlayer += servant
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
-		starter_servants--
+
+	if(servants_to_serve.len < required_enemies)
+		return 0
+
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
@@ -209,15 +219,14 @@ This file's folder contains:
 	if(silicons_possible)
 		possible_objectives += "silicons"
 	clockwork_objective = pick(possible_objectives)
-	clockwork_objective = "gateway" //TEMPORARY, to be removed before merge
 	switch(clockwork_objective)
 		if("escape")
-			required_escapees = max(1, num_players() / 3) //33% of the player count must be cultists
+			required_escapees = max(1, roundstart_player_count / 3) //33% of the player count must be cultists
 			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]."
 		if("gateway")
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 		if("silicons")
-			clockwork_explanation = "Ensure that all silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -242,8 +251,9 @@ This file's folder contains:
 	if(slot == "At your feet")
 		new/obj/item/clockwork/slab/starter(get_turf(L))
 	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using Report in your slab's interface, and you can find a \
-	concise tutorial in Recollection."
+	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
+	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
@@ -261,20 +271,30 @@ This file's folder contains:
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			if(surviving_servants <= required_escapees)
-				return 1
-			return 0
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. <i><b>[surviving_servants]</b> managed to escape!</i>"
+			if(surviving_servants >= required_escapees)
+				return TRUE
+			return FALSE
 		if("silicons")
+			var/total_silicons = 0
+			var/valid_silicons = 0
+			var/successful = TRUE
 			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
-				if(!is_servant_of_ratvar(S))
-					return 0
+				total_silicons++
+				if(is_servant_of_ratvar(S) || S.stat == DEAD)
+					valid_silicons++
 			for(var/mob/living/silicon/ai/A in mob_list)
-				if(!is_servant_of_ratvar(A))
-					return 0
-			return 1
+				total_silicons++
+				if(is_servant_of_ratvar(A) || A.stat == DEAD)
+					valid_silicons++
+			if(valid_silicons < total_silicons)
+				successful = FALSE
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. \
+			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!</i>"
+			return successful
 		if("gateway")
 			return ratvar_awakens
-	return 0 //This shouldn't ever be reached, but just in case it is
+	return FALSE //This shouldn't ever be reached, but just in case it is
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
@@ -285,10 +305,21 @@ This file's folder contains:
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
-			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
+			var/half_victory = FALSE
+			if(clockwork_objective == "gateway")
+				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+				if(G)
+					half_victory = TRUE
+			if(half_victory)
+				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway was successfully constructed!</b></span>"
+				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
+			else
+				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
+		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)

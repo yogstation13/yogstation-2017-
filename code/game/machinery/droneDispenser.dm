@@ -301,6 +301,11 @@
 		stat &= ~BROKEN
 		health = max_health
 		update_icon()
+		
+	else if(istype(O, /obj/item/weapon/crowbar))
+		materials.retrieve_all()
+		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		user << "<span class='notice'>You retrieve the materials from [src].</span>"
 	else
 		return ..()
 

@@ -19,15 +19,16 @@
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
-	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
+	var/list/channels = list() //see communications.dm for full list. First channel is a "default" for :h
+	var/list/encryption_keys = list() //keys the radio can use to encrypt and decrypt messages. Headsets and other subspace broadcasters can only decrypt.
+	var/transmission_encryption = "" //if set, non-subspace transmissions from this radio will be encrypted with this key. Mostly for specialty intercomms.
+	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept physical encryption keys.
 	var/subspace_switchable = 0
 	var/subspace_transmission = 0
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/centcom = 0//Bleh, more dirty booleans
 	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
-//			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
 	slot_flags = SLOT_BELT
 	languages_spoken = HUMAN | ROBOT
@@ -39,7 +40,6 @@
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1
-		//FREQ_BROADCASTING = 2
 
 	var/command = FALSE //If we are speaking into a command headset, our text can be BOLD
 	var/use_command = FALSE
@@ -63,6 +63,7 @@
 	translate_hive = 0
 	syndie = 0
 	centcom = 0
+	encryption_keys = null
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -82,6 +83,10 @@
 
 		if(keyslot.centcom)
 			centcom = 1
+
+		encryption_keys = keyslot.encryption_keys
+	else
+		encryption_keys = list()
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])
@@ -154,7 +159,7 @@
 			if(tune == "input")
 				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
 				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
-				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
+				tune = input("Tune frequency ([min]-[max]):", name, frequency) as null|num
 				if(!isnull(tune) && !..())
 					. = TRUE
 			else if(adjust)
@@ -197,6 +202,10 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
+	addtimer(src,"talk_into_impl",0,FALSE,M,message,channel,spans)
+
+/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
+
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -297,12 +306,13 @@
 
 	if (freqnum == CENTCOM_FREQ && centcom)
 		var/datum/signal/signal = new
-		signal.transmission_method = 2
+		signal.transmission_method = TRANSMISSION_SUBSPACE
 		signal.data = list(
 			"mob" = M, 				// store a reference to the mob
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
+			"uuid" = real_name, // Used for tracking when $source is changed
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
@@ -312,7 +322,7 @@
 			"radio" = src, 			// stores the radio used for transmission
 			"slow" = 0,
 			"traffic" = 0,
-			"type" = 0,
+			"type" = BROADCAST_NORMAL,
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
@@ -326,7 +336,7 @@
 		signal.frequency = freqnum // Quick frequency set
 		Broadcast_Message(M, voicemask,
 				  src, message, voice, jobname, real_name,
-				  5, signal.data["compression"], list(position.z, 0), freq, spans,
+				  BROADCAST_CENTCOMM_RADIOS, real_name, signal.data["compression"], signal.data["encryption"], list(position.z, 0), freq, spans, signal.data["languages"],
 				  verb_say, verb_ask, verb_exclaim, verb_yell)
 		return
 
@@ -335,15 +345,14 @@
 	if(subspace_transmission)
 		// First, we want to generate a new radio signal
 		var/datum/signal/signal = new
-		signal.transmission_method = 2 // 2 would be a subspace transmission.
-									   // transmission_method could probably be enumerated through #define. Would be neater.
-									   // --- Finally, tag the actual signal with the appropriate values ---
+		signal.transmission_method = TRANSMISSION_SUBSPACE
 		signal.data = list(
 			// Identity-associated tags:
 			"mob" = M, // store a reference to the mob
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
+			"uuid" = real_name,		// Used for tracking when $source is change
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
@@ -357,7 +366,7 @@
 			"radio" = src, // stores the radio used for transmission
 			"slow" = 0, // how much to sleep() before broadcasting - simulates net lag
 			"traffic" = 0, // dictates the total traffic sum that the signal went through
-			"type" = 0, // determines what type of radio input it is: normal broadcast
+			"type" = BROADCAST_NORMAL, // determines what type of radio input it is: normal broadcast
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
@@ -385,10 +394,8 @@
 
 	 /* ###### Intercoms and station-bounced radios ###### */
 
-	var/filter_type = 2
-
 	var/datum/signal/signal = new
-	signal.transmission_method = 2
+	signal.transmission_method = TRANSMISSION_SUBSPACE
 
 
 	/* --- Try to send a normal subspace broadcast first */
@@ -398,16 +405,18 @@
 		"mobtype" = M.type, 	// the mob's type
 		"realname" = real_name, // the mob's real name
 		"name" = voice,			// the mob's voice name
+		"uuid" = real_name, // Used for tracking when $source is changed
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
 
 		"compression" = 0,		// uncompressed radio signal
+		"encryption" = transmission_encryption,
 		"message" = message, 	// the actual sent message
 		"radio" = src, 			// stores the radio used for transmission
 		"slow" = 0,
 		"traffic" = 0,
-		"type" = 0,
+		"type" = BROADCAST_NORMAL,
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
@@ -423,18 +432,20 @@
 		R.receive_signal(signal)
 
 
-	spawn(20) // wait a little...
+	addtimer(src, "broadcast_delayed", 20, FALSE, signal, M, message, channel, spans, voicemask, voice, jobname, real_name, freq) //wait to see if it's picked up by tcomms
 
-		if(signal.data["done"] && position.z in signal.data["level"])
-			// we're done here.
-			return
+/obj/item/device/radio/proc/broadcast_delayed(datum/signal/signal, atom/movable/M, message, channel, list/spans, voicemask, voice, jobname, real_name, freq)
+	var/turf/position = get_turf(src)
+	if(signal.data["done"] && (position.z in signal.data["level"]))
+		// we're done here.
+		return
 
-		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-		// Send a mundane broadcast with limited targets:
-		Broadcast_Message(M, voicemask,
-						  src, message, voice, jobname, real_name,
-						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell)
+	// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
+	// Send a mundane broadcast with limited targets:
+	Broadcast_Message(M, voicemask,
+					  src, message, voice, jobname, real_name,
+					  BROADCAST_INTERCOMMS_AND_BOUNCE, real_name, signal.data["compression"], signal.data["encryption"], list(position.z), freq, spans, signal.data["languages"],
+					  verb_say, verb_ask, verb_exclaim, verb_yell)
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(radio_freq)
@@ -594,6 +605,8 @@
 	freerange = 1
 	frequency = 1359
 	freqlock = 1
+	encryption_keys = list("Security")
+	transmission_encryption = "Security"
 
 /obj/item/device/radio/off	// Station bounced radios, their only difference is spawning with the speakers off, this was made to help the lag.
 	listening = 0			// And it's nice to have a subtype too for future features.

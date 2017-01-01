@@ -7,11 +7,12 @@
 	plantname = "Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	maturation = 8
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash)
 	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	seed = /obj/item/seeds/tomato
@@ -31,7 +32,7 @@
 	plantname = "Blood-Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
 	mutatelist = list()
-	reagents_add = list("blood" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("blood" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blood
@@ -56,7 +57,7 @@
 	icon_grow = "bluetomato-grow"
 	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
 	genes = list(/datum/plant_gene/trait/slip)
-	reagents_add = list("lube" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("lube" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
@@ -79,7 +80,7 @@
 	yield = 2
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
-	reagents_add = list("lube" = 0.2, "singulo" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("lube" = 0.4, "singulo" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
@@ -139,4 +140,6 @@
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 			if(user)
 				user.unEquip(src)
+				user.attack_log += "\[[time_stamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
+				K.spawnedBy = "[user.real_name]([user.ckey])"
 			qdel(src)

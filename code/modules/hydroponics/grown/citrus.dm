@@ -18,8 +18,9 @@
 	endurance = 50
 	yield = 4
 	potency = 15
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	mutatelist = list(/obj/item/seeds/orange)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	seed = /obj/item/seeds/lime
@@ -40,10 +41,11 @@
 	endurance = 50
 	yield = 5
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/lime)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orange
@@ -63,10 +65,11 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/cash)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
@@ -83,12 +86,13 @@
 	species = "cashtree"
 	plantname = "Money Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	lifespan = 55
 	endurance = 45
 	yield = 4
-	reagents_add = list("nutriment" = 0.05)
+	reagents_add = list("nutriment" = 0.1)
 	rarity = 50  // Nanotrasen approves...
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit

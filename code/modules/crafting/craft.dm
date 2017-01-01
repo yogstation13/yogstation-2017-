@@ -1,7 +1,24 @@
 /datum/personal_crafting
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
+	var/list/categories = list(CAT_WEAPON,
+				CAT_AMMO,
+				CAT_ROBOT,
+				CAT_MISC,
+				CAT_PRIMAL,
+				CAT_BREAD,
+				CAT_BURGER,
+				CAT_CAKE,
+				CAT_EGG,
+				CAT_MEAT,
+				CAT_MISCFOOD,
+				CAT_PASTRY,
+				CAT_PIE,
+				CAT_PIZZA,
+				CAT_SALAD,
+				CAT_SANDWICH,
+				CAT_SOUP,
+				CAT_SPAGHETTI)
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 
@@ -92,7 +109,6 @@
 	return 1
 
 /datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
-	for(var/A in R.parts)
 	var/list/contents = get_surroundings(user)
 	var/send_feedback = 1
 	if(check_contents(R, contents))

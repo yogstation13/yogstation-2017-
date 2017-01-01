@@ -66,6 +66,7 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
+	var/datum/chameleon_browse/chameleon_browse = null
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -74,6 +75,8 @@
 
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	if(chameleon_browse)
+		chameleon_browse.move_to_mob(current, new_character)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
@@ -134,8 +137,9 @@
 			A.set_zeroth_law("")
 			A.show_laws()
 			A.verbs -= /mob/living/silicon/ai/proc/choose_modules
-			A.malf_picker.remove_verbs(A)
-			qdel(A.malf_picker)
+			if(A.malf_picker)
+				A.malf_picker.remove_verbs(A)
+				qdel(A.malf_picker)
 	special_role = null
 	remove_antag_equip()
 	ticker.mode.update_traitor_icons_removed(src)
@@ -175,8 +179,8 @@
 
 
 /datum/mind/proc/remove_gang()
-		ticker.mode.remove_gangster(src,0,1,1)
-		remove_objectives()
+	ticker.mode.remove_gangster(src,0,1,1)
+	remove_objectives()
 
 /datum/mind/proc/remove_hog_follower_prophet()
 	ticker.mode.red_deity_followers -= src
@@ -212,7 +216,8 @@
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
-	gang_datum.remove_gang_hud(src)
+	if(gang_datum)
+		gang_datum.remove_gang_hud(src)
 
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
@@ -1758,6 +1763,7 @@
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(istype(S, spell))
+			S.Removed(src)
 			qdel(S)
 			spell_list -= S
 

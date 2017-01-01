@@ -28,6 +28,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
+	prob_traitor_ai = 18
 
 ///////////////////////////
 //Announces the game type//
@@ -52,17 +53,16 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(prob(num_players() * 2))
 		gangs_to_create ++
 
-	for(var/i=1 to gangs_to_create)
-		if(!antag_candidates.len)
-			break
+	var/list/datum/mind/mafiosos = pick_candidate(amount = gangs_to_create)
+	update_not_chosen_candidates()
 
+	for(var/v in mafiosos)
 		//Create the gang
 		var/datum/gang/G = new()
 		gangs += G
 
 		//Now assign a boss for the gang
-		var/datum/mind/boss = pick_candidate()
-		antag_candidates -= boss
+		var/datum/mind/boss = v
 		G.bosses += boss
 		boss.gang_datum = G
 		boss.special_role = "[G.name] Gang Boss"
@@ -165,7 +165,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
-	if(!G || (gangster_mind in get_all_gangsters()) || gangster_mind.enslaved_to)
+	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
 		return 0
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1
@@ -263,10 +263,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(gangs.len)
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The loyalists win!"]</span><br>"
-			feedback_set_details("round_end_result","win - gang domination complete")
+			feedback_set_details("round_end_result","loss - gangs failed takeover")
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
-			feedback_set_details("round_end_result","loss - gangs failed takeover")
+			feedback_set_details("round_end_result","win - gang domination complete")
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
@@ -289,7 +289,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 /datum/gang_points/New()
 	next_point_time = world.time + next_point_interval
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any

@@ -43,7 +43,7 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-	flags = HEADBANGPROTECT
+	flags = HEADBANGPROTECT | THICKMATERIAL
 	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
 	strip_delay = 80
@@ -51,6 +51,7 @@
 	visor_flags_inv = HIDEMASK|HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/attack_self(mob/user)
@@ -60,7 +61,7 @@
 			up = !up
 			flags ^= visor_flags
 			flags_inv ^= visor_flags_inv
-			flags_cover ^= initial(flags_cover)
+			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
 			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
 
@@ -212,6 +213,16 @@
 	icon_state = "skull"
 	item_state = "skull"
 	strip_delay = 100
+
+/obj/item/clothing/head/helmet/kasa
+	name = "pathfinder kasa"
+	desc = "Used by ash walkers to travel long distances across lavaland's perilous landscape."
+	icon_state = "pathhead"
+	item_state = "pathhead"
+	flags_cover = HEAD
+	burn_state = FIRE_PROOF
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 
 //LightToggle
 

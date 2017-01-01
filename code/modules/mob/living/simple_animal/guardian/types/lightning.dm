@@ -4,8 +4,8 @@
 	layer = LYING_MOB_LAYER
 
 /mob/living/simple_animal/hostile/guardian/beam
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = 7
+	melee_damage_upper = 7
 	attacktext = "shocks"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
@@ -22,6 +22,11 @@
 /mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
 	if(..())
 		if(isliving(target) && target != src && target != summoner)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if(prob(50))
+					H.drop_item()
+					H <<"<span class='warning'>[src]'s shock causes your hand to spasm, disarming you!</span>"
 			for(var/chain in enemychains)
 				var/datum/beam/B = chain
 				if(B.target == target)
@@ -108,5 +113,5 @@
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
 						"<span class='italics'>You hear a heavy electrical crack.</span>" \
 					)
-				L.adjustFireLoss(0.9) //adds up very rapidly
+				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

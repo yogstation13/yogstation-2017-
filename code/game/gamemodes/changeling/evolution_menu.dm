@@ -328,7 +328,7 @@ var/list/sting_paths
 		user << "We have reached our capacity for abilities."
 		return
 
-	if(user.status_flags & FAKEDEATH)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+	if(FAKEDEATH in user.status_flags)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
 		user << "We lack the energy to evolve new abilities right now."
 		return
 

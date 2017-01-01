@@ -7,9 +7,14 @@
 /proc/spawn_rivers(target_z = 5, nodes = 4, turf_type = /turf/open/floor/plating/lava/smooth/lava_land_surface, whitelist_area = /area/lavaland/surface/outdoors, min_x = RANDOM_LOWER_X, min_y = RANDOM_LOWER_Y, max_x = RANDOM_UPPER_X, max_y = RANDOM_UPPER_Y)
 	var/list/river_nodes = list()
 	var/num_spawned = 0
+	var/sanity = 100 //how many times we will try again if we hit a protected area
 	while(num_spawned < nodes)
 		var/turf/F = locate(rand(min_x, max_x), rand(min_y, max_y), target_z)
-
+		if(sanity)
+			var/area/A = get_area(F)
+			if(!istype(A, whitelist_area) || A.mapgen_protected)
+				sanity--
+				continue
 		river_nodes += new /obj/effect/landmark/river_waypoint(F)
 		num_spawned++
 
@@ -43,14 +48,14 @@
 
 			cur_turf = get_step(cur_turf, cur_dir)
 			var/area/new_area = get_area(cur_turf)
-			if(!istype(new_area, whitelist_area)) //Rivers will skip ruins
+			if(!istype(new_area, whitelist_area) || new_area.mapgen_protected) //Rivers will skip ruins
 				detouring = 0
 				cur_dir = get_dir(cur_turf, target_turf)
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
 				var/turf/open/river_turf = new turf_type(cur_turf)
-				river_turf.Spread(30, 25)
+				river_turf.Spread(30, 25, whitelist_area)
 
 	for(var/WP in river_nodes)
 		qdel(WP)
@@ -62,11 +67,14 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 
-/turf/proc/Spread(probability = 30, prob_loss = 25)
+/turf/proc/Spread(probability = 30, prob_loss = 25, whitelist_area)
 	if(probability <= 0)
 		return
 
 	for(var/turf/F in orange(1, src))
+		var/area/A = get_area(F)
+		if((whitelist_area && !istype(A, whitelist_area)) || A.mapgen_protected)
+			continue
 		if(!F.density || istype(F, /turf/closed/mineral))
 			var/turf/L = new src.type(F)
 

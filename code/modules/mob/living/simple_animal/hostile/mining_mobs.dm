@@ -9,7 +9,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
-	status_flags = 0
+	status_flags = list()
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
@@ -57,7 +57,7 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/temp/basilisk
+	projectiletype = /obj/item/projectile/bullet/dart/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
@@ -74,20 +74,22 @@
 	a_intent = "harm"
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
-	aggro_vision_range = 9
+	aggro_vision_range = 5
 	idle_vision_range = 2
 	turns_per_move = 5
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
-/obj/item/projectile/temp/basilisk
-	name = "freezing blast"
+/obj/item/projectile/bullet/dart/basilisk
+	name = "freezing dart"
 	icon_state = "ice_2"
-	damage = 0
-	damage_type = BURN
-	nodamage = 1
-	flag = "energy"
-	temperature = 50
+	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
+
+/obj/item/projectile/bullet/dart/basilisk/New()
+	..()
+	reagents.add_reagent("bolamine",5)
+	reagents.add_reagent("cryptobiolin",2)
+	reagents.add_reagent("frostoil", 2)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
@@ -128,7 +130,7 @@
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
 	deathmessage = "spits up the contents of its stomach before dying!"
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
@@ -289,7 +291,7 @@
 			return
 
 		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume += 2 // Fast blood regen
+			H.blood_volume += 3 // Fast blood regen
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -426,14 +428,14 @@
 	ranged = 1
 	ranged_cooldown_time = 120
 	friendly = "wails at"
-	speak_emote = list("bellows")
+	speak_chance = 5
 	vision_range = 4
 	speed = 3
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 28
+	melee_damage_upper = 28
 	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
@@ -523,7 +525,7 @@
 	for(var/mob/living/M in src.loc)
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 		M.Stun(5)
-		M.adjustBruteLoss(rand(10,15))
+		M.adjustBruteLoss(15)
 		latched = 1
 	if(!latched)
 		qdel(src)
@@ -558,9 +560,9 @@
 			if(D.hides < 3)
 				D.hides++
 				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.1
+				damage_absorption["fire"] = damage_absorption["fire"] - 0.1
+				damage_absorption["laser"] = damage_absorption["laser"] - 0.1
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)
@@ -711,7 +713,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
-	desc = "Its stare causes victims to freeze from the inside."
+	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
 	icon = 'icons/mob/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
@@ -719,22 +721,23 @@
 	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
-	melee_damage_lower = 15
-	melee_damage_upper = 15
-	attacktext = "stares into the soul of"
+	melee_damage_lower = 13
+	melee_damage_upper = 13
+	attacktext = "impales"
 	a_intent = "harm"
-	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	flying = TRUE
 	stat_attack = 1
 	robust_searching = 1
+	gold_core_spawnable = 1
 	loot = list()
-	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 3, /obj/item/stack/sheet/sinew = 3, /obj/item/stack/sheet/bone = 3)
 
 //Goliath
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
@@ -742,12 +745,105 @@
 	icon_dead = "goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
 	pre_attack_icon = "goliath2"
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 5)
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+	gold_core_spawnable = 1
 
 
+//Marrow Weaver
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver
+	name = "marrow weaver"
+	desc = "A big, angry, poisonous spider. It likes to snack on bone marrow. Its preferred food source is you."
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "weaver"
+	icon_living = "weaver"
+	icon_aggro = "weaver"
+	icon_dead = "weaver_dead"
+	throw_message = "bounces harmlessly off the"
+	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
+	loot = list()
+	attacktext = "bites"
+	gold_core_spawnable = 1
+	health = 220
+	maxHealth = 220
+	vision_range = 8
+	move_to_delay = 16
+	speed = 3
+	melee_damage_lower = 13
+	melee_damage_upper = 16
+	stat_attack = 1
+	robust_searching = 1
+	see_in_dark = 7
+	ventcrawler = 2
+	pass_flags = PASSTABLE
+	attack_sound = 'sound/weapons/bite.ogg'
+	deathmessage = "rolls over, frothing at the mouth before stilling."
+	var/poison_type = "toxin"
+	var/poison_per_bite = 5
+	var/buttmad = 0
+	var/melee_damage_lower_angery0 = 13
+	var/melee_damage_upper_angery0 = 16
+	var/melee_damage_lower_angery1 = 15
+	var/melee_damage_upper_angery1 = 20
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
+	if(buttmad == 0)
+		if(health < maxHealth/3)
+			buttmad = 1
+			visible_message("<span class='danger'>[src] chitters in rage, baring its fangs!</span>")
+			melee_damage_lower = melee_damage_lower_angery1
+			melee_damage_upper = melee_damage_upper_angery1
+			move_to_delay = 8
+			speed = 3
+			poison_type = "spore"
+			poison_per_bite = 5
+	else if(buttmad == 1)
+		if(health > maxHealth/2)
+			buttmad = 0
+			visible_message("<span class='notice'>[src] seems to have calmed down, but not by much.</span>")
+			melee_damage_lower = melee_damage_lower_angery0
+			melee_damage_upper = melee_damage_upper_angery0
+			poison_type = initial(poison_type)
+			poison_per_bite = initial(poison_per_bite)
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(target.reagents)
+			L.reagents.add_reagent(poison_type, poison_per_bite)
+		if((L.stat == DEAD) && (health < maxHealth) && ishuman(L))
+			var/mob/living/carbon/human/H = L
+			var/foundorgans = 0
+			for(var/obj/item/organ/O in H.internal_organs)
+				if(O.zone == "chest")
+					foundorgans++
+					qdel(O)
+			if(foundorgans)
+				src.visible_message(
+					"<span class='danger'>[src] drools some toxic goo into [L]'s innards...</span>",
+					"<span class='danger'>Before sucking out the slurry of bone marrow and flesh, healing itself!</span>",
+					"<span class-'userdanger>You liquefy [L]'s innards with your venom and suck out the resulting slurry, revitalizing yourself.</span>")
+				adjustBruteLoss(round(-H.maxHealth/2))
+				for(var/obj/item/bodypart/B in H.bodyparts)
+					if(B.body_zone == "chest")
+						B.dismember()
+			else
+				src << "<span class='warning'>There are no organs left in this corpse.</span>"
+
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/CanAttack(atom/A)
+	if(..())
+		return TRUE
+	if((health < maxHealth) && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		for(var/obj/item/organ/O in H.internal_organs)
+			if(O.zone == "chest")
+				return TRUE
+	return FALSE
 
 //Legion
 
@@ -774,9 +870,9 @@
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
+	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
-		stored_mob.loc = get_turf(src)
+		stored_mob.forceMove(get_turf(src))
 		stored_mob.adjustBruteLoss(1000)
 	else
 		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
@@ -796,12 +892,12 @@
 	maxHealth = 1
 	health = 5
 	harm_intent_damage = 5
-	melee_damage_lower = 12
-	melee_damage_upper = 12
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	attacktext = "bites"
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
-	throw_message = "is shrugged off by"
+	throw_message = "is knocked away by"
 	pass_flags = PASSTABLE
 	del_on_death = 1
 	stat_attack = 1
@@ -816,8 +912,7 @@
 				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 				H.death()
 				L.stored_mob = H
-				H.loc = L
-				qdel(src)
+				H.forceMove(L)
 	..()
 
 /obj/item/organ/hivelord_core/legion
@@ -932,10 +1027,12 @@
 	reagents.my_atom = src
 
 /obj/item/udder/gutlunch/generateMilk()
-	if(prob(60))
+	if(prob(50))
 		reagents.add_reagent("cream", rand(2, 5))
 	if(prob(45))
 		reagents.add_reagent("salglu_solution", rand(2,5))
+	if(prob(5))
+		reagents.add_reagent("omnizine", rand(2,5))
 
 
 //Male gutlunch. They're smaller and more colorful!
@@ -991,7 +1088,7 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
-	gps = new /obj/item/device/gps/internal(src)
+	gps = new /obj/item/device/gps/internal/lavaland(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)
@@ -1007,14 +1104,14 @@
 
 /obj/effect/collapse/New()
 	..()
-	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
-	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
+	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
 		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
-		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
 				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)

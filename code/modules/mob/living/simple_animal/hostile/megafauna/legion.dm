@@ -13,6 +13,7 @@
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	dismember_chance = 0 //no dismember because of spammy legion heads
 	speed = 2
 	ranged = 1
 	flying = 1
@@ -20,7 +21,7 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	var/size = 10
+	var/size = 5
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
@@ -31,7 +32,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
-	new/obj/item/device/gps/internal/legion(src)
+	new/obj/item/device/gps/internal/lavaland/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
@@ -42,7 +43,7 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='danger'>[src] charges!</span>")
+			visible_message("<span class='warning'><b>[src] charges!</b></span>")
 			SpinAnimation(speed = 20, loops = 5)
 			ranged = 0
 			retreat_distance = 0
@@ -59,29 +60,29 @@
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)
 		return
-	if(size > 2)
+	if(size > 1)
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
-		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
+		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 
 		L.maxHealth = maxHealth * 0.6
 		maxHealth = L.maxHealth
 
 		L.health = L.maxHealth
-		health = L.health
+		health = maxHealth
 
-		L.size = size - 2
-		size = L.size
+		size--
+		L.size = size
 
-		var/size_multiplier = L.size * 0.08
-		L.resize = size_multiplier
-		resize = L.resize
+		L.resize = L.size * 0.2
+		transform = initial(transform)
+		resize = size * 0.2
 
 		L.update_transform()
 		update_transform()
 
-		L.target = target
+		L.GiveTarget(target)
 
-		visible_message("<span class='danger'>[src] splits!</span>")
+		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
@@ -89,15 +90,15 @@
 				last_legion = FALSE
 				break
 		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff_of_storms)
+			loot = list(/obj/item/weapon/staff/storm)
 		else if(prob(5))
-			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
+			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
 	return 1
 
-/obj/item/device/gps/internal/legion
+/obj/item/device/gps/internal/lavaland/legion
 	icon_state = null
 	gpstag = "Echoing Signal"
 	desc = "The message repeats."
@@ -106,46 +107,53 @@
 
 //Loot
 
-/obj/item/weapon/staff_of_storms
+/obj/item/weapon/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
 	w_class = 4
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	var/obj/machinery/lavaland_controller/linked_machine
+	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
 
-/obj/item/weapon/staff_of_storms/attack_self(mob/user)
+/obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
-		user << "The staff is still recharging."
+		user << "<span class='warning'>The staff is still recharging!</span>"
 		return
 
-	if(!linked_machine || linked_machine.z != user.z)
-		for(var/obj/machinery/lavaland_controller/controller in machines)
-			if(controller.z == user.z)
-				linked_machine = controller
-				break
+	var/area/user_area = get_area(user)
+	var/datum/weather/A
+	for(var/V in SSweather.existing_weather)
+		var/datum/weather/W = V
+		if(W.target_z == user.z && W.area_type == user_area.type)
+			A = W
+			break
+	if(A)
 
-	if(linked_machine && linked_machine.ongoing_weather)
-		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
-			user << "The storm is already ending. It would be a waste to use the staff now."
+		if(A.stage != END_STAGE)
+			if(A.stage == WIND_DOWN_STAGE)
+				user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
+				return
+			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
+			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			A.wind_down()
 			return
-		linked_machine.ongoing_weather.duration = 0
-		user << "<span class='danger'><B>With an appropriately dramatic flourish, you dispell the storm.</B>"
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
-		storm_cooldown = world.time + 600
-
-	else if (linked_machine && !linked_machine.ongoing_weather)
-		user << "<span class='danger'><B>You lift the staff towards the heavens, calling down a terrible storm.</B>"
-		linked_machine.weather_cooldown = 0
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
-		storm_cooldown = world.time + 600
-
 	else
-		user << "You can't seem to control the weather here."
+		A = new storm_type
+		A.name = "staff storm"
+		A.area_type = user_area.type
+		A.target_z = user.z
+		A.telegraph_duration = 100
+		A.end_duration = 100
+
+	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
+	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	A.telegraph()
+	storm_cooldown = world.time + 200

@@ -29,7 +29,7 @@
 	var/wieldsound = null
 	var/unwieldsound = null
 
-/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user)
+/obj/item/weapon/twohanded/proc/unwield(mob/living/carbon/user, show_message = TRUE)
 	if(!wielded || !user)
 		return
 	wielded = 0
@@ -41,12 +41,11 @@
 	else //something wrong
 		name = "[initial(name)]"
 	update_icon()
-	if(isrobot(user))
-		user << "<span class='notice'>You free up your module.</span>"
-	else if(istype(src, /obj/item/weapon/twohanded/required))
-		user << "<span class='notice'>You drop \the [name].</span>"
-	else
-		user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
+	if(show_message)
+		if(isrobot(user))
+			user << "<span class='notice'>You free up your module.</span>"
+		else
+			user << "<span class='notice'>You are now carrying the [name] with one hand.</span>"
 	if(unwieldsound)
 		playsound(loc, unwieldsound, 50, 1)
 	var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
@@ -83,7 +82,7 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/mob_can_equip(mob/M, slot)
+/obj/item/weapon/twohanded/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [name] first!</span>"
@@ -92,12 +91,14 @@
 
 /obj/item/weapon/twohanded/dropped(mob/user)
 	..()
+	if(!wielded)
+		return
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
 			O.unwield(user)
-	return	unwield(user)
+	unwield(user)
 
 /obj/item/weapon/twohanded/update_icon()
 	return
@@ -114,7 +115,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = 5
-	flags = ABSTRACT
+	flags = ABSTRACT | NODROP
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
@@ -124,13 +125,13 @@
 
 ///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
-/obj/item/weapon/twohanded/required/
+/obj/item/weapon/twohanded/required
 	w_class = 5
 
 /obj/item/weapon/twohanded/required/attack_self()
 	return
 
-/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, slot)
+/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded)
 		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
@@ -139,15 +140,30 @@
 /obj/item/weapon/twohanded/required/attack_hand(mob/user)//Can't even pick it up without both hands empty
 	var/obj/item/weapon/twohanded/required/H = user.get_inactive_hand()
 	if(get_dist(src,user) > 1)
-		return 0
+		return
 	if(H != null)
 		user << "<span class='notice'>\The [src] is too cumbersome to carry in one hand!</span>"
 		return
 	wield(user)
 	..()
 
+/obj/item/weapon/twohanded/required/equipped(mob/user, slot)
+	..()
+	if((slot == slot_l_hand) || (slot == slot_r_hand))
+		wield(user)
+	else
+		unwield(user)
 
-/obj/item/weapon/twohanded/
+/obj/item/weapon/twohanded/required/wield(mob/living/carbon/user)
+	..()
+	if(!wielded)
+		user.unEquip(src)
+
+/obj/item/weapon/twohanded/required/unwield(mob/living/carbon/user, show_message = TRUE)
+	if(show_message)
+		user << "<span class='notice'>You drop [src].</span>"
+	..(user, FALSE)
+	user.unEquip(src)
 
 /*
  * Fireaxe
@@ -209,6 +225,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
 	var/hacked = 0
+	var/flip = FALSE
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	item_color = pick("red", "blue", "green", "purple")
@@ -220,6 +237,23 @@
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
 	return
+
+/obj/item/weapon/twohanded/dualsaber/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	else
+		if(flip)
+			user << "<span class='notice'>You will no longer flip while using [src].</span>"
+			flip = FALSE
+			return
+		user << "<span class='notice'>You will now flip while using [src].</span>"
+		flip = TRUE
+
+/obj/item/weapon/twohanded/dualsaber/examine(mob/user)
+	..()
+	user << "<span class='notice'>Alt-click [src] to toggle flipping while attacking.</span>"
+
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -235,7 +269,7 @@
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
-				if(i == 8)
+				if(i == 8 && flip)
 					user.emote("flip")
 				sleep(1)
 
@@ -246,8 +280,12 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, dammage, attack_type)
 	if(wielded)
+		if(attack_type == UNARMED_ATTACK)
+			return 1
+		else
+			return 0
 		return ..()
 	return 0
 
@@ -261,10 +299,11 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
-	sharpness = IS_SHARP
-	w_class = w_class_on
 	..()
-	hitsound = 'sound/weapons/blade1.ogg'
+	if(wielded)
+		hitsound = 'sound/weapons/blade1.ogg'
+		sharpness = IS_SHARP
+		w_class = w_class_on
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)

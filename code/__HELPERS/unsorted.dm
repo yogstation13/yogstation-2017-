@@ -543,7 +543,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 				return 0
 			if(current.opacity)
 				return 0
-			for(var/atom/A in current)
+			for(var/thing in current)
+				var/atom/A = thing
 				if(A.opacity)
 					return 0
 			current = get_step_towards(current, target_turf)
@@ -720,16 +721,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else
 		return zone
 
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
-
-
 /*
 
  Gets the turf this atom's *ICON* appears to inhabit
@@ -903,7 +894,7 @@ var/list/WALLITEMS_INVERSE = list(
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
-			if(id in hardcoded_gases || gas_concentration > 0.001) //ensures the four primary gases are always shown.
+			if(gas_concentration > 0.001)
 				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
 
 		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
@@ -1528,3 +1519,26 @@ proc/pick_closest_path(value)
 	C.color = "#960000"
 	spawn(0)
 		animate(C, color = old_color, time = 20)
+
+#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
+
+/proc/check_for_cleanbot_bug()
+	var/static/admins_warned //bet you didn't know you could do this!
+	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)
+	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)

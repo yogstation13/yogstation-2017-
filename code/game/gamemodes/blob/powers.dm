@@ -165,7 +165,7 @@
 	blobber.notransform = 1 //stop the naut from moving around
 	blobber.adjustHealth(blobber.maxHealth * 0.5)
 	blob_mobs += blobber
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [blob_reagent_datum.name] blobbernaut?", ROLE_BLOB, null, ROLE_BLOB, 50, blobber) //players must answer rapidly
 	var/client/C = null
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
 		C = pick(candidates)
@@ -180,6 +180,7 @@
 		blobber << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	else
 		blobber.notransform = 0 //otherwise, just let it move
+
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
@@ -271,6 +272,33 @@
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
+
+/mob/camera/blob/verb/split_consciousness()
+	set category = "Blob"
+	set name = "Split consciousness (100) (One use)"
+	set desc = "Expend resources to attempt to produce another sentient overmind"
+
+	if(!blob_core)
+		src << "You do not have a core to split yourself."
+		return
+
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+
+	if(!B)
+		src << "<span class='warning'>You must be on a blob node!</span>"
+		return
+
+	if(!can_buy(100))
+		return
+
+	verbs -= /mob/camera/blob/verb/split_consciousness
+	new /obj/effect/blob/core/(get_turf(B), 200, null, blob_core.point_rate, "offspring")
+	qdel(B)
+	if(ticker && ticker.mode.name == "blob")
+		var/datum/game_mode/blob/BL = ticker.mode
+		BL.blobwincount = initial(BL.blobwincount) * 2
+
 
 /mob/camera/blob/verb/blob_broadcast()
 	set category = "Blob"

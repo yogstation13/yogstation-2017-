@@ -1,7 +1,7 @@
 /mob/living/carbon/alien/humanoid/royal
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
-	status_flags = 0
+	status_flags = list()
 	ventcrawler = 0 //pull over that ass too fat
 	unique_name = 0
 	pixel_x = -16
@@ -100,7 +100,7 @@
 	name = "\improper royal parasite"
 	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
 	icon_state = "alien_medal"
-	flags = ABSTRACT|NODROP
+	flags = ABSTRACT|NODROP|DROPDEL
 	icon = 'icons/mob/alien.dmi'
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)

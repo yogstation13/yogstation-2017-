@@ -93,8 +93,9 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
+	flags = THICKMATERIAL
 	strip_delay = 80
 	put_on_delay = 60
 
@@ -105,7 +106,26 @@
 	item_state = "bonearmor"
 	blood_overlay_type = "armor"
 	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+/obj/item/clothing/suit/armor/chitinplate
+	name = "chitin plate"
+	desc = "A heavily protected and padded version of the bone armor, reinforced with chitin, sinew and bone."
+	icon_state = "chitenplate"
+	item_state = "chitenplate"
+	blood_overlay_type = "armor"
+	armor = list(melee = 50, bullet = 25, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+
+/obj/item/clothing/suit/armor/pathfinder
+	name = "pathfinder cloak"
+	desc = "A massive cloak that protects the wearer from concentrated burns with it's layered sinew."
+	icon_state = "pathcloak"
+	item_state = "pathcloak"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	burn_state = FIRE_PROOF
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS|HANDS
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
@@ -123,7 +143,7 @@
 	icon_state = "armor_reflec"
 	item_state = "armor_reflec"
 	blood_overlay_type = "armor"
-	armor = list(melee = 10, bullet = 10, laser = 60, energy = 50, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 10, bullet = 10, laser = 80, energy = 80, bomb = 0, bio = 0, rad = 0)
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)

@@ -22,25 +22,25 @@ macro "default"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -61,13 +61,13 @@ macro "default"
 		command = "a-intent harm"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+B"
 		command = "resist"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+E"
 		command = "quick-equip"
@@ -85,10 +85,10 @@ macro "default"
 		command = ".southwest"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+X"
 		command = ".northeast"
@@ -156,25 +156,25 @@ macro "hotkeys"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -207,10 +207,10 @@ macro "hotkeys"
 		command = "a-intent harm"
 	elem
 		name = "A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "B"
 		command = "resist"
@@ -219,10 +219,10 @@ macro "hotkeys"
 		command = "resist"
 	elem
 		name = "D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "E"
 		command = "quick-equip"
@@ -264,19 +264,19 @@ macro "hotkeys"
 		command = ".southwest"
 	elem "s_key"
 		name = "S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "T"
 		command = "say"
 	elem "w_key"
 		name = "W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "X"
 		command = ".northeast"
@@ -348,25 +348,25 @@ macro "robot-default"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -387,7 +387,7 @@ macro "robot-default"
 		command = "a-intent left"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+B"
 		command = "resist"
@@ -396,7 +396,7 @@ macro "robot-default"
 		command = "ooc"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+F"
 		command = "a-intent left"
@@ -408,10 +408,10 @@ macro "robot-default"
 		command = "unequip-module"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+X"
 		command = ".northeast"
@@ -473,25 +473,25 @@ macro "robot-hotkeys"
 		command = "westface"
 	elem
 		name = "WEST+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+NORTH"
 		command = "northface"
 	elem
 		name = "NORTH+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+EAST"
 		command = "eastface"
 	elem
 		name = "EAST+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+SOUTH"
 		command = "southface"
 	elem
 		name = "SOUTH+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "INSERT"
 		command = "a-intent right"
@@ -524,10 +524,10 @@ macro "robot-hotkeys"
 		command = "a-intent left"
 	elem
 		name = "A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "CTRL+A+REP"
-		command = ".west"
+		command = ".moveleft"
 	elem
 		name = "B"
 		command = "resist"
@@ -542,10 +542,10 @@ macro "robot-hotkeys"
 		command = "ooc"
 	elem
 		name = "D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem
 		name = "F"
 		command = "a-intent left"
@@ -566,19 +566,19 @@ macro "robot-hotkeys"
 		command = "unequip-module"
 	elem "s_key"
 		name = "S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "CTRL+S+REP"
-		command = ".south"
+		command = ".movedown"
 	elem
 		name = "T"
 		command = "say"
 	elem "w_key"
 		name = "W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "CTRL+W+REP"
-		command = ".north"
+		command = ".moveup"
 	elem
 		name = "X"
 		command = ".northeast"
@@ -643,7 +643,7 @@ menu "menu"
 	elem
 		name = ""
 		category = "&File"
-	elem
+	elem "reconnectbutton"
 		name = "&Reconnect"
 		category = "&File"
 		command = ".reconnect"
@@ -916,3 +916,234 @@ window "statwindow"
 		background-color = #ffffff
 		allow-html = true
 		multi-line = true
+
+window "Telecomms IDE"
+	elem "Telecomms IDE"
+		type = MAIN
+		pos = 281,0
+		size = 569x582
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = false
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "TCS IDE"
+		titlebar = true
+		statusbar = false
+		can-close = true
+		can-minimize = true
+		can-resize = true
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = "exittcs"
+	elem "button5"
+		type = BUTTON
+		pos = 209,464
+		size = 70x20
+		anchor1 = 37,80
+		anchor2 = 49,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Clear Memory"
+		image = ""
+		command = "tcsclearmem"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button4"
+		type = BUTTON
+		pos = 157,464
+		size = 52x20
+		anchor1 = 28,80
+		anchor2 = 37,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Revert"
+		image = ""
+		command = "tcsrevert"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button3"
+		type = BUTTON
+		pos = 105,464
+		size = 52x20
+		anchor1 = 18,80
+		anchor2 = 28,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Execute"
+		image = ""
+		command = "tcsrun"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "tcserror"
+		type = OUTPUT
+		pos = 0,488
+		size = 566x94
+		anchor1 = 0,84
+		anchor2 = 99,100
+		font-family = "sans-serif"
+		font-size = 9
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		on-size = ""
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = ""
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
+	elem "button2"
+		type = BUTTON
+		pos = 53,464
+		size = 52x20
+		anchor1 = 9,80
+		anchor2 = 18,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Compile"
+		image = ""
+		command = "tcscompile"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "button1"
+		type = BUTTON
+		pos = 0,464
+		size = 53x20
+		anchor1 = 0,80
+		anchor2 = 9,83
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "is-checked"
+		on-size = ""
+		text = "Save"
+		image = ""
+		command = "tcssave"
+		is-flat = false
+		stretch = false
+		is-checked = false
+		group = ""
+		button-type = pushbutton
+	elem "tcscode"
+		type = INPUT
+		pos = 0,0
+		size = 569x464
+		anchor1 = 0,0
+		anchor2 = 100,80
+		font-family = "Courier"
+		font-size = 10
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		command = "cancel"
+		multi-line = true
+		is-password = false
+		no-command = true

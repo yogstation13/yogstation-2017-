@@ -1,6 +1,9 @@
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
+/obj/item/clothing/under/color/random
+	name = "random jumpsuit"
+
 /obj/item/clothing/under/color/random/New()
 	..()
 	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
@@ -19,6 +22,7 @@
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
+	attack_verb = list("greytided", "suited")
 	icon_state = "grey"
 	item_state = "gy_suit"
 	item_color = "grey"

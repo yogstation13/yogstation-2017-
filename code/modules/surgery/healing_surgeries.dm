@@ -1,11 +1,11 @@
 //debride wounds
 /datum/surgery_step/debride
-	name = "debride"
+	name = "clean wound"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/kitchen/knife = 65, /obj/item/weapon/shard = 45)
-	time = 48
+	time = 40
 
 /datum/surgery_step/debride/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to debride the wound upon [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin cutting away the dead and damaged tissue on [target]'s [parse_zone(target_zone)], creating a cleaner wound bed...</span>")
+	user.visible_message("[user] begins to cut off dead flesh around the wound upon [target]'s [parse_zone(target_zone)].", "<span class='notice'>You begin cutting away the dead and damaged tissue on [target]'s [parse_zone(target_zone)], creating a cleaner wound bed...</span>")
 
 /datum/surgery_step/debride/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if (ishuman(target))
@@ -17,7 +17,7 @@
 
 //add dressing to wounds
 /datum/surgery_step/apply_dressing //brute
-	name = "apply gauze dressing"
+	name = "apply gauze"
 	implements = list(/obj/item/stack/medical/gauze = 100, /obj/item/stack/medical/gauze/improvised = 65, /obj/item/clothing/torncloth = 35)
 	time = 24
 	var/dressing_type = "brute"
@@ -33,11 +33,11 @@
 		if (heal_limb)
 			switch (dressing_type)
 				if ("brute")
-					heal_limb.heal_damage(65, 0, 0) //brute
+					heal_limb.heal_damage(85, 0, 0) //brute
 				if ("burn")
-					heal_limb.heal_damage(0, 65, 0) //burn
+					heal_limb.heal_damage(0, 85, 0) //burn
 				if ("both")
-					heal_limb.heal_damage(45, 45, 0) //both
+					heal_limb.heal_damage(65, 65, 0) //both
 		else
 			user << "There's no limb there to dress!"
 			return 0
@@ -55,8 +55,8 @@
 	return 1
 
 /datum/surgery_step/apply_dressing/burn
-	name = "apply burn dressing"
-	implements = list(/obj/item/stack/medical/ointment = 100, /obj/item/medical/bandage/improvised_soaked = 65, /obj/item/clothing/torncloth = 25)
+	name = "apply bandage"
+	implements = list(/obj/item/medical/bandage/burn = 100, /obj/item/medical/bandage/improvised_soaked = 65, /obj/item/clothing/torncloth = 25)
 	time = 24
 	dressing_type = "burn"
 
@@ -68,11 +68,11 @@
 
 //surgeries go here
 /datum/surgery/heal_brute
-	name = "suturing and cleaning of flesh wounds"
+	name = "patch wounds"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/debride, /datum/surgery_step/apply_dressing, /datum/surgery_step/close)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
 /datum/surgery/heal_burn
-	name = "cleaning and dressing of burn wounds"
+	name = "treat burns"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/debride, /datum/surgery_step/apply_dressing/burn, /datum/surgery_step/close)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")

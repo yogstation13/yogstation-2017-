@@ -59,18 +59,23 @@
 	if(c.chem_charges<chemical_cost)
 		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
 		return 0
-	if(c.absorbedcount<req_dna)
+	if(c.profilecount<req_dna)
 		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
 		return 0
 	if(req_stat < user.stat)
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
-	if((user.status_flags & FAKEDEATH) && name != "Regenerate")
+	if((FAKEDEATH in user.status_flags) && name != "Regenerate")
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
 	if(c.geneticdamage > max_genetic_damage)
 		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(isabomination(H))
+			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
+			return 0
 	return 1
 
 //used in /mob/Stat()

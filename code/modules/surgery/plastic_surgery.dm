@@ -13,8 +13,8 @@
 	user.visible_message("[user] begins to alter [target]'s appearance.", "<span class='notice'>You begin to alter [target]'s appearance...</span>")
 
 /datum/surgery_step/reshape_face/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.status_flags & DISFIGURED)
-		target.status_flags &= ~DISFIGURED
+	if(DISFIGURED in target.status_flags)
+		target.status_flags -= DISFIGURED
 		user.visible_message("[user] successfully restores [target]'s appearance!", "<span class='notice'>You successfully restore [target]'s appearance.</span>")
 	else
 		var/oldname = target.real_name

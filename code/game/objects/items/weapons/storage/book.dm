@@ -114,6 +114,9 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 		usr << browse(null, "window=editicon") // Close window
 
+		//Add bless spell to chaplain
+		usr.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/bless())
+
 /obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

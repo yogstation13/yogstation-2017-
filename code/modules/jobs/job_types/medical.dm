@@ -188,32 +188,33 @@ Mining Medic
 /datum/job/miningmedic
 	title = "Mining Medic"
 	flag = MMEDIC
+	department_head = list("Chief Medical Officer")
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the chief medical officer and the quartermaster"
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/miningmedic
 
-	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
-
-
+	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"
-
-
-	backpack_contents = list(/obj/item/weapon/reagent_containers/hypospray/mini, /obj/item/weapon/storage/firstaid/o2)
+	backpack_contents = list(/obj/item/roller = 1,\
+		/obj/item/weapon/kitchen/knife/combat/survival = 1,\
+		/obj/item/weapon/survivalcapsule = 1)
 	belt = /obj/item/device/pda/medical
-	ears = /obj/item/device/radio/headset/headset_cargo
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	uniform = /obj/item/clothing/under/rank/mmedical
+	ears = /obj/item/device/radio/headset/headset_medcargo
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	uniform = /obj/item/clothing/under/rank/miner/medic
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	l_pocket = /obj/item/device/flashlight/pen
-
+	r_pocket = /obj/item/device/gps/mining
+	gloves = /obj/item/clothing/gloves/color/latex
+	mask = /obj/item/clothing/mask/surgical
 
 /*
 Paramedic

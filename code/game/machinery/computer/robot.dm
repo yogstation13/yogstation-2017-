@@ -9,6 +9,7 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
+	paiAllowed = 0 //Sorry, no powergaming the borgs
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
@@ -68,6 +69,21 @@
 
 	if(!robots)
 		dat += "No Cyborg Units detected within access parameters."
+		dat += "<BR>"
+		
+	var/drones = 0
+	for(var/mob/living/simple_animal/drone/D in mob_list)
+		if(D.hacked)
+			continue
+		drones++
+		dat += "[D.name] |"
+		if(D.stat)
+			dat += " Not Responding |"
+		dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
+		dat += "<BR>"
+
+	if(!drones)
+		dat += "No Drone Units detected within access parameters."
 
 	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
 	popup.set_content(dat)
@@ -127,6 +143,19 @@
 				R.SetEmagged(1)
 				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+		else
+			message_admins("EXPLOIT: [usr] attempted to emag a bot using robotics console without having the right to do so.")
+	else if (href_list["killdrone"])
+		if(src.allowed(usr))
+			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			if(D.hacked)
+				usr << "<span class='danger'>ERROR: [D] is not responding to external commands.</span>"
+			else
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+				s.set_up(3, 1, D)
+				s.start()
+				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
+				D.gib()
 
 	src.updateUsrDialog()
 	return

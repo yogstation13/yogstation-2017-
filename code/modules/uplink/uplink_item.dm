@@ -189,10 +189,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 	surplus = 50
 
-/datum/uplink_item/dangerous/carbine/unrestricted
-	item = /obj/item/weapon/gun/projectile/automatic/m90/unrestricted
-	include_modes = list(/datum/game_mode/gang)
-
 /datum/uplink_item/dangerous/sniper
 	name = "Sniper Rifle"
 	desc = "Ranged fury, Syndicate style. guaranteed to cause shock and awe or your TC back!"
@@ -217,17 +213,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
-	cost = 12
+	cost = 9
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/flamethrower
-	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
-			stations. Make a statement by roasting the filth in their own greed. Use with caution."
-	item = /obj/item/weapon/flamethrower/full/tank
-	cost = 7
-	surplus = 40
+	name = "Back-mounted High-power Flamethrower"
+	desc = "A compact back-mounted sprayer that comes pre-loaded with a cocktail of flammable chemicals. Use with caution."
+	item = /obj/item/weapon/watertank/operator
+	cost = 20
+	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/dangerous/sword
@@ -241,7 +236,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
-	desc = "A box that contains two EMP grenades and an EMP implant. Useful to disrupt communication, \
+	desc = "A box that contains five EMP grenades and an EMP implant. Useful to disrupt communication, \
 			security's energy weapons, and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/weapon/storage/box/syndie_kit/emp
 	cost = 2
@@ -315,7 +310,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			organic host as a home base and source of fuel."
 	item = /obj/item/weapon/storage/box/syndie_kit/guardian
 	cost = 12
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 25
 
 // Ammunition
@@ -533,14 +528,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
 
-/datum/uplink_item/stealthy_weapons/martialarts
-	name = "Martial Arts Scroll"
-	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
-	item = /obj/item/weapon/sleeping_carp_scroll
-	cost = 17
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
-
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
@@ -559,7 +546,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
 	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
-	cost = 3
+	cost = 2
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/gang)
 
@@ -653,8 +640,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/chameleon
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
-	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
+	item = /obj/item/weapon/storage/box/chameleon
 	cost = 4
+	exclude_modes = list(/datum/game_mode/traitor/double_agents)//being able to completely change your appearance infinitely when you have an assassin is dumb
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -719,10 +707,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_tools/stimpack
 	name = "Stimpack"
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
-			5 minutes after injection."
+			5 minutes after injection. You also cannot be put into critical as long as the stimulants are in your body."
 	item = /obj/item/weapon/reagent_containers/syringe/stimulants
-	cost = 5
-	surplus = 90
+	cost = 8
+	surplus = 30
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"
@@ -731,7 +719,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/reagent_containers/syringe/mulligan
 	cost = 4
 	surplus = 30
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang, /datum/game_mode/traitor/double_agents) 
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
@@ -840,7 +828,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/device/encryptionkey/binary
-	cost = 4
+	cost = 2
 	surplus = 75
 
 /datum/uplink_item/device_tools/encryptionkey
@@ -985,6 +973,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
+/datum/uplink_item/implants/zombie
+	name = "Zombie Implant"
+	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
+	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
+	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
+	cost = 5
+
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a separate uplink \
@@ -1025,13 +1020,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/implants/zombie
-	name = "Zombie Implant"
-	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
-	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
-	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
-	cost = 7
-
 /datum/uplink_item/implants/mindslave
 	name = "Mindslave Implant"
 	desc = "An implant injected into a targets body. Will cause the target to obey your every command whilst the target is implanted. Implant can be removed by surgery!"
@@ -1047,7 +1035,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(findtext(item, /obj/item/organ/cyberimp))
+		if(ispath(item, /obj/item/organ/cyberimp))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1081,7 +1069,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
 			They must be implanted via surgery."
-	item = /obj/item/weapon/storage/box/cyber_implants
+	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
 
 // Pointless
@@ -1111,6 +1099,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 1
+
+/datum/uplink_item/badass/syndiefedora
+	name = "Syndicate Fedora"
+	desc = "This Syndicate Fedora of micro-woven adamantium silk is sure to prove your style!"
+	item = /obj/item/clothing/head/det_hat/evil
+	cost = 3
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"

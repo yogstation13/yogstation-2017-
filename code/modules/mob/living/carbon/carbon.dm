@@ -121,6 +121,10 @@
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
 
+	if(reagents.has_reagent("capilletum") && lying)
+		M << "<span class='warning'>[src] is dead!</span>"
+		return
+
 	if(health >= 0)
 
 		if(lying)
@@ -129,6 +133,7 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
 						"<span class='notice'>You hug [src] to make them feel better!</span>")
+
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
@@ -231,13 +236,9 @@
 					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	if(I && I.prethrow_at(target))
-		return
-
-	if(!(I && istype(I)))
-		return //Grab processing has a chance of returning null
 	else if(!(I.flags & (NODROP|ABSTRACT)))
+		if(I.prethrow_at(target))
+			return
 		thrown_thing = I
 		unEquip(I)
 
@@ -716,14 +717,16 @@
 		hud_used.internals.icon_state = "internal[internal_state]"
 
 /mob/living/carbon/update_stat()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	if(stat != DEAD)
 		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
+				if(NOCRIT in status_flags)//no crit when you're stimmed
+					return
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()
@@ -757,7 +760,8 @@
 	if(B)
 		B.damaged_brain = 0
 	for(var/datum/disease/D in viruses)
-		D.cure(0)
+		if (D.severity != NONTHREAT)
+			D.cure(0)
 	if(admin_revive)
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
@@ -787,4 +791,11 @@
 	..()
 
 
-
+/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
+	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(amount > 0)
+			blood_volume -= 5*amount
+		else
+			blood_volume -= amount
+	return ..()

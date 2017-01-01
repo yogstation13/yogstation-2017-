@@ -29,6 +29,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	recommended_enemies = 8
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 
+	prob_traitor_ai = 18
 
 /datum/game_mode/hand_of_god/announce()
 	world << "<B>The current game mode is - Hand of God!</B>"
@@ -49,10 +50,11 @@ var/global/list/global_handofgod_structuretypes = list()
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	for(var/F in 1 to recommended_enemies)
-		if(!antag_candidates.len)
-			break
-		var/datum/mind/follower = pick_n_take(antag_candidates)
+	var/list/datum/mind/hogs = pick_candidate(amount = recommended_enemies)
+	update_not_chosen_candidates()
+
+	for(var/F in hogs)
+		var/datum/mind/follower = F
 		unassigned_followers += follower
 		follower.restricted_roles = restricted_jobs
 		log_game("[follower.key] (ckey) has been selected as a follower, however teams have not been decided yet.")
@@ -221,11 +223,12 @@ var/global/list/global_handofgod_structuretypes = list()
 //////////////////
 
 /datum/game_mode/proc/remove_hog_follower(datum/mind/follower_mind, announce = 1)//deconverts both
-	follower_mind.remove_hog_follower_prophet()
-	update_hog_icons_removed(follower_mind,"red")
-	update_hog_icons_removed(follower_mind,"blue")
-
 	if(follower_mind.current)
+		if(is_handofgod_cultist(follower_mind.current) || is_handofgod_prophet(follower_mind.current))
+			follower_mind.remove_hog_follower_prophet()
+			update_hog_icons_removed(follower_mind,"red")
+			update_hog_icons_removed(follower_mind,"blue")
+
 		var/mob/living/carbon/human/H = follower_mind.current
 		H.faction -= "red god"
 		H.faction -= "blue god"

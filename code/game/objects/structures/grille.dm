@@ -24,12 +24,11 @@
 			take_damage(rand(5,10), BRUTE, 0)
 
 /obj/structure/grille/ratvar_act()
-	if(prob(20))
-		if(destroyed)
-			new /obj/structure/grille/ratvar/broken(src.loc)
-		else
-			new /obj/structure/grille/ratvar(src.loc)
-		qdel(src)
+	if(destroyed)
+		new /obj/structure/grille/ratvar/broken(src.loc)
+	else
+		new /obj/structure/grille/ratvar(src.loc)
+	qdel(src)
 
 /obj/structure/grille/blob_act(obj/effect/blob/B)
 	qdel(src)
@@ -283,11 +282,16 @@
 
 /obj/structure/grille/ratvar/New()
 	..()
+	change_construction_value(1)
 	if(destroyed)
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille/broken, get_turf(src))
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille, get_turf(src))
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/grille, get_turf(src))
+
+/obj/structure/grille/ratvar/Destroy()
+	change_construction_value(-1)
+	return ..()
 
 /obj/structure/grille/ratvar/narsie_act()
 	take_damage(rand(1, 3), BRUTE)

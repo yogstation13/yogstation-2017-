@@ -103,6 +103,8 @@
 		user.AddLuminosity(-brightness_on)
 		SetLuminosity(brightness_on)
 
+/obj/item/device/flashlight/proc/fix_light()
+	broken = 0
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -120,7 +122,7 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/medical_holosign, list(T,user)) //produce a holographic glow
+			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
@@ -131,7 +133,7 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/medical_holosign/New(loc, creator)
+/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
 	..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
@@ -196,10 +198,12 @@ obj/item/device/flashlight/lamp/bananalamp
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
+	var/frng_min = 800
+	var/frng_max = 1000
 	heat = 1000
 
 /obj/item/device/flashlight/flare/New()
-	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
+	fuel = rand(frng_min, frng_max) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
 /obj/item/device/flashlight/flare/process()
@@ -211,7 +215,7 @@ obj/item/device/flashlight/lamp/bananalamp
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -245,10 +249,23 @@ obj/item/device/flashlight/lamp/bananalamp
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"
-		SSobj.processing += src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/is_hot()
 	return on * heat
+
+/obj/item/device/flashlight/flare/emergency
+	name = "safety flare"
+	desc = "A flare issued to nanotrasen employees for pending emergencies. There are instructions on the side, it reads 'pull cord, make light, obey nanotrasen'."
+	brightness_on = 3
+	frng_min = 150
+	frng_max = 350
+
+/obj/item/device/flashlight/flare/security
+	name = "heavy-duty safety flare"
+	desc = "A lightweight flare which usually carries around more fuel then the standard edition for emergencies. You can use it on tactical missions, cooperative missions, or for waving back and forth during a concert."
+	frng_min = 700
+	frng_max = 1250
 
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
@@ -289,10 +306,10 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/emp/New()
 		..()
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 /obj/item/device/flashlight/emp/process()

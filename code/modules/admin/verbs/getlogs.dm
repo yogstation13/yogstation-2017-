@@ -60,9 +60,9 @@
 //This proc allows download of past server logs saved within the data/logs/ folder.
 //It works similarly to show-server-log.
 /client/proc/getserverlog()
-	set name = ".getserverlog"
+	set name = "Get server logs"
 	set desc = "Fetch logfiles from data/logs"
-	set category = null
+	set category = "Admin"
 
 	var/path = browse_files("data/logs/")
 	if(!path)
@@ -105,4 +105,19 @@
 		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
 		return
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+
+/datum/admins/proc/view_admin_log()
+	set category = "Admin"
+	set name = "Show Admin Log"
+	set desc = "Shows today's admin log."
+
+	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Admin.log"
+	if( fexists(path) )
+		src << run( file(path) )
+	else
+		src << "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>"
+		return
+	usr << run( file(path) )
+	feedback_add_details("admin_verb","SAAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

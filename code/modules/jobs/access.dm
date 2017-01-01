@@ -10,7 +10,7 @@
 /var/const/access_tox_storage = 8
 /var/const/access_genetics = 9
 /var/const/access_engine = 10
-/var/const/access_engine_equip= 11
+/var/const/access_engine_equip = 11
 /var/const/access_maint_tunnels = 12
 /var/const/access_external_airlocks = 13
 /var/const/access_emergency_storage = 14
@@ -58,13 +58,14 @@
 /var/const/access_hos = 58
 /var/const/access_RC_announce = 59 //Request console announcements
 /var/const/access_keycard_auth = 60 //Used for events which require at least two people to confirm them
-/var/const/access_tcomsat = 61 // has access to the entire telecomms satellite / machinery
+/var/const/access_tcomsat = 61 // has access to the telecomms machinery
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
 /var/const/access_mineral_storeroom = 64
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_paramedic = 67
+/var/const/access_tcomadmin = 68 // has access to the telecomms computers
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -95,7 +96,13 @@
 		return 1
 	if(istype(M, /mob/living/silicon))
 		//AI can do whatever he wants
-		return 1
+		//UNLESS THEY'RE FILTHY PAI SCUM IN WHICH CASE THEY TAKE THE PLEB DOORS LIKE EVERYONE ELSE
+		if (istype(M, /mob/living/silicon/pai))
+			var/mob/living/silicon/pai/P = M
+			if (check_access(P.access_card))
+				return 1
+		else
+			return 1
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return 1
@@ -225,7 +232,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic)
+	            access_keycard_auth, access_tcomsat, access_tcomadmin, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic, access_manufacturing)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -249,7 +256,7 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //station general
-			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer)
+			return list(access_kitchen,access_bar, access_hydroponics, access_janitor, access_chapel_office, access_crematorium, access_library, access_theatre, access_lawyer, access_manufacturing)
 		if(2) //security
 			return list(access_sec_doors, access_weapons, access_security, access_brig, access_armory, access_forensics_lockers, access_court, access_hos)
 		if(3) //medbay
@@ -257,7 +264,7 @@
 		if(4) //research
 			return list(access_research, access_tox, access_tox_storage, access_genetics, access_robotics, access_xenobiology, access_minisat, access_rd)
 		if(5) //engineering and maintenance
-			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_minisat, access_ce)
+			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_tcomadmin, access_minisat, access_ce)
 		if(6) //supply
 			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
 		if(7) //command
@@ -371,7 +378,7 @@
 		if(access_theatre)
 			return "Theatre"
 		if(access_manufacturing)
-			return "Manufacturing"
+			return "Gift Shop"
 		if(access_research)
 			return "Science"
 		if(access_mining)
@@ -402,6 +409,8 @@
 			return "Keycode Auth."
 		if(access_tcomsat)
 			return "Telecommunications"
+		if(access_tcomadmin)
+			return "Telecomms Admin"
 		if(access_gateway)
 			return "Gateway"
 		if(access_sec_doors)
@@ -439,11 +448,14 @@
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
 				"Shaft Miner", "Clown", "Mime", "Janitor", "Librarian", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer",
-				"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
-				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Mining Medic", "Paramedic", "Psychiatrist", "Clerk", "Tourist")
+				"Atmospheric Technician", "Signal Technician", "Chief Medical Officer", "Medical Doctor", "Chemist", "Geneticist", "Virologist",
+				"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Mining Medic", "Paramedic", "Psychiatrist", "Clerk", "Tourist", "Space Bartender")
 
 /proc/get_all_job_icons() //For all existing HUD icons
 	return get_all_jobs() + list("Prisoner")
+
+/proc/get_all_job_fluff()
+	return list ("Boxer","Fighter","Fireman","Fire Fighter","Deputy","Bodyguard","Security Deputy", "Animal Control", "Zoo Keeper", "Captain's Assistant")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
@@ -454,6 +466,8 @@
 		return
 	var/jobName = I.assignment
 	if(jobName in get_all_job_icons()) //Check if the job has a hud icon
+		return jobName
+	if(jobName in get_all_job_fluff()) //Check if the job has a hud icon
 		return jobName
 	if(jobName in get_all_centcom_jobs()) //Return with the NT logo if it is a Centcom job
 		return "Centcom"

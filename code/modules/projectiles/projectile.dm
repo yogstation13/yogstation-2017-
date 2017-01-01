@@ -14,6 +14,7 @@
 	burn_state = LAVA_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
+	var/previous_dir = null // the firer's direction when the fire the projectile
 	var/obj/item/ammo_casing/ammo_casing = null
 	var/suppressed = 0	//Attack message
 	var/yo = null
@@ -49,6 +50,7 @@
 	var/stamina = 0
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
+	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 
 /obj/item/projectile/New()
 	permutated = list()

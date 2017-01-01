@@ -4,6 +4,10 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
+#define ismodholder(O) (istype(O, /obj/item/module_holder))
+
+#define ismodule(O) (istype(O, /obj/item/module))
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -17,6 +21,12 @@
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
+#define isabomination(A) (is_species(A, /datum/species/abomination))
+#define isshadow(A) (is_species(A, /datum/species/shadow))
+#define isshadowling(A) (is_species(A, /datum/species/shadow/ling))
+#define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
+#define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftain))
+#define iskrampus(A) (is_species(A, /datum/species/demon))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
@@ -44,6 +54,8 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
+#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
@@ -57,6 +69,8 @@
 #define iscarbon(A) (istype(A, /mob/living/carbon))
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
+
+#define isaiorborg(A) (istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
 
 #define isliving(A) (istype(A, /mob/living))
 
@@ -80,7 +94,13 @@
 
 #define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
+#define isitem(A) istype(A, /obj/item)
+
 #define ispredator(A) (istype(A, /mob/living/carbon/human/predator))
+
+#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
+
+#define iscaptive(A) (istype(A, /mob/living/captive_brain))
 
 // ASSEMBLY HELPERS
 

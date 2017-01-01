@@ -35,6 +35,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 		if(original)
 			original.data["done"] = 1
 			original.data["compression"] = signal.data["compression"]
+			original.data["encryption"] = signal.data["encryption"]
 			original.data["level"] = signal.data["level"]
 
 		var/signal_message = "[signal.frequency]:[signal.data["message"]]:[signal.data["realname"]]"
@@ -49,39 +50,28 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 	   /** #### - Normal Broadcast - #### **/
 
-		if(signal.data["type"] == 0)
+		if(signal.data["type"] == BROADCAST_NORMAL)
 
 			/* ###### Broadcast a message using signal.data ###### */
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"], signal.data["radio"],
 							  signal.data["message"], signal.data["name"], signal.data["job"], signal.data["realname"],
-							  0, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
-
-
-	   /** #### - Simple Broadcast - #### **/
-
-		if(signal.data["type"] == 1)
-
-			/* ###### Broadcast a message using signal.data ###### */
-			Broadcast_SimpleMessage(signal.data["name"], signal.frequency,
-								  signal.data["message"],null, null,
-								  signal.data["compression"], listening_level)
+							  0, signal.data["uuid"], signal.data["compression"], signal.data["encryption"], signal.data["level"], signal.frequency, signal.data["spans"],
+							  signal.data["languages"], signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
 
 
 	   /** #### - Artificial Broadcast - #### **/
 	   			// (Imitates a mob)
 
-		if(signal.data["type"] == 2)
+		if(signal.data["type"] == BROADCAST_ARTIFICIAL)
 
 			/* ###### Broadcast a message using signal.data ###### */
-				// Parameter "data" as 4: AI can't track this person/mob
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
-							  signal.data["realname"], 4, signal.data["compression"], signal.data["level"], signal.frequency, signal.data["spans"],
-							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
+							  signal.data["realname"],, signal.data["uuid"], signal.data["compression"], signal.data["encryption"], signal.data["level"], signal.frequency, signal.data["spans"],
+							  signal.data["languages"], signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
 
 		if(!message_delay)
 			message_delay = 1

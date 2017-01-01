@@ -16,6 +16,7 @@
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
  *		Various paper bags.
+ *		Barrier Grenade boxes
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -31,31 +32,38 @@
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()
-
-	if(!foldable)
-		return
 	if(contents.len)
 		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
-		return
-	if(!ispath(foldable))
-		return
+	var/obj/item/I = unfold()
+	if(I)
+		user.put_in_hands(I)
+		user << "<span class='notice'>You fold [src] flat.</span>"
 
-	//Close any open UI windows first
-	close_all()
+/obj/item/weapon/storage/box/attack_self_tk(mob/user)
+	if(contents.len)
+		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+	if(unfold())
+		user << "<span class='notice'>You fold [src] flat.</span>"
 
-	user << "<span class='notice'>You fold [src] flat.</span>"
+/obj/item/weapon/storage/box/proc/unfold()
+	if(!foldable || contents.len || !ispath(foldable))
+		return null
+	close_all() //Close any open UI windows first
+	if(ismob(loc))
+		var/mob/M = loc
+		if(!M.unEquip(src))
+			return null
+		M.update_inv_l_hand()
+		M.update_inv_r_hand()
 	var/obj/item/I = new foldable(get_turf(src))
-	user.drop_item()
-	user.put_in_hands(I)
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	transfer_fingerprints_to(I)
 	qdel(src)
+	return I
 
 /obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	return ..()
-
 
 // Ordinary survival box
 /obj/item/weapon/storage/box/survival/New()
@@ -63,6 +71,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
 
 /obj/item/weapon/storage/box/survival/radio/New()
 	..()
@@ -74,6 +83,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
 
 /obj/item/weapon/storage/box/engineer/radio/New()
 	..()
@@ -84,6 +94,7 @@
 	..()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/device/flashlight/flare/security(src)
 
 // Security survival box
 /obj/item/weapon/storage/box/security/New()
@@ -91,6 +102,7 @@
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/security(src)
 
 /obj/item/weapon/storage/box/security/radio/New()
 	..()
@@ -751,7 +763,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/weapon/storage/box/ingredients/vegetarian
 	item_state = "vegetarian"
@@ -786,7 +798,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey(src)
 
@@ -829,3 +841,41 @@
 	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
 	new /obj/item/weapon/circuitboard/computer/rdconsole(src)
+
+/obj/item/weapon/storage/box/barriers
+	name = "box of barrier grenades"
+	icon_state = "flashbang"
+	desc = "Tactical grenades here to solve your tactical problems. It is recommended to not go crazy with these."
+
+/obj/item/weapon/storage/box/barriers/New()
+	..()
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+	new /obj/item/weapon/grenade/barrier(src)
+
+/obj/item/weapon/storage/box/chameleon
+	name = "chameleon box"
+	desc = "An eerie box with the label 'syndicate (TM)'"
+	icon_state = "box_of_doom"
+
+/obj/item/weapon/storage/box/chameleon/New()
+	..()
+	chameleon = new /datum/chameleon(src)
+	chameleon.chameleon_type = /obj/item/weapon/storage/box
+	chameleon.chameleon_name = "Box"
+	chameleon.initialize_disguises()
+
+
+/obj/item/weapon/storage/box/chameleon/examine(mob/user)
+	..()
+	if(user.mind in ticker.mode.traitors)
+		user << "<span class='notice'>Activate to camouflage the [src.name]</span>"
+
+/obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
+	return
+
+

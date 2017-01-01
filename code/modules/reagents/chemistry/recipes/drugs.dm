@@ -36,7 +36,7 @@
 	name = "bath_salts"
 	id = "bath_salts"
 	result = "bath_salts"
-	required_reagents = list("????" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
+	required_reagents = list("badfood" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
 	result_amount = 7
 	required_temp = 374
 
@@ -46,3 +46,10 @@
 	result = "aranesp"
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
 	result_amount = 3
+
+/datum/chemical_reaction/bolamine
+	name= "bolamine"
+	id = "bolamine"
+	result = "bolamine"
+	required_reagents = list("space_drugs" = 2, "frostoil" = 1)
+	result_amount = 2

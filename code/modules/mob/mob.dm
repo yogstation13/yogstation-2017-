@@ -84,11 +84,11 @@ var/next_mob_id = 0
 // self_message (optional) is what the src mob sees e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(message, self_message, blind_message)
+/mob/visible_message(message, self_message, blind_message, range = 7)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
 		var/msg = message
@@ -114,11 +114,11 @@ var/next_mob_id = 0
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/atom/proc/visible_message(message, blind_message)
+/atom/proc/visible_message(message, blind_message, range = 7)
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	for(var/mob/M in get_hearers_in_view(7, src))
+	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue
 		var/msg = message
@@ -166,7 +166,11 @@ var/next_mob_id = 0
 		M.show_message( message, 2, deaf_message, 1)
 
 /mob/proc/movement_delay()
-	return 0
+	. = 0
+	if(istype(loc, /turf/open))
+		var/turf/open/current_loc = loc
+		. += current_loc.slowdown
+	return .
 
 /mob/proc/Life()
 	set waitfor = 0
@@ -208,7 +212,7 @@ var/next_mob_id = 0
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = 0, disable_warning = 0, redraw_mob = 1)
 	if(!istype(W)) return 0
-	if(!W.mob_can_equip(src, slot, disable_warning))
+	if(!W.mob_can_equip(src, null, slot, disable_warning))
 		if(qdel_on_fail)
 			qdel(W)
 		else
@@ -311,6 +315,7 @@ var/next_mob_id = 0
 		return
 
 	AM.add_fingerprint(src)
+	add_logs(src, AM, "grabbed")
 
 	// If we're pulling something then drop what we're currently pulling and pull this instead.
 	if(pulling)
@@ -326,18 +331,18 @@ var/next_mob_id = 0
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
 	pulling = AM
-	AM.pulledby = src
+	AM.on_pulledby(src, supress_message)
 	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
-	if(ismob(AM))
-		var/mob/M = AM
-		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
-		if(!iscarbon(src))
-			M.LAssailant = null
-		else
-			M.LAssailant = usr
+/mob/on_pulledby(mob/new_pulledby, supress_message)
+	..()
+	if(!supress_message)
+		visible_message("<span class='warning'>[new_pulledby] has grabbed [src] passively!</span>")
+	if(!iscarbon(new_pulledby))
+		LAssailant = null
+	else
+		LAssailant = new_pulledby
 
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
@@ -510,7 +515,8 @@ var/next_mob_id = 0
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -605,7 +611,6 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -678,7 +683,7 @@ var/next_mob_id = 0
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/ko = weakened || paralysis || stat || (FAKEDEATH in status_flags)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()

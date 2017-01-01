@@ -24,6 +24,7 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = 2
 	var/chew_probability = 1
+	var/hungry = 0 //If they're currently trying to eat wires, also acts as a multiplier.
 
 /mob/living/simple_animal/mouse/New()
 	..()
@@ -60,7 +61,7 @@
 	..()
 
 /mob/living/simple_animal/mouse/handle_automated_action()
-	if(prob(chew_probability))
+	if(prob(chew_probability * hungry))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
 			var/obj/structure/cable/C = locate() in F

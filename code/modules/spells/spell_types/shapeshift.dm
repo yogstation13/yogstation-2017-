@@ -38,7 +38,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	for(var/mob/living/M in caster)
-		if(M.status_flags & GODMODE)
+		if(GODMODE in M.status_flags)
 			caster << "<span class='warning'>You're already shapeshifted!</span>"
 			return
 
@@ -62,7 +62,7 @@
 	if(!caster)
 		return
 	caster.loc = shape.loc
-	caster.status_flags &= ~GODMODE
+	caster.status_flags -= GODMODE
 
 	clothes_req = initial(clothes_req)
 	human_req = initial(human_req)

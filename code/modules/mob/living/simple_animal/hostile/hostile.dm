@@ -16,6 +16,7 @@
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
+	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
 	var/minimum_distance = 1 //Minimum approach distance, so ranged mobs chase targets down, but still keep their distance set in tiles to the target, set higher to make mobs keep distance
@@ -70,19 +71,20 @@
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
-
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see
 	. = list()
 	if(!search_objects)
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 		. += Mobs
-		for(var/M in mechas_list)
-			if(get_dist(M, targets_from) <= vision_range && can_see(targets_from, M, vision_range))
-				. += M
+
+		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
+
+		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
+			if(can_see(targets_from, HM, vision_range))
+				. += HM
 	else
 		var/list/Objects = oview(vision_range, targets_from)
 		. += Objects
-
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -136,6 +138,8 @@
 		return 0
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
+	if(stop_automated_movement_when_pulled && pulledby && !ranged && !Adjacent(the_target))
+		return 0
 	if(search_objects < 2)
 		if(istype(the_target, /obj/mecha))
 			var/obj/mecha/M = the_target
@@ -179,23 +183,26 @@
 		if(ranged)//We ranged? Shoot at em
 			if(target_distance >= 2 && ranged_cooldown <= world.time)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) // Drifting
-			walk(src,0)
-			return 1
-		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
+		if(!(stop_automated_movement_when_pulled && pulledby))
+			if(!Process_Spacemove()) // Drifting
+				walk(src,0)
+				return 1
+			if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
+				if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+					walk_away(src,target,retreat_distance,move_to_delay)
+				else
+					Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
 			else
-				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
-		else
-			Goto(target,move_to_delay,minimum_distance)
+				Goto(target,move_to_delay,minimum_distance)
 		if(target)
 			if(isturf(targets_from.loc) && target.Adjacent(targets_from))	//If they're next to us, attack
 				AttackingTarget()
 			return 1
 		return 0
-	if(environment_smash)
+	if(environment_smash && !(stop_automated_movement_when_pulled && pulledby))
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
+			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
+				OpenFire(target)
 			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
@@ -221,8 +228,8 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
-/mob/living/simple_animal/hostile/proc/AttackingTarget()
-	target.attack_animal(src)
+/mob/living/simple_animal/hostile/AttackingTarget(atom/T = target) //this override does do something, it sets the default to target
+	..(T)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -290,19 +297,22 @@
 		casing.fire(targeted_atom, src, zone_override = ran_zone())
 		casing.loc = startloc
 	else if(projectiletype)
-		var/obj/item/projectile/P = new projectiletype(startloc)
-		playsound(src, projectilesound, 100, 1)
-		P.current = startloc
-		P.starting = startloc
-		P.firer = src
-		P.yo = targeted_atom.y - startloc.y
-		P.xo = targeted_atom.x - startloc.x
-		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
-			newtonian_move(get_dir(targeted_atom, targets_from))
-		P.original = targeted_atom
-		P.fire()
-		return P
+		return FireProjectile(projectiletype, projectilesound, targeted_atom, startloc)
 
+/mob/living/simple_animal/hostile/proc/FireProjectile(projectiletype, sound, atom/targeted_atom, turf/startloc)
+	var/obj/item/projectile/P = new projectiletype(startloc)
+	if(sound)
+		playsound(src, sound, 100, 1)
+	P.current = startloc
+	P.starting = startloc
+	P.firer = src
+	P.yo = targeted_atom.y - startloc.y
+	P.xo = targeted_atom.x - startloc.x
+	if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
+		newtonian_move(get_dir(targeted_atom, targets_from))
+	P.original = targeted_atom
+	P.fire()
+	return P
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
@@ -316,7 +326,7 @@
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
+				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/girder))
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
@@ -336,12 +346,17 @@
 		return 1
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
+	if(harness && harness.on_ranged_attack(src, A, params))
+		return
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
 	..()
 
-
+/mob/living/simple_animal/hostile/on_pulledby(mob/new_pulledby, supress_message)
+	..()
+	if(stop_automated_movement_when_pulled)
+		walk_to(src, 0)
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)

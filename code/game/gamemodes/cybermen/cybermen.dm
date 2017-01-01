@@ -35,6 +35,7 @@ var/datum/cyberman_network/cyberman_network
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	prob_traitor_ai = 18
 	//yogstat_name = "cybermen"
 
 /datum/game_mode/cybermen/announce()
@@ -55,14 +56,19 @@ var/datum/cyberman_network/cyberman_network
 	var/cybermen_num = max(3, round(num_players()/14))
 	#endif
 
-	while(cybermen_num)
-		var/datum/mind/cyberman = pick_candidate()
+	var/list/datum/mind/tinmen = pick_candidate(amount = cybermen_num)
+	update_not_chosen_candidates()
+
+	for(var/v in tinmen)
+		var/datum/mind/cyberman = v
 		cyberman_network.cybermen += cyberman
 		cyberman.cyberman = new /datum/cyberman_datum()
-		antag_candidates -= cyberman
 		cyberman.special_role = "Cyberman"
 		cyberman.restricted_roles = restricted_jobs
-		cybermen_num--
+
+	if(cyberman_network.cybermen.len < required_enemies)
+		return 0
+
 	return 1
 
 /datum/game_mode/cybermen/post_setup()
@@ -164,12 +170,6 @@ var/datum/cyberman_network/cyberman_network
 	cyberman_network.process_cyberman_objectives()
 	var/cybermen_won = (cyberman_network.cybermen_win == 1)
 
-	#ifdef CYBERMEN_DEBUG
-	world << "Cybermen won:[cybermen_won]"
-	world << "Shuttle Escaped: [SSshuttle.emergency.mode >= SHUTTLE_ESCAPE]"
-	world << "Station was Nuked: [station_was_nuked]"
-	#endif
-
 	//log_yogstat_data("gamemode.php?gamemode=cybermen&value=rounds&action=add&changed=1")
 
 	if(!cybermen_won && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
@@ -184,23 +184,23 @@ var/datum/cyberman_network/cyberman_network
 	else
 		world << "<span class='redtext'>The Cybermen have failed!</span>"
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=crewwin&action=add&changed=1")
-
-	world << "<br><span class='big'><b>The Cybermens' Objectives were:</b></span>"
-	var/datum/objective/cybermen/O
-	for(var/i = 1 to cyberman_network.cybermen_objectives.len-1)
-		O = cyberman_network.cybermen_objectives[i]
-		if(O)
-			world << "Phase [i]:[O.phase]"
-			world << "[O.explanation_text]"
-			world << "<font color='green'><b>Completed</b></font><br>"
-	O = cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len]
-	world << "Phase [cyberman_network.cybermen_objectives.len]:[O.phase]"
-	world << "[O.explanation_text]"
-	world << (O.check_completion() ? "<font color='green'><b>Completed</b></font><br>" : "<font color='red'><b>Failed</b></font>")
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_cybermen()
 	if(cyberman_network && cyberman_network.cybermen.len > 0)
+		world << "<br><span class='big'><b>The Cybermens' Objectives were:</b></span>"
+		var/datum/objective/cybermen/O
+		for(var/i = 1 to cyberman_network.cybermen_objectives.len-1)
+			O = cyberman_network.cybermen_objectives[i]
+			if(O)
+				world << "Phase [i]:[O.phase]"
+				world << "[O.explanation_text]"
+				world << "<font color='green'><b>Completed</b></font><br>"
+		O = cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len]
+		world << "Phase [cyberman_network.cybermen_objectives.len]:[O.phase]"
+		world << "[O.explanation_text]"
+		world << (O.check_completion() ? "<font color='green'><b>Completed</b></font><br>" : "<font color='red'><b>Failed</b></font>")
+
 		var/text = ""
 		text += "<br><span class='big'><b>The Cybermen were:</b></span>"
 		for(var/datum/mind/cyberman in cyberman_network.cybermen)
@@ -236,7 +236,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/New()
 	cyberman_network = src
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	generate_cybermen_objective(1)//there must always be an objective or it will cause runtimes.
 	message_admins("The Cyberman Network has been initialized.")
 

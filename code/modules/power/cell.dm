@@ -20,22 +20,22 @@
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	charge = maxcharge
 	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
 	desc = desc + ratingdesc
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
 	if(modified_var == "self_recharge")
 		if(self_recharge)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
-			SSobj.processing -= src
+			STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/stock_parts/cell/process()
@@ -98,6 +98,7 @@
 				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 				var/ischarging = 1
 				spark_system.set_up(5, 0, maybedroid.loc)
+				spark_system.attach(maybedroid)
 				maybedroid.visible_message("[maybedroid] deftly inserts [src] into a slot within their torso. A low hum begins to fill the air.", "<span class='info'>Extracutaneous implants detect viable power source in location: HANDS. Activating CONSUME protocol..</span>")
 				while (ischarging)
 					if (drain > charge)

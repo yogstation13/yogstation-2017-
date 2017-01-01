@@ -11,6 +11,7 @@
 	var/product						// A type path. The thing that is created when the plant is harvested.
 	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overriden.
 
+	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
 	var/icon_grow					// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
 	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
 	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
@@ -147,15 +148,23 @@
 
 	return result
 
-/obj/item/seeds/proc/prepare_result(var/obj/item/weapon/reagent_containers/food/snacks/grown/T)
-	if(T.reagents)
-		for(var/reagent_id in reagents_add)
-			if(reagent_id == "blood") // Hack to make blood in plants always O-
-				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
-				continue
+/obj/item/seeds/proc/prepare_result(obj/item/weapon/reagent_containers/food/snacks/grown/T)
+	if(!T.reagents)
+		return 0
+	var/total_volume = 0
+	for(var/reagent_id in reagents_add)
+		total_volume += max(1, reagents_add[reagent_id] * potency)
+	var/sanity_multiplier = total_volume ? min(1, T.reagents.maximum_volume / total_volume) : 1
 
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id]), 1)
-		return 1
+	for(var/reagent_id in reagents_add)
+		var/add_amount = sanity_multiplier * max(1, reagents_add[reagent_id] * potency )
+		if(reagent_id == "blood") // Hack to make blood in plants always O-
+			T.reagents.add_reagent(reagent_id, add_amount, list("blood_type"="O-"), no_react = TRUE)
+			continue
+
+		T.reagents.add_reagent(reagent_id, add_amount, 1, no_react = TRUE)
+	T.reagents.handle_reactions()
+	return 1
 
 
 /// Setters procs ///

@@ -89,7 +89,7 @@
 	now_pushing = 1
 	if(ismob(AM))
 		var/mob/tmob = AM
-		if(!(tmob.status_flags & CANPUSH))
+		if(!(CANPUSH in tmob.status_flags))
 			now_pushing = 0
 			return
 
@@ -344,7 +344,8 @@
 		if (client.statpanel == "Status")
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+				stat("Extracted DNA", mind.changeling.profilecount)
+				stat("Absorbed Lifeforms", mind.changeling.absorbedcount)
 	return
 
 
@@ -462,7 +463,7 @@
 	return
 
 /mob/living/carbon/human/zombie/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	amount = amount / 3
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
@@ -480,39 +481,39 @@
 	return 0
 
 /mob/living/carbon/human/zombie/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	amount = amount * 2
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/carbon/human/zombie/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
 
 /mob/living/carbon/human/zombie/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	cloneloss = amount
 	handle_regular_status_updates()
 
 /mob/living/carbon/human/zombie/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	amount = amount * 2
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
 	handle_regular_status_updates()
 
 /mob/living/carbon/human/zombie/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	brainloss = amount
 	handle_regular_status_updates() //we update our health right away.
 
 /mob/living/carbon/human/zombie/adjustStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	amount = amount / 5
 	staminaloss = min(max(staminaloss + amount, 0),(maxHealth*2))
 
 /mob/living/carbon/human/zombie/setStaminaLoss(amount)
-	if(status_flags & GODMODE)	return 0
+	if(GODMODE in status_flags)	return 0
 	amount = amount / 5
 	staminaloss = amount
 

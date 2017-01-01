@@ -2,7 +2,6 @@
 /*
 CONTAINS:
 T-RAY
-DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
 MASS SPECTROMETER
@@ -25,7 +24,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
@@ -38,7 +37,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	scan()
 
@@ -123,7 +122,7 @@ MASS SPECTROMETER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat > 1 ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
-	if(M.status_flags & FAKEDEATH)
+	if(FAKEDEATH in M.status_flags)
 		mob_status = "<span class='alert'>Deceased</span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
@@ -139,6 +138,12 @@ MASS SPECTROMETER
 					if(hack.target == H)
 						user << "<span class='danger'>Unknown harmful microscopic machines detected in subject's bloodstream: Recommend treatment via Electro Magnetic Pulse or Strong Electric Shock immediately!</span>"
 						break
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.borer)
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
@@ -155,9 +160,9 @@ MASS SPECTROMETER
 	if (M.getCloneLoss())
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
+		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of stabilizing chemicals.</span>"
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
-		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
+		user << "\t<span class='alert'>Subject brain function is non-existent.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if (M.getBrainLoss() >= 10)
@@ -179,12 +184,8 @@ MASS SPECTROMETER
 	user << "<span class='info'>Body temperature: [round(M.bodytemperature-T0C,0.1)] &deg;C ([round(M.bodytemperature*1.8-459.67,0.1)] &deg;F)</span>"
 
 	// Time of death
-	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+	if(M.tod && (M.stat == DEAD || (FAKEDEATH in M.status_flags)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
-		var/tdelta = round(world.time - M.timeofdeath)
-		if(tdelta < (DEFIB_TIME_LIMIT * 10))
-			user << "<span class='danger'>Subject died [tdelta / 10] seconds \
-				ago, defibrillation may be possible!</span>"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
@@ -217,6 +218,17 @@ MASS SPECTROMETER
 		if(implant_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
 			user << "<span class='notice'>[implant_detect]</span>"
+	//Organ Decay
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		for(var/obj/item/organ/O in C.internal_organs)
+			if(O.decay_time && O.decay)
+				if(O.decay >= O.decay_time)
+					user << "<span class='notice'>\The [O] of the subject has decayed past the point of no return.</span>"
+				else
+					user << "<span class='notice'>\The [O] of the subject is [round(O.decay / O.decay_time, 0.1)]% decayed.</span>"
+	if(!M.getorgan(/obj/item/organ/heart))
+		user << "<span class='warning'>Subject does not have a heart.</span>"
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))
@@ -293,6 +305,9 @@ MASS SPECTROMETER
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/bz_concentration = env_gases["bz"] ? env_gases["bz"][MOLES]/total_moles : 0
+		var/agent_b_concentration = env_gases["agent_b"] ? env_gases["agent_b"][MOLES]/total_moles : 0
+		var/n2o_concentration = env_gases["n2o"] ? env_gases["n2o"][MOLES]/total_moles : 0
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -314,6 +329,18 @@ MASS SPECTROMETER
 			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+		if(n2o_concentration > 0.01)
+			user << "<span class='alert'>N2O: [round(n2o_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>N2O: [round(n2o_concentration*100, 0.01)] %</span>"
+		if(agent_b_concentration > 0.005)
+			user << "<span class='alert'>AGENT B: [round(agent_b_concentration*100, 0.01)] %. Remove flammable materials.</span>"
+		else
+			user << "<span class='info'>AGENT B: [round(agent_b_concentration*100, 0.01)] %</span>"
+		if(bz_concentration > 0.01)
+			user << "<span class='alert'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
 
 
 		for(var/id in env_gases)
@@ -413,6 +440,18 @@ MASS SPECTROMETER
 		user << "<span class='warning'>Warning: slime is hungry</span>"
 	user << "Electric change strength: [T.powerlevel]"
 	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
+	if (T.rabid == 1)
+		user << "<span class='warning'>Warning: Slime is rabid!</span>"
+
+	if (T.attacked == 10)
+		user << "<span class='warning'>Warning: Slime was just attacked!</span>"
+	else if(T.attacked < 1)
+		user << "Slime appears agitated due to prior agression.</span>"
+	else if(T.attacked < 5)
+		user << "<span class='warning'>Warning: Slime was attacked a short period of time ago.</span>"
+	else if(T.attacked < 10)
+		user << "<span class='warning'>Warning: Slime was attacked recently.</span>"
+
 	if (T.slime_mutation[4] == T.colour)
 		user << "This slime does not evolve any further."
 	else
@@ -427,5 +466,28 @@ MASS SPECTROMETER
 			user << "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]"
 			user << "Genetic destability: [T.mutation_chance] % chance of mutation on splitting"
 	if (T.cores > 1)
-		user << "Anomalious slime core amount detected"
+		user << "Anomalious slime core amount detected."
+	if (T.mutator_used == TRUE)
+		user << "Slime has been fed a mutative chemical and cannot accept any more mutation potions."
+	if (T.Friends && T.Friends.len)
+		user << "<span class='notice'>Slime has formed lasting bonds with these organisms:</span>"
+		for (var/mob/mob in T.Friends)
+			user << "<span class='notice'>[mob.name]</span>"
+	else
+		if(prob(1))
+			user << "<span class='notice'>This slime is as lonely as you are.</span>"
+		else
+			user << "<span class='notice'>Slime has no lasting bonds with any organisms.</span>"
+	if(T.bodytemperature < (T0C + 5))
+		user << "<span class='notice'>Slime is beginning to suffer under cold temperature.:</span>"
+	else if(T.bodytemperature <= (T0C - 40)) // stun temperature
+		user << "<span class='notice'>Slime is paralyzed due to cold.</span>"
+	else if(T.bodytemperature <= (T0C - 50))
+		user << "<span class='notice'>Slime is dying due to cold temperature.</span>"
+	else if(T.bodytemperature <= 50)
+		user << "<span class='notice'>Slime is dying extremely fast due to cold temperature.</span>"
+	if (T.docile)
+		user << "<span class='notice'>Slime is docile and cannot evolve or feed.</span>"
+	if (T.stat == UNCONSCIOUS)
+		user << "<span class='notice'>Slime is in stasis.</span>"
 	user << "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"

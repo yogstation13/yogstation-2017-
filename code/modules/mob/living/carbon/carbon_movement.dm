@@ -3,6 +3,11 @@
 	. += grab_state * 3
 	if(legcuffed)
 		. += legcuffed.slowdown
+	if(!get_leg_ignore()) //ignore the fact we lack legs
+		var/leg_amount = get_num_legs()
+		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
+		if(!leg_amount)
+			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1

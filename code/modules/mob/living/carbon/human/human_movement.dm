@@ -34,7 +34,6 @@
 				if(!has_gravity(loc))
 					return
 				var/obj/item/clothing/shoes/S = shoes
-
 				//Bloody footprints
 				var/turf/T = get_turf(src)
 				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])

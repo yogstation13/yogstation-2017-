@@ -14,7 +14,7 @@
 
 /obj/structure/table
 	name = "table"
-	desc = "A square piece of metal standing on four metal legs. It can not move."
+	desc = "A square piece of metal standing on four metal legs. It can't move."
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table"
 	density = 1
@@ -62,8 +62,7 @@
 		new /obj/structure/table/wood(src.loc)
 
 /obj/structure/table/ratvar_act()
-	if(prob(20))
-		new /obj/structure/table/reinforced/brass(src.loc)
+	new /obj/structure/table/reinforced/brass(src.loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
@@ -127,6 +126,13 @@
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(issilicon(mover))
+		return
+	if(iscarbon(mover))
+		var/mob/living/carbon/C = mover
+		var/obj/item/weapon/tank/jetpack/jetpacktable = C.get_jetpack()
+		if(jetpacktable && jetpacktable.on && !has_gravity(C))
+			return 1
 	if(mover.throwing)
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
@@ -173,14 +179,15 @@
 
 	if(user.a_intent != "harm" && !(I.flags & ABSTRACT))
 		if(user.drop_item())
-			I.Move(loc)
-			var/list/click_params = params2list(params)
-			//Center the icon where the user clicked.
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
-				return
-			//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-			I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
-			I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			if(I.loc == user.loc) //some items move or delete themselves on drop, and we don't want to touch those
+				I.Move(loc)
+				var/list/click_params = params2list(params)
+				//Center the icon where the user clicked.
+				if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+					return
+				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+				I.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			return 1
 	else
 		return ..()

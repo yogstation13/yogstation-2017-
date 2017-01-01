@@ -17,11 +17,12 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
 	reroll_friendly = 1
+	prob_traitor_ai = 18
 
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
@@ -63,15 +64,15 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
-
 	if(antag_candidates.len>0)
-		for(var/i = 0, i < num_changelings, i++)
-			if(!antag_candidates.len) break
-			var/datum/mind/changeling = pick_candidate()
+		var/list/lings = pick_candidate(amount = num_changelings)
+		for(var/M in lings)
+			var/datum/mind/changeling = M
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
 			modePlayer += changelings
+
 		return 1
 	else
 		return 0
@@ -248,7 +249,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
-			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.absorbedcount]"
+			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.profilecount]"
 
 			if(changeling.objectives.len)
 				var/count = 1
@@ -281,7 +282,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
-	var/absorbedcount = 0
+	var/absorbedcount = 0//how many the ling has absorbed with the ability
+	var/profilecount = 0 //used to store how many profiles, either absorbed or DNAstung
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -296,6 +298,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
+	var/reverting = 0 //if they're turning back from horrorform
+	var/transforming = FALSE //if they're turning into horrorform
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 
@@ -344,7 +348,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return
 	if(!target)
 		return
-	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
+	if((target.disabilities & NOCLONE)/* || (target.disabilities & HUSK)*/)//Husk absorption, to prevent redtext due to people spacing themselves.
 		if(verbose)
 			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
@@ -393,9 +397,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-
+	profilecount++
 	stored_profiles += prof
-	absorbedcount++
 
 /datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
 	var/datum/changelingprofile/prof = create_profile(H, protect)
@@ -508,3 +511,78 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
+
+//for the abomination species, see horrorform.dm
+
+/datum/species/deformed //what you get from abomination reversion
+	name = "???"
+	id = "husk"
+	say_mod = "gasps"
+	sexes = 0
+	roundstart = 0
+
+/obj/item/clothing/suit/space/abomination
+	name = "fleshy hide"
+	desc = "A huge chunk of flesh. It seems to be shifting around itself."
+	icon_state = "golem"
+	item_state = "golem"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	armor = list(melee = 80, bullet = 50, laser = 70,energy = 100, bomb = 30, bio = 100, rad = 0)
+	slowdown = 0
+	unacidable = 1
+	burn_state = -1
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags = ABSTRACT | NODROP
+
+/obj/item/clothing/shoes/abomination
+	name = "spiked hooks"
+	desc = "A fleshy membrane with spikes that dig into the ground below."
+	icon_state = "golem"
+	unacidable = 1
+	burn_state = -1
+	flags = NOSLIP | ABSTRACT | NODROP
+
+/obj/item/clothing/mask/muzzle/abomination
+	name = "distorted mouth"
+	desc = "A disgusting mouth with multiple rows of teeth. There's no way someone with this on could talk normally."
+	icon_state = "golem"
+	item_state = "golem"
+	flags = ABSTRACT | NODROP
+	armor = list(melee = 30, bullet = 20, laser = 30, energy = 50, bomb = 20, bio = 50, rad = 0)
+	unacidable = 1
+	burn_state = -1
+	flags_cover = MASKCOVERSEYES
+
+/obj/item/clothing/head/helmet/space/abomination
+	name = "hardened membrane"
+	icon_state = "golem"
+	item_state = "golem"
+	desc = "Hardened resin of some sort."
+	flags = ABSTRACT | NODROP
+	armor = list(melee = 50, bullet = 25, laser = 40,energy = 50, bomb = 10, bio = 50, rad = 0)
+	unacidable = 1
+	burn_state = -1
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+
+/obj/item/clothing/gloves/abomination
+	name = "hardened membrane"
+	desc = "A strange filament webbing that would fit around one's hands. They seem to be rather thick."
+	icon_state = "golem"
+	item_state = "golem"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.9
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	unacidable = 1
+	burn_state = -1
+	flags = ABSTRACT | NODROP
+
+/obj/item/clothing/glasses/night/shadowling/abomination
+	name = "sunken pits"
+	desc = "Eye holes housing some sort of eyes. Something tells you you don't want to know what kind."
+	icon_state = "golem"
+	item_state = "golem"
+	actions_types = null
+

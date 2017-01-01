@@ -8,12 +8,18 @@
 	var/possible_destinations = ""
 	var/admin_controlled
 	var/no_destination_swap = 0
+	var/notification // assign a frequency here - ex: SEC_FREQ, etc
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
 	..()
 	if(istype(C))
 		possible_destinations = C.possible_destinations
 		shuttleId = C.shuttleId
+
+	if(notification)
+		var/obj/item/device/radio/R = new(src)
+		R.set_frequency(notification)
+		R.listening = FALSE
 
 /obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
@@ -65,6 +71,11 @@
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
 				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+				if(notification)
+					for(var/obj/item/device/radio/R in src.contents)
+						if(R.frequency != notification)
+							R.frequency = notification
+						R.talk_into(src,"The [shuttleId] shuttle is taking off!",notification)
 			if(1)
 				usr << "<span class='warning'>Invalid shuttle requested.</span>"
 			else

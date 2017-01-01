@@ -61,10 +61,16 @@
 
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
+	var/threat = 0
 	for(var/datum/disease/D in viruses)
-		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
-			return 1
-	return 0
+		if(!(D.visibility_flags & HIDDEN_SCANNER))
+			if (D.severity != NONTHREAT) //a buffing virus gets an icon
+				threat = 2
+				return threat //harmful viruses have priority
+			else
+				threat = 1 //aka good virus
+
+	return threat
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
@@ -143,19 +149,29 @@
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	if(stat == DEAD)
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(stat == DEAD || (FAKEDEATH in status_flags))
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
 
 /mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	if(status_flags & XENO_HOST)
+	var/icon/I = icon(icon, icon_state, dir)
+	var/virus_state = check_virus()
+	var/mob/living/simple_animal/borer/B = borer
+	holder.pixel_y = I.Height() - world.icon_size
+	if(XENO_HOST in status_flags)
 		holder.icon_state = "hudxeno"
-	else if(stat == DEAD)
+	else if(stat == DEAD || (FAKEDEATH in status_flags))
 		holder.icon_state = "huddead"
-	else if(check_virus())
+	else if(B && B.controlling)
+		holder.icon_state = "hudbrainworm"
+	else if(virus_state == 2)
 		holder.icon_state = "hudill"
+	else if(virus_state == 1)
+		holder.icon_state = "hudbuff"
 	else
 		holder.icon_state = "hudhealthy"
 

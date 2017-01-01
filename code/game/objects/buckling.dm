@@ -74,7 +74,8 @@
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
 		buckled_mob.clear_alert("buckled")
-		buckled_mobs -= buckled_mob
+		if(buckled_mobs)
+			buckled_mobs -= buckled_mob
 
 		post_buckle_mob(.)
 

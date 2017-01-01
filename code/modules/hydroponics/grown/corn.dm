@@ -10,10 +10,11 @@
 	oneharvest = 1
 	potency = 20
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "corn-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "corn-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
-	reagents_add = list("cornoil" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("cornoil" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/corn
 	seed = /obj/item/seeds/corn

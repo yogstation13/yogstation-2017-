@@ -343,7 +343,7 @@
 
 /datum/spellbook_entry/item/contract
 	name = "Contract of Apprenticeship"
-	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
+	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side. Requires a willing ghost, which there probably is."
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 	category = "Assistance"
@@ -383,16 +383,16 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
-/datum/spellbook_entry/item/cursed_heart
-	name = "Cursed Heart"
-	desc = "A heart that has been revived by dark magicks, the user must \
+// /datum/spellbook_entry/item/cursed_heart
+//	name = "Cursed Heart"
+//	desc = "A heart that has been revived by dark magicks, the user must \
 	concentrate to ensure the heart beats, but every beat heals them. It \
 	must beat every 6 seconds. The heart is fickle, and will not work for a \
 	lich."
-	item_path = /obj/item/organ/heart/cursed/wizard
-	log_name = "CH"
-	cost = 1
-	category = "Defensive"
+//	item_path = /obj/item/organ/heart/cursed/wizard
+//	log_name = "CH"
+//	cost = 1
+//	category = "Defensive" // Badly balanced, disabling until reworked since it literally just shouts DIE ASSHOLE and you die if you misclick/are stunned
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -429,16 +429,15 @@
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(0, user, 25)
+	summon_guns(user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon guns!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
-	category = "Challenges"
-	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
-	cost = 0
+	category = "Rituals"
+	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time. Make the gods cry."
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
@@ -448,11 +447,9 @@
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
-	rightandwrong(1, user, 0)
-	book.uses += 1
-	active = 1
+	summon_magic(user, 25)
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
-	user << "<span class='notice'>You have cast summon magic and gained an extra charge for your spellbook.</span>"
+	user << "<span class='notice'>You have cast summon magic!</span>"
 	return 1
 
 /datum/spellbook_entry/summon/events
@@ -563,9 +560,6 @@
 			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
 			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
 			dat += "You can reduce this number by spending more points on the spell.<BR>"
-		if("Challenges")
-			dat += "The Wizard Federation typically has hard limits on the potency and number of spells brought to the station based on risk.<BR>"
-			dat += "Arming the station against you will increases the risk, but will grant you one more charge for your spellbook.<BR>"
 		if("Rituals")
 			dat += "These powerful spells change the very fabric of reality. Not always in your favour.<BR>"
 	return dat

@@ -13,7 +13,7 @@
 		return 1
 	if(istype(O, /obj/item/device/pda))
 		var/obj/item/device/pda/A = O
-		if(A.scanmode == PDA_SCAN_MEDICAL)
+		if(A.scanmode == PDA_SCAN_MEDICAL_HEALTH || A.scanmode == PDA_SCAN_MEDICAL_REAGENT)
 			return 1
 	return 0
 
@@ -45,3 +45,6 @@
 	if(istype(special_device) && special_device.mode == RED_AIRLOCK_PAINTER_MODE)
 		return special_device.painter
 	return null
+
+/proc/is_mining_scanner(obj/O)
+	return istype(O, /obj/item/device/mining_scanner) || istype(O, /obj/item/device/t_scanner/adv_mining_scanner)

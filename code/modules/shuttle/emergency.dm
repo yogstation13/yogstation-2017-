@@ -10,6 +10,7 @@
 	icon_keyboard = "tech_key"
 	var/auth_need = 3
 	var/list/authorized = list()
+	paiAllowed = 0
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -292,6 +293,8 @@
 				sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_begin.ogg'
+					// Play the parallax animation
+					parallax_launch_in_area(E, 1)
 
 			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
 				priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")

@@ -29,16 +29,15 @@
 	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
 		n_agents = antag_candidates.len
 
-	while(n_agents > 0)
-		var/datum/mind/new_syndicate = pick_candidate()
-		syndicates += new_syndicate
-		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		n_agents--
+	var/list/datum/mind/new_cops = pick_candidate(amount = n_agents)
+	update_not_chosen_candidates()
 
-	for(var/datum/mind/synd_mind in syndicates)
-		synd_mind.assigned_role = "Syndicate"
-		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
-		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
+	for(var/v in new_cops)
+		var/datum/mind/new_syndicate = v
+		syndicates += new_syndicate
+		new_syndicate.assigned_role = "Syndicate"
+		new_syndicate.special_role = "Syndicate"//So they actually have a special role/N
+		log_game("[new_syndicate.key] (ckey) has been selected as a nuclear operative")
 
 	return 1
 

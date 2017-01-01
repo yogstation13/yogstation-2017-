@@ -41,7 +41,7 @@
 		user << "<span class='warning'>\The [src] is empty!</span>"
 		return
 
-	spray(A)
+	spray(A, user)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
@@ -59,7 +59,7 @@
 	return
 
 
-/obj/item/weapon/reagent_containers/spray/proc/spray(atom/A)
+/obj/item/weapon/reagent_containers/spray/proc/spray(atom/A, mob/living/user, log = 1)
 	var/range = max(min(spray_range, get_dist(src, A)), 1)
 	var/obj/effect/decal/chempuff/D = new /obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
@@ -69,6 +69,28 @@
 		puff_reagent_left = 1
 	else
 		reagents.trans_to(D, amount_per_transfer_from_this, 1/range)
+
+	if(log && user)
+		var/list/sprayed = list()
+		var/viruslist = ""
+		for(var/datum/reagent/R in reagents.reagent_list)
+			sprayed += R.name
+			if(istype(R, /datum/reagent/blood))
+				var/datum/reagent/blood/RR = R
+				for(var/datum/disease/Disease in RR.data["viruses"])
+					if(viruslist)
+						viruslist += " and "
+					viruslist += "[Disease.name]"
+					if(istype(Disease, /datum/disease/advance))
+						var/datum/disease/advance/DD = Disease
+						viruslist += " \[ symptoms: "
+						for(var/datum/symptom/S in DD.symptoms)
+							viruslist += "[S.name] "
+						viruslist += "\]"
+		user.attack_log += "\[[time_stamp()]\] <font color='orange'>Sprayed \a [src] containing [english_list(sprayed)].</font>"
+		if(viruslist)
+			investigate_log("[user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]", "viro")
+
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
 	spawn(0)
@@ -187,7 +209,7 @@
 	origin_tech = "combat=3;materials=3;engineering=3"
 
 
-/obj/item/weapon/reagent_containers/spray/chemsprayer/spray(atom/A)
+/obj/item/weapon/reagent_containers/spray/chemsprayer/spray(atom/A, user, log = 1)
 	var/direction = get_dir(src, A)
 	var/turf/T = get_turf(A)
 	var/turf/T1 = get_step(T,turn(direction, 90))
@@ -197,7 +219,8 @@
 	for(var/i=1, i<=3, i++) // intialize sprays
 		if(reagents.total_volume < 1)
 			return
-		..(the_targets[i])
+		..(the_targets[i], user, log)
+		log = 0
 
 /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, "polonium" = 100)

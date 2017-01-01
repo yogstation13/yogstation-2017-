@@ -23,6 +23,7 @@ var/global/mulebot_count = 0
 	a_intent = "harm" //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
+	allow_pai = 0
 
 	radio_key = /obj/item/device/encryptionkey/headset_cargo
 	radio_channel = "Supply"
@@ -365,7 +366,7 @@ var/global/mulebot_count = 0
 		if(!load_mob(AM))
 			return
 	else
-		AM.loc = src
+		AM.forceMove(src)
 
 	load = AM
 	mode = BOT_IDLE
@@ -654,9 +655,9 @@ var/global/mulebot_count = 0
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
-	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
-	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
+	var/damage = rand(5,6)
+	H.apply_damage(0.5*damage, BRUTE, "head", run_armor_check("head", "melee"))
+	H.apply_damage(0.5*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "r_leg", run_armor_check("r_leg", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))

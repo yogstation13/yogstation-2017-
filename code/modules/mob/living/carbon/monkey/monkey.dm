@@ -199,7 +199,8 @@
 		if(client && mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+				stat("Extracted DNA", mind.changeling.profilecount)
+				stat("Absorbed Lifeforms", mind.changeling.absorbedcount)
 	return
 
 

@@ -83,6 +83,7 @@ a.updated {
 			dat += "<b>Prominent products:</b><br>"
 			for (var/prod in S.products)
 				dat += "<i>[prod]</i><br>"
+			/*
 			dat += "<br><b>Borrow options:</b><br>"
 			if (S.borrow_brokers.len)
 				for (var/datum/borrow/B in S.borrow_brokers)
@@ -102,6 +103,7 @@ a.updated {
 						dat += "You are expected to return the borrowed shares in [(B.lease_expires - world.time) / 600] minutes.<br><br>"
 					else
 						dat += "The brokering agency is collecting. You still owe them <i>[B.share_debt]</i> shares, which you have [(B.grace_expires - world.time) / 600] minutes to present.<br><br>"
+			*/
 			var/news = 0
 			if (logged_in)
 				var/list/LR = stockExchange.last_read[S]

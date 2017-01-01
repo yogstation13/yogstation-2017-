@@ -75,8 +75,10 @@ var/list/tsbeacon_list = list()
 
 /obj/item/device/tsbeacon/proc/can_be_found(z)
 	var/turf/t = get_turf(src)
-	if(!on || !t || t.z != z) return 0
-	else return 1
+	if(!on || !t || t.z != z)
+		return 0
+	else
+		return 1
 
 /obj/item/device/tsbeacon/proc/get_offset(dx, dy)
 	var/turf/t = get_turf(src)

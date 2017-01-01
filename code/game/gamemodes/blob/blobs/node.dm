@@ -8,11 +8,12 @@
 	health_regen = 3
 	point_return = 25
 	atmosblock = 1
+	heatblock = 1
 
 
 /obj/effect/blob/node/New(loc, var/h = 100)
 	blob_nodes += src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..(loc, h)
 
 /obj/effect/blob/node/scannerreport()
@@ -33,7 +34,7 @@
 
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/blob/node/Life()

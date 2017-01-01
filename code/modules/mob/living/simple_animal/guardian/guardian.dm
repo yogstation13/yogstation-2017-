@@ -45,6 +45,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/New(loc, theme)
 	parasites |= src
 	setthemename(theme)
+	verbs -= /mob/living/verb/pulled
 
 	..()
 
@@ -172,6 +173,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
 		return 0
+	if(target == summoner && !(istype(src,/mob/living/simple_animal/hostile/guardian/healer)))
+		return 0
 	else
 		..()
 		return 1
@@ -195,13 +198,16 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(summoner)
 		if(loc == summoner)
 			return 0
-		summoner.adjustBruteLoss(amount)
-		if(amount)
+		if(amount > 0)
+			if(amount < 10)
+				summoner.visible_message("<span class='warning'>[summoner] winces as small bruises appear on their skin.</span>", , 3)
+			else
+				summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner]!</B></span>")
+			summoner.adjustBruteLoss(amount)
 			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
-			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
-		if(summoner.stat == UNCONSCIOUS)
-			summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
-			summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
+			if(summoner.stat == UNCONSCIOUS)
+				summoner << "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>"
+				summoner.adjustCloneLoss(amount*0.5) //dying hosts take 50% bonus damage as cloneloss
 		update_health_hud()
 
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
@@ -278,7 +284,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			M << "[link] [my_message]"
 
-		log_say("[src.real_name]/[src.key] : [input]")
+		log_say("[src.real_name]/[src.key] (TO SUMMONER): [input]")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -300,7 +306,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		M << "[link] [my_message]"
 
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_say("[src.real_name]/[src.key] (TO GUARDIAN): [input]")
 
 //FORCE RECALL/RESET
 
@@ -314,15 +320,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		G.Recall()
 
 /mob/living/proc/guardian_reset()
-	set name = "Reset Guardian Player (One Use)"
+	set name = "Reset Guardian Player"
 	set category = "Guardian"
-	set desc = "Re-rolls which ghost will control your Guardian. One use per Guardian."
+	set desc = "Re-rolls which ghost will control your Guardian."
 
 	var/list/guardians = hasparasites()
-	for(var/para in guardians)
-		var/mob/living/simple_animal/hostile/guardian/P = para
-		if(P.reset)
-			guardians -= P //clear out guardians that are already reset
 	if(guardians.len)
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
@@ -344,14 +346,10 @@ var/global/list/parasites = list() //all currently existing/living guardians
 					if("magic")
 						src << "<span class='holoparasite'><font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font> has been summoned!</span>"
 				guardians -= G
-				if(!guardians.len)
-					verbs -= /mob/living/proc/guardian_reset
 			else
 				src << "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>"
 		else
 			src << "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>"
-	else
-		verbs -= /mob/living/proc/guardian_reset
 
 ////////parasite tracking/finding procs
 
@@ -499,9 +497,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
- <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
+ <b>Chaos</b>: Ignites enemies on attack. Bumping humans causes them to hallucinate all nearby humans as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>

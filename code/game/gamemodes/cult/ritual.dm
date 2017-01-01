@@ -20,6 +20,7 @@ This file contains the arcane tome files.
 		user << "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>"
 		user << "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>"
 		user << "<span class='cult'>Striking a noncultist, however, will sear their flesh.</span>"
+		user << "<span class='cult'>Striking a runed wall will make it intangible or tangible.</span>"
 
 /obj/item/weapon/tome/attack(mob/living/M, mob/living/user)
 	if(!istype(M))
@@ -218,6 +219,12 @@ This file contains the arcane tome files.
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
 			var/area/A = get_area(src)
+			var/list/clearlist = list(/area/solar,/area/toxins/test_area,/area/maintenance)
+			if(!A.valid_territory)
+				if(!(A in clearlist))
+					user << "<span class='warning'>The Geometer cannot be opened \
+						in such a ridiculous place!</span>"
+					return
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
@@ -241,6 +248,9 @@ This file contains the arcane tome files.
 				N.icon_state = "shield-red"
 				N.health = 60
 				shields |= N
+			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+				P.visible_message("<span class='warning'>[P]'s pointer spins around rapidly until it slowly stops, clearly detecting an ominous presence.</span>")
+				P.the_disk = get_turf(user)
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
@@ -252,6 +262,8 @@ This file contains the arcane tome files.
 			var/obj/machinery/shield/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
+		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			P.the_disk = null // this sets it back.
 		return
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
@@ -264,3 +276,5 @@ This file contains the arcane tome files.
 			qdel(S)
 	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
+	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+		P.visible_message("<span class='warning'>[P] begins rattling, but it's pointer remains unmoved in it's pecuilar direction.</span>")

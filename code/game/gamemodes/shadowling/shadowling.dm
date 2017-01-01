@@ -73,6 +73,7 @@ Made by Xhuis
 	recommended_enemies = 2
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	prob_traitor_ai = 18
 
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
@@ -87,15 +88,16 @@ Made by Xhuis
 
 	var/shadowlings = max(2, round(num_players()/10))
 
+	var/list/datum/mind/shadowmen = pick_candidate(amount = shadowlings)
+	update_not_chosen_candidates()
 
-	while(shadowlings)
-		var/datum/mind/shadow = pick_candidate()
+	for(var/v in shadowmen)
+		var/datum/mind/shadow = v
 		shadows += shadow
-		antag_candidates -= shadow
 		modePlayer += shadow
 		shadow.special_role = "Shadowling"
 		shadow.restricted_roles = restricted_jobs
-		shadowlings--
+
 	return 1
 
 
@@ -258,6 +260,9 @@ Made by Xhuis
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,NODISMEMBER) //Can't use guns due to muzzle flash
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
+	sight_mod = SEE_MOBS
+	invis_sight = 2
+	blacklisted = 1
 
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
@@ -285,7 +290,7 @@ Made by Xhuis
 	name = "Lesser Shadowling"
 	id = "l_shadowling"
 	say_mod = "chitters"
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NODISMEMBER)
 	burnmod = 1.1
 	heatmod = 1.1
 

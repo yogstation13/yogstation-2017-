@@ -11,7 +11,7 @@
 	growthstages = 5
 	plant_type = PLANT_WEED
 	mutatelist = list(/obj/item/seeds/nettle/death)
-	reagents_add = list("sacid" = 0.5)
+	reagents_add = list("sacid" = 1)
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -53,7 +53,7 @@
 	var/mob/living/carbon/C = user
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = C
-		if(H.gloves)
+		if(istype(H.gloves, /obj/item/clothing))
 			return 0
 		var/organ = ((H.hand ? "l_":"r_") + "arm")
 		var/obj/item/bodypart/affecting = H.get_bodypart(organ)

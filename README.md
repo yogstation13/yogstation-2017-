@@ -1,12 +1,12 @@
-##/tg/station v1.0.1
+##Yogstation
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
+[![Build Status](https://travis-ci.org/yogstation13/yogstation.svg?branch=master)](https://travis-ci.org/yogstation13/yogstation)
+Copyright (C) Yogstation 2013-2016
 
-
-**Website:** http://www.tgstation13.org <BR>
-**Code:** https://github.com/tgstation/tgstation <BR>
-**Wiki** http://tgstation13.org/wiki/Main_Page <BR>
-**IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
+**Website:** https://yogstation.net <BR>
+**Code:** https://github.com/yogstation13/yogstation <BR>
+**Wiki:** https://wiki.yogstation.net <BR>
+**Discord:** https://discord.gg/0keg6hQH05Ha8OfO<BR>
 
 
 ##DOWNLOADING
@@ -19,11 +19,11 @@ Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 Option 2:
 Install GitHub::windows from http://windows.github.com/
 It handles most of the setup and configuraton of Git for you.
-Then you simply search for the tgstation repository and click the big clone
+Then you simply search for the yogstation repository and click the big clone
 button.
 
 Option 3: Download the source code as a zip by clicking the ZIP button in the
-code tab of https://github.com/tgstation/tgstation
+code tab of https://github.com/yogstation13/yogstation
 (note: this will use a lot of bandwidth if you wish to update and is a lot of
 hassle if you want to make any changes at all, so it's not recommended.)
 
@@ -33,13 +33,13 @@ First-time installation should be fairly straightforward.  First, you'll need
 BYOND installed.  You can get it from http://www.byond.com/.  Once you've done
 that, extract the game files to wherever you want to keep them.  This is a
 sourcecode-only release, so the next step is to compile the server files.
-Open tgstation.dme by double-clicking it, open the Build menu, and click
+Open yogstation.dme by double-clicking it, open the Build menu, and click
 compile.  This'll take a little while, and if everything's done right you'll get
 a message like this:
 
 ```
-saving tgstation.dmb (DEBUG mode)
-tgstation.dmb - 0 errors, 0 warnings
+saving yogstation.dmb (DEBUG mode)
+yogstation.dmb - 0 errors, 0 warnings
 ```
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
@@ -55,7 +55,7 @@ so they may have unknown and bizarre bugs.  Extended is essentially no mode, and
 isn't in the Secret rotation by default as it's just not very fun.
 
 You'll also want to edit config/admins.txt to remove the default admins and add
-your own.  "Game Master" is the highest level of access, and probably the one
+your own.  "Council Member" is the highest level of access, and probably the one
 you'll want to use for now.  You can set up your own ranks and find out more in
 config/admin_ranks.txt
 
@@ -68,7 +68,7 @@ byondkey = Rank
 where the admin rank must be properly capitalised.
 
 Finally, to start the server, run Dream Daemon and enter the path to your
-compiled tgstation.dmb file.  Make sure to set the port to the one you
+compiled yogstation.dmb file.  Make sure to set the port to the one you
 specified in the config.txt, and set the Security box to 'Safe'.  Then press GO
 and the server should start up and be ready to join. It is also recommended that
 you set up the SQL backend (see below).

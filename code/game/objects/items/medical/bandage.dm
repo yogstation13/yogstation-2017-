@@ -149,7 +149,7 @@
 	desc = "A primitive bandage fashioned from some torn cloth and leftover elastic. Will do in a pinch, but is nowhere near as effective as actual medical-grade bandages."
 	healtype = "brute"
 	healamount = 40
-	duration = 120
+	duration = 40
 	staunch_bleeding = 240
 
 /obj/item/medical/bandage/improvised_soaked
@@ -158,21 +158,21 @@
 	healtype = "burn"
 	color = "blue"
 	healamount = 40
-	duration = 120
+	duration = 40
 	staunch_bleeding = 0
 
 /obj/item/medical/bandage/destitute
 	name = "beggar's bandage"
 	desc = "Aptly named. These tattered shreds of cloth look about as useful as their namesake."
 	healamount = 15
-	duration = 120
+	duration = 40
 	staunch_bleeding = 120
 
 /obj/item/medical/bandage/normal
 	name = "standard NT-issue emergency bandage"
 	desc = "Does the job, and does it well. Wrap tightly around a wound. Smells like a pay docking."
 	healamount = 65
-	duration = 80
+	duration = 40
 	staunch_bleeding = 600
 
 /obj/item/medical/bandage/burn
@@ -180,7 +180,7 @@
 	desc = "Does the job, but stings like all hell. Wrap tightly around the wound. Smells slightly worse than the burning flesh it is supposed to heal, probably because it's being docked from your pay."
 	healamount = 65
 	healtype = "burn"
-	duration = 80
+	duration = 40
 	staunch_bleeding = 0
 
 /obj/item/medical/bandage/quality

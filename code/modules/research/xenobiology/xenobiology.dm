@@ -172,14 +172,14 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
 		SM.languages_spoken |= HUMAN
 		SM.languages_understood |= HUMAN
-		SM.faction = user.faction
+		SM.faction |= user.faction
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
 		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
@@ -458,7 +458,7 @@
 
 /obj/effect/golemrune/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost

@@ -18,6 +18,10 @@
 	desc = "It's worth 10 credits."
 	value = 10
 
+/obj/item/stack/spacecash/c10/fake
+	desc = "It's worth 10 cred- wait a minute... something's not right here. It smells like cheap paper."
+	value = 0
+
 /obj/item/stack/spacecash/c20
 	icon_state = "spacecash20"
 	desc = "It's worth 20 credits."

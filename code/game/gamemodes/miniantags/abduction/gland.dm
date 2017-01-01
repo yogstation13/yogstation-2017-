@@ -166,11 +166,15 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	var/list/magic_yolk = list("mindbreaker", "chloralhydrate", "tiresolution", "spraytan", "space_drugs", "colorful_reagent", "laughter", "godblood")
+
+/obj/item/organ/gland/egg/New()
+	magic_yolk = pick(magic_yolk)
 
 /obj/item/organ/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
-	egg.reagents.add_reagent("sacid",20)
+	egg.reagents.add_reagent(magic_yolk,20)
 	egg.desc += " It smells bad."
 
 /obj/item/organ/gland/bloody
@@ -188,22 +192,6 @@
 		owner.add_splatter_floor(T)
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
-
-/obj/item/organ/gland/bodysnatch
-	cooldown_low = 600
-	cooldown_high = 600
-	human_only = 1
-	uses = 1
-
-/obj/item/organ/gland/bodysnatch/activate()
-	owner << "<span class='warning'>You feel something moving around inside you...</span>"
-	//spawn cocoon with clone greytide snpc inside
-	if(ishuman(owner))
-		var/obj/effect/cocoon/abductor/C = new (get_turf(owner))
-		C.Copy(owner)
-		C.Start()
-	owner.gib()
-	return
 
 /obj/effect/cocoon/abductor
 	name = "slimy cocoon"
@@ -230,32 +218,12 @@
 
 /obj/effect/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/cocoon/abductor/process()
 	if(world.time > hatch_time)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc
 		qdel(src)
-
-/obj/item/organ/gland/plasma
-	cooldown_low = 2400
-	cooldown_high = 3000
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
-	uses = 1
-
-/obj/item/organ/gland/plasma/activate()
-	owner << "<span class='warning'>You feel bloated.</span>"
-	sleep(150)
-	if(!owner) return
-	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
-	sleep(50)
-	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] explodes in a cloud of plasma!</span>")
-	var/turf/open/T = get_turf(owner)
-	if(istype(T))
-		T.atmos_spawn_air("plasma=300;TEMP=[T20C]")
-	owner.gib()
-	return

@@ -44,6 +44,11 @@
 		sting_feedback(user,target)
 		take_chemical_cost(user.mind.changeling)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user //it only works with H for some reason
+		if(isabomination(H))
+			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
+			return
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
@@ -95,7 +100,7 @@
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.status_flags & CANWEAKEN)
+		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
 			C.take_organ_damage(20, 0) //The process is extremely painful
 
@@ -108,55 +113,47 @@
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/false_armblade
-	name = "False Armblade Sting"
-	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
-	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
+	name = "Armblade Sting"
+	desc = "We silently sting a human, injecting a retrovirus that temporarily mutates their arm into an armblade."
+	helptext = "The victim will form an armblade much like a changeling would. Beware, it is as deadly as one of ours!"
 	sting_icon = "sting_armblade"
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = 1
 	genetic_damage = 20
 	max_genetic_damage = 10
 
-/obj/item/weapon/melee/arm_blade/false
-	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
-	force = 5 //Basically as strong as a punch
-
-/obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
-	return
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		user << "<span class='warning'>Our sting appears ineffective against its DNA. Perhaps we should try something with DNA.</span>"
 		return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", object="falso armblade sting")
+	add_logs(user, target, "stung", object="armblade sting")
 
 	if(!target.drop_item())
-		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
+		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow an armblade over it!</span>"
 		return
 
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
+	var/obj/item/weapon/melee/arm_blade/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	addtimer(src, "remove_fake", 600, target, blade)
+	addtimer(src, "remove_fake", rand(450, 800), FALSE, target, blade)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
-*/
 
-/*
-/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms their [blade.name] into an arm!</span>",
@@ -166,7 +163,6 @@
 	qdel(blade)
 	target.update_inv_l_hand()
 	target.update_inv_r_hand()
-*/
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -184,9 +180,14 @@
 	add_logs(user, target, "stung", "extraction sting")
 	if((user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.remove_profile(target)
-		user.mind.changeling.absorbedcount--
+		user.mind.changeling.profilecount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
-	user.mind.changeling.add_new_profile(target, user)
+	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
+	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
+		if(ewi.target == target.mind)
+			protect = 1
+			break
+	user.mind.changeling.add_new_profile(target, user, protect)
 	feedback_add_details("changeling_powers","ED")
 	return 1
 

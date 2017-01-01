@@ -11,10 +11,11 @@
 	production = 5
 	yield = 4
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
-	reagents_add = list("capsaicin" = 0.25, "vitamin" = 0.04, "nutriment" = 0.04)
+	reagents_add = list("capsaicin" = 0.5, "vitamin" = 0.08, "nutriment" = 0.08)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili
 	seed = /obj/item/seeds/chili
@@ -37,7 +38,7 @@
 	production = 4
 	rarity = 20
 	mutatelist = list()
-	reagents_add = list("frostoil" = 0.25, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list("frostoil" = 0.5, "vitamin" = 0.04, "nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper
 	seed = /obj/item/seeds/chili/ice
@@ -62,7 +63,7 @@
 	yield = 3
 	rarity = 20
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.3, "capsaicin" = 0.55, "nutriment" = 0.04)
+	reagents_add = list("condensedcapsaicin" = 0.3, "capsaicin" = 0.6, "nutriment" = 0.08)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili
 	seed = /obj/item/seeds/chili/ghost
@@ -78,7 +79,7 @@
 	..()
 	if( istype(src.loc, /mob) )
 		held_mob = src.loc
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && src.loc == held_mob)

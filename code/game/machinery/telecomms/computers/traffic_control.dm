@@ -17,9 +17,9 @@
 	var/obj/item/weapon/card/id/auth = null
 	var/list/access_log = list()
 	var/process = 0
-	circuit = "/obj/item/weapon/circuitboard/comm_traffic"
+	circuit = /obj/item/weapon/circuitboard/computer/telecomms/comm_traffic
 
-	req_access = list(access_tcomsat)
+	req_access = list(access_tcomadmin)
 
 /obj/machinery/computer/telecomms/traffic/proc/stop_editing()
 	if(editingcode)
@@ -117,7 +117,15 @@
 					dat += "<br>[temp]<br>"
 					dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a>     <a href='?src=\ref[src];operation=refresh'>\[Refresh\]</a></center>"
 					dat += "<br>Current Network: [network]"
-					dat += "<br>Selected Server: [SelectedServer.id]<br><br>"
+					dat += "<br>Selected Server: [SelectedServer.id]"
+					dat += "<br>Encryption Mode: [SelectedServer.encryption ? "<a href='?src=\ref[src];encryption=0'>\[OFF\]</A>" : "<b>\[OFF\]</b>"]"
+					if(SelectedServer.encryptionkey)
+						for(var/E in SelectedServer.encryptionkey.encryption_keys)
+							if(E == SelectedServer.encryption)
+								dat += "<b> \[[E]\]</b>"
+							else
+								dat += "<a href='?src=\ref[src];encryption=[E]'>\[[E]\]</A>"
+					dat += "<br><br>"
 					dat += "<br><a href='?src=\ref[src];operation=editcode'>\[Edit Code\]</a>"
 					dat += "<br>Signal Execution: "
 					if(SelectedServer.autoruncode)
@@ -137,13 +145,14 @@
 
 /obj/machinery/computer/telecomms/traffic/proc/create_log(entry, mob/user)
 	var/id = null
-	if(issilicon(user))
+	if(isaiorborg(user))
 		id = "System Administrator"
+	else if(ispAI(user))
+		id = "[user.name] (pAI)"
 	else
 		if(auth)
 			id = "[auth.registered_name] ([auth.assignment])"
 		else
-			ERROR("There is a null auth while the user isn't a silicon! ([user.name], [user.type])")
 			return
 	access_log += "\[[get_timestamp()]\] [id] [entry]"
 
@@ -197,6 +206,18 @@
 				create_log("selected server [T.name]", usr)
 				break
 
+	if(href_list["encryption"])
+		if(SelectedServer)
+			var/E = href_list["encryption"]
+			var/set_e = ""
+			if(E == "0")
+				SelectedServer.encryption = ""
+				set_e = "OFF"
+			else if(SelectedServer.encryptionkey && (E in SelectedServer.encryptionkey.encryption_keys))
+				SelectedServer.encryption = E
+				set_e = E
+			if(set_e)
+				create_log("has set [SelectedServer] to encryption mode: [set_e].", usr)
 
 	if(href_list["operation"])
 		create_log("has performed action: [href_list["operation"]].", usr)
@@ -226,9 +247,10 @@
 					screen = 0
 
 			if("editcode")
-				if(editingcode == usr) return
-				if(usr in viewingcode) return
-
+				if(editingcode == usr)
+					return
+				if(usr in viewingcode)
+					return
 				if(!editingcode)
 					lasteditor = usr
 					editingcode = usr

@@ -12,10 +12,11 @@
 	potency = 20
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
-	reagents_add = list("bicaridine" = 0.2, "nutriment" = 0.05)
+	reagents_add = list("bicaridine" = 0.4, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/poppy
 	seed = /obj/item/seeds/poppy
@@ -78,7 +79,8 @@
 	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_WEED
-	reagents_add = list("nutriment" = 0.04)
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	reagents_add = list("nutriment" = 0.08)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -103,10 +105,11 @@
 	yield = 2
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.04)
+	reagents_add = list("cornoil" = 0.16, "nutriment" = 0.08)
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
@@ -134,7 +137,7 @@
 	plantname = "Moonflowers"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list("moonshine" = 0.4, "vitamin" = 0.04, "nutriment" = 0.04)
 	rarity = 15
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/moonflower
@@ -155,7 +158,7 @@
 	plantname = "Novaflowers"
 	product = /obj/item/weapon/grown/novaflower
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.25, "capsaicin" = 0.3, "nutriment" = 0)
+	reagents_add = list("condensedcapsaicin" = 0.5, "capsaicin" = 0.5)
 	rarity = 20
 
 /obj/item/weapon/grown/novaflower
@@ -194,6 +197,6 @@
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
-	if(!user.gloves)
+	if(!istype(user.gloves, /obj/item/clothing))
 		user << "<span class='danger'>The [name] burns your bare hand!</span>"
 		user.adjustFireLoss(rand(1, 5))

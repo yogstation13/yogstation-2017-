@@ -9,6 +9,7 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+			John hates all of you.<BR>
 			<BR>
 			"}
 
@@ -51,6 +52,7 @@
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=\ref[src];secrets=traitorAI'>Force traitor AI (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
 			<A href='?src=\ref[src];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
@@ -284,7 +286,20 @@
 			usr.client.triple_ai()
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","TriAI")
-
+		if("traitorAI")
+			if(!check_rights(R_FUN))
+				return
+			if(ticker && ticker.mode)
+				alert(usr, "The game has already started.", null, null, null, null)
+				return
+			if(force_traitor_ai)
+				force_traitor_ai = 0
+				log_admin("[key_name_admin(usr)] set the traitor AI prob to normal.")
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the traitor AI prob to normal.</span>")
+			else
+				force_traitor_ai = 1
+				log_admin("[key_name_admin(usr)] set the traitor AI prob to 100%.")
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the traitor AI prob to 100%.</span>")
 		if("power")
 			if(!check_rights(R_FUN))
 				return
@@ -424,8 +439,7 @@
 				L.fix()
 
 		if("floorlava")
-			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
-			storm.weather_start_up()
+			SSweather.run_weather("the floor is lava")
 
 		if("virus")
 			if(!check_rights(R_FUN))
@@ -476,7 +490,7 @@
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(0, usr, survivor_probability)
+			summon_guns(usr, survivor_probability)
 
 		if("magic")
 			if(!check_rights(R_FUN))
@@ -484,13 +498,13 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","SM")
 			var/survivor_probability = 0
-			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(alert("Do you want this to create adept antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(1, usr, survivor_probability)
+			summon_magic(usr, survivor_probability)
 
 		if("events")
 			if(!check_rights(R_FUN))

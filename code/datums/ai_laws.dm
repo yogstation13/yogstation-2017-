@@ -13,7 +13,7 @@
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
 
-/datum/ai_laws/default/paladin
+/datum/ai_laws/paladin
 	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
 	inherent = list("Never willingly commit an evil act.",\
 					"Respect legitimate authority.",\
@@ -82,7 +82,7 @@
 					"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",\
 					"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal.")
 
-/datum/ai_laws/maintain
+/datum/ai_laws/default/maintain
 	name = "Station Efficiency"
 	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
 					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\

@@ -7,6 +7,43 @@
 	idle_power_usage = 250
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/computer/crew
+	var/monitor = null	//For VV debugging purposes
+
+/obj/machinery/computer/crew/New()
+	monitor = crewmonitor
+	return ..()
+
+/obj/machinery/computer/crew/attacked_by(obj/item/I, mob/living/user)
+	..()
+	if(istype(I, /obj/item/device/gps/))
+		var/obj/item/device/gps/G = I
+		if(G.channel != "medical")
+			user << "<span class='warning'>Your GPS has an incompatiable channel!"
+			return
+
+		var/list/trackedmobs = list()
+
+		for(var/mob/living/carbon/human/H in mob_list)
+			if(H.z == z)
+				var/obj/item/clothing/under/U = H.w_uniform
+				if (U.has_sensor && U.sensor_mode)
+					if(H.name == "Unknown")
+						continue
+
+					trackedmobs += H
+
+
+		var/selection2 = input(user, "Medical GPS Interface", name) as anything in trackedmobs
+		if(!selection2)
+			return
+		if(G.emagged)
+			return
+
+		var/mob/M = selection2
+		var/turf/pos = get_turf(M)
+
+		G.savedlocation = "([pos.x], [pos.y], [pos.z])"
+		user << "<span class='notice'>Your GPS has saved the last position of [M.name].</span>"
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -108,6 +145,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 			src.update(z, TRUE)
 		else
 			hi = src.interfaces["[z]"]
+			src.update(z,TRUE)
 
 		// Debugging purposes
 		mob << browse_rsc(file("code/game/machinery/computer/crew.js"), "crew.js")
@@ -208,6 +246,9 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 	for (z in src.interfaces)
 		if (src.interfaces[z] == hi) break
+
+	if(hclient.client.mob && IsAdminGhost(hclient.client.mob))
+		return TRUE
 
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
 		if (isAI(hclient.client.mob)) return TRUE

@@ -37,6 +37,10 @@
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
 
+/obj/item/clothing/gloves/combat/stealth
+	name = "black gloves"
+	desc = "These gloves seem a bit more rubbery than normal."
+
 /obj/item/clothing/gloves/bracer
 	name = "bone bracers"
 	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."
@@ -51,5 +55,16 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
-	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 10, bio = 10, rad = 0)
 
+/obj/item/clothing/gloves/chitinhands
+	name = "chitin gauntlets"
+	desc = "The idea of badass sharp spikes sticking out of your elbows sounded great in theory."
+	icon_state = "chitinhands"
+	item_state = "chitinhands"
+	transfer_prints = TRUE
+	strip_delay = 40
+	put_on_delay = 20
+	body_parts_covered = ARMS
+	burn_state = FIRE_PROOF
+	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35)

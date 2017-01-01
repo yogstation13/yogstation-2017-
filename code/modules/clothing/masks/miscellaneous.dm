@@ -6,7 +6,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = 2
 	gas_transfer_coefficient = 0.90
-	put_on_delay = 20
+	put_on_delay = 12
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
@@ -16,15 +16,33 @@
 			return
 	..()
 
+
+
+/obj/item/clothing/mask/muzzle/cloth
+	name = "cloth muzzle"
+	desc = "A cloth gag for silencing your victim."
+	icon_state = "cloth_muzzle"
+	item_state = "cloth_muzzle"
+	put_on_delay = 16
+
+/datum/crafting_recipe/cloth_muzzle
+	name = "cloth muzzle"
+	reqs = list(
+		/obj/item/clothing/torncloth = 1
+	)
+	result = /obj/item/clothing/mask/muzzle/cloth
+	category = CAT_WEAPON
+
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
 	w_class = 1
-	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE
+	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE
+	visor_flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
@@ -108,6 +126,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
 	slot_flags = SLOT_MASK
 	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"

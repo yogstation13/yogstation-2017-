@@ -146,7 +146,7 @@
 			var/list/tech = params2list(G.origin_tech)
 			for(var/t in origin_tech)
 				if(t in tech)
-					tech[t] = max(tech[t], origin_tech[t])
+					tech[t] = max(text2num(tech[t]), origin_tech[t])
 				else
 					tech[t] = origin_tech[t]
 			G.origin_tech = list2params(tech)
@@ -171,7 +171,7 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-	origin_tech = list("bio" = 5)
+	origin_tech = list("biotech" = 5)
 
 /*/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	G.squash(target)*/

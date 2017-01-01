@@ -73,7 +73,7 @@
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
 	can_hold_items = 1
-	valid_held_items = list(/obj/item/device/assembly/bikehorn)
+	valid_held_items = list(/obj/item/device/assembly/bikehorn,/obj/item/weapon/nullrod/clown)
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -81,6 +81,30 @@
 		footstep = 0
 	else
 		footstep++
+
+/obj/item/clothing/shoes/pathtreads
+	name = "pathfinder treads"
+	desc = "Massive boots crafted to protect the user from the hot ashes of lavaland."
+	icon_state = "pathtreads"
+	item_state = "pathtreads"
+	strip_delay = 50
+	put_on_delay = 50
+	burn_state = FIRE_PROOF
+	heat_protection = FEET|LEGS
+	body_parts_covered = LEGS|FEET
+	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	can_hold_items = 1
+
+/obj/item/clothing/shoes/chitintreads
+	name = "chitin boots"
+	desc = "Compact boots crafted from a weaver's chitin with interlacing sinew."
+	icon_state = "chitentreads"
+	item_state = "chitentreads"
+	strip_delay = 50
+	put_on_delay = 50
+	body_parts_covered = LEGS|FEET
+	burn_state = FIRE_PROOF
+	can_hold_items = 1
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

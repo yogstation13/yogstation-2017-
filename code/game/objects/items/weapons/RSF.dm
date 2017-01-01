@@ -81,7 +81,7 @@ RSF
 	switch(mode)
 		if(1)
 			user << "Dispensing Dosh..."
-			new /obj/item/stack/spacecash/c10(T)
+			new /obj/item/stack/spacecash/c10/fake(T)
 			use_matter(200, user)
 		if(2)
 			user << "Dispensing Drinking Glass..."

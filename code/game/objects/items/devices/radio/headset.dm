@@ -32,6 +32,10 @@
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
 			return ..(freq, level)
+	else if(istype(loc, /mob/living/simple_animal/hostile))
+		var/mob/living/simple_animal/hostile/animal = loc
+		if(animal.headset == src)
+			return ..(freq, level)
 	else if(AIuser)
 		return ..(freq, level)
 	return -1
@@ -54,6 +58,20 @@
 /obj/item/device/radio/headset/syndicate/New()
 	..()
 	make_syndie()
+
+
+/obj/item/device/radio/headset/syndicate/alt/abductor
+	name = "irregular headset"
+	desc = "A smooth, criminson white headset which clearly defines state of the art alien technology as much as you know, but in reality to the aliens it could be as useful as scrap metal. There are engraved symbols and hard to read letters across the surface of the device, for instance the eeire purple markings on the front of it."
+	icon_state = "alien"
+	item_state = "alien"
+	freqlock = TRUE
+	frequency = 42
+
+
+/obj/item/device/radio/headset/syndicate/alt/abductor/emp_act()
+	visible_message("[src]'s purple symbols begin to change shape and light up.")
+	return
 
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
@@ -100,7 +118,7 @@
 
 /obj/item/device/radio/headset/headset_sci
 	name = "science radio headset"
-	desc = "A sciency headset. Like usual. \nTo access the science channel, use :n."
+	desc = "A sciency headset. Like usual. \nTo access the science channel, use :n. For supply use :u."
 	icon_state = "sci_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_sci
@@ -111,6 +129,13 @@
 	icon_state = "medsci_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_medsci
+
+/obj/item/device/radio/headset/headset_medcargo
+	name = "mining medic radio headset"
+	desc = "A headset that is a result of the mating between medical and cargo. \nTo access the medical channel, use :m. For cargo, use :u."
+	icon_state = "med_headset"
+	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_medsup
 
 /obj/item/device/radio/headset/headset_com
 	name = "command radio headset"
@@ -136,9 +161,16 @@
 	icon_state = "com_headset_alt"
 	item_state = "com_headset_alt"
 
+/obj/item/device/radio/headset/heads/captain/santa
+	name = "santas magical ear"
+	desc = "He knows if you've been bad or good. So be good for goodness sake! Also report this to a coder if you can actually read this."
+	icon_state = null
+	item_state = null
+	flags = EARBANGPROTECT | NODROP | ABSTRACT
+
 /obj/item/device/radio/headset/heads/rd
 	name = "\proper the research director's headset"
-	desc = "Headset of the fellow who keeps society marching towards technological singularity. \nTo access the science channel, use :n. For command, use :c."
+	desc = "Headset of the fellow who keeps society marching towards technological singularity. \nTo access the science channel, use :n. For command, use :c. For supply use :u."
 	icon_state = "com_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/heads/rd
@@ -180,7 +212,7 @@
 
 /obj/item/device/radio/headset/headset_cargo
 	name = "supply radio headset"
-	desc = "A headset used by the QM and his slaves. \nTo access the supply channel, use :u."
+	desc = "A headset used by the QM and his slaves. \nTo access the supply channel, use :u. For science use :n"
 	icon_state = "cargo_headset"
 	item_state = "headset"
 	keyslot = new /obj/item/device/encryptionkey/headset_cargo
@@ -210,6 +242,15 @@
 	icon_state = "cent_headset_alt"
 	item_state = "cent_headset_alt"
 	keyslot = null
+
+/obj/item/device/radio/headset/headset_merc
+	name = "private radio headset"
+	desc = "A headset jacked by mercenaries to talk on a universal private channel"
+	icon_state = "cent_headset"
+	flags = EARBANGPROTECT
+	item_state = "headset"
+	keyslot = new /obj/item/device/encryptionkey/headset_com
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cent
 
 /obj/item/device/radio/headset/ai
 	name = "\proper Integrated Subspace Transceiver "
@@ -294,6 +335,7 @@
 		if (keyslot2.centcom)
 			centcom = 1
 
+		encryption_keys |= keyslot2.encryption_keys
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, radiochannels[ch_name])

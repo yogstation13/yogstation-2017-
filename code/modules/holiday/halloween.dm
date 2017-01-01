@@ -240,7 +240,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane/New()
 	..()
 	timer = rand(5,15)
-	status_flags = (status_flags | GODMODE)
+	status_flags |= GODMODE
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Retaliate()

@@ -24,15 +24,8 @@
 	fon = 0
 	detonate = 0
 
-/obj/item/device/pda/ai/attack_self(mob/user)
-	if ((honkamt > 0) && (prob(60)))//For clown virus.
-		honkamt--
-		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
-	return
-
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
-
 
 
 /obj/item/device/pda/medical
@@ -73,7 +66,7 @@
 
 /obj/item/device/pda/toxins
 	name = "scientist PDA"
-	default_cartridge = /obj/item/weapon/cartridge/signal/toxins
+	default_cartridge = /obj/item/weapon/cartridge/toxins
 	icon_state = "pda-science"
 	ttone = "boom"
 
@@ -121,7 +114,7 @@
 
 /obj/item/device/pda/cargo
 	name = "cargo technician PDA"
-	default_cartridge = /obj/item/weapon/cartridge/quartermaster
+	default_cartridge = /obj/item/weapon/cartridge/cargo
 	icon_state = "pda-cargo"
 
 /obj/item/device/pda/quartermaster
@@ -198,3 +191,8 @@
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-genetics"
+
+/obj/item/device/pda/signaltech
+	name = "telecomms PDA"
+	default_cartridge = /obj/item/weapon/cartridge/signal
+	icon_state = "pda_tcomms"

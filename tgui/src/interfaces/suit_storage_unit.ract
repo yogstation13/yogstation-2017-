@@ -30,10 +30,18 @@
           <ui-button icon='{{data.mask ? "square" : "square-o"}}' state='{{data.mask ? null : "disabled"}}'
             action='dispense' params='{"item": "mask"}'>{{data.mask || "Empty"}}</ui-button>
         </ui-section>
-        <ui-section label='Storage'>
-          <ui-button icon='{{data.storage ? "square" : "square-o"}}' state='{{data.storage ? null : "disabled"}}'
-            action='dispense' params='{"item": "storage"}'>{{data.storage || "Empty"}}</ui-button>
+        <ui-section label='Shoes'>
+          <ui-button icon='{{data.shoes ? "square" : "square-o"}}' state='{{data.shoes ? null : "disabled"}}'
+            action='dispense' params='{"item": "shoes"}'>{{data.shoes || "Empty"}}</ui-button>
         </ui-section>
+        {{#if data.extra_items}}
+          <ui-section label='Auxiliary Storage'>
+          {{#each data.extra_items:i}}
+            <ui-button icon='{{. ? "square" : "square-o"}}' state='{{. ? null : "disabled"}}'
+            action='dispense' params='{"item": "extra_items", "item_num": {{i+1}} }'>{{. || "Empty"}}</ui-button>
+          {{/each}}
+          </ui-section>
+        {{/if}}
     {{else}}
       <ui-button icon='recycle' state='{{data.occupied && data.safeties ? "disabled" : null}}' action='uv'>Disinfect</ui-button>
     {{/if}}

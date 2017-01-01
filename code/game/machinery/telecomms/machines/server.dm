@@ -1,7 +1,7 @@
 
 /*
 	The server logs all traffic and signal data. Once it records the signal, it sends
-	it to the subspace broadcaster.
+	it to the subspace broadcaster. If necessary, it encrypts the signal for secure channels.
 
 	Store a maximum of 100 logs and then deletes them.
 */
@@ -24,28 +24,38 @@
 	var/totaltraffic = 0 // gigabytes (if > 1024, divide by 1024 -> terrabytes)
 
 	var/list/memory = list()	// stored memory
+	var/rawcode = ""	// the code to compile (raw text)
 
-	var/encryption = "null" // encryption key: ie "password"
-	var/salt = "null"		// encryption salt: ie "123comsat"
-							// would add up to md5("password123comsat")
-	var/language = "human"
+	var/datum/TCS_Compiler/Compiler	// the compiler that compiles and runs the code
+	var/autoruncode = 0		// 1 if the code is set to run every time a signal is picked up
+
+	var/obj/item/device/encryptionkey/encryptionkey = null
+	var/encryption = ""
+
 	var/obj/item/device/radio/headset/server_radio = null
 	var/last_signal = 0 	// Last time it sent a signal
 
 /obj/machinery/telecomms/server/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
-	B.apply_default_parts(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/machine/telecomms/server(null)
+	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	RefreshParts()
+	Compiler = new()
+	Compiler.Holder = src
 	server_radio = new()
 
-/obj/item/weapon/circuitboard/machine/telecomms/server
-	name = "circuit board (Telecommunication Server)"
-	build_path = /obj/machinery/telecomms/server
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/subspace/filter = 1)
+/obj/machinery/telecomms/server/Destroy()
+	// Garbage collects all the NTSL datums.
+	if(Compiler)
+		Compiler.GC()
+		Compiler = null
+	encryptionkey.forceMove(get_turf(src))
+	encryptionkey = null
+	..()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])
@@ -56,7 +66,7 @@
 				totaltraffic += traffic // add current traffic to total traffic
 
 			//Is this a test signal? Bypass logging
-			if(signal.data["type"] != 4)
+			if(signal.data["type"] != BROADCAST_TEST)
 
 				// If signal has a message and appropriate frequency
 
@@ -68,11 +78,13 @@
 				log.parameters["mobtype"] = signal.data["mobtype"]
 				log.parameters["job"] = signal.data["job"]
 				log.parameters["key"] = signal.data["key"]
+				log.parameters["languages"] = signal.data["languages"]
 				log.parameters["message"] = signal.data["message"]
 				log.parameters["name"] = signal.data["name"]
 				log.parameters["realname"] = signal.data["realname"]
+				log.parameters["encryption"] = encryption
 
-				log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				log.parameters["uspeech"] = signal.data["languages"]
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -88,14 +100,40 @@
 					stored_names.Add(signal.data["name"])
 				logs++
 				signal.data["server"] = src
+				if(encryptionkey && encryption)
+					signal.data["encryption"] = encryption
 
 				// Give the log a name
 				var/identifier = num2text( rand(-1000,1000) + world.time )
 				log.name = "data packet ([md5(identifier)])"
 
+				if(Compiler && autoruncode)
+					Compiler.Run(signal)	// execute the code
+			if(encryption && !signal.data["encryption"])
+				signal.data["encryption"] = encryption
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub")
 			if(!can_send)
 				relay_information(signal, "/obj/machinery/telecomms/broadcaster")
+
+
+/obj/machinery/telecomms/server/proc/setcode(t)
+	if(t)
+		if(istext(t))
+			rawcode = t
+
+/obj/machinery/telecomms/server/proc/admin_log(mob/mob)
+
+	var/msg="[key_name(mob)] has compiled a script to server [src]:"
+	diary << msg
+	diary << rawcode
+	src.investigate_log("[msg]<br>[rawcode]", "ntsl")
+	if(length(rawcode)) // Let's not bother the admins for empty code.
+		message_admins("[key_name_admin(mob)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has compiled and uploaded a NTSL script to [src.id]",0,1)
+
+/obj/machinery/telecomms/server/proc/compile(mob/user)
+	if(Compiler)
+		admin_log(user)
+		return Compiler.Compile(rawcode)
 
 /obj/machinery/telecomms/server/proc/update_logs()
 	// start deleting the very first log entry
@@ -127,37 +165,92 @@
 	var/input_type = "Speech File"
 
 
+/obj/machinery/telecomms/server/Options_Menu()
+	var/dat = "<br>Encryption Key: "
+	if(encryptionkey)
+		dat += "<A href='?src=\ref[src];removekey=1'>\[[encryptionkey]\]</A>"
+	else
+		dat += "<A href='?src=\ref[src];addkey=1'>\[EMPTY\]</A>"
+	return dat
 
+// The topic for Additional Options. Use this for checking href links for your specific option.
+// Example of how to use below.
+/obj/machinery/telecomms/server/Options_Topic(href, href_list)
+	if(href_list["removekey"])
+		if(usr && encryptionkey && !issilicon(usr))
+			usr.put_in_hands(encryptionkey)
+			encryptionkey = null
+			encryption = ""
+	if(href_list["addkey"])
+		insertKey(usr.get_active_hand(), usr)
+	return
+/*
+/obj/machinery/telecomms/server/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/encryptionkey) && user.intent != "harm")
+		insertKey(user.get_active_hand(), user)
+		return 0
+	return ..()
+*/
+/obj/machinery/telecomms/server/proc/insertKey(obj/item/device/encryptionkey/key, mob/user)
+	if(user && !user.canUseTopic(src))
+		return
+	if(!istype(key))
+		return
+	if(encryptionkey)
+		if(user)
+			user << "<span class='notice'>\The [src] already contains an encryption key.</span>"
+	if(istype(key))
+		if(!user || user.unEquip(key))
+			encryptionkey = key
+			encryptionkey.forceMove(src)
+			if(encryptionkey.encryption_keys.len)
+				encryption = encryptionkey.encryption_keys[1]
+			if(user)
+				user << "<span class='notice'>You insert [key] into [src].</span>"
+		else
+			if(user)
+				user << "<span class='notice'>\The [key] is stuck to your hand!</span>"
+	else
+
+/obj/machinery/telecomms/server/TelemonitorInfo()
+	return "Encryption Mode: [encryption ? encryption : "none"]<br>"
 
 //Preset Servers
 
 /obj/machinery/telecomms/server/presets
 	network = "tcommsat"
+	var/keytype
 
 /obj/machinery/telecomms/server/presets/New()
 	..()
 	name = id
-
+	if(keytype)
+		var/obj/item/device/encryptionkey/E = new keytype()
+		insertKey(E)
 
 /obj/machinery/telecomms/server/presets/science
 	id = "Science Server"
 	freq_listening = list(SCI_FREQ)
 	autolinkers = list("science")
+	keytype = /obj/item/device/encryptionkey/headset_sci
 
 /obj/machinery/telecomms/server/presets/medical
 	id = "Medical Server"
 	freq_listening = list(MED_FREQ)
 	autolinkers = list("medical")
+	keytype = /obj/item/device/encryptionkey/headset_med
 
 /obj/machinery/telecomms/server/presets/supply
 	id = "Supply Server"
 	freq_listening = list(SUPP_FREQ)
 	autolinkers = list("supply")
+	keytype = /obj/item/device/encryptionkey/headset_cargo
 
 /obj/machinery/telecomms/server/presets/service
 	id = "Service Server"
 	freq_listening = list(SERV_FREQ)
 	autolinkers = list("service")
+	keytype = /obj/item/device/encryptionkey/headset_service
 
 /obj/machinery/telecomms/server/presets/common
 	id = "Common Server"
@@ -175,17 +268,26 @@
 	id = "Command Server"
 	freq_listening = list(COMM_FREQ)
 	autolinkers = list("command")
+	keytype = /obj/item/device/encryptionkey/headset_com
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"
 	freq_listening = list(ENG_FREQ)
 	autolinkers = list("engineering")
+	keytype = /obj/item/device/encryptionkey/headset_eng
 
 /obj/machinery/telecomms/server/presets/security
 	id = "Security Server"
 	freq_listening = list(SEC_FREQ)
 	autolinkers = list("security")
+	keytype = /obj/item/device/encryptionkey/headset_sec
 
-/obj/machinery/telecomms/server/presets/common/birdstation/New()
-	..()
-	freq_listening = list()
+
+/obj/item/weapon/circuitboard/machine/telecomms/server
+	name = "circuit board (Telecommunication Server)"
+	build_path = /obj/machinery/telecomms/server
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1)

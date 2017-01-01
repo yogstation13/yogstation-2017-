@@ -12,6 +12,7 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	circuit = /obj/item/weapon/circuitboard/computer/prisoner
+	paiAllowed = 0
 
 /obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())

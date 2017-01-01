@@ -699,7 +699,7 @@
 					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
 	crate_name = "virus crate"
-	crate_type = /obj/structure/closet/crate/secure/plasma
+	crate_type = /obj/structure/closet/crate/secure/medical
 	dangerous = TRUE
 
 /datum/supply_pack/medical/bloodpacks

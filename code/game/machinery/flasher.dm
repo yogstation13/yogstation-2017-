@@ -23,13 +23,13 @@
 	density = 1
 
 /obj/machinery/flasher/New(loc, ndir = 0, built = 0)
-	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
 		dir = ndir
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else
 		bulb = new /obj/item/device/assembly/flash/handheld(src)
+	..() // ..() is EXTREMELY IMPORTANT, never forget to add it //Initializing variables defined in your object before calling the parent is, arguably, MORE IMPORTANT.
 
 /obj/machinery/flasher/Move()
 	remove_from_proximity_list(src, range)
@@ -43,7 +43,7 @@
 		else
 			icon_state = "[base_state]1"
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
 		icon_state = "[base_state]1-p"
 
 //Don't want to render prison breaks impossible

@@ -26,6 +26,26 @@
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 20, laser = 20, energy = 20, bomb = 50, bio = 100, rad = 50)
 
+/obj/item/clothing/mask/gas/explorer
+	name = "explorer gas mask"
+	desc = "A military-grade gas mask that can be connected to an air supply."
+	icon_state = "gas_mining"
+	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	visor_flags_inv = HIDEFACIALHAIR
+	visor_flags_cover = MASKCOVERSMOUTH
+	actions_types = list(/datum/action/item_action/adjust)
+	armor = list(melee = 10, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 50, rad = 0)
+
+/obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
+	adjustmask(user)
+
+/obj/item/clothing/mask/gas/explorer/adjustmask(user)
+	..()
+	w_class = mask_adjusted ? 3 : 2
+
+/obj/item/clothing/mask/gas/explorer/folded/New()
+	..()
+	adjustmask()
 
 
 /**********************Mining Equipment Vendor Items**************************/
@@ -149,6 +169,7 @@
 	w_class = 3
 	force = 15
 	throwforce = 10
+	slot_flags = SLOT_BELT
 	var/cooldown = 0
 	var/fieldsactive = 0
 	var/burst_time = 30
@@ -184,7 +205,8 @@
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(!check_allowed_items(target, 1)) return
+		if(!check_allowed_items(target, 1))
+			return
 		CreateResonance(target, user)
 
 /obj/effect/resonance

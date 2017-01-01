@@ -370,7 +370,11 @@
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)
-	..()
+	//..()  //If something breaks with storage, uncomment this
+	if(istype(W, /obj/item/weapon/hand_labeler))
+		var/obj/item/weapon/hand_labeler/labeler = W
+		if(labeler.mode)
+			return 0
 	. = 1 //no afterattack
 	if(isrobot(user))
 		return	//Robots can't interact with storage items.

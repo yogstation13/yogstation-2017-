@@ -9,10 +9,11 @@
 	lifespan = 50
 	endurance = 40
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "pumpkin-grow"
 	icon_dead = "pumpkin-dead"
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkin
@@ -39,7 +40,7 @@
 	plantname = "Blumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	mutatelist = list()
-	reagents_add = list("ammonia" = 0.2, "chlorine" = 0.2, "nutriment" = 0.2)
+	reagents_add = list("ammonia" = 0.4, "chlorine" = 0.4, "nutriment" = 0.4)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin

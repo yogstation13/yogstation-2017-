@@ -1,0 +1,3358 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"aa" = (
+/turf/open/space,
+/area/space)
+"ab" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
+/area/shuttle)
+"ac" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
+/area/shuttle)
+"ad" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/docking_port/mobile{
+	dheight = 0;
+	dir = 2;
+	dwidth = 11;
+	height = 30;
+	id = "whiteship";
+	launch_status = 0;
+	name = "S.S. Shitbucket, MK.3";
+	roundstart_move = "whiteship_away";
+	timid = 1;
+	travelDir = 180;
+	width = 43
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ae" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle)
+"af" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ag" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle)
+"ah" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall15";
+	dir = 2
+	},
+/area/shuttle)
+"ai" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swallc4";
+	dir = 2
+	},
+/area/shuttle)
+"aj" = (
+/turf/open/floor/plasteel/airless/shuttle,
+/area/shuttle)
+"ak" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"al" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"am" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swallc3";
+	dir = 2
+	},
+/area/shuttle)
+"an" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"ao" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f13"
+	},
+/area/shuttle)
+"ap" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle)
+"aq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	external_pressure_bound = 0;
+	frequency = 1441;
+	id_tag = "co2_out";
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/shuttle)
+"ar" = (
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"as" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/shuttle)
+"at" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"au" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f11"
+	},
+/area/shuttle)
+"av" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall15";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"aw" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall7";
+	dir = 2
+	},
+/area/shuttle)
+"ax" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall11";
+	dir = 2
+	},
+/area/shuttle)
+"ay" = (
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle)
+"az" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle)
+"aA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/shuttle)
+"aB" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"aC" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall7";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"aD" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall11";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"aE" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/shuttle)
+"aF" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall13";
+	dir = 2
+	},
+/area/shuttle)
+"aG" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle)
+"aH" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle)
+"aI" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"aJ" = (
+/obj/structure/grille,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/shuttle)
+"aK" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"aL" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"aM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/shuttle)
+"aN" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/shuttle)
+"aO" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"aP" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/space)
+"aQ" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"aR" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	layer = 4.1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"aS" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle)
+"aT" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"aU" = (
+/obj/machinery/shieldgen,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"aV" = (
+/turf/closed/wall/shuttle/interior,
+/area/shuttle)
+"aW" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Airlock Pump";
+	on = 1
+	},
+/turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle)
+"aX" = (
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/shuttle)
+"aY" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Entrance";
+	dir = 8;
+	network = list("SS13");
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"aZ" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swallc3";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"ba" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall13";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"bb" = (
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f9"
+	},
+/turf/closed/wall/shuttle{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/abandoned)
+"bc" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"bd" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"be" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle)
+"bf" = (
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"bg" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"bh" = (
+/obj/machinery/door/window/eastleft,
+/obj/machinery/button{
+	id = "b_driverdoor";
+	name = "blast door button";
+	pixel_x = 5;
+	pixel_y = 25
+	},
+/obj/machinery/button/massdriver{
+	id = "b_massdriver";
+	pixel_x = -5;
+	pixel_y = 25;
+	pixel_z = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle/abandoned)
+"bi" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "b_massdriver"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle/abandoned)
+"bj" = (
+/obj/machinery/door/poddoor{
+	id = "b_driverdoor"
+	},
+/turf/open/space,
+/area/shuttle/abandoned)
+"bk" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_l";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"bl" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	layer = 4.1
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"bm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle)
+"bn" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"bo" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swallc2";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"bp" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"bq" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f14"
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/abandoned)
+"br" = (
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "bot"
+	},
+/area/shuttle)
+"bs" = (
+/turf/open/floor/plasteel{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/shuttle)
+"bt" = (
+/obj/machinery/shieldgen,
+/obj/machinery/camera{
+	c_tag = "S.S.S. Supply Room";
+	dir = 8;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"bu" = (
+/obj/item/weapon/reagent_containers/glass/rag,
+/turf/open/floor/wood,
+/area/shuttle)
+"bv" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle)
+"bw" = (
+/turf/open/floor/wood,
+/area/shuttle)
+"bx" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Bar";
+	dir = 8;
+	network = list("SS13");
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/shuttle)
+"by" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"bz" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"bA" = (
+/obj/machinery/mineral/ore_redemption,
+/turf/open/floor/plasteel{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/shuttle)
+"bB" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel{
+	dir = 10;
+	icon_state = "neutral"
+	},
+/area/shuttle)
+"bC" = (
+/obj/structure/ore_box,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"bD" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/wood,
+/area/shuttle)
+"bE" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/wood,
+/area/shuttle)
+"bF" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/wood,
+/area/shuttle)
+"bG" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Bar";
+	req_access_txt = "25";
+	req_one_access_txt = null
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"bH" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"bI" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/shuttle)
+"bJ" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/bluegrid,
+/area/shuttle)
+"bK" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/bluegrid,
+/area/shuttle/abandoned)
+"bL" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"bM" = (
+/turf/open/floor/plasteel{
+	icon_state = "loadingarea"
+	},
+/area/shuttle)
+"bN" = (
+/obj/machinery/camera{
+	c_tag = "Armory";
+	dir = 4;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle)
+"bO" = (
+/turf/open/floor/bluegrid,
+/area/shuttle)
+"bP" = (
+/obj/structure/AIcore/deactivated,
+/turf/open/floor/bluegrid,
+/area/shuttle)
+"bQ" = (
+/turf/open/floor/bluegrid,
+/area/shuttle/abandoned)
+"bR" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"bS" = (
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"bT" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Supply Room"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"bU" = (
+/obj/machinery/door/airlock{
+	name = "Kitchen";
+	req_access_txt = "28"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"bV" = (
+/turf/open/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/shuttle)
+"bW" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/shuttle)
+"bX" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+/turf/open/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/shuttle)
+"bY" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/shuttle)
+"bZ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ca" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cb" = (
+/obj/machinery/camera/motion{
+	c_tag = "S.S.S. AI Core";
+	dir = 1;
+	network = list("SS13");
+	start_active = 0
+	},
+/turf/open/floor/bluegrid,
+/area/shuttle)
+"cc" = (
+/obj/item/weapon/paper{
+	desc = "This tidy notice is neatly written. It's probably very important.";
+	name = "READ ME - REGARDING CAMERAS";
+	text = "Please note that all the cameras on the S.S. Shitbucket have been initially deactivated as there was no AI onboard. If an AI is indeed brought onboard, please be sure to re-activate all the ship's cameras."
+	},
+/turf/open/floor/bluegrid,
+/area/shuttle)
+"cd" = (
+/turf/closed/wall/shuttle/interior,
+/area/shuttle/abandoned)
+"ce" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/shuttle)
+"cf" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/plasteel{
+	icon_state = "cafeteria"
+	},
+/area/shuttle)
+"cg" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ch" = (
+/obj/machinery/door/airlock/highsecurity{
+	icon_state = "closed";
+	locked = 1;
+	name = "AI Storage";
+	req_access_txt = "16"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"ci" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"cj" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/abandoned)
+"ck" = (
+/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f9"
+	},
+/turf/closed/wall/shuttle{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/abandoned)
+"cl" = (
+/obj/machinery/mech_bay_recharge_port,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cm" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"co" = (
+/obj/machinery/mecha_part_fabricator,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cp" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Science Wing";
+	dir = 6;
+	network = list("SS13");
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/machinery/r_n_d/circuit_imprinter,
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cq" = (
+/obj/machinery/computer/rdconsole,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cs" = (
+/obj/machinery/r_n_d/destructive_analyzer,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"ct" = (
+/turf/open/floor/plasteel/airless/shuttle/purple,
+/area/shuttle/abandoned)
+"cu" = (
+/obj/machinery/r_n_d/protolathe,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cv" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/structure/window{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"cw" = (
+/obj/structure/sink{
+	pixel_y = 25
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/shuttle)
+"cx" = (
+/obj/structure/toilet{
+	dir = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/shuttle)
+"cy" = (
+/obj/machinery/shower{
+	pixel_y = 15
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/shuttle)
+"cz" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"cA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	layer = 4.1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cB" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	layer = 4.1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cC" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cD" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle/abandoned)
+"cE" = (
+/obj/machinery/computer/mecha,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"cF" = (
+/obj/structure/window/shuttle,
+/turf/open/space,
+/area/shuttle/abandoned)
+"cG" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/abandoned)
+"cH" = (
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/abandoned)
+"cI" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Exosuit Deployment"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/abandoned)
+"cJ" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel/airless/shuttle/purple,
+/area/shuttle/abandoned)
+"cK" = (
+/obj/machinery/r_n_d/circuit_imprinter,
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cL" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cM" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Ladies' Restroom"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cN" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Shower"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cO" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Mens' Restroom"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cP" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/shuttle)
+"cQ" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Outer Bridge Entrance";
+	dir = 8;
+	network = list("SS13");
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cR" = (
+/obj/machinery/computer/security,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cS" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"cT" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s5";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"cU" = (
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f10"
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/abandoned)
+"cV" = (
+/obj/machinery/mech_bay_recharge_port,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plasteel/airless/shuttle/purple,
+/area/shuttle/abandoned)
+"cW" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"cX" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"cY" = (
+/obj/machinery/door/window/northright{
+	name = "Research Room";
+	req_one_access_txt = "47"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"cZ" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"da" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"db" = (
+/obj/machinery/door/airlock/glass_research{
+	name = "Science Wing"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/abandoned)
+"dc" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Port Hall";
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"dd" = (
+/obj/machinery/camera{
+	c_tag = "Locker Room West";
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"de" = (
+/obj/machinery/door/airlock/glass_command{
+	name = "Bridge";
+	req_access_txt = "19"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"df" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"dg" = (
+/obj/machinery/computer/shuttle/white_ship{
+	desc = "Used to control the S.S.S.";
+	name = "S.S.S. Console"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dh" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/open/floor/plasteel/airless/shuttle/purple,
+/area/shuttle/abandoned)
+"di" = (
+/obj/machinery/door/airlock/research{
+	name = "Exosuit Bay";
+	req_access_txt = "29";
+	req_one_access_txt = "0"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor5"
+	},
+/area/shuttle/abandoned)
+"dj" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"dk" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dl" = (
+/turf/closed/wall/shuttle,
+/area/shuttle)
+"dm" = (
+/obj/machinery/smartfridge/chemistry{
+	name = "smart medical storage"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"dn" = (
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"do" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Bridge";
+	dir = 4;
+	network = list("SS13")
+	},
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dp" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dq" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/shuttle/abandoned)
+"dr" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"ds" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"dt" = (
+/obj/machinery/vending/wallmed{
+	pixel_y = -30
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"du" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Science Wing Airlock Pump";
+	on = 1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"dv" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"dw" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
+/obj/machinery/door/window/northright{
+	name = "Bed Pod"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dx" = (
+/obj/structure/table,
+/obj/item/weapon/surgicaldrill{
+	pixel_y = 10
+	},
+/obj/item/weapon/cautery{
+	pixel_w = 0;
+	pixel_x = 3
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dy" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	name = "output gas connector port"
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dz" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dA" = (
+/obj/machinery/chem_dispenser,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dB" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/item/weapon/lighter,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dD" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dE" = (
+/obj/machinery/computer/teleporter,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dF" = (
+/obj/structure/table,
+/obj/item/weapon/retractor{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/weapon/hemostat{
+	pixel_x = 9
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dG" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dH" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dI" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dJ" = (
+/obj/machinery/chem_master,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dK" = (
+/obj/machinery/door/airlock/command{
+	name = "Head of Personnel";
+	req_access = null;
+	req_access_txt = "57"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"dL" = (
+/obj/machinery/gibber,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"dM" = (
+/obj/item/weapon/reagent_containers/spray/cleaner,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"dN" = (
+/obj/structure/table,
+/obj/item/weapon/surgical_drapes{
+	pixel_x = 6
+	},
+/obj/item/weapon/scalpel{
+	pixel_y = 7;
+	pixel_y = 10
+	},
+/obj/item/weapon/circular_saw{
+	pixel_y = 7
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dO" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dP" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/abandoned)
+"dQ" = (
+/obj/machinery/button{
+	id = "b_hop";
+	name = "Shutters";
+	pixel_x = -25;
+	pixel_y = -10
+	},
+/obj/machinery/button/flasher{
+	id = "b_hopflash";
+	pixel_x = -25;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"dR" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Head of Personnel Office";
+	dir = 8;
+	network = list("SS13");
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/obj/machinery/pdapainter,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"dS" = (
+/obj/structure/bodycontainer/morgue,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"dT" = (
+/obj/machinery/door/airlock/medical{
+	name = "Morgue";
+	req_access_txt = "6;5"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"dU" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medical Room"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dV" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Starboard Hall";
+	dir = 4;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle)
+"dW" = (
+/obj/machinery/flasher{
+	id = "b_hopflash";
+	pixel_x = 25;
+	pixel_y = 25;
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"dX" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window/northleft{
+	dir = 8;
+	icon_state = "left";
+	name = "Reception Window";
+	req_access_txt = "0"
+	},
+/obj/machinery/door/window/brigdoor{
+	base_state = "rightsecure";
+	dir = 4;
+	icon_state = "rightsecure";
+	name = "Head of Personnel's Desk";
+	req_access = null;
+	req_access_txt = "57"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "open";
+	id = "b_hop";
+	layer = 2.9;
+	name = "Privacy Door";
+	opacity = 0
+	},
+/turf/open/floor/plasteel,
+/area/shuttle)
+"dY" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"dZ" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s9";
+	dir = 2
+	},
+/area/shuttle/abandoned)
+"ea" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/bodybags,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"eb" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Morgue";
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"ec" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Medbay";
+	dir = 1
+	},
+/obj/machinery/vending/wallmed{
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ed" = (
+/obj/machinery/dna_scannernew,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ee" = (
+/obj/machinery/computer/cloning,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"ef" = (
+/obj/machinery/clonepod,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"eg" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"eh" = (
+/obj/machinery/computer/card,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle)
+"ei" = (
+/obj/structure/closet/secure_closet/hop,
+/obj/item/weapon/storage/box/PDAs,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/shuttle/abandoned)
+"ej" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"ek" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorgrime"
+	},
+/area/shuttle)
+"el" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorgrime"
+	},
+/area/shuttle)
+"em" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorgrime"
+	},
+/area/shuttle)
+"en" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"eo" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorgrime"
+	},
+/area/shuttle)
+"ep" = (
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "floorgrime"
+	},
+/area/shuttle)
+"eq" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"er" = (
+/obj/machinery/camera{
+	c_tag = "S.S.S. Aft Hall";
+	dir = 10;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"es" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"et" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle)
+"eu" = (
+/obj/machinery/door/airlock/glass_security{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"ev" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s5";
+	dir = 2
+	},
+/area/shuttle)
+"ew" = (
+/turf/closed/wall/shuttle{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle)
+"ex" = (
+/obj/structure/closet/secure_closet/security/sec,
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle)
+"ey" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"ez" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eA" = (
+/obj/structure/chair,
+/obj/machinery/button/flasher{
+	id = "b_cellflash";
+	name = "cell flasher button";
+	pixel_x = -10;
+	pixel_y = 25
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eB" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "b.cell_1";
+	name = "Cell 1 Locker"
+	},
+/obj/machinery/camera{
+	c_tag = "S.S.S. Holding Cells";
+	dir = 2
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eC" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "b.cell_2";
+	name = "Cell 2 Locker"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eD" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "b.cell_3";
+	name = "Cell 3 Locker"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eE" = (
+/turf/closed/wall/shuttle{
+	icon_state = "wall3"
+	},
+/area/shuttle)
+"eF" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/firingpins{
+	pixel_x = -5
+	},
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_x = 10
+	},
+/obj/machinery/camera/motion{
+	c_tag = "S.S.S. Armory";
+	start_active = 0
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"eG" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle)
+"eH" = (
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"eI" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f14"
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle)
+"eJ" = (
+/obj/machinery/door_timer{
+	id = "b.cell_1";
+	name = "Cell 1";
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eK" = (
+/obj/machinery/door_timer{
+	id = "b.cell_2";
+	name = "Cell 2";
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eL" = (
+/obj/machinery/door_timer{
+	id = "b.cell_3";
+	name = "Cell 3";
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eM" = (
+/obj/machinery/door/window/brigdoor/westleft{
+	name = "Security Storage"
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"eN" = (
+/obj/structure/rack,
+/obj/item/weapon/shield/riot{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/shield/riot,
+/obj/item/weapon/shield/riot{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"eO" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f12"
+	},
+/turf/closed/wall/shuttle{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle)
+"eP" = (
+/obj/machinery/door/window/brigdoor/northright{
+	id = "b.cell_1";
+	name = "Cell 1"
+	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
+/obj/machinery/flasher{
+	id = "b_cellflash";
+	pixel_x = 0;
+	pixel_y = -25
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eQ" = (
+/obj/machinery/door/window/brigdoor/northright{
+	id = "b.cell_2";
+	name = "Cell 2"
+	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
+/obj/machinery/flasher{
+	id = "b_cellflash";
+	pixel_x = 0;
+	pixel_y = -25
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eR" = (
+/obj/machinery/door/window/brigdoor/northright{
+	id = "b.cell_3";
+	name = "Cell 3"
+	},
+/obj/structure/bed,
+/obj/item/weapon/bedsheet,
+/obj/machinery/flasher{
+	id = "b_cellflash";
+	pixel_x = 0;
+	pixel_y = -25
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle)
+"eS" = (
+/obj/machinery/vending/security,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+"eT" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/turf/open/floor/plasteel/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "dark"
+	},
+/area/shuttle)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ci
+cG
+cT
+ci
+cG
+cT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+cj
+cH
+cj
+cj
+cH
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+bb
+cI
+cU
+bb
+cG
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cl
+cm
+cl
+cr
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cm
+cm
+cm
+cr
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cn
+cm
+cn
+cr
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+co
+cm
+cW
+cr
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cp
+cm
+cm
+di
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cq
+cL
+cL
+cr
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cr
+cr
+cr
+cr
+da
+cj
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cs
+cq
+cX
+dj
+da
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cm
+cm
+cY
+da
+da
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aE
+cu
+cK
+cZ
+da
+da
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+by
+cv
+cv
+da
+da
+da
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aQ
+bz
+bz
+bk
+cd
+cd
+cd
+db
+cd
+cd
+cd
+aQ
+bz
+bz
+bk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aQ
+bk
+bc
+bc
+bc
+bc
+aV
+cw
+cM
+dn
+aB
+dw
+aV
+bc
+bc
+bc
+bc
+aQ
+bk
+aa
+aa
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aQ
+bc
+bl
+aS
+aS
+aS
+aS
+aV
+cx
+aV
+dn
+dk
+aV
+aV
+aS
+aS
+aS
+aS
+ej
+bc
+bk
+aa
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aR
+aS
+aS
+br
+bA
+bM
+bd
+aV
+aV
+aV
+dc
+aB
+dw
+aV
+dL
+dS
+ea
+aV
+aS
+aS
+et
+aa
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+aS
+aT
+aT
+bs
+bB
+bs
+bR
+aV
+cy
+cN
+dn
+dk
+aV
+aV
+dM
+ar
+ar
+aV
+ek
+eo
+aS
+ev
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aa
+aE
+aT
+aT
+aT
+bd
+bd
+bd
+bS
+aV
+aV
+aV
+dn
+aB
+dw
+aV
+ar
+dS
+dS
+aV
+el
+ep
+em
+aE
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aE
+aU
+aU
+aU
+bd
+bd
+bd
+bd
+aV
+cx
+aV
+dn
+dk
+aV
+aV
+ar
+ar
+ar
+aV
+em
+ep
+em
+aE
+aa
+aa
+aa
+"}
+(22,1,1) = {"
+aa
+aa
+ab
+aw
+aF
+aU
+aU
+aU
+bt
+bC
+bC
+bd
+aV
+cw
+cO
+dn
+aB
+dw
+aV
+ar
+ar
+eb
+aV
+em
+ep
+em
+ac
+ev
+aa
+aa
+"}
+(23,1,1) = {"
+aa
+ab
+ah
+ax
+ax
+aV
+aV
+aV
+aV
+aV
+aV
+bT
+aV
+aV
+aV
+dn
+dk
+aV
+aV
+aV
+dT
+aV
+aV
+aV
+eq
+aV
+ew
+ah
+ev
+aa
+"}
+(24,1,1) = {"
+ab
+ah
+ao
+ay
+ay
+ay
+ay
+bm
+bm
+bm
+bN
+ay
+ay
+ay
+ay
+dn
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+er
+aV
+ex
+eI
+ah
+ev
+"}
+(25,1,1) = {"
+ac
+ai
+ap
+ap
+ap
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+aB
+eu
+ey
+eJ
+eE
+aF
+"}
+(26,1,1) = {"
+ad
+dn
+dn
+dn
+aI
+dn
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+dn
+dl
+dl
+dl
+dl
+dU
+dU
+dl
+dn
+aB
+aV
+ez
+ey
+eP
+aE
+"}
+(27,1,1) = {"
+ae
+ak
+ak
+ak
+ak
+ar
+bf
+aV
+aV
+aV
+aV
+bU
+aV
+aV
+bf
+dn
+dl
+dx
+dF
+dN
+aB
+ec
+dl
+dn
+aB
+aV
+eA
+eK
+eE
+aE
+"}
+(28,1,1) = {"
+ae
+al
+al
+al
+al
+ar
+bg
+bn
+bu
+bD
+aV
+bV
+bV
+bn
+cP
+dn
+dl
+dy
+dG
+dO
+aB
+ed
+dl
+dn
+aB
+aV
+eB
+ey
+eQ
+aE
+"}
+(29,1,1) = {"
+ae
+al
+ar
+ar
+ar
+ar
+bg
+bn
+bv
+bE
+aV
+bW
+bV
+bn
+cP
+dd
+dl
+dz
+dH
+aB
+aB
+ee
+dl
+dn
+aB
+aV
+eC
+eL
+eE
+aE
+"}
+(30,1,1) = {"
+ae
+al
+ar
+ar
+ar
+ar
+bg
+bn
+bw
+bF
+aV
+bX
+ce
+bn
+cP
+dn
+at
+dA
+dI
+cC
+aB
+ef
+dl
+dn
+aB
+aV
+eD
+ey
+eR
+aE
+"}
+(31,1,1) = {"
+ae
+al
+al
+al
+al
+ar
+bg
+bn
+bx
+bw
+aV
+bY
+cf
+cz
+cP
+dn
+dm
+dB
+dJ
+aB
+aB
+eg
+dl
+dn
+aB
+aV
+eE
+eM
+eE
+aE
+"}
+(32,1,1) = {"
+ae
+ak
+ak
+ak
+ak
+ar
+bf
+aV
+aV
+bG
+aV
+aV
+aV
+aV
+bf
+dn
+at
+aB
+aB
+aB
+ca
+eg
+dl
+dn
+aB
+aV
+eF
+ar
+eS
+aE
+"}
+(33,1,1) = {"
+af
+dn
+dn
+dn
+aI
+dn
+aB
+aB
+aB
+aB
+eG
+eG
+eG
+eG
+aB
+dn
+dl
+at
+at
+at
+dl
+dl
+dl
+dn
+aB
+aV
+ar
+ar
+eT
+by
+"}
+(34,1,1) = {"
+ac
+am
+ap
+ap
+ap
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dV
+dn
+dn
+dn
+aB
+aV
+ar
+eN
+eO
+ba
+"}
+(35,1,1) = {"
+ag
+ah
+au
+aB
+aO
+aY
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+dn
+aB
+aB
+aB
+aB
+aB
+aB
+aB
+en
+es
+aV
+eH
+eO
+av
+dZ
+"}
+(36,1,1) = {"
+aa
+an
+av
+aC
+aC
+aZ
+bh
+bo
+aZ
+aB
+aB
+bZ
+cg
+cA
+aB
+dn
+aB
+dC
+cg
+dP
+aB
+ay
+bo
+aC
+aC
+aC
+aC
+av
+dZ
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+an
+aD
+av
+ba
+bi
+bp
+ba
+bH
+aB
+ca
+ca
+cB
+cQ
+dn
+aB
+dD
+ca
+ca
+dW
+aB
+bp
+av
+aD
+aD
+aD
+dZ
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+aa
+aa
+an
+bb
+bj
+bq
+av
+bI
+bI
+bI
+aw
+bI
+bI
+de
+bI
+bI
+aw
+bI
+dX
+bI
+av
+dZ
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(39,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+by
+bJ
+bO
+cb
+aE
+cC
+cR
+dn
+do
+dk
+aE
+dQ
+dY
+eh
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(40,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bp
+bI
+bP
+cc
+ch
+dn
+dn
+dn
+dn
+dn
+dK
+bd
+bd
+bI
+ba
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(41,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+by
+bK
+bQ
+bQ
+by
+dj
+dn
+df
+dn
+eG
+aE
+dR
+bd
+ei
+by
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+bL
+aC
+aC
+ba
+cE
+cS
+dg
+dp
+dE
+ac
+aw
+aC
+bL
+dZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+an
+aD
+aD
+cF
+cF
+cF
+cF
+cF
+aD
+aD
+dZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}

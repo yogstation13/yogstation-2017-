@@ -23,9 +23,17 @@
 /datum/objective/proc/get_target()
 	return target
 
+/datum/objective/proc/get_crewmember_minds()
+	. = list()
+	for(var/V in data_core.locked)
+		var/datum/data/record/R = V
+		var/mob/M = R.fields["reference"]
+		if(M && M.mind)
+			. += M.mind
+
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
 	if(possible_targets.len > 0)
@@ -34,7 +42,7 @@
 	return target
 
 /datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
-	for(var/datum/mind/possible_target in ticker.minds)
+	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if((possible_target != owner) && ishuman(possible_target.current))
 			var/is_role = 0
 			if(role_type)
@@ -669,7 +677,7 @@ var/global/list/possible_items_special = list()
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
+	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.profilecount >= target_amount))
 		return 1
 	else
 		return 0
@@ -718,6 +726,19 @@ var/global/list/possible_items_special = list()
 		return 0
 	return 0
 
+/datum/objective/summon_magic
+	explanation_text = "Be the last living, human adept on the station."
+
+/datum/objective/summon_magic/check_completion()
+	if(!ishuman(owner.current) || (owner.current.stat & DEAD))
+		return 0
+	for(var/V in ticker.mode.traitors - owner)
+		var/datum/mind/M = V
+		if(M.special_role == "adept" && ishuman(M.current) && !(M.current.stat & DEAD))
+			var/turf/T = get_turf(M.current)
+			if(T && T.z == ZLEVEL_STATION)
+				return 0
+	return 1
 
 
 ////////////////////////////////
@@ -861,19 +882,18 @@ var/global/list/possible_items_special = list()
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
-	changelings:
-		for(var/datum/mind/changeling in ticker.mode.changelings)
-			if(success >= department_minds.len) //We did it, stop here!
-				return 1
-			if(ishuman(changeling.current))
-				var/mob/living/carbon/human/H = changeling.current
-				var/turf/cloc = get_turf(changeling.current)
-				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
-					for(var/name in check_names) //Is he (disguised as) one of the staff?
-						if(H.dna.real_name == name)
-							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
-							success++ //A living changeling staff member made it to centcomm
-							continue changelings
+	for(var/datum/mind/changeling in ticker.mode.changelings)
+		if(success >= department_minds.len) //We did it, stop here!
+			return 1
+		if(ishuman(changeling.current))
+			var/mob/living/carbon/human/H = changeling.current
+			var/turf/cloc = get_turf(changeling.current)
+			if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
+				for(var/name in check_names) //Is he (disguised as) one of the staff?
+					if(H.dna.real_name == name)
+						check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
+						success++ //A living changeling staff member made it to centcomm
+						break
 
 	if(success >= department_minds.len)
 		return 1

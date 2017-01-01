@@ -31,6 +31,13 @@
 
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
+		if(user.dna.species.id == "abomination")
+			adjustBruteLoss(40)
+			visible_message("<span class='danger'>[user] tears into [src]!</span>")
+			playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+			if(mob_size < MOB_SIZE_LARGE)
+				Paralyse(1)
+			return 1
 		..(user, 1)
 		adjustBruteLoss(15)
 		var/hitverb = "punched"

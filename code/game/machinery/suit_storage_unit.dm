@@ -7,15 +7,18 @@
 	anchored = 1
 	density = 1
 
-	var/obj/item/clothing/suit/space/suit = null
-	var/obj/item/clothing/head/helmet/space/helmet = null
+	var/obj/item/clothing/suit/suit = null
+	var/obj/item/clothing/head/helmet = null
 	var/obj/item/clothing/mask/mask = null
-	var/obj/item/storage = null
+	var/obj/item/clothing/shoes/shoes = null
+	var/list/extra_items = null
+	var/extra_items_max = null //determined based on how many extra_items are defined
 
 	var/suit_type = null
 	var/helmet_type = null
 	var/mask_type = null
-	var/storage_type = null
+	var/shoes_type = null
+	var/list/extra_types = null
 
 	state_open = FALSE
 	var/locked = FALSE
@@ -35,36 +38,41 @@
 	suit_type = /obj/item/clothing/suit/space/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/captain
 	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+	extra_types = list(/obj/item/weapon/tank/jetpack/oxygen/captain)
+
+/obj/machinery/suit_storage_unit/command
+	suit_type = /obj/item/clothing/suit/space/heads
+	helmet_type = /obj/item/clothing/head/helmet/space/heads
+	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots
+	shoes_type = /obj/item/clothing/shoes/magboots
 
 /obj/machinery/suit_storage_unit/ce
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type= /obj/item/clothing/shoes/magboots/advance
+	shoes_type = /obj/item/clothing/shoes/magboots/advance
 
 /obj/machinery/suit_storage_unit/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/clothing/shoes/magboots/security
+	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/clothing/shoes/magboots/security
+	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/weapon/watertank/atmos
+	extra_types = list(/obj/item/weapon/watertank/atmos)
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
-	mask_type = /obj/item/clothing/mask/gas
+	mask_type = /obj/item/clothing/mask/gas/explorer
 
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
@@ -81,27 +89,27 @@
 /obj/machinery/suit_storage_unit/syndicate
 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+	extra_types = list(/obj/item/weapon/tank/jetpack/oxygen/harness)
 
 /obj/machinery/suit_storage_unit/ert/command
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots/security
+	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/security
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots/security
+	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/engineer
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots/security
+	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/ert/medical
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots/security
+	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 ///mining medic///
 
@@ -118,8 +126,18 @@
 		helmet = new helmet_type(src)
 	if(mask_type)
 		mask = new mask_type(src)
-	if(storage_type)
-		storage = new storage_type(src)
+	if(shoes_type)
+		shoes = new shoes_type(src)
+	if(extra_types && extra_types.len)
+		extra_items = list()
+		extra_items_max = 0
+		for(var/type in extra_types)
+			var/num_to_create = extra_types[type]
+			if(!num_to_create)
+				num_to_create = 1
+			extra_items_max += num_to_create
+			for(var/i in 1 to num_to_create)
+				extra_items += new type(src)
 	update_icon()
 
 /obj/machinery/suit_storage_unit/update_icon()
@@ -141,7 +159,7 @@
 				overlays += "suit"
 			if(helmet)
 				overlays += "helm"
-			if(storage)
+			if(shoes)
 				overlays += "storage"
 	else if(occupant)
 		overlays += "human"
@@ -158,8 +176,9 @@
 	helmet = null
 	suit = null
 	mask = null
-	storage = null
+	shoes = null
 	occupant = null
+	extra_items = null
 
 /obj/machinery/suit_storage_unit/ex_act(severity, target)
 	switch(severity)
@@ -184,7 +203,7 @@
 	if(!is_operational())
 		user << "<span class='warning'>The unit is not operational!</span>"
 		return
-	if(occupant || helmet || suit || storage)
+	if(occupant || helmet || suit || shoes || (extra_items && extra_items.len))
 		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
 		return
 
@@ -194,7 +213,7 @@
 		target.visible_message("<span class='warning'>[user] starts shoving [target] into [src]!</span>", "<span class='userdanger'>[user] starts shoving you into [src]!</span>")
 
 	if(do_mob(user, target, 30))
-		if(occupant || helmet || suit || storage)
+		if(occupant || helmet || suit || shoes || (extra_items && extra_items.len))
 			return
 		if(target == user)
 			user.visible_message("<span class='warning'>[user] slips into [src] and closes the door behind them!</span>", "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
@@ -230,8 +249,10 @@
 			qdel(suit) // Delete everything but the occupant.
 			mask = null
 			qdel(mask)
-			storage = null
-			qdel(storage)
+			shoes = null
+			qdel(shoes)
+			extra_items = null
+			qdel(extra_items)
 			// The wires get damaged too.
 			wires.cut_all()
 		else
@@ -252,7 +273,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		if(electrocute_mob(user, src, src))
+		if(user && electrocute_mob(user, src, src))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
@@ -275,36 +296,46 @@
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user, params)
 	if(state_open && is_operational())
-		if(istype(I, /obj/item/clothing/suit/space))
+		if(istype(I, suit_type) || istype(I, /obj/item/clothing/suit/space))
 			if(suit)
 				user << "<span class='warning'>The unit already contains a suit!.</span>"
 				return
 			if(!user.drop_item())
 				return
 			suit = I
-		else if(istype(I, /obj/item/clothing/head/helmet))
+		else if(istype(I, helmet_type) || istype(I, /obj/item/clothing/head/helmet))
 			if(helmet)
 				user << "<span class='warning'>The unit already contains a helmet!</span>"
 				return
 			if(!user.drop_item())
 				return
 			helmet = I
-		else if(istype(I, /obj/item/clothing/mask))
+		else if(istype(I, mask_type) || istype(I, /obj/item/clothing/mask))
 			if(mask)
 				user << "<span class='warning'>The unit already contains a mask!</span>"
 				return
 			if(!user.drop_item())
 				return
 			mask = I
-		else
-			if(storage)
+		else if(istype(I, shoes_type) || istype(I, /obj/item/clothing/shoes))
+			if(shoes)
+				user << "<span class='warning'>The unit already contains a pair of shoes!</span>"
+				return
+			if(!user.drop_item())
+				return
+			shoes = I
+		else if(extra_items)
+			if(extra_items.len >= extra_items_max)
 				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
 				return
 			if(!user.drop_item())
 				return
-			storage = I
+			extra_items += I
+		else
+			user << "<span class='notice'>[I] doesn't fit into [src]</span>"
+			return
 
-		I.loc = src
+		I.forceMove(src)
 		visible_message("<span class='notice'>[user] inserts [I] into [src]</span>", "<span class='notice'>You load [I] into [src].</span>")
 		update_icon()
 		return
@@ -340,8 +371,16 @@
 		data["suit"] = suit.name
 	if(mask)
 		data["mask"] = mask.name
-	if(storage)
-		data["storage"] = storage.name
+	if(shoes)
+		data["shoes"] = shoes.name
+	if(extra_items)
+		var/list/extra_item_names = new/list(extra_items_max)
+		var/iteration = 0
+		for(var/v in extra_items)
+			var/obj/item/extra_item = v
+			extra_item_names[++iteration] += extra_item.name
+		data["extra_items"] = extra_item_names
+		data["max_extra_items"] = extra_items_max
 	if(occupant)
 		data["occupied"] = 1
 	return data
@@ -364,10 +403,11 @@
 		if("uv")
 			if(occupant && safeties)
 				return
-			else if(!helmet && !mask && !suit && !storage && !occupant)
+			else if(!helmet && !mask && !suit && !shoes && !(extra_items && extra_items.len) && !occupant)
 				return
 			else
-				occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
+				if(occupant)
+					occupant << "<span class='userdanger'>[src]'s confines grow warm, then hot, then scorching. You're being burned [!occupant.stat ? "alive" : "away"]!</span>"
 				cook()
 				. = TRUE
 		if("dispense")
@@ -383,8 +423,13 @@
 				if("mask")
 					mask.loc = loc
 					mask = null
-				if("storage")
-					storage.loc = loc
-					storage = null
+				if("shoes")
+					shoes.loc = loc
+					shoes = null
+				if("extra_items")
+					var/item_num = text2num(params["item_num"])
+					var/obj/item/thing = extra_items[item_num]
+					thing.loc = loc
+					extra_items -= thing
 			. = TRUE
 	update_icon()

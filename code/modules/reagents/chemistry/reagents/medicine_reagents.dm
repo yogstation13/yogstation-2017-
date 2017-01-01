@@ -126,7 +126,7 @@
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-7, 0)
 			M.adjustOxyLoss(-9, 0)
 			M.adjustBruteLoss(-5, 0)
@@ -134,7 +134,7 @@
 			M.adjustToxLoss(-5, 0)
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-2, 0)
 			M.adjustOxyLoss(-7, 0)
 			M.adjustBruteLoss(-3, 0)
@@ -142,7 +142,7 @@
 			M.adjustToxLoss(-3, 0)
 			. = 1
 		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-5, 0)
 			M.adjustBruteLoss(-1, 0)
@@ -155,22 +155,22 @@
 /datum/reagent/medicine/rezadone
 	name = "Rezadone"
 	id = "rezadone"
-	description = "A powder derived from fish toxin, Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
+	description = "A powder derived from something hot. Rezadone can effectively treat genetic damage as well as restoring minor wounds. Overdose will cause intense nausea and minor toxin damage."
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	overdose_threshold = 30
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
-	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
+	M.adjustCloneLoss(-15, 0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_organ_damage(1,1, 0)
-	M.status_flags &= ~DISFIGURED
+	M.status_flags -= DISFIGURED
 	..()
 	. = 1
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M)
-	M.adjustToxLoss(1, 0)
-	M.Dizzy(5)
-	M.Jitter(5)
+	M.adjustToxLoss(3, 0)
+	M.Dizzy(10)
+	M.Jitter(10)
 	..()
 	. = 1
 
@@ -185,7 +185,7 @@
 /datum/reagent/medicine/silver_sulfadiazine
 	name = "Silver Sulfadiazine"
 	id = "silver_sulfadiazine"
-	description = "If used in touch-based applications, immediately restores burn wounds as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores burn wounds. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
 
@@ -202,11 +202,6 @@
 			M.emote("scream")
 	..()
 
-/datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/M)
-	M.adjustFireLoss(-2*REM, 0)
-	..()
-	. = 1
-
 /datum/reagent/medicine/oxandrolone
 	name = "Oxandrolone"
 	id = "oxandrolone"
@@ -217,7 +212,7 @@
 	overdose_threshold = 25
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/M)
-	if(M.getFireLoss() > 50)
+	if(M.getFireLoss() > 25)
 		M.adjustFireLoss(-4*REM, 0) //Twice as effective as silver sulfadiazine for severe burns
 	else
 		M.adjustFireLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
@@ -233,7 +228,7 @@
 /datum/reagent/medicine/styptic_powder
 	name = "Styptic Powder"
 	id = "styptic_powder"
-	description = "If used in touch-based applications, immediately restores bruising as well as restoring more over time. If ingested through other means, deals minor toxin damage."
+	description = "If used in touch-based applications, immediately restores bruising. If ingested through other means, deals minor toxin damage."
 	reagent_state = LIQUID
 	color = "#FF9696"
 
@@ -250,11 +245,6 @@
 			M.emote("scream")
 	..()
 
-
-/datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-2*REM, 0)
-	..()
-	. = 1
 
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
@@ -275,10 +265,12 @@
 	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
 		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
-			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
-			efficiency = min(0.75,efficiency)
-			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
+			//The lower the blood of the patient, the better it is as a blood substitute.
+			var/const/hundred_point = BLOOD_VOLUME_NORMAL * 0.5 //100% efficiency at 50% blood level
+			var/const/zero_point = BLOOD_VOLUME_NORMAL * 1.5 //0% efficiency at 150% blood level
+			var/efficiency = 1 - (H.blood_volume - hundred_point) * (1 / (zero_point - hundred_point))
+			efficiency = max(0.25, min(1, efficiency)) //clamp it and change it from a percent to a decimal
+			H.blood_volume += round(efficiency * min(2.5, reac_volume), 0.1)//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -300,7 +292,7 @@
 
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(method in list(INGEST, VAPOR, INJECT))
+		if(method == INGEST)
 			M.Stun(4)
 			M.Weaken(4)
 			if(show_message)
@@ -434,7 +426,7 @@
 
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
-	if(M.getBruteLoss() > 50)
+	if(M.getBruteLoss() > 25)
 		M.adjustBruteLoss(-4*REM, 0) //Twice as effective as styptic powder for severe bruising
 	else
 		M.adjustBruteLoss(-0.5*REM, 0) //But only a quarter as effective for more minor ones
@@ -485,53 +477,77 @@
 	description = "Increases stun resistance and movement speed. Overdose deals toxin damage and inhibits breathing."
 	reagent_state = LIQUID
 	color = "#D2FFFA"
-	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 45
-	addiction_threshold = 30
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	addiction_threshold = 20
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	M.AdjustParalysis(-1, 0)
-	M.AdjustStunned(-1, 0)
-	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-1*REM, 0)
+	M.AdjustParalysis(-0.5, 0)
+	M.AdjustStunned(-0.5, 0)
+	M.AdjustWeakened(-0.5, 0)
+	M.adjustStaminaLoss(-2*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM, 0)
+	if(prob(44))
+		M.adjustToxLoss(2*REM, 0)
 		M.losebreath++
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
+		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
+		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
-	if(prob(33))
+	if(prob(44))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
+		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
 	..()
+/datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/M) //when it runs out
+	if(current_cycle >= 15)
+		M.visible_message("<span class='danger'>[M] suddenly runs out of breath!</span>")
+		M.adjustStaminaLoss(50*REM)
+	else
+		M.adjustStaminaLoss(current_cycle*5*REM)
+
+
+/datum/reagent/medicine/lesserephedrine
+	name = "Lesser Ephedrine"
+	id = "lesserephedrine"
+	description = "Increases movement speed."
+	reagent_state = LIQUID
+	color = "#D2FFFA"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+
+
+/datum/reagent/medicine/lesserephedrine/on_mob_life(mob/living/M)
+	M.status_flags |= GOTTAGOFAST
+	..()
+	. = 1
 
 /datum/reagent/medicine/diphenhydramine
 	name = "Diphenhydramine"
@@ -717,14 +733,14 @@
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 100 brute and burn damage (independent of one another), and causes slight damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 150 brute and burn damage (independent of one another), and causes slight damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
+		if(M.getBruteLoss() >= 150 || M.getFireLoss() >= 150)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
@@ -800,15 +816,24 @@
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/M)
 	M.status_flags |= GOTTAGOFAST
-	if(M.health < 50 && M.health > 0)
-		M.adjustOxyLoss(-1*REM, 0)
-		M.adjustToxLoss(-1*REM, 0)
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
+	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= NOCRIT
+	M.adjustOxyLoss(-1*REM, 0)
+	M.adjustToxLoss(-1*REM, 0)
+	M.adjustBruteLoss(-1*REM, 0)
+	M.adjustFireLoss(-1*REM, 0)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
 	M.adjustStaminaLoss(-5*REM, 0)
+	if(M.health < 0)//once you start dropping below crit it's obvious you're on stims
+		M.Jitter(5)
+		if(prob(10))
+			M.emote(pick("gasp","twitch"))
+		if(prob(20))
+			M.say(pick("I'm unstoppable!","ARRGH!","Immortality!", "Time's moving a bit slower... maybe I need some coffee.", "The curtains are closing...","FOR THE SYNDICATE!!","The Syndicate sends their regards.","See you all in hell, bastards!","I've been ready for this since day one","DEATH TO NANOTRASEN!"))
+		else if(prob(1))
+			M.say(pick("AAAAAAAAAAAAAAAAAAAA!!!","Shit, did I leave the oven on?","I'm beginning to see space angels.. and they're singing ground control to Major Tom.", "Ashes to Ashes, Funk to Funky, now you'll know my heart's been jumpy.","Something's wrong... Did I forget to lotion up?"))
 	..()
 	. = 1
 

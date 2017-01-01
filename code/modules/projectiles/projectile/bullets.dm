@@ -12,7 +12,7 @@
 	stamina = 80
 
 /obj/item/projectile/bullet/weakbullet2 //detective revolver instastuns, but multiple shots are better for keeping punks down
-	damage = 15
+	damage = 10
 	weaken = 3
 	stamina = 50
 
@@ -134,6 +134,7 @@
 	weaken = 5
 	stun = 5
 	forcedodge = 1
+	pass_flags = PASSGLASS
 	nodamage = 1
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'

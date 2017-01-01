@@ -2,6 +2,13 @@
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
+	var/oldmsg = message
+	message = pretty_filter(message)
+	if(oldmsg != message) //Immersive pretty filters
+		usr << "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
+		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
+		return
+	log_say("[name] : [message]")
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
@@ -10,7 +17,17 @@
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
-	return
+	var/oldmsg = message
+	message = pretty_filter(message)
+	if(oldmsg != message)
+		usr << "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
+		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
+		return
+	log_whisper("[name] : [message]")
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+	say(message) //only carbons actually whisper, everything else just talks
 
 /mob/verb/me_verb(message as text)
 	set name = "Me"
@@ -27,6 +44,8 @@
 /mob/proc/say_dead(var/message)
 	var/name = real_name
 	var/alt_name = ""
+	message = pretty_filter(message)
+	log_say("[name] : [message]")
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"

@@ -16,13 +16,13 @@ var/list/freqtospan = list(
 	"1337" = "centcomradio"
 	)
 
-/atom/movable/proc/say(message)
+/atom/movable/proc/say(message, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	if(!can_speak())
 		return
 	if(message == "" || !message)
 		return
 	var/list/spans = get_spans()
-	send_speech(message, 7, src, , spans)
+	send_speech(message, 7, src, , spans, languages)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	return
@@ -30,10 +30,10 @@ var/list/freqtospan = list(
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
+	var/rendered = compose_message(src, languages, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, languages, message, , spans)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
@@ -62,36 +62,43 @@ var/list/freqtospan = list(
 /atom/movable/proc/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
 
-/atom/movable/proc/say_quote(input, list/spans=list())
+/atom/movable/proc/say_quote(input, list/spans=list(), languages)
 	if(!input)
 		return "says, \"...\""	//not the best solution, but it will stop a large number of runtimes. The cause is somewhere in the Tcomms code
+	var/extra = ""
+	if(languages == ROBOT) //only if we are speaking only in robot
+		extra = " in binary"
 	var/ending = copytext(input, length(input))
 	if(copytext(input, length(input) - 1) == "!!")
 		spans |= SPAN_YELL
-		return "[verb_yell], \"[attach_spans(input, spans)]\""
+		return "[verb_yell][extra], \"[attach_spans(input, spans)]\""
 	input = attach_spans(input, spans)
 	if(ending == "?")
-		return "[verb_ask], \"[input]\""
+		return "[verb_ask][extra], \"[input]\""
 	if(ending == "!")
-		return "[verb_exclaim], \"[input]\""
+		return "[verb_exclaim][extra], \"[input]\""
 
-	return "[verb_say], \"[input]\""
+	return "[verb_say][extra], \"[input]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
 	if(languages_understood & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
 			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
-				return speaker.say_quote(raw_message, spans)
-			return AM.say_quote(raw_message, spans)
+				return speaker.say_quote(raw_message, spans, message_langs)
+			return AM.say_quote(raw_message, spans, message_langs)
 		else
-			return speaker.say_quote(raw_message, spans)
-	else if(message_langs & HUMAN)
+			return speaker.say_quote(raw_message, spans, message_langs)
+	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
 		var/atom/movable/AM = speaker.GetSource()
+		if(message_langs & HUMAN)
+			raw_message = stars(raw_message)
+		if(message_langs & RATVAR)
+			raw_message = text2ratvar(raw_message)
 		if(AM)
-			return AM.say_quote(stars(raw_message), spans)
+			return AM.say_quote(raw_message, spans, message_langs)
 		else
-			return speaker.say_quote(stars(raw_message), spans)
+			return speaker.say_quote(raw_message, spans, message_langs)
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
@@ -100,6 +107,8 @@ var/list/freqtospan = list(
 		return "beeps rapidly."
 	else if(message_langs & DRONE)
 		return "chitters."
+	else if(message_langs & SWARMER)
+		return "hums."
 	else
 		return "makes a strange sound."
 
@@ -168,3 +177,22 @@ var/list/freqtospan = list(
 /atom/movable/virtualspeaker/Destroy()
 	..()
 	return QDEL_HINT_PUTINPOOL
+
+/proc/get_virtual_speaker_for(atom/movable/AM, obj/item/device/radio/radio)
+	if(!AM)
+		return null
+	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker, null)
+	virt.name = AM.name
+	virt.languages_spoken = AM.languages_spoken
+	virt.languages_understood = AM.languages_understood
+	virt.identifier = AM.identifier
+	virt.source = AM
+	virt.radio = radio
+	virt.verb_say = AM.verb_say
+	virt.verb_ask = AM.verb_ask
+	virt.verb_exclaim = AM.verb_exclaim
+	virt.verb_yell = AM.verb_yell
+	if(ismob(AM))
+		var/mob/M = AM
+		virt.job = M.job
+	return virt

@@ -117,17 +117,16 @@
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 15
-	lowest_value = 256 * 12
+	get_chance = 10
+	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
-	species_allowed = list("human") //no skeleton/lizard hulk
+	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 25
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
-	owner.status_flags &= ~status
+	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -141,7 +140,7 @@
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
@@ -153,8 +152,8 @@
 
 	name = "Telekinesis"
 	quality = POSITIVE
-	get_chance = 20
-	lowest_value = 256 * 12
+	get_chance = 15
+	lowest_value = 256 * 14
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 	limb_req = "head"
 
@@ -600,7 +599,6 @@
 		message = replacetext(message," thank you "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
-		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," getting my kicks ")
 	return trim(message)
 

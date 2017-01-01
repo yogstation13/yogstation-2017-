@@ -41,6 +41,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/mapgen_protected = 0 //If the area is protected from ruins/lava rivers/etc generating on top of it
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -62,6 +63,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
+
+	var/parallax_movedir = 0
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -95,6 +98,7 @@ var/list/teleportlocs = list()
 	name = "Admin room"
 	icon_state = "start"
 
+
 /area/space
 	icon_state = "space"
 	requires_power = 1
@@ -107,6 +111,9 @@ var/list/teleportlocs = list()
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+
+/area/space/mapgen_protected
+	mapgen_protected = 1
 
 /area/space/nearstation
 	icon_state = "space_near"
@@ -198,6 +205,15 @@ var/list/teleportlocs = list()
 
 /area/centcom/holding
 	name = "Holding Facility"
+
+/area/centcom/abuse
+	name = "AB-use facility"
+	icon_state = "centcom"
+	requires_power = 0
+	has_gravity = 1
+	noteleport = 1
+	blob_allowed = 0
+
 
 //SYNDICATES
 

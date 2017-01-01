@@ -56,6 +56,8 @@
 /obj/item/robot_parts/robot_suit
 	name = "cyborg endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
+	attack_verb = list("borged", "stated the laws of", "robotized")
+	hitsound = 'sound/voice/liveagain.ogg'
 	icon_state = "robo_suit"
 	var/obj/item/robot_parts/l_arm/l_arm = null
 	var/obj/item/robot_parts/r_arm/r_arm = null
@@ -247,10 +249,7 @@
 			BM.mind.transfer_to(O)
 
 			if(M.clockwork)
-				O.emagged = 1
-				O.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
-				"<span class='warning'><b>As you serve Ratvar, your onboard camera is not active and your safeties are disabled.</b></span>")
-				ticker.mode.update_servant_icons_added(O.mind)
+				add_servant_of_ratvar(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
@@ -269,6 +268,9 @@
 			O.updatename()
 
 			feedback_inc("cyborg_birth",1)
+
+			if(pulledby)
+				pulledby.stop_pulling()
 
 			src.loc = O
 			O.robot_suit = src

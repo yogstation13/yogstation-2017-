@@ -30,15 +30,15 @@
 /obj/effect/particle_effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/effect/particle_effect/smoke/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	spawn(0)
 		fade_out()
 	spawn(10)
@@ -71,6 +71,8 @@
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
 	var/list/newsmokes = list()
+	if(!t_loc)
+		return
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)

@@ -196,11 +196,11 @@
 	desc = "A refridgerated and pressurized backpack tank with extinguisher nozzle, intended to fight fires. Swaps between extinguisher, nanofrost launcher, and metal foam dispenser for breaches. Nanofrost converts plasma in the air to nitrogen, but only if it is combusting at the time."
 	icon_state = "waterbackpackatmos"
 	item_state = "waterbackpackatmos"
-	volume = 200
+	volume = 250
 
 /obj/item/weapon/watertank/atmos/New()
 	..()
-	reagents.add_reagent("water", 200)
+	reagents.add_reagent("water", 250)
 
 /obj/item/weapon/watertank/atmos/make_noz()
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
@@ -219,7 +219,7 @@
 	icon_state = "atmos_nozzle"
 	item_state = "nozzleatmos"
 	safety = 0
-	max_water = 200
+	max_water = 250
 	power = 8
 	precision = 1
 	cooling_power = 5
@@ -413,13 +413,13 @@
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
 	on = 1
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns on.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns off.</span>"
 

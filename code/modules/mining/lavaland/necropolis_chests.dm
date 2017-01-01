@@ -17,7 +17,7 @@
 		if(2)
 			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
-			new /obj/item/device/soulstone/anybody(src)
+			new /obj/item/device/necromantic_stone/lesser(src)
 		if(4)
 			new /obj/item/weapon/katana/cursed(src)
 		if(5)
@@ -25,47 +25,50 @@
 		if(6)
 			new /obj/item/weapon/wingpotion(src)
 		if(7)
-			new /obj/item/weapon/pickaxe/diamond(src)
+			new /obj/item/weapon/pickaxe/drill/jackhammer(src)
 		if(8)
-			new /obj/item/clothing/head/culthood(src)
-			new /obj/item/clothing/suit/cultrobes(src)
+			new /obj/item/weapon/melee/cultblade/dagger(src)
+			new /obj/item/weapon/restraints/legcuffs/bola/cult(src)
 			new /obj/item/weapon/bedsheet/cult(src)
+			new /obj/item/clothing/suit/magusred(src)
+			new /obj/item/clothing/head/magus(src)
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/heart/cursed(src)
+			new /obj/item/weapon/rune_scimmy(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
-			new /obj/item/weapon/sord(src)
+			new /obj/item/clothing/suit/space/hardsuit/freedom(src)  //lavaland is actually america after trump was elected
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
-			new /obj/item/weapon/nullrod/armblade(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
 		if(16)
 			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/stack/sheet/runed_metal/fifty(src)
-		if(18)
 			new /obj/item/device/warp_cube/red(src)
-		if(19)
+		if(18)
 			new /obj/item/device/wisp_lantern(src)
-		if(20)
+		if(19)
 			new /obj/item/device/immortality_talisman(src)
-		if(21)
+		if(20)
 			new /obj/item/weapon/gun/magic/hook(src)
-		if(22)
+		if(21)
 			new /obj/item/voodoo(src)
+		if(22)
+			new /obj/item/weapon/melee/energy/sword/pirate(src)
+			new /obj/item/clothing/suit/space/pirate(src)
+			new /obj/item/clothing/head/helmet/space/pirate(src)
 		if(23)
-			new /obj/item/weapon/grenade/clusterbuster/inferno(src)
-		if(24)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(25)
+		if(24)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
-
+		if(25)
+			new /obj/item/organ/heart/cursed/wizard(src)
 
 
 //Spooky special loot
@@ -125,8 +128,9 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	luminosity = 7
+	luminosity = 9
 	layer = ABOVE_ALL_MOB_LAYER
+	burn_state = LAVA_PROOF
 
 /obj/item/device/warp_cube
 	name = "blue cube"
@@ -168,7 +172,7 @@
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
 	item_state = "chain"
-	fire_sound = 'sound/weapons/batonextend.ogg'
+	fire_sound = 'sound/weapons/meathook_fire.ogg'
 	max_charges = 1
 	flags = NOBLUDGEON
 	force = 18
@@ -188,7 +192,7 @@
 	damage = 25
 	armour_penetration = 100
 	damage_type = BRUTE
-	hitsound = 'sound/effects/splat.ogg'
+	hitsound = 'sound/effects/get_over_here.ogg'
 	weaken = 3
 	var/chain
 
@@ -233,7 +237,7 @@
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		spawn(100)
-			user.status_flags &= ~GODMODE
+			user.status_flags -= GODMODE
 			user.notransform = 0
 			user.forceMove(get_turf(Z))
 			user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
@@ -430,7 +434,7 @@
 			if(C.wear_mask)
 				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
 			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
+				if(!ishumanbasic(C)) //implying xenoshumans are holy
 					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
 				else
 					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
@@ -440,10 +444,6 @@
 					C.emote("scream")
 				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
 				src.used = TRUE
-
-
-
-
 
 
 ///Bosses
@@ -488,14 +488,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -565,19 +565,14 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,4)
+	var/random = rand(1,2)
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
-		if(2)
-			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
-			H.set_species(/datum/species/skeleton)
-		if(3)
 			user << "<span class='danger'>You don't feel so good...</span>"
 			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
 			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
-		if(4)
+		if(2)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 			H.weather_immunities |= "lava"
 
@@ -644,6 +639,19 @@
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		timer = world.time + cooldown
 
+//Runite Scimitar
+
+/obj/item/weapon/rune_scimmy
+	name = "rune scimitar"
+	desc = "A curved sword smelted from an unknown metal. Looking at it gives you the otherworldly urge to pawn it off for '30k,' whatever that means."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "rune_scimmy"
+	force = 25
+	damtype = BRUTE
+	sharpness = IS_SHARP
+	hitsound = 'sound/weapons/rs_slash.ogg'
+	attack_verb = list("slashed","pk'd","atk'd")
+
 ///Bubblegum
 
 /obj/item/mayhem
@@ -671,9 +679,9 @@
 		if(1)
 			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
 		if(2)
-			new /obj/item/mayhem(src)
+			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
-			new /obj/item/blood_contract(src)
+			new /obj/item/bloodvial/saw(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -714,3 +722,105 @@
 			H.equip_to_slot_or_del(new /obj/item/weapon/kitchen/knife/butcher(H), slot_l_hand)
 
 	qdel(src)
+
+/obj/item/bloodvial//parent typing for identical looking loot
+	name = "vial of blood" //aestetically identical to the demon spawner
+	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+
+/obj/item/bloodvial/bloodcrawl
+
+/obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
+	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
+	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
+		user <<"<span class='warning'>You break [src], but nothing happens.../span>"
+		qdel(src)
+		return
+	user <<"<span class='warning'>You break [src], feeling immense power overcome you.../span>"
+	user.bloodcrawl = BLOODCRAWL
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
+
+/obj/item/bloodvial/saw
+
+/obj/item/bloodvial/saw/attack_self(mob/living/carbon/user)
+	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
+		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
+		return
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	user.unEquip(src)
+	var/obj/item/weapon/chainsaw_bubblegum/C = new
+	user.put_in_active_hand(C)
+	qdel(src)
+
+
+/obj/item/weapon/chainsaw_bubblegum
+	name = "demonic chainsaw"
+	desc = "You almost regret picking this up."
+	force = 28
+	icon_state = "chainsaw_on"
+	item_state = "mounted_chainsaw"
+	w_class = 5
+	flags = NODROP | ABSTRACT
+	sharpness = IS_SHARP
+	attack_verb = list("sawed", "torn", "cut", "chopped", "diced","eviscerated")
+	hitsound = 'sound/weapons/chainsawhit.ogg'
+	armour_penetration = 30
+	color = "#FF0000"
+	block_chance = 30
+	var/recalled = FALSE
+
+/obj/item/weapon/chainsaw_bubblegum/equipped(mob/living/user)
+	..()
+	for(var/obj/effect/proc_holder/spell/targeted/summonsaw/spell in user.mind.spell_list)
+		user.mind.RemoveSpell(spell)//removes summon spell if they got it before
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonsaw(src))
+
+/obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [src.name]! It looks like \he's trying to join Bubblegum!</span>")
+	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
+	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
+	qdel(user)
+
+/obj/item/weapon/chainsaw_bubblegum/afterattack(mob/living/target, mob/living/user)
+	..()
+	if(ishuman(target))
+		if(target.stat != DEAD)
+			user.adjustBruteLoss(-(force / 2))
+			user << "<span class='notice'>[src] absorbs the strength of [target] and rejuvenates you!</span>"
+
+/obj/effect/proc_holder/spell/targeted/summonsaw
+	name = "Summon Chainsaw"
+	desc = "Summon Bubblegum's Chainsaw."
+	action_icon_state = "bloodcrawl"
+	charge_max = 10
+	clothes_req = 0
+	range = -1
+	level_max = 0
+	include_user = 1
+
+
+/obj/effect/proc_holder/spell/targeted/summonsaw/cast(mob/living/carbon/human/user)
+	if(locate(/obj/item/weapon/chainsaw_bubblegum) in user)
+		var/obj/item/weapon/chainsaw_bubblegum/S = locate(/obj/item/weapon/chainsaw_bubblegum)
+		if(S.recalled == FALSE)
+			S.flags &= ~NODROP
+			user.unEquip(S)
+			S.loc = user
+			user.visible_message("<span class='warning'><b>[S] assimilates itself into [usr]'s body!</b></span>")
+			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+			S.recalled = TRUE
+		else
+			S.flags |= NODROP
+			user.put_in_active_hand(S)
+			user.visible_message("<span class='warning'><b>[user]'s arm is suddenly engulfed in blood, which molds itself into [S]!</b></span>")
+			playsound(get_turf(user), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+			playsound(get_turf(user),'sound/effects/splat.ogg', 100, 1, -1)
+			S.recalled = FALSE
+	else
+		user.mind.RemoveSpell(src)
+

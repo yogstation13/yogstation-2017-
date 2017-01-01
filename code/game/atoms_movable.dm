@@ -8,6 +8,7 @@
 	var/mob/pulledby = null
 	var/languages_spoken = 0 //For say() and Hear()
 	var/languages_understood = 0
+	var/identifier = null //Only used for AI tracking.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -15,6 +16,7 @@
 	var/inertia_dir = 0
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/list/mobs_in_contents // This contains all the client mobs within this container
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
@@ -80,6 +82,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	update_parallax_contents()
 	return 1
 
 
@@ -375,3 +378,7 @@
 /atom/movable/proc/on_z_level_change()
 	for(var/atom/movable/A in contents)
 		A.on_z_level_change()
+
+/atom/movable/proc/on_pulledby(mob/new_pulledby, supress_message)
+	pulledby = new_pulledby
+	return

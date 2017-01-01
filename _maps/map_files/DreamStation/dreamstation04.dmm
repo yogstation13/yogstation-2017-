@@ -23656,10 +23656,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/cooldown_holder/computer/communications{
-	pixel_x = 5;
-	pixel_y = -5
-	},
+/obj/item/weapon/circuitboard/computer/cooldown_holder/communications,
 /obj/structure/cable/green{
 	tag = "icon-5-10";
 	icon_state = "5-10"
@@ -66157,12 +66154,12 @@
 	})
 "cwA" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/cartridge/signal/toxins,
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/weapon/cartridge/toxins,
+/obj/item/weapon/cartridge/toxins{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/weapon/cartridge/signal/toxins{
+/obj/item/weapon/cartridge/toxins{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -67800,8 +67797,8 @@
 /area/maintenance/fsmaint)
 "czF" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs/cable/green,
-/obj/item/weapon/restraints/handcuffs/cable/green,
+/obj/item/weapon/restraints/handcuffs/cable,
+/obj/item/weapon/restraints/handcuffs/cable,
 /obj/item/toy/talking/owl,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)

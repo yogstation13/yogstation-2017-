@@ -1,0 +1,8 @@
+"a" = (/turf/open/floor/engine/cult,/area/survivalpod)
+"b" = (/turf/closed/wall/mineral/sandstone,/area/survivalpod)
+
+(1,1,1) = {"
+aaa
+aba
+aaa
+"}

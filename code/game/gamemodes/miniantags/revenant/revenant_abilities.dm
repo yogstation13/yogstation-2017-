@@ -1,12 +1,28 @@
 
 //Harvest; activated ly clicking the target, will try to drain their essence.
+//CTRL+Clicking a living mob will quick-cast Transmit
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
+	var/list/modifiers = params2list(params)
+	if(modifiers["ctrl"])
+		CtrlClickOn(A)
+		return
+
 	A.examine(src)
 	if(ishuman(A))
 		if(A in drained_mobs)
 			src << "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" //feedback at any range
 		else if(in_range(src, A))
 			Harvest(A)
+
+//Quick-cast transmit
+/mob/living/simple_animal/revenant/CtrlClickOn(atom/A, params)
+	if(!revtransmit)
+		return
+	if(istype(A, /mob/living))
+		var/mob/living/LM = A
+		var/list/targets = list()
+		targets += LM
+		revtransmit.cast(targets)
 
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
@@ -249,7 +265,7 @@
 		for(var/turf/T in targets)
 			spawn(0)
 				if(T.flags & NOJAUNT)
-					T.flags -= NOJAUNT
+					T.flags &= ~NOJAUNT
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 				if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
 					var/turf/open/floor/floor = T
@@ -346,12 +362,13 @@
 							if(H.dna && H.dna.species)
 								H.dna.species.handle_mutant_bodyparts(H,"#1d2953")
 								H.dna.species.handle_hair(H,"#1d2953")
-								H.dna.species.update_color(H,"#1d2953")
+								var/old_color = H.color
+								H.color = "#1d2953"
 								spawn(20)
 									if(H && H.dna && H.dna.species)
 										H.dna.species.handle_mutant_bodyparts(H)
 										H.dna.species.handle_hair(H)
-										H.dna.species.update_color(H)
+										H.color = old_color
 							var/blightfound = 0
 							for(var/datum/disease/revblight/blight in H.viruses)
 								blightfound = 1

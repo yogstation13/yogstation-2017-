@@ -21,6 +21,7 @@
 
 	var/alertadmins = 1			//should we let the admins know this event is firing
 								//should be disabled on events that fire a lot
+	var/growth					// the event datum uses this to increase the weight every hour
 
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
