@@ -246,12 +246,22 @@
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
+	overdose_threshold = 50
+	var/saltprob = 8
+	var/radioprob = 50
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!istype(M))
 		return
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)
+
+/datum/reagent/consumable/sodiumchloride/overdose_process(mob/living/M)
+	if(prob(saltprob))
+		var/line = pick_list_replacements(BRAIN_DAMAGE_FILE, "salt")
+		if(prob(radioprob))
+			line = ";" + line
+		M.say(line)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
