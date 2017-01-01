@@ -12,13 +12,11 @@
 	var/on = 0
 	var/broken = 0
 	var/brightness_on = 4 //luminosity when on
-	var/light_color = "#FFFFAA"
 
 /obj/item/device/flashlight/initialize()
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		SetLightColor(light_color)
 		SetLuminosity(brightness_on)
 	else
 		icon_state = initial(icon_state)
@@ -37,7 +35,6 @@
 			user.AddLuminosity(-brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
-	SetLightColor(light_color)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -197,7 +194,6 @@ obj/item/device/flashlight/lamp/bananalamp
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
-	light_color = "#FF0000"
 	actions_types = list()
 	var/fuel = 0
 	var/on_damage = 7
