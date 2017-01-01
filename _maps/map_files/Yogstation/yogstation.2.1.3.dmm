@@ -69140,6 +69140,12 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyn" = (
+/obj/effect/landmark/start{
+	name = "Mining Medic"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "Zyo" = (
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -91422,7 +91428,7 @@ bJZ
 bLC
 bMU
 bJZ
-bJZ
+Zyn
 bBh
 aaa
 aaa
