@@ -662,13 +662,13 @@
 
 /obj/item/weapon/storage/box/darts_sleepy/New() //For anyone wanting to add more boxes: New(var/loc, var/reagent_type, var/amount = 15, allow reload, max_chemicals)
 	..()
-	new /obj/item/dart_casing/medical(src, "morphine")
-	new /obj/item/dart_casing/medical(src, "morphine")
-	new /obj/item/dart_casing/medical(src, "morphine")
+	new /obj/item/dart_casing/medical(src, "chloralhydrate")
+	new /obj/item/dart_casing/medical(src, "chloralhydrate")
+	new /obj/item/dart_casing/medical(src, "chloralhydrate")
 	if(prob(50)) new /obj/item/dart_casing/medical(src, "neurotoxin")
-	else new /obj/item/dart_casing/medical(src, "morphine")
-	new /obj/item/dart_casing/medical(src, "morphine")
-	new /obj/item/dart_casing/medical(src, "morphine")
+	else new /obj/item/dart_casing/medical(src, "chloralhydrate")
+	new /obj/item/dart_casing/medical(src, "chloralhydrate")
+	new /obj/item/dart_casing/medical(src, "chloralhydrate")
 
 /obj/item/weapon/storage/box/darts_anti_hulk
 	name = "box of anti-hulk darts"
