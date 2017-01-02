@@ -229,8 +229,8 @@
 		qdel(src)
 
 /obj/item/organ/gland/gib
-	cooldown_low = 100000
-	cooldown_high = 500000
+	cooldown_low = 12000
+	cooldown_high = 24000
 	uses = -1
 	icon_state = "egg"
 	var/gibs = 0
