@@ -280,7 +280,14 @@
 	light_on = 0
 
 /mob/living/simple_animal/drone/ClickOn(var/atom/A, var/params)
-	if(no_living_interaction && isliving(A))
+	if(no_living_interaction && !isdrone(A) && (isliving(A) || istype(A, /obj/effect/blob)) )
+		src << "<span class='warning'>You cannot interact with other beings!</span>"
+		return
+	..()
+
+/mob/living/simple_animal/drone/stripPanelUnequip(obj/item/what, mob/who)
+	if(no_living_interaction)
+		src << "<span class='warning'>You cannot interact with other beings!</span>"
 		return
 	..()
 
