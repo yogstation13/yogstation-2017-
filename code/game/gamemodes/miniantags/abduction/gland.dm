@@ -232,7 +232,7 @@
 	cooldown_low = 12000
 	cooldown_high = 24000
 	uses = -1
-	icon_state = "egg"
+	icon_state = "gib"
 	var/gibs = 0
 
 /obj/item/organ/gland/gib/activate()
@@ -268,3 +268,16 @@
 			L.disabilities -= MUTE
 			qdel(G)
 
+/obj/item/organ/gland/lag //I don't even feel bad
+	cooldown_low = 100
+	cooldown_high = 900
+	uses = -1
+	icon_state = "gland"
+	var/lag_loc
+
+/obj/item/organ/gland/lag/activate()
+	if(lag_loc)
+		owner.loc = lag_loc
+		lag_loc = null
+	else
+		lag_loc = get_turf(owner)
