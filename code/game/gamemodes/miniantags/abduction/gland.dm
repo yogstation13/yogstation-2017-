@@ -279,5 +279,32 @@
 	if(lag_loc)
 		owner.loc = lag_loc
 		lag_loc = null
+		if(prob(50))
+			owner.say(";THE ONE PERCENT!!")
 	else
 		lag_loc = get_turf(owner)
+
+/obj/item/organ/gland/limb
+	cooldown_low = 24000
+	cooldown_high = 30000
+	uses = -1
+	icon_state = "gland"
+
+/obj/item/organ/gland/limb/activate()
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			if(istype(BP, /obj/item/bodypart/chest) || istype(BP, /obj/item/bodypart/head))
+				BP.brute_dam -= 5
+				BP.burn_dam -= 5
+			else if((BP.brute_dam + BP.burn_dam) >= 5)
+				BP.drop_limb()
+				visible_message("<span class='notice'>[H]'s [BP.name] falls off.</span>")
+				sleep(50)
+		spawn(300)
+			var/bodypart_count = 0
+			for(var/obj/item/bodypart in H.bodyparts)
+				bodypart_count++
+			H.regenerate_limbs()
+			if(bodypart_count != 6) visible_message("<span class='notice'>[H]'s limbs grow back.</span>")
+			H.update_icons()
