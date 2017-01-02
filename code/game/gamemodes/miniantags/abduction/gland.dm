@@ -227,3 +227,44 @@
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc
 		qdel(src)
+
+/obj/item/organ/gland/gib
+	cooldown_low = 100000
+	cooldown_high = 500000
+	uses = -1
+	icon_state = "egg"
+	var/gibs = 0
+
+/obj/item/organ/gland/gib/activate()
+	gibs = 0
+	var/mob/living/L = owner //ITS TRIGGERING ME
+	var/turf/T = get_turf(L)
+	gibs(L.loc)
+	var/obj/effect/decal/remains/human/G = new /obj/effect/decal/remains/human(L.loc)
+	L.forceMove(G)
+	L.disabilities += MUTE
+	L.reset_perspective(L)
+	new /obj/effect/overlay/temp/gib_animation(T, "gibbed-h")
+	spawn(200)
+		for(var/obj/effect/decal/cleanable/blood/gibs/E in orange(1,G))
+			E.forceMove(G.loc) //Steptowards doesn't work on effects. ;_;
+			sleep(10)
+		for(var/obj/effect/decal/cleanable/blood/gibs/M in orange(1,G))
+			if(M.loc == G.loc)
+				qdel(M)
+				gibs++
+		playsound(L, 'sound/effects/blobattack.ogg', 30, 1)
+		new /obj/effect/overlay/temp/gib_animation(T, "reversed-gibbed-h")
+		G.alpha = 0
+		spawn(14)
+			L.forceMove(G.loc)
+			L.reset_perspective(L)
+			var/damage_stuff = -50+(gibs*15) //The gibs come back into the body, if we miss one, we heal alot less, if we lose more, we can
+			if(damage_stuff > 0)
+				L.heal_overall_damage(damage_stuff/1.5, damage_stuff/2)
+			else
+				L.adjustBruteLoss(-damage_stuff)
+			L.visible_message("<span class='warning'>The gibs reform into [L.name]</span>") //take up to 50 damage. Fun mechanic
+			L.disabilities -= MUTE
+			qdel(G)
+
