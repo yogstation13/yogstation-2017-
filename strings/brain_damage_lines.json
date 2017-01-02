@@ -1,121 +1,129 @@
 {
-    "brain_damage": [
-        "IM A PONY NEEEEEEIIIIIIIIIGH",
-        "without oxigen blob don't evoluate?",
-        "CAPTAINS A COMDOM",
-        "@pick(george) @pick(mellens) is grifing me HALP!!!",
-        "can u give me @pick(mutations)?",
-        "THe saiyans screwed",
-        "Bi is THE BEST OF BOTH WORLDS>",
-        "I WANNA PET TEH monkeyS",
-        "stop grifing me!!!!",
-        "SOTP IT#",
-        "shiggey diggey!!",
-        "A PIRATE APPEAR",
-        "FUS RO DAH",
-        "fucking 4rries!",
-        "stat me",
-        ">my face",
-        "roll it easy!",
-        "waaaaaagh!!!",
-        "red wonz go fasta",
-        "FOR TEH EMPRAH",
-        "lol2cat",
-        "dem dwarfs man, dem dwarfs",
-        "SPESS MAHREENS",
-        "hwee did eet fhor khayosss",
-        "lifelike texture ;_;",
-        "luv can bloooom",
-        "PACKETS!!!",
-        "port ba@pick(y_replacements) med!!!!",
-        "REVIRT GON CHEM!!!!!!!!",
-        "youed call her a toeugh bithc",
-        "closd for merbegging",
-        "pray can u @pick(create_verbs) @pick(create_nouns)???",
-        "GEY AWAY FROM ME U GREIFING PRICK!!!!",
-        "ur a fuckeing autist!",
-        ";HELP SHITECIRTY MURDERIN  MEE!!!",
-        "hwat dose tha @pick(random_gibberish) mean?????",
-        "CAL; TEH SHUTTLE!!!!!",
-        "wearnig siNGUARLTY IS .... FIne xDDDDDDDDD",
-        "AI laW 22 Open door",
-        "this SI mY stATIon......",
-        "who the HELL do u thenk u r?!!!!",
-        "geT THE FUCK OUTTTT",
-        "H U G B O X",
-        "CRASHING THIS STTAYTION WITH NIO SURVIVROS",
-        "@pick(servers) is down!!",
-        "PSHOOOM",
-        "REMOVE SINGULARITY",
-        "INSTLL TEG",
-        "TURBIN IS BEST ENGIENE",
-        "SOLIRS CAN POWER THE HOLE STATION ANEWAY",
-        "parasteng was best",
-        "Tajaran has warrrres, if you have coin"
-    ],
+	"brain_damage": [
+		"IM A PONY NEEEEEEIIIIIIIIIGH",
+		"without oxigen blob don't evoluate?",
+		"CAPTAINS A COMDOM",
+		"@pick(george) @pick(mellens) is grifing me HALP!!!",
+		"can u give me @pick(mutations)?",
+		"THe saiyans screwed",
+		"Bi is THE BEST OF BOTH WORLDS>",
+		"I WANNA PET TEH monkeyS",
+		"stop grifing me!!!!",
+		"SOTP IT#",
+		"shiggey diggey!!",
+		"A PIRATE APPEAR",
+		"FUS RO DAH",
+		"fucking 4rries!",
+		"stat me",
+		">my face",
+		"roll it easy!",
+		"waaaaaagh!!!",
+		"red wonz go fasta",
+		"FOR TEH EMPRAH",
+		"lol2cat",
+		"dem dwarfs man, dem dwarfs",
+		"SPESS MAHREENS",
+		"hwee did eet fhor khayosss",
+		"lifelike texture ;_;",
+		"luv can bloooom",
+		"PACKETS!!!",
+		"port ba@pick(y_replacements) med!!!!",
+		"REVIRT GON CHEM!!!!!!!!",
+		"youed call her a toeugh bithc",
+		"closd for merbegging",
+		"pray can u @pick(create_verbs) @pick(create_nouns)???",
+		"GEY AWAY FROM ME U GREIFING PRICK!!!!",
+		"ur a fuckeing autist!",
+		";HELP SHITECIRTY MURDERIN  MEE!!!",
+		"hwat dose tha @pick(random_gibberish) mean?????",
+		"CAL; TEH SHUTTLE!!!!!",
+		"wearnig siNGUARLTY IS .... FIne xDDDDDDDDD",
+		"AI laW 22 Open door",
+		"this SI mY stATIon......",
+		"who the HELL do u thenk u r?!!!!",
+		"geT THE FUCK OUTTTT",
+		"H U G B O X",
+		"CRASHING THIS STTAYTION WITH NIO SURVIVROS",
+		"@pick(servers) is down!!",
+		"PSHOOOM",
+		"REMOVE SINGULARITY",
+		"INSTLL TEG",
+		"TURBIN IS BEST ENGIENE",
+		"SOLIRS CAN POWER THE HOLE STATION ANEWAY",
+		"parasteng was best",
+		"Tajaran has warrrres, if you have coin"
+	],
 
-    "mutations": [
-        "telikesis",
-        "halk",
-        "eppilapse",
-        "kamelien",
-        "eksrey",
-        "glowey skin",
-        "fungal tb"
-    ],
+	"mutations": [
+		"telikesis",
+		"halk",
+		"eppilapse",
+		"kamelien",
+		"eksrey",
+		"glowey skin",
+		"fungal tb"
+	],
 
-    "george": [
-        "joerge",
-        "george",
-        "gorge",
-        "gdoruge"
-    ],
+	"george": [
+		"joerge",
+		"george",
+		"gorge",
+		"gdoruge"
+	],
 
-    "mellens": [
-        "mellens",
-        "melons",
-        "mwrlins"
-    ],
+	"mellens": [
+		"mellens",
+		"melons",
+		"mwrlins"
+	],
 
-    "random_gibberish": [
-        "g",
-        "squid",
-        "r"
-    ],
+	"random_gibberish": [
+		"g",
+		"squid",
+		"r"
+	],
 
-    "y_replacements": [
-        "y",
-        "i",
-        "e"
-    ],
+	"y_replacements": [
+		"y",
+		"i",
+		"e"
+	],
 
-    "servers": [
-        "bager",
-        "sybl",
-        "mrs sybil",
-        "mr basil"
-    ],
+	"servers": [
+		"bager",
+		"sybl",
+		"mrs sybil",
+		"mr basil"
+	],
 
-    "create_verbs": [
-        "spawn",
-        "MAke me",
-        "creat"
-    ],
+	"create_verbs": [
+		"spawn",
+		"MAke me",
+		"creat"
+	],
 
-    "create_nouns": [
-        "zenomorfs",
-        "ayleins",
-        "treaitors",
-        "sheadow lings",
-        "abdoocters"
-    ]
+	"create_nouns": [
+		"zenomorfs",
+		"ayleins",
+		"treaitors",
+		"sheadow lings",
+		"abdoocters"
+	]
 	
 	"CODEBASE": [
 		"YOGS",
 		"TEE GEE",
 		"GOON",
 		"VORE",
-		"FALLOUT 13"
+		"FALLOUT 13",
+		"BAY"
+	]
+	
+	"rp_level": [
+		"low rp",
+		"high rp",
+		"med rp",
+		"no rp",
 	]
 	
 	"DEPARTMENT": [
@@ -127,17 +135,23 @@
 		"CLOCKCULT",
 		"CARGO",
 		"MINING",
-		"ASSWALKER",
+		"ASSWALKERS",
 		"XENOBIO",
-		"SILICON"
+		"SILICONS",
+		"BLOB"
 	]
 	
 	"salt": [
-        "MaRGH MaH PRs!",
-        "FUCKING SHITSEC",
-        "THIS IS AGAINS SPESS LAW",
-        "ReBase TO @pick(CODEBASE)",
-        "REVIRT TO OLD @pick(CODEBASE)",
+		"ReBase TO @pick(CODEBASE)",
+		"REVIRT TO OLD @pick(CODEBASE)",
+		"PORT @pick(CODEBASE) @pick(DEPARTMENT)",
+		"@pick(DEPARTMENT) POWERCREPE",
+		"NERF @pick(DEPARTMENT)",
+		"I'M NERFING @pick(DEPARTMENT) AFTER THIS ROUND",
+		"We should be @pick(rp_level)",
+		"MaRGH MaH PRs!",
+		"FUCKING SHITSEC",
+		"THIS IS AGAINS SPESS LAW",
 		"AI WONT OBEY LAW 2 ITS ROGUE!!",
 		"LeAVE YuR AUTISM fORt sO i CAN kILL yOU",
 		"Why can nanotrasen cyborgs even access syndicate doors?",
@@ -145,11 +159,20 @@
 		"I DEMAND YOU BAN HIM",
 		"fUKKING cLoWN Is A GrIEFFeR",
 		"CODERZ CONSIRIN AGAINST MEH",
-		"@pick(DEPARTMENT) POWERCREPE",
 		"Muh Slippery SLope",
 		"NOONE RPS",
 		"RP IS FOR DUMBSHITS",
 		"AI SI RACIST AGIANS PLSAMAMEN",
-		"HES OBIVOUSLY A TATOR"
-    ]
+		"HES OBIVOUSLY A TATOR",
+		"AAAAAAAAAAARGH muh indentation",
+		"NO PLAYER REFERENCES",
+		"i ded to a bug",
+		"1v1 ME THUNDERDOME RITE NOW ILL WRECK YOU PUNK",
+		"END THE FEATURE FREEZE ALREADY",
+		"HE KILLED NE 4 NO RAISIN",
+		"YOUR JUST LUCKY I LAGGED OUT",
+		"this game so is shit why do I even play it?",
+		"Fukking RNG is SHIT",
+		"WHAT THE FUCK ESWORD CAN KNOCK U OUT INSTANT STUNS BROKEN GAME GGG"
+	]
 }

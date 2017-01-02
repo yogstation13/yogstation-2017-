@@ -249,6 +249,7 @@
 	overdose_threshold = 50
 	var/saltprob = 8
 	var/radioprob = 50
+	var/emoteprob = 30
 
 /datum/reagent/consumable/sodiumchloride/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!istype(M))
@@ -262,6 +263,8 @@
 		if(prob(radioprob))
 			line = ";" + line
 		M.say(line)
+		if(prob(emoteprob))
+			M.emote(pick("groan", "cry", "grumble", "whimper"))
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
