@@ -497,7 +497,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	else if(istype(W, /obj/item/weapon/book))
 		if(!user.drop_item())
 			return
-		W.forcemove(src)
+		W.forceMove(src)
 	else	
 		return ..()
 
