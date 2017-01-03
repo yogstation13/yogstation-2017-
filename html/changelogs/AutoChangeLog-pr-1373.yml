@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "The Mime can now turn things invisible! The Invisible Touch, as they call it, can turn objects and structures invisible for a certain amount of time."
+  - rscadd: "Mimes can also use this ability on themselves for a flickering effect that won't last long."
+  - tweak: "The round has to be 25 minutes in until the mime can break their vow."
