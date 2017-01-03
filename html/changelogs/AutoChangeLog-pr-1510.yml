@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscdel: "Stupid items like the freedom suit and alien brain are removed from necropolis chests"
+  - rscadd: "15u of godblood spawn with the talking scythe."
