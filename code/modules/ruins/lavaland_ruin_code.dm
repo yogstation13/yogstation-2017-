@@ -103,14 +103,14 @@ var/list/barometers = list()
 	radio = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
-	id_job = "Operative"
+	has_id = 1
+	id_job = "Syndicate Researcher"
 	id_access = "syndicate"
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-	has_id = 1
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
 	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!")
 
@@ -119,10 +119,42 @@ var/list/barometers = list()
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
+	id_job = "Syndicate Comms Agent"
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/special(mob/living/L)
-	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!")
+	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!")
+
+/obj/effect/mob_spawn/human/lavaland_syndicate/comms/equip(mob/living/carbon/human/H)
+	..()
+	var/obj/item/clothing/mask/chameleon/M = H.wear_mask
+	if(M && M.chameleon)
+		M.chameleon.antag_only = FALSE
+		addtimer(M.chameleon, "register", 1, , H) //this needs to be delayed because the mob does not have a mind yet
+
+
+///Syndicate Xenobiologist
+
+/obj/effect/mob_spawn/human/syndicate_xenobiologist
+	name = "Syndicate Xenomorph Scientist"
+	uniform = /obj/item/clothing/under/syndicate
+	shoes = /obj/item/clothing/shoes/combat
+	gloves = /obj/item/clothing/gloves/combat
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	back = /obj/item/weapon/storage/backpack
+	belt = /obj/item/weapon/gun/energy/gun/mini
+	pocket1 = /obj/item/weapon/crowbar/red
+	radio = /obj/item/device/radio/headset/syndicate/alt
+	has_id = 1
+	id_job = "Syndicate Researcher"
+	id_access = "syndicate"
+	flavour_text = "<font size=3><b></b></font><b>You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. The egg chamber is located in the bottom right of the facility right beneath the prisoner cells, don't worry about them resisting; they have lost their will to think. The combat environment room is in the bottom left of the facility while surgery and containment is right below where your sleeper is installed. How you go about testing is up to you and your accomplices, however you are to exercise extreme caution, these lifeforms are not dumb animals; should any damage be sustained to the facility there is some spare construction materials in the observation room. DO NOT under any circumstances attempt to leave the Facility."
+	roundstart = FALSE
+	death = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+/obj/effect/mob_spawn/human/syndicate_xenobiologist/special(mob/living/L)
+	L.add_memory("You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. The egg chamber is located in the bottom right of the facility right beneath the prisoner cells, don't worry about them resisting; they have lost their will to think. The combat environment room is in the bottom left of the facility while surgery and containment is right below where your sleeper is installed. How you go about testing is up to you and your accomplices, however you are to exercise extreme caution, these lifeforms are not dumb animals; should any damage be sustained to the facility there is some spare construction materials in the observation room. DO NOT under any circumstances attempt to leave the Facility.")
 
 ///Space Mercenaries
 
@@ -205,7 +237,7 @@ var/list/barometers = list()
 	back = /obj/item/weapon/storage/backpack/medic
 	belt = /obj/item/weapon/storage/belt/medical
 	glasses = /obj/item/clothing/glasses/hud/health
-	flavour_text = "<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help.</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help</b>"
 	id_job = "Medical Doctor"
 	has_id = 1
 	roundstart = FALSE
@@ -214,7 +246,7 @@ var/list/barometers = list()
 	icon_state = "sleeper"
 /obj/effect/mob_spawn/human/orion_doctor/special(mob/living/L)
 	L.add_memory("You were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help.")
-
+	
 /obj/effect/mob_spawn/human/orion_security
 	name = "Orion Outpost Security Officer"
 	uniform = /obj/item/clothing/under/syndicate
@@ -238,25 +270,3 @@ var/list/barometers = list()
 	icon_state = "sleeper_s"
 /obj/effect/mob_spawn/human/orion_security/special(mob/living/L)
 	L.add_memory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")
-
-///Syndicate Xenobiologist
-
-/obj/effect/mob_spawn/human/syndicate_xenobiologist
-	name = "Syndicate Xenomorph Scientist"
-	uniform = /obj/item/clothing/under/syndicate
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	suit = /obj/item/clothing/suit/toggle/labcoat
-	back = /obj/item/weapon/storage/backpack/dufflebag/syndie
-	belt = /obj/item/weapon/gun/energy/gun/mini
-	r_hand = /obj/item/weapon/card/id/syndicate
-	pocket1 = /obj/item/weapon/crowbar/red
-	radio = /obj/item/device/radio/headset/syndicate/alt
-	flavour_text = "<font size=3><b></b></font><b>You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. Familiarize yourself with the facility and its rooms before beginning experimentation, you have access to various and numerous materials, gadgets and machinery to aid you and your colleagues in experimentation. DO NOT under any circumstances leave or abandon the Facility."
-	roundstart = FALSE
-	death = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper_s"
-/obj/effect/mob_spawn/human/syndicate_xenobiologist/special(mob/living/L)
-	L.add_memory("You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. Familiarize yourself with the facility and its rooms before beginning experimentation, you have access to various and numerous materials, gadgets and machinery to aid you and your colleagues in experimentation. DO NOT under any circumstances leave or abandon the Facility.")
-
