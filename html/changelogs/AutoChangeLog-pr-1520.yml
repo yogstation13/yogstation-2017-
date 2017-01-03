@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "Default drones can no longer attack or drag living things or use guns."
