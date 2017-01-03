@@ -536,5 +536,5 @@
 	if(wielded)
 		if((attack_type == MELEE_ATTACK) || (attack_type == UNARMED_ATTACK)) //Don't use a stick against fucking bullets and lasers
 			final_block_chance = max(final_block_chance, melee_block_chance)
-		return ..(owner, attack_text, final_block_chance, damage, attack_type)
+		return ..(owner, attack_text, final_block_chance, damage, attack_type, AT)
 	return 0
