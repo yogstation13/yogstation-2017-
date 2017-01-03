@@ -476,7 +476,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	anchored = 1
 	density = 1
 	var/obj/item/weapon/book/cache		// Last scanned book
-	
+
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/book))
 		if(!user.drop_item())
@@ -502,6 +502,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if (do_after(user, 20/W.toolspeed, target = src))
 				anchored = 0
 				user << "<span class='notice'>You unsecure the scanner control interface.</span>"
+	else
+		..()
 
 /obj/machinery/libraryscanner/attack_hand(mob/user)
 	if(!anchored)
