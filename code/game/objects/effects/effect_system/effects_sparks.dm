@@ -35,7 +35,7 @@
 
 /obj/effect/particle_effect/sparks/Bump(A)
 	if(A)
-		if(istype(A, /obj/structure/reagent_dispensers/fueltank))
+		if(istype(A, /obj/structure/reagent_dispensers/fueltank) && prob(2))
 			var/obj/structure/reagent_dispensers/fueltank/F = A
 			F.boom()
 	..()
