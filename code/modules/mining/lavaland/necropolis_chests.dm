@@ -728,14 +728,21 @@
 	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
+	var/waiting = FALSE
 
 
 /obj/item/bloodvial/bloodcrawl
 
 /obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
+	if(waiting)
+		return
 	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
+	user << "<span class='notice'>You start working up the nerve to shatter the bottle...</span>"
+	waiting = TRUE
+	sleep(50)
+	waiting = FALSE
 	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
 		user <<"<span class='warning'>You break [src], but nothing happens.../span>"
 		qdel(src)
