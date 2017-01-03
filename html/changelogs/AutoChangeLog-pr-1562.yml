@@ -1,5 +1,0 @@
-author: matskuman5
-delete-after: True
-changes: 
-  - bugfix: "Golfclubs now make noise when beating people, as well as some other small fixes regarding the club"
-  - tweak: "The captain's putting green is anchored by default, so you can start golfing at round start!"
