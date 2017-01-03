@@ -59,6 +59,7 @@
 				log_game("[scripter] ([bearer]) has changed the station's name to [pending_name]")
 				world.name = pending_name
 				station_name = pending_name
+				feedback_set_details("station_name","[pending_name]")
 				minor_announce("[scripter.real_name] has designated your station as [world.name]", "Captain's Charter", 0)
 				admin_controlled = TRUE
 

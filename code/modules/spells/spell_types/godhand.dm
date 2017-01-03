@@ -110,3 +110,91 @@
 		user.visible_message("<span class= 'notice'>[user] blesses [target]!</span>")
 		..()
 		return
+
+/obj/item/weapon/melee/touch_attack/nothing
+	name = "nothing"
+	catchphrase = "..."
+	desc = "There's nothing there"
+	icon_state = "nothing"
+	item_state = "nothing"
+	var/uses = 3
+	var/list/things = list()
+	var/list/blacklist = list (
+						/obj/item/weapon/bombcore,
+						/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,
+						/obj/item/weapon/grenade,
+						/obj/machinery/nuclearbomb/selfdestruct,
+						/obj/item/weapon/gun/,
+						/obj/item/weapon/disk/nuclear,
+						/obj/item/weapon/storage,
+						/obj/structure/closet
+						)
+	var/useblacklist = FALSE
+
+/obj/item/weapon/melee/touch_attack/nothing/Destroy()
+	for(var/obj/O in things)
+		if(!O.alpha)
+			reverttarget(O)
+	..()
+
+/obj/item/weapon/melee/touch_attack/nothing/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity)
+		return
+	if(user.lying || user.handcuffed)
+		return
+	if(!uses)
+		user << "<span class='warning'>Whatever was attached to your hand has faded away. All of it's charges extinguished.</span>"
+		qdel(src)
+		return
+	if(useblacklist)
+		if(target in blacklist)
+			user << "<span class='warning'>[target] is too dangerous to mess with!</span>"
+			return
+	if(iscarbon(target))
+		if(target == user)
+			if(user.job == "Mime")
+				if(uses < 3)
+					user << "<span class='warning'>You've got to have more charges than that!</span>"
+					return
+				uses = 0 // we sacrifice all of our uses!
+				var/passes = 5
+				while(passes > 0)
+					if(!user)
+						break
+					passes--
+					user.alpha = 0
+					sleep(3)
+					user.alpha = initial(user.alpha)
+					sleep(2)
+			else
+				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
+		else
+			user << "<span class='warning'>It doesn't work on other people!</span>"
+
+	if(isobj(target))
+		if(istype(target, /obj/structure/chair))
+			target.visible_message("[target] [target.alpha == 0 ? "reappears" : "vanishes"]!</span>")
+			if(target.alpha)
+				target.alpha = 0
+			else
+				target.alpha = initial(target.alpha)
+			if(!(target in things))// to be restored later
+				things += target
+			return
+		if((target in things))
+			user << "<span class='warning'>You can't use this on the same thing more than once!</span>"
+			return
+		if(!target.alpha)
+			return
+		things += target
+		user << "<span class='warning'>You poke [target] extinguishing one of your charges.</span>"
+		uses--
+		target.alpha = 0
+		addtimer(src, "reverttarget",80, FALSE, target)
+
+/obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
+	if(A)
+		A.alpha = initial(A.alpha)
+
+/obj/item/weapon/melee/touch_attack/nothing/roundstart
+	useblacklist = TRUE

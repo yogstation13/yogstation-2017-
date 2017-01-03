@@ -103,20 +103,20 @@
 "bY" = (/obj/structure/bed/abductor,/obj/effect/mob_spawn/human/ash_walker{desc = "An Ashwalker egg, this one almost speaks to your mind as you walk near it"; flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. You were <span class='danger'>Abducted</span>. Taken from your home by strange beings, so they could take you apart and then put you back together as something which they could control. They failed, and paid the price. Your prison screamed and shook as ash storms dashed it to the ground. Now you are free, but... something is different.</b>"; icon = 'icons/obj/projectiles.dmi'; icon_state = "bluespace"; name = "Cosmic Ashwalker"},/turf/open/floor/mineral/abductor,/area/ruin/powered)
 "bZ" = (/obj/machinery/door/airlock/abductor{name = "Subject Cell: Scales"},/turf/open/floor/mineral/abductor,/area/ruin/powered)
 "ca" = (/obj/machinery/door/airlock/abductor{locked = 0},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"cb" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/mindflayer,/turf/open/floor/mineral/abductor,/area/ruin/powered)
 "cc" = (/obj/structure/closet/abductor,/obj/item/weapon/gun/energy/alien,/turf/open/floor/mineral/abductor,/area/ruin/powered)
 "cd" = (/obj/structure/table/abductor,/obj/item/stack/sheet/mineral/bananium{amount = 30},/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"ce" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/shock_revolver{pin = /obj/item/device/firing_pin},/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"cf" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/temperature{pin = /obj/item/device/firing_pin},/turf/open/floor/mineral/abductor,/area/ruin/powered)
 "cg" = (/obj/structure/table/abductor,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/mineral/abductor,/area/ruin/powered)
 "ch" = (/obj/machinery/door/airlock/abductor{locked = 1; state_open = 1},/obj/structure/fans/tiny/invisible,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"ci" = (/obj/structure/table/abductor,/obj/item/weapon/switchblade,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"cj" = (/obj/structure/table/abductor,/obj/item/weapon/throwing_star,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"ck" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/gravity_gun,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"cl" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"cm" = (/obj/structure/table/abductor,/obj/item/weapon/grenade/spawnergrenade/syndiesoap,/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"cn" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/decloner{pin = /obj/item/device/firing_pin},/turf/open/floor/mineral/abductor,/area/ruin/powered)
-"co" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/kinetic_accelerator/super,/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"jY" = (/obj/structure/table/abductor,/obj/item/weapon/switchblade,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"lE" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/kinetic_accelerator/super,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"ui" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/mindflayer,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"AP" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"CW" = (/obj/structure/table/abductor,/obj/item/weapon/grenade/spawnergrenade/syndiesoap,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"JL" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/decloner{pin = /obj/item/device/firing_pin},/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"Kc" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/shock_revolver{pin = /obj/item/device/firing_pin},/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"RL" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/temperature{pin = /obj/item/device/firing_pin},/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"SP" = (/obj/structure/table/abductor,/obj/item/weapon/gun/energy/gravity_gun,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
+"Uy" = (/obj/structure/table/abductor,/obj/item/weapon/throwing_star,/obj/effect/spawner/mapset{prob_nothing = 60},/turf/open/floor/mineral/abductor,/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -153,13 +153,13 @@ aaaaaaaaaaaaababacacacacacabacacacacababacabacacabacacacabababacacaebUbVbVbVbVbV
 aaaaaaaaaaaaababacacacabacacacacacacacacacacacacacacaeaeaeaeaeaeaeaeajbVbWajbXbVajaeaeaeaeaeaeababababaaaaaaaa
 aaaaaaaaaaaaababababababacacabacacacacacabacacabacabaeajajajajajajaxajbVajbYajbZaFaeabacabababababababaaaaaaaa
 aaaaaaaaaaaaababababababacabacababacacacacacaeaeaeaeaecaaeaeaeaeaeaebUbVaTajajbVbUaeacacababaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaababacababababacacabacacaecbajccaeajaeahcdajahaeajbVbVbVbVbVaGaeacacababaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaabababababacacacacacacacaeceajajapajaeajajaFahaeajaFajaGajaGaGaeacacababababaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaababababacacabacacabacabaecfajajaeajaeajahajcgaeaeaeaeaeaeaeaeaeacacacacababaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaababababacacabacacabacacaeaeaeaeaeajchajciajcjaeababacabacacacacacacacacababaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaabababacacababacacababacaeckajccaeajaeajajajclaeababababacacacacacacacacacabaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaababababacacacacacaecmajajapajaeahajajajaeacacababacacacacababababababaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacaecnajajaeaFaeahajcoaZaeababacacacacacacacacababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaababacababababacacabacacaeuiajccaeajaeahcdajahaeajbVbVbVbVbVaGaeacacababaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaabababababacacacacacacacaeKcajajapajaeajajaFahaeajaFajaGajaGaGaeacacababababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaababababacacabacacabacabaeRLajajaeajaeajahajcgaeaeaeaeaeaeaeaeaeacacacacababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaababababacacabacacabacacaeaeaeaeaeajchajjYajUyaeababacabacacacacacacacacababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaabababacacababacacababacaeSPajccaeajaeajajajAPaeababababacacacacacacacacacabaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaababababacacacacacaeCWajajapajaeahajajajaeacacababacacacacababababababaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacacacacaeJLajajaeaFaeahajlEaZaeababacacacacacacacacababaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaababababacacacacabaeaeaeaeaeaeaeaeaeaeaeaeacacacacacacacacababababaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababacacabababababababacababacabababababacacacacacababaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacababacacacababababababacababacabacacacacacacacacacacabaaaaaaaaaaaaaaaaaaaaaa
@@ -170,3 +170,4 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacababacacabababababababababababab
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

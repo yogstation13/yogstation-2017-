@@ -6,6 +6,7 @@
 	required_players = 1
 	var/max_teams = 4
 	abductor_teams = 1
+	var/list/possible_abductors = list()
 	var/list/datum/mind/scientists = list()
 	var/list/datum/mind/agents = list()
 	var/list/datum/objective/team_objectives = list()
@@ -18,13 +19,17 @@
 	world << "<B>The current game mode is - Traitor + Abduction!</B>"
 	world << "There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the abductors or the traitors succeed!"
 
-/datum/game_mode/traitor/traitorabd/pre_setup()
+/datum/game_mode/traitor/traitorabd/can_start()
 	if(!..())
- //message_admins("<B>Not enough traitor candidates to start Traitor+Abductor.</B>")
-		return 0
+		return FALSE
+	possible_abductors = get_players_for_role(ROLE_ABDUCTOR)
+	if(possible_abductors.len/2 < abductor_teams)
+		return FALSE
+	return TRUE
 
+/datum/game_mode/traitor/traitorabd/pre_setup()
 	abductor_teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
-	var/possible_teams = max(1,round(antag_candidates.len / 2))
+	var/possible_teams = max(1,round(possible_abductors.len / 2))
 	abductor_teams = min(abductor_teams,possible_teams)
 
 	abductors.len = 2*abductor_teams
@@ -35,8 +40,8 @@
 
 	for(var/i=1,i<=abductor_teams,i++)
 		if(!make_abductor_team(i))
-			return 0
-	return 1
+			return FALSE
+	return ..()
 
 /datum/game_mode/traitor/traitorabd/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
@@ -55,12 +60,12 @@
 	var/datum/mind/agent
 
 	if(!preset_scientist)
-		scientist = pick_candidate(amount=1)[1]
+		scientist = pick_candidate(possible_abductors, 1, TRUE)[1]
 	else
 		scientist = preset_scientist
 
 	if(!preset_agent)
-		agent = pick_candidate(amount=1)[1]
+		agent = pick_candidate(possible_abductors, 1, TRUE)[1]
 	else
 		agent = preset_agent
 

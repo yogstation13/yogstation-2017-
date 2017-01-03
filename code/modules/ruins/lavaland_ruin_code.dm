@@ -125,6 +125,7 @@ var/list/barometers = list()
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/special(mob/living/L)
 	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!")
 
+
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/clothing/mask/chameleon/M = H.wear_mask

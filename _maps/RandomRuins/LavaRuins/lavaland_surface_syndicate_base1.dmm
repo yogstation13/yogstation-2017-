@@ -156,7 +156,7 @@
 "cZ" = (/obj/structure/table/reinforced,/obj/item/device/assembly/signaler,/obj/item/device/assembly/signaler,/obj/item/device/assembly/voice,/obj/item/device/assembly/voice,/obj/item/weapon/screwdriver/nuke,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "da" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/plasteel{amount = 15},/obj/item/device/electropack,/obj/item/device/taperecorder,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "db" = (/obj/structure/filingcabinet/security,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
-"dc" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/obj/item/weapon/card/id/syndicate,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dc" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/obj/item/weapon/card/id/syndicate/unrestricted,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "dd" = (/obj/machinery/computer/message_monitor,/obj/item/weapon/paper/monitorkey,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "de" = (/obj/machinery/door/airlock/hatch{name = "Telecommunications Control"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "df" = (/turf/open/floor/plasteel/vault{tag = "icon-vault (NORTHEAST)"; dir = 5},/area/ruin/powered/syndicate_lava_base)

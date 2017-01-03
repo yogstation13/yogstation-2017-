@@ -86,7 +86,7 @@
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
 			if(O.horizontal)
 				P.icon_state = "deliverycrate"
-			O.loc = P
+			O.forceMove(P)
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else

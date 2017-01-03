@@ -38,7 +38,8 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/weapon/gun/energy/gun=1)
+		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/gun/projectile/automatic/wt550)
 	l_pocket = /obj/item/weapon/kitchen/knife/combat
 
 /datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -122,7 +123,7 @@
 
 	id = /obj/item/weapon/card/id/ert/Medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
-	glasses = /obj/item/clothing/glasses/hud/diagnostic/night
+	glasses = /obj/item/clothing/glasses/hud/health/night
 	back = /obj/item/weapon/storage/backpack/medic
 	belt = /obj/item/weapon/storage/belt/medical
 	r_hand = /obj/item/weapon/storage/firstaid/regular
@@ -182,6 +183,7 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
 		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/areaeditor/blueprints,\
 		/obj/item/weapon/rcd/combat=1)
 
 /datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -203,6 +205,7 @@
 		/obj/item/weapon/rcd/combat=1,\
 		/obj/item/weapon/gun/projectile/automatic/ar=1,\
 		/obj/item/ammo_box/magazine/m556=2,\
+		/obj/item/areaeditor/blueprints,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1)
 
 /datum/outfit/ert/inquisitor //FUCKEN XENOS
