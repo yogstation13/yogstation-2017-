@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "Nonantagonists can no longer change the appearance of chameleon items, or even recognize that they can be changed."
+  - tweak: "Syndicate lavaland scientists no longer get agent cards, except the comms agent, who gets an unrestricted agent ID."
