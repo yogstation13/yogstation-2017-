@@ -1,0 +1,4 @@
+author: Jc1469
+delete-after: True
+changes: 
+  - tweak: "The delay between each word being announced by AI VOX has been slightly increased, hopefully it will now stop messing up the order of words."
