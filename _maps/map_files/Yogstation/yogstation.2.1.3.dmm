@@ -28687,8 +28687,8 @@
 /obj/item/golfball,
 /obj/item/golfball,
 /obj/item/golfball,
-/obj/item/golfclub,
-/obj/item/golfclub,
+/obj/item/weapon/golfclub,
+/obj/item/weapon/golfclub,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bfS" = (
