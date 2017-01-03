@@ -112,7 +112,7 @@ var/list/barometers = list()
 	has_id = 1
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
-	L.add_memory("<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>")
+	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!")
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
@@ -122,7 +122,7 @@ var/list/barometers = list()
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/special(mob/living/L)
-	L.addmemory("<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>")
+	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!")
 
 ///Space Mercenaries
 
@@ -193,7 +193,7 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 /obj/effect/mob_spawn/human/travelling_bard/special(mob/living/L)
-	L.addmemory("You are a travelling Bard! Your only purpose in life is to travel the galaxy, playing songs and telling epic tales of adventure, you have seen many things and you only wish to share your knowledge with all those who you pass. You are a very passive person and dislike the idea of killing another sentient person, if you cannot stop conflict through peace then you would rather remain neutral. Despite your peaceful demeanor, you are not immune to brainwashing or conversion techniques, if converted or brainwashed you are to follow the will of your masters.")
+	L.add_memory("You are a travelling Bard! Your only purpose in life is to travel the galaxy, playing songs and telling epic tales of adventure, you have seen many things and you only wish to share your knowledge with all those who you pass. You are a very passive person and dislike the idea of killing another sentient person, if you cannot stop conflict through peace then you would rather remain neutral. Despite your peaceful demeanor, you are not immune to brainwashing or conversion techniques, if converted or brainwashed you are to follow the will of your masters.")
 
 ///Orion Medical Outpost Staff
 
@@ -205,7 +205,7 @@ var/list/barometers = list()
 	back = /obj/item/weapon/storage/backpack/medic
 	belt = /obj/item/weapon/storage/belt/medical
 	glasses = /obj/item/clothing/glasses/hud/health
-	flavour_text = "<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help.</b>"
 	id_job = "Medical Doctor"
 	has_id = 1
 	roundstart = FALSE
@@ -213,7 +213,7 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 /obj/effect/mob_spawn/human/orion_doctor/special(mob/living/L)
-	L.addmemory("<font size=3><b>Y</b></font><b>ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help</b>")
+	L.add_memory("You were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help.")
 
 /obj/effect/mob_spawn/human/orion_security
 	name = "Orion Outpost Security Officer"
@@ -237,7 +237,7 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 /obj/effect/mob_spawn/human/orion_security/special(mob/living/L)
-	L.addmemory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")
+	L.add_memory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")
 
 ///Syndicate Xenobiologist
 
@@ -258,5 +258,5 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 /obj/effect/mob_spawn/human/syndicate_xenobiologist/special(mob/living/L)
-	L.addmemory("<font size=3><b></b></font><b>You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. Familiarize yourself with the facility and its rooms before beginning experimentation, you have access to various and numerous materials, gadgets and machinery to aid you and your colleagues in experimentation. DO NOT under any circumstances leave or abandon the Facility.")
+	L.add_memory("You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. Familiarize yourself with the facility and its rooms before beginning experimentation, you have access to various and numerous materials, gadgets and machinery to aid you and your colleagues in experimentation. DO NOT under any circumstances leave or abandon the Facility.")
 
