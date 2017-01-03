@@ -1,0 +1,5 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "ERT gear has been buffed again. The commander gets a WT-550 autorifle. ERT engineers will get station blueprints for viewing original construction plans."
+  - bugfix: "The ERT medic now correctly comes with an accurate medHUD."
