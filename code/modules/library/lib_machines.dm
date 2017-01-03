@@ -494,12 +494,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if (do_after(user, 20/W.toolspeed, target = src))
 				anchored = 0
 				user << "<span class='notice'>You unsecure the scanner control interface.</span>"
-	else
-		if(istype(O, /obj/item/weapon/book))
-			if(!user.drop_item())
-				return
-		O.loc = src
-	else
+	else if(istype(W, /obj/item/weapon/book))
+		if(!user.drop_item())
+			return
+		W.loc = src
+	else	
 		return ..()
 
 /obj/machinery/libraryscanner/attack_hand(mob/user)
