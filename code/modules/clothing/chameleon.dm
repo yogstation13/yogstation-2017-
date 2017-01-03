@@ -7,6 +7,7 @@
 	var/chameleon_name = "Item"
 	var/obj/target
 	var/datum/chameleon_browse/registeredWith
+	var/antag_only = TRUE
 
 /datum/chameleon/New(obj/T)
 	target = T
@@ -15,6 +16,13 @@
 /datum/chameleon/Destroy()
 	deregister()
 	return ..()
+
+/datum/chameleon/proc/can_use(datum/mind/mind)
+	if(!mind)
+		return FALSE
+	if(antag_only && !mind.special_role)
+		return FALSE
+	return TRUE
 
 /datum/chameleon/proc/initialize_disguises()
 	chameleon_blacklist += target.type
@@ -161,6 +169,8 @@
 		qdel(action)
 
 /datum/chameleon_browse/proc/registerItem(datum/chameleon/C)
+	if(!C.can_use(mind))
+		return
 	registered |= C
 	C.registeredWith = src
 	if(mind && mind.current && !action)
