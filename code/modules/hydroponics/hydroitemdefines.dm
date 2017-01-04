@@ -112,13 +112,17 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/scythe/suicide_act(mob/user)  // I made it behead for you, pal
-	user.visible_message("<span class='suicide'>[user] is beheading \himself with [src]! It looks like \he's trying to commit suicide.</span>")
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/bodypart/B in H.bodyparts)
-			if(B.body_zone == "head")
-				B.dismember()
+		var/obj/item/bodypart/B
+		B = H.get_bodypart("head")
+		if(B)
+			user.visible_message("<span class='suicide'>[user] is beheading \himself with [src]! It looks like \he's trying to commit suicide.</span>")
+			playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+			B.dismember()
+		else
+			user.visible_message("<span class='suicide'>[user] is trying to decapitate their missing head with [src]! It looks like they're trying to commit suicide.</span>")
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
 // *************************************
