@@ -115,6 +115,7 @@
 		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
+				t.obscured.plane = PLANE_AI_STATIC
 
 			obscured += t.obscured
 			for(var/eye in seenby)
@@ -170,6 +171,7 @@
 		var/turf/t = turf
 		if(!t.obscured)
 			t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
+			t.obscured.plane = PLANE_AI_STATIC
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER
