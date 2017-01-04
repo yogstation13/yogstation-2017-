@@ -141,7 +141,7 @@
 		. += cult_give_item(/obj/item/weapon/tome, mob)
 	else
 		. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
-	mob << "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>"
+	mob << "These will help you start the cult on this station. Use them well, and remember - you are not the only one. If you need help, read https://forums.yogstation.net/index.php?threads/hematolagnia-or-how-i-learned-to-stop-worrying-and-play-bloodcult.12348/ .</span>"
 
 /datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
