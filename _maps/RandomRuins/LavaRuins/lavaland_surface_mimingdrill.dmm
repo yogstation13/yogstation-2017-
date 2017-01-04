@@ -21,7 +21,7 @@
 "u" = (/obj/structure/girder,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "v" = (/obj/structure/closet/crate,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "w" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
-"x" = (/obj/structure/table,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/borg/sight/meson,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
+"x" = (/obj/structure/table,/obj/item/weapon/storage/bag/ore,/obj/item/device/mining_scanner,/obj/item/clothing/glasses/meson,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "y" = (/obj/effect/spawner/structure/window,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "z" = (/obj/item/weapon/shard,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)
 "A" = (/obj/item/weapon/shard,/turf/open/floor/plating/asteroid/basalt/lava,/area/ruin/unpowered)

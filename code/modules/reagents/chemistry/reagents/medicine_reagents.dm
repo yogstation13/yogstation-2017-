@@ -348,12 +348,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healrate = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-0.5*REM, 0)
-	M.adjustOxyLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(-healrate*REM, 0)
+	M.adjustOxyLoss(-healrate*REM, 0)
+	M.adjustBruteLoss(-healrate*REM, 0)
+	M.adjustFireLoss(-healrate*REM, 0)
 	..()
 	. = 1
 
@@ -364,6 +365,14 @@
 	M.adjustFireLoss(1.5*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/blessed
+	name = "Blessed Water"
+	id = "godblood2"
+	description = "Water drowned in the efforts of holy magic."
+	overdose_threshold = 6
+	metabolization_rate = 0.5
+	healrate = 1
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"

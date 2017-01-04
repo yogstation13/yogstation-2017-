@@ -205,6 +205,10 @@
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
 	list_reagents = list("hell_water" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/godblood
+	desc = "A flash of holy water... it's been purified with the immortality of a god however. Take only a few small sips every now and than or pay the consequences."
+	list_reagents = list("godblood2" = 15)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"

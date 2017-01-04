@@ -27,12 +27,13 @@
 "A" = (/obj/structure/chair/wood/normal{dir = 8},/turf/open/floor/wood,/area/ruin/powered)
 "B" = (/obj/structure/bed,/obj/item/weapon/bedsheet/wiz,/obj/item/toy/stuffedmonkey,/turf/open/floor/wood,/area/ruin/powered)
 "C" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/wood{icon_state = "wood-broken4"},/area/ruin/powered)
+"T" = (/obj/structure/table/wood,/obj/item/weapon/spellbook/oneuse/random,/obj/effect/spawner/mapset{prob_nothing = 90},/turf/open/floor/wood,/area/ruin/powered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaa
 abbbbbbbbbbcaaaaaa
 abdefbghijbbbbbbba
-abkghihhblbmmnnnba
+abkghihhblbmmTnTba
 abopqbhrbbbhhhhhba
 abbbbbhhbsbthugvba
 aahhwbhgihhghhhhba
@@ -40,3 +41,4 @@ aaxyhihhbhhhhzABba
 aabChbbbbbbbbbbbba
 aaaaaaaaaaaaaaaaaa
 "}
+
