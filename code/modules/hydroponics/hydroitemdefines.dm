@@ -114,8 +114,7 @@
 /obj/item/weapon/scythe/suicide_act(mob/user)  // I made it behead for you, pal
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		var/obj/item/bodypart/B
-		B = H.get_bodypart("head")
+		var/obj/item/bodypart/B = H.get_bodypart("head")
 		if(B)
 			user.visible_message("<span class='suicide'>[user] is beheading \himself with [src]! It looks like \he's trying to commit suicide.</span>")
 			playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
