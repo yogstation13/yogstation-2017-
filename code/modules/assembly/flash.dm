@@ -112,7 +112,7 @@
 
 	else if(issilicon(M))
 		if(M.weakened)
-			user.visible_message("<span class='disarm'>[user] fails to flash [M]!!</span>", "<span class='warning'>You fail to flash [M]!</span>")
+			user.visible_message("<span class='disarm'>[user] fails to flash [M]!!</span>", "<span class='warning'>[M]'s sensors are already overloaded!</span>")
 			return 0
 		else
 			add_logs(user, M, "flashed", src)
