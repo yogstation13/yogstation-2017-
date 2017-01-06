@@ -234,6 +234,8 @@
 	uses = -1
 	icon_state = "gib"
 	var/gibs = 0
+	var/remains
+	var/already_mute = 1
 
 /obj/item/organ/gland/gib/activate()
 	gibs = 0
@@ -242,31 +244,48 @@
 	gibs(L.loc)
 	var/obj/effect/decal/remains/human/G = new /obj/effect/decal/remains/human(L.loc)
 	L.forceMove(G)
-	L.disabilities += MUTE
+	if(!(MUTE in L.disabilities))
+		L.disabilities |= MUTE
+		already_mute = 0
 	L.reset_perspective(L)
 	new /obj/effect/overlay/temp/gib_animation(T, "gibbed-h")
-	spawn(200)
-		for(var/obj/effect/decal/cleanable/blood/gibs/E in orange(1,G))
-			E.forceMove(G.loc) //Steptowards doesn't work on effects. ;_;
-			sleep(10)
-		for(var/obj/effect/decal/cleanable/blood/gibs/M in orange(1,G))
-			if(M.loc == G.loc)
-				qdel(M)
-				gibs++
-		playsound(L, 'sound/effects/blobattack.ogg', 30, 1)
-		new /obj/effect/overlay/temp/gib_animation(T, "reversed-gibbed-h")
-		G.alpha = 0
-		spawn(14)
-			L.forceMove(G.loc)
-			L.reset_perspective(L)
-			var/damage_stuff = -50+(gibs*15) //The gibs come back into the body, if we miss one, we heal alot less, if we lose more, we can
-			if(damage_stuff > 0)
-				L.heal_overall_damage(damage_stuff/1.5, damage_stuff/2)
-			else
-				L.adjustBruteLoss(-damage_stuff)
-			L.visible_message("<span class='warning'>The gibs reform into [L.name]</span>") //take up to 50 damage. Fun mechanic
-			L.disabilities -= MUTE
-			qdel(G)
+	remains = G
+	addtimer(src, "pull_gibs", 200)
+
+/obj/item/organ/gland/gib/proc/pull_gibs()
+	var/obj/effect/decal/remains/human/G = remains
+	for(var/obj/effect/decal/cleanable/blood/gibs/E in orange(1,G))
+		E.forceMove(G.loc) //Steptowards doesn't work on effects. ;_;
+		addtimer(src, "del_gibs", 10)
+	addtimer(src, "ungib_anime", 9)
+
+/obj/item/organ/gland/gib/proc/del_gibs()
+	var/obj/effect/decal/remains/human/G = remains
+	for(var/obj/effect/decal/cleanable/blood/gibs/M in orange(1,G))
+		if(M.loc == G.loc)
+			qdel(M)
+			gibs++
+
+/obj/item/organ/gland/gib/proc/ungib_anime()
+	var/obj/effect/decal/remains/human/G = remains
+	playsound(owner, 'sound/effects/blobattack.ogg', 30, 1)
+	new /obj/effect/overlay/temp/gib_animation(get_turf(owner), "reversed-gibbed-h")
+	G.alpha = 0
+	addtimer(src, "restore_human", 14)
+
+/obj/item/organ/gland/gib/proc/restore_human()
+	var/obj/effect/decal/remains/human/G = remains
+	owner.forceMove(G.loc)
+	owner.reset_perspective(owner)
+	var/damage_stuff = -50+(gibs*15) //The gibs come back into the body, if we miss one, we heal alot less, if we lose more, we can
+	if(damage_stuff > 0)
+		owner.heal_overall_damage(damage_stuff/1.5, damage_stuff/2)
+	else
+		owner.adjustBruteLoss(-damage_stuff)
+	owner.visible_message("<span class='warning'>The gibs reform into [owner.name]</span>") //take up to 50 damage. Fun mechanic
+	if(!already_mute)
+		owner.disabilities &= ~MUTE
+	qdel(G)
 
 /obj/item/organ/gland/lag //I don't even feel bad
 	cooldown_low = 100
@@ -277,7 +296,7 @@
 
 /obj/item/organ/gland/lag/activate()
 	if(lag_loc)
-		owner.loc = lag_loc
+		owner.forceMove(lag_loc)
 		lag_loc = null
 		if(prob(50))
 			owner.say(";THE ONE PERCENT!!")
@@ -295,16 +314,14 @@
 		var/mob/living/carbon/human/H = owner
 		for(var/obj/item/bodypart/BP in H.bodyparts)
 			if(istype(BP, /obj/item/bodypart/chest) || istype(BP, /obj/item/bodypart/head))
-				BP.brute_dam -= 5
-				BP.burn_dam -= 5
+				BP.heal_damage(5, 5, 0)
+				BP.heal_damage(5, 5, 1)
 			else if((BP.brute_dam + BP.burn_dam) >= 5)
 				BP.drop_limb()
-				visible_message("<span class='notice'>[H]'s [BP.name] falls off.</span>")
-				sleep(50)
-		spawn(300)
-			var/bodypart_count = 0
-			for(var/obj/item/bodypart in H.bodyparts)
-				bodypart_count++
-			H.regenerate_limbs()
-			if(bodypart_count != 6) visible_message("<span class='notice'>[H]'s limbs grow back.</span>")
-			H.update_icons()
+		addtimer(src, "heal_limbs", 300)
+
+/obj/item/organ/gland/limb/proc/heal_limbs()
+	if(owner.get_missing_limbs())
+		owner.visible_message("<span class='notice'>[owner]'s limbs grow back.</span>")
+	owner.regenerate_limbs()
+	owner.update_icons()
