@@ -235,7 +235,7 @@
 	icon_state = "gib"
 	var/gibs = 0
 	var/remains
-	var/already_mute = 1
+	var/already_mute
 
 /obj/item/organ/gland/gib/activate()
 	gibs = 0
@@ -244,9 +244,11 @@
 	gibs(L.loc)
 	var/obj/effect/decal/remains/human/G = new /obj/effect/decal/remains/human(L.loc)
 	L.forceMove(G)
-	if(!(MUTE in L.disabilities))
+	if(!(MUTE & L.disabilities))
 		L.disabilities |= MUTE
 		already_mute = 0
+	else
+		already_mute = 1
 	L.reset_perspective(L)
 	new /obj/effect/overlay/temp/gib_animation(T, "gibbed-h")
 	remains = G
@@ -256,12 +258,12 @@
 	var/obj/effect/decal/remains/human/G = remains
 	for(var/obj/effect/decal/cleanable/blood/gibs/E in orange(1,G))
 		E.forceMove(G.loc) //Steptowards doesn't work on effects. ;_;
-		addtimer(src, "del_gibs", 10)
+	addtimer(src, "del_gibs", 10)
 	addtimer(src, "ungib_anime", 9)
 
 /obj/item/organ/gland/gib/proc/del_gibs()
 	var/obj/effect/decal/remains/human/G = remains
-	for(var/obj/effect/decal/cleanable/blood/gibs/M in orange(1,G))
+	for(var/obj/effect/decal/cleanable/blood/gibs/M in G.loc)
 		if(M.loc == G.loc)
 			qdel(M)
 			gibs++
@@ -310,6 +312,7 @@
 	icon_state = "gland"
 
 /obj/item/organ/gland/limb/activate()
+	var/limb_dropped
 	if(istype(owner, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
 		for(var/obj/item/bodypart/BP in H.bodyparts)
@@ -318,6 +321,9 @@
 				BP.heal_damage(5, 5, 1)
 			else if((BP.brute_dam + BP.burn_dam) >= 5)
 				BP.drop_limb()
+				limb_dropped = 1
+		if(limb_dropped)
+			owner.visible_message("<span class='notice'>[owner]'s limbs fell off</span>")
 		addtimer(src, "heal_limbs", 300)
 
 /obj/item/organ/gland/limb/proc/heal_limbs()
