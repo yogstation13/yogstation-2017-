@@ -89,6 +89,9 @@
 			var/datum/game_mode/xenomorph/X = ticker.mode // to register antag, it HAS to be xeno mode.
 			X.AddXenomorph(new_xeno.mind)
 
+		var/obj/item/organ/alien/hivenode/H = new_xeno.getorganslot("hivenode")
+		if(H)
+			H.csuffix = new_xeno.HD.colony_suffix
 		return 0
 	else
 		user << "<span class='danger'>You are not fully grown.</span>"

@@ -23,6 +23,7 @@
 			continue
 		var/obj/item/organ/alien/hivenode/node = C.getorgan(/obj/item/organ/alien/hivenode)
 		if(istype(node)) // just in case someone would ever add a diffirent node to hivenode slot
-			node.queen_death()
+			if(node.csuffix == HD.colony_suffix) // we check if they're apart of our clan.
+				node.queen_death()
 
 	return ..(gibbed)

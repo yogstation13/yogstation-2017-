@@ -854,7 +854,7 @@ var/list/airlock_overlays = list()
 		update_icon()
 		C.loc = src
 		charge = C
-	else if(istype(C, /obj/item/weapon/kitchen/knife/predator))
+	else if(istype(C, /obj/item/weapon/predator))
 		if(!density)
 			return
 		if(!ispredator(user))
@@ -868,7 +868,7 @@ var/list/airlock_overlays = list()
 						"<span class='warning'>You hear groaning metal...</span>")
 		var/open_up = 20
 		if(hasPower())
-			open_up += 30
+			open_up += 50
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 
 		if(do_after(user, open_up, target = src))

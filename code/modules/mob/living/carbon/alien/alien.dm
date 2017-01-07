@@ -47,7 +47,7 @@
 		I.Insert(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
-	overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)
+//	overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)
 	..()
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums

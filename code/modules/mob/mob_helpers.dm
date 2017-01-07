@@ -348,9 +348,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			if("help", "disarm", "grab", "harm")
 				a_intent = input
 			if("right")
-				message_admins("Original is [intent_numeric(a_intent, stinger)]!!")
-				message_admins("[intent_numeric(a_intent, stinger) + 1] is what is getting sent.")
-				message_admins("[intent_numeric((intent_numeric(a_intent, stinger) + 1) % intentlimit, stinger)] is what came out.")
 				a_intent = intent_numeric((intent_numeric(a_intent, stinger) + 1) % intentlimit, stinger)
 			if("left")
 				a_intent = intent_numeric((intent_numeric(a_intent, stinger) + 3) % intentlimit, stinger)

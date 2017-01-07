@@ -242,7 +242,7 @@
 		if(istype(occupant, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = occupant
 			if((NOCLONE in H.dna.species.specflags))
-				visible_message("<span class='warning'>[src] buzzes because of it's struggle to clone [occupant]! It seems like that is not attainable.</span>")
+				visible_message("<span class='warning'>[src] buzzes because of it's struggle to clone [occupant]! The task is unattainable.</span>")
 				return
 
 		spawn(20)

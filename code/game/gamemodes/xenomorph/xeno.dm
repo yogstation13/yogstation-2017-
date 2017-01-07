@@ -64,6 +64,7 @@ var/list/turf/xenomorphweeds = list()
 	var/alien_weed_control_count
 	var/yautijalaunch = FALSE
 	var/ERTlaunch = FALSE
+	var/roundstartalert = FALSE
 
 
 /datum/game_mode/xenomorph/announce()
@@ -89,6 +90,7 @@ var/list/turf/xenomorphweeds = list()
 /datum/game_mode/xenomorph/proc/AddXenomorph(var/datum/mind/M)
 	if(!M)	return
 	if(!M.current)	return
+	if(!Xregister(M)) return
 
 	if(istype(M.current, /mob/living/carbon/alien/humanoid/hunter))
 		AddHunter(M)
@@ -99,37 +101,30 @@ var/list/turf/xenomorphweeds = list()
 	if(istype(M.current, /mob/living/carbon/alien/humanoid/drone))
 		AddDrone(M)
 
-/datum/game_mode/xenomorph/proc/AddQueen(var/datum/mind/M)
-	if(!Xregister(M))
-		return
+	var/datum/objective/weedconquer/W = new
+	W.owner = M.current
+	M.objectives += W
 
+
+/datum/game_mode/xenomorph/proc/AddQueen(var/datum/mind/M)
 	xenomorphs["QUEEN"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno queen"
 	M.special_role = "xeno queen"
 
 /datum/game_mode/xenomorph/proc/AddHunter(var/datum/mind/M)
-	if(!Xregister(M))
-		return
-
 	xenomorphs["HUNTERS"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno hunter"
 	M.special_role = "xeno hunter"
 
 /datum/game_mode/xenomorph/proc/AddSenitel(var/datum/mind/M)
-	if(!Xregister(M))
-		return
-
 	xenomorphs["SENITELS"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno sentinel"
 	M.special_role = "xeno sentinel"
 
 /datum/game_mode/xenomorph/proc/AddDrone(var/datum/mind/M)
-	if(!Xregister(M))
-		return
-
 	xenomorphs["DRONES"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno drone"
@@ -214,16 +209,18 @@ var/list/turf/xenomorphweeds = list()
 
 	var/shuffle_universe_luck = rand(3000,4500)
 	spawn(shuffle_universe_luck)
-		priority_announce("Xenomorphic lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation. All personel are instructed to assist in the extermination of this species. This is not a drill.", "CRITICAL: Biohazard Alert", 'sound/machines/Alarm.ogg')
+		priority_announce("Xenomorphic lifesigns detected coming aboard [station_name()]. \
+			Secure any exterior access, including ducting and ventilation. All personel are \
+			instructed to assist in the extermination of this species. This is not a drill.",\
+			"CRITICAL: Biohazard Alert", 'sound/machines/Alarm.ogg')
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
+		roundstartalert = TRUE // now we can jostle between called and uncalled.
 
 	var/colony
-	var/mob/living/carbon/alien/alien
-
-	for(var/datum/mind/M in xenomorphs["QUEEN"])
-		alien = M.current
-		colony = alien.HD.colony_suffix
-		queensuffix = alien.HD.colony_suffix
+	var/datum/mind/M = xenomorphs["QUEEN"]
+	var/mob/living/carbon/alien/alien = M.current
+	colony = alien.HD.colony_suffix
+	queensuffix = alien.HD.colony_suffix
 
 	if(colony)
 		for(var/datum/mind/xenos in xenomorphs)
@@ -294,9 +291,10 @@ var/list/turf/xenomorphweeds = list()
 	if(alivecrew <= centcommexpectation)
 		ERTlaunch = TRUE
 		message_admins("An AI admin is automatically assembling an ERT squad due to the crew's casualty rate: [deadcrew]/[totalcrew] crewmembers dead.")
-		var/type = "Amber: Full ERT (Armoury Access)"
+		var/type = "Red"
 		var/num = 7
-		var/obj = "Assist the crew, call the emergency shuttle, collect and report casualities, and exterminate the xenomorphs"
+		var/obj = "Assist the crew, call the emergency shuttle, collect and report casualities, \
+					and exterminate the xenomorphs"
 		makeEmergencyresponseteam(TRUE, type, num, obj)
 		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 
@@ -305,13 +303,13 @@ var/list/turf/xenomorphweeds = list()
 
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		return TRUE
-
-	if(calculateXenos(1) == DEAD)
-		SSshuttle.emergency.mode = SHUTTLE_IDLE
-		priority_announce("The Emergency Shuttle can now be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
-	else if (SSshuttle.emergency.mode == SHUTTLE_IDLE && calculateXenos(1) != DEAD)
-		SSshuttle.emergency.mode = SHUTTLE_STRANDED
-		priority_announce("The Emergency Shuttle can no longer be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
+	if(roundstartalert)
+		if(calculateXenos(1) == DEAD)
+			SSshuttle.emergency.mode = SHUTTLE_IDLE
+			priority_announce("The Emergency Shuttle can now be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
+		else if (SSshuttle.emergency.mode == SHUTTLE_IDLE && calculateXenos(1) != DEAD)
+			SSshuttle.emergency.mode = SHUTTLE_STRANDED
+			priority_announce("The Emergency Shuttle can no longer be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 
 	if(!ERTlaunch) // Has an ERT already been sent?
 		check_for_ERT()
@@ -322,18 +320,6 @@ var/list/turf/xenomorphweeds = list()
 		return FALSE
 	else
 		return TRUE
-
-/datum/game_mode/xenomorph/proc/update_queen_suffix()
-	if(queensuffix)
-		return
-
-	var/mob/living/carbon/alien/A
-
-	for(var/datum/mind/M in xenomorphs["QUEEN"])
-		if(istype(M.current, /mob/living/carbon/alien))
-			A = M.current
-
-	queensuffix = A.HD.colony_suffix
 
 /datum/game_mode/xenomorph/declare_completion()
 	if(alien_weed_control_count <= xenomorphweeds.len)
@@ -366,45 +352,6 @@ var/list/turf/xenomorphweeds = list()
 			world << "<FONT size = 5><B>Crew Major Win!</B></FONT>"
 			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak!</B>"
 	..()
-	return
-
-//helpers
-
-/datum/game_mode/xenomorph/proc/calculateXenos(var/justqueen) // is the hive alive? 0 - yes, 1 - no
-	var/hive
-	var/datum/mind/M = findQueen(1)
-
-	if(M)
-		if(justqueen)
-			return M.current
-		if(M.current)
-			if(M.current.stat != DEAD)
-				return FALSE // false if queens alive. however, if not than it's up to whether there's even 1 xenomorph alive
-	else
-		return TRUE
-
-	for(var/datum/mind/minds in xenomorphs)
-		if(minds.assigned_role != "xeno queen")
-			if(minds.current.stat != DEAD && minds.current.stat > DEAD)
-				hive++
-
-	if(!hive)
-		return TRUE
-	else
-		return FALSE
-
-
-
-/datum/game_mode/xenomorph/proc/findQueen(var/mind) // 1 yes i found her, 0 no shes out with another hive again
-	var/queen
-	for(var/datum/mind/M in xenomorphs["QUEEN"])
-		if(mind)
-			queen = M
-		else
-			queen = M.current
-
-	return queen
-
 
 /datum/objective/weedconquer
 	explanation_text = "Conquer the station!"

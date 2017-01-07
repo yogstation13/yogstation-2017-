@@ -24,8 +24,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		if(prob(10))
 			AttemptGrow(0)
 
-
-
 // To stop clientless larva, we will check that our host has a client
 // if we find no ghosts to become the alien. If the host has a client
 // he will become the alien but if he doesn't then we will set the stage
@@ -37,13 +35,14 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(findClient())
 		premature = TRUE
 
-/obj/item/organ/body_egg/alien_embryo/proc/findClient()
+/obj/item/organ/body_egg/alien_embryo/proc/findClient() // returns 1 if we can't find anything
 	if(!owner)
 		return
-	var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET, "alien candidate")
+	message_admins("POLLING!")
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as an embryo growing inside of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 200, embryo)
 	var/client/C = null
 
-	sleep(50)
+	sleep(200)
 	if(candidates.len)
 		C = pick(candidates)
 	else
@@ -105,7 +104,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
 
 	if(premature == TRUE)
-		if(findClient())
+		if(findClient()) // returns 1 if we can't find anything
 			stage = 4 // Let's try again later.
 			return
 		else
@@ -138,7 +137,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 				var/mob/living/carbon/human/H = owner
 				var/obj/item/bodypart/B = H.get_bodypart("chest")
 				B.take_damage(200)
-				H.dna.species.specflags += NOCLONE
+				H.dna.species.specflags |= NOCLONE
 			else
 				owner.adjustBruteLoss(200)
 				owner.updatehealth()

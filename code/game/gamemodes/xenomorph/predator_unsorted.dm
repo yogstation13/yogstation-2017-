@@ -1,6 +1,6 @@
 // all that unsorted predator good stuff goes here
 
-/datum/game_mode/xenomorph/proc/callPredators()
+/datum/game_mode/proc/callPredators()
 
 
 /datum/species/predator
@@ -60,3 +60,5 @@
 	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/hardsuit/predator, slot_wear_suit)
 	equip_to_slot_if_possible(new /obj/item/weapon/shuriken, slot_l_store)
 	equip_to_slot_if_possible(new /obj/item/weapon/twohanded/spear/combistick, slot_r_store)
+	equip_to_slot_if_possible(new /obj/item/clothing/under/predator, slot_w_uniform)
+	equip_to_slot_if_possible(new /obj/item/clothing/shoes/predator, slot_shoes)

@@ -43,10 +43,6 @@ var/list/colony_database = list()
 			traits["heat_protection"] = 0.2
 			changetraits = TRUE
 
-
-
-/datum/huggerdatum/queen
-
 /datum/huggerdatum/queen/assemble(var/origin)
 	name = "queen"
 	owner = origin

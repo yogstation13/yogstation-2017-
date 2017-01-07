@@ -444,18 +444,19 @@
 	var/mission
 
 	if(!AI)
-		alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green: Centcom Official", "Blue: Light ERT (No Armoury Access)", "Amber: Full ERT (Armoury Access)", "Red: Elite ERT (Armoury Access + Pulse Weapons)", "Delta: Deathsquad")
+		alert = input("Which team should we send?", "Select Response Level") as null|anything in list("Green", "Blue", "Amber", "Red", "Delta: Deathsquad")
 	else
 		alert = alertlevel
 	if(!alert)
 		return
 	switch(alert)
-		if("Red: Elite ERT (Armoury Access + Pulse Weapons)")
+		if("Red")
 			alert = "Red"
-		if("Amber: Full ERT (Armoury Access)")
+		if("Amber")
 			alert = "Amber"
-		if("Blue: Light ERT (No Armoury Access)")
+		if("Blue")
 			alert = "Blue"
+
 	if(!AI)
 		teamsize = min(7,input("Maximum size of team? (7 max)", "Select Team Size",4) as null|num)
 		mission = input("Assign a mission to the Emergency Response Team", "Assign Mission", "Assist the station.")

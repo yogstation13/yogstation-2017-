@@ -20,6 +20,9 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
+			if(check_shields(damage, "[M.name]'s slash"))
+				visible_message("<span class='danger'>[src] blocks [M]'s slash!</span>")
+				return 0
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			if (prob(20))
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
