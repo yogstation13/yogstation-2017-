@@ -24355,9 +24355,8 @@
 	},
 /area/hydroponics)
 "aWJ" = (
-/obj/structure/bookcase{
-	name = "bookcase (Adult)"
-	},
+/obj/structure/table/wood,
+/obj/item/weapon/storage/photo_album,
 /turf/open/floor/wood,
 /area/library)
 "aWK" = (
@@ -69173,6 +69172,11 @@
 	},
 /turf/open/space,
 /area/space)
+"cGp" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/wood,
+/area/library)
 
 (1,1,1) = {"
 aaa
@@ -112213,7 +112217,7 @@ aQF
 aJA
 aTC
 aJA
-aWJ
+cGp
 aGs
 baa
 bbJ
