@@ -131,7 +131,6 @@
 			qdel(src)
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
-		take_damage(dmg_dealt, user.melee_damage_type, 0)
 /*
  * Morgue
  */
