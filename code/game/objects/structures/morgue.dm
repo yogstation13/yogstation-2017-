@@ -114,7 +114,7 @@
 	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
 	qdel(src)
 
-/obj/structure/table/attack_alien(mob/living/user)
+/obj/structure/bodycontainer/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
@@ -122,7 +122,7 @@
 	qdel(src)
 
 
-/obj/structure/table/attack_animal(mob/living/simple_animal/user)
+/obj/structure/bodycontainer/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(user.melee_damage_upper)
