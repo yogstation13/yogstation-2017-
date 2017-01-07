@@ -323,7 +323,7 @@
 				BP.drop_limb()
 				limb_dropped = 1
 		if(limb_dropped)
-			owner.visible_message("<span class='notice'>[owner]'s limbs fell off</span>")
+			owner.visible_message("<span class='notice'>[owner]'s limbs fall off.</span>")
 		addtimer(src, "heal_limbs", 300)
 
 /obj/item/organ/gland/limb/proc/heal_limbs()
