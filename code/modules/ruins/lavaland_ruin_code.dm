@@ -114,12 +114,13 @@ var/list/barometers = list()
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
 	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!")
 
+
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 	id_job = "Syndicate Comms Agent"
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/special(mob/living/L)

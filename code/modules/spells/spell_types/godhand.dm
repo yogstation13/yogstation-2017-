@@ -127,7 +127,8 @@
 						/obj/item/weapon/gun/,
 						/obj/item/weapon/disk/nuclear,
 						/obj/item/weapon/storage,
-						/obj/structure/closet
+						/obj/structure/closet,
+						/obj/item/device/transfer_valve
 						)
 	var/useblacklist = FALSE
 
