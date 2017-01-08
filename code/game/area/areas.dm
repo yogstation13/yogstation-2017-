@@ -222,6 +222,18 @@ var/list/motion_alert_listeners = list()
 		var/datum/alert_listener/listener = L
 		listener.cancelAlarm("Burglar", src, trigger)
 
+/area/proc/shuttle_lockdown(trigger)
+	for(var/area/RA in related)
+		for (var/obj/machinery/door/DOOR in RA)
+			spawn(0)
+				DOOR.lock()
+
+/area/proc/shuttle_lockdown_reset(trigger)
+	for(var/area/RA in related)
+		for (var/obj/machinery/door/DOOR in RA)
+			spawn(0)
+				DOOR.unlock()
+
 /area/proc/set_fire_alarm_effect()
 	fire = 1
 	updateicon()
