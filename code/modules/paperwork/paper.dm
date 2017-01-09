@@ -402,6 +402,9 @@
 /obj/item/weapon/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
 
+/obj/item/weapon/paper/crumpled/bloody/syndie
+	info = "<i>The following is written in shaky handwriting...</i> <br> <br> You fuckers... you left the base too many times... Now those corporate jackasses have walled us up! We're trapped, and it seems like they're intent on letting us do our research here 'till the bitter end. <br> <br> I'm not sacrificing one more hour for those slavers... I'll rather put a bullet in my head. This is the last personal log of Dr. Thomas Spacer. If someone ever reads this, make sure to follow the damn orders you're given, before it's too late..."
+
 /obj/item/weapon/paper/bombcollars
 	name = "Bomb Collar User's Guide"
 	info = "<i>How to activate, apply, and control bomb collars without blowing yourself up.</i><br>\
