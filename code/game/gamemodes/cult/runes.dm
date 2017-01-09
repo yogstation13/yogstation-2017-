@@ -944,6 +944,7 @@ var/list/teleport_runes = list()
 		user <<"<span class='warning'>You attempt to absorb the manifested soul of [ghost_to_spawn] through [S]!</span>"
 		if(user.health <= 25)
 			user <<"<span class='warning'>You lack the energy to use this rune.</span>"
+			return
 		add_logs(user, ghost_to_spawn, "captured [ghost_to_spawn.name]'s soul", S)
 		S.transfer_soul("VICTIM", ghost_to_spawn, user)
 		user <<"<span class='userdanger'>Your life energy is drained by the rune, allowing [ghost_to_spawn] to return to the physical realm.</span>"
