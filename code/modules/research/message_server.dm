@@ -297,6 +297,12 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 		AI["name"] = S.name
 
+		if(istype(S, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = S
+			if(R.connected_ai)
+				AI["slaved_to"] = R.connected_ai.name
+
+
 		if(S.mind)
 			AI["ckey"] = S.mind.key
 			if(S.stat != 2)
