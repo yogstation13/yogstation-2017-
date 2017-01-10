@@ -130,6 +130,10 @@
 		return null
 
 	replacementmode = pickweight(usable_modes)
+	if(config.protect_roles_from_antagonist)
+		replacementmode.restricted_jobs += replacementmode.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		replacementmode.restricted_jobs += "Assistant"
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
@@ -144,8 +148,8 @@
 
 	var/list/antag_canadates = list()
 
-	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag)
+	for(var/mob/living/carbon/human/H in get_playing_crewmembers_for_role(replacementmode.antag_flag, replacementmode.restricted_jobs))
+		if(H.client && (H.stat != DEAD) && H.client.prefs.allow_midround_antag)
 			antag_canadates += H
 
 	if(!antag_canadates)
@@ -153,11 +157,6 @@
 		return null
 
 	antag_canadates = shuffle(antag_canadates)
-
-	if(config.protect_roles_from_antagonist)
-		replacementmode.restricted_jobs += replacementmode.protected_jobs
-	if(config.protect_assistant_from_antagonist)
-		replacementmode.restricted_jobs += "Assistant"
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 

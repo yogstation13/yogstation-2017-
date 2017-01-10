@@ -73,18 +73,10 @@ var/list/admin_verbs_admin = list(
 	/client/proc/list_pretty_filters,
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
-	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/test_pretty_filters,
 	/client/proc/add_pretty_filter,
 	/client/proc/reset_pretty_filter,
-	/client/proc/admin_credits_get,
-	/client/proc/admin_credits_list,
-	/client/proc/admin_credits_spend,
-	/client/proc/admin_credits_earn,
-	/client/proc/admin_credits_set,
 	/client/proc/toggle_restart_vote,	/* Moderator tool for toggling restart vote */
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
@@ -169,7 +161,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/test_snap_UI,
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/check_bomb_impacts,
-	/proc/machine_upgrade,
 	/client/proc/populate_world,
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
@@ -988,6 +979,6 @@ var/list/admin_verbs_hideable = list(
 	src << "[chosen_player] Has been chosen"
 	holder.show_player_panel(chosen_player)
 
-	
+
 
 

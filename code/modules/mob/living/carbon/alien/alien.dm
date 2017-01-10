@@ -31,6 +31,9 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
+	var/last_emote = 100 //Just make sure this is bigger then emote cooldown
+	var/emote_cooldown = 50 //5 seconds
+
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 /mob/living/carbon/alien/New()
