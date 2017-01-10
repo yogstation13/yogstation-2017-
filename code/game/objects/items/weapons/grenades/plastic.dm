@@ -70,6 +70,11 @@
 		return
 	if (istype(AM, /mob/living/carbon))
 		return
+	if(istype(AM,/obj/item))
+		var/obj/item/W = AM
+		if(W.sharpness)
+			//user << "<span class='notice'>You should really kill yourself.</span>"
+			return
 	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
 
 	if(do_after(user, 50, target = AM))
