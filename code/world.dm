@@ -86,7 +86,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
-	send_discord_message("public", "A new round is about to begin! Join with this address https://yogstation.net/play.php ! The current round number is **[yog_round_number]** and the chosen map is **[map_name]** @subscriber")
+	send_discord_message("public", "A new round is about to begin! Join with this address https://yogstation.net/play.php ! The current round number is **[yog_round_number]** and the chosen map is **[map_name]** <@&213375106888499200>")
 
 	config.Tickcomp = 0
 	world.fps = 20
