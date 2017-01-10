@@ -152,7 +152,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if(W.is_hot())
+		if(W.is_hot() && !unacidable)
 			thermitemelt(user)
 			return
 
