@@ -72,11 +72,6 @@
 		return
 	if(loc == AM)
 		return
-	if(istype(AM,/obj/item))
-		var/obj/item/W = AM
-		if(W.sharpness)
-			//user << "<span class='notice'>You should really kill yourself.</span>"
-			return
 	if(istype(AM,/obj/item/weapon/restraints/legcuffs/bola))
 		return
 	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
@@ -91,6 +86,8 @@
 	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
 			return
+		if(AM.throw_speed > 3)
+			AM.throw_speed = 3
 		src.target = AM
 		loc = null
 
