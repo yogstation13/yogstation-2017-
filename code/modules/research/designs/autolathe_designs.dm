@@ -526,6 +526,22 @@
 	materials = list(MAT_METAL = 14000, MAT_GLASS = 8000)
 	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
+	
+/datum/design/conveyor_belt
+	name = "Conveyor belt"
+	id = "conveyor_belt"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5000)
+	build_path = /obj/item/conveyor_construct
+	category = list("initial", "Construction")
+
+/datum/design/conveyor_switch
+	name = "Conveyor belt switch"
+	id = "conveyor_switch"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 450, MAT_GLASS = 190)
+	build_path = /obj/item/conveyor_switch_construct
+	category = list("initial", "Construction")
 
 /datum/design/syringe
 	name = "Syringe"
