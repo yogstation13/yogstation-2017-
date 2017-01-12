@@ -1,7 +1,10 @@
 /datum/round_event_control/radiation_storm
 	name = "Radiation Storm"
 	typepath = /datum/round_event/radiation_storm
-	max_occurrences = 1
+	if(istype(ticker.mode, /datum/game_mode/blob, /datum/game_mode/nuclear)) //radstorm on war ops/blob sounds like hell
+		max_occurrences = 0
+	else
+		max_occurrences = 1
 
 /datum/round_event/radiation_storm
 
