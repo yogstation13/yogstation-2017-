@@ -202,14 +202,9 @@
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
-/mob/living/carbon/human/bullet_act()
-	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-		if(!prob(martial_art.deflection_chance))
-			return ..()
-		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-			playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
-			return 0
+/mob/living/carbon/human/bullet_act(obj/item/projectile/Proj)
+	if(martial_art && martial_art.try_deflect_projectile(src, Proj)) //Some martial arts users can deflect projectiles!
+		return
 	..()
 
 /mob/living/carbon/human/attack_ui(slot)
