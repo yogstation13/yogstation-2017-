@@ -756,9 +756,7 @@
 /mob/living/carbon/fully_heal(admin_revive = 0)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-	if(B)
-		B.damaged_brain = 0
+	regenerate_organs()
 	for(var/datum/disease/D in viruses)
 		if (D.severity != NONTHREAT)
 			D.cure(0)
@@ -770,6 +768,11 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+
+/mob/living/carbon/proc/regenerate_organs()
+	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
+	if(B)
+		B.damaged_brain = 0
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

@@ -37,18 +37,22 @@
 		return
 
 	if ((src.loc == user && user.stat == 0))
-		if(emagged)
-			if(insults)
-				user.say(pick(insultmsg),"machine", list(voicespan))
-				insults--
-			else
-				user << "<span class='warning'>*BZZZZzzzzzt*</span>"
+		if(spamcheck > world.time) //If multiple dialogue boxes are open, this will stop it from being spammable.
+			user << "<span class='warning'>\The [src] needs to recharge!</span>"
+			return
 		else
-			user.say(message,"machine", list(voicespan))
+			if(emagged)
+				if(insults)
+					user.say(pick(insultmsg),"machine", list(voicespan))
+					insults--
+				else
+					user << "<span class='warning'>*BZZZZzzzzzt*</span>"
+			else
+				user.say(message,"machine", list(voicespan))
 
-		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
-		spamcheck = world.time + 50
-		return
+			playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
+			spamcheck = world.time + 50
+			return
 
 /obj/item/device/megaphone/emag_act(mob/user)
 	user << "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>"

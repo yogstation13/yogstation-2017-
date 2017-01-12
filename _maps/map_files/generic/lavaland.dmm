@@ -1264,8 +1264,8 @@
 /area/mine/production)
 "cy" = (
 /obj/machinery/door/airlock/glass_medical{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
+	id_tag = "MiningMedic";
+	name = "Mining Medic";
 	req_access_txt = "5"
 	},
 /turf/open/floor/plasteel/white{

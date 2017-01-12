@@ -358,7 +358,8 @@ var/next_external_rsc = 0
 		holder.owner = null
 		admins -= src
 		if(!total_admins_active())
-			send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
+			if(total_unresolved_tickets())
+				send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src

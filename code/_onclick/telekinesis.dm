@@ -93,6 +93,8 @@ var/const/tk_maxrange = 15
 	qdel(src)
 	return
 
+/obj/item/tk_grab/attack_hand(mob/user)
+	return
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -101,6 +103,7 @@ var/const/tk_maxrange = 15
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
+	update_icon()
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	if(!target || !user)
@@ -123,25 +126,27 @@ var/const/tk_maxrange = 15
 		focus_object(target, user)
 		return
 
-	if(focus.anchored)
+	if(focus.anchored || !isturf(focus.loc))
 		qdel(src)
+		return
 
 	if(target == focus)
 		target.attack_self_tk(user)
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
 			I.afterattack(target,user,1) // for splashing with beakers
+			update_icon()
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
-	return
+		update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
@@ -157,7 +162,7 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!istype(target,/obj))
+	if(!isobj(target))
 		return//Cant throw non objects atm might let it do mobs later
 	if(target.anchored || !isturf(target.loc))
 		qdel(src)

@@ -153,6 +153,7 @@ Doesn't work on other aliens/AI.*/
 		// TURF CHECK
 		else if(istype(target, /turf))
 			var/turf/T = target
+      
 			if(T.unacidable)
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0

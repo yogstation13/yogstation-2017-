@@ -17,6 +17,27 @@
 	var/dom_attempts = 2
 	var/points = 25
 	var/datum/atom_hud/antag/ganghud
+	var/item_list
+	var/item_category_list
+	var/buyable_items = list(
+		/datum/gang_item/function/gang_ping,
+		/datum/gang_item/function/recall,
+		/datum/gang_item/function/outfit,
+		/datum/gang_item/weapon/switchblade,
+		/datum/gang_item/weapon/pistol,
+		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/uzi,
+		/datum/gang_item/weapon/ammo/uzi_ammo,
+		/datum/gang_item/weapon/tommygun,
+		/datum/gang_item/weapon/ammo/tommygun_ammo,
+		/datum/gang_item/equipment/spraycan,
+		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/pen,
+		/datum/gang_item/equipment/gangtool,
+		/datum/gang_item/equipment/necklace,
+		/datum/gang_item/equipment/dominator
+	)
 
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
@@ -44,9 +65,37 @@
 	gang_name_pool -= name
 	if(name == "Sleeping Carp")
 		fighting_style = "martial"
+		buyable_items = list(
+			/datum/gang_item/function/gang_ping,
+			/datum/gang_item/function/recall,
+			/datum/gang_item/function/outfit,
+			/datum/gang_item/weapon/bostaff,
+			/datum/gang_item/weapon/sleeping_carp_scroll,
+			/datum/gang_item/weapon/throwing_weapons,
+			/datum/gang_item/equipment/spraycan,
+			/datum/gang_item/equipment/c4,
+			/datum/gang_item/equipment/implant_breaker,
+			/datum/gang_item/equipment/pen,
+			/datum/gang_item/equipment/gangtool,
+			/datum/gang_item/equipment/necklace,
+			/datum/gang_item/equipment/dominator
+		)
 
 	ganghud = new()
 	log_game("The [name] Gang has been created. Their gang color is [color].")
+	build_item_list()
+
+/datum/gang/proc/build_item_list()
+	item_list = list()
+	item_category_list = list()
+	for(var/V in buyable_items)
+		var/datum/gang_item/G = new V()
+		item_list[G.id] = G
+		var/list/Cat = item_category_list[G.category]
+		if(Cat)
+			Cat += G
+		else
+			item_category_list[G.category] = list(G)
 
 /datum/gang/proc/add_gang_hud(datum/mind/recruit_mind)
 	ganghud.join_hud(recruit_mind.current)
