@@ -1036,33 +1036,36 @@
 	if(admin_revive)
 		regenerate_limbs()
 
-		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
-			var/obj/item/organ/lungs/L = new()
-			L.Insert(src)
-
-		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
-			var/obj/item/organ/heart/H = new()
-			H.Insert(src)
-
-		if(!getorganslot("tongue"))
-			var/obj/item/organ/tongue/T
-
-			for(var/tongue_type in dna.species.mutant_organs)
-				if(ispath(tongue_type, /obj/item/organ/tongue))
-					T = new tongue_type()
-					T.Insert(src)
-
-			// if they have no mutant tongues, give them a regular one
-			if(!T)
-				T = new()
-				T.Insert(src)
-
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	..()
+
+/mob/living/carbon/human/regenerate_organs()
+	..()
+	CHECK_DNA_AND_SPECIES(src)
+	if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+
+	if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
+		var/obj/item/organ/heart/H = new()
+		H.Insert(src)
+
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T
+
+		for(var/tongue_type in dna.species.mutant_organs)
+			if(ispath(tongue_type, /obj/item/organ/tongue))
+				T = new tongue_type()
+				T.Insert(src)
+
+		// if they have no mutant tongues, give them a regular one
+		if(!T)
+			T = new()
+			T.Insert(src)
 
 /mob/living/carbon/human/proc/influenceSin()
 	var/datum/objective/sintouched/O
