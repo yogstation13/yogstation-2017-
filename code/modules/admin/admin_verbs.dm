@@ -4,7 +4,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/donor_ooc_admin,
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
-	/client/proc/dsay					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/toggleticketlistenall
 	)
 var/list/admin_verbs_basic = list(
 	/client/proc/view_tickets,
@@ -24,7 +25,6 @@ var/list/admin_verbs_basic = list(
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
-	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
 	/client/proc/stop_sounds
