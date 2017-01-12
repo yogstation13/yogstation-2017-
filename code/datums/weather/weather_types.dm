@@ -119,6 +119,7 @@
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
 	telegraph_duration = 400
+	telegraph_message = "<span class='boldwarning'>The air begins to grow warm. Get to the maintenence tunnels!</span>"
 	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'	//TODO: Get sounds and sprite overlays
 	//telegraph_overlay = "light_ash"
 
@@ -148,13 +149,17 @@
 					if(prob(max(0,100-resist)))
 						if(prob(90))
 							randmutb(H)
+							if(prob(50))
+								adjustToxLoss(2)
 						else
 							randmutg(H)
 						H.domutcheck()
 		L.rad_act(20,1)
-		L.adjustToxLoss(4)
 
 /datum/weather/rad_storm/end()
 	if(..())
 		return
-	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
+	priority_announce("The radiation threat has passed. Please return to your workplaces. Emergency maintenence access will be disabled shortly.", "Anomaly Alert")
+	sleep(600) //60 seconds, i think
+	if(emergency_access = 1)
+		revoke_maint_all_access()
