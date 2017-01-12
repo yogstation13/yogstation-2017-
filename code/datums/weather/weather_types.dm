@@ -150,7 +150,7 @@
 						if(prob(90))
 							randmutb(H)
 							if(prob(50))
-								adjustToxLoss(2)
+								H.adjustToxLoss(2)
 						else
 							randmutg(H)
 						H.domutcheck()
