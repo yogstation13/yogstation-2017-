@@ -114,7 +114,7 @@
 	var/datum/mind/wizmind = new /datum/mind()
 	wizmind.name = "Wizard Defender"
 	wizmind.special_role = "Academy Defender"
-	var/datum/objective/O = new("Protect Wizard Academy from the intruders")
+	var/datum/objective/O = new("Protect Wizard Academy from the intruders. Don't leave the academy EVER.")
 	wizmind.objectives += O
 	wizmind.transfer_to(wizbody)
 	ticker.mode.wizards |= wizmind
