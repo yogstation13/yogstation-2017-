@@ -109,7 +109,7 @@
 
 /obj/item/weapon/paper/talisman/supply/weak
 	cultist_name = "Lesser Supply Talisman"
-	uses = 2
+	uses = 1
 
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport
