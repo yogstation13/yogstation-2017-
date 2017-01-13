@@ -515,7 +515,8 @@ var/next_mob_id = 0
 			var/obj/item/what = get_item_by_slot(slot)
 
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 

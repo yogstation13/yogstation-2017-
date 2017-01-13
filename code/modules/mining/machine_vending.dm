@@ -16,7 +16,6 @@
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
 		new /datum/data/mining_equipment("Barometer",			/obj/item/device/barometer/mining,										300),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
-		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Fire First-Aid Kit",	/obj/item/weapon/storage/firstaid/fire,									600),
@@ -159,20 +158,20 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer's Webbing", "Resonator", "Mining Drone", "Advanced Scanner and Weather Detector")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule", "Resonator", "Mining Drone", "Advanced Scanner", "Weather Detector")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/weapon/storage/belt/mining(src.loc)
+		if("Survival Capsule")
 			new /obj/item/weapon/survivalcapsule(src.loc)
 		if("Resonator")
 			new /obj/item/weapon/resonator(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Advanced Scanner and Weather Detector")
+		if("Advanced Scanner")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+		if("Weather Detector")
 			new /obj/item/device/barometer(src.loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)

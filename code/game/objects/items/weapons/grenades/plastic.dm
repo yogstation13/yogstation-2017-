@@ -70,11 +70,15 @@
 		return
 	if (istype(AM, /mob/living/carbon))
 		return
+	if(istype(AM,/obj/item/weapon/restraints/legcuffs/bola))
+		return
 	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
 
 	if(do_after(user, 50, target = AM))
 		if(!user.unEquip(src))
 			return
+		if(AM.throw_speed > 3)
+			AM.throw_speed = 3
 		src.target = AM
 		loc = null
 

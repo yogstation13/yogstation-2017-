@@ -27,11 +27,18 @@
 	icon_state = "title"
 	layer = FLY_LAYER
 	var/titlescreen = TITLESCREEN
+	var/titlescreenalt = TITLESCREEN_ALT
 
 /turf/closed/indestructible/splashscreen/New()
 	..()
 	if(titlescreen)
-		icon_state = titlescreen
+		if(titlescreenalt)
+			if(prob(50))
+				icon_state = titlescreen
+			else
+				icon_state = titlescreenalt
+		else
+			icon_state = titlescreen
 
 /turf/closed/indestructible/riveted
 	icon_state = "riveted"

@@ -60,7 +60,8 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
-	send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
+	if(!findtext(raw_msg, "@"))
+		send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
 
 
 	if(!holder && !bypass_ooc_approval)

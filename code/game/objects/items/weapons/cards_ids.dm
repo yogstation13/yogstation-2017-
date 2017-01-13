@@ -137,6 +137,7 @@ update_label("John Doe", "Clowny")
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=1"
+	var/restricted = TRUE
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
@@ -153,12 +154,12 @@ update_label("John Doe", "Clowny")
 		var/obj/item/weapon/card/id/I = O
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
-			if(user.mind.special_role)
+			if(!restricted || user.mind.special_role)
 				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(istype(user, /mob/living) && user.mind)
-		if(user.mind.special_role)
+		if(!restricted || user.mind.special_role)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
 				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
@@ -183,6 +184,9 @@ update_label("John Doe", "Clowny")
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
+
+/obj/item/weapon/card/id/syndicate/unrestricted
+	restricted = FALSE
 
 /obj/item/weapon/card/id/syndicate/abductor
 	name = "abductor agent card"

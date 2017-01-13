@@ -30,7 +30,7 @@
 #define R_POSSESS		64
 #define R_PERMISSIONS	128
 #define R_STEALTH		256
-#define R_REJUVINATE	512
+#define R_BASIC			512
 #define R_VAREDIT		1024
 #define R_SOUNDS		2048
 #define R_SPAWN			4096
