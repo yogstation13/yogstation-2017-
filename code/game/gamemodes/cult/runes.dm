@@ -540,7 +540,7 @@ var/list/teleport_runes = list()
 	if(potential_revive_mobs.len > 1)
 		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
 	else
-		mob_to_sacrifice = potential_revive_mobs[1]
+		fail_invoke()
 	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_revive, user))
 		return
 	if(!validness_checks(mob_to_revive, user, 0))
