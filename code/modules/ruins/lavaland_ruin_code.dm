@@ -144,7 +144,7 @@ var/list/barometers = list()
 	has_id = 1
 	id_job = "Syndicate Researcher"
 	id_access = "syndicate"
-	flavour_text = "<font size=3><b></b></font><b>"You are a syndicate scientist, attempting to breed and develop xenomorphs for use as weaponry against Nanotrasen, and by proxy, the station. And for fuck's sake, don't leave the facility."
+	flavour_text = "<font size=3><b></b></font><b>"You are a syndicate scientist, attempting to breed and develop xenomorphs for use as weaponry against Nanotrasen, and by proxy, the station. And for fuck's sake, don't leave the facility.</b>"
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
