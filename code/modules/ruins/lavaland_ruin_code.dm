@@ -111,9 +111,6 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
-/obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
-	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!")
-
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
@@ -123,9 +120,6 @@ var/list/barometers = list()
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 	id_job = "Syndicate Comms Agent"
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/special(mob/living/L)
-	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!")
-
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/equip(mob/living/carbon/human/H)
 	..()
@@ -156,8 +150,7 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 /obj/effect/mob_spawn/human/syndicate_xenobiologist/special(mob/living/L)
-	L.add_memory("You are a syndicate scientist, attempting to breed and develop xenomorphs for use as weaponry against Nanotrasen, and by proxy, the station. And for fuck's sake, don't leave the facility.")
-
+	
 ///Space Mercenaries
 
 /obj/effect/mob_spawn/human/space_mercenary
@@ -226,9 +219,7 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-/obj/effect/mob_spawn/human/travelling_bard/special(mob/living/L)
-	L.add_memory("You are a travelling Bard! Your only purpose in life is to travel the galaxy, playing songs and telling epic tales of adventure. You are a strict pacifist, and should never hurt another thinking being, even in self defense. Unless converted, of course.")
-
+	
 ///Orion Medical Outpost Staff
 
 /obj/effect/mob_spawn/human/orion_doctor
@@ -246,9 +237,7 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-/obj/effect/mob_spawn/human/orion_doctor/special(mob/living/L)
-	L.add_memory("ou were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity. Unfortunately, it seems to have teleported you into literal hell. You should probably look for anyone who needs help-Who knows who might else have gotten stranded here!")
-	
+
 /obj/effect/mob_spawn/human/orion_security
 	name = "Orion Outpost Security Officer"
 	uniform = /obj/item/clothing/under/syndicate
@@ -270,5 +259,3 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
-/obj/effect/mob_spawn/human/orion_security/special(mob/living/L)
-	L.add_memory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")
