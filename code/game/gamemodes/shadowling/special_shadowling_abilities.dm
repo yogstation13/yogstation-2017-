@@ -89,7 +89,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(H), slot_wear_mask)
 			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(H), slot_glasses)
 			H.set_species(/datum/species/shadow/ling) //can't be a shadowling without being a shadowling
-
+			H.ExtinguishMob()
 			H.mind.RemoveSpell(src)
 
 			sleep(10)
