@@ -81,7 +81,6 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.languages_spoken |= HUMAN
 		H.languages_understood |= HUMAN
-		H.weather_immunities |= "ash"
 	if(nest)
 		nest.chief = new_spawn
 	if(new_spawn.client)
