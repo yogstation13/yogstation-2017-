@@ -568,8 +568,8 @@ var/list/teleport_runes = list()
 	if(!target_mob)
 		fail_invoke()
 		return 0
-		if(!(target_mob in T.contents))
-	user << "<span class='cultitalic'>The corpse to revive has been moved!</span>"
+	if(!(target_mob in T.contents))
+		user << "<span class='cultitalic'>The corpse to revive has been moved!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target moved")
 		return 0
