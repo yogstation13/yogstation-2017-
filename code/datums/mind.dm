@@ -66,17 +66,28 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
-	var/datum/chameleon_browse/chameleon_browse = null
+	var/list/outfit_browsers = null
 
 /datum/mind/New(var/key)
 	src.key = key
 	ckey = ckey(key)
 	soulOwner = src
 
+/datum/mind/proc/get_outfit_browser(type)
+	if(!outfit_browsers)
+		outfit_browsers = list()
+	var/datum/outfit_browse/B = outfit_browsers[type]
+	if(B)
+		return B
+	B = new type(src)
+	outfit_browsers[type] = B
+	return B
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
-	if(chameleon_browse)
-		chameleon_browse.move_to_mob(current, new_character)
+	if(outfit_browsers)
+		for(var/V in outfit_browsers)
+			var/datum/outfit_browse/B = V
+			B.move_to_mob(current, new_character)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
