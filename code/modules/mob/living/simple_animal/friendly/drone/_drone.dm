@@ -295,3 +295,9 @@
 	if(no_living_interaction)
 		return FALSE
 	return ..()
+
+/mob/living/simple_animal/drone/has_left_hand()
+	return TRUE
+
+/mob/living/simple_animal/drone/has_right_hand()
+	return TRUE
