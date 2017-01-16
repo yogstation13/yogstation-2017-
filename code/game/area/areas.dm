@@ -224,13 +224,13 @@ var/list/motion_alert_listeners = list()
 
 /area/proc/shuttle_lockdown(trigger)
 	for(var/area/RA in related)
-		for (var/obj/machinery/door/DOOR in RA)
+		for (var/obj/machinery/door/airlock/shuttle/DOOR in RA)
 			spawn(0)
 				DOOR.lock()
 
 /area/proc/shuttle_lockdown_reset(trigger)
 	for(var/area/RA in related)
-		for (var/obj/machinery/door/DOOR in RA)
+		for (var/obj/machinery/door/airlock/shuttle/DOOR in RA)
 			spawn(0)
 				DOOR.unlock()
 
