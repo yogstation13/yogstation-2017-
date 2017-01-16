@@ -313,6 +313,8 @@
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_progress.ogg'
 				enterTransit()
+				var/area/alarmed = get_area(src) //probably shitcode but it works
+				alarmed.shuttle_lockdown(src)
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
 				timer = world.time
@@ -334,6 +336,8 @@
 				dock(SSshuttle.getDock("emergency_away"))
 				mode = SHUTTLE_ENDGAME
 				timer = 0
+				var/area/alarmed = get_area(src)
+				alarmed.shuttle_lockdown_reset(src)
 				open_dock()
 
 /obj/docking_port/mobile/emergency/proc/open_dock()
