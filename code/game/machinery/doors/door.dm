@@ -49,7 +49,8 @@
 	//return
 
 /obj/machinery/door/Bumped(atom/AM)
-	if(operating || emagged) return
+	if(operating)
+		return
 	if(isliving(AM))
 		var/mob/living/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
@@ -65,10 +66,11 @@
 				if(world.time - mecha.occupant.last_bumped <= 10)
 					return
 				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
+			if(!emagged && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
 				do_animate("deny")
+				unlock_check(mecha.occupant)
 		return
 	return
 
@@ -95,12 +97,12 @@
 	if(!src.requiresID())
 		user = null
 
-	if(density && !emagged)
-		if(allowed(user) || src.emergency == 1)
+	if(density)
+		if(!emagged && (allowed(user) || src.emergency == 1))
 			open()
 		else
 			do_animate("deny")
-	return
+			unlock_check(user)
 
 
 /obj/machinery/door/attack_ai(mob/user)
@@ -139,11 +141,11 @@
 
 /obj/machinery/door/proc/try_to_activate_door(mob/user)
 	add_fingerprint(user)
-	if(operating || emagged)
+	if(operating)
 		return
 	if(!requiresID())
 		user = null //so allowed(user) always succeeds
-	if(allowed(user) || emergency == 1)
+	if(!emagged && (allowed(user) || emergency == 1))
 		if(density)
 			open()
 		else
@@ -151,6 +153,7 @@
 		return
 	if(density)
 		do_animate("deny")
+		unlock_check(user)
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	return
@@ -235,7 +238,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 				flick("door_deny", src)
 
 
-/obj/machinery/door/proc/open()
+/obj/machinery/door/proc/open(forced = 0)
 	if(!density)
 		return 1
 	if(operating)
@@ -259,7 +262,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 			close()
 	return 1
 
-/obj/machinery/door/proc/close()
+/obj/machinery/door/proc/close(forced = 0)
 	if(density)
 		return 1
 	if(operating)
@@ -344,3 +347,14 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 /obj/machinery/door/proc/unlock()
 	return
+
+/obj/machinery/door/proc/unlock_check(mob/user)
+	if(density && user && user.client && user.client.prefs && user.client.prefs.spacegems > 0)
+		var/pay = askuser(user, "Looks like this door is locked for you. Unlock?","Unlock [src]?", "No", "Yes ([SG_UNLOCK] SG)", Timeout = 100)
+		if(pay == 2)
+			if(user.client.try_sg_purchase(SG_UNLOCK))
+				message_admins("[key_name_admin(usr)] has unlocked [src] for Space Gems!")
+				welded = 0
+				locked = 0
+				open(forced=2)
+				return 1

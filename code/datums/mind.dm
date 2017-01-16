@@ -68,6 +68,8 @@
 	var/quiet_round = 0 //Won't be picked as target in most cases
 	var/datum/chameleon_browse/chameleon_browse = null
 
+	var/saveme = SG_REVIVE
+
 /datum/mind/New(var/key)
 	src.key = key
 	ckey = ckey(key)

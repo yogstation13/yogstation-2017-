@@ -2,7 +2,6 @@
 	//SECURITY//
 	////////////
 #define UPLOAD_LIMIT		1048576	//Restricts client uploads to the server to 1MB //Could probably do with being lower.
-
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -234,6 +233,7 @@ var/next_external_rsc = 0
 		if(prefs.toggles & QUIET_ROUND)
 			prefs.toggles &= ~QUIET_ROUND
 			prefs.save_preferences()
+	check_income()
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
@@ -455,6 +455,30 @@ var/next_external_rsc = 0
 	if(config.see_own_notes)
 		verbs += /client/proc/self_notes
 
+
+/client/proc/check_income()
+	if(prefs.lastenergyincome == 0)
+		prefs.energy = 100
+		prefs.lastenergyincome = world.realtime
+	else
+		var/timepassed = world.realtime - prefs.lastenergyincome
+		var/income = round(timepassed/ENERGY_DELAY)
+		prefs.energy = min(prefs.energy + income*ENERGY_INCOME, 100)
+		prefs.lastenergyincome += income*ENERGY_DELAY
+	if(is_donator(src))
+		if(world.realtime - prefs.lastspacegemincome >= SG_DELAY)
+			prefs.spacegems += SG_INCOME
+			prefs.lastspacegemincome = max(prefs.lastspacegemincome+SG_DELAY, world.realtime-SG_DELAY+600)
+	prefs.save_preferences()
+
+/client/proc/try_sg_purchase(price)
+	if(prefs.spacegems >= price)
+		prefs.spacegems -= price
+		prefs.save_preferences()
+		return 1
+	else
+		askuser(src, "This action requires [price] SG, but you only have [prefs.spacegems] SG. [is_donator(src) ? "As a donator, you" : "Become a donator to"] receive [SG_INCOME] SG every week!", "Not enough Space Gems", "OK", Timeout = 0)
+		return 0
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT

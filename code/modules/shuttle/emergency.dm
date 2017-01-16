@@ -183,6 +183,8 @@
 	travelDir = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	var/obj/effect/statclick/shuttle/statclick
+
 
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
@@ -342,6 +344,20 @@
 		if(!istype(T,/turf/open/space))
 			spawn(0)
 				D.open()
+
+/obj/docking_port/mobile/emergency/proc/try_skip_timer(mob/user)
+	if(!user || !user.client || !user.client.prefs)
+		return
+	if(mode == SHUTTLE_CALL)
+		var/minutes = timeLeft(600)
+		if(minutes > 0)
+			var/pay = askuser(user, "The shuttle will arrive in [minutes] minutes. Skip the timer?", "Skip the timer!", "No", "Yes ([minutes * SG_SHUTTLE_MINUTE] SG)", Timeout = 100)
+			if(pay == 2)
+				if(user.client.try_sg_purchase(minutes * SG_SHUTTLE_MINUTE))
+					setTimer(ENGINES_START_TIME * 10)
+					minor_announce("The emergency shuttle will arrive in \
+						[ENGINES_START_TIME] seconds", "WARNING:", alert=TRUE)
+					message_admins("[key_name_admin(user)] reduced shuttle timer with Space Gems!")
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"

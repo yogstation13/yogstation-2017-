@@ -590,10 +590,15 @@ var/next_mob_id = 0
 			stat(null,"Tickets([tickets_total]):\t[tickets_unclaimed > 0 ? "Unclaimed([tickets_unclaimed])\t" : ""][tickets_resolved > 0 ? "Resolved([tickets_resolved])\t" : ""][tickets_unresolved > 0 ? "Unresolved([tickets_unresolved])\t" : ""]")
 
 		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
+			var/obj/docking_port/mobile/emergency/shuttle = SSshuttle.emergency
+			var/ETA = shuttle.getModeStr()
+			if(!shuttle.statclick)
+				shuttle.statclick = new/obj/effect/statclick/shuttle("Initializing...", src)
 			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
-
+				stat(null, shuttle.statclick.update("[ETA] [shuttle.getTimerStr()]"))
+		if(client && client.prefs)
+			if(client.prefs.spacegems > 0)
+				stat(null, "Space Gems: [client.prefs.spacegems]")
 
 	if(client && client.holder)
 		if(statpanel("MC"))

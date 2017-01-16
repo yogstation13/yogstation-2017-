@@ -470,3 +470,15 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+//Donator stuff
+#define SG_DELAY			6048000
+#define SG_INCOME			50
+#define ENERGY_DELAY		21600
+#define ENERGY_INCOME		1
+#define ENERGY_SPAWN		20
+#define SG_UNLOCK			1
+#define SG_RECHARGE			2
+#define SG_REVIVE			4
+#define SG_REVIVE_MULT		2
+#define SG_SHUTTLE_MINUTE	1

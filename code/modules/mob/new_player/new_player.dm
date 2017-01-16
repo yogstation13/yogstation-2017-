@@ -35,7 +35,7 @@
 			output += "<p><span class='linkOn'><b>Ready</b></span> <a href='byond://?src=\ref[src];ready=0'>X</a></p>"
 		else
 			output += "<p><a href='byond://?src=\ref[src];ready=1'>Ready</a> <span class='linkOff'>X</span></p>"
-			
+
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		if(joining_forbidden)
@@ -151,6 +151,8 @@
 			if(client.holder)
 				stat("Players Ready:", "[ticker.totalPlayersReady]")
 
+		stat("Energy:", "[client.prefs.energy]%")
+
 
 /mob/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -171,8 +173,9 @@
 		return 1
 
 	if(href_list["ready"])
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME) // Make sure we don't ready up after the round has started
-			ready = text2num(href_list["ready"])
+		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME || !text2num(href_list["ready"])) // Make sure we don't ready up after the round has started
+			if(check_energy())
+				ready = 1
 		else
 			ready = 0
 
@@ -239,6 +242,9 @@
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
 			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			return
+
+		if(!check_energy())
 			return
 
 		if(href_list["late_join"] == "override")
@@ -493,6 +499,8 @@
 
 /mob/new_player/proc/create_character()
 	spawning = 1
+	client.prefs.energy = max(client.prefs.energy - ENERGY_SPAWN, 0)
+	client.prefs.save_preferences()
 	close_spawn_windows()
 
 	var/mob/living/carbon/human/new_character = new(loc)
@@ -523,6 +531,19 @@
 /mob/new_player/Move()
 	return 0
 
+/mob/new_player/proc/check_energy()
+	if(!client || !client.prefs)
+		return 0
+	if(client.prefs.energy >= ENERGY_SPAWN)
+		return 1
+	else
+		var/pay = askuser(src, "You do not have enough Energy to join the game. Energy regenerates over time or can be purchased for Space Gems.", "Energy low", "Cancel", "Restore Energy ([SG_RECHARGE] SG)", Timeout = 0)
+		if(pay == 2)
+			if(client.try_sg_purchase(SG_RECHARGE))
+				client.prefs.energy = 100
+				client.prefs.save_preferences()
+				return 1
+		return 0
 
 /mob/new_player/proc/close_spawn_windows()
 
