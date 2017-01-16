@@ -91,7 +91,7 @@
 		if (istype(src.loc, /turf/closed/wall))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if (!istype(src.loc, /turf/open/floor))
+		if (!istype(src.loc, /turf/open/floor) || !(T.flags & GIRDERABLE))
 			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
