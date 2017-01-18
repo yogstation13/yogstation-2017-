@@ -40,7 +40,7 @@
 		if(!stat && !resting && !buckled)
 			for(var/mob/living/simple_animal/pet/cat/mimekitty/M in view(1,src))
 				if(!M.stat && Adjacent(M))
-					emote("me", 1, "devours \the [M]!")
+					emote("me", 1, "devours \the [M]!") //Out-snowflake this.
 					M.gib()
 					movement_target = null
 					stop_automated_movement = 0
@@ -96,8 +96,17 @@
 	if(user && stat != DEAD)
 		if(istype(W,/obj/item/weapon/card/emag))
 			user << "<span class='danger'>You break the mechanism keeping the collar on [src]'s neck.</span>"
+			emote("me",1,"devours [W].  Its eyes blaze with pure hellfire...")
 			qdel(W)
 			new /mob/living/simple_animal/hostile/reddragon(loc)
 			qdel(src)
-		emote("me",1,"devours the [W].  Its eyes blaze with immense heat...")
-		qdel(W)
+			return
+		else if(istype(W,/obj/item/weapon/card/))
+			user << "<span class='warning'>[src] does not want to eat [W]. </span>"
+			return
+		else if(istype(W,/obj/item/) && W.w_class < 3)
+			emote("me",1,"devours [W]. Its eyes blaze with immense heat...")
+			qdel(W)
+			return
+		user << "<span class='warning'>[src] does not want to eat [W].</span>"
+
