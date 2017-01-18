@@ -92,10 +92,12 @@
 	. = ..()
 
 
-/mob/living/simple_animal/pet/dragon/attackby(obj/item/weapon/card/emag/E, mob/user)
-	user << "<span class='danger'>You break the mechanism keeping the collar on [src]'s neck.</span>"
+/mob/living/simple_animal/pet/dragon/attackby(obj/item/weapon/W, mob/user)
 	if(user && stat != DEAD)
-		emote("me",1,"devours the [E].  Its eyes blaze with immense heat...")
-		qdel(E)
-		new /mob/living/simple_animal/hostile/reddragon(loc)
-		qdel(src)
+		if(istype(W,/obj/item/weapon/card/emag))
+			user << "<span class='danger'>You break the mechanism keeping the collar on [src]'s neck.</span>"
+			qdel(W)
+			new /mob/living/simple_animal/hostile/reddragon(loc)
+			qdel(src)
+		emote("me",1,"devours the [W].  Its eyes blaze with immense heat...")
+		qdel(W)
