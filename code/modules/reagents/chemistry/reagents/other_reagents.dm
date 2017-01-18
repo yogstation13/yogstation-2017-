@@ -779,9 +779,9 @@
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
 			S.success_multiplier = max(0.20, S.success_multiplier)
-			S.speedup_multiplier = max(0.50, S.speedup_multiplier)
+			S.speedup_multiplier = max(0.75, S.speedup_multiplier)
 			// +20% success propability on each step, useful while operating in less-than-perfect conditions
-			// +50% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+			// +75% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
 	..()
 
 /datum/reagent/iron
