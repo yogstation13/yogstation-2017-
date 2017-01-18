@@ -1,4 +1,0 @@
-author: utahclock
-delete-after: True
-changes: 
-  - bugfix: "fixes player panel not properly picking from alive/dead players."
