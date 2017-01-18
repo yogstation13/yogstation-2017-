@@ -24144,9 +24144,8 @@
 	},
 /area/hydroponics)
 "aWk" = (
-/obj/structure/bookcase{
-	name = "bookcase (Adult)"
-	},
+/obj/structure/table/wood,
+/obj/item/weapon/storage/photo_album,
 /turf/open/floor/wood,
 /area/library)
 "aWl" = (
@@ -69150,6 +69149,11 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyl" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/wood,
+/area/library)
 "Zym" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "armory";
@@ -112232,7 +112236,7 @@ aQf
 aIV
 aTf
 aIV
-aWk
+Zyl
 aFY
 aZr
 baW
