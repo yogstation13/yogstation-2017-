@@ -52,8 +52,3 @@
 
 /area/ruin/powered/syndicate_lava_base
 	name = "Secret Base"
-	noteleport = TRUE
-
-/area/ruin/syndicate_xeno_base
-	name = "Secret Base"
-	noteleport = TRUE
