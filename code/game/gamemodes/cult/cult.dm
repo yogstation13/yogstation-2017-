@@ -14,25 +14,20 @@
 			return 1
 	return 0
 
-/proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))
+/proc/is_convertable_to_cult(mob/living/M)
+	if(!istype(M))
 		return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))
+	if(M.mind)
+		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+			return 0
+		if(is_sacrifice_target(M.mind))
+			return 0
+		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
+			return 0
+	else
 		return 0
-	if(isloyal(mind.current))
-		return 0
-	if(issilicon(mind.current) || isbot(mind.current) || isdrone(mind.current))
-		return 0 //can't convert machines, that's ratvar's thing
-	if(isguardian(mind.current))
-		var/mob/living/simple_animal/hostile/guardian/G = mind.current
-		if(!iscultist(G.summoner))
-			return 0 //can't convert it unless the owner is converted
-	if(is_sacrifice_target(mind))
-		return 0
-	if(mind.enslaved_to && !iscultist(mind.enslaved_to))
-		return 0
-	if(is_servant_of_ratvar(mind.current))
-		return 0
+	if(isloyal(M) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
+		return 0 //can't convert machines, shielded, or ratvar's dogs
 	return 1
 
 /datum/game_mode/cult
@@ -170,43 +165,21 @@
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
 		return 0
-	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
+	if(cult_mind.current.gain_antag_datum(/datum/antagonist/cultist))
 		if(stun)
 			cult_mind.current.Paralyse(5)
-		cult += cult_mind
-		cult_mind.current.faction |= "cult"
-		cult_mind.current.verbs += /mob/living/proc/cult_help
-		var/datum/action/innate/cultcomm/C = new()
-		C.Grant(cult_mind.current)
-		update_cult_icons_added(cult_mind)
-		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='cult'>Has been converted to the cult of Nar'Sie!</span>"
-	if(jobban_isbanned(cult_mind.current, ROLE_CULTIST))
-		replace_jobbaned_player(cult_mind.current, ROLE_CULTIST, ROLE_CULTIST)
-	return 1
-
-
-/datum/game_mode/cult/add_cultist(datum/mind/cult_mind, stun) //INHERIT
-	if (!..(cult_mind))
-		return
-	memorize_cult_objectives(cult_mind)
-
+		return 1
 
 /datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
-	if(cult_mind in cult)
-		cult -= cult_mind
-		cult_mind.current.faction -= "cult"
-		cult_mind.current.verbs -= /mob/living/proc/cult_help
-		for(var/datum/action/innate/cultcomm/C in cult_mind.current.actions)
-			qdel(C)
+	if(cult_mind.current)
+		var/datum/antagonist/cultist/cult_datum = cult_mind.current.has_antag_datum(/datum/antagonist/cultist, TRUE)
+		if(!cult_datum)
+			return FALSE
+		cult_datum.silent_update = show_message
+		cult_datum.on_remove()
 		if(stun)
 			cult_mind.current.Paralyse(5)
-		cult_mind.current << "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>"
-		cult_mind.memory = ""
-		update_cult_icons_removed(cult_mind)
-		cult_mind.current.attack_log += "\[[time_stamp()]\] <span class='cult'>Has renounced the cult of Nar'Sie!</span>"
-		if(show_message)
-			for(var/mob/M in viewers(cult_mind.current))
-				M << "<span class='big'>[cult_mind.current] looks like they just reverted to their old faith!</span>"
+		return TRUE
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
 	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
