@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "Using shapechange will transfer the health and maximum health of the original mob to the creature, and taking damage while transformed will affect the user when they revert to human."
