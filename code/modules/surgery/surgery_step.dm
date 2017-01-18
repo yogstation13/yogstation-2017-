@@ -42,7 +42,9 @@
 		surgery.step_in_progress = 0
 		return
 
-	if(do_after(user, time, target = target))
+	var/step_time = time * (1 - surgery.get_speedup_multiplier())
+
+	if(do_after(user, step_time, target = target))
 		var/advance = 0
 		var/prob_chance = 100
 

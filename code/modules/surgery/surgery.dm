@@ -13,6 +13,7 @@
 	var/obj/item/organ/organ									//Operable body part
 	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
+	var/speedup_multiplier = 0									//How much each step is sped up by (in percent)
 
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_organ)
@@ -67,6 +68,8 @@
 
 	return probability + success_multiplier
 
+/datum/surgery/proc/get_speedup_multiplier()
+	return speedup_multiplier
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.

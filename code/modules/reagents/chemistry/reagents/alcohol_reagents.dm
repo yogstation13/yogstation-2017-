@@ -66,7 +66,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			for(var/s in C.surgeries)
 				var/datum/surgery/S = s
 				S.success_multiplier = max(0.10*power_multiplier, S.success_multiplier)
+				S.speedup_multiplier = max(0.25*power_multiplier, S.speedup_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				// +25% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer
