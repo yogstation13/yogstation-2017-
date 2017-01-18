@@ -107,6 +107,7 @@
 	wizbody.equipOutfit(/datum/outfit/wizard/academy)
 	var/obj/item/weapon/implant/exile/Implant = new/obj/item/weapon/implant/exile(wizbody)
 	Implant.implant(wizbody)
+	wizbody.apply_status_effect(STATUS_EFFECT_Z_LEVEL_LOCK_WIZ)
 	wizbody.faction |= "wizard"
 	wizbody.real_name = "Academy Teacher"
 	wizbody.name = "Academy Teacher"
