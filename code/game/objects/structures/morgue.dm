@@ -125,10 +125,8 @@
 /obj/structure/bodycontainer/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
-		var/dmg_dealt = user.melee_damage_upper
-		if(user.environment_smash)
-			qdel(src)
+	if(user.environment_smash)
+		qdel(src)
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
 		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 /*
