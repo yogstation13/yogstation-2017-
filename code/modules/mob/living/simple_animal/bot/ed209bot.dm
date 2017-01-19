@@ -22,7 +22,8 @@
 	allow_pai = 0
 
 	var/lastfired = 0
-	var/shot_delay = 3 //.3 seconds between shots
+	var/shot_delay = 10 //deciseconds seconds between shots
+	var/emagged_shot_delay = 5 //deciseconds seconds between shots
 	var/lasercolor = ""
 	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 
@@ -55,7 +56,7 @@
 		prev_access = access_card.access
 
 		if(lasercolor)
-			shot_delay = 6//Longer shot delay because JESUS CHRIST
+			shot_delay = emagged_shot_delay
 			check_records = 0//Don't actively target people set to arrest
 			arrest_type = 1//Don't even try to cuff
 			bot_core.req_access = list(access_maint_tunnels, access_theatre)
@@ -405,6 +406,7 @@ Auto Patrol[]"},
 			projectile = /obj/item/projectile/beam/lasertag
 		else
 			projectile = /obj/item/projectile/beam
+		shot_delay = emagged_shot_delay
 	else
 		if(!lasercolor)
 			shoot_sound = 'sound/weapons/Taser.ogg'
@@ -413,6 +415,7 @@ Auto Patrol[]"},
 			projectile = /obj/item/projectile/beam/lasertag/bluetag
 		else if(lasercolor == "r")
 			projectile = /obj/item/projectile/beam/lasertag/redtag
+		shot_delay = initial(shot_delay)
 
 /mob/living/simple_animal/bot/ed209/proc/shootAt(mob/target)
 	if(lastfired && world.time - lastfired < shot_delay)
@@ -435,6 +438,7 @@ Auto Patrol[]"},
 	var/obj/item/projectile/A = new projectile (loc)
 	playsound(loc, shoot_sound, 50, 1)
 	A.current = U
+	A.firer = src
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
 	A.fire()
@@ -509,7 +513,7 @@ Auto Patrol[]"},
 /mob/living/simple_animal/bot/ed209/UnarmedAttack(atom/A)
 	if(!on)
 		return
-	if(iscarbon(A))
+	if(iscarbon(A) && (!lasercolor || (emagged == 2)) )
 		var/mob/living/carbon/C = A
 		if(!C.stunned || arrest_type)
 			stun_attack(A)
