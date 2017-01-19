@@ -13,7 +13,7 @@
 		H.SetParalysis(0)
 		H.SetStunned(0)
 		H.SetWeakened(0)
-
+		H << "<span class='notice'> Adrenaline Booster activated.</span>"
 		spawn(30)//Slight delay so the enemy does not immedietly know the ability was used. Due to lag, this often came before waking up.
 			H.say(pick("A CORNERED FOX IS MORE DANGEROUS THAN A JACKAL!","HURT ME MOOORRREEE!","IMPRESSIVE!"))
 		spawn(70)
@@ -23,5 +23,6 @@
 			reagents.trans_id_to(H, "radium", a_transfer)
 			H << "<span class='danger'>You are beginning to feel the after-effect of the injection.</span>"
 		a_boost--
+		H <<"<span class='notice'>There are <B>[a_boost]</B> adrenaline boosters remaining.</span>"
 		s_coold = 3
 	return
