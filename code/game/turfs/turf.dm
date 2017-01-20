@@ -19,6 +19,7 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/unacidable = FALSE
 
 /turf/New()
 	..()

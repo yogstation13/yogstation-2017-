@@ -965,9 +965,9 @@ var/list/admin_verbs_hideable = list(
 			else if ((what_group == "Non-Antags Only") && M.mind.special_role)
 				continue
 		if (choose_from_dead != "Everyone")
-			if ((choose_from_dead == "Living Only") && M.stat)
+			if ((choose_from_dead == "Living Only") && M.stat == DEAD)
 				continue
-			else if ((choose_from_dead == "Dead Only") && !M.stat)
+			else if ((choose_from_dead == "Dead Only") && M.stat != DEAD)
 				continue
 		player_pool += M
 
@@ -978,6 +978,7 @@ var/list/admin_verbs_hideable = list(
 	var/chosen_player = pick(player_pool)
 	src << "[chosen_player] Has been chosen"
 	holder.show_player_panel(chosen_player)
+
 
 
 
