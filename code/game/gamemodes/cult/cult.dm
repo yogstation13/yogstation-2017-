@@ -86,7 +86,8 @@
 	return 1
 
 
-/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
+/datum/game_mode/cult/proc/get_cult_objectives()
+	var/objs = ""
 	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
 		var/explanation
 		switch(cult_objectives[obj_count])
@@ -99,8 +100,13 @@
 					explanation = "Free objective."
 			if("eldergod")
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes around and on it. You must do this after sacrificing your target."
-		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+		objs += "<B>Objective #[obj_count]</B>: [explanation][obj_count == cult_objectives.len ? "" : "<br>"]"
+	return objs
+
+/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
+	var/objs = get_cult_objectives()
+	cult_mind.current << objs
+	cult_mind.memory += objs + "<BR>"
 
 /datum/game_mode/cult/post_setup()
 	modePlayer += cultists_to_cult
