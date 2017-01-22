@@ -158,6 +158,12 @@ var/list/barometers = list()
 /obj/effect/mob_spawn/human/syndicate_xenobiologist/special(mob/living/L)
 	L.add_memory("You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. The egg chamber is located in the bottom right of the facility right beneath the prisoner cells, don't worry about them resisting; they have lost their will to think. The combat environment room is in the bottom left of the facility while surgery and containment is right below where your sleeper is installed. How you go about testing is up to you and your accomplices, however you are to exercise extreme caution, these lifeforms are not dumb animals; should any damage be sustained to the facility there is some spare construction materials in the observation room. DO NOT under any circumstances attempt to leave the Facility.")
 
+/obj/item/clothing/mask/facehugger/syndie
+	hive_faction = "syndicate"
+
+/obj/structure/alien/egg/syndie
+	hive_faction = "syndicate"
+
 ///Space Mercenaries
 
 /obj/effect/mob_spawn/human/space_mercenary
@@ -248,7 +254,7 @@ var/list/barometers = list()
 	icon_state = "sleeper"
 /obj/effect/mob_spawn/human/orion_doctor/special(mob/living/L)
 	L.add_memory("You were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help.")
-	
+
 /obj/effect/mob_spawn/human/orion_security
 	name = "Orion Outpost Security Officer"
 	uniform = /obj/item/clothing/under/syndicate
