@@ -371,6 +371,15 @@
 	limit = 3
 	category = "Assistance"
 
+/datum/spellbook_entry/item/wabbajack
+	name = "The Wabbajack"
+	desc = "It wakes so you may sleep. Supplies you with an artifact that will summon the wabbajack statue upon use."
+	item_path = /obj/item/weapon/wabbajack
+	log_name = "WJ"
+	category = "Rituals"
+	cost = 1
+	limit = 1
+
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
