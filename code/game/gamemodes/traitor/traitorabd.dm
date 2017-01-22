@@ -2,7 +2,7 @@
 	name = "traitor+abductor"
 	config_tag = "traitorabd"
 	recommended_enemies = 1
-	required_players = 1
+	required_players = 40
 	var/max_teams = 4
 	abductor_teams = 1
 	var/list/possible_abductors = list()
