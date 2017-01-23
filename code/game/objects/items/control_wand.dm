@@ -68,21 +68,25 @@
 	name = "command door remote"
 	icon_state = "gangtool-yellow"
 	region_access = 7
+	high_risk = 1
 
 /obj/item/weapon/door_remote/chief_engineer
 	name = "engineering door remote"
 	icon_state = "gangtool-orange"
 	region_access = 5
+	high_risk = 1
 
 /obj/item/weapon/door_remote/research_director
 	name = "research door remote"
 	icon_state = "gangtool-purple"
 	region_access = 4
+	high_risk = 1
 
 /obj/item/weapon/door_remote/head_of_security
 	name = "security door remote"
 	icon_state = "gangtool-red"
 	region_access = 2
+	high_risk = 1
 
 /obj/item/weapon/door_remote/quartermaster
 	name = "supply door remote"
@@ -93,6 +97,7 @@
 	name = "medical door remote"
 	icon_state = "gangtool-blue"
 	region_access = 3
+	high_risk = 1
 
 /obj/item/weapon/door_remote/civillian
 	name = "civillian door remote"
