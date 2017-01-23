@@ -1,4 +1,0 @@
-author: utahclock
-delete-after: True
-changes: 
-  - bugfix: "Pretty Filter , now properly logs"
