@@ -19,7 +19,7 @@
 
 /mob/living/carbon/alien_talk(message, shown_name = name, obj/item/organ/alien/hivenode/speakerNode)
 	if(!speakerNode)
-		speakerNode = getorgan(/obj/item/organ/alien/hivenode)
+		speakerNode = src.getorgan(/obj/item/organ/alien/hivenode)
 	..(message, shown_name, speakerNode)
 
 /mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
