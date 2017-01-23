@@ -39,6 +39,7 @@
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 4
+	high_risk = 1
 
 /obj/item/weapon/gun/energy/gun/dragnet
 	name = "\improper DRAGnet"

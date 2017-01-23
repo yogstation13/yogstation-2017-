@@ -11,6 +11,7 @@
 	materials = list(MAT_METAL=500)
 	var/obj/item/weapon/disk/nuclear/the_disk = null
 	var/active = 0
+	high_risk = 1
 
 /obj/item/weapon/pinpointer/New()
 	..()

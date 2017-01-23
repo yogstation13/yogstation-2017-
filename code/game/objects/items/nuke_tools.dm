@@ -9,6 +9,7 @@
 	item_state = "plutoniumcore"
 	var/pulse = 0
 	var/cooldown = 0
+	high_risk = 1
 
 /obj/item/nuke_core/New()
 	..()

@@ -60,6 +60,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
+	high_risk = 1
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"

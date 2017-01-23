@@ -94,12 +94,15 @@
 
 /mob/living/simple_animal/pet/dragon/attackby(obj/item/weapon/W, mob/user)
 	if(user && stat != DEAD)
+		if(W.high_risk)
+			user << "<span class='warning'>You probably shouldn't feed [src] something so valuable..</span>"
+			return
 		if(istype(W,/obj/item/weapon/card/emag))
 			user << "<span class='danger'>You break the mechanism keeping the collar on [src]'s neck.</span>"
 			emote("me",1,"devours [W].  Its eyes blaze with pure hellfire...")
 			qdel(W)
 			new /mob/living/simple_animal/hostile/reddragon(loc)
-			qdel(src)
+			qdel(src)// I don't imagine the inside of a dragon is a very hospitable place for items, so they wont be getting dropped.
 			return
 		else if(istype(W,/obj/item/weapon/card/))
 			user << "<span class='warning'>[src] does not want to eat [W]. </span>"
@@ -109,4 +112,3 @@
 			qdel(W)
 			return
 		user << "<span class='warning'>[src] does not want to eat [W].</span>"
-
