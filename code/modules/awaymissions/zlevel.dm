@@ -81,7 +81,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		while(sanity > 0)
 			sanity--
-			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
+			var/turf/T = locate(rand(75, world.maxx - 75), rand(55, world.maxy - 55), z_level)
 			var/valid = TRUE
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))

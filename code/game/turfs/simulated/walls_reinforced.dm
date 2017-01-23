@@ -234,6 +234,7 @@
 	icon_state = "r_wall"
 	opacity = 1
 	density = 1
+	unacidable = 1
 
 	walltype = "rwall"
 
