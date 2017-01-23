@@ -649,7 +649,7 @@ var/global/list/multiverse = list()
 	new /obj/machinery/power/emitter/energycannon/magical(T_loc)
 	var/obj/structure/table/abductor/wabbajack/left/L = new/obj/structure/table/abductor/wabbajack/left(T_loc)
 	L.x -= 3
-	var/obj/structure/table/abductor/wabbajack/right/R = new/obj/structure/table/abductor/wabbajack/left(T_loc)
+	var/obj/structure/table/abductor/wabbajack/right/R = new/obj/structure/table/abductor/wabbajack/right(T_loc)
 	R.x += 3
 	qdel(src)
 
