@@ -1612,12 +1612,11 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
+		var/mob/M = locate(href_list["makeblob"])
+		if(!M)
 			return
 
-		usr.client.cmd_admin_blobize(H)
+		usr.client.cmd_admin_blobize(M)
 
 
 	else if(href_list["makerobot"])
