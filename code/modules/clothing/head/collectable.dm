@@ -105,7 +105,7 @@
 		message = replacetext(message, "hot", "swelterin'")
 		message = replacetext(message, "very ", "extra")
 		message = replacetext(message, "sword", "sword")
-		message = replacetest(message, "laser", "red cannon")
+		message = replacetext(message, "laser", "red cannon")
 		message = replacetext(message, "library", "navigator's lair")
 		message = replacetext(message, "traitor", "traiter")
 		message = replacetext(message, "wizard", "sea witch")
