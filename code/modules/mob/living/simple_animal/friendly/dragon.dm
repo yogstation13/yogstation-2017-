@@ -28,6 +28,23 @@
 	var/turns_since_scan = 0
 	var/following = 0
 	gold_core_spawnable = 2
+	var/list/uneatable = list(
+		/obj/item/weapon/gun/energy/laser/captain,
+		/obj/item/weapon/gun/energy/gun/hos,
+		/obj/item/weapon/hand_tele,
+		/obj/item/weapon/tank/jetpack/oxygen/captain,
+		/obj/item/clothing/shoes/magboots/advance,
+		/obj/item/clothing/tie/medal/gold/captain,
+		/obj/item/weapon/reagent_containers/hypospray/CMO,
+		/obj/item/weapon/disk/nuclear,
+		/obj/item/clothing/suit/armor/laserproof,
+		/obj/item/clothing/suit/armor/reactive,
+		/obj/item/documents,//Any documents at all, seeing as they're all high risk, basically.  Along with all being valid for objectives.
+		/obj/item/nuke_core,
+		/obj/item/device/aicard,//Intelicard to prevent AIs getting deleted, though it'd be a cool way to kill a rogue AI. le sigh.
+		/obj/item/areaeditor/blueprints,
+		/obj/item/weapon/pinpointer//Pinpointer because if you can't feed it the disk, you shouldn't be able to feed it one of the very limited few devices able to locate the disk.
+		)
 
 
 
@@ -94,14 +111,14 @@
 
 /mob/living/simple_animal/pet/dragon/attackby(obj/item/weapon/W, mob/user)
 	if(user && stat != DEAD)
-		if(W.high_risk)
+		if(W.type in uneatable)
 			user << "<span class='warning'>You probably shouldn't feed [src] something so valuable..</span>"
 			return
 		if(istype(W,/obj/item/weapon/card/emag))
 			user << "<span class='danger'>You break the mechanism keeping the collar on [src]'s neck.</span>"
 			emote("me",1,"devours [W].  Its eyes blaze with pure hellfire...")
 			qdel(W)
-			new /mob/living/simple_animal/hostile/reddragon(loc)
+			new /mob/living/simple_animal/hostile/megafauna/dragon/reddragon(loc)
 			qdel(src)// I don't imagine the inside of a dragon is a very hospitable place for items, so they wont be getting dropped.
 			return
 		else if(istype(W,/obj/item/weapon/card/))

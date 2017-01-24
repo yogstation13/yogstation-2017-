@@ -30,6 +30,7 @@
 	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
+	var/ability_scaling = 1
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -129,7 +130,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_rain()
 	visible_message("<span class='danger'>Fire rains from the sky!</span>")
-	for(var/turf/turf in range(12,get_turf(src)))
+	for(var/turf/turf in range(round(12*ability_scaling,1),get_turf(src)))
 		if(prob(10))
 			new /obj/effect/overlay/temp/target(turf)
 
@@ -142,7 +143,7 @@
 	for(var/d in attack_dirs)
 		spawn(0)
 			var/turf/E = get_edge_target_turf(src, d)
-			var/range = 10
+			var/range = round(10*ability_scaling,1)
 			for(var/turf/open/J in getline(src,E))
 				if(!range)
 					break
@@ -151,7 +152,7 @@
 				J.hotspot_expose(700,50,1)
 				for(var/mob/living/L in J)
 					if(L != src)
-						L.adjustFireLoss(20)
+						L.adjustFireLoss(round(20*ability_scaling,1))
 						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
 				sleep(1)
 
@@ -197,7 +198,7 @@
 			L.gib()
 		else
 			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			L.adjustBruteLoss(75)
+			L.adjustBruteLoss(round(75*ability_scaling,1))
 			L.throw_at_fast(throwtarget)
 			visible_message("<span class='danger'>[L] is thrown clear of [src]!</span>")
 	for(var/mob/M in range(7,src))
@@ -229,5 +230,22 @@
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	loot = list()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/reddragon
+	name = "red dragon"
+	icon = 'icons/mob/pets.dmi'
+	icon_state = "dragon"
+	icon_living = "dragon"
+	icon_dead = "dragon_dead"
+	maxHealth = 220
+	health = 220
+	faction = list()
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2, /obj/item/clothing/mask/luchador/rudos = 1)
+	armour_penetration = 15
+	melee_damage_upper = 15
+	melee_damage_lower = 15
+	ability_scaling = 0.34
+	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1) //Takes reduced fire damage unlike the lesser one because it's an AI and AI is dumb and needs handholding.
 	loot = list()
 
