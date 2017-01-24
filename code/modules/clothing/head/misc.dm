@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'Ã©rable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -118,12 +118,86 @@
 	item_state = "pirate"
 
 	dog_fashion = /datum/dog_fashion/head/pirate
+	
+/obj/item/clothing/head/pirate/speechModification(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "captain", "CAP'N")
+		message = replacetext(message, "station", "SHIP")
+		message = replacetext(message, "sir", "sir")
+		message = replacetext(message, "there", "tharr")
+		message = replacetext(message, "my ", "me")
+		message = replacetext(message, "is ", "be")
+		message = replacetext(message, "it's", "be")
+		message = replacetext(message, "friend", "matey")
+		message = replacetext(message, "buddy", "matey")
+		message = replacetext(message, "hello", "ahoy")
+		message = replacetext(message, " hot", "swelterin'")
+		message = replacetext(message, " very ", "extra")
+		message = replacetext(message, "sword", "sword")
+		message = replacetest(message, "laser", "red cannon")
+		message = replacetext(message, "library", "navigator's lair")
+		message = replacetext(message, "traitor", "traiter")
+		message = replacetext(message, "wizard", "sea witch")
+		message = replacetext(message, "changeling", "shapeshiftARRR")
+		message = replacetext(message, "abomination", "leviathan")
+		message = replacetext(message, "gold", "booty")
+		message = replacetext(message, "ai", "navigator")
+		message = replacetext(message, "ling", "shapeshiftARRR")
+		message = replacetext(message, "ops", "enemy boarders")
+		message = replacetext(message, "the", "th'")
+		message = replacetext(message, "minerals", "treasure")
+		message = replacetext(message, "drake", "dragon")
+		message = replacetext(message, "emitter", "cannon")
+		message = replacetext(message, "construct", "demon")
+		message = replacetext(message, "shadowling", "demon o' th' deep seas")
+		message = replacetext(message, "space", "deep sea")
+		message = replacetext(message, "spaced", "set adrift")
+		message = uppertext(message)	//Things end up looking better this way, pirates are also loud
+		if(prob(25))
+			message += " YARR HARR HARR!"
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
 	desc = "Yarr."
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
+	
+/obj/item/clothing/head/hgpiratecap/speechModification(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "captain", "CAP'N")
+		message = replacetext(message, "station", "SHIP")
+		message = replacetext(message, "sir", "sir")
+		message = replacetext(message, "there", "tharr")
+		message = replacetext(message, "my ", "me")
+		message = replacetext(message, "is ", "be")
+		message = replacetext(message, "it's", "be")
+		message = replacetext(message, "friend", "matey")
+		message = replacetext(message, "buddy", "matey")
+		message = replacetext(message, "hello", "ahoy")
+		message = replacetext(message, " hot", "swelterin'")
+		message = replacetext(message, " very ", "extra")
+		message = replacetext(message, "sword", "sword")
+		message = replacetest(message, "laser", "red cannon")
+		message = replacetext(message, "library", "navigator's lair")
+		message = replacetext(message, "traitor", "traiter")
+		message = replacetext(message, "wizard", "sea witch")
+		message = replacetext(message, "changeling", "shapeshiftARRR")
+		message = replacetext(message, "abomination", "leviathan")
+		message = replacetext(message, "gold", "booty")
+		message = replacetext(message, "ai", "navigator")
+		message = replacetext(message, "ling", "shapeshiftARRR")
+		message = replacetext(message, "ops", "enemy boarders")
+		message = replacetext(message, "the", "th'")
+		message = replacetext(message, "minerals", "treasure")
+		message = replacetext(message, "drake", "dragon")
+		message = replacetext(message, "emitter", "cannon")
+		message = replacetext(message, "construct", "demon")
+		message = replacetext(message, "shadowling", "demon o' th' deep seas")
+		message = replacetext(message, "space", "deep sea")
+		message = replacetext(message, "spaced", "set adrift")
+		message = uppertext(message)	//Things end up looking better this way, pirates are also loud
+		if(prob(25))
+			message += " YARR HARR HARR!"
 
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
@@ -131,6 +205,43 @@
 	icon_state = "bandana"
 	item_state = "bandana"
 
+/obj/item/clothing/head/bandana/speechModification(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "captain", "CAP'N")
+		message = replacetext(message, "station", "SHIP")
+		message = replacetext(message, "sir", "sir")
+		message = replacetext(message, "there", "tharr")
+		message = replacetext(message, "my ", "me")
+		message = replacetext(message, "is ", "be")
+		message = replacetext(message, "it's", "be")
+		message = replacetext(message, "friend", "matey")
+		message = replacetext(message, "buddy", "matey")
+		message = replacetext(message, "hello", "ahoy")
+		message = replacetext(message, " hot", "swelterin'")
+		message = replacetext(message, " very ", "extra")
+		message = replacetext(message, "sword", "sword")
+		message = replacetest(message, "laser", "red cannon")
+		message = replacetext(message, "library", "navigator's lair")
+		message = replacetext(message, "traitor", "traiter")
+		message = replacetext(message, "wizard", "sea witch")
+		message = replacetext(message, "changeling", "shapeshiftARRR")
+		message = replacetext(message, "abomination", "leviathan")
+		message = replacetext(message, "gold", "booty")
+		message = replacetext(message, "ai", "navigator")
+		message = replacetext(message, "ling", "shapeshiftARRR")
+		message = replacetext(message, "ops", "enemy boarders")
+		message = replacetext(message, "the", "th'")
+		message = replacetext(message, "minerals", "treasure")
+		message = replacetext(message, "drake", "dragon")
+		message = replacetext(message, "emitter", "cannon")
+		message = replacetext(message, "construct", "demon")
+		message = replacetext(message, "shadowling", "demon o' th' deep seas")
+		message = replacetext(message, "space", "deep sea")
+		message = replacetext(message, "spaced", "set adrift")
+		message = uppertext(message)	//Things end up looking better this way, pirates are also loud
+		if(prob(25))
+			message += " YARR HARR HARR!"
+			
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
