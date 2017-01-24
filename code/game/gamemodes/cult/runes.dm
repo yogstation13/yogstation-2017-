@@ -328,7 +328,7 @@ var/list/teleport_runes = list()
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
-  req_cultists = 1
+	req_cultists = 1
 	allow_excess_invokers = 1
 	rune_in_use = FALSE
 
