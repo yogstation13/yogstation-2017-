@@ -233,7 +233,8 @@
 	loot = list()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/reddragon
-	name = "red dragon"
+	name = "Red Dragon"
+	desc = "A dragon so red and evil in nature that it makes your blood boil..  or maybe that's just the mask."
 	icon = 'icons/mob/pets.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
@@ -241,6 +242,8 @@
 	maxHealth = 220
 	health = 220
 	faction = list()
+	mob_size = MOB_SIZE_SMALL
+	pixel_x = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2, /obj/item/clothing/mask/luchador/rudos = 1)
 	armour_penetration = 15
 	melee_damage_upper = 15
