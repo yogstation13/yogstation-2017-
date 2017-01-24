@@ -245,11 +245,11 @@
 				if(!M.hacked && !M.clockwork)
 					O.make_laws()
 
+			if(!M.clockwork)
+				remove_servant_of_ratvar(BM, TRUE)
+
 			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
-
-			if(M.clockwork)
-				add_servant_of_ratvar(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")

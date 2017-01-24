@@ -88,7 +88,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
-			loc = T
+			forceMove(T)
 
 
 /obj/singularity/energy_ball/proc/handle_energy()

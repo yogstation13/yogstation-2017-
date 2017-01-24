@@ -107,6 +107,7 @@
 	wizbody.equipOutfit(/datum/outfit/wizard/academy)
 	var/obj/item/weapon/implant/exile/Implant = new/obj/item/weapon/implant/exile(wizbody)
 	Implant.implant(wizbody)
+	wizbody.apply_status_effect(STATUS_EFFECT_Z_LEVEL_LOCK_WIZ)
 	wizbody.faction |= "wizard"
 	wizbody.real_name = "Academy Teacher"
 	wizbody.name = "Academy Teacher"
@@ -114,7 +115,7 @@
 	var/datum/mind/wizmind = new /datum/mind()
 	wizmind.name = "Wizard Defender"
 	wizmind.special_role = "Academy Defender"
-	var/datum/objective/O = new("Protect Wizard Academy from the intruders")
+	var/datum/objective/O = new("Protect Wizard Academy from the intruders. Don't leave the academy EVER.")
 	wizmind.objectives += O
 	wizmind.transfer_to(wizbody)
 	ticker.mode.wizards |= wizmind

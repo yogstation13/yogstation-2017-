@@ -28,6 +28,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/strength = 5
 
 	var/attached = 0
+	var/hive_faction
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
@@ -183,7 +184,8 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
 		if((!LC || LC.status != ORGAN_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			new /obj/item/organ/body_egg/alien_embryo(target)
+			var/obj/item/organ/body_egg/alien_embryo/embryo = new /obj/item/organ/body_egg/alien_embryo(target)
+			embryo.hive_faction = hive_faction
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target
