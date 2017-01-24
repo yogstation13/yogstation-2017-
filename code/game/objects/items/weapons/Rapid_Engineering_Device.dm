@@ -15,7 +15,6 @@
 	w_class = 3
 	origin_tech = "engineering=5;materials=3"
 	req_access_txt = "11"
-	high_risk = 1
 
 	var/datum/effect_system/spark_spread/spark_system
 	var/obj/item/weapon/pipe_dispenser/rpd
