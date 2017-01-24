@@ -78,11 +78,13 @@
 		temporary = 1
 	if(H.martial_art && temporary)
 		base = H.martial_art
+		no_ranged_weapons = no_ranged_weapons || base.no_ranged_weapons
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.martial_art != src)
 		return
+	no_ranged_weapons = initial(no_ranged_weapons)
 	H.martial_art = base
 	if(help_verb)
 		H.verbs -= help_verb

@@ -8,6 +8,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	icon_state = "larva0_dead"
 	var/stage = 0
 	var/growing = FALSE
+	var/hive_faction
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -72,7 +73,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	if(!owner)
 		return
 	growing = TRUE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as an alien larva?", ROLE_ALIEN, null, ROLE_ALIEN, 200, src)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [hive_faction ? " [hive_faction]" : ""] alien larva?", ROLE_ALIEN, null, ROLE_ALIEN, 200, src)
 	growing = FALSE
 	if(!owner)
 		return
@@ -102,6 +103,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	new_xeno.canmove = 0 //so we don't move during the bursting animation
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
+	new_xeno.set_hive_faction(hive_faction)
 	growing = TRUE
 	spawn(6)
 		if(new_xeno)

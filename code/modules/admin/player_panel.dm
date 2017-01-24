@@ -459,6 +459,14 @@
 			dat += "</table>"
 
 		if(ticker.mode.cult.len)
+			if(istype(ticker.mode, /datum/game_mode/cult))
+				var/datum/game_mode/cult/C = ticker.mode
+				dat += "<b>Cult Objectives:</b><br>"
+				dat += C.get_cult_objectives()
+				if(C.sacrifice_target)
+					dat += "<br><a href='?_src_=holder;cult_sac_target=1'>Change Sac Target</a><br>"
+				else
+					dat += "<br><a href='?_src_=holder;cult_sac_target=1'>Add Sac Target</a><br>"
 			dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.cult)
 				var/mob/M = N.current

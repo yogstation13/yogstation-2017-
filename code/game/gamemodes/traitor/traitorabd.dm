@@ -1,7 +1,6 @@
 /datum/game_mode/traitor/traitorabd
 	name = "traitor+abductor"
 	config_tag = "traitorabd"
-	antag_flag = ROLE_ABDUCTOR
 	recommended_enemies = 1
 	required_players = 1
 	var/max_teams = 4
