@@ -19,7 +19,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/message_cooldown = 0
 	var/ai_message_cooldown = 0
 	var/tmp_alertlevel = 0
-	var/z_lock = 1//Var that admins can change to 0 if they need to use a comms console for some crap, I dunno.
+	var/z_lock = TRUE//Var that admins can change to 0 if they need to use a comms console for some crap, I dunno, because it's basically like I didn't change it.
 	var/const/STATE_DEFAULT = 1
 	var/const/STATE_CALLSHUTTLE = 2
 	var/const/STATE_CANCELSHUTTLE = 3
@@ -50,7 +50,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if(z_lock) //Can only be used on SS13 unless z_lock is changed..
-		if(z != 1)
+		if(z != ZLEVEL_STATION)
 			usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 			return
 	usr.set_machine(src)
@@ -340,7 +340,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	if(..())
 		return
 	if(z_lock)
-		if (src.z != 1)
+		if (src.z != ZLEVEL_STATION)
 			user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 			return
 
