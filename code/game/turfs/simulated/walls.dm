@@ -102,7 +102,7 @@
 
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))
-		if(istype(src, /turf/closed/wall/mineral/cult)||istype(src, /turf/closed/wall/mineral/cult/artificer))
+		if(istype(src, /turf/closed/wall/mineral/cult))
 			return
 		src.ChangeTurf(/turf/closed/wall/mineral/cult/artificer)
 		M <<"<span class='notice'>You transfer some of your corrupt energy into the wall, causing it to transform.</span>"
