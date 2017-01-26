@@ -226,9 +226,9 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large/Aggro()
 	..()
-		summon_backup(15)
-		playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
-		visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>")
+	summon_backup(15)
+	playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
+	visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>")
 
 /mob/living/simple_animal/hostile/alien/queen/large/handle_automated_action()
 	if(!..()) //AIStatus is off
