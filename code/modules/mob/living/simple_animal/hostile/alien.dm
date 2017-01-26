@@ -244,8 +244,8 @@
 			egg_cooldown = initial(egg_cooldown)
 			LayEggs()
 	if(AIStatus == AI_ON)
-		if(angry = 1) && prob (20)
-			if(bitchslap.cast_check(0, src)
+		if(angry = 1) && prob (20))
+			if(bitchslap.cast_check(0, src))
 				bitchslap.choose_targets(src)
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob
