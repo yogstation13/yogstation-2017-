@@ -146,12 +146,19 @@
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_health = 80
 	health = 80
+	var/area/area
+	var/areaname
 	var/wall_generation_cooldown
+	var/active = TRUE //is it generating components? If it's off the station zlevel or in space it won't.
 
 /obj/structure/clockwork/cache/New()
 	..()
 	clockwork_caches++
 	SetLuminosity(2,1)
+	var/area/area = get_area()
+	var/areaname = initial(area.name)
+	if(areaname == "Space" || z != ZLEVEL_STATION)
+		active = FALSE
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
@@ -211,6 +218,8 @@
 
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
+	if(!active)
+		user << "<span class='warning'>It looks inactive.</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)

@@ -51,6 +51,8 @@ To draw a rune, use an arcane tome.
 		user << "<b>Required Acolytes:</b> [req_cultists]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
+	if(z != ZLEVEL_STATION)
+		user <<"It looks inactive."
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
@@ -103,6 +105,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/can_invoke(var/mob/living/user=null)
 	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
+	var/area/usrarea = get_area(user.loc)
+	var/usrturf = get_turf(user.loc)
+	if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || user.z != ZLEVEL_STATION)
+		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to utilize this rune! Return to the station!</span>"
+		fail_invoke()
+		return
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
@@ -283,9 +291,9 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		return
 
-	if(user.z > ZLEVEL_SPACEMAX)
-		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
-		log_game("Teleport rune failed - user in away mission")
+	if(user.z > ZLEVEL_STATION)
+		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to utilize this rune!</span>"
+		log_game("Teleport rune failed - user off station zlevel")
 		fail_invoke()
 		return
 
@@ -486,8 +494,6 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
-		return
-	if(z != ZLEVEL_STATION)
 		return
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult_mode = ticker.mode
