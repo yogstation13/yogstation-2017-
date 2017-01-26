@@ -189,12 +189,12 @@
 	icon_dead = "alienq_dead"
 	bubble_icon = "alienroyal"
 	desc = "The bigger momma. Rules over all the queens below it, and their hives by extention. Hobbies include: murder."
-	move_to_delay = 4
+	move_to_delay = 20
 	maxHealth = 900
 	health = 900
 	environment_smash = 3
 	force_threshold = 15
-	rapid = 1
+	var/angry = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
 							/obj/item/organ/alien/plasmavessel/large/queen = 1,
@@ -214,16 +214,21 @@
 	AddSpell(bitchslap)
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
-	. = ..()
-	if((stat != DEAD) && health < (maxHealth/3))
-		summon_backup(30)
-		visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>")
+	if(angry == 0)
+		if((health < maxHealth/2) && if(stat != DEAD))
+			angry = 1
+			visible_message("<span class='alertalien'>[src] screeches in rage!</span>")
+		else if(stat != DEAD) //just another check here in case the past fucks up
+			angry = 0
+		else
+			angry = 0
+			visible_message("<span class='alertalien'>[src] appears to have calmed down.</span>")
+
+/mob/living/simple_animal/hostile/alien/queen/large/Aggro()
+	..()
+		summon_backup(15)
 		playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
-		if(bitchslap)
-			if(bitchslap.cast_check(0, src))
-				bitchslap.choose_targets(src)
-	else
-		return
+		visible_message("<span class='alertalien'>[src] lets out a shrill scream!</span>")
 
 /mob/living/simple_animal/hostile/alien/queen/large/handle_automated_action()
 	if(!..()) //AIStatus is off
@@ -240,13 +245,13 @@
 			egg_cooldown = initial(egg_cooldown)
 			LayEggs()
 	if(AIStatus == AI_ON)
-		if(health < (maxHealth/3) && prob (20))
-			if(bitchslap.cast_check(0, src))
+		if(angry = 1) && prob (20)
+			if(bitchslap.cast_check(0, src)
 				bitchslap.choose_targets(src)
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/simplemob
-	charge_max = 100
-	cooldown_min = 100
+	charge_max = 40
+	cooldown_min = 40
 	player_lock = 0
 
 
@@ -293,9 +298,9 @@
 
 /obj/item/projectile/neurotox/heavy //queens and prae, purely lethal
 	name = "heavy neurotoxin"
-	damage = 45
+	damage = 20
 	icon_state = "toxin"
-	stamina = 10
+	stamina = 20
 	armour_penetration = 40
 
 
@@ -306,8 +311,6 @@
 	icon_state = "toxin"
 
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
-	if(bodytemperature < minbodytemp)
-		adjustBruteLoss(0) //aliens don't care about cold
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
 
