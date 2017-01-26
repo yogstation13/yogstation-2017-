@@ -63,7 +63,7 @@
 					user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
 					return
 				apply_cuffs(C,user)
-				user << "<span class='notice'>You handcuff [C]'s arm to their neck. Brutal.</span>", \
+				user << "<span class='notice'>You handcuff [C]'s arm to their neck. Brutal.</span>"
 				C.visible_message("<span class='danger'>[user] handcuffs [C]'s arm to their neck!</span>"
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 					feedback_add_details("handcuffs","C")
