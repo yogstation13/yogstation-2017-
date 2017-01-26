@@ -4,7 +4,8 @@ var/list/admin_verbs_default = list(
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/donor_ooc_admin,
 	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
-	/client/proc/dsay					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/toggleticketlistenall
 	)
 var/list/admin_verbs_basic = list(
 	/client/proc/view_tickets,
@@ -24,7 +25,6 @@ var/list/admin_verbs_basic = list(
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
-	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
 	/client/proc/stop_sounds
@@ -965,9 +965,9 @@ var/list/admin_verbs_hideable = list(
 			else if ((what_group == "Non-Antags Only") && M.mind.special_role)
 				continue
 		if (choose_from_dead != "Everyone")
-			if ((choose_from_dead == "Living Only") && M.stat)
+			if ((choose_from_dead == "Living Only") && M.stat == DEAD)
 				continue
-			else if ((choose_from_dead == "Dead Only") && !M.stat)
+			else if ((choose_from_dead == "Dead Only") && M.stat != DEAD)
 				continue
 		player_pool += M
 
@@ -978,6 +978,7 @@ var/list/admin_verbs_hideable = list(
 	var/chosen_player = pick(player_pool)
 	src << "[chosen_player] Has been chosen"
 	holder.show_player_panel(chosen_player)
+
 
 
 

@@ -78,6 +78,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
+	unacidable = 1
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -214,6 +215,7 @@
 	var/processing = 0
 	luminosity = 1
 	flags = 0
+	unacidable = 1
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"

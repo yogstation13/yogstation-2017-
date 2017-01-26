@@ -341,7 +341,7 @@
 	maxhealth = 20
 	health_regen = 1
 	brute_resist = 0.25
-	fire_resist = 0.75
+	fire_resist = 1
 	atmosblock = 1
 
 /obj/effect/blob/normal/scannerreport()
