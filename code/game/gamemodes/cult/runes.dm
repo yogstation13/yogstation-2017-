@@ -329,7 +329,7 @@ var/list/teleport_runes = list()
 	var/list/convertees = list()
 	var/turf/T = get_turf(src)
 	for(var/mob/living/M in T)
-		if(M.stat != DEAD && !iscultist(M) && is_convertable_to_cult(M.mind))
+		if(M.stat != DEAD && !iscultist(M) && is_convertable_to_cult(M))
 			convertees |= M
 		else if(is_sacrifice_target(M.mind))
 			for(var/C in invokers)

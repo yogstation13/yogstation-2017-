@@ -25,8 +25,20 @@
 		return 0
 	else
 		return ..()
+		
+/obj/machinery/door/poddoor/attackby(obj/item/I, mob/user, params)
+	add_fingerprint(user)
+	if(istype(I, /obj/item/weapon/twohanded/fireaxe))
+		var/obj/item/weapon/twohanded/fireaxe/F = I
+		if(!F.wielded)
+			return
+	else if(!istype(I, /obj/item/weapon/crowbar))
+		return
+	if(stat & NOPOWER)
+		open(1)	//Wew. Not copypasted from pre-rebase at all.
 
-//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
+
+//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.  But not crowbars, clearly.
 /obj/machinery/door/poddoor/ex_act(severity, target)
 	if(target == src)
 		qdel(src)
