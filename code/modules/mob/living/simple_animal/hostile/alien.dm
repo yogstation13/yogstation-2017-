@@ -130,7 +130,6 @@
 		if(alien_state == ALIEN_HAUL_ASS)
 			retreat_distance = 7
 			minimum_distance = 7
-			rapid = 1
 			projectiletype = /obj/item/projectile/neurotox/panic
 		else
 			retreat_distance = initial(retreat_distance)
