@@ -100,6 +100,7 @@
 	needs_permit = 0
 	var/overheat_time = 16
 	unique_rename = 1
+	can_flashlight = 1
 	origin_tech = "combat=3;powerstorage=3;engineering=3"
 	weapon_weight = WEAPON_LIGHT
 	var/holds_charge = FALSE
