@@ -215,12 +215,12 @@
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	if(angry == 0)
 		if((health < maxHealth/2) && if(stat != DEAD))
-			angry = 1
+			angry == 1
 			visible_message("<span class='alertalien'>[src] screeches in rage!</span>")
 		else if(stat != DEAD) //just another check here in case the past fucks up
-			angry = 0
+			angry == 0
 		else
-			angry = 0
+			angry == 0
 			visible_message("<span class='alertalien'>[src] appears to have calmed down.</span>")
 
 /mob/living/simple_animal/hostile/alien/queen/large/Aggro()
@@ -310,7 +310,7 @@
 	icon_state = "toxin"
 
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
-	else if(bodytemperature > maxbodytemp)
+	if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
 
 /mob/living/simple_animal/hostile/alien/maid
