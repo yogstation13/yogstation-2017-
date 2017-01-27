@@ -213,14 +213,13 @@
 	AddSpell(bitchslap)
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
-	if(angry == 0)
-		if((health < maxHealth/2) && if(stat != DEAD))
-			angry == 1
+	. = ..()
+	if(stat != DEAD)
+		if(health < maxHealth/2)
+			angry = 1
 			visible_message("<span class='alertalien'>[src] screeches in rage!</span>")
-		else if(stat != DEAD) //just another check here in case the past fucks up
-			angry == 0
 		else
-			angry == 0
+			angry = 0
 			visible_message("<span class='alertalien'>[src] appears to have calmed down.</span>")
 
 /mob/living/simple_animal/hostile/alien/queen/large/Aggro()
