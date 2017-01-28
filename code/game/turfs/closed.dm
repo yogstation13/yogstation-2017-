@@ -9,6 +9,7 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
+	unacidable = TRUE
 
 /turf/closed/indestructible/oldshuttle
 	name = "strange shuttle wall"

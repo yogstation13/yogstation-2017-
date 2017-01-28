@@ -101,6 +101,34 @@
 /obj/structure/bodycontainer/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
 		user.overlay_fullscreen("remote_view", /obj/screen/fullscreen/impaired, 2)
+
+
+/obj/structure/bodycontainer/narsie_act()
+	qdel(src)
+
+/obj/structure/bodycontainer/ratvar_act()
+	qdel(src)
+
+/obj/structure/bodycontainer/mech_melee_attack(obj/mecha/M)
+	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
+	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
+	qdel(src)
+
+/obj/structure/bodycontainer/attack_alien(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
+	visible_message("<span class='danger'>[user] slices [src]!</span>")
+	qdel(src)
+
+
+/obj/structure/bodycontainer/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(user.environment_smash)
+		qdel(src)
+		visible_message("<span class='warning'>[user] smashes [src]!</span>")
+		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
 /*
  * Morgue
  */

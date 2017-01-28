@@ -39,7 +39,6 @@
 	name = "flesh"
 	flags = NODROP
 	slot_flags = ALL
-	allowed = list(/obj/item/changeling)
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
@@ -62,7 +61,7 @@
 	var/chosen_name = input(prompt, title, null) as null|anything in names
 	if(!chosen_name)
 		return
-	
+
 	if(chosen_name == "Drop Flesh Disguise")
 		for(var/slot in slots)
 			if(istype(user.vars[slot], slot2type[slot]))
