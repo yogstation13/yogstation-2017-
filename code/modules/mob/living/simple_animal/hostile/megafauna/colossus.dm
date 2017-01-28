@@ -75,26 +75,26 @@
 	maxHealth = round(maxHealth * scaling, 1)
 	health = round(health * scaling, 1)
 	move_to_delay = move_to_delay / scaling
-	
-	if(rawScaling == 70)
+
+	if(rawScaling < 80)
 		var/prefix = "miserable"
 		name = "[prefix] [name]"
 		return
-	if(rawScaling < 95 && rawScaling > 70)
+	if(rawScaling < 99 && rawScaling > 80)
 		var/prefix = "crippled"
 		name = "[prefix] [name]"
 		return
-	if(rawScaling > 105 && rawScaling <= 120)
+	if(rawScaling >= 100 && rawScaling <= 120)
 		var/prefix = "dangerous"
 		name = "[prefix] [name]"
 		loot += /obj/item/weapon/ore/diamond
 		return
-	if(rawScaling > 120 && rawScaling < 150)
+	if(rawScaling > 120 && rawScaling < 145)
 		var/prefix = "powerful"
 		name = "[prefix] [name]"
 		loot += list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/diamond)
 		return
-	if(rawScaling == 150)
+	if(rawScaling > 145)
 		var/prefix = "perfect"
 		name = "[prefix] [name]"
 		loot += list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/diamond)
@@ -102,7 +102,7 @@
 		return
 
 // VAR SCALING END //
-	
+
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	qdel(internal)
 	. = ..()
