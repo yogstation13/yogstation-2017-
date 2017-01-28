@@ -106,7 +106,7 @@
 	for(var/obj/structure/clockwork/cache/C in orange(1, src))
 		if(!C.active) //if it's off the zlevel, caches can't produce components.
 			continue
-		if(C.z != ZLEVEL_STATION)
+		if(C.z != ZLEVEL_STATION && C.z != ZLEVEL_CENTCOM)
 			C.visible_message("<span class ='warning'>[C]'s fire goes out suddenly. Looks like it isn't making any more components.</span>")
 			C.active = FALSE
 		else

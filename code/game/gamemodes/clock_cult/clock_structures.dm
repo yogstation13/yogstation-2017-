@@ -157,7 +157,7 @@
 	SetLuminosity(2,1)
 	var/area/area = get_area()
 	var/areaname = initial(area.name)
-	if(areaname == "Space" || z != ZLEVEL_STATION)
+	if(areaname == "Space" || (z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM))
 		active = FALSE
 
 /obj/structure/clockwork/cache/Destroy()

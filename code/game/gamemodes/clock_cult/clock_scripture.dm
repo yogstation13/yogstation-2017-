@@ -28,7 +28,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && has_requirements() && check_special_requirements())
-		if(invoker.z != ZLEVEL_STATION)
+		if(invoker.z != ZLEVEL_STATION && invoker.z != ZLEVEL_CENTCOM)
 			invoker << "<span class='warning'>You are too far from Rat'Var's light! Return to the station!</span>"
 			return 0
 		if(slab.busy)

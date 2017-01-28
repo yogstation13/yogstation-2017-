@@ -178,7 +178,7 @@ This file contains the arcane tome files.
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
-	if(areaname == "Space" || istype(Turf,/turf/open/space) || user.z != ZLEVEL_STATION)
+	if(areaname == "Space" || istype(Turf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
 		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to scribe this rune! Return to the station!</span>"
 		return
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
