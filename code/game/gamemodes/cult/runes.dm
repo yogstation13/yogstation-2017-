@@ -107,7 +107,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-	if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM)
+	if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
 		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to utilize this rune! Return to the station!</span>"
 		fail_invoke()
 		return
