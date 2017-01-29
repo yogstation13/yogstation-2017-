@@ -196,12 +196,14 @@
 	var/datum/atom_hud/antag/culthud = huds[ANTAG_HUD_CULT]
 	culthud.leave_hud(cult_mind.current)
 	set_antag_hud(cult_mind.current, null)
+
 /datum/game_mode/cult/proc/get_unconvertables()
 	var/list/ucs = list()
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player.mind && !is_convertable_to_cult(player.mind))
+		if(player.mind && !is_convertable_to_cult(player) && !(player.mind in cultists_to_cult))
 			ucs += player.mind
 	return ucs
+
 /datum/game_mode/cult/proc/check_cult_victory()
 	var/cult_fail = 0
 	if(cult_objectives.Find("survive"))
