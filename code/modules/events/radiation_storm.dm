@@ -9,10 +9,6 @@
 	startWhen = 3
 	endWhen = startWhen + 1
 	announceWhen	= 1
-	if(istype(ticker.mode, /datum/game_mode/blob) || istype(ticker.mode, /datum/game_mode/nuclear))
-		max_occurrences = 0
-	else
-		max_occurrences = 1
 
 /datum/round_event/radiation_storm/announce()
 	priority_announce("High levels of radiation detected near the station. Enter maintenence immediately to avoid life-threatening damage..", "Anomaly Alert", 'sound/AI/radiation.ogg')
