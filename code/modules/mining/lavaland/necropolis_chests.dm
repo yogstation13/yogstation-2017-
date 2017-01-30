@@ -452,8 +452,7 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
-	..()
-		new /obj/item/weapon/dragons_blood(src)
+	new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -633,14 +632,14 @@
 
 /obj/item/mayhem
 	name = "mayhem in a bottle"
-	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
+	desc = "A magically infused bottle of blood, imbued with powerful healing properties."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
 		spawn()
-			var/obj/effect/mine/pickup/bloodbath/B = new(H)
+			var/obj/effect/mine/pickup/healing = new(H)
 			B.mineEffect(H)
 	user << "<span class='notice'>You shatter the bottle!</span>"
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
@@ -650,15 +649,7 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/New()
-	..()
-	var/loot = rand(1,3)
-	switch(loot)
-		if(1)
-			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
-		if(2)
-			new /obj/item/bloodvial/bloodcrawl(src)
-		if(3)
-			new /obj/item/bloodvial/saw(src)
+	new /obj/item/bloodvial/saw(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
