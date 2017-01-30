@@ -43,8 +43,6 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/godblood(src)
 		if(13)
 			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
-		if(14)
-			new /obj/item/weapon/guardiancreator(src)
 		if(15)
 			new /obj/item/device/warp_cube/red(src)
 		if(16)
@@ -566,10 +564,8 @@
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>You feel robust!</span>"
+			user << "<span class='danger'>You feel warm!</span>"
 			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
-			S.burnmod *= 0.5
 			S.coldmod *= 0.5
 		if(2)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
