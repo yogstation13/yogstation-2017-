@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25)
+	var/loot = rand(1,23)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -549,8 +549,8 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-		user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
-		H.weather_immunities |= "lava"
+	user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
+	H.weather_immunities |= "lava"
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
