@@ -639,7 +639,7 @@
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
 		spawn()
-			var/obj/effect/mine/pickup/healing = new(H)
+			var/obj/effect/mine/pickup/healing/B = new(H)
 			B.mineEffect(H)
 	user << "<span class='notice'>You shatter the bottle!</span>"
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
