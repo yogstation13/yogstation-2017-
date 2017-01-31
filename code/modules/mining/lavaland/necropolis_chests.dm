@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,23)
+	var/loot = rand(1,24)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -64,6 +64,8 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(23)
 			new /obj/item/organ/heart/cursed/wizard(src)
+		if(24)  new /obj/item/weapon/guardiancreator(src)
+
 
 
 //Spooky special loot
@@ -632,14 +634,14 @@
 
 /obj/item/mayhem
 	name = "mayhem in a bottle"
-	desc = "A magically infused bottle of blood, imbued with powerful healing properties."
+	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/H in range(7,user))
 		spawn()
-			var/obj/effect/mine/pickup/healing/B = new(H)
+			var/obj/effect/mine/pickup/bloodbath/B = new(H)
 			B.mineEffect(H)
 	user << "<span class='notice'>You shatter the bottle!</span>"
 	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
@@ -649,7 +651,15 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/New()
-	new /obj/item/bloodvial/saw(src)
+	..()
+	var/loot = rand(1,3)
+	switch(loot)
+		if(1)			
+			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
+		if(2)
+			new /obj/item/bloodvial/bloodcrawl(src)
+		if(3)
+			new /obj/item/bloodvial/saw(src)
 
 /obj/item/blood_contract
 	name = "blood contract"
