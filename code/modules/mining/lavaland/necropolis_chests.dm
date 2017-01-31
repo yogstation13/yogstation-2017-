@@ -64,7 +64,8 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(23)
 			new /obj/item/organ/heart/cursed/wizard(src)
-		if(24)  new /obj/item/weapon/guardiancreator(src)
+		if(24)  
+			new /obj/item/weapon/guardiancreator(src)
 
 
 
