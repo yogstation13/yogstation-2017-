@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "Cults will now properly target loyalty implanted crewmembers as sacrifice targets, and will no longer target cult members as sacrifice targets."
