@@ -3,8 +3,9 @@
 /turf/open/space,
 /area/space)
 "ab" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle)
@@ -45,8 +46,9 @@
 	},
 /area/shuttle)
 "ag" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle)
@@ -87,8 +89,9 @@
 	},
 /area/shuttle)
 "an" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -278,8 +281,9 @@
 	},
 /area/shuttle)
 "aP" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/space)
@@ -771,8 +775,9 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle)
 "ci" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -1043,8 +1048,9 @@
 	},
 /area/shuttle)
 "cT" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -1551,8 +1557,9 @@
 	},
 /area/shuttle)
 "dZ" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -1729,8 +1736,9 @@
 	},
 /area/shuttle)
 "ev" = (
+/turf/open/space
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle)
