@@ -767,11 +767,22 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("radium", reac_volume)
 
-/datum/reagent/sterilizine
+/datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.20, S.success_multiplier)
+			S.speedup_multiplier = max(0.75, S.speedup_multiplier)
+			// +20% success propability on each step, useful while operating in less-than-perfect conditions
+			// +75% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+	..()
 
 /datum/reagent/iron
 	name = "Iron"
