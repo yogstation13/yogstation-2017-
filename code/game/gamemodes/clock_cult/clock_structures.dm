@@ -129,8 +129,13 @@
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(I.force && takes_damage)
-		take_damage(I.force, I.damtype)
-		playsound(src, I.hitsound, 50, 1)
+		if(istype(I, /obj/item/weapon/nullrod))
+			take_damage(5000, I.damtype)
+			playsound(src, I.hitsound, 50, 1)
+			user << "<span class='warning'>The [src] shudders violently on contact with a void weapon!</span>"
+		else
+			take_damage(I.force, I.damtype)
+			playsound(src, I.hitsound, 50, 1)
 
 /obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
 	if(..())
@@ -247,10 +252,10 @@
 
 /obj/structure/clockwork/ocular_warden/process()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
-		damage_per_tick = 10
-		sight_range = 5
+		damage_per_tick = 50
+		sight_range = 50
 	if(target)
-		if(target.stat || get_dist(get_turf(src), get_turf(target)) > sight_range || is_servant_of_ratvar(target))
+		if(target.stat || get_dist(get_turf(src), get_turf(target)) > sight_range || is_servant_of_ratvar(target)) 
 			lose_target()
 		else
 			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
@@ -269,7 +274,7 @@
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_target()
 	var/list/possible_targets = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind)
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !L.restrained() && !L.null_rod_check())
 			possible_targets += L
 	if(!possible_targets.len)
 		return 0
@@ -406,6 +411,11 @@
 			for(var/mob/living/L in range(1, src))
 				if(is_servant_of_ratvar(L))
 					continue
+				if(L.null_rod_check())
+					var/obj/item/I = L.null_rod_check()
+					L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
+					"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+					continue
 				if(!iscultist(L))
 					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 					"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
@@ -413,7 +423,7 @@
 				else
 					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 					"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-					L.Weaken(4) //half the stun, but sets cultists on fire
+					L.Weaken(8)
 					L.adjust_fire_stacks(2)
 					L.IgniteMob()
 				L.adjustBruteLoss(10)
@@ -636,8 +646,8 @@
 	their prowess. After a lost battle with Nar-Sian cultists, Inath-neq was struck down and stated in her dying breath, \
 	\"The Resonant Cogs shall not fall silent this day, but will come together to form a wheel that shall never stop turning.\" Ratvar, touched by this, granted Inath-neq an eternal body and \
 	merged her soul with those of the Cogs slain with her on the battlefield."
-	icon = 'icons/effects/187x381.dmi'
-	icon_state = "inath-neq"
+	icon = 'icons/effects/187x381.dmi'	
+icon_state = "inath-neq"
 	pixel_x = -77
 	pixel_y = -174
 
@@ -652,6 +662,7 @@
 	burn_state = FIRE_PROOF
 	burntime = 1
 	var/affects_servants = FALSE
+	
 	var/stat_affected = CONSCIOUS
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
@@ -664,11 +675,17 @@
 /obj/effect/clockwork/sigil/Crossed(atom/movable/AM)
 	..()
 	if(isliving(AM))
+
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
-			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
-				sigil_effects(L)
-			return 1
+			if((!is_servant_of_ratvar(L)) || (is_servant_of_ratvar(L)) && affects_servants && L.mind && (!isdrone(L) || istype(L, /mob/living/simple_animal/drone/cogscarab)))			
+                                var/obj/item/I = L.null_rod_check()
+				if(I)
+					L.visible_message("<span class='warning'>[L]'s [I.name] glows a brilliant white, protecting them from [src]'s effects!</span>", \
+					"<span class='userdanger'>Your [I.name] glows a brilliant white, protecting you!</span>")
+					return
+				sigil_effects(L)	
+return 1
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
@@ -737,9 +754,9 @@
 	post_channel(L)
 	if(is_eligible_servant(L))
 		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
-	add_servant_of_ratvar(L)
-	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
-	L.Stun(3)
+		add_servant_of_ratvar(L)
+		L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
+		L.Stun(3)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
@@ -777,12 +794,15 @@
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(isloyal(L))
 		delete_on_finish = TRUE
-		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
+		L.visible_message("<span class='warning'>[L] visibly trembles!</span>")
+	        L << "<span class='sevtug'>("You will be mine and his. This puny trinket will not stop me.")</span>"
 		for(var/obj/item/weapon/implant/mindshield/M in L)
 			if(M.implanted)
 				qdel(M)
-
+	if(null_rod_check(L))
+		delete_on_finish = TRUE
+		L.visible_message("<span class='warning'>[L] looks entirely unaffected by the sigil!</span>")
+		L << "<span class='sevtug'>("A void weapon? How do they expect me to get through this?")</span>"
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
 	desc = "A glowing orange sigil. The air around it feels staticky."
@@ -812,6 +832,13 @@
 	power_charge -= amount
 	alpha = min(initial(alpha) + power_charge*0.02, 255)
 	return 1
+	
+/obj/effect/clockwork/sigil/transmission/attacked_by(obj/item/I, mob/living/user)
+		if(istype(I, /obj/item/weapon/nullrod))
+			user.visible_message("<span class='warning'>[user] smashes [src] into a million particles with their [I.name]!</span>", "<span class='danger'>You eradicate the foul magic holding [src] together.</span>")
+			qdel(src)
+			return 1
+	..()
 
 /obj/effect/clockwork/sigil/vitality
 	name = "comforting sigil"
@@ -840,7 +867,7 @@
 	animate(src, alpha = 255, time = 10)
 	sleep(10)
 	sigil_active = TRUE
-//as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
+//as long as they're still on the sigil and are either not a servant OR they have a null rod OR they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
 		if(animation_number >= 4)
 			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
@@ -858,6 +885,15 @@
 				for(var/obj/item/W in L)
 					L.unEquip(W)
 				L.dust()
+			if(L.null_rod_check())
+				vitality_drained = L.adjustToxLoss(-10)
+				animate(V, alpha = 0, transform = matrix()*2, time = 8)
+				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
+				L.visible_message("<span class='warning'>[L] shines a brilliant blue as vitality floods out of it!</span>")
+				L << "<span class='inathneq_large'>("Are you so callous as to waste the lives of others to preserve your own?")\"</span>"
+				if(vitality <= 0)
+					qdel(src)
+				
 			if(vitality_drained)
 				vitality += vitality_drained
 			else

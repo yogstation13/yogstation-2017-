@@ -13,7 +13,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
-	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
+	var/emergencyCallTime = 12000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
@@ -122,6 +122,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
 		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
+	else if(seclevel2num(get_security_level()) == SEC_LEVEL_GREEN)
+		emergency.request(null, 1.5, signal_origin, html_decode(emergency_reason), 0)
 	else
 		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
 
@@ -150,10 +152,10 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(ticker.mode.name == "meteor")
 		return
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
 			return
 	else
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
 			return
 	return 1
 

@@ -751,7 +751,7 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
-	force = 17 //Extra damage is dealt to silicons in attack()
+	force = 0 //damage is dealt in attack()
 	throwforce = 40
 	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
@@ -790,7 +790,7 @@
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
-			force += 23 //40 damage if ratvar isn't alive, 53 if he is
+			force += 40 //40 damage if ratvar isn't alive, 53 if he is
 			user.stop_pulling()
 
 	if(impaling)
@@ -804,17 +804,19 @@
 		add_fingerprint(user)
 	else //todo yell at someone to make attack() use proper return values
 		..()
-
-	if(issilicon(target))
-		var/mob/living/silicon/S = target
-		if(S.stat != DEAD)
+	if(!target.null_rod_check())
+		if(issilicon(target))
+			var/mob/living/silicon/S = target
+			if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(25)
-	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
-		var/mob/living/M = target
-		if(M.stat != DEAD)
-			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
-			M.adjustFireLoss(10)
+			S.adjustFireLoss(37)
+		else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
+			var/mob/living/M = target
+			if(M.stat != DEAD)
+				M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
+				M.adjustFireLoss(37)
+		else
+			S.adjustFireLoss(17)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)
@@ -851,16 +853,26 @@
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
-	if(..() || !isliving(target))
-		return
-	var/mob/living/L = target
-	if(issilicon(L) || iscultist(L))
-		L.Stun(6)
-		L.Weaken(6)
+	if(isliving(target))
+		var/mob/living/L = target
+		if(is_servant_of_ratvar(L))
+			if(L.put_in_active_hand(src))
+				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
+			else
+				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+		else if(!..())
+			if(!L.null_rod_check())
+				if(issilicon(L) || iscultist(L))
+					L.Stun(6)
+					L.Weaken(6)
+				else
+					L.Stun(2)
+					L.Weaken(2)
+			break_spear(T)
 	else
-		L.Stun(2)
-		L.Weaken(2)
-	break_spear(T)
+		L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+		break_spear(T)
+		..()
 
 /obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
 	if(src)
@@ -913,6 +925,10 @@
 	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>You fiddle around with [src], to no avail.</span>"
 		return 0
+	else if(user.mind.assigned_role == "Chaplain")
+		user << "<span class='warning'>You crush the soul vessel with ease. Deus vult.</span>"
+		user.visible_message("<span class='warning'>[user] smashes the [src] into tiny pieces!</span>")
+		qdel(src)
 	..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
@@ -1081,8 +1097,8 @@
 	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = TRUE, \
-	"\"It could still be used, if there was a door to place it on.\"" = TRUE)
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = FALSE, \
+	"\"It could still be used, if there was a door to place it on.\"" = FALSE)
 	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
@@ -1145,8 +1161,8 @@
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff fnlf vg'f abg ntnvafg gur ehyrf gb-xvyy lbh.\""
-	servant_of_ratvar_messages = list("\"Exile is such a bore. There's nothing I can hunt in here.\"" = TRUE, "\"What's keeping you? I want to go kill something.\"" = TRUE, \
-	"\"HEHEHEHEHEHEH!\"" = FALSE, "\"If I killed you fast enough, do you think the boss would notice?\"" = TRUE)
+	servant_of_ratvar_messages = list("\"Exile is such a bore. There's nothing I can hunt in here.\"" = TRUE, "\"What's keeping you? I want to go kill something.\"" = FALSE, \
+	"\"HEHEHEHEHEHEH!\"" = FALSE, "\"If I killed you fast enough, do you think the boss would notice?\"" = FALSE)
 	message_span = "nzcrentr"
 
 /obj/item/clockwork/component/hierophant_ansible/obelisk

@@ -232,8 +232,15 @@
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
+	if seclevel2num(get_security_level()) = SEC_LEVEL_GREEN)
+		priority_announce("A crew transfer shuttle has been called. It will arrive in [timeLeft(600)] minutes. [SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	else if seclevel2num(get_security_level()) = SEC_LEVEL_RED)
+		priority_announce("The emergency shuttle has been called. Red Alert state confirmed: Dispatching priority shuttle. It will arrive in [timeLeft(600)] minutes. [reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	else
+		priority_announce("The emergency shuttle has been called. It will arrive in [timeLeft(600)] minutes. [reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console.", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+		
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
