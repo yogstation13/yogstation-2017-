@@ -7,7 +7,7 @@
 	sharpness = IS_SHARP
 	w_class = 4
 	force = 30
-	block_chance = 50
+	block_chance = 20
 	throwforce = 15
 	embed_chance = 75 //throwing your sword always works
 	hitsound = 'sound/weapons/bladeslice.ogg'
