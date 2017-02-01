@@ -260,7 +260,7 @@
 	speed = 0
 	attacktext = "prods"
 	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
+	attack_sound = 'sound/weapons/punch3.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 							/obj/effect/proc_holder/spell/targeted/smoke/disable,
