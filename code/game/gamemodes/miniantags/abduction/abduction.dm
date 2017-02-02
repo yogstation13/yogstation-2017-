@@ -323,7 +323,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Experiment on [target_amount] humans."
+	explanation_text = "Experiment on at least [target_amount] humans and retain [target_amount] unspent research points."
 
 /datum/objective/experiment/check_completion()
 	var/ab_team = team
