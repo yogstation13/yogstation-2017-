@@ -1,7 +1,7 @@
 
 //make incision
 /datum/surgery_step/incise
-	name = "make incision"
+	name = "make an incision"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/melee/energy/sword = 75, /obj/item/weapon/kitchen/knife = 65, /obj/item/weapon/shard = 45)
 	time = 16
 
@@ -76,7 +76,7 @@
 
 //saw bone
 /datum/surgery_step/saw
-	name = "saw bone"
+	name = "saw the bone"
 	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 54
 
@@ -89,11 +89,11 @@
 		H.apply_damage(50,"brute","[target_zone]")
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
-	return 1
+	return ..()
 
 //drill bone
 /datum/surgery_step/drill
-	name = "drill bone"
+	name = "drill the bone"
 	implements = list(/obj/item/weapon/surgicaldrill = 100, /obj/item/weapon/pickaxe/drill = 60, /obj/item/mecha_parts/mecha_equipment/drill = 60, /obj/item/weapon/screwdriver = 20)
 	time = 30
 
@@ -102,4 +102,4 @@
 
 /datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] drills into [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>")
-	return 1
+	return ..()

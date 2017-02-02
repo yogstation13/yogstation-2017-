@@ -6,7 +6,6 @@
 	var/time = 10					//how long does the step take?
 	var/name
 
-
 /datum/surgery_step/proc/try_op(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/success = 0
 	if(accept_hand)
@@ -55,6 +54,7 @@
 		if(prob(prob_chance) || isrobot(user))
 			if(success(user, target, target_zone, tool, surgery))
 				advance = 1
+				addtimer(src, "guide", 5, FALSE, user, target, target_zone, tool, surgery)
 		else
 			if(failure(user, target, target_zone, tool, surgery))
 				advance = 1
@@ -65,7 +65,6 @@
 				surgery.complete()
 
 	surgery.step_in_progress = 0
-
 
 /datum/surgery_step/proc/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to perform surgery on [target].", "<span class='notice'>You begin to perform surgery on [target]...</span>")
@@ -81,3 +80,12 @@
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return 1
+
+/datum/surgery_step/proc/guide(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(user.job == "Medical Doctor" || user.job == "Chief Medical Officer" || user.job == "Roboticist" || isabductor(user)) //TODO:
+		if(surgery.get_surgery_step())                                   													//Give jobs expertises
+			var/datum/surgery_step/step = surgery.get_surgery_step()
+			step = step.name
+			user << "<span class='boldnotice'>Now to [step] on their [target_zone]</span>"
+			return 1
+	return 0
