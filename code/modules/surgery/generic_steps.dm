@@ -89,7 +89,7 @@
 		H.apply_damage(50,"brute","[target_zone]")
 
 	user.visible_message("[user] saws [target]'s [parse_zone(target_zone)] open!", "<span class='notice'>You saw [target]'s [parse_zone(target_zone)] open.</span>")
-	return ..()
+	return 1
 
 //drill bone
 /datum/surgery_step/drill
@@ -102,4 +102,4 @@
 
 /datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] drills into [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>")
-	return ..()
+	return 1
