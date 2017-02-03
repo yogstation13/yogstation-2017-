@@ -262,8 +262,9 @@ This file contains the arcane tome files.
 			var/obj/machinery/shield/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
-		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-			P.the_disk = null // this sets it back.
+		if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
+			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+				P.the_disk = null // this sets it back.
 		return
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
@@ -276,5 +277,6 @@ This file contains the arcane tome files.
 			qdel(S)
 	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
-	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-		P.visible_message("<span class='warning'>[P] begins rattling, but it's pointer remains unmoved in it's pecuilar direction.</span>")
+	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
+		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			P.visible_message("<span class='warning'>[P] begins rattling in horror.</span>")
