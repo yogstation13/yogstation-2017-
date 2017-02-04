@@ -86,6 +86,6 @@
 		if(surgery.get_surgery_step())                                   													//Give jobs expertises
 			var/datum/surgery_step/step = surgery.get_surgery_step()
 			step = step.name
-			user << "<i>Now to [step] on their [target_zone]</i>"
+			user << "<i>Now to [step] on their [target_zone].</i>"
 			return 1
 	return 0
