@@ -100,6 +100,12 @@
 		var/thermal_protection = H.get_thermal_protection()
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
 			return
+		if(H.wear_suit && H.head)
+			if((istype(H.wear_suit, /obj/item/clothing)) && (istype(H.head, /obj/item/clothing)))
+				var/obj/item/clothing/C_suit = H.wear_suit
+				var/obj/item/clothing/C_head = H.head
+				if((immunity_type in C_suit.weather_immunities) && (immunity_type in C_head.weather_immunities))
+					return
 	L.adjustFireLoss(4)
 
 /datum/weather/ash_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.

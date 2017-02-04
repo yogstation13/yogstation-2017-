@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "You can now attach seclites to kinetic accelerators."

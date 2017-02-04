@@ -5,10 +5,10 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message) //Immersive pretty filters
-		usr << "<span class='notice'>You fumble over your words.</span>"
+		usr << "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
+		log_say("[name]/[ckey]: [oldmsg]")
 		return
-	log_say("[name] : [message]")
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
@@ -20,10 +20,10 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message)
-		usr << "<span class='notice'>You fumble over your words.</span>"
+		usr << "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
+		log_whisper("[name]/[ckey]: [oldmsg]")
 		return
-	log_whisper("[name] : [message]")
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
@@ -44,8 +44,13 @@
 /mob/proc/say_dead(var/message)
 	var/name = real_name
 	var/alt_name = ""
+	var/oldmsg = message
 	message = pretty_filter(message)
-	log_say("[name] : [message]")
+	if(oldmsg != message)
+		usr << "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
+		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
+		log_whisper("[name]/[ckey]: [oldmsg]")
+		return
 
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"

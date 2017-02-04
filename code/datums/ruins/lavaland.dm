@@ -73,7 +73,7 @@
 	description = "Sure you don't need magical powers, but you WANT them, and \
 		that's what's important."
 	suffix = "lavaland_surface_greed.dmm"
-
+/*
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
 	id = "hermitcave"
@@ -81,6 +81,7 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+*/
 
 /datum/map_template/ruin/lavaland/syndicatepod
 	name = "Syndicate Pod"
@@ -144,7 +145,7 @@
 	description = "Abductors are not a rare sight in remote and sparsely populated regions of the galaxy, however no being has managed to survive an encounter with a terrorship, but who ever thought a primitive spear could be so robust?"
 	suffix = "lavaland_surface_abductorterrorship.dmm"
 	allow_duplicates = FALSE
-	cost = 10
+	cost = 20
 
 /datum/map_template/ruin/lavaland/cultritual
 	name = "Cult Ritual"
@@ -160,7 +161,7 @@
 	description = "A shop that has the entire collection of Nanotrasen brand action figures!"
 	suffix = "lavaland_surface_cursedtoyshop.dmm"
 	allow_duplicates = FALSE
-	cost = 5
+	cost = 15
 
 /datum/map_template/ruin/lavaland/goliathmound
 	name = "Goliath Mound"
@@ -224,7 +225,7 @@
 	description = "Only Malarky the mad would be mad enough to live in a wooden shack on this planet"
 	suffix = "lavaland_surface_wizardden.dmm"
 	allow_duplicates = FALSE
-	cost = 5
+	cost = 15
 
 /datum/map_template/ruin/lavaland/travellingbard
 	name = "Travelling Bard"
@@ -242,3 +243,38 @@
 	cost = 20
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/xeno_nest
+	name = "Xenomorph Nest"
+	id = "xeno-nest"
+	description = "These xenomorphs got bored of horrifically slaughtering \
+		people on space stations, and have settled down on a nice lava filled \
+		hellscape to focus on what's really important in life. Quality memes."
+	suffix = "lavaland_surface_xeno_nest.dmm"
+	cost = 20
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/scp_facility
+	name = "Anomalous Object Site"
+	id = "scp_facility"
+	description = "An abandoned storage site for dangerous and paranormal objects and creatures."
+	suffix = "lavaland_surface_scp_facility.dmm"
+	allow_duplicates = FALSE
+	cost = 20
+
+/datum/map_template/ruin/lavaland/gas_station
+	name = "Gas Station"
+	id = "gas-station"
+	description = "An old gas station that's somehow managed to survive in the deteriorating hellscape of lavaland. \
+				If you've managed to find it than you've lucked out."
+	suffix = "lavaland_surface_gas_station.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/cafe_of_broken_dreams
+	name = "Cafe of Broken Dreams"
+	id = "cafe-of-broken-dreams"
+	description = "Nothing's better the sweet taste of coffee in such an apocalyptic world. The only catch is that \
+			there isn't any coffee. But there's lots of fauna. "
+	suffix = "lavaland_surface_cafe_of_broken_dreams.dmm"
+	allow_duplicates = FALSE
+	cost = 10

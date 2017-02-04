@@ -50,6 +50,10 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
+.red					{color: #FF0000;}
+.blue					{color: #000099;}
+
+
 .genesisgreen			{color: #03ff39		font-weight: bold; font-size: 5;}
 .genesisred				{color: #FF0000; 	font-weight: bold; font-size: 5;}
 

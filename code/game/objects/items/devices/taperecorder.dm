@@ -35,7 +35,7 @@
 	..()
 	user << "The wire panel is [open_panel ? "opened" : "closed"]."
 	user << "Hold ALT and click on the tape recorder to eject the tape."
-	user << "Hold CTRL and click on the tape recorder to p-p-p-play that shit."
+	user << "Hold CTRL and click on the tape recorder to play the recording."
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)

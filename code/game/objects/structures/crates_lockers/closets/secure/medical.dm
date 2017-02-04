@@ -106,18 +106,29 @@
 
 /obj/structure/closet/secure_closet/mmedical/New()
 	..()
-	sleep(2)
+	new /obj/item/weapon/reagent_containers/hypospray/mixi(src)
+	new /obj/item/weapon/reagent_containers/hypospray/derm(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
-	new /obj/item/clothing/under/rank/mmedical(src)
+	new /obj/item/weapon/defibrillator/loaded(src)
+	new /obj/item/clothing/suit/toggle/labcoat/emt/explorer(src)
+	new /obj/item/clothing/under/rank/miner/medic(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/weapon/cartridge/medical(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
-	new /obj/item/weapon/storage/firstaid/regular(src)
-	new /obj/item/weapon/storage/firstaid/o2(src)
-	return
+	new /obj/item/weapon/storage/firstaid/toxin(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/weapon/storage/belt/medical(src)
+	new /obj/item/weapon/pickaxe(src)
+	new /obj/item/device/sensor_device(src)
+	new /obj/item/weapon/storage/box/bodybags(src)
+	new /obj/item/weapon/extinguisher/mini(src)
+	new /obj/item/clothing/glasses/hud/health/optical(src)
+	var/obj/item/key/K = new(src)
+	K.name = "ATV key"
+	K.desc = "It's a small grey key. Don't let those goddamn ashwalkers get it."
 
 /obj/structure/closet/secure_closet/paramedic
 	name = "paramedical closet"

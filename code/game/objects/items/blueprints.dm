@@ -203,6 +203,7 @@
 		return
 	var/area/old = get_area(get_turf(src))
 	var/old_gravity = old.has_gravity
+	var/okayterritory = old.valid_territory
 
 	var/area/A
 	for(var/key in turfs)
@@ -219,6 +220,7 @@
 		A.setup(str)
 		A.contents += turfs
 		A.SetDynamicLighting()
+	A.valid_territory = okayterritory
 	A.has_gravity = old_gravity
 	interact()
 	return 1

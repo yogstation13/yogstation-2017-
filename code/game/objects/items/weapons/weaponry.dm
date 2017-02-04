@@ -132,6 +132,7 @@
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	hitsound = 'sound/weapons/bladeslice.ogg'
 
 
 /obj/item/weapon/switchblade

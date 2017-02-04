@@ -258,12 +258,14 @@
 	density = 0
 	anchored = 1
 	health = 100
-	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
+	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	var/hive_faction
 
 
 /obj/structure/alien/egg/New()
-	new /obj/item/clothing/mask/facehugger(src)
+	var/obj/item/clothing/mask/facehugger/facehugger = new /obj/item/clothing/mask/facehugger(src)
+	facehugger.hive_faction = hive_faction
 	..()
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()

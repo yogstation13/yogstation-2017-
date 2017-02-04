@@ -114,7 +114,7 @@
 						if(L)
 							L.vomit(20)
 
-var/list/jauntbeacons = list()	// only deployed go in here.
+var/list/jauntbeacons = list()	// only deployed beacons in here.
 
 /obj/item/device/jauntbeacon
 	name = "jaunt beacon"
@@ -123,7 +123,7 @@ var/list/jauntbeacons = list()	// only deployed go in here.
 	item_state = "gangtool-blue" //TEMP ICON
 
 /obj/item/device/jauntbeacon/attack_self(mob/user)
-	user << "<span class='warning'>You set up [src] on the ground.</span>"
+	user << "<span class='warning'>You set up [src].</span>"
 	var/obj/machinery/jauntbeacon/J = new (get_turf(user))
 	jauntbeacons += J
 	qdel(src)
@@ -154,6 +154,7 @@ var/list/jauntbeacons = list()	// only deployed go in here.
 		if(bolted)
 			user << "<span class='warning'>[src] resists [I]!</span>"
 		else if(!bolted)
+			user << "<span class='warning'>You begin to fork up [src].</span>"
 			if(do_after(user, 60, target = src))
 				user << "<span class='warning'>You fork up [src] with [I].</span>"
 				jauntbeacons -= src

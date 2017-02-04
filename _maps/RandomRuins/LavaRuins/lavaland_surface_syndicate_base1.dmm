@@ -46,7 +46,6 @@
 "aT" = (/obj/machinery/door/airlock/hatch{name = "Dormitories"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "aU" = (/obj/structure/closet/emcloset,/obj/item/weapon/tank/internals/emergency_oxygen/engi,/obj/item/device/flashlight/seclite,/obj/item/clothing/mask/gas,/turf/open/floor/plasteel/podhatch{tag = "icon-podhatch (EAST)"; icon_state = "podhatch"; dir = 4},/area/ruin/powered/syndicate_lava_base)
 "aV" = (/obj/machinery/door/airlock/hatch{name = "Storage Closet"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"aW" = (/obj/machinery/door/airlock/hatch{name = "Dormitories"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "aX" = (/obj/machinery/door/airlock/hatch{name = "Restroom"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "aY" = (/obj/structure/mirror{desc = "Mirror mirror on the wall, who is the most robust of them all?"; pixel_x = 28},/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
 "aZ" = (/turf/open/floor/plasteel/podhatch{dir = 8},/area/ruin/powered/syndicate_lava_base)
@@ -124,7 +123,6 @@
 "ct" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = -3; pixel_y = -3},/turf/open/floor/plasteel/vault,/area/ruin/powered/syndicate_lava_base)
 "cu" = (/obj/machinery/sleeper/syndie{dir = 8},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "cv" = (/obj/structure/closet/crate/secure,/obj/item/target,/obj/item/target,/obj/item/target/alien,/obj/item/target/alien,/obj/item/target/clown,/obj/item/target/clown,/turf/open/floor/plasteel/podhatch{tag = "icon-podhatch (SOUTHEAST)"; icon_state = "podhatch"; dir = 6},/area/ruin/powered/syndicate_lava_base)
-"cw" = (/obj/machinery/door/airlock/hatch{name = "Firing Range"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "cx" = (/turf/open/floor/plasteel/podhatch{dir = 10},/area/ruin/powered/syndicate_lava_base)
 "cy" = (/turf/open/floor/plasteel/podhatch,/area/ruin/powered/syndicate_lava_base)
 "cz" = (/obj/structure/extinguisher_cabinet{pixel_y = -32},/turf/open/floor/plasteel/podhatch,/area/ruin/powered/syndicate_lava_base)
@@ -156,9 +154,8 @@
 "cZ" = (/obj/structure/table/reinforced,/obj/item/device/assembly/signaler,/obj/item/device/assembly/signaler,/obj/item/device/assembly/voice,/obj/item/device/assembly/voice,/obj/item/weapon/screwdriver/nuke,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "da" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/plasteel{amount = 15},/obj/item/device/electropack,/obj/item/device/taperecorder,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "db" = (/obj/structure/filingcabinet/security,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
-"dc" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/obj/item/weapon/card/id/syndicate,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
+"dc" = (/obj/structure/table/reinforced,/obj/item/weapon/paper_bin,/obj/item/weapon/pen,/obj/item/weapon/card/id/syndicate/unrestricted,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "dd" = (/obj/machinery/computer/message_monitor,/obj/item/weapon/paper/monitorkey,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
-"de" = (/obj/machinery/door/airlock/hatch{name = "Telecommunications Control"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "df" = (/turf/open/floor/plasteel/vault{tag = "icon-vault (NORTHEAST)"; dir = 5},/area/ruin/powered/syndicate_lava_base)
 "dg" = (/obj/machinery/button/door{id = "lavalandsyndi"; name = "Syndicate Experimentor Lockdown Control"; pixel_x = 26; req_access_txt = null},/turf/open/floor/engine,/area/ruin/powered/syndicate_lava_base)
 "dh" = (/obj/machinery/button/door{id = "lavalandsyndi"; name = "Syndicate Experimentor Lockdown Control"; pixel_x = -26; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
@@ -175,6 +172,8 @@
 "ds" = (/obj/structure/sign/xeno_warning_mining{pixel_x = 32},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "dt" = (/obj/structure/bed/roller,/obj/machinery/iv_drip,/mob/living/carbon/monkey,/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "du" = (/obj/structure/sign/securearea{pixel_y = 32},/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/lavaland/surface/outdoors)
+"Sk" = (/turf/closed/indestructible/opshuttle,/area/ruin/powered/syndicate_lava_base)
+"VS" = (/turf/closed/indestructible/fakedoor{name = "Syndicate Recon Outpost"},/area/ruin/powered/syndicate_lava_base)
 
 (1,1,1) = {"
 aaaaaaaaabaaaaabababababababababababababababababababababababababababababaaaa
@@ -182,37 +181,38 @@ aaaaabababababababababababababababababababababababababababababababababababaa
 aaaaabababababababababababababababababababababababababababababababababababab
 aaaaabababababababababababababababababababababababababababababababababababaa
 aaababababababababababababababababababababababababababababababababababababab
-ababababababababababacababababacacadadadadadadadadadadadadadadabacababababab
-abababababacababababababadadadadadadaeafagadahaiadajakadalamadababababababab
-abababababababababababacadanaoapaqadararararararadasatadauavadacabababababab
-abababababababacacababacadawapaoaxadararararararadayatadatayadacabababababab
-abababababababacadadadadadazaoapaAadaBaCaDaEaFaGadaHatadatavadababacabababab
-abababababababacadapapapadaIaJaoadadaKaLaMaLaoapadaNaOadaOaPadacabacabababab
-ababababababababadapaQapadaRapaoaSadapaoaJaoapaoadadaTadaTadadadadababababab
-abababababacababadapaOapadaUaoapapaVaoapaoapaoapaWapapapaJapaXaYadababababab
-abababababababacadaZaObaadbbapaobcadbdbeapaobcbfadaSapapapaSadbgadacabababab
-abababababababacadaJaOapadadadadadadadadbhbhadadadadadadadadadadadadadababab
-abababababababacadaZaObaadbibjbkblbmbnadbobpadbqbrbsbtbubvbwbxbybxbzadababab
-abababababacabacadbAbBbAadbCbDbEbFbFbGbvaZbabvbHbIapapapbvbJbybybJbyadababab
-abababababacababadbKaObLadaSapaJapapbMbvaZbabvbNapaoaobOaoaoaoaoaobOadababab
-abababababacabacadapapapadbPaoapbQbRbSbvaZbabvbTapapapbUbybJbybybVbyadababab
-abababababababacadbWapbXadbPapapbYbZcaadaZbaadcbccbQcdcebyaOcfbyaOcfadababab
-ababababababacabadcgchadadcgcicjadbvadadaZbaadckcladbvbvadadadadadadadababab
-ababababababababadcmapaSbvcncococococococpcqcococococococrcsctapcuadabababab
-aaabababababacacadcvaJapcwcxcyczcycycycycAcBcycycycycycycCcDapaJcEadabababab
-aaabababababacadadadcFadadadadadadcGcgadaZbaadadcHcgadadadadapapcuadabababab
-abababababababadcIcIcIcIcIcIcIcgaSapapadaZbaadaSapapcJapcKadcLapcMadabababab
-abababababababadcIcIcIcIcIcIcIcFcNapapadaZbaadapaocOcPcQcRadcScTcUadabababab
-abababababababadcIcIcIcIcIcIcIcFbGapcVadaZbaadcWaocXbIaJaOadadadadadabababab
-ababababababacadcYcIcIcIcIcIcIcFcZapdaadaZbaaddbaodcddapaOdedfdfdfadabababab
-abababababababadcIcIcIcIcIcIdgaddhapdiadaZbaaddjapapapapbLaddkdldkadabababab
-ababababababacadcIcIcIcIcIcIcIdmapaJdnadcxcCadadadadadadadaddkdodkadabababab
-ababababababacadcIcIcIcIcIcIcIadcWapaSaddpdpadacacacacacabadadadadadabababab
-ababababababacadadadadadadadadadbvdqbvaddrdsadacacacababababababacacabababab
-ababababababacacacabababacacacaddtaOdtadaOaOadacababababacababababababababab
-ababababababababababababababacadadadadaddpdpadababacacababababababababababab
+ababababababababababacababababacacSkSkSkSkSkSkSkSkSkSkSkSkSkSkabacababababab
+abababababacababababababSkSkSkSkSkSkaeafagadahaiadajakadalamSkababababababab
+abababababababababababacSkanaoapaqadararararararadasatadauavSkacabababababab
+abababababababacacababacSkawapaoaxadararararararadayatadataySkacabababababab
+abababababababacSkSkSkSkSkazaoapaAadaBaCaDaEaFaGadaHatadatavSkababacabababab
+abababababababacSkapapapadaIaJaoadadaKaLaMaLaoapadaNaOadaOaPSkacabacabababab
+ababababababababSkapaQapadaRapaoaSadapaoaJaoapaoadadaTadaTadSkSkSkababababab
+abababababacababSkapaOapadaUaoapapaVaoapaoapaoapaTapapapaJapaXaYSkababababab
+abababababababacSkaZaObaadbbapaobcadbdbeapaobcbfadaSapapapaSadbgSkacabababab
+abababababababacSkaJaOapadadadadadadadadbhbhadadadadadadadadadadSkSkSkababab
+abababababababacSkaZaObaadbibjbkblbmbnadbobpadbqbrbsbtbubvbwbxbybxbzSkababab
+abababababacabacSkbAbBbAadbCbDbEbFbFbGbvaZbabvbHbIapapapbvbJbybybJbySkababab
+abababababacababSkbKaObLadaSapaJapapbMbvaZbabvbNapaoaobOaoaoaoaoaobOSkababab
+abababababacabacSkapapapadbPaoapbQbRbSbvaZbabvbTapapapbUbybJbybybVbySkababab
+abababababababacSkbWapbXadbPapapbYbZcaadaZbaadcbccbQcdcebyaOcfbyaOcfSkababab
+ababababababacabSkcgchadadcgcicjadbvadadaZbaadckcladbvbvadadadadadSkSkababab
+ababababababababSkcmapaSbvcncococococococpcqcococococococrcsctapcuSkabababab
+aaabababababacacSkcvaJapchcxcyczcycycycycAcBcycycycycycycCcDapaJcESkabababab
+aaabababababacSkSkadcFadadadadadadcGcgadaZbaadadcHcgadadadadapapcuSkabababab
+abababababababSkcIcIcIcIcIcIcIcgaSapapadaZbaadaSapapcJapcKadcLapcMSkabababab
+abababababababSkcIcIcIcIcIcIcIcFcNapapadaZbaadapaocOcPcQcRadcScTcUSkabababab
+abababababababSkcIcIcIcIcIcIcIcFbGapcVadaZbaadcWaocXbIaJaOadadadadSkabababab
+ababababababacSkcYcIcIcIcIcIcIcFcZapdaadaZbaaddbaodcddapaOcHdfdfdfSkabababab
+abababababababSkcIcIcIcIcIcIdgaddhapdiadaZbaaddjapapapapbLaddkdldkSkabababab
+ababababababacSkcIcIcIcIcIcIcIdmapaJdnadcxcCSkSkSkSkSkSkSkSkdkdodkSkabababab
+ababababababacSkcIcIcIcIcIcIcIadcWapaSaddpdpSkacacacacacabSkSkSkSkSkabababab
+ababababababacSkSkSkSkSkSkSkSkSkbvdqbvaddrdsSkacacacababababababacacabababab
+ababababababacacacabababacacacSkdtaOdtadaOaOSkacababababacababababababababab
+ababababababababababababababacSkSkSkSkSkVSVSSkababacacababababababababababab
 abababababababababababababababababababduababduababababababababababababababab
 abababababababababababababababababababababababababababababababababababababaa
 aaababababababababababababababababababababababababababababababababababababaa
 aaaaabaaababababababababababababababababababababababababababababababaaaaaaaa
 "}
+

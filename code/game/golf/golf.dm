@@ -64,6 +64,7 @@
 /obj/machinery/golfhole/puttinggreen
 	desc = "The captain's putting green for the game of golf. Try to score a hole in one."
 	icon_state = "puttinggreen"
+	anchored = 1
 
 
 /obj/item/golfball
@@ -75,12 +76,12 @@
 	attack_verb = list("hit")
 
 /obj/item/golfball/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/golfclub))
+	if(istype(O, /obj/item/weapon/golfclub))
 		var/turf/throw_at = get_ranged_target_turf(src, get_dir(user, src), 3 )
 		throw_at_fast(throw_at, 3 , 2)
 		user.changeNext_move(CLICK_CD_RANGE*2)
 
-/obj/item/golfclub
+/obj/item/weapon/golfclub
 	desc = "A club for the game of golf."
 	name = "golfclub"
 	icon = 'code/game/golf/golfstuff.dmi'
@@ -107,10 +108,10 @@
 	new /obj/item/golfball(src)
 	new /obj/item/golfball(src)
 	new /obj/item/golfball(src)
-	new /obj/item/golfclub(src)
-	new /obj/item/golfclub(src)
-	new /obj/item/golfclub(src)
-	new /obj/item/golfclub(src)
+	new /obj/item/weapon/golfclub(src)
+	new /obj/item/weapon/golfclub(src)
+	new /obj/item/weapon/golfclub(src)
+	new /obj/item/weapon/golfclub(src)
 	new /obj/machinery/golfhole(src)
 	new /obj/machinery/golfhole(src)
 	new /obj/machinery/golfhole/blue(src)

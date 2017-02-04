@@ -214,16 +214,6 @@
 	item_state = "skull"
 	strip_delay = 100
 
-/obj/item/clothing/head/helmet/kasa
-	name = "pathfinder kasa"
-	desc = "Used by ash walkers to travel long distances across lavaland's perilous landscape."
-	icon_state = "pathhead"
-	item_state = "pathhead"
-	flags_cover = HEAD
-	burn_state = FIRE_PROOF
-	heat_protection = HEAD
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-
 //LightToggle
 
 /obj/item/clothing/head/helmet/update_icon()

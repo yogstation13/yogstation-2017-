@@ -9,18 +9,38 @@
 	var/requires_organic_bodypart = 1							//Prevents you from performing an operation on robotic limbs
 	var/list/possible_locs = list() 							//Multiple locations -- c0
 	var/ignore_clothes = 0										//This surgery ignores clothes
+	var/mob/living/carbon/target								//Operation target mob
 	var/obj/item/organ/organ									//Operable body part
 	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
+	var/success_multiplier = 0								//Step success propability multiplier
+	var/speedup_multiplier = 0									//How much each step is sped up by (in percent)
+
+
+/datum/surgery/New(surgery_target, surgery_location, surgery_organ)
+	..()
+	if(surgery_target)
+		target = surgery_target
+		target.surgeries += src
+		if(surgery_location)
+			location = surgery_location
+		if(surgery_organ)
+			organ = surgery_organ
+
+/datum/surgery/Destroy()
+	if(target)
+		target.surgeries -= src
+	target = null
+	organ = null
+	return ..()
 
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
 	return 1
 
-
-/datum/surgery/proc/next_step(mob/user, mob/living/carbon/target)
+/datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
-		return
+		return 1
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
@@ -32,12 +52,24 @@
 	var/step_type = steps[status]
 	return new step_type
 
+/datum/surgery/proc/complete()
+	qdel(src)
 
-/datum/surgery/proc/complete(mob/living/carbon/human/target)
-	target.surgeries -= src
-	src = null
+/datum/surgery/proc/get_probability_multiplier()
+	var/probability = 0.5
+	var/turf/T = get_turf(target)
 
+	if(locate(/obj/structure/table/optable, T))
+		probability = 1
+	else if(locate(/obj/structure/table, T))
+		probability = 0.8
+	else if(locate(/obj/structure/bed, T))
+		probability = 0.7
 
+	return probability + success_multiplier
+
+/datum/surgery/proc/get_speedup_multiplier()
+	return speedup_multiplier
 
 //INFO
 //Check /mob/living/carbon/attackby for how surgery progresses, and also /mob/living/carbon/attack_hand.
@@ -45,7 +77,6 @@
 //Other important variables are var/list/surgeries (/mob/living) and var/list/internal_organs (/mob/living/carbon)
 // var/list/bodyparts (/mob/living/carbon/human) is the LIMBS of a Mob.
 //Surgical procedures are initiated by attempt_initiate_surgery(), which is called by surgical drapes and bedsheets.
-// /code/modules/surgery/multiple_location_example.dm contains steps to setup a multiple location operation.
 
 
 //TODO

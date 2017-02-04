@@ -255,6 +255,10 @@
 
 ////////////////////////////////End Gibtonite
 
+// apparently miners needed this
+#define SAFE_SPACE_X 75
+#define SAFE_SPACE_Y 55
+
 /turf/open/floor/plating/asteroid/airless/cave
 	var/length = 100
 	var/mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 1, /mob/living/simple_animal/hostile/asteroid/goliath = 5, /mob/living/simple_animal/hostile/asteroid/basilisk = 4, /mob/living/simple_animal/hostile/asteroid/hivelord = 3)
@@ -262,10 +266,10 @@
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, \
-		/mob/living/simple_animal/hostile/asteroid/marrowweaver = 35, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30, \
-		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
-		/mob/living/simple_animal/hostile/megafauna/dragon = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 2, /mob/living/simple_animal/hostile/megafauna/colossus = 2)
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 55, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, \
+		/mob/living/simple_animal/hostile/asteroid/marrowweaver = 35, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 35, \
+		/mob/living/simple_animal/hostile/spawner/lavaland = 10, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 10, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 10, \
+		/mob/living/simple_animal/hostile/megafauna/dragon = 3, /mob/living/simple_animal/hostile/megafauna/bubblegum = 3, /mob/living/simple_animal/hostile/megafauna/colossus = 3)
 
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -338,11 +342,16 @@
 
 	SpawnMonster(T)
 	new turf_type(T)
+
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
 		if(istype(loc, /area/mine/explored))
 			return
 		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
+			if(T.x < SAFE_SPACE_X)
+				return
+			if(T.y < SAFE_SPACE_Y)
+				return
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)

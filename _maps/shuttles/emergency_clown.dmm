@@ -1,7 +1,7 @@
 "aa" = (/turf/open/space,/area/space)
-"ab" = (/turf/closed/wall/shuttle{icon_state = "swall_s6";dir = 2},/area/shuttle/escape)
+"ab" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f6";dir = 2},/area/shuttle/escape)
 "ac" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
-"ad" = (/turf/closed/wall/shuttle{icon_state = "swall_s10";dir = 2},/area/shuttle/escape)
+"ad" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f10";dir = 2},/area/shuttle/escape)
 "ae" = (/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/turf/closed/wall/shuttle/interior{icon_state = "swall_f9"},/area/shuttle/escape)
 "af" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/noslip,/area/shuttle/escape)
 "ag" = (/obj/structure/chair{dir = 1},/turf/open/floor/bluespace,/area/shuttle/escape)
@@ -56,9 +56,9 @@
 "bd" = (/obj/structure/closet/crate/trashcart{desc = "A heavy, metal trashcart with wheels. Feel free to hop in at any time!"},/obj/item/toy/sword,/turf/open/floor/mineral/bananium,/area/shuttle/escape)
 "be" = (/obj/machinery/vending/autodrobe{extended_inventory = 1;scan_id = 0},/turf/open/floor/mineral/bananium,/area/shuttle/escape)
 "bf" = (/obj/machinery/vending/clothing{extended_inventory = 1},/turf/open/floor/mineral/bananium,/area/shuttle/escape)
-"bg" = (/turf/closed/wall/shuttle{icon_state = "swall_s5";dir = 2},/area/shuttle/escape)
+"bg" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f5";dir = 2},/area/shuttle/escape)
 "bh" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
-"bi" = (/turf/closed/wall/shuttle{icon_state = "swall_s9";dir = 2},/area/shuttle/escape)
+"bi" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f9";dir = 2},/area/shuttle/escape)
 "bj" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
 
 (1,1,1) = {"

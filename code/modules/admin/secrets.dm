@@ -9,6 +9,7 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+			John hates all of you.<BR>
 			<BR>
 			"}
 
@@ -152,6 +153,7 @@
 				return
 			world.name = new_station_name()
 			station_name = world.name
+			feedback_set_details("station_name","[station_name]")
 			log_admin("[key_name(usr)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
 

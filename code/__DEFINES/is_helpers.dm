@@ -8,6 +8,20 @@
 
 #define ismodule(O) (istype(O, /obj/item/module))
 
+// TURFS
+
+#define isopenturf(A) (istype(A, /turf/open))
+
+#define isspaceturf(A) (istype(A, /turf/open/space))
+
+#define isfloorturf(A) (istype(A, /turf/open/floor))
+
+#define isclosedturf(A) (istype(A, /turf/closed))
+
+#define iswallturf(A) (istype(A, /turf/closed/wall))
+
+#define ismineralturf(A) (istype(A, /turf/closed/mineral))
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -26,6 +40,7 @@
 #define isshadowling(A) (is_species(A, /datum/species/shadow/ling))
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftain))
+#define iskrampus(A) (is_species(A, /datum/species/demon))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
@@ -52,6 +67,8 @@
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+
+#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
 

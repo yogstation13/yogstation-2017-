@@ -191,9 +191,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		return
 	return
 
-/turf/open/floor/ratvar_act()
-	if(prob(20))
+/turf/open/floor/ratvar_act(force)
+	var/converted = (prob(40) || force)
+	if(converted)
 		ChangeTurf(/turf/open/floor/clockwork)
+	for(var/I in src)
+		var/atom/A = I
+		if(ismob(A) || converted)
+			A.ratvar_act()
 
 /turf/open/floor/can_have_cabling()
 	return !burnt && !broken

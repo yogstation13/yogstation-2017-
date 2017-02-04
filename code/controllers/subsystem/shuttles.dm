@@ -33,6 +33,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
+	var/list/cooldown_ids = list()
+
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
@@ -199,7 +201,12 @@ var/datum/subsystem/shuttle/SSshuttle
 	return 0	//dock successful
 
 
-/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
+/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed, ignoreCD)
+	for(var/a in cooldown_ids)
+		if(a == shuttleId)
+			if(!ignoreCD)
+				return 3
+
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 

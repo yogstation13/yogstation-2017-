@@ -7123,8 +7123,9 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "ara" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -7135,8 +7136,9 @@
 	},
 /area/shuttle/supply)
 "arc" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -12135,8 +12137,9 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "aDn" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -12153,8 +12156,9 @@
 	},
 /area/shuttle/escape)
 "aDq" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -13438,8 +13442,9 @@
 	},
 /area/shuttle/escape)
 "aGx" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -15762,8 +15767,9 @@
 	},
 /area/toxins/xenobiology)
 "aMf" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -22446,7 +22452,7 @@
 /area/maintenance/asmaint2)
 "bbD" = (
 /obj/effect/spawner/lootdrop{
-	loot = list(/obj/item/organ/gland/bloody = 7, /obj/item/organ/gland/bodysnatch = 4, /obj/item/organ/gland/egg = 7, /obj/item/organ/gland/emp = 3, /obj/item/organ/gland/mindshock = 5, /obj/item/organ/gland/plasma = 7, /obj/item/organ/gland/pop = 5, /obj/item/organ/gland/slime = 4, /obj/item/organ/gland/spiderman = 5, /obj/item/organ/gland/ventcrawling = 1, /obj/item/organ/body_egg/alien_embryo = 1, /obj/item/organ/hivelord_core = 2);
+	loot = list(/obj/item/organ/gland/bloody = 7, /obj/item/organ/gland/egg = 7, /obj/item/organ/gland/emp = 3, /obj/item/organ/gland/mindshock = 5, /obj/item/organ/gland/pop = 5, /obj/item/organ/gland/slime = 4, /obj/item/organ/gland/spiderman = 5, /obj/item/organ/gland/ventcrawling = 1, /obj/item/organ/body_egg/alien_embryo = 1, /obj/item/organ/hivelord_core = 2);
 	lootcount = 3;
 	name = "organ spawner"
 	},
@@ -22946,8 +22952,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -22968,8 +22975,9 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bcS" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -23111,8 +23119,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -23147,8 +23156,9 @@
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint)
 "bdu" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/transport)

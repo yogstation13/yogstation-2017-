@@ -85,6 +85,7 @@
 				MM.objectives += new/datum/objective(objective)
 		special(M)
 		MM.name = M.real_name
+		MM.special_role = name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)

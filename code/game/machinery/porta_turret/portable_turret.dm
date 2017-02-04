@@ -443,6 +443,10 @@
 	var/list/targets = list()
 	var/turretview = view(scan_range, base)
 	for(var/A in turretview)
+		if(isdrone(A))
+			var/mob/living/simple_animal/drone/D = A
+			if(D.no_living_interaction)
+				continue
 		if(check_anomalies)//if it's set to check for simple animals
 			if(istype(A, /mob/living/simple_animal))
 				var/mob/living/simple_animal/SA = A

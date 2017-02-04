@@ -373,8 +373,9 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aaM" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/pod_2)
@@ -384,8 +385,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_2)
 "aaO" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/pod_2)
@@ -1874,8 +1876,9 @@
 	},
 /area/shuttle/pod_3)
 "adp" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/pod_3)
@@ -2434,8 +2437,9 @@
 	},
 /area/shuttle/pod_3)
 "aej" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/pod_3)
@@ -24911,8 +24915,9 @@
 /turf/open/space,
 /area/space)
 "aOy" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/pod_1)
@@ -24922,8 +24927,9 @@
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "aOA" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/pod_1)
@@ -34863,8 +34869,9 @@
 /turf/open/space,
 /area/space)
 "bev" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/arrival)
@@ -34892,8 +34899,9 @@
 	},
 /area/shuttle/arrival)
 "beA" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/arrival)
@@ -36878,8 +36886,9 @@
 	},
 /area/shuttle/pod_4)
 "bhL" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/pod_4)
@@ -39262,8 +39271,9 @@
 	},
 /area/shuttle/pod_4)
 "blA" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/pod_4)
@@ -40586,8 +40596,9 @@
 	name = "MiniSat Maintenance"
 	})
 "bnD" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/arrival)
@@ -41939,8 +41950,9 @@
 	},
 /area/shuttle/arrival)
 "bpG" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/arrival)
@@ -96979,8 +96991,9 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "cYL" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -96991,8 +97004,9 @@
 	},
 /area/shuttle/supply)
 "cYN" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -97090,8 +97104,9 @@
 	},
 /area/shuttle/supply)
 "cYZ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -97109,8 +97124,9 @@
 	},
 /area/shuttle/supply)
 "cZc" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -97135,8 +97151,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -97157,8 +97174,9 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cZk" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -97223,8 +97241,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -97239,14 +97258,16 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "cZw" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/transport)
 "cZx" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -97307,8 +97328,9 @@
 	},
 /area/shuttle/abandoned)
 "cZF" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -98457,8 +98479,9 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "dby" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -98577,8 +98600,9 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "dbL" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -99422,8 +99446,9 @@
 	},
 /area/chapel/main)
 "ddb" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99440,8 +99465,9 @@
 	},
 /area/shuttle/escape)
 "dde" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -99979,14 +100005,16 @@
 	},
 /area/shuttle/escape)
 "dev" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/escape)
 "dew" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/escape)

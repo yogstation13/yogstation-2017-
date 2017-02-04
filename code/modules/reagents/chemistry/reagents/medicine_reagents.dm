@@ -298,6 +298,14 @@
 			if(show_message)
 				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
 		else
+			var/mob/living/carbon/C = M
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10, S.success_multiplier)
+				S.speedup_multiplier = max(0.35, S.speedup_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				// +35% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+
 			if(show_message)
 				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
 	..()
@@ -348,12 +356,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healrate = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-0.5*REM, 0)
-	M.adjustOxyLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(-healrate*REM, 0)
+	M.adjustOxyLoss(-healrate*REM, 0)
+	M.adjustBruteLoss(-healrate*REM, 0)
+	M.adjustFireLoss(-healrate*REM, 0)
 	..()
 	. = 1
 
@@ -364,6 +373,14 @@
 	M.adjustFireLoss(1.5*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/blessed
+	name = "Blessed Water"
+	id = "godblood2"
+	description = "Water drowned in the efforts of holy magic."
+	overdose_threshold = 6
+	metabolization_rate = 0.5
+	healrate = 1
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -917,6 +934,17 @@ datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
 	..()
 	. = 1
 
+/datum/reagent/medicine/bicaridine/miximone
+	name = "Miximone"
+	id = "miximone"
+	description = "Restores brises rapidly, however deals a small amount of braindamage."
+
+datum/reagent/medicine/bicaridine/miximone/on_mob_life(mob/living/M)
+	if(prob(10))
+		M.adjustBrainLoss(2*REM)
+	..()
+	. = 1
+
 datum/reagent/medicine/dexalin
 	name = "Dexalin"
 	id = "dexalin"
@@ -950,6 +978,17 @@ datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
 
 datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
 	M.adjustFireLoss(4*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/kelotane/dermaline
+	name = "Dermaline"
+	id = "dermaline"
+	description = "Quickly heals burn damage, however slightly saps stamina."
+
+/datum/reagent/medicine/kelotane/dermaline/on_mob_life(mob/living/M)
+	if(prob(10))
+		M.adjustStaminaLoss(3*REM, 0)
 	..()
 	. = 1
 
@@ -1109,3 +1148,22 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
+
+/datum/reagent/medicine/rapidstims
+	name = "Rapid Stimulants"
+	id = "rapidstims"
+	description = "Fixes crit."
+	color = "#C1P5EA"
+	metabolization_rate = 5
+
+/datum/reagent/medicine/rapidstims/on_mob_life(mob/living/M)
+	if(M.health < 0)
+		M.adjustBruteLoss(-20)
+		M.adjustFireLoss(-20)
+	else
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.vomit(0)
+			M.adjustToxLoss(10, 0)
+	..()
+	. = 1

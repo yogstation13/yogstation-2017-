@@ -179,3 +179,14 @@
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
+
+/obj/item/clothing/head/helmet/kasa
+	name = "pathfinder kasa"
+	desc = "Used by ash walkers to travel long distances across lavaland's perilous landscape."
+	icon_state = "pathhead"
+	item_state = "pathhead"
+	flags_cover = HEAD
+	burn_state = FIRE_PROOF
+	heat_protection = HEAD
+	flags =	NODROP
+	weather_immunities = list("ash")
