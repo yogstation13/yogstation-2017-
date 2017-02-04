@@ -21,6 +21,7 @@
 	aSignal.frequency = rand(1200, 1599)
 	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
+	message_admins("An anomaly has been created. ([x],[y],[z])",1)
 
 /obj/effect/anomaly/Destroy()
 	poi_list.Remove(src)

@@ -458,6 +458,10 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
+		else
+			unEquip(I)
+			I.dropped()
+			return
 		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
@@ -756,11 +760,10 @@
 /mob/living/carbon/fully_heal(admin_revive = 0)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-	if(B)
-		B.damaged_brain = 0
+	regenerate_organs()
 	for(var/datum/disease/D in viruses)
-		D.cure(0)
+		if (D.severity != NONTHREAT)
+			D.cure(0)
 	if(admin_revive)
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
@@ -769,6 +772,11 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+
+/mob/living/carbon/proc/regenerate_organs()
+	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
+	if(B)
+		B.damaged_brain = 0
 
 /mob/living/carbon/can_be_revived()
 	. = ..()

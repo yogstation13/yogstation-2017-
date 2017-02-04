@@ -1149,6 +1149,11 @@
 	},
 /area/ai_monitored/security/armory)
 "acp" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
 /obj/structure/rack,
 /obj/item/weapon/storage/lockbox/loyalty,
 /turf/open/floor/plasteel{
@@ -1703,6 +1708,13 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "armory";
+	name = "Armory Shutters";
+	pixel_x = 28;
+	pixel_y = 0;
+	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "vault";
@@ -3999,11 +4011,9 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "ahe" = (
+/obj/structure/closet/wardrobe/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/effect/landmark{
-	name = "secequipment"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
@@ -24134,9 +24144,8 @@
 	},
 /area/hydroponics)
 "aWk" = (
-/obj/structure/bookcase{
-	name = "bookcase (Adult)"
-	},
+/obj/structure/table/wood,
+/obj/item/weapon/storage/photo_album,
 /turf/open/floor/wood,
 /area/library)
 "aWl" = (
@@ -28677,8 +28686,8 @@
 /obj/item/golfball,
 /obj/item/golfball,
 /obj/item/golfball,
-/obj/item/golfclub,
-/obj/item/golfclub,
+/obj/item/weapon/golfclub,
+/obj/item/weapon/golfclub,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bfS" = (
@@ -31507,14 +31516,16 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "blR" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "blS" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -33221,8 +33232,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bpr" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -33233,8 +33245,9 @@
 	},
 /area/shuttle/supply)
 "bpt" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41152,14 +41165,16 @@
 /turf/open/floor/engine/vacuum,
 /area/toxins/mixing)
 "bDY" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "bDZ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -41184,8 +41199,9 @@
 	},
 /area/shuttle/abandoned)
 "bEc" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41203,8 +41219,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "bEf" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -67985,8 +68002,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68007,8 +68025,9 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cFQ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68044,8 +68063,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68066,8 +68086,9 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGb" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -69140,6 +69161,26 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyl" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/wood,
+/area/library)
+"Zym" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "armory";
+	name = "armory shutters"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/ai_monitored/security/armory)
+"Zyn" = (
+/obj/effect/landmark/start{
+	name = "Mining Medic"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "Zyo" = (
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -91422,7 +91463,7 @@ bJZ
 bLC
 bMU
 bJZ
-bJZ
+Zyn
 bBh
 aaa
 aaa
@@ -99310,7 +99351,7 @@ abJ
 acp
 acP
 adp
-adU
+aci
 aeA
 afb
 afD
@@ -99567,7 +99608,7 @@ abJ
 abJ
 abJ
 abJ
-abJ
+Zym
 abJ
 abJ
 abJ
@@ -99824,7 +99865,7 @@ abK
 acq
 acQ
 adq
-adV
+acr
 aeB
 afc
 afE
@@ -112207,7 +112248,7 @@ aQf
 aIV
 aTf
 aIV
-aWk
+Zyl
 aFY
 aZr
 baW

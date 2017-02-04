@@ -34,11 +34,11 @@
 "H" = (/obj/structure/table/optable,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "I" = (/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "J" = (/obj/item/device/flashlight,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
-"K" = (/obj/structure/closet/crate/necropolis,/obj/item/stack/sheet/mineral/mythril{amount = 50},/obj/item/stack/sheet/mineral/mythril{amount = 50},/obj/item/stack/sheet/mineral/mythril{amount = 50},/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "M" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/obj/item/weapon/twohanded/spear,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "N" = (/obj/item/weapon/twohanded/spear,/obj/structure/rack,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "O" = (/obj/structure/mineral_door/iron,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/unpowered)
 "R" = (/obj/item/weapon/twohanded/spear,/obj/structure/table,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"T" = (/obj/structure/closet/crate/necropolis,/obj/item/stack/sheet/mineral/mythril{amount = 50},/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
 "U" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
 "V" = (/obj/structure/ore_box,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors/mapgen_protected)
 "W" = (/obj/item/weapon/pickaxe,/obj/item/weapon/shovel,/turf/open/floor/engine/cult{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "o2=13;n2=24;TEMP=300"},/area/lavaland/surface/outdoors/mapgen_protected)
@@ -58,7 +58,7 @@ aaacpqfrstcccc
 aaccuuvwuucxyc
 aaczABffCDffEc
 aacFfffnGffffc
-aacHIJffffffKc
+aacHIJffffffTc
 UXuMfNuOuuuucc
 YZuRRNuZUZWVaa
 YZuuuuuUUUUUaa

@@ -613,3 +613,145 @@ var/global/list/multiverse = list()
 	heal_burn = 25
 	heal_oxy = 25
 
+
+// Wabbajack statue, a sleeping frog statue that shoots bolts of change if
+// living carbons are put on its altar/tables
+
+
+/obj/machinery/power/emitter/energycannon/magical
+	name = "wabbajack statue"
+	desc = "Who am I? What is my purpose in life? What do I mean by who am I?"
+	projectile_type = /obj/item/projectile/magic/change
+	icon = 'icons/obj/machines/magic_emitter.dmi'
+	icon_state = "wabbajack_statue"
+	icon_state_on = "wabbajack_statue_on"
+	var/list/active_tables = list()
+	active = FALSE
+
+/obj/machinery/power/emitter/energycannon/magical/New()
+	. = ..()
+	if(prob(50))
+		desc = "Oh no, not again."
+	update_icon()
+
+/obj/item/weapon/wabbajack
+	name = "the wabbajack"
+	desc = "ALL HAIL THE WABBAJACK"
+	icon_state = "wabbajack_statue"
+	icon = 'icons/obj/machines/magic_emitter.dmi'
+
+
+/obj/item/weapon/wabbajack/attack_self(mob/user)
+	var/T_loc = get_turf(src)
+	if(z == ZLEVEL_CENTCOM)
+		user << "<span class='notice'>The wabbajack does not wake here.</span>"
+		return
+	new /obj/machinery/power/emitter/energycannon/magical(T_loc)
+	var/obj/structure/table/abductor/wabbajack/left/L = new/obj/structure/table/abductor/wabbajack/left(T_loc)
+	L.x -= 3
+	var/obj/structure/table/abductor/wabbajack/right/R = new/obj/structure/table/abductor/wabbajack/right(T_loc)
+	R.x += 3
+	qdel(src)
+
+
+/obj/machinery/power/emitter/energycannon/magical/update_icon()
+	if(active)
+		icon_state = icon_state_on
+	else
+		icon_state = initial(icon_state)
+
+/obj/machinery/power/emitter/energycannon/magical/process()
+	. = ..()
+	if(active_tables.len >= 2)
+		if(!active)
+			visible_message("<span class='revenboldnotice'>\
+				[src] opens its eyes.</span>")
+			update_icon()
+		active = TRUE
+	else
+		if(active)
+			visible_message("<span class='revenboldnotice'>\
+				[src] closes its eyes.</span>")
+			update_icon()
+		active = FALSE
+
+
+/obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
+	return
+
+/obj/machinery/power/emitter/energycannon/magical/attackby(obj/item/W, mob/user, params)
+	return
+
+/obj/machinery/power/emitter/energycannon/magical/ex_act(severity)
+	return
+
+/obj/machinery/power/emitter/energycannon/magical/emag_act(mob/user)
+	return
+
+/obj/structure/table/abductor/wabbajack
+	name = "wabbajack altar"
+	health = 1000
+	verb_say = "chants"
+	desc = "It wakes so you may sleep"
+	var/obj/machinery/power/emitter/energycannon/magical/our_statue
+	var/list/mob/living/sleepers = list()
+	var/never_spoken = TRUE
+	flags = NODECONSTRUCT
+
+/obj/structure/table/abductor/wabbajack/New()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/table/abductor/wabbajack/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/structure/table/abductor/wabbajack/process()
+	var/area = orange(4, src)
+	if(!our_statue)
+		for(var/obj/machinery/power/emitter/energycannon/magical/M in area)
+			our_statue = M
+			break
+
+	var/turf/T = get_turf(src)
+	var/list/found = list()
+	for(var/mob/living/carbon/C in T)
+		if(C.stat != DEAD)
+			found += C
+
+	// New sleepers
+	for(var/i in found - sleepers)
+		var/mob/living/L = i
+		L.color = "#800080"
+		L.visible_message("<span class='revennotice'>A strange purple glow \
+			wraps itself around [L] as they suddenly fall unconcious.</span>",
+			"<span class='revendanger'>[desc]</span>")
+
+
+	// Existing sleepers
+	for(var/i in found)
+		var/mob/living/L = i
+		L.SetSleeping(10)
+
+	// Missing sleepers
+	for(var/i in sleepers - found)
+		var/mob/living/L = i
+		L.color = initial(L.color)
+		L.visible_message("<span class='revennotice'>The glow from [L] fades \
+			away.</span>")
+
+	sleepers = found
+
+	if(sleepers.len)
+		our_statue.active_tables |= src
+		if(never_spoken || prob(5))
+			say(desc)
+			never_spoken = FALSE
+	else
+		our_statue.active_tables -= src
+
+/obj/structure/table/abductor/wabbajack/left
+	desc = "You sleep so it may wake."
+
+/obj/structure/table/abductor/wabbajack/right
+	desc = "It wakes so you may sleep."

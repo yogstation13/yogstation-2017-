@@ -654,16 +654,10 @@
 				if(!disable_warning)
 					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
-			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					H << "You somehow have a suit with no defined allowed items for suit storage, stop that."
-				return 0
-			if(I.w_class > 4)
-				if(!disable_warning)
-					H << "The [I.name] is too big to attach."  //should be src?
-				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
-				return 1
+			if(istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/S = H.wear_suit
+				if(S.can_hold(I))
+					return 1
 			return 0
 		if(slot_handcuffed)
 			if(H.handcuffed)

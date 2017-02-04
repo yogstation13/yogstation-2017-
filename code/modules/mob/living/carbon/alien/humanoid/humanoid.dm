@@ -170,11 +170,13 @@
 	..()
 
 //For alien evolution/promotion procs. Checks for
-proc/alien_type_present(var/alienpath)
+/proc/alien_type_present(var/alienpath, hive_faction)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		if(A.hive_faction != hive_faction)
 			continue
 		return 1
 	return 0

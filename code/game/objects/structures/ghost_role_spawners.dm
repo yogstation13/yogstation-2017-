@@ -88,6 +88,7 @@
 	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
 	ashhud.join_hud(new_spawn)
 	ticker.mode.set_antag_hud(new_spawn, "hudchieftain")
+	new_spawn <<"<b>You are the chieftain of the ashwalkers. You are the only one who can use complicated machinery and speak to outsiders-Lead your tribe, for better or for worse.</b>"
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile

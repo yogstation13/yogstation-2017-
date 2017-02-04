@@ -266,7 +266,6 @@
 			var/obj/machinery/abductor/console/con = get_team_console(team_number)
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
-				SSshuttle.emergency.request(null, 0.5)
 				finished = 1
 				return ..()
 	return ..()
@@ -324,7 +323,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Experiment on [target_amount] humans."
+	explanation_text = "Experiment on at least [target_amount] humans and retain [target_amount] unspent research points."
 
 /datum/objective/experiment/check_completion()
 	var/ab_team = team

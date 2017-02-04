@@ -379,7 +379,7 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-			
+
 		var/datum/species/mutation = race
 		if(prob(90) && mutation)
 			H << mutationtext
@@ -420,7 +420,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/lizard/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
-	
+
 /datum/reagent/stableslimetoxin/androidfly
 	name = "Flyternis Mutation Toxin"
 	id = "flyternismutationtoxin"
@@ -428,7 +428,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/android/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
-	
+
 /datum/reagent/stableslimetoxin/plant
 	name = "Phytosian Mutation Toxin"
 	id = "phytosianmutationtoxin"
@@ -436,7 +436,7 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/plant
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
-	
+
 /datum/reagent/stableslimetoxin/plantfly
 	name = "Flytosian Mutation Toxin"
 	id = "flytosianmutationtoxin"
@@ -767,11 +767,22 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("radium", reac_volume)
 
-/datum/reagent/sterilizine
+/datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.20, S.success_multiplier)
+			S.speedup_multiplier = max(0.75, S.speedup_multiplier)
+			// +20% success propability on each step, useful while operating in less-than-perfect conditions
+			// +75% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+	..()
 
 /datum/reagent/iron
 	name = "Iron"
@@ -1328,7 +1339,6 @@
 /datum/reagent/toxin/mutagen/mutagenvirusfood
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
-	description = "mutates blood"
 	color = "#A3C00F" // rgb: 163,192,15
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
@@ -1339,19 +1349,32 @@
 /datum/reagent/medicine/synaptizine/synaptizinevirusfood
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-	description = "mutates blood"
 	color = "#D18AA5" // rgb: 209,138,165
 
 /datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
 	id = "plasmavirusfood"
-	description = "mutates blood"
 	color = "#A69DA9" // rgb: 166,157,169
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+/datum/reagent/uranium/uraniumvirusfood
+	name = "decaying uranium gel"
+	id = "uraniumvirusfood"
+	color = "#67ADBA" // rgb: 103,173,186
+
+/datum/reagent/uranium/uraniumvirusfood/unstable
+	name = "unstable uranium gel"
+	id = "uraniumplasmavirusfood_unstable"
+	color = "#2FF2CB" // rgb: 47,242,203
+
+/datum/reagent/uranium/uraniumvirusfood/stable
+	name = "stable uranium gel"
+	id = "uraniumplasmavirusfood_stable"
+	color = "#04506C" // rgb: 4,80,108
 
 //Reagent used for shadowling blindness smoke spell
 datum/reagent/shadowling_blindness_smoke
@@ -1406,7 +1429,7 @@ datum/reagent/romerol
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
-	
+
 /datum/reagent/laughter
 	name = "liquid laughter"
 	id = "laughter"

@@ -55,30 +55,29 @@
 "bc" = (/obj/structure/table,/turf/open/floor/pod,/area/ruin/unpowered)
 "bd" = (/obj/item/chair,/turf/open/floor/pod,/area/ruin/unpowered)
 "be" = (/obj/structure/table_frame,/turf/open/floor/pod,/area/ruin/unpowered)
-"bf" = (/obj/structure/table,/obj/item/weapon/gun/projectile/shotgun/boltaction,/turf/open/floor/pod,/area/ruin/unpowered)
-"bg" = (/obj/structure/table,/obj/item/weapon/crowbar/red,/turf/open/floor/pod,/area/ruin/unpowered)
-"bh" = (/obj/item/stack/rods,/turf/open/floor/pod,/area/ruin/unpowered)
-"bi" = (/obj/item/weapon/broken_bottle,/turf/open/floor/pod,/area/ruin/unpowered)
-"bj" = (/obj/item/stack/sheet/metal,/turf/open/floor/pod,/area/ruin/unpowered)
-"bk" = (/obj/item/weapon/wrench,/turf/open/floor/pod,/area/ruin/unpowered)
-"bl" = (/obj/structure/table,/obj/item/clothing/mask/facehugger/toy,/turf/open/floor/pod,/area/ruin/unpowered)
-"bm" = (/obj/machinery/light,/turf/open/floor/pod,/area/ruin/unpowered)
-"bn" = (/obj/structure/table_frame,/obj/item/stack/rods,/turf/open/floor/pod,/area/ruin/unpowered)
-"bo" = (/obj/structure/table,/obj/item/weapon/stock_parts/matter_bin/bluespace,/turf/open/floor/pod,/area/ruin/unpowered)
-"bp" = (/obj/structure/table,/obj/item/clothing/head/helmet/skull,/turf/open/floor/pod,/area/ruin/unpowered)
-"bq" = (/obj/machinery/keycard_auth{pixel_y = -7},/turf/closed/wall/r_wall,/area/ruin/unpowered)
-"br" = (/obj/machinery/space_heater,/turf/open/floor/pod,/area/ruin/unpowered)
-"bs" = (/obj/effect/decal/cleanable/blood/drip,/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/turf/open/floor/pod,/area/ruin/unpowered)
-"bt" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/open/floor/pod,/area/ruin/unpowered)
-"bu" = (/obj/machinery/shower{dir = 4},/turf/open/floor/pod,/area/ruin/unpowered)
-"bv" = (/obj/machinery/shower{dir = 8},/turf/open/floor/pod,/area/ruin/unpowered)
-"bw" = (/turf/open/floor/plating,/area/ruin/unpowered)
-"bx" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/unpowered)
-"by" = (/obj/machinery/door/poddoor,/turf/open/floor/pod,/area/ruin/unpowered)
-"bz" = (/obj/structure/barricade/sandbags,/turf/open/floor/pod,/area/lavaland/surface/outdoors)
-"bA" = (/turf/open/floor/plating{icon_state = "platingdmg3"},/area/lavaland/surface/outdoors)
-"bB" = (/turf/open/floor/pod,/area/lavaland/surface/outdoors)
-"bC" = (/obj/effect/mob_spawn/human/corpse/russian,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/pod,/area/lavaland/surface/outdoors)
+"bf" = (/obj/structure/table,/obj/item/weapon/crowbar/red,/turf/open/floor/pod,/area/ruin/unpowered)
+"bg" = (/obj/item/stack/rods,/turf/open/floor/pod,/area/ruin/unpowered)
+"bh" = (/obj/item/weapon/broken_bottle,/turf/open/floor/pod,/area/ruin/unpowered)
+"bi" = (/obj/item/stack/sheet/metal,/turf/open/floor/pod,/area/ruin/unpowered)
+"bj" = (/obj/item/weapon/wrench,/turf/open/floor/pod,/area/ruin/unpowered)
+"bk" = (/obj/structure/table,/obj/item/clothing/mask/facehugger/toy,/turf/open/floor/pod,/area/ruin/unpowered)
+"bl" = (/obj/machinery/light,/turf/open/floor/pod,/area/ruin/unpowered)
+"bm" = (/obj/structure/table_frame,/obj/item/stack/rods,/turf/open/floor/pod,/area/ruin/unpowered)
+"bn" = (/obj/structure/table,/obj/item/weapon/stock_parts/matter_bin/bluespace,/turf/open/floor/pod,/area/ruin/unpowered)
+"bo" = (/obj/structure/table,/obj/item/clothing/head/helmet/skull,/turf/open/floor/pod,/area/ruin/unpowered)
+"bp" = (/obj/machinery/keycard_auth{pixel_y = -7},/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"bq" = (/obj/machinery/space_heater,/turf/open/floor/pod,/area/ruin/unpowered)
+"br" = (/obj/effect/decal/cleanable/blood/drip,/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,/turf/open/floor/pod,/area/ruin/unpowered)
+"bs" = (/obj/machinery/suit_storage_unit/standard_unit,/turf/open/floor/pod,/area/ruin/unpowered)
+"bt" = (/obj/machinery/shower{dir = 4},/turf/open/floor/pod,/area/ruin/unpowered)
+"bu" = (/obj/machinery/shower{dir = 8},/turf/open/floor/pod,/area/ruin/unpowered)
+"bv" = (/turf/open/floor/plating,/area/ruin/unpowered)
+"bw" = (/turf/open/floor/plating{icon_state = "platingdmg1"},/area/ruin/unpowered)
+"bx" = (/obj/machinery/door/poddoor,/turf/open/floor/pod,/area/ruin/unpowered)
+"by" = (/obj/structure/barricade/sandbags,/turf/open/floor/pod,/area/lavaland/surface/outdoors)
+"bz" = (/turf/open/floor/plating{icon_state = "platingdmg3"},/area/lavaland/surface/outdoors)
+"bA" = (/turf/open/floor/pod,/area/lavaland/surface/outdoors)
+"bB" = (/obj/effect/mob_spawn/human/corpse/russian,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/pod,/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -99,20 +98,20 @@ aaaaaaaaaaababadadadadadaRaSaTadavaiaiadaiaUaVadabababaaaaaaaaaaaaaaaa
 aaaaaaaaaaababadadadadadadadadadadatadadadadadadadababaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaababababadaiaiahaiaiaiaWaiaiaiahaXaYadababaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaabacabadaiaiaiaiaiavaiaiaZaiaiaibaadababaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaacacabadaibbbcbdbebfbgbhbiaiaiaiaiadabacaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabababadaiaiaiaZbjbkaibjaiaiaiaibladabacaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaababadaiaibmaibcaiaibnaiaibmbobpadababaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaacabadadadadadadadatbqadadadadadadababaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaacabababababadbrahbsapbtadababababababaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaacaaababababadbtaiapbmaiadabacabacacabaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaacacabadaibbbcbdbebcbfbgbhaiaiaiaiadabacaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabababadaiaiaiaZbibjaibiaiaiaiaibkadabacaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaababadaiaiblaibcaiaibmaiaiblbnboadababaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacabadadadadadadadatbpadadadadadadababaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacabababababadbqahbrapbsadababababababaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacaaababababadbsaiapblaiadabacabacacabaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaacacababadadadatadadadabacababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaacabababadbuaiavahbvadabacababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaababababadbwaiaiaibvadababababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaababacacadbxadbyadadadacacababaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaacacacacbzbAbAbBbBbCbBbBbzacacacacaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaabzbBbBbCbBbBbBbBbzaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaabzbBbBbBbBbBbBbBbzaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaabzbzbzbzbzbzbzbzbzaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaacabababadbtaiavahbuadabacababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaababababadbvaiaiaibuadababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaababacacadbwadbxadadadacacababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaacacacacbybzbzbAbAbBbAbAbyacacacacaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaabybAbAbBbAbAbAbAbyaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaabybAbAbAbAbAbAbAbyaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaabybybybybybybybybyaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

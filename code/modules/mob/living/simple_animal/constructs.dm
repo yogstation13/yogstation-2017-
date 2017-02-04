@@ -20,7 +20,6 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-	faction = list("cult")
 	flying = 1
 	pressure_resistance = 200
 	unique_name = 1
@@ -31,12 +30,38 @@
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/phaser = FALSE
+	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
-/mob/living/simple_animal/hostile/construct/New()
+/mob/living/simple_animal/hostile/construct/New(var/loc, var/_affiliation)
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+		if(_affiliation)
+			affiliation = _affiliation
+	addtimer(src, "set_affiliation", 1) //So the other code get's run first, wich might change the affiliation
+
+/mob/living/simple_animal/hostile/construct/proc/set_affiliation(var/_affiliation)
+	if(_affiliation)
+		affiliation = _affiliation
+	overlays.Cut()
+	var/image/I = image(icon, icon_state = "[icon_state]_o")
+	switch(affiliation)
+		if("Cult")
+			faction |= list("cult")
+			I.color = color2hex("red")
+			overlays += I
+		if("Wizard")
+			faction |= list("wizard")
+			ticker.mode.update_wiz_icons_added(mind)
+			I.color = color2hex("blue")
+			overlays += I
+		if("Neutral")
+			I.color = color2hex("lime")
+			overlays += I
+		else
+			I.color = color2hex(affiliation)
+			overlays += I
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"

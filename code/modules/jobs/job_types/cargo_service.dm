@@ -127,6 +127,7 @@ Bartender
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/weapon/lighter
 
 /datum/job/bartender/space
 	title = "Space Bartender"

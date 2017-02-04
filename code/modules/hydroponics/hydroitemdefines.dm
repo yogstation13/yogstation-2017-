@@ -111,9 +111,17 @@
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/scythe/suicide_act(mob/user)  // maybe later i'll actually figure out how to make it behead them
-	user.visible_message("<span class='suicide'>[user] is beheading \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+/obj/item/weapon/scythe/suicide_act(mob/user)  // I made it behead for you, pal
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/bodypart/B = H.get_bodypart("head")
+		if(B)
+			user.visible_message("<span class='suicide'>[user] is beheading \himself with [src]! It looks like \he's trying to commit suicide.</span>")
+			playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
+			B.dismember()
+		else
+			user.visible_message("<span class='suicide'>[user] is trying to decapitate their missing head with [src]! It looks like they're trying to commit suicide.</span>")
+			playsound(loc, 'sound/weapons/punchmiss.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
 // *************************************
