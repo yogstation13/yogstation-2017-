@@ -113,7 +113,7 @@
 	aesthetic = TRUE
 
 	probability = 10
-	
+
 /datum/weather/rad_storm
 	name = "radiation storm"
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
@@ -124,10 +124,12 @@
 	//telegraph_overlay = "light_ash"
 
 	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
+	weather_overlay = "ash_storm"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
-	//weather_sound = 'sound/lavaland/ash_storm_start.ogg'
-	//weather_overlay = "ash_storm"
+	weather_color = "green"
+	weather_sound = 'sound/misc/bloblarm.ogg'
+
 
 	end_duration = 100
 	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
@@ -161,5 +163,5 @@
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces. Emergency maintenence access will be disabled shortly.", "Anomaly Alert")
 	sleep(600) //60 seconds, i think
-	if(emergency_access = 1)
+	if(emergency_access)
 		revoke_maint_all_access()
