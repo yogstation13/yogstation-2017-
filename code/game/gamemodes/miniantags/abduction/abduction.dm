@@ -486,14 +486,29 @@
 	explanation_text = "Someone very important is being kept prisoner here. Nanotrasen might try to cover it up, but it doesn't matter; you know the truth, and you won't rest until they've been set free."
 
 /datum/objective/abductee/lightson
-	explanation_text = "our workspace is too poorly lit, it's disgraceful. It needs more light sources, as many as possible."
+	explanation_text = "Our workspace is too poorly lit, it's disgraceful. It needs more light sources, as many as possible."
 
 /datum/objective/abductee/cleanfreak
 	explanation_text = "Floors that aren't clean are the worst. Do whatever it takes to avoid stepping on messy sections of floor."
 
 /datum/objective/abductee/rorschach
-	explanation_text = "The station's assistants are plotting something. Figure out what their secret plan is. Stop at nothing and never compromise. Not even in the face of Armagedoon."
+	explanation_text = "The station's assistants are plotting something. Figure out what their secret plan is. Stop at nothing and never compromise. Not even in the face of Armageddon."
 
 /datum/objective/abductee/minipyro
 	explanation_text = "All paper should be burned. People should never be burned, of course. That would be crazy. Unless they're made of paper."
 
+/datum/objective/abductee/replacement
+	explanation_text = "REPLACE!"
+
+/datum/objective/abductee/replacement/New()
+	var/mob/living/chosen
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(chosen)
+			continue
+		if(H.job)
+			chosen = H
+			break
+
+	explanation_text = "You know that [chosen.real_name] has persihed. There must always be a [chosen.real_name]. Clearly you have to replace them."
+	..()
+	. = ..()
