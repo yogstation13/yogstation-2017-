@@ -109,7 +109,6 @@
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
 	functions = PDA_SECURITY_FUNCTIONS
-	alert_flags = PDA_BURGLAR_ALERT
 	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/detective

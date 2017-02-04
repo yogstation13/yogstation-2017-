@@ -445,9 +445,12 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 						H << "<span class='warning'>[owner] has actiated their emergency hotline alert.</span>"
 						if(signal)
 							if(signal.data["done"])
-								var/area/A = get_area(U)
-								H << "<span class='warning'>[owner] is communicating from [H.z in signal.data["level"] ? A.name : "an unknown area"].</span>"
-						H << "<span class='notice'>Your PDA prompts you with: <a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>Contact [owner]</a></span>"
+								var/area/A = get_area(src)
+								var/inrange = FALSE
+								if(H.z in signal.data["level"])
+									inrange = TRUE
+								H << "<span class='warning'>[owner] is communicating from [inrange ? A.name : "an unknown area"].</span>"
+						H << "<span class='notice'>Your PDA prompts you with: \[<a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>Contact [owner]</a>\]</span>"
 					else
 						P.visible_message("<span class='warning'>[src] begins to emit a red light.</span>")
 				U << "<span class='notice'>Your alert went through. Hotline agents were notified.</span>"
