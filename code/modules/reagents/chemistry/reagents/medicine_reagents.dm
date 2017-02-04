@@ -298,6 +298,14 @@
 			if(show_message)
 				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
 		else
+			var/mob/living/carbon/C = M
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10, S.success_multiplier)
+				S.speedup_multiplier = max(0.35, S.speedup_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				// +35% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+
 			if(show_message)
 				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
 	..()

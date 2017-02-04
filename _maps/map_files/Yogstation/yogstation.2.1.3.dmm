@@ -31516,14 +31516,16 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "blR" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "blS" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -33230,8 +33232,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bpr" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -33242,8 +33245,9 @@
 	},
 /area/shuttle/supply)
 "bpt" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41161,14 +41165,16 @@
 /turf/open/floor/engine/vacuum,
 /area/toxins/mixing)
 "bDY" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "bDZ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -41193,8 +41199,9 @@
 	},
 /area/shuttle/abandoned)
 "bEc" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41212,8 +41219,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "bEf" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -67994,8 +68002,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68016,8 +68025,9 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cFQ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68053,8 +68063,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68075,8 +68086,9 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGb" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/transport)

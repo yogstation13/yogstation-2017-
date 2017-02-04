@@ -1154,8 +1154,9 @@
 /turf/closed/indestructible/splashscreen,
 /area/start)
 "ds" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -1181,8 +1182,9 @@
 /turf/open/floor/plating/airless,
 /area/centcom/evac)
 "dw" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -1342,14 +1344,16 @@
 /turf/open/floor/plasteel/shuttle,
 /area/centcom/evac)
 "dU" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/centcom/evac)
 "dV" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/centcom/evac)

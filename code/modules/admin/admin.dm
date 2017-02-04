@@ -126,6 +126,11 @@ var/global/BSACooldown = 0
 			else
 				body += "<A href='?_src_=holder;corgione=\ref[M]'>Corgize</A> | "
 
+			if(isovermind(M))
+				body += "<B>Blob | </B>"
+			else
+				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
+
 			//AI / Cyborg
 			if(isAI(M))
 				body += "<B>Is an AI</B> "
@@ -134,7 +139,6 @@ var/global/BSACooldown = 0
 				body += "<A href='?_src_=holder;makerobot=\ref[M]'>Make Robot</A> | "
 				body += "<A href='?_src_=holder;makealien=\ref[M]'>Make Alien</A> | "
 				body += "<A href='?_src_=holder;makeslime=\ref[M]'>Make Slime</A> | "
-				body += "<A href='?_src_=holder;makeblob=\ref[M]'>Make Blob</A> | "
 
 			//Simple Animals
 			if(isanimal(M))

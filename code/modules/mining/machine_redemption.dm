@@ -63,7 +63,8 @@
 				var/msg = "[capitalize(s.name)] sheets are now available in the Cargo Bay."
 				for(var/obj/machinery/requests_console/D in allConsoles)
 					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
-						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
+						if(D.z == z)
+							D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += sheet_per_ore //Stack the sheets
 		O.loc = null //Let the old sheet...
