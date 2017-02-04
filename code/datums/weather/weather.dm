@@ -20,6 +20,7 @@
 	var/weather_duration_upper = 1500 //See above - this is the highest possible duration
 	var/weather_sound
 	var/weather_overlay
+	var/weather_color = null
 
 	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
@@ -38,8 +39,8 @@
 	var/stage = END_STAGE //The stage of the weather, from 1-4
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
-	
-	var/barometer_predictable = FALSE 
+
+	var/barometer_predictable = FALSE
 	var/next_hit_time = 0 //For barometers to know when the next storm will hit
 
 /datum/weather/New()
@@ -129,6 +130,7 @@
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.invisibility = 0
+		N.color = weather_color
 		switch(stage)
 			if(STARTUP_STAGE)
 				N.icon_state = telegraph_overlay
@@ -137,6 +139,7 @@
 			if(WIND_DOWN_STAGE)
 				N.icon_state = end_overlay
 			if(END_STAGE)
+				N.color = null
 				N.icon_state = initial(N.icon_state)
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
