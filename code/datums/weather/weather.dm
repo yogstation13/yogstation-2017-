@@ -28,6 +28,7 @@
 
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
+	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
 	var/target_z = ZLEVEL_STATION //The z-level to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
@@ -37,8 +38,8 @@
 	var/stage = END_STAGE //The stage of the weather, from 1-4
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
-
-	var/barometer_predictable = FALSE
+	
+	var/barometer_predictable = FALSE 
 	var/next_hit_time = 0 //For barometers to know when the next storm will hit
 
 /datum/weather/New()
@@ -47,13 +48,18 @@
 
 /datum/weather/Destroy()
 	SSweather.existing_weather -= src
-	return ..()
+	..()
 
 /datum/weather/proc/telegraph()
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
+	var/list/affectareas = list()
 	for(var/V in get_areas(area_type))
+		affectareas += V
+	for(var/V in protected_areas)
+		affectareas -= get_areas(V)
+	for(var/V in affectareas)
 		var/area/A = V
 		if(A.z == target_z)
 			impacted_areas |= A
@@ -101,9 +107,18 @@
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
-		return
+		return 1
 	stage = END_STAGE
 	update_areas()
+
+/datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
+	if(L.z != target_z)
+		return
+	if(immunity_type in L.weather_immunities)
+		return
+	if(!(get_area(L) in impacted_areas))
+		return
+	return 1
 
 /datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
 	return
