@@ -435,7 +435,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 						SetLuminosity(f_lum)
 			if("hotline")
 				if(hotline_cd)
-					U << "<span class='notice'>[src] is still on it's cooldown.</span>"
+					U << "<span class='notice'>[src] is still on its cooldown.</span>"
 					return
 				for(var/obj/item/device/pda/P in hotline_pdas)
 					playsound(get_turf(P), 'sound/machines/twobeep.ogg', 50, 0)
@@ -455,10 +455,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 						P.visible_message("<span class='warning'>[src] begins to emit a red light.</span>")
 				U << "<span class='notice'>Your alert went through. Hotline agents were notified.</span>"
 				hotline_cd = TRUE
-				spawn(PDA_HOTLINE_CD)
-					hotline_cd = FALSE
-					if(src in U.contents)
-						U << "<span class='notice'>[src] is ready to contact hotline agents again.</span>"
+				addtimer(src, "reset_hotline_cooldown", PDA_HOTLINE_CD, TRUE)
 
 			if("Medical Scan Health")
 				if(scanmode == PDA_SCAN_MEDICAL_HEALTH)
@@ -1265,3 +1262,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .
+
+/obj/item/device/pda/proc/reset_hotline_cooldown()
+	hotline_cd = FALSE
+	if(isliving(loc))
+		var/mob/living/li = loc
+		li << "<span class='notice'>[src] is ready to contact hotline agents again.</span>"

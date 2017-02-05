@@ -211,6 +211,7 @@
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
+	alert_flags = PDA_HOTLINE_ALERT
 	functions = PDA_MEDICAL_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_MEDICAL_FUNCTIONS
 	bot_access_flags = MED_BOT
 
@@ -223,13 +224,13 @@
 
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
-	desc = "Now with 450% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Hotline)
+	desc = "Now with 450% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_ENGINE_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_MEDICAL_FUNCTIONS|\
 				PDA_REAGENT_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS|\
 				PDA_NEWSCASTER_FUNCTIONS|PDA_CARGO_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_BOTANY_FUNCTIONS
 	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
-	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT|PDA_HOTLINE_ALERT
+	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT|PDA_HOTLINE_ALERT|PDA_BURGLAR_ALERT
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 
