@@ -216,11 +216,6 @@ Mining Medic
 	gloves = /obj/item/clothing/gloves/color/latex
 	mask = /obj/item/clothing/mask/surgical
 
-<<<<<<< .mine
-
-=======
-
->>>>>>> .theirs
 /*
 Paramedic
 */
