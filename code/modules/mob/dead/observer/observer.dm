@@ -322,7 +322,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "pAI Setup"
 	set desc = "Upload a fragment of your personality to the global pAI databanks."
-	
+
 	if(istype(usr, /mob/dead/observer))
 		if(SSpai)
 			SSpai.recruitWindow(client.mob)
@@ -478,6 +478,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	seedarkness = !(seedarkness)
 	updateghostsight()
+	usr << "You toggle darkness [(seedarkness ? "on" : "off")]."
 
 /mob/dead/observer/proc/updateghostsight()
 	if(client)
