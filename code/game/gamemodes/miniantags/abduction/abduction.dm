@@ -502,7 +502,7 @@
 /datum/objective/abductee/replacedead/New()
 	var/mob/chosen = pick(dead_mob_list)
 
-	explanation_text = "You know that [chosen.real_name] has persihed. There must always be a [chosen.real_name]. Clearly you have to replace them."
+	explanation_text = "You know that [chosen.real_name] has perished. There must always be a [chosen.real_name]. Clearly you have to replace them."
 	..()
 	. = ..()
 
@@ -511,6 +511,6 @@
 /datum/objective/abductee/replaceliving/New()
 	var/mob/chosen = pick(living_mob_list)
 
-	explanation_text = "You know that [chosen.real_name] has persihed. There must always be a [chosen.real_name]. Clearly you have to replace them."
+	explanation_text = "This station has one [chosen.real_name]. That is insufficient. You must also become [chosen.real_name]."
 	..()
 	. = ..()
