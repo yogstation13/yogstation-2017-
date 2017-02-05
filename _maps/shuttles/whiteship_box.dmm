@@ -31,7 +31,7 @@
 "aE" = (/obj/item/weapon/stock_parts/cell{charge = 100; maxcharge = 15000},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "aF" = (/turf/closed/wall/shuttle{icon_state = "swall_f14"},/area/shuttle/abandoned)
 "aG" = (/obj/structure/rack,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
-"aH" = (/obj/structure/computerframe{anchored = 1},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
+"aH" = (/obj/structure/frame{anchored = 1},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "aI" = (/turf/closed/wall/shuttle{icon_state = "swall_f11"},/area/shuttle/abandoned)
 "aJ" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "aK" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
