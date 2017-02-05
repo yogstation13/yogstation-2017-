@@ -2,7 +2,7 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = "<b>Current Players:</b>\n"
+	var/msg = ""
 
 	var/list/Lines = list()
 
@@ -47,6 +47,18 @@
 				Lines += C.holder.fakekey
 			else
 				Lines += C.key
+
+	if(length(mentors) > 0)
+		Lines += "<b>Mentors:</b>"
+		for(var/client/C in sortList(clients))
+			var/mentor = mentor_datums[C.ckey]
+			if(mentor)
+				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)] ([round(C.avgping, 1)]ms)"
+
+	Lines += "<b>Players:</b>"
+	for(var/client/C in sortList(clients))
+		if(!check_mentor_other(C) || C.holder.fakekey)
+			Lines += "\t [C.key][show_info(C)]"
 
 	for(var/line in sortList(Lines))
 		msg += "[line]\n"
