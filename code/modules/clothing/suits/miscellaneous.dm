@@ -534,3 +534,14 @@
 	icon_state = "bedsheet"
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+
+/obj/item/clothing/suit/hooded/pathfinder
+	name = "pathfinder cloak"
+	desc = "A massive cloak that protects the wearer from concentrated burns with it's layered sinew."
+	icon_state = "pathcloak_t"
+	item_state = "pathcloak_t"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	burn_state = FIRE_PROOF
+	heat_protection = CHEST|GROIN|LEGS|ARMS|HANDS
+	hoodtype = /obj/item/clothing/head/helmet/kasa
+	weather_immunities = list("ash")

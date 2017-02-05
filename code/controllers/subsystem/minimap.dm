@@ -7,7 +7,7 @@ var/datum/subsystem/minimap/SSminimap
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
-	var/list/z_levels = list(ZLEVEL_STATION)
+	var/list/z_levels = list(ZLEVEL_STATION, ZLEVEL_MINING)
 
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
@@ -101,6 +101,9 @@ var/datum/subsystem/minimap/SSminimap
 	var/obj/obj
 	var/list/obj_icons = list()
 	// Don't use icons for space, just add objects in space if they exist.
+	if(istype(get_area(tile), /area/ruin))
+		tile_icon = new /icon('icons/turf/mining.dmi', "rock", SOUTH)
+
 	if(istype(tile, /turf/open/space))
 		obj = locate(/obj/structure/lattice/catwalk) in tile
 		if(obj)

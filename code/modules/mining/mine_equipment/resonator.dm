@@ -65,6 +65,11 @@
 		var/turf/closed/mineral/M = proj_turf
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
+			for(var/turf/closed/T in orange(1, M))
+				if(istype(T, M))
+					var/turf/closed/mineral/T2 = T
+					if(T2.mineralType) // so we don't end up in the ultimate chain reaction
+						new /obj/effect/resonance(T, creator, timetoburst)
 			M.gets_drilled(creator)
 			qdel(src)
 	else

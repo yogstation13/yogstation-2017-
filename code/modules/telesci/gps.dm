@@ -21,6 +21,15 @@ var/list/GPS_list = list()
 	var/savedlocation // preferably filled with x,y,z
 	var/intelligent
 
+
+/obj/item/device/gps/examine(mob/user)
+	..()
+	if(intelligent)
+		user << "<span class='notice'>This GPS is upgraded with intelligent software. It will label other GPS's with a tag based on it's location from you.</span>"
+		user << "<span class='red'>The \[Adjacent\] tag means they are within 20 feet.</span>"
+		user << "<span class='blue'>The \[Close-By\] tag means they are within 40 feet.</span>"
+		user << "<span class='white'>The \[Away\] tag means they are anywhere farther than that.</span>"
+
 /obj/item/device/gps/New()
 	..()
 	GPS_list.Add(src)
@@ -86,15 +95,15 @@ var/list/GPS_list = list()
 			if((G.emagged || G.emped) == 1)
 				t += "<BR>[tracked_gpstag]: ERROR"
 			else if(G.tracking)
-				var/color = AWAY
+				var/code = "\[Away\]"
 				if(intelligent)
-					if(get_dist(user, pos) <= 20)
-						color = ADJACENT
-					else if (get_dist(user, pos) <= 40)
-						color = CLOSE
+					if(get_dist(get_turf(user), pos) <= 20)
+						code = "\[Adjacent\]"
+					else if (get_dist(get_turf(user), pos) <= 40)
+						code = "\[Close-By\]"
 					else
-						color = AWAY
-				t += "<span class='[color]'<BR>[tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])</span>"
+						code = "\[Away\]"
+				t += "<BR>[code] | [tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
 			else
 				continue
 	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 350))
@@ -139,6 +148,7 @@ var/list/GPS_list = list()
 /obj/item/device/gps/medical
 	gpstag = "MED0"
 	channel = "medical"
+	intelligent = TRUE
 
 /obj/item/device/gps/science
 	icon_state = "gps-s"

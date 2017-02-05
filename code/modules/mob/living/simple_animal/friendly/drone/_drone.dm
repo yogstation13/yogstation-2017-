@@ -277,3 +277,26 @@
 
 /mob/living/simple_animal/drone/proc/fix_light()
 	light_on = 0
+
+/mob/living/simple_animal/drone/ClickOn(var/atom/A, var/params)
+	if(no_living_interaction && !isdrone(A) && (isliving(A) || istype(A, /obj/effect/blob)) )
+		src << "<span class='warning'>You cannot interact with other beings!</span>"
+		return
+	..()
+
+/mob/living/simple_animal/drone/stripPanelUnequip(obj/item/what, mob/who)
+	if(no_living_interaction)
+		src << "<span class='warning'>You cannot interact with other beings!</span>"
+		return
+	..()
+
+/mob/living/simple_animal/drone/can_use_guns(var/obj/item/weapon/gun/G)
+	if(no_living_interaction)
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/drone/has_left_hand()
+	return TRUE
+
+/mob/living/simple_animal/drone/has_right_hand()
+	return TRUE

@@ -383,7 +383,7 @@
 			return "Science"
 		if(access_mining)
 			return "Mining"
-		if(access_mining_office)
+		if(access_mining_lockers)
 			return "Mining Office"
 		if(access_mailsorting)
 			return "Cargo Office"

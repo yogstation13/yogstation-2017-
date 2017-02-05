@@ -187,3 +187,10 @@
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
+
+/turf/closed/wall/mineral/frozen
+	name = "frozen wall"
+	desc = "It seems like a watcher got angry..."
+	icon = 'icons/turf/walls/snow_wall.dmi'
+	icon_state = "snow"
+	walltype = "snow"

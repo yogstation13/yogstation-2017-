@@ -73,7 +73,7 @@
 	description = "Sure you don't need magical powers, but you WANT them, and \
 		that's what's important."
 	suffix = "lavaland_surface_greed.dmm"
-
+/*
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
 	id = "hermitcave"
@@ -81,6 +81,7 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+*/
 
 /datum/map_template/ruin/lavaland/syndicatepod
 	name = "Syndicate Pod"
@@ -251,3 +252,29 @@
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
 	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/scp_facility
+	name = "Anomalous Object Site"
+	id = "scp_facility"
+	description = "An abandoned storage site for dangerous and paranormal objects and creatures."
+	suffix = "lavaland_surface_scp_facility.dmm"
+	allow_duplicates = FALSE
+	cost = 20
+
+/datum/map_template/ruin/lavaland/gas_station
+	name = "Gas Station"
+	id = "gas-station"
+	description = "An old gas station that's somehow managed to survive in the deteriorating hellscape of lavaland. \
+				If you've managed to find it than you've lucked out."
+	suffix = "lavaland_surface_gas_station.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/cafe_of_broken_dreams
+	name = "Cafe of Broken Dreams"
+	id = "cafe-of-broken-dreams"
+	description = "Nothing's better the sweet taste of coffee in such an apocalyptic world. The only catch is that \
+			there isn't any coffee. But there's lots of fauna. "
+	suffix = "lavaland_surface_cafe_of_broken_dreams.dmm"
+	allow_duplicates = FALSE
+	cost = 10

@@ -934,6 +934,17 @@ datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
 	..()
 	. = 1
 
+/datum/reagent/medicine/bicaridine/miximone
+	name = "Miximone"
+	id = "miximone"
+	description = "Restores brises rapidly, however deals a small amount of braindamage."
+
+datum/reagent/medicine/bicaridine/miximone/on_mob_life(mob/living/M)
+	if(prob(10))
+		M.adjustBrainLoss(2*REM)
+	..()
+	. = 1
+
 datum/reagent/medicine/dexalin
 	name = "Dexalin"
 	id = "dexalin"
@@ -967,6 +978,17 @@ datum/reagent/medicine/kelotane/on_mob_life(mob/living/M)
 
 datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
 	M.adjustFireLoss(4*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/kelotane/dermaline
+	name = "Dermaline"
+	id = "dermaline"
+	description = "Quickly heals burn damage, however slightly saps stamina."
+
+/datum/reagent/medicine/kelotane/dermaline/on_mob_life(mob/living/M)
+	if(prob(10))
+		M.adjustStaminaLoss(3*REM, 0)
 	..()
 	. = 1
 
@@ -1126,3 +1148,22 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(2, 0)
 	. = 1
 	..()
+
+/datum/reagent/medicine/rapidstims
+	name = "Rapid Stimulants"
+	id = "rapidstims"
+	description = "Fixes crit."
+	color = "#C1P5EA"
+	metabolization_rate = 5
+
+/datum/reagent/medicine/rapidstims/on_mob_life(mob/living/M)
+	if(M.health < 0)
+		M.adjustBruteLoss(-20)
+		M.adjustFireLoss(-20)
+	else
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.vomit(0)
+			M.adjustToxLoss(10, 0)
+	..()
+	. = 1

@@ -82,6 +82,7 @@
 			new /obj/item/clothing/suit/space/hardsuit/freedom(src)  //lavaland is actually america after trump was elected
 		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
+			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/godblood(src)
 		if(15)
 			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
 		if(16)
