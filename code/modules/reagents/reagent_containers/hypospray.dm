@@ -157,17 +157,19 @@
 	list_reagents = list("unstablemutationtoxin" = 1)
 
 /obj/item/weapon/reagent_containers/hypospray/mixi
-	name = "QMC Miximone Injector"
+	name = "QMC Bicaridine Injector"
 	desc = "A quick-mix capital combat injector loaded with miximone."
 	amount_per_transfer_from_this = 5
 	icon_state = "combat_hypo"
 	volume = 50
-	list_reagents = list("miximone" = 50)
+	list_reagents = list("bicaridine" = 50)
+	flags = 0
 
 /obj/item/weapon/reagent_containers/hypospray/derm
-	name = "QMC Dermaline Injector"
+	name = "QMC Kelotane Injector"
 	desc = "A quick-mix capital combat injector loaded with dermaline."
 	amount_per_transfer_from_this = 5
 	icon_state = "combat_hypo2"
 	volume = 50
-	list_reagents = list("dermaline" = 50)
+	list_reagents = list("kelotane" = 50)
+	flags = 0

@@ -121,8 +121,6 @@
 /obj/item/stack/sheet/mineral/gold,
 /obj/item/stack/sheet/mineral/gold,
 /obj/item/stack/sheet/mineral/gold,
-/obj/effect/spawner/lootdrop/armory_contraband,
-/obj/effect/spawner/lootdrop/armory_contraband,
 /obj/effect/spawner/lootdrop/gambling,
 /obj/effect/spawner/lootdrop/gambling,
 /obj/effect/spawner/lootdrop/gambling,
