@@ -29392,25 +29392,11 @@
 	dir = 2
 	},
 /area/shuttle/escape)
-"bhv" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrivals Docking Bay 4";
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "bhw" = (
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/hallway/secondary/entry)
-"bhx" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrivals Docking Bay 3";
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bhy" = (
 /obj/item/device/radio/intercom{
@@ -78843,7 +78829,7 @@ cFO
 axl
 axo
 ayC
-bhv
+mer
 avn
 mer
 blT
@@ -80642,7 +80628,7 @@ cGb
 axl
 axo
 ayC
-bhx
+IvH
 avn
 IvH
 blV
