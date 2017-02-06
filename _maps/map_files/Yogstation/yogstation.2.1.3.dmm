@@ -2017,26 +2017,6 @@
 	icon_state = "dark"
 	},
 /area/ai_monitored/security/armory)
-"adU" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/ai_monitored/security/armory)
-"adV" = (
-/obj/structure/closet/wardrobe/red,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/main)
 "adW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -68249,6 +68229,14 @@
 /area/ai_monitored/storage/secure{
 	name = "\improper Telecoms Satellite"
 	})
+"mer" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 4";
+	req_access_txt = "0";
+	req_one_access_txt = "30;69"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "mFS" = (
 /obj/structure/closet/wardrobe/botanist,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -68619,6 +68607,14 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"IvH" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 3";
+	req_access_txt = "0";
+	req_one_access_txt = "13;69"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "IEQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -78849,7 +78845,7 @@ axo
 ayC
 bhv
 avn
-bhv
+mer
 blT
 bnC
 bnC
@@ -80648,7 +80644,7 @@ axo
 ayC
 bhx
 avn
-bhx
+IvH
 blV
 bnC
 bpl

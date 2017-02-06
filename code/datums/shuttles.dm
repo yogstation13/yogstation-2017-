@@ -200,6 +200,10 @@
 	suffix = "shitbucket_v3"
 	name = "The S.S. Shitbucket, MK.3"
 
+/datum/map_template/shuttle/whiteship/miner
+	suffix = "miner"
+	name = "Free Miner Ship"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"

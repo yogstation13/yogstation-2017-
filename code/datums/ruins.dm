@@ -9,6 +9,7 @@
 
 	var/cost = null
 	var/allow_duplicates = TRUE
+	var/allow_duplicates_global = TRUE
 
 	var/prefix = null
 	var/suffix = null

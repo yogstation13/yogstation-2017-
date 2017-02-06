@@ -14,7 +14,7 @@
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
 #define SCOUTDRONE_HACKED "drone_scout_hacked"
-
+#undef HUMAN
 /mob/living/simple_animal/drone
 	name = "Drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
