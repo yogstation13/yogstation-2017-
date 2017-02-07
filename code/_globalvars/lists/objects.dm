@@ -25,3 +25,4 @@ var/global/list/poi_list = list()					//list of points of interest for observe/f
 var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to change stuff they are pointing to all at once.
 // A list of all zombie_infection organs, for any mass "animation"
 var/global/list/zombie_infection_list = list()
+var/global/list/meteor_list = list() //list of all meteors
