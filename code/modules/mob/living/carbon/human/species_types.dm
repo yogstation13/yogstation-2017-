@@ -181,6 +181,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	heatmod = 1.05
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	var/last_eat_message = -EATING_MESSAGE_COOLDOWN
+	
 
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if (istype(chem, /datum/reagent/consumable)) //paranoia paranoia type casting is coming to get me
@@ -224,10 +225,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	sexes = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 /datum/species/android/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
 		H.adjustToxLoss(3)
-		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
 
@@ -260,8 +261,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.adjustFireLoss(10)
 			H.Stun(5)
 			H.nutrition = H.nutrition * 0.4
-			H.visible_message("<span class='danger'>Electricity ripples over [H]'s subdermal implants, smoking profusely.</span>", \
-							"<span class='userdanger'>A surge of searing pain erupts throughout your very being! As the pain subsides, a terrible sensation of emptiness is left in its wake.</span>")
+			H.visible_message("<span class='danger'>Electricity ripples over [H]'s skin as they writhe in pain!</span>", \
+							"<span class='userdanger'>AUUUUUUGH!</span>")
 			H.attack_log += "Was hit with a severity 3(severe) EMP as an android. Lost 20 health."
 		if(2)
 			H.adjustBruteLoss(5)
@@ -269,7 +270,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.Stun(2)
 			H.nutrition = H.nutrition * 0.6
 			H.visible_message("<span class='danger'>A faint fizzling emanates from [H].</span>", \
-							"<span class='userdanger'>A fit of twitching overtakes you as your subdermal implants convulse violently from the electromagnetic disruption. Your sustenance reserves have been partially depleted from the blast.</span>")
+							"<span class='userdanger'>%@!%ERR%#@^-ELECTROMAGNETIC PULSE DETECTED. SYST!%@^MS DAMAGED. SUSTENANCE DEPLETED.</span>")
 			H.emote("twitch")
 			H.attack_log += "Was hit with a severity 2(medium) EMP as an android. Lost 10 health."
 		if(3)
@@ -293,7 +294,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	id = "plant"
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
-	attack_verb = "slice"
+	attack_verb = "slic" //slice makes it 'sliceed' since it adds an ed on later so slic is the way to fix
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.5
@@ -771,7 +772,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
-	name = "Golem"
+	name = "Iron"
 	id = "golem"
 	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
 	speedmod = 2
@@ -789,7 +790,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	blacklisted = TRUE
 	dangerous_existence = TRUE
 	limbs_id = "golem"
-	fixed_mut_color = "aaa"
+	fixed_mut_color = initial(golem_type.fixed_mut_color)
+
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -814,27 +816,179 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Plasma Golem"
 	id = "plasma"
 	fixed_mut_color = "a3d"
+	burnmod = 1.5
+	specflags = list(NOBREATH,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,MUTCOLORS) //can burn
+	
+datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
+	explosion(get_turf(H),0,1,2,flame_range = 5)
+	if(H)
+		H.gib()
 
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
 	fixed_mut_color = "0ff"
+	armor = 70 //up from 55
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
 	fixed_mut_color = "ee0"
+	speedmod = 1
+	armor = 25 //down from 55
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
 	fixed_mut_color = "ddd"
+	punchstunthreshold = 9 //60% chance, from 40%
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
 	fixed_mut_color = "7f0"
+	var/last_event = 0
+	var/active = null
+	
+/datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
+ 	if(!active)
+ 		if(world.time > last_event+30)
+ 			active = 1
+ 			radiation_pulse(get_turf(H), 3, 3, 5, 0)
+ 			last_event = world.time
+ 			active = null
+ 	..()
+	
+/datum/species/golem/plasteel
+	name = "Plasteel Golem"
+	id = "plasteel"
+	fixed_mut_color = "bbb"
+	punchdamagelow = 12
+	punchdamagehigh = 21
+	punchstunthreshold = 15
+	speedmod = 4 //pretty fucking slow
+	
+/datum/species/golem/alloy
+	name = "Alien Alloy Golem"
+	id = "alloy"
+	fixed_mut_color = "333"
+	no_equip = list() //can equip clothing
+	meat = /obj/item/stack/sheet/mineral/abductor
+	mutant_organs = list(/obj/item/organ/tongue/abductor) //abductor tongue
+	speedmod = 0 //human-level speed
+	
+//Regenerates because self-repairing super-advanced alien tech
+/datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
+	H.heal_overall_damage(1,1)
+	H.adjustToxLoss(-1)
+	H.adjustOxyLoss(-1)
 
+//Since this will usually be created from a collaboration between podpeople and free golems, wood golems are a mix between the two races
+/datum/species/golem/wood
+	name = "Wood Golem"
+	id = "wood"
+	fixed_mut_color = "49311c"
+	meat = /obj/item/stack/sheet/mineral/wood
+	specflags = list(NOBREATH,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS) //No RESISTTEMP, can burn
+	armor = 30
+	burnmod = 1.25
+	heatmod = 1.5
+
+/datum/species/golem/wood/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.faction |= "plants"
+	C.faction |= "vines"
+
+/datum/species/golem/wood/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.faction -= "plants"
+	C.faction -= "vines"
+  
+/datum/species/golem/wood/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
+	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+	if(isturf(H.loc)) //else, there's considered to be no light
+		var/turf/T = H.loc
+		light_amount = min(10,T.get_lumcount()) - 5
+		H.nutrition += light_amount
+		if(H.nutrition > NUTRITION_LEVEL_FULL)
+			H.nutrition = NUTRITION_LEVEL_FULL
+		if(light_amount > 2) //if there's enough light, heal
+			H.heal_overall_damage(1,1)
+			H.adjustToxLoss(-1)
+			H.adjustOxyLoss(-1)
+
+	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
+		H.take_overall_damage(2,0)
+
+/datum/species/golem/wood/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "plantbgone")
+		H.adjustToxLoss(3)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
+		return 1
+
+/datum/species/golem/sand
+	name = "Sand Golem"
+	id = "sand"
+	fixed_mut_color = "ffdc8f"
+	armor = 0
+	burnmod = 3 //melts easily
+	brutemod = 0.25
+
+
+/datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] turns into a pile of sand!</span>")
+	for(var/obj/item/W in H)
+		H.unEquip(W)
+	for(var/i=1, i <= rand(3,5), i++)
+		new /obj/item/weapon/ore/glass(get_turf(H))
+	qdel(H)
+
+/datum/species/golem/sand/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
+	if(istype(/obj/item/projectile/bullet) || (/obj/item/projectile/kinetic))
+		playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
+		H.visible_message("<span class='danger'>The bullet sinks harmlessly in [H]'s sandy body!</span>", \
+		"<span class='userdanger'>The bullet sinks harmlessly in [H]'s sandy body!</span>")
+		return 2
+	return 0
+	
+/datum/species/golem/mythril
+	name = "Mythril golem"
+	id = "mythril"
+	fixed_mut_color = "ffa07a"
+	armor = 75 //tough af
+	burnmod = 0 //immune to burn entirely
+	brutemod = 0.3 //tough af against brute
+	heatmod = 0 //immune to heat
+	siemens_coefficient = 2 //don't shock them tho
+	speedmod = 6 //slow as FUCK
+	stunmod = 3 //if they go down they stay down
+	punchdamagelow = 9 //can either punch low...
+	punchdamagehigh = 25 //or really hard
+	punchstunthreshold = 50 //but it'll never stun
+	
+	
+/datum/species/golem/mythril/spec_death(gibbed, mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] turns into dust!</span>")
+	for(var/obj/item/W in H)
+		H.unEquip(W)
+	for(var/i=1, i <= rand(3,5), i++)
+		new /obj/item/weapon/ore/glass(get_turf(H))
+	qdel(H)
+	
+/datum/species/golem/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
+	if(istype(/obj/item/projectile/magic))
+		playsound(H, "sound/effects/shovel_dig.ogg", 70, 1)
+		H.visible_message("<span class='danger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>", \
+		"<span class='userdanger'>The magical bolt is absorbed instantly by [H]'s magical armor!</span>")
+		return 2
+	return 
+	
+
+ 
 
 /*
  FLIES
@@ -963,7 +1117,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
+	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
