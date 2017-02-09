@@ -27,7 +27,7 @@ EMAGGED FUNCTIONS - TODO
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=5;materials=5"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	unacidable = TRUE
 	actions_types = list(/datum/action/item_action/rtd/gas,/datum/action/item_action/rtd/type,/datum/action/item_action/rtd/access)
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 400
@@ -55,7 +55,8 @@ EMAGGED FUNCTIONS - TODO
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 
-	var/safety = 1
+	var/safety = TRUE
+	var/zlock = TRUE
 	/*
 	Construction costs
 	COST| FUNCTION
@@ -87,10 +88,8 @@ EMAGGED FUNCTIONS - TODO
 	var/removedelay = 40
 
 /obj/item/weapon/rtd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RTD to 'Airlock' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
+	user.visible_message("<span class='suicide'>[user] sets the RTD to 'Airlock' and points it down their throat! It looks like they're trying to commit suicide..</span>")
 	var/obj/machinery/door/airlock/A = new /obj/machinery/door/airlock/glass_command(get_turf(src))
-	A.max_integrity = 500
-	A.obj_integrity = 500
 	A.name = user.name
 	return (BRUTELOSS)
 
@@ -292,7 +291,7 @@ EMAGGED FUNCTIONS - TODO
 		gas++
 
 /obj/item/weapon/rtd/attackby(obj/item/weapon/W, mob/user, params)
-	if(iscyborg(user))	//Make sure cyborgs can't load their rtds
+	if(istype(user, /mob/living/silicon/robot))	//Make sure cyborgs can't load their rtds
 		return
 	var/loaded = 0
 	if(istype(W, /obj/item/weapon/storage/bag/ore))
@@ -385,9 +384,11 @@ EMAGGED FUNCTIONS - TODO
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	electrocute_check(30, user)
 
+/obj/item/weapon/rtd/emag_act(mob/user)
+	user << "<span class='warning'>You silently short out the sector lock and pressure safeties on the [src]!</span>"
 
 /obj/item/weapon/rtd/afterattack(atom/A, mob/user, proximity)
-	if(user.z == 1)
+	if((user.z == 1) && zlock)
 		user << "<span class='warning'>This device can not be used in the station!</span>"
 		return 0
 	if(!proximity && mode > 2)
@@ -423,7 +424,7 @@ EMAGGED FUNCTIONS - TODO
 				return 0
 			return 0
 		if(3)
-			if(isfloorturf(A))
+			if(istype(A, /turf/open/floor/plating))
 				if(checkResource(airlockcost, user))
 					var/door_check = 1
 					for(var/obj/machinery/door/D in A)
@@ -463,7 +464,7 @@ EMAGGED FUNCTIONS - TODO
 				return 0
 			return 0
 		if(4)
-			if(ismineralturf(A))
+			if(istype(A, /turf/closed/mineral))
 				var/turf/closed/mineral/M = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start converting the [A] to a metal wall...</span>"
@@ -475,7 +476,7 @@ EMAGGED FUNCTIONS - TODO
 							return 1
 			return 0
 		if(5)
-			if(isfloorturf(A))
+			if(istype(A, /turf/open/floor/plating))
 				if(checkResource(membranecost, user))
 					var/turf/open/floor/F = A
 					user << "<span class='notice'>You start fabricating an airtight membrane...</span>"
@@ -502,7 +503,7 @@ EMAGGED FUNCTIONS - TODO
 			if(gas < gas_use)
 				user << "<span class='notice'>Not enough gas stored! Wait a while for internal compressors to regenerate enough gas...</span>"
 				return 0
-			if(isfloorturf(A))
+			if(istype(A, /turf/open/floor/plating))
 				var/turf/open/floor/F = A
 				if((F.air.return_pressure() > 4.5*ONE_ATMOSPHERE) && safety)
 					user << "<span class='warning'>Danger! Air pressure too high to inject any more compressed air with safety interlocks active!</span>"
@@ -551,7 +552,7 @@ EMAGGED FUNCTIONS - TODO
 	..()
 
 /obj/item/weapon/rtd/borg/useResource(amount, mob/user)
-	if(!iscyborg(user))
+	if(!istype(user, /mob/living/silicon/robot))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
@@ -564,7 +565,7 @@ EMAGGED FUNCTIONS - TODO
 	return .
 
 /obj/item/weapon/rtd/borg/checkResource(amount, mob/user)
-	if(!iscyborg(user))
+	if(!istype(user, /mob/living/silicon/robot))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)

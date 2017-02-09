@@ -332,7 +332,7 @@ RCD
 					return 1
 				return 0
 			if(islavaturf(A))
-				var/turf/open/plating/lava/L = A
+				var/turf/open/floor/plating/lava/L = A
 				if(useResource(floorcost*10, user))
 					user << "<span class='notice'>You fill in the lava with plating...</span>"
 					activate()

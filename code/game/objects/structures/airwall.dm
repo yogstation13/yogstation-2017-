@@ -6,7 +6,16 @@
 	opacity = 0
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"
-	obj_integrity = 10
-	max_integrity = 10
-	break_message = "The inflated membrane pops with a loud bang!"
-	break_sound = 'sound/weapons/flashbang.ogg'
+	var/obj_integrity = 10
+	var/max_integrity = 10
+
+/obj/structure/destructible/airwall/attackby(obj/item/weapon, mob/user)
+	. = ..()
+	obj_integrity -= weapon.force
+	if(obj_integrity <= 0)
+		pop()
+
+/obj/structure/destructible/airwall/proc/pop()
+	visible_message("<span class='warning'>The [src] breaks with a loud bang!</span>")
+	playsound(src, 'sound/weapons/flashbang.ogg', 40, 1)
+	qdel(src)
