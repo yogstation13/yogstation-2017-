@@ -46,6 +46,8 @@ This file's folder contains:
 			return FALSE
 	else
 		return FALSE
+	if(is_servant_of_ratvar(M))
+		return FALSE
 	if(iscultist(M) || isconstruct(M) || isloyal(M))
 		return FALSE
 	if(ishuman(M) || isbrain(M) || isguardian(M) || issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))

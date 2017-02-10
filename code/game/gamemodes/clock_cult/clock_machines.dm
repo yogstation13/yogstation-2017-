@@ -9,12 +9,15 @@
 	var/needs_power = TRUE
 	var/active_icon = null //icon_state while process() is being called
 	var/inactive_icon = null //icon_state while process() isn't being called
+	var/area/area
 
 /obj/structure/clockwork/powered/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
 		user << "<span class='[powered ? "brass":"alloy"]'>It has access to <b>[powered == INFINITY ? "INFINITY":"[powered]"]W</b> of power.</span>"
+		if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM || initial(area.name) == "Space")
+			user << "<span class='warning'>It cannot use power as is not near the station.</span>"
 
 /obj/structure/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -22,12 +25,7 @@
 	return ..()
 
 /obj/structure/clockwork/powered/process()
-	if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM)
-		if(active)
-			visible_message("<span class='warning'>[src] shuts down!</span>")
-			active = FALSE
-			icon_state = inactive_icon
-			return
+
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
@@ -35,7 +33,7 @@
 	if(user)
 		if(!is_servant_of_ratvar(user))
 			return 0
-		if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM)
+		if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM || initial(area.name) == "Space")
 			user <<"<span class='warning'>[src] is not close enough to the station to turn on."
 			return 0
 		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
@@ -61,6 +59,9 @@
 	var/power = 0
 	power += accessable_apc_power()
 	power += accessable_sigil_power()
+	area = get_area()
+	if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM || initial(area.name) == "Space")
+		return 0
 	return power
 
 /obj/structure/clockwork/powered/proc/accessable_apc_power()
@@ -289,6 +290,8 @@
 	if(try_use_power(mania_cost))
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		for(var/mob/living/carbon/human/H in view(1, src))
+			if(is_servant_of_ratvar(H) || H.null_rod_check() || H.stat == DEAD)
+				continue
 			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
 				if(is_eligible_servant(H) && try_use_power(convert_cost))
 					H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
