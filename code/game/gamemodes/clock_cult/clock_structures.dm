@@ -155,16 +155,28 @@
 	..()
 	clockwork_caches++
 	SetLuminosity(2,1)
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/clockwork/cache/process()
 	var/area/area = get_area()
 	var/areaname = initial(area.name)
 	if(areaname == "Space" || (z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM))
-		active = FALSE
+		if(active)
+			visible_message("<span class ='warning'>[src]'s fire goes out suddenly. Looks like it isn't making any more components.</span>")
+			active = FALSE
+			icon_state = "tinkerers_cache_off"
+	else
+		if(!active)
+			visible_message("<span class ='warning'>[src]'s fire lights itself back up. It's ready to make more components.</span>")
+			active = TRUE
+			icon_state = "tinkerers_cache"
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
 	for(var/I in src)
 		var/atom/movable/A = I
 		A.forceMove(get_turf(src)) //drop any daemons we have
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)

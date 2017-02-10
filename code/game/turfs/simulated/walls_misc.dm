@@ -104,12 +104,6 @@
 	if(prob(2))
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
 	for(var/obj/structure/clockwork/cache/C in orange(1, src))
-		if(C.z != ZLEVEL_STATION && C.z != ZLEVEL_CENTCOM)
-			C.visible_message("<span class ='warning'>[C]'s fire goes out suddenly. Looks like it isn't making any more components.</span>")
-			C.active = FALSE
-		else
-			C.visible_message("<span class ='warning'>[C]'s fire lights itself back up. It's ready to make more components.</span>")
-			C.active = TRUE
 		if(!C.active) //if it's off the zlevel, caches can't produce components.
 			continue
 		if(C.wall_generation_cooldown <= world.time)

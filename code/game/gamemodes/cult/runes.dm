@@ -38,10 +38,15 @@ To draw a rune, use an arcane tome.
 	var/req_keyword = 0 //If the rune requires a keyword - go figure amirite
 	var/keyword //The actual keyword for the rune
 
+	var/area/runearea
+	var/runeturf
+
 /obj/effect/rune/New(loc, set_keyword)
 	..()
 	if(set_keyword)
 		keyword = set_keyword
+	runearea = get_area()
+	runeturf = get_turf(src)
 
 /obj/effect/rune/examine(mob/user)
 	..()
@@ -51,8 +56,8 @@ To draw a rune, use an arcane tome.
 		user << "<b>Required Acolytes:</b> [req_cultists]"
 		if(req_keyword && keyword)
 			user << "<b>Keyword:</b> [keyword]"
-	if(z != ZLEVEL_STATION)
-		user <<"It looks inactive."
+	if(initial(runearea.name) == "Space" || istype(runeturf,/turf/open/space) || (z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM))
+		user <<"<span class='warning'>It looks inactive.</span>"
 
 /obj/effect/rune/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
@@ -108,7 +113,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
 	if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
-		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to utilize this rune! Return to the station!</span>"
+		user << "<span class='cultitalic'>You are too far away from Nar'sie's strength to utilize this rune! Return to the station!</span>"
 		fail_invoke()
 		return
 	var/list/invokers = list() //people eligible to invoke the rune

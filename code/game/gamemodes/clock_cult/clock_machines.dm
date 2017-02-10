@@ -22,12 +22,21 @@
 	return ..()
 
 /obj/structure/clockwork/powered/process()
+	if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM)
+		if(active)
+			visible_message("<span class='warning'>[src] shuts down!</span>")
+			active = FALSE
+			icon_state = inactive_icon
+			return
 	var/powered = total_accessable_power()
 	return powered == PROCESS_KILL ? 25 : powered //make sure we don't accidentally return the arbitrary PROCESS_KILL define
 
 /obj/structure/clockwork/powered/proc/toggle(fast_process, mob/living/user)
 	if(user)
 		if(!is_servant_of_ratvar(user))
+			return 0
+		if(z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM)
+			user <<"<span class='warning'>[src] is not close enough to the station to turn on."
 			return 0
 		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active
