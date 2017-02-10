@@ -59,7 +59,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "leaves" = "Classic")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -315,6 +315,15 @@ var/list/preferences_datums = list()
 					dat += "<h3>Body Markings</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("leaves" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Leaves</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=leaves;task=input'>[features["leaves"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -1057,6 +1066,12 @@ var/list/preferences_datums = list()
 					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
 					if(new_frills)
 						features["frills"] = new_frills
+
+				if("leaves")
+					var/new_leaves
+					new_leaves = input(user, "Choose your character's leaves:", "Character Preference") as null|anything in leaves_list
+					if(new_leaves)
+						features["leaves"] = new_leaves
 
 				if("spines")
 					var/new_spines

@@ -292,7 +292,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Phytosian"
 	id = "plant"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	mutant_bodyparts = list("leaves")
+	default_features = list("mcolor" = "0F0", "leaves" = "Classic")
 	attack_verb = "slice"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'

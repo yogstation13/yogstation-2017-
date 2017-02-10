@@ -28,7 +28,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
-
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/leaves, leaves_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
