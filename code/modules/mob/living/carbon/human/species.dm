@@ -372,6 +372,10 @@
 		else if ("wings" in mutant_bodyparts)
 			bodyparts_to_add -= "wings_open"
 
+	if("leaves" in mutant_bodyparts)
+		if(H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "leaves"
+
 
 	if(!bodyparts_to_add)
 		return
@@ -410,6 +414,8 @@
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = wings_open_list[H.dna.features["wings"]]
+				if("leaves")
+					S = leaves_list[H.dna.features["leaves"]]
 
 			if(!S || S.icon_state == "none")
 				continue

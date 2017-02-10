@@ -293,6 +293,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	id = "plant"
 	default_color = "59CE00"
 	specflags = list(MUTCOLORS,EYECOLOR)
+	mutant_bodyparts = list("leaves")
+	default_features = list("leaves" = "Classic")
 	attack_verb = "slice"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
