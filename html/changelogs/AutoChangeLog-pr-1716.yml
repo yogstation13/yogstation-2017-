@@ -1,0 +1,4 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "The xenomorph lavaland facility will no longer spawn in lavaland. You can turn on your xeno prefs again now."
