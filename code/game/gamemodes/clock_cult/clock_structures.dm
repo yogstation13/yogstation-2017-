@@ -146,8 +146,6 @@
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	max_health = 80
 	health = 80
-	var/area/area
-	var/areaname
 	var/wall_generation_cooldown
 	var/active = TRUE //is it generating components? If it's off the station zlevel or in space it won't.
 
