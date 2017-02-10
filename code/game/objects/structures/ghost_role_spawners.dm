@@ -238,6 +238,31 @@
 	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
 	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
 
+//Wall builders tasked with constructing a wall across lavaland.
+/obj/effect/mob_spawn/human/wallbuilder
+	name = "Wallbuilder Cryopod"
+	desc = "Wallbuilders were hired to construct a massive wall across lavaland, with the goal of keeping the miners safe from the xenos that roam the lands."
+	flavour_text = "<font size=3><b>W</b></font><b>You awake from deep cryosleep. Your job is to make a proud wall, worthy of the NT name. Your base has a variety of tools to help you construct it.</b>"
+	anchored = 1
+	death = FALSE
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper"
+	uniform = /obj/item/clothing/under/rank/engineer
+	shoes = /obj/item/clothing/shoes/workboots
+	belt = /obj/item/weapon/storage/belt/utility/full
+	helmet = /obj/item/clothing/head/hardhat
+	pocket2 = /obj/item/device/t_scanner
+	back = /obj/item/weapon/storage/backpack/industrial
+	radio = /obj/item/device/radio/headset/headset_eng
+
+
+/obj/effect/mob_spawn/human/wallbuilder/New()
+	..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A new wallbuilder has joined the shift! \the [A.name].", source = src, action=NOTIFY_ATTACK)
+	mob_name = random_unique_name()
+
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
 	name = "prisoner containment sleeper"

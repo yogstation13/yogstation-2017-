@@ -1,0 +1,76 @@
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered/wall_builder)
+"ac" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/powered/wall_builder)
+"ad" = (/turf/closed/wall/r_wall,/area/ruin/powered/wall_builder)
+"ae" = (/obj/structure/sign/securearea,/turf/closed/wall/r_wall,/area/ruin/powered/wall_builder)
+"af" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"ag" = (/obj/structure/sign/biohazard,/turf/closed/wall/r_wall,/area/ruin/powered/wall_builder)
+"ah" = (/obj/structure/closet/crate/rcd,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"ai" = (/obj/structure/table,/obj/item/weapon/rcd/loaded,/obj/machinery/light/built{dir = 1},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aj" = (/obj/structure/table,/obj/item/weapon/rcd_ammo/large,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"ak" = (/turf/closed/wall,/area/ruin/powered/wall_builder)
+"al" = (/obj/structure/bed,/obj/item/weapon/bedsheet/yellow,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"am" = (/obj/structure/table,/obj/machinery/microwave,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"an" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"ao" = (/obj/structure/table,/obj/machinery/light/built{dir = 1},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"ap" = (/obj/effect/mob_spawn/human/wallbuilder,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aq" = (/obj/structure/sign/xeno_warning_mining,/turf/closed/wall/r_wall,/area/ruin/powered/wall_builder)
+"ar" = (/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"as" = (/obj/structure/sign/poster,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"at" = (/obj/structure/closet{name = "Xeno-Defense Gear"},/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/ammo_box/magazine/pistolm9mm,/obj/item/ammo_box/magazine/pistolm9mm,/obj/item/ammo_box/magazine/pistolm9mm,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"au" = (/obj/structure/sign/mining,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"av" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aw" = (/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"ax" = (/obj/machinery/light/built,/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"ay" = (/obj/structure/table,/obj/item/stack/sheet/metal/fifty,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"az" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aA" = (/obj/machinery/light/built{dir = 1},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aB" = (/obj/structure/closet/wardrobe/miner,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aC" = (/obj/structure/chair,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aD" = (/obj/structure/sign/securearea,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"aE" = (/obj/structure/sign/biohazard,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"aF" = (/obj/machinery/door/airlock/highsecurity,/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"aG" = (/obj/structure/sign/xeno_warning_mining,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"aH" = (/obj/structure/table,/obj/item/stack/rods{amount = 50},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aI" = (/obj/structure/closet/firecloset,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aJ" = (/obj/structure/table,/obj/item/stack/sheet/glass/fifty,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aK" = (/obj/machinery/light/built,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aL" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aM" = (/obj/structure/bookcase/manuals/engineering,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aN" = (/obj/machinery/door/airlock/glass_external,/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"aO" = (/obj/machinery/door/airlock/glass_external,/obj/structure/fans/tiny,/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"aP" = (/obj/machinery/light/built{dir = 1},/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"aQ" = (/obj/structure/signpost{desc = "The wall goes this way!"},/turf/open/floor/plating,/area/ruin/powered/wall_builder)
+"aR" = (/obj/structure/sink/kitchen,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"aS" = (/obj/structure/sign/nosmoking_2,/turf/closed/wall,/area/ruin/powered/wall_builder)
+"aT" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aU" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/brute,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aV" = (/obj/item/weapon/book/manual/ripley_build_and_repair,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aW" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aX" = (/obj/structure/table,/obj/item/mecha_parts/mecha_equipment/rcd,/obj/machinery/light/built,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"aY" = (/obj/mecha/working/ripley/firefighter,/turf/open/floor/mech_bay_recharge_floor,/area/ruin/powered/wall_builder)
+"aZ" = (/obj/machinery/mech_bay_recharge_port{dir = 8},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"ba" = (/obj/machinery/computer/mech_bay_power_console,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"bb" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+"bc" = (/obj/structure/bodycontainer/morgue,/turf/open/floor/plasteel/sepia,/area/ruin/powered/wall_builder)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaababababababababababaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabacacacababacacacababaaaaaaaaabababaaaaaa
+aaaaaaaaadaeadafafafadagafafafadaeaaaaaaababacababaaaa
+aaaaaaaaafahahaiajajakalamanaoapaqaaaaaaabacacacabaaaa
+aaaaaaadadahaharararasararalararadaaaaaaabacacababaaaa
+aaaaaaafatarararararakalarararaladaaaaaaababababaaaaaa
+aaaaaqadakakauavakakakakakavakakadawawaxawawawawaxawaw
+ababafayazaAaparaBaBakaCaAarararadakaDakaEakaFaGakaDaw
+abacafaHazarararararaEararararaIadakakakakakawakakakaw
+abacafayazarararararavarararakakadakaDakaEakaFaGakaDaw
+ababafaJazarararaKaLakaMararaNaxaOawawaPawaQawawaPawaw
+aaaaadadakaGakavakakakakaGakakaRadaaaaaaaaaaaaaaaaaaaa
+aaaaaaafararararararaSaraTaUaparadaaaaaaaaaaaaaaaaaaaa
+aaaaaaaeadaVararararavararararaWadaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaafaXaYaZbaarakbbarbcaraKaqaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaadadadafafafadaeafafafadadaaaaaaaaaaaaaaaaaaaa
+"}

@@ -29,6 +29,9 @@
 /area/ruin/powered/golem_ship
 	name = "Free Golem Ship"
 
+/area/ruin/powered/wall_builder
+	name = "Wall Builders"
+
 // Ruins of "onehalf" ship
 /area/ruin/onehalf/hallway
 	name = "Hallway"
