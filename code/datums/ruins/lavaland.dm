@@ -129,7 +129,7 @@
 	suffix = "lavaland_surface_cugganscove.dmm"
 	allow_duplicates = FALSE
 	cost = 10
-/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc. 
+/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc.
 /datum/map_template/ruin/lavaland/xenofacility
 	name = "Xenomorph Facility"
 	id = "xenofacility"
@@ -251,4 +251,14 @@
 		hellscape to focus on what's really important in life. Quality memes."
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/wallbuilder
+	name = "Wallbuilder Base"
+	id = "wallbuilder"
+	description = "NT got tired of xenos and natives killing all of their \
+		miners before they could bring back the ores. They hope a wall would \
+		reduce fatalities on the planet. Oh and they made the ash walkers pay for it."
+	suffix = "lavaland_surface_wallbuilder"
+	cost = 15
 	allow_duplicates = FALSE
