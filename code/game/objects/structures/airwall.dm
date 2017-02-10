@@ -16,6 +16,6 @@
 		pop()
 
 /obj/structure/destructible/airwall/proc/pop()
-	visible_message("<span class='warning'>The [src] breaks with a loud bang!</span>")
+	visible_message("<span class='warning'>[src] breaks with a loud bang!</span>")
 	playsound(src, 'sound/weapons/flashbang.ogg', 40, 1)
 	qdel(src)
