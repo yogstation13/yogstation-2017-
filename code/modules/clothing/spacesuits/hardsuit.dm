@@ -177,7 +177,7 @@
 	item_color = "mining"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	brightness_on = 7
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	weather_immunities = list("ash")
 
 
 /obj/item/clothing/suit/space/hardsuit/mining
@@ -188,7 +188,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	weather_immunities = list("ash")
 
 
 

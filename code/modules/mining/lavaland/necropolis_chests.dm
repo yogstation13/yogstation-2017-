@@ -10,6 +10,37 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
+	// ore is spawned first so it stays at the bottom. your prize is presented on a pile of it.
+	var/random_ore_spawner = pick(1,2,3,4,5)
+	switch(random_ore_spawner)
+		if(1)
+			for(var/i, i>10, i++)
+				new /obj/item/weapon/ore/uranium(src)
+		if(2)
+			for(var/i, i>50, i++)
+				new /obj/item/weapon/ore/iron(src)
+				if(prob(80))
+					new /obj/item/weapon/ore/glass/basalt(src)
+				else
+					new /obj/item/weapon/ore/glass(src)
+			if(prob(1))
+				new /obj/item/weapon/ore/bananium(src)
+
+		if(3)
+			for(var/i, i>30, i++)
+				new /obj/item/weapon/ore/plasma(src)
+
+		if(4)
+			for(var/i, i>15, i++)
+				if(prob(50))
+					new /obj/item/weapon/ore/silver(src)
+				else
+					new /obj/item/weapon/ore/gold(src)
+
+		if(5)
+			for(var/i, i>2, i++)
+				new /obj/item/weapon/ore/diamond(src)
+
 	var/loot = rand(1,25)
 	switch(loot)
 		if(1)
@@ -33,40 +64,50 @@
 			new /obj/item/clothing/suit/magusred(src)
 			new /obj/item/clothing/head/magus(src)
 		if(9)
-			new /obj/item/weapon/rune_scimmy(src)
+			new /obj/item/organ/brain/alien(src)
+			if(prob(50))
+				new /obj/item/organ/alien/hivenode(src)
+			else
+				new /obj/item/organ/alien/plasmavessel/small(src)
+			new /obj/item/stack/sheet/animalhide/xeno(src)
+			new /obj/item/stack/sheet/animalhide/xeno(src)
+			new /obj/item/stack/sheet/animalhide/xeno(src)
 		if(10)
-			new /obj/item/ship_in_a_bottle(src)
+			new /obj/item/weapon/rune_scimmy(src)
 		if(11)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
+			new /obj/item/ship_in_a_bottle(src)
 		if(12)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
+		if(13)
+			new /obj/item/clothing/suit/space/hardsuit/freedom(src)  //lavaland is actually america after trump was elected
+		if(14)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/godblood(src)
-		if(13)
-			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
-		if(14)
-			new /obj/item/weapon/guardiancreator(src)
 		if(15)
-			new /obj/item/device/warp_cube/red(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
 		if(16)
-			new /obj/item/device/wisp_lantern(src)
+			new /obj/item/weapon/guardiancreator(src)
 		if(17)
-			new /obj/item/device/immortality_talisman(src)
+			new /obj/item/device/warp_cube/red(src)
 		if(18)
-			new /obj/item/weapon/gun/magic/hook(src)
+			new /obj/item/device/wisp_lantern(src)
 		if(19)
-			new /obj/item/voodoo(src)
+			new /obj/item/device/immortality_talisman(src)
 		if(20)
+			new /obj/item/weapon/gun/magic/hook(src)
+		if(21)
+			new /obj/item/voodoo(src)
+		if(22)
 			new /obj/item/weapon/melee/energy/sword/pirate(src)
 			new /obj/item/clothing/suit/space/pirate(src)
 			new /obj/item/clothing/head/helmet/space/pirate(src)
-		if(21)
+		if(23)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(22)
+		if(24)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
-		if(23)
+		if(25)
 			new /obj/item/organ/heart/cursed/wizard(src)
-
 
 //Spooky special loot
 
@@ -566,11 +607,9 @@
 
 	switch(random)
 		if(1)
-			user << "<span class='danger'>You feel robust!</span>"
-			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
-			S.burnmod *= 0.5
-			S.coldmod *= 0.5
+			user << "<span class='danger'>You don't feel so good...</span>"
+			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
+			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
 		if(2)
 			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 			H.weather_immunities |= "lava"
@@ -727,21 +766,14 @@
 	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
-	var/waiting = FALSE
 
 
 /obj/item/bloodvial/bloodcrawl
 
 /obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
-	if(waiting)
-		return
 	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
-	user << "<span class='notice'>You start working up the nerve to shatter the bottle...</span>"
-	waiting = TRUE
-	sleep(50)
-	waiting = FALSE
 	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
 		user <<"<span class='warning'>You break [src], but nothing happens.../span>"
 		qdel(src)

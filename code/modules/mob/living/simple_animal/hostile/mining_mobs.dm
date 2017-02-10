@@ -85,6 +85,14 @@
 	icon_state = "ice_2"
 	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
 
+/obj/item/projectile/bullet/dart/basilisk/Bump(atom/A)
+	..()
+	if(istype(A, /turf/closed/mineral))
+		var/turf/closed/mineral/M = A
+		M.name = "frozen rock"
+		M.desc = "A watcher missed."
+		M.color = "#00ffff"
+
 /obj/item/projectile/bullet/dart/basilisk/New()
 	..()
 	reagents.add_reagent("bolamine",5)
@@ -752,6 +760,45 @@
 	gold_core_spawnable = 1
 
 
+/obj/item/organ/weaver
+	name = "weaver anti-toxin sac"
+	desc = "All nice and lump with spewing charcoal erupting like a volcano from the top."
+	var/inert
+
+/obj/item/organ/weaver/New()
+	..()
+	addtimer(src, "inert", 2000) // since there is no stablizier, it takes longer to dry up
+
+/obj/item/organ/weaver/proc/inert()
+	if(owner)
+		return
+
+	desc = "It's all wrinkled up, and dry. The charcoal that use to be spilling out of it has gotten blue and is now oozing from the top."
+	inert = TRUE
+	visible_message("<span class='warning'>[src] wrinkles up!</span>")
+
+/obj/item/organ/weaver/on_life()
+	..()
+	if(owner.toxloss)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/human = owner
+			human.reagents.add_reagent("charcoal", 2)
+		owner.nutrition -= 2
+
+/obj/item/organ/weaver/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag && ishuman(target))
+		var/mob/living/carbon/human/H = user
+		if(H.is_mouth_covered())
+			user << "<span class='warning'>[target == user ? "Your" : "[target]"]'s mask is in the way!</span>"
+			return
+		if(!inert)
+			H.reagents.add_reagent("charcoal",30)
+		else
+			H.reagents.add_reagent("toxin", 30)
+
+		visible_message("<span class='warning'>[target] silently noms on [src] until it depletes.</span>")
+		qdel(src)
+
 //Marrow Weaver
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver
@@ -763,7 +810,7 @@
 	icon_aggro = "weaver"
 	icon_dead = "weaver_dead"
 	throw_message = "bounces harmlessly off the"
-	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
+	butcher_results = list(/obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/animalhide/weaver_chitin = 4, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider = 2, /obj/item/organ/weaver = 1)
 	loot = list()
 	attacktext = "bites"
 	gold_core_spawnable = 1

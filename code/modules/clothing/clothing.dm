@@ -26,6 +26,8 @@
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
 
+	var/list/weather_immunities = list()
+
 
 /obj/item/clothing/Destroy()
 	if(isliving(loc))

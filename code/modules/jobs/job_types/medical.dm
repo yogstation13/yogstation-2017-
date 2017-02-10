@@ -205,14 +205,14 @@ Mining Medic
 	name = "Mining Medic"
 	backpack_contents = list(/obj/item/roller = 1,\
 		/obj/item/weapon/kitchen/knife/combat/survival = 1,\
-		/obj/item/weapon/survivalcapsule = 1)
-	belt = /obj/item/device/pda/medical
+		/obj/item/device/gps/mining = 1)
+	belt = /obj/item/weapon/storage/belt/mining/medical
 	ears = /obj/item/device/radio/headset/headset_medcargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	uniform = /obj/item/clothing/under/rank/miner/medic
 	l_hand = /obj/item/weapon/storage/firstaid/regular
-	l_pocket = /obj/item/device/flashlight/pen
-	r_pocket = /obj/item/device/gps/mining
+	l_pocket =  /obj/item/device/pda/medical
+	r_pocket = /obj/item/device/pda/medical
 	gloves = /obj/item/clothing/gloves/color/latex
 	mask = /obj/item/clothing/mask/surgical
 

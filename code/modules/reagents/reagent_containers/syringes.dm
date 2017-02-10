@@ -207,6 +207,15 @@
 	volume = 60
 	list_reagents = list("stimulants" = 60)
 
+/obj/item/weapon/reagent_containers/syringe/reversestimulants
+	name = "Emergency Medical Stimpack"
+	desc = "Also known as \"The Syringe\", this tube ontains artifical stimulants designed to reboot soldiers in a critical state."
+	icon_state = "de-borghypo"
+	item_state = "de-borghypo"
+	amount_per_transfer_from_this = 5
+	volume = 5
+	list_reagents = list("stimulants" = 60)
+
 /obj/item/weapon/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"
 	desc = "Contains calomel."

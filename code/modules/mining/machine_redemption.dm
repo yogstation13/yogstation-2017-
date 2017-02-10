@@ -47,7 +47,7 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
 	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
-		point_upgrade_temp = 0.65 + (0.35 * L.rating)
+		point_upgrade_temp = 0.25 + (0.15 * L.rating)
 	ore_pickup_rate = ore_pickup_rate_temp
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp

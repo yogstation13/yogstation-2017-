@@ -14,8 +14,8 @@ Quartermaster
 
 	outfit = /datum/outfit/job/quartermaster
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom, access_mining_lockers)
+	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom, access_mining_lockers)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
@@ -72,8 +72,8 @@ Shaft Miner
 
 	outfit = /datum/outfit/job/miner
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom, access_mining_lockers)
+	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom, access_mining_lockers)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
@@ -89,7 +89,9 @@ Shaft Miner
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
-		/obj/item/weapon/mining_voucher=1)
+		/obj/item/weapon/mining_voucher=1,\
+		/obj/item/orecapsule=1,\
+		/obj/item/device/jauntbeacon=1)
 
 	backpack = /obj/item/weapon/storage/backpack/explorer
 	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
