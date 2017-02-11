@@ -321,7 +321,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		return 1
 
-	chem.metabolization_rate = 0
+	//chem.metabolization_rate = 0
 
 	if(chem.current_cycle > 40)
 		H.reagents.remove_reagent(chem.id, chem.volume)
