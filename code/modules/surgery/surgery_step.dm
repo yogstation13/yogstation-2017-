@@ -42,13 +42,15 @@
 		surgery.step_in_progress = 0
 		return
 
-	if(do_after(user, time, target = target))
+	var/step_time = time * (1 - surgery.get_speedup_multiplier())
+
+	if(do_after(user, step_time, target = target))
 		var/advance = 0
 		var/prob_chance = 100
 
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
-		prob_chance *= get_location_modifier(target)
+		prob_chance *= surgery.get_probability_multiplier()
 
 		if(prob(prob_chance) || isrobot(user))
 			if(success(user, target, target_zone, tool, surgery))
@@ -60,7 +62,7 @@
 		if(advance)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
-				surgery.complete(target)
+				surgery.complete()
 
 	surgery.step_in_progress = 0
 

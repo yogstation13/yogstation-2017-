@@ -22,7 +22,10 @@
 		if(C == src) //Make sure not to proc it on ourselves.
 			continue
 		var/obj/item/organ/alien/hivenode/node = C.getorgan(/obj/item/organ/alien/hivenode)
-		if(istype(node)) // just in case someone would ever add a diffirent node to hivenode slot
-			node.queen_death()
+		if(!node)
+			continue
+		if(node.hive_faction != hive_faction)
+			continue
+		node.queen_death()
 
 	return ..(gibbed)

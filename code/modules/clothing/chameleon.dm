@@ -1,3 +1,6 @@
+////////////////////
+//CHAMELEON DATUM
+////////////////////
 
 /datum/chameleon
 	var/list/chameleon_blacklist = list()
@@ -6,7 +9,8 @@
 	var/chameleon_type = null
 	var/chameleon_name = "Item"
 	var/obj/target
-	var/datum/chameleon_browse/registeredWith
+	var/datum/outfit_browse/chameleon/registeredWith
+	var/antag_only = TRUE
 
 /datum/chameleon/New(obj/T)
 	target = T
@@ -15,6 +19,13 @@
 /datum/chameleon/Destroy()
 	deregister()
 	return ..()
+
+/datum/chameleon/proc/can_use(datum/mind/mind)
+	if(!mind)
+		return FALSE
+	if(antag_only && !mind.special_role)
+		return FALSE
+	return TRUE
 
 /datum/chameleon/proc/initialize_disguises()
 	chameleon_blacklist += target.type
@@ -100,24 +111,26 @@
 
 /datum/chameleon/proc/register(mob/M)
 	deregister()
-	if(istype(M, /datum/chameleon_browse))
-		var/datum/chameleon_browse/cb = M
+	if(istype(M, /datum/outfit_browse/chameleon))
+		var/datum/outfit_browse/chameleon/cb = M
 		cb.registerItem(src)
 		return
 
 	if(M && M.mind)
-		if(!M.mind.chameleon_browse)
-			M.mind.chameleon_browse = new /datum/chameleon_browse(M.mind)
-		M.mind.chameleon_browse.registerItem(src)
+		var/datum/outfit_browse/chameleon/B = M.mind.get_outfit_browser(OUTFIT_BROWSE_CHAMELEON)
+		B.registerItem(src)
 
+////////////////////
+//CHAMELEON BROWSE
+////////////////////
 
 /datum/action/cham_browse
 	name = "Chameleon Change"
-	var/datum/chameleon_browse/chameleon_browse
+	var/datum/outfit_browse/chameleon/chameleon_browse
 	button_icon_state = "chameleon_menu"
 
 /datum/action/cham_browse/Trigger()
-	if(!owner || !owner.mind || (owner.mind.chameleon_browse != chameleon_browse))
+	if(!owner || !owner.mind)
 		qdel(src)
 		return
 	chameleon_browse.menu(owner)
@@ -127,40 +140,28 @@
 	return ..()
 
 
-/datum/chameleon_browse
-	var/datum/outfit/outfitSelected
-	var/jobSelected = "None"
-	var/datum/browser/popup
-	var/const/max_saves = 5
-	var/list/savedOutfits = list()
+/datum/outfit_browse/chameleon
+	window_name = "Chameleon Outfit Select"
+	window_id = "cham_outfit_select"
 	var/list/registered = list()
-	var/datum/mind/mind
 	var/datum/action/cham_browse/action
 
-	var/static/slots = list("uniform", "suit", "back", "belt", "gloves", "shoes",
-						"head", "mask", "ears", "glasses", "id", "l_pocket",
-						"r_pocket", "suit_store", "r_hand", "l_hand")
-
-/datum/chameleon_browse/New(datum/mind/M)
-	mind = M
-	outfitSelected = new /datum/outfit()
-	savedOutfits.len = max_saves
-	..()
-
-/datum/chameleon_browse/Destroy()
+/datum/outfit_browse/chameleon/Destroy()
 	if(action)
 		qdel(action)
 	for(var/C in registered)
 		deregisterItem(C)
 	return ..()
 
-/datum/chameleon_browse/proc/deregisterItem(datum/chameleon/C)
+/datum/outfit_browse/chameleon/proc/deregisterItem(datum/chameleon/C)
 	registered -= C
 	C.registeredWith = null
 	if(registered.len == 0)
 		qdel(action)
 
-/datum/chameleon_browse/proc/registerItem(datum/chameleon/C)
+/datum/outfit_browse/chameleon/proc/registerItem(datum/chameleon/C)
+	if(!C.can_use(mind))
+		return
 	registered |= C
 	C.registeredWith = src
 	if(mind && mind.current && !action)
@@ -168,16 +169,16 @@
 		action.chameleon_browse = src
 		action.Grant(mind.current)
 
-/datum/chameleon_browse/proc/move_to_mob(var/mob/newmob)
+/datum/outfit_browse/chameleon/move_to_mob(var/mob/newmob)
 	for(var/V in registered)
 		var/datum/chameleon/C = V
 		C.deregister()
 	for(var/obj/item/I in newmob)
 		if(I.chameleon)
 			I.chameleon.register(src)
-	mind = newmob.mind
+	..()
 
-/datum/chameleon_browse/proc/menu(mob/user)
+/datum/outfit_browse/chameleon/build_menu(mob/user)
 	var/dat = ""
 	var/datum/preferences/prefs = new /datum/preferences()
 	prefs.copy_from(user)
@@ -204,13 +205,11 @@
 		if(O)
 			dat += "[initial(O.name)]<br>"//witchcraft
 	dat += "</th></tr></table>"
-	var/datum/browser/popup = new(user, "cham_gear_select", "Chameleon Outfit Select", 450, 600)
-	popup.set_content(dat)
-	popup.open()
+	return dat
 
-/datum/chameleon_browse/proc/updateAppearances(mob/living/carbon/human/H)
+/datum/outfit_browse/chameleon/proc/updateAppearances(mob/living/carbon/human/H)
 	if(!istype(H))
-		return
+		return FALSE
 	var/list/updating = registered.Copy()
 	for(var/slot in slots)
 		for(var/U in updating)
@@ -219,27 +218,14 @@
 			if(type in C.chameleon_list)
 				updating -= C
 				C.update_look(H, type)
+	return TRUE
 
-/datum/chameleon_browse/Topic(href, href_list)
-	if(href_list["job"])
-		jobSelected = href_list["job"]
-		var/datum/job/J = SSjob.GetJob(jobSelected)
-		if(J && J.outfit)
-			var/datum/outfit/job/O = new J.outfit()
-			outfitSelected.copyFrom(O)
-			outfitSelected.back = O.backpack
-		else
-			outfitSelected.clear()
-		menu(usr)
+/datum/outfit_browse/chameleon/Topic(href, href_list)
+	if(..())
+		return TRUE
 
-	//below this point you must be able to use your hands
 	if(usr.incapacitated())
-		return
-
-	if(href_list["update"])
-		if(mind && mind.current)
-			updateAppearances(mind.current)
-			menu(usr)
+		return FALSE
 
 	if(href_list["change"])
 		var/datum/chameleon/C = locate(href_list["change"]) in registered
@@ -247,6 +233,19 @@
 			return
 		C.select_look(usr)
 		menu(usr)
+		return TRUE
+
+	if(href_list["update"])
+		if(mind && mind.current)
+			updateAppearances(mind.current)
+			menu(usr)
+		return TRUE
+
+	return FALSE
+
+////////////////////
+//CHAMELEON ACTION
+////////////////////
 
 /datum/action/item_action/chameleon/drone/randomise
 	name = "Randomise Headgear"
@@ -407,6 +406,9 @@
 
 */
 
+////////////////////
+//CHAMELEON ITEMS
+////////////////////
 
 /obj/item/clothing/under/chameleon
 //starts off as black
@@ -442,6 +444,7 @@
 	origin_tech = "syndicate=2"
 	burn_state = FIRE_PROOF
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight, /obj/item/weapon/gun/energy/laser/chameleon)
 
 /obj/item/clothing/suit/chameleon/New()
 	..()

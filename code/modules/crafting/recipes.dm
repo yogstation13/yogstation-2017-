@@ -500,3 +500,11 @@
 				/obj/item/stack/sheet/bone = 2,
 				/obj/item/stack/sheet/mineral/mythril = 1)
 	category = CAT_PRIMAL */
+
+/datum/crafting_recipe/sinewbelt
+	name = "Sinew Crafted Hunter Belt"
+	result = /obj/item/weapon/storage/belt/mining/primitive
+	time = 30
+	reqs = list(/obj/item/stack/sheet/bone = 1,
+				/obj/item/stack/sheet/sinew = 2)
+	category = CAT_PRIMAL

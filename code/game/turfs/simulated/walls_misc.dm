@@ -35,23 +35,13 @@
 		alertthreshold--
 
 /turf/closed/wall/mineral/cult/Bumped(atom/movable/C as mob)
-	var/phasable=0
 	if(istype(C,/mob/living/simple_animal/hostile/construct))
 		var/mob/living/simple_animal/hostile/construct/construct = C
 		if(!construct.phaser)
 			return
-		phasable = 2
-		while(phasable>0)
-			if(construct.pulling)
-				construct.stop_pulling()
-			src.density = 0
-			src.alpha = 60
-			src.opacity = 0
-			sleep(10)
-			phasable--
-		src.density = 1
-		src.alpha = initial(src.alpha)
-		src.opacity = 1
+		if(construct.pulling)
+			construct.stop_pulling()
+		construct.forceMove(get_turf(src))
 	return
 
 /turf/closed/wall/mineral/cult/attackby(obj/item/weapon/W, mob/user, params)

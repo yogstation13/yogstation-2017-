@@ -2,6 +2,7 @@
 	origin_tech = "biotech=5"
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
+	var/hive_faction
 
 /obj/item/organ/alien/New()
 	for(var/A in alien_powers)
@@ -14,7 +15,9 @@
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.AddAbility(P)
-
+	if(isalien(M))
+		var/mob/living/carbon/alien/A = M
+		hive_faction = A.hive_faction
 
 /obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)

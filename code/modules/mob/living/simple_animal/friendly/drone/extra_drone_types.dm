@@ -27,6 +27,7 @@
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
+	no_living_interaction = FALSE
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
@@ -94,6 +95,7 @@
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
+	no_living_interaction = FALSE
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar

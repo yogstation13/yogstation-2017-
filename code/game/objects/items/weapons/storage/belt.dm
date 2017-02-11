@@ -212,7 +212,7 @@
 /obj/item/weapon/storage/belt/soulstone/full/New()
 	..()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone(src)
+		new /obj/item/device/soulstone(src, "Wizard")
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"
