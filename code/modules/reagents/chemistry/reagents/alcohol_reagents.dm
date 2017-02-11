@@ -53,11 +53,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			usr << "<span class='warning'>The ink smears, but doesn't wash away!</span>"
 	return
 
-/datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
+/datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //Splashing people with ethanol isn't quite as good as fuel.
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH || method == VAPOR)
+	if(method in list(TOUCH, VAPOR, PATCH))
 		M.adjust_fire_stacks(reac_volume / 15)
+
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10*power_multiplier, S.success_multiplier)
+				S.speedup_multiplier = max(0.35*power_multiplier, S.speedup_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				// +35% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer

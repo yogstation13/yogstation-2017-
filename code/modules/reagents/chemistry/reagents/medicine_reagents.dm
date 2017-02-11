@@ -297,6 +297,14 @@
 			if(show_message)
 				M << "<span class='warning'>Your stomach agonizingly cramps!</span>"
 		else
+			var/mob/living/carbon/C = M
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10, S.success_multiplier)
+				S.speedup_multiplier = max(0.35, S.speedup_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				// +35% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+
 			if(show_message)
 				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
 	..()
@@ -347,12 +355,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healrate = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustOxyLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBruteLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustOxyLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 
@@ -363,6 +372,14 @@
 	M.adjustFireLoss(1.5*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/blessed
+	name = "Blessed Water"
+	id = "godblood2"
+	description = "Water drowned in the efforts of holy magic."
+	overdose_threshold = 6
+	metabolization_rate = 0.5
+	healrate = 1
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"

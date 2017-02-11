@@ -183,6 +183,7 @@
 		/obj/item/weapon/reagent_containers/pill,
 		/obj/item/weapon/ore/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/food/drinks,
+		/obj/item/device/barometer,
 
 
 		)
@@ -210,7 +211,7 @@
 /obj/item/weapon/storage/belt/soulstone/full/New()
 	..()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone(src)
+		new /obj/item/device/soulstone(src, "Wizard")
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"

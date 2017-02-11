@@ -2,7 +2,7 @@
 
 /obj/item/clothing/suit/cloak
 	name = "brown cloak"
-	desc = "It's a cape that can be worn on your back."
+	desc = "Also known as a cape."
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
 	item_state = "qmcloak"

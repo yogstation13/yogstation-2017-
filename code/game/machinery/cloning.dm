@@ -339,7 +339,9 @@
 		return
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.transfer_to(occupant)
+		//Don't dump us into clone if we somehow got a body during cloning finished
+		if(clonemind.current && clonemind.current.stat == DEAD)
+			clonemind.transfer_to(occupant)
 		occupant.grab_ghost()
 		occupant << "<span class='notice'><b>The world is suddenly bright \
 			and sudden and loud!</b><br>\
@@ -361,15 +363,19 @@
 			technician, as your warranty may be affected.")
 		mess = TRUE
 		icon_state = "pod_g"
-		if(occupant.mind != clonemind)
-			clonemind.transfer_to(occupant)
-		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, color="#960000", time=100)
-		occupant << "<span class='warning'><b>Agony blazes across your \
-			consciousness as your body is torn apart.</b><br>\
-			<i>Is this what dying is like? Yes it is.</i></span>"
+		if(grab_ghost_when == CLONER_MATURE_CLONE)
+			if(clonemind.current && clonemind.current.stat == DEAD)
+				clonemind.transfer_to(occupant)
+		else
+			if(occupant.mind != clonemind)
+				clonemind.transfer_to(occupant)
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
-		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
+		if(occupant.grab_ghost()) // We really just want to make you suffer, but only if you actually deserve it (which is most of the time)
+			flash_color(occupant, color="#960000", time=100)
+			occupant << "<span class='warning'><b>Agony blazes across your \
+				consciousness as your body is torn apart.</b><br>\
+				<i>Is this what dying is like? Yes it is.</i></span>"
+			occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		spawn(40)
 			occupant.ghostize()
 			qdel(occupant)

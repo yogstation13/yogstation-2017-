@@ -20,7 +20,6 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-	faction = list("cult")
 	flying = 1
 	pressure_resistance = 200
 	unique_name = 1
@@ -31,12 +30,38 @@
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/phaser = FALSE
+	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
-/mob/living/simple_animal/hostile/construct/New()
+/mob/living/simple_animal/hostile/construct/New(var/loc, var/_affiliation)
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+		if(_affiliation)
+			affiliation = _affiliation
+	addtimer(src, "set_affiliation", 1) //So the other code get's run first, wich might change the affiliation
+
+/mob/living/simple_animal/hostile/construct/proc/set_affiliation(var/_affiliation)
+	if(_affiliation)
+		affiliation = _affiliation
+	overlays.Cut()
+	var/image/I = image(icon, icon_state = "[icon_state]_o")
+	switch(affiliation)
+		if("Cult")
+			faction |= list("cult")
+			I.color = color2hex("red")
+			overlays += I
+		if("Wizard")
+			faction |= list("wizard")
+			ticker.mode.update_wiz_icons_added(mind)
+			I.color = color2hex("blue")
+			overlays += I
+		if("Neutral")
+			I.color = color2hex("lime")
+			overlays += I
+		else
+			I.color = color2hex(affiliation)
+			overlays += I
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
@@ -64,14 +89,6 @@
 				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
 	else if(src != M)
 		..()
-
-/mob/living/simple_animal/hostile/construct/AttackingSelf()
-	if(health < maxHealth)
-		adjustHealth(-5)
-		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
-					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
-	else
-		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 
 /mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -235,6 +252,14 @@
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+/mob/living/simple_animal/hostile/construct/builder/AttackingSelf()
+	if(health < maxHealth)
+		adjustHealth(-5)
+		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
+					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
+	else
+		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

@@ -754,9 +754,6 @@
 
 //Marrow Weaver
 
-#define SPINNING_WEB 1
-#define MOVING_TO_TARGET 2
-
 /mob/living/simple_animal/hostile/asteroid/marrowweaver
 	name = "marrow weaver"
 	desc = "A big, angry, poisonous spider. It likes to snack on bone marrow. Its preferred food source is you."
@@ -783,41 +780,70 @@
 	ventcrawler = 2
 	pass_flags = PASSTABLE
 	attack_sound = 'sound/weapons/bite.ogg'
-	deathmessage = "the weaver rolls over, frothing at the mouth before stilling."
-	speak_chance = 5
-	var/busy = 0
-	var/poison_type = "????"
+	deathmessage = "rolls over, frothing at the mouth before stilling."
+	var/poison_type = "toxin"
 	var/poison_per_bite = 5
-
-/mob/living/simple_animal/hostile/asteroid/marrowweaver/New()
-	..()
-	adjustHealth(0) //sets up speak_emote and emote_hear
+	var/buttmad = 0
+	var/melee_damage_lower_angery0 = 13
+	var/melee_damage_upper_angery0 = 16
+	var/melee_damage_lower_angery1 = 15
+	var/melee_damage_upper_angery1 = 20
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/adjustHealth(amount)
-	. = ..()
-	if(health < (maxHealth/3))  //He's REALLY mad.
-		speak_emote = list("chitters angrily")
-		emote_hear = list("chitters furiously")
-		move_to_delay = 8
-		speed = 3
-		melee_damage_lower = 15
-		melee_damage_upper = 20
-		poison_type = "spore"
-		poison_per_bite = 3
-		desc = "A big, angry, toxic spider. It looks really, REALLY unhappy. It's badly wounded."
-	else
-		poison_type = initial(poison_type)
-		poison_per_bite = initial(poison_per_bite)
-		speak_emote = list("chitters")
+	if(buttmad == 0)
+		if(health < maxHealth/3)
+			buttmad = 1
+			visible_message("<span class='danger'>[src] chitters in rage, baring its fangs!</span>")
+			melee_damage_lower = melee_damage_lower_angery1
+			melee_damage_upper = melee_damage_upper_angery1
+			move_to_delay = 8
+			speed = 3
+			poison_type = "spore"
+			poison_per_bite = 5
+	else if(buttmad == 1)
+		if(health > maxHealth/2)
+			buttmad = 0
+			visible_message("<span class='notice'>[src] seems to have calmed down, but not by much.</span>")
+			melee_damage_lower = melee_damage_lower_angery0
+			melee_damage_upper = melee_damage_upper_angery0
+			poison_type = initial(poison_type)
+			poison_per_bite = initial(poison_per_bite)
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/AttackingTarget()
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.reagents)
+		if(target.reagents)
 			L.reagents.add_reagent(poison_type, poison_per_bite)
+		if((L.stat == DEAD) && (health < maxHealth) && ishuman(L))
+			var/mob/living/carbon/human/H = L
+			var/foundorgans = 0
+			for(var/obj/item/organ/O in H.internal_organs)
+				if(O.zone == "chest")
+					foundorgans++
+					qdel(O)
+			if(foundorgans)
+				src.visible_message(
+					"<span class='danger'>[src] drools some toxic goo into [L]'s innards...</span>",
+					"<span class='danger'>Before sucking out the slurry of bone marrow and flesh, healing itself!</span>",
+					"<span class-'userdanger>You liquefy [L]'s innards with your venom and suck out the resulting slurry, revitalizing yourself.</span>")
+				adjustBruteLoss(round(-H.maxHealth/2))
+				for(var/obj/item/bodypart/B in H.bodyparts)
+					if(B.body_zone == "chest")
+						B.dismember()
+			else
+				src << "<span class='warning'>There are no organs left in this corpse.</span>"
 
-#undef MOVING_TO_TARGET
+/mob/living/simple_animal/hostile/asteroid/marrowweaver/CanAttack(atom/A)
+	if(..())
+		return TRUE
+	if((health < maxHealth) && ishuman(A))
+		var/mob/living/carbon/human/H = A
+		for(var/obj/item/organ/O in H.internal_organs)
+			if(O.zone == "chest")
+				return TRUE
+	return FALSE
 
 //Legion
 

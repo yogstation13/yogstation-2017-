@@ -97,7 +97,7 @@
 
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)
-		changeling.absorbedcount--
+		changeling.profilecount--
 	changeling.add_profile(target, user)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
@@ -131,15 +131,18 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
+			changeling.profilecount  += (target.mind.changeling.profilecount)
 
 			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
+			target.mind.changeling.profilecount = 0
 
 
 	changeling.chem_charges=min(changeling.chem_charges+50, changeling.chem_storage)
 
 	changeling.isabsorbing = 0
 	changeling.canrespec = 1
+	changeling.absorbedcount++
 	for(var/obj/item/I in target) //drops all items
 		target.unEquip(I)
 	new /obj/effect/decal/remains/human(target.loc)

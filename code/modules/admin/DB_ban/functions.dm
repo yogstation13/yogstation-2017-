@@ -332,7 +332,7 @@
 	holder.DB_ban_panel()
 
 
-/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null)
+/datum/admins/proc/DB_ban_panel(playerckey = null, adminckey = null, step = 0)
 	if(!usr.client)
 		return
 
@@ -396,6 +396,34 @@
 
 	if(adminckey || playerckey)
 
+		adminckey = ckey(adminckey)
+		playerckey = ckey(playerckey)
+		var/adminsearch = ""
+		var/playersearch = ""
+		if(adminckey)
+			adminsearch = "AND a_ckey = '[adminckey]' "
+		if(playerckey)
+			playersearch = "AND ckey = '[playerckey]' "
+
+		step = text2num(step)
+		var/stepSize = 50
+		var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC LIMIT [(step)*stepSize],[stepSize]")
+		select_query.Execute()
+
+		var/count = select_query.RowCount()
+
+		var/pagination = ""
+		pagination += "<p style='background-color: #aaaaaa; text-align: center; font-weight: bold; padding: 5px; margin: 5px;'>"
+		if(step > 0)
+			pagination += "<span><a href='?src=\ref[src];dbsearchadmin=[adminckey];dbsearchckey=[playerckey];step=[(step)-1]'>Previous</a></span>"
+		//if(step > 0 && count == stepSize)
+		pagination += " ([step*stepSize] - [(step*stepSize)+stepSize]) "
+		if(count == stepSize)
+			pagination += "<span><a href='?src=\ref[src];dbsearchadmin=[adminckey];dbsearchckey=[playerckey];step=[(step)+1]'>Next</a></span>"
+		pagination += "</p>"
+
+		output += pagination
+
 		var/blcolor = "#ffeeee" //banned light
 		var/bdcolor = "#ffdddd" //banned dark
 		var/ulcolor = "#eeffee" //unbanned light
@@ -410,18 +438,6 @@
 		output += "<th width='15%'><b>OPTIONS</b></th>"
 		output += "</tr>"
 
-		adminckey = ckey(adminckey)
-		playerckey = ckey(playerckey)
-		var/adminsearch = ""
-		var/playersearch = ""
-		if(adminckey)
-			adminsearch = "AND a_ckey = '[adminckey]' "
-		if(playerckey)
-			playersearch = "AND ckey = '[playerckey]' "
-
-		var/DBQuery/select_query = dbcon.NewQuery("SELECT id, bantime, bantype, reason, job, duration, expiration_time, ckey, a_ckey, unbanned, unbanned_ckey, unbanned_datetime, edits FROM [format_table_name("ban")] WHERE 1 [playersearch] [adminsearch] ORDER BY bantime DESC")
-		select_query.Execute()
-
 		while(select_query.NextRow())
 			var/banid = select_query.item[1]
 			var/bantime = select_query.item[2]
@@ -432,7 +448,7 @@
 			var/expiration = select_query.item[7]
 			var/ckey = select_query.item[8]
 			var/ackey = select_query.item[9]
-			var/unbanned = text2num(select_query.item[10]) //Even in integer, we are text
+			var/unbanned = text2num(select_query.item[10])//Even in integer, we are text
 			var/unbanckey = select_query.item[11]
 			var/unbantime = select_query.item[12]
 			var/edits = select_query.item[13]
@@ -487,4 +503,7 @@
 
 		output += "</table></div>"
 
+		output += pagination
+
 	usr << browse(output,"window=lookupbans;size=900x500")
+	

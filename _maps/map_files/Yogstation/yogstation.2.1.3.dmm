@@ -1149,6 +1149,11 @@
 	},
 /area/ai_monitored/security/armory)
 "acp" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24
+	},
 /obj/structure/rack,
 /obj/item/weapon/storage/lockbox/loyalty,
 /turf/open/floor/plasteel{
@@ -1703,6 +1708,13 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/machinery/button/door{
+	id = "armory";
+	name = "Armory Shutters";
+	pixel_x = 28;
+	pixel_y = 0;
+	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "vault";
@@ -3999,11 +4011,9 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "ahe" = (
+/obj/structure/closet/wardrobe/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/effect/landmark{
-	name = "secequipment"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
@@ -24134,9 +24144,8 @@
 	},
 /area/hydroponics)
 "aWk" = (
-/obj/structure/bookcase{
-	name = "bookcase (Adult)"
-	},
+/obj/structure/table/wood,
+/obj/item/weapon/storage/photo_album,
 /turf/open/floor/wood,
 /area/library)
 "aWl" = (
@@ -28677,8 +28686,8 @@
 /obj/item/golfball,
 /obj/item/golfball,
 /obj/item/golfball,
-/obj/item/golfclub,
-/obj/item/golfclub,
+/obj/item/weapon/golfclub,
+/obj/item/weapon/golfclub,
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
 "bfS" = (
@@ -31507,14 +31516,16 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "blR" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "blS" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -33221,8 +33232,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bpr" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -33233,8 +33245,9 @@
 	},
 /area/shuttle/supply)
 "bpt" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41152,14 +41165,16 @@
 /turf/open/floor/engine/vacuum,
 /area/toxins/mixing)
 "bDY" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "bDZ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -41184,8 +41199,9 @@
 	},
 /area/shuttle/abandoned)
 "bEc" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41203,8 +41219,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "bEf" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -42817,17 +42834,14 @@
 /turf/closed/wall/r_wall,
 /area/toxins/mixing)
 "bHd" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline/corner{
-	dir = 1
-	},
 /obj/machinery/meter{
 	name = "Heat Exchanger"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	color = "#000000"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -43287,15 +43301,12 @@
 /turf/open/floor/engine,
 /area/toxins/mixing)
 "bIf" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 1;
 	name = "Heat Exchanger input"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44198,54 +44209,42 @@
 /turf/open/floor/plasteel,
 /area/toxins/mixing)
 "bJP" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/meter{
 	name = "Heat Exchanger output"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
 "bJR" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 2;
 	name = "output valve"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
 "bJT" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 1;
 	name = "input valve"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
 "bJV" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/meter{
 	name = "Heat Exchanger input"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -44905,30 +44904,13 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bLo" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 6
-	},
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warningline{
-	dir = 4
-	},
-/area/toxins/mixing)
-"bLq" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	tag = "icon-warnplate (SOUTHEAST)";
+	icon_state = "warnplate";
 	dir = 6
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plasteel/warningline{
-	dir = 8
 	},
 /area/toxins/mixing)
 "bLv" = (
@@ -65300,27 +65282,6 @@
 /area/tcommsat/lounge{
 	name = "\improper Telecommunications Satellite Access"
 	})
-"czw" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the telecoms satellite.";
-	dir = 2;
-	name = "Telecoms Satellite Monitor";
-	network = list("Telecoms");
-	pixel_x = 0;
-	pixel_y = 29
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/tcommsat/lounge{
-	name = "\improper Telecommunications Satellite Access"
-	})
 "czx" = (
 /obj/machinery/computer/telecomms/monitor{
 	network = "tcommsat"
@@ -67637,13 +67598,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
-"cEE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/chair/office/dark,
-/turf/open/floor/plasteel,
-/area/tcommsat/computer)
 "cEF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -68048,8 +68002,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68070,8 +68025,9 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cFQ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68107,8 +68063,9 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68129,8 +68086,9 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGb" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68467,25 +68425,6 @@
 	dir = 8
 	},
 /area/ai_monitored/security/armory)
-"ylg" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
-	dir = 2;
-	name = "Telecoms Satellite APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/ai_monitored/storage/secure{
-	name = "\improper Telecoms Satellite"
-	})
 "zsJ" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/subspace/analyzer,
@@ -68494,6 +68433,16 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
+/area/tcommsat/computer)
+"zDS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/chair/office/dark,
+/obj/effect/landmark/start{
+	name = "Signal Technician"
+	},
+/turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "ABd" = (
 /obj/structure/table/reinforced,
@@ -68531,6 +68480,25 @@
 	tag = "loading"
 	},
 /area/tcommsat/computer)
+"CLL" = (
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 8;
+	name = "Telecoms Satellite APC";
+	pixel_x = -24;
+	pixel_y = 0
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "vault";
+	dir = 8
+	},
+/area/ai_monitored/storage/secure{
+	name = "\improper Telecoms Satellite"
+	})
 "CYQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68603,6 +68571,30 @@
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
+"GNP" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the telecoms satellite.";
+	dir = 2;
+	name = "Telecoms Satellite Monitor";
+	network = list("Telecoms");
+	pixel_x = 0;
+	pixel_y = 29
+	},
+/obj/effect/landmark/start{
+	name = "Signal Technician"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/tcommsat/lounge{
+	name = "\improper Telecommunications Satellite Access"
+	})
 "HNV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/light{
@@ -68801,6 +68793,20 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"UUd" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/start{
+	name = "Signal Technician"
+	},
+/turf/open/floor/plasteel,
+/area/tcommsat/computer)
 "VbF" = (
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -68891,7 +68897,6 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "Yon" = (
-/turf/open/floor/plasteel,
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
 	input_tag = "burn_in";
@@ -68899,8 +68904,8 @@
 	output_tag = "burn_out";
 	sensors = list("burn_sensor" = "Tank")
 	},
-/turf/open/floor/plasteel/warningline{
-	dir = 1
+/turf/open/floor/plasteel/warning{
+	dir = 5
 	},
 /area/toxins/mixing)
 "Yot" = (
@@ -68952,7 +68957,6 @@
 /turf/closed/wall/r_wall,
 /area/toxins/mixing)
 "YoA" = (
-/turf/open/floor/plasteel,
 /obj/machinery/camera{
 	c_tag = "Toxins Mixing Room North";
 	network = list("SS13","RD")
@@ -68962,36 +68966,28 @@
 /obj/item/weapon/screwdriver{
 	pixel_y = 10
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plasteel/warning{
 	dir = 1
 	},
 /area/toxins/mixing)
 "YoB" = (
-/turf/open/floor/plasteel,
-/turf/open/floor/plasteel/warningline{
-	dir = 1
+/turf/open/floor/plasteel/warning{
+	dir = 5
 	},
 /area/toxins/mixing)
 "YoC" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/binary/volume_pump{
 	name = "Heat Exchanger output"
 	},
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
 "YoD" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	airpump_tag = "tox_airlock_pump";
 	exterior_door_tag = "tox_airlock_exterior";
@@ -69006,15 +69002,12 @@
 	name = "Output"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
 "YoE" = (
-/turf/open/floor/plating,
-/turf/open/floor/plasteel/warningline{
-	dir = 8
-	},
 /obj/machinery/button/door{
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
@@ -69031,7 +69024,8 @@
 	name = "Input"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/warningline{
+/turf/open/floor/plating{
+	icon_state = "warnplate";
 	dir = 4
 	},
 /area/toxins/mixing)
@@ -69167,17 +69161,31 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
-"YXJ" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+"Zyl" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/wood,
+/area/library)
+"Zym" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "armory";
+	name = "armory shutters"
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel{
+	icon_state = "dark"
+	},
+/area/ai_monitored/security/armory)
+"Zyn" = (
+/obj/effect/landmark/start{
+	name = "Mining Medic"
+	},
 /turf/open/floor/plasteel,
-/area/tcommsat/computer)
+/area/quartermaster/miningdock)
+"Zyo" = (
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/toxins/mixing)
 "Zyp" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Teleporter Room";
@@ -91455,7 +91463,7 @@ bJZ
 bLC
 bMU
 bJZ
-bJZ
+Zyn
 bBh
 aaa
 aaa
@@ -99343,7 +99351,7 @@ abJ
 acp
 acP
 adp
-adU
+aci
 aeA
 afb
 afD
@@ -99600,7 +99608,7 @@ abJ
 abJ
 abJ
 abJ
-abJ
+Zym
 abJ
 abJ
 abJ
@@ -99857,7 +99865,7 @@ abK
 acq
 acQ
 adq
-adV
+acr
 aeB
 afc
 afE
@@ -102286,7 +102294,7 @@ cxO
 cyn
 aaa
 cvn
-czw
+GNP
 czS
 cnp
 cAm
@@ -107184,7 +107192,7 @@ cBz
 cDe
 cBz
 cBc
-ylg
+CLL
 maO
 cEv
 cBz
@@ -107695,7 +107703,7 @@ RFx
 jKT
 cAC
 wHK
-YXJ
+UUd
 DYF
 cDO
 cEe
@@ -108472,7 +108480,7 @@ cDQ
 cEh
 cEt
 cEz
-cEE
+zDS
 cEL
 cAS
 ady
@@ -112240,7 +112248,7 @@ aQf
 aIV
 aTf
 aIV
-aWk
+Zyl
 aFY
 aZr
 baW
@@ -119977,8 +119985,8 @@ bny
 csk
 bGW
 YoB
-bJO
-bJO
+Zyo
+Zyo
 bML
 bOo
 bPF
@@ -120246,8 +120254,8 @@ bJO
 bJO
 bXj
 bQO
-bYD
-bZG
+aaa
+aaa
 bYE
 bZH
 cdS
@@ -120491,8 +120499,8 @@ bDT
 bGX
 Yoz
 Yon
-bJO
-bJO
+Zyo
+Zyo
 bMM
 bOp
 bPG
@@ -120503,8 +120511,8 @@ bJO
 bJO
 bXj
 bQO
-bYE
-bZH
+aaa
+aaa
 bYF
 bZG
 cdS
@@ -120749,7 +120757,7 @@ bGY
 bFm
 YoD
 bJR
-bLq
+bLo
 bMN
 bOq
 bPH
@@ -120760,7 +120768,7 @@ YoK
 YoM
 YoP
 YoS
-bYF
+bYD
 bZG
 bYE
 bZH
@@ -121005,8 +121013,8 @@ bFn
 bGZ
 bId
 YoB
-bJO
-bJO
+Zyo
+Zyo
 bMO
 bMM
 bPI
@@ -121263,7 +121271,7 @@ bHa
 bFm
 YoE
 bJT
-bLq
+bLo
 bMO
 bMM
 bPJ
@@ -121275,8 +121283,8 @@ bVO
 bFq
 aaa
 bYF
-bZF
-bZF
+bZG
+bYE
 bZH
 aaC
 aaA
@@ -121519,8 +121527,8 @@ bFp
 bHb
 bAZ
 YoB
-bJO
-bJO
+Zyo
+Zyo
 bMO
 bOr
 bFq
@@ -121532,8 +121540,8 @@ bVP
 bFq
 aaa
 aaa
-aaa
-aaa
+bYF
+bZH
 aaa
 aaA
 aaA
@@ -121777,7 +121785,7 @@ Yov
 bHd
 bIf
 bJV
-bLq
+bLo
 bMO
 bOs
 bFq

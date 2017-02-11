@@ -33,15 +33,6 @@
 		return 0
 	return ..()
 
-
-/datum/species/human/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == "mutationtoxin")
-		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
-		H.set_species(/datum/species/jelly/slime)
-		H.reagents.del_reagent(chem.type)
-		H.faction |= "slime"
-		return 1
-
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -177,6 +168,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,NOMACHINERY)
+
+/datum/species/lizard/ashwalker/chieftain
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
 	warning_low_pressure = 35 //no pressure warning on lavaland
 
@@ -236,7 +230,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Preternis"
 	id = "android"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS,RADIMMUNE,CONSUMEPOWER,EASYIMPLANTS)
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS,CONSUMEPOWER,EASYIMPLANTS)
 	say_mod = "intones"
 	roundstart = 1
 	attack_verb = "assault"
@@ -250,9 +244,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	radiation_faint_threshhold = 999
 	clonemod = 0
 	toxmod = 0
-	speedmod = -0.34
-	damage_immunities = list(DAMAGE_CHEMICAL)
-	heal_immunities = list(DAMAGE_CHEMICAL)
+	//damage_immunities = list(DAMAGE_CHEMICAL)
+	//heal_immunities = list(DAMAGE_CHEMICAL)
 	limb_default_status = ORGAN_SEMI_ROBOTIC
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	disease_resist = 60
@@ -1411,7 +1404,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		default_features = S.default_features.Copy()
 		nojumpsuit = S.nojumpsuit
 		no_equip = S.no_equip.Copy()
-		limbs_id = S.id
+		limbs_id = S.limbs_id
 		use_skintones = S.use_skintones
 		fixed_mut_color = S.fixed_mut_color
 		hair_color = S.hair_color

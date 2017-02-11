@@ -50,7 +50,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
-	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
 	var/strip_delay = 40
 	var/put_on_delay = 20
@@ -265,6 +264,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 	if(anchored)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user

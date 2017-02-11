@@ -158,12 +158,21 @@
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	list_reagents = list("cleaner" = 250)
 
+//spray tan
 /obj/item/weapon/reagent_containers/spray/spraytan
 	name = "spray tan"
 	volume = 50
 	desc = "Gyaro brand spray tan. Do not spray near eyes or other orifices."
 	list_reagents = list("spraytan" = 50)
 
+//sterilizer
+/obj/item/weapon/reagent_containers/spray/sterilizer
+	name = "sterilizer spray"
+	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "medspray"
+	volume = 100
+	list_reagents = list("sterilizine" = 100)
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper

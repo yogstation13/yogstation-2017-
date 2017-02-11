@@ -68,6 +68,7 @@
 	var/limb_default_status = ORGAN_ORGANIC
 	var/exotic_damage_overlay = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/can_grab_items = TRUE
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/sight_mod = 0 //Add these flags to your mob's sight flag. For shadowlings and things to see people through walls.
@@ -166,9 +167,10 @@
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
 
 	C.prepare_huds()
-	for(var/V in C.bodyparts)
-		var/obj/item/bodypart/BP = V
-		BP.change_bodypart_status(limb_default_status)
+	if(limb_default_status)
+		for(var/V in C.bodyparts)
+			var/obj/item/bodypart/BP = V
+			BP.change_bodypart_status(limb_default_status)
 
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
@@ -688,16 +690,10 @@
 				if(!disable_warning)
 					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
-			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					H << "You somehow have a suit with no defined allowed items for suit storage, stop that."
-				return 0
-			if(I.w_class > 4)
-				if(!disable_warning)
-					H << "The [I.name] is too big to attach."  //should be src?
-				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
-				return 1
+			if(istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/S = H.wear_suit
+				if(S.can_hold(I))
+					return 1
 			return 0
 		if(slot_handcuffed)
 			if(H.handcuffed)

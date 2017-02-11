@@ -114,6 +114,8 @@ h1.alert, h2.alert		{color: #000000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .borer            		{color: #804000;}
 
+.ashwalker				{color: #00ff00;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
