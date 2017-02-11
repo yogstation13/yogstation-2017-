@@ -2017,26 +2017,6 @@
 	icon_state = "dark"
 	},
 /area/ai_monitored/security/armory)
-"adU" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/ai_monitored/security/armory)
-"adV" = (
-/obj/structure/closet/wardrobe/red,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/main)
 "adW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -33515,14 +33495,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
-/area/crew_quarters/captain)
-"bpY" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
 /area/crew_quarters/captain)
 "bpZ" = (
 /obj/structure/disposalpipe/segment,
@@ -68829,6 +68801,14 @@
 	dir = 2
 	},
 /area/shuttle/escape)
+"VJf" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/maintcentral)
 "WyQ" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
@@ -101211,9 +101191,9 @@ bdE
 bdE
 bmG
 bbX
-bbX
-bbX
-bbX
+bmv
+bmv
+bmv
 bup
 bvM
 bxk
@@ -101468,9 +101448,9 @@ bjL
 bdE
 bmH
 bop
-bpY
-bpY
-bpY
+VJf
+VJf
+VJf
 bus
 bvN
 bxl
@@ -101725,9 +101705,9 @@ bbX
 bbX
 bbX
 bbX
-bbX
-bbX
-bbX
+bmv
+bmv
+bmv
 bup
 bup
 bxm
