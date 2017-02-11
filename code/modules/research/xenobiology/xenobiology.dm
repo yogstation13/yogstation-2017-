@@ -98,6 +98,7 @@
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
+	origin_tech = "bluespace=5;biotech=3"
 	icon_state = "bluespace slime extract"
 
 /obj/item/slime_extract/pyrite

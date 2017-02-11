@@ -2017,26 +2017,6 @@
 	icon_state = "dark"
 	},
 /area/ai_monitored/security/armory)
-"adU" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/ai_monitored/security/armory)
-"adV" = (
-/obj/structure/closet/wardrobe/red,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/main)
 "adW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -50240,15 +50220,6 @@
 	icon_state = "white"
 	},
 /area/toxins/xenobiology)
-"bVw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/computer/camera_advanced/xenobio,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/toxins/xenobiology)
 "bVx" = (
 /obj/machinery/light,
 /obj/structure/disposalpipe/segment{
@@ -68444,6 +68415,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
+"zEx" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/toxins/xenobiology)
 "ABd" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -111770,7 +111750,7 @@ bQx
 bRD
 bSU
 byH
-bVw
+zEx
 bPp
 bYg
 bJt
@@ -112284,7 +112264,7 @@ bQz
 bRD
 bSU
 bUp
-bVw
+zEx
 bPp
 bYh
 bZl

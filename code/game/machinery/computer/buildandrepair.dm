@@ -307,6 +307,10 @@
 	name = "circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=3;powerstorage=3"
+/obj/item/weapon/circuitboard/computer/xenocamera
+	name = "circuit board (Slime Management Console)"
+	build_path = /obj/machinery/computer/camera_advanced/xenobio
+	origin_tech = "programming=3"
 
 /obj/item/weapon/circuitboard/computer/cargo
 	name = "circuit board (Supply Console)"
