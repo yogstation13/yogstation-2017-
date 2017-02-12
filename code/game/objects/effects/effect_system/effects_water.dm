@@ -33,6 +33,9 @@
 		if(istype(H.l_hand, W))
 			W = H.l_hand
 			W.toggle()
+	if(istype(A, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/welding = A
+		welding.toggle()
 
 	return ..()
 
