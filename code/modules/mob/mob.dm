@@ -967,3 +967,13 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/reveal_examine(mob/living/L, range) // we are examining L, and revealing ourselves
+	if(src == L) // so no one can tell if we're checking ourselves out
+		return
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human = src
+		if((istype(human.head, /obj/item/clothing/head/helmet/space/hardsuit)))
+			return
+	for(var/mob/M in view(src, range)) // so right next to us
+		M << "<span class='small'>[src] looks at [L].</span>"

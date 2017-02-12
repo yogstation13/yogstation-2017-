@@ -1,7 +1,5 @@
 /mob/living/carbon/human/examine(mob/user)
-	if(user != src) // so no one can tell if we're checking ourselves out
-		for(var/mob/M in view(user, 7))
-			M << "<span class='small'>[user] looks at [src].</span>"
+	user.reveal_examine(src, 1)
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
