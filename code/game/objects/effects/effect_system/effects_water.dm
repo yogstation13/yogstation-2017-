@@ -28,15 +28,23 @@
 		var/obj/item/weapon/weldingtool/W
 		if(istype(H.r_hand, W))
 			W = H.r_hand
-			W.toggle()
-		// not else if in case they are dual-wielding
+			if(W.welding)
+				W.toggle()
+				visible_message("[W] extinguishes.")
+		// not "else if" in case they are dual-wielding
 		if(istype(H.l_hand, W))
 			W = H.l_hand
-			W.toggle()
+			if(W.welding)
+				W.toggle()
+				visible_message("[W] extinguishes.")
+	return ..()
+
+/obj/effect/particle_effect/water/Crossed(atom/A)
 	if(istype(A, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welding = A
-		welding.toggle()
-
+		if(welding.welding)
+			welding.toggle()
+			visible_message("[welding] extinguishes.")
 	return ..()
 
 
