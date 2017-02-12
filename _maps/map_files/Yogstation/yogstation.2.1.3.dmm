@@ -1766,10 +1766,6 @@
 /obj/machinery/computer/secure_data,
 /turf/open/floor/carpet,
 /area/security/hos)
-"adv" = (
-/obj/machinery/computer/security,
-/turf/open/floor/carpet,
-/area/security/hos)
 "adw" = (
 /obj/machinery/computer/card/minor/hos,
 /turf/open/floor/carpet,
@@ -2017,26 +2013,6 @@
 	icon_state = "dark"
 	},
 /area/ai_monitored/security/armory)
-"adU" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/ai_monitored/security/armory)
-"adV" = (
-/obj/structure/closet/wardrobe/red,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/main)
 "adW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -4845,12 +4821,6 @@
 	icon_state = "showroomfloor"
 	},
 /area/security/warden)
-"aiw" = (
-/obj/machinery/computer/security,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/warden)
 "aix" = (
 /obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel{
@@ -6225,16 +6195,6 @@
 	network = list("SS13")
 	},
 /obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/security/main)
-"akQ" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/machinery/computer/security,
 /turf/open/floor/plasteel{
 	icon_state = "red"
 	},
@@ -8210,14 +8170,6 @@
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/security/brig)
-"aoA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -68167,6 +68119,15 @@
 	name = "floor"
 	},
 /area/engine/engine_smes)
+"jAg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/effect/landmark/sectele,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/security/brig)
 "jKT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -68211,6 +68172,23 @@
 	icon_state = "loadingarea"
 	},
 /area/tcommsat/computer)
+"lcv" = (
+/obj/machinery/computer/camera_advanced/security,
+/turf/open/floor/plasteel{
+	icon_state = "showroomfloor"
+	},
+/area/security/warden)
+"ldt" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/sectele/perma,
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/security/prison)
 "luc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -68658,11 +68636,25 @@
 	},
 /turf/open/floor/plating/airless,
 /area/tcommsat/computer)
+"JCU" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/obj/machinery/computer/camera_advanced/security,
+/turf/open/floor/plasteel{
+	icon_state = "red"
+	},
+/area/security/main)
 "JEH" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
+"LiS" = (
+/obj/machinery/computer/camera_advanced/security,
+/turf/open/floor/carpet,
+/area/security/hos)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -96268,7 +96260,7 @@ acg
 acL
 adh
 adN
-aeq
+ldt
 aeq
 afw
 agi
@@ -98073,7 +98065,7 @@ afz
 ago
 agX
 ahQ
-aiw
+lcv
 aiA
 ajT
 akC
@@ -100395,7 +100387,7 @@ alK
 amr
 anh
 anV
-aoA
+jAg
 aos
 apy
 apX
@@ -101663,7 +101655,7 @@ aaA
 aaA
 aaA
 acT
-adv
+LiS
 adZ
 aeF
 aff
@@ -101674,7 +101666,7 @@ aic
 aiH
 ajr
 ake
-akQ
+JCU
 abK
 alP
 amw
