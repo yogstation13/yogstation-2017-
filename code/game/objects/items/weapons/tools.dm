@@ -406,25 +406,30 @@
 //Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(mob/user, message = 0)
 	if(!status)
-		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
+		if(user)
+			user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
 		return
 	welding = !welding
 	if(welding)
 		if(get_fuel() >= 1)
-			user << "<span class='notice'>You switch [src] on.</span>"
+			if(user)
+				user << "<span class='notice'>You switch [src] on.</span>"
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
 			START_PROCESSING(SSobj, src)
 		else
-			user << "<span class='warning'>You need more fuel!</span>"
+			if(user)
+				user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0
 	else
 		if(!message)
-			user << "<span class='notice'>You switch [src] off.</span>"
+			if(user)
+				user << "<span class='notice'>You switch [src] off.</span>"
 		else
-			user << "<span class='warning'>[src] shuts off!</span>"
+			if(user)
+				user << "<span class='warning'>[src] shuts off!</span>"
 		force = 3
 		damtype = "brute"
 		hitsound = "swing_hit"

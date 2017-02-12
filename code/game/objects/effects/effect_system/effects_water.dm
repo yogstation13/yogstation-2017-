@@ -23,6 +23,17 @@
 /obj/effect/particle_effect/water/Bump(atom/A)
 	if(reagents)
 		reagents.reaction(A)
+	if(istype(A, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = A
+		var/obj/item/weapon/weldingtool/W
+		if(istype(H.r_hand, W))
+			W = H.r_hand
+			W.toggle()
+		// not else if in case they are dual-wielding
+		if(istype(H.l_hand, W))
+			W = H.l_hand
+			W.toggle()
+
 	return ..()
 
 
