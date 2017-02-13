@@ -47,24 +47,6 @@
 	new /obj/item/weapon/survivalcapsule(src)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 
-
-/**********************Shuttle Computer**************************/
-
-/obj/machinery/computer/shuttle/mining
-	name = "Mining Shuttle Console"
-	desc = "Used to call and send the mining shuttle."
-	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
-	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away"
-	no_destination_swap = 1
-	notification = SUPP_FREQ
-
-/obj/machinery/computer/shuttle/mining/Topic(href, href_list)
-    ..()
-    if(href_list["move"])
-        investigate_log("[key_name(usr)] has moved the mining shuttle", "cargo")
-
-
 /*********************Pickaxe & Drills**************************/
 
 /obj/item/weapon/pickaxe
