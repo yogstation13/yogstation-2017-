@@ -27,6 +27,10 @@
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftain))
 #define iskrampus(A) (is_species(A, /datum/species/demon))
+#define isplant(A) (is_species(A, /datum/species/plant))
+#define isphytosian(A) (is_species(A, /datum/species/plant))
+#define ispreternis(A) (is_species(A, /datum/species/android))
+
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 

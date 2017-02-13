@@ -42,9 +42,6 @@
 			pocell.charge = pocell.maxcharge
 			pocell.desc = "A rechargable starch based power cell. This one has a power rating of [pocell.maxcharge], and you should not swallow it."
 
-			if(reagents.has_reagent("plasma", 2))
-				pocell.rigged = 1
-
 			qdel(src)
 			return
 		else
