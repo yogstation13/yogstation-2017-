@@ -145,6 +145,12 @@
 		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
+	else if(istype(O, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/W = O
+		if(W.welding)
+			W.toggle()
+			visible_message("[W] extinguishes.")
+
 /*
  *	Water reaction to a mob
  */

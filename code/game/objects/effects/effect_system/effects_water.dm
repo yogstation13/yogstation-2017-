@@ -30,23 +30,14 @@
 			W = H.r_hand
 			if(W.welding)
 				W.toggle()
-				visible_message("[W] extinguishes.")
+				visible_message("[H]'s [W] extinguishes.")
 		// not "else if" in case they are dual-wielding
 		if(istype(H.l_hand, W))
 			W = H.l_hand
 			if(W.welding)
 				W.toggle()
-				visible_message("[W] extinguishes.")
+				visible_message("[H]'s [W] extinguishes.")
 	return ..()
-
-/obj/effect/particle_effect/water/Crossed(atom/A)
-	if(istype(A, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/welding = A
-		if(welding.welding)
-			welding.toggle()
-			visible_message("[welding] extinguishes.")
-	return ..()
-
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
