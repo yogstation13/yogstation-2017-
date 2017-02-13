@@ -1,3 +1,5 @@
+//Make sure to adjust line 25 in powercell.dm when making a new reaction thing
+
 /datum/powercell_reagents
 	var/name = "admins broke reality"
 	var/uses = -1 //Amount of times it does stuff. -1 for infinite
@@ -92,8 +94,6 @@
 	//explosion(T, 0, 1, 2, 2)
 	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
 
-
-
 /datum/powercell_reagents/banana
 	name = "HONK"
 	timer = 50
@@ -116,29 +116,5 @@
 	cell.charge -= 50
 
 /datum/powercell_reagents/uranium/on_borg(mob/living/silicon/robot/S, var/amount)
-	S.Stun(1)
-
-datum/powercell_reagents/water
-
-
-
-
-
-/*
-
-/obj/item/weapon/stock_parts/cell/proc/uranium()
-	radiation_pulse(get_turf(src), 2, 2, 3, 0)
-
-/obj/item/weapon/stock_parts/cell/proc/water()
-	for(var/mob/living/carbon/human/H in orange(2,src))
-		electrocute_mob(H, get_area(src), src, 0.7)
-	playsound(get_turf(src), 'sound/magic/lightningbolt.ogg', 50, 1)
-	emp_act()
-	special = 0
-
-/obj/item/weapon/stock_parts/cell/proc/blood(amount)
-	add_blood()
-	special = null
-*/
-
-
+	if(prob(50))
+		S.Stun(3)
