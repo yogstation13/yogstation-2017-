@@ -149,7 +149,7 @@
 		var/obj/item/weapon/weldingtool/W = O
 		if(W.welding)
 			W.toggle()
-			visible_message("[W] extinguishes.")
+			O.visible_message("[src] extinguishes [W]'s flame!.")
 
 /*
  *	Water reaction to a mob
