@@ -24,7 +24,8 @@
 
 	var/list/specials = list(
 	"plasma" = /datum/powercell_reagents/plasma,
-	"banana" = /datum/powercell_reagents/banana
+	"banana" = /datum/powercell_reagents/banana,
+	"uranium" = /datum/powercell_reagents/uranium
 	 )
 
 /obj/item/weapon/stock_parts/cell/New()
