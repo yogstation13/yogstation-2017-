@@ -726,17 +726,28 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/plant/handle_inherent_channels(mob/living/carbon/human/H, message, message_mode)
 	if(H.stat)
-		return
+		return ..()
 	if(message_mode == MODE_PHEROMONES)
-		for(var/mob/living/Hearer in get_hearers_in_view(7, H))
+		var/list/listening = get_hearers_in_view(7, H)
+		for(var/mob/M in player_list)
+			if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7))) // client is so that ghosts don't have to listen to mice
+				listening |= M
+		for(var/Hearer in listening)
+			if(isobserver(Hearer))
+				var/mob/dead/observer/O = Hearer
+				O << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
+				continue
 			var/mob/living/carbon/human/human = Hearer
 			if(istype(human) && istype(human.dna.species, /datum/species/plant) )
 				human << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
-			else
-				if(get_dist(H, Hearer) <= 1)
-					Hearer.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
-				if(istype(Hearer, /mob/living/carbon) && Hearer.stat)
-					Hearer << "<span class='notice'>The room smells like leaves.</span>"
+			else if(isliving(Hearer))
+				var/mob/living/L
+				if(get_dist(H, L) <= 1)
+					L.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
+				if(iscarbon(L) && L.stat)
+					L << "<span class='notice'>The room smells like leaves.</span>"
+		log_say("[H.name]/[H.key] : \[Pheromones\]: [message]")
+		H.say_log += "\[Pheromones\]: [message]"
 		return 1
 	return ..()
 
