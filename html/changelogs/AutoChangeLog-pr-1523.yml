@@ -1,0 +1,7 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "There is a NEW button in your PDA's! An emergency hotline one!"
+  - rscadd: "Paramedics (and the HoS) will receive the location and name of PDA's that active their emergency hotline."
+  - rscadd: "This will also allow Paramedics to get instantly in touch with you so you can report the damage that's been done to them."
+  - rscadd: "HoS will now get burglar alerts. For instance, breaking the laser gun case goes directly to his PDA. Traitor's beware!"
