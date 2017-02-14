@@ -397,6 +397,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
+/mob/living/carbon/human/regenStamina()
+	if(dna && dna.species)
+		if(sleeping)
+			adjustStaminaLoss(-dna.species.stamina_recover_sleeping)
+		else
+			adjustStaminaLoss(-dna.species.stamina_recover_normal)
+	else
+		..()
+
 /mob/living/carbon/human/proc/purrbation()
 	if(("tail_human" in dna.species.mutant_bodyparts) && ("ears" in dna.species.mutant_bodyparts))
 		if(dna.features["tail_human"] == "None" || dna.features["ears"] == "None")

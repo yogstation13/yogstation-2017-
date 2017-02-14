@@ -263,6 +263,8 @@
 	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
 		next_click = world.time + 5
 		mind.cyberman.initiate_hack(A)
+	else if(dna && dna.species && dna.species.specAltClickOn(A))
+		return
 	else
 		..()
 

@@ -503,6 +503,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
+		if(H.dna.species.specflags & PROTECTEDEYES)
+			user << "<span class='danger'>This person's eyes are too strong to be gouged out!</span>"
+			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M

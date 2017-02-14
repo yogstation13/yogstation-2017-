@@ -1655,6 +1655,7 @@
 #include "code\modules\power\powernet.dm"
 #include "code\modules\power\smes.dm"
 #include "code\modules\power\solar.dm"
+#include "code\modules\power\species_drain_act.dm"
 #include "code\modules\power\switch.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"

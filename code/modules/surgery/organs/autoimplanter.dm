@@ -1,4 +1,4 @@
-#define INFINITE -1
+#define AUTOIMPLANTER_INFINITE -1
 
 /obj/item/device/autoimplanter
 	name = "autoimplanter"
@@ -7,7 +7,7 @@
 	item_state = "walkietalkie"//left as this so as to intentionally not have inhands
 	w_class = 2
 	var/obj/item/organ/cyberimp/storedorgan
-	var/uses = INFINITE
+	var/uses = AUTOIMPLANTER_INFINITE
 	var/one_use = 0//separate var, as a 2-use device can have 1 use remaining if used once but not be a single-use device
 
 /obj/item/device/autoimplanter/New()
@@ -24,11 +24,11 @@
 	if(!storedorgan)
 		user << "<span class='notice'>[src] currently has no implant stored.</span>"
 		return
-	storedorgan.Insert(user)//insert stored organ into the user
+	storedorgan.Insert(user, 0, 0)//insert stored organ into the user
 	user.visible_message("<span class='notice'>[user] presses a button on [src], and you hear a short mechanical noise.</span>", "<span class='notice'>You feel a sharp sting as [src] plunges into your body.</span>")
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, 1)
 	storedorgan = null
-	if(uses != INFINITE)
+	if(uses != AUTOIMPLANTER_INFINITE)
 		uses --
 	if(!uses)
 		desc = "[initial(desc)] Looks like it's been used up."
