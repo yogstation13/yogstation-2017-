@@ -216,6 +216,11 @@
 	luminosity = 1
 	flags = 0
 	unacidable = 1
+	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
+
+/turf/open/floor/plating/lava/New()
+	. = ..()
+	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -237,9 +242,18 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
+/turf/open/floor/plating/lava/proc/is_safe()
+	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	return LAZYLEN(found_safeties)
+
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
 	var/thing_to_check = src
+	if(is_safe())
+		slowdown = 0
+		return FALSE
+	else
+		slowdown = initial(slowdown)
 	if (AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
