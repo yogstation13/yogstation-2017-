@@ -337,6 +337,12 @@
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
 
+/obj/item/weapon/reagent_containers/glass/bottle/drugs
+	name = "Bottle of drugs"
+	desc = "A bottle containing Space Drugs."
+	icon_state = "bottle3"
+	list_reagents = list("space_drugs" = 10)
+
 //self refilling bottles
 
 /obj/item/weapon/reagent_containers/glass/bottle/self_fill
