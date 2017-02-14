@@ -210,9 +210,6 @@ var/datum/subsystem/shuttle/SSshuttle
 			if(!ignoreCD)
 				return 3
 
-
-/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
-	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 
 	if(!M)
