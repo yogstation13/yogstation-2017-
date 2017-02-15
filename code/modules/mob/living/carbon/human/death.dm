@@ -53,6 +53,7 @@
 	if(.)
 		update_hair()
 		update_body()
+		dna.species.spec_husk(src)
 
 /mob/living/carbon/proc/Drain()
 	ChangeToHusk()

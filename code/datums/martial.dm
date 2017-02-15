@@ -7,6 +7,16 @@
 	var/datum/martial_art/base = null // The permanent style
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/help_verb = null
+	var/no_ranged_weapons = FALSE
+
+/datum/martial_art/proc/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj)
+	if(user.incapacitated() || (user.dna && user.dna.check_mutation(HULK)))
+		return FALSE
+	if(prob(deflection_chance))
+		user.visible_message("<span class='danger'>[user] deflecs the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+		playsound(user, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+		return TRUE
+	return FALSE
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -231,6 +241,15 @@
 	name = "The Sleeping Carp"
 	deflection_chance = 100
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
+	no_ranged_weapons = TRUE
+
+/datum/martial_art/the_sleeping_carp/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj)
+	. = ..()
+	if(.)
+		var/item = user.get_active_hand()
+		if(user.get_active_hand())
+			user << "<span class='userdanger'>You drop your [item] while deflecting the projectile!</span>"
+			user.drop_item()
 
 /datum/martial_art/the_sleeping_carp/proc/check_streak(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	if(findtext(streak,WRIST_WRENCH_COMBO))
@@ -449,16 +468,16 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-	w_class = 4
+	w_class = 3
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
-	force_wielded = 24
+	force_wielded = 30
 	throwforce = 20
 	throw_speed = 2
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "bostaff0"
-	block_chance = 50
+	var/melee_block_chance = 80
 
 /obj/item/weapon/twohanded/bostaff/update_icon()
 	icon_state = "bostaff[wielded]"
@@ -498,7 +517,7 @@
 		H.visible_message("<span class='warning'>[pick(fluffmessages)]</span>", \
 							   "<span class='userdanger'>[pick(fluffmessages)]</span>")
 		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, 1, -1)
-		H.adjustStaminaLoss(rand(13,20))
+		H.adjustStaminaLoss(rand(19,25))
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 								   "<span class='userdanger'>Your legs give out!</span>")
@@ -513,7 +532,9 @@
 	else
 		return ..()
 
-/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+/obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
 	if(wielded)
-		return ..()
+		if((attack_type == MELEE_ATTACK) || (attack_type == UNARMED_ATTACK)) //Don't use a stick against fucking bullets and lasers
+			final_block_chance = max(final_block_chance, melee_block_chance)
+		return ..(owner, attack_text, final_block_chance, damage, attack_type, AT)
 	return 0

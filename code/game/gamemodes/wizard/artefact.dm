@@ -162,7 +162,7 @@
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
-	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
+	M << "<span class='userdanger'>You have been revived by <B>[user]!</B></span>"
 	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
 
 	equip_roman_skeleton(M)

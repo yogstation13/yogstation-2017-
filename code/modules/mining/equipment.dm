@@ -169,6 +169,7 @@
 	w_class = 3
 	force = 15
 	throwforce = 10
+	slot_flags = SLOT_BELT
 	var/cooldown = 0
 	var/fieldsactive = 0
 	var/burst_time = 30
@@ -204,7 +205,8 @@
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(!check_allowed_items(target, 1)) return
+		if(!check_allowed_items(target, 1))
+			return
 		CreateResonance(target, user)
 
 /obj/effect/resonance

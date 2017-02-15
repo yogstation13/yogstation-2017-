@@ -46,7 +46,7 @@
 	while(spawncount >= 1)
 		var/obj/vent = pick_n_take(vents)
 		for(var/client/C in candidates)
-			if(jobban_check_mob(C.mob, "borer") || !(C.prefs.toggles & MIDROUND_ANTAG))
+			if(!(C.prefs.toggles & MIDROUND_ANTAG))
 				candidates -= C
 		if(!candidates.len)
 			return kill()

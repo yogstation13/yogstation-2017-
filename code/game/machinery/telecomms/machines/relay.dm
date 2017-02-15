@@ -59,6 +59,46 @@
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/subspace/filter = 2)
 
+// Off-Site Relays
+// You are able to send/receive signals from the station's z level if the relay is on the telecomm satellite
+
+/obj/machinery/telecomms/relay/proc/toggle_level()
+
+	var/turf/position = get_turf(src)
+
+	// Toggle on/off getting signals from the station or the current Z level
+	if(listening_level == ZLEVEL_STATION) // equals the station
+		listening_level = position.z
+		return 1
+	else if(position.z == ZLEVEL_ABANDONNEDTSAT)
+		listening_level = ZLEVEL_STATION
+		return 1
+	return 0
+
+
+/obj/machinery/telecomms/relay/Options_Menu()
+	var/dat = ""
+	if(src.z == ZLEVEL_ABANDONNEDTSAT)
+		dat += "<br>Signal Locked to Station: <A href='?src=\ref[src];change_listening=1'>[listening_level == ZLEVEL_STATION ? "TRUE" : "FALSE"]</a>"
+	dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
+	dat += "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
+	return dat
+
+/obj/machinery/telecomms/relay/Options_Topic(href, href_list)
+
+	if(href_list["receive"])
+		receiving = !receiving
+		temp = "<font color = #666633>-% Receiving mode changed. %-</font color>"
+	if(href_list["broadcast"])
+		broadcasting = !broadcasting
+		temp = "<font color = #666633>-% Broadcasting mode changed. %-</font color>"
+	if(href_list["change_listening"])
+		//Lock to the station OR lock to the current position!
+		var/result = toggle_level()
+		if(result)
+			temp = "<font color = #666633>-% [src]'s signal has been successfully changed.</font color>"
+		else
+			temp = "<font color = #666633>-% [src] could not lock it's signal onto the station.</font color>"
 
 
 //Preset Relay

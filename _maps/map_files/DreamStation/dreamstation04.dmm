@@ -67797,8 +67797,8 @@
 /area/maintenance/fsmaint)
 "czF" = (
 /obj/structure/table,
-/obj/item/weapon/restraints/handcuffs/cable/green,
-/obj/item/weapon/restraints/handcuffs/cable/green,
+/obj/item/weapon/restraints/handcuffs/cable,
+/obj/item/weapon/restraints/handcuffs/cable,
 /obj/item/toy/talking/owl,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)

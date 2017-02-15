@@ -138,6 +138,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a cyberman. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a cyberman.")
+			if("18")
+				if(src.makeClockCult())
+					message_admins("[key_name(usr)] started a clockwork cult.")
+					log_admin("[key_name(usr)] started a clockwork cult.")
+				else
+					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a clockwork cult.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -1514,7 +1521,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)")
 
 	else if(href_list["revive"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/L = locate(href_list["revive"])
@@ -2365,6 +2372,11 @@
 		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 
+	else if(href_list["borer"])
+		if(!check_rights(R_ADMIN))
+			return
+		borer_panel()
+
 	else if(href_list["cybermen"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2394,7 +2406,7 @@
 			if("11")
 				set_cybermen_queued_objective()
 		cybermen_panel()//refresh the page.
-	
+
 	else if(href_list["adminserverrestart"])
 		if(!check_rights(R_TICKET))
 			usr << "Clients without ticket administration rights cannot use this command. Get out of here, coder!"

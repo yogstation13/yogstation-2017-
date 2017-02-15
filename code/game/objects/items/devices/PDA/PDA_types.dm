@@ -191,3 +191,8 @@
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-genetics"
+
+/obj/item/device/pda/signaltech
+	name = "telecomms PDA"
+	default_cartridge = /obj/item/weapon/cartridge/signal
+	icon_state = "pda_tcomms"

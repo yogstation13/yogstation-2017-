@@ -73,7 +73,6 @@
 #define THROWN_PROJECTILE_ATTACK 4
 #define HULK_ATTACK 5
 
-
 //Gun Stuff
  #define SAWN_INTACT  0
  #define SAWN_OFF     1

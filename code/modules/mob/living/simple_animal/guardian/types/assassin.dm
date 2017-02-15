@@ -1,11 +1,15 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	candismember = TRUE
+	dismember_chance = 0
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_in_dark = 8
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
@@ -13,7 +17,7 @@
 
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
-	var/stealthcooldown = 160
+	var/stealthcooldown = 200
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
@@ -36,6 +40,9 @@
 /mob/living/simple_animal/hostile/guardian/assassin/AttackingTarget()
 	if(..())
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.adjustStaminaLoss(20)//so the assassin can actually secure kills on people it sneak attacks
 			ToggleMode(1)
 
 /mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount)
@@ -53,25 +60,27 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		armour_penetration = initial(armour_penetration)
 		environment_smash = initial(environment_smash)
+		pass_flags &= ~PASSMOB
+		pass_flags &= ~PASSTABLE
+		dismember_chance = initial(dismember_chance)
 		alpha = initial(alpha)
 		if(!forced)
 			src << "<span class='danger'><B>You exit stealth.</span></B>"
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
-			cooldown = world.time + 40 //can't recall for 4 seconds
+			cooldown = world.time + 60 //can't recall for 6 seconds
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
-		if(src.loc == summoner)
-			src << "<span class='danger'><B>You have to be manifested to enter stealth!</span></B>"
-			return
 		melee_damage_lower = 50
 		melee_damage_upper = 50
 		armour_penetration = 100
+		dismember_chance = 100
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15
+		pass_flags |= (PASSTABLE | PASSMOB)
 		if(!forced)
 			src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
 		updatestealthalert()

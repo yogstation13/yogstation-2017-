@@ -16,6 +16,7 @@
 	var/inertia_dir = 0
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/list/mobs_in_contents // This contains all the client mobs within this container
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
@@ -81,6 +82,7 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	update_parallax_contents()
 	return 1
 
 

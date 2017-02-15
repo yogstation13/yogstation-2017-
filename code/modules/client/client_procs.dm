@@ -109,19 +109,32 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
-			cmd_admin_mute(src, mute_type, 1)
-			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
-			return 0
-	else
-		last_message = message
-		src.last_message_count = 0
-		return 0
+	if(config.automute_on && !holder)
+		if(last_message == message)
+			last_message_count++
+			if(last_message_count >= SPAM_TRIGGER_AUTOMUTE_IDENTICAL)
+				src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+				cmd_admin_mute(src, mute_type, 1)
+				return 1
+			if(last_message_count >= SPAM_TRIGGER_WARNING_IDENTICAL)
+				src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+		else
+			last_message_count = 0
+			last_message = message
+
+		if((world.time - last_message_time) < SPAM_TRIGGER_AUTOMUTE_TIME)
+			fast_message_count++
+			if(fast_message_count >= SPAM_TRIGGER_AUTOMUTE)
+				src << "<span class='danger'>You have exceeded the spam filter limit for messages in a short time period. An auto-mute was applied.</span>"
+				cmd_admin_mute(src, mute_type, 1)
+				return 1
+			if(fast_message_count >= SPAM_TRIGGER_WARNING)
+				src << "<span class='danger'>You are nearing the spam filter limit for messages in a short time period.</span>"
+		else
+			fast_message_count = 0
+		last_message_time = world.time
+
+	return 0
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
@@ -268,7 +281,7 @@ var/next_external_rsc = 0
 		admin_memo_output("Show")
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
-		verbs += /client/verb/weightstats
+		//verbs += /client/verb/weightstats
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -345,7 +358,8 @@ var/next_external_rsc = 0
 		holder.owner = null
 		admins -= src
 		if(!total_admins_active())
-			send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
+			if(total_unresolved_tickets())
+				send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src

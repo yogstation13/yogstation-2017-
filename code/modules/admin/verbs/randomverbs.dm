@@ -208,7 +208,8 @@
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	new /datum/round_event/ion_storm(0, announce_ion_laws)
+	var/datum/round_event/ion_storm/E = new /datum/round_event/ion_storm(0, announce_ion_laws)
+	E.start()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

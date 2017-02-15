@@ -167,6 +167,7 @@
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
+	no_living_interaction = FALSE
 	src << laws
 	seeStatic = FALSE
 	updateSeeStaticMobs()

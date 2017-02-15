@@ -19,4 +19,7 @@
 /mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
 	if(..())	//to allow surgery to return properly.
 		return
-	dna.species.spec_attack_hand(M, src)
+	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
+	if(resolve_defense_modules(null, M, affecting, UNARMED_ATTACK))
+		return
+	dna.species.spec_attack_hand(M, src, affecting)

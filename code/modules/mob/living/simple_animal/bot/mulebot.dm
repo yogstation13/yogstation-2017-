@@ -23,6 +23,7 @@ var/global/mulebot_count = 0
 	a_intent = "harm" //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
+	allow_pai = 0
 
 	radio_key = /obj/item/device/encryptionkey/headset_cargo
 	radio_channel = "Supply"

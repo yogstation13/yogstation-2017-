@@ -93,7 +93,7 @@
 	name = "burned mess"
 	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
-	list_reagents = list("????" = 30)
+	list_reagents = list("badfood" = 30)
 	filling_color = "#8B4513"
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
@@ -115,7 +115,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
 	name = "mint"
-	desc = "it is only wafer thin."
+	desc = "It's only wafer thin. You should take its advice."
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate

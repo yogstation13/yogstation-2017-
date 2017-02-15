@@ -110,7 +110,6 @@
 
 	var/obj/item/W = get_active_hand()
 
-
 	if(W == A)
 		W.attack_self(src)
 		if(hand)
@@ -123,7 +122,9 @@
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
 		// No adjacency needed
 		if(W)
-			var/resolved = A.attackby(W,src)
+			var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+			if(!resolved && A && W)
+				resolved = A.attackby(W,src)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
@@ -139,8 +140,9 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
+				var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+				if(!resolved && A && W)
+					resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
@@ -150,7 +152,9 @@
 			return
 		else // non-adjacent click
 			if(W)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
+				var/resolved = resolve_assault_modules(A, ARMED_RANGE_CLICK)
+				if(!resolved && A && W)
+					W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 

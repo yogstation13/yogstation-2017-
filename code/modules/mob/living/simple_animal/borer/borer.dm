@@ -1,6 +1,7 @@
 
 var/list/mob/living/simple_animal/borer/borers = list()
 var/total_borer_hosts_needed = 10
+var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surrenders")
 
 /mob/living/simple_animal/borer
 	name = "Cortical Borer"
@@ -87,6 +88,7 @@ var/total_borer_hosts_needed = 10
 			if(victim && victim.client)
 				victim.client.images += image('icons/mob/hud.dmi',B.victim,"borer")
 
+
 	if(victim)
 		if(stat != DEAD)
 			if(victim.stat == DEAD)
@@ -127,6 +129,9 @@ var/total_borer_hosts_needed = 10
 					victim.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
 /mob/living/simple_animal/borer/say(message)
+	if(staminaloss) // stamina loss will mute borers
+		return
+
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
@@ -138,6 +143,16 @@ var/total_borer_hosts_needed = 10
 		src << "<span class='warning'>You cannot speak without a host!</span>"
 		return
 	if(dd_hasprefix(message, "*"))
+		var/pass = TRUE
+		for(var/M in banned_borer_emotes)
+			if(M == message)
+				src << "<span class='warning'>You don't have the strength to do this...</span>"
+			//	src << "Nice try, asshole."
+				pass = FALSE
+				break
+
+		if(!pass)
+			return
 		message = copytext(message,2)
 		victim.say(message)
 		return
@@ -148,9 +163,11 @@ var/total_borer_hosts_needed = 10
 	victim << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
 	src << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
 
-/mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
-	healthscan(usr, M)
-	chemscan(usr, M)
+/mob/living/simple_animal/borer/UnarmedAttack(atom/A)
+	if(isliving(A))
+		var/mob/living/M = A
+		healthscan(usr, M)
+		chemscan(usr, M)
 	return
 
 /mob/living/simple_animal/borer/ex_act()
@@ -191,6 +208,10 @@ var/total_borer_hosts_needed = 10
 		detatch()
 
 	loc = get_turf(victim)
+	if(victim.client)
+		for(var/image/hud in victim.client.images)
+			if(hud.icon_state == "borer")
+				victim.client.images -= hud
 
 	victim.borer = null
 	victim = null
@@ -276,7 +297,7 @@ var/total_borer_hosts_needed = 10
 	name = "borer vessel"
 	zone = "head"
 	slot = "brain tumor"
-	desc = "A hunk of alien flesh developed from inside the brain, and also a command center for any type of borer. Home is where the heart is. Or in this case, the head."
+	desc = "A hunk of alien flesh molded from the inside of a human brain. It now resembles a once operatable command center for a borer. Home is where the heart is. Or in this case, the head."
 	icon_state = "eggsac"
 	var/mob/living/simple_animal/borer/borer = null
 
@@ -286,6 +307,18 @@ var/total_borer_hosts_needed = 10
 		borer << "<span class='warning'>Your [src] is rising into the air! Something isn't right!"
 		borer.leave_victim()
 
-	M << "<span class='notice'>You feel the sweet embrace of dopamine that surges through your brain as it's suddenly relieved of a foreign parasite.</span>"
-	qdel(src)
+	if(M.borer) // if there's still a borer inside of them for whatever reason
+		M.borer.leave_victim()
+
+	M << "<span class='notice'>You feel the sweet embrace of dopamine as that parasite is cleansed from your mind.</span>"
+//	qdel(src)
 	..()
+
+
+/mob/living/simple_animal/borer/proc/checkStrength()
+	if(weakened || stunned)
+		src << "<span class='warning'>You lack the strength to do this.</span>"
+		return FALSE
+
+	else
+		return TRUE

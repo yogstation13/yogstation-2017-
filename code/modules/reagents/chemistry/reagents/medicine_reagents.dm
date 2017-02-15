@@ -348,12 +348,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healrate = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-0.5*REM, 0)
-	M.adjustOxyLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(-healrate*REM, 0)
+	M.adjustOxyLoss(-healrate*REM, 0)
+	M.adjustBruteLoss(-healrate*REM, 0)
+	M.adjustFireLoss(-healrate*REM, 0)
 	..()
 	. = 1
 
@@ -364,6 +365,14 @@
 	M.adjustFireLoss(1.5*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/blessed
+	name = "Blessed Water"
+	id = "godblood2"
+	description = "Water drowned in the efforts of holy magic."
+	overdose_threshold = 6
+	metabolization_rate = 0.5
+	healrate = 1
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -733,14 +742,14 @@
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
 	id = "strange_reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 100 brute and burn damage (independent of one another), and causes slight damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 150 brute and burn damage (independent of one another), and causes slight damage to the living."
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
+		if(M.getBruteLoss() >= 150 || M.getFireLoss() >= 150)
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")

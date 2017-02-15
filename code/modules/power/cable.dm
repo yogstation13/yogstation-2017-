@@ -34,7 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
-	var/cable_color = "red"
+	var/cable_color = "yellow"
 	var/obj/item/stack/cable_coil/stored
 
 /obj/structure/cable/yellow
@@ -451,9 +451,6 @@ By design, d1 is the smallest direction and d2 is the highest
 // Definitions
 ////////////////////////////////
 
-var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
-	new/datum/stack_recipe("cable restraints", /obj/item/weapon/restraints/handcuffs/cable, 15), \
-	)
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -475,6 +472,15 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
+
+/obj/item/stack/cable_coil/attack_self(mob/user)
+	if(amount >= 15)
+		var/obj/item/weapon/restraints/handcuffs/cable/O = new /obj/item/weapon/restraints/handcuffs/cable(src.loc)
+		user.put_in_hands(O)
+		O.item_color = item_color
+		O.update_icon()
+		use(15)
+
 
 /obj/item/stack/cable_coil/cyborg
 	is_cyborg = 1
@@ -501,7 +507,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()
-	recipes = cable_coil_recipes
 
 ///////////////////////////////////
 // General procedures

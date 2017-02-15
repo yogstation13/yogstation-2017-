@@ -14,8 +14,8 @@
 	response_disarm = "pushes"
 
 	speed = -1
-	maxHealth = 50000
-	health = 50000
+	maxHealth = 300
+	health = 300
 	healable = 0
 
 	harm_intent_damage = 70
@@ -42,9 +42,8 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = 1
-	status_flags = list(GODMODE) // Cannot push also
 
-	shadow_walk = 1
+	shadow_walk = 0
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
@@ -55,7 +54,7 @@
 /mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
 	..()
 	// Give spells
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
 
@@ -65,12 +64,6 @@
 	// Set creator
 	if(creator)
 		src.creator = creator
-
-/mob/living/simple_animal/hostile/statue/med_hud_set_health()
-	return //we're a statue we're invincible
-
-/mob/living/simple_animal/hostile/statue/med_hud_set_status()
-	return //we're a statue we're invincible
 
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))

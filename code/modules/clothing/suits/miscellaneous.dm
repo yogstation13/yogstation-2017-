@@ -492,6 +492,15 @@
 /obj/item/clothing/head/winterhood/engineering/atmos
 	icon_state = "winterhood_atmos"
 
+/obj/item/clothing/suit/hooded/wintercoat/engineering/tcomms
+	name = "signal technician's winter coat"
+	icon_state = "coatsignaltech"
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/radio,/obj/item/device/analyzer,/obj/item/device/multitool,/obj/item/device/assembly/signaler)
+	hoodtype = /obj/item/clothing/head/winterhood/engineering/tcomms
+
+/obj/item/clothing/head/winterhood/engineering/tcomms
+	icon_state = "winterhood_signaltech"
+
 /obj/item/clothing/suit/hooded/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"

@@ -59,14 +59,9 @@
 				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-			else
-				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
-						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
 				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
-			else
-				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
 		..()
 
@@ -232,6 +227,14 @@
 /mob/living/simple_animal/hostile/construct/builder/hostile //actually hostile, will move around, hit things, heal other constructs
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+/mob/living/simple_animal/hostile/construct/builder/AttackingSelf()
+	if(health < maxHealth)
+		adjustHealth(-5)
+		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
+					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
+	else
+		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

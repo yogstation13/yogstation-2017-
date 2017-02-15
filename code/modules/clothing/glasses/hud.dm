@@ -34,6 +34,13 @@
 	origin_tech = "magnets=3;biotech=2"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 
+/obj/item/clothing/glasses/hud/health/optical
+	name = "Optical Health Scanner HUD"
+	desc = "A medical heads-up display that comes accustomed with an advanced optical meson scanner."
+	darkness_view = 2
+	vision_flags = SEE_TURFS
+	invis_view = SEE_INVISIBLE_MINIMUM
+
 /obj/item/clothing/glasses/hud/health/night
 	name = "Night Vision Health Scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
@@ -72,7 +79,7 @@
 	user << "<span class='notice'>To add crimes to a person, hold CTRL + SHIFT and click on the target</span>"
 
 /obj/item/clothing/glasses/hud/security/chameleon
-	name = "Chamleon Security HUD"
+	name = "Chameleon Security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
 	flash_protect = 1
 

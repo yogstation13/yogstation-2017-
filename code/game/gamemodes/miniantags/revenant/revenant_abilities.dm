@@ -265,7 +265,7 @@
 		for(var/turf/T in targets)
 			spawn(0)
 				if(T.flags & NOJAUNT)
-					T.flags -= NOJAUNT
+					T.flags &= ~NOJAUNT
 					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 				if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
 					var/turf/open/floor/floor = T
@@ -362,12 +362,13 @@
 							if(H.dna && H.dna.species)
 								H.dna.species.handle_mutant_bodyparts(H,"#1d2953")
 								H.dna.species.handle_hair(H,"#1d2953")
-								H.dna.species.update_color(H,"#1d2953")
+								var/old_color = H.color
+								H.color = "#1d2953"
 								spawn(20)
 									if(H && H.dna && H.dna.species)
 										H.dna.species.handle_mutant_bodyparts(H)
 										H.dna.species.handle_hair(H)
-										H.dna.species.update_color(H)
+										H.color = old_color
 							var/blightfound = 0
 							for(var/datum/disease/revblight/blight in H.viruses)
 								blightfound = 1
