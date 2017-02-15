@@ -62,7 +62,7 @@
 		return
 	if(istype(proj_turf, /turf/closed/mineral))
 		var/turf/closed/mineral/M = proj_turf
-		replicate(M)
+		replicate(M, creator, timetoburst)
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			M.gets_drilled(creator)
@@ -86,7 +86,7 @@
 					L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 
-/obj/effect/resonance/proc/replicate(turf/M)
+/obj/effect/resonance/proc/replicate(turf/M, creator, timetoburst)
 	for(var/turf/closed/T in orange(1, M))
 		if(istype(T, M))
 			var/turf/closed/mineral/T2 = T
