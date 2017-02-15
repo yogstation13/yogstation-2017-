@@ -309,6 +309,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 25
 
+
+
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
@@ -536,6 +539,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A dagger made of energy that looks and functions as a pen when off."
 	item = /obj/item/weapon/pen/edagger
 	cost = 3
+
+/datum/uplink_item/stealthy_weapons/balisong
+	name = "Butterfly Knife"
+	desc = "A razor sharp concealable knife used by martial artists ,\
+	whilst not as strong as the popular energy sword, it can be opened and closed \
+	with a flick of your wrist with relatively little noise."
+	item = /obj/item/weapon/melee/balisong
+	cost = 4 //almost but not quite an esword so we'll keep it at this
 
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun with Riot Darts"
@@ -1084,6 +1095,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			manufactured to pack a little bit more of a punch if your client needs some convincing."
 	item = /obj/item/weapon/storage/secure/briefcase/syndie
 	cost = 1
+
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
