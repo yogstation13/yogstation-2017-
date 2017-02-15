@@ -57,6 +57,8 @@
 	desc = "Recon-prone binoculars useful for scouting areas before contact, and other thoughtful means. It starts with a 7x lens that can be adjusted."
 	var/max_zoom = 15
 	var/min_zoom = 5
+	icon_state = "binocular"
+	item_state = "binocular"
 
 /obj/item/scope/security/examine(mob/user)
 	..()
