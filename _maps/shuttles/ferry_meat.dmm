@@ -1,7 +1,7 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 4},/turf/closed/wall/shuttle{icon_state = "swall_s6";dir = 2},/area/shuttle/transport)
+"b" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 4},/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f6";dir = 2},/area/shuttle/transport)
 "c" = (/turf/closed/wall/shuttle{icon_state = "swall12";dir = 2},/area/shuttle/transport)
-"d" = (/turf/closed/wall/shuttle{icon_state = "swall_s10";dir = 2},/area/shuttle/transport)
+"d" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f10";dir = 2},/area/shuttle/transport)
 "e" = (/turf/open/floor/plasteel/freezer,/turf/closed/wall/shuttle/interior{icon_state = "swall_f9"},/area/shuttle/transport)
 "f" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "g" = (/obj/machinery/computer/shuttle/ferry/request,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
@@ -15,13 +15,13 @@
 "o" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/shuttle/transport)
 "p" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "q" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dir = 8;dwidth = 2;height = 12;id = "ferry";name = "ferry shuttle";roundstart_move = "ferry_away";travelDir = 180;width = 5;timid = 1},/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
-"r" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 4},/turf/closed/wall/shuttle{icon_state = "swall_s5";dir = 2},/area/shuttle/transport)
+"r" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 4},/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f5";dir = 2},/area/shuttle/transport)
 "s" = (/turf/open/floor/plasteel/freezer,/turf/closed/wall/shuttle/interior{icon_state = "swall_f10"},/area/shuttle/transport)
 "t" = (/obj/structure/closet/chefcloset,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "u" = (/obj/structure/kitchenspike,/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "v" = (/obj/machinery/door/airlock/freezer{name = "Meat Tradeship Backroom";req_access = "28"},/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
 "w" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/freezer,/area/shuttle/transport)
-"x" = (/turf/closed/wall/shuttle{icon_state = "swall_s9";dir = 2},/area/shuttle/transport)
+"x" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f9";dir = 2},/area/shuttle/transport)
 
 (1,1,1) = {"
 abcccccccccd

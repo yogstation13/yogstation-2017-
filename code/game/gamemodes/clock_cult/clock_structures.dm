@@ -311,7 +311,6 @@
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
 		A.visible_message("[src][spawn_message]")
 		S.brainmob.mind.transfer_to(A)
-		add_servant_of_ratvar(A, TRUE)
 		user.drop_item()
 		qdel(S)
 		qdel(src)

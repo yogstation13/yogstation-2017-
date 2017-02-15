@@ -104,7 +104,7 @@
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))
 		if(istype(src, /turf/closed/wall/mineral/cult))
 			return
-		src.ChangeTurf(/turf/closed/wall/mineral/cult)
+		src.ChangeTurf(/turf/closed/wall/mineral/cult/artificer)
 		M <<"<span class='notice'>You transfer some of your corrupt energy into the wall, causing it to transform.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		return
@@ -152,7 +152,7 @@
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
-		if(W.is_hot())
+		if(W.is_hot() && !unacidable)
 			thermitemelt(user)
 			return
 

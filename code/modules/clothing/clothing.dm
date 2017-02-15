@@ -273,18 +273,20 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
 	var/fire_resist = T0C+100
-	allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
-
+	var/list/allowed = list(/obj/item/weapon/tank/internals/emergency_oxygen)
 
 /obj/item/clothing/suit/worn_overlays(var/isinhands = FALSE)
 	. = list()
 	if(!isinhands)
 		if(blood_DNA)
 			. += image("icon"='icons/effects/blood.dmi', "icon_state"="[blood_overlay_type]blood")
+
+/obj/item/clothing/suit/proc/can_hold(obj/item/I) //if the item can be held in this suit's suit storage
+	return (I.w_class <= 4) && is_type_in_list(I, allowed)
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.

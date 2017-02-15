@@ -498,6 +498,11 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(!CTF.ctf_enabled)
+			CTF.ctf_enabled = !CTF.ctf_enabled
+			CTF.TellGhost()
+
 	return 1
 
 /datum/subsystem/ticker/proc/send_random_tip()

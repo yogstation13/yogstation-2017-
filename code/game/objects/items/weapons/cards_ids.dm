@@ -188,6 +188,10 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate/unrestricted
 	restricted = FALSE
 
+/obj/item/weapon/card/id/syndicate/unrestricted/New()
+	..()
+	chameleon.antag_only = FALSE
+
 /obj/item/weapon/card/id/syndicate/abductor
 	name = "abductor agent card"
 	desc = "A card that can copy access from the IDs of abductees."

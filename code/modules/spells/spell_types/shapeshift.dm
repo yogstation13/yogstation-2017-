@@ -18,7 +18,7 @@
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
 		/mob/living/simple_animal/bot/ed209,\
-		/mob/living/simple_animal/hostile/construct/armored)
+		/mob/living/simple_animal/hostile/construct/armored/shapeshift)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	for(var/mob/living/M in targets)
@@ -45,6 +45,9 @@
 	var/mob/living/shape = new shapeshift_type(caster.loc)
 	caster.loc = shape
 	caster.status_flags |= GODMODE
+	shape.maxHealth = caster.maxHealth
+	shape.adjustBruteLoss(-shape.maxHealth)
+	shape.adjustBruteLoss(caster.maxHealth - caster.health)
 
 	current_shapes |= shape
 	current_casters |= caster
@@ -62,7 +65,8 @@
 	if(!caster)
 		return
 	caster.loc = shape.loc
-	caster.status_flags -= GODMODE
+	caster.status_flags &= ~GODMODE
+	caster.adjustBruteLoss(caster.health - shape.health)
 
 	clothes_req = initial(clothes_req)
 	human_req = initial(human_req)
@@ -71,3 +75,6 @@
 
 	shape.mind.transfer_to(caster)
 	qdel(shape) //Gib it maybe ?
+
+/mob/living/simple_animal/hostile/construct/armored/shapeshift
+	affiliation = "cyan"
