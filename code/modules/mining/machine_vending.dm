@@ -21,7 +21,7 @@
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400, TOOL),
 		new /datum/data/mining_equipment("Barometer",			/obj/item/device/barometer/mining,										300, TOOL),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750, TOOL),
-		new /datum/data/mining_equipment("One-Use Ore Capsule",	/obj/item/orecapsule,													100, TOOL),
+		new /datum/data/mining_equipment("Orebox Capsule",	/obj/item/orecapsule,													100, TOOL),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500, MEDS),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600, MEDS),
 		new /datum/data/mining_equipment("Fire First-Aid Kit",	/obj/item/weapon/storage/firstaid/fire,									600, MEDS),
