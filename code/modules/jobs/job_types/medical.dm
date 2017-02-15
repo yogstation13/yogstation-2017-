@@ -239,7 +239,7 @@ Paramedic
 	name = "Paramedic"
 
 	backpack_contents = list(/obj/item/weapon/storage/firstaid/regular)
-	belt = /obj/item/device/pda/medical
+	belt = /obj/item/device/pda/para
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/medical
 	suit = /obj/item/clothing/suit/toggle/labcoat/emt

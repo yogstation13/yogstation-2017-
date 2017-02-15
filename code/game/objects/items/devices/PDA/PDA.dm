@@ -2,7 +2,7 @@
 //The advanced pea-green monochrome lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
-
+var/list/obj/item/device/pda/hotline_pdas = list()
 
 /obj/item/device/pda
 	name = "\improper PDA"
@@ -49,6 +49,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/image/photo = null //Scanned photo
 	var/list/software = null
+
+	var/hotline_cd = FALSE
 
 
 /obj/item/device/pda/pickup(mob/user)
@@ -152,6 +154,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=hotline'>Contact Emergency Hotline</a></li>"
 
 				if (cartridge)
 					if (cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS)
@@ -430,6 +433,30 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U.AddLuminosity(f_lum)
 					else
 						SetLuminosity(f_lum)
+			if("hotline")
+				if(hotline_cd)
+					U << "<span class='notice'>[src] is still on its cooldown.</span>"
+					return
+				for(var/obj/item/device/pda/P in hotline_pdas)
+					playsound(get_turf(P), 'sound/machines/twobeep.ogg', 50, 0)
+					if(istype(P.loc, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = P.loc
+						var/datum/signal/signal = telecomms_process()
+						H << "<span class='warning'>[owner] has actiated their emergency hotline alert.</span>"
+						if(signal)
+							if(signal.data["done"])
+								var/area/A = get_area(src)
+								var/inrange = FALSE
+								if(H.z in signal.data["level"])
+									inrange = TRUE
+								H << "<span class='warning'>[owner] is communicating from [inrange ? A.name : "an unknown area"].</span>"
+						H << "<span class='notice'>Your PDA prompts you with: \[<a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>Contact [owner]</a>\]</span>"
+					else
+						P.visible_message("<span class='warning'>[src] begins to emit a red light.</span>")
+				U << "<span class='notice'>Your alert went through. Hotline agents were notified.</span>"
+				hotline_cd = TRUE
+				addtimer(src, "reset_hotline_cooldown", PDA_HOTLINE_CD, TRUE)
+
 			if("Medical Scan Health")
 				if(scanmode == PDA_SCAN_MEDICAL_HEALTH)
 					scanmode = 0
@@ -1235,3 +1262,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .
+
+/obj/item/device/pda/proc/reset_hotline_cooldown()
+	hotline_cd = FALSE
+	if(isliving(loc))
+		var/mob/living/li = loc
+		li << "<span class='notice'>[src] is ready to contact hotline agents again.</span>"
