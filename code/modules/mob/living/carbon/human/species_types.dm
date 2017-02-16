@@ -630,8 +630,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 							break
 				return
 		var/lightamount = T.lighting_lumcount
-		if(istype(H.loc, /obj/mecha))
-			//let's assume that mech interiors are lit up
+		if(istype(H.loc, /obj/mecha) || istype(H.loc, /obj/machinery/clonepod))
+			//let's assume the interior is lit up
 			lightamount = 7
 		else if(!isturf(H.loc))
 			//inside a container or something else, only get light from the things inside it
