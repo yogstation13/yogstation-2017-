@@ -69153,9 +69153,7 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "Zyk" = (
-/obj/item/weapon/book/manual/wiki/plasmaman{
-	step_x = 31
-	},
+/obj/item/weapon/book/manual/wiki/plasmaman,
 /turf/closed/wall,
 /area/medical/sleeper)
 "Zyl" = (
