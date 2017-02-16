@@ -32851,6 +32851,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/weapon/book/manual/wiki/phytosian,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -68865,8 +68866,11 @@
 /area/tcommsat/computer)
 "XXK" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/book/manual/wiki/preternis{
+	step_x = 1
+	},
+/obj/item/weapon/folder/white,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -69149,6 +69153,12 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyk" = (
+/obj/item/weapon/book/manual/wiki/plasmaman{
+	step_x = 31
+	},
+/turf/closed/wall,
+/area/medical/sleeper)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -104295,7 +104305,7 @@ byG
 byG
 byG
 byG
-byG
+Zyk
 byG
 bKK
 byB
