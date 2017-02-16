@@ -115,7 +115,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
 		user << "<span class='cultitalic'>You are too far away from Nar'sie's strength to utilize this rune! Return to the station!</span>"
 		fail_invoke()
-		return
+		return list()
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
 	if(user)
