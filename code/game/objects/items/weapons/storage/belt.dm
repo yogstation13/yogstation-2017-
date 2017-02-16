@@ -148,7 +148,7 @@
 	desc = "A versatile chest rig, cherished by miners and hunters alike."
 	icon_state = "explorer1"
 	item_state = "explorer1"
-	storage_slots = 5
+	storage_slots = 6
 	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
 	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
@@ -184,9 +184,39 @@
 		/obj/item/weapon/ore/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/device/barometer,
-
-
 		)
+
+/obj/item/weapon/storage/belt/mining/medical
+	icon_state = "explorer2"
+	item_state = "explorer2"
+	name = "medical webbing"
+	desc = "A combat belt cherished by emergency medics in every corner of the galaxy."
+	can_hold = list(
+		/obj/item/weapon/pickaxe,
+		/obj/item/bodybag,
+		/obj/item/device/healthanalyzer,
+		/obj/item/stack/medical,
+		/obj/item/weapon/extinguisher/mini,
+		/obj/item/clothing/mask/breath,
+		/obj/item/weapon/tank/internals/emergency_oxygen,
+		/obj/item/medical,
+		/obj/item/weapon/lighter,
+		/obj/item/device/radio,
+		/obj/item/clothing/gloves/,
+		/obj/item/weapon/reagent_containers/hypospray,
+		/obj/item/weapon/reagent_containers/dropper,
+		/obj/item/weapon/reagent_containers/glass/beaker,
+		/obj/item/weapon/reagent_containers/glass/bottle,
+		/obj/item/weapon/reagent_containers/pill,
+		/obj/item/weapon/reagent_containers/syringe,
+		/obj/item/key/,
+		/obj/item/stack/sheet/animalhide,
+		/obj/item/stack/sheet/sinew,
+		/obj/item/stack/sheet/bone,
+		/obj/item/device/gps,
+		/obj/item/weapon/ore/bluespace_crystal,
+		/obj/item/weapon/reagent_containers/food/drinks,
+	)
 
 /obj/item/weapon/storage/belt/mining/alt
 	icon_state = "explorer2"
