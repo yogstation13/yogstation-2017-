@@ -47,11 +47,13 @@
 	density = 0
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>, and is lead by The Chieftain. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	var/in_tribe = TRUE
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
-	new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
+	if(in_tribe)
+		new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
+		new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -59,8 +61,10 @@
 		H.languages_spoken = ASHWALKER
 		H.languages_understood = ASHWALKER
 		H.weather_immunities |= "ash"
-	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
-	ashhud.join_hud(new_spawn)
+
+	if(in_tribe)
+		var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+		ashhud.join_hud(new_spawn)
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
@@ -89,6 +93,95 @@
 	ashhud.join_hud(new_spawn)
 	ticker.mode.set_antag_hud(new_spawn, "hudchieftain")
 	new_spawn <<"<b>You are the chieftain of the ashwalkers. You are the only one who can use complicated machinery and speak to outsiders-Lead your tribe, for better or for worse.</b>"
+
+//Cosmic Ashwalker: A lone-ashwalker stripped away from it's clan, experimented on for years while traveling and learning from the cosmos, tore away their restraints, struck down their captivators, and crash landed back on lavaland
+/obj/effect/mob_spawn/human/ash_walker/cosmic
+	name = "cosmic ashwalker egg"
+	desc = "As you stare you can hear your own thoughts hum through the wind."
+	mob_name = "an cosmic ashwalker"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "bluespace"
+	mob_species = /datum/species/lizard/ashwalker/cosmic
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. You were <span class='danger'>Abducted</span>. Taken from your home by strange beings, so they could take you apart and then put you back together as something which they could control. They failed, and paid the price. Your prison screamed and shook as ash storms dashed it to the ground. Now you are free, but... something is different.</b>"
+	in_tribe = FALSE // stripped away... for too long.
+	uniform = null
+
+/obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.languages_spoken |= HUMAN
+		H.languages_understood |= HUMAN
+		H << "<span class='notice'>You are familiar with these human's language. Use this to your advantage to communicate with those authentic with it.</span>"
+	new_spawn << "<span class='notice'>When you are close to death you will enter a chrysalis state where you will slowly regenerate. During this state you are very vunerable.</span>"
+
+// Rebirth egg that ashwalkers regenerate in when they reach under 0 health. Takes time to regenerate.
+/obj/effect/cyrogenicbubble
+	name = "cosmic egg"
+	desc = "You can see the embryo of a slowly regenerating baby-ashwalker. This one is extraordinary."
+	var/health = 100
+	var/progress // needs 300
+	var/mob/living/ashwalker
+
+/obj/effect/cyrogenicbubble/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/cyrogenicbubble/Destroy()
+	if(ashwalker)
+		qdel(ashwalker) // haha, you're not getting out of this one.
+	if(health)
+		health = 0
+	STOP_PROCESSING(SSobj, src)
+	..()
+
+/obj/effect/cyrogenicbubble/process()
+	..()
+	if(health)
+		progress++
+	else
+		ejectEgg()
+	if(progress == 300)
+		ejectEgg()
+		if(ishuman(ashwalker))
+			var/mob/living/carbon/human/H = ashwalker
+			var/datum/species/lizard/ashwalker/cosmic/C = H.dna.species
+			C.rebirth = FALSE
+		qdel(src)
+	else
+		healAshwalker()
+
+/obj/effect/cyrogenicbubble/attackby(obj/item/weapon, mob/user)
+	. = ..()
+	if(health)
+		if(weapon.force > health)
+			ejectEgg()
+			qdel(src)
+		else
+			health -= weapon.force
+
+/obj/effect/cyrogenicbubble/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+		if(damage > health)
+			ejectEgg()
+			qdel(src)
+		else
+			health -= damage
+
+/obj/effect/cyrogenicbubble/proc/ejectEgg()
+	if(ashwalker)
+		ashwalker.forceMove(get_turf(src))
+		ashwalker = null
+
+/obj/effect/cyrogenicbubble/proc/healAshwalker()
+	if(!ashwalker)
+		return
+	ashwalker.adjustToxLoss(-1, 0)
+	ashwalker.adjustOxyLoss(-1, 0)
+	ashwalker.adjustBruteLoss(-1, 0)
+	ashwalker.adjustFireLoss(-1, 0)
+	if(ashwalker.stat == DEAD) // one does not DIE in the cyro bubble.
+		ashwalker.revive()
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
