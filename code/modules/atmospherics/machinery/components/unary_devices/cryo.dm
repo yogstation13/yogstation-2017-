@@ -11,7 +11,7 @@
 	var/volume = 100
 
 	var/efficiency = 1
-	var/sleep_factor = 750
+	var/sleep_factor = 1000
 	var/paralyze_factor = 1000
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
@@ -76,17 +76,10 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	if(occupant)
-		if(occupant.health >= 100) // Don't bother with fully healed people.
-			on = FALSE
-			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
-			if(autoeject) // Eject if configured.
-				open_machine()
-			return
-		else if(occupant.stat == DEAD) // We don't bother with dead people.
+		if(occupant.stat == DEAD) // We don't bother with dead people.
 			return
 
-		if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+		if(occupant.bodytemperature < T0C + 40) // Sleepytime. Why? More cryo magic.
 			occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
 			occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
 
@@ -145,9 +138,9 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
-	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
+	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 2 minutes.)</span>"
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
-	if(do_after(user, 300))
+	if(do_after(user, 600)) //ugh fine you whiny shits
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
@@ -224,12 +217,9 @@
 	var/datum/gas_mixture/air1 = AIR1
 	data["cellTemperature"] = round(air1.temperature)
 
+	
 	data["isBeakerLoaded"] = beaker ? 1 : 0
-	var beakerContents = list()
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents += list(list("name" = R.name, "volume" = R.volume))
-	data["beakerContents"] = beakerContents
+	
 	return data
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_act(action, params)
