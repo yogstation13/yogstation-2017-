@@ -27,6 +27,7 @@ IMPROPERBLOCK returns 0. - it means that the attacker is behind the user, and ha
 You use check_for_postiions() to get this information back.
 
 Have fun!
+- Super3222
 
 */
 
