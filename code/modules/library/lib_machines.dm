@@ -178,7 +178,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	var/page = 1	//current page of the external archives
 	var/print_busy = 0 // LOL NO SPAM (1 minute delay) -- Doohl
 	var/list/print_queue = list()
-	var/max_print_queue_len = 50;
+	var/max_print_queue_len = 1000;
 	var/clearprintqueue = 0;
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/build_library_menu()
@@ -270,7 +270,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(!cachedbooks)
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>"
+				dat += "<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR>"
+				dat += "<A href='?src=\ref[src];printall=1'>(Print All Books)</A><BR><BR>"
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"
 				dat += libcomp_menu[Clamp(page,1,libcomp_menu.len)]
@@ -462,6 +463,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				print_book(print_queue[1])
 		else
 			say("The printing queue is full!")
+	if(href_list["printall"])
+		for(var/i in 1 to cachedbooks.len)
+			var/datum/cachedbook/C = cachedbooks[i]
+			print_queue += C.id
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
