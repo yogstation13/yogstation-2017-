@@ -10,10 +10,6 @@
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
-#define SHIELD_NORMAL 0
-#define SHIELD_CRACKED 1
-#define SHIELD_BREAKING 2
-
 #define IMPROPERBLOCK 0
 #define PROPERBLOCK 1
 /*

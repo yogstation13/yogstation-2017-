@@ -1,3 +1,7 @@
+#define SHIELD_NORMAL 0
+#define SHIELD_CRACKED 1
+#define SHIELD_BREAKING 2
+
 /obj/item/weapon/shield
 	name = "shield"
 	icon = 'icons/obj/weapons.dmi'
