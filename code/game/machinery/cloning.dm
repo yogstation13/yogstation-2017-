@@ -185,10 +185,6 @@
 	H.real_name = clonename
 
 	icon_state = "pod_1"
-	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)
-	H.Paralyse(4)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
@@ -215,6 +211,10 @@
 			no_breath_mob = FALSE
 
 	attempting = FALSE
+	//Get the clone body ready
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)
+	H.Paralyse(4)
 	return TRUE
 
 //Grow clones to maturity then kick them out.  FREELOADERS

@@ -242,7 +242,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	siemens_coeff = 1.5
 	radiation_effect_mod = 0
 	radiation_faint_threshhold = 999
-	clonemod = 0
 	toxmod = 0
 	//damage_immunities = list(DAMAGE_CHEMICAL)
 	//heal_immunities = list(DAMAGE_CHEMICAL)
