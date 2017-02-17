@@ -7,7 +7,9 @@
 #define ismodholder(O) (istype(O, /obj/item/module_holder))
 
 #define ismodule(O) (istype(O, /obj/item/module))
-
+#define islavaturf(A) (istype(A, /turf/open/floor/plating/lava))
+#define isminingturf(A) (istype(A, /turf/open/floor/plating/asteroid))
+#define ischasm(A) (istype(A, /turf/open/chasm))
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))

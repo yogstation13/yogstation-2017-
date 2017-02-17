@@ -1,5 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - tweak: "Constructs don't make walls phasable anymore, they just go through them like shadowlings."
-  - bugfix: "Constructs can't pull things through walls anymore."

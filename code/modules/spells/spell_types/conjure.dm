@@ -20,7 +20,6 @@
 	for(var/turf/T in targets)
 		if(T.density && !summon_ignore_density)
 			targets -= T
-
 	for(var/i=0,i<summon_amt,i++)
 		if(!targets.len)
 			break
