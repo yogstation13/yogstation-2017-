@@ -1,13 +1,11 @@
-/obj/item/projectile/bullet/dart/basilisk
-	name = "freezing dart"
+/obj/item/projectile/temp/basilisk
+	name = "freezing blast"
 	icon_state = "ice_2"
-	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
-
-/obj/item/projectile/bullet/dart/basilisk/New()
-	..()
-	reagents.add_reagent("bolamine",5)
-	reagents.add_reagent("cryptobiolin",2)
-	reagents.add_reagent("frostoil", 2)
+	damage = 0
+	damage_type = BURN
+	nodamage = 1
+	flag = "energy"
+	temperature = 50
 
 /obj/item/projectile/bullet/dart/basilisk/Bump(atom/A)
 	..()
