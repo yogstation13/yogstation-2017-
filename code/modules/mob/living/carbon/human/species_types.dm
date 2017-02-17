@@ -478,6 +478,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	speedmod = 0.33
 	damage_immunities = list()
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
+	var/no_light_heal = FALSE
 	var/light_heal_multiplier = 1
 	var/dark_damage_multiplier = 1
 	var/last_light_level = 0
@@ -610,80 +611,92 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/plant/spec_life(mob/living/carbon/human/H)
 	var/light_level = 0
 	var/light_msg //for sending "low light!" messages to the player.
-	if(isturf(H.loc)) //else, there's considered to be no light
-		var/turf/T = H.loc
-		var/area/A = H.loc.loc
-		if(A.murders_plants == 1)
-			if (H.mind)
-				if (H.mind.special_role == "thrall")
-					if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-						for(var/V in ticker.mode.shadows)
-							var/datum/mind/sling_mind = V
-							if(sling_mind.current && (get_dist(sling_mind.current, H) < 3))
-								light_level = -2
-								light_msg = "<span class='warning'>Being in the presence of one of your masters revitalizes you.</span>"
-								H.adjustToxLoss(-1, 1)
-								H.adjustOxyLoss(-0.5, 1)
-								H.heal_overall_damage(1.5, 1.5)
-								break
-					return
-
-			if (T.lighting_lumcount)
-				switch (T.lighting_lumcount)
-					if (0.1 to 3)
-						//very low light
-						light_level = 1
-						light_msg = "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
-						H.nutrition -= T.lighting_lumcount/1.5
-						H.adjustOxyLoss(3 * dark_damage_multiplier, 1)
-					if (3.1 to 6)
-						//low light
-						light_level = 2
-						light_msg = "<span class='warning'>The ambient light levels are too low. Your breath is coming more slowly as your insides struggle to keep up on their own.</span>"
-						H.nutrition -= T.lighting_lumcount/2
-						H.adjustOxyLoss(6 * dark_damage_multiplier, 1)
-					if (6.1 to 10)
-						//medium, average, doing nothing for now
-						light_level = 3
-						H.nutrition += T.lighting_lumcount/10
-					if (10.1 to 22)
-						//high light, regen here
-						light_level = 4
-						H.nutrition += T.lighting_lumcount/6
-						if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-							H.adjustToxLoss(-0.5 * light_heal_multiplier, 1)
-							H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
-							H.heal_overall_damage(1 * light_heal_multiplier, 1 * light_heal_multiplier)
-					if (22.1 to INFINITY)
-						//super high light
-						light_level = 5
-						H.nutrition += T.lighting_lumcount/4
-						if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-							H.adjustToxLoss(-1 * light_heal_multiplier, 1)
-							H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
-							H.heal_overall_damage(1.5 * light_heal_multiplier, 1.5 * light_heal_multiplier)
-			else if(T.loc.luminosity == 1 || A.lighting_use_dynamic == 0)
-				light_level = 6
-				H.nutrition += 1.4
+	var/turf/T = get_turf(H)
+	if(!T)
+		return
+	var/area/A = T.loc
+	if(A.murders_plants)
+		if (H.mind)
+			if (H.mind.special_role == "thrall")
 				if (H.stat != UNCONSCIOUS && H.stat != DEAD)
-					H.adjustToxLoss(-1 * light_heal_multiplier, 1)
-					H.adjustOxyLoss(-0.5* light_heal_multiplier, 1)
-					H.heal_overall_damage(1.5* light_heal_multiplier, 1.5* light_heal_multiplier)
-			else
-				//no light, this is baaaaaad
-				light_level = 0
-				light_msg = "<span class='userdanger'>Darkness! Your insides churn and your skin screams in pain!</span>"
-				H.nutrition -= 3
-				H.adjustOxyLoss(3 * dark_damage_multiplier, 1)
+					for(var/V in ticker.mode.shadows)
+						var/datum/mind/sling_mind = V
+						if(sling_mind.current && (get_dist(sling_mind.current, H) < 3))
+							light_level = -2
+							light_msg = "<span class='warning'>Being in the presence of one of your masters revitalizes you.</span>"
+							H.adjustToxLoss(-1, 1)
+							H.adjustOxyLoss(-0.5, 1)
+							H.heal_overall_damage(1.5, 1.5)
+							break
+				return
+		var/lightamount = T.lighting_lumcount
+		if(istype(H.loc, /obj/mecha) || istype(H.loc, /obj/machinery/clonepod))
+			//let's assume the interior is lit up
+			lightamount = 7
+		else if(!isturf(H.loc))
+			//inside a container or something else, only get light from the things inside it
+			lightamount = 0
+			for(var/V in H.loc)
+				if(V)
+					var/atom/At = V
+					if(At.light)
+						lightamount += At.light.luminosity
+		if (lightamount)
+			switch (lightamount)
+				if (0.1 to 3)
+					//very low light
+					light_level = 1
+					light_msg = "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
+					H.nutrition -= T.lighting_lumcount/1.5
+					//enough to make you faint but get back up consistently
+					if(H.getOxyLoss() < 55)
+						H.adjustOxyLoss(min(5 * dark_damage_multiplier, 55 - H.getOxyLoss()), 1)
+					if((H.getOxyLoss() > 50) && H.stat)
+						H.adjustOxyLoss(-4)
+				if (3.1 to 6)
+					//low light
+					light_level = 2
+					light_msg = "<span class='warning'>The ambient light levels are too low. Your breath is coming more slowly as your insides struggle to keep up on their own.</span>"
+					H.nutrition -= T.lighting_lumcount/2
+					//not enough to faint but enough to slow you down
+					if(H.getOxyLoss() < 50)
+						H.adjustOxyLoss(min(3 * dark_damage_multiplier, 50 - H.getOxyLoss()), 1)
+				if (6.1 to 10)
+					//medium, average, doing nothing for now
+					light_level = 3
+					H.nutrition += T.lighting_lumcount/10
+				if (10.1 to 22)
+					//high light, regen here
+					light_level = 4
+					H.nutrition += T.lighting_lumcount/6
+					if ((H.stat != UNCONSCIOUS) && (H.stat != DEAD) && !no_light_heal)
+						H.adjustToxLoss(-0.5 * light_heal_multiplier, 1)
+						H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
+						H.heal_overall_damage(1 * light_heal_multiplier, 1 * light_heal_multiplier)
+				if (22.1 to INFINITY)
+					//super high light
+					light_level = 5
+					H.nutrition += T.lighting_lumcount/4
+					if ((H.stat != UNCONSCIOUS) && (H.stat != DEAD) && !no_light_heal)
+						H.adjustToxLoss(-1 * light_heal_multiplier, 1)
+						H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
+						H.heal_overall_damage(1.5 * light_heal_multiplier, 1.5 * light_heal_multiplier)
+		else if(T.loc.luminosity == 1 || A.lighting_use_dynamic == 0)
+			light_level = 6
+			H.nutrition += 1.4
+			if ((H.stat != UNCONSCIOUS) && (H.stat != DEAD) && !no_light_heal)
+				H.adjustToxLoss(-1 * light_heal_multiplier, 1)
+				H.adjustOxyLoss(-0.5* light_heal_multiplier, 1)
+				H.heal_overall_damage(1.5* light_heal_multiplier, 1.5* light_heal_multiplier)
+		else
+			//no light, this is baaaaaad
+			light_level = 0
+			light_msg = "<span class='userdanger'>Darkness! Your insides churn and your skin screams in pain!</span>"
+			H.nutrition -= 3
+			//enough to make you faint for good, and eventually die
+			if(H.getOxyLoss() < 60)
+				H.adjustOxyLoss(min(5 * dark_damage_multiplier, 60 - H.getOxyLoss()), 1)
 				H.adjustToxLoss(1 * dark_damage_multiplier, 1)
-	else
-		if(!istype(H.loc, /obj/mecha))
-			//inside a container or something else, inflict low-level light degen
-			light_level = -1
-			light_msg = "<span class='warning'>There's not enough light reaching you in here. You start to feel very claustrophobic as your energy begins to drain away.</span>"
-			H.nutrition -= 1.5
-			H.adjustOxyLoss(9 * dark_damage_multiplier, 1)
-			H.adjustToxLoss(3 * dark_damage_multiplier, 1)
 
 	if(light_level != last_light_level)
 		last_light_level = light_level
@@ -712,9 +725,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(!environment)
 		return
 	if(H.bodytemperature < 150 || H.bodytemperature > 400)
-		heal_immunities = list(DAMAGE_CHEMICAL, DAMAGE_PHYSICAL)
+		no_light_heal = TRUE
 	else
-		heal_immunities = list()
+		no_light_heal = FALSE
 
 /datum/species/plant/handle_flash(mob/living/carbon/human/H, intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	H.adjustFireLoss(-5, 1)
@@ -726,17 +739,28 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/plant/handle_inherent_channels(mob/living/carbon/human/H, message, message_mode)
 	if(H.stat)
-		return
+		return ..()
 	if(message_mode == MODE_PHEROMONES)
-		for(var/mob/living/Hearer in get_hearers_in_view(7, H))
+		var/list/listening = get_hearers_in_view(7, H)
+		for(var/mob/M in player_list)
+			if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7))) // client is so that ghosts don't have to listen to mice
+				listening |= M
+		for(var/Hearer in listening)
+			if(isobserver(Hearer))
+				var/mob/dead/observer/O = Hearer
+				O << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
+				continue
 			var/mob/living/carbon/human/human = Hearer
 			if(istype(human) && istype(human.dna.species, /datum/species/plant) )
 				human << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
-			else
-				if(get_dist(H, Hearer) <= 1)
-					Hearer.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
-				if(istype(Hearer, /mob/living/carbon) && Hearer.stat)
-					Hearer << "<span class='notice'>The room smells like leaves.</span>"
+			else if(isliving(Hearer))
+				var/mob/living/L
+				if(get_dist(H, L) <= 1)
+					L.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
+				if(iscarbon(L) && L.stat)
+					L << "<span class='notice'>The room smells like leaves.</span>"
+		log_say("[H.name]/[H.key] : \[Pheromones\]: [message]")
+		H.say_log += "\[Pheromones\]: [message]"
 		return 1
 	return ..()
 
