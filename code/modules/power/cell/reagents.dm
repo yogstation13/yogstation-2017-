@@ -105,6 +105,7 @@
 	name = "radiation"
 	timer = 50
 	also_borg = TRUE
+	special_borg = TRUE
 
 /datum/powercell_reagents/uranium/on_normal(var/amount)
 	var/radiation_power = 1
@@ -117,4 +118,4 @@
 
 /datum/powercell_reagents/uranium/on_borg(mob/living/silicon/robot/S, var/amount)
 	if(prob(50))
-		S.Stun(3)
+		S.Stun(1)
