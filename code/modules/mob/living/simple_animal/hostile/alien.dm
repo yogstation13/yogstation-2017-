@@ -214,12 +214,11 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	. = ..()
-	if(stat != DEAD)
-		if(angry == 0)
-			if(health < maxHealth/2)
-				angry = 1
-			else
-				angry = 0
+	if(stat != DEAD)	
+		if(health < maxHealth/2)
+			angry = TRUE
+		else
+			angry = FALSE
 
 			
 
