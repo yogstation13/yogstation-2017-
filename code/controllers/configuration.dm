@@ -10,12 +10,6 @@
 	var/autoadmin = 0
 	var/autoadmin_rank = "Game Admin"
 
-/datum/protected_configuration/vv_get_var(var_name)
-	return debug_variable(var_name, "SECRET", 0, src)
-
-/datum/protected_configuration/vv_edit_var(var_name, var_value)
-	return FALSE
-
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -24,7 +18,6 @@
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
-	var/hub = 0
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -40,7 +33,6 @@
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
-	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
@@ -52,7 +44,6 @@
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
-	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
@@ -452,11 +443,11 @@
 					discord_token = value
 				if("check_randomizer")
 					config.check_randomizer = 1
-
 				if ("mentor_mobname_only")
 					config.mentors_mobname_only = 1
 				if ("mentor_legacy_system")
 					config.mentor_legacy_system = 1
+
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
