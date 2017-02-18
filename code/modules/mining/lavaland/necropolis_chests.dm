@@ -43,6 +43,8 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/godblood(src)
 		if(13)
 			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
+		if(14)
+			new /obj/item/weapon/guardiancreator(src)
 		if(15)
 			new /obj/item/device/warp_cube/red(src)
 		if(16)
@@ -64,9 +66,6 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(23)
 			new /obj/item/organ/heart/cursed/wizard(src)
-		if(24)  
-			new /obj/item/weapon/guardiancreator(src)
-
 
 
 //Spooky special loot
