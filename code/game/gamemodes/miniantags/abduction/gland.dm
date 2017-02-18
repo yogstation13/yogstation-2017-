@@ -36,6 +36,7 @@
 	if(..())
 		if(special != 2 && uses) // Special 2 means abductor surgery
 			Start()
+		return 1
 
 /obj/item/organ/gland/on_life()
 	if(!active)

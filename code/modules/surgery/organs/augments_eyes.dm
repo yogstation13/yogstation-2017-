@@ -27,6 +27,7 @@
 			owner << "<span class='notice'>[aug_message]</span>"
 
 		owner.update_sight()
+		return 1
 
 /obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags
@@ -80,6 +81,7 @@
 			var/datum/atom_hud/H = huds[HUD_type]
 			H.add_hud_to(M)
 			M.permanent_huds |= H
+		return 1
 
 /obj/item/organ/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
 	if(HUD_type)

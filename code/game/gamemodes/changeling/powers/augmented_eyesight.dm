@@ -68,6 +68,7 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.weakeyes = 1
+		return 1
 
 /obj/item/organ/cyberimp/eyes/thermals/ling/Remove(mob/living/carbon/M, special = 0)
 	if(..())

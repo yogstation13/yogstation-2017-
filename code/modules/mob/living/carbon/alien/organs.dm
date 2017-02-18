@@ -18,6 +18,7 @@
 		if(isalien(M))
 			var/mob/living/carbon/alien/A = M
 			hive_faction = A.hive_faction
+		return 1
 
 /obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0, del_after = 0)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
@@ -96,6 +97,7 @@
 		if(isalien(M))
 			var/mob/living/carbon/alien/A = M
 			A.updatePlasmaDisplay()
+		return 1
 
 /obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -117,6 +119,7 @@
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	if(..())
 		M.faction |= "alien"
+		return 1
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= "alien"

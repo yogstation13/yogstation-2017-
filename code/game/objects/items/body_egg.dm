@@ -22,6 +22,7 @@
 		owner.med_hud_set_status()
 		spawn(0)
 			AddInfectionImages(owner)
+		return 1
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0, del_after = 0)
 	STOP_PROCESSING(SSobj, src)

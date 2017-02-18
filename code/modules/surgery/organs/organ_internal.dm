@@ -202,7 +202,7 @@
 			var/mob/living/carbon/human/H = M
 			if(H.heart_attack)
 				H.heart_attack = 0
-				return
+		return 1
 
 /obj/item/organ/heart/proc/Stop()
 	beating = 0
@@ -271,6 +271,7 @@
 	if(..())
 		if(owner)
 			owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+		return 1
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "pump your blood"
@@ -338,6 +339,7 @@
 	if(..())
 		if(say_mod && M.dna && M.dna.species)
 			M.dna.species.say_mod = say_mod
+		return 1
 
 /obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -492,6 +494,7 @@
 	if(..())
 		if(inflamed)
 			M.AddDisease(new /datum/disease/appendicitis)
+		return 1
 
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()

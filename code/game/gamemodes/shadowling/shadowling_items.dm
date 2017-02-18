@@ -103,3 +103,4 @@
 	if(..())
 		ticker.mode.add_thrall(M.mind)
 		M.mind.special_role = "thrall"
+		return 1

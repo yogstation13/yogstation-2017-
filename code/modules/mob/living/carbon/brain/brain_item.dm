@@ -31,6 +31,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.update_hair(0)
+		return 1
 
 /obj/item/organ/brain/Remove(mob/living/carbon/M, special = 0)
 	..()

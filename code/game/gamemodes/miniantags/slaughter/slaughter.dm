@@ -103,6 +103,7 @@
 /obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
 	if(..())
 		M.bloodcrawl = BLOODCRAWL
+		return 1
 
 /obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
