@@ -83,6 +83,7 @@
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
 	var/list/image/showing = list()
 	var/client/viewing
+	high_risk = 1
 
 
 /obj/item/areaeditor/blueprints/Destroy()

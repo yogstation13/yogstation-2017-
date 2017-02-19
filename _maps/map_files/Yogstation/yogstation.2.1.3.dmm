@@ -69141,6 +69141,15 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/mob/living/simple_animal/pet/dragon,
+/turf/open/floor/plasteel{
+	tag = "icon-redbluefull";
+	icon_state = "redbluefull"
+	},
+/area/crew_quarters/theatre)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -103995,7 +104004,7 @@ aCQ
 aEn
 aFL
 aHe
-aHe
+Zyk
 aKf
 aLt
 aNm

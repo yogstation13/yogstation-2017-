@@ -101,6 +101,7 @@
 	item_state = "jetpack-captain"
 	w_class = 3
 	volume = 90
+	high_risk = 1
 
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"

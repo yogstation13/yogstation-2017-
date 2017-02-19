@@ -33,6 +33,7 @@
 	origin_tech = null
 	ammo_x_offset = 3
 	selfcharge = 1
+	high_risk = 1
 
 /obj/item/weapon/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
