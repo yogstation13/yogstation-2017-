@@ -1214,8 +1214,14 @@
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
-				var/turf/location = H.loc
-				if(istype(location))
+				var/turf/location = get_turf(H)
+				var/obj/effect/decal/cleanable/blood/hitsplatter/B = new(H)
+				B.blood_source = H
+				B.transfer_mob_blood_dna(H)
+				var/n = rand(1,3)
+				var/turf/targ = get_ranged_target_turf(H, get_dir(user, H), n)
+				B.GoTo(targ, n)
+				if (istype(location))
 					H.add_splatter_floor(location)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
