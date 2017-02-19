@@ -65,9 +65,8 @@
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
 	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim, and the process will damage our genomes."
 	sting_icon = "sting_transform"
-	chemical_cost = 40
-	dna_cost = 3
-	genetic_damage = 100
+	chemical_cost = 20
+	dna_cost = 1
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -102,7 +101,7 @@
 		var/mob/living/carbon/C = target
 		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
-			C.take_organ_damage(20, 0) //The process is extremely painful
+			C.take_organ_damage(5, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
@@ -121,8 +120,6 @@
 	sting_icon = "sting_armblade"
 	chemical_cost = 10
 	dna_cost = 1
-	genetic_damage = 20
-	max_genetic_damage = 10
 
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
@@ -170,7 +167,8 @@
 	helptext = "Will give you the DNA of your target, allowing you to transform into them."
 	sting_icon = "sting_extract"
 	chemical_cost = 25
-	dna_cost = 0
+	genetic_damage = 20
+	dna_cost = 2
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/can_sting(mob/user, mob/target)
 	if(..())
@@ -196,12 +194,13 @@
 	desc = "We silently sting a human, completely silencing them for a short time."
 	helptext = "Does not provide a warning to the victim that they have been stung, until they try to speak and cannot."
 	sting_icon = "sting_mute"
-	chemical_cost = 20
+	chemical_cost = 25
 	dna_cost = 2
+	genetic_damage = 30
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
-	target.silent += 30
+	target.reagents.add.reagent("mutetoxin", 10)
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
@@ -223,21 +222,48 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/LSD
-	name = "Hallucinogenic Pathogen Sting"
+	name = "Hallucination Sting"
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
 	sting_icon = "sting_lsd"
-	chemical_cost = 50
-	dna_cost = 5
+	chemical_cost = 20
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
+	addtimer(src, "hallucination_time", rand(300,600), target)
+	feedback_add_details("changeling_powers","HS")
+	return 1
+
+/obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
 	spawn(rand(300,600))
 		if(target)
-			if(!target.resistances.Find(/datum/disease/lingvirus))
-				var/datum/disease/welp = new /datum/disease/lingvirus(0)
-				target.ContractDisease(welp)
-	feedback_add_details("changeling_powers","HS")
+			if(target.reagents)
+				target.reagents.add_reagent("mindbreaker", 25)
+				
+/obj/effect/proc_holder/changeling/sting/paralysis
+	name = "Paralysis Sting"
+	desc = "We inject a human with a powerful muscular inhibitor, preventing their movement after a short time. They will immediately realize they have been stung."
+	helptext = "They will still be able to speak while paralyzed. The paralysis will last for around fifteen seconds."
+	sting_icon = "sting_lsd"
+	chemical_cost = 60
+	genetic_damage = 50
+	dna_cost = 4
+	req_dna = 6
+
+/obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/target)
+	add_logs(user, target, "stung", "parasting")
+	user << "<span class='notice'>The paralysis will take effect more quickly depending on their wounds.</span>"
+	target << "<span class='warning'>Your body begins throbbing with a painful ache...</span>" 
+	var/time_to_wait = target.health
+	time_to_wait += 80 //The target's health, plus eight seconds - a fully healed human will take eighteen seconds to begin experiencing the effects
+	time_to_wait = Clamp(time_to_wait, 0, INFINITY)
+	spawn(time_to_wait)
+		if(target && !target.lying) //So you can't spam parastings if they're already on the ground
+			target << "<span class='userdanger'>Your muscles painfully seize up! You can't move!</span>"
+			target.Weaken(8)
+			target.Stun(8)
+	feedback_add_details("changeling_powers", "PS")
 	return 1
 
 /*
