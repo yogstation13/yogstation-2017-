@@ -1,0 +1,11 @@
+author: AdamElTablawy
+delete-after: True
+changes: 
+  - rscadd: "The revive dead rune has been changed. Now, each sacrifice will 'charge' it. If the number of sacrifice charges is greater than the number of cultists revived by any of the runes, a cultist can be placed on the rune to be revived."
+  - rscadd: "The sacrifice and convert runes have been placed by the 'offer' rune, which fulfills the purpose of both. 2 cultists will convert. 3 cultists will sacrifice a living target. If a target cannot be converted the rune will sacrifice them."
+  - rscadd: "The void torch has been added. This item, attainable through archives, can be used to warp items to other cultists."
+  - rscadd: "The flagellant robes now convey a 50% increase in damage taken instead of a 100% increase in damage taken. They still provide the same speed boost. Which is massive. Use them."
+  - rscadd: "The cult sword can now block incoming projectiles or melee hits, and can be thrown to embed. If this is too powerful it will be changed or reverted accordingly."
+  - rscadd: "Veil shifter now has 4 charges, up from 2."
+  - rscadd: "All constructs except for the wraith are about the same speed as a human, or slower. The artificer in particular is slower. Wraiths are far more fragile than before. Harvesters, spawned by nar'sie, are much much much stronger."
+  - rscadd: "As usual, if you have any questions or complaints ping me and i'll respond."
