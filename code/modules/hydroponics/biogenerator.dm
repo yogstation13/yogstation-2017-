@@ -25,6 +25,24 @@
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/biogenerator(null)
 	B.apply_default_parts(src)
 
+/obj/machinery/biogenerator/Destroy()
+	if(beaker)
+		qdel(beaker)
+		beaker = null
+	return ..()
+
+/obj/machinery/biogenerator/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/biogenerator/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		update_icon()
+		updateUsrDialog()
+
 /obj/item/weapon/circuitboard/machine/biogenerator
 	name = "circuit board (Biogenerator)"
 	build_path = /obj/machinery/biogenerator
@@ -63,7 +81,11 @@
 	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
+<<<<<<< HEAD
 	if(user.a_intent == "harm")
+=======
+	if(user.a_intent == INTENT_HARM)
+>>>>>>> masterTGbranch
 		return ..()
 
 	if(processing)
@@ -244,6 +266,7 @@
 		update_icon()
 		updateUsrDialog()
 		return 1
+<<<<<<< HEAD
 
 /obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
 	var/sum_reagents = 0
@@ -251,11 +274,21 @@
 		sum_reagents += reagents[R]
 	sum_reagents *= multiplier
 
+=======
+
+/obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
+	var/sum_reagents = 0
+	for(var/R in reagents)
+		sum_reagents += reagents[R]
+	sum_reagents *= multiplier
+
+>>>>>>> masterTGbranch
 	if(beaker.reagents.total_volume + sum_reagents > beaker.reagents.maximum_volume)
 		menustat = "nobeakerspace"
 		return 0
 
 	return 1
+<<<<<<< HEAD
 
 /obj/machinery/biogenerator/proc/create_product(datum/design/D, amount)
 	if(!beaker || !loc)
@@ -284,6 +317,37 @@
 				beaker.reagents.add_reagent(R, D.make_reagents[R])
 			. = 1
 			--i
+=======
+
+/obj/machinery/biogenerator/proc/create_product(datum/design/D, amount)
+	if(!beaker || !loc)
+		return 0
+
+	if(ispath(D.build_path, /obj/item/stack))
+		if(!check_container_volume(D.make_reagents, amount))
+			return 0
+		if(!check_cost(D.materials, amount))
+			return 0
+
+		var/obj/item/stack/product = new D.build_path(loc)
+		product.amount = amount
+		for(var/R in D.make_reagents)
+			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
+	else
+		var/i = amount
+		while(i > 0)
+			if(!check_container_volume(D.make_reagents))
+				return .
+			if(!check_cost(D.materials))
+				return .
+			if(D.build_path)
+				new D.build_path(loc)
+			for(var/R in D.make_reagents)
+				beaker.reagents.add_reagent(R, D.make_reagents[R])
+			. = 1
+			--i
+
+>>>>>>> masterTGbranch
 	menustat = "complete"
 	update_icon()
 	return .

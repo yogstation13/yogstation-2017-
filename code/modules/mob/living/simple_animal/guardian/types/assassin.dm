@@ -1,5 +1,6 @@
 //Assassin
 /mob/living/simple_animal/hostile/guardian/assassin
+<<<<<<< HEAD
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	melee_damage_lower = 15
@@ -10,6 +11,13 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+=======
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attacktext = "slashes"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+>>>>>>> masterTGbranch
 	playstyle_string = "<span class='holoparasite'>As an <b>assassin</b> type you do medium damage and have no damage resistance, but can enter stealth, massively increasing the damage of your next attack and causing it to ignore armor. Stealth is broken when you attack or take damage.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Space Ninja, a lethal, invisible assassin.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Assassin modules loaded. Holoparasite swarm online.</span>"
@@ -17,7 +25,7 @@
 
 	toggle_button_type = /obj/screen/guardian/ToggleMode/Assassin
 	var/toggle = FALSE
-	var/stealthcooldown = 200
+	var/stealthcooldown = 160
 	var/obj/screen/alert/canstealthalert
 	var/obj/screen/alert/instealthalert
 
@@ -59,6 +67,7 @@
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		armour_penetration = initial(armour_penetration)
+		obj_damage = initial(obj_damage)
 		environment_smash = initial(environment_smash)
 		pass_flags &= ~PASSMOB
 		pass_flags &= ~PASSTABLE
@@ -69,14 +78,22 @@
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
+<<<<<<< HEAD
 			cooldown = world.time + 60 //can't recall for 6 seconds
+=======
+			cooldown = world.time + 40 //can't recall for 4 seconds
+>>>>>>> masterTGbranch
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
 		melee_damage_lower = 50
 		melee_damage_upper = 50
 		armour_penetration = 100
+<<<<<<< HEAD
 		dismember_chance = 100
+=======
+		obj_damage = 0
+>>>>>>> masterTGbranch
 		environment_smash = 0
 		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15

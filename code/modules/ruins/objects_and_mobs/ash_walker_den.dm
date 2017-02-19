@@ -1,5 +1,8 @@
 #define ASH_WALKER_SPAWN_THRESHOLD 2
+<<<<<<< HEAD
 
+=======
+>>>>>>> masterTGbranch
 //The ash walker den consumes corpses or unconscious mobs to create ash walker eggs. For more info on those, check ghost_role_spawners.dm
 /mob/living/simple_animal/hostile/spawner/ash_walker
 	name = "ash walker nest"
@@ -13,8 +16,11 @@
 	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
 	del_on_death = 1
 	var/meat_counter
+<<<<<<< HEAD
 	var/mob/living/carbon/human/chief = null
 	var/spawn_chief = TRUE
+=======
+>>>>>>> masterTGbranch
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/Life()
 	..()
@@ -24,6 +30,7 @@
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/proc/consume()
 	for(var/mob/living/H in view(src,1)) //Only for corpse right next to/on same tile
+<<<<<<< HEAD
 		if(H.stat == DEAD)
 			visible_message("<span class='warning'>Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs.</span>")
 			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
@@ -34,12 +41,22 @@
 				meat_counter++
 			else
 				meat_counter++
+=======
+		if(H.stat)
+			visible_message("<span class='warning'>Serrated tendrils eagerly pull [H] to [src], tearing the body apart as its blood seeps over the eggs.</span>")
+			playsound(get_turf(src),'sound/magic/Demon_consume.ogg', 100, 1)
+			if(ismegafauna(H))
+				meat_counter += 20
+			else
+				meat_counter ++
+>>>>>>> masterTGbranch
 			for(var/obj/item/W in H)
 				H.unEquip(W)
 			H.gib()
 
 /mob/living/simple_animal/hostile/spawner/ash_walker/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)
+<<<<<<< HEAD
 		var/turf/T = get_step(src, SOUTH)
 		if(spawn_chief)
 			var/obj/effect/mob_spawn/human/ash_walker/chief/hero = new /obj/effect/mob_spawn/human/ash_walker/chief(T)
@@ -47,5 +64,8 @@
 			spawn_chief = FALSE
 		else
 			new /obj/effect/mob_spawn/human/ash_walker(T)
+=======
+		new /obj/effect/mob_spawn/human/ash_walker(get_step(src.loc, SOUTH))
+>>>>>>> masterTGbranch
 		visible_message("<span class='danger'>One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!</span>")
 		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD

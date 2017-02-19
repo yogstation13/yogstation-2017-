@@ -1,11 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/cult_objectives = list()
 
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	return istype(M) && M.has_antag_datum(/datum/antagonist/cultist, TRUE)
 
 /proc/is_sacrifice_target(datum/mind/mind)
 	if(ticker.mode.name == "cult")
@@ -26,7 +26,11 @@
 			return 0
 	else
 		return 0
+<<<<<<< HEAD
 	if(isloyal(M) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
+=======
+	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
+>>>>>>> masterTGbranch
 		return 0 //can't convert machines, shielded, or ratvar's dogs
 	return 1
 
@@ -42,6 +46,11 @@
 	enemy_minimum_age = 14
 	prob_traitor_ai = 18
 
+	announce_span = "cult"
+	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
+	<span class='cult'>Cultists</span>: Carry out Nar-Sie's will.\n\
+	<span class='notice'>Crew</span>: Prevent the cult from expanding and drive it out."
+
 	var/finished = 0
 	var/eldergod = 1 //for the summon god objective
 
@@ -50,12 +59,6 @@
 
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
 	var/list/cultists_to_cult = list() //the cultists we'll convert
-
-
-/datum/game_mode/cult/announce()
-	world << "<B>The current game mode is - Cult!</B>"
-	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - sacrifice your target and summon Nar-Sie at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy water will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
-
 
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
@@ -99,6 +102,7 @@
 				else
 					explanation = "Free objective."
 			if("eldergod")
+<<<<<<< HEAD
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes around and on it. You must do this after sacrificing your target."
 		objs += "<B>Objective #[obj_count]</B>: [explanation][obj_count == cult_objectives.len ? "" : "<br>"]"
 	return objs
@@ -107,6 +111,11 @@
 	var/objs = get_cult_objectives()
 	cult_mind.current << objs
 	cult_mind.memory += objs + "<BR>"
+=======
+				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
+		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
+		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
+>>>>>>> masterTGbranch
 
 /datum/game_mode/cult/post_setup()
 	modePlayer += cultists_to_cult
@@ -148,9 +157,7 @@
 	var/list/slots = list(
 		"backpack" = slot_in_backpack,
 		"left pocket" = slot_l_store,
-		"right pocket" = slot_r_store,
-		"left hand" = slot_l_hand,
-		"right hand" = slot_r_hand,
+		"right pocket" = slot_r_store
 	)
 
 	var/T = new item_path(mob)
@@ -161,7 +168,6 @@
 		return 0
 	else
 		mob << "<span class='danger'>You have a [item_name] in your [where]."
-		mob.update_icons()
 		if(where == "backpack")
 			var/obj/item/weapon/storage/B = mob.back
 			B.orient2hud(mob)
@@ -250,9 +256,11 @@
 					if(!check_survive())
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_survive|SUCCESS|[acolytes_needed]")
+						ticker.news_report = CULT_ESCAPE
 					else
 						explanation = "Make sure at least [acolytes_needed] acolytes escape on the shuttle. ([acolytes_survived] escaped) <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
+						ticker.news_report = CULT_FAILURE
 				if("sacrifice")
 					if(sacrifice_target)
 						if(sacrifice_target in sacrificed)
@@ -268,9 +276,12 @@
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
 						feedback_add_details("cult_objective","cult_narsie|SUCCESS")
+						ticker.news_report = CULT_SUMMON
 					else
 						explanation = "Summon Nar-Sie. <span class='boldannounce'>Fail.</span>"
 						feedback_add_details("cult_objective","cult_narsie|FAIL")
+						ticker.news_report = CULT_FAILURE
+
 			text += "<br><B>Objective #[obj_count]</B>: [explanation]"
 	world << text
 	..()

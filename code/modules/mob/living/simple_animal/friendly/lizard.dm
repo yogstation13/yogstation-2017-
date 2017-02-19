@@ -9,17 +9,17 @@
 	maxHealth = 5
 	faction = list("Lizard")
 	attacktext = "bites"
-	attacktext = "bites"
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	response_help  = "pets"
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	density = 0
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = 2
+	obj_damage = 0
 	environment_smash = 0
 	var/list/edibles = list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/cockroach)
 
@@ -38,6 +38,7 @@
 		adjustBruteLoss(-2)
 	else
 		..()
+<<<<<<< HEAD
 
 /mob/living/simple_animal/hostile/lizard/proc/can_eat_thing(obj/item/I)
 	return is_type_in_list(I, edibles)
@@ -77,3 +78,5 @@
 		adjustBruteLoss(-2)
 	else
 		..()
+=======
+>>>>>>> masterTGbranch

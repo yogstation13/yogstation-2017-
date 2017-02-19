@@ -8,6 +8,7 @@
 	generic_pixel_y = 4
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
+<<<<<<< HEAD
 	var/datum/action/atvlight/vlight
 
 /obj/vehicle/atv/examine(mob/user)
@@ -17,6 +18,9 @@
 			user << "<span class='notice'>The lights are on.</span>"
 		else
 			user << "<span class='notice'>The lights are off.</span>"
+=======
+	
+>>>>>>> masterTGbranch
 
 /obj/vehicle/atv/New()
 	..()
@@ -54,8 +58,12 @@
 
 /obj/vehicle/atv/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
+<<<<<<< HEAD
 		overlays += atvcover
 		vlight.Grant(M)
+=======
+		add_overlay(atvcover)
+>>>>>>> masterTGbranch
 	else
 		overlays -= atvcover
 		vlight.Remove(M)

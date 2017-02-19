@@ -22,7 +22,6 @@
 	icon_state = "corgi"
 	icon_living = "corgi"
 	icon_dead = "corgi_dead"
-	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
@@ -79,10 +78,10 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't cause [p_them()] any damage.</span>"
 				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
+				user << "<span class='warning'>[src] is wearing too much armor! You can't reach [p_their()] skin.<span>"
 				visible_message("[user] gently taps [src] with [O].")
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
@@ -117,7 +116,7 @@
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -144,21 +143,21 @@
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
 			return
 
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
 			if("head")
-				place_on_head(usr.get_active_hand(),usr)
+				place_on_head(usr.get_active_held_item(),usr)
 
 			if("back")
 				if(inventory_back)
 					usr << "<span class='warning'>It's already wearing something!</span>"
 					return
 				else
-					var/obj/item/item_to_add = usr.get_active_hand()
+					var/obj/item/item_to_add = usr.get_active_held_item()
 
 					if(!item_to_add)
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
@@ -183,7 +182,7 @@
 						if(prob(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
-							dir = i
+							setDir(i)
 							sleep(1)
 						return
 
@@ -228,10 +227,10 @@
 
 	if(valid)
 		if(health <= 0)
-			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
+			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on [p_them()].</span>"
 		else if(user)
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
-				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.</span>",
+				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.loc = src
 		src.inventory_head = item_to_add
@@ -243,7 +242,7 @@
 		if(prob(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
-			dir = i
+			setDir(i)
 			sleep(1)
 
 	return valid
@@ -287,22 +286,26 @@
 	var/saved_head //path
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/New()
+	..()
+	//parent call must happen first to ensure IAN
+	//is not in nullspace when child puppies spawn
 	Read_Memory()
 	if(age == 0)
-		var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(loc)
-		P.name = "Ian"
-		P.real_name = "Ian"
-		P.gender = MALE
-		P.desc = "It's the HoP's beloved corgi puppy."
-		Write_Memory(0)
-		qdel(src)
+		var/turf/target = get_turf(loc)
+		if(target)
+			var/mob/living/simple_animal/pet/dog/corgi/puppy/P = new /mob/living/simple_animal/pet/dog/corgi/puppy(target)
+			P.name = "Ian"
+			P.real_name = "Ian"
+			P.gender = MALE
+			P.desc = "It's the HoP's beloved corgi puppy."
+			Write_Memory(0)
+			qdel(src)
 	else if(age == record_age)
 		icon_state = "old_corgi"
 		icon_living = "old_corgi"
 		icon_dead = "old_corgi_dead"
 		desc = "At a ripe old age of [record_age] Ian's not as spry as he used to be, but he'll always be the HoP's beloved corgi." //RIP
 		turns_per_move = 20
-	..()
 
 /mob/living/simple_animal/pet/dog/corgi/Ian/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -370,15 +373,15 @@
 
 				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
-						dir = WEST
+						setDir(WEST)
 					else if (movement_target.loc.x > src.x)
-						dir = EAST
+						setDir(EAST)
 					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
+						setDir(SOUTH)
 					else if (movement_target.loc.y > src.y)
-						dir = NORTH
+						setDir(NORTH)
 					else
-						dir = SOUTH
+						setDir(SOUTH)
 
 					if(!Adjacent(movement_target)) //can't reach food through windows.
 						return
@@ -393,19 +396,23 @@
 			emote("me", 1, pick("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
 
-		if(!DF.icon_state)
-			DF.icon_state = inventory_head.icon_state
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_head.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_head.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_head.color
 
 		if(health <= 0)
 			head_icon = DF.get_image(dir = EAST)
@@ -414,14 +421,18 @@
 		else
 			head_icon = DF.get_image()
 
-		overlays += head_icon
+		add_overlay(head_icon)
 
 	if(inventory_back)
 		var/image/back_icon
 		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
 
-		if(!DF.icon_state)
-			DF.icon_state = inventory_back.icon_state
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_back.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_back.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_back.color
 
 		if(health <= 0)
 			back_icon = DF.get_image(dir = EAST)
@@ -429,16 +440,16 @@
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
 			back_icon = DF.get_image()
-		overlays += back_icon
+		add_overlay(back_icon)
 
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 	if(pcollar)
-		overlays += collar
-		overlays += pettag
+		add_overlay(collar)
+		add_overlay(pettag)
 
 	return
 
@@ -512,7 +523,7 @@
 			emote("me", 1, pick("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 /mob/living/simple_animal/pet/dog/pug/Life()
@@ -523,7 +534,7 @@
 			emote("me", 1, pick("chases its tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)

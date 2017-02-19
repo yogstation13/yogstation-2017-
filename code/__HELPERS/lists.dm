@@ -63,6 +63,7 @@
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
 	if(!L || !L.len || !A)
+
 		return 0
 	return L[A.type]
 
@@ -103,13 +104,8 @@
 
 //Removes any null entries from the list
 /proc/listclearnulls(list/L)
-	if(istype(L))
-		var/i=1
-		for(var/thing in L)
-			if(thing != null)
-				++i
-				continue
-			L.Cut(i,i+1)
+	var/list/N = new(L.len)
+	L -= N
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -227,11 +223,29 @@
 
 	return L
 
+//same, but returns nothing and acts on list in place
+/proc/shuffle_inplace(list/L)
+	if(!L)
+		return
+
+	for(var/i=1, i<L.len, ++i)
+		L.Swap(i,rand(i,L.len))
+
 //Return a list with no duplicate entries
 /proc/uniqueList(list/L)
 	. = list()
 	for(var/i in L)
 		. |= i
+
+//same, but returns nothing and acts on list in place (also handles associated values properly)
+/proc/uniqueList_inplace(list/L)
+	var/temp = L.Copy()
+	L.len = 0
+	for(var/key in temp)
+		if (isnum(key))
+			L |= key
+		else
+			L[key] = temp[key]
 
 //for sorting clients or mobs by ckey
 /proc/sortKey(list/L, order=1)
@@ -391,11 +405,27 @@
 		if(islist(.[i]))
 			.[i] = .(.[i])
 
+#if DM_VERSION > 512
+#error Remie said that lummox was adding a way to get a lists
+#error contents via list.values, if that is true remove this
+#error otherwise, update the version and bug lummox
+#elseif
+//Flattens a keyed list into a list of it's contents
+/proc/flatten_list(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key_list[key]
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
 
+<<<<<<< HEAD
 #define add_list_to_list(L, E) L[++L.len] = E
 
+=======
+>>>>>>> masterTGbranch
 #define LAZYINITLIST(L) if (!L) L = list()
 
 #define UNSETEMPTY(L) if (L && !L.len) L = null

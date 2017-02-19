@@ -8,6 +8,7 @@
 	use_power = 1
 	idle_power_usage = 40
 	interact_offline = 1
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/energy = 100
 	var/max_energy = 100
 	var/amount = 30
@@ -84,9 +85,16 @@
 	if(severity < 3)
 		..()
 
-/obj/machinery/chem_dispenser/blob_act(obj/effect/blob/B)
-	if(prob(50))
-		qdel(src)
+/obj/machinery/chem_dispenser/contents_explosion(severity, target)
+	..()
+	if(beaker)
+		beaker.ex_act(severity, target)
+
+/obj/machinery/chem_dispenser/handle_atom_del(atom/A)
+	..()
+	if(A == beaker)
+		beaker = null
+		cut_overlays()
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -154,6 +162,7 @@
 				. = TRUE
 		if("eject")
 			if(beaker)
+<<<<<<< HEAD
 				var/datum/reagents/R = beaker.reagents
 				beaker.loc = loc
 				beaker = null
@@ -161,6 +170,11 @@
 				investigate_log("Beaker ejected <b><font color='red'><a href='?_src_=vars;Vars=\ref[beaker]'>\ref[beaker]</a></font></b> by <b>[key_name(usr)]</b>","chemistry")
 				for(var/datum/reagent/RE in R.reagent_list)
 					investigate_log("<b><font color='blue'> ¤ [RE.volume]x [RE.name] ([RE.id])</font></b>","chemistry")
+=======
+				beaker.forceMove(loc)
+				beaker = null
+				cut_overlays()
+>>>>>>> masterTGbranch
 				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
@@ -184,8 +198,8 @@
 		if(!icon_beaker)
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
-		overlays += icon_beaker
-	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
+		add_overlay(icon_beaker)
+	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()
@@ -289,7 +303,7 @@
 		return
 	return ..()
 
-/obj/machinery/chem_dispenser/constructable/deconstruction()
+/obj/machinery/chem_dispenser/constructable/on_deconstruction()
 	if(beaker)
 		beaker.loc = loc
 		beaker = null
@@ -348,7 +362,8 @@
 		"vermouth",
 		"cognac",
 		"ale",
-		"absinthe"
+		"absinthe",
+		"hcider"
 	)
 	emagged_reagents = list(
 		"ethanol",

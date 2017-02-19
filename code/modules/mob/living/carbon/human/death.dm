@@ -1,14 +1,22 @@
 /mob/living/carbon/human/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-h")
+	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-h"))
 
 /mob/living/carbon/human/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
+	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-h"))
 
+<<<<<<< HEAD
 /mob/living/carbon/human/spawn_gibs()
 	if(dna && dna.species)
 		dna.species.spawn_gibs(src)
 	else
 		hgibs(loc, viruses, dna)
+=======
+/mob/living/carbon/human/spawn_gibs(with_bodyparts)
+	if(with_bodyparts)
+		new /obj/effect/gibspawner/human(loc, viruses, dna)
+	else
+		new /obj/effect/gibspawner/humanbodypartless(loc, viruses, dna)
+>>>>>>> masterTGbranch
 
 /mob/living/carbon/human/spawn_dust()
 	new /obj/effect/decal/remains/human(loc)
@@ -36,14 +44,14 @@
 		ticker.mode.check_win()		//Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 	. = ..(gibbed)
 	if(mind && mind.devilinfo)
-		spawn(0)
-			mind.devilinfo.beginResurrectionCheck(src)
+		addtimer(mind.devilinfo, "beginResurrectionCheck", 0, TIMER_NORMAL, src)
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED
 	set_species(/datum/species/skeleton)
 	return 1
 
+<<<<<<< HEAD
 /mob/living/carbon/proc/ChangeToHusk()
 	if(disabilities & HUSK)
 		return
@@ -57,9 +65,11 @@
 		update_hair()
 		update_body()
 		dna.species.spec_husk(src)
+=======
+>>>>>>> masterTGbranch
 
 /mob/living/carbon/proc/Drain()
-	ChangeToHusk()
+	become_husk()
 	disabilities |= NOCLONE
 	blood_volume = 0
 	return 1

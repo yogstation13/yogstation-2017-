@@ -8,7 +8,12 @@
 	icon_living = "alienh_s"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
+<<<<<<< HEAD
 	response_help = "pets"
+=======
+	gender = FEMALE
+	response_help = "pokes"
+>>>>>>> masterTGbranch
 	response_disarm = "shoves"
 	response_harm = "slaps"
 	speed = 0
@@ -20,12 +25,13 @@
 	maxHealth = 150
 	health = 150
 	harm_intent_damage = 5
+	obj_damage = 60
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speak_emote = list("hisses")
 	bubble_icon = "alien"
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	damage_coeff = list(BRUTE = 1, BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -165,7 +171,7 @@
 	environment_smash = 2
 
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
-	if(!isturf(loc) || istype(loc, /turf/open/space))
+	if(!isturf(loc) || isspaceturf(loc))
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
@@ -173,7 +179,7 @@
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
-	if(!isturf(loc) || istype(loc, /turf/open/space))
+	if(!isturf(loc) || isspaceturf(loc))
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
@@ -316,9 +322,13 @@
 	name = "lusty xenomorph maid"
 	melee_damage_lower = 0
 	melee_damage_upper = 0
-	a_intent = "help"
+	a_intent = INTENT_HELP
 	friendly = "caresses"
+<<<<<<< HEAD
 	desc = "This ambitious xenomorph's gotten a job and moved out from home. They get letters weekly from their mother, signed in human blood."
+=======
+	obj_damage = 0
+>>>>>>> masterTGbranch
 	environment_smash = 0
 	gold_core_spawnable = 1
 	icon_state = "maid"

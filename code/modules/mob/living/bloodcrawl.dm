@@ -6,7 +6,7 @@
 	density = 0
 	anchored = 1
 	invisibility = 60
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/dummy/slaughter/relaymove(mob/user, direction)
 	forceMove(get_step(src,direction))
@@ -25,6 +25,7 @@
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
+<<<<<<< HEAD
 	var/turf/bloodloc = get_turf(B.loc)
 	if(Adjacent(bloodloc))
 		if(iscarbon(src))
@@ -47,6 +48,28 @@
 			bloodpool_sink(B)
 			src.notransform = FALSE
 		return 1
+=======
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		for(var/obj/item/I in C.held_items)
+			//TODO make it toggleable to either forcedrop the items, or deny
+			//entry when holding them
+			// literally only an option for carbons though
+			C << "<span class='warning'>You may not hold items while blood crawling!</span>"
+			return 0
+		var/obj/item/weapon/bloodcrawl/B1 = new(C)
+		var/obj/item/weapon/bloodcrawl/B2 = new(C)
+		B1.icon_state = "bloodhand_left"
+		B2.icon_state = "bloodhand_right"
+		C.put_in_hands(B1)
+		C.put_in_hands(B2)
+		C.regenerate_icons()
+	src.notransform = TRUE
+	spawn(0)
+		bloodpool_sink(B)
+		src.notransform = FALSE
+	return 1
+>>>>>>> masterTGbranch
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
@@ -70,7 +93,7 @@
 		return
 
 	// if the thing we're pulling isn't alive
-	if (!(istype(pullee, /mob/living)))
+	if (!isliving(pullee))
 		return
 
 	var/mob/living/victim = pullee
@@ -147,15 +170,14 @@
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	var/oldcolor = src.color
 	//Makes the mob have the color of the blood pool it came out of
+	var/newcolor = rgb(149, 10, 10)
 	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
-		src.color = rgb(43, 186, 0)
-	else
-		src.color = rgb(149, 10, 10)
+		newcolor = rgb(43, 186, 0)
+	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
 	spawn(30)
-		src.color = oldcolor
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)

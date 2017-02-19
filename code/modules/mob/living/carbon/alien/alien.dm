@@ -7,10 +7,14 @@
 	name = "alien"
 	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
-	gender = NEUTER
+	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
+<<<<<<< HEAD
 	ventcrawler = 2
+=======
+	ventcrawler = VENTCRAWLER_ALWAYS
+>>>>>>> masterTGbranch
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
 	sight = SEE_MOBS
@@ -42,16 +46,19 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/brain/alien
-	internal_organs += new /obj/item/organ/alien/hivenode
-	internal_organs += new /obj/item/organ/tongue/alien
+	create_bodyparts() //initialize bodyparts
 
+<<<<<<< HEAD
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src, 1)
+=======
+	create_internal_organs()
+>>>>>>> masterTGbranch
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
+<<<<<<< HEAD
 /mob/living/carbon/alien/proc/set_hive_faction(new_hive_faction)
 	hive_faction = new_hive_faction
 	for(var/obj/item/organ/alien/O in internal_organs)
@@ -59,22 +66,16 @@
 
 /mob/living/carbon/alien/assess_threat() // beepsky cannot be stopped
 	return 10
+=======
+/mob/living/carbon/alien/create_internal_organs()
+	internal_organs += new /obj/item/organ/brain/alien
+	internal_organs += new /obj/item/organ/alien/hivenode
+	internal_organs += new /obj/item/organ/tongue/alien
+	..()
 
-/mob/living/carbon/alien/adjustToxLoss(amount)
-	return 0
-
-/mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
-	if(amount > 0)
-		..(amount * 2)
-	else
-		..(amount)
-	return
-
-/mob/living/carbon/alien/check_eye_prot()
-	return ..() + 2
-
-/mob/living/carbon/alien/getToxLoss()
-	return 0
+/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+	return -10
+>>>>>>> masterTGbranch
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -109,35 +110,6 @@
 					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
 	else
 		clear_alert("alien_fire")
-
-
-/mob/living/carbon/alien/ex_act(severity, target)
-	..()
-
-	switch (severity)
-		if (1)
-			gib()
-			return
-
-		if (2)
-			adjustBruteLoss(60)
-			adjustFireLoss(60)
-			adjustEarDamage(30,120)
-
-		if(3)
-			adjustBruteLoss(30)
-			if (prob(50))
-				Paralyse(1)
-			adjustEarDamage(15,60)
-
-	updatehealth()
-
-
-/mob/living/carbon/alien/handle_fire()//Aliens on fire code
-	if(..())
-		return
-	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
-	return
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return 0
@@ -191,8 +163,12 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	src << "<span class='noticealien'>You begin to evolve!</span>"
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+<<<<<<< HEAD
 	new_xeno.dir = dir
 	new_xeno.set_hive_faction(hive_faction)
+=======
+	new_xeno.setDir(dir)
+>>>>>>> masterTGbranch
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name
@@ -239,3 +215,5 @@ Des: Removes all infected images from the alien.
 	if(see_override)
 		see_invisible = see_override
 
+/mob/living/carbon/alien/can_hold_items()
+	return has_fine_manipulation

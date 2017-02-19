@@ -7,6 +7,11 @@
 	var/obj/item/weapon/storage/bag/trash/mybag = null
 	var/floorbuffer = 0
 
+/obj/vehicle/janicart/Destroy()
+	if(mybag)
+		qdel(mybag)
+		mybag = null
+	return ..()
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
@@ -49,6 +54,7 @@
 			for(var/A in tile)
 				if(is_cleanable(A))
 					qdel(A)
+	. = ..()
 
 
 /obj/vehicle/janicart/examine(mob/user)
@@ -75,11 +81,11 @@
 
 
 /obj/vehicle/janicart/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(mybag)
-		overlays += "cart_garbage"
+		add_overlay("cart_garbage")
 	if(floorbuffer)
-		overlays += "cart_buffer"
+		add_overlay("cart_buffer")
 
 
 /obj/vehicle/janicart/attack_hand(mob/user)

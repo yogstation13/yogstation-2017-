@@ -39,7 +39,7 @@ Captain
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
 	backpack = /obj/item/weapon/storage/backpack/captain
-	satchel = /obj/item/weapon/storage/backpack/satchel_cap
+	satchel = /obj/item/weapon/storage/backpack/satchel/cap
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -52,9 +52,7 @@ Captain
 		return
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
+	L.implant(H, null, 1)
 
 	minor_announce("Captain [H.real_name] on deck!")
 
@@ -101,7 +99,7 @@ Head of Personnel
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hopcap
 	backpack_contents = list(/obj/item/weapon/storage/box/ids=1,\
-		/obj/item/weapon/melee/classic_baton/telescopic=1)
+		/obj/item/weapon/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
 
 /datum/outfit/job/hop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

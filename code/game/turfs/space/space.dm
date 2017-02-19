@@ -17,7 +17,7 @@
 
 
 /turf/open/space/New()
-	update_icon()
+	icon_state = SPACE_ICON_STATE
 	air = space_gas
 
 /turf/open/space/Destroy(force)
@@ -25,6 +25,11 @@
 		. = ..()
 	else
 		return QDEL_HINT_LETMELIVE
+
+/turf/open/space/attack_ghost(mob/dead/observer/user)
+	if(destination_z)
+		var/turf/T = locate(destination_x, destination_y, destination_z)
+		user.forceMove(T)
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
@@ -39,7 +44,7 @@
 
 /turf/open/space/AfterChange()
 	..()
-	atmos_overlay_types.Cut()
+	atmos_overlay_types = null
 
 /turf/open/space/Assimilate_Air()
 	return
@@ -47,7 +52,7 @@
 /turf/open/space/proc/update_starlight()
 	if(config.starlight)
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			if(istype(t, /turf/open/space))
+			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
 			SetLuminosity(4,1)
@@ -164,5 +169,10 @@
 		return 1
 	return 0
 
-/turf/open/space/proc/update_icon()
-	icon_state = SPACE_ICON_STATE
+/turf/open/space/is_transition_turf()
+	if(destination_x || destination_y || destination_z)
+		return 1
+
+
+/turf/open/space/acid_act(acidpwr, acid_volume)
+	return 0

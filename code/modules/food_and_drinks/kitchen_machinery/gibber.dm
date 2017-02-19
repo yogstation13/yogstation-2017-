@@ -47,7 +47,7 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+	src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
 	B.apply_default_parts(src)
 
@@ -62,7 +62,7 @@
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		meat_produced += 3 * B.rating
+		meat_produced += B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		gib_time -= 5 * M.rating
 		gibtime = gib_time
@@ -70,24 +70,23 @@
 			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dirty)
-		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/gibber/container_resist()
-	src.go_out()
-	return
+/obj/machinery/gibber/container_resist(mob/living/user)
+	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN))
@@ -96,7 +95,7 @@
 		user << "<span class='danger'>It's locked and running.</span>"
 		return
 
-	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
@@ -220,15 +219,16 @@
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
+		var/turf/T = get_turf(src)
+		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
+		var/obj/item/skin = allskin
+		skin.loc = src.loc
+		skin.throw_at_fast(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
-			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
-			var/obj/item/skin = allskin
 			meatslab.loc = src.loc
-			skin.loc = src.loc
 			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
-			skin.throw_at_fast(pick(nearby_turfs),i,3)
-			for (var/turfs=1 to meat_produced*3)
+			for (var/turfs=1 to meat_produced)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))
 					new gibtype(gibturf,i)

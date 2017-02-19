@@ -79,7 +79,7 @@
 	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 	if(!selected_dna)
 		return
-	if(NOTRANSSTING in selected_dna.dna.species.specflags)
+	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
 		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
 		return
 	..()
@@ -102,7 +102,7 @@
 		var/mob/living/carbon/C = target
 		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
-			C.take_organ_damage(20, 0) //The process is extremely painful
+			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
@@ -137,7 +137,11 @@
 	add_logs(user, target, "stung", object="armblade sting")
 
 	if(!target.drop_item())
+<<<<<<< HEAD
 		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow an armblade over it!</span>"
+=======
+		user << "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
+>>>>>>> masterTGbranch
 		return
 
 	if(ismonkey(target))
@@ -148,7 +152,11 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
+<<<<<<< HEAD
 	addtimer(src, "remove_fake", rand(450, 800), FALSE, target, blade)
+=======
+	addtimer(src, "remove_fake", 600, TIMER_NORMAL, target, blade)
+>>>>>>> masterTGbranch
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
@@ -161,8 +169,7 @@
 	"<span class='italics>You hear organic matter ripping and tearing!</span>")
 
 	qdel(blade)
-	target.update_inv_l_hand()
-	target.update_inv_r_hand()
+	target.update_inv_hands()
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -232,11 +239,15 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
+<<<<<<< HEAD
 	spawn(rand(300,600))
 		if(target)
 			if(!target.resistances.Find(/datum/disease/lingvirus))
 				var/datum/disease/welp = new /datum/disease/lingvirus(0)
 				target.ContractDisease(welp)
+=======
+	addtimer(src, "hallucination_time", rand(300,600), TIMER_NORMAL, target)
+>>>>>>> masterTGbranch
 	feedback_add_details("changeling_powers","HS")
 	return 1
 

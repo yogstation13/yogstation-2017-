@@ -12,6 +12,7 @@
 	yield = 5
 	growthstages = 5
 	icon_dead = "tea-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/tea/astra)
 	reagents_add = list("vitamin" = 0.08, "teapowder" = 0.2)
 
@@ -55,6 +56,7 @@
 	yield = 5
 	growthstages = 5
 	icon_dead = "coffee-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
 	reagents_add = list("vitamin" = 0.08, "coffeepowder" = 0.2)
 

@@ -12,6 +12,7 @@
 /obj/machinery/computer/crew/New()
 	monitor = crewmonitor
 	return ..()
+<<<<<<< HEAD
 
 /obj/machinery/computer/crew/attacked_by(obj/item/I, mob/living/user)
 	..()
@@ -44,6 +45,8 @@
 
 		G.savedlocation = "([pos.x], [pos.y], [pos.z])"
 		user << "<span class='notice'>Your GPS has saved the last position of [M.name].</span>"
+=======
+>>>>>>> masterTGbranch
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -252,7 +255,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 	if (hclient.client.mob && hclient.client.mob.stat == 0 && hclient.client.mob.z == text2num(z))
 		if (isAI(hclient.client.mob)) return TRUE
-		else if (isrobot(hclient.client.mob))
+		else if (iscyborg(hclient.client.mob))
 			return (locate(/obj/machinery/computer/crew, range(world.view, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
 		else
 			return (locate(/obj/machinery/computer/crew, range(1, hclient.client.mob))) || (locate(/obj/item/device/sensor_device, hclient.client.mob.contents))
@@ -297,7 +300,7 @@ var/global/datum/crewmonitor/crewmonitor = new
 		return ..()
 
 /datum/crewmonitor/proc/queueUpdate(z)
-	addtimer(crewmonitor, "update", 5, TRUE, z)
+	addtimer(crewmonitor, "update", 5, TIMER_UNIQUE, z)
 
 /datum/crewmonitor/proc/sendResources(var/client/client)
 	send_asset(client, "crewmonitor.js")

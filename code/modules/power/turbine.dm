@@ -29,6 +29,8 @@
 	icon_state = "compressor"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
 	var/turf/inturf
@@ -47,6 +49,8 @@
 	icon_state = "turbine"
 	anchored = 1
 	density = 1
+	resistance_flags = FIRE_PROOF
+	CanAtmosPass = ATMOS_PASS_DENSITY
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -131,9 +135,6 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/compressor/CanAtmosPass(turf/T)
-	return !density
-
 /obj/machinery/power/compressor/process()
 	if(!turbine)
 		stat = BROKEN
@@ -141,7 +142,7 @@
 		return
 	if(!starter)
 		return
-	overlays.Cut()
+	cut_overlays()
 
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
@@ -155,7 +156,7 @@
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
-	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
+	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
@@ -169,13 +170,13 @@
 
 
 	if(rpm>50000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER))
 	else if(rpm>10000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER))
 	else if(rpm>2000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER))
 	else if(rpm>500)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER))
 	 //TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
@@ -219,9 +220,6 @@
 	if(compressor)
 		compressor.locate_machinery()
 
-/obj/machinery/power/turbine/CanAtmosPass(turf/T)
-	return !density
-
 /obj/machinery/power/turbine/process()
 
 	if(!compressor)
@@ -231,7 +229,7 @@
 		return
 	if(!compressor.starter)
 		return
-	overlays.Cut()
+	cut_overlays()
 
 	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
 	// the TURBGENQ and TURBGENG values
@@ -257,7 +255,7 @@
 // If it works, put an overlay that it works!
 
 	if(lastgen > 100)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER))
 
 	updateDialog()
 
@@ -291,7 +289,7 @@
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
+	if(!Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user))
 		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return

@@ -7,17 +7,28 @@
 	plantname = "Cannabis Plant"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis
 	maturation = 8
+<<<<<<< HEAD
 	oneharvest = 0
+=======
+>>>>>>> masterTGbranch
 	potency = 20
 	growthstages = 1
 	growing_icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_grow = "cannabis-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "cannabis-dead" // Same for the dead icon
+<<<<<<< HEAD
+=======
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+>>>>>>> masterTGbranch
 	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
 						/obj/item/seeds/cannabis/death,
 						/obj/item/seeds/cannabis/white,
 						/obj/item/seeds/cannabis/ultimate)
+<<<<<<< HEAD
 	reagents_add = list("space_drugs" = 0.3, "lipolicide" = 0.7) // gives u the munchies
+=======
+	reagents_add = list("space_drugs" = 0.15, "lipolicide" = 0.35) // gives u the munchies
+>>>>>>> masterTGbranch
 
 
 /obj/item/seeds/cannabis/rainbow
@@ -28,7 +39,11 @@
 	plantname = "Rainbow Weed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/rainbow
 	mutatelist = list()
+<<<<<<< HEAD
 	reagents_add = list("mindbreaker" = 0.3, "lipolicide" = 0.7)
+=======
+	reagents_add = list("mindbreaker" = 0.15, "lipolicide" = 0.35)
+>>>>>>> masterTGbranch
 	rarity = 40
 
 /obj/item/seeds/cannabis/death
@@ -39,7 +54,11 @@
 	plantname = "Deathweed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/death
 	mutatelist = list()
+<<<<<<< HEAD
 	reagents_add = list("cyanide" = 0.6, "space_drugs" = 0.2, "lipolicide" = 0.2)
+=======
+	reagents_add = list("cyanide" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
+>>>>>>> masterTGbranch
 	rarity = 40
 
 /obj/item/seeds/cannabis/white
@@ -50,7 +69,11 @@
 	plantname = "Lifeweed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/white
 	mutatelist = list()
+<<<<<<< HEAD
 	reagents_add = list("omnizine" = 0.6, "space_drugs" = 0.2, "lipolicide" = 0.2)
+=======
+	reagents_add = list("omnizine" = 0.35, "space_drugs" = 0.15, "lipolicide" = 0.15)
+>>>>>>> masterTGbranch
 	rarity = 40
 
 
@@ -62,6 +85,7 @@
 	plantname = "Omega Weed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/ultimate
 	mutatelist = list()
+<<<<<<< HEAD
 	reagents_add = list("space_drugs" = 0.1,
 						"mindbreaker" = 0.1,
 						"mercury" = 0.05,
@@ -77,6 +101,23 @@
 						"krokodil" = 0.05,
 						"histamine" = 0.05,
 						"lipolicide" = 0.05)
+=======
+	reagents_add = list("space_drugs" = 0.3,
+						"mindbreaker" = 0.3,
+						"mercury" = 0.15,
+						"lithium" = 0.15,
+						"atropine" = 0.15,
+						"haloperidol" = 0.15,
+						"methamphetamine" = 0.15,
+						"capsaicin" = 0.15,
+						"barbers_aid" = 0.15,
+						"bath_salts" = 0.15,
+						"itching_powder" = 0.15,
+						"crank" = 0.15,
+						"krokodil" = 0.15,
+						"histamine" = 0.15,
+						"lipolicide" = 0.15)
+>>>>>>> masterTGbranch
 	rarity = 69
 
 
@@ -115,4 +156,8 @@
 	name = "omega cannibas leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
+<<<<<<< HEAD
 	volume = 420
+=======
+	volume = 420
+>>>>>>> masterTGbranch

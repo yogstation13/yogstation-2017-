@@ -78,6 +78,7 @@ Shaft Miner
 /datum/outfit/job/miner
 	name = "Shaft Miner"
 
+<<<<<<< HEAD
 	belt = /obj/item/weapon/storage/belt/mining
 	ears = /obj/item/device/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
@@ -86,16 +87,25 @@ Shaft Miner
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
 	r_pocket = /obj/item/device/pda/shaftminer
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
+=======
+	belt = /obj/item/device/pda/shaftminer
+	ears = /obj/item/device/radio/headset/headset_cargo/mining
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	gloves = /obj/item/clothing/gloves/color/black
+	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	l_pocket = /obj/item/weapon/reagent_containers/hypospray/medipen/survival
+	r_pocket = /obj/item/device/flashlight/seclite
+	backpack_contents = list(
+>>>>>>> masterTGbranch
 		/obj/item/weapon/storage/bag/ore=1,\
-		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
 		/obj/item/weapon/mining_voucher=1,\
 		/obj/item/orecapsule=1)
 
 	backpack = /obj/item/weapon/storage/backpack/explorer
-	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
+	satchel = /obj/item/weapon/storage/backpack/satchel/explorer
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	box = /obj/item/weapon/storage/box/engineer
+	box = /obj/item/weapon/storage/box/survival_mining
 
 /*
 Bartender
@@ -168,6 +178,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	backpack_contents = list(/obj/item/weapon/sharpener = 1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -215,7 +226,7 @@ Botanist
 	suit_store = /obj/item/device/plant_analyzer
 
 	backpack = /obj/item/weapon/storage/backpack/botany
-	satchel = /obj/item/weapon/storage/backpack/satchel_hyd
+	satchel = /obj/item/weapon/storage/backpack/satchel/hyd
 
 
 /*
@@ -244,3 +255,4 @@ Janitor
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
+	backpack_contents = list(/obj/item/device/modular_computer/tablet/preset/advanced=1)

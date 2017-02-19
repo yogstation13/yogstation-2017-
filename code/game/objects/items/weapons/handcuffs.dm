@@ -12,12 +12,13 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
 	origin_tech = "engineering=3;combat=3"
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
@@ -34,16 +35,24 @@
 		return
 
 	if(!C.handcuffed)
+<<<<<<< HEAD
 		if(C.get_num_arms() >= 2)
 			add_logs(user, C, "attempted to handcuff")
+=======
+		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+>>>>>>> masterTGbranch
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 			playsound(loc, cuffsound, 30, 1, -2)
+<<<<<<< HEAD
 			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
 				if(C.dna.species.id == "abomination")
 					user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
 					return
+=======
+			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
+>>>>>>> masterTGbranch
 				apply_cuffs(C,user)
 				user << "<span class='notice'>You handcuff [C].</span>"
 				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
@@ -157,11 +166,13 @@
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.amount < 6)
+		if(M.get_amount() < 6)
 			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
 			return
 		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
 		if(do_after(user, 35, target = src))
+			if(M.get_amount() < 6 || !M)
+				return
 			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
@@ -173,7 +184,7 @@
 		return ..()
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		if(!C.handcuffed)
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
@@ -218,7 +229,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	origin_tech = "engineering=3;combat=3"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
@@ -238,7 +249,7 @@
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -267,8 +278,10 @@
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
-				if(!SA.flying && SA.mob_size > MOB_SIZE_TINY)
+				if(SA.mob_size > MOB_SIZE_TINY)
 					snap = 1
+			if(L.movement_type & FLYING)
+				snap = 0
 			if(snap)
 				armed = 0
 				icon_state = "[initial(icon_state)][armed]"
@@ -311,6 +324,11 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+	if(!..())
+		return
+	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
@@ -337,7 +355,11 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
+<<<<<<< HEAD
 	w_class = 2
+=======
+	w_class = WEIGHT_CLASS_SMALL
+>>>>>>> masterTGbranch
 	breakouttime = 60
 
 /obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
@@ -345,4 +367,8 @@
 		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.Crossed(hit_atom)
 		qdel(src)
+<<<<<<< HEAD
 	..()
+=======
+	..()
+>>>>>>> masterTGbranch

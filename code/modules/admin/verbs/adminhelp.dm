@@ -1,4 +1,4 @@
-/proc/keywords_lookup(msg)
+/proc/keywords_lookup(msg,irc)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
@@ -10,6 +10,7 @@
 	var/list/surnames = list()
 	var/list/forenames = list()
 	var/list/ckeys = list()
+	var/founds = ""
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
@@ -71,13 +72,63 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
+<<<<<<< HEAD
 							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+=======
+							var/is_antag = 0
+							if(found.mind && found.mind.special_role)
+								is_antag = 1
+							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
+							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+>>>>>>> masterTGbranch
 							continue
 		msg += "[original_word] "
+	if(irc)
+		if(founds == "")
+			return "Search Failed"
+		else
+			return founds
+
 	return msg
 
 
+<<<<<<< HEAD
 /proc/keywords_lookup_ai(mob/living/ML, msg)
+=======
+/client/var/adminhelptimerid = 0
+
+/client/proc/giveadminhelpverb()
+	src.verbs |= /client/verb/adminhelp
+	adminhelptimerid = 0
+
+/client/verb/adminhelp(msg as text)
+	set category = "Admin"
+	set name = "Adminhelp"
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+
+	//handle muting and automuting
+	if(prefs.muted & MUTE_ADMINHELP)
+		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
+		return
+	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+		return
+
+	//clean the input msg
+	if(!msg)
+		return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg)	return
+	var/original_msg = msg
+
+	//remove our adminhelp verb temporarily to prevent spamming of admins.
+	src.verbs -= /client/verb/adminhelp
+	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, TIMER_NORMAL) //2 minute cooldown of admin helps
+
+	msg = keywords_lookup(msg)
+>>>>>>> masterTGbranch
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
@@ -85,6 +136,7 @@
 	//explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
 
+<<<<<<< HEAD
 	//generate keywords lookup
 	var/list/surnames = list()
 	var/list/forenames = list()
@@ -92,6 +144,13 @@
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)	indexing += M.mind.name
+=======
+	for(var/client/X in admins)
+		if(X.prefs.toggles & SOUND_ADMINHELP)
+			X << 'sound/effects/adminhelp.ogg'
+		window_flash(X)
+		X << msg
+>>>>>>> masterTGbranch
 
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
@@ -203,9 +262,25 @@
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	if(global.cross_allowed)
 		var/list/message = list()
-		message["message"] = "[source]: [msg]"
+		message["message_sender"] = source
+		message["message"] = msg
 		message["source"] = "([config.cross_name])"
 		message["key"] = global.comms_key
 		message["crossmessage"] = type
 
 		world.Export("[global.cross_address]?[list2params(message)]")
+
+
+/proc/ircadminwho()
+	var/msg = "Admins: "
+	for(var/client/C in admins)
+		msg += "[C] "
+
+		if(C.holder.fakekey)
+			msg += "(Stealth)"
+
+		if(C.is_afk())
+			msg += "(AFK)"
+		msg += ", "
+
+	return msg

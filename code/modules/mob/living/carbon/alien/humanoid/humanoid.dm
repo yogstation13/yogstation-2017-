@@ -3,6 +3,7 @@
 	icon_state = "alien_s"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	limb_destroyer = 1
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -13,17 +14,21 @@
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
+	var/drooling = 0 //For Neruotoxic spit overlays
+	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
+					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
+
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	..()
 
-
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
 	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
 
+<<<<<<< HEAD
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
 	if(l_store) l_store.emp_act(severity)
@@ -90,19 +95,23 @@
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
 
+=======
+>>>>>>> masterTGbranch
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	. = handcuffed
 
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = {"
+	var/list/dat = list()
+	dat += {"
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
-	<HR>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=[slot_l_hand]'>		[l_hand		? l_hand	: "Nothing"]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=[slot_r_hand]'>		[r_hand		? r_hand	: "Nothing"]</A>
-	<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"}
+	<HR>"}
+	for(var/i in 1 to held_items.len)
+		var/obj/item/I = get_item_for_held_index(i)
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
+	dat += "<BR><A href='?src=\ref[src];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)
 		dat += "<BR><A href='?src=\ref[src];item=[slot_handcuffed]'>Handcuffed</A>"
@@ -113,7 +122,7 @@
 	<BR>
 	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	"}
-	user << browse(dat, "window=mob\ref[src];size=325x500")
+	user << browse(dat.Join(), "window=mob\ref[src];size=325x500")
 	onclose(user, "mob\ref[src]")
 
 
@@ -154,41 +163,41 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/alien/humanoid/check_ear_prot()
-	return 1
-
 /mob/living/carbon/alien/humanoid/get_permeability_protection()
 	return 0.8
 
 /mob/living/carbon/alien/humanoid/alien_evolve(mob/living/carbon/alien/humanoid/new_xeno)
-	drop_l_hand()
-	drop_r_hand()
+	drop_all_held_items()
 	for(var/atom/movable/A in stomach_contents)
 		stomach_contents.Remove(A)
 		new_xeno.stomach_contents.Add(A)
 		A.loc = new_xeno
 	..()
 
+<<<<<<< HEAD
 //For alien evolution/promotion procs. Checks for
 /proc/alien_type_present(var/alienpath, hive_faction)
+=======
+//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+/proc/get_alien_type(var/alienpath)
+>>>>>>> masterTGbranch
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
 			continue
+<<<<<<< HEAD
 		if(A.hive_faction != hive_faction)
 			continue
 		return 1
 	return 0
+=======
+		return A
+	return FALSE
+>>>>>>> masterTGbranch
 
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
 	..()
-
-/mob/living/carbon/alien/humanoid/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling))
-		devour_mob(pulling, devour_time = 60)
-	else
-		..()

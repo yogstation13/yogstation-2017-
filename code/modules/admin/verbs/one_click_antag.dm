@@ -11,6 +11,7 @@
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"
+<<<<<<< HEAD
 		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
@@ -25,6 +26,20 @@
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
+=======
+		<a href='?src=\ref[src];makeAntag=traitors'>Make Traitors</a><br>
+		<a href='?src=\ref[src];makeAntag=changelings'>Make Changelings</a><br>
+		<a href='?src=\ref[src];makeAntag=revs'>Make Revs</a><br>
+		<a href='?src=\ref[src];makeAntag=cult'>Make Cult</a><br>
+		<a href='?src=\ref[src];makeAntag=clockcult'>Make Clockwork Cult</a><br>
+		<a href='?src=\ref[src];makeAntag=blob'>Make Blob</a><br>
+		<a href='?src=\ref[src];makeAntag=gangs'>Make Gangsters</a><br>
+		<a href='?src=\ref[src];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=centcom'>Make Centcom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+>>>>>>> masterTGbranch
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -108,7 +123,7 @@
 
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
 
-	var/mob/dead/observer/selected = popleft(candidates)
+	var/mob/dead/observer/selected = pick_n_take(candidates)
 
 	var/mob/living/carbon/human/new_character = makeBody(selected)
 	new_character.mind.make_Wizard()
@@ -147,9 +162,24 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
+<<<<<<< HEAD
 	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_SERVANT_OF_RATVAR, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
 
+=======
+	var/list/mob/living/carbon/human/candidates = list()
+	var/mob/living/carbon/human/H = null
+
+	for(var/mob/living/carbon/human/applicant in player_list)
+		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
+			var/turf/T = get_turf(applicant)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
+					if(temp.age_check(applicant.client))
+						if(!(applicant.job in temp.restricted_jobs))
+							candidates += applicant
+
+>>>>>>> masterTGbranch
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
 
@@ -195,7 +225,7 @@
 		if(agentcount < 3)
 			return 0
 
-		var/nuke_code = "[rand(10000, 99999)]"
+		var/nuke_code = random_nukecode()
 
 		var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
 		if(nuke)
@@ -499,6 +529,7 @@
 	return 1
 
 /datum/admins/proc/makeRevenant()
+<<<<<<< HEAD
 	new /datum/round_event/ghost_role/revenant(TRUE)
 	return 1
 
@@ -542,3 +573,7 @@
 		candidates.Remove(H)
 		return 1
 	return 0
+=======
+	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
+	return 1
+>>>>>>> masterTGbranch

@@ -93,10 +93,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list -= src							//remove it from global cable list
 	return ..()									// then go ahead and delete the cable
 
-/obj/structure/cable/Deconstruct()
-	var/turf/T = loc
-	stored.loc = T
-	..()
+/obj/structure/cable/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/turf/T = loc
+		stored.forceMove(T)
+	qdel(src)
 
 ///////////////////////////////////
 // General procedures
@@ -105,7 +106,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //If underfloor, hide the cable
 /obj/structure/cable/hide(i)
 
-	if(level == 1 && istype(loc, /turf))
+	if(level == 1 && isturf(loc))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
@@ -115,9 +116,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "[d1]-[d2]"
 
-//Telekinesis has no effect on a cable
-/obj/structure/cable/attack_tk(mob/user)
-	return
 
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
@@ -134,7 +132,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
-		Deconstruct()
+		deconstruct()
 		return
 
 	else if(istype(W, /obj/item/stack/cable_coil))
@@ -165,21 +163,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		return 0
 
-//explosion handling
-/obj/structure/cable/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				if(prob(50))
-					Deconstruct()
-			if(3)
-				if(prob(25))
-					Deconstruct()
-
 /obj/structure/cable/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		Deconstruct()
+		deconstruct()
 
 /obj/structure/cable/proc/cableColor(colorC = "red")
 	cable_color = colorC
@@ -201,9 +187,9 @@ By design, d1 is the smallest direction and d2 is the highest
 		if("white")
 			icon = 'icons/obj/power_cond/power_cond_white.dmi'
 
-/obj/structure/cable/proc/update_stored(var/length = 1, var/color = "red")
+/obj/structure/cable/proc/update_stored(length = 1, colorC = "red")
 	stored.amount = length
-	stored.item_color = color
+	stored.item_color = colorC
 	stored.update_icon()
 
 ////////////////////////////////////////////
@@ -464,7 +450,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	item_color = "red"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10, MAT_GLASS=5)
@@ -494,9 +480,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
@@ -518,12 +504,16 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+<<<<<<< HEAD
 	if(affecting && (affecting.status == ORGAN_ROBOTIC || affecting.status == ORGAN_SEMI_ROBOTIC))
+=======
+	if(affecting && affecting.status == BODYPART_ROBOTIC)
+>>>>>>> masterTGbranch
 		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 		if(!do_mob(user, H, 50))
 			return
-		item_heal_robotic(H, user, 0, 5)
-		src.use(1)
+		if(item_heal_robotic(H, user, 0, 5))
+			use(1)
 		return
 	else
 		return ..()
@@ -620,7 +610,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				C.Deconstruct()
+				C.deconstruct()
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
@@ -685,7 +675,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			if (NC.shock(user, 50))
 				if (prob(50)) //fail
-					NC.Deconstruct()
+					NC.deconstruct()
 
 			return
 
@@ -735,7 +725,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if (C.shock(user, 50))
 			if (prob(50)) //fail
-				C.Deconstruct()
+				C.deconstruct()
 				return
 
 		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.

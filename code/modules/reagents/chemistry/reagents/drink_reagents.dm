@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/reagent/consumable/orangejuice
-	name = "Orange juice"
+	name = "Orange Juice"
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
@@ -24,7 +24,7 @@
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/M)
 	if(M.getFireLoss() && prob(20))
-		M.heal_organ_damage(0,1, 0)
+		M.heal_bodypart_damage(0,1, 0)
 		. = 1
 	..()
 
@@ -41,7 +41,7 @@
 	..()
 
 /datum/reagent/consumable/carrotjuice
-	name = "Carrot juice"
+	name = "Carrot Juice"
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
@@ -63,6 +63,12 @@
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
+
+/datum/reagent/consumable/applejuice
+	name = "Apple Juice"
+	id = "applejuice"
+	description = "The sweet juice of an apple, fit for all ages."
+	color = "#ECFF56" // rgb: 236, 255, 86
 
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
@@ -94,8 +100,8 @@
 	color = "#863333" // rgb: 175, 175, 0
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/M)
-	if( ( istype(M, /mob/living/carbon/human) && M.job in list("Clown") ) || istype(M, /mob/living/carbon/monkey) )
-		M.heal_organ_damage(1,1, 0)
+	if((ishuman(M) && M.job in list("Clown") ) || ismonkey(M))
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
 
@@ -105,9 +111,33 @@
 	description = "Absolutely nothing."
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/M)
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Mime"))
-		M.heal_organ_damage(1,1, 0)
+	if(ishuman(M) && M.job in list("Mime"))
+		M.heal_bodypart_damage(1,1, 0)
 		. = 1
+	..()
+
+/datum/reagent/consumable/laughter
+	name = "Laughter"
+	id = "laughter"
+	description = "Some say that this is the best medicine, but recent studies have proven that to be untrue."
+	metabolization_rate = INFINITY
+	color = "#FF4DD2"
+
+/datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
+	if(!iscarbon(M))
+		return
+	if(!M.silent)//cant laugh if you're mute
+		M.emote("laugh")
+		var/laughnum = rand(1,2)
+		if(M.gender == MALE)
+			if(laughnum == 1)
+				playsound(get_turf(M), 'sound/voice/human/manlaugh1.ogg', 50, 1)
+			if(laughnum == 2)
+				playsound(get_turf(M), 'sound/voice/human/manlaugh2.ogg', 50, 1)
+		else if(M.gender == FEMALE)
+			playsound(get_turf(M), 'sound/voice/human/womanlaugh.ogg', 65, 1)
+		else//non-binary gender just sounds like a man
+			playsound(get_turf(M), 'sound/voice/human/manlaugh1.ogg', 50, 1)
 	..()
 
 /datum/reagent/consumable/potato_juice
@@ -118,7 +148,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 
 /datum/reagent/consumable/grapejuice
-	name = "Grape juice"
+	name = "Grape Juice"
 	id = "grapejuice"
 	description = "The juice of a bunch of grapes. Guaranteed non-alcoholic."
 	color = "#290029" // dark purple
@@ -131,13 +161,13 @@
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
 	var/datum/dna/Mdna = M.has_dna()
 	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -149,7 +179,7 @@
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -161,7 +191,7 @@
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 		. = 1
 	..()
 
@@ -240,7 +270,7 @@
 /datum/reagent/consumable/icetea
 	name = "Iced Tea"
 	id = "icetea"
-	description = "No relation to a certain rap artist/ actor."
+	description = "No relation to a certain rap artist/actor."
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
 
@@ -387,7 +417,7 @@
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
 
@@ -405,7 +435,7 @@
 		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.Jitter(5)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_organ_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0, 0)
 	..()
 	. = 1
 
@@ -492,6 +522,7 @@
 	description = "Beloved of children and teetotalers."
 	color = "#E6CDFF"
 
+<<<<<<< HEAD
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 /datum/reagent/consumable/atomicbomb
@@ -604,3 +635,10 @@
 				. = 1
 	..()
 
+=======
+/datum/reagent/consumable/milk/chocolate_milk
+	name = "Chocolate Milk"
+	id = "chocolate_milk"
+	description = "Milk for cool kids."
+	color = "#7D4E29"
+>>>>>>> masterTGbranch

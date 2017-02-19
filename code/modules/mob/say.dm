@@ -17,6 +17,7 @@
 /mob/verb/whisper(message as text)
 	set name = "Whisper"
 	set category = "IC"
+<<<<<<< HEAD
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message)
@@ -24,6 +25,8 @@
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
 		log_whisper("[name]/[ckey]: [oldmsg]")
 		return
+=======
+>>>>>>> masterTGbranch
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
@@ -55,6 +58,18 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
+
+	if(jobban_isbanned(src, "OOC"))
+		src << "<span class='danger'>You have been banned from deadchat.</span>"
+		return
+
+	if (src.client)
+		if(src.client.prefs.muted & MUTE_DEADCHAT)
+			src << "<span class='danger'>You cannot talk in deadchat (muted).</span>"
+			return
+
+		if(src.client.handle_spam_prevention(message,MUTE_DEADCHAT))
+			return
 
 	var/mob/dead/observer/O = src
 	if(isobserver(src) && O.deadchat_name)

@@ -40,7 +40,11 @@
 	owner.adjustBruteLoss(3)
 
 
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> masterTGbranch
 /datum/status_effect/vanguard_shield
 	id = "vanguard"
 	duration = 20
@@ -87,4 +91,57 @@
 				owner.Paralyse(stuns_blocked)
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
 		add_logs(owner, null, "lost Vanguard stun immunity[stuns_blocked ? "and been stunned for [stuns_blocked]":""]")
+<<<<<<< HEAD
 */
+=======
+
+
+
+/datum/status_effect/inathneqs_endowment
+	id = "inathneqs_endowment"
+	duration = 15
+	alert_type = /obj/screen/alert/status_effect/inathneqs_endowment
+
+/obj/screen/alert/status_effect/inathneqs_endowment
+	name = "Inath-neq's Endowment"
+	desc = "Adrenaline courses through you as the Resonant Cogwheel's energy shields you from all harm!"
+	icon_state = "inathneqs_endowment"
+	alerttooltipstyle = "clockcult"
+
+/datum/status_effect/inathneqs_endowment/on_apply()
+	add_logs(owner, null, "gained Inath-neq's invulnerability")
+	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
+	var/oldcolor = owner.color
+	owner.color = "#1E8CE1"
+	owner.fully_heal()
+	owner.add_stun_absorption("inathneq", 150, 2, "'s flickering blue aura momentarily intensifies!", "Inath-neq's power absorbs the stun!", " glowing with a flickering blue light!")
+	owner.status_flags |= GODMODE
+	animate(owner, color = oldcolor, time = 150, easing = EASE_IN)
+	addtimer(owner, "update_atom_colour", 150)
+	playsound(owner, 'sound/magic/Ethereal_Enter.ogg', 50, 1)
+
+/datum/status_effect/inathneqs_endowment/on_remove()
+	add_logs(owner, null, "lost Inath-neq's invulnerability")
+	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
+	owner.status_flags &= ~GODMODE
+	playsound(owner, 'sound/magic/Ethereal_Exit.ogg', 50, 1)
+
+/datum/status_effect/cyborg_power_regen
+	id = "power_regen"
+	duration = 10
+	alert_type = /obj/screen/alert/status_effect/power_regen
+	var/power_to_give = 0 //how much power is gained each tick
+
+/obj/screen/alert/status_effect/power_regen
+	name = "Power Regeneration"
+	desc = "You are quickly regenerating power!"
+	icon_state = "power_regen"
+
+/datum/status_effect/cyborg_power_regen/tick()
+	var/mob/living/silicon/robot/cyborg = owner
+	if(!istype(cyborg) || !cyborg.cell)
+		qdel(src)
+		return
+	playsound(cyborg, 'sound/effects/light_flicker.ogg', 50, 1)
+	cyborg.cell.give(power_to_give)
+>>>>>>> masterTGbranch

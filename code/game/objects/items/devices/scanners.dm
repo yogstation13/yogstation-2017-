@@ -13,7 +13,7 @@ MASS SPECTROMETER
 	icon_state = "t-ray0"
 	var/on = 0
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
@@ -73,21 +73,21 @@ MASS SPECTROMETER
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=200)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
-	var/scanchems = 0
+	var/scanmode = 0
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
-	if(!scanchems)
+	if(!scanmode)
 		user << "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>"
-		scanchems = 1
+		scanmode = 1
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
-		scanchems = 0
+		scanmode = 0
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
@@ -103,9 +103,9 @@ MASS SPECTROMETER
 
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 
-	if(!scanchems)
+	if(scanmode == 0)
 		healthscan(user, M, mode)
-	else
+	else if(scanmode == 1)
 		chemscan(user, M)
 
 	add_fingerprint(user)
@@ -113,7 +113,7 @@ MASS SPECTROMETER
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
-	if(user.stat || user.eye_blind)
+	if(user.incapacitated() || user.eye_blind)
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -130,6 +130,7 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
+<<<<<<< HEAD
 		if(cyberman_network)
 			if(ticker.mode.is_cyberman(M.mind))
 				user << "<span class='danger'>Unknown harmful implants detected in patient's brain - recommend removal via brain surgery.</span>"
@@ -142,6 +143,12 @@ MASS SPECTROMETER
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.borer)
+=======
+
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.has_brain_worms())
+>>>>>>> masterTGbranch
 			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
 
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
@@ -169,9 +176,9 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>"
 
 	// Organ damage report
-	if(istype(M, /mob/living/carbon/human) && mode == 1)
-		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_bodyparts(1,1)
+	if(iscarbon(M) && mode == 1)
+		var/mob/living/carbon/C = M
+		var/list/damaged = C.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			user << "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>"
 			for(var/obj/item/bodypart/org in damaged)
@@ -211,12 +218,13 @@ MASS SPECTROMETER
 			else
 				user << "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>"
 
-		var/implant_detect
+		var/cyberimp_detect
 		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
-				implant_detect += "[C.name] is modified with a [CI.name].<br>"
-		if(implant_detect)
+				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
+		if(cyberimp_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
+<<<<<<< HEAD
 			user << "<span class='notice'>[implant_detect]</span>"
 	//Organ Decay
 	if(iscarbon(M))
@@ -229,6 +237,9 @@ MASS SPECTROMETER
 					user << "<span class='notice'>\The [O] of the subject is [round(O.decay / O.decay_time, 0.1)]% decayed.</span>"
 	if(!M.getorgan(/obj/item/organ/heart))
 		user << "<span class='warning'>Subject does not have a heart.</span>"
+=======
+			user << "<span class='notice'>[cyberimp_detect]</span>"
+>>>>>>> masterTGbranch
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))
@@ -267,7 +278,7 @@ MASS SPECTROMETER
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -356,7 +367,7 @@ MASS SPECTROMETER
 	name = "mass-spectrometer"
 	icon_state = "spectrometer"
 	item_state = "analyzer"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT | OPENCONTAINER
 	slot_flags = SLOT_BELT
 	throwforce = 0
@@ -417,7 +428,7 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	origin_tech = "biotech=2"
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	throwforce = 0
 	throw_speed = 3

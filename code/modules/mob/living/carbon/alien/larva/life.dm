@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /mob/living/carbon/alien/larva/Life()
 	set invisibility = 0
@@ -6,7 +6,7 @@
 
 	if (notransform)
 		return
-	if(..())
+	if(..()) //not dead
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++
@@ -20,7 +20,11 @@
 		if(health<= -maxHealth || !getorgan(/obj/item/organ/brain))
 			death()
 			return
+<<<<<<< HEAD
 		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
+=======
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+>>>>>>> masterTGbranch
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

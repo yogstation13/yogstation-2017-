@@ -24,26 +24,45 @@
 	damage_type = BRUTE
 	nodamage = 0
 
+	//explosion values
+	var/exp_heavy = 0
+	var/exp_light = 2
+	var/exp_flash = 3
+	var/exp_fire = 2
+
 /obj/item/projectile/magic/fireball/Range()
 	var/turf/T1 = get_step(src,turn(dir, -45))
 	var/turf/T2 = get_step(src,turn(dir, 45))
+	var/turf/T3 = get_step(src,dir)
 	var/mob/living/L = locate(/mob/living) in T1 //if there's a mob alive in our front right diagonal, we hit it.
 	if(L && L.stat != DEAD)
-		Bump(L) //Magic Bullet #teachthecontroversy
+		Bump(L,1) //Magic Bullet #teachthecontroversy
 		return
 	L = locate(/mob/living) in T2
 	if(L && L.stat != DEAD)
-		Bump(L)
+		Bump(L,1)
+		return
+	L = locate(/mob/living) in T3
+	if(L && L.stat != DEAD)
+		Bump(L,1)
 		return
 	..()
 
 /obj/item/projectile/magic/fireball/on_hit(target)
 	. = ..()
 	var/turf/T = get_turf(target)
-	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
 	if(ismob(target)) //multiple flavors of pain
 		var/mob/living/M = target
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
+
+/obj/item/projectile/magic/fireball/infernal
+	name = "infernal fireball"
+	exp_heavy = -1
+	exp_light = -1
+	exp_flash = 4
+	exp_fire= 5
+
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -103,13 +122,12 @@
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
-	var/atom/T = target.loc
-	if(isturf(target) && target.density)
-		CreateDoor(target)
-	else if (isturf(T) && T.density)
-		CreateDoor(T)
-	else if(istype(target, /obj/machinery/door))
+	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
+	else
+		var/turf/T = get_turf(target)
+		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
+			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
@@ -133,8 +151,10 @@
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
 	wabbajack(change)
+	qdel(src)
 
 /proc/wabbajack(mob/living/M)
+<<<<<<< HEAD
 	if(istype(M))
 		if(istype(M, /mob/living) && M.stat != DEAD)
 			if(M.notransform)
@@ -199,9 +219,44 @@
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					new_mob.languages_spoken |= HUMAN
 					new_mob.languages_understood |= HUMAN
+=======
+	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
+		return
 
-				if("animal")
+	M.notransform = 1
+	M.canmove = 0
+	M.icon = null
+	M.cut_overlays()
+	M.invisibility = INVISIBILITY_ABSTRACT
+
+	var/list/contents = M.contents.Copy()
+
+	if(iscyborg(M))
+		var/mob/living/silicon/robot/Robot = M
+		if(Robot.mmi)
+			qdel(Robot.mmi)
+		Robot.notify_ai(1)
+	else
+		for(var/obj/item/W in contents)
+			if(!M.unEquip(W))
+				qdel(W)
+>>>>>>> masterTGbranch
+
+	var/mob/living/new_mob
+
+	var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	switch(randomize)
+		if("monkey")
+			new_mob = new /mob/living/carbon/monkey(M.loc)
+		if("robot")
+			var/robot = pick("cyborg","syndiborg","drone")
+			switch(robot)
+				if("cyborg")
+					new_mob = new /mob/living/silicon/robot(M.loc)
+				if("syndiborg")
+					var/path
 					if(prob(50))
+<<<<<<< HEAD
 						var/beast = pick("carp","bear","statue","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp","borer","swarmer")
 						switch(beast)
 							if("carp")
@@ -287,18 +342,144 @@
 					H.dna.update_dna_identity()
 				else
 					return
+=======
+						path = /mob/living/silicon/robot/syndicate
+					else
+						path = /mob/living/silicon/robot/syndicate/medical
+					new_mob = new path(M.loc)
+				if("drone")
+					new_mob = new /mob/living/simple_animal/drone/polymorphed(M.loc)
+			if(issilicon(new_mob))
+				new_mob.gender = M.gender
+				new_mob.invisibility = 0
+				new_mob.job = "Cyborg"
+				var/mob/living/silicon/robot/Robot = new_mob
+				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+		if("slime")
+			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
+		if("xeno")
+			if(prob(50))
+				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+			else
+				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+>>>>>>> masterTGbranch
 
-			new_mob.attack_log = M.attack_log
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+		if("animal")
+			var/path
+			if(prob(50))
+				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp", "watcher", "goliath", "headcrab", "morph", "stickman", "stickdog", "lesserdragon")
+				switch(beast)
+					if("carp")
+						path = /mob/living/simple_animal/hostile/carp
+					if("bear")
+						path = /mob/living/simple_animal/hostile/bear
+					if("mushroom")
+						path = /mob/living/simple_animal/hostile/mushroom
+					if("statue")
+						path = /mob/living/simple_animal/hostile/statue
+					if("bat")
+						path = /mob/living/simple_animal/hostile/retaliate/bat
+					if("goat")
+						path = /mob/living/simple_animal/hostile/retaliate/goat
+					if("killertomato")
+						path = /mob/living/simple_animal/hostile/killertomato
+					if("spiderbase")
+						path = /mob/living/simple_animal/hostile/poison/giant_spider
+					if("spiderhunter")
+						path = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
+					if("blobbernaut")
+						path = /mob/living/simple_animal/hostile/blob/blobbernaut/independent
+					if("magicarp")
+						path = /mob/living/simple_animal/hostile/carp/ranged
+					if("chaosmagicarp")
+						path = /mob/living/simple_animal/hostile/carp/ranged/chaos
+					if("watcher")
+						path = /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
+					if("goliath")
+						path = /mob/living/simple_animal/hostile/asteroid/goliath/beast
+					if("headcrab")
+						path = /mob/living/simple_animal/hostile/headcrab
+					if("morph")
+						path = /mob/living/simple_animal/hostile/morph
+					if("stickman")
+						path = /mob/living/simple_animal/hostile/stickman
+					if("stickdog")
+						path = /mob/living/simple_animal/hostile/stickman/dog
+					if("lesserdragon")
+						path = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+			else
+				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly","cak")
+				switch(animal)
+					if("parrot")
+						path = /mob/living/simple_animal/parrot
+					if("corgi")
+						path = /mob/living/simple_animal/pet/dog/corgi
+					if("crab")
+						path = /mob/living/simple_animal/crab
+					if("pug")
+						path = /mob/living/simple_animal/pet/dog/pug
+					if("cat")
+						path = /mob/living/simple_animal/pet/cat
+					if("mouse")
+						path = /mob/living/simple_animal/mouse
+					if("chicken")
+						path = /mob/living/simple_animal/chicken
+					if("cow")
+						path = /mob/living/simple_animal/cow
+					if("lizard")
+						path = /mob/living/simple_animal/hostile/lizard
+					if("fox")
+						path = /mob/living/simple_animal/pet/fox
+					if("butterfly")
+						path = /mob/living/simple_animal/butterfly
+					if("cak")
+						path = /mob/living/simple_animal/pet/cat/cak
+					if("chick")
+						path = /mob/living/simple_animal/chick
 
-			new_mob.a_intent = "harm"
+			new_mob = new path(M.loc)
 
-			M.wabbajack_act(new_mob)
+		if("humanoid")
+			new_mob = new /mob/living/carbon/human(M.loc)
 
-			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
+			var/datum/preferences/A = new()	//Randomize appearance for the human
+			A.copy_to(new_mob, icon_updates=0)
 
-			qdel(M)
-			return new_mob
+			var/mob/living/carbon/human/H = new_mob
+			if(prob(50))
+				var/list/all_species = list()
+				for(var/speciestype in subtypesof(/datum/species))
+					var/datum/species/S = new speciestype()
+					if(!S.dangerous_existence)
+						all_species += speciestype
+				H.set_species(pick(all_species), icon_update=0)
+			H.update_body()
+			H.update_hair()
+			H.update_body_parts()
+			H.dna.update_dna_identity()
+
+	if(!new_mob)
+		return
+
+	new_mob.languages_spoken |= HUMAN
+	new_mob.languages_understood |= HUMAN
+	new_mob.attack_log = M.attack_log
+
+	// Some forms can still wear some items
+	for(var/obj/item/W in contents)
+		new_mob.equip_to_appropriate_slot(W)
+
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+
+	new_mob.a_intent = INTENT_HARM
+
+	M.wabbajack_act(new_mob)
+
+	new_mob << "<span class='warning'>Your form morphs into that of \
+		a [randomize].</span>"
+
+	qdel(M)
+	return new_mob
 
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
@@ -307,33 +488,53 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/animate/Bump(atom/change)
+/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
 	..()
-	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
-		if(istype(change, /obj/structure/closet/statue))
-			for(var/mob/living/carbon/human/H in change.contents)
-				var/mob/living/simple_animal/hostile/statue/S = new /mob/living/simple_animal/hostile/statue(change.loc, firer)
-				S.name = "statue of [H.name]"
+	if((istype(target, /obj/item) || istype(target, /obj/structure)) && !is_type_in_list(target, protected_objects))
+		if(istype(target, /obj/structure/statue/petrified))
+			var/obj/structure/statue/petrified/P = target
+			if(P.petrified_mob)
+				var/mob/living/L = P.petrified_mob
+				var/mob/living/simple_animal/hostile/statue/S = new (P.loc, firer)
+				S.name = "statue of [L.name]"
 				S.faction = list("\ref[firer]")
-				S.icon = change.icon
-				S.icon_state = change.icon_state
-				S.overlays = change.overlays
-				S.color = change.color
-				if(H.mind)
-					H.mind.transfer_to(S)
+				S.icon = P.icon
+				S.icon_state = P.icon_state
+				S.overlays = P.overlays
+				S.color = P.color
+				S.atom_colours = P.atom_colours.Copy()
+				if(L.mind)
+					L.mind.transfer_to(S)
 					S << "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>"
-				H = change
-				H.loc = S
+				P.loc = S
 				qdel(src)
 				return
 		else
-			var/obj/O = change
+			var/obj/O = target
 			if(istype(O, /obj/item/weapon/gun))
 				new /mob/living/simple_animal/hostile/mimic/copy/ranged(O.loc, O, firer)
 			else
 				new /mob/living/simple_animal/hostile/mimic/copy(O.loc, O, firer)
 
-	else if(istype(change, /mob/living/simple_animal/hostile/mimic/copy))
+	else if(istype(target, /mob/living/simple_animal/hostile/mimic/copy))
 		// Change our allegiance!
-		var/mob/living/simple_animal/hostile/mimic/copy/C = change
+		var/mob/living/simple_animal/hostile/mimic/copy/C = target
 		C.ChangeOwner(firer)
+
+/obj/item/projectile/magic/spellblade
+	name = "blade energy"
+	icon_state = "lavastaff"
+	damage = 15
+	damage_type = BURN
+	flag = "magic"
+	dismemberment = 50
+	nodamage = 0
+
+/obj/item/projectile/magic/arcane_barrage
+	name = "arcane bolt"
+	icon_state = "arcane_barrage"
+	damage = 20
+	damage_type = BURN
+	nodamage = 0
+	armour_penetration = 0
+	flag = "magic"

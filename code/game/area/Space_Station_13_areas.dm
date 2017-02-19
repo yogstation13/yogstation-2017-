@@ -14,6 +14,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 
+<<<<<<< HEAD
 /area
 	level = null
 	name = "Space"
@@ -81,11 +82,15 @@ var/list/teleportlocs = list()
 
 	sortTim(teleportlocs, /proc/cmp_text_dsc)
 
+=======
+>>>>>>> masterTGbranch
 /*-----------------------------------------------------------------------------*/
 
-/area/engine/
+/area/engine
 
-/area/turret_protected/
+/area/ai_monitored	//stub defined ai_monitored.dm
+
+/area/ai_monitored/turret_protected
 
 /area/arrival
 	requires_power = 0
@@ -109,7 +114,7 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	valid_territory = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg')
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/mapgen_protected
@@ -119,6 +124,7 @@ var/list/teleportlocs = list()
 	icon_state = "space_near"
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
+<<<<<<< HEAD
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
 /area/shuttle
@@ -170,6 +176,8 @@ var/list/teleportlocs = list()
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 
+=======
+>>>>>>> masterTGbranch
 /area/start
 	name = "start area"
 	icon_state = "start"
@@ -178,6 +186,7 @@ var/list/teleportlocs = list()
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
 
+<<<<<<< HEAD
 // CENTCOM
 
 /area/centcom
@@ -232,6 +241,8 @@ var/list/teleportlocs = list()
 /area/syndicate_mothership/elite_squad
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
+=======
+>>>>>>> masterTGbranch
 
 //EXTRA
 
@@ -267,144 +278,13 @@ var/list/teleportlocs = list()
 	icon_state = "telesci"
 	requires_power = 0
 
-/area/tdome
-	name = "Thunderdome"
-	icon_state = "yellow"
-	requires_power = 0
-	has_gravity = 1
-
-/area/tdome/arena
-	name = "Thunderdome Arena"
-	icon_state = "thunder"
-
-/area/tdome/arena_source
-	name = "Thunderdome Arena Template"
-	icon_state = "thunder"
-
-/area/tdome/tdome1
-	name = "Thunderdome (Team 1)"
-	icon_state = "green"
-
-/area/tdome/tdome2
-	name = "Thunderdome (Team 2)"
-	icon_state = "green"
-
-/area/tdome/tdomeadmin
-	name = "Thunderdome (Admin.)"
-	icon_state = "purple"
-
-/area/tdome/tdomeobserve
-	name = "Thunderdome (Observer.)"
-	icon_state = "purple"
-
-//ENEMY
-
-
-/area/wizard_station
-	name = "Wizard's Den"
-	icon_state = "yellow"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-
-//Abductors
-/area/abductor_ship
-	name = "Abductor Ship"
-	icon_state = "yellow"
-	requires_power = 0
-	noteleport = 1
-	has_gravity = 1
-
-
-//PRISON
-/area/prison
-	name = "Prison Station"
-	icon_state = "brig"
-
-/area/prison/arrival_airlock
-	name = "Prison Station Airlock"
-	icon_state = "green"
-	requires_power = 0
-
-/area/prison/control
-	name = "Prison Security Checkpoint"
-	icon_state = "security"
-
-/area/prison/crew_quarters
-	name = "Prison Security Quarters"
-	icon_state = "security"
-
-/area/prison/rec_room
-	name = "Prison Rec Room"
-	icon_state = "green"
-
-/area/prison/closet
-	name = "Prison Supply Closet"
-	icon_state = "dk_yellow"
-
-/area/prison/hallway/fore
-	name = "Prison Fore Hallway"
-	icon_state = "yellow"
-
-/area/prison/hallway/aft
-	name = "Prison Aft Hallway"
-	icon_state = "yellow"
-
-/area/prison/hallway/port
-	name = "Prison Port Hallway"
-	icon_state = "yellow"
-
-/area/prison/hallway/starboard
-	name = "Prison Starboard Hallway"
-	icon_state = "yellow"
-
-/area/prison/morgue
-	name = "Prison Morgue"
-	icon_state = "morgue"
-	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
-
-/area/prison/medical_research
-	name = "Prison Genetic Research"
-	icon_state = "medresearch"
-
-/area/prison/medical
-	name = "Prison Medbay"
-	icon_state = "medbay"
-
-/area/prison/solar
-	name = "Prison Solar Array"
-	icon_state = "storage"
-	requires_power = 0
-
-/area/prison/podbay
-	name = "Prison Podbay"
-	icon_state = "dk_yellow"
-
-/area/prison/solar_control
-	name = "Prison Solar Array Control"
-	icon_state = "dk_yellow"
-
-/area/prison/solitary
-	name = "Solitary Confinement"
-	icon_state = "brig"
-
-/area/prison/cell_block/A
-	name = "Prison Cell Block A"
-	icon_state = "brig"
-
-/area/prison/cell_block/B
-	name = "Prison Cell Block B"
-	icon_state = "brig"
-
-/area/prison/cell_block/C
-	name = "Prison Cell Block C"
-	icon_state = "brig"
 
 //STATION13
 
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
+ 	flags = NONE
 
 //Maintenance
 /area/maintenance
@@ -626,11 +506,15 @@ var/list/teleportlocs = list()
 /area/library
  	name = "Library"
  	icon_state = "library"
+ 	flags = NONE
+
+/area/chapel
+	icon_state = "chapel"
+	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+	flags = NONE
 
 /area/chapel/main
 	name = "Chapel"
-	icon_state = "chapel"
-	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -676,6 +560,8 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
+	blob_allowed = FALSE
+	flags = NONE
 
 /area/solar/auxport
 		name = "Fore Port Solar Array"
@@ -749,12 +635,6 @@ var/list/teleportlocs = list()
 	icon_state = "teleporter"
 	music = "signal"
 
-/area/AIsattele
-	name = "Abandoned Teleporter"
-	icon_state = "teleporter"
-	music = "signal"
-	ambientsounds = list('sound/ambience/ambimalf.ogg')
-
 //MedBay
 
 /area/medical/medbay
@@ -792,6 +672,7 @@ var/list/teleportlocs = list()
 /area/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+	flags = NONE
 
 /area/medical/morgue
 	name = "Morgue"
@@ -869,6 +750,7 @@ var/list/teleportlocs = list()
 	name = "Transfer Centre"
 	icon_state = "armory"
 
+<<<<<<< HEAD
 /area/security/interrogation
 	name = "\improper Interrogation"
 	icon_state = "firingrange"
@@ -889,6 +771,8 @@ var/list/teleportlocs = list()
 					newIcon.GrayScale()
 					objectToGrayscale.icon = newIcon
 */
+=======
+>>>>>>> masterTGbranch
 
 /area/security/nuke_storage
 	name = "Vault"
@@ -924,6 +808,10 @@ var/list/teleportlocs = list()
 
 /area/security/vacantoffice
 	name = "Vacant Office"
+	icon_state = "security"
+
+/area/security/vacantoffice2
+	name = "Vacant Office B"
 	icon_state = "security"
 
 /area/quartermaster
@@ -962,9 +850,10 @@ var/list/teleportlocs = list()
 	name = "Mech Bay"
 	icon_state = "yellow"
 
-/area/janitor/
+/area/janitor
 	name = "Custodial Closet"
 	icon_state = "janitor"
+	flags = NONE
 
 /area/hydroponics
 	name = "Hydroponics"
@@ -1068,124 +957,15 @@ var/list/teleportlocs = list()
 	name = "Test Room"
 	icon_state = "storage"
 
-//DJSTATION
-
-/area/djstation
-	name = "Ruskie DJ Station"
-	icon_state = "DJ"
-	has_gravity = 1
-	blob_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
-
-/area/djstation/solars
-	name = "DJ Station Solars"
-	icon_state = "DJ"
-	has_gravity = 1
-
-//DERELICT
-
-/area/derelict
-	name = "Derelict Station"
-	icon_state = "storage"
-	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
-
-/area/derelict/hallway/primary
-	name = "Derelict Primary Hallway"
-	icon_state = "hallP"
-
-/area/derelict/hallway/secondary
-	name = "Derelict Secondary Hallway"
-	icon_state = "hallS"
-
-/area/derelict/arrival
-	name = "Derelict Arrival Centre"
-	icon_state = "yellow"
-
-/area/derelict/storage/equipment
-	name = "Derelict Equipment Storage"
-
-/area/derelict/storage/storage_access
-	name = "Derelict Storage Access"
-
-/area/derelict/storage/engine_storage
-	name = "Derelict Engine Storage"
-	icon_state = "green"
-
-/area/derelict/bridge
-	name = "Derelict Control Room"
-	icon_state = "bridge"
-
-/area/derelict/secret
-	name = "Derelict Secret Room"
-	icon_state = "library"
-
-/area/derelict/bridge/access
-	name = "Derelict Control Room Access"
-	icon_state = "auxstorage"
-
-/area/derelict/bridge/ai_upload
-	name = "Derelict Computer Core"
-	icon_state = "ai"
-
-/area/derelict/solar_control
-	name = "Derelict Solar Control"
-	icon_state = "engine"
-
-/area/derelict/se_solar
-	name = "South East Solars"
-	icon_state = "engine"
-
-/area/derelict/crew_quarters
-	name = "Derelict Crew Quarters"
-	icon_state = "fitness"
-
-/area/derelict/medical
-	name = "Derelict Medbay"
-	icon_state = "medbay"
-
-/area/derelict/medical/morgue
-	name = "Derelict Morgue"
-	icon_state = "morgue"
-
-/area/derelict/medical/chapel
-	name = "Derelict Chapel"
-	icon_state = "chapel"
-
-/area/derelict/teleporter
-	name = "Derelict Teleporter"
-	icon_state = "teleporter"
-
-/area/derelict/eva
-	name = "Derelict EVA Storage"
-	icon_state = "eva"
-
-/area/derelict/ship
-	name = "Abandoned Ship"
-	icon_state = "yellow"
-
-/area/solar/derelict_starboard
-	name = "Derelict Starboard Solar Array"
-	icon_state = "panelsS"
-
-/area/solar/derelict_aft
-	name = "Derelict Aft Solar Array"
-	icon_state = "yellow"
-
-/area/derelict/singularity_engine
-	name = "Derelict Singularity Engine"
-	icon_state = "engine"
-
-/area/derelict/gravity_generator
-	name = "Derelict Gravity Generator Room"
-	icon_state = "red"
-
-/area/derelict/atmospherics
-	name = "Derelict Atmospherics"
-	icon_state = "red"
 
 //Construction
 
 /area/construction
 	name = "Construction Area"
+	icon_state = "yellow"
+
+/area/mining_construction
+	name = "Auxillary Base Construction"
 	icon_state = "yellow"
 
 /area/construction/supplyshuttle
@@ -1238,22 +1018,22 @@ var/list/teleportlocs = list()
 	icon_state = "storage"
 
 
-/area/turret_protected/
+/area/ai_monitored/turret_protected
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
 
-/area/turret_protected/ai_upload
+/area/ai_monitored/turret_protected/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
 
-/area/turret_protected/ai_upload_foyer
+/area/ai_monitored/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
 
-/area/turret_protected/ai
+/area/ai_monitored/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
 
-/area/turret_protected/aisat
+/area/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
 	icon_state = "ai"
 
@@ -1261,62 +1041,36 @@ var/list/teleportlocs = list()
 	name = "AI Satellite Exterior"
 	icon_state = "yellow"
 
-/area/turret_protected/aisat_interior
+/area/ai_monitored/turret_protected/aisat_interior
 	name = "AI Satellite Antechamber"
 	icon_state = "ai"
 
-/area/turret_protected/AIsatextFP
+/area/ai_monitored/turret_protected/AIsatextFP
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/AIsatextFS
+/area/ai_monitored/turret_protected/AIsatextFS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/AIsatextAS
+/area/ai_monitored/turret_protected/AIsatextAS
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/AIsatextAP
+/area/ai_monitored/turret_protected/AIsatextAP
 	name = "AI Sat Ext"
 	icon_state = "storage"
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-/area/turret_protected/NewAIMain
+/area/ai_monitored/turret_protected/NewAIMain
 	name = "AI Main New"
-	icon_state = "storage"
-
-
-
-//Misc
-
-
-
-/area/wreck/ai
-	name = "AI Chamber"
-	icon_state = "ai"
-
-/area/wreck/main
-	name = "Wreck"
-	icon_state = "storage"
-
-/area/wreck/engineering
-	name = "Power Room"
-	icon_state = "engine"
-
-/area/wreck/bridge
-	name = "Bridge"
-	icon_state = "bridge"
-
-/area/generic
-	name = "Unknown"
 	icon_state = "storage"
 
 
@@ -1334,22 +1088,22 @@ var/list/teleportlocs = list()
 	name = "Abandoned Satellite"
 	icon_state = "tcomsatcham"
 
-/area/turret_protected/tcomsat
+/area/ai_monitored/turret_protected/tcomsat
 	name = "Telecoms Satellite"
 	icon_state = "tcomsatlob"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
-/area/turret_protected/tcomfoyer
+/area/ai_monitored/turret_protected/tcomfoyer
 	name = "Telecoms Foyer"
 	icon_state = "tcomsatentrance"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
-/area/turret_protected/tcomwest
+/area/ai_monitored/turret_protected/tcomwest
 	name = "Telecommunications Satellite West Wing"
 	icon_state = "tcomsatwest"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
-/area/turret_protected/tcomeast
+/area/ai_monitored/turret_protected/tcomeast
 	name = "Telecommunications Satellite East Wing"
 	icon_state = "tcomsateast"
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
@@ -1366,246 +1120,6 @@ var/list/teleportlocs = list()
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
-
-// Hell
-/area/hell
-	name = "Hell Lobby"
-	//icon = "ICON FILENAME"
-	//icon_state = "NAME OF ICON"
-	requires_power = 0
-	music = "music/music.ogg"
-
-/area/hell/trial1
-	name = "Hell Trial1"
-	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
-
-/area/hell/trial1
-	name = "Hell Trial2"
-	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
-
-/area/hell/trial1
-	name = "Hell Trial3"
-	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
-
-// Away Missions
-/area/awaymission
-	name = "Strange Location"
-	icon_state = "away"
-	has_gravity = 1
-
-/area/awaymission/example
-	name = "Strange Station"
-	icon_state = "away"
-
-/area/awaymission/desert
-	name = "Mars"
-	icon_state = "away"
-
-/area/awaymission/listeningpost
-	name = "Listening Post"
-	icon_state = "away"
-	requires_power = 0
-
-/area/awaymission/beach
-	name = "Beach"
-	icon_state = "away"
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
-	requires_power = 0
-	has_gravity = 1
-	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
-
-/area/spacecontent
-	name = "space"
-
-/area/spacecontent/a1
-	icon_state = "spacecontent1"
-
-/area/spacecontent/a2
-	icon_state = "spacecontent2"
-
-/area/spacecontent/a3
-	icon_state = "spacecontent3"
-
-/area/spacecontent/a4
-	icon_state = "spacecontent4"
-
-/area/spacecontent/a5
-	icon_state = "spacecontent5"
-
-/area/spacecontent/a6
-	icon_state = "spacecontent6"
-
-/area/spacecontent/a7
-	icon_state = "spacecontent7"
-
-/area/spacecontent/a8
-	icon_state = "spacecontent8"
-
-/area/spacecontent/a9
-	icon_state = "spacecontent9"
-
-/area/spacecontent/a10
-	icon_state = "spacecontent10"
-
-/area/spacecontent/a11
-	icon_state = "spacecontent11"
-
-/area/spacecontent/a11
-	icon_state = "spacecontent12"
-
-/area/spacecontent/a12
-	icon_state = "spacecontent13"
-
-/area/spacecontent/a13
-	icon_state = "spacecontent14"
-
-/area/spacecontent/a14
-	icon_state = "spacecontent14"
-
-/area/spacecontent/a15
-	icon_state = "spacecontent15"
-
-/area/spacecontent/a16
-	icon_state = "spacecontent16"
-
-/area/spacecontent/a17
-	icon_state = "spacecontent17"
-
-/area/spacecontent/a18
-	icon_state = "spacecontent18"
-
-/area/spacecontent/a19
-	icon_state = "spacecontent19"
-
-/area/spacecontent/a20
-	icon_state = "spacecontent20"
-
-/area/spacecontent/a21
-	icon_state = "spacecontent21"
-
-/area/spacecontent/a22
-	icon_state = "spacecontent22"
-
-/area/spacecontent/a23
-	icon_state = "spacecontent23"
-
-/area/spacecontent/a24
-	icon_state = "spacecontent24"
-
-/area/spacecontent/a25
-	icon_state = "spacecontent25"
-
-/area/spacecontent/a26
-	icon_state = "spacecontent26"
-
-/area/spacecontent/a27
-	icon_state = "spacecontent27"
-
-/area/spacecontent/a28
-	icon_state = "spacecontent28"
-
-/area/spacecontent/a29
-	icon_state = "spacecontent29"
-
-/area/spacecontent/a30
-	icon_state = "spacecontent30"
-
-/area/awaycontent
-	name = "space"
-
-/area/awaycontent/a1
-	icon_state = "awaycontent1"
-
-/area/awaycontent/a2
-	icon_state = "awaycontent2"
-
-/area/awaycontent/a3
-	icon_state = "awaycontent3"
-
-/area/awaycontent/a4
-	icon_state = "awaycontent4"
-
-/area/awaycontent/a5
-	icon_state = "awaycontent5"
-
-/area/awaycontent/a6
-	icon_state = "awaycontent6"
-
-/area/awaycontent/a7
-	icon_state = "awaycontent7"
-
-/area/awaycontent/a8
-	icon_state = "awaycontent8"
-
-/area/awaycontent/a9
-	icon_state = "awaycontent9"
-
-/area/awaycontent/a10
-	icon_state = "awaycontent10"
-
-/area/awaycontent/a11
-	icon_state = "awaycontent11"
-
-/area/awaycontent/a11
-	icon_state = "awaycontent12"
-
-/area/awaycontent/a12
-	icon_state = "awaycontent13"
-
-/area/awaycontent/a13
-	icon_state = "awaycontent14"
-
-/area/awaycontent/a14
-	icon_state = "awaycontent14"
-
-/area/awaycontent/a15
-	icon_state = "awaycontent15"
-
-/area/awaycontent/a16
-	icon_state = "awaycontent16"
-
-/area/awaycontent/a17
-	icon_state = "awaycontent17"
-
-/area/awaycontent/a18
-	icon_state = "awaycontent18"
-
-/area/awaycontent/a19
-	icon_state = "awaycontent19"
-
-/area/awaycontent/a20
-	icon_state = "awaycontent20"
-
-/area/awaycontent/a21
-	icon_state = "awaycontent21"
-
-/area/awaycontent/a22
-	icon_state = "awaycontent22"
-
-/area/awaycontent/a23
-	icon_state = "awaycontent23"
-
-/area/awaycontent/a24
-	icon_state = "awaycontent24"
-
-/area/awaycontent/a25
-	icon_state = "awaycontent25"
-
-/area/awaycontent/a26
-	icon_state = "awaycontent26"
-
-/area/awaycontent/a27
-	icon_state = "awaycontent27"
-
-/area/awaycontent/a28
-	icon_state = "awaycontent28"
-
-/area/awaycontent/a29
-	icon_state = "awaycontent29"
-
-/area/awaycontent/a30
-	icon_state = "awaycontent30"
 
 
 /////////////////////////////////////////////////////////////////////
@@ -1641,7 +1155,7 @@ var/list/the_station_areas = list (
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 //	/area/ai_monitored/storage/secure,	//not present on map
 //	/area/ai_monitored/storage/emergency,	//not present on map
-	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
-	/area/turret_protected/ai_upload_foyer,
-	/area/turret_protected/ai,
+	/area/ai_monitored/turret_protected/ai_upload, //do not try to simplify to "/area/ai_monitored/turret_protected" --rastaf0
+	/area/ai_monitored/turret_protected/ai_upload_foyer,
+	/area/ai_monitored/turret_protected/ai,
 )

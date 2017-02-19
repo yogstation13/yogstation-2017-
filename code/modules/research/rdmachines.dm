@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
@@ -105,7 +105,7 @@
 
 
 //we eject the loaded item when deconstructing the machine
-/obj/machinery/r_n_d/deconstruction()
+/obj/machinery/r_n_d/on_deconstruction()
 	if(loaded_item)
-		loaded_item.loc = loc
+		loaded_item.forceMove(loc)
 	..()

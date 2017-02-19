@@ -2,6 +2,7 @@
 	name = "Shade"
 	real_name = "Shade"
 	desc = "A bound spirit"
+	gender = PLURAL
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
@@ -24,15 +25,22 @@
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH
-	flying = 1
+	movement_type = FLYING
 	loot = list(/obj/item/weapon/ectoplasm)
 	del_on_death = 1
+<<<<<<< HEAD
 	deathmessage = "lets out a contented sigh as their form unwinds."
 	var/affiliation = "Cult"
 
 /mob/living/simple_animal/shade/New()
 	..()
 	addtimer(src, "set_affiliation", 5)
+=======
+
+/mob/living/simple_animal/shade/death()
+	deathmessage = "lets out a contented sigh as [p_their()] form unwinds."
+	..()
+>>>>>>> masterTGbranch
 
 /mob/living/simple_animal/shade/canSuicide()
 	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
@@ -44,6 +52,7 @@
 
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+<<<<<<< HEAD
 		if(M.health < M.maxHealth)
 			M.adjustHealth(-25)
 			Beam(src,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
@@ -51,6 +60,15 @@
 					   "<span class='cult'>You heal <b>[M]</b>, leaving <b>[M]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else
 			src << "<span class='cult'>You cannot heal <b>[M]</b>, as it is unharmed!</span>"
+=======
+		if(health < maxHealth)
+			adjustHealth(-25)
+			Beam(M,icon_state="sendbeam",time=4)
+			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
+					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+		else
+			M << "<span class='cult'>You cannot heal <b>[src]</b>, as [p_they()] [p_are()] unharmed!</span>"
+>>>>>>> masterTGbranch
 	else if(src != M)
 		..()
 

@@ -11,7 +11,7 @@ This file contains the arcane tome files.
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
@@ -35,7 +35,11 @@ This file contains the arcane tome files.
 			M.reagents.add_reagent("unholywater",holy2unholy)
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
+<<<<<<< HEAD
 	M.take_organ_damage(0, 15, 1, DAMAGE_MAGIC) //Used to be a random between 5 and 20
+=======
+	M.take_bodypart_damage(0, 15) //Used to be a random between 5 and 20
+>>>>>>> masterTGbranch
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
 	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
 					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
@@ -69,8 +73,9 @@ This file contains the arcane tome files.
 	invoking it and choosing which talisman you desire, the paper will be converted, after some delay into a talisman.<br><br>"
 
 	text += "<font color='red'><b>Teleport</b></font><br>This rune is unique in that it requires a keyword before the scribing can begin. When invoked, it will find any other Teleport runes; \
-	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
+	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune, provided the selected rune is unblocked.<br><br>"
 
+<<<<<<< HEAD
 	text += "<font color='red'><b>Offer</b></font><br>Requires two cultists to convert a living target, or three to sacrifice a living target. Requires only one to sacrifice a corpse. This rune will see if a target placed atop it is convertable.\
 	If they are convertable, they will be converted. If they are not, they will be sacrificed. A sacrifice will place the sacrifice's soul into a soulstone, an object \
 	which holds the sacrifice's soul. They can then either be released by clicking on the soulstone, or placed into a construct shell to become a deadly construct, capable of amazing feats. Your target \
@@ -79,6 +84,15 @@ This file contains the arcane tome files.
 	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires there to be more sacrifices than there are cultists revived in total. To perform the ritual, place the corpse you wish to revive onto \
 	the rune. When the rune is invoked, the body will be revived. Assuming the target is not moved \
 	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
+=======
+	text += "<font color='red'><b>Offer</b></font><br><b>This rune is necessary to achieve your goals.</b> Placing a noncultist above it will convert them if it can and sacrifice them otherwise. \
+	It requires two invokers to convert a target and three to sacrifice a living target or the sacrifice target.<br>\
+	Successful conversions will produce a tome for the new cultist, in addition to healing them.<br> \
+	Successful sacrifices will please the Geometer, can complete your objective if it sacrificed the sacrifice target, and will attempt to place the target into a soulstone.<br><br>"
+
+	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires the corpse of a cultist placed upon the rune, and one person sacrificed for each revival you wish to do.\
+	Provided there are remaining revivals from those sacrificed, invoking the rune will revive the cultist placed upon it.<br><br>"
+>>>>>>> masterTGbranch
 
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. This rune may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location. The size of the EMP will grow significantly for each additional adjacent cultist when the \
@@ -89,15 +103,17 @@ This file contains the arcane tome files.
 	The body will also take constant damage while in this form, and may even die. The user's spirit will contain their consciousness, and will allow them to freely wander the station as a ghost. This may \
 	also be used to commune with the dead.<br><br>"
 
-	text += "<font color='red'><b>Form Barrier</b></font><br>While simple, this rune serves an important purpose in defense and hindering passage. When invoked, the \
-	rune will draw a small amount of life force from the user and make the space above the rune completely dense, rendering it impassable to all but the most complex means. The rune may be invoked again to \
-	undo this effect and allow passage again.<br><br>"
+	text += "<font color='red'><b>Form Barrier</b></font><br>While simple, this rune serves an important purpose in defense and hindering passage. When invoked, the rune will draw a small amount of blood from the user \
+	and make the space above the rune completely dense, rendering it impassable for about a minute and a half. This effect will spread to other nearby Barrier Runes. \
+	The rune may be invoked again to undo this effect and allow passage again.<br><br>"
 
 	text += "<font color='red'><b>Summon Cultist</b></font><br>This rune allows the cult to free other cultists with ease. When invoked, it will allow the user to summon a single cultist to the rune from \
 	any location. It requires two invokers, and will damage each invoker slightly.<br><br>"
 
-	text += "<font color='red'><b>Blood Boil</b></font><br>When invoked, this rune will do a massive amount of damage to all non-cultist viewers, but it will also emit a small explosion upon invocation. \
+	text += "<font color='red'><b>Blood Boil</b></font><br>When invoked, this rune will rapidly do a massive amount of damage to all non-cultist viewers, but it will also emit a burst of flame once it finishes. \
 	It requires three invokers.<br><br>"
+
+	text += "<font color='red'><b>Drain Life</b></font><br>This rune will drain the life of every living creature above the rune, healing the invoker for each creature drained by it.<br><br>"
 
 	text += "<font color='red'><b>Manifest Spirit</b></font><br>This rune allows you to summon spirits as humanoid fighters. When invoked, a spirit above the rune will be brought to life as a human, wearing nothing, that seeks only to serve you and the Geometer. \
 	However, the spirit's link to reality is fragile - you must remain on top of the rune, and you will slowly take damage. Upon stepping off the rune, all summoned spirits will dissipate, dropping their items to the ground. You may manifest \
@@ -109,7 +125,7 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Talisman of Teleportation</b></font><br>The talisman form of the Teleport rune will transport the invoker to a selected Teleport rune once.<br><br>"
 
-	text += "<font color='red'><b>Talisman of Construction</b></font><br>This talisman is the main way of creating construct shells. To use it, one must strike 30 sheets of metal with the talisman. The sheets will then be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
+	text += "<font color='red'><b>Talisman of Construction</b></font><br>This talisman is the main way of creating construct shells. To use it, one must strike 25 sheets of metal with the talisman. The sheets will then be twisted into a construct shell, ready to recieve a soul to occupy it.<br><br>"
 
 	text += "<font color='red'><b>Talisman of Tome Summoning</b></font><br>This talisman will produce a single tome at your feet.<br><br>"
 
@@ -172,8 +188,9 @@ This file contains the arcane tome files.
 	var/entered_rune_name
 	var/list/possible_runes = list()
 	var/list/shields = list()
-	if(locate(/obj/effect/rune) in Turf)
-		user << "<span class='cult'>There is already a rune here.</span>"
+	var/area/A = get_area(src)
+
+	if(!check_rune_turf(Turf, user))
 		return
 	if(areaname == "Space" || istype(Turf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
 		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to scribe this rune! Return to the station!</span>"
@@ -185,7 +202,11 @@ This file contains the arcane tome files.
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
+<<<<<<< HEAD
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+=======
+	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
+>>>>>>> masterTGbranch
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -200,10 +221,7 @@ This file contains the arcane tome files.
 	if(!rune_to_scribe)
 		return
 	Turf = get_turf(user) //we may have moved. adjust as needed...
-	if(locate(/obj/effect/rune) in Turf)
-		user << "<span class='cult'>There is already a rune here.</span>"
-		return
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
@@ -217,6 +235,7 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
+<<<<<<< HEAD
 			var/area/A = get_area(src)
 			var/list/clearlist = list(/area/solar,/area/toxins/test_area,/area/maintenance)
 			if(!A.valid_territory)
@@ -224,15 +243,12 @@ This file contains the arcane tome files.
 					user << "<span class='warning'>The Geometer cannot be opened \
 						in such a ridiculous place!</span>"
 					return
+=======
+>>>>>>> masterTGbranch
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
 					in lesser locations; the station is the prize!</span>"
-				return
-			if(istype(A, /area/shuttle))
-				user << "<span class='warning'>Interference from hyperspace \
-					engines prevents the Geometer from entering our world on \
-					a shuttle.</span>"
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
@@ -241,11 +257,7 @@ This file contains the arcane tome files.
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/turf/T = B
-				var/obj/machinery/shield/N = new(T)
-				N.name = "sanguine barrier"
-				N.desc = "A potent shield summoned by cultists to defend their rites."
-				N.icon_state = "shield-red"
-				N.health = 60
+				var/obj/structure/emergency_shield/sanguine/N = new(T)
 				shields |= N
 			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
 				P.visible_message("<span class='warning'>[P]'s pointer spins around rapidly until it slowly stops, clearly detecting an ominous presence.</span>")
@@ -253,29 +265,56 @@ This file contains the arcane tome files.
 		else
 			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
-	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
-						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
-	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
+	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
+						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
+	if(user.blood_volume)
+		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
-			var/obj/machinery/shield/S = V
+			var/obj/structure/emergency_shield/sanguine/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
 		if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
 				P.the_disk = null // this sets it back.
 		return
-	if(locate(/obj/effect/rune) in Turf)
-		user << "<span class='cult'>There is already a rune here.</span>"
+	if(!check_rune_turf(Turf, user))
 		return
-	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
+	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in their own blood":""].</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
-		var/obj/machinery/shield/S = V
+		var/obj/structure/emergency_shield/S = V
 		if(S && !qdeleted(S))
 			qdel(S)
+<<<<<<< HEAD
 	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
 			P.visible_message("<span class='warning'>[P] begins rattling in horror.</span>")
+=======
+	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
+	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"
+	feedback_add_details("cult_runes_scribed", R.cultist_name)
+
+/obj/item/weapon/tome/proc/check_rune_turf(turf/T, mob/user)
+	var/area/A = get_area(T)
+
+	if(isspaceturf(T))
+		user << "<span class='warning'>You cannot scribe runes in space!</span>"
+		return FALSE
+
+	if(locate(/obj/effect/rune) in T)
+		user << "<span class='cult'>There is already a rune here.</span>"
+		return FALSE
+
+	if(T.z != ZLEVEL_STATION && T.z != ZLEVEL_MINING)
+		user << "<span class='warning'>The veil is not weak enough here."
+		return FALSE
+
+	if(istype(A, /area/shuttle))
+		user << "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>"
+		return FALSE
+
+	return TRUE
+>>>>>>> masterTGbranch

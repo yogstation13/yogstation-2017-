@@ -2,6 +2,7 @@
 	if(!istype(M))
 		return
 
+<<<<<<< HEAD
 	var/mob/living/carbon/human/H
 	var/obj/item/bodypart/affecting
 	var/selected_zone = user.zone_selected
@@ -9,6 +10,15 @@
 	if(istype(M, /mob/living/carbon/human))
 		H = M
 		affecting = H.get_bodypart(check_zone(selected_zone))
+=======
+	var/mob/living/carbon/C
+	var/obj/item/bodypart/affecting
+	var/selected_zone = user.zone_selected
+
+	if(istype(M, /mob/living/carbon))
+		C = M
+		affecting = C.get_bodypart(check_zone(selected_zone))
+>>>>>>> masterTGbranch
 
 	if(!M.lying && !isslime(M))	//if they're prone or a slime
 		return
@@ -29,9 +39,15 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
+<<<<<<< HEAD
 				if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
 					continue
 			else if(H && S.requires_bodypart) //human with no limb in surgery zone when we need a limb
+=======
+				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+					continue
+			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
+>>>>>>> masterTGbranch
 				continue
 			if(!S.can_start(user, M))
 				continue
@@ -49,6 +65,7 @@
 					return //during the input() another surgery was started at the same location.
 
 			//we check that the surgery is still doable after the input() wait.
+<<<<<<< HEAD
 			if(H)
 				affecting = H.get_bodypart(check_zone(selected_zone))
 			if(affecting)
@@ -57,6 +74,16 @@
 				if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
 					return
 			else if(H && S.requires_bodypart)
+=======
+			if(C)
+				affecting = C.get_bodypart(check_zone(selected_zone))
+			if(affecting)
+				if(!S.requires_bodypart)
+					return
+				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+					return
+			else if(C && S.requires_bodypart)
+>>>>>>> masterTGbranch
 				return
 			if(!S.can_start(user, M))
 				return
@@ -76,7 +103,11 @@
 			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
 			qdel(current_surgery)
+<<<<<<< HEAD
 		else if(istype(user.get_inactive_hand(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
+=======
+		else if(istype(user.get_inactive_held_item(), /obj/item/weapon/cautery) && current_surgery.can_cancel)
+>>>>>>> masterTGbranch
 			M.surgeries -= current_surgery
 			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
@@ -87,7 +118,12 @@
 	return 1
 
 
+<<<<<<< HEAD
 proc/get_location_modifier(mob/M)
+=======
+
+/proc/get_location_modifier(mob/M)
+>>>>>>> masterTGbranch
 	var/turf/T = get_turf(M)
 	if(locate(/obj/structure/table/optable, T))
 		return 1

@@ -1,7 +1,7 @@
 /datum/chemical_reaction
 	var/name = null
 	var/id = null
-	var/result = null
+	var/list/results = new/list()
 	var/list/required_reagents = new/list()
 	var/list/required_catalysts = new/list()
 
@@ -9,11 +9,11 @@
 	var/atom/required_container = null // the container required for the reaction to happen
 	var/required_other = 0 // an integer required for the reaction to happen
 
-	var/result_amount = 0
 	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
+	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
 	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
 	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
@@ -37,7 +37,7 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
 		var/area/my_area = get_area(T)
-		var/message = "A [reaction_name] reaction has occured in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
+		var/message = "A [reaction_name] reaction has occurred in [my_area.name]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</A>)"
 		message += " (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
@@ -51,7 +51,7 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
 		for(var/mob/living/carbon/C in viewers(get_turf(holder.my_atom), null))
-			C.flash_eyes()
+			C.flash_act()
 		for(var/i = 1, i <= amount_to_spawn, i++)
 			var/chosen
 			var/mob/living/simple_animal/C
@@ -88,9 +88,15 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 							O.show_message(text("<span class='notice'>The slime extract shudders, then forms some sort of alien machine!</span>"), 1)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
+<<<<<<< HEAD
 			if(!C)
 				C = new chosen(get_turf(holder.my_atom))
 				C.faction |= mob_faction
+=======
+			var/spawnloc = get_turf(holder.my_atom)
+			var/mob/living/simple_animal/C = new chosen(spawnloc)
+			C.faction |= mob_faction
+>>>>>>> masterTGbranch
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))

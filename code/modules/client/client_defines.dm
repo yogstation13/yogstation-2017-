@@ -1,5 +1,9 @@
 
 /client
+		//////////////////////
+		//BLACK MAGIC THINGS//
+		//////////////////////
+	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -10,6 +14,7 @@
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
+	var/ircreplyamount = 0
 
 	var/last_message_time = 0 //contains the world.time that the last message was sent without triggering the fast message spam filter
 	var/fast_message_count = 0 //how many messages have been sent since the last time the fast message spam filter was reset
@@ -51,12 +56,16 @@
 	// Used by html_interface module.
 	var/hi_last_pos
 
+	var/ip_intel = "Disabled"
 
 	//datum that controls the displaying and hiding of tooltips
 	var/datum/tooltip/tooltips
+<<<<<<< HEAD
 
 	//Used for var edit flagging, also defined in datums (clients are not a child of datums for some reason)
 	var/var_edited = 0
 
 	var/last_cached_weight //For weight checking, prevents query spam
 	var/last_cached_total_weight //For weight checking, prevents query spam
+=======
+>>>>>>> masterTGbranch

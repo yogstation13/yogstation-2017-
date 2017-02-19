@@ -1,4 +1,7 @@
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 /client/var/bypass_ooc_approval = 0
+=======
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -9,14 +12,32 @@
 
 	if(!mob)
 		return
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
+=======
+
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 	if(IsGuestKey(key))
 		src << "Guests may not use OOC."
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 	if(!msg)
 		return
 
+=======
+	var/raw_msg = msg
+
+	if(!msg)
+		return
+
+	msg = emoji_parse(msg)
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
+
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		src << "<span class='danger'>You have OOC muted.</span>"
 		return
@@ -43,6 +64,7 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 	msg = pretty_filter(msg)
 
 	log_ooc("[mob.name]/[key] : [msg]")
@@ -88,18 +110,32 @@
 
 	keyname += "[key]"
 	msg = emoji_parse(msg)
+=======
+	log_ooc("[mob.name]/[key] : [raw_msg]")
+
+	var/keyname = key
+	if(prefs.unlock_content)
+		if(prefs.toggles & MEMBER_PUBLIC)
+			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'><img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>[keyname]</font>"
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			if(holder)
 				if(!holder.fakekey || C.holder)
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 					var/tag = "[find_admin_rank(src)]"
 					if(check_rights_for(src, R_ADMIN) || holder.rank.name == ("SeniorCoder" || "Coder"))
 						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+=======
+					if(check_rights_for(src, R_ADMIN))
+						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 
 			else if(!(key in C.prefs.ignoring))
 				if(is_donator(src))
@@ -107,6 +143,10 @@
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
+=======
+			else if(!(key in C.prefs.ignoring))
+				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
@@ -181,7 +221,11 @@ var/global/normal_ooc_colour = OOC_COLOR
 		src << "<span class='notice'>The Message of the Day has not been set.</span>"
 
 /client/proc/self_notes()
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 	set name = "View Admin Notes"
+=======
+	set name = "View Admin Remarks"
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 	set category = "OOC"
 	set desc = "View the notes that admins have written about you"
 
@@ -189,7 +233,11 @@ var/global/normal_ooc_colour = OOC_COLOR
 		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
 		return
 
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 	show_note(usr, null, 1)
+=======
+	show_note(usr.ckey, null, 1)
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm
 
 /client/proc/ignore_key(client)
 	var/client/C = client
@@ -212,6 +260,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		src << "You can't ignore yourself."
 		return
 	ignore_key(selection)
+<<<<<<< HEAD:code/modules/client/verbs/ooc.dm
 
 /client/proc/find_admin_rank(client)
 	var/client/C = client
@@ -266,3 +315,5 @@ var/global/normal_ooc_colour = OOC_COLOR
 
 		if("RetiredAdmin")
 			return "\[Retmin\]"
+=======
+>>>>>>> masterTGbranch:code/modules/client/verbs/ooc.dm

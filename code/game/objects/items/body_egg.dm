@@ -16,6 +16,7 @@
 	return ..()
 
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
+<<<<<<< HEAD
 	if(..())
 		owner.status_flags |= XENO_HOST
 		START_PROCESSING(SSobj, src)
@@ -25,12 +26,20 @@
 		return 1
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0, del_after = 0)
+=======
+	..()
+	owner.status_flags |= XENO_HOST
+	START_PROCESSING(SSobj, src)
+	owner.med_hud_set_status()
+	addtimer(src, "AddInfectionImages", 0, TIMER_NORMAL, owner)
+
+/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+>>>>>>> masterTGbranch
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		owner.status_flags -= XENO_HOST
 		owner.med_hud_set_status()
-		spawn(0)
-			RemoveInfectionImages(owner)
+		addtimer(src, "RemoveInfectionImages", 0, TIMER_NORMAL, owner)
 	..()
 
 /obj/item/organ/body_egg/process()

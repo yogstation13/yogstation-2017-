@@ -72,8 +72,9 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	//item_state = null
-	w_class = 10
+	w_class = WEIGHT_CLASS_GIGANTIC
 	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 	var/last_throw = 0
 	var/atom/movable/focus = null
@@ -88,7 +89,7 @@ var/const/tk_maxrange = 15
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )
+	if(slot == slot_hands)
 		return
 	qdel(src)
 	return
@@ -146,7 +147,10 @@ var/const/tk_maxrange = 15
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
+<<<<<<< HEAD
 		update_icon()
+=======
+>>>>>>> masterTGbranch
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
@@ -181,7 +185,7 @@ var/const/tk_maxrange = 15
 	O.anchored = 1
 	O.density = 0
 	O.layer = FLY_LAYER
-	O.dir = pick(cardinal)
+	O.setDir(pick(cardinal))
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
 	flick("empdisable",O)
@@ -190,13 +194,13 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(focus && focus.icon && focus.icon_state)
-		overlays += icon(focus.icon,focus.icon_state)
+		add_overlay(icon(focus.icon,focus.icon_state))
 	return
 
 /obj/item/tk_grab/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using \his telekinesis to choke \himself! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
 /*Not quite done likely needs to use something thats not get_step_to

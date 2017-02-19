@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 The yogstation codebase currently requires you to have 9 z-levels of the same size dimensions.
 z-level order is important, the order you put them in inside this file will determine what z level number they are assigned ingame.
@@ -15,6 +16,8 @@ z8 = empty space
 z9 = empty space
 */
 
+=======
+>>>>>>> masterTGbranch
 #if !defined(MAP_FILE)
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
@@ -31,12 +34,14 @@ z9 = empty space
         #include "map_files\generic\z7.dmm"
         #include "map_files\generic\z8.dmm"
 		#include "map_files\generic\z9.dmm"
+		#include "map_files\generic\z10.dmm"
+		#include "map_files\generic\z11.dmm"
 
 		#define MAP_PATH "map_files/YogStation"
         #define MAP_FILE "yogstation.2.1.3.dmm"
         #define MAP_NAME "Box Station"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
+		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
 
 #elif !defined(MAP_OVERRIDE)
 

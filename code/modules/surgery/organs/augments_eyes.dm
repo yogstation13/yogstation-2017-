@@ -5,7 +5,7 @@
 	implant_overlay = "eye_implant_overlay"
 	slot = "eye_sight"
 	zone = "eyes"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 	var/sight_flags = 0
 	var/dark_view = 0
@@ -17,6 +17,7 @@
 
 
 /obj/item/organ/cyberimp/eyes/Insert(var/mob/living/carbon/M, var/special = 0)
+<<<<<<< HEAD
 	if(..())
 		if(istype(owner, /mob/living/carbon/human) && eye_color)
 			var/mob/living/carbon/human/HMN = owner
@@ -28,10 +29,22 @@
 
 		owner.update_sight()
 		return 1
+=======
+	..()
+	if(ishuman(owner) && eye_color)
+		var/mob/living/carbon/human/HMN = owner
+		old_eye_color = HMN.eye_color
+		HMN.eye_color = eye_color
+		HMN.regenerate_icons()
+	if(aug_message && !special)
+		owner << "<span class='notice'>[aug_message]</span>"
+
+	owner.update_sight()
+>>>>>>> masterTGbranch
 
 /obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags
-	if(istype(M,/mob/living/carbon/human) && eye_color)
+	if(ishuman(M) && eye_color)
 		var/mob/living/carbon/human/HMN = owner
 		HMN.eye_color = old_eye_color
 		HMN.regenerate_icons()
@@ -44,7 +57,7 @@
 		if(prob(10 * severity))
 			return
 	owner << "<span class='warning'>Static obfuscates your vision!</span>"
-	owner.flash_eyes(visual = 1)
+	owner.flash_act(visual = 1)
 
 /obj/item/organ/cyberimp/eyes/xray
 	name = "X-ray implant"

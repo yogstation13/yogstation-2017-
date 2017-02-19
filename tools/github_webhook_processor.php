@@ -155,14 +155,14 @@ function checkchangelog($payload, $merge = false) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:') {
+		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
 			if ($pos)
 				$username = substr($line, $pos+1);
 			continue;
-		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:') {
+		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
 			$incltag = false;
 			$changelogbody = array_merge($changelogbody, $currentchangelogblock);
 			continue;
@@ -251,7 +251,7 @@ function checkchangelog($payload, $merge = false) {
 	if (!count($changelogbody))
 		return;
 
-	$file = 'author: '.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username))."\n";
+	$file = 'author: "'.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username)).'"'."\n";
 	$file .= "delete-after: True\n";
 	$file .= "changes: \n";
 	foreach ($changelogbody as $changelogitem) {

@@ -9,7 +9,11 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+<<<<<<< HEAD
 			John hates all of you.<BR>
+=======
+			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
+>>>>>>> masterTGbranch
 			<BR>
 			"}
 
@@ -67,6 +71,8 @@
 			<A href='?src=\ref[src];secrets=nerfwar'>Nerf War</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
+			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
+			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -119,6 +125,13 @@
 					var/datum/admins/D = admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
+
+		if("show_current_watchlist")
+			var/dat = "<B>Watchlist: </B><HR>"
+			if(current_watchlist)
+				for(var/ckey in current_watchlist)
+					dat += "[ckey] - [current_watchlist[ckey]]"
+				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
 
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
@@ -404,7 +417,7 @@
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in machines)
-				L.broken()
+				L.break_light_tube()
 
 		if("anime")
 			if(!check_rights(R_FUN))
@@ -421,9 +434,10 @@
 						H.dna.features["ears"] = "Cat"
 					var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
 					var/obj/item/clothing/under/schoolgirl/I = new seifuku
-					var/list/honorifics = list(MALE = list("kun"), FEMALE = list("chan","tan"), NEUTER = list("san")) //John Robust -> Robust-kun
+					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
-					var/newname = "[names[2]]-[pick(honorifics[H.gender])]"
+					var/forename = names.len > 1 ? names[2] : names[1]
+					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
 					H.unEquip(H.w_uniform)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
@@ -595,13 +609,25 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			var/ctf_enabled = 0
+			var/ctf_enabled = FALSE
 			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = !CTF.ctf_enabled
-				CTF.ctf_enabled = !CTF.ctf_enabled
-				CTF.TellGhost()
+				ctf_enabled = CTF.toggle_ctf()
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+		if("masspurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_purrbation()
+			message_admins("[key_name_admin(usr)] has put everyone on \
+				purrbation!")
+			log_admin("[key_name(usr)] has put everyone on purrbation.")
+		if("massremovepurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_remove_purrbation()
+			message_admins("[key_name_admin(usr)] has removed everyone from \
+				purrbation.")
+			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
 		E.processing = 0

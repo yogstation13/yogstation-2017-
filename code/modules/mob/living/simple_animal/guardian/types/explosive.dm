@@ -38,9 +38,9 @@
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to create bombs!</span></B>"
 		return
-	if(istype(A, /obj/))
+	if(isobj(A))
 		if(bomb_cooldown <= world.time && !stat)
-			var/obj/item/weapon/guardian_bomb/B = new /obj/item/weapon/guardian_bomb(get_turf(A))
+			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
 			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
 			bomb_cooldown = world.time + 300
 			B.spawner = src
@@ -48,20 +48,21 @@
 		else
 			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 30 seconds between bombs.</span></B>"
 
-/obj/item/weapon/guardian_bomb
+/obj/guardian_bomb
 	name = "bomb"
 	desc = "You shouldn't be seeing this!"
 	var/obj/stored_obj
 	var/mob/living/simple_animal/hostile/guardian/spawner
 
 
-/obj/item/weapon/guardian_bomb/proc/disguise(var/obj/A)
+/obj/guardian_bomb/proc/disguise(obj/A)
 	A.loc = src
 	stored_obj = A
 	opacity = A.opacity
 	anchored = A.anchored
 	density = A.density
 	appearance = A.appearance
+<<<<<<< HEAD
 	addtimer(src,"vanish", 1000)
 
 /obj/item/weapon/guardian_bomb/proc/vanish(var/obj/A)
@@ -104,8 +105,40 @@
 	else
 		user <<"<span class='danger'>Something forces you to avoid touching [src].</span>"
 	return
+=======
+	addtimer(src, "disable", 600, TIMER_NORMAL)
 
-/obj/item/weapon/guardian_bomb/examine(mob/user)
+/obj/guardian_bomb/proc/disable()
+	stored_obj.forceMove(get_turf(src))
+	spawner << "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>"
+	qdel(src)
+
+/obj/guardian_bomb/proc/detonate(mob/living/user)
+	if(isliving(user))
+		if(user != spawner && user != spawner.summoner && !spawner.hasmatchingsummoner(user))
+			user << "<span class='danger'><B>The [src] was boobytrapped!</span></B>"
+			spawner << "<span class='danger'><B>Success! Your trap caught [user]</span></B>"
+			var/turf/T = get_turf(src)
+			stored_obj.forceMove(T)
+			playsound(T,'sound/effects/Explosion2.ogg', 200, 1)
+			PoolOrNew(/obj/effect/overlay/temp/explosion, T)
+			user.ex_act(2)
+			qdel(src)
+		else
+			user << "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>"
+
+/obj/guardian_bomb/Bump(atom/A)
+	detonate(A)
+	..()
+
+/obj/guardian_bomb/attackby(mob/living/user)
+	detonate(user)
+
+/obj/guardian_bomb/attack_hand(mob/living/user)
+	detonate(user)
+>>>>>>> masterTGbranch
+
+/obj/guardian_bomb/examine(mob/user)
 	stored_obj.examine(user)
 	if(get_dist(user,src)<=2)
 		user << "<span class='holoparasite'>It glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>!</span>"

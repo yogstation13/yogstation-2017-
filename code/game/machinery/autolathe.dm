@@ -92,7 +92,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/autolathe/deconstruction()
+/obj/machinery/autolathe/on_deconstruction()
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
@@ -115,7 +115,7 @@
 			wires.interact(user)
 			return 1
 
-	if(user.a_intent == "harm") //so we can hit the machine
+	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
 	if(stat)
@@ -131,6 +131,10 @@
 			for(var/B in D.blueprints)
 				if(B)
 					files.AddDesign2Known(B)
+<<<<<<< HEAD
+=======
+
+>>>>>>> masterTGbranch
 		busy = 0
 		return 1
 

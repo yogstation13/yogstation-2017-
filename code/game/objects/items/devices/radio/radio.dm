@@ -35,7 +35,7 @@
 	languages_understood = HUMAN | ROBOT
 	throw_speed = 3
 	throw_range = 7
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=75, MAT_GLASS=25)
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
@@ -115,7 +115,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !istype(user, /mob/living/silicon/ai))
+	if(b_stat && !isAI(user))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -202,10 +202,17 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
+<<<<<<< HEAD
 	addtimer(src,"talk_into_impl",0,FALSE,M,message,channel,spans)
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
 
+=======
+	addtimer(src,"talk_into_impl",0, TIMER_NORMAL,M,message,channel,spans)
+	return ITALICS | REDUCE_RANGE
+
+/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
+>>>>>>> masterTGbranch
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -286,7 +293,7 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if(isrobot(M))
+	else if(iscyborg(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 
@@ -326,7 +333,11 @@
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
+<<<<<<< HEAD
 			"languages" = M.languages_spoken,
+=======
+			"languages" = languages_spoken,
+>>>>>>> masterTGbranch
 			"spans" = spans,
 			"verb_say" = M.verb_say,
 			"verb_ask" = M.verb_ask,
@@ -420,7 +431,11 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
+<<<<<<< HEAD
 		"languages" = M.languages_spoken,
+=======
+		"languages" = languages_spoken,
+>>>>>>> masterTGbranch
 		"spans" = spans,
 		"verb_say" = M.verb_say,
 		"verb_ask" = M.verb_ask,

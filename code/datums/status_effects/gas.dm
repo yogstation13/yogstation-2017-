@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /*
+=======
+>>>>>>> masterTGbranch
 /datum/status_effect/freon
 	id = "frozen"
 	duration = 10
@@ -29,4 +32,7 @@
 	owner.overlays -= cube
 	owner.bodytemperature += 100
 	owner.update_canmove()
+<<<<<<< HEAD
 */
+=======
+>>>>>>> masterTGbranch

@@ -1,4 +1,4 @@
-// SUIT STORAGE UNIT /////////////////close_machine(
+// SUIT STORAGE UNIT /////////////////
 /obj/machinery/suit_storage_unit
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold space suits. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
@@ -6,6 +6,8 @@
 	icon_state = "close"
 	anchored = 1
 	density = 1
+	obj_integrity = 250
+	max_integrity = 250
 
 	var/obj/item/clothing/suit/suit = null
 	var/obj/item/clothing/head/helmet = null
@@ -35,6 +37,7 @@
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/captain
+<<<<<<< HEAD
 	suit_type = /obj/item/clothing/suit/space/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/captain
 	mask_type = /obj/item/clothing/mask/gas
@@ -44,6 +47,11 @@
 	suit_type = /obj/item/clothing/suit/space/heads
 	helmet_type = /obj/item/clothing/head/helmet/space/heads
 	mask_type = /obj/item/clothing/mask/breath
+=======
+	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
+	mask_type = /obj/item/clothing/mask/gas/sechailer
+	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+>>>>>>> masterTGbranch
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
@@ -140,29 +148,50 @@
 				extra_items += new type(src)
 	update_icon()
 
+/obj/machinery/suit_storage_unit/Destroy()
+	if(suit)
+		qdel(suit)
+		suit = null
+	if(helmet)
+		qdel(helmet)
+		helmet = null
+	if(mask)
+		qdel(mask)
+		mask = null
+	if(storage)
+		qdel(storage)
+		storage = null
+	return ..()
+
 /obj/machinery/suit_storage_unit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(uv)
 		if(uv_super)
-			overlays += "super"
+			add_overlay("super")
 		else if(occupant)
-			overlays += "uvhuman"
+			add_overlay("uvhuman")
 		else
-			overlays += "uv"
+			add_overlay("uv")
 	else if(state_open)
 		if(stat & BROKEN)
-			overlays += "broken"
+			add_overlay("broken")
 		else
-			overlays += "open"
+			add_overlay("open")
 			if(suit)
-				overlays += "suit"
+				add_overlay("suit")
 			if(helmet)
+<<<<<<< HEAD
 				overlays += "helm"
 			if(shoes)
 				overlays += "storage"
+=======
+				add_overlay("helm")
+			if(storage)
+				add_overlay("storage")
+>>>>>>> masterTGbranch
 	else if(occupant)
-		overlays += "human"
+		add_overlay("human")
 
 /obj/machinery/suit_storage_unit/power_change()
 	..()
@@ -180,18 +209,12 @@
 	occupant = null
 	extra_items = null
 
-/obj/machinery/suit_storage_unit/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			if(prob(50))
-				open_machine()
-				dump_contents()
-			qdel(src)
-		if(2)
-			if(prob(50))
-				open_machine()
-				dump_contents()
-				qdel(src)
+/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		open_machine()
+		dump_contents()
+		new /obj/item/stack/sheet/metal (loc, 2)
+	qdel(src)
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
@@ -235,7 +258,7 @@
 				occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(occupant))
 				occupant.emote("scream")
-		addtimer(src, "cook", 50, FALSE)
+		addtimer(src, "cook", 50, TIMER_NORMAL)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -277,14 +300,13 @@
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
-	container_resist()
+	container_resist(user)
 
-/obj/machinery/suit_storage_unit/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/suit_storage_unit/container_resist(mob/living/user)
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
-		addtimer(src, "resist_open", 300, FALSE, user)
+		addtimer(src, "resist_open", 300, TIMER_NORMAL, user)
 	else
 		open_machine()
 		dump_contents()

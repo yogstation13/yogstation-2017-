@@ -1,9 +1,3 @@
-#define GIRDER_NORMAL 0
-#define GIRDER_REINF_STRUTS 1
-#define GIRDER_REINF 2
-#define GIRDER_DISPLACED 3
-#define GIRDER_DISASSEMBLED 4
-
 /obj/structure/girder
 	name = "girder"
 	icon_state = "girder"
@@ -13,16 +7,21 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
+<<<<<<< HEAD
 	var/health = 100
+=======
+	obj_integrity = 200
+	max_integrity = 200
+>>>>>>> masterTGbranch
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(state == GIRDER_DISPLACED)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user.visible_message("<span class='warning'>[user] disassembles the girder.</span>", \
 								"<span class='notice'>You start to disassemble the girder...</span>", "You hear clanking and banging noises.")
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if(state != GIRDER_DISPLACED)
 					return
 				state = GIRDER_DISASSEMBLED
@@ -31,9 +30,9 @@
 				M.add_fingerprint(user)
 				qdel(src)
 		else if(state == GIRDER_REINF)
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You start unsecuring support struts...</span>"
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if(state != GIRDER_REINF)
 					return
 				user << "<span class='notice'>You unsecure the support struts.</span>"
@@ -41,21 +40,25 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
+<<<<<<< HEAD
 			var/turf/T = loc
 			if(!istype(T, /turf/open) || !(T.flags & GIRDERABLE))
+=======
+			if(!isfloorturf(loc))
+>>>>>>> masterTGbranch
 				user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 				return
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You start securing the girder...</span>"
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				user << "<span class='notice'>You secure the girder.</span>"
 				var/obj/structure/girder/G = new (loc)
 				transfer_fingerprints_to(G)
 				qdel(src)
 		else if(state == GIRDER_NORMAL && can_displace)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src.loc, W.usesound, 100, 1)
 			user << "<span class='notice'>You start unsecuring the girder...</span>"
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				user << "<span class='notice'>You unsecure the girder.</span>"
 				var/obj/structure/girder/displaced/D = new (loc)
 				transfer_fingerprints_to(D)
@@ -78,9 +81,9 @@
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == GIRDER_REINF_STRUTS)
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(src.loc, W.usesound, 100, 1)
 		user << "<span class='notice'>You start removing support struts...</span>"
-		if(do_after(user, 40/W.toolspeed, target = src))
+		if(do_after(user, 40*W.toolspeed, target = src))
 			user << "<span class='notice'>You remove the support struts.</span>"
 			new /obj/item/stack/sheet/plasteel(get_turf(src))
 			var/obj/structure/girder/G = new (loc)
@@ -88,11 +91,18 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack))
+<<<<<<< HEAD
 		var/turf/T = get_turf(src)
 		if (istype(T, /turf/closed/wall))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
 		if (!istype(src.loc, /turf/open/floor) || !(T.flags & GIRDERABLE))
+=======
+		if(iswallturf(loc))
+			user << "<span class='warning'>There is already a wall present!</span>"
+			return
+		if(!isfloorturf(src.loc))
+>>>>>>> masterTGbranch
 			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
@@ -102,12 +112,12 @@
 		if(istype(W,/obj/item/stack/rods))
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two rods to create a false wall!</span>"
 					return
 				user << "<span class='notice'>You start building a reinforced false wall...</span>"
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.amount < 2)
+					if(!src.loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
@@ -115,12 +125,12 @@
 					transfer_fingerprints_to(FW)
 					qdel(src)
 			else
-				if(S.amount < 5)
+				if(S.get_amount() < 5)
 					user << "<span class='warning'>You need at least five rods to add plating!</span>"
 					return
 				user << "<span class='notice'>You start adding plating...</span>"
 				if (do_after(user, 40, target = src))
-					if(!src.loc || !S || S.amount < 5)
+					if(!src.loc || !S || S.get_amount() < 5)
 						return
 					S.use(5)
 					user << "<span class='notice'>You add the plating.</span>"
@@ -164,12 +174,12 @@
 
 		if(istype(S,/obj/item/stack/sheet/plasteel))
 			if(state == GIRDER_DISPLACED)
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 					return
 				user << "<span class='notice'>You start building a reinforced false wall...</span>"
 				if(do_after(user, 20, target = src))
-					if(!src.loc || !S || S.amount < 2)
+					if(!src.loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You create a reinforced false wall. Push on it to open or close the passage.</span>"
@@ -178,11 +188,11 @@
 					qdel(src)
 			else
 				if(state == GIRDER_REINF)
-					if(S.amount < 1)
+					if(S.get_amount() < 1)
 						return
 					user << "<span class='notice'>You start finalizing the reinforced wall...</span>"
 					if(do_after(user, 50, target = src))
-						if(!src.loc || !S || S.amount < 1)
+						if(!src.loc || !S || S.get_amount() < 1)
 							return
 						S.use(1)
 						user << "<span class='notice'>You fully reinforce the wall.</span>"
@@ -191,11 +201,11 @@
 						qdel(src)
 					return
 				else
-					if(S.amount < 1)
+					if(S.get_amount() < 1)
 						return
 					user << "<span class='notice'>You start reinforcing the girder...</span>"
 					if (do_after(user, 60, target = src))
-						if(!src.loc || !S || S.amount < 1)
+						if(!src.loc || !S || S.get_amount() < 1)
 							return
 						S.use(1)
 						user << "<span class='notice'>You reinforce the girder.</span>"
@@ -207,22 +217,25 @@
 		if(S.sheettype)
 			var/M = S.sheettype
 			if(state == GIRDER_DISPLACED)
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two sheets to create a false wall!</span>"
 					return
-				S.use(2)
-				user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
-				var/F = text2path("/obj/structure/falsewall/[M]")
-				var/obj/structure/FW = new F (loc)
-				transfer_fingerprints_to(FW)
-				qdel(src)
+				if(do_after(user, 20, target = src))
+					if(!src.loc || !S || S.get_amount() < 2)
+						return
+					S.use(2)
+					user << "<span class='notice'>You create a false wall. Push on it to open or close the passage.</span>"
+					var/F = text2path("/obj/structure/falsewall/[M]")
+					var/obj/structure/FW = new F (loc)
+					transfer_fingerprints_to(FW)
+					qdel(src)
 			else
-				if(S.amount < 2)
+				if(S.get_amount() < 2)
 					user << "<span class='warning'>You need at least two sheets to add plating!</span>"
 					return
 				user << "<span class='notice'>You start adding plating...</span>"
 				if (do_after(user, 40, target = src))
-					if(!src.loc || !S || S.amount < 2)
+					if(!src.loc || !S || S.get_amount() < 2)
 						return
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
@@ -292,24 +305,18 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSGRILLE)
 
-/obj/structure/girder/blob_act(obj/effect/blob/B)
-	if(prob(40))
-		qdel(src)
+/obj/structure/girder/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
+		new remains(loc)
+	qdel(src)
 
-/obj/structure/girder/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if (prob(70))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
-		if(3)
-			if (prob(40))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
+/obj/structure/girder/ratvar_act()
+	if(anchored)
+		new /obj/structure/destructible/clockwork/wall_gear(loc)
+	else
+		new /obj/structure/destructible/clockwork/wall_gear/displaced(loc)
+	qdel(src)
 
 /obj/structure/girder/narsie_act()
 	if(prob(25))
@@ -322,28 +329,21 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
+	obj_integrity = 120
+	max_integrity = 120
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
+<<<<<<< HEAD
 	health = 200
+=======
+	obj_integrity = 350
+	max_integrity = 350
+>>>>>>> masterTGbranch
 
-/obj/structure/girder/reinforced/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if (prob(50))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
-		if(3)
-			if (prob(20))
-				var/remains = pick(/obj/item/stack/rods,/obj/item/stack/sheet/metal)
-				new remains(loc)
-				qdel(src)
 
 
 //////////////////////////////////////////// cult girder //////////////////////////////////////////////
@@ -366,9 +366,9 @@
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(src.loc, W.usesound, 50, 1)
 			user << "<span class='notice'>You start slicing apart the girder...</span>"
-			if(do_after(user, 40/W.toolspeed, target = src))
+			if(do_after(user, 40*W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return
 				user << "<span class='notice'>You slice apart the girder.</span>"
@@ -398,17 +398,18 @@
 
 	else if(istype(W, /obj/item/stack/sheet/runed_metal))
 		var/obj/item/stack/sheet/runed_metal/R = W
-		if(R.amount < 1)
+		if(R.get_amount() < 1)
 			user << "<span class='warning'>You need at least one sheet of runed metal to construct a runed wall!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] begins laying runed metal on [src]...</span>", "<span class='notice'>You begin constructing a runed wall...</span>")
-		if(!do_after(user, 50, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
-		R.use(1)
-		var/turf/T = get_turf(src)
-		T.ChangeTurf(/turf/closed/wall/mineral/cult)
-		qdel(src)
+		if(do_after(user, 50, target = src))
+			if(R.get_amount() < 1 || !R)
+				return
+			user.visible_message("<span class='notice'>[user] plates [src] with runed metal.</span>", "<span class='notice'>You construct a runed wall.</span>")
+			R.use(1)
+			var/turf/T = get_turf(src)
+			T.ChangeTurf(/turf/closed/wall/mineral/cult)
+			qdel(src)
 
 	else
 		return ..()
@@ -416,15 +417,7 @@
 /obj/structure/girder/cult/narsie_act()
 	return
 
-/obj/structure/girder/cult/ex_act(severity, target)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(30))
-				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
-				qdel(src)
-		if(3)
-			if(prob(5))
-				new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
-				qdel(src)
+/obj/structure/girder/cult/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new/obj/item/stack/sheet/runed_metal/(get_turf(src), 1)
+	qdel(src)

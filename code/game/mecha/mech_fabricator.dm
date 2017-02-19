@@ -37,7 +37,7 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
 
@@ -143,7 +143,7 @@
 	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	if(D.reagents.len) // No reagents storage - no reagent designs.
+	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1
@@ -155,7 +155,7 @@
 	var/list/res_coef = get_resources_w_coeff(D)
 
 	materials.use_amount(res_coef)
-	overlays += "fab-active"
+	add_overlay("fab-active")
 	use_power = 2
 	updateUsrDialog()
 	sleep(get_construction_time_w_coeff(D))
@@ -415,7 +415,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/deconstruction()
+/obj/machinery/mecha_part_fabricator/on_deconstruction()
 	materials.retrieve_all()
 	..()
 
@@ -453,7 +453,7 @@
 			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
 			if(W && W.materials.len)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
-				overlays += mat_overlay
+				add_overlay(mat_overlay)
 				sleep(10)
 				overlays -= mat_overlay //No matter what the overlay shall still be deleted
 

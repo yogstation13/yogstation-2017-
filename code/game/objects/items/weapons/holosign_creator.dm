@@ -5,7 +5,7 @@
 	icon_state = "signmaker"
 	item_state = "electronic"
 	force = 0
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -14,7 +14,7 @@
 	var/list/signs = list()
 	var/max_signs = 10
 	var/creation_time = 0 //time to create a holosign in deciseconds.
-	var/holosign_type = /obj/effect/overlay/holograph/wetsign
+	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = 0 //to prevent placing multiple holo barriers at once
 
 /obj/item/weapon/holosign_creator/afterattack(atom/target, mob/user, flag)
@@ -22,7 +22,7 @@
 		if(!check_allowed_items(target, 1))
 			return
 		var/turf/T = get_turf(target)
-		var/obj/effect/overlay/holograph/H = locate(holosign_type) in T
+		var/obj/structure/holosign/H = locate(holosign_type) in T
 		if(H)
 			user << "<span class='notice'>You use [src] to deactivate [H].</span>"
 			qdel(H)
@@ -62,7 +62,7 @@
 	name = "security holobarrier projector"
 	desc = "A holographic projector that creates holographic security barriers."
 	icon_state = "signmaker_sec"
-	holosign_type = /obj/effect/overlay/holograph/barrier
+	holosign_type = /obj/structure/holosign/barrier
 	creation_time = 30
 	max_signs = 6
 
@@ -70,25 +70,25 @@
 	name = "engineering holobarrier projector"
 	desc = "A holographic projector that creates holographic engineering barriers."
 	icon_state = "signmaker_engi"
-	holosign_type = /obj/effect/overlay/holograph/barrier/engineering
+	holosign_type = /obj/structure/holosign/barrier/engineering
 	creation_time = 30
 	max_signs = 6
 
 /obj/item/weapon/holosign_creator/cyborg
 	name = "Energy Barrier Projector"
 	desc = "A holographic projector that creates fragile energy fields"
-	creation_time = 5
+	creation_time = 15
 	max_signs = 9
-	holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
+	holosign_type = /obj/structure/holosign/barrier/cyborg
 	var/shock = 0
 
 /obj/item/weapon/holosign_creator/cyborg/attack_self(mob/user)
-	if(isrobot(user))
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 
 		if(shock)
 			user <<"<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>"
-			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
+			holosign_type = /obj/structure/holosign/barrier/cyborg
 			creation_time = 5
 			if(signs.len)
 				for(var/H in signs)
@@ -97,7 +97,7 @@
 			return
 		else if(R.emagged&&!shock)
 			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
-			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg/hacked
+			holosign_type = /obj/structure/holosign/barrier/cyborg/hacked
 			creation_time = 30
 			if(signs.len)
 				for(var/H in signs)
@@ -114,6 +114,7 @@
 			qdel(H)
 		user << "<span class='notice'>You clear all active holograms.</span>"
 
+<<<<<<< HEAD
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
@@ -257,3 +258,5 @@
 			shockcd = 1
 			spawn(10)
 			shockcd = 0
+=======
+>>>>>>> masterTGbranch

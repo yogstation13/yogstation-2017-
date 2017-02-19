@@ -4,11 +4,31 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 
 	var/obj/item/radio/integrated/radio = null
+<<<<<<< HEAD
 	var/functions = 0 //Bitflags in __DEFINES/pda.dm
 	var/special_functions = 0
+=======
+	var/access_security = 0
+	var/access_engine = 0
+	var/access_atmos = 0
+	var/access_medical = 0
+	var/access_manifest = 0
+	var/access_clown = 0
+	var/access_mime = 0
+	var/access_janitor = 0
+//	var/access_flora = 0
+	var/access_reagent_scanner = 0
+	var/access_newscaster = 0
+	var/access_remote_door = 0 //Control some blast doors remotely!!
+	var/remote_door_id = ""
+	var/access_status_display = 0
+	var/access_quartermaster = 0
+	var/access_hydroponics = 0
+	var/access_dronephone = 0
+>>>>>>> masterTGbranch
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	var/alert_flags = 0 //Bitflags in __DEFINES/pda.dm
 	var/alert_toggles = 0
@@ -75,15 +95,25 @@
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
+<<<<<<< HEAD
 	functions = PDA_ENGINE_FUNCTIONS
 	alert_flags = PDA_POWER_ALERT
+=======
+	access_engine = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
+<<<<<<< HEAD
 	functions = PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS
 	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT
+=======
+	access_atmos = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
@@ -121,7 +151,12 @@
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
+<<<<<<< HEAD
 	functions = PDA_JANITOR_FUNCTIONS
+=======
+	access_janitor = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
@@ -156,6 +191,7 @@
 	name = "\improper B.O.O.P. Remote Control cartridge"
 	desc = "Packed with heavy duty triple-bot interlink!"
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
+	access_dronephone = 1
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
@@ -193,6 +229,14 @@
 	icon_state = "cart-h"
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 	bot_access_flags = MULE_BOT|CLEAN_BOT
+<<<<<<< HEAD
+=======
+	access_janitor = 1
+	access_security = 1
+	access_newscaster = 1
+	access_quartermaster = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -204,8 +248,16 @@
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
 	icon_state = "cart-ce"
+<<<<<<< HEAD
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ENGINE_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS
 	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT
+=======
+	access_manifest = 1
+	access_status_display = 1
+	access_engine = 1
+	access_atmos = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
@@ -218,19 +270,41 @@
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
+<<<<<<< HEAD
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_ATMOS_FUNCTIONS
 	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
+=======
+	access_manifest = 1
+	access_status_display = 1
+	access_reagent_scanner = 1
+	access_atmos = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 450% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
+<<<<<<< HEAD
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_ENGINE_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_MEDICAL_FUNCTIONS|\
 				PDA_REAGENT_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS|\
 				PDA_NEWSCASTER_FUNCTIONS|PDA_CARGO_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_BOTANY_FUNCTIONS
 	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
 	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT|PDA_HOTLINE_ALERT|PDA_BURGLAR_ALERT
+=======
+	access_manifest = 1
+	access_engine = 1
+	access_security = 1
+	access_medical = 1
+	access_reagent_scanner = 1
+	access_status_display = 1
+	access_atmos = 1
+	access_newscaster = 1
+	access_quartermaster = 1
+	access_janitor = 1
+	access_dronephone = 1
+>>>>>>> masterTGbranch
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 

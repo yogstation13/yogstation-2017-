@@ -7,6 +7,8 @@
 	desc = "The frame of a meat spike."
 	density = 1
 	anchored = 0
+	obj_integrity = 200
+	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -17,14 +19,31 @@
 		if(R.get_amount() >= 4)
 			R.use(4)
 			user << "<span class='notice'>You add spikes to the frame.</span>"
-			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
+			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
+<<<<<<< HEAD
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start to deconstruct the frame...</span>"
 		if(do_after(user, 40/I.toolspeed, target = src))
 			user << "<span class='notice'>You deconstruct the frame.</span>"
 			new /obj/item/stack/sheet/metal(loc, 5)
+=======
+	else if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.remove_fuel(0, user))
+			return
+		user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
+		playsound(src.loc, WT.usesound, 40, 1)
+		if(do_after(user, 40*WT.toolspeed, 1, target = src))
+			if(!WT.isOn())
+				return
+			playsound(src.loc, WT.usesound, 50, 1)
+			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
+							"<span class='italics'>You hear welding.</span>")
+			new /obj/item/stack/sheet/metal(src.loc, 4)
+>>>>>>> masterTGbranch
 			qdel(src)
 		return
 	else
@@ -39,7 +58,12 @@
 	anchored = 1
 	buckle_lying = 0
 	can_buckle = 1
+<<<<<<< HEAD
 	var/spiked
+=======
+	obj_integrity = 250
+	max_integrity = 250
+>>>>>>> masterTGbranch
 
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
@@ -48,21 +72,28 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
+<<<<<<< HEAD
 		if(!spiked)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
+=======
+		if(!has_buckled_mobs())
+			playsound(loc, I.usesound, 100, 1)
+			if(do_after(user, 20*I.toolspeed, target = src))
+>>>>>>> masterTGbranch
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
-				new /obj/item/stack/rods(loc, 4)
-				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
-				transfer_fingerprints_to(F)
-				qdel(src)
+				deconstruct(TRUE)
 		else
 			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
 	else
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
+<<<<<<< HEAD
 	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
+=======
+	if(isliving(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
+>>>>>>> masterTGbranch
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
@@ -76,15 +107,20 @@
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
-			L.buckled = src
-			L.dir = 2
+			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
 			L.pixel_y = L.get_standard_pixel_y_offset(180)
+<<<<<<< HEAD
 	else if(spiked)
 		user_unbuckle_mob(spiked, user)
+=======
+	else if (has_buckled_mobs())
+		for(var/mob/living/L in buckled_mobs)
+			user_unbuckle_mob(L, user)
+>>>>>>> masterTGbranch
 	else
 		..()
 
@@ -158,3 +194,12 @@
 		spiked = 0
 		M.emote("scream")
 		M.AdjustWeakened(10)
+
+/obj/structure/kitchenspike/deconstruct(disassembled = TRUE)
+	if(disassembled)
+		var/obj/F = new /obj/structure/kitchenspike_frame(src.loc)
+		transfer_fingerprints_to(F)
+	else
+		new /obj/item/stack/sheet/metal(src.loc, 4)
+	new /obj/item/stack/rods(loc, 4)
+	qdel(src)

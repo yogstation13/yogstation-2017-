@@ -1,7 +1,7 @@
 /proc/radiation_pulse(turf/epicenter, heavy_range, light_range, severity, log=0)
 	if(!epicenter || !severity) return
 
-	if(!istype(epicenter, /turf))
+	if(!isturf(epicenter))
 		epicenter = get_turf(epicenter.loc)
 
 	if(heavy_range > light_range)
@@ -29,7 +29,10 @@
 /atom/proc/rad_act(var/severity)
 	return 1
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> masterTGbranch
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)
 		var/blocked = getarmor(null, "rad")
@@ -40,3 +43,15 @@
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob
 			I.rad_act(amount)
+
+/mob/living/carbon/rad_act(amount, silent = 0)
+	if(dna && (RADIMMUNE in dna.species.species_traits))
+		silent = TRUE
+	..()
+
+//Silicons will inherently not get irradiated due to having an empty handle_mutations_and_radiation, but they need to not hear this
+/mob/living/silicon/rad_act(amount)
+	. = ..(amount, TRUE)
+
+/mob/living/simple_animal/bot/rad_act(amount)
+	. = ..(amount, TRUE)

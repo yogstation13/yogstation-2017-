@@ -115,7 +115,10 @@
 		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
+<<<<<<< HEAD
 				t.obscured.plane = PLANE_AI_STATIC
+=======
+>>>>>>> masterTGbranch
 
 			obscured += t.obscured
 			for(var/eye in seenby)

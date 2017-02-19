@@ -8,11 +8,12 @@
 	icon_state = "sechailer"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR|HIDEFACE
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	visor_flags_cover = MASKCOVERSMOUTH
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -48,7 +49,7 @@
 				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
 			if(4)
-				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
+				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
 			user << "<span class='danger'>You broke the restrictor!</span>"
@@ -56,8 +57,8 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
-	if(actiontype == /datum/action/item_action/halt)
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/halt))
 		halt()
 	else
 		adjustmask(user)
@@ -69,7 +70,7 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!istype(usr, /mob/living))
+	if(!isliving(usr))
 		return
 	if(!can_use(usr))
 		return

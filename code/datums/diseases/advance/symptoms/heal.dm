@@ -37,7 +37,11 @@ Bonus
 	var/heal_amt = 0.5
 	if(M.toxloss > 0 && prob(20))
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
+<<<<<<< HEAD
 	M.adjustToxLoss(-heal_amt, 1, DAMAGE_DISEASE)
+=======
+	M.adjustToxLoss(-heal_amt)
+>>>>>>> masterTGbranch
 	return 1
 
 /*
@@ -99,12 +103,19 @@ Bonus
 
 /datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 1
+<<<<<<< HEAD
 	var/list/parts
 	if(ishuman(M))
 		var/mob/living.carbon/human/H = M
 		parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
 	if(!parts || !parts.len)
+=======
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(!parts.len)
+>>>>>>> masterTGbranch
 		return
 
 	for(var/obj/item/bodypart/L in parts)
@@ -144,6 +155,7 @@ Bonus
 
 /datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 2
+<<<<<<< HEAD
 	var/list/parts
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -155,6 +167,17 @@ Bonus
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#33FFCC"))
 
 	if(!parts || !parts.len)
+=======
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(M.getCloneLoss() > 0)
+		M.adjustCloneLoss(-1)
+		M.take_bodypart_damage(0, 1) //Deals BURN damage, which is not cured by this symptom
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#33FFCC"))
+
+	if(!parts.len)
+>>>>>>> masterTGbranch
 		return
 
 	for(var/obj/item/bodypart/L in parts)
@@ -165,6 +188,7 @@ Bonus
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#CC1100"))
 
 	return 1
+<<<<<<< HEAD
 
 /*
 //////////////////////////////////////
@@ -211,6 +235,81 @@ Bonus
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#FF9933"))
 	return 1
 
+=======
+>>>>>>> masterTGbranch
+
+/*
+//////////////////////////////////////
+
+<<<<<<< HEAD
+Heat Resistance //Needs a better name
+
+	No resistance change.
+	Decreases stage speed.
+	Decreases transmittablity.
+	Fatal Level.
+
+Bonus
+	Heals burn damage over time, and helps stabilize body temperature.
+=======
+Tissue Regrowth
+
+	Little bit hidden.
+	Lowers resistance tremendously.
+	Decreases stage speed tremendously.
+	Decreases transmittablity temrendously.
+	Fatal Level.
+
+Bonus
+	Heals burn damage slowly over time.
+>>>>>>> masterTGbranch
+
+//////////////////////////////////////
+*/
+
+<<<<<<< HEAD
+/datum/symptom/heal/burn/plus
+
+	name = "Heat Resistance"
+	stealth = 0
+	resistance = 0
+	stage_speed = -2
+	transmittable = -2
+	level = 8
+
+/datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = 2
+
+	var/list/parts
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+=======
+/datum/symptom/heal/burn
+
+	name = "Tissue Regrowth"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
+
+/datum/symptom/heal/burn/Heal(mob/living/carbon/M, datum/disease/advance/A)
+	var/heal_amt = 1
+
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+
+	if(!parts.len)
+		return
+
+	for(var/obj/item/bodypart/L in parts)
+		if(L.heal_damage(0, heal_amt/parts.len))
+			M.update_damage_overlays()
+
+	if(prob(20))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#FF9933"))
+	return 1
+
 
 /*
 //////////////////////////////////////
@@ -240,17 +339,19 @@ Bonus
 /datum/symptom/heal/burn/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 2
 
-	var/list/parts
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
+>>>>>>> masterTGbranch
 
 	if(M.bodytemperature > 310)
 		M.bodytemperature = max(310, M.bodytemperature - (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
 	else if(M.bodytemperature < 311)
 		M.bodytemperature = min(310, M.bodytemperature + (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
 
+<<<<<<< HEAD
 	if(!parts || !parts.len)
+=======
+	if(!parts.len)
+>>>>>>> masterTGbranch
 		return
 
 	for(var/obj/item/bodypart/L in parts)
@@ -290,7 +391,11 @@ Bonus
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/amt_healed = 1
+<<<<<<< HEAD
 	M.adjustBrainLoss(-amt_healed, 1, DAMAGE_DISEASE)
+=======
+	M.adjustBrainLoss(-amt_healed)
+>>>>>>> masterTGbranch
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)

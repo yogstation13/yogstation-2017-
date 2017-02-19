@@ -11,17 +11,25 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/pod
+<<<<<<< HEAD
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
 	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
+=======
+>>>>>>> masterTGbranch
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a sentient ecosystem - an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
 	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+<<<<<<< HEAD
 	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper", "Cannabis")
+=======
+	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
+	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+>>>>>>> masterTGbranch
 	new_spawn.real_name = plant_name
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -40,27 +48,43 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
+<<<<<<< HEAD
 	uniform = /obj/item/clothing/under/gladiator
+=======
+	helmet = /obj/item/clothing/head/helmet/gladiator
+	uniform = /obj/item/clothing/under/gladiator/ash_walker
+>>>>>>> masterTGbranch
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0
 	density = 0
+<<<<<<< HEAD
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>, and is lead by The Chieftain. The wastes are sacred ground, its monsters a blessed bounty. \
+=======
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
+>>>>>>> masterTGbranch
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
+<<<<<<< HEAD
 	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
 	new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
+=======
+	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>"
+>>>>>>> masterTGbranch
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+<<<<<<< HEAD
 		H.languages_spoken = ASHWALKER
 		H.languages_understood = ASHWALKER
 		H.weather_immunities |= "ash"
 	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
 	ashhud.join_hud(new_spawn)
+=======
+>>>>>>> masterTGbranch
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
@@ -68,6 +92,7 @@
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
+<<<<<<< HEAD
 /obj/effect/mob_spawn/human/ash_walker/chief
 	name = "chief ashwalker egg"
 	icon_state = "hero_egg"
@@ -90,6 +115,8 @@
 	ticker.mode.set_antag_hud(new_spawn, "hudchieftain")
 	new_spawn <<"<b>You are the chieftain of the ashwalkers. You are the only one who can use complicated machinery and speak to outsiders-Lead your tribe, for better or for worse.</b>"
 
+=======
+>>>>>>> masterTGbranch
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
 	name = "timeless prison"
@@ -100,15 +127,24 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/shadow
+<<<<<<< HEAD
 	flavour_text = "<font size=3><b>Y</b></font>ou are cursed. Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you did so, \
 	it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland.</b>"
+=======
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are cursed. Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you \
+	did so, it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland.</b>"
+>>>>>>> masterTGbranch
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
 	..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
+<<<<<<< HEAD
 	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
+=======
+	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
+>>>>>>> masterTGbranch
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -132,6 +168,10 @@
 	death = FALSE
 	anchored = 0
 	density = 0
+<<<<<<< HEAD
+=======
+	var/mob/living/owner = null //golem's owner if it has one
+>>>>>>> masterTGbranch
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
@@ -141,6 +181,13 @@
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+<<<<<<< HEAD
+=======
+	spawn(1)//give it time to get an owner
+		if(owner)
+			flavour_text = "You are a golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
+			Serve [owner], and assist [owner.p_them()] in completing their goals at any cost."
+>>>>>>> masterTGbranch
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
 	var/golem_surname = pick(golem_names)
@@ -149,7 +196,11 @@
 	if(prob(3))
 		golem_surname = pick(last_names)
 
+<<<<<<< HEAD
 	var/datum/species/X = mob_species
+=======
+	var/datum/species/golem/X = mob_species
+>>>>>>> masterTGbranch
 	var/golem_forename = initial(X.id)
 
 	// The id of golem species is either their material "diamond","gold",
@@ -163,12 +214,26 @@
 	// also a tiny chance of being called "Plasma Meme"
 	// which is clearly a feature
 
+<<<<<<< HEAD
 	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+=======
+	new_spawn << "[initial(X.info_text)]"
+	if(!owner)
+		new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	else
+		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
+		new_spawn.mind.enslave_mind_to_creator(owner)
+		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
+		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
+>>>>>>> masterTGbranch
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> masterTGbranch
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
@@ -179,8 +244,13 @@
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
 /obj/effect/mob_spawn/human/hermit
+<<<<<<< HEAD
 	name = "malfunctiong cryostasis sleeper"
 	desc = "A humming sleeper with a silhoutted occupant inside. Its stasis function is broken and it's likely being used as a bed."
+=======
+	name = "malfunctioning cryostasis sleeper"
+	desc = "A humming sleeper with a silhouetted occupant inside. Its stasis function is broken and it's likely being used as a bed."
+>>>>>>> masterTGbranch
 	mob_name = "a stranded hermit"
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper"
@@ -249,27 +319,82 @@
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+<<<<<<< HEAD
 	pocket2 = /obj/item/device/flashlight
+=======
+>>>>>>> masterTGbranch
 	roundstart = FALSE
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you. You remember that you were convicted of "
+<<<<<<< HEAD
 	var/crime
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.real_name = "NTP #LL-0[rand(111,999)]"
 	L.name = L.real_name
 	L.add_memory("You were convicted of [crime].")
+=======
+
+/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
+	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
+	L.name = L.real_name
+>>>>>>> masterTGbranch
 
 /obj/effect/mob_spawn/human/prisoner_transport/New()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
+<<<<<<< HEAD
 	crime = pick(crimes)
 	flavour_text += "[crime]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
 	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")] by whatever means necessary.</b>."
 	objectives = "Find a way to rehabilitate yourself, or choose to commit [crime] and nothing higher."
+=======
+	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
+	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
+>>>>>>> masterTGbranch
 	..()
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+<<<<<<< HEAD
+=======
+
+//Space Hotel Staff
+/obj/effect/mob_spawn/human/hotel_staff //not free antag u little shits
+	name = "staff sleeper"
+	desc = "A sleeper designed for long-term stasis between guest visits."
+	mob_name = "hotel staff member"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	pocket1 = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	objectives = "Cater to visiting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
+	implants = list(/obj/item/weapon/implant/mindshield)
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
+		dereliction of duty!"
+
+/obj/effect/mob_spawn/human/hotel_staff/security
+	name = "hotel security sleeper"
+	mob_name = "hotel security memeber"
+	uniform = /obj/item/clothing/under/rank/security/blueshirt
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	helmet = /obj/item/clothing/head/helmet/blueshirt
+	back = /obj/item/weapon/storage/backpack/security
+	belt = /obj/item/weapon/storage/belt/security/full
+	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
+		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
+	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+
+/obj/effect/mob_spawn/human/hotel_staff/Destroy()
+	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
+	..()
+
+>>>>>>> masterTGbranch

@@ -138,7 +138,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	updateUsrDialog()
 
 
-/obj/machinery/computer/rdconsole/deconstruction()
+/obj/machinery/computer/rdconsole/on_deconstruction()
 	if(linked_destroy)
 		linked_destroy.linked_console = null
 		linked_destroy = null
@@ -188,7 +188,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(t_disk)
 				if(!n)
 					for(var/tech in t_disk.tech_stored)
+<<<<<<< HEAD
 						files.AddTech2Known(tech)
+=======
+						if(tech)
+							files.AddTech2Known(tech)
+>>>>>>> masterTGbranch
 				else
 					files.AddTech2Known(t_disk.tech_stored[n])
 				updateUsrDialog()
@@ -211,9 +216,13 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
+<<<<<<< HEAD
 		var/datum/tech/T = files.known_tech[href_list["copy_tech_ID"]]
 		if(T)
 			t_disk.tech_stored[slot] = T.copy()
+=======
+		t_disk.tech_stored[slot] = files.known_tech[href_list["copy_tech_ID"]]
+>>>>>>> masterTGbranch
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -257,7 +266,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/datum/design/D = files.known_designs[href_list["copy_design_ID"]]
 		if(D)
 			var/autolathe_friendly = 1
-			if(D.reagents.len)
+			if(D.reagents_list.len)
 				autolathe_friendly = 0
 				D.category -= "Imported"
 			else
@@ -278,7 +287,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				usr << "<span class='danger'>The destructive analyzer is busy at the moment.</span>"
 
 			else if(linked_destroy.loaded_item)
-				linked_destroy.loaded_item.loc = linked_destroy.loc
+				linked_destroy.loaded_item.forceMove(linked_destroy.loc)
 				linked_destroy.loaded_item = null
 				linked_destroy.icon_state = "d_analyzer"
 				screen = 1.0
@@ -427,18 +436,21 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			enough_materials = 0
 			g2g = 0
 		else
-			for(var/R in being_built.reagents)
-				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents[R]*coeff))
+			for(var/R in being_built.reagents_list)
+				if(!linked_lathe.reagents.has_reagent(R, being_built.reagents_list[R]*coeff))
 					linked_lathe.say("Not enough reagents to complete prototype.")
 					enough_materials = 0
 					g2g = 0
 
 		if(enough_materials)
 			linked_lathe.materials.use_amount(efficient_mats, amount)
-			for(var/R in being_built.reagents)
-				linked_lathe.reagents.remove_reagent(R, being_built.reagents[R]*coeff)
+			for(var/R in being_built.reagents_list)
+				linked_lathe.reagents.remove_reagent(R, being_built.reagents_list[R]*coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
+
+		coeff *= being_built.lathe_time_factor
+
 		spawn(32*coeff*amount**0.8)
 			if(linked_lathe)
 				if(g2g) //And if we only fail the material requirements, we still spend time and power
@@ -500,16 +512,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			enough_materials = 0
 			g2g = 0
 		else
-			for(var/R in being_built.reagents)
-				if(!linked_imprinter.reagents.has_reagent(R, being_built.reagents[R]/coeff))
+			for(var/R in being_built.reagents_list)
+				if(!linked_imprinter.reagents.has_reagent(R, being_built.reagents_list[R]/coeff))
 					linked_imprinter.say("Not enough reagents to complete prototype.")
 					enough_materials = 0
 					g2g = 0
 
 		if(enough_materials)
 			linked_imprinter.materials.use_amount(efficient_mats)
-			for(var/R in being_built.reagents)
-				linked_imprinter.reagents.remove_reagent(R, being_built.reagents[R]/coeff)
+			for(var/R in being_built.reagents_list)
+				linked_imprinter.reagents.remove_reagent(R, being_built.reagents_list[R]/coeff)
 
 		var/P = being_built.build_path //lets save these values before the spawn() just in case. Nobody likes runtimes.
 		spawn(16)
@@ -569,7 +581,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
+<<<<<<< HEAD
 		if(choice == "Continue")
+=======
+		if(choice == "Continue" && usr.canUseTopic(src))
+>>>>>>> masterTGbranch
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
 			screen = 0.0
@@ -728,7 +744,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 					dat += "Required Materials:<BR>"
+<<<<<<< HEAD
 					var/all_mats = D.materials + D.reagents
+=======
+					var/all_mats = D.materials + D.reagents_list
+>>>>>>> masterTGbranch
 					for(var/M in all_mats)
 						dat += "* [CallMaterialName(M)] x [all_mats[M]]<BR>"
 					dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
@@ -849,7 +869,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/c = 50
 				var/t
 
-				var/all_materials = D.materials + D.reagents
+				var/all_materials = D.materials + D.reagents_list
 				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
@@ -883,7 +903,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/temp_material
 				var/c = 50
 				var/t
+<<<<<<< HEAD
 				var/all_materials = D.materials + D.reagents
+=======
+				var/all_materials = D.materials + D.reagents_list
+>>>>>>> masterTGbranch
 				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
@@ -968,7 +992,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/temp_materials
 				var/check_materials = 1
 
-				var/all_materials = D.materials + D.reagents
+				var/all_materials = D.materials + D.reagents_list
 
 				for(var/M in all_materials)
 					temp_materials += " | "
@@ -994,7 +1018,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
+<<<<<<< HEAD
 				var/all_materials = D.materials + D.reagents
+=======
+				var/all_materials = D.materials + D.reagents_list
+>>>>>>> masterTGbranch
 				for(var/M in all_materials)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))

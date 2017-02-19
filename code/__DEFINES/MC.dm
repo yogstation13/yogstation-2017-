@@ -6,7 +6,11 @@
 #define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
 
 #define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) {Datum.isprocessing = 1;Processor.processing += Datum}
+<<<<<<< HEAD
 #define STOP_PROCESSING(Processor, Datum) if (Datum.isprocessing) {Datum.isprocessing = 0;Processor.processing -= Datum}
+=======
+#define STOP_PROCESSING(Processor, Datum) Datum.isprocessing = 0;Processor.processing -= Datum
+>>>>>>> masterTGbranch
 
 //SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
@@ -44,6 +48,12 @@
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
 
+<<<<<<< HEAD
 #define GLOBAL_PROC		"some_magic_bullshit"
 #define TIMER_NORMAL	FALSE
 #define TIMER_UNIQUE	TRUE
+=======
+
+//Timing subsystem
+#define GLOBAL_PROC	"some_magic_bullshit"
+>>>>>>> masterTGbranch

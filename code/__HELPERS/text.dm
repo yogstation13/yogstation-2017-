@@ -421,6 +421,7 @@ var/list/binary = list("0","1")
 
 	return t
 
+<<<<<<< HEAD
 /proc/char_split(t)
 	. = list()
 	for(var/x in 1 to length(t))
@@ -455,6 +456,8 @@ var/list/rot13_lookup = list()
 
 		rot13_lookup[char] = translated_char
 
+=======
+>>>>>>> masterTGbranch
 #define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
 
 /proc/rot13(text = "")
@@ -471,4 +474,8 @@ var/list/rot13_lookup = list()
 		else if(ca >= text2ascii("N") && ca <= text2ascii("Z"))
 			ca -= 13
 		result += ascii2text(ca)
+<<<<<<< HEAD
 	return jointext(result, "")
+=======
+	return jointext(result, "")
+>>>>>>> masterTGbranch

@@ -5,6 +5,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -40,6 +41,27 @@
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
+	return 1
+
+/obj/item/projectile/bullet/a84mm
+	name ="anti-armour rocket"
+	desc = "USE A WEEL GUN"
+	icon_state= "atrocket"
+	damage = 80
+	var/anti_armour_damage = 200
+	armour_penetration = 100
+	dismemberment = 100
+
+/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
+	..()
+	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
+
+	if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(anti_armour_damage)
+	if(istype(target, /mob/living/silicon))
+		var/mob/living/silicon/S = target
+		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
 /obj/item/projectile/temp
@@ -98,8 +120,13 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.dna.species.id == "pod")
+<<<<<<< HEAD
 			randmuti(C)
 			randmut(C)
+=======
+			C.randmuti()
+			C.randmut()
+>>>>>>> masterTGbranch
 			C.updateappearance()
 			C.domutcheck()
 
@@ -121,6 +148,7 @@
 		M.adjustBrainLoss(20)
 		M.hallucination += 20
 
+<<<<<<< HEAD
 /obj/item/projectile/kinetic
 	name = "kinetic force"
 	icon_state = null
@@ -181,6 +209,8 @@
 	spawn(4)
 		qdel(src)
 
+=======
+>>>>>>> masterTGbranch
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"
 	icon_state = "spark"
@@ -223,25 +253,33 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
+<<<<<<< HEAD
 	damage = 4
 	range = 5
 	dismemberment = 20
+=======
+	damage = 5
+	range = 3.5 //works as 4, but doubles to 7
+	dismemberment = 20
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+>>>>>>> masterTGbranch
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
-	if(!istype(proj_turf, /turf))
+	if(!isturf(proj_turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
 		if(pressure < 60)
-			name = "full strength plasma blast"
+			name = "full strength [name]"
 			damage *= 4
+			range *= 2
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(istype(target, /turf/closed/mineral))
+	if(ismineralturf(target))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
 		Range()
@@ -250,15 +288,15 @@
 
 /obj/item/projectile/plasma/adv
 	damage = 7
-	range = 7
+	range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 8
+	range = 6
 
 
-/obj/item/projectile/gravipulse
-	name = "one-point energy bolt"
+/obj/item/projectile/gravityrepulse
+	name = "repulsion bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
 	hitsound = "sound/weapons/wave.ogg"
@@ -269,12 +307,12 @@
 	var/turf/T
 	var/power = 4
 
-/obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
+/obj/item/projectile/gravityrepulse/New(var/obj/item/ammo_casing/energy/gravityrepulse/C)
 	..()
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
-/obj/item/projectile/gravipulse/on_hit()
+/obj/item/projectile/gravityrepulse/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
@@ -288,18 +326,63 @@
 		spawn(5)
 		F.overlays -= gravfield
 
-/obj/item/projectile/gravipulse/alt
+/obj/item/projectile/gravityattract
+	name = "attraction bolt"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "chronofield"
+	hitsound = "sound/weapons/wave.ogg"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
 	color = "#FF6600"
+	var/turf/T
+	var/power = 4
 
-/obj/item/projectile/gravipulse/alt/on_hit()
+/obj/item/projectile/gravityattract/New(var/obj/item/ammo_casing/energy/gravityattract/C)
+	..()
+	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+		power = min(C.gun.power, 15)
+
+/obj/item/projectile/gravityattract/on_hit()
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
 		if(A == src || (firer && A == src.firer) || A.anchored)
 			continue
-		A.throw_at_fast(T,power+1,1)
+		A.throw_at_fast(T, power+1, 1)
 	for(var/turf/F in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		F.overlays += gravfield
 		spawn(5)
 		F.overlays -= gravfield
+
+/obj/item/projectile/gravitychaos
+	name = "gravitational blast"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "chronofield"
+	hitsound = "sound/weapons/wave.ogg"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
+	color = "#101010"
+	var/turf/T
+	var/power = 4
+
+/obj/item/projectile/gravitychaos/New(var/obj/item/ammo_casing/energy/gravitychaos/C)
+	..()
+	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+		power = min(C.gun.power, 15)
+
+/obj/item/projectile/gravitychaos/on_hit()
+	. = ..()
+	T = get_turf(src)
+	for(var/atom/movable/A in range(T, power))
+		if(A == src|| (firer && A == src.firer) || A.anchored)
+			continue
+		A.throw_at_fast(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
+	for(var/turf/Z in range(T,power))
+		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
+		Z.overlays += gravfield
+		spawn(5)
+		Z.overlays -= gravfield
+

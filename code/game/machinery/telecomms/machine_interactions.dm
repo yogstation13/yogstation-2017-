@@ -42,7 +42,11 @@
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user) && !IsAdminGhost(user))
 		// istype returns false if the value is null
+<<<<<<< HEAD
 		if(!istype(user.get_active_hand(), /obj/item/device/multitool) && !istype(usr.get_inactive_hand(), /obj/item/device/multitool))
+=======
+		if(!istype(user.get_active_held_item(), /obj/item/device/multitool))
+>>>>>>> masterTGbranch
 			return
 
 	if(stat & (BROKEN|NOPOWER))
@@ -111,17 +115,22 @@
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
+<<<<<<< HEAD
 	if(!issilicon(user))
 		if(istype(user.get_active_hand(), /obj/item/device/multitool))
 			P = user.get_active_hand()
 		else if(istype(user.get_inactive_hand(), /obj/item/device/multitool))
 			P = user.get_inactive_hand()
+=======
+	if(!issilicon(user) && istype(user.get_active_held_item(), /obj/item/device/multitool))
+		P = user.get_active_held_item()
+>>>>>>> masterTGbranch
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
-	else if(isrobot(user) && in_range(user, src))
-		if(istype(user.get_active_hand(), /obj/item/device/multitool))
-			P = user.get_active_hand()
+	else if(iscyborg(user) && in_range(user, src))
+		if(istype(user.get_active_held_item(), /obj/item/device/multitool))
+			P = user.get_active_held_item()
 	return P
 
 // Additional Options for certain machines. Use this when you want to add an option to a specific machine.
@@ -138,13 +147,69 @@
 /obj/machinery/telecomms/proc/Options_Topic(href, href_list)
 	return
 
+<<<<<<< HEAD
+=======
+// RELAY
+
+/obj/machinery/telecomms/relay/Options_Menu()
+	var/dat = ""
+	if(src.z == TELECOMM_Z)
+		dat += "<br>Signal Locked to Station: <A href='?src=\ref[src];change_listening=1'>[listening_level == STATION_Z ? "TRUE" : "FALSE"]</a>"
+	dat += "<br>Broadcasting: <A href='?src=\ref[src];broadcast=1'>[broadcasting ? "YES" : "NO"]</a>"
+	dat += "<br>Receiving:    <A href='?src=\ref[src];receive=1'>[receiving ? "YES" : "NO"]</a>"
+	return dat
+
+/obj/machinery/telecomms/relay/Options_Topic(href, href_list)
+
+	if(href_list["receive"])
+		receiving = !receiving
+		temp = "<font color = #666633>-% Receiving mode changed. %-</font color>"
+	if(href_list["broadcast"])
+		broadcasting = !broadcasting
+		temp = "<font color = #666633>-% Broadcasting mode changed. %-</font color>"
+	if(href_list["change_listening"])
+		//Lock to the station OR lock to the current position!
+		//You need at least two receivers and two broadcasters for this to work, this includes the machine.
+		var/result = toggle_level()
+		if(result)
+			temp = "<font color = #666633>-% [src]'s signal has been successfully changed.</font color>"
+		else
+			temp = "<font color = #666633>-% [src] could not lock its signal onto the station. Two broadcasters or receivers required.</font color>"
+
+// BUS
+
+/obj/machinery/telecomms/bus/Options_Menu()
+	var/dat = "<br>Change Signal Frequency: <A href='?src=\ref[src];change_freq=1'>[change_frequency ? "YES ([change_frequency])" : "NO"]</a>"
+	return dat
+
+/obj/machinery/telecomms/bus/Options_Topic(href, href_list)
+
+	if(href_list["change_freq"])
+
+		var/newfreq = input(usr, "Specify a new frequency for new signals to change to. Enter null to turn off frequency changing. Decimals assigned automatically.", src, network) as null|num
+		if(canAccess(usr))
+			if(newfreq)
+				if(findtext(num2text(newfreq), "."))
+					newfreq *= 10 // shift the decimal one place
+				if(newfreq < 10000)
+					change_frequency = newfreq
+					temp = "<font color = #666633>-% New frequency to change to assigned: \"[newfreq] GHz\" %-</font color>"
+			else
+				change_frequency = 0
+				temp = "<font color = #666633>-% Frequency changing deactivated %-</font color>"
+
+>>>>>>> masterTGbranch
 
 /obj/machinery/telecomms/Topic(href, href_list)
 	if(..())
 		return
 
 	if(!issilicon(usr))
+<<<<<<< HEAD
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool) && !istype(usr.get_inactive_hand(), /obj/item/device/multitool))
+=======
+		if(!istype(usr.get_active_held_item(), /obj/item/device/multitool))
+>>>>>>> masterTGbranch
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)

@@ -9,7 +9,11 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_keyboard = "tcstation_key"
 	icon_screen = "syndie"
 	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
+<<<<<<< HEAD
 	paiAllowed = 0
+=======
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+>>>>>>> masterTGbranch
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
@@ -35,7 +39,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
 		return
 	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_hand()
+		var/obj/item/I = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		uplinkholder = I
@@ -49,7 +53,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
 	if(uplinkholder)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)

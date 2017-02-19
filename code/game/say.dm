@@ -30,10 +30,15 @@ var/list/freqtospan = list(
 /atom/movable/proc/can_speak()
 	return 1
 
+<<<<<<< HEAD
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	var/rendered = compose_message(src, languages, message, , spans)
+=======
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
+	var/rendered = compose_message(src, languages_spoken, message, , spans)
+>>>>>>> masterTGbranch
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages, message, , spans)
+		AM.Hear(rendered, src, languages_spoken, message, , spans)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
@@ -88,7 +93,11 @@ var/list/freqtospan = list(
 				return speaker.say_quote(raw_message, spans, message_langs)
 			return AM.say_quote(raw_message, spans, message_langs)
 		else
+<<<<<<< HEAD
 			return speaker.say_quote(raw_message, spans, message_langs)
+=======
+			return speaker.say_quote(raw_message, spans)
+>>>>>>> masterTGbranch
 	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
 		var/atom/movable/AM = speaker.GetSource()
 		if(message_langs & HUMAN)
@@ -96,9 +105,15 @@ var/list/freqtospan = list(
 		if(message_langs & RATVAR)
 			raw_message = text2ratvar(raw_message)
 		if(AM)
+<<<<<<< HEAD
 			return AM.say_quote(raw_message, spans, message_langs)
 		else
 			return speaker.say_quote(raw_message, spans, message_langs)
+=======
+			return AM.say_quote(raw_message, spans)
+		else
+			return speaker.say_quote(raw_message, spans)
+>>>>>>> masterTGbranch
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
@@ -177,6 +192,7 @@ var/list/freqtospan = list(
 /atom/movable/virtualspeaker/Destroy()
 	..()
 	return QDEL_HINT_PUTINPOOL
+<<<<<<< HEAD
 
 /proc/get_virtual_speaker_for(atom/movable/AM, obj/item/device/radio/radio)
 	if(!AM)
@@ -196,3 +212,5 @@ var/list/freqtospan = list(
 		var/mob/M = AM
 		virt.job = M.job
 	return virt
+=======
+>>>>>>> masterTGbranch

@@ -27,11 +27,15 @@
 	card.overlays.Cut()
 	card.overlays += "pai-off"
 	canmove = 0
+<<<<<<< HEAD
 	did_suicide = 0
 	wiped = 0
 	emitter_OD = 0
 	stat = DEAD
 
+=======
+	card.removePersonality()
+>>>>>>> masterTGbranch
 	update_sight()
 	clear_fullscreens()
 	close_up()

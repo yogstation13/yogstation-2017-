@@ -1,5 +1,6 @@
 /mob/living/silicon/pai
 	name = "pAI"
+<<<<<<< HEAD
 	icon = 'icons/mob/pai.dmi'
 	mouse_opacity = 1
 	density = 0
@@ -12,10 +13,22 @@
 
 	var/description = null
 
+=======
+>>>>>>> masterTGbranch
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
-
+	icon = 'icons/mob/pai.dmi'
+	icon_state = "repairbot"
+	mouse_opacity = 1
+	density = 0
+	ventcrawler = 2
+	luminosity = 0
+	pass_flags = PASSTABLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	weather_immunities = list("ash")
+	health = 500
+	maxHealth = 500
 
 	var/static/list/available_software
 
@@ -75,6 +88,7 @@
 
 	var/obj/item/weapon/card/id/access_card = null //yes pai require one of these now OR ELSE THEY CAN WALK FUCKING EVERYWHERE
 
+<<<<<<< HEAD
 	var/chassis = "mouse"
 	var/global/list/possible_chassis = list(
 		"Cat" = "cat",
@@ -92,8 +106,33 @@
 	var/selfrepair = 0
 	var/updating = 0
 	var/emitter_OD = 0
+=======
+	var/holoform = FALSE
+	var/canholo = TRUE
+	var/obj/item/weapon/card/id/access_card = null
+	var/chassis = "repairbot"
+	var/list/possible_chassis = list("cat", "mouse", "monkey", "corgi", "fox", "repairbot", "rabbit")
+
+	var/emitterhealth = 50
+	var/emittermaxhealth = 50
+	var/emitterregen = 1
+	var/emittercd = 10
+	var/emitteroverloadcd = 50
+	var/emittersemicd = FALSE
+
+	var/overload_ventcrawl = 0
+	var/overload_bulletblock = 0	//Why is this a good idea?
+	var/overload_maxhealth = 0
+	canmove = FALSE
+
+/mob/living/silicon/pai/Destroy()
+	pai_list -= src
+	..()
+>>>>>>> masterTGbranch
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard/P)
+	START_PROCESSING(SSfastprocess, src)
+	pai_list += src
 	make_laws()
 	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
@@ -103,10 +142,8 @@
 	loc = P
 	card = P
 	sradio = new(src)
-	if(card)
-		if(!card.radio)
-			card.radio = new /obj/item/device/radio(card)
-		radio = card.radio
+	if(!radio)
+		radio = new /obj/item/device/radio(src)
 
 	//populate static instance list of pai software
 	if (!available_software)
@@ -118,7 +155,7 @@
 	//PDA
 	pda = new(src)
 	spawn(5)
-		pda.ownjob = "Personal Assistant"
+		pda.ownjob = "pAI Messenger"
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 
@@ -128,26 +165,36 @@
 
 	..()
 
+	var/datum/action/innate/pai/shell/AS = new /datum/action/innate/pai/shell
+	var/datum/action/innate/pai/chassis/AC = new /datum/action/innate/pai/chassis
+	var/datum/action/innate/pai/rest/AR = new /datum/action/innate/pai/rest
+	AS.Grant(src)
+	AC.Grant(src)
+	AR.Grant(src)
+
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
-	return 1
+	return TRUE
 
 /mob/living/silicon/pai/Login()
 	..()
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-
+	if(client)
+		client.perspective = EYE_PERSPECTIVE
+		if(holoform)
+			client.eye = src
+		else
+			client.eye = card
 
 /mob/living/silicon/pai/Stat()
 	..()
 	if(statpanel("Status"))
-		if(src.silence_time)
-			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
-			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-		if(!src.stat)
-			stat(null, text("System integrity: [(src.health+100)/2]%"))
+		if(!stat)
+			stat(null, text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]"))
 		else
 			stat(null, text("Systems nonfunctional"))
 
+<<<<<<< HEAD
 /mob/living/silicon/pai/blob_act()
 	if (src.stat != 2)
 		src.adjustBruteLoss(34)
@@ -370,12 +417,45 @@
 	src << "<span class='danger'>The intense heat from the nearby fire causes your holographic field to fail instantly, damaging your internal hardware!</span>"
 	flicker_fade(0)
 	return
+=======
+/mob/living/silicon/pai/restrained(ignore_grab)
+	. = FALSE
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
-	return
+/mob/living/silicon/pai/canUseTopic(atom/movable/M)
+	return TRUE
 
+/mob/living/silicon/pai/process()
+	emitterhealth = Clamp((emitterhealth + emitterregen), -50, emittermaxhealth)
+	if(weakened > 0)
+		weakened -= 0.2
+
+/mob/proc/makePAI(delold)
+	var/obj/item/device/paicard/card = new /obj/item/device/paicard(get_turf(src))
+	var/mob/living/silicon/pai/pai = new /mob/living/silicon/pai(card)
+	pai.key = key
+	pai.name = name
+	card.setPersonality(pai)
+	if(delold)
+		qdel(src)
+
+/datum/action/innate/pai
+	name = "PAI Action"
+	var/mob/living/silicon/pai/P
+>>>>>>> masterTGbranch
+
+/datum/action/innate/pai/Trigger()
+	if(!ispAI(owner))
+		return 0
+	P = owner
+
+/datum/action/innate/pai/shell
+	name = "Toggle Holoform"
+	button_icon_state = "pai_holoform"
+	background_icon_state = "bg_tech"
+
+<<<<<<< HEAD
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
 	if(!C)
 		src.unset_machine()
@@ -572,3 +652,29 @@ mob/verb/makePAI(var/turf/t in view())
 		src << "\blue You are now [resting ? "resting" : "getting up"]"
 
 	canmove = !resting
+=======
+/datum/action/innate/pai/shell/Trigger()
+	..()
+	if(P.holoform)
+		P.fold_in(0)
+	else
+		P.fold_out()
+
+/datum/action/innate/pai/chassis
+	name = "Holochassis Appearence Composite"
+	button_icon_state = "pai_chassis"
+	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/chassis/Trigger()
+	..()
+	P.choose_chassis()
+
+/datum/action/innate/pai/rest
+	name = "Rest"
+	button_icon_state = "pai_rest"
+	background_icon_state = "bg_tech"
+
+/datum/action/innate/pai/rest/Trigger()
+	..()
+	P.lay_down()
+>>>>>>> masterTGbranch

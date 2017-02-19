@@ -25,10 +25,17 @@
 /mob/proc/ContractDisease(datum/disease/D, source = null)
 	if(!CanContractDisease(D))
 		return 0
+<<<<<<< HEAD
 	AddDisease(D, source)
 
 
 /mob/proc/AddDisease(datum/disease/D, source = null)
+=======
+	AddDisease(D)
+
+
+/mob/proc/AddDisease(datum/disease/D)
+>>>>>>> masterTGbranch
 	for(var/datum/disease/advance/P in viruses)
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/DD = D
@@ -54,12 +61,17 @@
 
 		DD.affected_mob.med_hud_set_status()
 
+<<<<<<< HEAD
 /mob/living/carbon/human/AddDisease(datum/disease/D, source = null)
 	..()
 	if(dna && dna.species)
 		dna.species.on_gain_disease(src, D)
 
 /mob/living/carbon/ContractDisease(datum/disease/D, source = null)
+=======
+
+/mob/living/carbon/ContractDisease(datum/disease/D)
+>>>>>>> masterTGbranch
 	if(!CanContractDisease(D))
 		return 0
 
@@ -91,7 +103,7 @@
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
 	var/base_resist = 0
 
-	if(istype(src, /mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.dna && H.dna.species)
 			base_resist = H.dna.species.disease_resist
@@ -103,7 +115,14 @@
 					passed = prob(((Cl.permeability_coefficient+base_resist)*100) - 1)
 				if(passed && istype(H.wear_mask, /obj/item/clothing))
 					Cl = H.wear_mask
+<<<<<<< HEAD
 					passed = prob(((Cl.permeability_coefficient+base_resist)*100) - 1)
+=======
+					passed = prob((Cl.permeability_coefficient*100) - 1)
+				if(passed && isobj(H.wear_neck))
+					Cl = H.wear_neck
+					passed = prob((Cl.permeability_coefficient*100) - 1)
+>>>>>>> masterTGbranch
 			if(2)
 				if(istype(H.wear_suit, /obj/item/clothing))
 					Cl = H.wear_suit
@@ -128,7 +147,7 @@
 					Cl = H.shoes
 					passed = prob(((Cl.permeability_coefficient+base_resist)*100) - 1)
 
-	else if(istype(src, /mob/living/carbon/monkey))
+	else if(ismonkey(src))
 		var/mob/living/carbon/monkey/M = src
 		switch(target_zone)
 			if(1)
@@ -151,6 +170,6 @@
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-	if(dna && (VIRUSIMMUNE in dna.species.specflags))
+	if(dna && (VIRUSIMMUNE in dna.species.species_traits))
 		return 0
 	return ..()

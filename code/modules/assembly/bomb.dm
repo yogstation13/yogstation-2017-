@@ -3,7 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 4
 	flags = CONDUCT
@@ -20,9 +20,9 @@
 	if(bombtank)
 		icon_state = bombtank.icon_state
 	if(bombassembly)
-		overlays += bombassembly.icon_state
-		overlays += bombassembly.overlays
-		overlays += "bomb_assembly"
+		add_overlay(bombassembly.icon_state)
+		add_overlay(bombassembly.overlays)
+		add_overlay("bomb_assembly")
 
 /obj/item/device/onetankbomb/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))

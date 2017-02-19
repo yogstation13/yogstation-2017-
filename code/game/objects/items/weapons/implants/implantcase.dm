@@ -6,7 +6,7 @@
 	item_state = "implantcase"
 	throw_speed = 2
 	throw_range = 5
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
 	var/obj/item/weapon/implant/imp = null
@@ -16,19 +16,21 @@
 	if(imp)
 		icon_state = "implantcase-[imp.item_color]"
 		origin_tech = imp.origin_tech
+<<<<<<< HEAD
 		flags = (imp.flags & ~DROPDEL)
+=======
+>>>>>>> masterTGbranch
 		reagents = imp.reagents
 	else
 		icon_state = "implantcase-0"
 		origin_tech = initial(origin_tech)
-		flags = initial(flags)
 		reagents = null
 
 
 /obj/item/weapon/implantcase/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_hand() != W)
+		if(user.get_active_held_item() != W)
 			return
 		if(!in_range(src, user) && loc != user)
 			return

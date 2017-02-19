@@ -20,7 +20,11 @@
 		user << "<span class='userdanger'>No... just one more try...</span>"
 		user.gib()
 	else
+<<<<<<< HEAD
 		user.visible_message("<span class='warning'>[user], pulls [src]'s lever with a glint in their eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
+=======
+		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
+>>>>>>> masterTGbranch
 		know it'll be worth it.</span>")
 	icon_state = "slots2"
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, 0)
@@ -46,6 +50,7 @@
 	density = TRUE
 
 /obj/structure/cursed_money/New()
+<<<<<<< HEAD
 	spawn(600)
 		if(src)
 			visible_message("<span class='warning'>[src] falls in on itself, canvas rotting away and contents vanishing.</span>")
@@ -54,6 +59,24 @@
 /obj/structure/cursed_money/attack_hand(mob/living/user)
 	user.visible_message("<span class='boldwarning'>You open the bag...!</span>\n<span class='danger'>And see a bag full of dice. Confused, you take one... and the bag vanishes.</span>")
 	var/obj/item/weapon/dice/d20/fate/one_use/critical_fail = new(get_turf(user))
+=======
+	. = ..()
+	addtimer(src, "collapse", 600)
+
+/obj/structure/cursed_money/proc/collapse()
+	visible_message("<span class='warning'>[src] falls in on itself, \
+		canvas rotting away and contents vanishing.</span>")
+	qdel(src)
+
+/obj/structure/cursed_money/attack_hand(mob/living/user)
+	user.visible_message("<span class='warning'>[user] opens the bag and \
+		and removes a die. The bag then vanishes.</span>",
+		"<span class='boldwarning'>You open the bag...!</span>\n\
+		<span class='danger'>And see a bag full of dice. Confused, \
+		you take one... and the bag vanishes.</span>")
+	var/turf/T = get_turf(user)
+	var/obj/item/weapon/dice/d20/fate/one_use/critical_fail = new(T)
+>>>>>>> masterTGbranch
 	user.put_in_hands(critical_fail)
 	qdel(src)
 
@@ -71,7 +94,11 @@
 /obj/effect/gluttony/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(height==0)
 		return 1
+<<<<<<< HEAD
 	if(istype(mover, /mob/living/carbon/human))
+=======
+	if(ishuman(mover))
+>>>>>>> masterTGbranch
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
@@ -89,7 +116,11 @@
 	icon_state = "magic_mirror"
 
 /obj/structure/mirror/magic/pride/curse(mob/user)
+<<<<<<< HEAD
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as their hand leaves the mirror!</B></span>", \
+=======
+	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
+>>>>>>> masterTGbranch
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
 	var/turf/T = get_turf(user)
 	T.ChangeTurf(/turf/open/chasm/straight_down)
@@ -98,7 +129,11 @@
 
 //can't be bothered to do sloth right now, will make later
 
+<<<<<<< HEAD
 /obj/item/weapon/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
+=======
+/obj/item/weapon/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
+>>>>>>> masterTGbranch
 	name = "envy's knife"
 	desc = "Their success will be yours."
 	icon = 'icons/obj/wizard.dmi'
@@ -106,16 +141,27 @@
 	item_state = "render"
 	force = 18
 	throwforce = 10
+<<<<<<< HEAD
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/weapon/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+=======
+	w_class = WEIGHT_CLASS_NORMAL
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+>>>>>>> masterTGbranch
 	..()
 	if(!proximity)
 		return
 	if(!istype(user))
 		return
+<<<<<<< HEAD
 	if(istype(AM, /mob/living/carbon/human))
+=======
+	if(ishuman(AM))
+>>>>>>> masterTGbranch
 		var/mob/living/carbon/human/H = AM
 		if(user.real_name != H.dna.real_name)
 			user.real_name = H.dna.real_name

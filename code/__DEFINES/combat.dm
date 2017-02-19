@@ -80,12 +80,21 @@
 #define UNARMED_ATTACK 2
 #define PROJECTILE_ATTACK 3
 #define THROWN_PROJECTILE_ATTACK 4
+<<<<<<< HEAD
 #define HULK_ATTACK 5
+=======
+#define LEAP_ATTACK 5
+
+//the define for visible message range in combat
+#define COMBAT_MESSAGE_RANGE 3
+
+>>>>>>> masterTGbranch
 
 //Gun Stuff
  #define SAWN_INTACT  0
  #define SAWN_OFF     1
 
+<<<<<<< HEAD
  #define WEAPON_LIGHT 0
  #define WEAPON_MEDIUM 1
  #define WEAPON_HEAVY 2
@@ -95,3 +104,14 @@
  #define DISARM "disarm"
  #define GRAB "grab"
  #define HELP "help"
+=======
+#define WEAPON_DUAL_WIELD 0
+#define WEAPON_LIGHT 1
+#define WEAPON_MEDIUM 2
+#define WEAPON_HEAVY 3
+
+//Health Defines
+
+#define HEALTH_THRESHOLD_CRIT 0
+#define HEALTH_THRESHOLD_DEAD -100
+>>>>>>> masterTGbranch

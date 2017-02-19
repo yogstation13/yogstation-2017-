@@ -105,6 +105,7 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 5)
 	build_path = /obj/item/weapon/reagent_containers/glass/bottle/nutrient/empty
+<<<<<<< HEAD
 	category = list("initial","Botany Chemicals")
 
 /datum/design/mutagen
@@ -114,6 +115,9 @@
 	materials = list(MAT_BIOMASS = 600)
 	build_path = /obj/item/weapon/reagent_containers/glass/bottle/mutagen
 	category = list("initial","Botany Chemicals")
+=======
+	category = list("initial", "Botany Chemicals")
+>>>>>>> masterTGbranch
 
 /datum/design/cloth
 	name = "Roll of cloth"
@@ -135,7 +139,11 @@
 	name = "Botanical gloves"
 	id = "botany_gloves"
 	build_type = BIOGENERATOR
+<<<<<<< HEAD
 	materials = list(MAT_BIOMASS = 250)
+=======
+	materials = list(MAT_BIOMASS = 150)
+>>>>>>> masterTGbranch
 	build_path = /obj/item/clothing/gloves/botanic_leather
 	category = list("initial","Leather and Cloth")
 
@@ -218,6 +226,7 @@
 	materials = list(MAT_BIOMASS = 300)
 	build_path = /obj/item/clothing/head/rice_hat
 	category = list("initial","Leather and Cloth")
+<<<<<<< HEAD
 
 /datum/design/cardboard
 	name = "Cardboard sheet"
@@ -226,3 +235,5 @@
 	materials = list(MAT_BIOMASS = 400)
 	build_path = /obj/item/stack/sheet/cardboard
 	category = list("initial","Leather and Cloth")
+=======
+>>>>>>> masterTGbranch

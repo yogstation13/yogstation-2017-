@@ -135,14 +135,16 @@
 
 
 		var/obj/item/stack/cable_coil/C = I
-		if(C.amount < 10)
+		if(C.get_amount() < 10)
 			user << "<span class='warning'>You need more wires!</span>"
 			return
 
 		user << "<span class='notice'>You start building the power terminal...</span>"
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
+			if(C.get_amount() < 10 || !C)
+				return
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
@@ -162,7 +164,7 @@
 
 	//disassembling the terminal
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
-		terminal.dismantle(user)
+		terminal.dismantle(user, I)
 		return
 
 	//crowbarring it !
@@ -175,7 +177,7 @@
 
 	return ..()
 
-/obj/machinery/power/smes/deconstruction()
+/obj/machinery/power/smes/on_deconstruction()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
 		cell.charge = (charge / capacity) * cell.maxcharge
 
@@ -193,7 +195,7 @@
 // wires will attach to this
 /obj/machinery/power/smes/proc/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
-	terminal.dir = get_dir(T,src)
+	terminal.setDir(get_dir(T,src))
 	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()
@@ -203,7 +205,7 @@
 
 
 /obj/machinery/power/smes/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
 		return
 
@@ -226,19 +228,19 @@
 		smesImageCache[SMES_INPUT_ATTEMPT] = image('icons/obj/power.dmi', "smes-oc0")
 
 	if(outputting)
-		overlays += smesImageCache[SMES_OUTPUTTING]
+		add_overlay(smesImageCache[SMES_OUTPUTTING])
 	else
-		overlays += smesImageCache[SMES_NOT_OUTPUTTING]
+		add_overlay(smesImageCache[SMES_NOT_OUTPUTTING])
 
 	if(inputting)
-		overlays += smesImageCache[SMES_INPUTTING]
+		add_overlay(smesImageCache[SMES_INPUTTING])
 	else
 		if(input_attempt)
-			overlays += smesImageCache[SMES_INPUT_ATTEMPT]
+			add_overlay(smesImageCache[SMES_INPUT_ATTEMPT])
 
 	var/clevel = chargedisplay()
 	if(clevel>0)
-		overlays += smesImageCache[clevel]
+		add_overlay(smesImageCache[clevel])
 	return
 
 

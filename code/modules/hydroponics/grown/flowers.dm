@@ -10,7 +10,6 @@
 	maturation = 8
 	yield = 6
 	potency = 20
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
@@ -76,11 +75,16 @@
 	production = 1
 	yield = 2
 	potency = 30
-	oneharvest = 1
 	growthstages = 4
+<<<<<<< HEAD
 	plant_type = PLANT_WEED
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list("nutriment" = 0.08)
+=======
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	reagents_add = list("nutriment" = 0.04)
+>>>>>>> masterTGbranch
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -103,7 +107,6 @@
 	endurance = 20
 	production = 2
 	yield = 2
-	oneharvest = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
@@ -120,7 +123,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 
@@ -170,7 +173,7 @@
 	force = 0
 	slot_flags = SLOT_HEAD
 	throwforce = 0
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("roasted", "scorched", "burned")
@@ -180,11 +183,14 @@
 	force = round((5 + seed.potency / 5), 1)
 
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M, mob/user)
-	if(!..()) return
-	if(istype(M, /mob/living))
+	if(!..())
+		return
+	if(isliving(M))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
 		M.adjust_fire_stacks(seed.potency / 20)
-		M.IgniteMob()
+		if(M.IgniteMob())
+			message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+			log_game("[key_name(user)] set [key_name(M)] on fire")
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return

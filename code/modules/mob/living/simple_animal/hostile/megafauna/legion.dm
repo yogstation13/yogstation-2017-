@@ -1,3 +1,22 @@
+#define MEDAL_PREFIX "Legion"
+/*
+
+LEGION
+
+Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort.
+
+It has two attack modes that it constantly rotates between.
+
+In ranged mode, it will behave like a normal legion - retreating when possible and firing legion skulls at the target.
+In charge mode, it will spin and rush its target, attacking with melee whenever possible.
+
+When Legion dies, it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 800
@@ -8,7 +27,6 @@
 	icon = 'icons/mob/lavaland/legion.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
-	faction = list("mining")
 	speak_emote = list("echoes")
 	armour_penetration = 50
 	melee_damage_lower = 25
@@ -16,28 +34,43 @@
 	dismember_chance = 0 //no dismember because of spammy legion heads
 	speed = 2
 	ranged = 1
-	flying = 1
 	del_on_death = 1
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
 	var/size = 5
 	var/charging = 0
+	medal_type = MEDAL_PREFIX
+	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
-	aggro_vision_range = 18
+	elimination = 1
 	idle_vision_range = 13
+	appearance_flags = 0
+	mouse_opacity = 1
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
+<<<<<<< HEAD
 	new/obj/item/device/gps/internal/lavaland/legion(src)
+=======
+	internal = new/obj/item/device/gps/internal/legion(src)
+
+/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
+	..()
+	if(ishuman(target))
+		var/mob/living/L = target
+		if(L.stat == UNCONSCIOUS)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
+			A.infest(L)
+>>>>>>> masterTGbranch
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
 		if(prob(75))
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(src.loc)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.GiveTarget(target)
 			A.friends = friends
 			A.faction = faction
@@ -50,12 +83,14 @@
 			minimum_distance = 0
 			speed = 0
 			charging = 1
-			spawn(50)
-				ranged = 1
-				retreat_distance = 5
-				minimum_distance = 5
-				speed = 2
-				charging = 0
+			addtimer(src, "reset_charge", 50)
+
+/mob/living/simple_animal/hostile/megafauna/legion/proc/reset_charge()
+	ranged = 1
+	retreat_distance = 5
+	minimum_distance = 5
+	speed = 2
+	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	if(health > 0)
@@ -80,6 +115,11 @@
 		L.update_transform()
 		update_transform()
 
+<<<<<<< HEAD
+=======
+		L.faction = faction.Copy()
+
+>>>>>>> masterTGbranch
 		L.GiveTarget(target)
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
@@ -91,6 +131,10 @@
 				break
 		if(last_legion)
 			loot = list(/obj/item/weapon/staff/storm)
+<<<<<<< HEAD
+=======
+			elimination = 0
+>>>>>>> masterTGbranch
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -114,7 +158,11 @@
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
+<<<<<<< HEAD
 	w_class = 4
+=======
+	w_class = WEIGHT_CLASS_BULKY
+>>>>>>> masterTGbranch
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
@@ -157,3 +205,8 @@
 	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
+<<<<<<< HEAD
+=======
+
+#undef MEDAL_PREFIX
+>>>>>>> masterTGbranch

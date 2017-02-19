@@ -14,6 +14,7 @@
 /obj/item/device/assembly/igniter/Destroy()
 	qdel(sparks)
 	sparks = null
+<<<<<<< HEAD
 	return ..()
 
 /obj/item/device/assembly/igniter/proc/set_up_sparks()
@@ -21,6 +22,9 @@
 	sparks.set_up(2, 0, src)
 	sparks.attach(src)
 
+=======
+	. = ..()
+>>>>>>> masterTGbranch
 
 /obj/item/device/assembly/igniter/activate()
 	if(!..())
@@ -33,8 +37,12 @@
 	sparks.start()
 	return 1
 
-
 /obj/item/device/assembly/igniter/attack_self(mob/user)
 	activate()
 	add_fingerprint(user)
-	return
+
+/obj/item/device/assembly/igniter/ignition_effect(atom/A, mob/user)
+	. = "<span class='notice'>[user] fiddles with [src], and manages to \
+		light [A].</span>"
+	activate()
+	add_fingerprint(user)

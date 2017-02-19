@@ -33,15 +33,15 @@
 	icon_state = "trashbag"
 	item_state = "trashbag"
 
-	w_class = 4
-	max_w_class = 2
+	w_class = WEIGHT_CLASS_BULKY
+	max_w_class = WEIGHT_CLASS_SMALL
 	max_combined_w_class = 30
 	storage_slots = 30
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
 /obj/item/weapon/storage/bag/trash/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] puts the [src.name] over their head and starts chomping at the insides! Disgusting!</span>")
+	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
@@ -83,10 +83,10 @@
 	icon_state = "satchel"
 	origin_tech = "engineering=2"
 	slot_flags = SLOT_BELT | SLOT_POCKET
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	storage_slots = 50
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = 3
+	max_w_class = WEIGHT_CLASS_NORMAL
 	can_hold = list(/obj/item/weapon/ore)
 
 /obj/item/weapon/storage/bag/ore/cyborg
@@ -108,12 +108,12 @@
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
-	storage_slots = 50; //the number of plant pieces it can carry.
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
-	max_w_class = 3
-	w_class = 1
-	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
-	burn_state = FLAMMABLE
+	storage_slots = 100; //the number of plant pieces it can carry.
+	max_combined_w_class = 100 //Doesn't matter what this is, so long as it's more or equal to storage_slots * plants.w_class
+	max_w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_TINY
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown,/obj/item/weapon/reagent_containers/food/snacks/ash_flora)
+	resistance_flags = FLAMMABLE
 
 ////////
 
@@ -147,7 +147,7 @@
 	icon_state = "sheetsnatcher"
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 
 	allow_quick_empty = 1 // this function is superceded
 
@@ -289,12 +289,19 @@
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookbag"
 	display_contents_with_number = 0 //This would look really stupid otherwise
+<<<<<<< HEAD
 	storage_slots = 15
 	max_combined_w_class = 45
 	max_w_class = 3
 	w_class = 4 //Bigger than a book because physics
+=======
+	storage_slots = 7
+	max_combined_w_class = 21
+	max_w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY //Bigger than a book because physics
+>>>>>>> masterTGbranch
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /*
  * Trays - Agouri
@@ -308,7 +315,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	flags = CONDUCT
 	materials = list(MAT_METAL=3000)
 	preposition = "on"
@@ -337,16 +344,16 @@
 			M.Weaken(2)
 
 /obj/item/weapon/storage/bag/tray/proc/rebuild_overlays()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in contents)
-		overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
+		add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
 
 /obj/item/weapon/storage/bag/tray/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	rebuild_overlays()
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
+	add_overlay(image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1))
 	. = ..()
 
 
@@ -361,10 +368,10 @@
 	desc = "A bag for storing pills, patches, and bottles."
 	storage_slots = 50
 	max_combined_w_class = 200
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
 	can_hold = list(/obj/item/weapon/reagent_containers/pill, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle)
-	burn_state = FLAMMABLE
+	resistance_flags = FLAMMABLE
 
 /*
  *  Biowaste bag (mostly for xenobiologists)
@@ -377,8 +384,9 @@
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	storage_slots = 25
 	max_combined_w_class = 200
-	w_class = 1
+	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
+<<<<<<< HEAD
 	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse)
 	burn_state = FLAMMABLE
 
@@ -397,3 +405,7 @@
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots *
 	max_w_class = 3
 	can_hold = list(/obj/item/device/camera_film,/obj/item/weapon/photo,/obj/item/weapon/storage/photo_album,/obj/item/device/camera,/obj/item/weapon/storage/photobook)
+=======
+	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	resistance_flags = FLAMMABLE
+>>>>>>> masterTGbranch

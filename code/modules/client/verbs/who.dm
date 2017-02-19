@@ -54,6 +54,7 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	src << msg
 
+<<<<<<< HEAD:code/modules/client/verbs/who.dm
 /client/proc/adminwhotoggle()
 	set category = "Admin"
 	set name = "Admin Who Toggle"
@@ -71,6 +72,9 @@
 						C.verbs -= /client/proc/adminwho
 
 /client/proc/adminwho()
+=======
+/client/verb/adminwho()
+>>>>>>> masterTGbranch:code/modules/client/verbs/who.dm
 	set category = "Admin"
 	set name = "Adminwho"
 
@@ -84,7 +88,11 @@
 
 			if(isobserver(C.mob))
 				msg += " - Observing"
+<<<<<<< HEAD:code/modules/client/verbs/who.dm
 			else if(istype(C.mob,/mob/new_player))
+=======
+			else if(isnewplayer(C.mob))
+>>>>>>> masterTGbranch:code/modules/client/verbs/who.dm
 				msg += " - Lobby"
 			else
 				msg += " - Playing"
@@ -96,5 +104,9 @@
 		for(var/client/C in admins)
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
+<<<<<<< HEAD:code/modules/client/verbs/who.dm
+=======
+		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
+>>>>>>> masterTGbranch:code/modules/client/verbs/who.dm
 	src << msg
 

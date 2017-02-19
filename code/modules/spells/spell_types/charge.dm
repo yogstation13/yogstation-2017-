@@ -14,11 +14,11 @@
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
-		var/list/hand_items = list(L.get_active_hand(),L.get_inactive_hand())
+		var/list/hand_items = list(L.get_active_held_item(),L.get_inactive_held_item())
 		var/charged_item = null
 		var/burnt_out = 0
 
-		if(L.pulling && (istype(L.pulling, /mob/living)))
+		if(L.pulling && isliving(L.pulling))
 			var/mob/living/M =	L.pulling
 			if(M.mob_spell_list.len != 0 || (M.mind && M.mind.spell_list.len != 0))
 				for(var/obj/effect/proc_holder/spell/S in M.mob_spell_list)
@@ -58,12 +58,26 @@
 				if(istype(item,/obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
 					var/obj/item/weapon/gun/magic/W = item
 					W.icon_state = initial(W.icon_state)
+				I.process_chamber()
 				charged_item = I
 				break
+<<<<<<< HEAD
 			else if(istype(item, /obj/item/weapon/stock_parts/cell))
 				if(mess_with_cell(item))
 					burnt_out = 1
 				charged_item = item
+=======
+			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
+				var/obj/item/weapon/stock_parts/cell/C = item
+				if(!C.self_recharge)
+					if(prob(80))
+						C.maxcharge -= 200
+					if(C.maxcharge <= 1) //Div by 0 protection
+						C.maxcharge = 1
+						burnt_out = 1
+				C.charge = C.maxcharge
+				charged_item = C
+>>>>>>> masterTGbranch
 				break
 			else if(istype(item, /obj/item/weapon/gun/energy))
 				var/obj/item/weapon/gun/energy/G = item
@@ -88,9 +102,24 @@
 			else if(item.contents)
 				var/obj/I = null
 				for(I in item.contents)
+<<<<<<< HEAD
 					if(istype(I, /obj/item/weapon/stock_parts/cell))
 						if(mess_with_cell(I))
 							burnt_out = 1
+=======
+					if(istype(I, /obj/item/weapon/stock_parts/cell/))
+						var/obj/item/weapon/stock_parts/cell/C = I
+						if(!C.self_recharge)
+							if(prob(80))
+								C.maxcharge -= 200
+							if(C.maxcharge <= 1) //Div by 0 protection
+								C.maxcharge = 1
+								burnt_out = 1
+						C.charge = C.maxcharge
+						if(istype(C.loc,/obj/item/weapon/gun))
+							var/obj/item/weapon/gun/G = C.loc
+							G.process_chamber()
+>>>>>>> masterTGbranch
 						item.update_icon()
 						charged_item = item
 						break

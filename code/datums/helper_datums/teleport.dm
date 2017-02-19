@@ -82,15 +82,18 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			spawn(0)
-				src = null
-				effect.attach(location)
-				effect.start()
+			addtimer(src, "do_effect", 0, TIMER_NORMAL, location, effect)
 		if(sound)
-			spawn(0)
-				src = null
-				playsound(location,sound,60,1)
-	return
+			addtimer(src, "do_sound", 0, TIMER_NORMAL, location, sound)
+
+/datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
+	src = null
+	effect.attach(location)
+	effect.start()
+
+/datum/teleport/proc/do_sound(atom/location, sound)
+	src = null
+	playsound(location, sound, 60, 1)
 
 //do the monkey dance
 /datum/teleport/proc/doTeleport()
@@ -103,6 +106,8 @@
 		if(!center)
 			center = destination
 		for(var/turf/T in range(precision,center))
+			if(T.is_transition_turf())
+				continue // Avoid picking these.
 			var/area/A = T.loc
 			if(!A.noteleport)
 				posturfs.Add(T)
@@ -111,7 +116,7 @@
 	else
 		destturf = get_turf(destination)
 
-	if(!destturf || !curturf)
+	if(!destturf || !curturf || destturf.is_transition_turf())
 		return 0
 
 	var/area/A = get_area(curturf)
@@ -162,20 +167,25 @@
 	var/list/bagholding = teleatom.search_contents_for(/obj/item/weapon/storage/backpack/holding)
 	if(bagholding.len)
 		precision = max(rand(1,100)*bagholding.len,100)
-		if(istype(teleatom, /mob/living))
+		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			MM << "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>"
 	return 1
 
 // Safe location finder
 
-/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels, extended_safety_checks = FALSE)
 	if(!zlevels)
 		zlevels = list(zlevel)
-	for(var/cycle in 1 to 100)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
-		var/random_location = locate(rand(37,202),rand(75,192),pick(zlevels))
-		if(!(istype(random_location, /turf/open/floor)))
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/random_location = locate(x,y,z)
+
+		if(!isfloorturf(random_location))
 			continue
 		var/turf/open/floor/F = random_location
 		if(!F.air)
@@ -206,6 +216,12 @@
 		var/pressure = A.return_pressure()
 		if((pressure <= 20) || (pressure >= 550))
 			continue
+
+		if(extended_safety_checks)
+			if(istype(F, /turf/open/floor/plating/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/floor/plating/lava/L = F
+				if(!L.is_safe())
+					continue
 
 		// DING! You have passed the gauntlet, and are "probably" safe.
 		return F

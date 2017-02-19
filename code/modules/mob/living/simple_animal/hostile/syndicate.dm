@@ -31,7 +31,7 @@
 	melee_damage_upper = 10
 	attacktext = "punches"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
@@ -133,7 +133,7 @@
 	projectilesound = 'sound/weapons/Gunshot.ogg'
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatestormtrooper,
-				/obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/unrestricted,
+				/obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/unrestricted,
 				/obj/item/weapon/shield/energy)
 
 ///////////////Misc////////////
@@ -141,6 +141,7 @@
 /mob/living/simple_animal/hostile/syndicate/civilian
 	minimum_distance = 10
 	retreat_distance = 10
+	obj_damage = 0
 	environment_smash = 0
 
 /mob/living/simple_animal/hostile/syndicate/civilian/Aggro()
@@ -155,18 +156,24 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
-	health = 15
-	maxHealth = 15
+	health = 25
+	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
+<<<<<<< HEAD
 	dismember_chance = 15
+=======
+	obj_damage = 0
+	environment_smash = 0
+>>>>>>> masterTGbranch
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
-	flying = 1
+	movement_type = FLYING
+	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
 	gold_core_spawnable = 1

@@ -18,26 +18,36 @@
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
+<<<<<<< HEAD
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 #define SUPERNOSLIP 2048	//prevents slipping on space lube
 
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
+=======
+>>>>>>> masterTGbranch
 
-#define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
+#define HEADBANGPROTECT		4096
 
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define DROPDEL			16384 // When dropped, it calls qdel on itself
+#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 //turf-only flags
 #define NOJAUNT		1
+<<<<<<< HEAD
 #define GIRDERABLE	2
+=======
+#define UNUSED_TRANSIT_TURF 2
+#define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
+>>>>>>> masterTGbranch
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -52,8 +62,8 @@
 #define LETPASSTHROW	32
 #define PASSDOOR		64
 
-//flags for species
 
+<<<<<<< HEAD
 #define MUTCOLORS		1
 #define HAIR			2
 #define FACEHAIR		3
@@ -81,13 +91,29 @@
 #define CONSUMEPOWER	25
 #define EASYIMPLANTS	26
 #define PROTECTEDEYES	27
+=======
+//Movement Types
+#define IMMOBILE 0
+#define GROUND 1
+#define FLYING 2
+>>>>>>> masterTGbranch
 
-#define FLYING	65536
 
 /*
 	Language defines were moved to language.dm
 */
+<<<<<<< HEAD
 
+=======
+#define HUMAN 1
+#define MONKEY 2
+#define ALIEN 4
+#define ROBOT 8
+#define SLIME 16
+#define DRONE 32
+#define SWARMER 64
+#define RATVAR 128
+>>>>>>> masterTGbranch
 
 // Flags for reagents
 #define REAGENT_NOREACT 1

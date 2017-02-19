@@ -64,6 +64,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(!message || message == "")
+		return
+
 
 	if(stat == DEAD)
 		say_dead(message)
@@ -96,10 +99,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
-	spans += get_spans()
 
-	if(!message)
-		return
+	spans += get_spans()
 
 	//Log of what we've said, plain message, no spans or junk
 	say_log += message
@@ -148,12 +149,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	var/list/listening = get_hearers_in_view(message_range, source)
 	for(var/mob/M in player_list)
-		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
+		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
-	var/rendered = compose_message(src, languages, message, , spans)
+	var/rendered = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages, message, , spans)
+		AM.Hear(rendered, src, languages_spoken, message, , spans)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
@@ -269,14 +270,15 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/radio(message, message_mode, list/spans)
 	switch(message_mode)
 		if(MODE_R_HAND)
-			if (r_hand)
-				r_hand.talk_into(src, message, , spans)
-			return ITALICS | REDUCE_RANGE
-
+			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
+				if (r_hand)
+					return r_hand.talk_into(src, message, , spans)
+				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
-			if (l_hand)
-				l_hand.talk_into(src, message, , spans)
-			return ITALICS | REDUCE_RANGE
+			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
+				if (l_hand)
+					return l_hand.talk_into(src, message, , spans)
+				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))

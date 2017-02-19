@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
@@ -9,16 +9,19 @@
 	throw_range = 7
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	burn_state = FLAMMABLE
-	burntime = 5
+	resistance_flags = FLAMMABLE
+	obj_integrity = 40
+	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
 	var/clumsy_check = 1 //1 means clumsy people drop it, 0 means no one drops it, 2 means non-clumsy people drop it.
 
-/obj/item/weapon/grenade/burn()
-	prime()
-	..()
+/obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		prime()
+	if(!qdeleted(src))
+		qdel(src)
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/carbon/human/user)
 	if( ( ((user.disabilities & CLUMSY) && clumsy_check == 1) || (!(user.disabilities & CLUMSY) && clumsy_check == 2) ) && prob(50))
@@ -53,8 +56,10 @@
 			add_fingerprint(user)
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] ([bombturf.x],[bombturf.y],[bombturf.z]).")
+			var/message = "[ADMIN_LOOKUPFLW(user)]) has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]"
+			bombers += message
+			message_admins(message)
+			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name] [COORD(bombturf)].")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()

@@ -118,9 +118,8 @@ research holder datum.
 //Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(ID, level)
 	var/datum/tech/KT = known_tech[ID]
-	if(KT)
-		if(KT.level <= level)
-			KT.level = KT.level + 1
+	if(KT && KT.level <= level)
+		KT.level = max(KT.level + 1, level)
 
 //Checks if the origin level can raise current tech levels
 //Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
@@ -146,6 +145,16 @@ research holder datum.
 		if((D.build_type & AUTOLATHE) && ("initial" in D.category))  //autolathe starts without hacked designs
 			AddDesign2Known(D)
 
+//Limb Grower files
+/datum/research/limbgrower/New()
+	for(var/T in (subtypesof(/datum/tech)))
+		possible_tech += new T(src)
+	for(var/path in subtypesof(/datum/design))
+		var/datum/design/D = new path(src)
+		possible_designs += D
+		if((D.build_type & LIMBGROWER) && ("initial" in D.category))
+			AddDesign2Known(D)
+
 /datum/research/autolathe/AddDesign2Known(datum/design/D)
 	if(!(D.build_type & AUTOLATHE))
 		return
@@ -166,6 +175,10 @@ research holder datum.
 		return
 	..()
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> masterTGbranch
 /***************************************************************
 **						Technology Datums					  **
 **	Includes all the various technoliges and what they make.  **
@@ -310,6 +323,10 @@ research holder datum.
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> masterTGbranch
 /obj/item/weapon/disk/tech_disk/adv
 	name = "advanced technology disk"
 	desc = "A disk for storing technology data for further research. This one has extra storage space."

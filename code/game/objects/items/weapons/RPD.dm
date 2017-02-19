@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 /*
 CONTAINS:
@@ -32,7 +32,7 @@ RPD
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
 	src.icon_state=pipeID2State["[pid]"]
-	src.dir=direction
+	src.dir = direction
 	src.dirtype=dt
 
 /datum/pipe_info/proc/Render(dispenser,label)
@@ -70,7 +70,7 @@ var/global/list/disposalpipeID2State=list(
 /datum/pipe_info/disposal/New(var/pid,var/dt)
 	src.id=pid
 	src.icon_state=disposalpipeID2State[pid+1]
-	src.dir=2
+	src.dir = SOUTH
 	src.dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
@@ -130,10 +130,15 @@ var/global/list/RPD_recipes=list(
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=75000, MAT_GLASS=37500)
 	origin_tech = "engineering=4;materials=2"
+<<<<<<< HEAD
 	var/abbreviated_name = "RPD"
+=======
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	resistance_flags = FIRE_PROOF
+>>>>>>> masterTGbranch
 	var/datum/effect_system/spark_spread/spark_system
 	var/working = 0
 	var/p_type = PIPE_SIMPLE
@@ -168,7 +173,11 @@ var/global/list/RPD_recipes=list(
 	show_menu(user)
 
 /obj/item/weapon/pipe_dispenser/suicide_act(mob/user)
+<<<<<<< HEAD
 	user.visible_message("<span class='suicide'>[user] points the end of the [abbreviated_name] down \his throat and presses a button! It looks like \he's trying to commit suicide...</span>")
+=======
+	user.visible_message("<span class='suicide'>[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide...</span>")
+>>>>>>> masterTGbranch
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, 1)
 	playsound(get_turf(user), 'sound/items/Deconstruct.ogg', 50, 1)
 	return(BRUTELOSS)
@@ -556,9 +565,8 @@ var/global/list/RPD_recipes=list(
 				return 0
 			var/obj/machinery/atmospherics/pipe/P = A
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
-			P.color = paint_colors[paint_color]
+			P.add_atom_colour(paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 			P.pipe_color = paint_colors[paint_color]
-			P.stored.color = paint_colors[paint_color]
 			user.visible_message("<span class='notice'>[user] paints \the [P] [paint_color].</span>","<span class='notice'>You paint \the [P] [paint_color].</span>")
 			//P.update_icon()
 			P.update_node_icon()
@@ -578,8 +586,13 @@ var/global/list/RPD_recipes=list(
 			user << "<span class='warning'>The [abbreviated_name]'s error light flickers!  Perhaps you need to only use it on pipes and pipe meters?</span>"
 			return 0
 		if(ATMOS_MODE)
+<<<<<<< HEAD
 			if(!(istype(A, /turf)))
 				user << "<span class='warning'>The [abbreviated_name]'s error light flickers!</span>"
+=======
+			if(!isturf(A))
+				user << "<span class='warning'>The [src]'s error light flickers!</span>"
+>>>>>>> masterTGbranch
 				return 0
 			user << "<span class='notice'>You start building pipes...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
@@ -593,8 +606,13 @@ var/global/list/RPD_recipes=list(
 			return 0
 
 		if(METER_MODE)
+<<<<<<< HEAD
 			if(!(istype(A, /turf)))
 				user << "<span class='warning'>The [abbreviated_name]'s error light flickers!</span>"
+=======
+			if(!isturf(A))
+				user << "<span class='warning'>The [src]'s error light flickers!</span>"
+>>>>>>> masterTGbranch
 				return 0
 			user << "<span class='notice'>You start building meter...</span>"
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, 1)
