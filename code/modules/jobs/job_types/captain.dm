@@ -1,3 +1,5 @@
+#define LATEJOINCHARTERCAP 12000
+
 /*
 Captain
 */
@@ -61,7 +63,10 @@ Captain
 	if(world.time >  CHALLENGE_TIME_LIMIT) // latejoin captain?
 		var/obj/item/station_charter/C = locate() in H
 		if(C)
-			C.additional_time = world.time
+			var/worldtimer = world.time
+			if(worldtimer > LATEJOINCHARTERCAP)
+				worldtimer = LATEJOINCHARTERCAP
+			C.additional_time = worldtimer
 
 /*
 Head of Personnel
@@ -115,3 +120,6 @@ Head of Personnel
 		return
 
 	announce_head(H, list("Supply", "Service"))
+
+
+#undef LATEJOINCHARTERCAP
