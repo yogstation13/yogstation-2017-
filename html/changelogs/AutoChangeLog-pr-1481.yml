@@ -1,0 +1,7 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Security Binoculars are at your local secvend! Adjust them between 5-15 tiles."
+  - rscadd: "Ported electric bolas from /tg/station. Thank you Papa Bones."
+  - rscadd: "The Wardens locker now spawns with a box of EMP grenades. Only 5 of them are in though."
+  - rscadd: "The Detective now spawns with a photo book/journal that they can use to categorize cases, store information, and etc. It comes with it's own labeler that has twice as many labels as the normal one does."
