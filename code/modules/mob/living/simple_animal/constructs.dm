@@ -8,7 +8,7 @@
 	response_harm   = "punches"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
-	speed = 0
+	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = list(CANPUSH)
@@ -165,8 +165,8 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	maxHealth = 75
-	health = 75
+	maxHealth = 40
+	health = 40
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	retreat_distance = 2 //AI wraiths will move in and out of combat
@@ -191,6 +191,7 @@
 	maxHealth = 55
 	health = 55
 	response_harm = "viciously beats"
+	speed = 2
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
@@ -277,21 +278,22 @@
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "harvester"
 	icon_living = "harvester"
-	maxHealth = 60
-	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	speed = 0
 	attacktext = "prods"
 	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
+	attack_sound = 'sound/weapons/punch3.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+							/obj/effect/proc_holder/spell/targeted/smoke/disable,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	playstyle_string = "<B>You are a Harvester. You are strong and fast. \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = 2 //SMASH IT ALL
