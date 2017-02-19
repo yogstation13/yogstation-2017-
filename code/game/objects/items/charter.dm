@@ -10,7 +10,7 @@
 	var/mob/living/scripter
 	var/additional_time
 	var/cooldown // that's not needed, but hey. can stop spam.
-	var/cooldownLEN = 60
+	var/cooldownLEN = 600
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	..()

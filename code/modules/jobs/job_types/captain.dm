@@ -58,6 +58,11 @@ Captain
 
 	minor_announce("Captain [H.real_name] on deck!")
 
+	if(world.time >  CHALLENGE_TIME_LIMIT) // latejoin captain?
+		var/obj/item/station_charter/C = locate() in H
+		if(C)
+			C.additional_time = world.time
+
 /*
 Head of Personnel
 */
