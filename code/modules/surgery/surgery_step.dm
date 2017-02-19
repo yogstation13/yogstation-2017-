@@ -83,7 +83,7 @@
 
 /datum/surgery_step/proc/guide(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(user.job == "Medical Doctor" || user.job == "Chief Medical Officer" || user.job == "Roboticist" || isabductor(user)) //TODO:
-		if(surgery.get_surgery_step())                                   													//Give jobs expertises
+		if(surgery)                                   													//Give jobs expertises
 			var/datum/surgery_step/step = surgery.get_surgery_step()
 			step = step.name
 			user << "<i>Now to [step] on their [target_zone].</i>"
