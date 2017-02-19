@@ -168,6 +168,8 @@ This file contains the arcane tome files.
 
 /obj/item/weapon/tome/proc/scribe_rune(mob/living/user)
 	var/turf/Turf = get_turf(user)
+	var/area/area = get_area(user)
+	var/areaname = initial(area.name)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
@@ -175,6 +177,9 @@ This file contains the arcane tome files.
 	var/list/shields = list()
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
+		return
+	if(areaname == "Space" || istype(Turf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
+		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to scribe this rune! Return to the station!</span>"
 		return
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
@@ -184,9 +189,6 @@ This file contains the arcane tome files.
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
-		return
-	if(istype(Turf, /turf/open/space))
-		user << "<span class='warning'>You cannot scribe runes in space!</span>"
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
