@@ -1,0 +1,6 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Mining GPS's have been upgraded! They now display whether something is adjacent / closeby / or away. (20 / 40 / 40+)"
+  - rscadd: "Examine your GPS if you're ever curious on what a distance tag is telling you."
+  - rscadd: "Medical GPS's are smart as well. That means YOU, Paramedics."
