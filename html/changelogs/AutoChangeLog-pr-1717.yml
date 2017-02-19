@@ -1,6 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - rscdel: "Blood and clockwork cultists can no longer scribe runes or create structures off of the station's z level."
-  - rscadd: "Tinkerer's cache turns itself off when leaving the zlevel or being in space. It has a new icon to indicate when this happens."
-  - bugfix: "Fixes invisible judicial visor icons. Wait, that was SUPPOSED to be visible?"
