@@ -38,11 +38,11 @@
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_organ_damage(1, 0, 1, DAMAGE_DISEASE)
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
-					affected_mob.adjustToxLoss(2)
+					affected_mob.adjustToxLoss(2, 1, DAMAGE_DISEASE)
 					affected_mob.updatehealth()
 		if(4)
 			if(!transformed && !carrier)
