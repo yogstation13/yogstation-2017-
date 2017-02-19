@@ -50212,15 +50212,6 @@
 	icon_state = "white"
 	},
 /area/toxins/xenobiology)
-"bVw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/computer/camera_advanced/xenobio,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/toxins/xenobiology)
 "bVx" = (
 /obj/machinery/light,
 /obj/structure/disposalpipe/segment{
@@ -68416,6 +68407,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
+"zEx" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/frame/computer,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/toxins/xenobiology)
 "ABd" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -111750,7 +111750,7 @@ bQx
 bRD
 bSU
 byH
-bVw
+zEx
 bPp
 bYg
 bJt
@@ -112264,7 +112264,7 @@ bQz
 bRD
 bSU
 bUp
-bVw
+zEx
 bPp
 bYh
 bZl

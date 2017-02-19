@@ -26,8 +26,18 @@
 	var/max_slimes = 5
 	var/monkeys = 0
 
+	circuit = /obj/item/weapon/circuitboard/computer/xenocamera
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
+
+/obj/machinery/computer/camera_advanced/xenobio/Destroy()
+	if(slime_place_action)
+		slime_place_action.Activate()
+		for(var/V in stored_slimes)
+			qdel(V)
+		for(var/V in 1 to monkeys)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube(loc)
+	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio()
@@ -58,8 +68,6 @@
 
 
 /obj/machinery/computer/camera_advanced/xenobio/attack_hand(mob/user)
-	if(!ishuman(user)) //AIs using it might be weird
-		return
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
@@ -72,27 +80,29 @@
 	..()
 
 /datum/action/innate/camera_off/xenobio/Activate()
-	if(!target || !ishuman(target))
+	if(!target)
 		return
-	var/mob/living/carbon/C = target
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
+	var/mob/living/L = target
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = L.remote_control
+	if(!remote_eye)
+		return
 	var/obj/machinery/computer/camera_advanced/xenobio/origin = remote_eye.origin
 	origin.current_user = null
-	origin.jump_action.Remove(C)
-	origin.slime_place_action.Remove(C)
-	origin.slime_up_action.Remove(C)
-	origin.feed_slime_action.Remove(C)
-	origin.monkey_recycle_action.Remove(C)
+	origin.jump_action.Remove(L)
+	origin.slime_place_action.Remove(L)
+	origin.slime_up_action.Remove(L)
+	origin.feed_slime_action.Remove(L)
+	origin.monkey_recycle_action.Remove(L)
 	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
 	remote_eye.eye_user = null
-	C.reset_perspective(null)
-	if(C.client)
-		C.client.images -= remote_eye.user_image
+	L.reset_perspective(null)
+	if(L.client)
+		L.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			C.client.images -= chunk.obscured
-	C.remote_control = null
-	C.unset_machine()
-	src.Remove(C)
+			L.client.images -= chunk.obscured
+	L.remote_control = null
+	L.unset_machine()
+	src.Remove(L)
 
 
 /datum/action/innate/slime_place
@@ -100,11 +110,12 @@
 	button_icon_state = "slime_down"
 
 /datum/action/innate/slime_place/Activate()
-	if(!target || !ishuman(owner))
+	if(!target)
 		return
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = X.eyeobj
+	if(!remote_eye)
+		return
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
@@ -112,18 +123,20 @@
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		if(owner)
+			owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
 	button_icon_state = "slime_up"
 
 /datum/action/innate/slime_pick_up/Activate()
-	if(!target || !ishuman(owner))
+	if(!target)
 		return
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = X.eyeobj
+	if(!remote_eye)
+		return
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
@@ -136,7 +149,8 @@
 				S.loc = X
 				X.stored_slimes += S
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		if(owner)
+			owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 
 /datum/action/innate/feed_slime
@@ -144,20 +158,24 @@
 	button_icon_state = "monkey_down"
 
 /datum/action/innate/feed_slime/Activate()
-	if(!target || !ishuman(owner))
+	if(!target)
+		return
+	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = X.eyeobj
+	if(!remote_eye)
 		return
 	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		if(X.monkeys >= 1)
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
-			owner << "[X] now has [X.monkeys] monkeys left."
+			if(owner)
+				owner << "[X] now has [X.monkeys] monkeys left."
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		if(owner)
+			owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 
 /datum/action/innate/monkey_recycle
@@ -165,11 +183,12 @@
 	button_icon_state = "monkey_up"
 
 /datum/action/innate/monkey_recycle/Activate()
-	if(!target || !ishuman(owner))
+	if(!target)
 		return
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/mob/camera/aiEye/remote/xenobio/remote_eye = X.eyeobj
+	if(!remote_eye)
+		return
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
@@ -178,4 +197,5 @@
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		if(owner)
+			owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
