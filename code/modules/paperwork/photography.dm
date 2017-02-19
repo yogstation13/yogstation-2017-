@@ -142,7 +142,7 @@
 /obj/item/weapon/storage/photobook/detective
 	name = "detective's journal"
 	desc = "October 12th, 1985. Tonight, a comedian died in New York. Somebody knows why."
-	can_hold = list(/obj/item/weapon/photo, /obj/item/weapon/hand_labeler, /obj/item/weapon/paper)
+	can_hold = list(/obj/item/weapon/photo, /obj/item/weapon/hand_labeler, /obj/item/weapon/paper, /obj/item/device/camera)
 	max_w_class = 3
 
 /obj/item/weapon/storage/photobook/detective/New()
