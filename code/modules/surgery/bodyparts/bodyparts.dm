@@ -27,6 +27,13 @@
 	var/mutation_color = ""
 	var/no_update = 0
 
+	//Variables for custom limbs
+	var/custom = FALSE //Whether this is a non-species limb
+	var/limb_type //Type of limb, should be ignored outside of custom limbs
+	var/datum/species/species = null //The original species datum. So a plant with a human arm wont get 2x damage on that limb, but the human mod
+	var/brutemod = 1 //Gets set automaticly with normal limbs
+	var/burnmod = 1
+
 	var/px_x = 0
 	var/px_y = 0
 
@@ -96,15 +103,12 @@
 		if(owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
 			if(application in owner.dna.species.damage_immunities)
 				return
-			brute *= owner.dna.species.brutemod
-			burn *= owner.dna.species.burnmod
+
+			brute *= brutemod
+			burn *= burnmod
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 
-
-	if(status == ORGAN_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
-		brute = max(0, brute - 5)
-		burn = max(0, burn - 4)
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)
@@ -187,6 +191,8 @@
 
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 /obj/item/bodypart/proc/update_limb(dropping_limb, mob/living/carbon/human/source)
+	if(custom)
+		return 0
 	var/mob/living/carbon/human/H
 	if(source)
 		H = source
@@ -199,6 +205,8 @@
 
 	var/datum/species/S = H.dna.species
 	species_id = S.limbs_id
+	brutemod = S.brutemod
+	burnmod = S.burnmod
 
 	if(S.use_skintones)
 		skin_tone = H.skin_tone
@@ -252,7 +260,7 @@
 	var/image_dir
 	if(dropped)
 		image_dir = SOUTH
-	if(status == ORGAN_ORGANIC)
+	if(!custom)
 		if(should_draw_greyscale)
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
@@ -265,9 +273,9 @@
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 	else
 		if(should_draw_gender)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"='icons/mob/custom_limb.dmi', "icon_state"="[limb_type]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"='icons/mob/custom_limb.dmi', "icon_state"="[limb_type]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		return I
 
 
