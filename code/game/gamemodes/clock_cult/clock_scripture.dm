@@ -833,6 +833,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_APPLICATION
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
+	if(!ishuman(invoker))
+		invoker << "<span class='warning'>Your body lacks the biological functions to house a marauder!</span>"
+		return 0
 	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in living_mob_list)
 		if(M.host == invoker)
 			invoker << "<span class='warning'>You can only house one marauder at a time!</span>"

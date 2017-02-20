@@ -80,7 +80,7 @@
 	picked = TRUE
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE || PASSMOB
 	health = 50
 	maxHealth = 50
 	density = TRUE
@@ -97,6 +97,7 @@
 	visualAppearence = CLOCKDRONE
 	no_living_interaction = FALSE
 
+
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
 
@@ -108,6 +109,7 @@
 	SetLuminosity(2,1)
 	qdel(access_card) //we don't have free access
 	access_card = null
+	verbs -= /mob/living/verb/pulled //don't pull them onto the stun rune pls
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
@@ -118,7 +120,19 @@
 	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert rods, \
 	metal, and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with </b><span class='heavy_brass'>:b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
+	\nYou yourself are one of these servants, and can utilize a slab as well, but you do not start with one. \
+	\nYou are unable to pick up any items not meant to serve the Justiciar.</b>"
+
+
+/mob/living/simple_animal/drone/cogscarab/UnarmedAttack(atom/A, proximity)
+	if(isitem(A))
+		var/obj/item/I = A
+		if(I.scarab_usable)
+			..()
+		else
+			return
+	else
+		..()
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
