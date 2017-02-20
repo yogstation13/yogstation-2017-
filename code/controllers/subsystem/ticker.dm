@@ -39,6 +39,11 @@ var/datum/subsystem/ticker/ticker
 	SCRIPTURE_REVENANT = FALSE, \
 	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
+	var/identification_console_message
+	var/id_console_msg_lock
+
+	var/list/prioritized_jobs = list()
+
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
 	var/triai = 0							//Global holder for Triumvirate

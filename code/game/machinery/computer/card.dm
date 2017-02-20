@@ -204,6 +204,11 @@ var/time_last_changed_position = 0
 			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
 			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
 
+		header += "<br>The current arrival message is [ticker.identification_console_message].</br>"
+		header += "<br><a href='?src=\ref[src];choice=arrivalmessage'>Change Arrival Message</a> <br>"
+
+		header += "<a href='?src=\ref[src];choice=prioritize'>Prioritize a Job</a><br>"
+
 		header += "<hr>"
 
 		var/jobs_all = ""
@@ -472,6 +477,46 @@ var/time_last_changed_position = 0
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
+
+		if ("arrivalmessage")
+			var/mob/M = usr
+			if(ticker.id_console_msg_lock)
+				M << "<span class='warning'>Central Command has blocked your station's power to do this.</span>"
+				log_game("[M] ([M.ckey]) has attempted to change the arrivals message while it was locked.")
+				return
+
+			message_admins("[M.name] ([M.ckey]) is changing the arrival message.")
+			log_game("[M] ([M.ckey]) is attempting to change the arrivals message ([ticker.identification_console_message]).")
+			var/msg = input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
+			if(msg)
+				message_admins("[M.name] ([M.ckey]) has changed the arrivals message to: [msg]")
+				ticker.identification_console_message = msg
+				log_game("[M] ([M.ckey]) has changed the arrival message to [msg].")
+			else
+				message_admins("[M.name] ([M.ckey]) has decided not to create a message.")
+
+		if ("prioritize")
+			var/mob/M = usr
+			var/list/jobs = list()
+			for(var/datum/job/job in SSjob.occupations)
+				if(job && SSjob.IsJobAvailable(job.title))
+					jobs += job.title
+
+			if(length(jobs))
+				var/pickjob = input(usr,"Select Job","Prioritize/Un-Prioritize",null) as anything in jobs
+				if(pickjob)
+					var/prior = TRUE
+					if(pickjob in ticker.prioritized_jobs)
+						ticker.prioritized_jobs -= pickjob
+						prior = FALSE
+						log_game("[M] ([M.ckey])has unprioritized [pickjob].")
+					else
+						ticker.prioritized_jobs += pickjob
+						log_game("[M] ([M.ckey]) has prioritized [pickjob].")
+					usr << "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. New arrivals will notice this request.</span>"
+			else
+				usr << "<span class='notice'>Surprisingly... there's no jobs to prioritize.</span>"
+
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()

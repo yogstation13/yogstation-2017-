@@ -493,3 +493,27 @@ var/datum/subsystem/job/SSjob
 				newjob.total_positions = J.total_positions
 				newjob.spawn_positions = J.spawn_positions
 				newjob.current_positions = J.current_positions
+
+// Use it for generic or non-generic (in new_player.dm) reasons.
+/datum/subsystem/job/proc/IsJobAvailable(rank, var/mob/new_player/NP)
+	var/datum/job/job = SSjob.GetJob(rank)
+	if(!job)
+		return 0
+	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+		if(job.title == "Assistant")
+			if(NP)
+				if(isnum(NP.client.player_age) && NP.client.player_age <= 14) //Newbies can always be assistants
+					return 1
+			for(var/datum/job/J in SSjob.occupations)
+				if(J && J.current_positions < J.total_positions && J.title != job.title)
+					return 0
+		else
+			return 0
+	if(jobban_isbanned(src,rank))
+		return 0
+	if(NP)
+		if(!job.player_old_enough(NP.client))
+			return 0
+		if(config.enforce_human_authority && !NP.client.prefs.pref_species.qualifies_for_rank(rank, NP.client.prefs.features))
+			return 0
+	return 1
