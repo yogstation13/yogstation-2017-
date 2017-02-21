@@ -66,16 +66,11 @@ var/datum/subsystem/ticker/ticker
 	login_music = pick(list('sound/ambience/title2.ogg',
 				'sound/ambience/title1.ogg',
 				'sound/ambience/title3.ogg',
-				'sound/ambience/title-7ly.ogg',
-				'sound/ambience/title-yes.ogg',
-				'sound/ambience/title-carmen.ogg',
 				'sound/ambience/title-clown.ogg',
 				'sound/ambience/title-getlucky.ogg',
 				'sound/ambience/title-halflife.ogg',
 				'sound/ambience/title-lanius.ogg',
 				'sound/ambience/title-mars.ogg',
-				'sound/ambience/title-robocop.ogg',
-				'sound/ambience/title-nightcall.ogg',
 				'sound/ambience/title-musique.ogg'))
 
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
