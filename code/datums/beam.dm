@@ -133,9 +133,10 @@
 	return ..()
 
 /obj/effect/ebeam/New(alpha_fade = 0, time_exist = 10)
-	if(alpha_fade)
-		animate(src, alpha = 0, time = time_exist*10)
-	..()
+	spawn(1)
+		if(alpha_fade)
+			animate(src, alpha = 0, time = time_exist*10)
+		..()
 
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam, alphafade=1)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,alphafade)
