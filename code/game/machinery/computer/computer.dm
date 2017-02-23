@@ -174,6 +174,7 @@
 
 /obj/machinery/computer/proc/update_crack()
 	overlays -= crack_overlay
+	if(!(screen_crack && computer_health) || (computer_health == initial(src.computer_health) | 0 ))
 		return 0
 	var/crack = round(computer_health / 5)
 	crack_overlay = image(icon = 'icons/obj/computer.dmi', icon_state = "[screen_crack]_[crack]")
