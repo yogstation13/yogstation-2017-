@@ -1,4 +1,3 @@
-/*  ;___________________________________________________________________________________;  */
 /obj/machinery/computer
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
