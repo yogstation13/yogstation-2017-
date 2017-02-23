@@ -13,7 +13,10 @@
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
 	var/computer_health = 25
+	var/computer_health_max = 25
 	var/clockwork = FALSE
+	var/screen_crack = "crack"
+	var/image/crack_overlay
 	paiAllowed = 1
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
@@ -91,6 +94,7 @@
 		overlays += icon_screen
 	if(paired)
 		overlays += "paipaired"
+	update_crack()
 
 /obj/machinery/computer/power_change()
 	..()
@@ -125,6 +129,19 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
+		var/obj/item/weapon/weldingtool/W = I
+		if(!W.isOn())
+			return ..()
+		else if(computer_health == computer_health_max | 0)
+			user << "<span class='notice'>No point in welding a [computer_health ?  "pristine" : "completely broken"] computer.</spawn>"
+			return 0
+		else
+			computer_health = computer_health_max
+			update_crack()
+			W.remove_fuel(1, user)
+
+
 	else
 		return ..()
 
@@ -149,6 +166,14 @@
 				paired.unpair(0)
 			stat |= BROKEN
 			update_icon()
+	update_crack()
+
+
 
 /obj/machinery/computer/proc/erase_data()
 	return 0
+
+/obj/machinery/computer/proc/update_crack()
+		return 0
+	var/crack = round(computer_health / 5)
+	overlays += crack_overlay
