@@ -199,7 +199,7 @@
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
 	if(target.reagents)
-		target.reagents.add.reagent("mutetoxin", 20)
+		target.reagents.add_reagent("mutetoxin", 20)
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
@@ -231,7 +231,7 @@
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
 	if(target.reagents)
-		target.reagents.add.reagent("mindbreaker", 30)
+		target.reagents.add_reagent("mindbreaker", 30)
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
