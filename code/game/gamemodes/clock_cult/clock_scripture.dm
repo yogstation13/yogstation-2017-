@@ -381,6 +381,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
 
+/datum/clockwork_scripture/channeled/taunting_tirade/check_special_requirements()
+	if(!ishuman(invoker))
+		invoker << "<span class='warning'>Your body lacks the biological functions to recite this scripture!</span>"
+		return 0
+	return 1
+
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L) && !L.null_rod_check())
