@@ -57,7 +57,7 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/bullet/dart/basilisk
+	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
