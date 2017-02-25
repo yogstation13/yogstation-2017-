@@ -1,6 +1,10 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 #define DONOR_CHARACTER_SLOTS 6
 
+#define FULL_VISIBLE 1 // default version. if you do not like it, switch it.
+#define HALF_VISIBLE 2 // cooldown attached.
+#define NO_VISIBLE 3
+
 var/list/preferences_datums = list()
 
 /datum/preferences
@@ -99,6 +103,8 @@ var/list/preferences_datums = list()
 	var/donor_pda = 1
 	var/quiet_round = 0
 	var/purrbation = null
+
+	var/examine_throttle = FULL_VISIBLE
 
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)

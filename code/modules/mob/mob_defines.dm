@@ -148,3 +148,6 @@
 
 	//Spooky shadow walking. For Spooks. //So spoopy
 	var/shadow_walk = 0
+
+	// For revealing examines. Check mob.dm for reveal_examine()
+	var/examineCD
