@@ -1,4 +1,4 @@
-/obj/item/projectile/temp/basilisk
+/obj/item/projectile/bullet/dart/basilisk
 	name = "freezing blast"
 	icon_state = "ice_2"
 	damage = 0
