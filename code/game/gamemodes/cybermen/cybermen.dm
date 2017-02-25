@@ -184,6 +184,7 @@ var/datum/cyberman_network/cyberman_network
 	else
 		world << "<span class='redtext'>The Cybermen have failed!</span>"
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=crewwin&action=add&changed=1")
+		ticker.project_security = TRUE
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_cybermen()

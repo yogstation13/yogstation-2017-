@@ -196,6 +196,7 @@
 	killer.show_laws()
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
+	var/traitorwincount
 	if(traitors.len)
 		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
@@ -242,6 +243,7 @@
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
 				feedback_add_details("traitor_success","SUCCESS")
+				traitorwincount++
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
 				feedback_add_details("traitor_success","FAIL")
@@ -251,6 +253,8 @@
 		text += "<br><b>The code phrases were:</b> <font color='red'>[syndicate_code_phrase]</font><br>\
 		<b>The code responses were:</b> <font color='red'>[syndicate_code_response]</font><br>"
 		world << text
+	if(!traitorwincount)
+		ticker.project_security = TRUE
 
 	return 1
 

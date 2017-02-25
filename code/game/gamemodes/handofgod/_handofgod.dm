@@ -435,6 +435,7 @@ var/global/list/global_handofgod_structuretypes = list()
 			else
 				text += "<BR><font color='red'><B>The blue cult and deity have failed!</B></font>"
 				feedback_add_details("god_success","FAIL")
+				ticker.project_security = TRUE
 
 			text += "<BR>"
 

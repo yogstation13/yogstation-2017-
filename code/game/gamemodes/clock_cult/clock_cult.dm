@@ -243,6 +243,7 @@ This file's folder contains:
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
+				ticker.project_security = TRUE
 		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"

@@ -187,11 +187,13 @@
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
 		world << "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+		ticker.project_security = TRUE
 	..()
 	return 1
 
 
 /datum/game_mode/proc/auto_declare_completion_wizard()
+	var/wincount
 	if(wizards.len)
 		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
 
@@ -215,6 +217,7 @@
 				if(objective.check_completion())
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
 					feedback_add_details("wizard_objective","[objective.type]|SUCCESS")
+					wincount++
 				else
 					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 					feedback_add_details("wizard_objective","[objective.type]|FAIL")
@@ -238,6 +241,8 @@
 			text += "<br>"
 
 		world << text
+		if(!wincount) // 0 wizards won.
+			ticker.project_security = TRUE
 	return 1
 
 //OTHER PROCS
