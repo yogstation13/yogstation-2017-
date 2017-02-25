@@ -204,7 +204,7 @@ var/time_last_changed_position = 0
 			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
 			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
 
-		header += "<br>The current arrival message is [ticker.identification_console_message].</br>"
+		header += "<br>The current arrival message is \"[ticker.identification_console_message]\"</br>"
 		header += "<br><a href='?src=\ref[src];choice=arrivalmessage'>Change Arrival Message</a> <br>"
 
 		header += "<a href='?src=\ref[src];choice=prioritize'>Prioritize a Job</a><br>"
@@ -479,6 +479,9 @@ var/time_last_changed_position = 0
 				printing = null
 
 		if ("arrivalmessage")
+			if(!allowed(usr))
+				usr << "<span class='warning'>Invalid ID.</span>"
+				return
 			var/mob/M = usr
 			if(ticker.id_console_msg_lock)
 				M << "<span class='warning'>Central Command has blocked your station's power to do this.</span>"
@@ -496,11 +499,15 @@ var/time_last_changed_position = 0
 				message_admins("[M.name] ([M.ckey]) has decided not to create a message.")
 
 		if ("prioritize")
+			if(!allowed(usr))
+				usr << "<span class='warning'>Invalid ID.</span>"
+				return
 			var/mob/M = usr
 			var/list/jobs = list()
 			for(var/datum/job/job in SSjob.occupations)
 				if(job && SSjob.IsJobAvailable(job.title))
-					jobs += job.title
+					if(job.title != "Assistant")
+						jobs += job.title
 
 			if(length(jobs))
 				var/pickjob = input(usr,"Select Job","Prioritize/Un-Prioritize",null) as anything in jobs
@@ -513,7 +520,7 @@ var/time_last_changed_position = 0
 					else
 						ticker.prioritized_jobs += pickjob
 						log_game("[M] ([M.ckey]) has prioritized [pickjob].")
-					usr << "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. New arrivals will notice this request.</span>"
+					usr << "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
 			else
 				usr << "<span class='notice'>Surprisingly... there's no jobs to prioritize.</span>"
 

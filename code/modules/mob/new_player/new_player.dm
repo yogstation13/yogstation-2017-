@@ -443,6 +443,23 @@
 		if(job && SSjob.IsJobAvailable(job.title, src))
 			available_job_count++;
 
+	if(length(ticker.prioritized_jobs))
+		dat += "<div class='notice'>The Head of Personnel has flagged these jobs as high priority:"
+		var/amt = length(ticker.prioritized_jobs)
+		var/amt_count
+		for(var/a in ticker.prioritized_jobs)
+			amt_count++
+			if(amt_count == amt) // checks for the last job added.
+				if(amt == 1) // we only have one prioritized job.
+					dat += " [a]"
+				else if(amt == 2)
+					dat += " and [a]"
+				else
+					dat += ", and [a]"
+			else
+				dat += " [a][amt == 2 ? "" : ","]" // this is to prevent "Jaintor, and Medical Doctor" so it outputs "Jaintor and Medical Doctor"
+		dat += "</div><br>"
+
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
@@ -456,7 +473,7 @@
 			if (job.title in ticker.prioritized_jobs)
 				prior = TRUE
 
-			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'><span class='[prior ? "bad" : ""]'>[job.title]</span> ([job.current_positions])</a><br>"
+			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'><span class='[prior ? "good" : ""]'>[prior ? "(!)" : ""][job.title]</span> ([job.current_positions])</a><br>"
 	if(!job_count) //if there's nowhere to go, assistant opens up.
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title != "Assistant") continue
