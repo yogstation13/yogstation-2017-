@@ -1047,6 +1047,7 @@
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\sethotkeys.dm"
 #include "code\modules\client\verbs\suicide.dm"
+#include "code\modules\client\verbs\visibleexamines.dm"
 #include "code\modules\client\verbs\weightinfo.dm"
 #include "code\modules\client\verbs\who.dm"
 #include "code\modules\clothing\chameleon.dm"
