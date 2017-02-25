@@ -24,3 +24,5 @@
 	new /obj/item/device/laser_pointer(src)
 	new /obj/item/weapon/door_remote/research_director(src)
 	new /obj/item/weapon/storage/box/firingpins(src)
+	var/obj/item/weapon/stock_parts/cell/potato/P = new(src)
+	P.desc = "We do what we must because we can."

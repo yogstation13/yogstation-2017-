@@ -274,7 +274,7 @@
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
-	desc = "A rechargable starch based power cell."
+	desc = "A rechargable starch based power cell. Surprisingly, it's powerful enough to hold an entire AI."
 	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
 	origin_tech = "powerstorage=1;biotech=1"
@@ -282,6 +282,42 @@
 	maxcharge = 300
 	materials = list()
 	rating = 1
+	var/obj/item/device/aicard/storage
+
+/obj/item/weapon/stock_parts/cell/potato/New()
+	. = ..()
+	storage = new(src)
+
+/obj/item/weapon/stock_parts/cell/potato/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+	if(!..())
+		return
+	if(!AI)
+		return
+	if(storage.AI)
+		return
+
+	if(interaction == AI_TRANS_FROM_CARD)
+		storage.AI = AI
+		AI.control_disabled = 1
+		AI.radio_enabled = 0
+		AI.forceMove(src)
+		AI << "You are a potato."
+		name = AI.name
+		desc = "This isn't your average potato..."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		card.AI = null
+		card.update_icon()
+
+/obj/item/weapon/stock_parts/cell/potato/afterattack(atom/target, mob/user, proximity) // for potato -> card
+	..()
+	if(istype(target, /obj/item/device/aicard))
+		var/obj/item/device/aicard/A = target
+		if(storage)
+			if(storage.AI)
+				storage.AI.transfer_ai(AI_TRANS_TO_CARD, user, null, A, spawndeadAI = FALSE)
+				storage.AI = null // since that proc works normally for [Core] -> [Intellicard] we have to manually turn off this var
+				name = initial(name)
+				desc = initial(desc)
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"
