@@ -968,7 +968,7 @@
 	name = "Managing your Preternis"
 	icon_state = "bookEngineering"
 	author = "United Earth Government"
-	title = "Surgery for Dummies"
+	title = "Managing your Preternis - a guide to the future of human lifestyle advancement"
 	page_link = "Preternis"
 
 /obj/item/weapon/book/manual/wiki/phytosian
