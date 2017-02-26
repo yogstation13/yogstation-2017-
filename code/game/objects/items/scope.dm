@@ -17,7 +17,7 @@
 
 /obj/item/scope/attack_self(mob/user)
 	..()
-	zoom(user, FALSE)
+	zoom(user)
 
 /obj/item/scope/proc/zoom(mob/living/user, forced_zoom)
 	if(!user || !user.client)
@@ -85,10 +85,10 @@
 	var/mob/living/owner = usr
 	if(decrease)
 		zoom(owner, FALSE)
-		zoom_amt++
+		zoom_amt--
 		usr << "<span class='warning'>You pull the dial on [src] backwards decreasing the zoom range to [zoom_amt]</span>"
 	else
-		usr << "<span class='warning'>You cannot adjust this anyway further.</span>"
+		usr << "<span class='warning'>You cannot adjust this any further.</span>"
 
 
 /obj/item/scope/security/proc/CheckLength(type) // grabbing whether we can adjust the max or min. make sure they don't touch cap.
