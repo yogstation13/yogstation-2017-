@@ -50,7 +50,6 @@
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
-	world << "S: [siemens_coeff], D: [shock_damage]"
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
