@@ -251,6 +251,7 @@
 	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/mob/living/target
+	var/eyeseeyou
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
@@ -273,6 +274,8 @@
 			lose_target()
 		else
 			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+			eyeseeyou = Beam(target, "ocular_warden",,5)
+			playsound(target,'sound/effects/singlebeat.ogg',100) //This oughta catch your attention
 			if(ratvar_awakens && target)
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()
