@@ -81,9 +81,9 @@
 	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
-		victim.forceMove(src)
 		victim.emote("scream")
 		src.visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
+		victim.forceMove(src)
 		kidnapped = TRUE
 
 	if(kidnapped)
@@ -161,16 +161,18 @@
 	if(src.notransform)
 		src << "<span class='warning'>Finish eating first!</span>"
 		return 0
-	src.loc = B.loc
-	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
-	exit_blood_effect(B)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		for(var/obj/item/weapon/bloodcrawl/BC in C)
-			BC.flags = null
-			C.unEquip(BC)
-			qdel(BC)
-	qdel(src.holder)
-	src.holder = null
+	B.visible_message("<span class='warning'>[B] begins to bubble...</B>")
+	if(do_after(src, 25, target = B))
+		src.loc = B.loc
+		src.client.eye = src
+		src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
+		exit_blood_effect(B)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			for(var/obj/item/weapon/bloodcrawl/BC in C)
+				BC.flags = null
+				C.unEquip(BC)
+				qdel(BC)
+		qdel(src.holder)
+		src.holder = null
 	return 1
