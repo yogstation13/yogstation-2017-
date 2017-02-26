@@ -1,0 +1,5 @@
+author:  Iamgoofball and Cyberboss
+delete-after: True
+changes: 
+  - experiment: "Makes most visual effects juicy as fuck with animations."
+  - rscadd: "Makes progressbars stack"
