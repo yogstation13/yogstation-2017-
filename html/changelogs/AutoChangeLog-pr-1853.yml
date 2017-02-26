@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Attempting to change the station name without admins online increases the time it takes to reach it's expiration date."
+  - rscadd: "Latejoin Captains now have the opportunity to change the station name! After joining you will have an additional 20 minutes to change the name before the charter expires."
