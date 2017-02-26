@@ -67970,11 +67970,11 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFM" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
@@ -68031,11 +68031,11 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
@@ -69141,6 +69141,12 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyk" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Cargo"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -122775,7 +122781,7 @@ aTq
 bgj
 aTp
 aKM
-aPk
+Zyk
 aKM
 aHR
 blQ
