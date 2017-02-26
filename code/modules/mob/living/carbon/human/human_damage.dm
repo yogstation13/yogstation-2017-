@@ -85,14 +85,21 @@
 /mob/living/carbon/human/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
-	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
-		if(amount > 0)
-			if(application in dna.species.damage_immunities)
-				return 0
-			amount *= dna.species.toxmod
-		else
-			if(application in dna.species.heal_immunities)
-				return 0
+	if(dna && dna.species)
+		if(application != DAMAGE_NO_MULTIPLIER)
+			if(TOXINLOVER in dna.species.specflags)
+				amount = -amount
+				if(amount > 0)
+					blood_volume -= 5*amount
+				else
+					blood_volume -= amount
+			if(amount > 0)
+				if(application in dna.species.damage_immunities)
+					return 0
+				amount *= dna.species.toxmod
+			else
+				if(application in dna.species.heal_immunities)
+					return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()

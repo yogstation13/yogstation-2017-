@@ -50,10 +50,11 @@
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
+	world << "S: [siemens_coeff], D: [shock_damage]"
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
-		if(dna.species.specflags & CONSUMEPOWER)
+		if((shock_damage > 0) && (CONSUMEPOWER in dna.species.specflags))
 			nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
 	if(shock_damage<1 && !override)
 		return 0
@@ -799,12 +800,3 @@
 
 	..()
 
-
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(amount > 0)
-			blood_volume -= 5*amount
-		else
-			blood_volume -= amount
-	return ..()

@@ -215,7 +215,7 @@
 				//if ( !safe_thing )
 					//safe_thing = H.glasses
 
-			if(H.dna.species.specflags & PROTECTEDEYES)
+			if(PROTECTEDEYES in H.dna.species.specflags)
 				eyes_covered = 1
 				//safe_thing = ???
 

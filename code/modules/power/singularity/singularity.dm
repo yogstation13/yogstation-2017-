@@ -397,7 +397,7 @@
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
-				if(H.dna && H.dna.species && (H.dna.species.specflags & PROTECTEDEYES))
+				if(H.dna && H.dna.species && (PROTECTEDEYES in H.dna.species.specflags))
 					H << "<span class='notice'>You look directly into the [src.name], but your lizard eyes protect you from its mesmerizing gaze!</span>"
 					return
 

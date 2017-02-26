@@ -430,7 +430,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	default_color = "FFFFFF"
-	specflags = list(RADIMMUNE,CONSUMEPOWER,EASYIMPLANTS)
+	specflags = list(CONSUMEPOWER,EASYIMPLANTS)
 	roundstart = 0
 	sexes = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
