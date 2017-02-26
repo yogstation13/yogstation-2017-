@@ -681,7 +681,7 @@ var/list/teleport_runes = list()
 		affecting.apply_damage(1, BRUTE)
 		if(!(user in T.contents))
 			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them back to the rune!</span>")
-			Beam(user,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=2)
+			Beam(user,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=2,alphafade=1)
 			user.forceMove(get_turf(src)) //NO ESCAPE :^)
 		if(user.key)
 			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around them dimming.</span>", \

@@ -197,7 +197,7 @@
 	..()
 	var/obj/item/projectile/hook/P = BB
 	spawn(1)
-		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30)
+		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30,alphafade=0)
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
@@ -654,7 +654,7 @@
 	..()
 	var/loot = rand(1,3)
 	switch(loot)
-		if(1)			
+		if(1)
 			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
 		if(2)
 			new /obj/item/bloodvial/bloodcrawl(src)
