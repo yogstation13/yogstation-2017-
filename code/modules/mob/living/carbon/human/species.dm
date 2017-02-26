@@ -1652,7 +1652,7 @@
 
 /datum/species/proc/specAltClickOn(atom/A)
 	var/mob/living/carbon/human/H = usr
-	if(H.dna && H.dna.species && (H.dna.species.specflags & CONSUMEPOWER) && A.Adjacent(H))
+	if(H.dna && H.dna.species && (CONSUMEPOWER in H.dna.species.specflags) && A.Adjacent(H))
 		return species_drain_act(H, A)
 	return 0
 

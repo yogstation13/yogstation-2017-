@@ -371,13 +371,6 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
 	return
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
-	if(updating_stamina)
-		update_stamina()
-
 /mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
 	return
 
