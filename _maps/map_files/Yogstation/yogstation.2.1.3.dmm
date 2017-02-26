@@ -1766,6 +1766,10 @@
 /obj/machinery/computer/secure_data,
 /turf/open/floor/carpet,
 /area/security/hos)
+"adv" = (
+/obj/machinery/computer/security,
+/turf/open/floor/carpet,
+/area/security/hos)
 "adw" = (
 /obj/machinery/computer/card/minor/hos,
 /turf/open/floor/carpet,
@@ -4821,6 +4825,12 @@
 	icon_state = "showroomfloor"
 	},
 /area/security/warden)
+"aiw" = (
+/obj/machinery/computer/security,
+/turf/open/floor/plasteel{
+	icon_state = "showroomfloor"
+	},
+/area/security/warden)
 "aix" = (
 /obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel{
@@ -6195,6 +6205,16 @@
 	network = list("SS13")
 	},
 /obj/machinery/computer/secure_data,
+/turf/open/floor/plasteel{
+	icon_state = "red"
+	},
+/area/security/main)
+"akQ" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/obj/machinery/computer/security,
 /turf/open/floor/plasteel{
 	icon_state = "red"
 	},
@@ -8170,6 +8190,14 @@
 	on = 1;
 	scrub_N2O = 0;
 	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/security/brig)
+"aoA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -33468,14 +33496,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/crew_quarters/captain)
-"bpY" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/captain)
 "bpZ" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -37716,7 +37736,7 @@
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
-	req_access_txt = "5; 9"
+	req_access_txt = "69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -40001,7 +40021,7 @@
 "bBO" = (
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Research";
-	req_access_txt = "5; 9"
+	req_access_txt = "5; 9; 69"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -68119,15 +68139,6 @@
 	name = "floor"
 	},
 /area/engine/engine_smes)
-"jAg" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/obj/effect/landmark/sectele,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/security/brig)
 "jKT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -68172,23 +68183,6 @@
 	icon_state = "loadingarea"
 	},
 /area/tcommsat/computer)
-"lcv" = (
-/obj/machinery/computer/camera_advanced/security,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/warden)
-"ldt" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/sectele/perma,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/security/prison)
 "luc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -68636,25 +68630,11 @@
 	},
 /turf/open/floor/plating/airless,
 /area/tcommsat/computer)
-"JCU" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/machinery/computer/camera_advanced/security,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/security/main)
 "JEH" = (
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
-"LiS" = (
-/obj/machinery/computer/camera_advanced/security,
-/turf/open/floor/carpet,
-/area/security/hos)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -68821,6 +68801,14 @@
 	dir = 2
 	},
 /area/shuttle/escape)
+"VJf" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/maintcentral)
 "WyQ" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
@@ -96260,7 +96248,7 @@ acg
 acL
 adh
 adN
-ldt
+aeq
 aeq
 afw
 agi
@@ -98065,7 +98053,7 @@ afz
 ago
 agX
 ahQ
-lcv
+aiw
 aiA
 ajT
 akC
@@ -100387,7 +100375,7 @@ alK
 amr
 anh
 anV
-jAg
+aoA
 aos
 apy
 apX
@@ -101203,9 +101191,9 @@ bdE
 bdE
 bmG
 bbX
-bbX
-bbX
-bbX
+bmv
+bmv
+bmv
 bup
 bvM
 bxk
@@ -101460,9 +101448,9 @@ bjL
 bdE
 bmH
 bop
-bpY
-bpY
-bpY
+VJf
+VJf
+VJf
 bus
 bvN
 bxl
@@ -101655,7 +101643,7 @@ aaA
 aaA
 aaA
 acT
-LiS
+adv
 adZ
 aeF
 aff
@@ -101666,7 +101654,7 @@ aic
 aiH
 ajr
 ake
-JCU
+akQ
 abK
 alP
 amw
@@ -101717,9 +101705,9 @@ bbX
 bbX
 bbX
 bbX
-bbX
-bbX
-bbX
+bmv
+bmv
+bmv
 bup
 bup
 bxm
