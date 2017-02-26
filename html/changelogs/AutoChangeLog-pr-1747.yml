@@ -1,0 +1,4 @@
+author: Time-Green
+delete-after: True
+changes: 
+  - rscadd: "Anyone connected in a pull chain will get teleported if the wiz uses his teleport SPELL"
