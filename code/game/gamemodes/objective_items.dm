@@ -103,10 +103,19 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
-			return 1
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/I)
+	var/obj/item/device/aicard/C
+
+	if(istype(I, /obj/item/weapon/stock_parts/cell/potato))
+		var/obj/item/weapon/stock_parts/cell/potato/P = I
+		C = P.storage // storage is defined as an intellicard
+	else
+		C = I
+
+	if(istype(C, /obj/item/device/aicard))
+		for(var/mob/living/silicon/ai/A in C)
+			if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
+				return 1
 	return 0
 
 /datum/objective_item/steal/blueprints
