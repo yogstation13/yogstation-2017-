@@ -65,6 +65,21 @@
 			alpha = initial(src.alpha)
 			density = 1
 			opacity = 1
+	else if(istype(W,/obj/item/weapon/weldingtool) && iscultist(user))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.remove_fuel(0,user))
+			return 0
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		user.visible_message("<span class='notice'>[user] begins channeling energy into [src]...</span>", "<span class='notice'>You begin undoing the magics protecting [src]...</span>")
+		if(!do_after(user, 60 / WT.toolspeed, target = src))
+			return 0
+		if(!WT.remove_fuel(1, user))
+			return 0
+		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
+		dismantle_wall()
+		return 1
+	else
+		..()//Let the parent do the heavy lifting.
 	return
 
 /turf/closed/wall/mineral/cult/artificer
@@ -118,13 +133,26 @@
 	return ..()
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
+	if(istype(I, /obj/item/weapon/weldingtool) && user.IsAdvancedToolUser() && is_servant_of_ratvar(user)) //Clock cultists get superfast dismantle
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.remove_fuel(0,user))
+			return 0
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		user.visible_message("<span class='notice'>[user] quickly begins adjusting [src]...</span>", "<span class='notice'>You begin preparing [src] for reallocation.</span>")
+		if(!do_after(user, 60 / WT.toolspeed, target = src))
+			return 0
+		if(!WT.remove_fuel(1, user))
+			return 0
+		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
+		dismantle_wall()
+		return 1
+	if(istype(I, /obj/item/weapon/weldingtool) && user.IsAdvancedToolUser() && (!is_servant_of_ratvar(user))) //Meanwhile, noncultists take a while
 		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.remove_fuel(0,user))
 			return 0
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
-		if(!do_after(user, 120 / WT.toolspeed, target = src))
+		if(!do_after(user, 240 / WT.toolspeed, target = src))
 			return 0
 		if(!WT.remove_fuel(1, user))
 			return 0
