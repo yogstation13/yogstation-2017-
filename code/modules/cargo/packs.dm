@@ -294,12 +294,8 @@
 
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
-	cost = 2000
+	cost = 6000
 	contains = list(/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
-					/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
-					/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
-					/obj/item/weapon/storage/belt/bandolier,
-					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier)
 	crate_name = "combat shotguns crate"
 
@@ -328,7 +324,7 @@
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
-	cost = 3500
+	cost = 4500
 	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
 					/obj/item/weapon/gun/projectile/automatic/wt550)
 	crate_name = "auto rifle crate"
