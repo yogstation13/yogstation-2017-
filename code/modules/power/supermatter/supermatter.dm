@@ -38,6 +38,8 @@
 	var/emergency_point = 500
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 900
+	var/grav_pulling = 0
+	var/exploded = 0
 
 	var/emergency_issued = 0
 
@@ -82,9 +84,15 @@
 
 /obj/machinery/power/supermatter_shard/proc/explode()
 	investigate_log("has exploded.", "supermatter")
-	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
-	qdel(src)
-	return
+	grav_pulling = 1
+	exploded = 1
+
+	spawn(15 * TICKS_IN_SECOND )
+		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
+		
+		qdel(src)
+		return
+	
 
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/L = loc
@@ -97,11 +105,14 @@
 
 	if(istype(L, /turf/open/space))	// Stop processing this stuff if we've been ejected.
 		return
+	
+	if(grav_pulling)
+		supermatter_pull()
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
 			var/stability = num2text(round((damage / explosion_point) * 100))
-
+				
 			if(damage > emergency_point)
 				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
 				lastwarning = world.timeofday
@@ -284,6 +295,14 @@
 			R.receive_pulse(power/10)
 	return
 
+/obj/machinery/power/supermatter/proc/supermatter_pull()
+	//following is adapted from singulo code
+	// Let's just make this one loop.
+	for(var/atom/X in orange(15), src ))
+		X.singularity_pull(src, STAGE_FIVE)
+
+	return
+
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
 		return
@@ -303,7 +322,7 @@
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-	else if(isobj(AM) && !istype(AM, /obj/effect))
+	else if(isobj(AM) && (!exploded) && !istype(AM, /obj/effect))
 		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	else
@@ -321,7 +340,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
+	else if(isobj(AM) && (!exploded) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 
