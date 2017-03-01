@@ -329,8 +329,10 @@
 			toner = 0
 
 /obj/machinery/photocopier/emag_act(mob/user)
+	src.add_fingerprint(user)
 	if(!emagged)
 		emagged = 1
+	
 
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
@@ -353,7 +355,7 @@
 
 		target.loc = get_turf(src)
 		ass = target
-		if(emagged)
+		if(emagged && (target != user))
 			target.gib()
 			visible_message("<span class='warning'>[target] is crushed in a tragic photocopying accident!</span>")
 			if(toner <= 0 || !isCarbon(ass))
@@ -363,6 +365,7 @@
 				if(prob(90)) //90%
 					/obj/item/target/syndicate = new(src.loc)  //photocopier spews out a blood red paper person
 					return
+				
 				else
 					/obj/item/weapon/paper/talisman/malformed = new(src.loc)
 					return
