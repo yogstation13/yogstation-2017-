@@ -87,7 +87,7 @@
 	grav_pulling = 1
 	exploded = 1
 
-	spawn(15 * TICKS_IN_SECOND )
+	spawn(1500)
 		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 		
 		qdel(src)
