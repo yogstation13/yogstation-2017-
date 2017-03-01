@@ -328,6 +328,10 @@
 			new /obj/effect/decal/cleanable/oil(get_turf(src))
 			toner = 0
 
+/obj/machinery/photocopier/emag_act(mob/user)
+	if(!emagged)
+		emagged = 1
+
 /obj/machinery/photocopier/MouseDrop_T(mob/target, mob/user)
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
 	if (!istype(target) || target.anchored || target.buckled || !Adjacent(user) || !Adjacent(target) || !user.canUseTopic(src, 1) || target == ass || copier_blocked())
@@ -349,7 +353,20 @@
 
 		target.loc = get_turf(src)
 		ass = target
-
+		if(emagged)
+			target.gib()
+			visible_message("<span class='warning'>[target] is crushed in a tragic photocopying accident!</span>")
+			if(toner <= 0 || !isCarbon(ass))
+				return
+			
+			else
+				if(prob(90)) //90%
+					/obj/item/target/syndicate = new(src.loc)  //photocopier spews out a blood red paper person
+					return
+				else
+					/obj/item/weapon/paper/talisman/malformed = new(src.loc)
+					return
+			
 		if(photocopy)
 			photocopy.loc = src.loc
 			visible_message("<span class='warning'>[photocopy] is shoved out of the way by [ass]!</span>")
@@ -359,6 +376,7 @@
 			copy.loc = src.loc
 			visible_message("<span class='warning'>[copy] is shoved out of the way by [ass]!</span>")
 			copy = null
+			
 	updateUsrDialog()
 
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
