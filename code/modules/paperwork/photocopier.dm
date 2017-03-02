@@ -27,6 +27,7 @@
 	var/greytoggle = "Greyscale"
 	var/mob/living/ass //i can't believe i didn't write a stupid-ass comment about this var when i first coded asscopy.
 	var/busy = 0
+	var/emagged = 0
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
