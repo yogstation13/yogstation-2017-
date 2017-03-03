@@ -65,7 +65,9 @@
 			alpha = initial(src.alpha)
 			density = 1
 			opacity = 1
-	return
+		return
+	else
+		..()
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
