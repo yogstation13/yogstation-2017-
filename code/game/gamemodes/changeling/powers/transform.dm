@@ -17,6 +17,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
@@ -28,6 +29,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
@@ -40,6 +42,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
@@ -51,6 +54,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
@@ -62,6 +66,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
@@ -73,6 +78,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
@@ -84,6 +90,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 /obj/item/changeling
 	name = "flesh"
@@ -96,6 +103,7 @@
 		user << "<span class='notice'>You absorb [src] into your body.</span>"
 		user.put_in_active_hand(src)
 		user.drop_item()
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
