@@ -40,24 +40,34 @@
 	if(decay >= decay_time)
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, del_replaced = 1)
 	if(!iscarbon(M) || owner == M)
-		return
+		return 0
+	if(!special && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna && H.dna.species)
+			if(!H.dna.species.can_accept_organ(H, src))
+				return 0
 
 	var/obj/item/organ/replaced = M.getorganslot(slot)
 	if(replaced)
-		replaced.Remove(M, special = 1)
+		replaced.Remove(M, 1, del_replaced)
 
 	owner = M
 	M.internal_organs |= src
 	M.internal_organs_slot[slot] = src
+	if(ismob(loc))
+		var/mob/Mloc = loc
+		Mloc.unEquip(src, 1)
+	forceMove(get_turf(M))
 	loc = null
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Grant(M)
+	return 1
 
 
-/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/proc/Remove(mob/living/carbon/M, special = 0, del_after = 0)
 	owner = null
 	if(M)
 		M.internal_organs -= src
@@ -68,6 +78,10 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(M)
+	if(del_after)
+		qdel(src)
+	else
+		forceMove(M.loc)
 
 
 /obj/item/organ/proc/on_find(mob/living/finder)
@@ -183,12 +197,12 @@
 			user.visible_message("<span class='warning'>[user] squeezes [src], but it does not start to beat.</span>")
 
 /obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(ishuman(M) && beating)
-		var/mob/living/carbon/human/H = M
-		if(H.heart_attack)
-			H.heart_attack = 0
-			return
+	if(..())
+		if(ishuman(M) && beating)
+			var/mob/living/carbon/human/H = M
+			if(H.heart_attack)
+				H.heart_attack = 0
+		return 1
 
 /obj/item/organ/heart/proc/Stop()
 	beating = 0
@@ -236,7 +250,7 @@
 	if(H == user && istype(H))
 		playsound(user,'sound/effects/singlebeat.ogg',40,1)
 		user.drop_item()
-		Insert(user)
+		Insert(user, 1)
 	else
 		return ..()
 
@@ -254,9 +268,10 @@
 			last_pump = world.time //lets be extra fair *sigh*
 
 /obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(owner)
-		owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+	if(..())
+		if(owner)
+			owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+		return 1
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "pump your blood"
@@ -281,9 +296,9 @@
 				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
-				H.adjustBruteLoss(-cursed_heart.heal_brute)
-				H.adjustFireLoss(-cursed_heart.heal_burn)
-				H.adjustOxyLoss(-cursed_heart.heal_oxy)
+				H.adjustBruteLoss(-cursed_heart.heal_brute, 1, DAMAGE_MAGIC)
+				H.adjustFireLoss(-cursed_heart.heal_burn, 1, DAMAGE_MAGIC)
+				H.adjustOxyLoss(-cursed_heart.heal_oxy, 1, DAMAGE_MAGIC)
 
 
 /datum/client_colour/cursed_heart_blood
@@ -321,9 +336,10 @@
 	return message
 
 /obj/item/organ/tongue/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(say_mod && M.dna && M.dna.species)
-		M.dna.species.say_mod = say_mod
+	if(..())
+		if(say_mod && M.dna && M.dna.species)
+			M.dna.species.say_mod = say_mod
+		return 1
 
 /obj/item/organ/tongue/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -475,9 +491,10 @@
 	..()
 
 /obj/item/organ/appendix/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(inflamed)
-		M.AddDisease(new /datum/disease/appendicitis)
+	if(..())
+		if(inflamed)
+			M.AddDisease(new /datum/disease/appendicitis)
+		return 1
 
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()

@@ -104,6 +104,8 @@
 	if(prob(2))
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
 	for(var/obj/structure/clockwork/cache/C in orange(1, src))
+		if(!C.active) //if it's off the zlevel, caches can't produce components.
+			continue
 		if(C.wall_generation_cooldown <= world.time)
 			C.wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			generate_cache_component()

@@ -33,9 +33,10 @@
 	..()
 
 /obj/item/organ/gland/Insert(var/mob/living/carbon/M, special = 0)
-	..()
-	if(special != 2 && uses) // Special 2 means abductor surgery
-		Start()
+	if(..())
+		if(special != 2 && uses) // Special 2 means abductor surgery
+			Start()
+		return 1
 
 /obj/item/organ/gland/on_life()
 	if(!active)

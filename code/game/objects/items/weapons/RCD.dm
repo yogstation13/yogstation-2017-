@@ -331,7 +331,14 @@ RCD
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
-
+			if(islavaturf(A))
+				var/turf/open/floor/plating/lava/L = A
+				if(useResource(floorcost*10, user))
+					user << "<span class='notice'>You fill in the lava with plating...</span>"
+					activate()
+					L.ChangeTurf(/turf/open/floor/plating)
+					return TRUE
+				return FALSE
 			if(istype(A, /turf/open/floor) && (A.flags & GIRDERABLE))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
@@ -405,7 +412,6 @@ RCD
 						return 1
 					return 0
 				return 0
-
 			if(istype(A, /turf/open/floor))
 				var/turf/open/floor/F = A
 				if(istype(F, /turf/open/floor/engine) && !canRturf)

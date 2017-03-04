@@ -15,11 +15,11 @@
 	if(user.getorgan(/obj/item/organ/cyberimp/eyes/thermals/ling))
 		user << "<span class='notice'>Our eyes are protected from flashes.</span>"
 		var/obj/item/organ/cyberimp/eyes/O = new /obj/item/organ/cyberimp/eyes/shield/ling()
-		O.Insert(user)
+		O.Insert(user, 1)
 
 	else
 		var/obj/item/organ/cyberimp/eyes/O = new /obj/item/organ/cyberimp/eyes/thermals/ling()
-		O.Insert(user)
+		O.Insert(user, 1)
 
 	return 1
 
@@ -27,8 +27,7 @@
 /obj/effect/proc_holder/changeling/augmented_eyesight/on_refund(mob/user)
 	var/obj/item/organ/cyberimp/eyes/O = user.getorganslot("eye_ling")
 	if(O)
-		O.Remove(user)
-		qdel(O)
+		O.Remove(user, 1, 1)
 
 
 /obj/item/organ/cyberimp/eyes/shield/ling
@@ -65,13 +64,14 @@
 	return
 
 /obj/item/organ/cyberimp/eyes/thermals/ling/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.weakeyes = 1
+	if(..())
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.weakeyes = 1
+		return 1
 
 /obj/item/organ/cyberimp/eyes/thermals/ling/Remove(mob/living/carbon/M, special = 0)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.weakeyes = 0
-	..()
+	if(..())
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.weakeyes = 0
