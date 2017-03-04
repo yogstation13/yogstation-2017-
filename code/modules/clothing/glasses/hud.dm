@@ -76,7 +76,7 @@
 /obj/item/clothing/glasses/hud/security/examine(mob/user)
 	. = ..()
 	user << "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>"
-	user << "<span class='notice'>To add crimes to a person, hold CTRL + SHIFT and click on the target</span>"
+	user << "<span class='notice'>To add crimes and comments to a person, hold CTRL + SHIFT and click on the target</span>"
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chameleon Security HUD"
@@ -178,3 +178,51 @@
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
 	thermal_overload()
 	..()
+
+// ctrl + shift
+/proc/security_scan_crime(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A, allowed_access)
+	var/perpname = A.get_face_name(H.get_id_name(""))
+	var/datum/data/record/R = find_record("name", perpname, data_core.security)
+	switch(alert("What would you like to add?","Security HUD","Minor Crime","Major Crime", "Comment", "Cancel"))
+		if("Minor Crime")
+			if(R)
+				var/t1 = stripped_input(H, "Please input minor crime names:", "Security HUD", "", null)
+				var/t2 = stripped_multiline_input(H, "Please input minor crime details:", "Security HUD", "", null)
+				if(R)
+					if (!t1 || !t2) return
+					var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+					data_core.addMinorCrime(R.fields["id"], crime)
+					H << "<span class='notice'>Successfully added a minor crime.</span>"
+		if("Major Crime")
+			if(R)
+				var/t1 = stripped_input(H, "Please input major crime names:", "Security HUD", "", null)
+				var/t2 = stripped_multiline_input(H, "Please input major crime details:", "Security HUD", "", null)
+				if(R)
+					if (!t1 || !t2) return
+					var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
+					data_core.addMajorCrime(R.fields["id"], crime)
+					H << "<span class='notice'>Successfully added a major crime.</span>"
+		if("Comment")
+			if(R)
+				var/t1 = stripped_multiline_input(H, "Add Comment:", "Secure. records", null, null)
+				if(R)
+					if (!t1) return
+					var/counter = 1
+					while(R.fields[text("com_[]", counter)])
+						counter++
+					R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
+					H << "<span class='notice'>Successfully added comment.</span>"
+
+// ctrl + alt
+/proc/security_scan_status(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A, allowed_access)
+	var/perpname = A.get_face_name(H.get_id_name(""))
+	var/datum/data/record/R = find_record("name", perpname, data_core.general)
+	R = find_record("name", perpname, data_core.security)
+	if(R)
+		var/setcriminal = input(H, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
+		if(setcriminal != "Cancel")
+			if(H.canUseHUD())
+				H.investigate_log("[A.key] has been set from [R.fields["criminal"]] to [setcriminal] by [H.name] ([H.key]).", "records")
+				R.fields["criminal"] = setcriminal
+				A.sec_hud_set_security_status()
+				return
