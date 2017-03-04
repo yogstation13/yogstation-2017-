@@ -89,7 +89,8 @@ Shaft Miner
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
-		/obj/item/weapon/mining_voucher=1)
+		/obj/item/weapon/mining_voucher=1,\
+		/obj/item/orecapsule=1)
 
 	backpack = /obj/item/weapon/storage/backpack/explorer
 	satchel = /obj/item/weapon/storage/backpack/satchel_explorer

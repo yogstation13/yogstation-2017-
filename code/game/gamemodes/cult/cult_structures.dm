@@ -173,19 +173,21 @@
 	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shifter")
-	var/pickedtype
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
+	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype = /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
 		if("Shuttle Curse")
-			pickedtype = /obj/item/device/shuttle_curse
-		if("Veil Shifter")
-			pickedtype = /obj/item/device/cult_shift
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+			pickedtype += /obj/item/device/shuttle_curse
+		if("Veil Walker Set")
+			pickedtype += /obj/item/device/cult_shift
+			pickedtype += /obj/item/device/flashlight/flare/culttorch
+	if(src && !qdeleted(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+		for(var/N in pickedtype)
+			var/obj/item/D = new N(get_turf(src))
+			user << "<span class='cultitalic'>You summon [D] from the archives!</span>"
 
 /obj/effect/gateway
 	name = "gateway"

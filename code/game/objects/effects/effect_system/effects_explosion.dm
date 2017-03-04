@@ -6,6 +6,7 @@
 
 /obj/effect/particle_effect/expl_particles/New()
 	..()
+	animate(src, alpha = 0, time = 15)
 	spawn (15)
 		qdel(src)
 
@@ -36,7 +37,7 @@
 	..()
 	spawn (10)
 		qdel(src)
-	return
+	animate(src, alpha = 0, time = 10)
 
 /datum/effect_system/explosion
 

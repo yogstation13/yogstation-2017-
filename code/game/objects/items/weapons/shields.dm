@@ -2,20 +2,6 @@
 #define SHIELD_CRACKED 1
 #define SHIELD_BREAKING 2
 
-#define IMPROPERBLOCK 0
-#define PROPERBLOCK 1
-
-var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[NORTH]" = IMPROPERBLOCK),
-"[EAST]" = list("[SOUTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = IMPROPERBLOCK, "[NORTH]" = PROPERBLOCK),
-"[SOUTH]" = list("[NORTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = IMPROPERBLOCK ),
-"[WEST]" = list("[NORTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = PROPERBLOCK, "[WEST]" = IMPROPERBLOCK) )
-
-/obj/item/weapon/proc/check_for_positions(mob/living/carbon/human/H, atom/movable/AM)
-	var/facing_hit = blockcheck["[H.dir]"]["[AM.dir]"]
-//	message_admins("This is [H] and his direction is [H.dir].") //break glass if needed -Super
-//	message_admins("This is [AM] and his direction is [AM.dir].")
-	return facing_hit
-
 /obj/item/weapon/shield
 	name = "shield"
 	icon = 'icons/obj/weapons.dmi'
@@ -23,7 +9,6 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 	var/block_limit = 0 // used to see whether a weapon has enough force to break a shield
 	var/shieldstate = SHIELD_NORMAL
 	var/shieldhealth
-
 
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)

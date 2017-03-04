@@ -86,11 +86,14 @@
 			changeling.chem_recharge_slowdown = (18/changeling.absorbedcount)
 			if(changeling.chem_recharge_slowdown < 2)
 				changeling.chem_recharge_slowdown = 2
+			user.status_flags -= GOTTAGOFAST
 			changeling.transforming = FALSE
+
 
 //hulk
 			var/datum/mutation/human/HM = mutations_list[HULK]
 			if(H.dna && H.dna.mutations)
+				H.dna.remove_all_mutations() //no TK or invisible horrorform
 				HM.force_give(H)
 
 //spells
@@ -104,7 +107,6 @@
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/abom_revert
 
 //forced reversion and healing
-
 
 //abomination stuff
 /datum/species/abomination
@@ -141,6 +143,7 @@
 		H.adjustFireLoss(-4)
 		H.adjustOxyLoss(-10)
 		H.adjustToxLoss(-10)
+		H.adjustStaminaLoss(-10)
 		if(prob(25))
 			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
 

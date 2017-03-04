@@ -89,8 +89,13 @@
 #define BODYTEMP_COOLING_MAX				30		//The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
 #define BODYTEMP_HEATING_MAX				30		//The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
 
-#define BODYTEMP_HEAT_DAMAGE_LIMIT			360.15 // The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_COLD_DAMAGE_LIMIT			260.15 // The limit the human body can take before it starts taking damage from coldness.
+#define BODYTEMP_HEAT_DAMAGE_LEVEL_1		360
+#define BODYTEMP_HEAT_DAMAGE_LEVEL_2		400
+#define BODYTEMP_HEAT_DAMAGE_LEVEL_3		460
+#define BODYTEMP_COLD_DAMAGE_LEVEL_1		260
+#define BODYTEMP_COLD_DAMAGE_LEVEL_2		200
+#define BODYTEMP_COLD_DAMAGE_LEVEL_3		120
+
 
 #define SPACE_HELM_MIN_TEMP_PROTECT			2.0		//what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
 #define SPACE_HELM_MAX_TEMP_PROTECT			1500	//Thermal insulation works both ways /Malkevin
@@ -120,7 +125,7 @@
 #define MAX_HIGH_PRESSURE_DAMAGE			40		//The maximum value of pressure damage you can take per tick
 #define LOW_PRESSURE_DAMAGE					2		//The amounb of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
 
-#define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LIMIT divided by this
+#define COLD_SLOWDOWN_FACTOR				20		//Humans are slowed by the difference between bodytemp and BODYTEMP_COLD_DAMAGE_LEVEL_1 divided by this
 
 // Atmos pipe limits
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
