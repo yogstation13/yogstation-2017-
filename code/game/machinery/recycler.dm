@@ -5,44 +5,45 @@ var/const/SAFETY_COOLDOWN = 100
 	desc = "A large crushing machine which is used to recycle small items ineffeciently; there are lights on the side of it."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
-	layer = ABOVE_ALL_MOB_LAYER // Overhead
+	layer = MOB_LAYER+1 // Overhead
 	anchored = 1
 	density = 1
-	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
+	var/safety_mode = 0 // Temporality stops the machine if it detects a mob
+	var/grinding = 0
 	var/icon_name = "grinder-o"
 	var/blood = 0
 	var/eat_dir = WEST
 	var/amount_produced = 1
-	var/datum/material_container/materials
-	var/crush_damage = 1000
-	var/eat_victim_items = TRUE
-	var/item_recycle_sound = 'sound/items/Welder.ogg'
+	var/probability_mod = 1
+	var/extra_materials = 0
+	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
 
 /obj/machinery/recycler/New()
+	// On us
 	..()
-	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recycler(null)
-	B.apply_default_parts(src)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
+	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
 	update_icon()
-
-/obj/item/weapon/circuitboard/machine/recycler
-	name = "circuit board (Recycler)"
-	build_path = /obj/machinery/recycler
-	origin_tech = "programming=2;engineering=2"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/recycler/RefreshParts()
 	var/amt_made = 0
-	var/mat_mod = 0
+	var/prob_mod = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
-		mat_mod = 2 * B.rating
-	mat_mod *= 50000
+		amt_made = 1 * B.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		amt_made = 25 * M.rating //% of materials salvaged
-	materials.max_amount = mat_mod
-	amount_produced = min(100, amt_made)
+		if(M.rating > 1)
+			prob_mod = 2 * M.rating
+		else
+			prob_mod = 1 * M.rating
+		if(M.rating >= 3)
+			extra_materials = 1
+		else
+			extra_materials = 0
+	probability_mod = prob_mod
+	amount_produced = amt_made
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
@@ -55,7 +56,7 @@ var/const/SAFETY_COOLDOWN = 100
 	update_icon()
 
 
-/obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
+/obj/machinery/recycler/attackby(var/obj/item/I, var/mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 
@@ -68,15 +69,16 @@ var/const/SAFETY_COOLDOWN = 100
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+	default_deconstruction_crowbar(I)
+	..()
+	add_fingerprint(user)
+	return
 
-/obj/machinery/recycler/emag_act(mob/user)
+/obj/machinery/recycler/emag_act(user as mob)
 	if(!emagged)
-		emagged = TRUE
+		emagged = 1
 		if(safety_mode)
-			safety_mode = FALSE
+			safety_mode = 0
 			update_icon()
 		playsound(src.loc, "sparks", 75, 1, -1)
 		user << "<span class='notice'>You use the cryptographic sequencer on the [src.name].</span>"
@@ -85,77 +87,82 @@ var/const/SAFETY_COOLDOWN = 100
 	..()
 	var/is_powered = !(stat & (BROKEN|NOPOWER))
 	if(safety_mode)
-		is_powered = FALSE
+		is_powered = 0
 	icon_state = icon_name + "[is_powered]" + "[(blood ? "bld" : "")]" // add the blood tag at the end
 
 // This is purely for admin possession !FUN!.
-/obj/machinery/recycler/Bump(atom/movable/AM)
+/obj/machinery/recycler/Bump(var/atom/movable/AM)
 	..()
 	if(AM)
 		Bumped(AM)
 
 
-/obj/machinery/recycler/Bumped(atom/movable/AM)
+/obj/machinery/recycler/Bumped(var/atom/movable/AM)
 
 	if(stat & (BROKEN|NOPOWER))
-		return
-	if(!anchored)
 		return
 	if(safety_mode)
 		return
 
 	var/move_dir = get_dir(loc, AM.loc)
 	if(move_dir == eat_dir)
-		eat(AM)
-
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
-	var/list/to_eat = list(AM0)
-	if(istype(AM0, /obj/item))
-		to_eat += AM0.GetAllContents()
-	var/items_recycled = 0
-
-	for(var/i in to_eat)
-		var/atom/movable/AM = i
 		if(isliving(AM))
 			if(emagged)
-				crush_living(AM)
+				eat(AM)
 			else
-				emergency_stop(AM)
+				stop(AM)
 		else if(istype(AM, /obj/item))
-			recycle_item(AM)
-			items_recycled++
-		else
+			recycle(AM)
+		else // Can't recycle
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			AM.loc = src.loc
 
-	if(items_recycled && sound)
-		playsound(src.loc, item_recycle_sound, 50, 1)
-
-/obj/machinery/recycler/proc/recycle_item(obj/item/I)
+/obj/machinery/recycler/proc/recycle(var/obj/item/I, var/sound = 1)
 	I.loc = src.loc
-
-	var/material_amount = materials.get_item_material_amount(I)
-	if(!material_amount)
+	if(is_type_in_list(I, blacklist))
 		qdel(I)
+		if(sound)
+			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 		return
-	materials.insert_item(I, multiplier = (amount_produced / 100))
 	qdel(I)
-	materials.retrieve_all()
+	if(prob(15 + probability_mod))
+		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(loc)
+		M.amount = amount_produced
+	if(prob(10 + probability_mod))
+		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(loc)
+		G.amount = amount_produced
+	if(prob(2 + probability_mod))
+		var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel(loc)
+		P.amount = amount_produced
+	if(prob(1 + probability_mod))
+		var/obj/item/stack/sheet/rglass/R = new /obj/item/stack/sheet/rglass(loc)
+		R.amount = amount_produced
+	if(extra_materials)
+		if(prob(3 + probability_mod))
+			var/obj/item/stack/sheet/mineral/gold/GS = new /obj/item/stack/sheet/mineral/gold(loc)
+			GS.amount = amount_produced
+		if(prob(2 + probability_mod))
+			var/obj/item/stack/sheet/mineral/silver/S = new /obj/item/stack/sheet/mineral/silver(loc)
+			S.amount = amount_produced
+		if(prob(1 + probability_mod))
+			var/obj/item/stack/sheet/mineral/bananium/B = new /obj/item/stack/sheet/mineral/bananium(loc)
+			B.amount = amount_produced
+	if(sound)
+		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 
 
-/obj/machinery/recycler/proc/emergency_stop(mob/living/L)
+/obj/machinery/recycler/proc/stop(var/mob/living/L)
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-	safety_mode = TRUE
+	safety_mode = 1
 	update_icon()
 	L.loc = src.loc
-	addtimer(src, "reboot", SAFETY_COOLDOWN)
 
-/obj/machinery/recycler/proc/reboot()
-	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-	safety_mode = FALSE
-	update_icon()
+	spawn(SAFETY_COOLDOWN)
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		safety_mode = 0
+		update_icon()
 
-/obj/machinery/recycler/proc/crush_living(mob/living/L)
+/obj/machinery/recycler/proc/eat(var/mob/living/L)
 
 	L.loc = src.loc
 
@@ -164,23 +171,22 @@ var/const/SAFETY_COOLDOWN = 100
 	else
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 
-	var/gib = TRUE
+	var/gib = 1
 	// By default, the emagged recycler will gib all non-carbons. (human simple animal mobs don't count)
 	if(iscarbon(L))
-		gib = FALSE
+		gib = 0
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!")
-		add_mob_blood(L)
+		add_blood(L)
 
 	if(!blood && !issilicon(L))
-		blood = TRUE
+		blood = 1
 		update_icon()
 
-	// Remove and recycle the equipped items
-	if(eat_victim_items)
-		for(var/obj/item/I in L.get_equipped_items())
-			if(L.unEquip(I))
-				eat(I, sound=FALSE)
+	// Remove and recycle the equipped items.
+	for(var/obj/item/I in L.get_equipped_items())
+		if(L.unEquip(I))
+			recycle(I, 0)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Paralyse(5)
@@ -189,7 +195,7 @@ var/const/SAFETY_COOLDOWN = 100
 	if(gib || emagged == 2)
 		L.gib()
 	else if(emagged == 1)
-		L.adjustBruteLoss(crush_damage)
+		L.adjustBruteLoss(1000)
 
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
