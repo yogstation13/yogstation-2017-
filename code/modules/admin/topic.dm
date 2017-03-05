@@ -449,6 +449,46 @@
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
+	else if(href_list["cult_sac_target"])
+		if(!ticker || !ticker.mode)
+			return
+		if(!istype(ticker.mode, /datum/game_mode/cult))
+			usr << "<span class='warning'>The gamemode is not cult</span>"
+			return
+		var/datum/game_mode/cult/C = ticker.mode
+		var/list/candidates = ticker.mode.get_playing_crewmembers_for_role()
+		var/list/minds = list()
+		var/list/numnames = list()
+		for(var/V in candidates)
+			if(!V)
+				continue
+			var/mob/living/carbon/human/H = V
+			if(H.mind)
+				var/name = H.mind.name
+				var/n = numnames[name]
+				if(n)
+					name += "([n])"
+					numnames[name]++
+				else
+					numnames[name] = 1
+				if(H.mind in ticker.mode.cult)
+					name += "(CULTIST)"
+				if(H.mind == C.sacrifice_target)
+					name += "(CURRENT)"
+				if(H.stat == DEAD)
+					name += "(DEAD)"
+				minds[name] = H.mind
+		var/selected = input(usr, "Select new Cult Sac Target","Sac Target") as null|anything in minds
+		if(!selected)
+			return
+		C.cult_objectives |= "sacrifice"
+		C.sacrifice_target = minds[selected]
+		for(var/V in ticker.mode.cult)
+			if(!V)
+				continue
+			var/datum/mind/M = V
+			M.wipe_memory()
+			C.memorize_cult_objectives(M)
 
 	/////////////////////////////////////new ban stuff
 	else if(href_list["unbanf"])
@@ -1521,7 +1561,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)")
 
 	else if(href_list["revive"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/L = locate(href_list["revive"])
@@ -1572,12 +1612,11 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
+		var/mob/M = locate(href_list["makeblob"])
+		if(!M)
 			return
 
-		usr.client.cmd_admin_blobize(H)
+		usr.client.cmd_admin_blobize(M)
 
 
 	else if(href_list["makerobot"])
@@ -2371,6 +2410,11 @@
 				qdel(virus)
 		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
+
+	else if(href_list["borer"])
+		if(!check_rights(R_ADMIN))
+			return
+		borer_panel()
 
 	else if(href_list["cybermen"])
 		if(!check_rights(R_ADMIN))

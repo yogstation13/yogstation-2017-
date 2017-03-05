@@ -90,7 +90,7 @@
 /obj/item/weapon/restraints/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."
-	icon_state = "cuff_red"
+	icon_state = "cuff_cable"
 	item_state = "coil_red"
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	origin_tech = "engineering=2"
@@ -119,42 +119,14 @@
 		var/obj/item/stack/cable_coil/new_coil = new /obj/item/stack/cable_coil
 		new_coil.amount = 15
 		qdel(src)
+		new_coil.item_color = item_color
+		new_coil.update_icon()
 		usr.put_in_hands(new_coil)
 		usr.visible_message("<span class='notice'>[user.name] unties the knot holding together [src].</span>")
 
-/obj/item/weapon/restraints/handcuffs/cable
-
-/obj/item/weapon/restraints/handcuffs/cable/red
-	icon_state = "cuff_red"
-	item_state = "coil_red"
-
-/obj/item/weapon/restraints/handcuffs/cable/yellow
-	icon_state = "cuff_yellow"
-	item_state = "coil_yellow"
-
-/obj/item/weapon/restraints/handcuffs/cable/blue
-	icon_state = "cuff_blue"
-	item_state = "coil_blue"
-
-/obj/item/weapon/restraints/handcuffs/cable/green
-	icon_state = "cuff_green"
-	item_state = "coil_green"
-
-/obj/item/weapon/restraints/handcuffs/cable/pink
-	icon_state = "cuff_pink"
-	item_state = "coil_pink"
-
-/obj/item/weapon/restraints/handcuffs/cable/orange
-	icon_state = "cuff_orange"
-	item_state = "coil_orange"
-
-/obj/item/weapon/restraints/handcuffs/cable/cyan
-	icon_state = "cuff_cyan"
-	item_state = "coil_cyan"
-
-/obj/item/weapon/restraints/handcuffs/cable/white
-	icon_state = "cuff_white"
-	item_state = "coil_white"
+/obj/item/weapon/restraints/handcuffs/cable/update_icon()
+	color = color2code(item_color)
+	item_state = "coil_[item_color]"
 
 /obj/item/weapon/restraints/handcuffs/alien
 	icon_state = "handcuffAlien"
@@ -218,7 +190,7 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
-	icon_state = "cuff_white"
+	icon_state = "cuff_cable"
 	item_state = "coil_white"
 	materials = list()
 	breakouttime = 450 //Deciseconds = 45s
@@ -359,3 +331,18 @@
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
 	weaken = 1
+
+/obj/item/weapon/restraints/legcuffs/bola/energy //For Security
+	name = "energy bola"
+	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
+	icon_state = "ebola"
+	hitsound = 'sound/weapons/taserhit.ogg'
+	w_class = 2
+	breakouttime = 60
+
+/obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
+	if(iscarbon(hit_atom))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
+		B.Crossed(hit_atom)
+		qdel(src)
+	..()

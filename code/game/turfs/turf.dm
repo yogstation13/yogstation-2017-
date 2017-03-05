@@ -11,8 +11,6 @@
 
 	var/blocks_air = 0
 
-	var/PathNode/PNode = null //associated PathNode in the A* algorithm
-
 	flags = 0
 
 	var/list/proximity_checkers = list()
@@ -21,6 +19,7 @@
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
+	var/unacidable = FALSE
 
 /turf/New()
 	..()

@@ -80,6 +80,8 @@
 	)
 
 /obj/machinery/airalarm/server // No checks here.
+	req_access = list()
+	req_one_access = list(access_tcomsat, access_atmospherics)
 	TLV = list(
 		"pressure"		= new/datum/tlv(-1, -1, -1, -1),
 		"temperature"	= new/datum/tlv(-1, -1, -1, -1),

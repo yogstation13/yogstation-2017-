@@ -2,20 +2,6 @@
 #define SHIELD_CRACKED 1
 #define SHIELD_BREAKING 2
 
-#define IMPROPERBLOCK 0
-#define PROPERBLOCK 1
-
-var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[NORTH]" = IMPROPERBLOCK),
-"[EAST]" = list("[SOUTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = IMPROPERBLOCK, "[NORTH]" = PROPERBLOCK),
-"[SOUTH]" = list("[NORTH]" = PROPERBLOCK, "[WEST]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = IMPROPERBLOCK ),
-"[WEST]" = list("[NORTH]" = PROPERBLOCK, "[EAST]" = PROPERBLOCK, "[SOUTH]" = PROPERBLOCK, "[WEST]" = IMPROPERBLOCK) )
-
-/obj/item/weapon/proc/check_for_positions(mob/living/carbon/human/H, atom/movable/AM)
-	var/facing_hit = blockcheck["[H.dir]"]["[AM.dir]"]
-//	message_admins("This is [H] and his direction is [H.dir].") //break glass if needed -Super
-//	message_admins("This is [AM] and his direction is [AM.dir].")
-	return facing_hit
-
 /obj/item/weapon/shield
 	name = "shield"
 	icon = 'icons/obj/weapons.dmi'
@@ -23,7 +9,6 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 	var/block_limit = 0 // used to see whether a weapon has enough force to break a shield
 	var/shieldstate = SHIELD_NORMAL
 	var/shieldhealth
-
 
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -47,12 +32,12 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 		var/examinedhealth = shieldhealth - damage
 		if(examinedhealth >= 50)
 			shieldstate = SHIELD_CRACKED
-			owner.visible_message("<span class='danger'>[owner]'s shield cracks slightly from the hit!</span class>")
+			visible_message("<span class='danger'>[owner]'s shield cracks slightly from the hit!</span class>")
 			shieldhealth = examinedhealth
 			return 1
 		if(examinedhealth >= 25) // below 50
 			shieldstate = SHIELD_BREAKING
-			owner.visible_message("<span class='danger'>[owner]'s shield begins to fall apart from the hit!<span class>")
+			visible_message("<span class='danger'>[owner]'s shield begins to fall apart from the hit!<span class>")
 			shieldhealth = examinedhealth
 			return 1
 
@@ -99,18 +84,21 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 		if(damage > block_limit)
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 			var/roll_for_shatter = check_shatter(owner, damage)
-			if(roll_for_shatter)
-				return 1
+			if(roll_for_shatter) // the damage to the sheld is processed, but we'll still be able to block it
+				final_block_chance += 50
+				return ..()
 			else
 				return 0
 		else
-			return 1
+			final_block_chance += 50
+			return ..()
 
 	else if(attack_type == UNARMED_ATTACK)
 		if(!check_for_positions(owner,AT))
 			return 0
 		else
-			return 1
+			final_block_chance += 50
+			return ..()
 
 
 	else if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -121,7 +109,8 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 			if(!check_for_positions(owner,O))
 				return 0
 			else
-				return 1
+				final_block_chance += 50
+				return ..()
 		else
 			final_block_chance += 50
 			return ..()
@@ -137,10 +126,9 @@ var/global/list/blockcheck = list("[NORTH]" = list("[SOUTH]" = PROPERBLOCK, "[EA
 		var/target = src.loc
 		for(var/i = 0, i < 7, i++)
 			target = get_step(target, pick(alldirs))
-		src.throw_at(target,7,1, spin = 0)
-		if(prob(final_block_chance))
-			owner.Weaken(2) // if it ain't tossin, they're takin the heat
-		return 0
+		src.throw_at(target,7,1, spin = 1)
+		final_block_chance -= 50
+		return ..()
 	else
 		return 1
 

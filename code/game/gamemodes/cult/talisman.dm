@@ -25,6 +25,9 @@
 
 /obj/item/weapon/paper/talisman/proc/invoke(mob/living/user, successfuluse = 1)
 	. = successfuluse
+	if(user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM)
+		successfuluse = 0
+		user << "<span class='cultitalic'>[src] fizzles. It's too far away from Nar'Sie's strength.</span>"
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
 			user.whisper(invocation)
@@ -109,7 +112,7 @@
 
 /obj/item/weapon/paper/talisman/supply/weak
 	cultist_name = "Lesser Supply Talisman"
-	uses = 2
+	uses = 1
 
 //Rite of Translocation: Same as rune
 /obj/item/weapon/paper/talisman/teleport

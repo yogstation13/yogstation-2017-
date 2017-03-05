@@ -130,50 +130,78 @@
 	name = "Virus Food"
 	id = "virusfood"
 	result = "virusfood"
-	required_reagents = list("water" = 5, "milk" = 5)
 	result_amount = 15
+	required_reagents = list("water" = 5, "milk" = 5)
 
 /datum/chemical_reaction/virus_food_mutagen
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
 	result = "mutagenvirusfood"
-	required_reagents = list("mutagen" = 1, "virusfood" = 1)
 	result_amount = 1
+	required_reagents = list("mutagen" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_synaptizine
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-	result = "synaptizinevirusfood"
-	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
+	result ="synaptizinevirusfood"
 	result_amount = 1
+	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma
 	name = "virus plasma"
 	id = "plasmavirusfood"
 	result = "plasmavirusfood"
-	required_reagents = list("plasma" = 1, "virusfood" = 1)
 	result_amount = 1
+	required_reagents = list("plasma" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	result = "weakplasmavirusfood"
-	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
 	result_amount = 2
+	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	name = "sucrose agar"
 	id = "sugarvirusfood"
 	result = "sugarvirusfood"
-	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
 	result_amount = 2
+	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_mutagen_salineglucose
 	name = "sucrose agar"
 	id = "salineglucosevirusfood"
 	result = "sugarvirusfood"
-	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
 	result_amount = 2
+	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
+
+/datum/chemical_reaction/virus_food_uranium
+	name = "Decaying uranium gel"
+	id = "uraniumvirusfood"
+	result = "uraniumvirusfood"
+	result_amount = 1
+	required_reagents = list("uranium" = 1, "virusfood" = 1)
+
+/datum/chemical_reaction/virus_food_uranium_plasma
+	name = "Unstable uranium gel"
+	id = "uraniumvirusfood_plasma"
+	result = "uraniumplasmavirusfood_unstable"
+	result_amount = 1
+	required_reagents = list("uranium" = 5, "plasmavirusfood" = 1)
+
+/datum/chemical_reaction/virus_food_uranium_plasma_gold
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_gold"
+	result = "uraniumplasmavirusfood_stable"
+	result_amount = 1
+	required_reagents = list("uranium" = 10, "gold" = 10, "plasma" = 1)
+
+/datum/chemical_reaction/virus_food_uranium_plasma_silver
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_silver"
+	result = "uraniumplasmavirusfood_stable"
+	result_amount = 1
+	required_reagents = list("uranium" = 10, "silver" = 10, "plasma" = 1)
 
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
@@ -257,6 +285,30 @@
 	level_min = 1
 	level_max = 1
 
+/datum/chemical_reaction/mix_virus/mix_virus_10
+
+	name = "Mix Virus 10"
+	id = "mixvirus10"
+	required_reagents = list("uraniumvirusfood" = 1)
+	level_min = 6
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_11
+
+	name = "Mix Virus 11"
+	id = "mixvirus11"
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 1)
+	level_min = 7
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_12
+
+	name = "Mix Virus 12"
+	id = "mixvirus12"
+	required_reagents = list("uraniumplasmavirusfood_stable" = 1)
+	level_min = 8
+	level_max = 8
+
 /datum/chemical_reaction/mix_virus/rem_virus
 
 	name = "Devolve Virus"
@@ -271,6 +323,149 @@
 		var/datum/disease/advance/D = locate(/datum/disease/advance) in B.data["viruses"]
 		if(D)
 			D.Devolve()
+
+		////////////////////////////////// Mutation Toxins ///////////////////////////////////
+
+/datum/chemical_reaction/stable_mutation_toxin
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
+	result = "stablemutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "blood" = 1) //classic
+
+/datum/chemical_reaction/lizard_mutation_toxin
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	result = "lizardmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "radium" = 1) //mutant
+
+/datum/chemical_reaction/fly_mutation_toxin
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	result = "flymutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "mutagen" = 1) //VERY mutant
+
+/datum/chemical_reaction/lizardfly_mutation_toxin
+	name = "Unafly Mutation Toxin"
+	id = "unaflymutationtoxin"
+	result = "unaflymutationtoxin"
+	result_amount = 1
+	required_reagents = list("flymutationtoxin" = 1, "lizardmutationtoxin" = 1)
+
+/datum/chemical_reaction/android_mutation_toxin
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	result = "androidmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "teslium" = 1) //beep boop
+
+/datum/chemical_reaction/androidfly_mutation_toxin
+	name = "Flyternis Mutation Toxin"
+	id = "flyternismutationtoxin"
+	result = "flyternismutationtoxin"
+	result_amount = 1
+	required_reagents = list("flymutationtoxin" = 1, "androidmutationtoxin" = 1)
+
+/datum/chemical_reaction/plant_mutation_toxin
+	name = "Phytosian Mutation Toxin"
+	id = "phytosianmutationtoxin"
+	result = "phytosianmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "robustharvestnutriment" = 1)
+
+/datum/chemical_reaction/flytosian_mutation_toxin
+	name = "Flytosian Mutation Toxin"
+	id = "flytosianmutationtoxin"
+	result = "flytosianmutationtoxin"
+	result_amount = 1
+	required_reagents = list("flymutationtoxin" = 1, "phytosianmutationtoxin" = 1)
+
+
+/datum/chemical_reaction/jelly_mutation_toxin
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	result = "jellymutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "slimejelly" = 1) //why would you even make this
+
+/datum/chemical_reaction/abductor_mutation_toxin
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	result = "abductormutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "morphine" = 1)
+
+
+/datum/chemical_reaction/pod_mutation_toxin
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	result = "podmutationtoxin"
+	result_amount = 1
+	required_reagents = list("unstablemutationtoxin" = 1, "eznutriment" = 1) //plant food
+
+/datum/chemical_reaction/golem_mutation_toxin
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	result = "golemmutationtoxin"
+	required_reagents = list("unstablemutationtoxin" = 1, "silver" = 1) //not too hard to get but also not just there in xenobio
+	result_amount = 1
+
+/datum/chemical_reaction/synth_mutation_toxin
+	name = "Synth Mutation Toxin"
+	id = "synthmutationtoxin"
+	result = "synthmutationtoxin"
+	required_reagents = list("androidmutationtoxin" = 1, "teslium" = 1)
+	result_amount = 1
+
+
+//BLACKLISTED RACES
+/datum/chemical_reaction/skeleton_mutation_toxin
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	result = "skeletonmutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "milk" = 1) //good for yer bones
+	result_amount = 1
+
+/datum/chemical_reaction/zombie_mutation_toxin
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	result = "zombiemutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "toxin" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/ash_mutation_toxin //ash lizard
+	name = "Ash Mutation Toxin"
+	id = "ashmutationtoxin"
+	result = "ashmutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "lizardmutationtoxin" = 1, "ash" = 1)
+	result_amount = 1
+
+
+//DANGEROUS RACES
+/datum/chemical_reaction/plasma_mutation_toxin
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	result = "plasmamutationtoxin"
+	result_amount = 1
+	required_reagents = list("skeletonmutationtoxin" = 1, "plasma" = 1, "uranium" = 1) //this is very fucking powerful, so it's hard to make
+
+/datum/chemical_reaction/shadow_mutation_toxin
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	result = "shadowmutationtoxin"
+	required_reagents = list("amutationtoxin" = 1, "liquid_dark_matter" = 1, "holywater" = 1)
+	result_amount = 1
+
+//Technically a mutation toxin
+/datum/chemical_reaction/mulligan
+	name = "Mulligan"
+	id = "mulligan"
+	result = "mulligan"
+	required_reagents = list("humanmutationtoxin" = 1, "mutagen" = 1)
+	result_amount = 1
+
 
 
 

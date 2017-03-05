@@ -42,6 +42,11 @@
 	if(!B)
 		return
 
+	if(client.prefs.afreeze)
+		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		return
+
+
 	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 10 seconds).</span>"
 	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
 

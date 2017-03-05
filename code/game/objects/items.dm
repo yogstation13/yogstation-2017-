@@ -35,6 +35,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/list/actions = list() //list of /datum/action's that this item has.
 	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
+	var/datum/chameleon/chameleon = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -49,7 +50,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
-	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
 	var/strip_delay = 40
 	var/put_on_delay = 20
@@ -142,6 +142,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(ismob(loc))
 		var/mob/m = loc
 		m.unEquip(src, 1)
+	qdel(chameleon)
 	for(var/X in actions)
 		qdel(X)
 	if(module_holder)
@@ -179,6 +180,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 //OXYLOSS = 8
 //Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
+	return
+
+/obj/item/proc/cuff_act(mob/user) // effect for cuffs/legcuffs. attached to movement_delay() inside of carbon_movement.dm
 	return
 
 /obj/item/verb/move_to_top()
@@ -263,6 +267,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 	if(anchored)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -370,7 +378,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	
+
 	if(ismodule(W))
 		if(!module_holder)
 			user << "<span class='warning'>This equipment doesn't support modules.</span>"
@@ -381,7 +389,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			user << "<span class='warning'>[return_value]</span>"
 		else
 			user << "<span class='notice'>You successfully install \the [module.name] into [src]."
-	
+
 	if(ismodholder(W))
 		if(module_holder)
 			user << "<span class='notice'>There's already a module holder installed!</span>"
@@ -402,6 +410,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
+	if(chameleon)
+		chameleon.deregister()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -433,12 +443,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	if(chameleon)
+		chameleon.register(user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 
 /obj/item/proc/unequipped(mob/user)
+	if(chameleon)
+		chameleon.deregister()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -491,6 +505,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
+		if(H.dna.species.specflags & PROTECTEDEYES)
+			user << "<span class='danger'>This person's eyes are too strong to be gouged out!</span>"
 			return
 
 	if(ismonkey(M))

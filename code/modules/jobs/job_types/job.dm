@@ -42,7 +42,7 @@
 	//Whitelist for jobs that have ULTRA preference for people who are accepted into the whitelist
 	var/whitelisted = 0
 
-	var/outfit = null
+	var/datum/outfit/outfit = null
 
 //Only override this proc
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
@@ -82,7 +82,9 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
 			PDA.icon_state = "pda-pipboy"
 			PDA.slot_flags |= SLOT_GLOVES
-
+		if(4)//rainbow
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
+			PDA.icon_state = "pda-rainbow"
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -173,6 +175,24 @@
 	var/box = /obj/item/weapon/storage/box/survival
 
 	var/pda_slot = slot_belt
+
+/datum/outfit/job/copyFrom(datum/outfit/other)
+	..()
+	if(istype(other, /datum/outfit/job))
+		var/datum/outfit/job/J = other
+		backpack = J.backpack
+		satchel  = J.satchel
+		dufflebag = J.dufflebag
+		box = J.box
+		pda_slot = J.pda_slot
+
+/datum/outfit/job/clear()
+	..()
+	backpack = null
+	satchel  = null
+	dufflebag = null
+	box = null
+	pda_slot = slot_belt
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)

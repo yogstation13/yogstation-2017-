@@ -13,13 +13,16 @@
 	var/mob/living/carbon/human/H = user
 	if(user.stat || !ishuman(user))
 		return
-	if(changeling.absorbedcount < 6)//you start with 1 DNA
-		user << "<span class='warning'>We must absorb five lifeforms before being able to use this ability.</span>"
+	if(changeling.absorbedcount < 1)
+		user << "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>"
+		return
+	if(changeling.chem_charges < 20)//no spamming it with 5 chems, you won't get anything done anyway
+		user << "<span class='warning'>We require sufficient chemicals to use this ability.</span>"
 		return
 	if(user.health < 35)//amount of health that makes you revert
 		user << "<span class='warning'>We are too hurt to sustain such power.</span>"
 		return
-	if(H.dna.species.id == "abomination")//can't transform twice at once
+	if(isabomination(H))//can't transform twice at once
 		user << "<span class='warning'>You're already transformed!</span>"
 		return
 	var/transform_or_no=alert(user,"Are you sure you want to transform?",,"Yes","No")
@@ -28,12 +31,16 @@
 			user << "<span class='warning'>You opt not to transform."
 			return
 		if("Yes")
-			if(H.dna.species.id == "abomination")
+			if(changeling.transforming)
+				user << "<span class='warning'>You're transforming, hold on.</span>"
+				return
+			if(isabomination(H))
 				user << "<span class='warning'>You're already transformed!</span>"
 				return
 			if(changeling.geneticdamage > 15)
 				user << "<span class='warning'>Your genomes are too damaged to allow you to transform.</span>"
 				return
+			changeling.transforming = TRUE
 			changeling.geneticdamage += 5
 			user.Stun(INFINITY)
 			for(var/obj/item/I in user) //drops all items
@@ -74,21 +81,32 @@
 			user.equip_to_slot_or_del(new /obj/item/clothing/mask/muzzle/abomination(user), slot_wear_mask)
 			user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling/abomination(user), slot_glasses)
 			H.set_species(/datum/species/abomination)
-			changeling.chem_recharge_slowdown = 3
+			changeling.mimicing = ""
+			changeling.chem_recharge_rate = 0
+			changeling.chem_recharge_slowdown = (18/changeling.absorbedcount)
+			if(changeling.chem_recharge_slowdown < 2)
+				changeling.chem_recharge_slowdown = 2
+			user.status_flags -= GOTTAGOFAST
+			changeling.transforming = FALSE
+
 
 //hulk
 			var/datum/mutation/human/HM = mutations_list[HULK]
 			if(H.dna && H.dna.mutations)
+				H.dna.remove_all_mutations() //no TK or invisible horrorform
 				HM.force_give(H)
 
 //spells
+				for(var/spell in user.mind.spell_list) //no duping spells if you manage to transform multiple times without reverting
+					if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
+						user.mind.spell_list -= spell
+						qdel(spell)
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/abomination/screech
 				//user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend //replaced with constant healing, hopefully not too op
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/devour
 				user.mind.spell_list += new /obj/effect/proc_holder/spell/targeted/abomination/abom_revert
 
 //forced reversion and healing
-
 
 //abomination stuff
 /datum/species/abomination
@@ -105,6 +123,7 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	heatmod = 1.5
+	can_grab_items = FALSE //no picking stuff up grr
 	blacklisted = 1
 
 /datum/species/abomination/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -124,6 +143,7 @@
 		H.adjustFireLoss(-4)
 		H.adjustOxyLoss(-10)
 		H.adjustToxLoss(-10)
+		H.adjustStaminaLoss(-10)
 		if(prob(25))
 			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
 
@@ -153,6 +173,7 @@
 
 
 	if(changeling.reverting == 1)
+		changeling.chem_recharge_rate = 1
 		changeling.chem_recharge_slowdown = 0
 		for(var/obj/item/I in user) // removes any item, the only thing I can think of is cuffs
 			user.unEquip(I)

@@ -66,14 +66,28 @@
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
+	var/list/outfit_browsers = null
 
 /datum/mind/New(var/key)
 	src.key = key
 	ckey = ckey(key)
 	soulOwner = src
 
+/datum/mind/proc/get_outfit_browser(type)
+	if(!outfit_browsers)
+		outfit_browsers = list()
+	var/datum/outfit_browse/B = outfit_browsers[type]
+	if(B)
+		return B
+	B = new type(src)
+	outfit_browsers[type] = B
+	return B
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	if(outfit_browsers)
+		for(var/V in outfit_browsers)
+			var/datum/outfit_browse/B = V
+			B.move_to_mob(current, new_character)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
 		SStgui.on_transfer(current, new_character)
@@ -87,8 +101,12 @@
 	if(new_character.mind)								//disassociate any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
+	if(istype(current) && islist(current.antag_datums)) //wow apparently current isn't always living good fucking job SOMEONE
+		for(var/i in current.antag_datums)
+			var/datum/antagonist/D = i
+			D.transfer_to_new_body(new_character)
+
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
-	leave_all_huds()									//leave all the huds in the old body, so it won't get huds if somebody else enters it
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
@@ -216,6 +234,33 @@
 	if(gang_datum)
 		gang_datum.remove_gang_hud(src)
 
+/*
+//Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
+
+/datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
+	if(iscultist(creator))
+		ticker.mode.add_cultist(src)
+
+	else if(is_gangster(creator))
+		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
+
+	else if(is_revolutionary_in_general(creator))
+		ticker.mode.add_revolutionary(src)
+
+	else if(is_servant_of_ratvar(creator))
+		add_servant_of_ratvar(current)
+
+	else if(is_nuclear_operative(creator))
+		make_Nuke(null, null, 0, FALSE)
+
+	enslaved_to = creator
+
+	current.faction = creator.faction.Copy()
+
+	if(creator.mind.special_role)
+		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
+*/
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -345,7 +390,7 @@
 		if (ticker.mode.config_tag=="cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (src in ticker.mode.cult)
+		if (iscultist(current))
 			text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
 			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
 /*
@@ -354,8 +399,10 @@
 */
 		else if(isloyal(current))
 			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-		else
+		else if(is_convertable_to_cult(current))
 			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
+		else
+			text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Nar-Sie</i>"
 
 		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
@@ -369,13 +416,15 @@
 		if(ticker.mode.config_tag == "clockwork cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if(src in ticker.mode.servants_of_ratvar)
+		if(is_servant_of_ratvar(current))
 			text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
 			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
 		else if(isloyal(current))
 			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
-		else
+		else if(is_eligible_servant(current))
 			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+		else
+			text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Ratvar</i>"
 
 		if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
@@ -1232,8 +1281,7 @@
 					var/safty = 0
 					var/mob/living/carbon/human/H = current
 					for(var/obj/item/organ/thrall_tumor/T in H.internal_organs)
-						T.Remove(current,0,1)
-						qdel(T)
+						T.Remove(current,0,1,1)
 						safty = 1
 					if(!safty)
 						ticker.mode.remove_thrall(current,0)
@@ -1255,7 +1303,7 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				var/obj/item/organ/thrall_tumor/T = new/obj/item/organ/thrall_tumor(current)
-				T.Insert(current)
+				T.Insert(current, 1)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 

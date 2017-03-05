@@ -281,7 +281,7 @@ var/next_external_rsc = 0
 		admin_memo_output("Show")
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
-		verbs += /client/verb/weightstats
+		//verbs += /client/verb/weightstats
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -358,7 +358,8 @@ var/next_external_rsc = 0
 		holder.owner = null
 		admins -= src
 		if(!total_admins_active())
-			send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
+			if(total_unresolved_tickets())
+				send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src

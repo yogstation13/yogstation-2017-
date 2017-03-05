@@ -364,6 +364,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/stuntime = 7
 	var/sleeptime = 60
 	var/cufftime = 30 // operates the amount of time put into cuffing someone.
+	var/safetylock = TRUE
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
@@ -397,8 +398,9 @@ Congratulations! You are now trained for xenobiology research!"}
 			item_state = "wonderprodProbe"
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!isabductor(user))
-		return
+	if(safetylock)
+		if(!isabductor(user))
+			return
 
 	if(isrobot(target))
 		..()
@@ -503,22 +505,22 @@ Congratulations! You are now trained for xenobiology research!"}
 		var/mob/living/carbon/human/H = L
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
-			species = "<span class='warning'>Changeling lifeform</span>"
+			species += "<br><span class='warning'>Changeling lifeform</span>"
 
 		if(L.mind && L.mind.special_role == "Servant of Ratvar")
-			species = "<span class='warning'>Lifeform has connections to the elder god, Ratvar.</span>"
+			species += "<br><span class='warning'>Lifeform has connections to the elder god, Ratvar.</span>"
 
 		if(L.mind && L.mind.special_role == "Cultist")
-			species = "<span class='warning'>Lifeform has connections to the elder god, Narsie.</span>"
+			species += "<br><span class='warning'>Lifeform has connections to the elder god, Narsie.</span>"
 
 		if(L.mind && L.mind.special_role == "thrall")
-			species = "<span class='warning'>Shadowling possessed lifeform</span>"
+			species += "<br><span class='warning'>Shadowling possessed lifeform</span>"
 
 		if(L.mind && L.mind.special_role == "Shadowling")
-			species = "<span class='warning'>Shadowling lifeform</span>"
+			species += "<br><span class='warning'>Shadowling lifeform</span>"
 
 		if(L.mind && L.mind.special_role == "Cyberman")
-			species = "<span class='warning'>Lifeform has a multitude of neurally connected submicrolevel binary particles.</span>"
+			species += "<br><span class='warning'>Lifeform has a multitude of neurally connected submicrolevel binary particles.</span>"
 
 		var/obj/item/organ/gland/temp = locate() in H.internal_organs
 		if(temp)
@@ -541,6 +543,8 @@ Congratulations! You are now trained for xenobiology research!"}
 	name = "unorthodox alien baton"
 	stuntime = 5
 	sleeptime = 0
+	safetylock = FALSE
+	origin_tech = "combat=2;abductor=2"
 
 /obj/item/weapon/abductor_baton/weak/ProbeAttack()
 	return 0

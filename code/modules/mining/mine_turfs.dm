@@ -160,7 +160,7 @@
 	mineralAmt = 1
 	spreadChance = 0
 	spread = 0
-	scan_state = "rock_Gibtonite"
+	scan_state = "rock_Uranium"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = 0 //How far into the lifecycle of gibtonite we are, 0 is untouched, 1 is active and attempting to detonate, 2 is benign and ready for extraction
 	var/activated_ckey = null //These are to track who triggered the gibtonite deposit for logging purposes
@@ -343,6 +343,10 @@
 		if(istype(loc, /area/mine/explored))
 			return
 		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
+			if(T.x < 75)
+				return
+			if(T.y < 55)
+				return
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
 				return
 		var/randumb = pickweight(mob_spawn_list)
@@ -371,8 +375,6 @@
 				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
-	else
-		return attack_hand(user)
 	return
 
 /turf/closed/mineral/proc/gets_drilled()

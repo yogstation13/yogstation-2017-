@@ -1,14 +1,3 @@
-/obj/effect/proc_holder/spell/proc/abomination_check(mob/usr)
-	if(!ishuman(usr))
-		return 0
-	var/mob/living/carbon/human/H = usr
-	if(H.dna.species.id == "abomination")
-		return 1
-	else
-		usr << "You can't use this in your current form."
-		return 0
-
-
 
 /obj/effect/proc_holder/spell/aoe_turf/abomination/screech //Stuns anyone in view range.
 	name = "Screech"
@@ -20,7 +9,7 @@
 	sound = 'sound/effects/creepyshriek.ogg'
 
 /obj/effect/proc_holder/spell/aoe_turf/abomination/screech/cast(list/targets,mob/user = usr)
-	if(!abomination_check(user))
+	if(!isabomination(user))
 		revert_cast()
 		return
 	playMagSound()
@@ -51,7 +40,7 @@
 	include_user = 1
 
 /obj/effect/proc_holder/spell/targeted/abomination/abom_fleshmend/cast(mob/living/carbon/human/user)
-	if(!abomination_check(user))
+	if(!isabomination(user))
 		return
 	user.visible_message("<span class='warning'>[usr]'s skin shifts and pulses, any damage rapidly vanishing!</span>")
 	spawn(0)
@@ -79,7 +68,7 @@
 
 
 /obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets,mob/user)
-	if(!abomination_check(user))
+	if(!isabomination(user))
 		return
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
@@ -108,7 +97,7 @@
 
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)
-		changeling.absorbedcount--
+		changeling.profilecount--
 	changeling.add_profile(target, user)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
@@ -142,15 +131,18 @@
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += (target.mind.changeling.absorbedcount)
+			changeling.profilecount  += (target.mind.changeling.profilecount)
 
 			target.mind.changeling.stored_profiles.len = 1
 			target.mind.changeling.absorbedcount = 0
+			target.mind.changeling.profilecount = 0
 
 
 	changeling.chem_charges=min(changeling.chem_charges+50, changeling.chem_storage)
 
 	changeling.isabsorbing = 0
 	changeling.canrespec = 1
+	changeling.absorbedcount++
 	for(var/obj/item/I in target) //drops all items
 		target.unEquip(I)
 	new /obj/effect/decal/remains/human(target.loc)
@@ -177,7 +169,7 @@
 			user << "<span class='warning'>You decide not to revert."
 			return
 		if("Yes")
-			if(!abomination_check(usr))
+			if(!isabomination(usr))
 				user << "<span class='warning'>You're already reverted!</span>"
 				for(var/spell in user.mind.spell_list)
 					if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))

@@ -173,8 +173,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(src.loc == summoner)
 		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
 		return 0
-	if(target == src)//stop hitting yourself, please
-		return
 	if(target == summoner && !(istype(src,/mob/living/simple_animal/hostile/guardian/healer)))
 		return 0
 	else

@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25)
+	var/loot = rand(1,24)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -33,41 +33,38 @@
 			new /obj/item/clothing/suit/magusred(src)
 			new /obj/item/clothing/head/magus(src)
 		if(9)
-			new /obj/item/organ/brain/alien(src)
-		if(10)
 			new /obj/item/weapon/rune_scimmy(src)
-		if(11)
+		if(10)
 			new /obj/item/ship_in_a_bottle(src)
-		if(12)
+		if(11)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
-		if(13)
-			new /obj/item/clothing/suit/space/hardsuit/freedom(src)  //lavaland is actually america after trump was elected
-		if(14)
+		if(12)
 			new /obj/item/weapon/nullrod/scythe/talking(src)
-		if(15)
+			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/godblood(src)
+		if(13)
 			new /obj/item/weapon/reagent_containers/glass/bottle/self_fill(src)
-		if(16)
+		if(14)
 			new /obj/item/weapon/guardiancreator(src)
-		if(17)
+		if(15)
 			new /obj/item/device/warp_cube/red(src)
-		if(18)
+		if(16)
 			new /obj/item/device/wisp_lantern(src)
-		if(19)
+		if(17)
 			new /obj/item/device/immortality_talisman(src)
-		if(20)
+		if(18)
 			new /obj/item/weapon/gun/magic/hook(src)
-		if(21)
+		if(19)
 			new /obj/item/voodoo(src)
-		if(22)
+		if(20)
 			new /obj/item/weapon/melee/energy/sword/pirate(src)
 			new /obj/item/clothing/suit/space/pirate(src)
 			new /obj/item/clothing/head/helmet/space/pirate(src)
-		if(23)
+		if(21)
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-		if(24)
+		if(22)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
-		if(25)
+		if(23)
 			new /obj/item/organ/heart/cursed/wizard(src)
 
 
@@ -130,6 +127,7 @@
 	icon_state = "orb"
 	luminosity = 9
 	layer = ABOVE_ALL_MOB_LAYER
+	burn_state = LAVA_PROOF
 
 /obj/item/device/warp_cube
 	name = "blue cube"
@@ -199,7 +197,7 @@
 	..()
 	var/obj/item/projectile/hook/P = BB
 	spawn(1)
-		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30)
+		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30,alphafade=0)
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
@@ -456,18 +454,7 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
-	..()
-	var/loot = rand(1,4)
-	switch(loot)
-		if(1)
-			new /obj/item/weapon/melee/ghost_sword(src)
-		if(2)
-			new /obj/item/weapon/lava_staff(src)
-		if(3)
-			new /obj/item/weapon/spellbook/oneuse/fireball(src)
-			new /obj/item/weapon/gun/magic/wand/fireball(src)
-		if(4)
-			new /obj/item/weapon/dragons_blood(src)
+	new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -564,16 +551,8 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,2)
-
-	switch(random)
-		if(1)
-			user << "<span class='danger'>You don't feel so good...</span>"
-			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
-			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
-		if(2)
-			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
-			H.weather_immunities |= "lava"
+	user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
+	H.weather_immunities |= "lava"
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
@@ -727,14 +706,21 @@
 	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
+	var/waiting = FALSE
 
 
 /obj/item/bloodvial/bloodcrawl
 
 /obj/item/bloodvial/bloodcrawl/attack_self(mob/living/carbon/user)
+	if(waiting)
+		return
 	if(user.z != ZLEVEL_STATION) //so you can't see if it's demon spawner on lavaland
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
+	user << "<span class='notice'>You start working up the nerve to shatter the bottle...</span>"
+	waiting = TRUE
+	sleep(50)
+	waiting = FALSE
 	if(user.bloodcrawl == BLOODCRAWL || user.bloodcrawl == BLOODCRAWL_EAT)
 		user <<"<span class='warning'>You break [src], but nothing happens.../span>"
 		qdel(src)

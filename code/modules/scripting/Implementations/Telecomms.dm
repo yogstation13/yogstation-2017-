@@ -109,7 +109,7 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$loud",		SPAN_YELL)	//Bolding, applied when ending a message with several exclamation marks.
 	interpreter.SetVar("$emphasis",	SPAN_ITALICS) //Italics
 	interpreter.SetVar("$wacky",	SPAN_SANS) //Comic sans font, normally seen from the genetics power.
-	interpreter.SetVar("$command",	SPAN_COMMAND) //Bolding from high-volume mode on command headsets
+	interpreter.SetVar("$commanding",	SPAN_COMMAND) //Bolding from high-volume mode on command headsets
 
 	//Language bitflags
 	interpreter.SetVar("HUMAN"   ,	HUMAN)

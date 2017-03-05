@@ -7,7 +7,9 @@
 #define ismodholder(O) (istype(O, /obj/item/module_holder))
 
 #define ismodule(O) (istype(O, /obj/item/module))
-
+#define islavaturf(A) (istype(A, /turf/open/floor/plating/lava))
+#define isminingturf(A) (istype(A, /turf/open/floor/plating/asteroid))
+#define ischasm(A) (istype(A, /turf/open/chasm))
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -21,6 +23,12 @@
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
+#define isabomination(A) (is_species(A, /datum/species/abomination))
+#define isshadow(A) (is_species(A, /datum/species/shadow))
+#define isshadowling(A) (is_species(A, /datum/species/shadow/ling))
+#define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
+#define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftain))
+#define iskrampus(A) (is_species(A, /datum/species/demon))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 

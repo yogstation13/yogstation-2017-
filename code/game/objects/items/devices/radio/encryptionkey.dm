@@ -58,15 +58,21 @@
 
 /obj/item/device/encryptionkey/headset_sci
 	name = "science radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the science channel, use :n."
+	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For supply use :u."
 	icon_state = "sci_cypherkey"
-	channels = list("Science" = 1)
+	channels = list("Science" = 1, "Supply" = 1)
 
 /obj/item/device/encryptionkey/headset_medsci
 	name = "medical research radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the medical channel, use :m. For science, use :n."
 	icon_state = "medsci_cypherkey"
 	channels = list("Science" = 1, "Medical" = 1)
+
+/obj/item/device/encryptionkey/headset_medsup
+	name = "medical supply radio encryption key"
+	desc = "An encryption key for mining medic headsets. To access the medical channel, use :m. For cargo, use :u."
+	icon_state = "cargo_cypherkey"
+	channels = list("Supply" = 1, "Medical" = 1)
 
 /obj/item/device/encryptionkey/headset_com
 	name = "command radio encryption key"
@@ -82,9 +88,9 @@
 
 /obj/item/device/encryptionkey/heads/rd
 	name = "\proper the research director's encryption key"
-	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For command, use :c."
+	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For command, use :c. For supply use :u"
 	icon_state = "rd_cypherkey"
-	channels = list("Science" = 1, "Command" = 1)
+	channels = list("Science" = 1, "Command" = 1, "Supply" = 1)
 
 /obj/item/device/encryptionkey/heads/hos
 	name = "\proper the head of security's encryption key"
@@ -112,9 +118,9 @@
 
 /obj/item/device/encryptionkey/headset_cargo
 	name = "supply radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the supply channel, use :u."
+	desc = "An encryption key for a radio headset.  To access the supply channel, use :u for science use :n"
 	icon_state = "cargo_cypherkey"
-	channels = list("Supply" = 1)
+	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"

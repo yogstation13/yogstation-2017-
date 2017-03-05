@@ -17,7 +17,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -249,7 +249,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
-			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.absorbedcount]"
+			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.profilecount]"
 
 			if(changeling.objectives.len)
 				var/count = 1
@@ -282,7 +282,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
-	var/absorbedcount = 0
+	var/absorbedcount = 0//how many the ling has absorbed with the ability
+	var/profilecount = 0 //used to store how many profiles, either absorbed or DNAstung
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -297,7 +298,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/reverting = 0
+	var/reverting = 0 //if they're turning back from horrorform
+	var/transforming = FALSE //if they're turning into horrorform
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 
@@ -395,9 +397,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-
+	profilecount++
 	stored_profiles += prof
-	absorbedcount++
 
 /datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
 	var/datum/changelingprofile/prof = create_profile(H, protect)
