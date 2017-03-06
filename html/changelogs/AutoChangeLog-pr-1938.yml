@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "c4 has wires again, and c4 from the syndicate ship is no longer invisible when placed."
