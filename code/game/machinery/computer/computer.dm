@@ -132,8 +132,10 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.isOn())
 			return ..()
-		else if(computer_health == initial(src.computer_health) | 0)
-			user << "<span class='notice'>No point in welding a [computer_health ?  "pristine" : "completely broken"] computer.</span>"
+		else if(computer_health == initial(src.computer_health)) //This doesn't like |'s for some reason
+			user << "<span class='notice'>No point in welding a pristine looking computer.</span>"
+			return 0
+		else if(!computer_health)
 			return 0
 		else
 			computer_health = initial(src.computer_health)
