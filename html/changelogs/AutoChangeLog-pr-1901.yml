@@ -1,0 +1,6 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscdel: "Removed the stun from leg dismemberment."
+  - rscadd: "Blood bubbles when slaughter demons are about to pop out of it."
+  - tweak: "Slaughter demons now lose their speed boost from exiting blood much faster."
