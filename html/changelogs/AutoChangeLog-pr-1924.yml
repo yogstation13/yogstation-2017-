@@ -1,4 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - bugfix: "Fixes the names being messed up when preternis inserted stuff into themselves. r_arm instead of right arm etc"
