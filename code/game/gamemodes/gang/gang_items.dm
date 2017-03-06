@@ -196,7 +196,7 @@
 	name = "C4 Explosive"
 	id = "c4"
 	cost = 5
-	item_path = /obj/item/weapon/grenade/plastic/c4
+	item_path = /obj/item/weapon/c4
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
