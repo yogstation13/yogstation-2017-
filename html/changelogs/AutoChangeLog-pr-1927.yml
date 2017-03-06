@@ -1,0 +1,5 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Juggernauts can phase through runed walls like every other cult construct now."
+  - bugfix: "Sonic jackhammers now correctly destroy runed walls."
