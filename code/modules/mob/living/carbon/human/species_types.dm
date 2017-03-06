@@ -168,10 +168,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker
 	name = "Ash Walker"
 	id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,NOMACHINERY)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOGUNS,NOMACHINERY)
+	safe_oxygen_min = 5
 
 /datum/species/lizard/ashwalker/chieftain
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOGUNS)
 	warning_low_pressure = 35 //no pressure warning on lavaland
 
 /datum/species/lizard/ashwalker/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
