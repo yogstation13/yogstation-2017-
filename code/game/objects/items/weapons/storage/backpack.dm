@@ -483,7 +483,7 @@
 	..()
 	contents = list()
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/grenade/plastic/c4(src)
+		new /obj/item/weapon/c4(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/x4/New()
