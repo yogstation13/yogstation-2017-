@@ -188,7 +188,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/uplink(O)
 	O.update_icon()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
