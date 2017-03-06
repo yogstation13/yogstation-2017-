@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Security HUD hotkeys work again. If you have trouble figuring them out, examine your sechud."
