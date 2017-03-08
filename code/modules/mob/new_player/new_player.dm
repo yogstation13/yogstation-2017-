@@ -443,11 +443,11 @@
 		if(job && SSjob.IsJobAvailable(job.title, src))
 			available_job_count++;
 
-	if(length(ticker.prioritized_jobs))
+	if(length(SSjob.prioritized_jobs))
 		dat += "<div class='notice'>The Head of Personnel has flagged these jobs as high priority:"
-		var/amt = length(ticker.prioritized_jobs)
+		var/amt = length(SSjob.prioritized_jobs)
 		var/amt_count
-		for(var/a in ticker.prioritized_jobs)
+		for(var/a in SSjob.prioritized_jobs)
 			amt_count++
 			if(amt_count == amt) // checks for the last job added.
 				if(amt == 1) // we only have one prioritized job.
@@ -470,7 +470,7 @@
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
 			var/position_class = "otherPosition"
-			if (job.title in ticker.prioritized_jobs)
+			if (job.title in SSjob.prioritized_jobs)
 				prior = TRUE
 
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'><span class='[prior ? "good" : ""]'>[prior ? "(!)" : ""][job.title]</span> ([job.current_positions])</a><br>"

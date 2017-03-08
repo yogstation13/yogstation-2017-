@@ -1,6 +1,6 @@
 /client/proc/reset_idconsole_msg()
 	set category = "Special Verbs"
-	set name = "resetidconsole"
+	set name = "reset arrival message"
 	if(!check_rights(0))
 		return
 
@@ -10,7 +10,7 @@
 
 /client/proc/lock_idconsole()
 	set category = "Special Verbs"
-	set name = "toggle_idconsolelock"
+	set name = "lock/unlock arrival message system"
 	if(!check_rights(0))
 		return
 
