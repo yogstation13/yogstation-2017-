@@ -873,6 +873,10 @@ var/list/teleportlocs = list()
 	name = "\improper Interrogation"
 	icon_state = "firingrange"
 
+/area/security/medical
+	name = "Brig Medical"
+	icon_state = "medbay"
+
 /*
 /area/security/transfer/New()
 	..()
