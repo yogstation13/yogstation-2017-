@@ -16,6 +16,3 @@
 		QDEL_IN(src, 5)
 	else
 		qdel(src)
-
-/obj/effect/attackby(obj/item/I, mob/living/user, params)
-	return
