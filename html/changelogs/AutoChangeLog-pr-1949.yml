@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Blobs are no longer impossible to attack with melee weapons."
