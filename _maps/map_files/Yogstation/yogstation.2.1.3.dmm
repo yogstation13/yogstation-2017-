@@ -4393,13 +4393,6 @@
 /obj/item/weapon/razor{
 	pixel_x = -6
 	},
-/obj/item/stack/medical/ointment{
-	pixel_y = 4
-	},
-/obj/item/stack/medical/bruise_pack{
-	pixel_x = 10;
-	pixel_y = 2
-	},
 /obj/item/weapon/reagent_containers/syringe/epinephrine{
 	pixel_x = 5;
 	pixel_y = -2
@@ -4840,7 +4833,6 @@
 "aiy" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -5041,13 +5033,17 @@
 /area/security/interrogation)
 "aiV" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute{
-	pixel_x = -2;
-	pixel_y = -2
-	},
 /obj/item/weapon/storage/firstaid/fire{
 	pixel_x = 4;
 	pixel_y = 4
+	},
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/weapon/storage/firstaid/brute{
+	pixel_x = -2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white";
@@ -5580,8 +5576,9 @@
 	pixel_x = 24
 	},
 /obj/machinery/sleeper{
+	dir = 8;
 	icon_state = "sleeper-open";
-	dir = 8
+	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white";
