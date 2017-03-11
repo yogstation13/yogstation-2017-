@@ -9,6 +9,12 @@
 		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
 		if(!leg_amount)
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
+	if(lying)
+		. += 10
+		if(is_nearcrit(src))
+			. += 20
+			jitteriness += 50
+			emote(pick("moan", "cry"))
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1

@@ -296,6 +296,8 @@
 		else
 			msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
 
+	if(is_nearcrit())
+		msg += "<B>[t_He] is holding on to dear life as they're very apparently crawling on the ground trembling.</B>"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
