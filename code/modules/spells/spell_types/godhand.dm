@@ -111,13 +111,15 @@
 		..()
 		return
 
+#define MAX_INVIS_TOUCH_USES 5
+
 /obj/item/weapon/melee/touch_attack/nothing
 	name = "nothing"
 	catchphrase = "..."
 	desc = "There's nothing there"
 	icon_state = "nothing"
 	item_state = "nothing"
-	var/uses = 3
+	var/uses = 5
 	var/list/things = list()
 	var/list/blacklist = list (
 						/obj/item/weapon/bombcore,
@@ -127,7 +129,6 @@
 						/obj/item/weapon/gun/,
 						/obj/item/weapon/disk/nuclear,
 						/obj/item/weapon/storage,
-						/obj/structure/closet,
 						/obj/item/device/transfer_valve
 						)
 	var/useblacklist = FALSE
@@ -154,7 +155,7 @@
 	if(iscarbon(target))
 		if(target == user)
 			if(user.job == "Mime")
-				if(uses < 3)
+				if(uses < MAX_INVIS_TOUCH_USES)
 					user << "<span class='warning'>You've got to have more charges than that!</span>"
 					return
 				uses = 0 // we sacrifice all of our uses!
@@ -195,7 +196,20 @@
 
 /obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
 	if(A)
+		var/initA = initial(A.alpha)
+		var/countleft = 10
+		while(countleft > 0)
+			if(!user)
+				break
+			countleft--
+			user.alpha = 0
+			sleep(3)
+			user.alpha = initA
+			sleep(1)
+
 		A.alpha = initial(A.alpha)
 
 /obj/item/weapon/melee/touch_attack/nothing/roundstart
 	useblacklist = TRUE
+
+#undef MAX_INVIS_TOUCH_USES
