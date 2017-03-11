@@ -737,6 +737,8 @@
 				blind_eyes(1)
 				update_canmove()
 		else if(health <= config.health_threshold_crit)
+			if(NOCRIT in status_flags)
+				return
 			Weaken(3)
 			update_canmove()
 			if(prob(15))
