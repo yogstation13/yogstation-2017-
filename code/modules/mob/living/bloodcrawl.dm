@@ -50,9 +50,17 @@
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
+	var/obj/item/weapon/disk/nuclear/nukedisk = null
+	var/list/all_items = GetAllContents()
 
 	src.visible_message("<span class='warning'>[src] sinks into the pool of blood!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+	for(var/obj/I in all_items) //Check for items
+		if(istype(I, /obj/item/weapon/disk/nuclear))
+			nukedisk = I
+			unEquip(nukedisk)
+			nukedisk.forceMove(get_turf(src.loc))
+			src.visible_message("<span class='warning'>[nukedisk] appears on the ground!</span>")
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
 	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
@@ -163,7 +171,7 @@
 		return 0
 	B.visible_message("<span class='warning'>[B] begins to bubble...</B>")
 	if(do_after(src, 25, target = B))
-		forceMove(B)
+		forceMove(get_turf(B.loc))
 		client.eye = src
 		visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
 		exit_blood_effect(B)
