@@ -195,7 +195,7 @@
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
 	spawn(0)
 		var/turf/E = get_edge_target_turf(src, src.dir)
-		var/range = 25 * scaling
+		var/range = round(25 * scaling, 1)
 		for(var/turf/open/J in getline(src,E))
 			if(!range)
 				break
