@@ -629,10 +629,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 							H.heal_overall_damage(1.5, 1.5)
 							break
 				return
-		var/lightamount = T.lighting_lumcount
+		var/lightamount = T.get_lumcount()
 		if(istype(H.loc, /obj/mecha) || istype(H.loc, /obj/machinery/clonepod))
 			//let's assume the interior is lit up
-			lightamount = 7
+			lightamount = 0.7
 		else if(!isturf(H.loc))
 			//inside a container or something else, only get light from the things inside it
 			lightamount = 0
@@ -640,48 +640,48 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 				if(V)
 					var/atom/At = V
 					if(At.light)
-						lightamount += At.light.luminosity
+						lightamount += At.light.light_range
 		if (lightamount)
 			switch (lightamount)
-				if (0.1 to 3)
+				if (0.1 to 0.3)
 					//very low light
 					light_level = 1
 					light_msg = "<span class='warning'>There isn't enough light here, and you can feel your body protesting the fact violently.</span>"
-					H.nutrition -= T.lighting_lumcount/1.5
+					H.nutrition -= T.get_lumcount()/0.15
 					//enough to make you faint but get back up consistently
 					if(H.getOxyLoss() < 55)
 						H.adjustOxyLoss(min(5 * dark_damage_multiplier, 55 - H.getOxyLoss()), 1)
 					if((H.getOxyLoss() > 50) && H.stat)
 						H.adjustOxyLoss(-4)
-				if (3.1 to 6)
+				if (0.31 to 0.6)
 					//low light
 					light_level = 2
 					light_msg = "<span class='warning'>The ambient light levels are too low. Your breath is coming more slowly as your insides struggle to keep up on their own.</span>"
-					H.nutrition -= T.lighting_lumcount/2
+					H.nutrition -= T.get_lumcount()/0.2
 					//not enough to faint but enough to slow you down
 					if(H.getOxyLoss() < 50)
 						H.adjustOxyLoss(min(3 * dark_damage_multiplier, 50 - H.getOxyLoss()), 1)
-				if (6.1 to 10)
+				if (0.61 to 1)
 					//medium, average, doing nothing for now
 					light_level = 3
-					H.nutrition += T.lighting_lumcount/10
-				if (10.1 to 22)
+					H.nutrition += T.get_lumcount()
+				if (1.1 to 2.2)
 					//high light, regen here
 					light_level = 4
-					H.nutrition += T.lighting_lumcount/6
+					H.nutrition += T.get_lumcount()/0.6
 					if ((H.stat != UNCONSCIOUS) && (H.stat != DEAD) && !no_light_heal)
 						H.adjustToxLoss(-0.5 * light_heal_multiplier, 1)
 						H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
 						H.heal_overall_damage(1 * light_heal_multiplier, 1 * light_heal_multiplier)
-				if (22.1 to INFINITY)
+				if (2.21 to INFINITY)
 					//super high light
 					light_level = 5
-					H.nutrition += T.lighting_lumcount/4
+					H.nutrition += T.get_lumcount()/0.4
 					if ((H.stat != UNCONSCIOUS) && (H.stat != DEAD) && !no_light_heal)
 						H.adjustToxLoss(-1 * light_heal_multiplier, 1)
 						H.adjustOxyLoss(-0.5 * light_heal_multiplier, 1)
 						H.heal_overall_damage(1.5 * light_heal_multiplier, 1.5 * light_heal_multiplier)
-		else if(T.loc.luminosity == 1 || A.lighting_use_dynamic == 0)
+		else if(T.loc.luminosity == 1 || A.dynamic_lighting == 0)
 			light_level = 6
 			H.nutrition += 1.4
 			if ((H.stat != UNCONSCIOUS) && (H.stat != DEAD) && !no_light_heal)

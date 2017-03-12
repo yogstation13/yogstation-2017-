@@ -52,27 +52,10 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 
 	var/hotline_cd = FALSE
 
-
-/obj/item/device/pda/pickup(mob/user)
-	..()
-	if(fon)
-		SetLuminosity(0)
-		user.AddLuminosity(f_lum)
-
-/obj/item/device/pda/dropped(mob/user)
-	..()
-	if(fon)
-		user.AddLuminosity(-f_lum)
-		SetLuminosity(f_lum)
-
 /obj/item/device/pda/New()
 	..()
 	if(fon)
-		if(!isturf(loc))
-			loc.AddLuminosity(f_lum)
-			SetLuminosity(0)
-		else
-			SetLuminosity(f_lum)
+		set_light(f_lum)
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -423,16 +406,10 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			if("Light")
 				if(fon)
 					fon = 0
-					if(src in U.contents)
-						U.AddLuminosity(-f_lum)
-					else
-						SetLuminosity(0)
+					set_light(0)
 				else
 					fon = 1
-					if(src in U.contents)
-						U.AddLuminosity(f_lum)
-					else
-						SetLuminosity(f_lum)
+					set_light(f_lum)
 			if("hotline")
 				if(hotline_cd)
 					U << "<span class='notice'>[src] is still on its cooldown.</span>"

@@ -18,9 +18,9 @@
 	if(light_on == 2)
 		return
 	if(light_on)
-		AddLuminosity(-8)
+		set_light(-8)
 	else
-		AddLuminosity(8)
+		set_light(8)
 
 	light_on = !light_on
 

@@ -943,14 +943,16 @@ var/list/WALLITEMS_INVERSE = list(
 			return "white"
 
 /proc/params2turf(scr_loc, turf/origin)
+	if(!scr_loc)
+		return null
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
-	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
+	tX = Clamp(origin.x + text2num(tX) - world.view + 1, 1, world.maxx)
+	tY = Clamp(origin.y + text2num(tY) - world.view + 1, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
@@ -960,8 +962,8 @@ var/list/WALLITEMS_INVERSE = list(
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = max(1, min(origin.x + 7 - tX, world.maxx))
-	tY = max(1, min(origin.y + 7 - tY, world.maxy))
+	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
+	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
 	return locate(tX, tY, tZ)
 
 /proc/IsValidSrc(A)
@@ -1542,3 +1544,39 @@ proc/pick_closest_path(value)
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
+
+/var/mob/dview/dview_mob = new
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	dview_mob.loc = center
+
+	dview_mob.see_invisible = invis_flags
+
+	. = view(range, dview_mob)
+	dview_mob.loc = null
+
+/mob/dview
+	invisibility = 101
+	density = 0
+	see_in_dark = 1e6
+	anchored = 1
+
+/mob/dview/Destroy(force=0)
+	stack_trace("ALRIGHT WHICH FUCKER TRIED TO DELETE *MY* DVIEW?")
+
+	if (!force)
+		return QDEL_HINT_LETMELIVE
+
+	world.log << "EVACUATE THE SHITCODE IS TRYING TO STEAL MUH JOBS"
+	global.dview_mob = new
+	return QDEL_HINT_QUEUE
+
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.loc = center;           \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))

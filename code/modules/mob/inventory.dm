@@ -32,6 +32,7 @@
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
+		W.plane = ABOVE_HUD_PLANE
 		W.equipped(src,slot_l_hand)
 		if(W.pulledby)
 			W.pulledby.stop_pulling()
@@ -51,6 +52,7 @@
 		W.loc = src
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
+		W.plane = ABOVE_HUD_LAYER
 		W.equipped(src,slot_r_hand)
 		if(W.pulledby)
 			W.pulledby.stop_pulling()
@@ -100,6 +102,7 @@
 	else
 		W.loc = get_turf(src)
 		W.layer = initial(W.layer)
+		W.plane = initial(W.plane)
 		W.dropped(src)
 		return 0
 
@@ -163,6 +166,7 @@
 		I.dropped(src)
 		if(I)
 			I.layer = initial(I.layer)
+			I.plane = initial(I.plane)
 	return 1
 
 

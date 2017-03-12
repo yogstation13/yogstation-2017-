@@ -45,10 +45,10 @@
 	if(ATV)
 		toggle = !toggle
 		if(toggle)
-			ATV.AddLuminosity(8)
+			ATV.set_light(8)
 			ATV.visible_message("<span class='notice'>[ATV]'s lights blink on.</span>")
 		else
-			ATV.AddLuminosity(-8)
+			ATV.set_light(0)
 			ATV.visible_message("<span class='notice'>[ATV]'s lights slowly diminish.</span>")
 	return 1
 

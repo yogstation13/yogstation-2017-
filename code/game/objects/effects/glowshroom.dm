@@ -25,7 +25,7 @@ obj/effect/glowshroom/glowcap
 
 /obj/effect/glowshroom/New()
 	..()
-	SetLuminosity(round(potency/10))
+	set_light(round(potency/10))
 	dir = CalcDir()
 	var/base_icon_state = initial(icon_state)
 	if(!floor)

@@ -110,7 +110,6 @@
 	for(var/obj/effect/spacevine/SV in src)
 		qdel(SV)
 	..()
-	UpdateAffectingLights()
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/open/space))
@@ -145,7 +144,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
 	if(holder.energy)
-		holder.SetLuminosity(severity, 3)
+		holder.set_light(severity, 3)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"
@@ -216,7 +215,7 @@
 	quality = POSITIVE
 
 /datum/spacevine_mutation/transparency/on_grow(obj/effect/spacevine/holder)
-	holder.SetOpacity(0)
+	holder.set_opacity(0)
 	holder.alpha = 125
 
 /datum/spacevine_mutation/oxy_eater
@@ -362,7 +361,7 @@
 			KZ.potency = min(100, master.mutativness * 10)
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
-	SetOpacity(0)
+	set_opacity(0)
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
@@ -531,7 +530,7 @@
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		SetOpacity(1)
+		set_opacity(1)
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2

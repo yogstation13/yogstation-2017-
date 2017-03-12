@@ -37,6 +37,7 @@
 	if(slot != slot_in_backpack)
 		I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER
+	I.plane = ABOVE_HUD_PLANE
 
 	switch(slot)
 		if(slot_back)

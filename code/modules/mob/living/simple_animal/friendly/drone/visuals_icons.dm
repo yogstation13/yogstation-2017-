@@ -38,6 +38,7 @@
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_rhand
 			client.screen |= r_hand
 
@@ -55,6 +56,7 @@
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_lhand
 			client.screen |= l_hand
 

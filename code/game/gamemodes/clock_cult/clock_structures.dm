@@ -152,7 +152,7 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	clockwork_caches++
-	SetLuminosity(2,1)
+	set_light(2,1)
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/clockwork/cache/process()
@@ -735,7 +735,7 @@
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
-	SetLuminosity(glow_light,glow_falloff)
+	set_light(glow_light,glow_falloff)
 
 /obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
