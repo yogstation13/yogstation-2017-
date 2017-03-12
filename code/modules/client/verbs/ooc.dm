@@ -266,3 +266,89 @@ var/global/normal_ooc_colour = OOC_COLOR
 
 		if("RetiredAdmin")
 			return "\[Retmin\]"
+
+
+/client/verb/looc(msg as text)
+	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+	set desc = "Local OOC, seen only by those in view."
+	set category = "OOC"
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='warning'>Speech is currently admin-disabled.</span>"
+		return
+
+	if(!mob)	return
+	if(IsGuestKey(key))
+		src << "<span class='warning'>Guests may not use OOC.</span>"
+		return
+
+	if(istype(mob, /mob/dead/observer))
+		if(!holder)
+			src << "<span class='warning'>Ghosts cannot use LOOC.</span>"
+			return
+
+	if(isliving(mob))
+		var/mob/living/L = mob
+		if(L.health < 0)
+			src << "<span class='warning'>LOOC doesn't work while you're in crit.</span>"
+			return
+
+		if(L.stat != CONSCIOUS)
+			src << "<span class='warning>Nice try.</span>"
+			return
+
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(!msg)	return
+
+	if(!(prefs.toggles & CHAT_LOOC))
+		src << "\red You have LOOC muted."
+		return
+
+	if(!holder)
+		if(!ooc_allowed)
+			src << "\red OOC is globally muted"
+			return
+		if(!dooc_allowed && (mob.stat == DEAD))
+			usr << "\red OOC for dead mobs has been turned off."
+			return
+		if(prefs.muted & MUTE_OOC)
+			src << "\red You cannot use OOC (muted)."
+			return
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+
+	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
+
+	var/list/heard = view(7, mob)
+	for(var/mob/M in heard)
+		if(!M.client)
+			continue
+
+		if(!(mob.languages_spoken in M.languages_understood))
+			continue
+
+		var/client/C = M.client
+		if (C in admins) // admins are handled LATER with ckeys.
+			continue
+
+		if(C.prefs.toggles & CHAT_LOOC)
+			var/display_name = key
+			if(holder)
+				if(holder.fakekey)
+					if(C.holder)
+						display_name = "[holder.fakekey]/([key])"
+					else
+						display_name = holder.fakekey
+
+			if(istype(mob, /mob/dead/observer)) // admins
+				if(holder) // final sanity check
+				 	display_name = key // admins display key as dead mobs.
+
+			C << "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span>"
+
+	for(var/client/C in admins)
+		if(C.prefs.toggles & CHAT_LOOC)
+			var/prefix = "(R)LOOC"
+			if (C.mob in heard)
+				prefix = "LOOC"
+			C << "<span class='looc'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span>"

@@ -362,3 +362,13 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/listen_looc()
+	set name = "Show/Hide LOOC"
+	set category = "Preferences"
+	set desc = "Toggles seeing Local OutOfCharacter chat"
+	prefs.toggles ^= CHAT_LOOC
+	prefs.save_preferences()
+	src << "You will [(prefs.toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the Local OOC channel."
+	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
