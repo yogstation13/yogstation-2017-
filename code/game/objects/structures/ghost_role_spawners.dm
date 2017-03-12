@@ -98,7 +98,7 @@
 /obj/effect/mob_spawn/human/ash_walker/cosmic
 	name = "cosmic ashwalker egg"
 	desc = "As you stare you can hear your own thoughts hum through the wind."
-	mob_name = "an cosmic ashwalker"
+	mob_name = "a cosmic ashwalker"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	mob_species = /datum/species/lizard/ashwalker/cosmic
@@ -118,8 +118,10 @@
 /obj/effect/cyrogenicbubble
 	name = "cosmic egg"
 	desc = "You can see the embryo of a slowly regenerating baby-ashwalker. This one is extraordinary."
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "bluespace"
 	var/health = 100
-	var/progress // needs 300
+	var/progress = 0 // needs 300
 	var/mob/living/ashwalker
 
 /obj/effect/cyrogenicbubble/New()

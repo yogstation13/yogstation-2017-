@@ -128,12 +128,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker/cosmic
 	name = "Cosmic Ashwalker"
 	var/rebirth
-	var/rebirthcount
+	var/rebirthcount = 0
 
 /datum/species/lizard/ashwalker/cosmic/spec_life(mob/living/carbon/human/H)
-	..()
+	. = ..()
 	if(H.health < 0)
-		if(rebirthcount < 3)
+		if(rebirthcount > 3)
 			return
 		if(rebirth)
 			return
@@ -146,9 +146,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		var/obj/effect/cyrogenicbubble/CB = new(get_turf(H))
 		H.forceMove(CB)
 		CB.ashwalker = H
-		if(rebirthcount <= 3)
-			H << "<span class='notice'>You notice that your body is not regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>"
-	return ..()
+		if(rebirthcount >= 3)
+			H << "<span class='notice'>You notice that your body isn't regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>"
+			//H << "<span class='notice'>If only there was a mutant out there with the same powers as you, but maybe only female.</span>"
+
 
 /datum/species/lizard/fly
 	// lizards turned into fly-like abominations in teleporter accidents.
