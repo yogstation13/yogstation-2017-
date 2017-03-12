@@ -779,6 +779,7 @@
 #include "code\game\objects\structures\ai_core.dm"
 #include "code\game\objects\structures\airwall.dm"
 #include "code\game\objects\structures\aliens.dm"
+#include "code\game\objects\structures\arclumin.dm"
 #include "code\game\objects\structures\artstuff.dm"
 #include "code\game\objects\structures\barsigns.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
