@@ -339,11 +339,9 @@ var/global/normal_ooc_colour = OOC_COLOR
 						display_name = "[holder.fakekey]/([key])"
 					else
 						display_name = holder.fakekey
-
 			if(istype(mob, /mob/dead/observer)) // admins
 				if(holder) // final sanity check
-				 	display_name = key // admins display key as dead mobs.
-
+					display_name = key // admins display key as dead mobs.
 			C << "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span>"
 
 	for(var/client/C in admins)
