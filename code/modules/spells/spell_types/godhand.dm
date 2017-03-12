@@ -164,9 +164,9 @@
 					if(!user)
 						break
 					passes--
-					user.alpha = 0
+					animate(user, alpha = 0, time = 1)
 					sleep(3)
-					user.alpha = initial(user.alpha)
+					animate(user, alpha = initial(user.alpha), time = 1)
 					sleep(2)
 			else
 				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
@@ -177,9 +177,9 @@
 		if(istype(target, /obj/structure/chair))
 			target.visible_message("[target] [target.alpha == 0 ? "reappears" : "vanishes"]!</span>")
 			if(target.alpha)
-				target.alpha = 0
+				animate(target, alpha = 0, time = 5)
 			else
-				target.alpha = initial(target.alpha)
+				animate(target, alpha = initial(target.alpha), time = 8)
 			if(!(target in things))// to be restored later
 				things += target
 			return
@@ -191,7 +191,7 @@
 		things += target
 		user << "<span class='warning'>You poke [target] extinguishing one of your charges.</span>"
 		uses--
-		target.alpha = 0
+		animate(target, alpha = 0, time = 5)
 		addtimer(src, "reverttarget",80, FALSE, target)
 
 /obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
@@ -199,15 +199,15 @@
 		var/initA = initial(A.alpha)
 		var/countleft = 10
 		while(countleft > 0)
-			if(!user)
+			if(!A)
 				break
 			countleft--
-			user.alpha = 0
-			sleep(3)
-			user.alpha = initA
-			sleep(1)
+			animate(A, alpha = initA, time = 5)
+			sleep(7) // yes, we want it slowly to relapse into reality
+			animate(A, alpha = 0, time = 2)
+			sleep(5)
 
-		A.alpha = initial(A.alpha)
+		A.alpha = initA
 
 /obj/item/weapon/melee/touch_attack/nothing/roundstart
 	useblacklist = TRUE
