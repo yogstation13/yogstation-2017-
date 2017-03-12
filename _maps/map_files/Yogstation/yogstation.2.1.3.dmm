@@ -5061,7 +5061,6 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
 /turf/open/floor/plasteel{
 	icon_state = "white";
 	temperature = 273.15
@@ -5532,9 +5531,6 @@
 /obj/structure/table,
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
-/obj/item/weapon/gun/syringe{
-	pixel_y = 5
-	},
 /turf/open/floor/plasteel{
 	icon_state = "white";
 	temperature = 273.15
