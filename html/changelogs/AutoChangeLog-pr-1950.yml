@@ -1,0 +1,4 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Money bags can now hold infinite money. That's still all they can hold, though."
