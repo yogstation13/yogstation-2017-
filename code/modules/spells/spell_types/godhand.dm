@@ -159,15 +159,9 @@
 					user << "<span class='warning'>You've got to have more charges than that!</span>"
 					return
 				uses = 0 // we sacrifice all of our uses!
-				var/passes = 5
-				while(passes > 0)
-					if(!user)
-						break
-					passes--
-					animate(user, alpha = 0, time = 1)
-					sleep(3)
-					animate(user, alpha = initial(user.alpha), time = 1)
-					sleep(2)
+				animate(user, alpha = initial(user.alpha), time = 80)
+				addtimer(src, "reverttarget", 85, FALSE, target)
+
 			else
 				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
 		else
@@ -196,18 +190,7 @@
 
 /obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
 	if(A)
-		var/initA = initial(A.alpha)
-		var/countleft = 10
-		while(countleft > 0)
-			if(!A)
-				break
-			countleft--
-			animate(A, alpha = initA, time = 5)
-			sleep(7) // yes, we want it slowly to relapse into reality
-			animate(A, alpha = 0, time = 2)
-			sleep(5)
-
-		A.alpha = initA
+		animate(A, alpha = initial(A.alpha), time = 10)
 
 /obj/item/weapon/melee/touch_attack/nothing/roundstart
 	useblacklist = TRUE
