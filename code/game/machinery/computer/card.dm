@@ -4,6 +4,8 @@
 //increase the slots of many jobs.
 var/time_last_changed_position = 0
 
+#def ID_PRIORITIZE_LEN 5
+
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to manage jobs and ID access."
@@ -44,6 +46,7 @@ var/time_last_changed_position = 0
 	//This is used to keep track of opened positions for jobs to allow instant closing
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
+
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -490,10 +493,10 @@ var/time_last_changed_position = 0
 
 			message_admins("[M.name] ([M.ckey]) is changing the arrival message.")
 			log_game("[M] ([M.ckey]) is attempting to change the arrivals message ([ticker.identification_console_message]).")
+			var/msg = input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
 			if(!allowed(usr) || !usr.canUseTopic(src,be_close=TRUE))
 				message_admins("[M.name] ([M.ckey] (ckey)) did not have the correct ID, or simply was interrupted when trying to change the arrival message.")
 				return
-			var/msg = input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
 			if(msg)
 				message_admins("[M.name] ([M.ckey]) has changed the arrivals message to: [msg] (Use reset arrival message to clear it or lock/unlock arrival message to completely lock it)")
 				ticker.identification_console_message = msg
@@ -506,6 +509,9 @@ var/time_last_changed_position = 0
 			if(!allowed(usr))
 				usr << "<span class='warning'>Invalid ID.</span>"
 				return
+			if(length(prioritized_jobs) >= ID_PRIORITIZE_LEN)
+				usr << "<span class='warning'>Centcomm cannot accept more than 5 priority requests.</span>"
+				return
 			var/mob/M = usr
 			var/list/jobs = list()
 			for(var/datum/job/job in SSjob.occupations)
@@ -514,9 +520,9 @@ var/time_last_changed_position = 0
 						jobs += job.title
 
 			if(length(jobs))
+				var/pickjob = input(usr,"Select Job","Prioritize/Un-Prioritize",null) as anything in jobs
 				if(!M.canUseTopic(src,be_close=TRUE))
 					return
-				var/pickjob = input(usr,"Select Job","Prioritize/Un-Prioritize",null) as anything in jobs
 				if(pickjob)
 					var/prior = TRUE
 					if(pickjob in SSjob.prioritized_jobs)
@@ -528,7 +534,7 @@ var/time_last_changed_position = 0
 						log_game("[M] ([M.ckey]) has prioritized [pickjob].")
 					usr << "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
 			else
-				usr << "<span class='notice'>Surprisingly... there's no jobs to prioritize.</span>"
+				usr << "<span class='notice'>Surprisingly... there aren't any jobs to prioritize.</span>"
 
 	if (modify)
 		modify.update_label()
@@ -576,3 +582,5 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
 	icon_screen = "idce"
+
+#undef ID_PRIORITIZE_LEN
