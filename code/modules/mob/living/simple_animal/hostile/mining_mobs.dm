@@ -57,7 +57,7 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	move_to_delay = 20
-	projectiletype = /obj/item/projectile/bullet/dart/basilisk
+	projectiletype = /obj/item/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1
 	ranged_message = "stares"
@@ -79,17 +79,6 @@
 	turns_per_move = 5
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
-
-/obj/item/projectile/bullet/dart/basilisk
-	name = "freezing dart"
-	icon_state = "ice_2"
-	nodamage = 1 //The darts don't do much damage, but it adds up (especially since you may get hit 20+ times assaulting a tendril)
-
-/obj/item/projectile/bullet/dart/basilisk/New()
-	..()
-	reagents.add_reagent("bolamine",5)
-	reagents.add_reagent("cryptobiolin",2)
-	reagents.add_reagent("frostoil", 2)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target

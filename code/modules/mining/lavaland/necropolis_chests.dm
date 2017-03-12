@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,25)
+	var/loot = rand(1,24)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -197,7 +197,7 @@
 	..()
 	var/obj/item/projectile/hook/P = BB
 	spawn(1)
-		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30)
+		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30,alphafade=0)
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()
@@ -454,18 +454,7 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
-	..()
-	var/loot = rand(1,4)
-	switch(loot)
-		if(1)
-			new /obj/item/weapon/melee/ghost_sword(src)
-		if(2)
-			new /obj/item/weapon/lava_staff(src)
-		if(3)
-			new /obj/item/weapon/spellbook/oneuse/fireball(src)
-			new /obj/item/weapon/gun/magic/wand/fireball(src)
-		if(4)
-			new /obj/item/weapon/dragons_blood(src)
+	new /obj/item/weapon/dragons_blood(src)
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -562,18 +551,8 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	var/random = rand(1,2)
-
-	switch(random)
-		if(1)
-			user << "<span class='danger'>You feel robust!</span>"
-			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
-			S.burnmod *= 0.5
-			S.coldmod *= 0.5
-		if(2)
-			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
-			H.weather_immunities |= "lava"
+	user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
+	H.weather_immunities |= "lava"
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)

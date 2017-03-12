@@ -50,6 +50,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	var/list/include_modes = list() // Game modes to allow this item in.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
+	var/list/restricted_roles = list() //The jobs allow to buy this weapon.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -859,7 +860,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/weapon/grenade/plastic/c4
+	item = /obj/item/weapon/c4
 	cost = 1
 
 /datum/uplink_item/device_tools/c4bag
@@ -1062,6 +1063,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			They must be implanted via surgery."
 	item = /obj/item/weapon/storage/box/cyber_implants/bundle
 	cost = 40
+
+
+
+// Role-specific items
+/datum/uplink_item/role_restricted
+	category = "Role-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear)
+
+
+/datum/uplink_item/role_restricted/dicks
+	name = "testobjyay"
+	item = /obj/item/weapon/storage/toolbox/syndicate
+	restricted_roles = list("Assistant")
+	cost = 5
 
 // Pointless
 /datum/uplink_item/badass

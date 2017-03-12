@@ -269,7 +269,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health=1)
+/mob/living/proc/adjustBruteLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
@@ -286,14 +286,14 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health=1)
+/mob/living/proc/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
-/mob/living/proc/setOxyLoss(amount, updating_health=1)
+/mob/living/proc/setOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	oxyloss = amount
@@ -303,7 +303,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount, updating_health=1)
+/mob/living/proc/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
@@ -321,7 +321,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health=1)
+/mob/living/proc/adjustFireLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
@@ -338,7 +338,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount, updating_health=1)
+/mob/living/proc/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
@@ -355,7 +355,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
-/mob/living/proc/adjustBrainLoss(amount)
+/mob/living/proc/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
 	if(GODMODE in status_flags)
 		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
@@ -368,17 +368,10 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
 	return
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
-	if(GODMODE in status_flags)
-		return 0
-	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
-	if(updating_stamina)
-		update_stamina()
-
-/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
@@ -471,14 +464,14 @@ Sorry Giacom. Please don't be mad :(
 	return def_zone
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
-	adjustBruteLoss(-brute, updating_health)
-	adjustFireLoss(-burn, updating_health)
+/mob/living/proc/heal_organ_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
+	adjustBruteLoss(-brute, updating_health, application)
+	adjustFireLoss(-burn, updating_health, application)
 	if(updating_health)
 		updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn, updating_health=1)
+/mob/living/proc/take_organ_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	if(updating_health)
@@ -803,7 +796,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/narsie_act()
 	if(is_servant_of_ratvar(src) && !stat)
 		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
-		adjustBruteLoss(35)
+		adjustBruteLoss(35, 1, DAMAGE_MAGIC)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return 0
@@ -818,32 +811,10 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/ratvar_act()
 	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
 		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35)
+		adjustFireLoss(35, 1, DAMAGE_MAGIC)
 		if(src)
 			adjust_fire_stacks(1)
 			IgniteMob()
-
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
-
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		pixel_y_diff = 8
-	else if(direction & SOUTH)
-		pixel_y_diff = -8
-
-	if(direction & EAST)
-		pixel_x_diff = 8
-	else if(direction & WEST)
-		pixel_x_diff = -8
-
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
 
 /mob/living/do_attack_animation(atom/A)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)

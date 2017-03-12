@@ -79,52 +79,13 @@
 	charge += power_used
 	return power_used
 
-
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
-	if (istype(user, /mob/living/carbon/human))
+	if (ishuman(user))
 		var/mob/living/carbon/human/maybedroid = user
-		if (maybedroid.dna.species.id == "android" || maybedroid.dna.species.id == "flyternis")
-			//BEGIN THE NUTRITION RECHARGEEEE
-			if (charge)
-				if (rigged)
-					//oh, shit.
-					explode()
-
-				if (maybedroid.nutrition > NUTRITION_LEVEL_FED)
-					maybedroid << "<span class='notice'>CONSUME protocol reports no need for additional power at this time.</span>"
-					return
-
-				var/drain = maxcharge/40
-				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-				var/ischarging = 1
-				spark_system.set_up(5, 0, maybedroid.loc)
-				spark_system.attach(maybedroid)
-				maybedroid.visible_message("[maybedroid] deftly inserts [src] into a slot within their torso. A low hum begins to fill the air.", "<span class='info'>Extracutaneous implants detect viable power source in location: HANDS. Activating CONSUME protocol..</span>")
-				while (ischarging)
-					if (drain > charge)
-						drain = charge
-
-					if (prob(35))
-						var/nutpercents
-						nutpercents = (maybedroid.nutrition / NUTRITION_LEVEL_WELL_FED)*100
-
-						maybedroid << "<span class='info'>CONSUME protocol continues. Current satiety level: [nutpercents]%."
-					if (do_after(maybedroid, 10, target = src))
-						spark_system.start()
-						playsound(maybedroid.loc, "sparks", 35, 1)
-
-					charge -= drain
-					src.update_icon()
-					maybedroid.nutrition += drain/22
-
-					if (maybedroid.nutrition >= NUTRITION_LEVEL_WELL_FED || maybedroid.get_active_hand() != src || !charge)
-						maybedroid.visible_message("A slight hiss emanates from [maybedroid] as [src] pops free from a slot in their torso.", "<span class='info>CONSUME protocol complete. Physical nourishment refreshed. Advise cell recharging.</span>")
-						ischarging = 0
-			else
-				user << "<span class='info'>You currently surmise via ocular sensors that this cell does not possess enough charge to be of use to you.</span>"
-				return
-		else
-			user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"
+		if(maybedroid.dna && maybedroid.dna.species && (CONSUMEPOWER in maybedroid.dna.species.specflags) )
+			maybedroid.dna.species.species_drain_act(maybedroid, src)
+			return
+	user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()

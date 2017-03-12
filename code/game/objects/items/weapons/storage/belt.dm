@@ -131,7 +131,8 @@
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/classic_baton/telescopic,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves/,
+		/obj/item/weapon/restraints/legcuffs/bola
 		)
 
 /obj/item/weapon/storage/belt/security/full/New()
@@ -184,7 +185,7 @@
 		/obj/item/weapon/ore/bluespace_crystal,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/device/barometer,
-
+		/obj/item/orecapsule
 
 		)
 
@@ -211,7 +212,7 @@
 /obj/item/weapon/storage/belt/soulstone/full/New()
 	..()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone(src)
+		new /obj/item/device/soulstone(src, "Wizard")
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"

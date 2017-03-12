@@ -56,6 +56,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
+	alpha = 0
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	ghostimage = image(src.icon,src,src.icon_state)
@@ -107,7 +108,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		verbs -= /mob/dead/observer/verb/boo
 		verbs -= /mob/dead/observer/verb/possess
 
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	animate(src, alpha = 255, time = 5)
+	animate(src, pixel_y = 2, time = 10, loop = -1, easing = QUAD_EASING)
 	..()
 
 /mob/dead/observer/narsie_act()
@@ -322,7 +324,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	set name = "pAI Setup"
 	set desc = "Upload a fragment of your personality to the global pAI databanks."
-	
+
 	if(istype(usr, /mob/dead/observer))
 		if(SSpai)
 			SSpai.recruitWindow(client.mob)
@@ -478,6 +480,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set category = "Ghost"
 	seedarkness = !(seedarkness)
 	updateghostsight()
+	usr << "You toggle darkness [(seedarkness ? "on" : "off")]."
 
 /mob/dead/observer/proc/updateghostsight()
 	if(client)

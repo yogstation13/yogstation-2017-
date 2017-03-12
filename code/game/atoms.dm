@@ -18,6 +18,9 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	//overlays that should remain on top and not normally be removed, like c4.
+	var/list/priority_overlays
+
 
 /atom/Destroy()
 	if(alternate_appearances)

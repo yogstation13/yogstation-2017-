@@ -2,6 +2,7 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	all_clockwork_mobs -= src
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -972,6 +973,8 @@ var/next_mob_id = 0
 
 /mob/proc/reveal_examine(mob/living/L, range) // we are examining L, and revealing ourselves
 	if(src == L) // so no one can tell if we're checking ourselves out
+		return
+	if(istype(src, /mob/dead/observer))
 		return
 	if(client.prefs.examine_throttle == NO_VISIBLE)
 		return

@@ -45,15 +45,27 @@
 	var/list/mutant_organs = list(/obj/item/organ/tongue)		//Internal organs that are unique to this race.
 	var/speedmod = 0	// this affects the race's speed. positive numbers make it move slower, negative numbers make it move faster
 	var/armor = 0		// overall defense for the race... or less defense, if it's negative.
-	var/brutemod = 1	// multiplier for brute damage
-	var/burnmod = 1		// multiplier for burn damage
-	var/coldmod = 1		// multiplier for cold damage
-	var/heatmod = 1		// multiplier for heat damage
+	var/brutemod = 1
+	var/burnmod = 1
+	var/coldmod = 1
+	var/heatmod = 1
+	var/toxmod = 1
+	var/acidmod = 1
+	var/clonemod = 1
+	var/staminamod = 1
+	var/brainmod = 1
+	var/damage_immunities = list() //damage applications that this species is immune to (DAMAGE_CHEMICAL, DAMAGE_MAGIC, etc.)
+	var/heal_immunities = list() //heal applications that this species is immune to
+	var/stamina_recover_normal = 3
+	var/stamina_recover_sleeping = 10
 	var/stunmod = 1		// multiplier for stun duration
+	var/radiation_faint_threshhold = 100
+	var/radiation_effect_mod = 1
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
+	var/limb_default_status = ORGAN_ORGANIC
 	var/exotic_damage_overlay = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/can_grab_items = TRUE
@@ -61,6 +73,7 @@
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/sight_mod = 0 //Add these flags to your mob's sight flag. For shadowlings and things to see people through walls.
 	var/darksight = 2
+	var/disease_resist = 0
 
 	// species flags. these can be found in flags.dm
 	var/list/specflags = list()
@@ -92,6 +105,22 @@
 
 	//Flight and floating
 	var/override_float = 0
+
+	var/high_temp_level_1 = BODYTEMP_HEAT_DAMAGE_LEVEL_1
+	var/high_temp_level_2 = BODYTEMP_HEAT_DAMAGE_LEVEL_2
+	var/high_temp_level_3 = BODYTEMP_HEAT_DAMAGE_LEVEL_3
+	var/low_temp_level_1 = BODYTEMP_COLD_DAMAGE_LEVEL_1
+	var/low_temp_level_2 = BODYTEMP_COLD_DAMAGE_LEVEL_2
+	var/low_temp_level_3 = BODYTEMP_COLD_DAMAGE_LEVEL_3
+
+	var/warning_low_pressure = WARNING_LOW_PRESSURE
+	var/hazard_low_pressure = HAZARD_LOW_PRESSURE
+	var/warning_high_pressure = WARNING_HIGH_PRESSURE
+	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
+	var/highpressure_mod = 1
+	var/lowpressure_mod = 1
+
+	var/cold_slowdown_factor = COLD_SLOWDOWN_FACTOR //the lower this is the slower you go in the cold
 
 	///////////
 	// PROCS //
@@ -137,34 +166,38 @@
 	if(NODISMEMBER in specflags)
 		C.regenerate_limbs() //if we don't handle dismemberment, we grow our missing limbs back
 
+	C.prepare_huds()
+	if(limb_default_status)
+		for(var/V in C.bodyparts)
+			var/obj/item/bodypart/BP = V
+			BP.change_bodypart_status(limb_default_status)
+
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 
 	if((NOBLOOD in specflags) && heart)
-		heart.Remove(C)
-		qdel(heart)
+		heart.Remove(C, 1, 1)
 	else if((!(NOBLOOD in specflags)) && (!heart))
 		heart = new()
-		heart.Insert(C)
+		heart.Insert(C, 1)
 
 	if((NOBREATH in specflags) && lungs)
-		lungs.Remove(C)
-		qdel(lungs)
+		lungs.Remove(C, 1, 1)
 	else if((!(NOBREATH in specflags)) && (!lungs))
 		lungs = new()
-		lungs.Insert(C)
+		lungs.Insert(C, 1)
 
 	if((NOHUNGER in specflags) && appendix)
 		appendix.Remove(C)
 		qdel(appendix)
 	else if((!(NOHUNGER in specflags)) && (!appendix))
 		appendix = new()
-		appendix.Insert(C)
+		appendix.Insert(C, 1)
 
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
-		I.Insert(C)
+		I.Insert(C, 1)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -481,10 +514,13 @@
 
 		var/takes_crit_damage = (!(NOCRITDAMAGE in specflags))
 		if((H.health < config.health_threshold_crit) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+			H.adjustBruteLoss(1, 1, DAMAGE_NO_MULTIPLIER)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
+
+/datum/species/proc/spawn_gibs(mob/living/carbon/human/H)
+	hgibs(H.loc, H.viruses, H.dna)
 
 /datum/species/proc/spec_husk(mob/living/carbon/human/H)
 	return
@@ -703,8 +739,17 @@
 /datum/species/proc/get_spans()
 	return list()
 
+/datum/species/proc/handle_inherent_channels(mob/living/carbon/human/H, message, message_mode)
+	return 0
+
 /datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
 	return 0
+
+/datum/species/proc/handle_flash(mob/living/carbon/human/H, intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	return 0 //returning 1 will cancel all normal flash effects.
+
+/datum/species/proc/on_gain_disease(mob/living/carbon/human/H, datum/disease/D)
+	return
 
 	////////
 	//LIFE//
@@ -817,7 +862,7 @@
 
 	if(!(RADIMMUNE in specflags))
 		if(H.radiation)
-			if (H.radiation > 100)
+			if (H.radiation > radiation_faint_threshhold)
 				H.Weaken(10)
 				H << "<span class='danger'>You feel weak.</span>"
 				H.emote("collapse")
@@ -825,11 +870,11 @@
 			switch(H.radiation)
 
 				if(50 to 75)
-					if(prob(5))
+					if(prob(radiation_effect_mod*5))
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
 						H.emote("collapse")
-					if(prob(15))
+					if(prob(radiation_effect_mod*15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
 							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 							spawn(50)
@@ -838,7 +883,7 @@
 								H.update_hair()
 
 				if(75 to 100)
-					if(prob(1))
+					if(prob(radiation_effect_mod*1))
 						H << "<span class='danger'>You mutate!</span>"
 						randmutb(H)
 						H.emote("gasp")
@@ -898,8 +943,8 @@
 
 			if((H.disabilities & FAT))
 				. += 1.5
-			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
-				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+			if(H.bodytemperature < low_temp_level_1)
+				. += (low_temp_level_1 - H.bodytemperature) / cold_slowdown_factor
 
 			if(!(specflags & FLYING))
 				var/leg_amount = H.get_num_legs()
@@ -1169,8 +1214,14 @@
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			if(prob(I.force * 2))	//blood spatter!
 				bloody = 1
-				var/turf/location = H.loc
-				if(istype(location))
+				var/turf/location = get_turf(H)
+				var/obj/effect/decal/cleanable/blood/hitsplatter/B = new(H)
+				B.blood_source = H
+				B.transfer_mob_blood_dna(H)
+				var/n = rand(1,3)
+				var/turf/targ = get_ranged_target_turf(H, get_dir(user, H), n)
+				B.GoTo(targ, n)
+				if (istype(location))
 					H.add_splatter_floor(location)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
@@ -1214,7 +1265,7 @@
 			H.forcesay(hit_appends)	//forcesay checks stat already.
 	return 1
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, application=DAMAGE_PHYSICAL)
 	blocked = (100-(blocked+armor))/100
 	if(!damage || blocked <= 0)
 		return 0
@@ -1234,20 +1285,22 @@
 	switch(damagetype)
 		if(BRUTE)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(damage*brutemod, 0))
+			if(organ.take_damage(damage, 0, application))
 				H.update_damage_overlays(0)
 		if(BURN)
 			H.damageoverlaytemp = 20
-			if(organ.take_damage(0, damage*burnmod))
+			if(organ.take_damage(0, damage, application))
 				H.update_damage_overlays(0)
 		if(TOX)
-			H.adjustToxLoss(damage)
+			H.adjustToxLoss(damage, 1, application)
 		if(OXY)
-			H.adjustOxyLoss(damage)
+			H.adjustOxyLoss(damage, 1, application)
 		if(CLONE)
-			H.adjustCloneLoss(damage)
+			H.adjustCloneLoss(damage, 1, application)
 		if(STAMINA)
-			H.adjustStaminaLoss(damage)
+			H.adjustStaminaLoss(damage, 1, application)
+		if(BRAIN)
+			H.adjustBrainLoss(damage, 1, application)
 	return 1
 
 /datum/species/proc/on_hit(obj/item/projectile/proj_type, mob/living/carbon/human/H)
@@ -1452,26 +1505,26 @@
 
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
-				if(-INFINITY to 120)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, "head")
+				if(-INFINITY to low_temp_level_3)
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3*coldmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
 					H.lastburntype = "coldburn"
-				if(120 to 200)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, "head")
+				if(low_temp_level_3 to low_temp_level_2)
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2*coldmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
 					H.lastburntype = "coldburn"
-				if(200 to 260)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, "head")
+				if(low_temp_level_2 to low_temp_level_1)
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1*coldmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
 					H.lastburntype = "coldburn"
 
 		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
-				if(360 to 400)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, "head")
+				if(high_temp_level_1 to high_temp_level_2)
+					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1*heatmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
 					H.lastburntype = "hotburn"
-				if(400 to 1000)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, "head")
+				if(high_temp_level_1 to 1000)
+					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2*heatmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
 					H.lastburntype = "hotburn"
 				if(1000 to INFINITY)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head")
+					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3*heatmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
 					H.lastburntype = "hotburn"
 
 /datum/species/proc/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
@@ -1500,35 +1553,32 @@
 				H.bodytemperature += min((1-thermal_protection) * ((loc_temp - H.bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
-	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTTEMP in specflags))
+	if(H.bodytemperature > high_temp_level_1 && !(RESISTTEMP in specflags))
 		//Body temperature is too hot.
-		switch(H.bodytemperature)
-			if(360 to 400)
-				H.throw_alert("temp", /obj/screen/alert/hot, 1)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
-			if(400 to 460)
-				H.throw_alert("temp", /obj/screen/alert/hot, 2)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-			if(460 to INFINITY)
-				H.throw_alert("temp", /obj/screen/alert/hot, 3)
-				if(H.on_fire)
-					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
-				else
-					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
-		switch(H.bodytemperature)
-			if(200 to 260)
-				H.throw_alert("temp", /obj/screen/alert/cold, 1)
-				H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
-			if(120 to 200)
-				H.throw_alert("temp", /obj/screen/alert/cold, 2)
-				H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
-			if(-INFINITY to 120)
-				H.throw_alert("temp", /obj/screen/alert/cold, 3)
-				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
-			else
-				H.clear_alert("temp")
 
+		if(H.bodytemperature > high_temp_level_3)
+			H.throw_alert("temp", /obj/screen/alert/hot, 3)
+			if(H.on_fire)
+				H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+			else
+				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+		else if(H.bodytemperature > high_temp_level_2)
+			H.throw_alert("temp", /obj/screen/alert/hot, 2)
+			H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+		else if(H.bodytemperature > high_temp_level_1)
+			H.throw_alert("temp", /obj/screen/alert/hot, 1)
+			H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+
+	else if(H.bodytemperature < low_temp_level_1 && !(mutations_list[COLDRES] in H.dna.mutations))
+		if(H.bodytemperature < low_temp_level_3)
+			H.throw_alert("temp", /obj/screen/alert/cold, 3)
+			H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+		else if(H.bodytemperature < low_temp_level_2)
+			H.throw_alert("temp", /obj/screen/alert/cold, 2)
+			H.apply_damage(COLD_DAMAGE_LEVEL_2*coldmod, BURN)
+		else if(H.bodytemperature < low_temp_level_1)
+			H.throw_alert("temp", /obj/screen/alert/cold, 1)
+			H.apply_damage(COLD_DAMAGE_LEVEL_1*coldmod, BURN)
 	else
 		H.clear_alert("temp")
 
@@ -1537,26 +1587,31 @@
 
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = H.calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
-	switch(adjusted_pressure)
-		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!(RESISTTEMP in specflags))
-				H.lastbrutetype = "pressure"
-				H.adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
-				H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
-			else
-				H.clear_alert("pressure")
-		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
-		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert("pressure")
-		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
-			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+	if(adjusted_pressure > hazard_high_pressure)
+		if(!(RESISTTEMP in specflags))
+			H.lastbrutetype = "pressure"
+			H.apply_damage( min( ( (adjusted_pressure / hazard_high_pressure) -1 ) * PRESSURE_DAMAGE_COEFFICIENT * lowpressure_mod , MAX_HIGH_PRESSURE_DAMAGE), BRUTE)
+			H.throw_alert("pressure", /obj/screen/alert/highpressure, 2)
 		else
-			if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
-				H.clear_alert("pressure")
-			else
-				H.adjustBruteLoss( LOW_PRESSURE_DAMAGE )
-				H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+			H.clear_alert("pressure")
+	else if(adjusted_pressure > warning_high_pressure)
+		H.throw_alert("pressure", /obj/screen/alert/highpressure, 1)
+	else if(adjusted_pressure > warning_low_pressure)
+		H.clear_alert("pressure")
+	else if((adjusted_pressure > hazard_low_pressure) && (adjusted_pressure < warning_low_pressure))
+		H.throw_alert("pressure", /obj/screen/alert/lowpressure, 1)
+	else
+		if(H.dna.check_mutation(COLDRES) || (RESISTTEMP in specflags))
+			H.clear_alert("pressure")
+		else
+			H.apply_damage(LOW_PRESSURE_DAMAGE * highpressure_mod, BRUTE)
+			H.throw_alert("pressure", /obj/screen/alert/lowpressure, 2)
+
+/datum/species/proc/can_accept_organ(mob/living/carbon/human/H, obj/item/organ/O)
+	return 1
+
+/datum/species/proc/emag_act(mob/user)
+	return 0
 
 //////////
 // FIRE //
@@ -1591,7 +1646,17 @@
 /datum/species/proc/negates_gravity()
 	return 0
 
+////////////
+//Click On//
+////////////
 
+/datum/species/proc/specAltClickOn(atom/A)
+	var/mob/living/carbon/human/H = usr
+	if(H.dna && H.dna.species && (CONSUMEPOWER in H.dna.species.specflags) && A.Adjacent(H))
+		return species_drain_act(H, A)
+	return 0
+
+/*
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
 
@@ -1610,3 +1675,4 @@
 #undef COLD_GAS_DAMAGE_LEVEL_1
 #undef COLD_GAS_DAMAGE_LEVEL_2
 #undef COLD_GAS_DAMAGE_LEVEL_3
+*/
