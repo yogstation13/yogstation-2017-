@@ -296,6 +296,13 @@
 	if(storage.AI)
 		return
 
+	if(!card)
+		return
+
+	if(!AI.mind)
+		user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+		return
+
 	if(interaction == AI_TRANS_FROM_CARD)
 		storage.AI = AI
 		AI.control_disabled = 1
@@ -308,13 +315,23 @@
 		card.AI = null
 		card.update_icon()
 
+	else if(interaction == AI_TRANS_TO_CARD)
+		AI.ai_restore_power()//So the AI initially has power.
+		AI.control_disabled = 1//Can't control things remotely if you're stuck in a card!
+		AI.radio_enabled = 0 	//No talking on the built-in radio for you either!
+		AI.forceMove(card)
+		card.AI = src
+		AI << "You have been downloaded to a mobile storage device. Remote device connection severed."
+		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		card.update_icon()
+
 /obj/item/weapon/stock_parts/cell/potato/afterattack(atom/target, mob/user, proximity) // for potato -> card
 	..()
 	if(istype(target, /obj/item/device/aicard))
 		var/obj/item/device/aicard/A = target
 		if(storage)
 			if(storage.AI)
-				storage.AI.transfer_ai(AI_TRANS_TO_CARD, user, null, A, spawndeadAI = FALSE)
+				transfer_ai(AI_TRANS_TO_CARD, user, storage.AI, A)
 				storage.AI = null // since that proc works normally for [Core] -> [Intellicard] we have to manually turn off this var
 				name = initial(name)
 				desc = initial(desc)

@@ -25,4 +25,4 @@
 	new /obj/item/weapon/door_remote/research_director(src)
 	new /obj/item/weapon/storage/box/firingpins(src)
 	var/obj/item/weapon/stock_parts/cell/potato/P = new(src)
-	P.desc = "We do what we must because we can."
+	P.desc = "You can transfer AI's into potato batteries by using an intellicard."
