@@ -4,7 +4,7 @@
 //increase the slots of many jobs.
 var/time_last_changed_position = 0
 
-#def ID_PRIORITIZE_LEN 5
+#define ID_PRIORITIZE_LEN 5
 
 /obj/machinery/computer/card
 	name = "identification console"
