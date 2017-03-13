@@ -1,3 +1,5 @@
+#define NEARCRIT_JITTERCAP 150
+
 /mob/living/carbon/movement_delay()
 	. = ..()
 	. += grab_state * 3
@@ -13,7 +15,8 @@
 		. += 10
 		if(is_nearcrit(src))
 			. += 20
-			jitteriness += 50
+			if(jitteriness > NEARCRIT_JITTERCAP) // magic number! define later.
+				jitteriness += 20
 			emote(pick("moan", "cry"))
 
 

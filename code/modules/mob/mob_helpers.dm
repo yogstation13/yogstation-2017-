@@ -507,17 +507,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
 
-/mob/proc/is_nearcrit() // viable for LIVING mobs. however, pathed as /mob/ for relief.
-	if(!ismonkey(src) && !ishuman(src))
-		return FALSE
-	if(!isliving(src))
-		return
-	var/mob/living/L = src
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(NOCRIT in H.status_flags)
-			return FALSE
-	if(L.health <= config.health_threshold_crit && L.health > HEALTH_THRESHOLD_DEEPCRIT)
-		return TRUE
-	else
-		return FALSE
+/mob/proc/is_nearcrit()
+	if(ismonkey(src) || ishuman(src))
+		var/mob/living/L = src
+		if(L.health <= config.health_threshold_crit && L.health > HEALTH_THRESHOLD_DEEPCRIT)
+			if(!(NOCRIT in status_flags))
+				return TRUE
+	return FALSE

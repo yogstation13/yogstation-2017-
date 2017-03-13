@@ -30,6 +30,8 @@
 
 	var/whispers = "whispers"
 	var/critical = InCritical()
+	if(is_nearcrit()) // this won't be our last breath, it seems. let's take multiple!
+		critical = FALSE
 
 	// We are unconscious but not in critical, so don't allow them to whisper.
 	if(stat == UNCONSCIOUS && !critical)

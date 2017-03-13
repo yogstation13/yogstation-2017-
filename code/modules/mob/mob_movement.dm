@@ -197,7 +197,7 @@
 			"<span class='userdanger'>You crawl forward at the expense of some of your strength.</span>")
 			L.apply_damage(1, OXY)
 			playsound(L.loc, pick('sound/misc//bodyscrape-01.ogg', 'sound/misc/bodyscrape-02.ogg'), 20, 1, -4)
-		if(L.lying && !L.is_nearcrit()) // legless people.
+		else if(L.lying) // legless people.
 			if(prob(25))
 				playsound(L.loc, pick('sound/misc/bodyscrape-01.ogg', 'sound/misc/bodyscrape-02.ogg'), 20, 1, -4)
 
