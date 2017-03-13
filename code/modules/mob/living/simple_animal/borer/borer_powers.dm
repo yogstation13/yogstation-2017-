@@ -52,9 +52,9 @@
 		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
 		return 0
 
-	/*if(!H.mind.active)
+	if(!H.mind.active)
 		src << "<span class='warning'>[H] does not have an active mind.</span>"
-		return 0*/
+		return 0
 
 	var/unprotected = TRUE
 
@@ -429,7 +429,7 @@ mob/living/carbon/proc/release_control()
 	if(borer.chemicals >= 100)
 		src << "<span class='notice'>We prepare our host for the creation of a new borer.</span>"
 		reproducing = 1
-		var/list/mob/dead/observer/Bcandidates = pollCandidatesForMob("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 100) // we use this to FIND candidates. not necessarily use them.
+		var/list/Bcandidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 100) // we use this to FIND candidates. not necessarily use them.
 		if(!Bcandidates.len)
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
@@ -442,8 +442,8 @@ mob/living/carbon/proc/release_control()
 
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
-		var/client/B = pick(Bcandidates)
-		newborer.key = B.key
+		var/mob/dead/observer/O = pick(Bcandidates)
+		newborer.key = O.key
 		reproducing = 0
 	else
 		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
