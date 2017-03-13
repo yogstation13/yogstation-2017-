@@ -509,7 +509,7 @@ var/time_last_changed_position = 0
 			if(!allowed(usr))
 				usr << "<span class='warning'>Invalid ID.</span>"
 				return
-			if(length(prioritized_jobs) >= ID_PRIORITIZE_LEN)
+			if(length(SSjob.prioritized_jobs) >= ID_PRIORITIZE_LEN)
 				usr << "<span class='warning'>Centcomm cannot accept more than 5 priority requests.</span>"
 				return
 			var/mob/M = usr
