@@ -229,7 +229,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
 			and deflects all energy projectiles."
 	item = /obj/item/weapon/melee/energy/sword/saber
-	cost = 6
+	cost = 7
 
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
