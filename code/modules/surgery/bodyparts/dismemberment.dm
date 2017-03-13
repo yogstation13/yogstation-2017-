@@ -131,11 +131,6 @@
 	var/mob/living/carbon/human/H = owner
 	..()
 	if(istype(H) && !special)
-		if(H.handcuffed)
-			H.handcuffed.loc = H.loc
-			H.handcuffed.dropped(H)
-			H.handcuffed = null
-			H.update_handcuffed()
 		if(H.hud_used)
 			var/obj/screen/inventory/R = H.hud_used.inv_slots[slot_r_hand]
 			if(R)
@@ -151,11 +146,6 @@
 	var/mob/living/carbon/human/H = owner
 	..()
 	if(istype(H) && !special)
-		if(H.handcuffed)
-			H.handcuffed.loc = H.loc
-			H.handcuffed.dropped(H)
-			H.handcuffed = null
-			H.update_handcuffed()
 		if(H.hud_used)
 			var/obj/screen/inventory/L = H.hud_used.inv_slots[slot_l_hand]
 			if(L)

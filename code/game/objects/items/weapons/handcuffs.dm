@@ -55,7 +55,22 @@
 			else
 				user << "<span class='warning'>You fail to handcuff [C]!</span>"
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			add_logs(user, C, "attempted to handcuff")
+			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+			if(do_mob(user, C, 50)
+				if(C.dna.species.id == "abomination")
+					user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
+					return
+				apply_cuffs(C,user)
+				user << "<span class='notice'>You handcuff [C]'s arm to their neck. Brutal.</span>"
+				C.visible_message("<span class='danger'>[user] handcuffs [C]'s arm to their neck!</span>"
+				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+					feedback_add_details("handcuffs","C")
+				else
+					feedback_add_details("handcuffs","H")
+
+				add_logs(user, C, "handcuffed")
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
