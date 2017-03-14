@@ -46,7 +46,7 @@
 		return
 	if(!ishuman(usr))
 		return
-	if(world.time < 15000 && !(usr.mind.changeling) && !(is_servant_of_ratvar(usr))) // 25 minutes
+	if(world.time < 15000 && !(usr.mind.changeling) && !(is_servant_of_ratvar(usr)) && !(usr in ticker.mode.traitors) && !(iscultist(usr)) && !(usr in ticker.mode.revolutionaries) && !(is_shadow(usr)) && !(is_gangster(usr))) // 25 minutes
 		usr << "<span class='warning'>It's too early into the shift to do this! Play your part!"
 		return
 	var/mob/living/carbon/human/H = usr
@@ -66,7 +66,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/mime
 	name = "Invisible Touch"
-	desc = "It dissapeared!"
+	desc = "It disappeared!"
 	hand_path = "/obj/item/weapon/melee/touch_attack/nothing/roundstart" // there is a non roundstart version. can be found in godhand.dmi
 	panel = "Mime"
 
@@ -83,6 +83,6 @@
 /obj/effect/proc_holder/spell/targeted/touch/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			usr << "<span class='notice'>You've don't remember how to perform this... It probably takes dedication.</span>"
+			usr << "<span class='notice'>You don't remember how to perform this... It probably takes dedication.</span>"
 			return
 	..()
