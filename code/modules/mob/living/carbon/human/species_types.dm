@@ -884,8 +884,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 		if(light_amount > 2) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
+			speedmod = 4 //much slower than a human in the light
 		else if (light_amount < 2) //heal in the dark
 			H.heal_overall_damage(1,1)
+			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+			speedmod = -1 //much faster than a human in the dark
 
 /*
  JELLYPEOPLE
