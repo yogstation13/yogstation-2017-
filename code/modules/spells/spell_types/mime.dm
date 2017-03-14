@@ -46,7 +46,7 @@
 		return
 	if(!ishuman(usr))
 		return
-	if(world.time < 15000 && !(usr.mind.changeling) && !(is_servant_of_ratvar(usr)) && !(usr in ticker.mode.traitors) && !(iscultist(usr)) && !(usr in ticker.mode.revolutionaries) && !(is_shadow(usr)) && !(is_gangster(usr))) // 25 minutes
+	if(world.time < 15000 && !(usr.mind.changeling) && !(is_servant_of_ratvar(usr)) && !(usr in ticker.mode.traitors) && !(iscultist(usr)) && !(usr in ticker.mode.head.revolutionaries) && !(is_shadow(usr)) && !(is_gangster(usr))) // 25 minutes
 		usr << "<span class='warning'>It's too early into the shift to do this! Play your part!"
 		return
 	var/mob/living/carbon/human/H = usr
