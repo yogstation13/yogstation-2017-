@@ -76,7 +76,8 @@
 
 	if(istype(I, /obj/item/weapon/restraints/handcuffs/cable))
 		var/obj/item/weapon/restraints/handcuffs/cable/C = I
-		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/wire)
+		world << "WEE WOO WOO WEE"
+		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/zipties)
 
 	I.loc = src
 	modules += I
@@ -213,7 +214,7 @@
 
 /obj/item/weapon/robot_module/security/New()
 	..()
-	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+	add_module(new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src))
 	modules += new /obj/item/weapon/melee/baton/loaded(src)
 	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
 	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
@@ -432,3 +433,8 @@
 	max_energy = 2500
 	recharge_rate = 250
 	name = "Medical Synthesizer"
+
+/datum/robot_energy_storage/zipties
+	max_energy = 5
+	recharge_rate = 1
+	name = "Ziptie Synthesizer"
