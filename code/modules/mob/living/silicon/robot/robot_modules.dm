@@ -76,7 +76,6 @@
 
 	if(istype(I, /obj/item/weapon/restraints/handcuffs/cable))
 		var/obj/item/weapon/restraints/handcuffs/cable/C = I
-		world << "WEE WOO WOO WEE"
 		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/zipties)
 
 	I.loc = src
