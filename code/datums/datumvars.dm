@@ -945,19 +945,19 @@ body
 
 			switch(Text)
 				if("brute")
-					L.adjustBruteLoss(amount)
+					L.adjustBruteLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				if("fire")
-					L.adjustFireLoss(amount)
+					L.adjustFireLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				if("toxin")
-					L.adjustToxLoss(amount)
+					L.adjustToxLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				if("oxygen")
-					L.adjustOxyLoss(amount)
+					L.adjustOxyLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				if("brain")
-					L.adjustBrainLoss(amount)
+					L.adjustBrainLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				if("clone")
-					L.adjustCloneLoss(amount)
+					L.adjustCloneLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				if("stamina")
-					L.adjustStaminaLoss(amount)
+					L.adjustStaminaLoss(amount, 1, DAMAGE_NO_MULTIPLIER)
 				else
 					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
 					return

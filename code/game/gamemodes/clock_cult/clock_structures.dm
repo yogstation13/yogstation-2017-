@@ -147,17 +147,34 @@
 	max_health = 80
 	health = 80
 	var/wall_generation_cooldown
+	var/active = TRUE //is it generating components? If it's off the station zlevel or in space it won't.
 
 /obj/structure/clockwork/cache/New()
 	..()
 	clockwork_caches++
 	SetLuminosity(2,1)
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/clockwork/cache/process()
+	var/area/area = get_area()
+	var/areaname = initial(area.name)
+	if(areaname == "Space" || (z != ZLEVEL_STATION && z != ZLEVEL_CENTCOM))
+		if(active)
+			visible_message("<span class ='warning'>[src]'s fire goes out suddenly. Looks like it isn't making any more components.</span>")
+			active = FALSE
+			icon_state = "tinkerers_cache_off"
+	else
+		if(!active)
+			visible_message("<span class ='warning'>[src]'s fire lights itself back up. It's ready to make more components.</span>")
+			active = TRUE
+			icon_state = "tinkerers_cache"
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
 	for(var/I in src)
 		var/atom/movable/A = I
 		A.forceMove(get_turf(src)) //drop any daemons we have
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
@@ -211,6 +228,8 @@
 
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
+	if(!active)
+		user << "<span class='warning'>It looks inactive.</span>"
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<b>Stored components:</b>"
 		for(var/i in clockwork_component_cache)
@@ -232,6 +251,7 @@
 	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/mob/living/target
+	var/eyeseeyou
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
@@ -254,6 +274,8 @@
 			lose_target()
 		else
 			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+			eyeseeyou = Beam(target, "ocular_warden",,5)
+			playsound(target,'sound/effects/singlebeat.ogg',100) //This oughta catch your attention
 			if(ratvar_awakens && target)
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()

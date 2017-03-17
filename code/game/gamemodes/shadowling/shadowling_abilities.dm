@@ -440,7 +440,7 @@
 			target << "<span class='boldannounce'>You suddenly understand. This is the natural order of things. The light must be shunned. Your insides shift and twist as the influence of the Other takes effect. Darkness is no longer lethal to you.</span>"
 		target.setOxyLoss(0) //In case the shadowling was choking them out
 		var/obj/item/organ/thrall_tumor/T = new/obj/item/organ/thrall_tumor(target)
-		T.Insert(target)
+		T.Insert(target, 1)
 
 
 /obj/effect/proc_holder/spell/self/shadowling_hivemind //Lets a shadowling talk to its allies
@@ -828,7 +828,9 @@
 			timer += more_minutes
 			priority_announce("Major system failure aboard the emergency shuttle. This will extend its arrival time by approximately 15 minutes..", "System Failure", 'sound/misc/notice1.ogg')
 			SSshuttle.emergency.setTimer(timer)
+			SSshuttle.canRecall = FALSE
 		user.mind.spell_list.Remove(src) //Can only be used once!
+
 		qdel(src)
 
 
@@ -930,6 +932,7 @@
 		user << "<span class='warning'><b>As you attempt to commune with the others, an agonizing spike of pain drives itself into your head!</b></span>"
 		user.apply_damage(10, BRUTE, "head")
 		return
+	cooldownCheck(user)
 	var/text = stripped_input(user, "What do you want to say your masters and fellow thralls?.", "Lesser Commune", "")
 	if(!text)
 		return
@@ -941,6 +944,13 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [text]"
 	log_say("[user.real_name]/[user.key] : [text]")
+
+/obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/proc/cooldownCheck(mob/living/carbon/human/user)
+	if(istype(user) && (user.dna.species.specflags & THRALLAPPTITUDE))
+		charge_max = 0
+		charge_counter = 0
+	else
+		charge_max = initial(charge_max)
 
 
 // ASCENDANT ABILITIES BEYOND THIS POINT //

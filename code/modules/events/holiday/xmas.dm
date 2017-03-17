@@ -384,6 +384,7 @@ var/krampusweak
 	id = "krampus"
 	limbs_id = "krampus"
 	sexes = 0
+	blacklisted = 1
 	dangerous_existence = 1
 	specflags = list(NOBREATH,NOGUNS,NODISMEMBER)
 	burnmod = 2.1 // hey krampus, your horns are as crooked as your soul.

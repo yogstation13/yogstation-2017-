@@ -106,6 +106,7 @@ PROBABILITY SANDBOX 0
 
 CONTINUOUS TRAITOR
 CONTINUOUS TRAITORCHAN
+CONTINUOUS TRAITORABD
 CONTINUOUS DOUBLE_AGENTS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
@@ -351,4 +352,4 @@ BOMBCAP 20
 # a less lootfilled or smaller or less round effecting ruin costs less to
 # spawn, while the converse is true. Alter this number to affect the amount
 # of ruins.
-LAVALAND_BUDGET 125
+LAVALAND_BUDGET 60
