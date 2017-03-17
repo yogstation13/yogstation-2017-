@@ -38,7 +38,7 @@
 
 /obj/effect/acid/proc/tick()
 	if(!target)
-		qdel(src)
+		destroy_effect()
 
 	ticks++
 
@@ -65,7 +65,7 @@
 		else
 			qdel(target)
 
-		qdel(src)
+		destroy_effect()
 
 		return
 

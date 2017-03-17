@@ -10,7 +10,11 @@
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
+	var/imptype = /obj/item/weapon/implant
 
+/obj/item/weapon/implanter/New()
+	..()
+	imp = new imptype(src)
 
 /obj/item/weapon/implanter/update_icon()
 	if(imp)
@@ -58,20 +62,11 @@
 	spawn(1)
 		update_icon()
 
-
-
-
 /obj/item/weapon/implanter/adrenalin
 	name = "implanter (adrenalin)"
-
-/obj/item/weapon/implanter/adrenalin/New()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
-	..()
+	imptype = /obj/item/weapon/implant/adrenalin
 
 
 /obj/item/weapon/implanter/emp
 	name = "implanter (EMP)"
-
-/obj/item/weapon/implanter/emp/New()
-	imp = new /obj/item/weapon/implant/emp(src)
-	..()
+	imptype = /obj/item/weapon/implant/emp

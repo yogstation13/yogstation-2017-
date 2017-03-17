@@ -18,10 +18,12 @@ Chief Medical Officer
 
 	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic,
+			access_cloning)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic,
+			access_cloning)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -64,8 +66,8 @@ Medical Doctor
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_surgery)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom, access_cloning)
+	minimal_access = list(access_medical, access_morgue, access_surgery, access_cloning)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -131,8 +133,8 @@ Geneticist
 
 	outfit = /datum/outfit/job/geneticist
 
-	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
+	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage, access_cloning)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_research, access_cloning)
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"
@@ -232,14 +234,14 @@ Paramedic
 
 	outfit = /datum/outfit/job/paramedic
 
-	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic)
+	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic, access_cloning)
 	minimal_access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"
 
 	backpack_contents = list(/obj/item/weapon/storage/firstaid/regular)
-	belt = /obj/item/device/pda/medical
+	belt = /obj/item/device/pda/para
 	ears = /obj/item/device/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/medical
 	suit = /obj/item/clothing/suit/toggle/labcoat/emt

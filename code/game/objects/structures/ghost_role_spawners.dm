@@ -10,7 +10,7 @@
 	density = TRUE
 	roundstart = FALSE
 	death = FALSE
-	mob_species = /datum/species/pod
+	mob_species = /datum/species/plant
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
@@ -20,14 +20,15 @@
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper", "Cannabis")
-	new_spawn.real_name = plant_name
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
+		H.gender = pick(MALE, FEMALE)
+		if(H.gender == MALE)
+			H.real_name = pick(first_m_plant_names)
+		else
+			H.real_name = pick(first_f_plant_names)
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	..()

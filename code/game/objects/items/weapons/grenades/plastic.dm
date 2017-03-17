@@ -65,21 +65,24 @@
 		det_time = newtime
 		user << "Timer set for [det_time] seconds."
 
-/obj/item/weapon/grenade/plastic/afterattack(atom/movable/AM, mob/user, flag)
+/obj/item/weapon/grenade/plastic/afterattack(atom/A, mob/user, flag)
+	var/atom/movable/AM
+	if(istype(A, /atom/movable))
+		AM = A
 	if (!flag)
 		return
-	if (istype(AM, /mob/living/carbon))
+	if (istype(A, /mob/living/carbon))
 		return
-	if(istype(AM,/obj/item/weapon/restraints/legcuffs/bola))
+	if(istype(A,/obj/item/weapon/restraints/legcuffs/bola))
 		return
 	user << "<span class='notice'>You start planting the [src]. The timer is set to [det_time]...</span>"
 
-	if(do_after(user, 50, target = AM))
+	if(do_after(user, 50, target = A))
 		if(!user.unEquip(src))
 			return
-		if(AM.throw_speed > 3)
+		if(AM && AM.throw_speed > 3)
 			AM.throw_speed = 3
-		src.target = AM
+		src.target = A
 		loc = null
 
 		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [det_time] second fuse",0,1)

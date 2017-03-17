@@ -44,7 +44,7 @@
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("stimulants", 10)
+	imp_in.reagents.add_reagent("ephedrine", 10)
 	if(!uses)
 		qdel(src)
 

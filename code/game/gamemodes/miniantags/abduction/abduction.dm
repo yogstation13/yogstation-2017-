@@ -323,7 +323,7 @@
 	var/team
 
 /datum/objective/experiment/New()
-	explanation_text = "Experiment on [target_amount] humans."
+	explanation_text = "Experiment on at least [target_amount] humans and retain [target_amount] unspent research points."
 
 /datum/objective/experiment/check_completion()
 	var/ab_team = team
@@ -463,3 +463,54 @@
 
 /datum/objective/abductee/pragnant
 	explanation_text = "You are pregnant and soon due. Find a safe place to deliver your baby."
+
+/datum/objective/abductee/alterego
+	explanation_text = "Develop a costumed alter ego with which to do your work- for it will make powerful enemies, and they cannot know who you are."
+
+/datum/objective/abductee/ego
+	explanation_text = "You have to be the most famous person on the entire station. Everyone should know about you."
+
+/datum/objective/abductee/nudist
+	explanation_text = "Try to deprive the station of clothing."
+
+/datum/objective/abductee/antigrowns
+	explanation_text = "You know it in your heart: food which wasn't prepared in the station's kitchen is bad. It all needs to go, before people can eat any more of it."
+
+/datum/objective/abductee/ITSFUCKINGRAW
+	explanation_text = "Critize all types of served food to the core. Make sure the cook gets back what he deserves."
+
+/datum/objective/abductee/survivalist
+	explanation_text = "Everyone should have weapons so the station can be safe."
+
+/datum/objective/abductee/escapist
+	explanation_text = "Someone very important is being kept prisoner here. Nanotrasen might try to cover it up, but it doesn't matter; you know the truth, and you won't rest until they've been set free."
+
+/datum/objective/abductee/lightson
+	explanation_text = "Your workspace is too poorly lit, it's disgraceful. It needs more light sources, as many as possible."
+
+/datum/objective/abductee/cleanfreak
+	explanation_text = "Floors that aren't clean are the worst. Do whatever it takes to avoid stepping on messy sections of floor."
+
+/datum/objective/abductee/rorschach
+	explanation_text = "The station's assistants are plotting something. Figure out what their secret plan is. Stop at nothing and never compromise. Not even in the face of Armageddon."
+
+/datum/objective/abductee/minipyro
+	explanation_text = "All paper should be burned. People should never be burned, of course. That would be crazy. Unless they're made of paper."
+
+/datum/objective/abductee/replacedead
+
+/datum/objective/abductee/replacedead/New()
+	var/mob/chosen = pick(dead_mob_list)
+
+	explanation_text = "You know that [chosen.real_name] has perished. There must always be a [chosen.real_name]. Clearly you have to replace them."
+	..()
+	. = ..()
+
+/datum/objective/abductee/replaceliving
+
+/datum/objective/abductee/replaceliving/New()
+	var/mob/chosen = pick(living_mob_list)
+
+	explanation_text = "This station has one [chosen.real_name]. That is insufficient. You must also become [chosen.real_name]."
+	..()
+	. = ..()
