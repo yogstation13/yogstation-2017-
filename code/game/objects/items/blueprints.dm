@@ -215,16 +215,16 @@
 	if(A)
 		A.set_dynamic_lighting()
 		for(var/turf/T in turfs)
-			var/area/old_alrea = T.loc
-			A.content += T
+			var/area/old_area = T.loc
+			A.contents += T
 			T.change_area(old_area, T)
 	else
 		A = new
 		A.setup(str)
 		A.set_dynamic_lighting()
 		for(var/turf/T in turfs)
-			var/area/old_alrea = T.loc
-			A.content += T
+			var/area/old_area = T.loc
+			A.contents += T
 			T.change_area(old_area, T)
 	A.valid_territory = okayterritory
 	A.has_gravity = old_gravity
