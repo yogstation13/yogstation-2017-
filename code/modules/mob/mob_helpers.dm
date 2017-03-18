@@ -508,9 +508,4 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return FALSE
 
 /mob/proc/is_nearcrit()
-	if(ismonkey(src) || ishuman(src))
-		var/mob/living/L = src
-		if(L.health <= config.health_threshold_crit && L.health > HEALTH_THRESHOLD_DEEPCRIT)
-			if(!(NOCRIT in status_flags))
-				return TRUE
 	return FALSE
