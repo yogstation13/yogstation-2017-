@@ -350,6 +350,7 @@
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
 		world << "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
+		ticker.project_security = TRUE
 	..()
 	return 1
 

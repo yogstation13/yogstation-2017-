@@ -224,10 +224,13 @@ Made by Xhuis
 		world << "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>"
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 		world << "<span class='redtext'>The shadowlings have been killed by the crew!</span>"
+		ticker.project_security = TRUE
 	else if(!check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED)
 		world << "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>"
+		ticker.project_security = TRUE
 	else
 		world << "<span class='redtext'>The shadowlings have failed!</span>"
+		ticker.project_security = TRUE
 	..()
 	return 1
 

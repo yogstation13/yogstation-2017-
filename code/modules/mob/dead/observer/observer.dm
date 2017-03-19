@@ -153,10 +153,11 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
  * Hair will always update its dir, so if your sprite has no dirs the haircut will go all over the place.
  * |- Ricotez
  */
-/mob/dead/observer/proc/update_icon(new_form)
-	if(client) //We update our preferences in case they changed right before update_icon was called.
-		ghost_accs = client.prefs.ghost_accs
-		ghost_others = client.prefs.ghost_others
+/mob/dead/observer/proc/update_icon(new_form, update_client = TRUE)
+	if(update_client)
+		if(client) //We update our preferences in case they changed right before update_icon was called.
+			ghost_accs = client.prefs.ghost_accs
+			ghost_others = client.prefs.ghost_others
 
 	if(hair_image)
 		overlays -= hair_image

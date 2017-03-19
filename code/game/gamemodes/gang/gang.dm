@@ -264,6 +264,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The loyalists win!"]</span><br>"
 			feedback_set_details("round_end_result","loss - gangs failed takeover")
+			ticker.project_security = TRUE
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
 			feedback_set_details("round_end_result","win - gang domination complete")

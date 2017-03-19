@@ -59,6 +59,8 @@ var/datum/subsystem/ticker/ticker
 	var/total_deaths = 0
 	var/maprotatechecked = 0
 
+	var/project_security = FALSE					// if antagonists lose all of security becomes a visible mirage of their former self.
+
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -505,6 +507,9 @@ var/datum/subsystem/ticker/ticker
 			CTF.ctf_enabled = !CTF.ctf_enabled
 			CTF.TellGhost()
 
+	if(ticker.project_security)
+		project_security()
+
 	return 1
 
 /datum/subsystem/ticker/proc/send_random_tip()
@@ -595,3 +600,16 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+
+/datum/subsystem/ticker/proc/project_security()
+	var/list/security = list("Security Officer", "Detective", "Warden", "Head of Security", "Captain")
+	for(var/mob/dead/observer/G in player_list)
+		if(G.mind)
+			if(G.mind.current)
+				if(G.mind.current.job in security)
+					if(G.client) // our final sanity check
+						G.ghost_accs = GHOST_ACCS_FULL
+						G.update_icon(update_client = FALSE)
+						G.invisibility = 0
+						G.desc = "It's the [G.mind.current.job]!"
+						G << "<span class='notice'>You slowly begin to reappear. Security has won the day! Peace has been restored!</span>"
