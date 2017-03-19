@@ -1,0 +1,5 @@
+author: Groxic
+delete-after: True
+changes: 
+  - tweak: "It might just be possible that hostilities do not occur for an entire shift (extended in rotation)."
+  - rscadd: "The crew of Space Station 13 is now expected to partake in station-wide goals directed by Nanotrasen."
