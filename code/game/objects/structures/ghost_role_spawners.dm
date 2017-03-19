@@ -120,6 +120,7 @@
 	desc = "You can see the embryo of a slowly regenerating baby-ashwalker. This one is extraordinary."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
+	density = 1
 	var/health = 100
 	var/progress = 0 // needs 300
 	var/mob/living/ashwalker
@@ -137,12 +138,11 @@
 	..()
 
 /obj/effect/cyrogenicbubble/process()
-	..()
 	if(health)
 		progress++
 	else
 		ejectEgg()
-	if(progress == 300)
+	if(progress == 150)
 		ejectEgg()
 		if(ishuman(ashwalker))
 			var/mob/living/carbon/human/H = ashwalker
@@ -167,12 +167,15 @@
 		if(damage > health)
 			ejectEgg()
 			qdel(src)
+			visible_message("<span class='warning'>[M] [M.attacktext] [src]</span>")
 		else
 			health -= damage
 
 /obj/effect/cyrogenicbubble/proc/ejectEgg()
 	if(ashwalker)
 		ashwalker.forceMove(get_turf(src))
+		ashwalker.real_name = name
+		ashwalker.name = name
 		ashwalker = null
 
 /obj/effect/cyrogenicbubble/proc/healAshwalker()
@@ -184,6 +187,14 @@
 	ashwalker.adjustFireLoss(-1, 0)
 	if(ashwalker.stat == DEAD) // one does not DIE in the cyro bubble.
 		ashwalker.revive()
+
+
+/obj/effect/cyrogenicbubble/return_air()
+	if(get_turf(src))
+		var/turf/T = get_turf(src)
+		return T.return_air()
+	else
+		return null
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile

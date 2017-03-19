@@ -141,14 +141,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			return
 		rebirth = TRUE
 		rebirthcount++
-		H << "<span class='notice'>Your body enters cryogenic rebirth. You will soon be restored to your physical form. Once this happens your soul will lunge back into your body."
+		H << "<span class='notice'>Your body is entering cryogenic rebirth. You will soon be restored to your physical form. Once this happens your soul will be dragged back into your body."
 		H.death()
 		var/obj/effect/cyrogenicbubble/CB = new(get_turf(H))
+		CB.name = H.real_name
 		H.forceMove(CB)
 		CB.ashwalker = H
 		if(rebirthcount >= 3)
 			H << "<span class='notice'>You notice that your body isn't regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>"
-			//H << "<span class='notice'>If only there was a mutant out there with the same powers as you, but maybe only female.</span>"
+			//H << "<span class='notice'>If only there was a mutant out there with the same powers as you... female too.</span>"
 
 
 /datum/species/lizard/fly
