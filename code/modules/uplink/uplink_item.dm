@@ -1070,13 +1070,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear)
-
-
-/datum/uplink_item/role_restricted/dicks
-	name = "testobjyay"
-	item = /obj/item/weapon/storage/toolbox/syndicate
-	restricted_roles = list("Assistant")
-	cost = 5
+	//restricted_roles = list("Assistant")
 
 // Pointless
 /datum/uplink_item/badass
