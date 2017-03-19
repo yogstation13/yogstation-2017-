@@ -30,27 +30,23 @@ var/list/datum/dna/hivemind_bank = list()
 
 /obj/effect/proc_holder/changeling/hivemind_upload/sting_action(var/mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	var/list/names = list()
-	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
-		if(!(prof in hivemind_bank))
-			names += prof.name
-
-	if(names.len <= 0)
-		user << "<span class='notice'>The airwaves already have all of our DNA.</span>"
+	if(changeling.stored_profiles.len < 2)
+		user << "<span class = 'warning'>We do not have enough stored DNA for this.</span>"
 		return
 
-	var/chosen_name = input("Select a DNA to channel: ", "Channel DNA", null) as null|anything in names
-	if(!chosen_name)
+	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select a DNA to channel: ", "Channel DNA", user, FALSE, FALSE, TRUE)
+
+	if(!chosen_prof)
 		return
 
-	var/datum/changelingprofile/chosen_dna = changeling.get_dna(chosen_name)
-	if(!chosen_dna)
-		return
+	var/datum/changelingprofile/uploaded_prof = new chosen_prof.type
+	chosen_prof.copy_profile(uploaded_prof)
+	hivemind_bank += uploaded_prof
 
-	var/datum/changelingprofile/uploaded_dna = new chosen_dna.type
-	chosen_dna.copy_profile(uploaded_dna)
-	hivemind_bank += uploaded_dna
-	user << "<span class='notice'>We channel the DNA of [chosen_name] to the air.</span>"
+	user.mind.changeling.stored_profiles -= chosen_prof
+	user.mind.changeling.profilecount--
+
+	user << "<span class='notice'>We channel the DNA of [chosen_prof] to the air.</span>"
 	feedback_add_details("changeling_powers","HU")
 	return 1
 
@@ -64,8 +60,8 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!..())
 		return
 	var/datum/changeling/changeling = user.mind.changeling
-	var/datum/changelingprofile/first_prof = changeling.stored_profiles[1]
-	if(first_prof.name == user.real_name)//If our current DNA is the stalest, we gotta ditch it.
+	var/datum/changelingprofile/first_prof = changeling.stored_profiles.len > 0 ? changeling.stored_profiles[1] : null
+	if(!first_prof || (first_prof.name == user.real_name))//If our current DNA is the stalest, we gotta ditch it.
 		user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
 		return
 	return 1
@@ -87,10 +83,12 @@ var/list/datum/dna/hivemind_bank = list()
 	var/datum/changelingprofile/chosen_prof = names[S]
 	if(!chosen_prof)
 		return
+	if(!(chosen_prof in hivemind_bank))
+		user << "<span class='warning'>That DNA is no longer available.</span>"
+		return
 
-	var/datum/changelingprofile/downloaded_prof = new chosen_prof.type
-	chosen_prof.copy_profile(downloaded_prof)
-	changeling.add_profile(downloaded_prof)
+	hivemind_bank -= chosen_prof
+	changeling.add_profile(chosen_prof)
 	user << "<span class='notice'>We absorb the DNA of [S] from the air.</span>"
 	feedback_add_details("changeling_powers","HD")
 	return 1

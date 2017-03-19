@@ -12,6 +12,7 @@
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/carbon/holder
+	var/sting_extractable = TRUE //whether the DNA can be retrieved by a changeling's DNA sting
 
 /datum/dna/New(mob/living/carbon/new_holder)
 	if(new_holder)
@@ -25,6 +26,7 @@
 	destination.dna.features = features
 	destination.dna.real_name = real_name
 	destination.dna.temporary_mutations = temporary_mutations
+	destination.dna.sting_extractable = sting_extractable
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
 

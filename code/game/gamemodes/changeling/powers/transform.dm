@@ -108,7 +108,7 @@
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA", user)
+	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA", user, TRUE, TRUE)
 
 	if(!chosen_prof)
 		return
@@ -118,19 +118,29 @@
 	feedback_add_details("changeling_powers","TR")
 	return 1
 
-/datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
-	var/list/names = list("Drop Flesh Disguise")
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		names += "[prof.name]"
+/datum/changeling/proc/select_dna(prompt, title, mob/living/carbon/user, drop_flesh_disguise = TRUE, show_protected = TRUE, hide_channeled = FALSE)
+	var/list/names = list()
+	var/list/namecounts = list()
+	if(drop_flesh_disguise)
+		names[avoid_assoc_duplicate_keys("Drop Flesh Disguise", namecounts)] = "Drop Flesh Disguise"
+
+	for(var/V in stored_profiles)
+		var/datum/changelingprofile/prof = V
+		if(!show_protected && prof.protected)
+			continue
+		if(hide_channeled && (prof in hivemind_bank))
+			continue
+		names[avoid_assoc_duplicate_keys(prof.name, namecounts)] = prof
 
 	var/chosen_name = input(prompt, title, null) as null|anything in names
 	if(!chosen_name)
 		return
 
-	if(chosen_name == "Drop Flesh Disguise")
+	if(names[chosen_name] == "Drop Flesh Disguise")
 		for(var/slot in slots)
 			if(istype(user.vars[slot], slot2type[slot]))
 				qdel(user.vars[slot])
-
-	var/datum/changelingprofile/prof = get_dna(chosen_name)
-	return prof
+		return
+	var/datum/changelingprofile/prof = names[chosen_name]
+	if(prof in stored_profiles)
+		return prof
