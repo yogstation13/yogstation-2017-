@@ -3,6 +3,7 @@
 	icon_state = "Holodeck"
 	luminosity = 1
 	lighting_use_dynamic = 0
+	sound_env = LARGE_SOFTFLOOR
 
 	var/obj/machinery/computer/holodeck/linked
 	var/restricted = 0 // if true, program goes on emag list
@@ -52,36 +53,45 @@
 */
 /area/holodeck/rec_center
 	name = "\improper Recreational Holodeck"
+	sound_env = ARENA
 
 /area/holodeck/rec_center/offline
 	name = "Holodeck - Offline"
 
 /area/holodeck/rec_center/court
 	name = "Holodeck - Empty Court"
+	sound_env = ARENA
 
 /area/holodeck/rec_center/dodgeball
 	name = "Holodeck - Dodgeball Court"
+	sound_env = ARENA
 
 /area/holodeck/rec_center/basketball
 	name = "Holodeck - Basketball Court"
+	sound_env = ARENA
 
 /area/holodeck/rec_center/thunderdome
 	name = "Holodeck - Thunderdome Court"
+	sound_env = ARENA
 
 /area/holodeck/rec_center/beach
 	name = "Holodeck - Beach"
 
 /area/holodeck/rec_center/lounge
 	name = "Holodeck - Lounge"
+	sound_env = LIVINGROOM
 
 /area/holodeck/rec_center/medical
 	name = "Holodeck - Emergency Medical"
+	sound_env = ROOM
 
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Playground"
+	sound_env = ROOM
 
 /area/holodeck/rec_center/winterwonderland
 	name = "Holodeck - Winter Wonderland"
+	sound_env = CAVE
 
 // Bad programs
 

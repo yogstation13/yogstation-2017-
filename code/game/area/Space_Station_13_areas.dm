@@ -66,6 +66,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/parallax_movedir = 0
 
+	var/sound_env
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -130,6 +132,7 @@ var/list/teleportlocs = list()
 	valid_territory = 0
 	icon_state = "shuttle"
 	murders_plants = 0
+	sound_env = SMALL_ENCLOSED
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -242,6 +245,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	blob_allowed = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = 0
+	sound_env = ASTEROID
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -272,6 +276,7 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	sound_env = ARENA
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
@@ -405,6 +410,7 @@ var/list/teleportlocs = list()
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
+ 	sound_env = LARGE_ENCLOSED
 
 //Maintenance
 /area/maintenance
@@ -417,6 +423,7 @@ var/list/teleportlocs = list()
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg')
 	valid_territory = 0
+	sound_env = TUNNEL_ENCLOSED
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -488,6 +495,9 @@ var/list/teleportlocs = list()
 
 //Hallway
 
+/area/hallway/
+	sound_env = LARGE_ENCLOSED
+
 /area/hallway/primary/fore
 	name = "Fore Primary Hallway"
 	icon_state = "hallF"
@@ -531,10 +541,12 @@ var/list/teleportlocs = list()
 	name = "Heads of Staff Meeting Room"
 	icon_state = "meeting"
 	music = null
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/captain
 	name = "Captain's Office"
 	icon_state = "captain"
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/courtroom
 	name = "Courtroom"
@@ -570,6 +582,7 @@ var/list/teleportlocs = list()
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
+	sound_env = SMALL_ENCLOSED
 
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
@@ -614,23 +627,28 @@ var/list/teleportlocs = list()
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "Theatre"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/library
  	name = "Library"
  	icon_state = "library"
+ 	sound_env = LARGE_SOFTFLOOR
 
 /area/chapel/main
 	name = "Chapel"
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+	sound_env = LARGE_SOFTFLOOR
 
 /area/chapel/office
 	name = "Chapel Office"
@@ -648,10 +666,12 @@ var/list/teleportlocs = list()
 /area/engine/engine_smes
 	name = "Engineering SMES"
 	icon_state = "engine_smes"
+	sound_env = SMALL_ENCLOSED
 
 /area/engine/engineering
 	name = "Engineering"
 	icon_state = "engine"
+	sound_env = LARGE_ENCLOSED
 
 /area/engine/break_room
 	name = "Engineering Foyer"
@@ -704,18 +724,22 @@ var/list/teleportlocs = list()
 /area/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/starboardsolar
 	name = "Aft Starboard Solar Maintenance"
 	icon_state = "SolarcontrolS"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/portsolar
 	name = "Aft Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/auxsolarstarboard
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	sound_env = SMALL_ENCLOSED
 
 
 /area/assembly/chargebay
@@ -860,6 +884,7 @@ var/list/teleportlocs = list()
 	name = "Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/security/range
 	name = "Firing Range"
@@ -945,6 +970,7 @@ var/list/teleportlocs = list()
 /area/quartermaster/storage
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
+	sound_env = LARGE_ENCLOSED
 
 /area/quartermaster/qm
 	name = "Quartermaster's Office"
@@ -1244,6 +1270,7 @@ var/list/teleportlocs = list()
 /area/turret_protected/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
+	sound_env = SMALL_ENCLOSED
 
 /area/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
