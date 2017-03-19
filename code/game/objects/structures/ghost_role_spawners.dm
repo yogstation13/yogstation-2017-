@@ -10,7 +10,7 @@
 	density = TRUE
 	roundstart = FALSE
 	death = FALSE
-	mob_species = /datum/species/pod
+	mob_species = /datum/species/plant
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
@@ -18,16 +18,18 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a sentient ecosystem - an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
 	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper", "Cannabis")
-	new_spawn.real_name = plant_name
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
+		H.gender = pick(MALE, FEMALE)
+		if(H.gender == MALE)
+			H.real_name = pick(first_m_plant_names)
+		else
+			H.real_name = pick(first_f_plant_names)
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	..()
@@ -47,6 +49,7 @@
 	density = 0
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>, and is lead by The Chieftain. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	jobban_type = "lavaland"
 	var/in_tribe = TRUE
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
@@ -241,6 +244,7 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/golem/New()
 	..()
@@ -297,6 +301,7 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou've been stranded in this godless prison of a planet for longer than you can remember. Each day you barely scrape by, and between the terrible \
 	conditions of your makeshift shelter, the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/hermit/New()
 	var/arrpee = rand(1,4)
@@ -343,6 +348,7 @@
 	flavour_text = "<font size=3><b>W</b></font><b>hat...? Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
 	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
 	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
+	jobban_type = "lavaland"
 
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
@@ -361,6 +367,7 @@
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you. You remember that you were convicted of "
 	var/crime
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.real_name = "NTP #LL-0[rand(111,999)]"

@@ -14,6 +14,8 @@
 	var/icon_screen = "generic"
 	var/computer_health = 25
 	var/clockwork = FALSE
+	var/screen_crack = "crack"
+	var/image/crack_overlay
 	paiAllowed = 1
 
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
@@ -91,6 +93,7 @@
 		overlays += icon_screen
 	if(paired)
 		overlays += "paipaired"
+	update_crack()
 
 /obj/machinery/computer/power_change()
 	..()
@@ -125,6 +128,21 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
+		var/obj/item/weapon/weldingtool/W = I
+		if(!W.isOn())
+			return ..()
+		else if(computer_health == initial(src.computer_health)) //This doesn't like |'s for some reason
+			user << "<span class='notice'>No point in welding a pristine looking computer.</span>"
+			return 0
+		else if(!computer_health)
+			return 0
+		else
+			computer_health = initial(src.computer_health)
+			update_crack()
+			W.remove_fuel(1, user)
+
+
 	else
 		return ..()
 
@@ -149,6 +167,17 @@
 				paired.unpair(0)
 			stat |= BROKEN
 			update_icon()
+	update_crack()
+
+
 
 /obj/machinery/computer/proc/erase_data()
 	return 0
+
+/obj/machinery/computer/proc/update_crack()
+	overlays -= crack_overlay
+	if(!(screen_crack && computer_health) || (computer_health == initial(src.computer_health)))
+		return 0
+	var/crack = round(computer_health / 5)
+	crack_overlay = image(icon = 'icons/obj/computer.dmi', icon_state = "[screen_crack]_[crack]")
+	overlays += crack_overlay

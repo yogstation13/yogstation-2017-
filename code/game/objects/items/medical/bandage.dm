@@ -25,14 +25,14 @@
 					if (healing_limb.brute_dam)
 						success = healing_limb.heal_damage(healamount/src.duration, 0, 0)
 					else
-						H << "<span class='notice'>The wounds on your [src.healing_limb.getDisplayName()] have stopped bleeding and appear to be healed.</span>"
+						H << "<span class='notice'>The wounds on your [getLimbDisplayName(src.healing_limb)] have stopped bleeding and appear to be healed.</span>"
 						used = 1
 				if ("burn")
 					if (healing_limb.burn_dam)
 						success = healing_limb.heal_damage(0, healamount/src.duration, 0)
 					else
 						used = 1
-						H << "<span class='notice'>The burns on your [src.healing_limb.getDisplayName()] feel much better, and seem to be completely healed.</span>"
+						H << "<span class='notice'>The burns on your [getLimbDisplayName(src.healing_limb)] feel much better, and seem to be completely healed.</span>"
 			if (success)
 				H.update_damage_overlays(0)
 			if (staunch_bleeding && !H.bleedsuppress)
@@ -48,7 +48,7 @@
 /obj/item/medical/bandage/proc/unwrap(mob/living/M, mob/living/carbon/human/T)
 	//DUPLICATE CODE BUT I'M FUCKING LAZY
 	if (healing_limb.bandaged)
-		M.visible_message("<span class='warning'>[M] grabs and pulls at the [src] on [T]'s [src.healing_limb.name], unwrapping it instantly!</span>", "<span class='notice'>You deftly yank [src] off [T]'s [src.healing_limb.getDisplayName()].</span>")
+		M.visible_message("<span class='warning'>[M] grabs and pulls at the [src] on [T]'s [src.healing_limb.name], unwrapping it instantly!</span>", "<span class='notice'>You deftly yank [src] off [T]'s [getLimbDisplayName(src.healing_limb)].</span>")
 		name = "used [src.name]"
 		desc = "Piled into a tangled, crusty mess, these bandages have obviously been used and then disposed of in great haste."
 		color = "red"
@@ -59,9 +59,9 @@
 
 /obj/item/medical/bandage/proc/fall_off(mob/living/carbon/human/H, obj/item/bodypart/L)
 	if (L.bandaged)
-		H << "You loosen the bandage around [L.getDisplayName()] and let it fall to the floor."
+		H << "You loosen the bandage around [getLimbDisplayName(L.name)] and let it fall to the floor."
 		name = "used [src.name]"
-		desc = "Bloodied and crusted, these bandages have clearly been used and aren't fit for much anymore. Seems as if they were wrapped around someone's [L.getDisplayName()] last."
+		desc = "Bloodied and crusted, these bandages have clearly been used and aren't fit for much anymore. Seems as if they were wrapped around someone's [getLimbDisplayName(L.name)] last."
 		color = "red"
 		loc = H.loc
 		L.bandaged = 0
@@ -77,9 +77,9 @@
 		temphuman = tar
 		if (!lt.bandaged)
 			if (user == tar)
-				user.visible_message("<span class='notice'>[user] begins winding [src] about their [lt.getDisplayName()]..</span>", "<span class='notice'>You begin winding [src] around your [lt.getDisplayName()]..</span>")
+				user.visible_message("<span class='notice'>[user] begins winding [src] about their [getLimbDisplayName(lt.name)]..</span>", "<span class='notice'>You begin winding [src] around your [getLimbDisplayName(lt.name)]..</span>")
 			else
-				user.visible_message("<span class='notice'>[user] begins winding [src] about [tar]'s [lt.getDisplayName()]..</span>", "<span class='notice'>You begin winding [src] around [tar]'s [lt.getDisplayName()]..</span>")
+				user.visible_message("<span class='notice'>[user] begins winding [src] about [tar]'s [getLimbDisplayName(lt.name)]..</span>", "<span class='notice'>You begin winding [src] around [tar]'s [getLimbDisplayName(lt.name)]..</span>")
 
 			if (do_after(user, 50, target = tar))
 				if(!user.unEquip(src))

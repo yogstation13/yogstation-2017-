@@ -46,6 +46,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	new /obj/item/device/gps/mining(src)
 
 /*********************Pickaxe & Drills**************************/
 

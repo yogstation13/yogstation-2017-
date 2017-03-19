@@ -27,6 +27,19 @@
 			var/link = FOLLOW_LINK(M, following)
 			M << "[link] [rendered]"
 
+/mob/living/silicon/robot/robot_talk(message)
+	..()
+	//cyborgs "leak" a bit when they binary talk
+	var/garbled_message = Gibberish(message, 70, list("1", "0"))
+	var/list/spans = list("robot")
+	var/rendered = compose_message(src, ROBOT, garbled_message, , spans)
+	for(var/atom/movable/AM in get_hearers_in_view(1, src))
+		var/mob/M = null
+		if(ismob(AM))
+			M = AM
+		if(!M || !M.binarycheck())
+			AM.Hear(rendered, src, ROBOT, garbled_message, , spans)
+
 /mob/living/silicon/binarycheck()
 	return 1
 
@@ -65,5 +78,8 @@
 	if(message_mode == MODE_BINARY)
 		if(binarycheck())
 			robot_talk(message)
+			return 1
+	if(message_mode == MODE_SPOKEN_BINARY)
+		say(message, , list("robot"), ROBOT)
 		return 1
 	return 0

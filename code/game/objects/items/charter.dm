@@ -8,18 +8,26 @@
 	var/pending_name
 	var/admin_controlled
 	var/mob/living/scripter
+	var/additional_time
+	var/cooldown // that's not needed, but hey. can stop spam.
+	var/cooldownLEN = 600
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	..()
-	var/admins_number = admins.len
-	if(!admins_number)
-		user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
-		return
 	if(used)
 		user << "The station has already been named."
 		return
+	if(cooldown > world.time)
+		user << "<span class='notice'>The charter is recharging.</span>"
+		return
+	cooldown = world.time + cooldownLEN // six seconds sounds fine, right?
+	var/admins_number = admins.len
+	if(!admins_number)
+		user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
+		additional_time += 600
+		return
 	used = TRUE
-	if(world.time > CHALLENGE_TIME_LIMIT) //5 minutes
+	if(world.time > CHALLENGE_TIME_LIMIT+additional_time) //5 minutes + whatever
 		user << "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now."
 		return
 

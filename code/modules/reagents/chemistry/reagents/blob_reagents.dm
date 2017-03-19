@@ -147,7 +147,7 @@
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BURN)
 	if(M)
-		M.adjustStaminaLoss(0.6*reac_volume)
+		M.adjustStaminaLoss(0.6*reac_volume, 1, DAMAGE_CHEMICAL)
 
 /datum/reagent/blob/energized_fibers/tesla_reaction(obj/effect/blob/B, power)
 	return 0
@@ -229,7 +229,7 @@
 	M.apply_damage(0.5*reac_volume, TOX)
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM)
+	M.adjustToxLoss(1*REM, 1, DAMAGE_CHEMICAL)
 	if(iscarbon(M))
 		var/mob/living/carbon/N = M
 		N.hal_screwyhud = 5 //fully healed, honest
@@ -301,7 +301,7 @@
 		M.reagents.add_reagent("spore", 0.2*reac_volume)
 	M.apply_damage(0.4*reac_volume, TOX)
 	if(M)
-		M.adjustStaminaLoss(0.4*reac_volume)
+		M.adjustStaminaLoss(0.4*reac_volume, 1, DAMAGE_CHEMICAL)
 
 //does brute, fire, and toxin over a few seconds
 /datum/reagent/blob/poisonous_strands
@@ -320,9 +320,9 @@
 		M.reagents.add_reagent("poisonous_strands", 0.12*reac_volume)
 
 /datum/reagent/blob/poisonous_strands/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(1.3*REM)
-	M.adjustFireLoss(1.3*REM)
-	M.adjustToxLoss(1.3*REM)
+	M.adjustBruteLoss(1.3*REM, 1, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(1.3*REM, 1, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1.3*REM, 1, DAMAGE_CHEMICAL)
 	..()
 
 //does oxygen damage, randomly pushes or pulls targets
@@ -439,7 +439,8 @@
 		M.reagents.add_reagent("ice", 0.3*reac_volume)
 	M.apply_damage(0.4*reac_volume, BURN)
 	if(M)
-		M.adjustStaminaLoss(0.3*reac_volume)*/
+		M.adjustStaminaLoss(0.3*reac_volume, 1, DAMAGE_CHEMICAL)
+*/
 
 //does burn damage and EMPs, slightly fragile
 /datum/reagent/blob/electromagnetic_web
@@ -526,7 +527,7 @@
 /datum/reagent/blob/reactive_spines/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	if(M.stat == DEAD || istype(M, /mob/living/simple_animal/hostile/blob))
 		return 0 //the dead, and blob mobs, don't cause reactions
-	M.adjustBruteLoss(0.7*reac_volume)
+	M.adjustBruteLoss(0.7*reac_volume, 1, DAMAGE_CHEMICAL)
 
 /datum/reagent/blob/reactive_spines/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(damage && damage_type == BRUTE && original_health - damage > 0) //is there any damage, is it brute, and will we be alive

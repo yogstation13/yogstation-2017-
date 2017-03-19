@@ -5,6 +5,7 @@
  *		Photos
  *		Photo Albums
  *		AI Photography
+ *		Detective Album
  */
 
 /*
@@ -138,6 +139,20 @@
 	pictures_max = 30
 	pictures_left = 30
 
+/obj/item/weapon/storage/photobook/detective
+	name = "detective's journal"
+	desc = "October 12th, 1985. Tonight, a comedian died in New York. Somebody knows why."
+	can_hold = list(/obj/item/weapon/photo, /obj/item/weapon/hand_labeler, /obj/item/weapon/paper, /obj/item/device/camera)
+	max_w_class = 3
+
+/obj/item/weapon/storage/photobook/detective/New()
+	..()
+	new /obj/item/weapon/hand_labeler/det(src)
+
+/obj/item/weapon/hand_labeler/det
+	name = "detectives crime labeler"
+	desc = "Used to label and categorize investigation files inside of the detective's journal."
+	labels_left = 60
 
 /obj/item/device/camera/siliconcam //camera AI can take pictures with
 	name = "silicon photo camera"

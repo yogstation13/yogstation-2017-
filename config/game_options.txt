@@ -82,18 +82,18 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 
 PROBABILITY TRAITOR         7
 PROBABILITY TRAITORCHAN     7
-PROBABILITY DOUBLE_AGENTS     7
-PROBABILITY NUCLEAR         10
+PROBABILITY DOUBLE_AGENTS     6
+PROBABILITY NUCLEAR         9
 PROBABILITY REVOLUTION         7
 PROBABILITY CULT             10
 PROBABILITY CHANGELING         0
-PROBABILITY WIZARD             10
-PROBABILITY BLOB             10
+PROBABILITY WIZARD             9
+PROBABILITY BLOB             9
 PROBABILITY METEOR             0
-PROBABILITY EXTENDED         0
-PROBABILITY GANG             10
+PROBABILITY EXTENDED         6
+PROBABILITY GANG             9
 PROBABILITY RAGINMAGES         0
-PROBABILITY SHADOWLING         10
+PROBABILITY SHADOWLING         9
 PROBABILITY ABDUCTION         0
 PROBABILITY TRAITORABD        6
 PROBABILITY TRAITORABDCHAN    6
@@ -352,4 +352,4 @@ BOMBCAP 20
 # a less lootfilled or smaller or less round effecting ruin costs less to
 # spawn, while the converse is true. Alter this number to affect the amount
 # of ruins.
-LAVALAND_BUDGET 125
+LAVALAND_BUDGET 60

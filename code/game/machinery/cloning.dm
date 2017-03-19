@@ -185,10 +185,6 @@
 	H.real_name = clonename
 
 	icon_state = "pod_1"
-	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
-	H.Paralyse(4)
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
@@ -213,8 +209,12 @@
 			no_breath_mob = TRUE
 		else
 			no_breath_mob = FALSE
-			
+
 	attempting = FALSE
+	//Get the clone body ready
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)
+	H.Paralyse(4)
 	return TRUE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
@@ -236,18 +236,17 @@
 
 		else if(occupant.cloneloss > (100 - heal_level))
 			occupant.Paralyse(4)
-
 			//Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-(speed_coeff/2), 0)
+			occupant.adjustCloneLoss(-(speed_coeff/2), 0, DAMAGE_CLONING)
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-(speed_coeff/2), 0)
+			occupant.adjustBrainLoss(-(speed_coeff/2), 0, DAMAGE_CLONING)
 
 			// NOBREATH species will take brute damage in crit instead of oxyloss
-			if(no_breath_mob) 
-				occupant.setBruteLoss(0, 0)
+			if(no_breath_mob)
+				occupant.setBruteLoss(0, 0, DAMAGE_CLONING)
 			else
-				occupant.setOxyLoss(0, 0)
+				occupant.setOxyLoss(0, 0, DAMAGE_CLONING)
 
 			occupant.updatehealth() //Update health only once we finish healing, instead of possibly 4 times during the proc
 

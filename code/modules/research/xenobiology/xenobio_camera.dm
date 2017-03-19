@@ -179,3 +179,190 @@
 				qdel(M)
 	else
 		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+
+
+////////////////////////////////////////////////////
+
+
+
+/mob/camera/aiEye/remote/security
+	visible_icon = 1
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "camera_target"
+
+
+/mob/camera/aiEye/remote/security/setLoc(var/t)
+	var/area/new_area = get_area(t)
+	if(new_area && new_area.name != "Space")
+		return ..()
+	else
+		return
+
+/obj/machinery/computer/camera_advanced/security
+	name = "Criminal management console"
+	desc = "A computer used for remotely handling criminals."
+	networks = list("SS13")
+	off_action = new/datum/action/innate/camera_off/security
+	var/datum/action/innate/taze/taze_action = new
+	var/datum/action/innate/cuff/cuff_action = new
+	var/datum/action/innate/arrest/normal/arrest_action = new
+	var/datum/action/innate/arrest/perma/perma_action = new
+
+	icon_screen = "security"
+	icon_keyboard = "security_key"
+
+/obj/machinery/computer/camera_advanced/security/CreateEye()
+	eyeobj = new /mob/camera/aiEye/remote/security()
+	eyeobj.origin = src
+	eyeobj.visible_icon = 1
+	eyeobj.icon = 'icons/obj/abductor.dmi'
+	eyeobj.icon_state = "camera_target"
+	eyeobj.setLoc(src)
+
+/obj/machinery/computer/camera_advanced/security/GrantActions(mob/living/carbon/user)
+	off_action.target = user
+	off_action.Grant(user)
+
+	jump_action.target = user
+	jump_action.Grant(user)
+
+	taze_action.target = src
+	taze_action.Grant(user)
+
+	cuff_action.target = src
+	cuff_action.Grant(user)
+
+	arrest_action.target = src
+	arrest_action.Grant(user)
+
+	perma_action.target = src
+	perma_action.Grant(user)
+
+/datum/action/innate/camera_off/security/Activate()
+	if(!target || !ishuman(target))
+		return
+	var/mob/living/carbon/C = target
+	var/mob/camera/aiEye/remote/security/remote_eye = C.remote_control
+	var/obj/machinery/computer/camera_advanced/security/origin = remote_eye.origin
+	origin.current_user = null
+	origin.jump_action.Remove(C)
+	origin.taze_action.Remove(C)
+	origin.cuff_action.Remove(C)
+	origin.arrest_action.Remove(C)
+	origin.perma_action.Remove(C)
+	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
+	remote_eye.eye_user = null
+	C.reset_perspective(null)
+	if(C.client)
+		C.client.images -= remote_eye.user_image
+		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
+			C.client.images -= chunk.obscured
+	C.remote_control = null
+	C.unset_machine()
+	src.Remove(C)
+
+/datum/action/innate/taze
+	name = "Stun"
+	button_icon_state = "monkey_up"
+
+/datum/action/innate/taze/Activate()
+	if(!target || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/C = owner
+	var/mob/camera/aiEye/remote/security/remote_eye = C.remote_control
+
+	if(cameranet.checkTurfVis(remote_eye.loc))
+		for(var/mob/living/carbon/human/H in remote_eye.loc)
+			//H.visible_message("[H] warps out!")
+			add_logs(C, H, "stunned with a security management console", src)
+			H.apply_effects(5, 5, 0, 0, 0, 5, 0, 0, 0, 0, 0)
+			playsound(H, 'sound/weapons/Genhit.ogg', 50, 1)
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+
+/datum/action/innate/cuff
+	name = "Cuff"
+	button_icon_state = "monkey_up"
+
+/datum/action/innate/cuff/Activate()
+	if(!target || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/C = owner
+	var/mob/camera/aiEye/remote/security/remote_eye = C.remote_control
+
+	if(cameranet.checkTurfVis(remote_eye.loc))
+		for(var/mob/living/carbon/human/H in remote_eye.loc)
+			if(!H.stunned)
+				owner << "<span class='notice'>Target must be stunned to cuff.</span>"
+				continue
+			if(!H.handcuffed)
+				playsound(H.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+				H.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(H)
+				H.update_handcuffed()
+				add_logs(C, H, "handcuffed with a security management console", src)
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+
+/datum/action/innate/arrest
+	var/arrest_type
+
+/datum/action/innate/arrest/proc/extra(mob/living/carbon/user, mob/living/carbon/human/target)
+	return
+
+/datum/action/innate/arrest/normal
+	name = "Arrest"
+	button_icon_state = "monkey_up"
+	arrest_type = "arrest"
+
+/datum/action/innate/arrest/perma
+	name = "Permabrig"
+	button_icon_state = "monkey_up"
+	arrest_type = "perma"
+
+/datum/action/innate/arrest/perma/extra(mob/living/carbon/user, mob/living/carbon/human/target)
+	if(!user || !target)
+		return
+	var/warped = FALSE
+	for(var/obj/item/I in target)
+		if(target.unEquip(I))
+			I.forceMove(user.loc)
+			warped = TRUE
+	target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/orange(target), slot_shoes)
+	target.equip_to_slot_or_del(new /obj/item/clothing/under/rank/prisoner(target), slot_w_uniform)
+	if(warped)
+		user.visible_message("<span class='notice'>Objects warp in at [user]'s feet.</span>", "<span class='notice'>The target's possessions warp in at your feet.</span>")
+
+/datum/action/innate/arrest/Activate()
+	if(!target || !ishuman(owner))
+		return
+	var/mob/living/carbon/human/C = owner
+	var/mob/camera/aiEye/remote/security/remote_eye = C.remote_control
+
+	var/teleloc
+	for(var/obj/effect/landmark/sectele/S in landmarks_list)
+		if(S.arrest_type == arrest_type)
+			teleloc = S.loc
+
+	if(!teleloc)
+		owner << "<span class='notice'>No arrest location has been calibrated, please contact NT technical support.</span>"
+		return
+
+	if(cameranet.checkTurfVis(remote_eye.loc))
+		for(var/mob/living/carbon/human/H in remote_eye.loc)
+			if(!H.handcuffed)
+				owner << "<span class='notice'>Target must be handcuffed to arrest.</span>"
+				continue
+			H.visible_message("[H] warps out!")
+			add_logs(C, H, "[arrest_type]ed with a security management console", src)
+			H.forceMove(teleloc)
+			extra(C, H)
+			H.visible_message("[H] warps in!")
+	else
+		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+
+
+/obj/effect/landmark/sectele
+	var/arrest_type = "arrest"
+
+/obj/effect/landmark/sectele/perma
+	arrest_type = "perma"

@@ -139,10 +139,6 @@ MASS SPECTROMETER
 						user << "<span class='danger'>Unknown harmful microscopic machines detected in subject's bloodstream: Recommend treatment via Electro Magnetic Pulse or Strong Electric Shock immediately!</span>"
 						break
 
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.borer)
-			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
 
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
@@ -167,6 +163,10 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if (M.getBrainLoss() >= 10)
 		user << "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>"
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.borer)
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
 
 	// Organ damage report
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
