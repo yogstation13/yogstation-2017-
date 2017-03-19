@@ -1,0 +1,4 @@
+author: Time-Green
+delete-after: True
+changes: 
+  - bugfix: "Removes a test obj from the uplink"
