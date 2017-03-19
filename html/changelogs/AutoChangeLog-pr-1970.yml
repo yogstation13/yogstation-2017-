@@ -1,0 +1,4 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Observers can examine silicon lawsets by examining them."
