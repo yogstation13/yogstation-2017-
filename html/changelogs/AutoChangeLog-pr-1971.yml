@@ -1,0 +1,5 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - tweak: "Dual Esword has a much lower chance to block things it doesn't already reflect, like stunbatons or floor tiles."
+  - tweak: "Esword cost increased from 6 to 7 telecrystals."
