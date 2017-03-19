@@ -102,8 +102,8 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
+			else if(T.lighting_overlay)
+				if(T.lighting_overlay.invisibility <= M.see_invisible && !T.lighting_overlay.luminosity)
 					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
 						msg = blind_message
 					else
@@ -128,8 +128,8 @@ var/next_mob_id = 0
 				msg = blind_message
 			else
 				continue
-		else if(T.lighting_object)
-			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
+		else if(T.lighting_overlay)
+			if(T.lighting_overlay.invisibility <= M.see_invisible && !T.lighting_overlay.luminosity) //the light object is dark and not invisible to us
 				if(blind_message)
 					msg = blind_message
 				else

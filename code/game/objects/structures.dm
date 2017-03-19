@@ -24,8 +24,6 @@
 /obj/structure/Destroy()
 	if(ticker)
 		cameranet.updateVisibility(src)
-	if(opacity)
-		UpdateAffectingLights()
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()

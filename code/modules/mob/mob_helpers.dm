@@ -436,9 +436,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					A.target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
+						var/old_plane = source.plane
 						source.layer = FLOAT_LAYER
+						source.layer = FLOAT_PLANE
 						A.overlays += source
 						source.layer = old_layer
+						source.plane = old_plane
 					else
 						alert_overlay.layer = FLOAT_LAYER
 						A.overlays += alert_overlay

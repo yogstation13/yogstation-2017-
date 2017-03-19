@@ -385,7 +385,7 @@
 			return -1
 
 	closePortDoors()
-	
+
 	if(istype(S1.loc, /turf/open/space/transit))
 		var/new_movedir = turn(S1.loc.dir, 180)
 		parallax_movedir_in_area(get_area(src), new_movedir)
@@ -451,15 +451,12 @@
 		if(rotation)
 			T1.shuttleRotate(rotation)
 
-		//lighting stuff
-		T1.redraw_lighting()
 		SSair.remove_from_active(T1)
 		T1.CalculateAdjacentTurfs()
 		SSair.add_to_active(T1,1)
 
 		T0.ChangeTurf(turf_type)
 
-		T0.redraw_lighting()
 		SSair.remove_from_active(T0)
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)

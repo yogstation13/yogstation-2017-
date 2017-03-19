@@ -480,7 +480,7 @@ mob/verb/makePAI(var/turf/t in view())
 	card.forceMove(src)
 	card.screen_loc = null
 
-	src.SetLuminosity(2)
+	src.set_light(2)
 	weather_immunities = list() //remove ash immunity in holoform
 
 	icon_state = "[chassis]"
@@ -513,7 +513,7 @@ mob/verb/makePAI(var/turf/t in view())
 	canmove = 0
 	density = 0
 	weather_immunities = list("ash")
-	src.SetLuminosity(0)
+	src.set_light(0)
 	icon_state = "[chassis]"
 
 /mob/living/silicon/pai/verb/fold_up()

@@ -281,9 +281,9 @@
 		return
 
 	if(light_on)
-		AddLuminosity(-6)
+		set_light(-6)
 	else
-		AddLuminosity(6)
+		set_light(6)
 	light_on = !light_on
 	src << "<span class='notice'>You toggle your light [light_on ? "on" : "off"].</span>"
 

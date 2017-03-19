@@ -525,7 +525,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 						user.apply_damage(5, BURN, hitzone)
 						user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
-			user.AddLuminosity(1)
+			set_light(1)
 			START_PROCESSING(SSobj, src)
 		else
 			lit = 0
@@ -537,7 +537,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
-			user.AddLuminosity(-1)
+			set_light(-1)
 			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()
@@ -569,8 +569,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/pickup(mob/user)
 	..()
 	if(lit)
-		SetLuminosity(0)
-		user.AddLuminosity(1)
+		set_light(1)
 	return
 
 
@@ -578,8 +577,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	if(lit)
 		if(user)
-			user.AddLuminosity(-1)
-		SetLuminosity(1)
+			set_light(-1)
+		set_light(1)
 	return
 
 /obj/item/weapon/lighter/is_hot()

@@ -52,8 +52,8 @@ var/list/motion_alert_listeners = list()
 		power_equip = 1
 		power_environ = 1
 
-		if (lighting_use_dynamic != DYNAMIC_LIGHTING_IFSTARLIGHT)
-			lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+		if (dynamic_lighting != DYNAMIC_LIGHTING_IFSTARLIGHT)
+			dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 	..()
 

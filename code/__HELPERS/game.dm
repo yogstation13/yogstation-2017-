@@ -458,3 +458,12 @@
 	var/rx = rand(TRANSITIONEDGE + 1, world.maxx - TRANSITIONEDGE - 2)
 	var/ry = rand(TRANSITIONEDGE + 1, world.maxy - TRANSITIONEDGE - 2)
 	return locate(rx, ry, z)
+
+/proc/GetRedPart(const/hexa)
+	return hex2num(copytext(hexa, 2, 4))
+
+/proc/GetGreenPart(const/hexa)
+	return hex2num(copytext(hexa, 4, 6))
+
+/proc/GetBluePart(const/hexa)
+	return hex2num(copytext(hexa, 6, 8))

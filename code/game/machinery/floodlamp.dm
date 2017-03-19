@@ -31,9 +31,9 @@ obj/machinery/flood_lamp/proc/update_appearance()
 
 obj/machinery/flood_lamp/proc/update_brightness()
 	if(on)
-		SetLuminosity(flashlights.len * 5)
+		set_light(flashlights.len * 5)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 obj/machinery/flood_lamp/attack_hand(mob/living/carbon/user)
 	if(opened && cell && istype(user))
@@ -83,8 +83,8 @@ obj/machinery/flood_lamp/proc/toggle_light()
 		on = 1
 	update_all()
 
-obj/machinery/flood_lamp/get_light_range(radius)
-		return radius // No cap on these things. Intentionally.
+//obj/machinery/flood_lamp/get_light_range(radius)
+//		return radius // No cap on these things. Intentionally.
 
 obj/machinery/flood_lamp/assembled
 	New()

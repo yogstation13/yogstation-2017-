@@ -33,7 +33,7 @@
 	if (!user.emitter_OD)
 		//toggle the overcharge on. the ramping happens in the life tick
 		user.emitter_OD = 1
-		user.AddLuminosity(2) //add some luminosity straight away for obvious benefit
+		user.set_light(2) //add some luminosity straight away for obvious benefit
 		T.visible_message("<span class='notice'>A blinding pulse of light emanates briefly from within [user]'s holographic core, slowly fading until its field is nearly twice as bright as before.</span>")
 	else
 		user.emitter_OD = 0

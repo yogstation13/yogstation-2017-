@@ -85,6 +85,7 @@
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
 	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
+	robot_modules_background.plane = HUD_PLANE
 
 	ident = rand(1, 999)
 	update_icons()
@@ -1108,7 +1109,7 @@
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
-	SetLuminosity(0)
+	set_light(0)
 
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
@@ -1117,7 +1118,7 @@
 		spawn(cooldown) //10 seconds by default, if the source of the deactivation does not keep stat that long.
 			lamp_recharging = 0
 	else
-		AddLuminosity(lamp_intensity)
+		set_light(lamp_intensity)
 
 	if(lamp_button)
 		lamp_button.icon_state = "lamp[lamp_intensity]"

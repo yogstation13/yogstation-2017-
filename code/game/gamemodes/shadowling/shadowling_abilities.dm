@@ -167,7 +167,7 @@
 	else if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/P = I
 		P.fon = 0
-	I.SetLuminosity(0)
+	I.set_light(0)
 	return I.luminosity
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(mob/living/H)
@@ -183,7 +183,7 @@
 		addtimer(D, "fix_light", 600)
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
-	H.SetLuminosity(blacklistLuminosity) //I hate lightcode for making me do it this way
+	H.set_light(blacklistLuminosity) //I hate lightcode for making me do it this way
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets, mob/user = usr)
 	if(!shadowling_check(user))
@@ -198,7 +198,7 @@
 			L.visible_message("<span class='warning'>[L] flickers and falls dark.</span>")
 			L.update(0)
 		for(var/obj/machinery/computer/C in T.contents)
-			C.SetLuminosity(0)
+			C.set_light(0)
 			C.visible_message("<span class='warning'>[C] grows dim, its screen barely readable.</span>")
 		for(var/obj/effect/glowshroom/G in orange(2, user)) //Haha, no, /tg/...if only you experienced the new Shadow Walk
 			G.visible_message("<span class='warning'>[G] withers away!</span>")
@@ -295,14 +295,14 @@
 			spawn(100)
 				F.broken = 0
 			F.update_brightness()
-	I.SetLuminosity(0)
+	I.set_light(0)
 	return I.luminosity
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/proc/extinguishMob(mob/living/H)
 	var/blacklistLuminosity = 0
 	for(var/obj/item/F in H)
 		blacklistLuminosity += extinguishItem(F)
-	H.SetLuminosity(blacklistLuminosity) //I hate lightcode for making me do it this way
+	H.set_light(blacklistLuminosity) //I hate lightcode for making me do it this way
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets,mob/user = usr)
 	if(!shadowling_check(user))

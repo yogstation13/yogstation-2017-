@@ -36,6 +36,7 @@
 	using.icon_state = "swap_1_m"
 	using.screen_loc = ui_swaphand1
 	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	static_inventory += using
 
 	using = new /obj/screen/inventory()
@@ -44,6 +45,7 @@
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
 	using.layer = HUD_LAYER
+	using.plane = HUD_PLANE
 	static_inventory += using
 
 	zone_select = new /obj/screen/zone_sel()
