@@ -1444,6 +1444,7 @@
 #include "code\modules\mob\living\carbon\predator\predator_equipment.dm"
 #include "code\modules\mob\living\carbon\predator\predator_powers.dm"
 #include "code\modules\mob\living\silicon\death.dm"
+#include "code\modules\mob\living\silicon\examine.dm"
 #include "code\modules\mob\living\silicon\laws.dm"
 #include "code\modules\mob\living\silicon\login.dm"
 #include "code\modules\mob\living\silicon\say.dm"
