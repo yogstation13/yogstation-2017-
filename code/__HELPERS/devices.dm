@@ -13,7 +13,7 @@
 		return 1
 	if(istype(O, /obj/item/device/pda))
 		var/obj/item/device/pda/A = O
-		if(A.scanmode == PDA_SCAN_MEDICAL)
+		if(A.scanmode == PDA_SCAN_MEDICAL_HEALTH || A.scanmode == PDA_SCAN_MEDICAL_REAGENT)
 			return 1
 	return 0
 

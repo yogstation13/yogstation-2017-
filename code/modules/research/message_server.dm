@@ -285,6 +285,31 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","PDA-[pda_msg_amt]")
 	feedback_add_details("radio_usage","RC-[rc_msg_amt]")
 
+	for (var/mob/living/silicon/S in mob_list)
+		var/list/AI = list()
+
+		AI["typepath"] = S.type
+		AI["lawchanges"] = S.law_change_counter
+		AI["name"] = S.name
+		AI["icon_state"] = S.icon_state
+
+		if(S.laws)
+			AI["laws"] = S.laws.get_laws()
+
+		if(istype(S, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/R = S
+			if(R.connected_ai)
+				AI["slaved_to"] = R.connected_ai.name
+
+		if(S.mind)
+			AI["ckey"] = S.mind.key
+			if(S.stat != 2)
+				AI["survived"] = 1
+			else
+				AI["survived"] = 0
+
+		feedback_add_details("roundend_silicons", json_encode(AI))
+
 
 	feedback_set_details("round_end","[time2text(world.realtime)]") //This one MUST be the last one that gets set.
 

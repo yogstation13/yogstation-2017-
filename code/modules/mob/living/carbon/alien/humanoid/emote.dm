@@ -1,5 +1,11 @@
 /mob/living/carbon/alien/humanoid/emote(act,m_type=1,message = null)
 
+	if((world.time - last_emote) < emote_cooldown)
+		return
+	last_emote = world.time
+
+
+
 	var/param = null
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)

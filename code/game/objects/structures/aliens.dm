@@ -168,9 +168,10 @@
 	var/obj/structure/alien/weeds/node/linked_node = null
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
-
+	var/blacklisted_turfs
 
 /obj/structure/alien/weeds/New(pos, node)
+	blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/floor/plating/lava))
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
 	..()
@@ -183,7 +184,7 @@
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
-	if(istype(loc, /turf/open/space))
+	if(is_type_in_typecache(loc, blacklisted_turfs))
 		qdel(src)
 		return
 	spawn(rand(150, 200))
@@ -198,7 +199,7 @@
 	set background = BACKGROUND_ENABLED
 	var/turf/U = get_turf(src)
 
-	if(istype(U, /turf/open/space))
+	if(is_type_in_typecache(U, blacklisted_turfs))
 		qdel(src)
 		return
 
@@ -207,7 +208,7 @@
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-		if (locate(/obj/structure/alien/weeds) in T || istype(T, /turf/open/space))
+		if (locate(/obj/structure/alien/weeds) in T || is_type_in_typecache(T, blacklisted_turfs))
 			continue
 
 		new /obj/structure/alien/weeds(T, linked_node)
@@ -257,12 +258,14 @@
 	density = 0
 	anchored = 1
 	health = 100
-	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
+	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
+	var/hive_faction
 
 
 /obj/structure/alien/egg/New()
-	new /obj/item/clothing/mask/facehugger(src)
+	var/obj/item/clothing/mask/facehugger/facehugger = new /obj/item/clothing/mask/facehugger(src)
+	facehugger.hive_faction = hive_faction
 	..()
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()

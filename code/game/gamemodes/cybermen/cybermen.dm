@@ -34,7 +34,7 @@ var/datum/cyberman_network/cyberman_network
 	#endif
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Prison Officer")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	prob_traitor_ai = 18
 	//yogstat_name = "cybermen"
 
@@ -236,7 +236,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/New()
 	cyberman_network = src
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	generate_cybermen_objective(1)//there must always be an objective or it will cause runtimes.
 	message_admins("The Cyberman Network has been initialized.")
 

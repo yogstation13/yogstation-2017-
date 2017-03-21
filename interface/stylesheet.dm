@@ -114,11 +114,14 @@ h1.alert, h2.alert		{color: #000000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .borer            		{color: #804000;}
 
+.ashwalker				{color: #00ff00;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
+.pheromone				{color: #3b2769;}
 
 .command_headset       {font-weight: bold; font-size: 3;}
 .big					{font-size: 3;}

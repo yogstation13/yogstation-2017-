@@ -155,3 +155,22 @@
 	suffix = "way_home.dmm"
 	name = "Salvation"
 	description = "In the darkest times, we will find our way home."
+
+
+/datum/map_template/ruin/space/wizard_academy
+	id = "wizard-academy"
+	suffix = "Academy.dmm"
+	name = "Wizard Academy"
+	description = "The Wizard Federation has desginated a hectic but \
+		well-isolated space station to house wizards in training. \
+		Given the plethora of valuable, magical equipment hidden within, \
+		it is incredibly well-hidden, to the point where no documentation \
+		of the area exists in any record. After all, it's not like \
+		some doofus with an EVA suit and jetpack can just waltz around \
+		in space and find it..."
+
+/datum/map_template/ruin/space/hippie_shuttle
+	id = "hippie_shuttle"
+	suffix = "hippie_shuttle"
+	name= "Hippie Shuttle"
+	description = "These hippies went a little too far out..."

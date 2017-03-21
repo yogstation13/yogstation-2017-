@@ -31,6 +31,13 @@
 
 /mob/living/carbon/alien/humanoid/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
+		if(user.dna.species.id == "abomination")
+			adjustBruteLoss(40)
+			visible_message("<span class='danger'>[user] tears into [src]!</span>")
+			playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+			if(mob_size < MOB_SIZE_LARGE)
+				Paralyse(1)
+			return 1
 		..(user, 1)
 		adjustBruteLoss(15)
 		var/hitverb = "punched"
@@ -163,11 +170,13 @@
 	..()
 
 //For alien evolution/promotion procs. Checks for
-proc/alien_type_present(var/alienpath)
+/proc/alien_type_present(var/alienpath, hive_faction)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
+			continue
+		if(A.hive_faction != hive_faction)
 			continue
 		return 1
 	return 0

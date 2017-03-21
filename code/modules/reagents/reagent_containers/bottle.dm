@@ -336,3 +336,34 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/weapon/reagent_containers/glass/bottle/drugs
+	name = "Bottle of drugs"
+	desc = "A bottle containing Space Drugs."
+	icon_state = "bottle3"
+	list_reagents = list("space_drugs" = 10)
+
+//self refilling bottles
+
+/obj/item/weapon/reagent_containers/glass/bottle/self_fill
+	name = "self-refilling bottle"
+	desc = "You can say with certainty that this is half-full."
+	var/randomchem = null
+	var/fillrate = 1
+	var/pickable_chems = list("synaptizine","oxandrolone","pen_acid","blood","antitoxin","ephedrine","earthsblood","sal_acid","amatoxin","toxin","tirizene","neurotoxin2","morphine","heparin")
+
+/obj/item/weapon/reagent_containers/glass/bottle/self_fill/New()
+	..()
+	randomchem = pick(pickable_chems)
+	reagents.add_reagent(randomchem, volume)//the bottle starts filled with the reagent
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/glass/bottle/self_fill/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/reagent_containers/glass/bottle/self_fill/process()
+	if(reagents.total_volume <= volume)
+		reagents.add_reagent(randomchem, fillrate)
+		update_icon()
+	return 1

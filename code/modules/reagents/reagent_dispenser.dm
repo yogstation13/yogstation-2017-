@@ -83,6 +83,7 @@
 
 /obj/structure/reagent_dispensers/watertank/high/New()
 	..()
+	create_reagents(100000)
 	reagents.add_reagent("water",100000)
 
 /obj/structure/reagent_dispensers/fueltank

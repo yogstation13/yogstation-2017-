@@ -1,16 +1,26 @@
-/mob/living/proc/alien_talk(message, shown_name = name)
+/mob/living/proc/alien_talk(message, shown_name = name, obj/item/organ/alien/hivenode/speakerNode)
 	log_say("[key_name(src)] : [message]")
 	message = trim(message)
-	if(!message) return
-
+	if(!message)
+		return
 	var/message_a = say_quote(message, get_spans())
 	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/S in player_list)
 		if(!S.stat && S.hivecheck())
+			if(speakerNode && iscarbon(S))
+				var/mob/living/carbon/C = S
+				var/obj/item/organ/alien/hivenode/N = C.getorgan(/obj/item/organ/alien/hivenode)
+				if(N && (N.hive_faction != speakerNode.hive_faction))
+					continue
 			S << rendered
 		if(S in dead_mob_list)
 			var/link = FOLLOW_LINK(S, src)
 			S << "[link] [rendered]"
+
+/mob/living/carbon/alien_talk(message, shown_name = name, obj/item/organ/alien/hivenode/speakerNode)
+	if(!speakerNode)
+		speakerNode = src.getorgan(/obj/item/organ/alien/hivenode)
+	..(message, shown_name, speakerNode)
 
 /mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
 	shown_name = "<FONT size = 3>[shown_name]</FONT>"

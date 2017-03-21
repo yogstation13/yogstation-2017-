@@ -1154,8 +1154,9 @@
 /turf/closed/indestructible/splashscreen,
 /area/start)
 "ds" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -1181,8 +1182,9 @@
 /turf/open/floor/plating/airless,
 /area/centcom/evac)
 "dw" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -1342,14 +1344,16 @@
 /turf/open/floor/plasteel/shuttle,
 /area/centcom/evac)
 "dU" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/centcom/evac)
 "dV" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -2641,9 +2645,6 @@
 	},
 /area/centcom/supply)
 "hU" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
@@ -2696,6 +2697,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 /turf/open/floor/plasteel/green/side{
 	dir = 5
 	},
@@ -2899,24 +2901,26 @@
 	},
 /area/centcom/evac)
 "iI" = (
-/obj/structure/chair{
-	dir = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/open/floor/plasteel/green/side,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/holofloor/grass,
 /area/centcom/evac)
 "iJ" = (
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iK" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
-/obj/item/toy/katana,
-/turf/open/floor/plasteel/green/side,
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/holofloor/grass,
 /area/centcom/evac)
 "iL" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/crayons,
 /obj/item/toy/sword,
+/obj/item/toy/katana,
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iM" = (
@@ -5659,11 +5663,11 @@
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/ctf)
 "rf" = (
-/obj/item/weapon/twohanded/required/ctf/blue,
+/obj/item/weapon/twohanded/ctf/blue,
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/ctf)
 "rg" = (
-/obj/item/weapon/twohanded/required/ctf/red,
+/obj/item/weapon/twohanded/ctf/red,
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/ctf)
 "rh" = (
@@ -6049,19 +6053,142 @@
 	dir = 8
 	},
 /area/centcom/control)
-"si" = (
-/mob/living/simple_animal/slaughter/laughter,
-/turf/open/floor/grass,
-/area/centcom/control)
+"sg" = (
+/obj/item/weapon/banner,
+/turf/open/floor/plasteel,
+/area/centcom/evac)
 "sh" = (
 /obj/item/weapon/banner,
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
 	},
 /area/centcom/evac)
-"sg" = (
-/obj/item/weapon/banner,
-/turf/open/floor/plasteel,
+"si" = (
+/mob/living/simple_animal/slaughter/laughter,
+/turf/open/floor/grass,
+/area/centcom/control)
+"sj" = (
+/turf/closed/indestructible/riveted,
+/area/krampusbag)
+"sk" = (
+/turf/open/floor/oldshuttle,
+/area/krampusbag)
+"sl" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sm" = (
+/obj/effect/landmark{
+	name = "KrampusBag"
+	},
+/turf/open/floor/oldshuttle,
+/area/krampusbag)
+"sn" = (
+/obj/effect/glowshroom,
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"so" = (
+/obj/structure/table,
+/obj/effect/glowshroom,
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"sp" = (
+/turf/closed/indestructible/riveted,
+/area/krampusworkshop)
+"sq" = (
+/turf/closed/indestructible/rock/snow,
+/area/krampusworkshop)
+"sr" = (
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"ss" = (
+/obj/structure/table,
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"st" = (
+/turf/open/floor/wood{
+	tag = "icon-wood-broken4";
+	icon_state = "wood-broken4"
+	},
+/area/krampusworkshop)
+"su" = (
+/obj/effect/landmark{
+	name = "KrampShip"
+	},
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"sv" = (
+/turf/open/floor/wood{
+	tag = "icon-wood-broken6";
+	icon_state = "wood-broken6"
+	},
+/area/krampusworkshop)
+"sw" = (
+/obj/item/coalbell,
+/turf/open/floor/oldshuttle,
+/area/krampusbag)
+"sx" = (
+/obj/structure/table,
+/obj/item/toy/figure/cursed,
+/obj/item/toy/figure/cursed,
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"sy" = (
+/obj/structure/table,
+/obj/effect/glowshroom/single,
+/turf/open/floor/wood,
+/area/krampusworkshop)
+"sE" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sD" = (
+/obj/structure/arc,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sB" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sA" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sz" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/holofloor/grass,
 /area/centcom/evac)
 
 (1,1,1) = {"
@@ -7055,18 +7182,18 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
 ab
 ab
 ab
@@ -7312,18 +7439,18 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sp
 ab
 ab
 ab
@@ -7559,28 +7686,28 @@ ab
 ab
 ab
 ab
+sj
+sj
+sj
+sj
+sj
+sj
+sj
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sq
+sp
 ab
 ab
 ab
@@ -7816,28 +7943,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sk
+sk
+sk
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sr
+sr
+sn
+sr
+sr
+sv
+sp
+sq
+sp
 ab
 ab
 ab
@@ -8073,28 +8200,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sk
+sk
+sk
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sx
+sx
+su
+ss
+ss
+ss
+sp
+sq
+sp
 ab
 ab
 ab
@@ -8330,28 +8457,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sk
+sk
+sk
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sr
+sr
+st
+sr
+st
+sr
+sp
+sq
+sp
 ab
 ab
 ab
@@ -8587,28 +8714,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sm
+sk
+sw
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sx
+sx
+sr
+ss
+so
+ss
+sp
+sq
+sp
 ab
 ab
 ab
@@ -8844,28 +8971,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sk
+sk
+sk
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sr
+sr
+sr
+sr
+sr
+sr
+sp
+sq
+sp
 ab
 ab
 ab
@@ -9101,28 +9228,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sk
+sk
+sk
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sx
+sx
+sr
+ss
+ss
+sy
+sp
+sq
+sp
 ab
 ab
 ab
@@ -9358,28 +9485,28 @@ ab
 ab
 ab
 ab
+sj
+sk
+sk
+sk
+sk
+sk
+sk
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sn
+st
+sr
+sr
+sr
+sr
+sp
+sq
+sp
 ab
 ab
 ab
@@ -9615,28 +9742,28 @@ ab
 ab
 ab
 ab
+sj
+sj
+sj
+sj
+sj
+sj
+sj
+sj
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sq
+sp
 ab
 ab
 ab
@@ -9882,18 +10009,18 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sq
+sp
 ab
 ab
 ab
@@ -10139,18 +10266,18 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
+sp
 ab
 ab
 ab
@@ -41692,8 +41819,8 @@ gK
 gK
 gK
 gK
-gK
-gK
+sz
+sC
 iI
 fN
 ab
@@ -41949,9 +42076,9 @@ gK
 gK
 gK
 gK
-gK
-gK
-iI
+sA
+sD
+iK
 fN
 ab
 ab
@@ -42206,9 +42333,9 @@ gK
 gK
 gK
 gK
-gK
-gK
-iI
+sB
+sE
+sl
 fN
 ab
 ab
@@ -42465,7 +42592,7 @@ gK
 gK
 gK
 gK
-gt
+iJ
 fN
 ab
 ab
@@ -42722,7 +42849,7 @@ gK
 hV
 ib
 gK
-iK
+gt
 fN
 ab
 ab

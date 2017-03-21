@@ -5,13 +5,14 @@
 
 	if(victim)
 		src << "<span class='warning'>You already have a host! leave this one if you want a new one.</span>"
+		return
 
 	if(stat == DEAD)
 		return
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/H in view(1,src))
-		if(H!=src && Adjacent(H))
+		if(H != src && Adjacent(H))
 			choices += H
 
 	var/mob/living/carbon/human/H = input(src,"Who do you wish to infect?") in null|choices
@@ -23,7 +24,7 @@
 
 	if(CanInfect(H))
 		src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
-		src.layer = MOB_LAYER
+		layer = MOB_LAYER
 		if(!do_mob(src, H, 30))
 			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
 			return
@@ -36,11 +37,32 @@
 	if(!Adjacent(H))
 		return 0
 
+	if(!checkStrength())
+		return 0
+
 	if(stat != CONSCIOUS)
 		src << "<span class='warning'>I must be conscious to do this...</span>"
 		return 0
 
-	return 1
+	if(H.mind.devilinfo)
+		src << "<span class='warning'>This being has a strange presence, it would be unwise to enter their body."
+		return 0
+
+	if(isshadow(H))
+		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
+		return 0
+
+	if(!H.mind.active)
+		src << "<span class='warning'>[H] does not have an active mind.</span>"
+		return 0
+
+	var/unprotected = TRUE
+
+	if((H.wear_suit && (H.wear_suit.flags & THICKMATERIAL)) && (H.head && (H.head.flags & THICKMATERIAL)))
+		unprotected = FALSE
+		src << "<span class='warning'>[H] is wearing protective clothing! We can't get through!</span>"
+
+	return unprotected
 
 /mob/living/simple_animal/borer/verb/secrete_chemicals()
 	set category = "Borer"
@@ -57,6 +79,9 @@
 	if(docile)
 		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
 		return
+
+	if(!checkStrength())
+		return 0
 
 	var content = ""
 	content += "<p>Chemicals: <span id='chemicals'>[chemicals]</span></p>"
@@ -181,8 +206,8 @@
 		if(victim.mind)
 			host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
 			host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
-
 		leave_victim()
+
 
 
 /mob/living/simple_animal/borer/verb/jumpstart()
@@ -201,6 +226,9 @@
 	if(chemicals < 250)
 		src << "<span class='warning'>You need 250 chemicals to use this!</span>"
 		return
+
+	if(!checkStrength())
+		return 0
 
 	if(victim.stat == DEAD)
 		dead_mob_list -= victim
@@ -254,6 +282,11 @@
 		src << "<span class='warning'>It's too soon to use that!</span>"
 		return
 
+	if(!checkStrength())
+		return 0
+	if(client.prefs.afreeze)
+		src << "<span class='warning'>You are frozen by an administrator.</span>"
+		return
 
 	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
 
@@ -336,6 +369,9 @@
 		src << "<span class='warning'>You need 75 chems to punish your host.</span>"
 		return
 
+	if(!checkStrength())
+		return 0
+
 	var/punishment = input("Select a punishment:.", "Punish") as null|anything in list("Blindness","Deafness","Stun")
 
 	if(!punishment)
@@ -378,6 +414,7 @@ mob/living/carbon/proc/release_control()
 	set category = "Borer"
 	set name = "Reproduce"
 	set desc = "Vomit out your younglings."
+	var/reproducing = 0 //l-lewd
 
 	if(istype(src, /mob/living/carbon/brain))
 		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
@@ -385,25 +422,29 @@ mob/living/carbon/proc/release_control()
 	if(!borer)
 		return
 
+	if(reproducing)
+		src << "<span class='warning'>We are already reproducing.</span>"
+		return
+
 	if(borer.chemicals >= 100)
-		var/list/candidates = get_candidates(ROLE_ALIEN, ALIEN_AFK_BRACKET)
-		for(var/client/C in candidates)
-			if(jobban_isbanned(C.mob, "borer") || !(C.prefs.toggles & MIDROUND_ANTAG))
-				candidates -= C
-		if(!candidates.len)
+		src << "<span class='notice'>We prepare our host for the creation of a new borer.</span>"
+		reproducing = 1
+		var/list/Bcandidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 100) // we use this to FIND candidates. not necessarily use them.
+		if(!Bcandidates.len)
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
-		var/client/C = pick(candidates)
 
 		borer.chemicals -= 100
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
-		newborer.transfer_personality(C)
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
+		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
+		var/mob/dead/observer/O = pick(Bcandidates)
+		newborer.key = O.key
+		reproducing = 0
 	else
 		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
 		return

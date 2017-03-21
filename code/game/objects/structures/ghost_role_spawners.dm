@@ -10,20 +10,26 @@
 	density = TRUE
 	roundstart = FALSE
 	death = FALSE
-	mob_species = /datum/species/pod
+	mob_species = /datum/species/plant
+	uniform = /obj/item/clothing/under/rank/hydroponics
+	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	mask = /obj/item/clothing/mask/breath //no suffocating because of breach
+	belt = /obj/item/weapon/pickaxe/mini //finally they can fucking leave if needed
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a sentient ecosystem - an example of the mastery over life that your creators possessed. Your masters, benevolent as they were, created uncounted \
 	seed vaults and spread them across the universe to every planet they could chart. You are in one such seed vault. Your goal is to cultivate and spread life wherever it will go while waiting \
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
+		H.gender = pick(MALE, FEMALE)
+		if(H.gender == MALE)
+			H.real_name = pick(first_m_plant_names)
+		else
+			H.real_name = pick(first_f_plant_names)
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
-
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
 	..()
@@ -36,28 +42,56 @@
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
 	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>, and is lead by The Chieftain. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>"
+	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
+	new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
 		H.update_body()
+		H.languages_spoken = ASHWALKER
+		H.languages_understood = ASHWALKER
+		H.weather_immunities |= "ash"
+	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+	ashhud.join_hud(new_spawn)
 
 /obj/effect/mob_spawn/human/ash_walker/New()
 	..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+
+/obj/effect/mob_spawn/human/ash_walker/chief
+	name = "chief ashwalker egg"
+	icon_state = "hero_egg"
+	mob_species = /datum/species/lizard/ashwalker/chieftain
+	helmet = /obj/item/clothing/head/helmet/gladiator
+	var/mob/living/simple_animal/hostile/spawner/ash_walker/nest
+
+/obj/effect/mob_spawn/human/ash_walker/chief/special(mob/living/new_spawn)
+	..()
+	if(ishuman(new_spawn))
+		var/mob/living/carbon/human/H = new_spawn
+		H.languages_spoken |= HUMAN
+		H.languages_understood |= HUMAN
+	if(nest)
+		nest.chief = new_spawn
+	if(new_spawn.client)
+		new_spawn.client.images += image('icons/mob/hud.dmi',new_spawn,"hudchieftain")
+	var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
+	ashhud.join_hud(new_spawn)
+	ticker.mode.set_antag_hud(new_spawn, "hudchieftain")
+	new_spawn <<"<b>You are the chieftain of the ashwalkers. You are the only one who can use complicated machinery and speak to outsiders-Lead your tribe, for better or for worse.</b>"
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
@@ -104,6 +138,7 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/golem/New()
 	..()
@@ -160,6 +195,7 @@
 	flavour_text = "<font size=3><b>Y</b></font><b>ou've been stranded in this godless prison of a planet for longer than you can remember. Each day you barely scrape by, and between the terrible \
 	conditions of your makeshift shelter, the hostile creatures, and the ash drakes swooping down from the cloudless skies, all you can wish for is the feel of soft grass between your toes and \
 	the fresh air of Earth. These thoughts are dispelled by yet another recollection of how you got here... "
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/hermit/New()
 	var/arrpee = rand(1,4)
@@ -206,6 +242,7 @@
 	flavour_text = "<font size=3><b>W</b></font><b>hat...? Where are you? Where are the others? This is still the animal hospital - you should know, you've been an intern here for weeks - but \
 	everyone's gone. One of the cats scratched you just a few minutes ago. That's why you were in the pod - to heal the scratch. The scabs are still fresh; you see them right now. So where is \
 	everyone? Where did they go? What happened to the hospital? And is that <i>smoke</i> you smell? You need to find someone else. Maybe they can tell you what happened.</b>"
+	jobban_type = "lavaland"
 
 //Prisoner containment sleeper: Spawns in crashed prison ships in lavaland. Ghosts become escaped prisoners and are advised to find a way out of the mess they've gotten themselves into.
 /obj/effect/mob_spawn/human/prisoner_transport
@@ -218,20 +255,26 @@
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
+	pocket2 = /obj/item/device/flashlight
 	roundstart = FALSE
 	death = FALSE
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you. You remember that you were convicted of "
+	var/crime
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
 	L.real_name = "NTP #LL-0[rand(111,999)]"
 	L.name = L.real_name
+	L.add_memory("You were convicted of [crime].")
 
 /obj/effect/mob_spawn/human/prisoner_transport/New()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
-	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
-	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
+	crime = pick(crimes)
+	flavour_text += "[crime]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
+	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")] by whatever means necessary.</b>."
+	objectives = "Find a way to rehabilitate yourself, or choose to commit [crime] and nothing higher."
 	..()
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()

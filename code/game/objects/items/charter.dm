@@ -1,24 +1,33 @@
 /obj/item/station_charter
 	name = "station charter"
 	icon = 'icons/obj/wizard.dmi'
+	attack_verb = list("renamed", "charted", "named")
 	icon_state = "scroll2"
 	desc = "An official document entrusting the governance of the station and surrounding space to the Captain. Despite the fact it looks like a scroll, it actually has highly powerful electronic bindings attached which transmits information back and forth to Centcomm."
 	var/used = FALSE
 	var/pending_name
 	var/admin_controlled
 	var/mob/living/scripter
+	var/additional_time
+	var/cooldown // that's not needed, but hey. can stop spam.
+	var/cooldownLEN = 600
 
 /obj/item/station_charter/attack_self(mob/living/user)
 	..()
-	var/admins_number = admins.len
-	if(!admins_number)
-		user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
-		return
 	if(used)
 		user << "The station has already been named."
 		return
+	if(cooldown > world.time)
+		user << "<span class='notice'>The charter is recharging.</span>"
+		return
+	cooldown = world.time + cooldownLEN // six seconds sounds fine, right?
+	var/admins_number = admins.len
+	if(!admins_number)
+		user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
+		additional_time += 600
+		return
 	used = TRUE
-	if(world.time > CHALLENGE_TIME_LIMIT) //5 minutes
+	if(world.time > CHALLENGE_TIME_LIMIT+additional_time) //5 minutes + whatever
 		user << "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now."
 		return
 
@@ -58,6 +67,7 @@
 				log_game("[scripter] ([bearer]) has changed the station's name to [pending_name]")
 				world.name = pending_name
 				station_name = pending_name
+				feedback_set_details("station_name","[pending_name]")
 				minor_announce("[scripter.real_name] has designated your station as [world.name]", "Captain's Charter", 0)
 				admin_controlled = TRUE
 

@@ -206,7 +206,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"pda_refresh.png"		= 'icons/pda_icons/pda_refresh.png',
 		"pda_scanner.png"		= 'icons/pda_icons/pda_scanner.png',
 		"pda_signaler.png"		= 'icons/pda_icons/pda_signaler.png',
-		"pda_status.png"		= 'icons/pda_icons/pda_status.png'
+		"pda_status.png"		= 'icons/pda_icons/pda_status.png',
+		"pda_botany.png"		= 'icons/pda_icons/pda_botany.png'
 	)
 
 /datum/asset/simple/paper

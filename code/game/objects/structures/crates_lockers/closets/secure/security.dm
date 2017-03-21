@@ -98,6 +98,7 @@
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/weapon/storage/box/emps(src)
 	new /obj/item/weapon/storage/box/zipties(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
@@ -297,3 +298,5 @@
 	new /obj/item/clothing/head/bombCollar(src)
 	new /obj/item/device/collarDetonator(src)
 	new /obj/item/weapon/paper/bombcollars(src)
+	new /obj/item/weapon/implantcase/bombcollar(src)
+	new /obj/item/weapon/implanter(src)

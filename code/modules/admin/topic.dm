@@ -138,6 +138,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a cyberman. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a cyberman.")
+			if("18")
+				if(src.makeClockCult())
+					message_admins("[key_name(usr)] started a clockwork cult.")
+					log_admin("[key_name(usr)] started a clockwork cult.")
+				else
+					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to start a clockwork cult.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -442,6 +449,46 @@
 			if("shade")
 				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
+	else if(href_list["cult_sac_target"])
+		if(!ticker || !ticker.mode)
+			return
+		if(!istype(ticker.mode, /datum/game_mode/cult))
+			usr << "<span class='warning'>The gamemode is not cult</span>"
+			return
+		var/datum/game_mode/cult/C = ticker.mode
+		var/list/candidates = ticker.mode.get_playing_crewmembers_for_role()
+		var/list/minds = list()
+		var/list/numnames = list()
+		for(var/V in candidates)
+			if(!V)
+				continue
+			var/mob/living/carbon/human/H = V
+			if(H.mind)
+				var/name = H.mind.name
+				var/n = numnames[name]
+				if(n)
+					name += "([n])"
+					numnames[name]++
+				else
+					numnames[name] = 1
+				if(H.mind in ticker.mode.cult)
+					name += "(CULTIST)"
+				if(H.mind == C.sacrifice_target)
+					name += "(CURRENT)"
+				if(H.stat == DEAD)
+					name += "(DEAD)"
+				minds[name] = H.mind
+		var/selected = input(usr, "Select new Cult Sac Target","Sac Target") as null|anything in minds
+		if(!selected)
+			return
+		C.cult_objectives |= "sacrifice"
+		C.sacrifice_target = minds[selected]
+		for(var/V in ticker.mode.cult)
+			if(!V)
+				continue
+			var/datum/mind/M = V
+			M.wipe_memory()
+			C.memorize_cult_objectives(M)
 
 	/////////////////////////////////////new ban stuff
 	else if(href_list["unbanf"])
@@ -790,9 +837,21 @@
 
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td></tr><tr align='center'>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td></tr><tr align='center'>"
+
+		//Lavaland Roles
+		if(jobban_isbanned(M, "lavaland"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>[replacetext("Lavaland Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>[replacetext("Lavaland Roles", " ", "&nbsp")]</a></td>"
+
+		//Xenobio (sentience potions/golems/etc._
+		if(jobban_isbanned(M, "xenobio"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'><font color=red>[replacetext("Xenobio Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'>[replacetext("Xenobio Roles", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -952,7 +1011,7 @@
 						continue
 					joblist += temp.title
 			if("ghostroles")
-				joblist += list("pAI", "posibrain", "drone", "deathsquad")
+				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland", "xenobio")
 			else
 				joblist += href_list["jobban3"]
 
@@ -1514,7 +1573,7 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Observer.)")
 
 	else if(href_list["revive"])
-		if(!check_rights(R_REJUVINATE))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/living/L = locate(href_list["revive"])
@@ -1565,12 +1624,11 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
+		var/mob/M = locate(href_list["makeblob"])
+		if(!M)
 			return
 
-		usr.client.cmd_admin_blobize(H)
+		usr.client.cmd_admin_blobize(M)
 
 
 	else if(href_list["makerobot"])
@@ -2365,6 +2423,11 @@
 		message_admins("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 		log_admin("[key_name_admin(usr)] deleted all instances of the stuxnet virus.")
 
+	else if(href_list["borer"])
+		if(!check_rights(R_ADMIN))
+			return
+		borer_panel()
+
 	else if(href_list["cybermen"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2394,7 +2457,7 @@
 			if("11")
 				set_cybermen_queued_objective()
 		cybermen_panel()//refresh the page.
-	
+
 	else if(href_list["adminserverrestart"])
 		if(!check_rights(R_TICKET))
 			usr << "Clients without ticket administration rights cannot use this command. Get out of here, coder!"

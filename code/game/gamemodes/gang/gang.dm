@@ -23,7 +23,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	name = "gang war"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Prison Officer")
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 2
@@ -289,7 +289,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 /datum/gang_points/New()
 	next_point_time = world.time + next_point_interval
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any

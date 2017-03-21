@@ -4,7 +4,10 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
+	var/oldkey = ckey
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	if(ckey != oldkey)
+		return
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -116,11 +119,10 @@
 	set category = "pAI Commands"
 	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
 	set name = "pAI Suicide"
-	var/answer = input("REALLY kill yourself? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
+	var/answer = input("REALLY turn off your own life processes? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
 	if(answer == "Yes")
 		card.removePersonality()
-		var/turf/T = get_turf(src.loc)
-		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", "<span class='notice'>[src] bleeps electronically.</span>")
+		did_suicide = 1
 		death(0)
 	else
 		src << "Aborting suicide attempt."

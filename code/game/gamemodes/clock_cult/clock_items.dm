@@ -58,16 +58,16 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/clockwork/slab/process()
 	if(!produces_components)
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 		return
 	if(production_time > world.time)
 		return
@@ -446,10 +446,10 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/clothing/glasses/wraith_spectacles/process()
@@ -809,12 +809,12 @@
 		var/mob/living/silicon/S = target
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(25)
+			S.adjustFireLoss(25, 1, DAMAGE_MAGIC)
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
 		if(M.stat != DEAD)
 			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
-			M.adjustFireLoss(10)
+			M.adjustFireLoss(10, 1, DAMAGE_MAGIC)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)
@@ -957,8 +957,7 @@
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
 	"<span class='brass'>You extract [H]'s consciousness from their body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
-	B.Remove(H)
-	qdel(B)
+	B.Remove(H, 1, 1)
 	H.update_hair()
 
 /obj/item/clockwork/daemon_shell
@@ -990,11 +989,11 @@
 
 /obj/item/clockwork/tinkerers_daemon/New()
 	..()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	clockwork_daemons++
 
 /obj/item/clockwork/tinkerers_daemon/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	clockwork_daemons--
 	return ..()
 

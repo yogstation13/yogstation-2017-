@@ -329,14 +329,28 @@
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
-		user << "You take a bite of the [src.name]. Delicious!"
-		var/eaten = use_charges(5)
-		var/fraction = min(eaten / reagents.total_volume, 1)
-		reagents.reaction(M, INGEST, fraction * volume_multiplier)
-		reagents.trans_to(M, eaten, volume_multiplier)
-		// check_empty() is called during afterattack
+		user << "<span class='notice'>You take a bite of the [src.name]. Delicious!</span>"
+		eatcrayon(M, user)
+	if(edible && (M != user))
+		if(istype(M, /mob/living/carbon/human))
+			user << "<span class='notice'>You start feeding [M.name] the [src.name]</span>"
+			M << "<span class='warning'>[user.name] is feeding you the [src.name]!</span>"
+			if(do_after(user, 30, target = M))
+				M.visible_message("<span class='notice'>[user.name] feeds [M.name] the [src.name]. Delicious!</span>")
+				eatcrayon(M, user)
+		else
+			..()
+
 	else
 		..()
+
+/obj/item/toy/crayon/proc/eatcrayon(mob/M, mob/user)
+	var/eaten = use_charges(5)
+	var/fraction = min(eaten / reagents.total_volume, 1)
+	reagents.reaction(M, INGEST, fraction * volume_multiplier)
+	reagents.trans_to(M, eaten, volume_multiplier)
+	// check_empty() is called during afterattack
+	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 
 /obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target)
 	// Check area validity.

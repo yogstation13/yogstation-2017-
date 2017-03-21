@@ -329,6 +329,7 @@
 	var/list/linkedCollars = list()
 	var/info
 
+
 /obj/item/device/collarDetonator/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/clothing/head/bombCollar))
 		var/obj/item/clothing/head/bombCollar/C = W
@@ -349,6 +350,9 @@
 	if(!ishuman(user))
 		user << "<span class='warning'>You aren't sure how to use this...</span>"
 		return
+	for(var/obj/item/weapon/implant/bombcollar/I in user.contents)
+		I.linkedCollars = src.linkedCollars
+		user << "Implant updated with the latest collars"
 	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Status"))
 		if("Locks")
 			var/choice = input(user, "Select collar to change.", "Locking Control") in linkedCollars

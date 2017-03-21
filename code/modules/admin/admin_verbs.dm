@@ -1,14 +1,19 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
 var/list/admin_verbs_default = list(
-	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
+	/client/proc/donor_ooc_admin,
+	/client/proc/toggleadminhelpsound,	/*toggles whether we hear a sound when adminhelps/PMs are used*/
+	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/toggleticketlistenall
+	)
+var/list/admin_verbs_basic = list(
+	/client/proc/view_tickets,
 	/client/proc/hide_verbs,			/*hides all our adminverbs*/
 	/client/proc/hide_most_verbs,		/*hides all our hideable adminverbs*/
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
 	/client/proc/deadchat,				/*toggles deadchat on/off*/
-	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 	/client/verb/toggleprayersounds,	/*Toggles prayer sounds (HALLELUJAH!)*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
@@ -17,12 +22,9 @@ var/list/admin_verbs_default = list(
 	/client/proc/reload_admins,
 	/client/proc/adminwhotoggle,
 	// /client/proc/adminwho,
-	/client/proc/donor_ooc_admin,
 	/client/proc/reestablish_db_connection,/*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
-	/client/proc/view_tickets,
-	/client/proc/toggleticketlistenall,
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
 	/client/proc/stop_sounds
@@ -71,28 +73,23 @@ var/list/admin_verbs_admin = list(
 	/client/proc/list_pretty_filters,
 	/client/proc/toggle_antag_hud, 	/*toggle display of the admin antag hud*/
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
-	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
-	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/test_pretty_filters,
 	/client/proc/add_pretty_filter,
 	/client/proc/reset_pretty_filter,
-	/client/proc/admin_credits_get,
-	/client/proc/admin_credits_list,
-	/client/proc/admin_credits_spend,
-	/client/proc/admin_credits_earn,
-	/client/proc/admin_credits_set,
 	/client/proc/toggle_restart_vote,	/* Moderator tool for toggling restart vote */
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/check_ruins
+	/client/proc/check_ruins,
+	/datum/admins/proc/borer_panel,
+	/client/proc/respawn_character,
+	/client/proc/rejuv_all
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
-	/client/proc/DB_ban_panel,
-	/client/proc/stickybanpanel
+	/client/proc/DB_ban_panel/*,
+	/client/proc/stickybanpanel*/
 	)
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
@@ -119,7 +116,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all
+	/client/proc/polymorph_all,
+	/client/proc/admin_pick_random_player
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -163,7 +161,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/test_snap_UI,
 	/client/proc/debugNatureMapGenerator,
 	/client/proc/check_bomb_impacts,
-	/proc/machine_upgrade,
 	/client/proc/populate_world,
 	/client/proc/cmd_display_del_log,
 	/client/proc/reset_latejoin_spawns,
@@ -171,7 +168,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
-	/client/proc/check_ruins
+	/client/proc/check_ruins,
+	/datum/admins/proc/borer_panel
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -180,9 +178,6 @@ var/list/admin_verbs_possess = list(
 var/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
 	/client/proc/create_poll
-	)
-var/list/admin_verbs_rejuv = list(
-	/client/proc/respawn_character
 	)
 
 //verbs which can be hidden - needs work
@@ -260,7 +255,8 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/check_ruins
+	/client/proc/check_ruins,
+	/datum/admins/proc/borer_panel,
 	)
 
 /client/proc/add_admin_verbs()
@@ -287,8 +283,8 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_permissions
 		if(rights & R_STEALTH)
 			verbs += /client/proc/stealth
-		if(rights & R_REJUVINATE)
-			verbs += admin_verbs_rejuv
+		if(rights & R_BASIC)
+			verbs += admin_verbs_basic
 		if(rights & R_SOUNDS)
 			verbs += admin_verbs_sounds
 		if(rights & R_SPAWN)
@@ -311,7 +307,7 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_possess,
 		admin_verbs_permissions,
 		/client/proc/stealth,
-		admin_verbs_rejuv,
+		admin_verbs_basic,
 		admin_verbs_sounds,
 		admin_verbs_spawn,
 		/*Debug verbs added by "show debug verbs"*/
@@ -627,9 +623,8 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		holder.check_antagonists()
-		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
-		if(!isobserver(usr))
-			message_admins("[key_name_admin(usr)] checked antagonists.")
+		log_admin("[key_name(usr)] checked antagonists.")
+		message_admins("[key_name_admin(usr)] checked antagonists.")
 	feedback_add_details("admin_verb","CHA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -914,7 +909,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[src] toggled the restart vote on.")
 
 /client/proc/rejuv_all()
-	set name = "Rejuvinate everyone"
+	set name = "Revive All"
 	set category = "Fun"
 	set desc = "Rejuvinate every mob/living."
 	var/revive_count = 0
@@ -922,11 +917,11 @@ var/list/admin_verbs_hideable = list(
 	var/fluff_adjective = pick("benevolent","sacred","holy","godly","magnificent","benign","generous","caring") //lol
 	var/fluff_adverb = pick("tenderly","gently","elegantly","gracefully","mercifully","affectionately","sympathetically","politely") //am having a lot of fun here
 
-	if(!check_rights(R_REJUVINATE))
+	if(!check_rights(R_ADMIN))
 		return
 
 	for(var/mob/living/M in world)
-		M.revive()
+		M.revive(full_heal = 1, admin_revive = 1)
 		revive_count++
 
 	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
@@ -937,8 +932,54 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check Ruins"
 	set category = "Debug"
 	set desc = "Check all loaded ruins."
+	log_admin("[key_name(usr)] checked ruins.")
+	message_admins("[key_name_admin(usr)] checked ruins.")
 	var/dat = "<center><b>Ruins</b></center><br>"
 	for(var/V in ruinAreas)
 		var/list/L = V
 		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
 	usr << browse(dat, "window=checkruin;size=350x500")
+
+
+
+/client/proc/admin_pick_random_player()
+	set category = "Admin"
+	set name = "Pick Random Player"
+	set desc = "Picks a random logged-in player and brings up their player panel."
+
+
+	var/what_group = input(src, "What group would you like to pick from?", "Selection", "Everyone") as null|anything in list("Everyone", "Antags Only", "Non-Antags Only")
+	if (!what_group)
+		return
+	var/choose_from_dead = input(src, "What group would you like to pick from?", "Selection", "Everyone") as null|anything in list("Everyone", "Living Only", "Dead Only")
+	if (!choose_from_dead)
+		return
+
+	var/list/player_pool = list()
+	for (var/mob/M in world)
+		if (!M.client || istype(M, /mob/new_player))
+			continue
+		if (what_group != "Everyone")
+			if ((what_group == "Antags Only") && !M.mind.special_role)
+				continue
+			else if ((what_group == "Non-Antags Only") && M.mind.special_role)
+				continue
+		if (choose_from_dead != "Everyone")
+			if ((choose_from_dead == "Living Only") && M.stat == DEAD)
+				continue
+			else if ((choose_from_dead == "Dead Only") && M.stat != DEAD)
+				continue
+		player_pool += M
+
+	if (!player_pool.len)
+		src << "<span style=\"color:red\">Error: no valid mobs found via selected options.</span>"
+		return
+
+	var/chosen_player = pick(player_pool)
+	src << "[chosen_player] Has been chosen"
+	holder.show_player_panel(chosen_player)
+
+
+
+
+

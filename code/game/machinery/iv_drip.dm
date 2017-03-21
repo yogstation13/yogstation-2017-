@@ -7,6 +7,8 @@
 	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
+	var/transfer_amount = 2.5
+	var/transfers_per_inject = 2 //this is doubled for bloodpacks
 
 
 /obj/machinery/iv_drip/New()
@@ -73,7 +75,7 @@
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			SSmachine.processing.Add(src)
+			START_PROCESSING(SSmachine, src)
 			update_icon()
 		else
 			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"
@@ -110,14 +112,15 @@
 	if(beaker)
 		// Give blood
 		if(mode)
-			if(beaker.volume > 0)
-				var/transfer_amount = 5
+			if(beaker.reagents.total_volume > 0)
+				var/transfers = transfers_per_inject
 				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount = 10
-				var/fraction = min(transfer_amount/beaker.volume, 1) //the fraction that is transfered of the total volume
-				beaker.reagents.reaction(attached, INJECT, fraction,0) //make reagents reacts, but don't spam messages
-				beaker.reagents.trans_to(attached, transfer_amount)
+					transfers += transfers_per_inject
+				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume, necessary because of how reaction() works
+				for(var/i in 1 to transfers)
+					beaker.reagents.reaction(attached, INJECT, fraction, 0) //make reagents reacts, but don't spam messages
+				beaker.reagents.trans_to(attached, transfer_amount * transfers)
 				update_icon()
 
 		// Take blood

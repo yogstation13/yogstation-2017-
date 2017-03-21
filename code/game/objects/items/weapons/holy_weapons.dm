@@ -49,15 +49,11 @@
 	item_state = "disintegrate"
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
-
-/obj/item/weapon/nullrod/godhand/dropped(mob/user)
-	qdel(src)
-
 
 /obj/item/weapon/nullrod/genesis
 	icon_state = "disintegrate"
@@ -169,7 +165,6 @@
 	sleep(15)
 	user.say("Wynken, Blynken, and Nod")
 	return (BRUTELOSS)
-
 
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
@@ -296,7 +291,7 @@
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
 
 /obj/item/weapon/nullrod/scythe/talking
 	icon_state = "talking_sword"
@@ -304,7 +299,7 @@
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	attack_verb = list("chopped", "sliced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/attack_self(mob/living/user)
@@ -467,10 +462,10 @@
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/nullrod/tribal_knife/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/nullrod/tribal_knife/process()

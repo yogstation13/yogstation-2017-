@@ -14,23 +14,24 @@
 	var/damaged_brain = 0 //whether the brain organ is damaged.
 
 /obj/item/organ/brain/Insert(mob/living/carbon/M, special = 0)
-	..()
-	name = "brain"
-	if(brainmob)
-		if(M.key)
-			M.ghostize()
+	if(..())
+		name = "brain"
+		if(brainmob)
+			if(M.key)
+				M.ghostize()
 
-		if(brainmob.mind)
-			brainmob.mind.transfer_to(M)
-		else
-			M.key = brainmob.key
+			if(brainmob.mind)
+				brainmob.mind.transfer_to(M)
+			else
+				M.key = brainmob.key
 
-		qdel(brainmob)
+			qdel(brainmob)
 
-	//Update the body's icon so it doesnt appear debrained anymore
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_hair(0)
+		//Update the body's icon so it doesnt appear debrained anymore
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.update_hair(0)
+		return 1
 
 /obj/item/organ/brain/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -39,6 +40,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.update_hair(0)
+	if(M.borer)
+		visible_message("<span class='danger'>[M.borer] has slipped out of [M]'s brain!!</span>", \
+			"<span class='danger'>[M.borer] slips out of [src]!</span>")
+		M.borer.leave_victim()
 
 /obj/item/organ/brain/prepare_eat()
 	return // Too important to eat.

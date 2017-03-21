@@ -49,6 +49,7 @@
 /obj/item/weapon/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
+	// attack_verb = list("emagged", "hacked", "glitched") //might cause some problems with trying to emag borgs, will be excluded until someone resolves it
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
@@ -77,11 +78,13 @@
 	icon_state = "id"
 	item_state = "card-id"
 	slot_flags = SLOT_ID
+	attack_verb = list("identified", "slapped")
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
+	var/has_fluff
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
@@ -114,30 +117,35 @@ update_label("John Doe", "Clowny")
 		return
 
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	ID_fluff()
 
 /obj/item/weapon/card/id/silver
 	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
-	icon_state = "silver"
+	attack_verb = list("promoted", "slapped", "identified")
+	icon_state = "id_silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
-	icon_state = "gold"
+	attack_verb = list("promoted", "honored", "identified", "slapped")
+	icon_state = "id_gold"
 	item_state = "gold_id"
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=1"
+	var/restricted = TRUE
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()
-	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/weapon/card/id
-	chameleon_action.chameleon_name = "ID Card"
-	chameleon_action.initialize_disguises()
+	chameleon = new /datum/chameleon(src)
+	chameleon.include_basetype = 1
+	chameleon.chameleon_type = /obj/item/weapon/card/id
+	chameleon.chameleon_name = "ID Card"
+	chameleon.initialize_disguises()
 
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
 	if(!proximity)
@@ -146,12 +154,12 @@ update_label("John Doe", "Clowny")
 		var/obj/item/weapon/card/id/I = O
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
-			if(user.mind.special_role)
+			if(!restricted || user.mind.special_role)
 				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(istype(user, /mob/living) && user.mind)
-		if(user.mind.special_role)
+		if(!restricted || user.mind.special_role)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
 				var t = copytext(sanitize(input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null),1,26)
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
@@ -177,6 +185,13 @@ update_label("John Doe", "Clowny")
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate)
 
+/obj/item/weapon/card/id/syndicate/unrestricted
+	restricted = FALSE
+
+/obj/item/weapon/card/id/syndicate/unrestricted/New()
+	..()
+	chameleon.antag_only = FALSE
+
 /obj/item/weapon/card/id/syndicate/abductor
 	name = "abductor agent card"
 	desc = "A card that can copy access from the IDs of abductees."
@@ -186,7 +201,8 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
-	icon_state = "gold"
+	attack_verb = list("spared", "promoted", "honored", "identified", "slapped")
+	icon_state = "id_gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
@@ -199,6 +215,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
 	desc = "An ID straight from Cent. Com."
+	attack_verb = list("inspected", "identified", "slapped")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -211,6 +228,7 @@ update_label("John Doe", "Clowny")
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
+	attack_verb = list("responded to","identified", "slapped")
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 
@@ -241,7 +259,8 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
-	icon_state = "orange"
+	attack_verb = list("arrested", "cuffed", "took freedom from", "imprisoned", "identified", "slapped")
+	icon_state = "id_orange"
 	item_state = "orange-id"
 	assignment = "Prisoner"
 	registered_name = "Scum"
@@ -282,3 +301,55 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/mining
 	name = "mining ID"
 	access = list(access_mining, access_mining_station, access_mineral_storeroom)
+
+
+/obj/item/weapon/card/id/proc/ID_fluff()
+	var/job = assignment
+	var/list/idfluff = list(
+	"Assistant" = list("civillian","green"),
+	"Captain" = list("captain","gold"),
+	"Head of Personnel" = list("civillian","silver"),
+	"Head of Security" = list("security","silver"),
+	"Chief Engineer" = list("engineering","silver"),
+	"Research Director" = list("science","silver"),
+	"Chief Medical Officer" = list("medical","silver"),
+	"Station Engineer" = list("engineering","yellow"),
+	"Atmospheric Technician" = list("engineering","white"),
+	"Signal Technician" = list("engineering","green"),
+	"Medical Doctor" = list("medical","blue"),
+	"Geneticist" = list("medical","purple"),
+	"Virologist" = list("medical","green"),
+	"Chemist" = list("medical","orange"),
+	"Paramedic" = list("medical","white"),
+	"Psychiatrist" = list("medical","brown"),
+	"Scientist" = list("science","purple"),
+	"Roboticist" = list("science","black"),
+	"Quartermaster" = list("cargo","silver"),
+	"Cargo Technician" = list("cargo","brown"),
+	"Shaft Miner" = list("cargo","black"),
+	"Mining Medic" = list("cargo","blue"),
+	"Bartender" = list("civillian,","black"),
+	"Botanist" = list("civillian","blue"),
+	"Cook" = list("civillian","white"),
+	"Janitor" = list("civillian","purple"),
+	"Librarian" = list("civillian","purple"),
+	"Chaplain" = list("civillian","black"),
+	"Clown" = list("clown","rainbow"),
+	"Mime" = list("mime","white"),
+	"Clerk" = list("civillian","blue"),
+	"Tourist" = list("civillian","yellow"),
+	"Warden" = list("security","black"),
+	"Security Officer" = list("security","red"),
+	"Detective" = list("security","brown"),
+	"Lawyer" = list("security","purple")
+	)
+	if(job in idfluff)
+		has_fluff = 1
+	else
+		if(has_fluff)
+			return
+		else
+			job = "Assistant" //Loads up the basic green ID
+	overlays.Cut()
+	overlays += idfluff[job][1]
+	overlays += idfluff[job][2]

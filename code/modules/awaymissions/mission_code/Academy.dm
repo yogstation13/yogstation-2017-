@@ -66,7 +66,7 @@
 	var/braindead_check = 0
 
 /obj/structure/academy_wizard_spawner/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/academy_wizard_spawner/process()
 	if(next_check < world.time)
@@ -91,7 +91,7 @@
 	if(!current_wizard)
 		return
 	spawn(0)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", "wizard", null, ROLE_WIZARD, current_wizard)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [current_wizard.real_name]?", "Wizard Academy Defender", null, 0, 300, current_wizard)
 		var/mob/dead/observer/chosen = null
 
 		if(candidates.len)
@@ -107,6 +107,7 @@
 	wizbody.equipOutfit(/datum/outfit/wizard/academy)
 	var/obj/item/weapon/implant/exile/Implant = new/obj/item/weapon/implant/exile(wizbody)
 	Implant.implant(wizbody)
+	wizbody.apply_status_effect(STATUS_EFFECT_Z_LEVEL_LOCK_WIZ)
 	wizbody.faction |= "wizard"
 	wizbody.real_name = "Academy Teacher"
 	wizbody.name = "Academy Teacher"
@@ -114,7 +115,7 @@
 	var/datum/mind/wizmind = new /datum/mind()
 	wizmind.name = "Wizard Defender"
 	wizmind.special_role = "Academy Defender"
-	var/datum/objective/O = new("Protect Wizard Academy from the intruders")
+	var/datum/objective/O = new("Protect Wizard Academy from the intruders. Don't leave the academy EVER.")
 	wizmind.objectives += O
 	wizmind.transfer_to(wizbody)
 	ticker.mode.wizards |= wizmind
@@ -131,7 +132,7 @@
 	if(health<0)
 		visible_message("<span class='warning'>[src] breaks down!</span>")
 		icon_state = "forge_off"
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		broken = 1
 
 /obj/structure/academy_wizard_spawner/attackby(obj/item/weapon/W, mob/living/user, params)

@@ -9,6 +9,7 @@
 	layer = BELOW_MOB_LAYER
 	origin_tech = "bluespace=4;materials=5"
 	var/usability = 0
+	var/affiliation = "Cult" //Cult, wizard or Neutral. Or use a color.
 
 	var/reusable = TRUE
 	var/spent = FALSE
@@ -21,8 +22,29 @@
 			the 'Soul Stone'. The shard lies still, dull and lifeless; \
 			whatever spark it once held long extinguished."
 
+
+/obj/item/device/soulstone/New(var/loc, var/_affiliation)
+	..()
+	if(_affiliation)
+		affiliation = _affiliation
+	addtimer(src, "set_affiliation", 1) //So the other code get's run first, wich might change the affiliation(summon shards etc.)
+
+/obj/item/device/soulstone/proc/set_affiliation(var/_affiliation)
+	if(_affiliation)
+		affiliation = _affiliation
+	switch(affiliation)
+		if("Wizard")
+			color = color2hex("blue")
+		if("Cult")
+			color = color2hex("red")
+		if("Neutral")
+			color = color2hex("lime")
+		else
+			color = color2hex(affiliation)
+
 /obj/item/device/soulstone/anybody
 	usability = 1
+	affiliation = "Neutral"
 
 /obj/item/device/soulstone/anybody/chaplain
 	name = "mysterious old shard"
@@ -62,6 +84,10 @@
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
 	transfer_soul("VICTIM", M, user)
+	if(istype(M, /mob/living/simple_animal/shade))
+		var/mob/living/simple_animal/shade/S = M
+		S.set_affiliation(affiliation)
+
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
@@ -77,6 +103,8 @@
 			for(var/mob/dead/observer/G in player_list)
 				if(G.name == A.name) // to prevent whatever needs to be prevented.
 					attack_ghost(G)
+		if(A.affiliation != affiliation)
+			return ..()
 		A.status_flags -= GODMODE
 		A.canmove = 1
 		A.forceMove(get_turf(user))
@@ -184,17 +212,17 @@
 					return
 				switch(construct_class)
 					if("Juggernaut")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc, affiliation)
 
 					if("Wraith")
-						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
+						makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc, affiliation)
 
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc, affiliation)
 
 						else
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc, affiliation)
 
 				qdel(T)
 				user.drop_item()
@@ -203,8 +231,9 @@
 				user << "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!"
 
 
-/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
+/proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null, _affiliation)
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
+	if(_affiliation) newstruct.set_affiliation(_affiliation)
 	newstruct.faction |= "\ref[stoner]"
 	newstruct.key = target.key
 	if(newstruct.mind)

@@ -39,11 +39,11 @@ Borg Hypospray
 		modes[R] = iteration
 		iteration++
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/reagent_containers/borghypo/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 

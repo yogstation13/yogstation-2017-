@@ -187,6 +187,10 @@ var/datum/subsystem/ticker/ticker
 
 	if(!Debug2)
 		if(!can_continue)
+			if(mode)
+				message_admins("<B>Error setting up [master_mode]([mode.name], [mode.type]).</B> Reverting to pre-game lobby.")
+			else
+				message_admins("<B>Error setting up [master_mode](mode is null).</B> Reverting to pre-game lobby.")
 			qdel(mode)
 			mode = null
 			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
@@ -486,6 +490,8 @@ var/datum/subsystem/ticker/ticker
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
+	mode.declare_station_goal_completion()
+
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)
 		var/dellog = ""
@@ -493,6 +499,11 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Path : [path] \n"
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
+
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(!CTF.ctf_enabled)
+			CTF.ctf_enabled = !CTF.ctf_enabled
+			CTF.TellGhost()
 
 	return 1
 

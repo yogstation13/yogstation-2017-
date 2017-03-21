@@ -44,7 +44,7 @@
 						charged_item = I
 						break
 				else
-					L << "<span class='caution'>Glowing red letters appear on the front cover...</span>"
+					L << "<span class='warning'>Glowing red letters appear on the front cover...</span>"
 					L << "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>"
 					burnt_out = 1
 			else if(istype(item, /obj/item/weapon/gun/magic))
@@ -60,34 +60,53 @@
 					W.icon_state = initial(W.icon_state)
 				charged_item = I
 				break
-			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
-				var/obj/item/weapon/stock_parts/cell/C = item
-				if(prob(80))
-					C.maxcharge -= 200
-				if(C.maxcharge <= 1) //Div by 0 protection
-					C.maxcharge = 1
+			else if(istype(item, /obj/item/weapon/stock_parts/cell))
+				if(mess_with_cell(item))
 					burnt_out = 1
-				C.charge = C.maxcharge
-				charged_item = C
+				charged_item = item
 				break
+			else if(istype(item, /obj/item/weapon/gun/energy))
+				var/obj/item/weapon/gun/energy/G = item
+				var/obj/item/weapon/stock_parts/cell/C = G.power_supply
+				var/list/ammo = G.ammo_type
+				var/dont_alter = 0
+				if(C)
+					if(ammo)
+						for(var/V in ammo)
+							var/obj/item/ammo_casing/energy/E = V
+							if(E.e_cost > (C.maxcharge - 200))
+								dont_alter = 1
+								break
+					if(dont_alter)
+						L << "<span class='warning'>[item] makes a worrying buzzing sound.</span>"
+						burnt_out = 1
+					else
+						if(mess_with_cell(C))
+							burnt_out = 1
+					charged_item = item
+					break
 			else if(item.contents)
 				var/obj/I = null
 				for(I in item.contents)
-					if(istype(I, /obj/item/weapon/stock_parts/cell/))
-						var/obj/item/weapon/stock_parts/cell/C = I
-						if(prob(80))
-							C.maxcharge -= 200
-						if(C.maxcharge <= 1) //Div by 0 protection
-							C.maxcharge = 1
+					if(istype(I, /obj/item/weapon/stock_parts/cell))
+						if(mess_with_cell(I))
 							burnt_out = 1
-						C.charge = C.maxcharge
 						item.update_icon()
 						charged_item = item
 						break
 		if(!charged_item)
 			L << "<span class='notice'>you feel magical power surging to your hands, but the feeling rapidly fades...</span>"
 		else if(burnt_out)
-			L << "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>"
+			L << "<span class='warning'>[charged_item] doesn't seem to be reacting to the spell...</span>"
 		else
 			playsound(get_turf(L), "sound/magic/Charge.ogg", 50, 1)
 			L << "<span class='notice'>[charged_item] suddenly feels very warm!</span>"
+
+/obj/effect/proc_holder/spell/targeted/charge/proc/mess_with_cell(obj/item/weapon/stock_parts/cell/C)
+	if(prob(80))
+		C.maxcharge -= 200
+	if(C.maxcharge <= 1) //Div by 0 protection
+		C.maxcharge = 1
+		return 1
+	C.charge = C.maxcharge
+	return 0

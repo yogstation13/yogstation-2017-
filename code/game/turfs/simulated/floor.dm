@@ -28,6 +28,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
 	intact = 1
+	flags = GIRDERABLE
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
@@ -190,9 +191,14 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		return
 	return
 
-/turf/open/floor/ratvar_act()
-	if(prob(20))
+/turf/open/floor/ratvar_act(force)
+	var/converted = (prob(40) || force)
+	if(converted)
 		ChangeTurf(/turf/open/floor/clockwork)
+	for(var/I in src)
+		var/atom/A = I
+		if(ismob(A) || converted)
+			A.ratvar_act()
 
 /turf/open/floor/can_have_cabling()
 	return !burnt && !broken

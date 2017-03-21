@@ -23,7 +23,7 @@
 			if(prob(2))
 				affected_mob << "<span class='danger'>Your stomach stings painfully.</span>"
 				if(prob(20))
-					affected_mob.adjustToxLoss(2)
+					affected_mob.adjustToxLoss(2, 1, DAMAGE_DISEASE)
 					affected_mob.updatehealth()
 		if(4)
 			if(prob(10))

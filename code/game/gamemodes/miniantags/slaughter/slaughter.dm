@@ -4,7 +4,7 @@
 	name = "Slaughter Demon"
 	real_name = "Slaughter Demon"
 	desc = "A large, menacing creature covered in armored black scales."
-	speak_emote = list("gurgles")
+	speak_emote = list("growls")
 	emote_hear = list("wails","screeches")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
@@ -30,8 +30,10 @@
 	environment_smash = 1
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	dismember_chance = 30
 	see_in_dark = 8
 	var/boost = 0
+	var/speed_after_boost = 1
 	bloodcrawl = BLOODCRAWL_EAT
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/playstyle_string = "<B><font size=3 color='red'>You are a slaughter demon,</font> a terrible creature from another realm. You have a single desire: To kill.  \
@@ -55,7 +57,7 @@
 /mob/living/simple_animal/slaughter/Life()
 	..()
 	if(boost<world.time)
-		speed = 1
+		speed = speed_after_boost
 	else
 		speed = 0
 
@@ -68,7 +70,7 @@
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
 	speed = 0
-	boost = world.time + 60
+	boost = world.time + 20
 
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
@@ -96,11 +98,12 @@
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
 						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
 	user.drop_item()
-	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
+	src.Insert(user, 1) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
 /obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
-	..()
-	M.bloodcrawl = BLOODCRAWL
+	if(..())
+		M.bloodcrawl = BLOODCRAWL
+		return 1
 
 /obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -118,13 +121,13 @@
 	emote_hear = list("gaffaws","laughs")
 	response_help  = "hugs"
 	attacktext = "wildly tickles"
-
 	attack_sound = 'sound/items/bikehorn.ogg'
 	feast_sound = 'sound/spookoween/scary_horn2.ogg'
 	death_sound = 'sound/misc/sadtrombone.ogg'
-
 	icon_state = "bowmon"
 	icon_living = "bowmon"
+	dismember_chance = 0
+	speed_after_boost = 2
 	deathmessage = "fades out, as all of its friends are released from its \
 		prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})

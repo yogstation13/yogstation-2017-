@@ -190,68 +190,94 @@
 			WARNING("Invalid custom AI laws, check silicon_laws.txt")
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
-	src.zeroth = law
+	zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
-		src.zeroth_borg = law_borg
+		zeroth_borg = law_borg
 
 /datum/ai_laws/proc/add_inherent_law(law)
-	if (!(law in src.inherent))
-		src.inherent += law
+	if (!(law in inherent))
+		inherent += law
 
 /datum/ai_laws/proc/add_ion_law(law)
-	src.ion += law
+	ion += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	qdel(src.inherent)
-	src.inherent = list()
+	qdel(inherent)
+	inherent = list()
 
 /datum/ai_laws/proc/add_supplied_law(number, law)
-	while (src.supplied.len < number + 1)
-		src.supplied += ""
+	while (supplied.len < number + 1)
+		supplied += ""
 
-	src.supplied[number + 1] = law
+	supplied[number + 1] = law
 
 /datum/ai_laws/proc/clear_supplied_laws()
-	src.supplied = list()
+	supplied = list()
 
 /datum/ai_laws/proc/clear_ion_laws()
-	src.ion = list()
+	ion = list()
 
 /datum/ai_laws/proc/show_laws(who)
 
-	if (src.zeroth)
-		who << "0. [src.zeroth]"
+	if (zeroth)
+		who << "0. [zeroth]"
 
-	for (var/index = 1, index <= src.ion.len, index++)
-		var/law = src.ion[index]
+	for (var/index = 1, index <= ion.len, index++)
+		var/law = ion[index]
 		var/num = ionnum()
 		who << "[num]. [law]"
 
 	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		var/law = src.inherent[index]
+	for (var/index = 1, index <= inherent.len, index++)
+		var/law = inherent[index]
 
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
 
-	for (var/index = 1, index <= src.supplied.len, index++)
-		var/law = src.supplied[index]
+	for (var/index = 1, index <= supplied.len, index++)
+		var/law = supplied[index]
 		if (length(law) > 0)
 			who << "[number]. [law]"
 			number++
+
+/datum/ai_laws/proc/get_laws()
+
+	var/list/laws = list()
+
+	if (zeroth)
+		laws["0"] = zeroth
+
+	for (var/index = 1, index <= ion.len, index++)
+		laws[ionnum()] = ion[index]
+
+	var/number = 1
+	for (var/index = 1, index <= inherent.len, index++)
+		var/law = inherent[index]
+
+		if (length(law) > 0)
+			laws["[number]"] = inherent[index]
+			number++
+
+	for (var/index = 1, index <= supplied.len, index++)
+		var/law = supplied[index]
+		if (length(law) > 0)
+			laws["[number]"] = supplied[index]
+			number++
+
+	return laws
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
-		src.zeroth = null
-		src.zeroth_borg = null
+		zeroth = null
+		zeroth_borg = null
 		return
 	else
 		if(owner && owner.mind.special_role)
 			return
 		else
-			src.zeroth = null
-			src.zeroth_borg = null
+			zeroth = null
+			zeroth_borg = null
 			return
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)

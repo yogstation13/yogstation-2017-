@@ -149,17 +149,15 @@ Doesn't work on other aliens/AI.*/
 			if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
+
 		// TURF CHECK
 		else if(istype(target, /turf))
 			var/turf/T = target
-			// R WALL
-			if(istype(T, /turf/closed/wall/r_wall))
+      
+			if(T.unacidable)
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0
-			// R FLOOR
-			if(istype(T, /turf/open/floor/engine))
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
+
 		else// Not a type we can acid.
 			return 0
 		new /obj/effect/acid(get_turf(target), target)

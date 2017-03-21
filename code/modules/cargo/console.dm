@@ -61,7 +61,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !emagged) || (P.contraband && !contraband))
+		if((P.hidden && !emagged) || (P.contraband && !contraband) || (P.special && !P.special_enabled))
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -193,7 +193,7 @@
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src
-	status_signal.transmission_method = 1
+	status_signal.transmission_method = TRANSMISSION_RADIO
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)

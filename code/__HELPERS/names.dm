@@ -59,6 +59,8 @@ var/religion_name = null
 	else
 		station_name = new_station_name()
 
+	feedback_set_details("station_name","[station_name]")
+
 	if(config && config.server_name)
 		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
 	else

@@ -53,6 +53,8 @@
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
+		if((shock_damage > 0) && (CONSUMEPOWER in dna.species.specflags))
+			nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))
@@ -236,13 +238,9 @@
 					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	if(I && I.prethrow_at(target))
-		return
-
-	if(!(I && istype(I)))
-		return //Grab processing has a chance of returning null
 	else if(!(I.flags & (NODROP|ABSTRACT)))
+		if(I.prethrow_at(target))
+			return
 		thrown_thing = I
 		unEquip(I)
 
@@ -461,6 +459,10 @@
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
+			return
+		else
+			unEquip(I)
+			I.dropped()
 			return
 		return TRUE
 
@@ -729,6 +731,8 @@
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
 			if(stat == CONSCIOUS)
+				if(NOCRIT in status_flags)//no crit when you're stimmed
+					return
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()
@@ -758,11 +762,10 @@
 /mob/living/carbon/fully_heal(admin_revive = 0)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-	if(B)
-		B.damaged_brain = 0
+	regenerate_organs()
 	for(var/datum/disease/D in viruses)
-		D.cure(0)
+		if (D.severity != NONTHREAT)
+			D.cure(0)
 	if(admin_revive)
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
@@ -771,6 +774,11 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+
+/mob/living/carbon/proc/regenerate_organs()
+	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
+	if(B)
+		B.damaged_brain = 0
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
@@ -791,12 +799,3 @@
 
 	..()
 
-
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(amount > 0)
-			blood_volume -= 5*amount
-		else
-			blood_volume -= amount
-	return ..()

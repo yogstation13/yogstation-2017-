@@ -75,6 +75,7 @@
 	silent = 1
 	force = 15
 	throwforce = 18
+	w_class = 3
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
@@ -91,7 +92,7 @@
 	I.toolspeed = 1.5
 	I = new /obj/item/device/multitool(src)
 	I.toolspeed = 1.5
-	I = new /obj/item/clothing/gloves/combat(src)
+	I = new /obj/item/clothing/gloves/combat/stealth(src)
 	I.toolspeed = 1.5
 
 /obj/item/weapon/storage/toolbox/drone

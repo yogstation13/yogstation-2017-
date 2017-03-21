@@ -12,7 +12,25 @@
 			return 1
 	return (!mover.density || !density || lying)
 
+/client/verb/moveup()
+	set name = ".moveup"
+	set instant = 1
+	Move(get_step(mob, NORTH), NORTH)
 
+/client/verb/movedown()
+	set name = ".movedown"
+	set instant = 1
+	Move(get_step(mob, SOUTH), SOUTH)
+
+/client/verb/moveright()
+	set name = ".moveright"
+	set instant = 1
+	Move(get_step(mob, EAST), EAST)
+
+/client/verb/moveleft()
+	set name = ".moveleft"
+	set instant = 1
+	Move(get_step(mob, WEST), WEST)
 
 /client/Northeast()
 	if(prefs.afreeze)
@@ -117,15 +135,16 @@
 /client/Move(n, direct)
 	if(prefs.afreeze)
 		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
-		return
+		return 0
+	if(world.time < move_delay)
+		return 0
+	move_delay = world.time+world.tick_lag
 	if(!mob || !mob.loc)
 		return 0
 	if(mob.notransform)
 		return 0	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
-	if(world.time < move_delay)
-		return 0
 	if(!isliving(mob))
 		return mob.Move(n,direct)
 	if(mob.stat == DEAD)

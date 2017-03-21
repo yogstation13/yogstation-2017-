@@ -30,7 +30,7 @@
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
 		return
-	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
+	owner.reagents.add_reagent("badfood",poison_amount / severity) //food poisoning
 	owner << "<span class='warning'>You feel like your insides are burning.</span>"
 
 
@@ -126,10 +126,11 @@
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(!ion_trail)
-		ion_trail = new
-	ion_trail.set_up(M)
+	if(..())
+		if(!ion_trail)
+			ion_trail = new
+		ion_trail.set_up(M)
+		return 1
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
 	if(on)

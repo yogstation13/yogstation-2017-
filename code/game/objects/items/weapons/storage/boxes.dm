@@ -32,31 +32,38 @@
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()
-
-	if(!foldable)
-		return
 	if(contents.len)
 		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
-		return
-	if(!ispath(foldable))
-		return
+	var/obj/item/I = unfold()
+	if(I)
+		user.put_in_hands(I)
+		user << "<span class='notice'>You fold [src] flat.</span>"
 
-	//Close any open UI windows first
-	close_all()
+/obj/item/weapon/storage/box/attack_self_tk(mob/user)
+	if(contents.len)
+		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+	if(unfold())
+		user << "<span class='notice'>You fold [src] flat.</span>"
 
-	user << "<span class='notice'>You fold [src] flat.</span>"
+/obj/item/weapon/storage/box/proc/unfold()
+	if(!foldable || contents.len || !ispath(foldable))
+		return null
+	close_all() //Close any open UI windows first
+	if(ismob(loc))
+		var/mob/M = loc
+		if(!M.unEquip(src))
+			return null
+		M.update_inv_l_hand()
+		M.update_inv_r_hand()
 	var/obj/item/I = new foldable(get_turf(src))
-	user.drop_item()
-	user.put_in_hands(I)
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	transfer_fingerprints_to(I)
 	qdel(src)
+	return I
 
 /obj/item/weapon/storage/box/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/packageWrap))
 		return 0
 	return ..()
-
 
 // Ordinary survival box
 /obj/item/weapon/storage/box/survival/New()
@@ -849,3 +856,26 @@
 	new /obj/item/weapon/grenade/barrier(src)
 	new /obj/item/weapon/grenade/barrier(src)
 	new /obj/item/weapon/grenade/barrier(src)
+
+/obj/item/weapon/storage/box/chameleon
+	name = "chameleon box"
+	desc = "An eerie box with the label 'syndicate (TM)'"
+	icon_state = "box_of_doom"
+
+/obj/item/weapon/storage/box/chameleon/New()
+	..()
+	chameleon = new /datum/chameleon(src)
+	chameleon.chameleon_type = /obj/item/weapon/storage/box
+	chameleon.chameleon_name = "Box"
+	chameleon.initialize_disguises()
+
+
+/obj/item/weapon/storage/box/chameleon/examine(mob/user)
+	..()
+	if(user.mind in ticker.mode.traitors)
+		user << "<span class='notice'>Activate to camouflage the [src.name]</span>"
+
+/obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
+	return
+
+

@@ -47,6 +47,7 @@
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
 	var/real_name = null
+	var/bhunger = 0			//Carbon
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/sleeping = 0		//Carbon
@@ -147,3 +148,6 @@
 
 	//Spooky shadow walking. For Spooks. //So spoopy
 	var/shadow_walk = 0
+	var/list/observers = null	//The list of people observing this mob.
+
+	var/list/progressbars = null	//for stacking do_after bars

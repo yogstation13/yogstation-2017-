@@ -22,6 +22,7 @@
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
+			new /obj/item/weapon/storage/box/chameleon(src)
 			return
 
 		if("bond")
@@ -48,7 +49,7 @@
 			new /obj/item/weapon/gun/projectile/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
-			new /obj/item/weapon/grenade/plastic/c4(src)
+			new /obj/item/weapon/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
@@ -86,8 +87,8 @@
 			return
 
 		if("sabotage")
-			new /obj/item/weapon/grenade/plastic/c4 (src)
-			new /obj/item/weapon/grenade/plastic/c4 (src)
+			new /obj/item/weapon/c4 (src)
+			new /obj/item/weapon/c4 (src)
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)
@@ -187,7 +188,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/uplink(O)
 	O.update_icon()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
@@ -280,10 +280,10 @@
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/tuberculosiscure(src)
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon
+/obj/item/weapon/storage/box/chameleon
 	name = "chameleon kit"
 
-/obj/item/weapon/storage/box/syndie_kit/chameleon/New()
+/obj/item/weapon/storage/box/chameleon/New()
 	..()
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/suit/chameleon(src)

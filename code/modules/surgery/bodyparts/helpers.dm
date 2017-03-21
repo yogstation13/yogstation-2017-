@@ -24,8 +24,11 @@
 		return 0
 	return 1
 
-/mob/living/carbon/proc/has_left_hand()
-	return 1
+/mob/proc/has_left_hand()
+	return FALSE
+
+/mob/living/carbon/has_left_hand()
+	return TRUE
 
 /mob/living/carbon/human/has_left_hand()
 	var/obj/item/bodypart/L
@@ -34,8 +37,11 @@
 		return 0
 	return 1
 
-/mob/living/carbon/proc/has_right_hand()
-	return 1
+/mob/proc/has_right_hand()
+	return FALSE
+
+/mob/living/carbon/has_right_hand()
+	return TRUE
 
 /mob/living/carbon/human/has_right_hand()
 	var/obj/item/bodypart/L

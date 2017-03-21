@@ -396,6 +396,11 @@ var/global/dmm_suite/preloader/_preloader = new
 
 /area/template_noop
 	name = "Area Passthrough"
+	has_gravity = 1
+
+/area/template_noop/mapgen_protected
+	name = "Area Passthrough"
+	mapgen_protected = 1
 
 /turf/template_noop
 	name = "Turf Passthrough"

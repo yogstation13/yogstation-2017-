@@ -39,6 +39,8 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
+	var/list/datum/station_goal/station_goals = list()
+
 
 /datum/game_mode/proc/announce() //to be called when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -94,6 +96,7 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1
@@ -130,6 +133,10 @@
 		return null
 
 	replacementmode = pickweight(usable_modes)
+	if(config.protect_roles_from_antagonist)
+		replacementmode.restricted_jobs += replacementmode.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		replacementmode.restricted_jobs += "Assistant"
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
@@ -144,8 +151,8 @@
 
 	var/list/antag_canadates = list()
 
-	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag)
+	for(var/mob/living/carbon/human/H in get_playing_crewmembers_for_role(replacementmode.antag_flag, replacementmode.restricted_jobs))
+		if(H.client && (H.stat != DEAD) && H.client.prefs.allow_midround_antag)
 			antag_canadates += H
 
 	if(!antag_canadates)
@@ -153,11 +160,6 @@
 		return null
 
 	antag_canadates = shuffle(antag_canadates)
-
-	if(config.protect_roles_from_antagonist)
-		replacementmode.restricted_jobs += replacementmode.protected_jobs
-	if(config.protect_assistant_from_antagonist)
-		replacementmode.restricted_jobs += "Assistant"
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
@@ -363,6 +365,12 @@
 			intercepttext += i_text.build(A)
 		else
 			intercepttext += i_text.build(A, pick(modePlayer))
+
+	if(station_goals.len)
+		intercepttext += "<hr><b fontsize = 10>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
 
 	print_command_report(intercepttext,"Centcom Status Summary")
 	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
@@ -573,7 +581,9 @@
 			crewmembers += H
 	for(var/V in crewmembers)
 		var/mob/living/carbon/human/applicant = V
-		if(!(role in applicant.client.prefs.be_special))
+		if(!applicant.client.prefs.allow_midround_antag)
+			continue
+		if(role && !(role in applicant.client.prefs.be_special))
 			continue
 		if(applicant.stat != CONSCIOUS || !applicant.mind || applicant.mind.special_role)
 			continue
@@ -747,4 +757,22 @@
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
-	remove_servant_of_ratvar(newborgie.current, TRUE)
+
+/datum/game_mode/proc/generate_station_goals()
+	var/list/possible = list()
+	for(var/T in subtypesof(/datum/station_goal))
+		var/datum/station_goal/G = T
+		if(config_tag in initial(G.gamemode_blacklist))
+			continue
+		possible += T
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		station_goals += new picked
+
+
+/datum/game_mode/proc/declare_station_goal_completion()
+	for(var/V in station_goals)
+		var/datum/station_goal/G = V
+		G.print_result()

@@ -148,6 +148,7 @@
 	desc = "Golden? Clearly, its made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
+	cooldowntime = 10
 
 /obj/item/device/assembly/bikehorn/golden/attack()
 	flip_mobs()

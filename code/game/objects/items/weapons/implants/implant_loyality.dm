@@ -27,14 +27,9 @@
 			removed(target, 1)
 			qdel(src)
 			return -1
-		if(target.mind in ticker.mode.get_gangsters())
-			ticker.mode.remove_gangster(target.mind)
-			target.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='notice'>You feel a sense of peace and security. You are now protected from brainwashing.</span>")
-			removed(target, 1)
-			qdel(src)
-			return -1
-		if(target.mind in ticker.mode.revolutionaries)
+		if(target.mind in ticker.mode.revolutionaries | ticker.mode.get_gangsters())
 			ticker.mode.remove_revolutionary(target.mind)
+			ticker.mode.remove_gangster(target.mind)
 		if(ticker.mode.is_cyberman(target.mind))
 			target << "<span class='notice'>Your cyberman body silenty disables the Nanotrasen nanobots as they enter your bloodstream. You appear to be implanted, but the implant has no effect.</span>"
 		if((target.mind in ticker.mode.cult) || (target.mind in ticker.mode.blue_deity_prophets|ticker.mode.red_deity_prophets|ticker.mode.red_deity_followers|ticker.mode.blue_deity_followers))
@@ -54,17 +49,9 @@
 
 /obj/item/weapon/implanter/mindshield
 	name = "implanter (mindshield)"
-
-/obj/item/weapon/implanter/mindshield/New()
-	imp = new /obj/item/weapon/implant/mindshield(src)
-	..()
-	update_icon()
-
+	imptype = /obj/item/weapon/implant/mindshield
 
 /obj/item/weapon/implantcase/mindshield
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
-
-/obj/item/weapon/implantcase/mindshield/New()
-	imp = new /obj/item/weapon/implant/mindshield(src)
-	..()
+	imptype = /obj/item/weapon/implant/mindshield

@@ -74,6 +74,10 @@
 	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
 		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
 		return
+	if(PROTECTEDEYES in C.dna.species.specflags)
+		visible_message("<span class='danger'>[C]'s lizard eyes block the sand!</span>")
+		return
+
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5

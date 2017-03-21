@@ -6,6 +6,7 @@
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
+#define BRAIN		"brain"
 
 #define STUN		"stun"
 #define WEAKEN		"weaken"
@@ -16,6 +17,14 @@
 #define EYE_BLUR	"eye_blur"
 #define DROWSY		"drowsy"
 #define JITTER		"jitter"
+
+//damage application types
+#define DAMAGE_PHYSICAL 1
+#define DAMAGE_CHEMICAL 2
+#define DAMAGE_DISEASE 	3
+#define DAMAGE_CLONING 	4
+#define DAMAGE_MAGIC 	5
+#define DAMAGE_NO_MULTIPLIER	6
 
 //I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
 #define BRUTELOSS 1
@@ -37,6 +46,7 @@
 #define DISFIGURED			10
 #define XENO_HOST			11	//Tracks whether we're gonna be a baby alien's mummy.
 #define GODMODE				12
+#define NOCRIT				13	//if they're immune to crit, currently only used with stimulants reagent
 
 
 //Grab levels
@@ -71,7 +81,6 @@
 #define PROJECTILE_ATTACK 3
 #define THROWN_PROJECTILE_ATTACK 4
 #define HULK_ATTACK 5
-
 
 //Gun Stuff
  #define SAWN_INTACT  0
