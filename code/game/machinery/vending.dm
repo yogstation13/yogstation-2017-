@@ -804,7 +804,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list("Medical Devices" = list(/obj/item/weapon/reagent_containers/syringe = 12, /obj/item/device/healthanalyzer = 4, /obj/item/device/sensor_device = 2,
 	/obj/item/weapon/reagent_containers/dropper = 3),
 				"Medicine" = list(/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/stack/medical/gauze = 8,/obj/item/weapon/reagent_containers/pill/patch/styptic = 5, /obj/item/weapon/reagent_containers/pill/insulin = 10,
-				/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4, /obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4,/obj/item/weapon/reagent_containers/glass/bottle/morphine = 4,
+				/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 4, /obj/item/weapon/reagent_containers/spray/sterilizer = 1, /obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 4,/obj/item/weapon/reagent_containers/glass/bottle/morphine = 4,
 				/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution = 3,/obj/item/medical/bandage/normal = 5, /obj/item/medical/bandage/burn = 5,
 				/obj/item/weapon/reagent_containers/glass/bottle/toxin = 3,/obj/item/weapon/reagent_containers/syringe/antiviral = 6,/obj/item/weapon/reagent_containers/pill/salbutamol = 2))
 	contraband = list("Medicine" = list(/obj/item/weapon/reagent_containers/pill/tox = 3,/obj/item/weapon/reagent_containers/pill/morphine = 4,/obj/item/weapon/reagent_containers/pill/charcoal = 6))
@@ -828,7 +828,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list("Medical Devices" = list(/obj/item/weapon/reagent_containers/syringe = 3),
 					"Medicine" = list(/obj/item/weapon/reagent_containers/pill/patch/styptic = 5,
 					/obj/item/medical/bandage/normal = 2, /obj/item/medical/bandage/burn = 2,
-					/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/pill/charcoal = 2))
+					/obj/item/weapon/reagent_containers/pill/patch/silver_sulf = 5,/obj/item/weapon/reagent_containers/pill/charcoal = 2, /obj/item/weapon/reagent_containers/spray/sterilizer = 1))
 	contraband = list("Medicine" = list(/obj/item/weapon/reagent_containers/pill/tox = 2,/obj/item/weapon/reagent_containers/pill/morphine = 2))
 
 /obj/machinery/vending/security
@@ -839,7 +839,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_deny = "sec-deny"
 	req_access_txt = "1"
 	products = list("Security Items" = list(/obj/item/weapon/restraints/handcuffs = 8,/obj/item/weapon/restraints/handcuffs/cable/zipties = 10,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/assembly/flash/handheld = 5,
-					/obj/item/weapon/reagent_containers/food/snacks/donut = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4))
+					/obj/item/weapon/reagent_containers/food/snacks/donut = 12,/obj/item/weapon/storage/box/evidence = 6,/obj/item/device/flashlight/seclite = 4, /obj/item/scope/security=8, /obj/item/weapon/restraints/legcuffs/bola/energy = 10))
 	contraband = list("Security Items" = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2))
 	premium = list("Security Items" = list(/obj/item/weapon/coin/antagtoken = 1))
 

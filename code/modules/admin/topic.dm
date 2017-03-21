@@ -837,9 +837,21 @@
 
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td></tr><tr align='center'>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td></tr><tr align='center'>"
+
+		//Lavaland Roles
+		if(jobban_isbanned(M, "lavaland"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>[replacetext("Lavaland Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>[replacetext("Lavaland Roles", " ", "&nbsp")]</a></td>"
+
+		//Xenobio (sentience potions/golems/etc._
+		if(jobban_isbanned(M, "xenobio"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'><font color=red>[replacetext("Xenobio Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'>[replacetext("Xenobio Roles", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -999,7 +1011,7 @@
 						continue
 					joblist += temp.title
 			if("ghostroles")
-				joblist += list("pAI", "posibrain", "drone", "deathsquad")
+				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland", "xenobio")
 			else
 				joblist += href_list["jobban3"]
 
@@ -1612,12 +1624,11 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human"
+		var/mob/M = locate(href_list["makeblob"])
+		if(!M)
 			return
 
-		usr.client.cmd_admin_blobize(H)
+		usr.client.cmd_admin_blobize(M)
 
 
 	else if(href_list["makerobot"])

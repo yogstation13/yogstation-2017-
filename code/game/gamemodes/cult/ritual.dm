@@ -35,7 +35,7 @@ This file contains the arcane tome files.
 			M.reagents.add_reagent("unholywater",holy2unholy)
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
-	M.take_organ_damage(0, 15) //Used to be a random between 5 and 20
+	M.take_organ_damage(0, 15, 1, DAMAGE_MAGIC) //Used to be a random between 5 and 20
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
 	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
 					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
@@ -50,9 +50,9 @@ This file contains the arcane tome files.
 	open_tome(user)
 
 /obj/item/weapon/tome/proc/open_tome(mob/user)
-	var/choice = alert(user,"You open the tome...",,"Scribe Rune","More Information","Cancel")
+	var/choice = alert(user,"You open the tome...",,"Scribe Rune","How to cult","Cancel")
 	switch(choice)
-		if("More Information")
+		if("How to cult")
 			read_tome(user)
 		if("Scribe Rune")
 			scribe_rune(user)
@@ -63,24 +63,21 @@ This file contains the arcane tome files.
 	var/text = ""
 	text += "<center><font color='red' size=3><b><i>Archives of the Dark One</i></b></font></center><br><br><br>"
 	text += "A rune's name and effects can be revealed by examining the rune.<<br><br>"
-
+	text += "A complete guide to cult by the Salty One is available at https://forums.yogstation.net/index.php?threads/hematolagnia-or-how-i-learned-to-stop-worrying-and-play-bloodcult.12348/.<<br><br>"
+	text += "Alternatively, go to the /tg/station wiki, or ask admins for help. Your role is a vital one. Make sure you know what you're doing.<<br><br>"
 	text += "<font color='red'><b>Create Talisman</b></font><br>This rune is one of the most important runes the cult has, being the only way to create new talismans. A blank sheet of paper must be on top of the rune. After \
 	invoking it and choosing which talisman you desire, the paper will be converted, after some delay into a talisman.<br><br>"
 
 	text += "<font color='red'><b>Teleport</b></font><br>This rune is unique in that it requires a keyword before the scribing can begin. When invoked, it will find any other Teleport runes; \
 	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
 
-	text += "<font color='red'><b>Convert</b></font><br>This rune is critical to the success of the cult. It will allow you to convert normal crew members into cultists. \
-	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is mindshield-implanted or a certain assignment, they will \
-	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br> \
-	Successful conversions will produce a tome for the new cultist.<br><br>"
+	text += "<font color='red'><b>Offer</b></font><br>Requires two cultists to convert a living target, or three to sacrifice a living target. Requires only one to sacrifice a corpse. This rune will see if a target placed atop it is convertable.\
+	If they are convertable, they will be converted. If they are not, they will be sacrificed. A sacrifice will place the sacrifice's soul into a soulstone, an object \
+	which holds the sacrifice's soul. They can then either be released by clicking on the soulstone, or placed into a construct shell to become a deadly construct, capable of amazing feats. Your target \
+	cannot be converted, and will be sacrificed. The Captain and Chaplain are also immune to being converted.<br><br>"
 
-	text += "<font color='red'><b>Sacrifice</b></font><br><b>This rune is necessary to achieve your goals.</b> Simply place any dead creature upon the rune and invoke it (this will not \
-	target cultists!). If this creature has a mind, a soulstone will be created and the creature's soul transported to it. Sacrificing the dead can be done alone, but sacrificing living crew <b>or your cult's target</b> will require 3 cultists. \
-	Soulstones used on construct shells will move that soul into a powerful construct of your choice.<br><br>"
-
-	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires two corpses. To perform the ritual, place the corpse you wish to revive onto \
-	the rune and the offering body adjacent to it. When the rune is invoked, the body to be sacrificed will turn to dust, the life force flowing into the revival target. Assuming the target is not moved \
+	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires there to be more sacrifices than there are cultists revived in total. To perform the ritual, place the corpse you wish to revive onto \
+	the rune. When the rune is invoked, the body will be revived. Assuming the target is not moved \
 	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
 
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. This rune may allow you to gain the upper \
@@ -168,6 +165,8 @@ This file contains the arcane tome files.
 
 /obj/item/weapon/tome/proc/scribe_rune(mob/living/user)
 	var/turf/Turf = get_turf(user)
+	var/area/area = get_area(user)
+	var/areaname = initial(area.name)
 	var/chosen_keyword
 	var/obj/effect/rune/rune_to_scribe
 	var/entered_rune_name
@@ -175,6 +174,9 @@ This file contains the arcane tome files.
 	var/list/shields = list()
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
+		return
+	if(areaname == "Space" || istype(Turf,/turf/open/space) || (user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM))
+		user << "<span class='cultitalic'>You are too far away from Nar'Sie's strength to scribe this rune! Return to the station!</span>"
 		return
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
@@ -184,9 +186,6 @@ This file contains the arcane tome files.
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
-		return
-	if(istype(Turf, /turf/open/space))
-		user << "<span class='warning'>You cannot scribe runes in space!</span>"
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -262,8 +261,9 @@ This file contains the arcane tome files.
 			var/obj/machinery/shield/S = V
 			if(S && !qdeleted(S))
 				qdel(S)
-		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-			P.the_disk = null // this sets it back.
+		if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
+			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+				P.the_disk = null // this sets it back.
 		return
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
@@ -276,5 +276,6 @@ This file contains the arcane tome files.
 			qdel(S)
 	new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
-	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-		P.visible_message("<span class='warning'>[P] begins rattling, but it's pointer remains unmoved in it's pecuilar direction.</span>")
+	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
+		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			P.visible_message("<span class='warning'>[P] begins rattling in horror.</span>")

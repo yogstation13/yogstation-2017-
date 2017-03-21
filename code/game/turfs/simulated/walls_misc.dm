@@ -35,23 +35,13 @@
 		alertthreshold--
 
 /turf/closed/wall/mineral/cult/Bumped(atom/movable/C as mob)
-	var/phasable=0
 	if(istype(C,/mob/living/simple_animal/hostile/construct))
 		var/mob/living/simple_animal/hostile/construct/construct = C
 		if(!construct.phaser)
 			return
-		phasable = 2
-		while(phasable>0)
-			if(construct.pulling)
-				construct.stop_pulling()
-			src.density = 0
-			src.alpha = 60
-			src.opacity = 0
-			sleep(10)
-			phasable--
-		src.density = 1
-		src.alpha = initial(src.alpha)
-		src.opacity = 1
+		if(construct.pulling)
+			construct.stop_pulling()
+		construct.forceMove(get_turf(src))
 	return
 
 /turf/closed/wall/mineral/cult/attackby(obj/item/weapon/W, mob/user, params)
@@ -75,7 +65,9 @@
 			alpha = initial(src.alpha)
 			density = 1
 			opacity = 1
-	return
+		return
+	else
+		..()
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
@@ -114,6 +106,8 @@
 	if(prob(2))
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
 	for(var/obj/structure/clockwork/cache/C in orange(1, src))
+		if(!C.active) //if it's off the zlevel, caches can't produce components.
+			continue
 		if(C.wall_generation_cooldown <= world.time)
 			C.wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			generate_cache_component()

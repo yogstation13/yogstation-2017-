@@ -2,6 +2,7 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	all_clockwork_mobs -= src
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)

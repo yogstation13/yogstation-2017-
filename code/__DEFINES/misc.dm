@@ -125,7 +125,8 @@
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-
+// Max number of station goals
+#define STATION_GOAL_BUDGET  1
 
 //HUD styles. Please ensure HUD_VERSIONS is the same as the maximum index. Index order defines how they are cycled in F12.
 #define HUD_STYLE_STANDARD 1

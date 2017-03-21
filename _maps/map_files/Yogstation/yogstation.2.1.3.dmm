@@ -2017,26 +2017,6 @@
 	icon_state = "dark"
 	},
 /area/ai_monitored/security/armory)
-"adU" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/ai_monitored/security/armory)
-"adV" = (
-/obj/structure/closet/wardrobe/red,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/security/main)
 "adW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -31516,14 +31496,16 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "blR" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "blS" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -32851,6 +32833,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/weapon/book/manual/wiki/phytosian,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -33230,8 +33213,9 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bpr" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -33242,8 +33226,9 @@
 	},
 /area/shuttle/supply)
 "bpt" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -33511,14 +33496,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
-/area/crew_quarters/captain)
-"bpY" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
 /area/crew_quarters/captain)
 "bpZ" = (
 /obj/structure/disposalpipe/segment,
@@ -37760,7 +37737,7 @@
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
-	req_access_txt = "5; 9"
+	req_access_txt = "69"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -40045,7 +40022,7 @@
 "bBO" = (
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Research";
-	req_access_txt = "5; 9"
+	req_access_txt = "5; 9; 69"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -41161,14 +41138,16 @@
 /turf/open/floor/engine/vacuum,
 /area/toxins/mixing)
 "bDY" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/abandoned)
 "bDZ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/abandoned)
@@ -41193,8 +41172,9 @@
 	},
 /area/shuttle/abandoned)
 "bEc" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -41212,8 +41192,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
 "bEf" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/supply)
@@ -43786,6 +43767,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/book/manual/wiki/plasmaman,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -67990,12 +67972,13 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFM" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68016,8 +67999,9 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cFQ" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68049,12 +68033,13 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68075,8 +68060,9 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cGb" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/shuttle/transport)
@@ -68817,6 +68803,14 @@
 	dir = 2
 	},
 /area/shuttle/escape)
+"VJf" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/maintcentral)
 "WyQ" = (
 /obj/machinery/door/airlock/external{
 	name = "Engineering Escape Pod";
@@ -68865,8 +68859,9 @@
 /area/tcommsat/computer)
 "XXK" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
 /obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/book/manual/wiki/preternis,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -69149,6 +69144,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyk" = (
+/obj/item/weapon/book/manual/wiki/plasmaman,
+/turf/closed/wall,
+/area/medical/sleeper)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -83461,7 +83460,7 @@ bcM
 aUW
 bag
 bgl
-bhG
+bkB
 biZ
 bkD
 blZ
@@ -101199,9 +101198,9 @@ bdE
 bdE
 bmG
 bbX
-bbX
-bbX
-bbX
+bmv
+bmv
+bmv
 bup
 bvM
 bxk
@@ -101456,9 +101455,9 @@ bjL
 bdE
 bmH
 bop
-bpY
-bpY
-bpY
+VJf
+VJf
+VJf
 bus
 bvN
 bxl
@@ -101713,9 +101712,9 @@ bbX
 bbX
 bbX
 bbX
-bbX
-bbX
-bbX
+bmv
+bmv
+bmv
 bup
 bup
 bxm

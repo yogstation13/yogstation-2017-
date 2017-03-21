@@ -68,9 +68,16 @@
 
 	summon_type = list(/obj/item/device/soulstone)
 
-/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult/
 	cult_req = 1
 	charge_max = 4000
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cast(list/targets,mob/user = usr)
+	if(isconstruct(usr))
+		var/mob/living/simple_animal/hostile/construct/C = usr
+		newVars += list("affiliation" = C.affiliation)
+	..()
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
 	summon_type = list(/obj/item/device/soulstone/anybody)

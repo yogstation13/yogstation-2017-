@@ -79,8 +79,8 @@
 "bs" = (/turf/closed/wall/shuttle{icon_state = "swall3";dir = 2},/area/shuttle/escape)
 "br" = (/turf/closed/wall/shuttle{tag = "icon-swallc3";icon_state = "swallc3";dir = 2},/area/shuttle/escape)
 "bq" = (/turf/closed/wall/shuttle{icon_state = "swallc4";dir = 2},/area/shuttle/escape)
-"bp" = (/turf/closed/wall/shuttle{icon_state = "swall_s10";dir = 2},/area/shuttle/escape)
-"bo" = (/turf/closed/wall/shuttle{icon_state = "swall_s6";dir = 2},/area/shuttle/escape)
+"bp" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f10";dir = 2},/area/shuttle/escape)
+"bo" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f6";dir = 2},/area/shuttle/escape)
 
 (1,1,1) = {"
 aaaaboacacacacacbpaaaa

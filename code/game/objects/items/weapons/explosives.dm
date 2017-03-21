@@ -6,7 +6,6 @@
 	gender = PLURAL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = 2
 	origin_tech = "syndicate=1"
@@ -16,7 +15,6 @@
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
-	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()
@@ -65,30 +63,33 @@
 		timer = newtime
 		user << "Timer set for [timer] seconds."
 
-/obj/item/weapon/c4/afterattack(atom/movable/AM, mob/user, flag)
+/obj/item/weapon/c4/afterattack(atom/A, mob/user, flag)
+	var/atom/movable/AM
+	if(istype(A, /atom/movable))
+		AM = A
 	if (!flag)
 		return
-	if (ismob(AM))
+	if (ismob(A))
 		return
-	if(loc == AM)
+	if(loc == A)
 		return
-	if(istype(AM,/obj/item/weapon/restraints/legcuffs/bola))
+	if(istype(A,/obj/item/weapon/restraints/legcuffs/bola))
 		return
-	if((istype(AM, /obj/item/weapon/storage/)) && !((istype(AM, /obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
+	if((istype(A, /obj/item/weapon/storage/)) && !((istype(A, /obj/item/weapon/storage/secure)) || (istype(A, /obj/item/weapon/storage/lockbox)))) //If its storage but not secure storage OR a lockbox, then place it inside.
 		return
-	if((istype(AM,/obj/item/weapon/storage/secure)) || (istype(AM, /obj/item/weapon/storage/lockbox)))
-		var/obj/item/weapon/storage/secure/S = AM
+	if((istype(A,/obj/item/weapon/storage/secure)) || (istype(A, /obj/item/weapon/storage/lockbox)))
+		var/obj/item/weapon/storage/secure/S = A
 		if(!S.locked) //Literal hacks, this works for lockboxes despite incorrect type casting, because they both share the locked var. But if its unlocked, place it inside, otherwise PLANTING C4!
 			return
 
 	user << "<span class='notice'>You start planting the bomb...</span>"
 
-	if(do_after(user, 50, target = AM))
+	if(do_after(user, 50, target = A))
 		if(!user.unEquip(src))
 			return
-		if(AM.throw_speed > 3)
+		if(AM && AM.throw_speed > 3)
 			AM.throw_speed = 3
-		src.target = AM
+		src.target = A
 		loc = null
 
 		message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) planted [src.name] on [target.name] at ([target.x],[target.y],[target.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>) with [timer] second fuse",0,1)

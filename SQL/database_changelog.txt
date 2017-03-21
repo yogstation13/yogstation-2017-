@@ -1,3 +1,13 @@
+
+7 February 2017, by tomamoto
+
+Modified table 'player', adding column 'antag_weight', to bring it inline with the schema expected by the yogstation code.
+
+ALTER TABLE `feedback`.`player` ADD COLUMN `antag_weight` FLOAT DEFAULT NULL
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
 21 September 2015, by Jordie0608
 
 Modified table 'poll_question', adding columns 'createdby_ckey', 'createdby_ip' and 'for_trialmin' to bring it inline with the schema used by the tg servers.
@@ -34,7 +44,7 @@ Remember to add prefix to the table name if you use them.
 
 Modified table 'memo', removing 'id' column and making 'ckey' primary.
 
-ALTER TABLE `feedback`.`memo` DROP COLUMN `id`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`) 
+ALTER TABLE `feedback`.`memo` DROP COLUMN `id`, DROP PRIMARY KEY, ADD PRIMARY KEY (`ckey`)
 
 Remember to add prefix to the table name if you use them.
 

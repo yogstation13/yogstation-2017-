@@ -53,11 +53,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			usr << "<span class='warning'>The ink smears, but doesn't wash away!</span>"
 	return
 
-/datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
+/datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //Splashing people with ethanol isn't quite as good as fuel.
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH || method == VAPOR)
+	if(method in list(TOUCH, VAPOR, PATCH))
 		M.adjust_fire_stacks(reac_volume / 15)
+
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10*power_multiplier, S.success_multiplier)
+				S.speedup_multiplier = max(0.35*power_multiplier, S.speedup_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
+				// +35% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer
@@ -260,10 +271,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/M)
 	if(M.mind && M.mind.special_role in list("Revolutionary", "Head Revolutionary")) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.adjustBruteLoss(-1, 0)
-		M.adjustFireLoss(-1, 0)
-		M.adjustToxLoss(-1, 0)
-		M.adjustOxyLoss(-5, 0)
+		M.adjustBruteLoss(-1, 0, DAMAGE_CHEMICAL)
+		M.adjustFireLoss(-1, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-1, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(-5, 0, DAMAGE_CHEMICAL)
 		. = 1
 	return ..() || .
 
@@ -486,7 +497,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/H = M
 		if(!H.shoes)
-			H.adjustBruteLoss(-3, 0)
+			H.adjustBruteLoss(-3, 0, DAMAGE_CHEMICAL)
 			. = 1
 	return ..() || .
 
@@ -733,11 +744,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)
 	if(M.stat == UNCONSCIOUS && M.health <= 0)
-		M.adjustBruteLoss(-7, 0)
-		M.adjustFireLoss(-7, 0)
-		M.adjustToxLoss(-7, 0)
-		M.adjustOxyLoss(-7, 0)
-		M.adjustCloneLoss(-7, 0)
+		M.adjustBruteLoss(-7, 0, DAMAGE_CHEMICAL)
+		M.adjustFireLoss(-7, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-7, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(-7, 0, DAMAGE_CHEMICAL)
+		M.adjustCloneLoss(-7, 0, DAMAGE_CHEMICAL)
 		. = 1
 	return ..() || .
 

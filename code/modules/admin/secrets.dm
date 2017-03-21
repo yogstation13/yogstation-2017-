@@ -9,7 +9,6 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
-			John hates all of you.<BR>
 			<BR>
 			"}
 
@@ -64,6 +63,7 @@
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=\ref[src];secrets=nerfwar'>Nerf War</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
 			"}
@@ -576,6 +576,20 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+		if("nerfwar")
+			var/list/gun_type_list = list(/obj/item/weapon/gun/projectile/automatic/toy, /obj/item/weapon/gun/projectile/automatic/toy/pistol, /obj/item/weapon/gun/projectile/shotgun/toy, /obj/item/weapon/gun/projectile/shotgun/toy/crossbow)
+			for(var/mob/living/carbon/human/H in player_list)
+				if(H.stat == 2 || !(H.client))
+					continue
+				var/type = pick(gun_type_list)
+				new /obj/item/ammo_box/foambox(get_turf(H))
+				var/obj/item/weapon/gun/projectile/gun = new type(get_turf(H))
+				if(istype(gun, /obj/item/weapon/gun/projectile/automatic) && gun.mag_type)//one extra mag if the gun uses magazines.
+					new gun.mag_type(get_turf(H))
+				if(type == /obj/item/weapon/gun/projectile/shotgun/toy/crossbow)//for that sick combo cafe.
+					new /obj/item/toy/sword(get_turf(H))
+				playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
+			message_admins("[key_name_admin(usr)] has spawned foam-force guns for the entire crew.")
 
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))

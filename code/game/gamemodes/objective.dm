@@ -89,7 +89,11 @@
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Assassinate [target.name], the [spec][!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -117,7 +121,11 @@
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Assassinate or exile [target.name], the [spec][!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -144,7 +152,11 @@
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Prevent [target.name], the [spec][!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -177,7 +189,11 @@
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Steal the brain of [target.name], the [spec][!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -206,7 +222,11 @@
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Protect [target.name], the [spec][!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -387,8 +407,12 @@
 
 /datum/objective/escape/escape_with_identity/update_explanation_text()
 	if(target && target.current)
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
 		target_real_name = target.current.real_name
-		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [target.assigned_role]"
+		explanation_text = "Escape on the shuttle or an escape pod with the identity of [target_real_name], the [spec][target.assigned_role]"
 		var/mob/living/carbon/human/H
 		if(ishuman(target.current))
 			H = target.current
@@ -563,7 +587,11 @@ var/global/list/possible_items_special = list()
 /datum/objective/steal/exchange/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Acquire [targetinfo.name] held by [target.name], the [target.assigned_role] and syndicate agent"
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Acquire [targetinfo.name] held by [target.name], the [spec][target.assigned_role] and syndicate agent"
 	else
 		explanation_text = "Free Objective"
 
@@ -851,9 +879,13 @@ var/global/list/possible_items_special = list()
 
 	var/first = 1
 	for(var/datum/mind/M in department_minds)
-		var/string = "[M.name] the [M.assigned_role]"
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		var/string = "[M.name] the [spec][M.assigned_role]"
 		if(!first)
-			string = ", [M.name] the [M.assigned_role]"
+			string = ", [M.name] the [spec][M.assigned_role]"
 		else
 			first--
 		explanation_text += string

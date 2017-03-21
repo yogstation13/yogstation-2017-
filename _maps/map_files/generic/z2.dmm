@@ -1154,8 +1154,9 @@
 /turf/closed/indestructible/splashscreen,
 /area/start)
 "ds" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall_f6";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -1181,8 +1182,9 @@
 /turf/open/floor/plating/airless,
 /area/centcom/evac)
 "dw" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	icon_state = "swall_f10";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -1342,14 +1344,16 @@
 /turf/open/floor/plasteel/shuttle,
 /area/centcom/evac)
 "dU" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall_f5";
 	dir = 2
 	},
 /area/centcom/evac)
 "dV" = (
+/turf/open/space,
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
+	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/centcom/evac)
@@ -2641,9 +2645,6 @@
 	},
 /area/centcom/supply)
 "hU" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
@@ -2696,6 +2697,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 /turf/open/floor/plasteel/green/side{
 	dir = 5
 	},
@@ -2899,24 +2901,26 @@
 	},
 /area/centcom/evac)
 "iI" = (
-/obj/structure/chair{
-	dir = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/open/floor/plasteel/green/side,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/holofloor/grass,
 /area/centcom/evac)
 "iJ" = (
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iK" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
-/obj/item/toy/katana,
-/turf/open/floor/plasteel/green/side,
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/holofloor/grass,
 /area/centcom/evac)
 "iL" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/crayons,
 /obj/item/toy/sword,
+/obj/item/toy/katana,
 /turf/open/floor/plasteel/green/side,
 /area/centcom/evac)
 "iM" = (
@@ -6070,10 +6074,13 @@
 /turf/open/floor/oldshuttle,
 /area/krampusbag)
 "sl" = (
-/obj/effect/mob_spawn/human/corpse/damaged,
-/obj/effect/decal/sandeffect,
-/turf/open/floor/sepia,
-/area/krampusbag)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
 "sm" = (
 /obj/effect/landmark{
 	name = "KrampusBag"
@@ -6135,6 +6142,54 @@
 /obj/effect/glowshroom/single,
 /turf/open/floor/wood,
 /area/krampusworkshop)
+"sE" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sD" = (
+/obj/structure/arc,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sB" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sA" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
+"sz" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/holofloor/grass,
+/area/centcom/evac)
 
 (1,1,1) = {"
 aa
@@ -41764,8 +41819,8 @@ gK
 gK
 gK
 gK
-gK
-gK
+sz
+sC
 iI
 fN
 ab
@@ -42021,9 +42076,9 @@ gK
 gK
 gK
 gK
-gK
-gK
-iI
+sA
+sD
+iK
 fN
 ab
 ab
@@ -42278,9 +42333,9 @@ gK
 gK
 gK
 gK
-gK
-gK
-iI
+sB
+sE
+sl
 fN
 ab
 ab
@@ -42537,7 +42592,7 @@ gK
 gK
 gK
 gK
-gt
+iJ
 fN
 ab
 ab
@@ -42794,7 +42849,7 @@ gK
 hV
 ib
 gK
-iK
+gt
 fN
 ab
 ab
