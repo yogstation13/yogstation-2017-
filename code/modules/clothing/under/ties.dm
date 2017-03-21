@@ -321,3 +321,25 @@
 	item_color = "talisman"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 50, bio = 65, rad = 5) //Faith is the best armor. //This won't actually work because of accessories kill me with a fucking knife jesus christ I hate code
+
+/obj/item/clothing/tie/medic
+	name = "pinnable camera"
+	desc = "The medic SEES ALL. Not recommended to bring to the restroom."
+	icon_state = "camera"
+	item_color = "camera"
+	item_state = ""
+	icon = 'icons/obj/clothing/ties.dmi'
+	var/obj/machinery/camera/portable/cam
+
+/obj/item/clothing/tie/medic/New()
+	..()
+	cam = new(src)
+	cam.c_tag = "Miner ([rand(1,999)])"
+	cam.network = list("MEDIC")
+
+/obj/item/clothing/tie/medic/attack_self(mob/user)
+	var/newname = copytext(sanitize(input(user, "Name your camera", "Save the Mining Medic Time", cam.c_tag) as null|text),1,MAX_NAME_LEN)
+	if(newname)
+		cam.c_tag = newname
+	else
+		user << "<span class='notice'>You chose not to name your camera.</span>"

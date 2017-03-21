@@ -22,7 +22,7 @@
 	src.loc = loc
 	src.target = target
 	src.creator = creator
-	var/area/A = target.loc
+	var/area/A = get_area(target)
 	if(A.noteleport) // No point in persisting if the target is unreachable.
 		destroy_effect()
 		return
