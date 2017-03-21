@@ -67972,11 +67972,11 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFM" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
@@ -68033,11 +68033,11 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
@@ -83460,7 +83460,7 @@ bcM
 aUW
 bag
 bgl
-bhG
+bkB
 biZ
 bkD
 blZ

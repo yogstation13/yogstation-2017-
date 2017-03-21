@@ -54,6 +54,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/body_attack_log
+	var/body_say_log
 
 /mob/dead/observer/New(mob/body)
 	alpha = 0
@@ -71,9 +73,12 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	updateallghostimages()
 
 	var/turf/T
-	if(ismob(body))
+	if(isliving(body))
+		var/mob/living/L = body
 		T = get_turf(body)				//Where is the body located?
-		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
+		//preserve our logs by copying them to our ghost
+		body_attack_log = L.attack_log
+		body_say_log = L.say_log
 
 		gender = body.gender
 		if(body.mind && body.mind.name)

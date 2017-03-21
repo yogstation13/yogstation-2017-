@@ -20,63 +20,74 @@
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
+	var/infinite = FALSE
+	var/cuffspeed = 30
 
-/obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+/obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
 		return
-	if(user.disabilities & CLUMSY && prob(50))
+	if((user.disabilities & CLUMSY) && prob(50))
 		user << "<span class='warning'>Uh... how do those things work?!</span>"
-		apply_cuffs(user,user)
-		return
-
-	if(C.dna.species.id == "abomination")
-		user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
-		return
-
-	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
-			add_logs(user, C, "attempted to handcuff")
-			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
-
-			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
-				if(C.dna.species.id == "abomination")
-					user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
-					return
-				apply_cuffs(C,user)
-				user << "<span class='notice'>You handcuff [C].</span>"
-				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
-					feedback_add_details("handcuffs","C")
-				else
-					feedback_add_details("handcuffs","H")
-
-				add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+		if(can_cuff(user))
+			apply_cuffs(user,user)
 		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+			user.unEquip(src)
+		return
 
-/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
+	add_logs(user, C, "attempted to handcuff")
+	C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+						"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+
+	if(can_cuff(C, user))
+		playsound(loc, cuffsound, cuffspeed, 1, -2)
+		if(do_mob(user, C, cuffspeed))
+			if(!can_cuff(C, user))
+				return
+			apply_cuffs(C,user)
+			user << "<span class='notice'>You handcuff [C].</span>"
+			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+				feedback_add_details("handcuffs","C")
+			else
+				feedback_add_details("handcuffs","H")
+
+			add_logs(user, C, "handcuffed")
+		else
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
+
+/obj/item/weapon/restraints/handcuffs/proc/can_cuff(mob/living/carbon/target, mob/living/user)
+	if(!istype(target))
+		return FALSE
 	if(target.handcuffed)
-		return
+		if(user)
+			user <<"<span class='warning'>[target] is already handcuffed.</span>"
+		return FALSE
+	if(target.dna.species.id == "abomination")
+		if(user)
+			user <<"<span class='warning'>[target] doesn't have much hands to speak of!</span>"
+		return FALSE
+	if(target.get_num_arms() < 2)
+		if(user)
+			user << "<span class='warning'>[target] doesn't have two hands...</span>"
+		return FALSE
+	return TRUE
 
-	if(!user.drop_item() && !dispense)
-		return
+/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
+	if(!infinite && !user.unEquip(src))
+		return FALSE
 
 	var/obj/item/weapon/restraints/handcuffs/cuffs = src
 	if(trashtype)
 		cuffs = new trashtype()
-	else if(dispense)
+		if(!infinite)
+			qdel(src)
+	else if(infinite)
 		cuffs = new type()
 
 	cuffs.loc = target
 	target.handcuffed = cuffs
 
 	target.update_handcuffed()
-	if(trashtype && !dispense)
-		qdel(src)
-	return
+	return TRUE
 
 /obj/item/weapon/restraints/handcuffs/sinew
 	name = "sinew restraints"
@@ -106,14 +117,17 @@
 		return
 	return ..()
 
-/obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
-	if(wirestorage)
-		if(!wirestorage.use_charge(15))
+/obj/item/weapon/restraints/handcuffs/cable/can_cuff(mob/living/carbon/target, mob/user)
+	if(wirestorage && (wirestorage.energy < 15))
+		if(user)
 			user << "<span class='warning'>You need at least 15 wire to restrain [target]!</span>"
-			return
-		return ..(target, user, 1)
+		return FALSE
+	return ..(target, user)
 
-	return ..()
+/obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user)
+	. = ..()
+	if(. && wirestorage)
+		wirestorage.use_charge(15)
 
 /obj/item/weapon/restraints/handcuffs/cable/attack_self(mob/user)
 		var/obj/item/stack/cable_coil/new_coil = new /obj/item/stack/cable_coil
@@ -172,21 +186,6 @@
 	else
 		return ..()
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
-	if(isrobot(user))
-		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
-				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-					C.update_handcuffed()
-					user << "<span class='notice'>You handcuff [C].</span>"
-					add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
-
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -207,6 +206,8 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties/attack_self(mob/user)
 	return
 
+/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg
+	infinite = TRUE
 
 //Legcuffs
 
