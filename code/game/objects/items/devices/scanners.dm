@@ -5,6 +5,7 @@ T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
 MASS SPECTROMETER
+DIAGNOSTIC ANALYZER
 
 */
 /obj/item/device/t_scanner
@@ -112,8 +113,10 @@ MASS SPECTROMETER
 
 
 // Used by the PDA medical scanner too
-/proc/healthscan(mob/living/user, mob/living/M, mode = 1)
+/proc/healthscan(mob/living/user, mob/living/M, mode = 1, var/silicon)
 	if(user.stat || user.eye_blind)
+		return
+	if(!silicon && (issilicon(M) || istype(M, /mob/living/simple_animal/bot)))
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -491,3 +494,85 @@ MASS SPECTROMETER
 	if (T.stat == UNCONSCIOUS)
 		user << "<span class='notice'>Slime is in stasis.</span>"
 	user << "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+
+
+
+
+
+/obj/item/device/diagnosticscanner
+	name = "diagnostic scanner"
+	desc = "An analyzer for silicons and other silicon based lifeforms. Open a borg for an internal scan."
+	icon_state = "diagnostic0"
+	w_class = 2
+	var/active = FALSE
+	item_state = "analyzer"
+	materials = list(MAT_METAL=200, MAT_SILVER=10)
+	origin_tech = "magnets=1;engineering=3;biotech=2"
+
+/obj/item/device/diagnosticscanner/attack_self(mob/user)
+	if(!active)
+		icon_state = "diagnostic2"
+	else
+		icon_state = "diagnostic3"
+	addtimer(src,"toggle",15,TRUE)
+
+/obj/item/device/diagnosticscanner/proc/toggle()
+	if(!active)
+		icon_state = "diagnostic1"
+		active = TRUE
+		w_class = 3
+	else
+		icon_state = "diagnostic0"
+		active = FALSE
+		w_class = 2
+
+/obj/item/device/diagnosticscanner/attack(mob/living/M, mob/living/carbon/human/user)
+	if(!active)
+		return
+	else
+		diagnosticscan(user, M)
+
+/proc/diagnosticscan(mob/living/user, mob/living/M)
+	if(isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		user << "<span class='notice'>Diagnostic results for \icon[R] [R.name]:</span>"
+		user << "<span class='notice'>Overall status: <b>[round(M.health/M.maxHealth*100)]%</b></span>"
+		user << "<span class='notice'>Damage:<font color='red'>Brute</font>-<font color='#FE5800'>Burn</font></span>"
+		user << "     <font color='red'>[R.getBruteLoss()]</font> - <font color='#FE5800'>[R.getFireLoss()]</font>"
+		if(R.cell)
+			user << "<span class='notice'> \icon[R.cell] [R.cell.name] at [R.cell.charge/R.cell.maxcharge*100]%.</span>"
+		user << "<span class='notice'>Designation: <b>[R.designation]</b></span>"
+		user << "<span class='notice'>Upgrades:</span>"
+		for(var/obj/item/borg/upgrade/U in R.contents)
+			user << "<span class='notice'>  \icon[U] [U.name]</span>"
+		var/healthstat
+		if(R.health == R.maxHealth)
+			healthstat = "<font color='green'>Healthy</font>"
+		else if(R.health >= 50)
+			healthstat = "<font color='blue'>Dented</font>"
+		else if(R.health >= 0)
+			healthstat = "<font color='#E84A01'>Damaged</font>"
+		else if(R.health > -100)
+			healthstat = "<font color='red'>Heavily Damaged</font>"
+		else
+			healthstat = "<font color='black'>Inoperable</font>"
+
+		user << "<span class='notice'>Status: <b>[healthstat]</b></span>"
+		if(R.opened)
+			user << "<span class='notice'> Internal scan in-progress...</span>"
+			if(do_after(user,80,target = R))
+				user << "<span class='notice'>Silicon obeying: </span><b>[R.laws.name]</b>.</span>"
+			else
+				user << "<span class='warning'>Subject must stand still.</span>"
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(is_species(H, /datum/species/android)) //THIS WILL BE CHANGED ONCE POWERCELL PR GETS MERGED
+			healthscan(user, H)
+		if(do_after(user, 100, target = H))
+			if(M.mind.cyberman)
+				user << "<span class='warning'><b>WARNING</b></span>: Hostile nanites detected.</span>"
+			else
+				user << "<span class='notice'><b>CLEAR</b>: No hostile nanites detected.</span>"
+	if(issilicon(M) || istype(M, /mob/living/simple_animal/bot))
+		healthscan(user, M,,1)
