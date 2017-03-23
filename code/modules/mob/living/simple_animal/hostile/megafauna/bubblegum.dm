@@ -107,7 +107,7 @@
 		var/prefix = "king"
 		name = "[prefix] [name]"
 		loot += list(/obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
-		loot += pick(/obj/item/clothing/suit/space/hardsuit/syndi, /obj/item/weapon/antag_spawner/slaughter_demon/laughter, /obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
+		loot += pick(/obj/item/clothing/suit/space/hardsuit/syndi, /obj/item/bloodvial/saw, /obj/structure/closet/crate/freezer/blood)
 
 // VAR SCALING END //
 

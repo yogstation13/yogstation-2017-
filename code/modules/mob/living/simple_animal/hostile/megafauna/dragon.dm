@@ -67,7 +67,7 @@
 	if(rawScaling >= 130)
 		var/prefix = "infernal"
 		name = "[prefix] [name]"
-		loot += pick(/obj/item/clothing/suit/armor/reactive/fire, /obj/item/weapon/dragons_blood, /obj/item/wallframe/firealarm) //I doubt any unrobust miner will be able to beat this beautiful being, so the chance for 2 bottles of blood seems reasonable to me.
+		loot += pick(/obj/item/clothing/suit/armor/reactive/fire, /obj/item/clothing/suit/hooded/cloak/drake, /obj/item/weapon/dragons_blood) //Blood is now the fuck you drop seeing as it's pretty crap.
 		return
 
 // VAR SCALING END //
