@@ -87,7 +87,7 @@
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
-				ghost << "<span class='boldnotice'>An enemrgency reboot module has been installed \
+				ghost << "<span class='boldnotice'>An emergency reboot module has been installed \
 					into your servo. You are being revived.</span>"
 				ghost << 'sound/machines/ping.ogg'
 
