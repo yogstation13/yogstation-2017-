@@ -1,7 +1,7 @@
 /turf/open/floor/goonplaque
 	name = "Commemorative Plaque"
 	icon_state = "plaque"
-	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
+	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations and the TG4407 stations. Hopefully YOG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding. A brief text follows: George Melons is back at it again."
 	floor_tile = /obj/item/stack/tile/plasteel
 
 /turf/open/floor/vault

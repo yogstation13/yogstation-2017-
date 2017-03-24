@@ -203,9 +203,9 @@
 /obj/item/weapon/reagent_containers/syringe/stimulants
 	name = "Stimpack"
 	desc = "Contains stimulants."
-	amount_per_transfer_from_this = 50
-	volume = 50
-	list_reagents = list("stimulants" = 50)
+	amount_per_transfer_from_this = 20
+	volume = 60
+	list_reagents = list("stimulants" = 60)
 
 /obj/item/weapon/reagent_containers/syringe/calomel
 	name = "syringe (calomel)"

@@ -88,7 +88,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
-			loc = T
+			forceMove(T)
 
 
 /obj/singularity/energy_ball/proc/handle_energy()
@@ -232,7 +232,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5,alphafade=1)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir

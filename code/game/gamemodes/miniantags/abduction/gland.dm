@@ -33,9 +33,10 @@
 	..()
 
 /obj/item/organ/gland/Insert(var/mob/living/carbon/M, special = 0)
-	..()
-	if(special != 2 && uses) // Special 2 means abductor surgery
-		Start()
+	if(..())
+		if(special != 2 && uses) // Special 2 means abductor surgery
+			Start()
+		return 1
 
 /obj/item/organ/gland/on_life()
 	if(!active)
@@ -106,7 +107,7 @@
 
 /obj/item/organ/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
+	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/plant/pod,/datum/species/fly, /datum/species/android))
 	owner.set_species(species)
 
 /obj/item/organ/gland/ventcrawling
@@ -166,11 +167,15 @@
 	cooldown_high = 400
 	uses = -1
 	icon_state = "egg"
+	var/list/magic_yolk = list("mindbreaker", "chloralhydrate", "tiresolution", "spraytan", "space_drugs", "colorful_reagent", "laughter", "godblood")
+
+/obj/item/organ/gland/egg/New()
+	magic_yolk = pick(magic_yolk)
 
 /obj/item/organ/gland/egg/activate()
 	owner << "<span class='boldannounce'>You lay an egg!</span>"
 	var/obj/item/weapon/reagent_containers/food/snacks/egg/egg = new(owner.loc)
-	egg.reagents.add_reagent("sacid",20)
+	egg.reagents.add_reagent(magic_yolk,20)
 	egg.desc += " It smells bad."
 
 /obj/item/organ/gland/bloody
@@ -188,22 +193,6 @@
 		owner.add_splatter_floor(T)
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
-
-/obj/item/organ/gland/bodysnatch
-	cooldown_low = 600
-	cooldown_high = 600
-	human_only = 1
-	uses = 1
-
-/obj/item/organ/gland/bodysnatch/activate()
-	owner << "<span class='warning'>You feel something moving around inside you...</span>"
-	//spawn cocoon with clone greytide snpc inside
-	if(ishuman(owner))
-		var/obj/effect/cocoon/abductor/C = new (get_turf(owner))
-		C.Copy(owner)
-		C.Start()
-	owner.gib()
-	return
 
 /obj/effect/cocoon/abductor
 	name = "slimy cocoon"
@@ -240,22 +229,106 @@
 			M.loc = src.loc
 		qdel(src)
 
-/obj/item/organ/gland/plasma
-	cooldown_low = 2400
-	cooldown_high = 3000
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
-	uses = 1
+/obj/item/organ/gland/gib
+	cooldown_low = 12000
+	cooldown_high = 24000
+	uses = -1
+	icon_state = "gib"
+	var/gibs = 0
+	var/remains
+	var/already_mute
 
-/obj/item/organ/gland/plasma/activate()
-	owner << "<span class='warning'>You feel bloated.</span>"
-	sleep(150)
-	if(!owner) return
-	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
-	sleep(50)
-	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] explodes in a cloud of plasma!</span>")
-	var/turf/open/T = get_turf(owner)
-	if(istype(T))
-		T.atmos_spawn_air("plasma=300;TEMP=[T20C]")
-	owner.gib()
-	return
+/obj/item/organ/gland/gib/activate()
+	gibs = 0
+	var/mob/living/L = owner //ITS TRIGGERING ME
+	var/turf/T = get_turf(L)
+	gibs(L.loc)
+	var/obj/effect/decal/remains/human/G = new /obj/effect/decal/remains/human(L.loc)
+	L.forceMove(G)
+	if(!(MUTE & L.disabilities))
+		L.disabilities |= MUTE
+		already_mute = 0
+	else
+		already_mute = 1
+	L.reset_perspective(L)
+	new /obj/effect/overlay/temp/gib_animation(T, "gibbed-h")
+	remains = G
+	addtimer(src, "pull_gibs", 200)
+
+/obj/item/organ/gland/gib/proc/pull_gibs()
+	var/obj/effect/decal/remains/human/G = remains
+	for(var/obj/effect/decal/cleanable/blood/gibs/E in orange(1,G))
+		E.forceMove(G.loc) //Steptowards doesn't work on effects. ;_;
+	addtimer(src, "del_gibs", 10)
+	addtimer(src, "ungib_anime", 9)
+
+/obj/item/organ/gland/gib/proc/del_gibs()
+	var/obj/effect/decal/remains/human/G = remains
+	for(var/obj/effect/decal/cleanable/blood/gibs/M in G.loc)
+		if(M.loc == G.loc)
+			qdel(M)
+			gibs++
+
+/obj/item/organ/gland/gib/proc/ungib_anime()
+	var/obj/effect/decal/remains/human/G = remains
+	playsound(owner, 'sound/effects/blobattack.ogg', 30, 1)
+	new /obj/effect/overlay/temp/gib_animation(get_turf(owner), "reversed-gibbed-h")
+	G.alpha = 0
+	addtimer(src, "restore_human", 14)
+
+/obj/item/organ/gland/gib/proc/restore_human()
+	var/obj/effect/decal/remains/human/G = remains
+	owner.forceMove(G.loc)
+	owner.reset_perspective(owner)
+	var/damage_stuff = -50+(gibs*15) //The gibs come back into the body, if we miss one, we heal alot less, if we lose more, we can
+	if(damage_stuff > 0)
+		owner.heal_overall_damage(damage_stuff/1.5, damage_stuff/2)
+	else
+		owner.adjustBruteLoss(-damage_stuff)
+	owner.visible_message("<span class='warning'>The gibs reform into [owner.name]</span>") //take up to 50 damage. Fun mechanic
+	if(!already_mute)
+		owner.disabilities &= ~MUTE
+	qdel(G)
+
+/obj/item/organ/gland/lag //I don't even feel bad
+	cooldown_low = 100
+	cooldown_high = 900
+	uses = -1
+	icon_state = "gland"
+	var/lag_loc
+
+/obj/item/organ/gland/lag/activate()
+	if(lag_loc)
+		owner.forceMove(lag_loc)
+		lag_loc = null
+		if(prob(50))
+			owner.say(";THE ONE PERCENT!!")
+	else
+		lag_loc = get_turf(owner)
+
+/obj/item/organ/gland/limb
+	cooldown_low = 24000
+	cooldown_high = 30000
+	uses = -1
+	icon_state = "gland"
+
+/obj/item/organ/gland/limb/activate()
+	var/limb_dropped
+	if(istype(owner, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			if(istype(BP, /obj/item/bodypart/chest) || istype(BP, /obj/item/bodypart/head))
+				BP.heal_damage(5, 5, 0)
+				BP.heal_damage(5, 5, 1)
+			else if((BP.brute_dam + BP.burn_dam) >= 5)
+				BP.drop_limb()
+				limb_dropped = 1
+		if(limb_dropped)
+			owner.visible_message("<span class='notice'>[owner]'s limbs fall off.</span>")
+		addtimer(src, "heal_limbs", 300)
+
+/obj/item/organ/gland/limb/proc/heal_limbs()
+	if(owner.get_missing_limbs())
+		owner.visible_message("<span class='notice'>[owner]'s limbs grow back.</span>")
+	owner.regenerate_limbs()
+	owner.update_icons()

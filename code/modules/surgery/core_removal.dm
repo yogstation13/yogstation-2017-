@@ -1,12 +1,16 @@
 /datum/surgery/core_removal
 	name = "core removal"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/incise, /datum/surgery_step/extract_core)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/extract_core)
 	species = list(/mob/living/simple_animal/slime)
+	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
-/datum/surgery/core_removal/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/core_removal/can_start(mob/user, mob/living/target)
 	if(target.stat == DEAD)
 		return 1
 	return 0
+
+/datum/surgery/core_removal/get_probability_multiplier()
+	return 1 //I don't see why this shouldn't be guaranteed
 
 //extract brain
 /datum/surgery_step/extract_core

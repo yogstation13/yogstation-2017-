@@ -9,14 +9,21 @@
 
 /obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
-		src.Insert(M)
+		src.Insert(M, 1)
 	if(implant_overlay)
 		var/image/overlay = new /image(icon, implant_overlay)
 		overlay.color = implant_color
 		overlays |= overlay
 	return ..()
 
-
+/obj/item/organ/cyberimp/attack_self(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.species && (EASYIMPLANTS in H.dna.species.specflags))
+			H.visible_message("<span class='notice'>[H] begins inserting [src] into their [getLimbDisplayName(zone)]</span>", "<span class='notice'>You begin inserting [src] into your [getLimbDisplayName(zone)]</span>")
+			if(do_after(user, 100, target = user))
+				Insert(H, 0, 0)
+				H.visible_message("<span class='notice'>[H] inserts [src] into their [getLimbDisplayName(zone)]</span>", "<span class='notice'>You insert [src] into your [getLimbDisplayName(zone)]</span>")
 
 //[[[[BRAIN]]]]
 

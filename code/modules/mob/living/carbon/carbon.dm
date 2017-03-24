@@ -53,6 +53,8 @@
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
 		shock_damage *= dna.species.siemens_coeff
+		if((shock_damage > 0) && (CONSUMEPOWER in dna.species.specflags))
+			nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))
@@ -458,6 +460,10 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
+		else
+			unEquip(I)
+			I.dropped()
+			return
 		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
@@ -756,11 +762,10 @@
 /mob/living/carbon/fully_heal(admin_revive = 0)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-	if(B)
-		B.damaged_brain = 0
+	regenerate_organs()
 	for(var/datum/disease/D in viruses)
-		D.cure(0)
+		if (D.severity != NONTHREAT)
+			D.cure(0)
 	if(admin_revive)
 		handcuffed = initial(handcuffed)
 		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
@@ -769,6 +774,11 @@
 		if(reagents)
 			reagents.addiction_list = list()
 	..()
+
+/mob/living/carbon/proc/regenerate_organs()
+	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
+	if(B)
+		B.damaged_brain = 0
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
@@ -789,12 +799,3 @@
 
 	..()
 
-
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(amount > 0)
-			blood_volume -= 5*amount
-		else
-			blood_volume -= amount
-	return ..()

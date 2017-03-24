@@ -38,6 +38,11 @@
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-virology"
 
+/obj/item/device/pda/para
+	name = "paramedic PDA"
+	default_cartridge = /obj/item/weapon/cartridge/paramedic
+	icon_state = "pda-medical"
+
 /obj/item/device/pda/engineering
 	name = "engineering PDA"
 	default_cartridge = /obj/item/weapon/cartridge/engineering
@@ -191,3 +196,8 @@
 	name = "geneticist PDA"
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-genetics"
+
+/obj/item/device/pda/signaltech
+	name = "telecomms PDA"
+	default_cartridge = /obj/item/weapon/cartridge/signal
+	icon_state = "pda_tcomms"

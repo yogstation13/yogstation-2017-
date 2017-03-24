@@ -2,7 +2,7 @@
 /client/proc/cmd_admin_pm_context(mob/M in mob_list)
 	set category = null
 	set name = "Admin PM Mob"
-	if(!holder)
+	if(!check_rights(R_BASIC))
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
 	if( !ismob(M) || !M.client )
@@ -14,7 +14,7 @@
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
-	if(!holder)
+	if(!check_rights(R_BASIC))
 		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
 		return
 	var/list/client/targets[0]
@@ -36,6 +36,9 @@
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		return
+	if(!check_rights(R_BASIC))
+		src << "<font color='red'>Error: Admin-PM: Only administrators may use this command.</font>"
 		return
 	var/client/C
 	if(istext(whom))
@@ -61,7 +64,6 @@
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
-
 	var/client/C
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
@@ -171,4 +173,4 @@
 	else
 		T = null
 
-	return
+	return //This ticket system. Wow.

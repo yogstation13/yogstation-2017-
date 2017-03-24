@@ -293,6 +293,8 @@
 				sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_begin.ogg'
+					// Play the parallax animation
+					parallax_launch_in_area(E, 1)
 
 			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
 				priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")

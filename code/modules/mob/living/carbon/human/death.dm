@@ -5,7 +5,10 @@
 	new /obj/effect/overlay/temp/dust_animation(loc, "dust-h")
 
 /mob/living/carbon/human/spawn_gibs()
-	hgibs(loc, viruses, dna)
+	if(dna && dna.species)
+		dna.species.spawn_gibs(src)
+	else
+		hgibs(loc, viruses, dna)
 
 /mob/living/carbon/human/spawn_dust()
 	new /obj/effect/decal/remains/human(loc)
@@ -53,6 +56,7 @@
 	if(.)
 		update_hair()
 		update_body()
+		dna.species.spec_husk(src)
 
 /mob/living/carbon/proc/Drain()
 	ChangeToHusk()

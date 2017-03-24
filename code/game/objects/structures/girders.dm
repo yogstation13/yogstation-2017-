@@ -41,7 +41,8 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
-			if(!istype(loc, /turf/open/floor))
+			var/turf/T = loc
+			if(!istype(T, /turf/open) || !(T.flags & GIRDERABLE))
 				user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -87,10 +88,11 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack))
-		if (istype(src.loc, /turf/closed/wall))
+		var/turf/T = get_turf(src)
+		if (istype(T, /turf/closed/wall))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
-		if (!istype(src.loc, /turf/open/floor))
+		if (!istype(src.loc, /turf/open/floor) || !(T.flags & GIRDERABLE))
 			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
@@ -122,7 +124,6 @@
 						return
 					S.use(5)
 					user << "<span class='notice'>You add the plating.</span>"
-					var/turf/T = get_turf(src)
 					T.ChangeTurf(/turf/closed/wall/mineral/iron)
 					transfer_fingerprints_to(T)
 					qdel(src)
@@ -156,7 +157,6 @@
 						return
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
-					var/turf/T = get_turf(src)
 					T.ChangeTurf(/turf/closed/wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
@@ -186,7 +186,6 @@
 							return
 						S.use(1)
 						user << "<span class='notice'>You fully reinforce the wall.</span>"
-						var/turf/T = get_turf(src)
 						T.ChangeTurf(/turf/closed/wall/r_wall)
 						transfer_fingerprints_to(T)
 						qdel(src)
@@ -227,7 +226,6 @@
 						return
 					S.use(2)
 					user << "<span class='notice'>You add the plating.</span>"
-					var/turf/T = get_turf(src)
 					T.ChangeTurf(text2path("/turf/closed/wall/mineral/[M]"))
 					transfer_fingerprints_to(T)
 					qdel(src)

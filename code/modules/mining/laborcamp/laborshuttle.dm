@@ -25,3 +25,6 @@
 			usr << "<span class='warning'>Shuttle is already at the outpost!</span>"
 			return 0
 	..()
+
+/obj/machinery/computer/shuttle/labor/awayspeech()
+	return "The [shuttleId] shuttle is flying to [current_destination == "laborcamp_home" ? "the station" : "lavaland"]!"

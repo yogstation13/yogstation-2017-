@@ -44,4 +44,6 @@
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
 
-#define GLOBAL_PROC	"some_magic_bullshit"
+#define GLOBAL_PROC		"some_magic_bullshit"
+#define TIMER_NORMAL	FALSE
+#define TIMER_UNIQUE	TRUE

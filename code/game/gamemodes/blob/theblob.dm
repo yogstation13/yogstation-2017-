@@ -14,7 +14,7 @@
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed/healed when?
 	var/brute_resist = 0.8 //multiplies brute damage by this
-	var/fire_resist = 2 //multiplies burn damage by this
+	var/fire_resist = 1.5 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos
 	var/heatblock = 0 // if the blob blocks heatspread
 	var/mob/camera/blob/overmind
@@ -341,6 +341,7 @@
 	maxhealth = 20
 	health_regen = 1
 	brute_resist = 0.25
+	fire_resist = 1
 	atmosblock = 1
 
 /obj/effect/blob/normal/scannerreport()

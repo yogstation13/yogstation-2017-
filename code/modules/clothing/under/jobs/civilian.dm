@@ -188,3 +188,16 @@
 	item_state = "explorer"
 	item_color = "explorer"
 	can_adjust = 0
+	sensor_mode = 3
+	random_sensor = 0
+
+/obj/item/clothing/under/rank/miner/medic
+	desc = "A verstile blue and white uniform honored to hard working recovery medics in hazardous environments. It has minor protection against biohazards."
+	name = "recovery medic's jumpsuit"
+	icon_state = "recovery"
+	item_state = "recovery"
+	item_color = "recovery"
+	can_adjust = 0
+	sensor_mode = 3
+	random_sensor = 0
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 15, rad = 0)

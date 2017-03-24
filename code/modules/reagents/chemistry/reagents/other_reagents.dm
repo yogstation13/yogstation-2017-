@@ -225,16 +225,16 @@
 		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-2, 0)
 		M.AdjustWeakened(-2, 0)
-		M.adjustToxLoss(-2, 0)
-		M.adjustOxyLoss(-2, 0)
-		M.adjustBruteLoss(-2, 0)
-		M.adjustFireLoss(-2, 0)
+		M.adjustToxLoss(-2, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(-2, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(-2, 0, DAMAGE_CHEMICAL)
+		M.adjustFireLoss(-2, 0, DAMAGE_CHEMICAL)
 	else
 		M.adjustBrainLoss(3)
-		M.adjustToxLoss(2, 0)
-		M.adjustFireLoss(2, 0)
-		M.adjustOxyLoss(2, 0)
-		M.adjustBruteLoss(2, 0)
+		M.adjustToxLoss(2, 0, DAMAGE_CHEMICAL)
+		M.adjustFireLoss(2, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(2, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(2, 0, DAMAGE_CHEMICAL)
 	holder.remove_reagent(src.id, 1)
 	. = 1
 
@@ -246,9 +246,9 @@
 /datum/reagent/hellwater/on_mob_life(mob/living/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
-	M.adjustToxLoss(1, 0)
-	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
-	M.adjustBrainLoss(5)
+	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(1, 0, DAMAGE_CHEMICAL)		//Hence the other damages... ain't I a bastard?
+	M.adjustBrainLoss(5, 0, DAMAGE_CHEMICAL)
 	holder.remove_reagent(src.id, 1)
 
 /datum/reagent/medicine/omnizine/godblood
@@ -361,20 +361,17 @@
 	..()
 	return
 
-/datum/reagent/slimetoxin
-	name = "Mutation Toxin"
-	id = "mutationtoxin"
-	description = "A corruptive toxin produced by slimes."
-	color = "#13BC5E" // rgb: 19, 188, 94
-
-/datum/reagent/unstableslimetoxin
-	name = "Unstable Mutation Toxin"
-	id = "unstablemutationtoxin"
-	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+/datum/reagent/stableslimetoxin
+	name = "Stable Mutation Toxin"
+	id = "stablemutationtoxin"
+	description = "A humanizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY //So it instantly removes all of itself
+	var/datum/species/race = /datum/species/human
+	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
+	metabolization_rate = INFINITY //So it instantly removes all of itself
 
-/datum/reagent/unstableslimetoxin/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
 	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
@@ -382,20 +379,182 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		var/list/possible_morphs = list()
-		for(var/type in subtypesof(/datum/species))
-			var/datum/species/S = type
-			if(initial(S.blacklisted))
-				continue
-			possible_morphs += S
-		var/datum/species/mutation = pick(possible_morphs)
+
+		var/datum/species/mutation = race
 		if(prob(90) && mutation)
-			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
+			H << mutationtext
 			H.set_species(mutation)
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
 	return 1
+
+/datum/reagent/stableslimetoxin/classic //The one from plasma on green slimes
+	name = "Mutation Toxin"
+	id = "mutationtoxin"
+	description = "A corruptive toxin produced by slimes."
+	color = "#13BC5E" // rgb: 19, 188, 94
+	race = /datum/species/jelly/slime
+	mutationtext = "<span class='danger'>The pain subsides. Your whole body feels like slime.</span>"
+
+/datum/reagent/stableslimetoxin/lizard
+	name = "Lizard Mutation Toxin"
+	id = "lizardmutationtoxin"
+	description = "A lizarding toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard
+	mutationtext = "<span class='danger'>The pain subsides. You feel... scaly.</span>"
+
+/datum/reagent/stableslimetoxin/fly
+	name = "Fly Mutation Toxin"
+	id = "flymutationtoxin"
+	description = "An insectifying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/human/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
+
+/datum/reagent/stableslimetoxin/lizardfly
+	name = "Unafly Mutation Toxin"
+	id = "unaflymutationtoxin"
+	description = "A combination of an insectifying and scalifying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
+
+/datum/reagent/stableslimetoxin/androidfly
+	name = "Flyternis Mutation Toxin"
+	id = "flyternismutationtoxin"
+	description = "A combination of an insectifying and roboticizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/android/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
+
+/datum/reagent/stableslimetoxin/plant
+	name = "Phytosian Mutation Toxin"
+	id = "phytosianmutationtoxin"
+	description = "A vegetalizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plant
+	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
+
+/datum/reagent/stableslimetoxin/plantfly
+	name = "Flytosian Mutation Toxin"
+	id = "flytosianmutationtoxin"
+	description = "A combination of an insectifying and vegetalizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plant/fly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
+
+/datum/reagent/stableslimetoxin/pod
+	name = "Podperson Mutation Toxin"
+	id = "podmutationtoxin"
+	description = "A vegetalizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plant/pod
+	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
+
+/datum/reagent/stableslimetoxin/jelly
+	name = "Imperfect Mutation Toxin"
+	id = "jellymutationtoxin"
+	description = "A jellyfying toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/jelly
+	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
+
+/datum/reagent/stableslimetoxin/golem
+	name = "Golem Mutation Toxin"
+	id = "golemmutationtoxin"
+	description = "A crystal toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/golem/random
+	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
+
+/datum/reagent/stableslimetoxin/abductor
+	name = "Abductor Mutation Toxin"
+	id = "abductormutationtoxin"
+	description = "An alien toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/abductor
+	mutationtext = "<span class='danger'>The pain subsides. You feel... alien.</span>"
+
+/datum/reagent/stableslimetoxin/android
+	name = "Android Mutation Toxin"
+	id = "androidmutationtoxin"
+	description = "A robotic toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/android
+	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
+
+/datum/reagent/stableslimetoxin/synth //because of eph's changes there's both android AND synth
+	name = "Synth Mutation Toxin"
+	id = "synthmutationtoxin"
+	description = "A roboticizing toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/synth
+	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
+
+
+
+//BLACKLISTED RACES
+/datum/reagent/stableslimetoxin/skeleton
+	name = "Skeleton Mutation Toxin"
+	id = "skeletonmutationtoxin"
+	description = "A scary toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/skeleton
+	mutationtext = "<span class='danger'>The pain subsides. You feel... spooky.</span>"
+
+/datum/reagent/stableslimetoxin/zombie
+	name = "Zombie Mutation Toxin"
+	id = "zombiemutationtoxin"
+	description = "An undead toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/zombie //Not the infectious kind. The days of xenobio zombie outbreaks are long past.
+	mutationtext = "<span class='danger'>The pain subsides. You feel... undead.</span>"
+
+/datum/reagent/stableslimetoxin/ash
+	name = "Ash Mutation Toxin"
+	id = "ashmutationtoxin"
+	description = "An ashen toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/lizard/ashwalker
+	mutationtext = "<span class='danger'>The pain subsides. You feel... savage.</span>"
+
+
+//DANGEROUS RACES
+/datum/reagent/stableslimetoxin/shadow
+	name = "Shadow Mutation Toxin"
+	id = "shadowmutationtoxin"
+	description = "A dark toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/shadow
+	mutationtext = "<span class='danger'>The pain subsides. You feel... darker.</span>"
+
+/datum/reagent/stableslimetoxin/plasma
+	name = "Plasma Mutation Toxin"
+	id = "plasmamutationtoxin"
+	description = "A plasma-based toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/plasmaman
+	mutationtext = "<span class='danger'>The pain subsides. You feel... flammable.</span>"
+
+/datum/reagent/stableslimetoxin/unstable //PSYCH
+	name = "Unstable Mutation Toxin"
+	id = "unstablemutationtoxin"
+	description = "An unstable and unpredictable corruptive toxin produced by slimes."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	mutationtext = "<span class='danger'>The pain subsides. You feel... different.</span>"
+
+/datum/reagent/stableslimetoxin/unstable/on_mob_life(mob/living/carbon/human/H)
+	var/list/possible_morphs = list()
+	for(var/type in subtypesof(/datum/species))
+		var/datum/species/S = type
+		if(initial(S.blacklisted))
+			continue
+		possible_morphs += S
+	race = pick(possible_morphs)
+	..()
+
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
@@ -508,7 +667,7 @@
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2)
+	M.adjustBrainLoss(2, 0, DAMAGE_CHEMICAL)
 	..()
 
 /datum/reagent/sulfur
@@ -539,7 +698,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_organ_damage(1*REM, 0, 0)
+	M.take_organ_damage(1*REM, 0, 0, DAMAGE_CHEMICAL)
 	. = 1
 	..()
 
@@ -551,7 +710,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/fluorine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM, 0)
+	M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
 	. = 1
 	..()
 
@@ -608,11 +767,22 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("radium", reac_volume)
 
-/datum/reagent/sterilizine
+/datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.20, S.success_multiplier)
+			S.speedup_multiplier = max(0.75, S.speedup_multiplier)
+			// +20% success propability on each step, useful while operating in less-than-perfect conditions
+			// +75% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
+	..()
 
 /datum/reagent/iron
 	name = "Iron"
@@ -706,7 +876,7 @@
 	..()
 
 /datum/reagent/fuel/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1, 0)
+	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
 	. = 1
 	..()
 
@@ -730,7 +900,7 @@
 			qdel(C)
 
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(5,10))
+			M.adjustToxLoss(rand(5,10), 1, DAMAGE_CHEMICAL)
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -789,7 +959,7 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(prob(80))
-		M.adjustBrainLoss(1*REM)
+		M.adjustBrainLoss(1*REM, 1, DAMAGE_CHEMICAL)
 	if(prob(50))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
@@ -851,6 +1021,15 @@
 	id = "diethylamine"
 	description = "A secondary amine, mildly corrosive."
 	color = "#604030" // rgb: 96, 64, 48
+
+/datum/reagent/diethylamine/overdose_start(mob/living/M) //only for plant people, no one else will overdose.
+	..()
+
+/datum/reagent/diethylamine/overdose_process(mob/living/M)
+	var/mob/living/carbon/C = M
+	if(istype(C))
+		C.adjustToxLoss(5, 1, DAMAGE_CHEMICAL)
+		C.adjustBrainLoss(2, 1, DAMAGE_CHEMICAL)
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -942,7 +1121,7 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/M)
 	if(prob(tox_prob))
-		M.adjustToxLoss(1*REM, 0)
+		M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	..()
 
@@ -952,6 +1131,13 @@
 	description = "Cheap and extremely common type of plant nutriment."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 10
+
+/datum/reagent/plantnutriment/eznutriment/addiction_act_stage4(mob/M)//only for plant people.
+	..()
+	var/mob/living/L = M
+	if(istype(L))
+		L.adjustOxyLoss(2, 1, DAMAGE_CHEMICAL)
+	M.losebreath += 0.5
 
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
@@ -1169,7 +1355,6 @@
 /datum/reagent/toxin/mutagen/mutagenvirusfood
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
-	description = "mutates blood"
 	color = "#A3C00F" // rgb: 163,192,15
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
@@ -1180,19 +1365,32 @@
 /datum/reagent/medicine/synaptizine/synaptizinevirusfood
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-	description = "mutates blood"
 	color = "#D18AA5" // rgb: 209,138,165
 
 /datum/reagent/toxin/plasma/plasmavirusfood
 	name = "virus plasma"
 	id = "plasmavirusfood"
-	description = "mutates blood"
 	color = "#A69DA9" // rgb: 166,157,169
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+/datum/reagent/uranium/uraniumvirusfood
+	name = "decaying uranium gel"
+	id = "uraniumvirusfood"
+	color = "#67ADBA" // rgb: 103,173,186
+
+/datum/reagent/uranium/uraniumvirusfood/unstable
+	name = "unstable uranium gel"
+	id = "uraniumplasmavirusfood_unstable"
+	color = "#2FF2CB" // rgb: 47,242,203
+
+/datum/reagent/uranium/uraniumvirusfood/stable
+	name = "stable uranium gel"
+	id = "uraniumplasmavirusfood_stable"
+	color = "#04506C" // rgb: 4,80,108
 
 //Reagent used for shadowling blindness smoke spell
 datum/reagent/shadowling_blindness_smoke
@@ -1213,8 +1411,8 @@ datum/reagent/shadowling_blindness_smoke
 	else
 		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
 		M.heal_organ_damage(2,2, 0)
-		M.adjustOxyLoss(-2, 0)
-		M.adjustToxLoss(-2, 0)
+		M.adjustOxyLoss(-2, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-2, 0, DAMAGE_CHEMICAL)
 		. = 1
 	return ..() || .
 
@@ -1247,7 +1445,7 @@ datum/reagent/romerol
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
-	
+
 /datum/reagent/laughter
 	name = "liquid laughter"
 	id = "laughter"

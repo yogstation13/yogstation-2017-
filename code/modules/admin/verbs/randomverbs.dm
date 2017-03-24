@@ -116,8 +116,8 @@
 	if(GODMODE in M.status_flags)
 		M.status_flags -= GODMODE
 	else
-		M.status_flags += GODMODE
-	usr << "<span class='adminnotice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>"
+		M.status_flags |= GODMODE
+	usr << "<span class='adminnotice'>Toggled [(GODMODE in M.status_flags) ? "ON" : "OFF"]</span>"
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
@@ -208,7 +208,8 @@
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	new /datum/round_event/ion_storm(0, announce_ion_laws)
+	var/datum/round_event/ion_storm/E = new /datum/round_event/ion_storm(0, announce_ion_laws)
+	E.start()
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 

@@ -17,7 +17,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -64,11 +64,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
-
 	if(antag_candidates.len>0)
-		for(var/i = 0, i < num_changelings, i++)
-			if(!antag_candidates.len) break
-			var/datum/mind/changeling = pick_candidate()
+		var/list/lings = pick_candidate(amount = num_changelings)
+		for(var/M in lings)
+			var/datum/mind/changeling = M
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
@@ -250,7 +249,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<br><b>Changeling ID:</b> [changeling.changeling.changelingID]."
-			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.absorbedcount]"
+			text += "<br><b>Genomes Extracted:</b> [changeling.changeling.profilecount]"
 
 			if(changeling.objectives.len)
 				var/count = 1
@@ -283,7 +282,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	//var/list/absorbed_dna = list()
 	//var/list/protected_dna = list() //dna that is not lost when capacity is otherwise full
 	var/dna_max = 6 //How many extra DNA strands the changeling can store for transformation.
-	var/absorbedcount = 0
+	var/absorbedcount = 0//how many the ling has absorbed with the ability
+	var/profilecount = 0 //used to store how many profiles, either absorbed or DNAstung
 	var/chem_charges = 20
 	var/chem_storage = 75
 	var/chem_recharge_rate = 1
@@ -298,7 +298,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/mimicing = ""
 	var/canrespec = 0
 	var/changeling_speak = 0
-	var/reverting = 0
+	var/reverting = 0 //if they're turning back from horrorform
+	var/transforming = FALSE //if they're turning into horrorform
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 
@@ -396,9 +397,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(stored_profiles.len > dna_max)
 		if(!push_out_profile())
 			return
-
+	profilecount++
 	stored_profiles += prof
-	absorbedcount++
 
 /datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
 	var/datum/changelingprofile/prof = create_profile(H, protect)
@@ -512,22 +512,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
 
-//abomination stuff
-/datum/species/abomination
-	name = "???"
-	id = "abomination"
-	specflags = list(NOBREATH,COLDRES,NOGUNS,VIRUSIMMUNE,PIERCEIMMUNE,RADIMMUNE,NODISMEMBER)
-	sexes = 0
-	speedmod = 4
-	armor = 0//has horror armor instead
-	punchdamagelow = 30
-	punchdamagehigh = 30
-	punchstunthreshold = 30 //100 % chance
-	no_equip = list(slot_w_uniform, slot_back, slot_ears)
-	attack_verb = "slash"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	heatmod = 1.5
-	blacklisted = 1
+//for the abomination species, see horrorform.dm
 
 /datum/species/deformed //what you get from abomination reversion
 	name = "???"
@@ -536,13 +521,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	sexes = 0
 	roundstart = 0
 
-/obj/item/clothing/suit/abomination
+/obj/item/clothing/suit/space/abomination
 	name = "fleshy hide"
 	desc = "A huge chunk of flesh. It seems to be shifting around itself."
 	icon_state = "golem"
 	item_state = "golem"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = 80, bullet = 50, laser = 70,energy = 100, bomb = 30, bio = 100, rad = 0)
+	slowdown = 0
 	unacidable = 1
 	burn_state = -1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -567,7 +553,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	burn_state = -1
 	flags_cover = MASKCOVERSEYES
 
-/obj/item/clothing/head/abomination
+/obj/item/clothing/head/helmet/space/abomination
 	name = "hardened membrane"
 	icon_state = "golem"
 	item_state = "golem"

@@ -350,6 +350,9 @@ Class Procs:
 		if(prob(H.getBrainLoss()))
 			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
+		if((NOMACHINERY in H.dna.species.specflags))
+			user << "<span class='warning'>This technology is too advanced for you!</span>"
+			return 1
 	if(!is_interactable())
 		return 1
 	if(set_machine)

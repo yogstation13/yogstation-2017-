@@ -38,7 +38,7 @@
 
 /obj/effect/acid/proc/tick()
 	if(!target)
-		qdel(src)
+		destroy_effect()
 
 	ticks++
 
@@ -50,22 +50,23 @@
 			T.dump_contents()
 			qdel(target)
 
-		if(istype(target, /turf/closed/mineral))
+		else if(istype(target, /turf/closed/mineral))
 			var/turf/closed/mineral/M = target
 			M.ChangeTurf(M.baseturf)
 
-		if(istype(target, /turf/open/floor))
+		else if(istype(target, /turf/open))
 			var/turf/open/floor/F = target
 			F.ChangeTurf(F.baseturf)
 
-		if(istype(target, /turf/closed/wall))
+		else if(istype(target, /turf/closed/wall))
 			var/turf/closed/wall/W = target
 			W.dismantle_wall(1)
 
 		else
 			qdel(target)
 
-		qdel(src)
+		destroy_effect()
+
 		return
 
 	x = target.x

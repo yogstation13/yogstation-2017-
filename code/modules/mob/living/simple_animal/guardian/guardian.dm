@@ -45,6 +45,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/New(loc, theme)
 	parasites |= src
 	setthemename(theme)
+	verbs -= /mob/living/verb/pulled
 
 	..()
 

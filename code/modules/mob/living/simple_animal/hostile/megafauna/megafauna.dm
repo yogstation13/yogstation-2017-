@@ -6,6 +6,7 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
+	dismember_chance = 33
 	luminosity = 3
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
@@ -68,7 +69,7 @@
 /mob/living/simple_animal/hostile/megafauna/Life()
 	..()
 	if(loc && (loc.z != ZLEVEL_LAVALAND) && alert_admins_z_level)
-		message_admins("A live [src.name] ([src.desc]) has left the lavaland and is currently on another z level. <A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
+		message_admins("A live [src.name] has left the lavaland and is currently on another z level. <A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
 		log_admin("[src] is off of the lavaland.")
 		alert_admins_z_level = 0
 		spawn(3000) // a cooldown, so it'll alert the admins again if it's still off the z level.
@@ -76,7 +77,7 @@
 
 	var/area/A = get_area(src)
 	if(!istype(A, /area/lavaland/surface/outdoors) && alert_admins_area)
-		message_admins("A live [src.name] ([src.desc]) was led [aggroed_from ? "a distance of [get_dist(aggroed_from, src)] tiles " : ""] to [A] by [lastTarget]. Check the aggro_log var of this creature to see where it was led from.<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
+		message_admins("A live [src.name] was led [aggroed_from ? "a distance of [get_dist(aggroed_from, src)] tiles " : ""] to [A] by [lastTarget]. Check the aggro_log var of this creature to see where it was led from.<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A> ([loc.x], [loc.y], [loc.z])")
 		log_admin("[src] was led to [A] by [lastTarget].")
 		alert_admins_area = 0
 		spawn(3000)

@@ -51,8 +51,6 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 	if(!istype(H))
 		return
 	if(ticker && !ticker.Bible_icon_state && H.job == "Chaplain")
-		//Add bless spell to chaplain
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/bless(null))
 		//Open bible selection
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 
@@ -116,6 +114,9 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 		usr << browse(null, "window=editicon") // Close window
 
+		//Add bless spell to chaplain
+		usr.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/bless())
+
 /obj/item/weapon/storage/book/bible/proc/bless(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
@@ -139,7 +140,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		return
 	if(!chaplain)
 		user << "<span class='danger'>The book sizzles in your hands.</span>"
-		user.take_organ_damage(0,10)
+		user.take_organ_damage(0, 10, 1, DAMAGE_DISEASE)
 		return
 
 	if (user.disabilities & CLUMSY && prob(50))

@@ -105,7 +105,6 @@
 	body_parts_covered = LEGS|FEET
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
-	armor = list(melee = 35, bullet = 35, laser = 0, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

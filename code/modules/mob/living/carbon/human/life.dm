@@ -20,7 +20,6 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-#define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
 #define TINT_IMPAIR 2
 
 /mob/living/carbon/human/Life()
@@ -397,6 +396,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+
+/mob/living/carbon/human/regenStamina()
+	if(dna && dna.species)
+		if(sleeping)
+			adjustStaminaLoss(-dna.species.stamina_recover_sleeping)
+		else
+			adjustStaminaLoss(-dna.species.stamina_recover_normal)
+	else
+		..()
 
 /mob/living/carbon/human/proc/purrbation()
 	if(("tail_human" in dna.species.mutant_bodyparts) && ("ears" in dna.species.mutant_bodyparts))
