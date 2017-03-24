@@ -1336,6 +1336,26 @@
 	crate_name = "Sneaker Drop"
 
 
+/datum/supply_pack/misc/superb
+	name = "Designer Clothes Bundle"
+	cost = 800
+	contains = list(/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb)
+	crate_name = "Designer clothes crate"
+
+
+
 /datum/supply_pack/misc/yeezy
 	name = "One Singular Pair Of Yeezys"
 	cost = 450
