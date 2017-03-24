@@ -1357,10 +1357,10 @@
 
 
 /datum/supply_pack/misc/yeezy
-	name = "One Singular Pair Of Yeezys"
+	name = "One Singular Pair Of Sneakers"
 	cost = 450
 	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
-	crate_name = "Yeezy 350 Boost Box"
+	crate_name = "Small Sneaker Crate"
 
 
 
