@@ -18055,6 +18055,7 @@
 "aIm" = (
 /obj/item/device/assembly/bikehorn/rubberducky,
 /obj/structure/table,
+/obj/item/clothing/shoes/sneakers/nmd,
 /turf/open/floor/plasteel{
 	tag = "icon-greenyellowfull (WEST)";
 	icon_state = "greenyellowfull";
@@ -18760,6 +18761,7 @@
 	},
 /obj/item/key,
 /obj/structure/table,
+/obj/item/clothing/shoes/sneakers/nmd,
 /turf/open/floor/plasteel{
 	tag = "icon-greenyellowfull (WEST)";
 	icon_state = "greenyellowfull";

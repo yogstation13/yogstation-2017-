@@ -1320,6 +1320,30 @@
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
 
+/datum/supply_pack/misc/sneakers
+	name = "Crep Crate"
+	cost = 2000
+	contains = list(/obj/item/clothing/shoes/sneakers/nmd/collab,
+					/obj/item/clothing/shoes/sneakers/nmd,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy/orange,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Sneaker Drop"
+
+
+/datum/supply_pack/misc/yeezy
+	name = "One Singular Pair Of Yeezys"
+	cost = 450
+	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Yeezy 350 Boost Box"
+
+
+
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
 	cost = 1000
