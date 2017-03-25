@@ -143,19 +143,13 @@
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user, params)
 	..()
-	world << "5 [W]"
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
-		world << "6 [W]"
 		var/obj/item/weapon/reagent_containers/syringe/S = W
 		user << "<span class='notice'>You inject the solution into the power cell.</span>"
-		world << "7 [S]"
 		for(var/A in specials)
-			world << "1 [A]"
 			if(S.reagents.has_reagent(A, 5))
-				world << "3 [A]"
 				var/datum/powercell_reagents/R = specials[A]
 				special = new R
-				world << "4 [R]"
 				break
 		S.reagents.clear_reagents()
 
