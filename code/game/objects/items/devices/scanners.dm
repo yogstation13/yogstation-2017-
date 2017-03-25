@@ -560,7 +560,7 @@ DIAGNOSTIC ANALYZER
 		user << "<span class='notice'>Status: <b>[healthstat]</b></span>"
 		if(R.opened)
 			user << "<span class='notice'> Internal scan in-progress...</span>"
-			if(do_after(user,80,target = R))
+			if(do_mob(user,50,target = R))
 				user << "<span class='notice'>Silicon obeying: </span><b>[R.laws.name]</b>.</span>"
 			else
 				user << "<span class='warning'>Subject must stand still.</span>"
@@ -569,10 +569,8 @@ DIAGNOSTIC ANALYZER
 		var/mob/living/carbon/human/H = M
 		if(is_species(H, /datum/species/android)) //THIS WILL BE CHANGED ONCE POWERCELL PR GETS MERGED
 			healthscan(user, H)
-		if(do_after(user, 100, target = H))
+		if(do_mob(user, 100, target = H))
 			if(M.mind.cyberman)
 				user << "<span class='warning'><b>WARNING</b></span>: Hostile nanites detected.</span>"
-			else
-				user << "<span class='notice'><b>CLEAR</b>: No hostile nanites detected.</span>"
 	if(issilicon(M) || istype(M, /mob/living/simple_animal/bot))
 		healthscan(user, M,,1)
