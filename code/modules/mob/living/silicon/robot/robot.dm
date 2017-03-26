@@ -170,8 +170,6 @@
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
-	if(!config.forbid_secborg)
-		modulelist += "Security"
 
 	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 
@@ -205,14 +203,6 @@
 			hands.icon_state = "medical"
 			status_flags -= CANPUSH
 			feedback_inc("cyborg_medical",1)
-
-		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			hands.icon_state = "security"
-			modtype = "Sec"
-			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_security",1)
 
 		if("Peacekeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
