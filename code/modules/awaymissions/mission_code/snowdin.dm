@@ -154,8 +154,7 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/stack/sheet/mineral/gold{amount = 15} = 10,
 				/obj/item/weapon/spellbook/oneuse/barnyard = 4,
 				/obj/item/weapon/pickaxe/drill/diamonddrill = 6,
-				/obj/item/borg/upgrade/vtec = 7,
-				/obj/item/borg/upgrade/disablercooler = 7)
+				/obj/item/borg/upgrade/vtec = 7)
 
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy
