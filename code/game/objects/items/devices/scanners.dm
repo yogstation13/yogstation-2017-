@@ -540,7 +540,7 @@ DIAGNOSTIC ANALYZER
 		user << "<span class='notice'>Damage:<font color='red'>Brute</font>-<font color='#FE5800'>Burn</font></span>"
 		user << "     <font color='red'>[R.getBruteLoss()]</font> - <font color='#FE5800'>[R.getFireLoss()]</font>"
 		if(R.cell)
-			user << "<span class='notice'> \icon[R.cell] [R.cell.name] at [R.cell.charge/R.cell.maxcharge*100]%.</span>"
+			user << "<span class='notice'> \icon[R.cell] [R.cell.name] at [round(R.cell.charge/R.cell.maxcharge*100)]%.</span>"
 		user << "<span class='notice'>Designation: <b>[R.designation]</b></span>"
 		user << "<span class='notice'>Upgrades:</span>"
 		for(var/obj/item/borg/upgrade/U in R.contents)
