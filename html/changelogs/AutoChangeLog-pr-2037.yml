@@ -1,6 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - rscadd: "Adds the diagnostic scanner. A useful tool for roboticists to scan borgs. Open a borgs cover for a covert scan, giving their supplied laws (So not ion, freeform and zeroth)"
-  - rscadd: "Some fun stuff with the diag scanner and the plant scanner"
-  - rscdel: "The medical scanner cant scan silicons or bots anymore, diag scanner can."
