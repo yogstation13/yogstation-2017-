@@ -1,0 +1,4 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "Security cyborg zipties now properly have a charge level, refillable at cyborg recharging stations."
