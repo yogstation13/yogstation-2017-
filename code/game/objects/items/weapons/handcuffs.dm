@@ -107,27 +107,19 @@
 	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
-	var/datum/robot_energy_storage/wirestorage = null
-
-/obj/item/weapon/restraints/handcuffs/cable/attack(mob/living/carbon/C, mob/living/carbon/human/user)
-	if(!istype(C))
-		return
-	if(wirestorage && wirestorage.energy < 15)
-		user << "<span class='warning'>You need at least 15 wire to restrain [C]!</span>"
-		return
-	return ..()
+	var/datum/robot_energy_storage/zipties/wirestorage = null
 
 /obj/item/weapon/restraints/handcuffs/cable/can_cuff(mob/living/carbon/target, mob/user)
-	if(wirestorage && (wirestorage.energy < 15))
+	if(wirestorage && (wirestorage.energy < 1))
 		if(user)
-			user << "<span class='warning'>You need at least 15 wire to restrain [target]!</span>"
+			user << "<span class='warning'>You need at least 1 ziptie to restrain [target]!</span>"
 		return FALSE
 	return ..(target, user)
 
 /obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user)
 	. = ..()
 	if(. && wirestorage)
-		wirestorage.use_charge(15)
+		wirestorage.use_charge(1)
 
 /obj/item/weapon/restraints/handcuffs/cable/attack_self(mob/user)
 		var/obj/item/stack/cable_coil/new_coil = new /obj/item/stack/cable_coil
