@@ -59,6 +59,8 @@ var/datum/subsystem/ticker/ticker
 	var/total_deaths = 0
 	var/maprotatechecked = 0
 
+	var/identification_console_message
+	var/id_console_msg_lock
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
