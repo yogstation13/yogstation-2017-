@@ -64,6 +64,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(!message)
+		return
 
 	if(stat == DEAD)
 		say_dead(message)
@@ -96,10 +98,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
-	spans += get_spans()
+		if(!message)
+			return
 
-	if(!message)
-		return
+	spans += get_spans()
 
 	//Log of what we've said, plain message, no spans or junk
 	say_log += message
