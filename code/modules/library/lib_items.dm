@@ -185,7 +185,7 @@
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 		onclose(user, "book")
-		if(istype(user,mob/living/carbon/human))
+		if(istype(user,/mob/living/carbon/human))
 			spawn(200)
 			for(var/i=1;i<=10 && winexists(user,"book");i++)
 				user.adjustBrainLoss(-1)
