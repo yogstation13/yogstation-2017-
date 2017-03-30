@@ -188,11 +188,12 @@
 		while(do_after(user,600,progress = 0))	//60 seconds of reading
 			user.adjustBrainLoss(-5)
 			user.adjustStaminaLoss(-20)
-			if(user.reagents.has_reagent(hot_coco)
+			if(user.reagents.has_reagent(hot_coco))
 				user.heal_organ_damage(1,1)
 	if(!dat)
 		user << "<span class='notice'>This book is completely blank!</span>"
-		
+
+
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
