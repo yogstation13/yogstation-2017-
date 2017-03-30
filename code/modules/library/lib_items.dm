@@ -175,7 +175,7 @@
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
-/obj/item/weapon/book/attack_self(mob/user)
+/obj/item/weapon/book/attack_self(mob/living/user)
 	if(is_blind(user))
 		return
 	if(ismonkey(user))
@@ -191,7 +191,7 @@
 				user.adjustBrainLoss(-1)
 				user.adjustStaminaLoss(-4)
 				spawn(79)
-	
+			
 	else
 		user << "<span class='notice'>This book is completely blank!</span>"
 
