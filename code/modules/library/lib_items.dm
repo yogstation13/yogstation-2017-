@@ -191,10 +191,8 @@
 				user.adjustBrainLoss(-1)
 				user.adjustStaminaLoss(-4)
 				spawn(79)
-	else
-		user << "<span class='notice'>This book is completely blank!</span>"
-
-
+	
+		
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
