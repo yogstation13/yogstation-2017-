@@ -191,7 +191,6 @@
 				user.adjustBrainLoss(-1)
 				user.adjustStaminaLoss(-4)
 				spawn(79)
-			
 	else
 		user << "<span class='notice'>This book is completely blank!</span>"
 
