@@ -85,7 +85,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/toolspeed = 1
 
 	var/high_risk = 0 //if admins should be notified when this destoryed
-	
+
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
@@ -111,7 +111,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// Needs to be in /obj/item because corgis can wear a lot of
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
-
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
@@ -171,6 +170,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 //OXYLOSS = 8
 //Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
+	return
+
+/obj/item/proc/cuff_act(mob/user)
 	return
 
 /obj/item/verb/move_to_top()

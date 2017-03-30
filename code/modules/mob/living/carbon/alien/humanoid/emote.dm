@@ -64,6 +64,11 @@
 			message = "<span class='name'>[src]</span> waves its tail."
 			m_type = 1
 
+		if("drool")
+			message = "<span class='name'>[src]</span> extends their inner-tounge and ejects a hunking slump of salivia onto the ground."
+			m_type = 1
+			new /obj/effect/decal/cleanable/xenodrool(get_turf(src))
+
 		if ("help") //This is an exception
 			src << "Help for xenomorph emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow, burp, choke, chucke, clap, collapse, cough, dance, deathgasp, drool, flap, frown, gasp, giggle, glare-(none)/mob, gnarl, hiss, jump, laugh, look-atom, me, moan, nod, point-atom, roar, roll, scream, scratch, screech, shake, shiver, sign-#, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tail, tremble, twitch, twitch_s, wave, whimper, wink, yawn"
 

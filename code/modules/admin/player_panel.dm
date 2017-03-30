@@ -631,6 +631,32 @@
 					dat += "<td><A href='?priv_msg=[sintouched.key]'>PM</A></td>"
 			dat += "</table>"
 
+		if(ticker.mode.xenomorphs)
+			dat += "<br><table cellspacing=5><tr><td><B>xenomorph queens</B></td><td></td><td></td></tr>"
+			for(var/X in ticker.mode.xenomorphs["QUEEN"])
+				var/datum/mind/queen = X
+				var/mob/M = queen.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A HREF='?_src_=holder;traitor=\ref[M]'>Show Objective</A></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[queen]'>[queen.name]([queen.key])</a><i>the queens body was destroyed!</i></td></tr>"
+					dat += "<td><A href='?priv_msg=[queen.key]'>PM</A></td>"
+			dat += "</table>"
+
+		if(ticker.mode.predators)
+			dat += "<br><table cellspacing=5><tr><td><B>predators</B></td><td></td><td></td></tr>"
+			for(var/X in ticker.mode.predators)
+				var/datum/mind/predator = X
+				var/mob/M = predator.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+				else
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[predator]'>[predator.name]([predator.key])</a><i>the queens body was destroyed!</i></td></tr>"
+					dat += "<td><A href='?priv_msg=[predator.key]'>PM</A></td>"
+
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in mob_list)
 			blob_minds |= B.mind

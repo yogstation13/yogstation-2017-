@@ -169,8 +169,9 @@
 
 /mob/living/carbon/human/update_icons()
 	if(m_intent == "walk")
-		world << "walk ping at update_icons()"
 		for(var/mob/living/carbon/alien/A in mob_list)
+			if(!A.client)
+				continue
 			var/masked = TRUE// determines if we can mask ourselves from any noise possible
 			for(var/obj/effect/noise/N in noise_database)
 				if(masked == FALSE)
@@ -178,10 +179,12 @@
 				if((src in N.crossed))
 					masked = FALSE
 			if(!masked)
-				return ..()
+				noisy += 10
+				break
+			if(noisy)
+				break
 			if(thermalOverlay)
 				A.client.images -= thermalOverlay
-				world << "minus thermaloverlay!"
 			var/image/I = image(icon('icons/effects/effects.dmi', "invsthermal2"), loc = src)
 			//image(getInvsThermalIcon(new/icon(icon,icon_state)), loc = src)
 		//	image('icons/effects/effects.dmi', loc = src, icon_state = "invsthermal")

@@ -46,8 +46,11 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
 		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
+			var/ventspeed = 25
+			if(istype(src, /mob/living/carbon/alien/humanoid))
+				ventspeed = 5
 
-			if(!do_after(src, 25, target = vent_found))
+			if(!do_after(src, ventspeed, target = vent_found))
 				return
 
 			if(!client)
@@ -101,10 +104,16 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 /mob/living/proc/remove_ventcrawl()
 	if(client)
+		var/was_in_vent
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-	pipes_shown.len = 0
+			if(current_image)
+				was_in_vent = TRUE
 
+		if(was_in_vent)
+			if(!(istype(loc, /obj/machinery/atmospherics)))
+				on_vent_leave()
+	pipes_shown.len = 0
 
 
 

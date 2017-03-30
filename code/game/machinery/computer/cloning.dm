@@ -239,12 +239,6 @@
 		loading = 1
 		src.updateUsrDialog()
 
-		if(istype(occupant, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = occupant
-			if((NOCLONE in H.dna.species.specflags))
-				visible_message("<span class='warning'>[src] buzzes because of it's struggle to clone [occupant]! The task is unattainable.</span>")
-				return
-
 		spawn(20)
 			src.scan_mob(scanner.occupant)
 
@@ -373,6 +367,9 @@
 		return
 	if (find_record("ckey", subject.ckey, records))
 		scantemp = "<font class='average'>Subject already in database.</font>"
+		return
+	if((NOCLONE in subject.dna.species.specflags))
+		scantemp = "<font class='bad'>Subject's genetic DNA is impossible to unscramble.</font>"
 		return
 
 	var/datum/data/record/R = new()

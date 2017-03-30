@@ -8,6 +8,7 @@ GAS ANALYZER
 MASS SPECTROMETER
 
 */
+
 /obj/item/device/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
@@ -18,6 +19,8 @@ MASS SPECTROMETER
 	item_state = "electronic"
 	materials = list(MAT_METAL=150)
 	origin_tech = "magnets=1;engineering=1"
+	var/flickcount = 8
+	var/cd
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -27,20 +30,26 @@ MASS SPECTROMETER
 	if(on)
 		SSobj.processing |= src
 
-/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
-	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
+/obj/item/device/t_scanner/proc/flick_sonar(atom/A)
+	var/flicklayer
+	if(istype(A, /obj))
+		var/obj/pipe = A
+		flicklayer = pipe.layer+1
+
+	var/image/I = image('icons/effects/effects.dmi', A, "blip", flicklayer)
 	I.alpha = 128
 	var/list/nearby = list()
-	for(var/mob/M in viewers(pipe))
+	for(var/mob/M in viewers(A))
 		if(M.client)
 			nearby |= M.client
-	flick_overlay(I,nearby,8)
+	flick_overlay(I,nearby,flickcount)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
 		SSobj.processing.Remove(src)
 		return null
-	scan()
+	if(!cd)
+		scan()
 
 /obj/item/device/t_scanner/proc/scan()
 
@@ -56,6 +65,7 @@ MASS SPECTROMETER
 				O.invisibility = 0
 				if(L)
 					flick_sonar(O)
+					flick_sonar(L)
 				spawn(10)
 					if(O && O.loc)
 						var/turf/U = O.loc
@@ -65,6 +75,17 @@ MASS SPECTROMETER
 				if(L)
 					flick_sonar(O)
 
+	cd = TRUE
+	addtimer(src, "deactivateCD", flickcount*10)
+
+/obj/item/device/t_scanner/proc/deactivateCD()
+	if(cd)
+		cd = FALSE
+
+/obj/item/device/t_scanner/advanced
+	name = "advanced tray scanner"
+	desc = "Best known for it's longer durability."
+	flickcount = 16
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"

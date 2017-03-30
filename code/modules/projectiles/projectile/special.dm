@@ -255,6 +255,9 @@
 	damage = 10
 	range = 8
 
+/obj/item/projectile/plasma/adv/yautija
+	damage = 47
+	range = 50
 
 /obj/item/projectile/gravipulse
 	name = "one-point energy bolt"

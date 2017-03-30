@@ -180,6 +180,9 @@ obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 /obj/item/ammo_casing/energy/plasma/adv
 	projectile_type = /obj/item/projectile/plasma/adv
 
+/obj/item/ammo_casing/energy/plasma/predator
+	projectile_type =  /obj/item/projectile/plasma/adv/yautija
+
 /obj/item/projectile/energy/shock_revolver
 	name = "shock bolt"
 	icon_state = "purple_laser"

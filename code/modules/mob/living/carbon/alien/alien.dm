@@ -192,8 +192,12 @@ Des: Removes all infected images from the alien.
 		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
-	if(HD.colony_suffix)
+	if(!HD)
+		message_admins("THE ALEIN_EVOLVE() WORKS")
+		new_xeno.HD = new(new_xeno)
 		new_xeno.HD.colony_suffix = HD.colony_suffix
+	else
+		message_admins("THE ALIEN EVOVLE DOES NOT WORK")
 	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1

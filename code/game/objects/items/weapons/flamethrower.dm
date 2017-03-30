@@ -43,6 +43,8 @@
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
+	if(prob(10))
+		playsound(get_turf(src), 'sound/misc/flame.ogg', 10, 0, -5, sNoiseLevel = 200) // double normal sound.
 	return
 
 
@@ -62,7 +64,7 @@
 /obj/item/weapon/flamethrower/afterattack(atom/target, mob/user, flag)
 	if(flag) return // too close
 	if(iscarbon(user))
-		var/mob/living/carbon/H
+		var/mob/living/carbon/H = user
 		if(H.has_dna())
 			if(H.dna.check_mutation(HULK))
 				user << "<span class='warning'>Your fat, meaty fingers cannot operate [src]!</span>"

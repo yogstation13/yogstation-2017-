@@ -1,4 +1,4 @@
-// datum predetermines the outcome of the xenomorph and their colony.
+// datum predetermines some of the variables of the xenomorph beforehand.
 // colony suffix is carried from a queen to an egg, and from that egg to the hugger, and from that hugger to the xeno.
 
 var/list/colony_database = list()
@@ -33,7 +33,7 @@ var/list/colony_database = list()
 
 		if("lizard")
 			traits["name"] = "odd smelling xenomorph ([randomdigit])"
-			traits["desc"] = "A pecuilar xenomorphic beast, which appears to have less than smooth skin. Along the skin of it's flesh are imprinted scales symbolizing a reptilian origin."
+			traits["desc"] = "A pecuilar xenomorphic beast with viciously thin fangs, and a less-sharp tail. Along the skin of it's flesh are imprinted scales symbolizing a reptilian origin."
 			traits["heat_protection"] = 0.8
 			changetraits = TRUE
 

@@ -232,6 +232,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "alien_noqueen"
 	alerttooltipstyle = "alien"
 
+/obj/screen/alert/tutorial
+	name = "Tutorial"
+	desc = "These aliens are pretty different! Instead of relying on disarms, you'll have to adjust to your sting intent to incapaciatate humans. It's suggested that you swallow them whole (aggressive grab -> click on yourself) in order to carry them back to the hive."
+	icon_state = "default"
+	alerttooltipstyle = "alien"
+
+/obj/screen/alert/alien_objective
+	name = "Hivemind Objective"
+	desc = "You do not have an objective. Consult with the Queen."
+	alerttooltipstyle = "alien"
+//	icon_state = ""
+
+
 //BLOBS
 
 /obj/screen/alert/nofactory

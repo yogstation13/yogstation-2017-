@@ -1,8 +1,5 @@
 // all that unsorted predator good stuff goes here
 
-/datum/game_mode/proc/callPredators()
-
-
 /datum/species/predator
 	name = "Predator"
 	id = "pred"
@@ -10,11 +7,10 @@
 	default_color = "59CE00"
 	sexes = FALSE
 	speedmod = -1
-	armor = 5
+	armor = 10
 	stunmod = 0.5
 	specflags = list(VIRUSIMMUNE)
 	skinned_type = /obj/item/stack/sheet/animalhide/human
-	no_equip = list(slot_shoes, slot_w_uniform)
 
 /mob/living/carbon/human/predator
 	name = "predator"
@@ -55,6 +51,8 @@
 /mob/living/carbon/human/predator/say_quote(var/text)
 	return "[verb_say], \"[text]\"";
 
+//	TESTING:
+
 /mob/living/carbon/human/predator/preloaded/New()
 	..()
 	equip_to_slot_if_possible(new /obj/item/clothing/suit/space/hardsuit/predator, slot_wear_suit)
@@ -62,3 +60,8 @@
 	equip_to_slot_if_possible(new /obj/item/weapon/twohanded/spear/combistick, slot_r_store)
 	equip_to_slot_if_possible(new /obj/item/clothing/under/predator, slot_w_uniform)
 	equip_to_slot_if_possible(new /obj/item/clothing/shoes/predator, slot_shoes)
+	equip_to_slot_if_possible(new /obj/item/weapon/storage/belt/yautija, slot_belt)
+	new /obj/item/yautijaholster(get_turf(src))
+	new /obj/item/weapon/gun/netgun(get_turf(src))
+	new /obj/item/weapon/predatortank(get_turf(src))
+	new /obj/item/device/assault_pod/predator(get_turf(src))

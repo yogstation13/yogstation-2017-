@@ -58,3 +58,7 @@ var/global/default_martial_art = new/datum/martial_art
 	var/datum/personal_crafting/handcrafting
 
 	var/cauterized // controls whether a wound is cauterized or not.
+
+	var/noisy // controls whether they're silent enough. used in human_helpers.dm
+
+	var/image/bloodtracking

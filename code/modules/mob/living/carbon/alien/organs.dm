@@ -227,9 +227,9 @@
 /obj/item/organ/alien/neurotoxinthroat/proc/stop_ache()
 	ache = FALSE
 
-/obj/item/organ/alien/neurotoxinthroat/Insert(mob/living/carbon/M)
-	..()
-	M.Stat("Throat Canal Storage:", "[neurotoxinStorage]/[neurotoxinStorageLimit]")
+///obj/item/organ/alien/neurotoxinthroat/Insert(mob/living/carbon/M)
+//	..()
+//	stat("Throat Canal Storage:", "[neurotoxinStorage]/[neurotoxinStorageLimit]")
 
 /obj/item/organ/alien/neurotoxinthroat/frail
 	name = "weak xenomorphic throat canal"

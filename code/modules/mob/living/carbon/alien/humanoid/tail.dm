@@ -4,9 +4,10 @@
 /obj/item/weapon/xenomorphtail
 	name = "their tail"
 	desc = "A curious tail with a dagger sharp ail. It drags itself around the xenomorph picking up on anything that might be around it."
-	force = 10
+	force = 15
+	hitsound = 'sound/xenomorph/xeno_tailwhip1.ogg'
 	var/datum/reagent/chemical = null // will the tail inject a chemical into someone?
-	var/chemregain // operates with cooldown
+	var/chemregain // operates as a cooldown
 	var/chemexcess = 15 // how many reagents are we going to pump into our target?
 	var/chemcooldown = 500 // what's the cooldown
 
@@ -28,9 +29,10 @@
 				H.reagents.add_reagent("[tailreagent.id]", chemexcess)
 				user << "<span class='alien>You transfer [chemical] into [M].</span>"
 				chemregain = world.time + chemcooldown
+		hitsound = pick('sound/xenomorph/xeno_tailwhip1.ogg', 'sound/xenomorph/xeno_tailwhip2.ogg')
 
 /obj/item/weapon/xenomorphtail/hunter
-	force = 5 // reduced from 15.
+	force = 10
 	chemical = /datum/reagent/toxin/xenotoxin
 
 /obj/item/weapon/xenomorphtail/sentinel

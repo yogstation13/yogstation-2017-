@@ -26,6 +26,7 @@
 		<a href='?src=\ref[src];makeAntag=18'>Make Deathsquad Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=\ref[src];makeAntag=20'>Make Predator (Begins a Wave)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)

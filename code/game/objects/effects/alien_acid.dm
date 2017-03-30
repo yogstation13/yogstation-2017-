@@ -16,6 +16,7 @@
 	opacity = 0
 	anchored = 1
 	unacidable = 1
+	layer = WALL_OBJ_LAYER
 	var/atom/target
 	var/ticks = 0
 	var/target_strength = 0

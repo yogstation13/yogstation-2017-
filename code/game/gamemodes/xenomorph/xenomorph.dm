@@ -1,34 +1,34 @@
-/*
-#define PREDATORS_UNKNOWN 0
-#define PREDATORS_ALIVE 1
-#define PREDATORS_DEAD 2
+/datum/game_mode/proc/FindHunters(dead)
+	var/hcount
+	for(var/datum/mind/H in xenomorphs["HUNTERS"])
+		if(dead)
+			hcount++
+		else if(H.current.stat != DEAD)
+			hcount++
+	return hcount
 
-*/
-var/list/turf/xenomorphweeds = list()
+/datum/game_mode/proc/FindSenitels(dead)
+	var/scount
+	for(var/datum/mind/S in xenomorphs["SENITELS"])
+		if(dead)
+			scount++
+		else if(S.current.stat != DEAD)
+			scount++
+	return scount
 
-/datum/game_mode
-	var/list/datum/mind/xenomorphs = list(
-	"QUEEN" = list (),
-	"HUNTERS" = list (),
-	"SENITELS" = list (),
-	"DRONES" = list ()
-	)
-
-	// "xenomorphs" list saves mind datums. not mobs.
-
-
-	var/list/datum/mind/predators = list()
-
-	var/queensuffix
+/datum/game_mode/proc/FindDrones(dead)
+	var/dcount
+	for(var/datum/mind/D in xenomorphs["DRONES"])
+		if(dead)
+			dcount++
+		else if(D.current.stat != DEAD)
+			dcount++
+	return dcount
 
 /datum/game_mode/proc/checkHive() // if it returns 0 - it can be anything. else it returns a caste
-	var/hcount = xenomorphs.len["HUNTERS"]
-	var/scount = xenomorphs.len["SENITELS"]
-	var/dcount = xenomorphs.len["DRONES"]
-
-	if(!hcount || !scount || !dcount)
-		return 0
-
+	var/hcount = FindHunters()
+	var/scount = FindSenitels()
+	var/dcount = FindDrones()
 
 	if(hcount == (scount && dcount))
 		return 0
@@ -39,7 +39,6 @@ var/list/turf/xenomorphweeds = list()
 
 		else
 			return "senitel"
-
 	else
 		if(hcount > dcount)
 			return "drone"
@@ -47,22 +46,31 @@ var/list/turf/xenomorphweeds = list()
 		else
 			return "hunter"
 
+var/list/turf/xenomorphweeds = list()
+
+/datum/game_mode
+	var/list/datum/mind/xenomorphs = list("QUEEN" = list (),"HUNTERS" = list (),"SENITELS" = list (),"DRONES" = list ())
+	var/list/datum/mind/predators = list()
+	var/queensuffix
+	var/list/xenoprogressmarker = list("10" = FALSE, "20" = FALSE, "30" = FALSE, "40" = FALSE, "50" = FALSE, "60" = FALSE, "70" = FALSE, "80" = FALSE, "90" = FALSE, "100" = FALSE)
+	var/predatorwave = null
+
 /datum/game_mode/xenomorph
 	name = "alien"
 	config_tag = "alien"
 	antag_flag = ROLE_ALIEN
-	/*
+
 	required_players = 30
 	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
-	*/
+/*
 	required_players = 1
 	required_enemies = 1
 	recommended_enemies = 1
-
+*/
 	var/alien_weed_control_count
-	var/yautijalaunch = FALSE
+	var/yautjalaunch = FALSE
 	var/ERTlaunch = FALSE
 	var/roundstartalert = FALSE
 
@@ -194,7 +202,7 @@ var/list/turf/xenomorphweeds = list()
 
 	var/RNGspawn = pick(spawns)
 
-	for(var/datum/mind/alien_brethern in xenomorphs)
+	for(var/datum/mind/alien_brethern in xenomorphs) // spawning
 		var/greeted_forged_moved
 		for(var/turf/open/floor/F in orange(1, RNGspawn))
 			if(greeted_forged_moved)
@@ -208,33 +216,37 @@ var/list/turf/xenomorphweeds = list()
 			greeted_forged_moved = TRUE
 
 	var/shuffle_universe_luck = rand(3000,4500)
-	spawn(shuffle_universe_luck)
+	spawn(shuffle_universe_luck) // announcement
 		priority_announce("Xenomorphic lifesigns detected coming aboard [station_name()]. \
 			Secure any exterior access, including ducting and ventilation. All personel are \
 			instructed to assist in the extermination of this species. This is not a drill.",\
-			"CRITICAL: Biohazard Alert", 'sound/machines/Alarm.ogg')
+			"CRITICAL: Biohazard Alert", 'sound/AI/commandreport.ogg')
 		SSshuttle.emergency.mode = SHUTTLE_STRANDED
 		roundstartalert = TRUE // now we can jostle between called and uncalled.
 
+	. = ..()
+
 	var/colony
-	var/datum/mind/M = xenomorphs["QUEEN"]
-	var/mob/living/carbon/alien/alien = M.current
-	colony = alien.HD.colony_suffix
-	queensuffix = alien.HD.colony_suffix
+	var/datum/mind/M = xenomorphs["QUEEN"][1]
+	var/mob/living/carbon/alien/A = M.current
+	colony = A.HD.colony_suffix
+	queensuffix = A.HD.colony_suffix
 
 	if(colony)
 		for(var/datum/mind/xenos in xenomorphs)
-			if(colony)
-				alien = xenos.current
-				alien.HD.colony_suffix = colony
+			if(xenos.special_role == "xeno queen")
+				continue
+			A = xenos.current
+			A.HD.colony_suffix = colony
 	else
 		message_admins("ERROR: Queen failed to configure a colony suffix. Reloading the queensuffix. Please check the mode under TICKER.")
 		update_queen_suffix()
 
-	return ..()
+	return .
 
 /datum/game_mode/xenomorph/proc/greet_xeno_and_transform(datum/mind/hbrain, role)
 	if(!role)
+		message_admins("ERROR: Xeno Mode's greet_xeno_and_transform() reported a null role.")
 		return
 	var/mob/living/l
 	var/mob/living/M = hbrain.current
@@ -252,22 +264,22 @@ var/list/turf/xenomorphweeds = list()
 		if("xeno drone")
 			l = new /mob/living/carbon/alien/humanoid/drone(hbrain.current.loc)
 
-	if(hbrain)
-		hbrain.transfer_to(l)
-		var/datum/objective/weedconquer/W = new
-		W.owner = l
-		l.mind.objectives += W
-		l.mind.special_role = hbrain.special_role
-		l.mind.assigned_role = hbrain.assigned_role
-		hbrain.current = l
-		l << "<span class='alertalien'>You are a <B>[role]</B>!</span>"
-		l << "<B><span class='alien'>Objective #1</B>: [W.explanation_text]</span>"
-		var/mob/living/carbon/alien/A = l
-		if(hbrain.special_role != "xeno queen")
-			A.HD = new /datum/huggerdatum/default(origin = l)
-		qdel(M)
-	else
+	if(!hbrain)
 		message_admins("ERROR: [ticker.mode] has failed to greet and transform [hbrain.current] / [hbrain.current.ckey]. Contact a coder!")
+		return
+
+	hbrain.transfer_to(l)
+	var/datum/objective/weedconquer/W = new
+	W.owner = l
+	l.mind.objectives += W
+	l.mind.special_role = hbrain.special_role
+	l.mind.assigned_role = hbrain.assigned_role
+	hbrain.current = l
+	l << "<span class='alertalien'>You are a <B>[role]</B>!</span>"
+	l << "<B><span class='alien'>Objective #1</B>: [W.explanation_text]</span>"
+	var/mob/living/carbon/alien/A = l
+	if(hbrain.special_role != "xeno queen") 	A.HD = new /datum/huggerdatum/default(origin = l)
+	qdel(M)
 
 /datum/game_mode/xenomorph/proc/check_for_ERT()
 	var/totalcrew = 0
@@ -281,10 +293,7 @@ var/list/turf/xenomorphweeds = list()
 			else
 				alivecrew++
 	message_admins("total crew: [totalcrew]")
-	var/centcommexpectation = alivecrew * 1/8
-	message_admins("this is centcomms exxpectation: [centcommexpectation]")
-	if(centcommexpectation < 1)
-		centcommexpectation = 1
+	var/centcommexpectation = max(alivecrew * 1/8, 1)
 	message_admins("this is centcomms exxpectation: [centcommexpectation]")
 	if(ERTlaunch)
 		return
@@ -304,7 +313,7 @@ var/list/turf/xenomorphweeds = list()
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		return TRUE
 	if(roundstartalert)
-		if(calculateXenos(1) == DEAD)
+		if(calculateXenos(1) == DEAD) // The Queen has died!
 			SSshuttle.emergency.mode = SHUTTLE_IDLE
 			priority_announce("The Emergency Shuttle can now be called.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 		else if (SSshuttle.emergency.mode == SHUTTLE_IDLE && calculateXenos(1) != DEAD)
@@ -314,19 +323,55 @@ var/list/turf/xenomorphweeds = list()
 	if(!ERTlaunch) // Has an ERT already been sent?
 		check_for_ERT()
 
-//	update_queen_suffix()
+	check_hive_progress()
+
+	if(!yautjalaunch)
+		check_for_predator()
 
 	if(!calculateXenos())
 		return FALSE
 	else
 		return TRUE
 
+
+#define PREDATOR_COEFF 0.45 // 45%
+
+/datum/game_mode/xenomorph/proc/check_for_predator()
+	if(xenomorphweeds.len)
+		var/weedcount = length(xenomorphweeds)
+		var/pred = alien_weed_control_count * PREDATOR_COEFF
+		if(weedcount > pred)
+			summonpredators()
+			yautjalaunch = TRUE
+
+/datum/game_mode/proc/summonpredators()
+	for(var/obj/effect/landmark/A in landmarks_list)
+		if(A.name == "pred[predatorwave]")
+			var/obj/effect/mob_spawn/human/predator/P = new(get_turf(A))
+			notify_ghosts("A Predator Cyropod has been awakened!", source = P, action = NOTIFY_ORBIT)
+			var/obj/effect/landmark/L = new(get_turf(A))
+			L.name = "pred[predatorwave + 1]"
+			qdel(A)
+	predatorwave++ // for the next generation!
+
 /datum/game_mode/xenomorph/declare_completion()
+	var/predcount
+	for(var/datum/mind/M in predators)
+		if(M.current.stat != DEAD)
+			predcount++
+
+	var/predtotal = 4 // it initializes on 4
+	predtotal += predatorwave * 4 // since 4 is the current limit on the map.
+
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		if(!calculateXenos())
 			feedback_set_details("round_end_result","win - xenomorphs took over")
-			world << "<FONT size = 5><B>Xenomorphs Major Win!</B></FONT>"
-			world << "<B>The entire station was taken over by alien weeds.</B>"
+			if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
+				world << "<FONT size = 5><B>Xenomorphs Major Win!</B></FONT>"
+				world << "<B>The entire station was taken over by alien weeds.</B>"
+			else if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
+				world << "<FONT size = 5><B>Xenomorph Minor Win!</B></FONT>"
+				world << "<B>The station was dominated in alien weeds, but the crew still evacuated to safety.</B>"
 		else
 			feedback_set_details("round_end_result","win - xenomorphs exterminated, but weeds took over")
 			world << "<FONT size = 5><B>Xenomorphs Minor Win!</B></FONT>"
@@ -351,7 +396,27 @@ var/list/turf/xenomorphweeds = list()
 			feedback_set_details("round_end_result","lose - the xenomorphs were exterminated")
 			world << "<FONT size = 5><B>Crew Major Win!</B></FONT>"
 			world << "<B>The Research Staff aboard [station_name()] managed to contain the xenomorphic outbreak!</B>"
+
+	if(yautjalaunch)
+		world << "<B>There was a total of [predtotal] Yautja Predators this shift. [predcount] survived.</B>"
+	else
+		world << "<B>The Yautja Predators were not summoned this round.</B>"
 	..()
+
+/datum/game_mode/xenomorph/proc/auto_declare_completion_alien()
+	if(istype(ticker.mode,/datum/game_mode/xenomorph) )
+		if(length(xenomorphs["QUEEN"]))
+			var/queenlen = length(xenomorphs["QUEEN"])
+			var/text = "<FONT size = 2><B>The xenomorph queen[(queenlen > 1 ? "s were" : " was")]:</B></FONT>"
+			for(var/datum/mind/xeno in xenomorphs["QUEEN"])
+				text += printplayer(xeno)
+			world << text
+		if(predators.len)
+			var/text2 = "<BR><FONT size = 2><B>The Predators were:</B></FONT>"
+			for(var/datum/mind/pred1 in predators)
+				text2 += printplayer(predators)
+		return 1
+
 
 /datum/objective/weedconquer
 	explanation_text = "Conquer the station!"
@@ -363,17 +428,52 @@ var/list/turf/xenomorphweeds = list()
 			return TRUE
 	return FALSE
 
-
-/proc/compareAlienSuffix(var/suffix1, var/suffix2)
-	if(suffix1 == suffix2)
-		return TRUE
+/datum/game_mode/xenomorph/proc/check_hive_progress()
+	var/goal = alien_weed_control_count
+	var/nextlevel = check_for_pecentage()
+	if(!nextlevel)
+		return
+	var/nextlevelMult = nextlevel / 100
+	var/calcWeed = goal * nextlevelMult
+	if(xenomorphweeds.len > calcWeed)
+		xenoprogressmarker[num2text(nextlevel)] = TRUE
+		message_xenomorphs("Your hive has dominated [nextlevel]% of the station!", FALSE, "alienannounce")
 	else
-		return FALSE
+		var/currentlevel = nextlevel - 10
+		nextlevelMult = currentlevel / 100
+		var/calcPastWeed = goal * nextlevelMult
+		if(xenomorphweeds.len < calcPastWeed)
+			xenoprogressmarker[num2text(currentlevel)] = FALSE
+			var/regresslevel = currentlevel - 10
+			message_xenomorphs("Your weed reproduction has dropped from [currentlevel]% to [regresslevel]%!", FALSE, "alienannounce")
 
-/*
-/proc/compareHD(var/datum/huggerdatum/H1, var/datum/huggerdatum/H2)
-	if(H1.colony_suffix == H2.colony_suffix)
-		return TRUE
+/datum/game_mode/xenomorph/proc/check_for_pecentage()
+	if(xenoprogressmarker["10"])
+		if(xenoprogressmarker["20"])
+			if(xenoprogressmarker["30"])
+				if(xenoprogressmarker["40"])
+					if(xenoprogressmarker["50"])
+						if(xenoprogressmarker["60"])
+							if(xenoprogressmarker["70"])
+								if(xenoprogressmarker["80"])
+									if(xenoprogressmarker["90"])
+										if(xenoprogressmarker["100"])
+											return 100
+									else
+										return 90
+								else
+									return 80
+							else
+								return 70
+						else
+							return 60
+					else
+						return 50
+				else
+					return 40
+			else
+				return 30
+		else
+			return 20
 	else
-		return FALSE
-*/
+		return 10

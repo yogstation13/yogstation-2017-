@@ -1,6 +1,7 @@
 /mob/living/carbon/brain/alien
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
+	stat = CONSCIOUS
 
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
@@ -14,6 +15,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	var/colony
 	var/mob/living/carbon/brain/alien/embryo
 	var/premature
+	var/polling = FALSE
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -38,15 +40,24 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 /obj/item/organ/body_egg/alien_embryo/proc/findClient() // returns 1 if we can't find anything
 	if(!owner)
 		return
+	if(!src)
+		return
+	if(polling)
+		return
 	message_admins("POLLING!")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as an embryo growing inside of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 200, embryo)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as an embryo growing inside of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, embryo)
 	var/client/C = null
+	polling = TRUE
 
-	sleep(200)
+	sleep(100)
 	if(candidates.len)
 		C = pick(candidates)
 	else
+		polling = FALSE
 		return 1
+
+	if(!src)
+		return
 
 	embryo.key = C.key
 	embryo << "<span class='alertalien'>Darkness surrounds you, and you grow bigger as you drain the nutrients out of your host. In time you'll soon be a fully grown...</span>"
@@ -109,8 +120,8 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			return
 		else
 			premature = FALSE
-
-	embryo.SetSleeping(0)
+	if(embryo)
+		embryo.SetSleeping(0)
 	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
 	owner.overlays += overlay
 
@@ -130,6 +141,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			new_xeno.invisibility = 0
 			new_xeno.HD = new(new_xeno)
 			new_xeno.HD.assemble("[colony]")
+			contact_queen()
 		if(gib_on_success)
 			owner.overlays -= overlay
 			var/overlay2 = image('icons/mob/alien.dmi', loc = owner, icon_state = "bursted_lie")
@@ -147,7 +159,10 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			owner.overlays -= overlay
 		qdel(src)
 
-
+/obj/item/organ/body_egg/alien_embryo/proc/contact_queen()
+	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
+		if(compareAlienSuffix(Q, col2 = colony))
+			Q << "<span class='alienminiannounce'>A new xenomorph was born in [get_area(src)]</span>"
 
 /*----------------------------------------
 Proc: AddInfectionImages(C)

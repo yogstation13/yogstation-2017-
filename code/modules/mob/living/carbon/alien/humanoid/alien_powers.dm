@@ -11,6 +11,7 @@ Doesn't work on other aliens/AI.*/
 	panel = "Alien"
 	var/plasma_cost = 0
 	var/check_turf = 0
+	var/usable = 1
 
 	var/has_action = 1
 	var/datum/action/spell_action/alien/action = null
@@ -24,6 +25,9 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/Click()
 	if(!istype(usr,/mob/living/carbon))
+		return 1
+	if(!usable)
+		usr << "<span class='warning'>[name] is currently on a cooldown.</span>"
 		return 1
 	var/mob/living/carbon/user = usr
 	if(cost_check(check_turf,user))
@@ -54,6 +58,9 @@ Doesn't work on other aliens/AI.*/
 			user << "<span class='noticealien'>Bad place for a garden!</span>"
 		return 0
 	return 1
+
+/obj/effect/proc_holder/alien/proc/resetUsable()
+	usable = !usable
 
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
@@ -276,7 +283,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
-	desc = "Spits neurotoxin at someone, burning them. Can be used to destroy machinery as well."
+	desc = "Spits neurotoxin at someone, burning them. Can be used to destroy machinery as well.  Ten units of neurotoxin spit will mute humans."
 	action_icon_state = "alien_neurotoxin_0"
 	var/active = 0
 
@@ -348,13 +355,13 @@ Doesn't work on other aliens/AI.*/
 		return
 
 	A.current = U
+	A.preparePixelProjectile(target, get_turf(target), user, params)
+	A.fire()
+
 	if(istype(target, /turf/) || istype(target, /obj))
 		if(target in view(1, user))
 			if(!(istype(target, /turf/closed))) // walls
 				A.splashAcid(target)
-	else
-		A.preparePixelProjectile(target, get_turf(target), user, params)
-		A.fire()
 
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost*5)
@@ -364,3 +371,81 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	if(user.ranged_ability == src)
 		user.ranged_ability = null
+
+
+/obj/effect/proc_holder/alien/boil
+	name = "Boil Stomach"
+	desc = "Lets you digest humans in your stomach, slowly burning them"
+	plasma_cost = 50
+	check_turf = 1
+	panel = "Alien"
+	action_icon_state = "dissolve"
+	var/staminadamage = 5
+	var/burndamage = 3
+
+/obj/effect/proc_holder/alien/boil/fire(mob/living/carbon/user)
+	if(usable)
+		resetUsable(user) // we will turn it off during this.
+
+	var/list/phrases = list("More off then getting stuck in a xenomorphs stomach..",
+							"This is NOT the type of station you wanted to be on!",
+							"The pain is digging into your bones!!",
+							"Your skin is melting!!",
+							"Is this xenomorph somehow enjoying this?!")
+	var/chosen
+
+	user << "<span class='warning'>You begin to digest the residue in your stomach..</span>"
+
+	for(var/i,i<7,i++)
+		chosen = pick(phrases)
+		for(var/mob/living/L in user.stomach_contents)
+			L << "<span class='warning'>Your body becomes heavier! Somethings off here! [chosen]</span>"
+			L.adjustStaminaLoss(staminadamage)
+			L.adjustFireLoss(burndamage)
+		sleep(30)
+	addtimer(src, "resetUsable", 210)
+	return 1
+
+/obj/effect/proc_holder/alien/boil/resetUsable(mob/living/L)
+	if(!usable)
+		L << "<span class='notice'>Your digestive systems deplete to normal...</span>"
+	..()
+
+/obj/effect/proc_holder/spell/targeted/headbite
+	name = "Headbite"
+	clothes_req = 0
+	max_targets = 1
+	range = 1
+	charge_max = 800
+	invocation_type = "none"
+	action_icon_state = "headbite" // needs a better sprite.
+
+/obj/effect/proc_holder/spell/targeted/headbite/cast(list/targets,mob/user = usr)
+	for(var/mob/living/L in targets)
+		if(!ishuman(L))
+			return
+		if(user.grab_state <= GRAB_AGGRESSIVE)
+			user << "<span class='noticealien'>You need a better grab.</span>"
+			return
+		if(user.pulling == L)
+			L << "<span class='warning'>[user] begins to slowly crawl over you...</span>"
+			user << "<span class='alertalien>'>You begin to crawl ontop of [user]....</span>"
+			sleep(30) // three seconds.
+			var/mob/living/carbon/human/H = L
+			var/obj/item/bodypart/B = H.get_bodypart("head")
+			if(!B)
+				user << "<span class='alertalien'>[user] doesn't have a head... there's nothing to bite.</span>"
+				return
+			L << "<span class='warning'>[user]'s tongue snaps at your head!</span>"
+			flash_color(L, color = "#FF0000", time = 50)
+			sleep(10)
+			if(istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit))
+				L << "<span class='warning'>[H.head] protects you!</span>"
+				user << "<span class='alertalien'>[L]'s [H.head] gets in the way!</span>"
+				flash_color(user, color = "#FF0000", time = 50)
+				user.Stun(10)
+				return
+			L.visible_message("<span class='warning'>[L]'s head is mutilated by [user]'s snake-like tongue!</span>", \
+				"<span class='warning'>[L]'s head is mutilated by [user]'s snake-like tongue!</span>")
+			if(B)
+				B.dismember()

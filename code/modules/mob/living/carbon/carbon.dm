@@ -540,6 +540,11 @@
 		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+
+		var/obj/item/organ/alien/neurotoxinthroat/NTT = getorganslot("throatcanal")
+		if(NTT)
+			stat("Throat Canal Storage:", "[NTT.neurotoxinStorage]/[NTT.neurotoxinStorageLimit]")
+
 		if(locate(/obj/item/device/assembly/health) in src)
 			stat(null, "Health: [health]")
 

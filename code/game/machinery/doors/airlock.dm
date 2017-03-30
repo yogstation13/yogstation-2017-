@@ -864,7 +864,7 @@ var/list/airlock_overlays = list()
 				return
 
 		user.visible_message("<span class='warning'>[user] sticks their claws into the middle of [src]...</span>",\
-						"<span class='noticealien'>You begin pushing the airlock open [src] with all your might!</span>",\
+						"<span class='noticealien'>You begin pushing [src] open with all your might!</span>",\
 						"<span class='warning'>You hear groaning metal...</span>")
 		var/open_up = 20
 		if(hasPower())

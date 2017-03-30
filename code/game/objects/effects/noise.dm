@@ -11,6 +11,16 @@ var/list/noise_database = list()
 	var/image/noiseimage
 	var/list/crossed = list()
 
+/obj/effect/New()
+	..()
+	SSobj.processing |= src
+//	START_PROCESSING(SSobj, src)
+
+/obj/effect/Destroy()
+	..()
+	SSobj.processing -= src
+//	STOP_PROCESSING(SSobj, src)
+
 /obj/effect/noise/proc/channel()
 	for(var/mob/living/carbon/alien/A in mob_list)
 		if(A.client)
@@ -51,7 +61,7 @@ var/list/noise_database = list()
 	search_for_walkers()
 
 /obj/effect/noise/proc/search_for_walkers() // not the dead kind...
-	for(var/mob/living/carbon/human/H in orange(1, src))
+	for(var/mob/living/carbon/human/H in orange(1, get_turf(src)))
 		if(H)
 			if(H.m_intent == "walk")
 				H.UpdateAlienThermal()

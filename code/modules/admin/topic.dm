@@ -152,6 +152,10 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a centcomm official. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a centcomm official.")
+			if("20")
+				ticker.mode.summonpredators()
+				message_admins("[key_name(usr)] has summoned another wave of predators.")
+				log_admin("[key_name(usr)] has summoned another wave of predators.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))

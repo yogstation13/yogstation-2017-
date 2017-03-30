@@ -232,7 +232,6 @@
 	damage_type = BURN
 	damage = 5
 
-
 /obj/item/projectile/bullet/neurospit/on_hit(atom/target, blocked = 0)
 	if(isalien(target))
 		nodamage = 1
@@ -263,7 +262,7 @@
 			failText(target)
 
 	if(istype(target, /obj/machinery))
-		if(damage == (15 || 20 || 25))
+		if(damage >= 20)
 			splashAcid(target)
 		else
 			failText(target)
@@ -281,6 +280,7 @@
 			return
 
 		var/mob/living/carbon/human/H = target
+		H.silent += damage * 2 // SILENCE!
 		if(H.dna.species.armor > damage*2) // species like golems are resistant to the alien acid
 			damage -= round((damage/2))
 		else
@@ -289,7 +289,7 @@
 			nodamage = 1
 			damage = 0
 
-/obj/item/projectile/bullet/neurospit/proc/splashAcid(var/obj/item/item, var/turf/turf)
+/obj/item/projectile/bullet/neurospit/proc/splashAcid(obj/item/item, turf/turf)
 	if(item)
 		new /obj/effect/acid(get_turf(item), item)
 	if(turf)
@@ -301,6 +301,7 @@
 
 /obj/item/projectile/bullet/neurospit/average
 	damage = 10
+	stun = 3
 
 /obj/item/projectile/bullet/neurospit/moderate
 	damage = 15

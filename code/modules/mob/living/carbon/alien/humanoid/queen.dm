@@ -46,6 +46,8 @@
 	internal_organs += new /obj/item/organ/alien/eggsac
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/directobjective())
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/globalobjective())
 	..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
@@ -137,3 +139,55 @@
 /obj/item/queenpromote/attack_self(mob/user)
 	user << "<span class='noticealien'>You discard [src].</span>"
 	qdel(src)
+
+/obj/effect/proc_holder/alien/royal/queen/directobjective
+	name = "Direct Objective"
+	desc = "Give a xenomorph nearbly an objective."
+	plasma_cost = 0
+	action_icon_state =  "direct-order"
+
+/obj/effect/proc_holder/alien/royal/queen/directobjective/fire(mob/living/carbon/alien/user)
+	var/list/xenomorphs = list()
+	xenomorphs += "None"
+	for(var/mob/living/carbon/alien/humanoid/H in viewers(7,user))
+		if(compareAlienSuffix(user, H))
+			xenomorphs += H
+
+	var/mob/living/carbon/alien/humanoid/chosenxeno = input(user,"Choose a xenomorph",null) as anything in xenomorphs
+	if(!chosenxeno || chosenxeno == "None")
+		user << "<span class='warning'>You chose not to give out another objective.</span>"
+		return
+	var/objective = stripped_input(user, "Print out a message", "Create an objective")
+
+	if(!objective)
+		return
+
+	user << "<span class='noticealien'>You give [chosenxeno.name] the objective <span class='alertalien'>[objective].</span></span>"
+	chosenxeno << "<span class='alertalien'>Your queen has given you the objective:</span> <span class='alertalien'>[objective]</span> <span class='noticealien'>(Use the alert at the top right of your screen to see it as well.)</span>"
+	var/obj/screen/alert/alien_objective/A = chosenxeno.alerts["alienobjective"]
+	if(A)
+		A.desc = objective
+		playsound(chosenxeno.loc, 'sound/voice/hiss5.ogg', 50, 1, 1)
+	return 1
+
+/obj/effect/proc_holder/alien/royal/queen/globalobjective
+	name = "Global Objective"
+	desc = "Sends a new objective to every single xenomorph.."
+	plasma_cost = 10
+	action_icon_state = "global-order"
+
+/obj/effect/proc_holder/alien/royal/queen/globalobjective/fire(mob/living/carbon/alien/user)
+	var/objective = stripped_input(user, "What objective do you want to give to your xenomorphs?", "Choose a Global Objective")
+	if(!objective)
+		return
+
+	for(var/mob/living/carbon/alien/humanoid/H in living_mob_list)
+		if(compareAlienSuffix(user, H))
+			var/obj/screen/alert/alien_objective/A = H.alerts["alienobjective"]
+			if(A)
+				A.desc = objective
+				H << 'sound/voice/hiss5.ogg'
+				H << "<span class='aliensmallannounce'>New Objective!</span><span class='notice'>(Check the alert at the top right corner)</span>"
+
+	user << "<span class='alertalien'>Your Colony's Currrent Objective:</span> <span class='notice'>[objective]</span>"
+	return 1

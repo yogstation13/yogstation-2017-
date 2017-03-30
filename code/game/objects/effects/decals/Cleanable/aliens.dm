@@ -14,6 +14,13 @@
 	bloodiness = MAX_SHOE_BLOODINESS
 	blood_state = BLOOD_STATE_XENO
 
+/obj/effect/decal/cleanable/xenoblood/New()
+	..()
+	if(prob(5))
+		var/turf/T = get_turf(src)
+		visible_message("<span class='warning'>[src] starts phasing through [T.name]!</span class>")
+		new /obj/effect/acid(loc, T)
+
 /obj/effect/decal/cleanable/xenoblood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
@@ -31,11 +38,6 @@
 					var/datum/disease/ND = D.Copy(1)
 					b.viruses += ND
 					ND.holder = b
-
-			if(prob(5))
-				var/turf/T = get_turf(src)
-				src.visible_message("<span class='warning'>[src] begins splases onto [T.name]!</span class>")
-				new /obj/effect/acid(loc, T)
 			if (step_to(src, get_step(src, direction), 0))
 				break
 
@@ -76,12 +78,16 @@
 /obj/effect/decal/cleanable/xenodrool
 	name = "xeno drool"
 	desc = "A nasty pool of coughed up alien spit and drool. It seems like it's still melting the surface below it... must be fresh."
+	icon = 'icons/effects/drool.dmi'
+	icon_state = "drool"
 
 /obj/effect/decal/cleanable/xenodrool/New()
 	. = ..()
-
 	addtimer(src, "dry_up", 1000)
 
+/obj/effect/decal/cleanable/xenodrool/Cross(atom/A)
+	. = ..()
+	playsound(get_turf(src), 'sound/misc/squish.ogg', 100, 0, sNoiseLevel = 500, sNoiseDesc = "someone stepped over alien drool", sNoiseMult = 2)
 
 /obj/effect/decal/cleanable/xenodrool/proc/dry_up()
 	visible_message("[src] settles down.")

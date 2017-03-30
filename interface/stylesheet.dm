@@ -109,6 +109,10 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
+.alienannounce			{color: #543354;	font-weight: bold		font-size: 6}
+.aliensmallannounce		{color: #543354;	font-weight: bold		font-size: 5}
+.alienminiannounce		{color: #543354;	font-weight: bold		font-size: 3}
+
 .borer            		{color: #804000;}
 
 .interface				{color: #330033;}

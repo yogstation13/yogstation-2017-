@@ -3,6 +3,7 @@
 	. += grab_state * 3
 	if(legcuffed)
 		. += legcuffed.slowdown
+		legcuffed.cuff_act(src)
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1

@@ -161,6 +161,9 @@ var/list/teleportlocs = list()
 /area/shuttle/assault_pod
 	name = "Steel Rain"
 
+/area/shuttle/predator_pod
+	name = "Yautija Pod"
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 
@@ -208,6 +211,13 @@ var/list/teleportlocs = list()
 	noteleport = 1
 	infestation_allowed = 0
 
+// PREDATORS
+
+/area/predator
+	name = "Predator Ship"
+	requires_power = 0
+	noteleport = 1
+	has_gravity = 1
 
 //SYNDICATES
 

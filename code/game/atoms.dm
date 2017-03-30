@@ -18,6 +18,8 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	var/thirdlayer // check click.dm
+
 
 /atom/Destroy()
 	if(alternate_appearances)

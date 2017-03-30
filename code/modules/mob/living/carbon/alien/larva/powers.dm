@@ -55,12 +55,16 @@
 			L.HD = new(L)
 
 		if(L.HD.colony_suffix) // dirty checks, but hey what can you do
+			message_admins("1")
 			if(ticker && istype(ticker.mode, /datum/game_mode/xenomorph))
-				if(compareAlienSuffix(L.HD.colony_suffix, ticker.mode.queensuffix))
+				message_admins("2")
+				if(compareAlienSuffix(L, col2 = ticker.mode.queensuffix))
+					message_admins("3")
 					registerAntag = TRUE
 					var/decision = ticker.mode.checkHive()
 
 					if(decision) // passing 0 equates to all
+						message_admins("4")
 						user << "<span class='alertalien'>The hive has too many [alien_caste]'s!"
 						switch(decision)
 							if("drone")
@@ -86,7 +90,7 @@
 
 		L.alien_evolve(new_xeno)
 		if(registerAntag)
-			var/datum/game_mode/xenomorph/X = ticker.mode // to register antag, it HAS to be xeno mode.
+			var/datum/game_mode/xenomorph/X = ticker.mode
 			X.AddXenomorph(new_xeno.mind)
 
 		var/obj/item/organ/alien/hivenode/H = new_xeno.getorganslot("hivenode")

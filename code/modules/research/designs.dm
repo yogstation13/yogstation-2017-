@@ -475,6 +475,15 @@ datum/design/diagnostic_hud_night
 	build_path = /obj/item/weapon/disk/plantgene
 	category = list("Electronics")
 
+/datum/design/trayadvanced
+	name = "Advanced T-Ray Scanner"
+	id = "advtray"
+	req_tech = list("programming" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=200, MAT_GLASS=100)
+	build_path = /obj/item/device/t_scanner/advanced
+	category = list("Electronics")
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////

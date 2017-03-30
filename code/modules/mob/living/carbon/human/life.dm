@@ -44,6 +44,8 @@
 		//handle bandage healing
 		handle_bandaged_limbs()
 
+		handle_silence()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -327,6 +329,11 @@
 			adjustBruteLoss(3)
 			if(src.reagents)
 				src.reagents.add_reagent("toxin", 2)
+
+
+/mob/living/carbon/human/proc/handle_silence()
+	if(noisy)
+		noisy--
 
 /*
 Alcohol Poisoning Chart

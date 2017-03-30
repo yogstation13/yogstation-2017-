@@ -56,7 +56,11 @@
 			if(M.tail)
 				visible_message("<span class='danger'>[M]'s tail swoops down and punctures [src]!</span>", \
 				"<span class='userdanger'>[M] punctures [src] with it's tail!</span>")
-				M.tail.attack(src, M)
+				if(check_shields(M.tail.force, "[M]'s tail", M.tail))
+					visible_message("<span class='danger'>[M]'s tail rickashays away from [src]!</span>", \
+						"<span class='danger'[M]'s tail is blocked!</span>")
+				else
+					M.tail.attack(src, M)
 			else
 				M << "<span class='aliennotice'>You cannot use this intent.</span>"
 	return
