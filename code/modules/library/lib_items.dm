@@ -187,7 +187,7 @@
 		onclose(user, "book")
 		if(istype(user,mob/living/carbon/human))
 			spawn(200)
-			for(i=1;i<=10 && winexists(user,"book");i++)
+			for(var/i=1;i<=10 && winexists(user,"book");i++)
 				user.adjustBrainLoss(-1)
 				user.adjustStaminaLoss(-4)
 				spawn(79)
