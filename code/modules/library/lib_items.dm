@@ -186,15 +186,18 @@
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 		onclose(user, "book")
 		var/readingtime = 600
+		var/stimulants = 0
+		var/class = 0
 		for(var/s in list("hot_coco","coffee","tea","soy_latte","cafe_latte","pumpkin_latte","hot_ramen"))
 			if(user.reagents.has_reagent(s))
 				readingtime = 300
-				var/stimulants = 1
+				stimulants = 1
 				break
+			
 		for(var/d in list("whiskey","gintonic","whiskey_cola","irish_cream","driestmartini"))
 			if(user.reagents.has_reagent(d))
 				readingtime += 50	//classy reading alcohols slows down reading
-				var/class = 1
+				class = 1
 				break
 		while(do_after(user,600,progress = 0))	//60 seconds of reading by default
 			user.adjustBrainLoss(-5)
