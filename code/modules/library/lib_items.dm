@@ -196,10 +196,10 @@
 			
 		for(var/d in list("whiskey","gintonic","whiskey_cola","irish_cream","driestmartini"))
 			if(user.reagents.has_reagent(d))
-				readingtime += 50	//classy reading alcohols slows down reading
+				readingtime = max(600,readingtime + 50)	//classy reading alcohols slows down reading
 				class = 1
 				break
-		while(do_after(user,600,progress = 0))	//60 seconds of reading by default
+		while(do_after(user,readingtime,progress = 0))	//60 seconds of reading by default
 			user.adjustBrainLoss(-5)
 			user.adjustStaminaLoss(-20)
 			if(stimulants)
