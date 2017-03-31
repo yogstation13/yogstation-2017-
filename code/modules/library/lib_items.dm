@@ -185,11 +185,24 @@
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 		onclose(user, "book")
-		while(do_after(user,600,progress = 0))	//60 seconds of reading
+		var/readingtime = 600
+		for(var/s in list("hot_coco","coffee","tea","soy_latte","cafe_latte","pumpkin_latte","hot_ramen"))
+			if(user.reagents.has_reagent(s))
+				readingtime = 300
+				var/stimulants = 1
+				break
+		for(var/d in list("whiskey","gintonic","whiskey_cola","irish_cream","driestmartini"))
+			if(user.reagents.has_reagent(d))
+				readingtime += 50	//classy reading alcohols slows down reading
+				var/class = 1
+				break
+		while(do_after(user,600,progress = 0))	//60 seconds of reading by default
 			user.adjustBrainLoss(-5)
 			user.adjustStaminaLoss(-20)
-			if(user.reagents.has_reagent("hot_coco"))
+			if(stimulants)
 				user.heal_organ_damage(1,1)
+			if(class && prob(20))
+				user.maxHealth += 2	//knowledge is power 20% of the time
 	if(!dat)
 		user << "<span class='notice'>This book is completely blank!</span>"
 
