@@ -1605,6 +1605,7 @@
 	},
 /area/security/prison)
 "adj" = (
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -2038,6 +2039,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/carpet,
 /area/security/hos)
 "adY" = (
@@ -19526,6 +19528,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aLw" = (
@@ -39009,6 +39012,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small,
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -69148,6 +69152,18 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "Zyk" = (
+/mob/living/simple_animal/hostile/honkbot,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"Zyl" = (
+/mob/living/simple_animal/hostile/honkbot,
+/turf/open/floor/bluegrid{
+	icon_state = "dark";
+	name = "Mainframe Floor";
+	temperature = 80
+	},
+/area/tcommsat/server)
+"Zyk" = (
 /obj/item/weapon/book/manual/wiki/plasmaman,
 /turf/closed/wall,
 /area/medical/sleeper)
@@ -98096,7 +98112,7 @@ apV
 aGT
 aIr
 aJU
-aJU
+Zyk
 aMV
 aOy
 aPH
@@ -110263,7 +110279,7 @@ cBx
 cBX
 cCo
 cCN
-cBV
+Zyl
 cDH
 cCo
 cEl
