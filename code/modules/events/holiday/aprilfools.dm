@@ -7,7 +7,7 @@
 	min_players = 15
 
 /datum/round_event/clown_bugs
-	var/spawncount
+	var/spawncount = 1
 
 /datum/round_event/clown_bugs/setup()
 	spawncount = rand(5, 8)
@@ -22,8 +22,6 @@
 
 	while((spawncount >= 1) && vents.len)
 		var/obj/vent = pick(vents)
-		var/obj/effect/spider/spiderling/S = new(vent.loc)
-		if(prob(66))
-			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
+		new /mob/living/simple_animal/cockroach/clownbug(vent.loc)
 		vents -= vent
 		spawncount--
