@@ -102,7 +102,7 @@
 		var/mob/M = src
 		if(M.client)
 			if(!M.client.prefs.soundenv)
-				S.environment = GENERIC
+				S.environment = ROOM
 	src << S
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
