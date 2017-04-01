@@ -48,3 +48,9 @@
 	var/obj/item/weapon/storage/tactical_harness/corgi/tmp_harness = new /obj/item/weapon/storage/tactical_harness/corgi()
 	tmp_harness.add_harness(src, null)
 
+/mob/living/simple_animal/pet/dog/corgi/tactical/roxie
+	name = "Roxie"
+	gender = FEMALE
+	icon_state = "g_shepherd"
+	icon_living = "g_shepherd"
+	icon_dead = "g_shepherd_dead"
