@@ -172,7 +172,7 @@
 
 /atom/proc/examine(mob/user)
 	if(loc != user) // so inventories don't get spotted
-		if(!(istype(user, /mob/dead/observer))
+		if(ishuman(user) || ismonkey(user) || isrobot(user))
 			for(var/mob/M in view(7, user))
 				M << "<span class='small'>[user] looks at [src].</span>"
 
