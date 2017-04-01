@@ -125,6 +125,12 @@
 			return 1
 	return 0
 
+/datum/objective_item/steal/rapidengineeringdevice
+	name = "the rapid engineering device"
+	targetitem = /obj/item/weapon/rapid_engineering_device
+	difficulty = 10
+	excludefromjob = list("Chief Engineer")
+
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract"
 	targetitem = /obj/item/slime_extract
