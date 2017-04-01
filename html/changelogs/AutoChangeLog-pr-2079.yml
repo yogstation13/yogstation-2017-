@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Global / OOC sounds will no longer be affected by your environment (admin helps, vox, communication announcements)."
+  - rscadd: "There is now a preference option to disable bay sounds...for all you bay haters."
