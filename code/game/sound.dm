@@ -22,7 +22,6 @@
 
 /atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, var/is_global)
 	soundin = get_sfx(soundin)
-	world << "AAAAA!"
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
