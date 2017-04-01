@@ -46,10 +46,11 @@
 		return
 	if(!ishuman(usr))
 		return
-	if(world.time < 15000) // 25 minutes
-		usr << "<span class='warning'>It's too early into the shift to do this! Play your part!"
-		return
 	var/mob/living/carbon/human/H = usr
+	if(H.mind.miming) // so if you're here to make a vow, you won't be bothered
+		if(world.time < 15000 && !(usr.mind.special_role)) // 25 minutes
+			usr << "<span class='warning'>It's too early into the shift to do this! Play your part!"
+			return
 	if(H.mind.miming)
 		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
 	else
@@ -66,7 +67,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/mime
 	name = "Invisible Touch"
-	desc = "It dissapeared!"
+	desc = "It disappeared!"
 	hand_path = "/obj/item/weapon/melee/touch_attack/nothing/roundstart" // there is a non roundstart version. can be found in godhand.dmi
 	panel = "Mime"
 
@@ -83,6 +84,11 @@
 /obj/effect/proc_holder/spell/targeted/touch/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			usr << "<span class='notice'>You've don't remember how to perform this... It probably takes dedication.</span>"
+			usr << "<span class='notice'>You don't remember how to perform this... It probably takes dedication.</span>"
 			return
 	..()
+
+/obj/effect/proc_holder/spell/targeted/touch/mime/strong
+	hand_path = "/obj/item/weapon/melee/touch_attack/nothing"
+	charge_max = 1500
+	cooldown_min = 1000

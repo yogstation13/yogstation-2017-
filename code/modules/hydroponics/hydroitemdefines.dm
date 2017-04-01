@@ -10,6 +10,12 @@
 	origin_tech = "magnets=2;biotech=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
+/obj/item/device/plant_analyzer/attack(mob/target, mob/living/user)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(isplant(H))
+			healthscan(user, H)
+
 // *************************************
 // Hydroponics Tools
 // *************************************

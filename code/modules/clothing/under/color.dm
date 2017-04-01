@@ -67,6 +67,13 @@
 	item_state = "r_suit"
 	item_color = "red"
 
+/obj/item/clothing/under/color/superb
+	name = "superb jumpsuit"
+	icon_state = "superb"
+	item_state = "superb"
+	item_color = "superb"
+	desc = "Produced by superb inc. NNYC, wearing this thing makes you feel like a <i>hypebeast</i>."
+
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
 	icon_state = "white"

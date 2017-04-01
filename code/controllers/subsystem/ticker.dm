@@ -59,6 +59,8 @@ var/datum/subsystem/ticker/ticker
 	var/total_deaths = 0
 	var/maprotatechecked = 0
 
+	var/identification_console_message
+	var/id_console_msg_lock
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -489,6 +491,8 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	mode.declare_station_goal_completion()
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)

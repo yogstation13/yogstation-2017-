@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, var/is_global)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -17,11 +17,12 @@
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
-				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround)
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, is_global)
 
 
-/atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
+/atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, var/is_global)
 	soundin = get_sfx(soundin)
+	world << "AAAAA!"
 
 	var/sound/S = sound(soundin)
 	S.wait = 0 //No queue
@@ -34,11 +35,13 @@
 		else
 			S.frequency = get_rand_frequency()
 
+	//sound volume falloff with pressure
+	var/pressure_factor = 1.0
+
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
 
 		//Atmosphere affects sound
-		var/pressure_factor = 1
 		var/datum/gas_mixture/hearer_env = T.return_air()
 		var/datum/gas_mixture/source_env = turf_source.return_air()
 
@@ -70,7 +73,36 @@
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+	if(!is_global)
 
+		if(istype(src,/mob/living/))
+			var/mob/living/M = src
+			if (M.hallucination)
+				S.environment = PSYCHOTIC
+			else if (M.druggy)
+				S.environment = DRUGGED
+			else if (M.drowsyness)
+				S.environment = DIZZY
+			else if (M.confused)
+				S.environment = DIZZY
+			else if (M.sleeping)
+				S.environment = UNDERWATER
+			else if (pressure_factor < 0.5)
+				S.environment = SPACE
+			else
+				var/area/A = get_area(src)
+				S.environment = A.sound_env
+
+		else if (pressure_factor < 0.5)
+			S.environment = SPACE
+		else
+			var/area/A = get_area(src)
+			S.environment = A.sound_env
+	if(istype(src, /mob))
+		var/mob/M = src
+		if(M.client)
+			if(!M.client.prefs.soundenv)
+				S.environment = ROOM
 	src << S
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
@@ -79,13 +111,13 @@
 	..()
 
 /mob/proc/stopLobbySound()
-	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+	src << nullify_sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)
 		return
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+		src << nullify_sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
@@ -122,3 +154,9 @@
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
 	for(var/V in clients)
 		V << sound(file, repeat, wait, channel, volume)
+
+/proc/nullify_sound(file, repeat, wait, volume, channel)
+	var/sound/S = sound(file, repeat, wait, volume, channel)
+	S.environment = ROOM
+	S.echo = 0
+	return S

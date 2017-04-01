@@ -205,6 +205,122 @@
 	item_path = /obj/item/weapon/implanter/gang
 	spawn_msg = "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
 
+// APRIL FOOLS START
+/datum/gang_item/equipment/banana
+	name = "Banana"
+	id = "banana"
+	cost = 15
+	item_path = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	spawn_msg = "<span class='notice'>Honk!</span>"
+
+/datum/gang_item/equipment/clown_mask
+	name = "Clown Mask"
+	id = "clownmask"
+	cost = 5
+	item_path = /obj/item/clothing/mask/gas/clown_hat
+	spawn_msg = "<span class='notice'>You're in the family now, son!</span>"
+
+/datum/gang_item/equipment/golden_airhorn
+	name = "Golden Airhorn"
+	id = "goldenairhorn"
+	cost = 10
+	item_path = /obj/item/device/assembly/bikehorn/golden
+	spawn_msg = "<span class='notice'>Let's get this party STARTED!</span>"
+
+/datum/gang_item/weapon/bananium_esword
+	name = "Bananum Esword"
+	id = "b_esowrd"
+	cost = 30
+	item_path = /obj/item/weapon/melee/energy/sword/bananium
+	spawn_msg = "<span class='notice'>Ooooh! You are now one with the HONK!</span>"
+
+/datum/gang_item/weapon/bananium_eshield
+	name = "Bananum Eshield"
+	id = "b_eshield"
+	cost = 60
+	item_path = /obj/item/weapon/shield/energy/bananium
+	spawn_msg = "<span class='notice'>Throw it and it comes back!</span>"
+
+/datum/gang_item/weapon/tearstache
+	name = "Tearstache Grenade"
+	id = "tearstache"
+	cost = 10
+	item_path = /obj/item/weapon/grenade/chem_grenade/teargas/moustache
+
+/datum/gang_item/weapon/clownbug
+	name = "Clownbug Delivery"
+	id = "clownbugs"
+	cost = 30
+	item_path = /obj/item/weapon/grenade/spawnergrenade/clownbugs/weak
+
+/datum/gang_item/weapon/dark_honk
+	name = "Dark H.O.N.K.E.R."
+	id = "dark_honk"
+	cost = 200
+	item_path = /obj/mecha/combat/honker/dark/loaded/aprilfools
+	spawn_msg = "<span class='notice'>The rest is up to you! Honk.</span>"
+
+
+// mimery
+
+/datum/gang_item/equipment/bottleofnothing
+	name = "Bottle of Nothing"
+	id = "bottleofnothing"
+	cost = 10
+	item_path = /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
+	spawn_msg = "<span class='notice'>...</span>"
+
+/datum/gang_item/equipment/mimemask
+	name = "Mime Mask"
+	id = "mime_mask"
+	cost = 5
+	item_path = /obj/item/clothing/mask/gas/mime
+	spawn_msg = "<span class='notice'>...</span>"
+
+/datum/gang_item/equipment/mimearts
+	name = "Mimery"
+	id = "mimerybook"
+	cost = 10
+	item_path = /obj/item/weapon/spellbook/oneuse/mime
+	spawn_msg = "<span class='notice'>...</span>"
+
+/datum/gang_item/equipment/mimewall
+	name = "Mime Wall"
+	id = "mimerywall"
+	cost = 10
+	item_path = /obj/item/weapon/spellbook/oneuse/mime_wall
+	spawn_msg = "<span class='notice'>...Make sure you've read the book of mimery before approaching this.</span>"
+
+/datum/gang_item/equipment/mutetoxin
+	name = "Bottle of Mutetoxin"
+	id = "mutetoxin"
+	cost = 20
+	item_path = /obj/item/weapon/reagent_containers/glass/bottle/mutetoxin
+	spawn_msg = "<span class='notice'>...!</span>"
+
+/datum/gang_item/equipment/invisibletouch
+	name = "Legendary Invisible Touch"
+	id = "invisibletouch"
+	cost = 50
+	item_path = /obj/item/weapon/spellbook/oneuse/invisible_touch
+	spawn_msg = "<span class='notice'>This ability has no limits.</span>"
+
+/datum/gang_item/equipment/reactivestealth
+	name = "Reactive Stealth Armor"
+	id = "reactivestealth"
+	cost = 30
+	item_path = /obj/item/clothing/suit/armor/reactive/stealth
+	spawn_msg = "<span class='notice'>...</span>"
+
+/datum/gang_item/weapon/reticence
+	name = "Reticence"
+	id = "reticence_mech"
+	cost = 200
+	item_path = /obj/mecha/combat/reticence/loaded
+	spawn_msg = "<span class='notice'>... The rest is up to you ...</span>"
+
+// APROIL FOOLS END
+
 /datum/gang_item/equipment/implant_breaker/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(item_path)
 		var/obj/item/O = new item_path(user.loc, gang) //we need to override this whole proc for this one argument

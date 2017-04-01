@@ -9,6 +9,8 @@
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
 	var/dangerous = FALSE // Should we message admins?
+	var/special = FALSE //Event/Station Goals/Admin enabled packs
+	var/special_enabled = FALSE
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -1318,6 +1320,50 @@
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
 
+/datum/supply_pack/misc/sneakers
+	name = "Crep Crate"
+	cost = 2000
+	contains = list(/obj/item/clothing/shoes/sneakers/nmd/collab,
+					/obj/item/clothing/shoes/sneakers/nmd,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy/orange,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Sneaker Drop"
+
+
+/datum/supply_pack/misc/superb
+	name = "Designer Clothes Bundle"
+	cost = 800
+	contains = list(/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb)
+	crate_name = "Designer clothes crate"
+
+
+
+/datum/supply_pack/misc/yeezy
+	name = "One Singular Pair Of Sneakers"
+	cost = 450
+	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Small Sneaker Crate"
+
+
+
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
 	cost = 1000
@@ -1482,3 +1528,57 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name= "art supply crate"
+
+/datum/supply_pack/misc/bsa
+	name = "Bluespace Artillery Parts"
+	cost = 12000
+	special = TRUE
+	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
+					/obj/item/weapon/circuitboard/machine/bsa/middle,
+					/obj/item/weapon/circuitboard/machine/bsa/back,
+					/obj/item/weapon/circuitboard/computer/bsa_control
+					)
+	crate_name= "bluespace artillery parts crate"
+
+/datum/supply_pack/misc/dna_vault
+	name = "DNA Vault Parts"
+	cost = 10000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/dna_vault
+					)
+	crate_name= "dna vault parts crate"
+
+/datum/supply_pack/misc/dna_probes
+	name = "DNA Vault Samplers"
+	cost = 2500
+	special = TRUE
+	contains = list(/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
+					)
+	crate_name= "dna samplers crate"
+
+
+/datum/supply_pack/misc/shield_sat
+	name = "Shield Generator Satellite"
+	cost = 2500
+	special = TRUE
+	contains = list(
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield
+					)
+	crate_name= "shield sat crate"
+
+
+/datum/supply_pack/misc/shield_sat_control
+	name = "Shield System Control Board"
+	cost = 3500
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/computer/sat_control
+					)
+	crate_name= "shield control board crate"

@@ -104,6 +104,8 @@ var/list/preferences_datums = list()
 	var/quiet_round = 0
 	var/purrbation = null
 
+	var/soundenv = TRUE
+
 	var/examine_throttle = FULL_VISIBLE
 
 /datum/preferences/New(client/C)

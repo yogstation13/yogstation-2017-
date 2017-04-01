@@ -1605,6 +1605,7 @@
 	},
 /area/security/prison)
 "adj" = (
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -2038,6 +2039,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/carpet,
 /area/security/hos)
 "adY" = (
@@ -18055,6 +18057,7 @@
 "aIm" = (
 /obj/item/device/assembly/bikehorn/rubberducky,
 /obj/structure/table,
+/obj/item/clothing/shoes/sneakers/nmd,
 /turf/open/floor/plasteel{
 	tag = "icon-greenyellowfull (WEST)";
 	icon_state = "greenyellowfull";
@@ -18760,6 +18763,7 @@
 	},
 /obj/item/key,
 /obj/structure/table,
+/obj/item/clothing/shoes/sneakers/nmd,
 /turf/open/floor/plasteel{
 	tag = "icon-greenyellowfull (WEST)";
 	icon_state = "greenyellowfull";
@@ -19524,6 +19528,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aLw" = (
@@ -30339,6 +30344,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/structure/displaycase/royalp,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bjA" = (
@@ -39006,6 +39012,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small,
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -67972,11 +67979,11 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFM" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
@@ -68033,11 +68040,11 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
@@ -69144,6 +69151,18 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyk" = (
+/mob/living/simple_animal/hostile/honkbot,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"Zyl" = (
+/mob/living/simple_animal/hostile/honkbot,
+/turf/open/floor/bluegrid{
+	icon_state = "dark";
+	name = "Mainframe Floor";
+	temperature = 80
+	},
+/area/tcommsat/server)
 "Zyk" = (
 /obj/item/weapon/book/manual/wiki/plasmaman,
 /turf/closed/wall,
@@ -83460,7 +83479,7 @@ bcM
 aUW
 bag
 bgl
-bhG
+bkB
 biZ
 bkD
 blZ
@@ -98093,7 +98112,7 @@ apV
 aGT
 aIr
 aJU
-aJU
+Zyk
 aMV
 aOy
 aPH
@@ -110260,7 +110279,7 @@ cBx
 cBX
 cCo
 cCN
-cBV
+Zyl
 cDH
 cCo
 cEl
