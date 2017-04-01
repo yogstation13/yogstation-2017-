@@ -1,7 +1,7 @@
 /**********************Ore Redemption Unit**************************/
 //Turns all the various mining machines into a single unit to speed up mining and establish a point system
 
-/obj/machinery/mineral/ore_redemption
+/obj/machinery/Slaveal/ore_redemption
 	name = "ore redemption machine"
 	desc = "A machine that accepts ore and instantly transforms it into workable material sheets. Points for ore are generated based on type and can be redeemed at a mining equipment vendor."
 	icon = 'icons/obj/machines/mining_machines.dmi'
@@ -10,7 +10,7 @@
 	anchored = 1
 	input_dir = NORTH
 	output_dir = SOUTH
-	req_access = list(access_mineral_storeroom)
+	req_access = list(access_slave_owner)
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
@@ -22,14 +22,14 @@
 	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 15), ("silver" = 16), ("gold" = 18), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
 	speed_process = 1
 
-/obj/machinery/mineral/ore_redemption/New()
+/obj/machinery/Slaveal/ore_redemption/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ore_redemption(null)
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/ore_redemption
 	name = "circuit board (Ore Redemption)"
-	build_path = /obj/machinery/mineral/ore_redemption
+	build_path = /obj/machinery/Slaveal/ore_redemption
 	origin_tech = "programming=2;engineering=2;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
@@ -38,7 +38,7 @@
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/device/assembly/igniter = 1)
 
-/obj/machinery/mineral/ore_redemption/RefreshParts()
+/obj/machinery/Slaveal/ore_redemption/RefreshParts()
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1
@@ -52,8 +52,8 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
-/obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
-	var/obj/item/stack/sheet/processed_sheet = SmeltMineral(O)
+/obj/machinery/Slaveal/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
+	var/obj/item/stack/sheet/processed_sheet = SmeltSlaveal(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
 			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
@@ -64,14 +64,14 @@
 				for(var/obj/machinery/requests_console/D in allConsoles)
 					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
 						if(D.z == z)
-							D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
+							D.createmessage("Ore Redemption Machine", "New Slaveals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += sheet_per_ore //Stack the sheets
 		O.loc = null //Let the old sheet...
 		qdel(O) //... garbage collect
 
-/obj/machinery/mineral/ore_redemption/process()
-	if(!panel_open && powered()) //If the machine is partially disassembled and/or depowered, it should not process minerals
+/obj/machinery/Slaveal/ore_redemption/process()
+	if(!panel_open && powered()) //If the machine is partially disassembled and/or depowered, it should not process Slaveals
 		var/turf/T = get_step(src, input_dir)
 		var/i = 0
 		if(T)
@@ -95,7 +95,7 @@
 						process_sheet(O)
 						i++
 
-/obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/Slaveal/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
 	if(exchange_parts(user, W))
 		return
 
@@ -123,10 +123,10 @@
 		return
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/deconstruction()
+/obj/machinery/Slaveal/ore_redemption/deconstruction()
 	empty_content()
 
-/obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
+/obj/machinery/Slaveal/ore_redemption/proc/SmeltSlaveal(obj/item/weapon/ore/O)
 	if(O.refined_type)
 		var/obj/item/stack/sheet/M = O.refined_type
 		points += O.points * point_upgrade
@@ -134,12 +134,12 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(mob/user)
+/obj/machinery/Slaveal/ore_redemption/attack_hand(mob/user)
 	if(..())
 		return
 	interact(user)
 
-/obj/machinery/mineral/ore_redemption/interact(mob/user)
+/obj/machinery/Slaveal/ore_redemption/interact(mob/user)
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -159,20 +159,20 @@
 				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
+	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/Slaveal/plasma in stack_list))
 		var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
-		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/Slaveal/plasma]
 		if(min(metalstack.amount, plasmastack.amount))
 			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
-	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
+	dat += text("<br><div class='statusDisplay'><b>Slaveal Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
 	popup.open()
 	return
 
-/obj/machinery/mineral/ore_redemption/proc/get_ore_values()
+/obj/machinery/Slaveal/ore_redemption/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
 	for(var/ore in ore_values)
 		var/value = ore_values[ore]
@@ -180,7 +180,7 @@
 	dat += "</table>"
 	return dat
 
-/obj/machinery/mineral/ore_redemption/Topic(href, href_list)
+/obj/machinery/Slaveal/ore_redemption/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["choice"])
@@ -212,7 +212,7 @@
 			out.amount = round(min(desired,50,inp.amount))
 			if(out.amount >= 1)
 				inp.amount -= out.amount
-				unload_mineral(out)
+				unload_Slaveal(out)
 			if(inp.amount < 1)
 				stack_list -= text2path(href_list["release"])
 		else
@@ -220,9 +220,9 @@
 	if(href_list["plasteel"])
 		if(check_access(inserted_id) || allowed(usr))
 			if(!(/obj/item/stack/sheet/metal in stack_list)) return
-			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
+			if(!(/obj/item/stack/sheet/Slaveal/plasma in stack_list)) return
 			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
-			var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+			var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/Slaveal/plasma]
 
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/plasteel/plasteelout = new
@@ -230,13 +230,13 @@
 			if(plasteelout.amount >= 1)
 				metalstack.amount -= plasteelout.amount
 				plasmastack.amount -= plasteelout.amount
-				unload_mineral(plasteelout)
+				unload_Slaveal(plasteelout)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	updateUsrDialog()
 	return
 
-/obj/machinery/mineral/ore_redemption/ex_act(severity, target)
+/obj/machinery/Slaveal/ore_redemption/ex_act(severity, target)
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
@@ -250,7 +250,7 @@
 			qdel(src)
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
-/obj/machinery/mineral/ore_redemption/proc/empty_content()
+/obj/machinery/Slaveal/ore_redemption/proc/empty_content()
 	var/obj/item/stack/sheet/s
 
 	for(var/O in stack_list)
@@ -261,11 +261,11 @@
 		s.loc = loc
 		s.layer = initial(s.layer)
 
-/obj/machinery/mineral/ore_redemption/power_change()
+/obj/machinery/Slaveal/ore_redemption/power_change()
 	..()
 	update_icon()
 
-/obj/machinery/mineral/ore_redemption/update_icon()
+/obj/machinery/Slaveal/ore_redemption/update_icon()
 	if(powered())
 		icon_state = initial(icon_state)
 	else

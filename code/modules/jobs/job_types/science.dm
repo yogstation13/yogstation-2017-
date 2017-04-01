@@ -20,13 +20,13 @@ Research Director
 	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
-			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom,
-			            access_tech_storage, access_minisat, access_maint_tunnels)
+			            access_RC_announce, access_keycard_auth, access_gateway, access_Slaveal_storeroom,
+			            access_tech_storage, access_minisat, access_maint_tunnels, access_slave_owner)
 	minimal_access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
-			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom,
-			            access_tech_storage, access_minisat, access_maint_tunnels)
+			            access_RC_announce, access_keycard_auth, access_gateway, access_Slaveal_storeroom,
+			            access_tech_storage, access_minisat, access_maint_tunnels, access_slave_owner)
 
 /datum/outfit/job/rd
 	name = "Research Director"
@@ -68,8 +68,8 @@ Scientist
 
 	outfit = /datum/outfit/job/scientist
 
-	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom, access_tech_storage, access_genetics)
-	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_mineral_storeroom)
+	access = list(access_robotics, access_tox, access_tox_storage, access_research, access_xenobiology, access_Slaveal_storeroom, access_tech_storage, access_genetics, access_slave_owner)
+	minimal_access = list(access_tox, access_tox_storage, access_research, access_xenobiology, access_Slaveal_storeroom, access_slave_owner)
 
 /datum/outfit/job/scientist
 	name = "Scientist"
@@ -99,8 +99,8 @@ Roboticist
 
 	outfit = /datum/outfit/job/roboticist
 
-	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research, access_mineral_storeroom, access_xenobiology, access_genetics)
-	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research, access_mineral_storeroom)
+	access = list(access_robotics, access_tox, access_tox_storage, access_tech_storage, access_morgue, access_research, access_Slaveal_storeroom, access_xenobiology, access_genetics, access_slave_owner)
+	minimal_access = list(access_robotics, access_tech_storage, access_morgue, access_research, access_Slaveal_storeroom, access_slave_owner)
 
 /datum/outfit/job/roboticist
 	name = "Roboticist"

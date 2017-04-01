@@ -20,11 +20,11 @@ Chief Engineer
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors, access_minisat,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_tcomadmin, access_mineral_storeroom)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_tcomadmin, access_Slaveal_storeroom, access_slave_owner)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
 			            access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva,
 			            access_heads, access_construction, access_sec_doors, access_minisat,
-			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_tcomadmin, access_mineral_storeroom)
+			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_tcomadmin, access_Slaveal_storeroom, access_slave_owner)
 
 /datum/outfit/job/ce
 	name = "Chief Engineer"
@@ -70,9 +70,10 @@ Station Engineer
 	outfit = /datum/outfit/job/engineer
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat, access_tcomadmin)
+									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat, access_tcomadmin,
+									access_slave_owner)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_tcomsat)
+									access_external_airlocks, access_construction, access_tcomsat, access_slave_owner)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"

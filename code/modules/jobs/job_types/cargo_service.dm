@@ -14,8 +14,8 @@ Quartermaster
 
 	outfit = /datum/outfit/job/quartermaster
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_Slaveal_storeroom, access_slave_owner)
+	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_Slaveal_storeroom, access_slave_owner)
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
@@ -44,8 +44,8 @@ Cargo Technician
 
 	outfit = /datum/outfit/job/cargo_tech
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting, access_mineral_storeroom)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_Slaveal_storeroom)
+	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting, access_Slaveal_storeroom)
 
 /datum/outfit/job/cargo_tech
 	name = "Cargo Technician"
@@ -57,11 +57,11 @@ Cargo Technician
 
 
 /*
-Shaft Miner
+Slave
 */
 /datum/job/mining
-	title = "Shaft Miner"
-	flag = MINER
+	title = "Slave"
+	flag = Slave
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
 	faction = "Station"
@@ -70,21 +70,21 @@ Shaft Miner
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#dcba97"
 
-	outfit = /datum/outfit/job/miner
+	outfit = /datum/outfit/job/Slave
 
-	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_Slaveal_storeroom)
+	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_Slaveal_storeroom)
 
-/datum/outfit/job/miner
-	name = "Shaft Miner"
+/datum/outfit/job/Slave
+	name = "Slave"
 
 	belt = /obj/item/weapon/storage/belt/mining
 	ears = /obj/item/device/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
-	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	uniform = /obj/item/clothing/under/rank/Slave/lavaland
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
-	r_pocket = /obj/item/device/pda/shaftminer
+	r_pocket = /obj/item/device/pda/shaftSlave
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
