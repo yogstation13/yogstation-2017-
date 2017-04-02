@@ -726,14 +726,14 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
-	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
+	desc = "A massive beast with a rocky hide that uses tendrils to ensare its prey."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "goliath"
-	icon_living = "goliath"
-	icon_aggro = "goliath"
-	icon_dead = "goliath_dead"
+	icon_state = "Goliath"
+	icon_living = "Goliath"
+	icon_aggro = "Goliath"
+	icon_dead = "Goliath_dead"
 	throw_message = "does nothing to the tough hide of the"
-	pre_attack_icon = "goliath2"
+	pre_attack_icon = "Goliath_preattack"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath = 2, /obj/item/stack/sheet/animalhide/goliath_hide = 1, /obj/item/stack/sheet/bone = 5)
 	loot = list()
 	stat_attack = 1
