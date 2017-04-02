@@ -173,7 +173,7 @@
 /atom/proc/examine(mob/user)
 	if(loc != user) // so inventories don't get spotted
 		if(isliving(user))
-			reveal_examine(src, 7)
+			user.reveal_examine(src, 7)
 
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."

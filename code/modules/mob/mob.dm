@@ -980,6 +980,10 @@ var/next_mob_id = 0
 		return
 	if(!isliving(src))
 		return
+	if(invisibility)
+		return
+	if(!alpha)
+		return
 	if(client.prefs.examine_throttle == NO_VISIBLE)
 		return
 	if(client.prefs.examine_throttle == HALF_VISIBLE)
