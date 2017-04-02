@@ -1345,9 +1345,9 @@
 	toysay = "..."
 	toysound = null
 
-/obj/item/toy/figure/miner
-	name = "Shaft Miner action figure"
-	icon_state = "miner"
+/obj/item/toy/figure/Slave
+	name = "Slave action figure"
+	icon_state = "Slave"
 	toysay = "Oh god it's eating my intestines!"
 
 /obj/item/toy/figure/ninja

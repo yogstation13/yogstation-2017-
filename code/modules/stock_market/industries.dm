@@ -183,7 +183,7 @@
 	tokens = list( \
 		"industry" = list("mines", "large scale mining operations"), \
 		"industrial" = list("resource acquisitional"), \
-		"jobs" = list("shaft miners", "drill operators", "mining foremen", "gibtonite handlers")
+		"jobs" = list("Slaves", "drill operators", "mining foremen", "gibtonite handlers")
 	)
 
 /datum/industry/mining/generateProductName(var/company)

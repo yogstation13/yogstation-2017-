@@ -518,15 +518,15 @@
 /obj/item/clothing/head/winterhood/cargo
 	icon_state = "winterhood_cargo"
 
-/obj/item/clothing/suit/hooded/wintercoat/miner
+/obj/item/clothing/suit/hooded/wintercoat/Slave
 	name = "mining winter coat"
-	icon_state = "coatminer"
+	icon_state = "coatSlave"
 	allowed = list(/obj/item/weapon/pickaxe,/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
-	hoodtype = /obj/item/clothing/head/winterhood/miner
+	hoodtype = /obj/item/clothing/head/winterhood/Slave
 
-/obj/item/clothing/head/winterhood/miner
-	icon_state = "winterhood_miner"
+/obj/item/clothing/head/winterhood/Slave
+	icon_state = "winterhood_Slave"
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"

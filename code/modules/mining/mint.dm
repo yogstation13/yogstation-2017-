@@ -27,28 +27,28 @@
 	if(T)
 		for(var/obj/item/stack/sheet/O in T)
 			if (istype(O, /obj/item/stack/sheet/mineral/gold))
-				amt_gold += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_gold += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/silver))
-				amt_silver += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_silver += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/diamond))
-				amt_diamond += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_diamond += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/plasma))
-				amt_plasma += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_plasma += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/uranium))
-				amt_uranium += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_uranium += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/metal))
-				amt_iron += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_iron += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/bananium))
-				amt_clown += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_clown += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			if (istype(O, /obj/item/stack/sheet/mineral/adamantine))
-				amt_adamantine += MINERAL_MATERIAL_AMOUNT * O.amount
+				amt_adamantine += mineral_MATERIAL_AMOUNT * O.amount
 				O.loc = null
 			return
 
@@ -128,7 +128,7 @@
 		var/temp_coins = coinsToProduce
 		processing = 1;
 		icon_state = "coinpress1"
-		var/coin_mat = MINERAL_MATERIAL_AMOUNT * 0.2
+		var/coin_mat = mineral_MATERIAL_AMOUNT * 0.2
 		switch(chosen)
 			if("metal")
 				while(amt_iron >= coin_mat && coinsToProduce > 0)

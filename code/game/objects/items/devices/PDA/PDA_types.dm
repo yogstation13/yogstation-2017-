@@ -122,9 +122,9 @@
 	default_cartridge = /obj/item/weapon/cartridge/quartermaster
 	icon_state = "pda-qm"
 
-/obj/item/device/pda/shaftminer
-	name = "shaft miner PDA"
-	icon_state = "pda-miner"
+/obj/item/device/pda/shaftSlave
+	name = "Slave PDA"
+	icon_state = "pda-Slave"
 
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate

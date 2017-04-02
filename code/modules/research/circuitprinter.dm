@@ -106,7 +106,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		if(!amount_inserted)
 			return 1
 		else
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
+			use_power(max(1000, (mineral_MATERIAL_AMOUNT*amount_inserted/10)))
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
 		updateUsrDialog()
 

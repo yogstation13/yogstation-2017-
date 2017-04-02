@@ -158,7 +158,7 @@
 	desc = "A diamond drill replacement for the mining module's standard drill."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/weapon/robot_module/Slave
 	origin_tech = "engineering=4;materials=5"
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
@@ -180,7 +180,7 @@
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/weapon/robot_module/Slave
 	origin_tech = "engineering=4;materials=4;bluespace=4"
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
@@ -200,7 +200,7 @@
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/weapon/robot_module/Slave
 	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
 
 /obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
@@ -238,7 +238,7 @@
 	desc = "An upgrade kit to apply specialized plating and internal weather stripping to mining cyborgs, enabling them to withstand the heaviest of ash storms."
 	icon_state = "ash_plating"
 	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
+	module_type = /obj/item/weapon/robot_module/Slave
 	origin_tech = "engineering=4;materials=4;plasmatech=4"
 
 /obj/item/borg/upgrade/ashplating/action(mob/living/silicon/robot/R)

@@ -61,7 +61,7 @@
 /var/const/access_tcomsat = 61 // has access to the telecomms machinery
 /var/const/access_gateway = 62
 /var/const/access_sec_doors = 63 // Security front doors
-/var/const/access_Slaveal_storeroom = 64
+/var/const/access_mineral_storeroom = 64
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_paramedic = 67
@@ -234,7 +234,7 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-	            access_keycard_auth, access_tcomsat, access_tcomadmin, access_gateway, access_Slaveal_storeroom, access_minisat, access_paramedic, access_manufacturing)
+	            access_keycard_auth, access_tcomsat, access_tcomadmin, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic, access_manufacturing)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -268,7 +268,7 @@
 		if(5) //engineering and maintenance
 			return list(access_construction, access_maint_tunnels, access_engine, access_engine_equip, access_external_airlocks, access_tech_storage, access_atmospherics, access_tcomsat, access_tcomadmin, access_minisat, access_ce)
 		if(6) //supply
-			return list(access_mailsorting, access_mining, access_mining_station, access_Slaveal_storeroom, access_cargo, access_qm)
+			return list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo, access_qm)
 		if(7) //command
 			return list(access_heads, access_RC_announce, access_keycard_auth, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_gateway, access_all_personal_lockers, access_heads_vault, access_hop, access_captain)
 
@@ -417,8 +417,8 @@
 			return "Gateway"
 		if(access_sec_doors)
 			return "Brig"
-		if(access_Slaveal_storeroom)
-			return "Slaveal Storage"
+		if(access_mineral_storeroom)
+			return "mineral Storage"
 		if(access_minisat)
 			return "AI Satellite"
 		if(access_weapons)

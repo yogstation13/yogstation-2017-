@@ -313,12 +313,12 @@
 	if(O)
 		O.reagents.add_reagent("enzyme", 2 * coeff)
 
-/obj/item/weapon/robot_module/miner
-	name = "miner robot module"
-	skins = list("Brown" = "minerborg", "Miner Droid" = "droid-miner", "Minerborg" = "minerborg")
+/obj/item/weapon/robot_module/Slave
+	name = "Slave robot module"
+	skins = list("Brown" = "Slaveborg", "Slave Droid" = "droid-Slave", "Slaveborg" = "Slaveborg")
 	donator_skins = list("Wall-E" = "wall-eng")
 
-/obj/item/weapon/robot_module/miner/New()
+/obj/item/weapon/robot_module/Slave/New()
 	..()
 	modules += new /obj/item/borg/sight/meson(src)
 	emag = new /obj/item/borg/stun(src)

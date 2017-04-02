@@ -52,7 +52,7 @@
 		dat += text("<A href='?src=\ref[src];choice=station'>Proceed to Station.</A><br>")
 		dat += text("<A href='?src=\ref[src];choice=release'>Open release door.</A><br>")
 	if(machine)
-		dat += text("<HR><b>Mineral Value List:</b><BR>[machine.get_ore_values()]")
+		dat += text("<HR><b>mineral Value List:</b><BR>[machine.get_ore_values()]")
 
 
 	user << browse("[dat]", "window=console_stacking_machine")
@@ -106,7 +106,7 @@
 							usr << "<span class='notice'>No permission to dock could be granted.</span>"
 						else
 							Radio.set_frequency(SEC_FREQ)
-							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
+							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
 							usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 
 			if(href_list["choice"] == "release")

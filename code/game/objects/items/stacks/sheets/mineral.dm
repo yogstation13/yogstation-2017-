@@ -1,5 +1,5 @@
 /*
-Mineral Sheets
+mineral Sheets
 	Contains:
 		- Sandstone
 		- Sandbags
@@ -41,7 +41,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	throw_speed = 3
 	throw_range = 5
 	origin_tech = "materials=1"
-	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_GLASS=mineral_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
 
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
@@ -84,7 +84,7 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 	singular_name = "diamond"
 	origin_tech = "materials=6"
 	sheettype = "diamond"
-	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_DIAMOND=mineral_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
@@ -109,7 +109,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	singular_name = "uranium sheet"
 	origin_tech = "materials=5"
 	sheettype = "uranium"
-	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_URANIUM=mineral_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
@@ -135,7 +135,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	sheettype = "plasma"
 	burn_state = FLAMMABLE
 	burntime = 5
-	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_PLASMA=mineral_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
@@ -170,7 +170,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	singular_name = "gold bar"
 	origin_tech = "materials=4"
 	sheettype = "gold"
-	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_GOLD=mineral_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
@@ -197,7 +197,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	singular_name = "silver bar"
 	origin_tech = "materials=4"
 	sheettype = "silver"
-	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_SILVER=mineral_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
@@ -224,7 +224,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	singular_name = "bananium sheet"
 	origin_tech = "materials=4"
 	sheettype = "clown"
-	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_BANANIUM=mineral_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \

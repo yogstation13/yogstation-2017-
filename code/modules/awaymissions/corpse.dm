@@ -350,22 +350,22 @@
 	id_job = "Scientist"
 	id_access = "Scientist"
 
-/obj/effect/mob_spawn/human/miner
+/obj/effect/mob_spawn/human/Slave
 	radio = /obj/item/device/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/miner
+	uniform = /obj/item/clothing/under/rank/Slave
 	gloves = /obj/item/clothing/gloves/fingerless
 	back = /obj/item/weapon/storage/backpack/industrial
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	has_id = 1
-	id_job = "Shaft Miner"
-	id_access = "Shaft Miner"
+	id_job = "Slave"
+	id_access = "Slave"
 
-/obj/effect/mob_spawn/human/miner/rig
+/obj/effect/mob_spawn/human/Slave/rig
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
 
-/obj/effect/mob_spawn/human/miner/explorer
-	uniform = /obj/item/clothing/under/rank/miner/lavaland
+/obj/effect/mob_spawn/human/Slave/explorer
+	uniform = /obj/item/clothing/under/rank/Slave/lavaland
 	gloves = /obj/item/clothing/gloves/color/black
 	back = /obj/item/weapon/storage/backpack/security
 	shoes = /obj/item/clothing/shoes/jackboots

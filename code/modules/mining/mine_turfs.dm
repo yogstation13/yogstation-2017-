@@ -1,4 +1,4 @@
-/**********************Mineral deposits**************************/
+/**********************mineral deposits**************************/
 
 /turf/closed/mineral //wall piece
 	name = "rock"

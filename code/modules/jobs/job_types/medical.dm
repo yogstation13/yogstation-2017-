@@ -16,10 +16,10 @@ Chief Medical Officer
 
 	outfit = /datum/outfit/job/cmo
 
-	access = list(access_medical, access_morgue, access_genetics, access_heads, access_Slaveal_storeroom,
+	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic, access_slave_owner)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_Slaveal_storeroom,
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic access_slave_owner)
 
@@ -64,7 +64,7 @@ Medical Doctor
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_Slaveal_storeroom)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
 	minimal_access = list(access_medical, access_morgue, access_surgery)
 
 /datum/outfit/job/doctor
@@ -98,8 +98,8 @@ Chemist
 
 	outfit = /datum/outfit/job/chemist
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_Slaveal_storeroom, access_slave_owner)
-	minimal_access = list(access_medical, access_chemistry, access_Slaveal_storeroom, access_slave_owner)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom, access_slave_owner)
+	minimal_access = list(access_medical, access_chemistry, access_mineral_storeroom, access_slave_owner)
 
 /datum/outfit/job/chemist
 	name = "Chemist"
@@ -131,7 +131,7 @@ Geneticist
 
 	outfit = /datum/outfit/job/geneticist
 
-	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_Slaveal_storeroom, access_tech_storage)
+	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
 
 /datum/outfit/job/geneticist
@@ -164,8 +164,8 @@ Virologist
 
 	outfit = /datum/outfit/job/virologist
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_Slaveal_storeroom)
-	minimal_access = list(access_medical, access_virology, access_Slaveal_storeroom)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_virology, access_mineral_storeroom)
 
 /datum/outfit/job/virologist
 	name = "Virologist"
@@ -198,8 +198,8 @@ Mining Medic
 
 	outfit = /datum/outfit/job/miningmedic
 
-	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_Slaveal_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mining_station, access_mailsorting, access_Slaveal_storeroom)
+	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"

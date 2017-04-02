@@ -86,7 +86,7 @@
 
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
-	name = "\improper APLU \"Miner\""
+	name = "\improper APLU \"Slave\""
 
 /obj/mecha/working/ripley/mining/New()
 	..()

@@ -129,7 +129,7 @@
 	suffix = "lavaland_surface_cugganscove.dmm"
 	allow_duplicates = FALSE
 	cost = 10
-/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc. 
+/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc.
 /datum/map_template/ruin/lavaland/xenofacility
 	name = "Xenomorph Facility"
 	id = "xenofacility"

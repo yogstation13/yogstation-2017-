@@ -151,7 +151,7 @@
 
 /obj/item/weapon/storage/box/medipens/utility
 	name = "stimpack value kit"
-	desc = "A box with several stimpack medipens for the economical miner."
+	desc = "A box with several stimpack medipens for the economical Slave."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/medipens/utility/New()
@@ -251,12 +251,12 @@
 	new /obj/item/weapon/implantpad(src)
 	new /obj/item/weapon/locator(src)
 
-/obj/item/weapon/storage/box/minertracker
+/obj/item/weapon/storage/box/Slavetracker
 	name = "boxed tracking implant kit"
 	desc = "For finding those who have died on the accursed lavaworld."
 	icon_state = "implant"
 
-/obj/item/weapon/storage/box/minertracker/New()
+/obj/item/weapon/storage/box/Slavetracker/New()
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/implantcase/tracking(src)

@@ -915,9 +915,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/mat_id in linked_lathe.materials.materials)
 					var/datum/material/M = linked_lathe.materials.materials[mat_id]
 					dat += "* [M.amount] of [M.name]: "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
+					if(M.amount >= mineral_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= mineral_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= mineral_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
 					dat += "<BR>"
 			dat += "</div>"
 
@@ -1027,9 +1027,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/mat_id in linked_imprinter.materials.materials)
 					var/datum/material/M = linked_imprinter.materials.materials[mat_id]
 					dat += "* [M.amount] of [M.name]: "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
+					if(M.amount >= mineral_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= mineral_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= mineral_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
 					dat += "<BR>"
 			dat += "</div>"
 

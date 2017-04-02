@@ -116,7 +116,7 @@
 
 //////////////////////////////////
 /*
-	Station Airlocks Mineral
+	Station Airlocks mineral
 */
 
 /obj/machinery/door/airlock/gold

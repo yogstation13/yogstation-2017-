@@ -68,7 +68,7 @@
 
 		var/list/scannable_reagents = list("charcoal" = "Anti-Toxin", "morphine" = "Morphine", "amatoxin" = "Amatoxins",
 			"toxin" = "Toxins", "mushroomhallucinogen" = "Mushroom Hallucinogen", "condensedcapsaicin" = "Condensed Capsaicin",
-			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "Mineral Content", "glycerol" = "Glycerol",
+			"capsaicin" = "Capsaicin", "frostoil" = "Frost Oil", "gold" = "mineral Content", "glycerol" = "Glycerol",
 			"radium" = "Highly Radioactive Material", "uranium" = "Radioactive Material")
 		var/reag_txt = ""
 		if(seed)

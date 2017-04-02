@@ -108,7 +108,7 @@ Note: Must be placed west/left of and R&D console to function.
 		else
 			var/stack_name = stack.name
 			busy = 1
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
+			use_power(max(1000, (mineral_MATERIAL_AMOUNT*amount_inserted/10)))
 			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
 			overlays += "protolathe_[stack_name]"
 			sleep(10)

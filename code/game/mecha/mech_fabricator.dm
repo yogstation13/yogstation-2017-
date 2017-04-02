@@ -128,9 +128,9 @@
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
-		if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+		if(M.amount >= mineral_MATERIAL_AMOUNT)
 			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[mat_id]'>1</a>\]"
-			if(M.amount >= (MINERAL_MATERIAL_AMOUNT * 10))
+			if(M.amount >= (mineral_MATERIAL_AMOUNT * 10))
 				output += " | \[<a href='?src=\ref[src];remove_mat=10;material=[mat_id]'>10</a>\]"
 			output += " | \[<a href='?src=\ref[src];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"

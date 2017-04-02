@@ -99,7 +99,7 @@ Radio:
 1359 - Security
 1337 - death squad
 1443 - Confession Intercom
-1349 - Miners
+1349 - Slaves
 1347 - Cargo techs
 1447 - AI Private
 

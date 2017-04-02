@@ -86,7 +86,7 @@
 	name = "proto-kinetic accelerator"
 	desc = "According to Nanotrasen accounting, this is mining equipment. \
 	It's been modified for extreme power output to crush rocks, but often \
-	serves as a miner's first defense against hostile alien life; it's not \
+	serves as a Slave's first defense against hostile alien life; it's not \
 	very powerful unless used in a low pressure environment.\n\
 	It uses an experimental self-charging cell powered by the user's \
 	bioelectrical field. The downside of this is that it quickly discharges \

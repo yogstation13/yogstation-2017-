@@ -56,7 +56,7 @@
 	..()
 	health = max_health
 	materials = new(src, list(MAT_METAL, MAT_GLASS),
-		MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
+		mineral_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
 
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)
 
@@ -301,7 +301,7 @@
 		stat &= ~BROKEN
 		health = max_health
 		update_icon()
-		
+
 	else if(istype(O, /obj/item/weapon/crowbar))
 		materials.retrieve_all()
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)

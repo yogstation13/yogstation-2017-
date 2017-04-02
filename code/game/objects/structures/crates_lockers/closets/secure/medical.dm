@@ -112,7 +112,7 @@
 		new /obj/item/weapon/storage/backpack/satchel_med(src)
 	new /obj/item/weapon/defibrillator/loaded(src)
 	new /obj/item/clothing/suit/toggle/labcoat/emt(src)
-	new /obj/item/clothing/under/rank/miner/medic(src)
+	new /obj/item/clothing/under/rank/Slave/medic(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
 	new /obj/item/weapon/cartridge/medical(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)

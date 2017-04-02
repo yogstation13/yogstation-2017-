@@ -7,21 +7,21 @@
 	unacidable = 1
 	luminosity = 8
 
-/**********************Miner Lockers**************************/
+/**********************Slave Lockers**************************/
 
-/obj/structure/closet/wardrobe/miner
+/obj/structure/closet/wardrobe/Slave
 	name = "mining wardrobe"
 	icon_door = "mixed"
 
-/obj/structure/closet/wardrobe/miner/New()
+/obj/structure/closet/wardrobe/Slave/New()
 	..()
 	contents = list()
 	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
+	new /obj/item/clothing/under/rank/Slave(src)
+	new /obj/item/clothing/under/rank/Slave(src)
+	new /obj/item/clothing/under/rank/Slave(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
@@ -29,12 +29,12 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/clothing/gloves/fingerless(src)
 
-/obj/structure/closet/secure_closet/miner
-	name = "miner's equipment"
+/obj/structure/closet/secure_closet/Slave
+	name = "Slave's equipment"
 	icon_state = "mining"
 	req_access = list(access_mining)
 
-/obj/structure/closet/secure_closet/miner/New()
+/obj/structure/closet/secure_closet/Slave/New()
 	..()
 	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
@@ -634,7 +634,7 @@
 //Signs
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
-	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
+	desc = "A sign of relief for weary Slaves, and a warning for would be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
 

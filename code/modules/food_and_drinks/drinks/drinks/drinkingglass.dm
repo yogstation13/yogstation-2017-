@@ -494,7 +494,7 @@
 			if("fetching_fizz")
 				icon_state = "fetching_fizz"
 				name = "Fetching Fizz"
-				desc = "Induces magnetism in the imbiber. Started as a barroom prank but evolved to become popular with miners and scrappers. Metallic aftertaste."
+				desc = "Induces magnetism in the imbiber. Started as a barroom prank but evolved to become popular with Slaves and scrappers. Metallic aftertaste."
 			if("hearty_punch")
 				icon_state = "hearty_punch"
 				name = "Hearty Punch"

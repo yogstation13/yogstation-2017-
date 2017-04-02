@@ -92,7 +92,7 @@
 /obj/item/weapon/storage/bag/ore/cyborg
 	name = "cyborg mining satchel"
 
-/obj/item/weapon/storage/bag/ore/holding //miners, your messiah has arrived
+/obj/item/weapon/storage/bag/ore/holding //Slaves, your messiah has arrived
 	name = "mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for infinite ore storage. It's been outfitted with anti-malfunction safety measures."
 	storage_slots = INFINITY

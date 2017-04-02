@@ -145,7 +145,7 @@
 
 /obj/item/weapon/storage/belt/mining
 	name = "explorer's webbing"
-	desc = "A versatile chest rig, cherished by miners and hunters alike."
+	desc = "A versatile chest rig, cherished by Slaves and hunters alike."
 	icon_state = "explorer1"
 	item_state = "explorer1"
 	storage_slots = 5

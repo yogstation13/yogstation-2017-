@@ -1,5 +1,5 @@
 /datum/export/material
-	cost = 5 // Cost per MINERAL_MATERIAL_AMOUNT, which is 2000cm3 as of April 2016.
+	cost = 5 // Cost per mineral_MATERIAL_AMOUNT, which is 2000cm3 as of April 2016.
 	message = "cm3 of developer's tears. Please, report this on github"
 	var/material_id = null
 	export_types = list(
@@ -28,7 +28,7 @@
 	return round(amount)
 
 /datum/export/material/get_cost(obj/O)
-	return round(..() / MINERAL_MATERIAL_AMOUNT)
+	return round(..() / mineral_MATERIAL_AMOUNT)
 
 // Materials. Nothing but plasma is really worth selling. Better leave it all to RnD and sell some plasma instead.
 

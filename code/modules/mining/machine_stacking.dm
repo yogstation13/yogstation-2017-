@@ -1,4 +1,4 @@
-/**********************Mineral stacking unit console**************************/
+/**********************mineral stacking unit console**************************/
 
 /obj/machinery/mineral/stacking_unit_console
 	name = "stacking machine console"
@@ -54,7 +54,7 @@
 	return
 
 
-/**********************Mineral stacking unit**************************/
+/**********************mineral stacking unit**************************/
 
 
 /obj/machinery/mineral/stacking_machine

@@ -1,5 +1,5 @@
 /obj/item/wallframe
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT*2)
+	materials = list(MAT_METAL=mineral_MATERIAL_AMOUNT*2)
 	flags = CONDUCT
 	origin_tech = "materials=1;engineering=1"
 	item_state = "syringe_kit"
@@ -54,8 +54,8 @@
 		if(istype(T, /turf/closed/wall))
 			T.attackby(src, user, params)
 
-	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
-	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
+	var/metal_amt = round(materials[MAT_METAL]/mineral_MATERIAL_AMOUNT)
+	var/glass_amt = round(materials[MAT_GLASS]/mineral_MATERIAL_AMOUNT)
 
 	if(istype(W, /obj/item/weapon/wrench) && (metal_amt || glass_amt))
 		user << "<span class='notice'>You dismantle [src].</span>"

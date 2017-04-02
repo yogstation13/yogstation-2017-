@@ -55,7 +55,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	desc = "Sheets made out of metal."
 	singular_name = "metal sheet"
 	icon_state = "sheet-metal"
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_METAL=mineral_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=1"

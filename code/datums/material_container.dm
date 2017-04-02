@@ -2,7 +2,7 @@
 	This datum should be used for handling mineral contents of machines and whatever else is supposed to hold minerals and make use of them.
 
 	Variables:
-		amount - raw amount of the mineral this container is holding, calculated by the defined value MINERAL_MATERIAL_AMOUNT=2000.
+		amount - raw amount of the mineral this container is holding, calculated by the defined value mineral_MATERIAL_AMOUNT=2000.
 		max_amount - max raw amount of mineral this container can hold.
 		sheet_type - type of the mineral sheet the container handles, used for output.
 		owner - object that this container is being used by, used for output.
@@ -16,7 +16,7 @@
 	var/obj/owner
 	var/list/materials = list()
 	//MAX_STACK_SIZE = 50
-	//MINERAL_MATERIAL_AMOUNT = 2000
+	//mineral_MATERIAL_AMOUNT = 2000
 
 /datum/material_container/New(obj/O, list/mat_list, max_amt = 0)
 	owner = O
@@ -141,20 +141,20 @@
 	if(!M.sheet_type)
 		return 0
 	if(sheet_amt > 0)
-		if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
-			sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
+		if(M.amount < (sheet_amt * mineral_MATERIAL_AMOUNT))
+			sheet_amt = round(M.amount / mineral_MATERIAL_AMOUNT)
 		var/count = 0
 
 		while(sheet_amt > MAX_STACK_SIZE)
 			new M.sheet_type(get_turf(owner), MAX_STACK_SIZE)
 			count += MAX_STACK_SIZE
-			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
+			use_amount_type(sheet_amt * mineral_MATERIAL_AMOUNT, M.id)
 			sheet_amt -= MAX_STACK_SIZE
 
-		if(round(M.amount / MINERAL_MATERIAL_AMOUNT))
+		if(round(M.amount / mineral_MATERIAL_AMOUNT))
 			new M.sheet_type(get_turf(owner), sheet_amt)
 			count += sheet_amt
-			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
+			use_amount_type(sheet_amt * mineral_MATERIAL_AMOUNT, M.id)
 		return count
 	return 0
 
@@ -189,13 +189,13 @@
 	return 1
 
 /datum/material_container/proc/amount2sheet(amt)
-	if(amt >= MINERAL_MATERIAL_AMOUNT)
-		return round(amt / MINERAL_MATERIAL_AMOUNT)
+	if(amt >= mineral_MATERIAL_AMOUNT)
+		return round(amt / mineral_MATERIAL_AMOUNT)
 	return 0
 
 /datum/material_container/proc/sheet2amount(sheet_amt)
 	if(sheet_amt > 0)
-		return sheet_amt * MINERAL_MATERIAL_AMOUNT
+		return sheet_amt * mineral_MATERIAL_AMOUNT
 	return 0
 
 /datum/material_container/proc/amount(id)

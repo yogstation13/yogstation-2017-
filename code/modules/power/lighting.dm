@@ -23,7 +23,7 @@
 	name = "small light fixture frame"
 	icon_state = "bulb-construct-item"
 	result_path = /obj/machinery/light_construct/small
-	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
+	materials = list(MAT_METAL=mineral_MATERIAL_AMOUNT)
 
 
 /obj/machinery/light_construct

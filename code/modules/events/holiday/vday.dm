@@ -115,7 +115,7 @@
                 "A heart-shaped candy that reads: AYY LMAO",
                 "A heart-shaped candy that reads: TABLE ME",
                 "A heart-shaped candy that reads: HAND CUFFS",
-                "A heart-shaped candy that reads: SHAFT MINER",
+                "A heart-shaped candy that reads: Slave",
                 "A heart-shaped candy that reads: BANGING DONK",
                 "A heart-shaped candy that reads: Y-YOU T-TOO",
                 "A heart-shaped candy that reads: GOT WOOD",

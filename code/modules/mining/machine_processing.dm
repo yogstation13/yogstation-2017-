@@ -1,4 +1,4 @@
-/**********************Mineral processing unit console**************************/
+/**********************mineral processing unit console**************************/
 
 /obj/machinery/mineral/processing_unit_console
 	name = "production machine console"
@@ -171,7 +171,7 @@
 	src.updateUsrDialog()
 	return
 
-/**********************Mineral processing unit**************************/
+/**********************mineral processing unit**************************/
 
 
 /obj/machinery/mineral/processing_unit

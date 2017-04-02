@@ -39,7 +39,7 @@
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/open/space)))
-			continue	//#savetheminers
+			continue	//#savetheSlaves
 		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry

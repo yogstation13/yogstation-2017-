@@ -989,7 +989,7 @@ var/list/teleportlocs = list()
 	icon_state = "toxstorage"
 
 /area/toxins/mineral_storeroom
-	name = "Mineral Storeroom"
+	name = "mineral Storeroom"
 	icon_state = "toxmisc"
 
 /area/toxins/test_area

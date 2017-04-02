@@ -94,7 +94,7 @@
 
 /obj/item/clothing/glasses/material/mining
 	name = "Optical Material Scanner"
-	desc = "Used by miners to detect ores deep within the rock."
+	desc = "Used by Slaves to detect ores deep within the rock."
 	icon_state = "material"
 	item_state = "glasses"
 	origin_tech = "magnets=3;engineering=3"

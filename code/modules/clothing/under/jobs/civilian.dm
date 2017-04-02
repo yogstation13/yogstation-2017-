@@ -173,17 +173,17 @@
 	item_color = "mime"
 
 
-/obj/item/clothing/under/rank/miner
+/obj/item/clothing/under/rank/Slave
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
-	name = "shaft miner's jumpsuit"
-	icon_state = "miner"
-	item_state = "miner"
-	item_color = "miner"
+	name = "Slave's jumpsuit"
+	icon_state = "Slave"
+	item_state = "Slave"
+	item_color = "Slave"
 
 
-/obj/item/clothing/under/rank/miner/lavaland
+/obj/item/clothing/under/rank/Slave/lavaland
 	desc = "A green uniform for operating in hazardous environments."
-	name = "shaft miner's jumpsuit"
+	name = "Slave's jumpsuit"
 	icon_state = "explorer"
 	item_state = "explorer"
 	item_color = "explorer"
@@ -191,7 +191,7 @@
 	sensor_mode = 3
 	random_sensor = 0
 
-/obj/item/clothing/under/rank/miner/medic
+/obj/item/clothing/under/rank/Slave/medic
 	desc = "A verstile blue and white uniform honored to hard working recovery medics in hazardous environments. It has minor protection against biohazards."
 	name = "recovery medic's jumpsuit"
 	icon_state = "recovery"

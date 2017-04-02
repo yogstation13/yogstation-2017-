@@ -6,7 +6,7 @@
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
 you use one of the material IDs below. These are NOT ids in the usual sense (they aren't defined in the object or part of a datum),
 they are simply references used as part of a "has materials?" type proc. They all start with a $ to denote that they aren't reagents.
-The currently supporting non-reagent materials. All material amounts are set as the define MINERAL_MATERIAL_AMOUNT, which defaults to 2000
+The currently supporting non-reagent materials. All material amounts are set as the define mineral_MATERIAL_AMOUNT, which defaults to 2000
 - MAT_METAL (/obj/item/stack/metal).
 - MAT_GLASS (/obj/item/stack/glass).
 - MAT_PLASMA (/obj/item/stack/plasma).
@@ -153,7 +153,7 @@ other types of metals and chemistry for reagents).
 	id = "drill"
 	req_tech = list("materials" = 2, "powerstorage" = 2, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for Slaves.
 	build_path = /obj/item/weapon/pickaxe/drill
 	category = list("Mining Designs")
 
@@ -314,7 +314,7 @@ other types of metals and chemistry for reagents).
 /datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
-	id = "minerbag_holding"
+	id = "Slavebag_holding"
 	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500) //quite cheap, for more convenience

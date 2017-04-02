@@ -44,7 +44,7 @@ var/const/JANITOR			=(1<<4)
 var/const/LIBRARIAN			=(1<<5)
 var/const/QUARTERMASTER		=(1<<6)
 var/const/CARGOTECH			=(1<<7)
-var/const/MINER				=(1<<8)
+var/const/Slave				=(1<<8)
 var/const/LAWYER			=(1<<9)
 var/const/CHAPLAIN			=(1<<10)
 var/const/CLOWN				=(1<<11)
@@ -103,7 +103,7 @@ var/list/supply_positions = list(
 	"Head of Personnel",
 	"Quartermaster",
 	"Cargo Technician",
-	"Shaft Miner",
+	"Slave",
 )
 
 

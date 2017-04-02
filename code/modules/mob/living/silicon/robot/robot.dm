@@ -166,8 +166,8 @@
 	if(module)
 		return
 
-	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
+	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "Slaveborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Slave", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -193,11 +193,11 @@
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
-		if("Miner")
-			module = new /obj/item/weapon/robot_module/miner(src)
-			hands.icon_state = "miner"
-			modtype = "Miner"
-			feedback_inc("cyborg_miner",1)
+		if("Slave")
+			module = new /obj/item/weapon/robot_module/Slave(src)
+			hands.icon_state = "Slave"
+			modtype = "Slave"
+			feedback_inc("cyborg_Slave",1)
 
 
 		if("Medical")
@@ -813,9 +813,9 @@
 				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
 				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg","ashborg")
-				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-				state_name = "minerborg"
+			if("Slaveborg","ashborg")
+				overlays += "eyes-Slaveborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				state_name = "Slaveborg"
 			if("peaceborg")
 				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
@@ -828,10 +828,10 @@
 				overlays += "eyes-eve[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("wall-eng")
 				overlays += "eyes-wall-eng[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg-brown")
-				overlays += "eyes-minerborg-brown[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid-miner")
-				overlays += "eyes-droid-miner[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("Slaveborg-brown")
+				overlays += "eyes-Slaveborg-brown[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("droid-Slave")
+				overlays += "eyes-droid-Slave[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("droid-medical")
 				overlays += "eyes-droid-medical[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("droid")
@@ -992,7 +992,7 @@
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 
-		if(module.type == /obj/item/weapon/robot_module/miner)
+		if(module.type == /obj/item/weapon/robot_module/Slave)
 			if(istype(loc, /turf/open/floor/plating/asteroid))
 				if(istype(module_state_1,/obj/item/weapon/storage/bag/ore))
 					loc.attackby(module_state_1,src)
