@@ -971,10 +971,14 @@ var/next_mob_id = 0
 
 #define REV_EXAMINE_CD 60
 
-/mob/proc/reveal_examine(mob/living/L, range) // we are examining L, and revealing ourselves
-	if(src == L) // so no one can tell if we're checking ourselves out
+/mob/proc/reveal_examine(atom/A, range) // we are examining A, and revealing ourselves
+	if(src == A) // so no one can tell if we're checking ourselves out
 		return
 	if(istype(src, /mob/dead/observer))
+		return
+	if(stat != CONCIOUS)
+		return
+	if(!isliving(src))
 		return
 	if(client.prefs.examine_throttle == NO_VISIBLE)
 		return
@@ -992,6 +996,6 @@ var/next_mob_id = 0
 		if((istype(human.head, /obj/item/clothing/head/helmet/space/hardsuit)))
 			return
 	for(var/mob/M in view(src, range))
-		M << "<span class='small'>[src] looks at [L].</span>"
+		M << "<span class='small'>[src] looks at [A].</span>"
 
 #undef REV_EXAMINE_CD
