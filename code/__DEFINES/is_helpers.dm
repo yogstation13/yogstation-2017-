@@ -60,6 +60,8 @@
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
+#define issimpleanimal(A) (istype(A, /mob/living/simple_animal))
+
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
 #define isrobot(A) (istype(A, /mob/living/silicon/robot))
