@@ -297,7 +297,7 @@
 			msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
 
 	if(is_nearcrit())
-		msg += "<B>[t_He] looks haunting as they crawl on the ground hanging on for dear life.</B>"
+		msg += "<B>[t_He] looks haunting as they crawl on the ground hanging on for dear life.</B>\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
