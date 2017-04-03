@@ -976,7 +976,7 @@ var/next_mob_id = 0
 		return
 	if(istype(src, /mob/dead/observer))
 		return
-	if(stat != CONCIOUS)
+	if(stat != CONSCIOUS)
 		return
 	if(!isliving(src))
 		return
