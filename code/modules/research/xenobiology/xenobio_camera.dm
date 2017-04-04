@@ -65,7 +65,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user << "<span class='notice'>You feed [O] into [src]. It now has [monkeys] monkey cubes stored.</span>"
 		user.drop_item()
 		qdel(O)
 		return
