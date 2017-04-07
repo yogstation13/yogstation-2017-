@@ -5966,7 +5966,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/defibrillator,
+/obj/item/weapon/defibrillator/loaded,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "whitered"
