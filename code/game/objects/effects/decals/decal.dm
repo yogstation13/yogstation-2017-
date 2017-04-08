@@ -4,6 +4,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/effect/decal/ex_act(severity, target)
+<<<<<<< HEAD
 	qdel(src)
 
 /obj/effect/decal/fire_act(exposed_temperature, exposed_volume)
@@ -65,3 +66,6 @@
 
 /obj/effect/turf_decal/sand/plating
 	icon_state = "sandyplating"
+=======
+	destroy_effect()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

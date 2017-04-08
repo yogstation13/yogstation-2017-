@@ -438,6 +438,7 @@
 						if(R)
 							criminal = R.fields["criminal"]
 
+						msg += "<span class='deptradio'>Operate your security HUD faster by using ALT + SHIFT + CLICK to operate a targets criminal status or CTRL + SHIFT + CLICK to add crimes or comments.</span>\n"
 						msg += "<span class='deptradio'>Criminal status:</span> <a href='?src=\ref[src];hud=s;status=1'>\[[criminal]\]</a>\n"
 						msg += "<span class='deptradio'>Security record:</span> <a href='?src=\ref[src];hud=s;view=1'>\[View\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
@@ -445,4 +446,8 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	msg += "*---------*</span>"
 
+<<<<<<< HEAD
 	to_chat(user, msg)
+=======
+	user << msg
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

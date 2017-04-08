@@ -86,7 +86,7 @@
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
 	if (ishuman(user))
 		var/mob/living/carbon/human/maybedroid = user
-		if(maybedroid.dna && maybedroid.dna.species && (maybedroid.dna.species.specflags & CONSUMEPOWER) )
+		if(maybedroid.dna && maybedroid.dna.species && (CONSUMEPOWER in maybedroid.dna.species.specflags) )
 			maybedroid.dna.species.species_drain_act(maybedroid, src)
 			return
 	user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"

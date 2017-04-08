@@ -120,7 +120,7 @@
 
 	if(istype(I, /obj/item/weapon/restraints/handcuffs/cable))
 		var/obj/item/weapon/restraints/handcuffs/cable/C = I
-		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/wire)
+		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/zipties)
 
 	if(I.loc != src)
 		I.forceMove(src)
@@ -435,8 +435,17 @@
 /obj/item/weapon/robot_module/security/do_transform_animation()
 >>>>>>> masterTGbranch
 	..()
+<<<<<<< HEAD
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+=======
+	add_module(new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src))
+	modules += new /obj/item/weapon/melee/baton/loaded(src)
+	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
+	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
+	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	fix_modules()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -812,3 +821,11 @@
 	max_energy = 2500
 	recharge_rate = 250
 	name = "Medical Synthesizer"
+<<<<<<< HEAD
+=======
+
+/datum/robot_energy_storage/zipties
+	max_energy = 5
+	recharge_rate = 1
+	name = "Ziptie Synthesizer"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

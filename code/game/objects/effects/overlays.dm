@@ -16,7 +16,11 @@
 
 /obj/effect/overlay/beam/New()
 	..()
+<<<<<<< HEAD
 	QDEL_IN(src, 10)
+=======
+	addtimer(src,10,"destroy_effect")
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/effect/overlay/temp
 	icon_state = "nothing"

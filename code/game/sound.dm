@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, frequency = null, channel = 0, pressure_affected = TRUE)
+=======
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, var/is_global)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -21,12 +25,20 @@
 		if(get_dist(M, turf_source) <= world.view + extrarange)
 			var/turf/T = get_turf(M)
 			if(T && T.z == turf_source.z)
+<<<<<<< HEAD
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, channel, pressure_affected)
+=======
+				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, is_global)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /atom/proc/playsound_direct(soundin, vol as num, vary,  frequency, falloff, surround = TRUE, channel = 0, pressure_affected = FALSE)
 	playsound_local(get_turf(src), soundin, vol, vary, frequency, falloff, surround, channel)
 
+<<<<<<< HEAD
 /atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
+=======
+/atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, var/is_global)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
@@ -40,14 +52,23 @@
 		else
 			S.frequency = get_rand_frequency()
 
+	//sound volume falloff with pressure
+	var/pressure_factor = 1.0
+
 	if(isturf(turf_source))
 		var/turf/T = get_turf(src)
 
+<<<<<<< HEAD
 		if(pressure_affected)
 			//Atmosphere affects sound
 			var/pressure_factor = 1
 			var/datum/gas_mixture/hearer_env = T.return_air()
 			var/datum/gas_mixture/source_env = turf_source.return_air()
+=======
+		//Atmosphere affects sound
+		var/datum/gas_mixture/hearer_env = T.return_air()
+		var/datum/gas_mixture/source_env = turf_source.return_air()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 			if(hearer_env && source_env)
 				var/pressure = min(hearer_env.return_pressure(), source_env.return_pressure())
@@ -77,7 +98,36 @@
 		// The y value is for above your head, but there is no ceiling in 2d spessmens.
 		S.y = 1
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+	if(!is_global)
 
+		if(istype(src,/mob/living/))
+			var/mob/living/M = src
+			if (M.hallucination)
+				S.environment = PSYCHOTIC
+			else if (M.druggy)
+				S.environment = DRUGGED
+			else if (M.drowsyness)
+				S.environment = DIZZY
+			else if (M.confused)
+				S.environment = DIZZY
+			else if (M.sleeping)
+				S.environment = UNDERWATER
+			else if (pressure_factor < 0.5)
+				S.environment = SPACE
+			else
+				var/area/A = get_area(src)
+				S.environment = A.sound_env
+
+		else if (pressure_factor < 0.5)
+			S.environment = SPACE
+		else
+			var/area/A = get_area(src)
+			S.environment = A.sound_env
+	if(istype(src, /mob))
+		var/mob/M = src
+		if(M.client)
+			if(!M.client.prefs.soundenv)
+				S.environment = ROOM
 	src << S
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0, pressure_affected = TRUE)
@@ -85,6 +135,7 @@
 		return
 	..()
 
+<<<<<<< HEAD
 /proc/open_sound_channel()
 	var/static/next_channel = 1	//loop through the available 1024 - (the ones we reserve) channels and pray that its not still being used
 	. = ++next_channel
@@ -93,12 +144,20 @@
 
 /mob/proc/stop_sound_channel(chan)
 	src << sound(null, repeat = 0, wait = 0, channel = chan)
+=======
+/mob/proc/stopLobbySound()
+	src << nullify_sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /client/proc/playtitlemusic()
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
+<<<<<<< HEAD
 		src << sound(SSticker.login_music, repeat = 0, wait = 0, volume = 85, channel = CHANNEL_LOBBYMUSIC) // MAD JAMS
+=======
+		src << nullify_sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
@@ -137,5 +196,16 @@
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
+<<<<<<< HEAD
 	for(var/V in GLOB.clients)
 		V << sound(file, repeat, wait, channel, volume)
+=======
+	for(var/V in clients)
+		V << sound(file, repeat, wait, channel, volume)
+
+/proc/nullify_sound(file, repeat, wait, volume, channel)
+	var/sound/S = sound(file, repeat, wait, volume, channel)
+	S.environment = ROOM
+	S.echo = 0
+	return S
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

@@ -84,7 +84,11 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
 	var/list/restricted_roles = list() //If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
+<<<<<<< HEAD
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
+=======
+	var/list/restricted_roles = list() //The jobs allow to buy this weapon.
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -281,7 +285,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			energy swords to create a double energy sword, which must be wielded in two hands but is more robust \
 			and deflects all energy projectiles."
 	item = /obj/item/weapon/melee/energy/sword/saber
-	cost = 6
+	cost = 7
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -1005,7 +1009,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/weapon/grenade/plastic/c4
+	item = /obj/item/weapon/c4
 	cost = 1
 
 /datum/uplink_item/device_tools/c4bag
@@ -1306,6 +1310,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Librarian")
 	limited_stock = 1 // please don't spam deadchat
+
+
+
+// Role-specific items
+/datum/uplink_item/role_restricted
+	category = "Role-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear)
+	//restricted_roles = list("Assistant")
 
 // Pointless
 /datum/uplink_item/badass

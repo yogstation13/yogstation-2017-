@@ -48,6 +48,10 @@
 			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
 	msg += "*---------*</span>"
 
+<<<<<<< HEAD
 	to_chat(user, msg)
+=======
+	user << msg
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	..()

@@ -10,8 +10,15 @@
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
+<<<<<<< HEAD
 	var/imp_type = null
+=======
+	var/imptype = /obj/item/weapon/implant
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
+/obj/item/weapon/implanter/New()
+	..()
+	imp = new imptype(src)
 
 /obj/item/weapon/implanter/update_icon()
 	if(imp)
@@ -58,6 +65,7 @@
 
 /obj/item/weapon/implanter/Initialize(mapload)
 	..()
+<<<<<<< HEAD
 	if(imp_type)
 		imp = new imp_type(src)
 	update_icon()
@@ -69,3 +77,16 @@
 /obj/item/weapon/implanter/emp
 	name = "implanter (EMP)"
 	imp_type = /obj/item/weapon/implant/emp
+=======
+	spawn(1)
+		update_icon()
+
+/obj/item/weapon/implanter/adrenalin
+	name = "implanter (adrenalin)"
+	imptype = /obj/item/weapon/implant/adrenalin
+
+
+/obj/item/weapon/implanter/emp
+	name = "implanter (EMP)"
+	imptype = /obj/item/weapon/implant/emp
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

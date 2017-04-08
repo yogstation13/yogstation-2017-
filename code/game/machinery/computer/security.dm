@@ -245,7 +245,7 @@
 					else
 						dat += "Security Record Lost!<br>"
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=\ref[];choice=Print Record'>Print Record</A><BR><A href='?src=\ref[];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src, src)
+					dat += text("<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=\ref[];choice=Print Record'>Print Record</A><BR><A href='?src=\ref[];choice=Print Poster;global=0'>Print Wanted Poster</A><BR><A href='?src=\ref[];choice=Print Poster;global=1'>Print Wanted Poster Globally</A><BR><A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src, src, src)
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
@@ -426,6 +426,7 @@ What a mess.*/
 					printing = null
 			if("Print Poster")
 				if(!( printing ))
+					var/globalprint = href_list["global"]
 					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
@@ -451,7 +452,16 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
+<<<<<<< HEAD
 								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
+=======
+								if(globalprint)
+									for(var/obj/machinery/computer/secure_data/SD in SSmachine.processing)
+										if(SD.z == z)
+											new /obj/item/weapon/poster/legit/wanted(get_turf(SD), photo.img, wanted_name, info)
+								else
+									new /obj/item/weapon/poster/legit/wanted(get_turf(src), photo.img, wanted_name, info)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 							printing = 0
 
 //RECORD DELETE

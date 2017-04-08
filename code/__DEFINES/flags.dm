@@ -106,6 +106,7 @@
 #define CONSUMEPOWER	25
 #define EASYIMPLANTS	26
 #define PROTECTEDEYES	27
+#define PLANT           28
 
 //Movement Types
 #define IMMOBILE 0

@@ -33,10 +33,16 @@
 	GLOB.portals += src
 	src.target = target
 	src.creator = creator
+<<<<<<< HEAD
 
 	var/area/A = get_area(target)
 	if(A && A.noteleport) // No point in persisting if the target is unreachable.
 		qdel(src)
+=======
+	var/area/A = target.loc
+	if(A.noteleport) // No point in persisting if the target is unreachable.
+		destroy_effect()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		return
 	if(lifespan > 0)
 		QDEL_IN(src, lifespan)

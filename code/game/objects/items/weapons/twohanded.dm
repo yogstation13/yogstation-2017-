@@ -331,11 +331,15 @@
 	item_color = "green"
 	light_color = "#00ff00"//green
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+<<<<<<< HEAD
 	block_chance = 75
 	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
+=======
+	block_chance = 25
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	var/hacked = 0
 <<<<<<< HEAD
 	var/flip = FALSE
@@ -426,7 +430,7 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, dammage, attack_type)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(wielded)
 		if(attack_type == UNARMED_ATTACK)
 			return 1

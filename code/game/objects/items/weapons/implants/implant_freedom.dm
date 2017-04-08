@@ -36,9 +36,18 @@ No Implant Specifics"}
 
 /obj/item/weapon/implanter/freedom
 	name = "implanter (freedom)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/freedom
+=======
+	imptype = /obj/item/weapon/implant/freedom
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/freedom
 	name = "implant case - 'Freedom'"
 	desc = "A glass case containing a freedom implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/freedom
+=======
+	imptype = /obj/item/weapon/implant/freedom
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

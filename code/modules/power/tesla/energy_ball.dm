@@ -247,7 +247,11 @@ GLOBAL_LIST_INIT(blacklisted_tesla_types, typecacheof(list(/obj/machinery/atmosp
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
+<<<<<<< HEAD
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
+=======
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5,alphafade=1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir

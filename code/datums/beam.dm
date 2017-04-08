@@ -13,10 +13,20 @@
 	var/origin_oldloc = null
 	var/static_beam = 0
 	var/beam_type = /obj/effect/ebeam //must be subtype
+<<<<<<< HEAD
 	var/timing_id = null
 	var/recalculating = FALSE
 
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,beam_sleep_time=3)
+=======
+	var/alpha_fade = FALSE
+	var/last_time = 0
+
+
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam,alphafade=0)
+	endtime = world.time+time
+	last_time = time
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -29,7 +39,12 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
+<<<<<<< HEAD
 	addtimer(CALLBACK(src,.proc/End), time)
+=======
+	alpha_fade = alphafade
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/beam/proc/Start()
 	Draw()
@@ -98,7 +113,7 @@
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
-		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
+		var/obj/effect/ebeam/X = new beam_type(origin_oldloc,alpha_fade,last_time)
 		X.owner = src
 		elements += X
 
@@ -144,12 +159,27 @@
 	mouse_opacity = 0
 	anchored = 1
 	var/datum/beam/owner
+	use_fade = 0
 
 /obj/effect/ebeam/Destroy()
 	owner = null
 	return ..()
 
+<<<<<<< HEAD
 /atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3)
 	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time)
 	INVOKE_ASYNC(newbeam, /datum/beam/.proc/Start)
 	return newbeam
+=======
+/obj/effect/ebeam/New(alpha_fade = 0, time_exist = 10)
+	spawn(1)
+		if(alpha_fade)
+			animate(src, alpha = 0, time = time_exist*10)
+		..()
+
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam, alphafade=1)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,alphafade)
+	spawn(0)
+		newbeam.Start()
+	return newbeam
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

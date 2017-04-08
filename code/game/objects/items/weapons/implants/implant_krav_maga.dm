@@ -26,10 +26,18 @@
 
 /obj/item/weapon/implanter/krav_maga
 	name = "implanter (krav maga)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/krav_maga
+=======
+	imptype = /obj/item/weapon/implant/krav_maga
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/krav_maga
 	name = "implant case - 'Krav Maga'"
 	desc = "A glass case containing an implant that can teach the user the arts of Krav Maga."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/krav_maga
 
+=======
+	imptype = /obj/item/weapon/implant/krav_maga
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

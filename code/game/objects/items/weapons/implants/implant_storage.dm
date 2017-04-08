@@ -47,4 +47,8 @@
 
 /obj/item/weapon/implanter/storage
 	name = "implanter (storage)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/storage
+=======
+	imptype = /obj/item/weapon/implant/storage
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

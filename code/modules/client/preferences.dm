@@ -118,6 +118,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
+	var/soundenv = TRUE
+
 /datum/preferences/New(client/C)
 	parent = C
 	custom_names["ai"] = pick(GLOB.ai_names)

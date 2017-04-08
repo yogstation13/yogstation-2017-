@@ -14,6 +14,78 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 
+<<<<<<< HEAD
+=======
+/area
+	level = null
+	name = "Space"
+	icon = 'icons/turf/areas.dmi'
+	icon_state = "unknown"
+	layer = AREA_LAYER
+	mouse_opacity = 0
+	invisibility = INVISIBILITY_LIGHTING
+
+	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
+	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
+
+	var/eject = null
+
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
+
+	var/requires_power = 1
+	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+
+	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/mapgen_protected = 0 //If the area is protected from ruins/lava rivers/etc generating on top of it
+
+	var/power_equip = 1
+	var/power_light = 1
+	var/power_environ = 1
+	var/music = null
+	var/used_equip = 0
+	var/used_light = 0
+	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
+	var/murders_plants = 1
+
+	var/has_gravity = 0
+	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
+	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+
+	var/no_air = null
+	var/area/master				// master area used for power calcluations
+	var/list/related			// the other areas of the same type as this
+//	var/list/lights				// list of all lights on this area
+
+	var/parallax_movedir = 0
+
+	var/sound_env = ROOM
+
+/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
+/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+var/list/teleportlocs = list()
+
+/proc/process_teleport_locs()
+	for(var/area/AR in world)
+		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station) || AR.noteleport) continue
+		if(teleportlocs.Find(AR.name)) continue
+		var/turf/picked = safepick(get_area_turfs(AR.type))
+		if (picked && (picked.z == ZLEVEL_STATION))
+			teleportlocs += AR.name
+			teleportlocs[AR.name] = AR
+
+	sortTim(teleportlocs, /proc/cmp_text_dsc)
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /*-----------------------------------------------------------------------------*/
 
 /area/engine/supermatter
@@ -54,14 +126,139 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/space/nearstation
 	icon_state = "space_near"
+<<<<<<< HEAD
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+=======
+	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
+
+//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
+
+/area/shuttle
+	name = "Shuttle"
+	requires_power = 0
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	has_gravity = 1
+	valid_territory = 0
+	icon_state = "shuttle"
+	murders_plants = 0
+	sound_env = SMALL_ENCLOSED
+
+/area/shuttle/arrival
+	name = "Arrival Shuttle"
+	sound_env = LARGE_ENCLOSED
+
+/area/shuttle/pod_1
+	name = "Escape Pod One"
+
+/area/shuttle/pod_2
+	name = "Escape Pod Two"
+
+/area/shuttle/pod_3
+	name = "Escape Pod Three"
+
+/area/shuttle/pod_4
+	name = "Escape Pod Four"
+
+/area/shuttle/mining
+	name = "Mining Shuttle"
+
+/area/shuttle/labor
+	name = "Labor Camp Shuttle"
+
+/area/shuttle/supply
+	name = "Supply Shuttle"
+	sound_env = LARGE_ENCLOSED
+
+/area/shuttle/escape
+	name = "Emergency Shuttle"
+	sound_env = LARGE_ENCLOSED
+
+/area/shuttle/transport
+	name = "Transport Shuttle"
+
+/area/shuttle/syndicate
+	name = "Syndicate Infiltrator"
+	sound_env = LARGE_ENCLOSED
+
+/area/shuttle/assault_pod
+	name = "Steel Rain"
+
+/area/shuttle/abandoned
+	name = "Abandoned Ship"
+	sound_env = LARGE_ENCLOSED
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /area/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
+<<<<<<< HEAD
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
+=======
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	has_gravity = 1
+	sound_env = PADDED_CELL
+
+// CENTCOM
+
+/area/centcom
+	name = "Centcom"
+	icon_state = "centcom"
+	requires_power = 0
+	has_gravity = 1
+	noteleport = 1
+	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	sound_env = LARGE_ENCLOSED
+
+/area/centcom/control
+	name = "Centcom Docks"
+
+/area/centcom/evac
+	name = "Centcom Recovery Ship"
+
+/area/centcom/supply
+	name = "Centcom Supply Shuttle Dock"
+
+/area/centcom/ferry
+	name = "Centcom Transport Shuttle Dock"
+
+/area/centcom/prison
+	name = "Admin Prison"
+
+/area/centcom/holding
+	name = "Holding Facility"
+
+/area/centcom/abuse
+	name = "AB-use facility"
+	icon_state = "centcom"
+	requires_power = 0
+	has_gravity = 1
+	noteleport = 1
+	blob_allowed = 0
+
+
+//SYNDICATES
+
+/area/syndicate_mothership
+	name = "Syndicate Mothership"
+	icon_state = "syndie-ship"
+	requires_power = 0
+	has_gravity = 1
+	noteleport = 1
+	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	sound_env = LARGE_ENCLOSED
+
+/area/syndicate_mothership/control
+	name = "Syndicate Control Room"
+	icon_state = "syndie-control"
+
+/area/syndicate_mothership/elite_squad
+	name = "Syndicate Elite Squad"
+	icon_state = "syndie-elite"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 //EXTRA
 
@@ -72,6 +269,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	has_gravity = 1
 	blob_allowed = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = 0
+	sound_env = ASTEROID
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -97,13 +295,161 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "telesci"
 	requires_power = 0
 
+<<<<<<< HEAD
+=======
+/area/tdome
+	name = "Thunderdome"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
+	sound_env = ARENA
+
+/area/tdome/arena
+	name = "Thunderdome Arena"
+	icon_state = "thunder"
+
+/area/tdome/arena_source
+	name = "Thunderdome Arena Template"
+	icon_state = "thunder"
+
+/area/tdome/tdome1
+	name = "Thunderdome (Team 1)"
+	icon_state = "green"
+
+/area/tdome/tdome2
+	name = "Thunderdome (Team 2)"
+	icon_state = "green"
+
+/area/tdome/tdomeadmin
+	name = "Thunderdome (Admin.)"
+	icon_state = "purple"
+
+/area/tdome/tdomeobserve
+	name = "Thunderdome (Observer.)"
+	icon_state = "purple"
+
+//ENEMY
+
+
+/area/wizard_station
+	name = "Wizard's Den"
+	icon_state = "yellow"
+	requires_power = 0
+	has_gravity = 1
+	noteleport = 1
+	sound_env = LARGE_ENCLOSED
+
+//Abductors
+/area/abductor_ship
+	name = "Abductor Ship"
+	icon_state = "yellow"
+	requires_power = 0
+	noteleport = 1
+	has_gravity = 1
+	sound_env = SMALL_ENCLOSED
+
+
+//PRISON
+/area/prison
+	name = "Prison Station"
+	icon_state = "brig"
+
+/area/prison/arrival_airlock
+	name = "Prison Station Airlock"
+	icon_state = "green"
+	requires_power = 0
+
+/area/prison/control
+	name = "Prison Security Checkpoint"
+	icon_state = "security"
+
+/area/prison/crew_quarters
+	name = "Prison Security Quarters"
+	icon_state = "security"
+
+/area/prison/rec_room
+	name = "Prison Rec Room"
+	icon_state = "green"
+
+/area/prison/closet
+	name = "Prison Supply Closet"
+	icon_state = "dk_yellow"
+
+/area/prison/hallway/
+	sound_env = LARGE_ENCLOSED
+
+/area/prison/hallway/fore
+	name = "Prison Fore Hallway"
+	icon_state = "yellow"
+
+/area/prison/hallway/aft
+	name = "Prison Aft Hallway"
+	icon_state = "yellow"
+
+/area/prison/hallway/port
+	name = "Prison Port Hallway"
+	icon_state = "yellow"
+
+/area/prison/hallway/starboard
+	name = "Prison Starboard Hallway"
+	icon_state = "yellow"
+
+/area/prison/morgue
+	name = "Prison Morgue"
+	icon_state = "morgue"
+	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
+
+/area/prison/medical_research
+	name = "Prison Genetic Research"
+	icon_state = "medresearch"
+
+/area/prison/medical
+	name = "Prison Medbay"
+	icon_state = "medbay"
+
+/area/prison/solar
+	name = "Prison Solar Array"
+	icon_state = "storage"
+	requires_power = 0
+
+/area/prison/podbay
+	name = "Prison Podbay"
+	icon_state = "dk_yellow"
+
+/area/prison/solar_control
+	name = "Prison Solar Array Control"
+	icon_state = "dk_yellow"
+
+/area/prison/solitary
+	name = "Solitary Confinement"
+	icon_state = "brig"
+
+/area/prison/cell_block/A
+	name = "Prison Cell Block A"
+	icon_state = "brig"
+	sound_env = PADDED_CELL
+
+/area/prison/cell_block/B
+	name = "Prison Cell Block B"
+	icon_state = "brig"
+	sound_env = PADDED_CELL
+
+/area/prison/cell_block/C
+	name = "Prison Cell Block C"
+	icon_state = "brig"
+	sound_env = PADDED_CELL
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 //STATION13
 
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
+<<<<<<< HEAD
  	flags = NONE
+=======
+ 	sound_env = LARGE_ENCLOSED
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 //Maintenance
 /area/maintenance
@@ -116,6 +462,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg')
 	valid_territory = 0
+	sound_env = TUNNEL_ENCLOSED
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -212,6 +559,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
+/area/hallway/
+	sound_env = LARGE_ENCLOSED
+
 /area/hallway/primary/fore
 	name = "Fore Primary Hallway"
 	icon_state = "hallF"
@@ -255,10 +605,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Heads of Staff Meeting Room"
 	icon_state = "meeting"
 	music = null
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/captain
 	name = "Captain's Office"
 	icon_state = "captain"
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/captain/captains_quarters
 	name = "Captain's Quarters"
@@ -267,6 +619,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/courtroom
 	name = "Courtroom"
 	icon_state = "courtroom"
+	sound_env = LARGE_ENCLOSED
 
 /area/crew_quarters/heads
 	name = "Head of Personnel's Office"
@@ -298,6 +651,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
+	sound_env = SMALL_ENCLOSED
 
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
@@ -342,10 +696,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/bar/atrium
 	name = "Atrium"
@@ -362,11 +718,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "Theatre"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/library
  	name = "Library"
  	icon_state = "library"
+<<<<<<< HEAD
  	flags = NONE
+=======
+ 	sound_env = LARGE_SOFTFLOOR
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /area/library/abandoned_library
  	name = "Abandoned Library"
@@ -376,14 +737,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/chapel
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+<<<<<<< HEAD
 	flags = NONE
 
 /area/chapel/main
 	name = "Chapel"
+=======
+	sound_env = LARGE_ENCLOSED
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /area/chapel/office
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/lawoffice
 	name = "Law Office"
@@ -397,18 +763,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/engine_smes
 	name = "Engineering SMES"
 	icon_state = "engine_smes"
+	sound_env = SMALL_ENCLOSED
 
 /area/engine/engineering
 	name = "Engineering"
 	icon_state = "engine"
+	sound_env = LARGE_ENCLOSED
 
 /area/engine/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/engine/chiefs_office
 	name = "Chief Engineer's office"
 	icon_state = "engine_control"
+	sound_env = SMALL_SOFTFLOOR
 
 /area/engine/secure_construction
 	name = "Secure Construction Area"
@@ -454,23 +824,28 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/starboardsolar
 	name = "Aft Starboard Solar Maintenance"
 	icon_state = "SolarcontrolS"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/portsolar
 	name = "Aft Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/auxsolarstarboard
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	sound_env = SMALL_ENCLOSED
 
 
 /area/assembly/chargebay
 	name = "Mech Bay"
 	icon_state = "mechbay"
+	sound_env = LARGE_ENCLOSED
 
 /area/assembly/showroom
 	name = "Robotics Showroom"
@@ -479,6 +854,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/assembly/robotics
 	name = "Robotics Lab"
 	icon_state = "ass_line"
+	sound_env = LARGE_ENCLOSED
 
 /area/assembly/assembly_line //Derelict Assembly Line
 	name = "Assembly Line"
@@ -493,6 +869,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Teleporter Room"
 	icon_state = "teleporter"
 	music = "signal"
+	sound_env = SMALL_ENCLOSED
 
 /area/gateway
 	name = "Gateway"
@@ -515,12 +892,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Lobby"
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
+	sound_env = LARGE_ENCLOSED
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/medbay2
 	name = "Medbay"
 	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/medbay2/medbay_storage
 	name = "Medbay Storage"
@@ -531,6 +910,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/abandoned_medbay
 	name = "Abandoned Medbay"
@@ -540,10 +920,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/patients_rooms
 	name = "Patients' Rooms"
 	icon_state = "patients"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/cmo
 	name = "Chief Medical Officer's office"
 	icon_state = "CMO"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/robotics
 	name = "Robotics"
@@ -574,14 +956,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/chemistry
 	name = "Chemistry"
 	icon_state = "chem"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/surgery
 	name = "Surgery"
 	icon_state = "surgery"
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/exam_room
 	name = "Exam Room"
@@ -590,14 +975,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/genetics
 	name = "Genetics Lab"
 	icon_state = "genetics"
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/genetics_cloning
 	name = "Cloning Lab"
 	icon_state = "cloning"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/sleeper
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
+	sound_env = LARGE_ENCLOSED
 
 //Security
 
@@ -608,10 +996,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/brig
 	name = "Brig"
 	icon_state = "brig"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/processing
 	name = "Labor Shuttle Dock"
@@ -620,19 +1010,23 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/warden
 	name = "Brig Control"
 	icon_state = "Warden"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/armory
 	name = "Armory"
 	icon_state = "armory"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/hos
 	name = "Head of Security's Office"
 	icon_state = "sec_hos"
+	sound_env = SMALL_ENCLOSED
 
 /area/security/detectives_office
 	name = "Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/security/detectives_office/private_investigators_office
 	name = "Private Investigator's Office"
@@ -647,15 +1041,28 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Transfer Centre"
 	icon_state = "armory"
 
+<<<<<<< HEAD
+=======
+/area/security/interrogation
+	name = "\improper Interrogation"
+	icon_state = "firingrange"
+	sound_env = SMALL_ENCLOSED
+
+/*
+/area/security/transfer/New()
+	..()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	sound_env = LARGE_ENCLOSED
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
@@ -712,6 +1119,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/quartermaster/storage
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
+	sound_env = LARGE_ENCLOSED
 
 /area/quartermaster/qm
 	name = "Quartermaster's Office"
@@ -756,10 +1164,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/toxins/lab
 	name = "Research and Development"
 	icon_state = "toxlab"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "toxlab"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/storage
 	name = "Toxins Storage"
@@ -777,6 +1187,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/toxins/mixing
 	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/misc_lab
 	name = "Testing Lab"
@@ -793,6 +1204,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/toxins/telesci
 	name = "\improper Telescience Lab"
 	icon_state = "toxtest"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/toxlab
 	name = "\improper Toxins Lab"
@@ -823,6 +1235,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	sound_env = LARGE_ENCLOSED
 
 /area/storage/secure
 	name = "Secure Storage"
@@ -859,6 +1272,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/mining_construction
 	name = "Auxillary Base Construction"
 	icon_state = "yellow"
+	sound_env = LARGE_ENCLOSED
 
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
@@ -916,14 +1330,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/ai_monitored/turret_protected/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
+	sound_env = SMALL_ENCLOSED
 
 /area/ai_monitored/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
+	sound_env = LARGE_ENCLOSED
 
 /area/ai_monitored/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
+	sound_env = LARGE_ENCLOSED
 
 /area/ai_monitored/turret_protected/aisat
 	name = "AI Satellite"
@@ -962,6 +1379,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // Telecommunications Satellite
 
 /area/tcommsat
+	sound_env = LARGE_ENCLOSED
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/entrance
@@ -1008,9 +1426,254 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel Asteroid"
 	icon_state = "explored"
 
+<<<<<<< HEAD
 /area/chapel/dock
 	name = "Chapel Dock"
 	icon_state = "construction"
+=======
+// Hell
+/area/hell
+	name = "Hell Lobby"
+	//icon = "ICON FILENAME"
+	//icon_state = "NAME OF ICON"
+	requires_power = 0
+	music = "music/music.ogg"
+	sound_env = LARGE_ENCLOSED // AHAHAHHAHAHA I'm not even sorry.
+
+/area/hell/trial1
+	name = "Hell Trial1"
+	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
+
+/area/hell/trial1
+	name = "Hell Trial2"
+	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
+
+/area/hell/trial1
+	name = "Hell Trial3"
+	//icon_state = "NAME OF ICON" 	(defaults to "unknown" (blank))
+
+// Away Missions
+/area/awaymission
+	name = "Strange Location"
+	icon_state = "away"
+	has_gravity = 1
+
+/area/awaymission/example
+	name = "Strange Station"
+	icon_state = "away"
+
+/area/awaymission/desert
+	name = "Mars"
+	icon_state = "away"
+
+/area/awaymission/listeningpost
+	name = "Listening Post"
+	icon_state = "away"
+	requires_power = 0
+
+/area/awaymission/beach
+	name = "Beach"
+	icon_state = "away"
+	luminosity = 1
+	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
+	requires_power = 0
+	has_gravity = 1
+	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
+	sound_env = PLAIN
+
+/area/spacecontent
+	name = "space"
+
+/area/spacecontent/a1
+	icon_state = "spacecontent1"
+
+/area/spacecontent/a2
+	icon_state = "spacecontent2"
+
+/area/spacecontent/a3
+	icon_state = "spacecontent3"
+
+/area/spacecontent/a4
+	icon_state = "spacecontent4"
+
+/area/spacecontent/a5
+	icon_state = "spacecontent5"
+
+/area/spacecontent/a6
+	icon_state = "spacecontent6"
+
+/area/spacecontent/a7
+	icon_state = "spacecontent7"
+
+/area/spacecontent/a8
+	icon_state = "spacecontent8"
+
+/area/spacecontent/a9
+	icon_state = "spacecontent9"
+
+/area/spacecontent/a10
+	icon_state = "spacecontent10"
+
+/area/spacecontent/a11
+	icon_state = "spacecontent11"
+
+/area/spacecontent/a11
+	icon_state = "spacecontent12"
+
+/area/spacecontent/a12
+	icon_state = "spacecontent13"
+
+/area/spacecontent/a13
+	icon_state = "spacecontent14"
+
+/area/spacecontent/a14
+	icon_state = "spacecontent14"
+
+/area/spacecontent/a15
+	icon_state = "spacecontent15"
+
+/area/spacecontent/a16
+	icon_state = "spacecontent16"
+
+/area/spacecontent/a17
+	icon_state = "spacecontent17"
+
+/area/spacecontent/a18
+	icon_state = "spacecontent18"
+
+/area/spacecontent/a19
+	icon_state = "spacecontent19"
+
+/area/spacecontent/a20
+	icon_state = "spacecontent20"
+
+/area/spacecontent/a21
+	icon_state = "spacecontent21"
+
+/area/spacecontent/a22
+	icon_state = "spacecontent22"
+
+/area/spacecontent/a23
+	icon_state = "spacecontent23"
+
+/area/spacecontent/a24
+	icon_state = "spacecontent24"
+
+/area/spacecontent/a25
+	icon_state = "spacecontent25"
+
+/area/spacecontent/a26
+	icon_state = "spacecontent26"
+
+/area/spacecontent/a27
+	icon_state = "spacecontent27"
+
+/area/spacecontent/a28
+	icon_state = "spacecontent28"
+
+/area/spacecontent/a29
+	icon_state = "spacecontent29"
+
+/area/spacecontent/a30
+	icon_state = "spacecontent30"
+
+/area/awaycontent
+	name = "space"
+
+/area/awaycontent/a1
+	icon_state = "awaycontent1"
+
+/area/awaycontent/a2
+	icon_state = "awaycontent2"
+
+/area/awaycontent/a3
+	icon_state = "awaycontent3"
+
+/area/awaycontent/a4
+	icon_state = "awaycontent4"
+
+/area/awaycontent/a5
+	icon_state = "awaycontent5"
+
+/area/awaycontent/a6
+	icon_state = "awaycontent6"
+
+/area/awaycontent/a7
+	icon_state = "awaycontent7"
+
+/area/awaycontent/a8
+	icon_state = "awaycontent8"
+
+/area/awaycontent/a9
+	icon_state = "awaycontent9"
+
+/area/awaycontent/a10
+	icon_state = "awaycontent10"
+
+/area/awaycontent/a11
+	icon_state = "awaycontent11"
+
+/area/awaycontent/a11
+	icon_state = "awaycontent12"
+
+/area/awaycontent/a12
+	icon_state = "awaycontent13"
+
+/area/awaycontent/a13
+	icon_state = "awaycontent14"
+
+/area/awaycontent/a14
+	icon_state = "awaycontent14"
+
+/area/awaycontent/a15
+	icon_state = "awaycontent15"
+
+/area/awaycontent/a16
+	icon_state = "awaycontent16"
+
+/area/awaycontent/a17
+	icon_state = "awaycontent17"
+
+/area/awaycontent/a18
+	icon_state = "awaycontent18"
+
+/area/awaycontent/a19
+	icon_state = "awaycontent19"
+
+/area/awaycontent/a20
+	icon_state = "awaycontent20"
+
+/area/awaycontent/a21
+	icon_state = "awaycontent21"
+
+/area/awaycontent/a22
+	icon_state = "awaycontent22"
+
+/area/awaycontent/a23
+	icon_state = "awaycontent23"
+
+/area/awaycontent/a24
+	icon_state = "awaycontent24"
+
+/area/awaycontent/a25
+	icon_state = "awaycontent25"
+
+/area/awaycontent/a26
+	icon_state = "awaycontent26"
+
+/area/awaycontent/a27
+	icon_state = "awaycontent27"
+
+/area/awaycontent/a28
+	icon_state = "awaycontent28"
+
+/area/awaycontent/a29
+	icon_state = "awaycontent29"
+
+/area/awaycontent/a30
+	icon_state = "awaycontent30"
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /////////////////////////////////////////////////////////////////////
 /*

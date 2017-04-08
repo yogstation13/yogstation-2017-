@@ -17,6 +17,7 @@
 	var/lifetime = 5
 	var/opaque = 1 //whether the smoke can block the view when in enough amount
 
+<<<<<<< HEAD
 
 /obj/effect/particle_effect/smoke/proc/fade_out(frames = 16)
 	if(alpha == 0) //Handle already transparent case
@@ -30,8 +31,12 @@
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /obj/effect/particle_effect/smoke/New()
+	alpha = 0
 	..()
+	animate(src, alpha = 255, time = 5)
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
 
@@ -42,7 +47,13 @@
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
+<<<<<<< HEAD
 	INVOKE_ASYNC(src, .proc/fade_out)
+=======
+	if(opaque)
+		opacity = 0
+	animate(src, alpha = 0, time = 10)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()

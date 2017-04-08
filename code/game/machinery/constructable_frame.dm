@@ -138,7 +138,8 @@
 				icon_state = "box_2"
 				state = 3
 				components = list()
-				req_components = B.req_components.Copy()
+				if(B.req_components)
+					req_components = B.req_components.Copy()
 				update_namelist()
 				return
 

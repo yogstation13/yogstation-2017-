@@ -420,6 +420,13 @@
 	for(var/atom/movable/A in contents)
 		A.on_z_level_change()
 
+<<<<<<< HEAD
+=======
+/atom/movable/proc/on_pulledby(mob/new_pulledby, supress_message)
+	pulledby = new_pulledby
+	return
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(!no_effect && (visual_effect_icon || used_item))
 		do_item_attack_animation(A, visual_effect_icon, used_item)
@@ -441,8 +448,13 @@
 	else if(direction & WEST)
 		pixel_x_diff = -8
 
+<<<<<<< HEAD
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+=======
+	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2, easing = CUBIC_EASING)
+	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2, easing = CUBIC_EASING)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -474,6 +486,7 @@
 	if(!I)
 		return
 
+<<<<<<< HEAD
 	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
 
 	// And animate the attack!
@@ -630,3 +643,10 @@
 			highest_priority = pri
 
 	. = chosen_langtype
+=======
+	flick_overlay(I, clients, 5) // 5 ticks/half a second
+
+	// And animate the attack!
+	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3, easing = QUAD_EASING)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

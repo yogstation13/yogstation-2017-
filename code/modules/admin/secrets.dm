@@ -10,10 +10,13 @@
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			John hates all of you.<BR>
 =======
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			<BR>
 			"}
 

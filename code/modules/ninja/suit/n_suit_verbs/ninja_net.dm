@@ -15,7 +15,11 @@
 						to_chat(H, "<span class='warning'>You may not use an energy net through solid obstacles!</span>")
 						return
 				spawn(0)
+<<<<<<< HEAD
 					H.Beam(C,"n_beam",time=15)
+=======
+					H.Beam(C,"n_beam",,15,alphafade=1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 				H.say("Get over here!")
 				var/obj/structure/energy_net/E = new /obj/structure/energy_net(C.loc)
 				H.visible_message("<span class='danger'>[H] caught [C] with an energy net!</span>","<span class='notice'>You caught [C] with an energy net!</span>")

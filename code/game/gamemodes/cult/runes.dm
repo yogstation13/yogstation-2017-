@@ -701,10 +701,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 			affecting = null //In case it's assigned to a number or something
 			rune_in_use = 0
 			return
+<<<<<<< HEAD
 		affecting.apply_damage(0.1, BRUTE)
 		if(!(user in T))
 			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls [user.p_them()] back to the rune!</span>")
 			Beam(user,icon_state="drainbeam",time=2)
+=======
+		affecting.apply_damage(1, BRUTE)
+		if(!(user in T.contents))
+			user.visible_message("<span class='warning'>A spectral tendril wraps around [user] and pulls them back to the rune!</span>")
+			Beam(user,icon_state="drainbeam",icon='icons/effects/effects.dmi',time=2,alphafade=1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			user.forceMove(get_turf(src)) //NO ESCAPE :^)
 		if(user.key)
 			user.visible_message("<span class='warning'>[user] slowly relaxes, the glow around [user.p_them()] dimming.</span>", \

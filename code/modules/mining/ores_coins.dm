@@ -104,7 +104,7 @@
 	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
 		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
 		return
-	if(C.dna.species.specflags & PROTECTEDEYES)
+	if(PROTECTEDEYES in C.dna.species.specflags)
 		visible_message("<span class='danger'>[C]'s lizard eyes block the sand!</span>")
 		return
 

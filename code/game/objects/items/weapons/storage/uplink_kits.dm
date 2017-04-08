@@ -52,7 +52,7 @@
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
-			new /obj/item/weapon/grenade/plastic/c4(src)
+			new /obj/item/weapon/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
@@ -86,9 +86,15 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/weapon/card/emag(src)
 
+<<<<<<< HEAD
 		if("sabotage") // 26 tc now
 			new /obj/item/weapon/grenade/plastic/c4 (src)
 			new /obj/item/weapon/grenade/plastic/c4 (src)
+=======
+		if("sabotage")
+			new /obj/item/weapon/c4 (src)
+			new /obj/item/weapon/c4 (src)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)

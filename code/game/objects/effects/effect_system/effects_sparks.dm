@@ -18,6 +18,10 @@
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
+<<<<<<< HEAD
+=======
+	animate(src, alpha = 0, time = 20)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()

@@ -6,7 +6,6 @@
 	gender = PLURAL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
 	origin_tech = "syndicate=1"
@@ -16,7 +15,6 @@
 
 /obj/item/weapon/c4/New()
 	wires = new /datum/wires/explosive/c4(src)
-	image_overlay = image('icons/obj/grenade.dmi', "plastic-explosive2")
 	..()
 
 /obj/item/weapon/c4/Destroy()

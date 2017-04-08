@@ -30,6 +30,7 @@
 
 /obj/item/weapon/implanter/uplink
 	name = "implanter (uplink)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/uplink
 
 /obj/item/weapon/implanter/uplink/precharged
@@ -38,3 +39,6 @@
 
 /obj/item/weapon/implant/uplink/precharged
 	starting_tc = 10
+=======
+	imptype = /obj/item/weapon/implant/uplink
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

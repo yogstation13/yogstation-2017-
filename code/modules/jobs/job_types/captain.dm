@@ -1,3 +1,5 @@
+#define LATEJOINCHARTERCAP 12000
+
 /*
 Captain
 */
@@ -49,6 +51,14 @@ Captain
 	implants = list(/obj/item/weapon/implant/mindshield)
 
 
+	if(world.time >  CHALLENGE_TIME_LIMIT) // latejoin captain?
+		var/obj/item/station_charter/C = locate() in H
+		if(C)
+			var/worldtimer = world.time
+			if(worldtimer > LATEJOINCHARTERCAP)
+				worldtimer = LATEJOINCHARTERCAP
+			C.additional_time = worldtimer
+
 /*
 Head of Personnel
 */
@@ -94,4 +104,19 @@ Head of Personnel
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	head = /obj/item/clothing/head/hopcap
 	backpack_contents = list(/obj/item/weapon/storage/box/ids=1,\
+<<<<<<< HEAD
 		/obj/item/weapon/melee/classic_baton/telescopic=1, /obj/item/device/modular_computer/tablet/preset/advanced = 1)
+=======
+		/obj/item/weapon/melee/classic_baton/telescopic=1)
+
+/datum/outfit/job/hop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	announce_head(H, list("Supply", "Service"))
+
+
+#undef LATEJOINCHARTERCAP
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

@@ -79,6 +79,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
+<<<<<<< HEAD
 			"items" = (category == selected_cat ? list() : null))
 		if(category == selected_cat)
 			for(var/item in uplink_items[category])
@@ -97,6 +98,24 @@ GLOBAL_LIST_EMPTY(uplinks)
 					"cost" = I.cost,
 					"desc" = I.desc,
 				))
+=======
+			"items" = list(),
+		)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
+			if(I.restricted_roles.len)
+				var/is_inaccessible = 1
+				for(var/R in I.restricted_roles)
+					if(R == user.mind.assigned_role)
+						is_inaccessible = 0
+				if(is_inaccessible)
+					continue
+			cat["items"] += list(list(
+				"name" = I.name,
+				"cost" = I.cost,
+				"desc" = I.desc,
+			))
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		data["categories"] += list(cat)
 	return data
 

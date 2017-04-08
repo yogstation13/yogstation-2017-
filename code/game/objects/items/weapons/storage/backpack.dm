@@ -58,7 +58,11 @@
 					playsound(src, alt_sound, 40, 1)
 				else
 					playsound(src, pshoom, 40, 1)
+<<<<<<< HEAD
 				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
+=======
+				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5,alphafade=1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 				return 1
 		to_chat(user, "The [src.name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -510,7 +514,7 @@
 	..()
 	contents = list()
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/grenade/plastic/c4(src)
+		new /obj/item/weapon/c4(src)
 	return
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie/x4/New()

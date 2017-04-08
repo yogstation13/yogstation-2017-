@@ -60,9 +60,14 @@ SUBSYSTEM_DEF(ticker)
 	var/total_deaths = 0
 	var/maprotatechecked = 0
 
+<<<<<<< HEAD
 	var/news_report
 
 	var/late_join_disabled
+=======
+	var/identification_console_message
+	var/id_console_msg_lock
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	var/round_start_time = 0
 	var/list/round_start_events
@@ -629,6 +634,7 @@ SUBSYSTEM_DEF(ticker)
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
+<<<<<<< HEAD
 	CHECK_TICK
 
 	//Borers
@@ -672,6 +678,10 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
+=======
+	mode.declare_station_goal_completion()
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len || SSgarbage.sleptDestroy.len)
 		var/dellog = ""

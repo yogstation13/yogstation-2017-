@@ -568,7 +568,7 @@
 
 /////////////////////////////////////////////////////////////////////////
 
-/obj/item/bodypart/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed
+/proc/getLimbDisplayName(var/name) //Added "Chest" and "Head" just in case, this may not be needed
 	switch(name)
 		if("l_leg")		return "left leg"
 		if("r_leg")		return "right leg"

@@ -79,9 +79,17 @@
 
 /obj/item/weapon/implanter/mindshield
 	name = "implanter (mindshield)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/mindshield
+=======
+	imptype = /obj/item/weapon/implant/mindshield
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/mindshield
 	name = "implant case - 'Mindshield'"
 	desc = "A glass case containing a mindshield implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/mindshield
+=======
+	imptype = /obj/item/weapon/implant/mindshield
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

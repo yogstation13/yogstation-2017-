@@ -192,7 +192,11 @@
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	being_used = 1
 
+<<<<<<< HEAD
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+=======
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_ALIEN, 50, SM)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -517,6 +521,8 @@
 			continue
 		if (O.orbiting)
 			continue
+		if(jobban_isbanned(O, "xenobio"))
+			continue
 		ghost = O
 		break
 	if(ghost)
@@ -532,6 +538,8 @@
 		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
 			continue
 		if (O.orbiting)
+			continue
+		if(jobban_isbanned(O, "xenobio"))
 			continue
 		ghost = O
 		break

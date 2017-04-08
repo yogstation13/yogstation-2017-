@@ -8,8 +8,11 @@
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
 #define VAULT_ARMOUR "Bone Reinforcement"
+<<<<<<< HEAD
 #define VAULT_SPEED "Leg Muscle Stimulus"
 #define VAULT_QUICK "Arm Muscle Stimulus"
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/station_goal/dna_vault
 	name = "DNA Vault"
@@ -20,7 +23,11 @@
 /datum/station_goal/dna_vault/New()
 	..()
 	animal_count = rand(15,20) //might be too few given ~15 roundstart stationside ones
+<<<<<<< HEAD
 	human_count = rand(round(0.75 * SSticker.totalPlayersReady) , SSticker.totalPlayersReady) // 75%+ roundstart population.
+=======
+	human_count = rand(round(0.75 * ticker.totalPlayersReady) , ticker.totalPlayersReady) // 75%+ roundstart population.
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	var/non_standard_plants = non_standard_plants_count()
 	plant_count = rand(round(0.5 * non_standard_plants),round(0.7 * non_standard_plants))
 
@@ -32,6 +39,7 @@
 			.++
 
 /datum/station_goal/dna_vault/get_report()
+<<<<<<< HEAD
 	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
 	 We need you to construct a DNA Vault aboard your station.
 
@@ -41,6 +49,17 @@
 	 [human_count] unique sapient humanoid DNA data
 
 	 Base vault parts are available for shipping via cargo."}
+=======
+	return {"Our long term prediction systems say there's 99% chance of system-wide cataclysm in near future.
+	 We need you to construct DNA Vault aboard your station.
+
+	 DNA Vault needs to contain samples of:\n
+	 [animal_count] unique animal data,\n
+	 [plant_count] unique non-standard plant data,\n
+	 [human_count] unique sapient humanoid DNA data.\n
+
+	 Base vault parts should be availible for shipping by your cargo shuttle."}
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -53,7 +72,11 @@
 /datum/station_goal/dna_vault/check_completion()
 	if(..())
 		return TRUE
+<<<<<<< HEAD
 	for(var/obj/machinery/dna_vault/V in GLOB.machines)
+=======
+	for(var/obj/machinery/dna_vault/V in machines)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		if(V.animals.len >= animal_count && V.plants.len >= plant_count && V.dna.len >= human_count)
 			return TRUE
 	return FALSE
@@ -75,6 +98,11 @@
 	plants = list()
 	dna = list()
 
+<<<<<<< HEAD
+=======
+var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /obj/item/device/dna_probe/afterattack(atom/target, mob/user, proximity)
 	..()
 	if(!proximity || !target)
@@ -85,6 +113,7 @@
 		if(!H.myseed)
 			return
 		if(!H.harvest)// So it's bit harder.
+<<<<<<< HEAD
 			to_chat(user, "<span clas='warning'>Plant needs to be ready to harvest to perform full data scan.</span>") //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
@@ -95,10 +124,22 @@
 
 	//animals
 	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/monkey,/mob/living/carbon/alien))
+=======
+			user << "<span clas='warning'>Plants needs to be ready to harvest to perform full data scan.</span>" //Because space dna is actually magic
+			return
+		if(plants[H.myseed.type])
+			user << "<span class='notice'>Plant data already present in local storage.<span>"
+			return
+		plants[H.myseed.type] = 1
+		user << "<span class='notice'>Plant data added to local storage.<span>"
+
+	//animals
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar
+<<<<<<< HEAD
 				to_chat(user, "<span class='warning'>No compatible DNA detected</span>")
 				return
 		if(animals[target.type])
@@ -106,15 +147,31 @@
 			return
 		animals[target.type] = 1
 		to_chat(user, "<span class='notice'>Animal data added to local storage.<span>")
+=======
+				user << "<span class='warning'>No compatibile DNA detected</span>"
+				return
+		if(animals[target.type])
+			user << "<span class='notice'>Animal data already present in local storage.<span>"
+			return
+		animals[target.type] = 1
+		user << "<span class='notice'>Animal data added to local storage.<span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	//humans
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(dna[H.dna.uni_identity])
+<<<<<<< HEAD
 			to_chat(user, "<span class='notice'>Humanoid data already present in local storage.<span>")
 			return
 		dna[H.dna.uni_identity] = 1
 		to_chat(user, "<span class='notice'>Humanoid data added to local storage.<span>")
+=======
+			user << "<span class='notice'>Humanoid data already present in local storage.<span>"
+			return
+		dna[H.dna.uni_identity] = 1
+		user << "<span class='notice'>Humanoid data added to local storage.<span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 
 /obj/item/weapon/circuitboard/machine/dna_vault
@@ -122,8 +179,12 @@
 	build_path = /obj/machinery/dna_vault
 	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
+<<<<<<< HEAD
 							/obj/item/weapon/stock_parts/capacitor/super = 5,
 							/obj/item/weapon/stock_parts/manipulator/pico = 5,
+=======
+							/obj/item/weapon/stock_parts/capacitor/quadratic = 5,
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_vault
@@ -136,7 +197,11 @@
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
+<<<<<<< HEAD
 	light_range = 1
+=======
+	luminosity = 1
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100
@@ -151,7 +216,11 @@
 
 	var/list/obj/structure/fillers = list()
 
+<<<<<<< HEAD
 /obj/machinery/dna_vault/Initialize()
+=======
+/obj/machinery/dna_vault/New()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	//TODO: Replace this,bsa and gravgen with some big machinery datum
 	var/list/occupied = list()
 	for(var/direct in list(EAST,WEST,SOUTHEAST,SOUTHWEST))
@@ -164,13 +233,21 @@
 		F.parent = src
 		fillers += F
 
+<<<<<<< HEAD
 	if(SSticker.mode)
 		for(var/datum/station_goal/dna_vault/G in SSticker.mode.station_goals)
+=======
+	if(ticker.mode)
+		for(var/datum/station_goal/dna_vault/G in ticker.mode.station_goals)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			animals_max = G.animal_count
 			plants_max = G.plant_count
 			dna_max = G.human_count
 			break
+<<<<<<< HEAD
 	..()
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/machinery/dna_vault/Destroy()
 	for(var/V in fillers)
@@ -180,7 +257,11 @@
 	. = ..()
 
 
+<<<<<<< HEAD
 /obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+=======
+/obj/machinery/dna_vault/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		roll_powers(user)
@@ -192,7 +273,11 @@
 	if(user in power_lottery)
 		return
 	var/list/L = list()
+<<<<<<< HEAD
 	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
+=======
+	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
 	power_lottery[user] = L
@@ -247,7 +332,11 @@
 				uploaded++
 				dna[ui] = 1
 		check_goal()
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>[uploaded] new datapoints uploaded.</span>")
+=======
+		user << "<span class='notice'>[uploaded] new datapoints uploaded.</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	else
 		return ..()
 
@@ -259,6 +348,7 @@
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
+<<<<<<< HEAD
 			to_chat(H, "<span class='notice'>You feel resistant to airborne toxins.</span>")
 			if(locate(/obj/item/organ/lungs) in H.internal_organs)
 				var/obj/item/organ/lungs/L = H.internal_organs_slot["lungs"]
@@ -286,3 +376,23 @@
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier = 0.5
 	power_lottery[H] = list()
+=======
+			H << "<span class='notice'>You feel resistant to airborne toxins.</span>"
+			S.tox_breath_dam_min = 0
+			S.tox_breath_dam_max = 0
+			S.specflags |= VIRUSIMMUNE
+		if(VAULT_NOBREATH)
+			H << "<span class='notice'>Your lungs feel great.</span>"
+			S.specflags |= NOBREATH
+		if(VAULT_FIREPROOF)
+			H << "<span class='notice'>Your feel fireproof.</span>"
+			S.burnmod = 0.5
+			S.heatmod = 0
+		if(VAULT_STUNTIME)
+			H << "<span class='notice'>Nothing can keep you down for long.</span>"
+			S.stunmod = 0.5
+		if(VAULT_ARMOUR)
+			H << "<span class='notice'>Your feel tough.</span>"
+			S.armor = 30
+	power_lottery[H] = list()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

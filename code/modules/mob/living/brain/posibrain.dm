@@ -23,9 +23,13 @@
 	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	var/dead_message = "<span class='deadsay'>It appears to be completely inactive. The reset light is blinking.</span>"
+<<<<<<< HEAD:code/modules/mob/living/brain/posibrain.dm
 	var/list/fluff_names
 	var/picked_fluff_name //which fluff name we picked
 	var/static/posibrain_notif_cooldown = FALSE
+=======
+	var/list/fluff_names = list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","RR","CHRI","CDB","HG","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","GOOF","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","WJ","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","CRX","SPR","MAC","EPH","OSN","XTD")
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee:code/modules/mob/living/carbon/brain/posibrain.dm
 
 
 /obj/item/device/mmi/posibrain/Topic(href, href_list)

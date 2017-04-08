@@ -115,6 +115,7 @@
 	build_path = /obj/item/device/extinguisher_refill
 	category = list("Medical Designs")
 
+<<<<<<< HEAD
 /datum/design/alienscalpel
 	name = "Alien Scalpel"
 	desc = "An advanced scalpel obtained through Abductor technology."
@@ -173,6 +174,16 @@
 	build_path = /obj/item/weapon/cautery/alien
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+=======
+/datum/design/diagnosticscanner
+	name = "Diagnostic scanner"
+	desc = "An analyzer for scanning cyborg integrity."
+	id = "diagnosticscanner"
+	req_tech = list("biotech" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	build_path = /obj/item/device/diagnosticscanner
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	category = list("Medical Designs")
 
 /////////////////////////////////////////

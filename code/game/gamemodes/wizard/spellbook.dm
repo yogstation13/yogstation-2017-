@@ -977,8 +977,40 @@
 	new real_type(loc)
 	qdel(src)
 
+<<<<<<< HEAD
 /obj/item/weapon/spellbook/oneuse/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"
 	icon_state ="booksacredflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."
+=======
+/obj/item/weapon/spellbook/oneuse/mime
+	spell = /obj/effect/proc_holder/spell/targeted/mime/speak
+	spellname = "how to mime"
+	icon_state ="bookcharge"
+	desc = "Silence!"
+	color = "#000000"
+
+/obj/item/weapon/spellbook/oneuse/mime/attack_self(mob/user)
+	if(!used)
+		user.job = "Mime" // welcome to the family, son.
+		user << "<span class='notice'>You feel.. different.</span>"
+	..()
+
+/obj/item/weapon/spellbook/oneuse/mime_wall
+	spell = /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall
+	spellname = "how to hide in plain sight"
+	icon_state ="bookcharge"
+	desc = "Now you see me... now there's a wall inbetween us!"
+	color = "#000000"
+
+/obj/item/weapon/spellbook/oneuse/invisible_touch
+	spell = /obj/effect/proc_holder/spell/targeted/touch/mime/strong
+	spellname = "the legendary art of the invisible touch"
+	icon_state ="bookcharge"
+	desc = "This version has no limits unlike the roundstart mimes!"
+	color = "#000000"
+
+
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

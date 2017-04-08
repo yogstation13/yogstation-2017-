@@ -76,12 +76,16 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+<<<<<<< HEAD
 =======
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(!message || message == "")
+=======
+	if(!message)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		return
 
 	var/message_mode = get_message_mode(message)
@@ -148,6 +152,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		message = treat_message(message)
 		if(!message)
 			return
+<<<<<<< HEAD
 
 	spans += get_spans()
 
@@ -158,6 +163,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			GLOB.language_datums[language] = L
 
 		spans |= L.spans
+=======
+
+	spans += get_spans()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)

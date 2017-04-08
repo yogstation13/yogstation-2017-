@@ -25,8 +25,14 @@
 
 	target = get_turf(src)
 
+<<<<<<< HEAD
 	if(acid_amt)
 		acid_level = min(acid_amt*acid_pwr, 12000) //capped so the acid effect doesn't last a half hour on the floor.
+=======
+/obj/effect/acid/proc/tick()
+	if(!target)
+		destroy_effect()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	//handle APCs and newscasters and stuff nicely
 	pixel_x = target.pixel_x + rand(-4,4)
@@ -56,6 +62,7 @@
 				O.acid_act(10, acid_used)
 				acid_level = max(0, acid_level - acid_used*10)
 
+<<<<<<< HEAD
 	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
 	if(acid_level <= 0)
 		qdel(src)
@@ -89,6 +96,9 @@
 			target.acid_melt()
 			qdel(src)
 		else
+=======
+		destroy_effect()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 			switch(target_strength)
 				if(24)

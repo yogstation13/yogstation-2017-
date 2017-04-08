@@ -1514,6 +1514,50 @@
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
 
+/datum/supply_pack/misc/sneakers
+	name = "Crep Crate"
+	cost = 2000
+	contains = list(/obj/item/clothing/shoes/sneakers/nmd/collab,
+					/obj/item/clothing/shoes/sneakers/nmd,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy/orange,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Sneaker Drop"
+
+
+/datum/supply_pack/misc/superb
+	name = "Designer Clothes Bundle"
+	cost = 800
+	contains = list(/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb)
+	crate_name = "Designer clothes crate"
+
+
+
+/datum/supply_pack/misc/yeezy
+	name = "One Singular Pair Of Sneakers"
+	cost = 450
+	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Small Sneaker Crate"
+
+
+
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
 	cost = 1000
@@ -1703,6 +1747,7 @@
 					/obj/item/weapon/canvas/twentythreeXtwentythree,
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
+<<<<<<< HEAD
 	crate_name = "art supply crate"
 
 /datum/supply_pack/misc/soapstone
@@ -1717,6 +1762,13 @@
 /datum/supply_pack/misc/bsa
 	name = "Bluespace Artillery Parts"
 	cost = 15000
+=======
+	crate_name= "art supply crate"
+
+/datum/supply_pack/misc/bsa
+	name = "Bluespace Artillery Parts"
+	cost = 12000
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	special = TRUE
 	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
 					/obj/item/weapon/circuitboard/machine/bsa/middle,
@@ -1727,6 +1779,7 @@
 
 /datum/supply_pack/misc/dna_vault
 	name = "DNA Vault Parts"
+<<<<<<< HEAD
 	cost = 12000
 	special = TRUE
 	contains = list(
@@ -1736,12 +1789,22 @@
 					/obj/item/device/dna_probe,
 					/obj/item/device/dna_probe,
 					/obj/item/device/dna_probe
+=======
+	cost = 10000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/dna_vault
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 					)
 	crate_name= "dna vault parts crate"
 
 /datum/supply_pack/misc/dna_probes
 	name = "DNA Vault Samplers"
+<<<<<<< HEAD
 	cost = 3000
+=======
+	cost = 2500
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	special = TRUE
 	contains = list(/obj/item/device/dna_probe,
 					/obj/item/device/dna_probe,
@@ -1754,7 +1817,11 @@
 
 /datum/supply_pack/misc/shield_sat
 	name = "Shield Generator Satellite"
+<<<<<<< HEAD
 	cost = 3000
+=======
+	cost = 2500
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	special = TRUE
 	contains = list(
 					/obj/machinery/satellite/meteor_shield,
@@ -1766,11 +1833,16 @@
 
 /datum/supply_pack/misc/shield_sat_control
 	name = "Shield System Control Board"
+<<<<<<< HEAD
 	cost = 5000
+=======
+	cost = 3500
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	special = TRUE
 	contains = list(
 					/obj/item/weapon/circuitboard/machine/computer/sat_control
 					)
+<<<<<<< HEAD
 	crate_name= "shield control board crate"
 
 /datum/supply_pack/misc/bicycle
@@ -1779,3 +1851,6 @@
 	contains = list(/obj/vehicle/bicycle)
 	crate_name = "Bicycle Crate"
 	crate_type = /obj/structure/closet/crate/large
+=======
+	crate_name= "shield control board crate"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

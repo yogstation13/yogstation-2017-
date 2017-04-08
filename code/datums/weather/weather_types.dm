@@ -134,8 +134,12 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
+<<<<<<< HEAD
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle)
+=======
+	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/shuttle)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"

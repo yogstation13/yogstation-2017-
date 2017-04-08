@@ -33,7 +33,7 @@
 
 /obj/effect/decal/cleanable/crayon/gang/Initialize(mapload, var/datum/gang/G, var/e_name = "gang tag", var/rotation = 0)
 	if(!type || !G)
-		qdel(src)
+		destroy_effect()
 
 	var/area/territory = get_area(src)
 	gang = G

@@ -161,9 +161,15 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
+<<<<<<< HEAD
 				/obj/item/weapon/storage/toolbox/artistic = 2,
 				/obj/item/toy/eightball = 1,
 				"" = 3
+=======
+				/obj/item/clothing/shoes/sneakers/nmd = 3,
+				/obj/item/clothing/shoes/sneakers/yeezy = 1,
+				"" = 4
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 				)
 
 /obj/effect/spawner/lootdrop/crate_spawner

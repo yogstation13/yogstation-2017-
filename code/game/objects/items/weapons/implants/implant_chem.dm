@@ -53,6 +53,7 @@
 /obj/item/weapon/implantcase/chem
 	name = "implant case - 'Remote Chemical'"
 	desc = "A glass case containing a remote chemical implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/chem
 
 /obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
@@ -61,3 +62,6 @@
 		return TRUE
 	else
 		return ..()
+=======
+	imptype = /obj/item/weapon/implant/chem
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

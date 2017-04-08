@@ -6,7 +6,13 @@
 
 /obj/effect/particle_effect/expl_particles/New()
 	..()
+<<<<<<< HEAD
 	QDEL_IN(src, 15)
+=======
+	animate(src, alpha = 0, time = 15)
+	spawn (15)
+		qdel(src)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/effect_system/expl_particles
 	number = 10
@@ -33,7 +39,13 @@
 
 /obj/effect/explosion/New()
 	..()
+<<<<<<< HEAD
 	QDEL_IN(src, 10)
+=======
+	spawn (10)
+		qdel(src)
+	animate(src, alpha = 0, time = 10)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/effect_system/explosion
 

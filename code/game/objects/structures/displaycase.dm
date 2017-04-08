@@ -248,4 +248,10 @@
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
+<<<<<<< HEAD
 	req_access = list(GLOB.access_rd)
+=======
+
+/obj/structure/displaycase/royalp
+	start_showpiece_type = /obj/item/weapon/tank/internals/royalp
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

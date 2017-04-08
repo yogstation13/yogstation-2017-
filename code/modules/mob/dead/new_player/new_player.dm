@@ -382,6 +382,7 @@
 					return
 				to_chat(src, "<span class='notice'>Vote successful.</span>")
 
+<<<<<<< HEAD:code/modules/mob/dead/new_player/new_player.dm
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
 	if(!job)
@@ -407,6 +408,11 @@
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
+=======
+/mob/new_player/proc/AttemptLateSpawn(rank)
+	if(!SSjob.IsJobAvailable(rank, src))
+		src << alert("[rank] is not available. Please try another.")
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee:code/modules/mob/new_player/new_player.dm
 		return 0
 	
 	if(SSticker.late_join_disabled)
@@ -515,12 +521,16 @@
 				if(!SSshuttle.canRecall())
 					dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
+	if(ticker.identification_console_message)
+		dat += "<div class='notice'>[station_name()] has delievered the following message, \"[ticker.identification_console_message]\"</div><br>"
+
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && SSjob.IsJobAvailable(job.title, src))
 			available_job_count++;
 
 	if(length(SSjob.prioritized_jobs))
+<<<<<<< HEAD:code/modules/mob/dead/new_player/new_player.dm
 		dat += "<div class='notice red'>The station has flagged these jobs as high priority:<br>"
 		var/amt = length(SSjob.prioritized_jobs)
 		var/amt_count
@@ -530,19 +540,44 @@
 				dat += " [a.title], "
 			else
 				dat += " [a.title]. </div>"
+=======
+		dat += "<div class='notice'>The Head of Personnel has flagged these jobs as high priority:"
+		var/amt = length(SSjob.prioritized_jobs)
+		var/amt_count
+		for(var/a in SSjob.prioritized_jobs)
+			amt_count++
+			if(amt_count == amt) // checks for the last job added.
+				if(amt == 1) // we only have one prioritized job.
+					dat += " [a]"
+				else if(amt == 2)
+					dat += " and [a]"
+				else
+					dat += ", and [a]"
+			else
+				dat += " [a][amt == 2 ? "" : ","]" // this is to prevent "Jaintor, and Medical Doctor" so it outputs "Jaintor and Medical Doctor"
+		dat += "</div><br>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee:code/modules/mob/new_player/new_player.dm
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && SSjob.IsJobAvailable(job.title, src))
 			job_count++;
+			var/prior
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
 			var/position_class = "otherPosition"
+<<<<<<< HEAD:code/modules/mob/dead/new_player/new_player.dm
 			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+=======
+			if (job.title in SSjob.prioritized_jobs)
+				prior = TRUE
+
+			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'><span class='[prior ? "good" : ""]'>[prior ? "(!)" : ""][job.title]</span> ([job.current_positions])</a><br>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee:code/modules/mob/new_player/new_player.dm
 	if(!job_count) //if there's nowhere to go, assistant opens up.
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title != "Assistant") continue

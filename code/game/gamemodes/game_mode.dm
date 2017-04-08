@@ -99,8 +99,13 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	generate_station_goals()
+<<<<<<< HEAD
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count(1)
+=======
+	start_state = new /datum/station_state()
+	start_state.count(1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	return 1
 
 
@@ -374,18 +379,35 @@
 	possible_modes = shuffle(possible_modes) //Meta prevention
 
 	var/datum/intercept_text/i_text = new /datum/intercept_text
+<<<<<<< HEAD
 	for(var/V in possible_modes)
 		intercepttext += i_text.build(V)
 
 	if(station_goals.len)
 		intercepttext += "<hr><b>Special Orders for [station_name()]:</b>"
+=======
+	for(var/A in possible_modes)
+		if(modePlayer.len == 0)
+			intercepttext += i_text.build(A)
+		else
+			intercepttext += i_text.build(A, pick(modePlayer))
+
+	if(station_goals.len)
+		intercepttext += "<hr><b fontsize = 10>Special Orders for [station_name()]:</b>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		for(var/datum/station_goal/G in station_goals)
 			G.on_report()
 			intercepttext += G.get_report()
 
+<<<<<<< HEAD
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
+=======
+	print_command_report(intercepttext,"Centcom Status Summary")
+	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
+	if(security_level < SEC_LEVEL_BLUE)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		set_security_level(SEC_LEVEL_BLUE)
 
 // Function to pull an antag from our list of antag candidates, by default, use antag_candidates, but can specify
@@ -773,9 +795,16 @@
 		M.key = theghost.key
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
+<<<<<<< HEAD
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
 	SSticker.mode.remove_revolutionary(newborgie, 0)
 	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
+=======
+	ticker.mode.remove_cultist(newborgie, 0, 0)
+	ticker.mode.remove_revolutionary(newborgie, 0)
+	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
+	ticker.mode.remove_hog_follower(newborgie, 0)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()
@@ -794,4 +823,8 @@
 /datum/game_mode/proc/declare_station_goal_completion()
 	for(var/V in station_goals)
 		var/datum/station_goal/G = V
+<<<<<<< HEAD
 		G.print_result()
+=======
+		G.print_result()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

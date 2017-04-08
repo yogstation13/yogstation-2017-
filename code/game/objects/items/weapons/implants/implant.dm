@@ -11,8 +11,12 @@
 	var/uses = -1
 	flags = DROPDEL
 
+<<<<<<< HEAD
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/living/carbon/source)
+=======
+/obj/item/weapon/implant/proc/trigger(emote, mob/source)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	return
 
 /obj/item/weapon/implant/proc/activate()

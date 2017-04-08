@@ -131,6 +131,38 @@
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
+<<<<<<< HEAD
+=======
+// Max number of station goals
+#define STATION_GOAL_BUDGET  1
+
+//HUD styles. Please ensure HUD_VERSIONS is the same as the maximum index. Index order defines how they are cycled in F12.
+#define HUD_STYLE_STANDARD 1
+#define HUD_STYLE_REDUCED 2
+#define HUD_STYLE_NOHUD 3
+
+
+#define HUD_VERSIONS 3	//used in show_hud()
+//1 = standard hud
+//2 = reduced hud (just hands and intent switcher)
+//3 = no hud (for screenshots)
+
+#define MINERAL_MATERIAL_AMOUNT 2000
+//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+#define MAX_STACK_SIZE 50
+//The maximum size of a stack object.
+
+#define CLICK_CD_MELEE 8
+#define CLICK_CD_RANGE 4
+#define CLICK_CD_BREAKOUT 100
+#define CLICK_CD_HANDCUFFED 10
+#define CLICK_CD_RESIST 20
+#define CLICK_CD_GRABBING 10
+
+//click cooldowns, in tenths of a second
+
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 #define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
 #define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
 //used by canUseTopic()

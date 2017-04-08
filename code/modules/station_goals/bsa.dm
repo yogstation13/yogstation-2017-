@@ -9,7 +9,11 @@
 	return {"Our military presence is inadequate in your sector.
 	 We need you to construct BSA-[rand(1,99)] Artillery position aboard your station.
 
+<<<<<<< HEAD
 	 Base parts are available for shipping via cargo.
+=======
+	 Base parts should be availible for shipping by your cargo shuttle.
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	 -Nanotrasen Naval Command"}
 
 /datum/station_goal/bluespace_cannon/on_report()
@@ -39,7 +43,11 @@
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
+=======
+		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
@@ -55,7 +63,11 @@
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>You store linkage information in [W]'s buffer.</span>")
+=======
+		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
@@ -76,11 +88,19 @@
 			if(istype(M.buffer,/obj/machinery/bsa/back))
 				back = M.buffer
 				M.buffer = null
+<<<<<<< HEAD
 				to_chat(user, "<span class='notice'>You link [src] with [back].</span>")
 			else if(istype(M.buffer,/obj/machinery/bsa/front))
 				front = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
+=======
+				user << "<span class='notice'>You link [src] with [back].</span>"
+			else if(istype(M.buffer,/obj/machinery/bsa/front))
+				front = M.buffer
+				M.buffer = null
+				user << "<span class='notice'>You link [src] with [front].</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	else if(istype(W, /obj/item/weapon/wrench))
 		default_unfasten_wrench(user, W, 10)
 		return TRUE
@@ -192,7 +212,11 @@
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE
 	use_power(power_used_per_shot)
+<<<<<<< HEAD
 	addtimer(CALLBACK(src,"ready_cannon"),600)
+=======
+	addtimer(src, "ready_cannon", 600)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/machinery/bsa/full/proc/ready_cannon()
 	ready = TRUE
@@ -248,7 +272,11 @@
 	var/area_aim = FALSE //should also show areas for targeting
 
 /obj/machinery/computer/bsa_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+<<<<<<< HEAD
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
+=======
+										datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "bsa", name, 400, 305, master_ui, state)
@@ -280,12 +308,20 @@
 
 /obj/machinery/computer/bsa_control/proc/calibrate(mob/user)
 	var/list/gps_locators = list()
+<<<<<<< HEAD
 	for(var/obj/item/device/gps/G in GLOB.GPS_list) //nulls on the list somehow
+=======
+	for(var/obj/item/device/gps/G in GPS_list) //nulls on the list somehow
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		gps_locators[G.gpstag] = G
 
 	var/list/options = gps_locators
 	if(area_aim)
+<<<<<<< HEAD
 		options += GLOB.teleportlocs
+=======
+		options += teleportlocs
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	var/V = input(user,"Select target", "Select target",null) in options|null
 	target = options[V]
 

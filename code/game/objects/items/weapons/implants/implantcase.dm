@@ -10,8 +10,12 @@
 	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
 	var/obj/item/weapon/implant/imp = null
+<<<<<<< HEAD
 	var/imp_type
 
+=======
+	var/imptype = /obj/item/weapon/implant
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/update_icon()
 	if(imp)
@@ -61,22 +65,39 @@
 
 /obj/item/weapon/implantcase/Initialize(mapload)
 	..()
+<<<<<<< HEAD
 	if(imp_type)
 		imp = new imp_type(src)
+=======
+	imp = new imptype(src)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	update_icon()
 
 
 /obj/item/weapon/implantcase/tracking
 	name = "implant case - 'Tracking'"
 	desc = "A glass case containing a tracking implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/tracking
+=======
+	imptype = /obj/item/weapon/implant/tracking
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/weapons_auth
 	name = "implant case - 'Firearms Authentication'"
 	desc = "A glass case containing a firearms authentication implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/weapons_auth
+=======
+	imptype = /obj/item/weapon/implant/weapons_auth
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/adrenaline
 	name = "implant case - 'Adrenaline'"
 	desc = "A glass case containing an adrenaline implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/adrenalin
+=======
+	imptype = /obj/item/weapon/implant/adrenalin
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

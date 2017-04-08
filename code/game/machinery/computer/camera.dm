@@ -165,6 +165,7 @@
 	density = 0
 	circuit = null
 	clockwork = TRUE //it'd look very weird
+	screen_crack = null
 
 	light_power = 0
 

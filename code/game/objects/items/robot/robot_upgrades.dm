@@ -59,9 +59,19 @@
 		to_chat(usr, "<span class='warning'>You have to repair the cyborg before using this module!</span>")
 		return 0
 
+<<<<<<< HEAD
 	if(R.mind)
 		R.mind.grab_ghost()
 		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+=======
+	if(!R.key)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind && ghost.mind.current == R)
+				R.key = ghost.key
+				ghost << "<span class='boldnotice'>An emergency reboot module has been installed \
+					into your servo. You are being revived.</span>"
+				ghost << 'sound/machines/ping.ogg'
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	R.revive()
 

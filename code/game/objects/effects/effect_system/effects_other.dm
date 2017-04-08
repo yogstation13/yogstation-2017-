@@ -40,8 +40,9 @@
 			number++
 			I.setDir(holder.dir)
 			oldposition = get_turf(holder)
+			animate(I, alpha = 0, time = 10)
+			QDEL_IN(I, 10)
 			spawn(10)
-				qdel(I)
 				number--
 		spawn(2)
 			if(on)
@@ -72,6 +73,7 @@
 		processing = 0
 		var/turf/T = get_turf(holder)
 		if(T != oldposition)
+<<<<<<< HEAD
 			if(!T.has_gravity() || !nograv_required)
 				var/obj/effect/particle_effect/ion_trails/I = new effect_type(oldposition)
 				set_dir(I)
@@ -80,6 +82,15 @@
 					I.icon_state = ""
 				spawn(20)
 					qdel(I)
+=======
+			if(!has_gravity(T))
+				var/obj/effect/particle_effect/ion_trails/I = PoolOrNew(effect_type, oldposition)
+				I.dir = holder.dir
+				flick("ion_fade", I)
+				I.icon_state = ""
+				animate(I, alpha = 0, time = 20)
+				QDEL_IN(I, 20)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			oldposition = T
 		spawn(2)
 			if(on)

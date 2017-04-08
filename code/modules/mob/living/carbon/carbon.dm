@@ -45,9 +45,44 @@
 					src.gib()
 
 
+<<<<<<< HEAD
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
+=======
+/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
+	shock_damage *= siemens_coeff
+	if(dna && dna.species)
+		shock_damage *= dna.species.siemens_coeff
+		if((shock_damage > 0) && (CONSUMEPOWER in dna.species.specflags))
+			nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
+	if(shock_damage<1 && !override)
+		return 0
+	if(reagents.has_reagent("teslium"))
+		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
+	take_overall_damage(0,shock_damage)
+	//src.adjustFireLoss(shock_damage)
+	//src.updatehealth()
+	visible_message(
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack.</span>" \
+	)
+	jitteriness += 1000 //High numbers for violent convulsions
+	do_jitter_animation(jitteriness)
+	stuttering += 2
+	if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+		Stun(2)
+	spawn(20)
+		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
+		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
+			Stun(3)
+			Weaken(3)
+	if(override)
+		return override
+	else
+		return shock_damage
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
@@ -741,6 +776,7 @@
 
 	..()
 
+<<<<<<< HEAD
 /mob/living/carbon/ExtinguishMob()
 	for(var/X in get_equipped_items())
 		var/obj/item/I = X
@@ -799,3 +835,5 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

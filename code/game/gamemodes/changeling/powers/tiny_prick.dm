@@ -63,11 +63,10 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim, and the process will damage our genomes."
+	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim."
 	sting_icon = "sting_transform"
-	chemical_cost = 40
-	dna_cost = 3
-	genetic_damage = 100
+	chemical_cost = 30
+	dna_cost = 1
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -109,8 +108,11 @@
 		if(C.status_flags & CANWEAKEN)
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			C.do_jitter_animation(500)
+<<<<<<< HEAD
 			C.take_bodypart_damage(20, 0) //The process is extremely painful
 
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 	feedback_add_details("changeling_powers","TS")
 	. = TRUE
@@ -216,7 +218,8 @@
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
-	target.silent += 30
+	if(target.reagents)
+		target.reagents.add_reagent("mutetoxin", 20)
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
@@ -238,16 +241,21 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/LSD
-	name = "Hallucinogenic Pathogen Sting"
+	name = "Hallucinogenic Sting"
 	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs very quickly."
 	sting_icon = "sting_lsd"
-	chemical_cost = 50
-	dna_cost = 5
+	chemical_cost = 20
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
+<<<<<<< HEAD
 	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
+=======
+	if(target.reagents)
+		target.reagents.add_reagent("mindbreaker", 30)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	feedback_add_details("changeling_powers","HS")
 	return 1
 

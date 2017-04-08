@@ -21,10 +21,13 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
+	var/infinite = FALSE
+	var/cuffspeed = 30
 
-/obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+/obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/user)
 	if(!istype(C))
 		return
+<<<<<<< HEAD
 	if(user.disabilities & CLUMSY && prob(50))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
@@ -33,6 +36,14 @@
 <<<<<<< HEAD
 	if(C.dna.species.id == "abomination")
 		user <<"<span class='warning'>[C] doesn't have much hands to speak of!</span>"
+=======
+	if((user.disabilities & CLUMSY) && prob(50))
+		user << "<span class='warning'>Uh... how do those things work?!</span>"
+		if(can_cuff(user))
+			apply_cuffs(user,user)
+		else
+			user.unEquip(src)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		return
 =======
 	// chance of monkey retaliation
@@ -42,6 +53,7 @@
 		M.retaliate(user)
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
+<<<<<<< HEAD
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			add_logs(user, C, "attempted to handcuff")
@@ -65,27 +77,62 @@
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+=======
+	add_logs(user, C, "attempted to handcuff")
+	C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+						"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
-/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
+	if(can_cuff(C, user))
+		playsound(loc, cuffsound, cuffspeed, 1, -2)
+		if(do_mob(user, C, cuffspeed))
+			if(!can_cuff(C, user))
+				return
+			apply_cuffs(C,user)
+			user << "<span class='notice'>You handcuff [C].</span>"
+			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+				feedback_add_details("handcuffs","C")
+			else
+				feedback_add_details("handcuffs","H")
+
+			add_logs(user, C, "handcuffed")
+		else
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+
+/obj/item/weapon/restraints/handcuffs/proc/can_cuff(mob/living/carbon/target, mob/living/user)
+	if(!istype(target))
+		return FALSE
 	if(target.handcuffed)
-		return
+		if(user)
+			user <<"<span class='warning'>[target] is already handcuffed.</span>"
+		return FALSE
+	if(target.dna.species.id == "abomination")
+		if(user)
+			user <<"<span class='warning'>[target] doesn't have much hands to speak of!</span>"
+		return FALSE
+	if(target.get_num_arms() < 2)
+		if(user)
+			user << "<span class='warning'>[target] doesn't have two hands...</span>"
+		return FALSE
+	return TRUE
 
-	if(!user.drop_item() && !dispense)
-		return
+/obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user)
+	if(!infinite && !user.unEquip(src))
+		return FALSE
 
 	var/obj/item/weapon/restraints/handcuffs/cuffs = src
 	if(trashtype)
 		cuffs = new trashtype()
-	else if(dispense)
+		if(!infinite)
+			qdel(src)
+	else if(infinite)
 		cuffs = new type()
 
 	cuffs.loc = target
 	target.handcuffed = cuffs
 
 	target.update_handcuffed()
-	if(trashtype && !dispense)
-		qdel(src)
-	return
+	return TRUE
 
 /obj/item/weapon/restraints/handcuffs/sinew
 	name = "sinew restraints"
@@ -105,6 +152,7 @@
 	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
+<<<<<<< HEAD
 	var/datum/robot_energy_storage/wirestorage = null
 
 /obj/item/weapon/restraints/handcuffs/cable/attack(mob/living/carbon/C, mob/living/carbon/human/user)
@@ -121,8 +169,21 @@
 			to_chat(user, "<span class='warning'>You need at least 15 wire to restrain [target]!</span>")
 			return
 		return ..(target, user, 1)
+=======
+	var/datum/robot_energy_storage/zipties/wirestorage = null
 
-	return ..()
+/obj/item/weapon/restraints/handcuffs/cable/can_cuff(mob/living/carbon/target, mob/user)
+	if(wirestorage && (wirestorage.energy < 1))
+		if(user)
+			user << "<span class='warning'>You need at least 1 ziptie to restrain [target]!</span>"
+		return FALSE
+	return ..(target, user)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+
+/obj/item/weapon/restraints/handcuffs/cable/apply_cuffs(mob/living/carbon/target, mob/user)
+	. = ..()
+	if(. && wirestorage)
+		wirestorage.use_charge(1)
 
 /obj/item/weapon/restraints/handcuffs/cable/attack_self(mob/user)
 		var/obj/item/stack/cable_coil/new_coil = new /obj/item/stack/cable_coil
@@ -181,6 +242,7 @@
 	else
 		return ..()
 
+<<<<<<< HEAD
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/attack(mob/living/carbon/C, mob/user)
 	if(iscyborg(user))
 		if(!C.handcuffed)
@@ -196,6 +258,8 @@
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
 
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /obj/item/weapon/restraints/handcuffs/cable/zipties
 	name = "zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -216,6 +280,8 @@
 /obj/item/weapon/restraints/handcuffs/cable/zipties/attack_self(mob/user)
 	return
 
+/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg
+	infinite = TRUE
 
 //Legcuffs
 

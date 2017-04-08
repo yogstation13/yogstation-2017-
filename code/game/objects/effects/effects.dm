@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 //objects in /obj/effect should never be things that are attackable, use obj/structure instead.
 //Effects are mostly temporary visual effects like sparks, smoke, as well as decals, etc...
@@ -46,3 +47,23 @@
 /obj/effect/singularity_act()
 	qdel(src)
 	return 0
+=======
+/obj/effect
+	icon = 'icons/effects/effects.dmi'
+	var/use_fade = 1
+
+/obj/effect/New()
+	if(use_fade)
+		alpha = 0
+		..()
+		animate(src, alpha = 255, time = 5)
+	else
+		..()
+
+/obj/effect/proc/destroy_effect()
+	if(use_fade)
+		animate(src, alpha = 0, time = 5)
+		QDEL_IN(src, 5)
+	else
+		qdel(src)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

@@ -64,8 +64,13 @@
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red,
 		/obj/item/clothing/suit/snowman,
+<<<<<<< HEAD
 		/obj/item/clothing/head/snowman,
 		/obj/item/trash/coal)
+=======
+		/obj/item/clothing/shoes/sneakers/yeezy/orange,
+		/obj/item/clothing/head/snowman)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
 	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo + /obj/item/toy/toy_mech + /obj/item/toy/toy_mech/ranged + /obj/item/toy/toy_mech/melee)) //All toys, except for abstract types and syndicate cards.

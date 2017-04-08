@@ -15,6 +15,10 @@
 	if (goal_number)
 		goal = goal_number
 	bar = image('icons/effects/progessbar.dmi', target, "prog_bar_0", HUD_LAYER)
+<<<<<<< HEAD
+=======
+	bar.alpha = 0
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	bar.plane = HUD_PLANE
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
@@ -27,6 +31,10 @@
 	bars.Add(src)
 	listindex = bars.len
 	bar.pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1))
+<<<<<<< HEAD
+=======
+	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = 5, easing = SINE_EASING)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/progressbar/proc/update(progress)
 	//to_chat(world, "Update [progress] - [goal] - [(progress / goal)] - [((progress / goal) * 100)] - [round(((progress / goal) * 100), 5)]")
@@ -47,7 +55,12 @@
 
 /datum/progressbar/proc/shiftDown()
 	--listindex
+<<<<<<< HEAD
 	bar.pixel_y -= PROGRESSBAR_HEIGHT
+=======
+	var/temp = bar.pixel_y - PROGRESSBAR_HEIGHT
+	animate(bar, pixel_y = temp, time = 5, easing = SINE_EASING)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/progressbar/Destroy()
 	for(var/I in user.progressbars[bar.loc])

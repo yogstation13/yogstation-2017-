@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(job)
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
+	var/list/prioritized_jobs = list()
 
 	var/list/prioritized_jobs = list()
 
@@ -527,6 +528,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/Recover()
 	set waitfor = FALSE
 	var/oldjobs = SSjob.occupations
+<<<<<<< HEAD:code/controllers/subsystem/job.dm
 	sleep(20)
 	for (var/datum/job/J in oldjobs)
 		INVOKE_ASYNC(src, .proc/RecoverJob, J)
@@ -538,3 +540,38 @@ SUBSYSTEM_DEF(job)
 	newjob.total_positions = J.total_positions
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
+=======
+	spawn(20)
+		for (var/datum/job/J in oldjobs)
+			spawn(-1)
+				var/datum/job/newjob = GetJob(J.title)
+				if (!istype(newjob))
+					return
+				newjob.total_positions = J.total_positions
+				newjob.spawn_positions = J.spawn_positions
+				newjob.current_positions = J.current_positions
+
+// Use it for generic or non-generic (in new_player.dm) reasons.
+/datum/subsystem/job/proc/IsJobAvailable(rank, var/mob/new_player/NP)
+	var/datum/job/job = SSjob.GetJob(rank)
+	if(!job)
+		return 0
+	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+		if(job.title == "Assistant")
+			if(NP)
+				if(isnum(NP.client.player_age) && NP.client.player_age <= 14) //Newbies can always be assistants
+					return 1
+			for(var/datum/job/J in SSjob.occupations)
+				if(J && J.current_positions < J.total_positions && J.title != job.title)
+					return 0
+		else
+			return 0
+	if(jobban_isbanned(src,rank))
+		return 0
+	if(NP)
+		if(!job.player_old_enough(NP.client))
+			return 0
+		if(config.enforce_human_authority && !NP.client.prefs.pref_species.qualifies_for_rank(rank, NP.client.prefs.features))
+			return 0
+	return 1
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee:code/controllers/subsystem/jobs.dm

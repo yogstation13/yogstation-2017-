@@ -192,7 +192,13 @@
 	if(firer)
 		chain = firer.Beam(src, icon_state = "chain", time = INFINITY, maxdistance = INFINITY)
 	..()
+<<<<<<< HEAD
 	//TODO: root the firer until the chain returns
+=======
+	var/obj/item/projectile/hook/P = BB
+	spawn(1)
+		P.chain = P.Beam(user,icon_state="chain",icon = 'icons/obj/lavaland/artefacts.dmi',time=1000, maxdistance = 30,alphafade=0)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/projectile/hook/on_hit(atom/target)
 	. = ..()

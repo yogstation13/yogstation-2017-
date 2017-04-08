@@ -52,7 +52,7 @@
 					to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
 					update_icon()
 					return
-				if(victim.dna.species.specflags & PROTECTEDEYES)
+				if(PROTECTEDEYES in victim.dna.species.specflags)
 					target << "<span class='danger'>[user] tries to squirt something into [target]'s eyes, but [target]'s lizard eyes ignore the fluid!</span>"
 					return
 

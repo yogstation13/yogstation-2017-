@@ -15,9 +15,17 @@
 
 /obj/item/weapon/implanter/sad_trombone
 	name = "implanter (sad_trombone)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/sad_trombone
+=======
+	imptype = /obj/item/weapon/implant/sad_trombone
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/sad_trombone
 	name = "implant case - 'Sad Trombone'"
 	desc = "A glass case containing a sad trombone implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/sad_trombone
+=======
+	imptype = /obj/item/weapon/implant/sad_trombone
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

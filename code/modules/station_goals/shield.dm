@@ -7,9 +7,15 @@
 
 /datum/station_goal/station_shield/get_report()
 	return {"The station is located in a zone full of space debris.
+<<<<<<< HEAD
 			 We have a prototype shielding system you must deploy to reduce collision-related accidents.
 
 			 You can order the satellites and control systems at cargo.
+=======
+			 We have a prototype shielding system you will deploy to reduce collision related accidents.
+
+			 You can order the satellites and control systems through cargo shuttle.
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			 "}
 
 
@@ -30,7 +36,11 @@
 
 /datum/station_goal/proc/get_coverage()
 	var/list/coverage = list()
+<<<<<<< HEAD
 	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
+=======
+	for(var/obj/machinery/satellite/meteor_shield/A in machines)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		if(!A.active || A.z != ZLEVEL_STATION)
 			continue
 		coverage |= view(A.kill_range,A)
@@ -47,7 +57,11 @@
 	circuit = /obj/item/weapon/circuitboard/machine/computer/sat_control
 	var/notice
 
+<<<<<<< HEAD
 /obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+=======
+/obj/machinery/computer/sat_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "sat_control", name, 400, 305, master_ui, state)
@@ -62,7 +76,11 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
+<<<<<<< HEAD
 	for(var/obj/machinery/satellite/S in GLOB.machines)
+=======
+	for(var/obj/machinery/satellite/S in machines)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		if(S.id == id && S.z == z)
 			S.toggle()
 
@@ -70,7 +88,11 @@
 	var/list/data = list()
 
 	data["satellites"] = list()
+<<<<<<< HEAD
 	for(var/obj/machinery/satellite/S in GLOB.machines)
+=======
+	for(var/obj/machinery/satellite/S in machines)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		data["satellites"] += list(list(
 			"id" = S.id,
 			"active" = S.active,
@@ -79,7 +101,11 @@
 	data["notice"] = notice
 
 
+<<<<<<< HEAD
 	var/datum/station_goal/station_shield/G = locate() in SSticker.mode.station_goals
+=======
+	var/datum/station_goal/station_shield/G = locate() in ticker.mode.station_goals
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	if(G)
 		data["meteor_shield"] = 1
 		data["meteor_shield_coverage"] = G.get_coverage()
@@ -109,10 +135,17 @@
 /obj/machinery/satellite/proc/toggle(mob/user)
 	if(!active && !isinspace())
 		if(user)
+<<<<<<< HEAD
 			to_chat(user, "<span class='warning'>You can only active the [src] in space.</span>")
 		return FALSE
 	if(user)
 		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>")
+=======
+			user << "<span class='warning'>You can only active the [src] in space.</span>"
+		return FALSE
+	if(user)
+		user << "<span class='notice'>You [active ? "deactivate": "activate"] the [src]</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	active = !active
 	if(active)
 		animate(src, pixel_y = 2, time = 10, loop = -1)
@@ -127,7 +160,11 @@
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>")
+=======
+		user << "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	else
 		return ..()
 
@@ -147,7 +184,11 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(!active)
 		return
+<<<<<<< HEAD
 	for(var/obj/effect/meteor/M in GLOB.meteor_list)
+=======
+	for(var/obj/effect/meteor/M in meteor_list)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		if(M.z != z)
 			continue
 		if(get_dist(M,src) > kill_range)
@@ -166,7 +207,11 @@
 			change_meteor_chance(0.5)
 
 /obj/machinery/satellite/meteor_shield/proc/change_meteor_chance(mod)
+<<<<<<< HEAD
 	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevents.control
+=======
+	var/datum/round_event_control/E = locate(/datum/round_event_control/meteor_wave) in SSevent.control
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	if(E)
 		E.weight *= mod
 

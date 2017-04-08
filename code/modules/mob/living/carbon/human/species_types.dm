@@ -169,10 +169,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Ash Walker"
 <<<<<<< HEAD
 	id = "lizard"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,NOMACHINERY)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOGUNS,NOMACHINERY)
+	safe_oxygen_min = 5
 
 /datum/species/lizard/ashwalker/chieftain
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOGUNS)
 	warning_low_pressure = 35 //no pressure warning on lavaland
 
 /datum/species/lizard/ashwalker/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
@@ -431,7 +432,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	say_mod = "buzzes"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	default_color = "FFFFFF"
-	specflags = list(RADIMMUNE,CONSUMEPOWER,EASYIMPLANTS)
+	specflags = list(CONSUMEPOWER,EASYIMPLANTS)
 	roundstart = 0
 	sexes = 0
 	mutant_organs = list(/obj/item/organ/tongue/fly)
@@ -466,8 +467,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Phytosian"
 	id = "plant"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE)
-	attack_verb = "slice"
+	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE, PLANT)
+	attack_verb = "slic"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 2
@@ -768,7 +769,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	// Phytosian turned into fly-like abominations in teleporter accidents.
 	name = "Flytosian"
 	id = "flytosian"
-	specflags = list(THRALLAPPTITUDE)
+	specflags = list(THRALLAPPTITUDE, PLANT)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
@@ -807,11 +808,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
  PODPEOPLE
 */
 
-/datum/species/pod
+/datum/species/plant/pod
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
+<<<<<<< HEAD
 	species_traits = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
@@ -871,6 +873,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /*
  SHADOWPEOPLE
@@ -930,8 +934,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 		if(light_amount > 2) //if there's enough light, start dying
 			H.take_overall_damage(1,1)
+			speedmod = 4 //much slower than a human in the light
 		else if (light_amount < 2) //heal in the dark
 			H.heal_overall_damage(1,1)
+			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+			speedmod = -1 //much faster than a human in the dark
 
 /*
  JELLYPEOPLE

@@ -834,6 +834,7 @@
 
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
+<<<<<<< HEAD
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>Deathsquad</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>Deathsquad</a></td>"
@@ -843,6 +844,23 @@
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>Lavaland</font></a></td>"
 		else
 			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>Lavaland</a></td>"
+=======
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td></tr><tr align='center'>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td></tr><tr align='center'>"
+
+		//Lavaland Roles
+		if(jobban_isbanned(M, "lavaland"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>[replacetext("Lavaland Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>[replacetext("Lavaland Roles", " ", "&nbsp")]</a></td>"
+
+		//Xenobio (sentience potions/golems/etc._
+		if(jobban_isbanned(M, "xenobio"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'><font color=red>[replacetext("Xenobio Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'>[replacetext("Xenobio Roles", " ", "&nbsp")]</a></td>"
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 		dat += "</tr></table>"
 
@@ -978,7 +996,11 @@
 						continue
 					joblist += jobPos
 			if("ghostroles")
+<<<<<<< HEAD
 				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland")
+=======
+				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland", "xenobio")
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 			else
 				joblist += href_list["jobban3"]
 

@@ -20,6 +20,7 @@
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
+	var/jobban_type
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(SSticker.current_state != GAME_STATE_PLAYING || !loc)
@@ -29,6 +30,9 @@
 		return
 	if(jobban_isbanned(user, "lavaland"))
 		to_chat(user, "<span class='warning'>You are jobanned!</span>")
+		return
+	if(jobban_type && jobban_isbanned(user, jobban_type))
+		user << "<span class='warning'>You are banned from this role.</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)

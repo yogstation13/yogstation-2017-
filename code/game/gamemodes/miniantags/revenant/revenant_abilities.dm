@@ -69,8 +69,13 @@
 					to_chat(target, "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>")
 				reveal(46)
 				stun(46)
+<<<<<<< HEAD
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
+=======
+				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, their skin turning an ashy gray.</span>")
+				var/datum/beam/B = Beam(target,icon_state="drain_life",icon='icons/effects/effects.dmi',time=46,alphafade=1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, FALSE, target)
 					if(essence_drained <= 90 && target.stat != DEAD)
@@ -208,6 +213,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
+<<<<<<< HEAD
 			INVOKE_ASYNC(src, .proc/overload, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
@@ -232,6 +238,31 @@
 			z.set_up(4, 0, M)
 			z.start()
 			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+=======
+			spawn(0)
+				for(var/obj/machinery/light/L in T.contents)
+					spawn(0)
+						if(!L.on)
+							return
+						L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
+						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+						s.set_up(4, 0, L)
+						s.start()
+						PoolOrNew(/obj/effect/overlay/temp/revenant, L.loc)
+						sleep(20)
+						if(!L.on) //wait, wait, don't shock me
+							return
+						flick("[L.base_state]2", L)
+						for(var/mob/living/carbon/human/M in view(shock_range, L))
+							if(M == user)
+								continue
+							L.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5,alphafade=1)
+							M.electrocute_act(shock_damage, L, safety=1)
+							var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
+							z.set_up(4, 0, M)
+							z.start()
+							playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile

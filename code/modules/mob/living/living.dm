@@ -267,6 +267,132 @@
 			temperature = desired
 	return temperature
 
+<<<<<<< HEAD
+=======
+
+// MOB PROCS
+/mob/living/proc/getBruteLoss()
+	return bruteloss
+
+/mob/living/proc/adjustBruteLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setBruteLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	bruteloss = amount
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getOxyLoss()
+	return oxyloss
+
+/mob/living/proc/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	oxyloss = amount
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getToxLoss()
+	return toxloss
+
+/mob/living/proc/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+	return amount
+
+/mob/living/proc/setToxLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	toxloss = amount
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getFireLoss()
+	return fireloss
+
+/mob/living/proc/adjustFireLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setFireLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	fireloss = amount
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getCloneLoss()
+	return cloneloss
+
+/mob/living/proc/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/setCloneLoss(amount, updating_health=1)
+	if(GODMODE in status_flags)
+		return 0
+	cloneloss = amount
+	if(updating_health)
+		updatehealth()
+
+/mob/living/proc/getBrainLoss()
+	return brainloss
+
+/mob/living/proc/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+	if(GODMODE in status_flags)
+		return 0
+	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
+
+/mob/living/proc/setBrainLoss(amount)
+	if(GODMODE in status_flags)
+		return 0
+	brainloss = amount
+
+/mob/living/proc/getStaminaLoss()
+	return staminaloss
+
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+	return
+
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+	return
+
+/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
+	return
+
+/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
+	if(GODMODE in status_flags)
+		return 0
+	staminaloss = amount
+	if(updating_stamina)
+		update_stamina()
+
+/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
+	return
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /mob/living/proc/getMaxHealth()
 	return maxHealth
 
@@ -683,6 +809,76 @@
 	else
 		step_towards(src,S)
 
+<<<<<<< HEAD
+=======
+/mob/living/narsie_act()
+	if(is_servant_of_ratvar(src) && !stat)
+		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
+		adjustBruteLoss(35, 1, DAMAGE_MAGIC)
+		if(src && reagents)
+			reagents.add_reagent("heparin", 5)
+		return 0
+	if(client)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+	else
+		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
+	spawn_dust()
+	gib()
+	return
+
+/mob/living/ratvar_act()
+	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
+		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+		adjustFireLoss(35, 1, DAMAGE_MAGIC)
+		if(src)
+			adjust_fire_stacks(1)
+			IgniteMob()
+
+/mob/living/do_attack_animation(atom/A)
+	var/final_pixel_y = get_standard_pixel_y_offset(lying)
+	..(A, final_pixel_y)
+	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+	// What icon do we use for the attack?
+	var/image/I
+	if(hand && l_hand) // Attacked with item in left hand.
+		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
+	else if(!hand && r_hand) // Attacked with item in right hand.
+		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
+	else // Attacked with a fist?
+		return
+
+	// Who can see the attack?
+	var/list/viewing = list()
+	for(var/mob/M in viewers(A))
+		if(M.client)
+			viewing |= M.client
+	flick_overlay(I, viewing, 5) // 5 ticks/half a second
+
+	// Scale the icon.
+	I.transform *= 0.75
+	// The icon should not rotate.
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	// Set the direction of the icon animation.
+	var/direction = get_dir(src, A)
+	if(direction & NORTH)
+		I.pixel_y = -16
+	else if(direction & SOUTH)
+		I.pixel_y = 16
+
+	if(direction & EAST)
+		I.pixel_x = -16
+	else if(direction & WEST)
+		I.pixel_x = 16
+
+	if(!direction) // Attacked self?!
+		I.pixel_z = 16
+
+	// And animate the attack!
+	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)

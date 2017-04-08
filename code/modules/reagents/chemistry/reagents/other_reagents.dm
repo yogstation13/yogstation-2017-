@@ -480,7 +480,7 @@
 	id = "podmutationtoxin"
 	description = "A vegetalizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/pod
+	race = /datum/species/plant/pod
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
 
 /datum/reagent/stableslimetoxin/jelly

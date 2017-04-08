@@ -465,11 +465,11 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 /obj/item/stack/cable_coil/attack_self(mob/user)
 	if(amount >= 15)
+		use(15)
 		var/obj/item/weapon/restraints/handcuffs/cable/O = new /obj/item/weapon/restraints/handcuffs/cable(src.loc)
 		user.put_in_hands(O)
 		O.item_color = item_color
 		O.update_icon()
-		use(15)
 
 
 /obj/item/stack/cable_coil/cyborg

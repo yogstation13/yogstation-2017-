@@ -206,10 +206,14 @@
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/device/barometer,
+<<<<<<< HEAD
 		/obj/item/organ/hivelord_core,
 		/obj/item/device/wormhole_jaunter
 		)
 
+=======
+		/obj/item/orecapsule
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/storage/belt/mining/vendor
 	contents = newlist(/obj/item/weapon/survivalcapsule)

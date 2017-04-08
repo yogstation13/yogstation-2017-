@@ -150,5 +150,9 @@
 	var/shadow_walk = 0
 	var/list/observers = null	//The list of people observing this mob.
 
+<<<<<<< HEAD
 	var/list/progressbars = null	//for stacking do_after bars
 	var/list/can_ride_typecache = list()
+=======
+	var/list/progressbars = null	//for stacking do_after bars
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

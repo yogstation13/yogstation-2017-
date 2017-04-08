@@ -9,7 +9,15 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
+
+/obj/item/clothing/glasses/changeling/attack_hand(mob/user)
+	if(loc == user && user.mind && user.mind.changeling)
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
 
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -20,7 +28,15 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
+
+/obj/item/clothing/under/changeling/attack_hand(mob/user)
+	if(loc == user && user.mind && user.mind.changeling)
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
 
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -31,11 +47,12 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	allowed = list(/obj/item/changeling)
 
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
@@ -51,10 +68,37 @@
 		qdel(src)
 		return
 	..()
+=======
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
+
+/obj/item/clothing/head/changeling
+	name = "flesh"
+	flags = NODROP | DROPDEL
+
+/obj/item/clothing/head/changeling/attack_hand(mob/user)
+	if(loc == user && user.mind && user.mind.changeling)
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
+
+/obj/item/clothing/shoes/changeling/attack_hand(mob/user)
+	if(loc == user && user.mind && user.mind.changeling)
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
 
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -65,7 +109,15 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
+
+/obj/item/clothing/gloves/changeling/attack_hand(mob/user)
+	if(loc == user && user.mind && user.mind.changeling)
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
 
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -76,7 +128,15 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
+
+/obj/item/clothing/mask/changeling/attack_hand(mob/user)
+	if(loc == user && user.mind && user.mind.changeling)
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
 
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
@@ -87,15 +147,23 @@
 
 /obj/item/changeling
 	name = "flesh"
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	slot_flags = ALL
 
 /obj/item/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
+<<<<<<< HEAD
 		to_chat(user, "<span class='notice'>You reabsorb [src] into your body.</span>")
 		qdel(src)
 		return
 	..()
+=======
+		flags &= ~NODROP
+		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		user.put_in_active_hand(src)
+		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
+		user.drop_item()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 //Change our DNA to that of somebody we've absorbed.
 /obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)

@@ -56,10 +56,17 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/body_attack_log
+	var/body_say_log
 
+<<<<<<< HEAD
 /mob/dead/observer/Initialize()
 	invisibility = GLOB.observer_default_invisibility
 
+=======
+/mob/dead/observer/New(mob/body)
+	alpha = 0
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	if(config.cross_allowed)
@@ -77,10 +84,19 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 
 	var/turf/T
+<<<<<<< HEAD
 	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		logging = body.logging			//preserve our logs by copying them to our ghost
+=======
+	if(isliving(body))
+		var/mob/living/L = body
+		T = get_turf(body)				//Where is the body located?
+		//preserve our logs by copying them to our ghost
+		body_attack_log = L.attack_log
+		body_say_log = L.say_log
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -120,9 +136,14 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		verbs -= /mob/dead/observer/verb/boo
 		verbs -= /mob/dead/observer/verb/possess
 
+<<<<<<< HEAD
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
 	grant_all_languages()
+=======
+	animate(src, alpha = 255, time = 5)
+	animate(src, pixel_y = 2, time = 10, loop = -1, easing = QUAD_EASING)
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	..()
 
 /mob/dead/observer/narsie_act()
@@ -273,6 +294,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
+		ghostize(1)
+	else if(istype(src, /mob/living/carbon/brain))
 		ghostize(1)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")

@@ -129,6 +129,7 @@
 	nodamage = 1
 	flag = "energy"
 
+<<<<<<< HEAD
 /obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(iscarbon(target))
@@ -138,6 +139,8 @@
 			C.randmut()
 			C.updateappearance()
 			C.domutcheck()
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"

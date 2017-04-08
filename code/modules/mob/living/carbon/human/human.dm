@@ -333,7 +333,7 @@
 
 	for (var/obj/item/bodypart/org in bodyparts)
 		if (org.can_be_bandaged && org.bandaged)
-			dat += "<tr><td><i>[org.getDisplayName()]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
+			dat += "<tr><td><i>[getLimbDisplayName(org.name)]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A></td></tr>"

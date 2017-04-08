@@ -13,11 +13,17 @@
 	GLOB.tracked_implants -= src
 
 /obj/item/weapon/implanter/tracking
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/tracking
 
 /obj/item/weapon/implanter/tracking/gps
 	imp_type = /obj/item/device/gps/mining/internal
+=======
+	imptype = /obj/item/weapon/implant/tracking
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
+/obj/item/weapon/implanter/tracking/gps
+	imptype = /obj/item/device/gps/mining/internal
 /obj/item/weapon/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Tracking Beacon<BR>

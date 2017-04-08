@@ -117,9 +117,17 @@
 
 /obj/item/weapon/implanter/explosive
 	name = "implanter (explosive)"
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/explosive
+=======
+	imptype = /obj/item/weapon/implant/explosive
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/item/weapon/implantcase/explosive
 	name = "implant case - 'Explosive'"
 	desc = "A glass case containing an explosive implant."
+<<<<<<< HEAD
 	imp_type = /obj/item/weapon/implant/explosive
+=======
+	imptype = /obj/item/weapon/implant/explosive
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

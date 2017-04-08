@@ -96,7 +96,9 @@ GLOBAL_LIST_INIT(admin_verbs_admin, AVerbsAdmin())
 	/client/proc/check_ruins,
 	/datum/admins/proc/borer_panel,
 	/client/proc/respawn_character,
-	/client/proc/rejuv_all
+	/client/proc/rejuv_all,
+	/client/proc/reset_idconsole_msg,
+	/client/proc/lock_idconsole
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,

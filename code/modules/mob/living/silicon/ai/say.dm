@@ -150,10 +150,14 @@
 <<<<<<< HEAD
 		var/sound_file = vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 2, channel = VOX_CHANNEL)
+<<<<<<< HEAD
 =======
 		var/sound_file = GLOB.vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+=======
+		voice.environment = GENERIC
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level

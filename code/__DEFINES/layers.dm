@@ -72,8 +72,13 @@
 
 #define HUD_PLANE 19
 #define HUD_LAYER 19
+<<<<<<< HEAD
 #define ABOVE_HUD_PLANE 20
 #define ABOVE_HUD_LAYER 20
 
 #define SPLASHSCREEN_LAYER 21
 #define SPLASHSCREEN_PLANE 21
+=======
+#define HUD_PLANE 19
+#define ABOVE_HUD_LAYER 19.1
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

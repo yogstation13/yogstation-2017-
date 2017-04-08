@@ -47,6 +47,16 @@
 		M.update_action_buttons()
 	else
 		Remove(owner)
+<<<<<<< HEAD
+=======
+	owner = M
+	M.actions += src
+	button.alpha = 0
+	if(M.client)
+		M.client.screen += button
+	animate(M, alpha = 255, time = 5)
+	M.update_action_buttons()
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/action/proc/Remove(mob/M)
 	if(M)

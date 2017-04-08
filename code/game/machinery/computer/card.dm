@@ -4,6 +4,8 @@
 //increase the slots of many jobs.
 GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
+#define ID_PRIORITIZE_LEN 5
+
 /obj/machinery/computer/card
 	name = "identification console"
 	desc = "You can use this to manage jobs and ID access."
@@ -46,7 +48,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
+<<<<<<< HEAD
 	light_color = LIGHT_COLOR_BLUE
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -251,6 +256,11 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
 			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
 			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
+
+		header += "<br>The current arrival message is \"[ticker.identification_console_message]\"</br>"
+		header += "<br><a href='?src=\ref[src];choice=arrivalmessage'>Change Arrival Message</a> <br>"
+
+		header += "<a href='?src=\ref[src];choice=prioritize'>Prioritize or Unprioritize a Job</a><br>"
 
 		header += "<hr>"
 
@@ -548,7 +558,66 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
+<<<<<<< HEAD
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+=======
+
+		if ("arrivalmessage")
+			if(!allowed(usr))
+				usr << "<span class='warning'>Invalid ID.</span>"
+				return
+			var/mob/M = usr
+			if(ticker.id_console_msg_lock)
+				M << "<span class='warning'>Central Command has blocked your station's power to do this.</span>"
+				log_game("[M] ([M.ckey]) has attempted to change the arrivals message while it was locked.")
+				return
+
+			message_admins("[M.name] ([M.ckey]) is changing the arrival message.")
+			log_game("[M] ([M.ckey]) is attempting to change the arrivals message ([ticker.identification_console_message]).")
+			var/msg = input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
+			if(!allowed(usr) || !usr.canUseTopic(src,be_close=TRUE))
+				message_admins("[M.name] ([M.ckey] (ckey)) did not have the correct ID, or simply was interrupted when trying to change the arrival message.")
+				return
+			if(msg)
+				message_admins("[M.name] ([M.ckey]) has changed the arrivals message to: [msg] (Use reset arrival message to clear it or lock/unlock arrival message to completely lock it)")
+				ticker.identification_console_message = msg
+				log_game("[M] ([M.ckey]) has changed the arrival message to [msg].")
+				investigate_log("[M] (ckey: [M.ckey]) changed the arrival message to: [ticker.identification_console_message].", "arrivalmessage")
+			else
+				message_admins("[M.name] ([M.ckey]) has decided not to create a message.")
+
+		if ("prioritize")
+			if(!allowed(usr))
+				usr << "<span class='warning'>Invalid ID.</span>"
+				return
+			if(length(SSjob.prioritized_jobs) >= ID_PRIORITIZE_LEN)
+				usr << "<span class='warning'>Centcomm cannot accept more than 5 priority requests.</span>"
+				return
+			var/mob/M = usr
+			var/list/jobs = list()
+			for(var/datum/job/job in SSjob.occupations)
+				if(job && SSjob.IsJobAvailable(job.title))
+					if(job.title != "Assistant")
+						jobs += job.title
+
+			if(length(jobs))
+				var/pickjob = input(usr,"Select Job","Prioritize/Un-Prioritize",null) as anything in jobs
+				if(!M.canUseTopic(src,be_close=TRUE))
+					return
+				if(pickjob)
+					var/prior = TRUE
+					if(pickjob in SSjob.prioritized_jobs)
+						SSjob.prioritized_jobs -= pickjob
+						prior = FALSE
+						log_game("[M] ([M.ckey])has unprioritized [pickjob].")
+					else
+						SSjob.prioritized_jobs += pickjob
+						log_game("[M] ([M.ckey]) has prioritized [pickjob].")
+					usr << "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
+			else
+				usr << "<span class='notice'>Surprisingly... there aren't any jobs to prioritize.</span>"
+
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()
@@ -600,4 +669,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	target_dept = 5
 	icon_screen = "idce"
 
+<<<<<<< HEAD
 	light_color = LIGHT_COLOR_YELLOW
+=======
+#undef ID_PRIORITIZE_LEN
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

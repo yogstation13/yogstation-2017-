@@ -182,6 +182,7 @@
 					shake_camera(L, 20, 1)
 					addtimer(CALLBACK(L, /mob/living/carbon.proc/vomit), 20)
 
+<<<<<<< HEAD
 /**********************Resonator**********************/
 
 /obj/item/weapon/resonator
@@ -295,6 +296,8 @@
 		L.apply_damage(resonance_damage, BRUTE)
 	qdel(src)
 
+=======
+>>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 /**********************Facehugger toy**********************/
 
 /obj/item/clothing/mask/facehugger/toy
