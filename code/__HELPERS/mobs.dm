@@ -343,7 +343,6 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
-<<<<<<< HEAD
 /proc/get_ckey(user)
 	if(ismob(user))
 		var/mob/temp = user
@@ -499,7 +498,7 @@ Proc for attack log creation, because really why not
 		return temp.computer_id
 
 	return "Unknown"
-=======
+
 /proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
 	if(!T)
@@ -527,7 +526,6 @@ Proc for attack log creation, because really why not
 
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
->>>>>>> masterTGbranch
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in player_list)

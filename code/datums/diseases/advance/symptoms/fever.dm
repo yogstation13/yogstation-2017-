@@ -37,9 +37,5 @@ Bonus
 
 /datum/symptom/fever/proc/Heat(mob/living/M, datum/disease/advance/A)
 	var/get_heat = (sqrt(max(21,21+A.totalTransmittable()*2)))+(sqrt(max(21,20+A.totalStageSpeed()*3)))
-<<<<<<< HEAD
 	M.bodytemperature = min(M.bodytemperature + (get_heat * A.stage), BODYTEMP_HEAT_DAMAGE_LEVEL_1 - 1)
-=======
-	M.bodytemperature = min(M.bodytemperature + (get_heat * A.stage), BODYTEMP_HEAT_DAMAGE_LIMIT - 1)
->>>>>>> masterTGbranch
 	return 1

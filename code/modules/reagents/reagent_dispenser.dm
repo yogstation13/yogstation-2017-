@@ -55,20 +55,9 @@
 
 /obj/structure/reagent_dispensers/watertank/high
 	name = "high-capacity water tank"
-<<<<<<< HEAD
-	desc = "A specialised high-pressure water tank for holding large amounts of water."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "hightank"
-
-/obj/structure/reagent_dispensers/watertank/high/New()
-	..()
-	create_reagents(100000)
-	reagents.add_reagent("water",100000)
-=======
 	desc = "A highly-pressurized water tank made to hold gargantuan amounts of water.."
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 100000
->>>>>>> masterTGbranch
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"

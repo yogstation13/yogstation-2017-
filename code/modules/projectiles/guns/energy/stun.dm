@@ -31,7 +31,7 @@
 	desc = "An integrated hybrid taser that draws directly from a cyborg's power cell. The weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_flashlight = 0
 	can_charge = 0
-<<<<<<< HEAD
+	use_cyborg_cell = 1
 	var/recharge_time = 10
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg/New()
@@ -50,9 +50,6 @@
 
 	if(!power_supply) return 0 //sanity
 	robocharge()
-=======
-	use_cyborg_cell = 1
->>>>>>> masterTGbranch
 
 	update_icon()
 
@@ -68,7 +65,7 @@
 	name = "cyborg disabler"
 	desc = "An integrated disabler that draws from a cyborg's power cell. This weapon contains a limiter to prevent the cyborg's power cell from overheating."
 	can_charge = 0
-<<<<<<< HEAD
+	use_cyborg_cell = 1
 	var/recharge_time = 4
 
 
@@ -91,7 +88,4 @@
 
 	update_icon()
 
-=======
-	use_cyborg_cell = 1
 
->>>>>>> masterTGbranch

@@ -119,11 +119,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all,
-<<<<<<< HEAD
 	/client/proc/admin_pick_random_player
-=======
 	/client/proc/show_tip
->>>>>>> masterTGbranch
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -344,11 +341,8 @@ var/list/admin_verbs_hideable = list(
 		/client/proc/count_objects_all,
 		/client/proc/cmd_assume_direct_control,
 		/client/proc/startSinglo,
-<<<<<<< HEAD
 		/client/proc/cfps,
-=======
 		/client/proc/set_server_fps,
->>>>>>> masterTGbranch
 		/client/proc/cmd_admin_grantfullaccess,
 		/client/proc/cmd_admin_areatest,
 		/client/proc/readmin
@@ -977,11 +971,8 @@ var/list/admin_verbs_hideable = list(
 	AI_Interact = !AI_Interact
 	if(mob && IsAdminGhost(mob))
 		mob.has_unlimited_silicon_privilege = AI_Interact
-
-<<<<<<< HEAD
- 	AI_Interact = !AI_Interact
- 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
- 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
+	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
 /client/proc/toggle_restart_vote()
 	set name = "Toggle Restart Vote"
@@ -1067,12 +1058,3 @@ var/list/admin_verbs_hideable = list(
 	var/chosen_player = pick(player_pool)
 	src << "[chosen_player] Has been chosen"
 	holder.show_player_panel(chosen_player)
-
-
-
-
-
-=======
-	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
-	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
->>>>>>> masterTGbranch

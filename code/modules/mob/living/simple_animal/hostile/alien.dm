@@ -8,12 +8,8 @@
 	icon_living = "alienh_s"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
-<<<<<<< HEAD
-	response_help = "pets"
-=======
 	gender = FEMALE
 	response_help = "pokes"
->>>>>>> masterTGbranch
 	response_disarm = "shoves"
 	response_harm = "slaps"
 	speed = 0
@@ -121,7 +117,7 @@
 							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1)
-							
+
 
 /mob/living/simple_animal/hostile/alien/sentinel/adjustHealth(amount)
 	. = ..()
@@ -220,13 +216,13 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	. = ..()
-	if(stat != DEAD)	
+	if(stat != DEAD)
 		if(health < maxHealth/2)
 			angry = TRUE
 		else
 			angry = FALSE
 
-			
+
 
 /mob/living/simple_animal/hostile/alien/queen/large/Aggro()
 	..()
@@ -288,7 +284,7 @@
 	damage = 20
 	stamina = 15
 	icon_state = "toxin"
-	
+
 /obj/item/projectile/neurotox/panic //sentinels swap to kill mode
 	name = "neurotoxin"
 	damage = 35
@@ -324,11 +320,8 @@
 	melee_damage_upper = 0
 	a_intent = INTENT_HELP
 	friendly = "caresses"
-<<<<<<< HEAD
 	desc = "This ambitious xenomorph's gotten a job and moved out from home. They get letters weekly from their mother, signed in human blood."
-=======
 	obj_damage = 0
->>>>>>> masterTGbranch
 	environment_smash = 0
 	gold_core_spawnable = 1
 	icon_state = "maid"

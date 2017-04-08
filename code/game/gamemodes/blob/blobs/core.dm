@@ -8,11 +8,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 90)
 	explosion_block = 6
 	point_return = -1
-<<<<<<< HEAD
 	atmosblock = 1
 	heatblock = 1
-=======
->>>>>>> masterTGbranch
 	health_regen = 0 //we regen in Life() instead of when pulsed
 	var/core_regen = 2
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again

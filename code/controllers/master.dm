@@ -34,12 +34,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/init_timeofday
 	var/init_time
 	var/tickdrift = 0
-
-<<<<<<< HEAD
-=======
 	var/sleep_delta
 
->>>>>>> masterTGbranch
 	var/make_runtime = 0
 
 	// Has round started? (So we know what subsystems to run)
@@ -70,14 +66,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
 
-<<<<<<< HEAD
-=======
 /datum/controller/master/proc/Shutdown()
 	processing = FALSE
 	for(var/datum/subsystem/ss in subsystems)
 		ss.Shutdown()
 
->>>>>>> masterTGbranch
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
@@ -159,44 +152,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
 	round_started = 1
-<<<<<<< HEAD
-	var/timer = world.time
-	for (var/datum/subsystem/SS in subsystems)
-		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
-			continue //already firing
-		// Stagger subsystems.
-		timer += world.tick_lag * rand(1, 5)
-		SS.next_fire = timer
-
-// Starts the mc, and sticks around to restart it if the loop ever ends.
-/datum/controller/master/proc/StartProcessing()
-	set waitfor = 0
-	var/rtn = Loop()
-	if (rtn > 0 || processing < 0)
-		return //this was suppose to happen.
-	//loop ended, restart the mc
-	log_game("MC crashed or runtimed, restarting")
-	message_admins("MC crashed or runtimed, restarting")
-	var/rtn2 = Recreate_MC()
-	if (rtn2 <= 0)
-		log_game("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
-		message_admins("Failed to recreate MC (Error code: [rtn2]), its up to the failsafe now")
-		Failsafe.defcon = 2
-
-// Main loop.
-/datum/controller/master/proc/Loop()
-	. = -1
-	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
-	//	local vars rock
-
-	// Schedule the first run of the Subsystems.
-	round_started = world.has_round_started()
-	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
-	var/list/tickersubsystems = list()
-	var/list/normalsubsystems = list()
-	var/list/lobbysubsystems = list()
-	var/timer = world.time
-=======
 	var/timer = world.time
 	for (var/datum/subsystem/SS in subsystems)
 		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
@@ -233,7 +188,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/list/normalsubsystems = list()
 	var/list/lobbysubsystems = list()
 	var/timer = world.time
->>>>>>> masterTGbranch
 	for (var/thing in subsystems)
 		var/datum/subsystem/SS = thing
 		if (SS.flags & SS_NO_FIRE)
@@ -332,10 +286,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 		iteration++
 		last_run = world.time
-<<<<<<< HEAD
-=======
 		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
->>>>>>> masterTGbranch
 		sleep(world.tick_lag * (processing + sleep_delta))
 
 
@@ -432,7 +383,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				tick_precentage = tick_remaining
 
 			CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
-<<<<<<< HEAD
 
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE
@@ -476,51 +426,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			queue_node.last_fire = world.time
 			queue_node.times_fired++
 
-=======
-
-			if (!(queue_node_flags & SS_TICKER))
-				ran_non_ticker = TRUE
-			ran = TRUE
-			tick_usage = world.tick_usage
-			queue_node_paused = queue_node.paused
-			queue_node.paused = FALSE
-			last_type_processed = queue_node
-
-			queue_node.fire(queue_node_paused)
-
-			current_tick_budget -= queue_node_priority
-			tick_usage = world.tick_usage - tick_usage
-
-			if (tick_usage < 0)
-				tick_usage = 0
-
-			if (queue_node.paused)
-				queue_node.paused_ticks++
-				queue_node.paused_tick_usage += tick_usage
-				if (!istype(queue_node))
-					world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
-					return
-				queue_node = queue_node.queue_next
-				continue
-
-			queue_node.ticks = MC_AVERAGE(queue_node.ticks, queue_node.paused_ticks)
-			tick_usage += queue_node.paused_tick_usage
-
-			queue_node.tick_usage = MC_AVERAGE_FAST(queue_node.tick_usage, tick_usage)
-
-			queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_DELTA_TO_MS(tick_usage))
-			queue_node.paused_ticks = 0
-			queue_node.paused_tick_usage = 0
-
-			if (queue_node_flags & SS_BACKGROUND) //update our running total
-				queue_priority_count_bg -= queue_node_priority
-			else
-				queue_priority_count -= queue_node_priority
-
-			queue_node.last_fire = world.time
-			queue_node.times_fired++
-
->>>>>>> masterTGbranch
 			if (queue_node_flags & SS_TICKER)
 				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
 			else if (queue_node_flags & SS_POST_FIRE_TIMING)

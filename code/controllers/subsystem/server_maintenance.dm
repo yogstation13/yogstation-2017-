@@ -3,12 +3,7 @@ var/datum/subsystem/server_maint/SSserver
 /datum/subsystem/server_maint
 	name = "Server Tasks"
 	wait = 6000
-<<<<<<< HEAD
-	init_order = 19
-	flags = SS_NO_TICK_CHECK|SS_NO_INIT
-=======
 	flags = SS_NO_TICK_CHECK
->>>>>>> masterTGbranch
 
 /datum/subsystem/server_maint/New()
 	NEW_SS_GLOBAL(SSserver)

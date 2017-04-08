@@ -61,26 +61,15 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-<<<<<<< HEAD
-		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
-			if(!H.get_bodypart(body_zone))
-				if(H == user)
-					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
-=======
 		if(EASYLIMBATTACHMENT in H.dna.species.species_traits)
 			if(!H.get_bodypart(body_zone) && !animal_origin)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
->>>>>>> masterTGbranch
 					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
 				else
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
 					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
-<<<<<<< HEAD
-				user.drop_item()
-=======
 				user.unEquip(src,1)
->>>>>>> masterTGbranch
 				attach_limb(C)
 				return
 	..()
@@ -117,8 +106,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-<<<<<<< HEAD
-/obj/item/bodypart/proc/take_damage(brute, burn, application=DAMAGE_PHYSICAL)
+/obj/item/bodypart/proc/receive_damage(brute, burn, application=DAMAGE_PHYSICAL, updating_health = 1)
 	if(owner)
 		if(GODMODE in owner.status_flags)
 			return 0	//godmode
@@ -127,16 +115,8 @@
 				return
 			brute *= owner.dna.species.brutemod
 			burn *= owner.dna.species.burnmod
-	brute	= max(brute,0)
-	burn	= max(burn,0)
-=======
-/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
-	if(owner && (owner.status_flags & GODMODE))
-		return 0	//godmode
 	brute	= max(brute * config.damage_multiplier,0)
 	burn	= max(burn * config.damage_multiplier,0)
->>>>>>> masterTGbranch
-
 
 	if(status == BODYPART_ROBOTIC) //This makes robolimbs not damageable by chems and makes it stronger
 		brute = max(0, brute - 5)
@@ -171,17 +151,11 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-<<<<<<< HEAD
-/obj/item/bodypart/proc/heal_damage(brute, burn, robotic, application=DAMAGE_PHYSICAL)
+/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1, application=DAMAGE_PHYSICAL)
 	if(owner && owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
 		if(application in owner.dna.species.heal_immunities)
 			return
-	if(robotic && status == ORGAN_ORGANIC) //This makes organic limbs not heal when the proc is in Robotic mode.
-=======
-/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
-
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
->>>>>>> masterTGbranch
 		return
 
 	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
@@ -266,16 +240,6 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-<<<<<<< HEAD
-	if(MUTCOLORS in S.specflags)
-		if(S.fixed_mut_color)
-			species_color = S.fixed_mut_color
-		else
-			species_color = H.dna.features["mcolor"]
-		should_draw_greyscale = TRUE
-	else
-		species_color = ""
-=======
 		if(MUTCOLORS in S.species_traits)
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
@@ -284,7 +248,6 @@
 			should_draw_greyscale = TRUE
 		else
 			species_color = ""
->>>>>>> masterTGbranch
 
 		if(!dropping_limb && H.dna.check_mutation(HULK))
 			mutation_color = "00aa00"

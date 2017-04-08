@@ -20,20 +20,10 @@
 	stored.amount = 2
 
 /obj/structure/grille/ratvar_act()
-<<<<<<< HEAD
-	if(destroyed)
-		new /obj/structure/grille/ratvar/broken(src.loc)
-	else
-		new /obj/structure/grille/ratvar(src.loc)
-	qdel(src)
-
-/obj/structure/grille/blob_act(obj/effect/blob/B)
-=======
 	if(broken)
 		new /obj/structure/grille/ratvar/broken(src.loc)
 	else
 		new /obj/structure/grille/ratvar(src.loc)
->>>>>>> masterTGbranch
 	qdel(src)
 
 /obj/structure/grille/Bumped(atom/user)
@@ -236,11 +226,7 @@
 /obj/structure/grille/ratvar/New()
 	..()
 	change_construction_value(1)
-<<<<<<< HEAD
-	if(destroyed)
-=======
 	if(broken)
->>>>>>> masterTGbranch
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille/broken, get_turf(src))
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille, get_turf(src))

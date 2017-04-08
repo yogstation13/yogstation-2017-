@@ -1,9 +1,5 @@
 //replaces the old Ticklag verb, fps is easier to understand
-<<<<<<< HEAD
-/client/proc/cfps()
-=======
 /client/proc/set_server_fps()
->>>>>>> masterTGbranch
 	set category = "Debug"
 	set name = "Set server fps"
 	set desc = "Sets game speed in frames-per-second. Can potentially break the game"
@@ -20,18 +16,7 @@
 		if(alert(src, "You are setting fps to a high value:\n\t[new_fps] frames-per-second\n\tconfig.fps = [config.fps]","Warning!","Confirm","ABORT-ABORT-ABORT") != "Confirm")
 			return
 
-<<<<<<< HEAD
-	switch(alert("Enable Tick Compensation?","Tick Comp is currently: [config.Tickcomp]","Enable","Disable"))
-		if("Enable")
-			config.Tickcomp = 1
-		else
-			config.Tickcomp = 0
-
-	var/msg = "[key_name(src)] has modified world.fps to [fps] and config.Tickcomp to [config.Tickcomp]"
-
-=======
 	var/msg = "[key_name(src)] has modified world.fps to [new_fps]"
->>>>>>> masterTGbranch
 	log_admin(msg, 0)
 	message_admins(msg, 0)
 	feedback_add_details("admin_verb","TICKLAG") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

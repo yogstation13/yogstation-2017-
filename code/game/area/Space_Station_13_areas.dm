@@ -14,76 +14,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 */
 
 
-<<<<<<< HEAD
-/area
-	level = null
-	name = "Space"
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "unknown"
-	layer = AREA_LAYER
-	mouse_opacity = 0
-	invisibility = INVISIBILITY_LIGHTING
-
-	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
-
-	var/valid_territory = 1 // If it's a valid territory for gangs to claim
-	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
-
-	var/eject = null
-
-	var/fire = null
-	var/atmos = 1
-	var/atmosalm = 0
-	var/poweralm = 1
-	var/party = null
-	var/lightswitch = 1
-
-	var/requires_power = 1
-	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
-
-	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
-	var/mapgen_protected = 0 //If the area is protected from ruins/lava rivers/etc generating on top of it
-
-	var/power_equip = 1
-	var/power_light = 1
-	var/power_environ = 1
-	var/music = null
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
-	var/static_equip
-	var/static_light = 0
-	var/static_environ
-	var/murders_plants = 1
-
-	var/has_gravity = 0
-	var/noteleport = 0			//Are you forbidden from teleporting to the area? (centcomm, mobs, wizard, hand teleporter)
-	var/safe = 0 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
-
-	var/no_air = null
-	var/area/master				// master area used for power calcluations
-	var/list/related			// the other areas of the same type as this
-//	var/list/lights				// list of all lights on this area
-
-	var/parallax_movedir = 0
-
-/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
-/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
-var/list/teleportlocs = list()
-
-/proc/process_teleport_locs()
-	for(var/area/AR in world)
-		if(istype(AR, /area/shuttle) || istype(AR, /area/wizard_station) || AR.noteleport) continue
-		if(teleportlocs.Find(AR.name)) continue
-		var/turf/picked = safepick(get_area_turfs(AR.type))
-		if (picked && (picked.z == ZLEVEL_STATION))
-			teleportlocs += AR.name
-			teleportlocs[AR.name] = AR
-
-	sortTim(teleportlocs, /proc/cmp_text_dsc)
-
-=======
->>>>>>> masterTGbranch
 /*-----------------------------------------------------------------------------*/
 
 /area/engine
@@ -124,60 +54,6 @@ var/list/teleportlocs = list()
 	icon_state = "space_near"
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
-<<<<<<< HEAD
-//These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
-
-/area/shuttle
-	name = "Shuttle"
-	requires_power = 0
-	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
-	has_gravity = 1
-	valid_territory = 0
-	icon_state = "shuttle"
-	murders_plants = 0
-
-/area/shuttle/arrival
-	name = "Arrival Shuttle"
-
-/area/shuttle/pod_1
-	name = "Escape Pod One"
-
-/area/shuttle/pod_2
-	name = "Escape Pod Two"
-
-/area/shuttle/pod_3
-	name = "Escape Pod Three"
-
-/area/shuttle/pod_4
-	name = "Escape Pod Four"
-
-/area/shuttle/mining
-	name = "Mining Shuttle"
-
-/area/shuttle/labor
-	name = "Labor Camp Shuttle"
-
-/area/shuttle/supply
-	name = "Supply Shuttle"
-
-/area/shuttle/escape
-	name = "Emergency Shuttle"
-
-/area/shuttle/transport
-	name = "Transport Shuttle"
-
-/area/shuttle/syndicate
-	name = "Syndicate Infiltrator"
-
-/area/shuttle/assault_pod
-	name = "Steel Rain"
-
-/area/shuttle/abandoned
-	name = "Abandoned Ship"
-
-=======
->>>>>>> masterTGbranch
 /area/start
 	name = "start area"
 	icon_state = "start"
@@ -185,64 +61,6 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
-
-<<<<<<< HEAD
-// CENTCOM
-
-/area/centcom
-	name = "Centcom"
-	icon_state = "centcom"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
-
-/area/centcom/control
-	name = "Centcom Docks"
-
-/area/centcom/evac
-	name = "Centcom Recovery Ship"
-
-/area/centcom/supply
-	name = "Centcom Supply Shuttle Dock"
-
-/area/centcom/ferry
-	name = "Centcom Transport Shuttle Dock"
-
-/area/centcom/prison
-	name = "Admin Prison"
-
-/area/centcom/holding
-	name = "Holding Facility"
-
-/area/centcom/abuse
-	name = "AB-use facility"
-	icon_state = "centcom"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0
-
-
-//SYNDICATES
-
-/area/syndicate_mothership
-	name = "Syndicate Mothership"
-	icon_state = "syndie-ship"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
-
-/area/syndicate_mothership/control
-	name = "Syndicate Control Room"
-	icon_state = "syndie-control"
-
-/area/syndicate_mothership/elite_squad
-	name = "Syndicate Elite Squad"
-	icon_state = "syndie-elite"
-=======
->>>>>>> masterTGbranch
 
 //EXTRA
 
@@ -750,29 +568,7 @@ var/list/teleportlocs = list()
 	name = "Transfer Centre"
 	icon_state = "armory"
 
-<<<<<<< HEAD
-/area/security/interrogation
-	name = "\improper Interrogation"
-	icon_state = "firingrange"
 
-/*
-/area/security/transfer/New()
-	..()
-
-	spawn(10) //let objects set up first
-		for(var/turf/turfToGrayscale in src)
-			if(turfToGrayscale.icon)
-				var/icon/newIcon = icon(turfToGrayscale.icon)
-				newIcon.GrayScale()
-				turfToGrayscale.icon = newIcon
-			for(var/obj/objectToGrayscale in turfToGrayscale) //1 level deep, means tables, apcs, locker, etc, but not locker contents
-				if(objectToGrayscale.icon)
-					var/icon/newIcon = icon(objectToGrayscale.icon)
-					newIcon.GrayScale()
-					objectToGrayscale.icon = newIcon
-*/
-=======
->>>>>>> masterTGbranch
 
 /area/security/nuke_storage
 	name = "Vault"

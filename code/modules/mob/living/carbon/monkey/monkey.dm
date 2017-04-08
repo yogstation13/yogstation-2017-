@@ -8,11 +8,7 @@
 	pass_flags = PASSTABLE
 	languages_spoken = MONKEY
 	languages_understood = MONKEY
-<<<<<<< HEAD
-	ventcrawler = 1
-=======
 	ventcrawler = VENTCRAWLER_NUDE
->>>>>>> masterTGbranch
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
@@ -36,12 +32,7 @@
 	if(good_mutations.len) //genetic mutations have been set up.
 		initialize() //initialize monkey dna
 
-<<<<<<< HEAD
-	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src, 1)
-=======
 	create_internal_organs()
->>>>>>> masterTGbranch
 
 	..()
 

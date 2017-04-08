@@ -18,13 +18,9 @@ var/list/ai_list = list()
 	icon_state = "ai"
 	anchored = 1
 	density = 1
-<<<<<<< HEAD
-	status_flags = list(CANSTUN|CANPUSH)
-=======
+	status_flags = list(CANSTUN, CANPUSH)
 	canmove = 0
-	status_flags = CANSTUN|CANPUSH
 	a_intent = INTENT_HARM //so we always get pushed instead of trying to swap
->>>>>>> masterTGbranch
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = 8

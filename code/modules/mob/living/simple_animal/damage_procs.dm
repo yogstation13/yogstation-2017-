@@ -1,6 +1,6 @@
 
 /mob/living/simple_animal/proc/adjustHealth(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth)
 	updatehealth()

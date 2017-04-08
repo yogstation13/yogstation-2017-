@@ -74,8 +74,7 @@
 			H.equip_to_slot_or_del(new path(H),slot_in_backpack)
 
 	post_equip(H, visualsOnly)
-
-<<<<<<< HEAD
+	H.update_body()
 	return 1
 
 /datum/outfit/proc/copyFrom(datum/outfit/other)
@@ -117,7 +116,3 @@
 	r_hand = null
 	l_hand = null
 	backpack_contents.Cut()
-=======
-	H.update_body()
-	return 1
->>>>>>> masterTGbranch

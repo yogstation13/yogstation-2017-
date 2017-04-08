@@ -59,16 +59,11 @@
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
 	flags = ABSTRACT | NODROP | DROPDEL
-<<<<<<< HEAD
-	w_class = 5
-=======
 	w_class = WEIGHT_CLASS_HUGE
->>>>>>> masterTGbranch
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
 
-<<<<<<< HEAD
 /obj/item/weapon/nullrod/genesis
 	icon_state = "disintegrate"
 	item_state = "disintegrate"
@@ -180,8 +175,6 @@
 	user.say("Wynken, Blynken, and Nod")
 	return (BRUTELOSS)
 
-=======
->>>>>>> masterTGbranch
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
@@ -312,9 +305,6 @@
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
-<<<<<<< HEAD
-=======
-
 
 /obj/item/weapon/nullrod/scythe/spellblade
 	icon_state = "spellblade"
@@ -323,7 +313,6 @@
 	name = "dormant spellblade"
 	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
 	hitsound = 'sound/weapons/rapierhit.ogg'
->>>>>>> masterTGbranch
 
 /obj/item/weapon/nullrod/scythe/talking
 	icon_state = "talking_sword"

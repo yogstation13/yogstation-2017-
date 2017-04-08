@@ -102,11 +102,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-<<<<<<< HEAD
-	w_class = 3 // QUALITY OF LIFE
-=======
-	w_class = WEIGHT_CLASS_BULKY // Can't be put in backpacks.
->>>>>>> masterTGbranch
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/roller/robo))

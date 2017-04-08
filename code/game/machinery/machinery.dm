@@ -161,16 +161,12 @@ Class Procs:
 	return PROCESS_KILL
 
 /obj/machinery/emp_act(severity)
-<<<<<<< HEAD
 	if(software)
 		for(var/V in software)
 			var/datum/software/M = V
 			M.onEMP()
 
-	if(use_power && stat == 0)
-=======
 	if(use_power && !stat)
->>>>>>> masterTGbranch
 		use_power(7500/severity)
 		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
@@ -308,7 +304,6 @@ Class Procs:
 	if(!user.IsAdvancedToolUser() && !IsAdminGhost(user))
 		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 1
-<<<<<<< HEAD
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(prob(H.getBrainLoss()))
@@ -317,8 +312,6 @@ Class Procs:
 		if((NOMACHINERY in H.dna.species.specflags))
 			user << "<span class='warning'>This technology is too advanced for you!</span>"
 			return 1
-=======
->>>>>>> masterTGbranch
 	if(!is_interactable())
 		return 1
 	if(set_machine)
@@ -528,13 +521,9 @@ Class Procs:
 	else if(prob(50))
 		emp_act(2)
 	else
-<<<<<<< HEAD
-		ex_act(1)
+		ex_act(2)
 
 /obj/machinery/get_software_list()
 	if(!software)
 		software = list()
 	return software
-=======
-		ex_act(2)
->>>>>>> masterTGbranch

@@ -140,13 +140,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-<<<<<<< HEAD
-	item = /obj/item/weapon/gun/projectile/revolver
-	cost = 11
-=======
 	item = /obj/item/weapon/gun/ballistic/revolver
 	cost = 13
->>>>>>> masterTGbranch
 	surplus = 50
 
 /datum/uplink_item/dangerous/shotgun
@@ -162,13 +157,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			20-round magazine and is compatible with suppressors."
-<<<<<<< HEAD
-	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 13
-	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear)
-
-=======
 	item = /obj/item/weapon/gun/ballistic/automatic/c20r
 	cost = 10
 	surplus = 40
@@ -178,18 +166,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/gun/ballistic/automatic/c20r/unrestricted
 	include_modes = list(/datum/game_mode/gang)
 
->>>>>>> masterTGbranch
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 5.56x45mm ammunition."
-<<<<<<< HEAD
-	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 40
-=======
 	item = /obj/item/weapon/gun/ballistic/automatic/l6_saw
 	cost = 18
->>>>>>> masterTGbranch
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -333,7 +315,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 35
 	include_modes = list(/datum/game_mode/nuclear)
 
-<<<<<<< HEAD
 /datum/uplink_item/dangerous/guardian
 	name = "Holoparasites"
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
@@ -343,8 +324,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 	player_minimum = 25
 
-=======
->>>>>>> masterTGbranch
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
@@ -578,8 +557,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
 
-<<<<<<< HEAD
-=======
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
@@ -597,7 +574,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 13
 	surplus = 0
 
->>>>>>> masterTGbranch
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
@@ -615,13 +591,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
 			darts effective at incapacitating a target."
-<<<<<<< HEAD
-	item = /obj/item/weapon/gun/projectile/automatic/toy/pistol/riot
-	cost = 2
-=======
 	item = /obj/item/weapon/gun/ballistic/automatic/toy/pistol/riot
-	cost = 3
->>>>>>> masterTGbranch
+	cost = 2
 	surplus = 10
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
@@ -716,16 +687,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/chameleon
 	cost = 4
-<<<<<<< HEAD
-	exclude_modes = list(/datum/game_mode/traitor/double_agents)//being able to completely change your appearance infinitely when you have an assassin is dumb
-=======
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor/double_agents)//being able to completely change your appearance infinitely when you have an assassin is dumb
 
 /datum/uplink_item/stealthy_tools/chameleon/nuke
 	cost = 6
 	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
->>>>>>> masterTGbranch
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
 	name = "No-Slip Chameleon Shoes"
@@ -757,9 +724,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_tools/cham_belt
 	name = "Chameleon Military Belt"
-	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment. This one can be disguised to imitate many of the standard belts found around the station."
+	desc = "A robust seven-slot red belt that is capable of holding all manner of tactical equipment. This one can be disguised to imitate many of the standard belts found around the station."
 	item = /obj/item/weapon/storage/belt/military/chameleon
-	cost = 3
+	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 
@@ -819,14 +786,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
 	cost = 1
 	surplus = 20
-	
+
 /datum/uplink_item/stealthy_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
 	desc = "It's just a normal disk. Visually it's identical to the real deal, but it won't hold up under closer scrutiny. Don't try to give this to us to complete your objective, we know better!"
 	item = /obj/item/weapon/disk/fakenucleardisk
 	cost = 1
 	surplus = 1
-	
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
@@ -897,13 +864,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
-<<<<<<< HEAD
-	cost = 3
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
-=======
 	cost = 1
-	exclude_modes = list(/datum/game_mode/nuclear)
->>>>>>> masterTGbranch
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor)
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"

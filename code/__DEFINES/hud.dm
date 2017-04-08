@@ -31,7 +31,6 @@
 #define ANTAG_HUD_OPS			8
 #define ANTAG_HUD_WIZ			9
 #define ANTAG_HUD_SHADOW    	10
-<<<<<<< HEAD
 #define ANTAG_HUD_HOG_BLUE 		11
 #define ANTAG_HUD_HOG_RED 		12
 #define ANTAG_HUD_TRAITOR 		13
@@ -45,17 +44,7 @@
 #define ANTAG_HUD_CYBERMEN		21
 #define DATA_HUD_CYBERMEN_HACK	22
 #define ANTAG_HUD_SUMMON_MAGIC	23
-#define ANTAG_HUD_ASHWALKER 24
-=======
-#define ANTAG_HUD_TRAITOR 		11
-#define ANTAG_HUD_NINJA 		12
-#define ANTAG_HUD_CHANGELING 	13
-#define ANTAG_HUD_ABDUCTOR 		14
-#define ANTAG_HUD_DEVIL			15
-#define ANTAG_HUD_SINTOUCHED	16
-#define ANTAG_HUD_SOULLESS		17
-#define ANTAG_HUD_CLOCKWORK		18
->>>>>>> masterTGbranch
+#define ANTAG_HUD_ASHWALKER 	24
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

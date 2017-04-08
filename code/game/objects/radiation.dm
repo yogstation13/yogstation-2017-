@@ -29,10 +29,6 @@
 /atom/proc/rad_act(var/severity)
 	return 1
 
-<<<<<<< HEAD
-
-=======
->>>>>>> masterTGbranch
 /mob/living/rad_act(amount, silent = 0)
 	if(amount)
 		var/blocked = getarmor(null, "rad")

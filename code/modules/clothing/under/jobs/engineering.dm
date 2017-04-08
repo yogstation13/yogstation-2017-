@@ -5,15 +5,12 @@
 	icon_state = "chiefengineer"
 	item_state = "gy_suit"
 	item_color = "chief"
-<<<<<<< HEAD
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10, fire = 80, acid = 40)
 	burn_state = FIRE_PROOF
 	cold_protection = CHEST
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-=======
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 10, fire = 80, acid = 40)
 	resistance_flags = 0
->>>>>>> masterTGbranch
 
 /obj/item/clothing/under/rank/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians."
@@ -44,11 +41,6 @@
 	desc = "It's a slimming black with reinforced seams; great for industrial work."
 	name = "roboticist's jumpsuit"
 	icon_state = "robotics"
-<<<<<<< HEAD
-	item_state = "ro_suit"
-	item_color = "robotics"
-=======
 	item_state = "robotics"
 	item_color = "robotics"
 	resistance_flags = 0
->>>>>>> masterTGbranch

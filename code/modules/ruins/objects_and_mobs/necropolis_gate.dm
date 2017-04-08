@@ -1,9 +1,5 @@
 //The necropolis gate is used to call forth Legion from the Necropolis.
-<<<<<<< HEAD
-/obj/structure/lavaland_door
-=======
 /obj/structure/necropolis_gate
->>>>>>> masterTGbranch
 	name = "necropolis gate"
 	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
 	icon = 'icons/effects/96x96.dmi'
@@ -14,21 +10,12 @@
 	bound_width = 96
 	bound_height = 96
 	pixel_x = -32
-<<<<<<< HEAD
-	bound_x = -32
-	burn_state = LAVA_PROOF
-=======
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
->>>>>>> masterTGbranch
 	luminosity = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE
 
-<<<<<<< HEAD
-/obj/structure/lavaland_door/attack_hand(mob/user)
-=======
 /obj/structure/necropolis_gate/attack_hand(mob/user)
->>>>>>> masterTGbranch
 	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
 		return
 	if(is_anyone_home)
@@ -59,18 +46,6 @@
 		if(M.z == z)
 			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
 			M << 'sound/creatures/legion_spawn.ogg'
-<<<<<<< HEAD
-			if(M.client)
-				flash_color(M, color = "#FF0000", time = 50)
-	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
-	is_anyone_home = FALSE
-	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
-
-/obj/structure/lavaland_door/singularity_pull()
-	return 0
-
-/obj/structure/lavaland_door/Destroy(force)
-=======
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
 	var/image/door_overlay = image('icons/effects/effects.dmi', "legiondoor")
 	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, alert_overlay = door_overlay, action = NOTIFY_JUMP)
@@ -81,7 +56,6 @@
 	return 0
 
 /obj/structure/necropolis_gate/Destroy(force)
->>>>>>> masterTGbranch
 	if(force)
 		. = ..()
 	else

@@ -67,7 +67,6 @@
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
-<<<<<<< HEAD
 
 /obj/item/trash/toritose
 	name = "toritos"
@@ -102,5 +101,3 @@
 				return
 
 			user << "<span class='warning'>You have successfully added [naughty] to the naughty list.</span>"
-=======
->>>>>>> masterTGbranch

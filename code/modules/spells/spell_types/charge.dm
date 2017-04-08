@@ -61,12 +61,6 @@
 				I.process_chamber()
 				charged_item = I
 				break
-<<<<<<< HEAD
-			else if(istype(item, /obj/item/weapon/stock_parts/cell))
-				if(mess_with_cell(item))
-					burnt_out = 1
-				charged_item = item
-=======
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
 				var/obj/item/weapon/stock_parts/cell/C = item
 				if(!C.self_recharge)
@@ -77,7 +71,6 @@
 						burnt_out = 1
 				C.charge = C.maxcharge
 				charged_item = C
->>>>>>> masterTGbranch
 				break
 			else if(istype(item, /obj/item/weapon/gun/energy))
 				var/obj/item/weapon/gun/energy/G = item
@@ -102,11 +95,6 @@
 			else if(item.contents)
 				var/obj/I = null
 				for(I in item.contents)
-<<<<<<< HEAD
-					if(istype(I, /obj/item/weapon/stock_parts/cell))
-						if(mess_with_cell(I))
-							burnt_out = 1
-=======
 					if(istype(I, /obj/item/weapon/stock_parts/cell/))
 						var/obj/item/weapon/stock_parts/cell/C = I
 						if(!C.self_recharge)
@@ -119,7 +107,6 @@
 						if(istype(C.loc,/obj/item/weapon/gun))
 							var/obj/item/weapon/gun/G = C.loc
 							G.process_chamber()
->>>>>>> masterTGbranch
 						item.update_icon()
 						charged_item = item
 						break

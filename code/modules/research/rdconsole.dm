@@ -188,12 +188,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(t_disk)
 				if(!n)
 					for(var/tech in t_disk.tech_stored)
-<<<<<<< HEAD
-						files.AddTech2Known(tech)
-=======
 						if(tech)
 							files.AddTech2Known(tech)
->>>>>>> masterTGbranch
 				else
 					files.AddTech2Known(t_disk.tech_stored[n])
 				updateUsrDialog()
@@ -216,13 +212,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["copy_tech"]) //Copy some technology data from the research holder to the disk.
 		var/slot = text2num(href_list["copy_tech"])
-<<<<<<< HEAD
 		var/datum/tech/T = files.known_tech[href_list["copy_tech_ID"]]
 		if(T)
 			t_disk.tech_stored[slot] = T.copy()
-=======
-		t_disk.tech_stored[slot] = files.known_tech[href_list["copy_tech_ID"]]
->>>>>>> masterTGbranch
 		screen = 1.2
 
 	else if(href_list["updt_design"]) //Updates the research holder with design data from the design disk.
@@ -581,11 +573,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(href_list["reset"]) //Reset the R&D console's database.
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
-<<<<<<< HEAD
-		if(choice == "Continue")
-=======
 		if(choice == "Continue" && usr.canUseTopic(src))
->>>>>>> masterTGbranch
 			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
 			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
 			screen = 0.0
@@ -744,11 +732,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
 						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
 					dat += "Required Materials:<BR>"
-<<<<<<< HEAD
-					var/all_mats = D.materials + D.reagents
-=======
 					var/all_mats = D.materials + D.reagents_list
->>>>>>> masterTGbranch
 					for(var/M in all_mats)
 						dat += "* [CallMaterialName(M)] x [all_mats[M]]<BR>"
 					dat += "Operations: <A href='?src=\ref[src];updt_design=[i]'>Upload to Database</A> <A href='?src=\ref[src];clear_design=[i]'>Clear Slot</A>"
@@ -903,11 +887,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				var/temp_material
 				var/c = 50
 				var/t
-<<<<<<< HEAD
-				var/all_materials = D.materials + D.reagents
-=======
 				var/all_materials = D.materials + D.reagents_list
->>>>>>> masterTGbranch
 				for(var/M in all_materials)
 					t = linked_lathe.check_mat(D, M)
 					temp_material += " | "
@@ -1018,11 +998,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			for(var/datum/design/D in matching_designs)
 				var/temp_materials
 				var/check_materials = 1
-<<<<<<< HEAD
-				var/all_materials = D.materials + D.reagents
-=======
 				var/all_materials = D.materials + D.reagents_list
->>>>>>> masterTGbranch
 				for(var/M in all_materials)
 					temp_materials += " | "
 					if (!linked_imprinter.check_mat(D, M))

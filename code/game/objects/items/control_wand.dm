@@ -37,11 +37,7 @@
 	if(!D.requiresID())
 		user << "<span class='danger'>[D]'s ID scan is disabled!</span>"
 		return
-<<<<<<< HEAD
-	if(D.check_access(ID) && D.allowed(user))
-=======
 	if(D.check_access(ID) && D.canAIControl(user))
->>>>>>> masterTGbranch
 		switch(mode)
 			if(WAND_OPEN)
 				if(D.density)

@@ -6,11 +6,7 @@
 
 /datum/action
 	var/name = "Generic Action"
-<<<<<<< HEAD
-	var/desc
-=======
 	var/desc = null
->>>>>>> masterTGbranch
 	var/obj/target = null
 	var/check_flags = 0
 	var/processing = 0
@@ -108,24 +104,13 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-<<<<<<< HEAD
-	if(button_icon && button_icon_state && (current_button.overlay_icon_state != button_icon_state))
-=======
 	current_button.cut_overlays()
 	if(icon_icon && button_icon_state)
->>>>>>> masterTGbranch
 		var/image/img
 		img = image(icon_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
-<<<<<<< HEAD
-		current_button.overlays = list(img)
-		current_button.overlay_icon_state = button_icon_state
-=======
 		current_button.add_overlay(img)
-
-
->>>>>>> masterTGbranch
 
 //Presets for item actions
 /datum/action/item_action

@@ -175,10 +175,6 @@ research holder datum.
 		return
 	..()
 
-<<<<<<< HEAD
-=======
-
->>>>>>> masterTGbranch
 /***************************************************************
 **						Technology Datums					  **
 **	Includes all the various technoliges and what they make.  **
@@ -323,10 +319,6 @@ research holder datum.
 	for(var/i in 1 to max_tech_stored)
 		tech_stored += null
 
-<<<<<<< HEAD
-=======
-
->>>>>>> masterTGbranch
 /obj/item/weapon/disk/tech_disk/adv
 	name = "advanced technology disk"
 	desc = "A disk for storing technology data for further research. This one has extra storage space."

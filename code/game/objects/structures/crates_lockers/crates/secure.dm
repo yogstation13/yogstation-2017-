@@ -4,9 +4,6 @@
 	icon_state = "securecrate"
 	secure = 1
 	locked = 1
-<<<<<<< HEAD
-	health = 150
-=======
 	obj_integrity = 500
 	max_integrity = 500
 	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
@@ -16,7 +13,6 @@
 	if(damage_flag == "melee" && damage_amount < 25)
 		return 0
 	. = ..()
->>>>>>> masterTGbranch
 
 /obj/structure/closet/crate/secure/update_icon()
 	..()

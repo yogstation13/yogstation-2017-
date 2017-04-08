@@ -18,15 +18,9 @@
 	yield = 4
 	potency = 15
 	growthstages = 4
-<<<<<<< HEAD
-	plant_type = PLANT_MUSHROOM
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("morphine" = 0.5, "charcoal" = 0.5)
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
->>>>>>> masterTGbranch
+	reagents_add = list("morphine" = 0.7, "charcoal" = 0.7, "nutriment" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
@@ -50,17 +44,10 @@
 	production = 5
 	yield = 4
 	growthstages = 3
-<<<<<<< HEAD
-	plant_type = PLANT_MUSHROOM
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	mutatelist = list(/obj/item/seeds/angel)
-	reagents_add = list("mushroomhallucinogen" = 0.08, "amatoxin" = 0.7)
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0, "growthserum" = 0.1)
->>>>>>> masterTGbranch
+	reagents_add = list("mushroomhallucinogen" = 0.08, "amatoxin" = 0.7, "growthserum" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanita
@@ -85,15 +72,9 @@
 	yield = 2
 	potency = 35
 	growthstages = 3
-<<<<<<< HEAD
-	plant_type = PLANT_MUSHROOM
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("mushroomhallucinogen" = 0.08, "amatoxin" = 0.2, "amanitin" = 0.4)
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
->>>>>>> masterTGbranch
+	reagents_add = list("mushroomhallucinogen" = 0.08, "amatoxin" = 0.2, "amanitin" = 0.4)
 	rarity = 30
 	origin_tech = "biotech=5"
 
@@ -118,15 +99,9 @@
 	yield = 5
 	potency = 15
 	growthstages = 3
-<<<<<<< HEAD
-	plant_type = PLANT_MUSHROOM
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("mushroomhallucinogen" = 0.5, "nutriment" = 0.04)
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("mushroomhallucinogen" = 0.25, "nutriment" = 0.02)
->>>>>>> masterTGbranch
+	reagents_add = list("mushroomhallucinogen" = 0.5, "nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
 	seed = /obj/item/seeds/liberty
@@ -149,11 +124,7 @@
 	yield = 4
 	potency = 15
 	growthstages = 3
-<<<<<<< HEAD
-	plant_type = PLANT_MUSHROOM
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
->>>>>>> masterTGbranch
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
@@ -219,15 +190,9 @@
 	yield = 5
 	potency = 15
 	growthstages = 3
-<<<<<<< HEAD
-	plant_type = PLANT_MUSHROOM
-	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("nutriment" = 0.2)
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list("nutriment" = 0.1)
->>>>>>> masterTGbranch
+	reagents_add = list("nutriment" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
 	seed = /obj/item/seeds/chanter
@@ -253,11 +218,7 @@
 	potency = 30 //-> brightness
 	growthstages = 4
 	rarity = 20
-<<<<<<< HEAD
-	genes = list(/datum/plant_gene/trait/glow)
-=======
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
->>>>>>> masterTGbranch
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 	reagents_add = list("radium" = 0.2, "phosphorus" = 0.2, "nutriment" = 0.08)

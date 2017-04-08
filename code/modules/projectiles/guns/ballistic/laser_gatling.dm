@@ -22,14 +22,10 @@
 
 /obj/item/weapon/minigunpack/Destroy()
 	STOP_PROCESSING(SSobj, src)
-<<<<<<< HEAD:code/modules/projectiles/guns/projectile/rechargable_magazine.dm
 	var/g = gun
 	gun = null
 	qdel(g)
 	return ..()
-=======
-	..()
->>>>>>> masterTGbranch:code/modules/projectiles/guns/ballistic/laser_gatling.dm
 
 /obj/item/weapon/minigunpack/process()
 	overheat = max(0, overheat - heat_diffusion)
@@ -119,64 +115,15 @@
 	casing_ejector = 0
 	var/obj/item/weapon/minigunpack/ammo_pack
 
-<<<<<<< HEAD:code/modules/projectiles/guns/projectile/rechargable_magazine.dm
-/obj/item/weapon/gun/projectile/minigun/New()
-	if(!ammo_pack)
-		if(istype(loc,/obj/item/weapon/minigunpack)) //We should spawn inside a ammo pack so let's use that one.
-			ammo_pack = loc
-			..()
-		else
-			qdel(src)//No pack, no gun
-
-/obj/item/weapon/gun/projectile/minigun/Destroy()
-	var/ap = ammo_pack
-	ammo_pack = null
-	qdel(ap)
-	return ..()
-
-/obj/item/weapon/gun/projectile/minigun/attack_self(mob/living/user)
-	return
-
-/obj/item/weapon/gun/projectile/minigun/dropped(mob/user)
-	..()
-=======
 /obj/item/weapon/gun/ballistic/minigun/attack_self(mob/living/user)
 	return
 
 /obj/item/weapon/gun/ballistic/minigun/dropped(mob/user)
->>>>>>> masterTGbranch:code/modules/projectiles/guns/ballistic/laser_gatling.dm
 	if(ammo_pack)
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
 
-<<<<<<< HEAD:code/modules/projectiles/guns/projectile/rechargable_magazine.dm
-/obj/item/weapon/gun/projectile/minigun/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
-	. = ..()
-	ammo_pack.overheat++
-
-/obj/item/weapon/gun/projectile/minigun/can_shoot()
-	if(!ammo_pack || ammo_pack.loc != loc)
-		return 0
-	if(ammo_pack.overheat >= ammo_pack.overheat_max)
-		return 0
-	return 1
-
-/obj/item/weapon/gun/projectile/minigun/shoot_with_empty_chamber(mob/living/user)
-	if(!ammo_pack || ammo_pack.loc != user)
-		user << "You need the backpack power source to fire the gun!"
-	else if(ammo_pack.overheat >= ammo_pack.overheat_max)
-		user << "The gun's heat sensor has locked the trigger to prevent lens damage."
-
-/obj/item/weapon/gun/projectile/minigun/process_chamber(eject_casing = 0, empty_chamber = 1)
-	..()
-
-/obj/item/ammo_box/magazine/internal/minigun
-	name = "gatling gun fusion core"
-	ammo_type = /obj/item/ammo_casing/caseless/laser/gatling
-	caliber = "gatling"
-	max_ammo = 5000
-=======
 /obj/item/weapon/gun/ballistic/minigun/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	if(ammo_pack)
 		if(ammo_pack.overheat < ammo_pack.overheat_max)
@@ -200,6 +147,5 @@
 
 /obj/item/weapon/gun/ballistic/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)
->>>>>>> masterTGbranch:code/modules/projectiles/guns/ballistic/laser_gatling.dm
 
 

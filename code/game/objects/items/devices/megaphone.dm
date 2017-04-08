@@ -13,41 +13,10 @@
 /obj/item/device/megaphone/get_held_item_speechspans(mob/living/carbon/user)
 	if(spamcheck > world.time)
 		user << "<span class='warning'>\The [src] needs to recharge!</span>"
-<<<<<<< HEAD
-		return
-
-	var/message = copytext(sanitize(input(user, "Shout a message?", "Megaphone", null)  as text),1,MAX_MESSAGE_LEN)
-	if(!message)
-		return
-
-	message = capitalize(message)
-	if(!user.can_speak(message))
-		user << "<span class='warning'>You find yourself unable to speak at all!</span>"
-		return
-
-	if ((src.loc == user && user.stat == 0))
-		if(spamcheck > world.time) //If multiple dialogue boxes are open, this will stop it from being spammable.
-			user << "<span class='warning'>\The [src] needs to recharge!</span>"
-			return
-		else
-			if(emagged)
-				if(insults)
-					user.say(pick(insultmsg),"machine", list(voicespan))
-					insults--
-				else
-					user << "<span class='warning'>*BZZZZzzzzzt*</span>"
-			else
-				user.say(message,"machine", list(voicespan))
-
-			playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
-			spamcheck = world.time + 50
-			return
-=======
 	else
 		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
 		spamcheck = world.time + 50
 		return voicespan
->>>>>>> masterTGbranch
 
 /obj/item/device/megaphone/emag_act(mob/user)
 	user << "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>"

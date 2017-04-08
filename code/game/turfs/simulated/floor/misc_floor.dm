@@ -71,14 +71,6 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-<<<<<<< HEAD
-	START_PROCESSING(SSobj, src)
-	clockwork_construction_value++
-
-/turf/open/floor/clockwork/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	clockwork_construction_value--
-=======
 	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
 	realappearence.linked = src
 	change_construction_value(1)
@@ -99,7 +91,6 @@
 	realappearence = null
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
->>>>>>> masterTGbranch
 	..()
 	START_PROCESSING(SSobj, src)
 
@@ -176,36 +167,18 @@
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
-<<<<<<< HEAD
-		playsound(src, 'sound/items/Crowbar.ogg', 20, 1)
-		if(!do_after(user, 70 / I.toolspeed, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
-		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
-=======
 		playsound(src, I.usesound, 20, 1)
 		if(!do_after(user, 70*I.toolspeed, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src]!</span>")
 		playsound(src, I.usesound, 80, 1)
->>>>>>> masterTGbranch
 		make_plating()
 		return 1
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-<<<<<<< HEAD
-	new/obj/item/clockwork/alloy_shards/small(src)
-	new/obj/item/clockwork/alloy_shards/medium(src)
-	return ..()
-
-/turf/open/floor/clockwork/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
-=======
 	PoolOrNew(/obj/item/stack/tile/brass, src)
 	return ..()
->>>>>>> masterTGbranch
 
 /turf/open/floor/clockwork/narsie_act()
 	..()

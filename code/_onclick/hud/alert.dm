@@ -247,14 +247,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /obj/screen/alert/clockwork
 	alerttooltipstyle = "clockcult"
 
-<<<<<<< HEAD
 /obj/screen/alert/clockwork/nocache
 	name = "No Tinkerer's Cache"
 	desc = "In order to share components and unlock higher tier \
 		scripture, a tinkerer's cache must be constructed somewhere \
 		in the world. Try to place it somewhere accessible, yet hidden."
 	icon_state = "nocache"
-=======
+
 /obj/screen/alert/clockwork/scripture_reqs
 	name = "Next Tier Requirements"
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
@@ -345,7 +344,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				icon_state += "-ai"
 			else
 				desc += "<br>No unconverted AIs exist: <b><font color=#5A6068>\[CHECK\]</font></b>"
->>>>>>> masterTGbranch
 
 /obj/screen/alert/clockwork/infodump
 	name = "Global Records"
@@ -358,11 +356,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	else
 		var/servants = 0
 		var/validservants = 0
-<<<<<<< HEAD
-		var/unconverted_ai_exists = FALSE
-=======
 		var/unconverted_ais_exist = FALSE
->>>>>>> masterTGbranch
 		var/list/scripture_states = scripture_unlock_check()
 		for(var/mob/living/L in living_mob_list)
 			if(is_servant_of_ratvar(L))
@@ -370,11 +364,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 				if(ishuman(L) || issilicon(L))
 					validservants++
 			else if(isAI(L))
-<<<<<<< HEAD
-				unconverted_ai_exists = TRUE
-=======
 				unconverted_ais_exist++
->>>>>>> masterTGbranch
 		if(servants > 1)
 			if(validservants > 1)
 				desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
@@ -388,40 +378,26 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
-<<<<<<< HEAD
-		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
-=======
 		for(var/obj/structure/destructible/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
->>>>>>> masterTGbranch
 			var/area/gate_area = get_area(G)
 			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
 			if(G.ratvar_portal)
 				desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
 			else
 				desc += "Seconds until Proselytization: <b>[G.get_arrival_text(TRUE)]</b><br>"
-<<<<<<< HEAD
-		if(unconverted_ai_exists)
-			desc += "<b>An unconverted AI exists!</b><br>"
-=======
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)
 				desc += "<b>[unconverted_ais_exist] unconverted AIs exist!</b><br>"
 			else
 				desc += "<b>An unconverted AI exists!</b><br>"
->>>>>>> masterTGbranch
 		if(scripture_states[SCRIPTURE_REVENANT])
 			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-<<<<<<< HEAD
-				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
-				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
-=======
 				desc += "Generals available:<b>[inathneq_available ? "<br><font color=#1E8CE1>INATH-NEQ</font>":""][sevtug_available ? "<br><font color=#AF0AAF>SEVTUG</font>":""]\
 				[nezbere_available ? "<br><font color=#5A6068>NEZBERE</font>":""][nezcrentr_available ? "<br><font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
->>>>>>> masterTGbranch
 			else
 				desc += "Generals available: <b>NONE</b><br>"
 		else

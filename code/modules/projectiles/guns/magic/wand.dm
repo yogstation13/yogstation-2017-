@@ -66,18 +66,11 @@
 	max_charges = 3 //3, 2, 2, 1
 
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user)
-<<<<<<< HEAD
-	var/message ="<span class='warning'>You irradiate yourself with pure energy! "
-	message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
-	user << message
-	user.adjustOxyLoss(500, 1, DAMAGE_MAGIC)
-=======
 	..()
 	user << "<span class='warning'>You irradiate yourself with pure energy! \
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
 	</span>"
-	user.adjustOxyLoss(500)
->>>>>>> masterTGbranch
+	user.adjustOxyLoss(500, 1, DAMAGE_MAGIC)
 	charges--
 
 

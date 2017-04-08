@@ -28,7 +28,6 @@
 	pin = /obj/item/device/firing_pin
 	actions_types = list(/datum/action/item_action/replicate_ammo)
 
-<<<<<<< HEAD:code/modules/projectiles/guns/projectile/launchers.dm
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg/attack_self(mob/user)
 	replicate_ammo(user)
 
@@ -61,10 +60,6 @@
 
 /datum/action/item_action/replicate_ammo
 	name = "Replicate Ammo"
-=======
-/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg/attack_self()
-	return
->>>>>>> masterTGbranch:code/modules/projectiles/guns/ballistic/launchers.dm
 
 /obj/item/weapon/gun/ballistic/automatic/gyropistol
 	name = "gyrojet pistol"

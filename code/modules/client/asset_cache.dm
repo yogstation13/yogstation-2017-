@@ -243,11 +243,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"pda_scanner.png"		= 'icons/pda_icons/pda_scanner.png',
 		"pda_signaler.png"		= 'icons/pda_icons/pda_signaler.png',
 		"pda_status.png"		= 'icons/pda_icons/pda_status.png',
-<<<<<<< HEAD
 		"pda_botany.png"		= 'icons/pda_icons/pda_botany.png'
-=======
 		"pda_dronephone.png"	= 'icons/pda_icons/pda_dronephone.png'
->>>>>>> masterTGbranch
 	)
 
 /datum/asset/simple/paper
@@ -265,7 +262,6 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
 	)
 
-<<<<<<< HEAD
 /datum/asset/simple/adware
 	assets = list(
 		"ad1.png" = 'icons/ads/ad1.png',
@@ -277,13 +273,11 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"ad7.png" = 'icons/ads/ad7.png',
 	)
 
-=======
 /datum/asset/simple/IRV
 	assets = list(
 		"jquery-ui.custom-core-widgit-mouse-sortable-min.js" = 'html/IRV/jquery-ui.custom-core-widgit-mouse-sortable-min.js',
 		"jquery-1.10.2.min.js" = 'html/IRV/jquery-1.10.2.min.js'
 	)
->>>>>>> masterTGbranch
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()

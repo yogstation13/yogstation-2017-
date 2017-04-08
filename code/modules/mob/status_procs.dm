@@ -46,39 +46,24 @@
 
 /////////////////////////////////// PARALYSIS ////////////////////////////////////
 
-<<<<<<< HEAD
-/mob/proc/Paralyse(amount, updating = 1)
-	if(CANPARALYSE in status_flags)
-=======
 /mob/proc/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
->>>>>>> masterTGbranch
+	if((CANPARALYSE in status_flags) || ignore_canparalyse)
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
 			if(updating)
 				update_stat()
 
-<<<<<<< HEAD
-/mob/proc/SetParalysis(amount, updating = 1)
-	if(CANPARALYSE in status_flags)
-=======
 /mob/proc/SetParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
->>>>>>> masterTGbranch
+	if((CANPARALYSE in status_flags) || ignore_canparalyse)
 		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
 			if(updating)
 				update_stat()
 
-<<<<<<< HEAD
-/mob/proc/AdjustParalysis(amount, updating = 1)
-	if(CANPARALYSE in status_flags)
-=======
 /mob/proc/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
->>>>>>> masterTGbranch
+	if((CANPARALYSE in status_flags) || ignore_canparalyse)
 		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))

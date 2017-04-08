@@ -22,15 +22,4 @@
 
 /obj/effect/forcefield/mime/New()
 	..()
-<<<<<<< HEAD
-	last_process = world.time
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/forcefield/mime/process()
-	timeleft -= (world.time - last_process)
-	if(timeleft <= 0)
-		STOP_PROCESSING(SSobj, src)
-		qdel(src)
-=======
 	QDEL_IN(src, timeleft)
->>>>>>> masterTGbranch

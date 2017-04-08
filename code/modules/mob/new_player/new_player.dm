@@ -35,7 +35,7 @@
 			output += "<p><span class='linkOn'><b>Ready</b></span> <a href='byond://?src=\ref[src];ready=0'>X</a></p>"
 		else
 			output += "<p><a href='byond://?src=\ref[src];ready=1'>Ready</a> <span class='linkOff'>X</span></p>"
-			
+
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		if(joining_forbidden)
@@ -398,17 +398,11 @@
 
 	SSjob.AssignRole(src, rank, 1)
 
-<<<<<<< HEAD
-	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
-	character.mind.quiet_round = character.client.prefs.toggles & QUIET_ROUND
-	SSjob.EquipRank(character, rank, 1)					//equips the human
-=======
 	var/mob/living/character = create_character()	//creates the human and transfers vars and mind
+	character.mind.quiet_round = character.client.prefs.toggles & QUIET_ROUND
 	var/equip = SSjob.EquipRank(character, rank, 1)
 	if(iscyborg(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
-
->>>>>>> masterTGbranch
 
 	var/D = pick(latejoin)
 	if(!D)
@@ -440,16 +434,7 @@
 
 	joined_player_list += character.ckey
 
-<<<<<<< HEAD
-	if(config.allow_latejoin_antagonists && !character.mind.quiet_round)
-		switch(SSshuttle.emergency.mode)
-			if(SHUTTLE_RECALL, SHUTTLE_IDLE)
-				ticker.mode.make_antag_chance(character)
-			if(SHUTTLE_CALL)
-				if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
-					ticker.mode.make_antag_chance(character)
-=======
-	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(config.allow_latejoin_antagonists && humanc && !character.mind.quiet_round)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
@@ -457,7 +442,6 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						ticker.mode.make_antag_chance(humanc)
->>>>>>> masterTGbranch
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)

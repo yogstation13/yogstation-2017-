@@ -4,7 +4,6 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
-<<<<<<< HEAD
 #define ismodholder(O) (istype(O, /obj/item/module_holder))
 
 #define ismodule(O) (istype(O, /obj/item/module))
@@ -12,7 +11,6 @@
 #define isminingturf(A) (istype(A, /turf/open/floor/plating/asteroid))
 #define ischasm(A) (istype(A, /turf/open/chasm))
 // MOB HELPERS
-=======
 #define ismovableatom(A) (istype(A, /atom/movable))
 
 //Turfs
@@ -35,7 +33,6 @@
 
 //Carbon mobs
 #define iscarbon(A) (istype(A, /mob/living/carbon))
->>>>>>> masterTGbranch
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
@@ -118,13 +115,11 @@
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
-<<<<<<< HEAD
 #define isaiorborg(A) (istype(A, /mob/living/silicon/ai) || istype(A, /mob/living/silicon/robot))
 
 #define isliving(A) (istype(A, /mob/living))
-=======
+
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
->>>>>>> masterTGbranch
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -140,7 +135,6 @@
 
 #define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 
-<<<<<<< HEAD
 #define isitem(A) istype(A, /obj/item)
 
 #define ispredator(A) (istype(A, /mob/living/carbon/human/predator))
@@ -150,9 +144,7 @@
 #define iscaptive(A) (istype(A, /mob/living/captive_brain))
 
 // ASSEMBLY HELPERS
-=======
 #define isorgan(A) (istype(A, /obj/item/organ))
->>>>>>> masterTGbranch
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

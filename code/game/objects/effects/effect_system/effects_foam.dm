@@ -13,11 +13,7 @@
 	animate_movement = 0
 	var/metal = 0
 	var/lifetime = 40
-<<<<<<< HEAD
-	var/reagent_divisor = 5
-=======
 	var/reagent_divisor = 7
->>>>>>> masterTGbranch
 
 
 /obj/effect/particle_effect/foam/metal
@@ -44,18 +40,11 @@
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
-<<<<<<< HEAD
-	if(metal)
-		var/obj/structure/foamedmetal/M = new(src.loc)
-		M.metal = metal
-		M.updateicon()
-=======
 	switch(metal)
 		if(1)
 			new /obj/structure/foamedmetal(src.loc)
 		if(2)
 			new /obj/structure/foamedmetal/iron(src.loc)
->>>>>>> masterTGbranch
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -230,13 +219,7 @@
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return !density
 
-<<<<<<< HEAD
-
-/obj/structure/foamedmetal/CanAtmosPass()
-	return !density
-=======
 /obj/structure/foamedmetal/iron
 	obj_integrity = 50
 	max_integrity = 50
 	icon_state = "ironfoam"
->>>>>>> masterTGbranch

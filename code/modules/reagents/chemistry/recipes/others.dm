@@ -68,7 +68,7 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/sheet/mineral/gold(location)
-		 
+
 /datum/chemical_reaction/capsaicincondensation
 	name = "Capsaicincondensation"
 	id = "capsaicincondensation"
@@ -124,7 +124,7 @@
 	results = list("nitrous_oxide" = 2, "water" = 4)
 	required_reagents = list("ammonia" = 3, "nitrogen" = 1, "oxygen" = 2)
 	required_temp = 525
-	
+
 ////////////////////////////////// Mutation Toxins ///////////////////////////////////
 
 /datum/chemical_reaction/stable_mutation_toxin
@@ -222,122 +222,67 @@
 /datum/chemical_reaction/virus_food
 	name = "Virus Food"
 	id = "virusfood"
-<<<<<<< HEAD
-	result = "virusfood"
-	result_amount = 15
-=======
 	results = list("virusfood" = 15)
->>>>>>> masterTGbranch
 	required_reagents = list("water" = 5, "milk" = 5)
 
 /datum/chemical_reaction/virus_food_mutagen
 	name = "mutagenic agar"
 	id = "mutagenvirusfood"
-<<<<<<< HEAD
-	result = "mutagenvirusfood"
-	result_amount = 1
-=======
 	results = list("mutagenvirusfood" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("mutagen" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_synaptizine
 	name = "virus rations"
 	id = "synaptizinevirusfood"
-<<<<<<< HEAD
-	result ="synaptizinevirusfood"
-	result_amount = 1
-=======
 	results = list("synaptizinevirusfood" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("synaptizine" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma
 	name = "virus plasma"
 	id = "plasmavirusfood"
-<<<<<<< HEAD
-	result = "plasmavirusfood"
-	result_amount = 1
-=======
 	results = list("plasmavirusfood" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("plasma" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
-<<<<<<< HEAD
-	result = "weakplasmavirusfood"
-	result_amount = 2
-=======
 	results = list("weakplasmavirusfood" = 2)
->>>>>>> masterTGbranch
 	required_reagents = list("synaptizine" = 1, "plasmavirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	name = "sucrose agar"
 	id = "sugarvirusfood"
-<<<<<<< HEAD
-	result = "sugarvirusfood"
-	result_amount = 2
-=======
 	results = list("sugarvirusfood" = 2)
->>>>>>> masterTGbranch
 	required_reagents = list("sugar" = 1, "mutagenvirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_mutagen_salineglucose
 	name = "sucrose agar"
 	id = "salineglucosevirusfood"
-<<<<<<< HEAD
-	result = "sugarvirusfood"
-	result_amount = 2
-=======
 	results = list("sugarvirusfood" = 2)
->>>>>>> masterTGbranch
 	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_uranium
 	name = "Decaying uranium gel"
 	id = "uraniumvirusfood"
-<<<<<<< HEAD
-	result = "uraniumvirusfood"
-	result_amount = 1
-=======
 	results = list("uraniumvirusfood" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("uranium" = 1, "virusfood" = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma
 	name = "Unstable uranium gel"
 	id = "uraniumvirusfood_plasma"
-<<<<<<< HEAD
-	result = "uraniumplasmavirusfood_unstable"
-	result_amount = 1
-=======
 	results = list("uraniumplasmavirusfood_unstable" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("uranium" = 5, "plasmavirusfood" = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma_gold
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_gold"
-<<<<<<< HEAD
-	result = "uraniumplasmavirusfood_stable"
-	result_amount = 1
-=======
 	results = list("uraniumplasmavirusfood_stable" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("uranium" = 10, "gold" = 10, "plasma" = 1)
 
 /datum/chemical_reaction/virus_food_uranium_plasma_silver
 	name = "Stable uranium gel"
 	id = "uraniumvirusfood_silver"
-<<<<<<< HEAD
-	result = "uraniumplasmavirusfood_stable"
-	result_amount = 1
-=======
 	results = list("uraniumplasmavirusfood_stable" = 1)
->>>>>>> masterTGbranch
 	required_reagents = list("uranium" = 10, "silver" = 10, "plasma" = 1)
 
 /datum/chemical_reaction/mix_virus
@@ -426,11 +371,7 @@
 
 	name = "Mix Virus 10"
 	id = "mixvirus10"
-<<<<<<< HEAD
 	required_reagents = list("uraniumvirusfood" = 1)
-=======
-	required_reagents = list("uraniumvirusfood" = 5)
->>>>>>> masterTGbranch
 	level_min = 6
 	level_max = 7
 
@@ -438,11 +379,7 @@
 
 	name = "Mix Virus 11"
 	id = "mixvirus11"
-<<<<<<< HEAD
 	required_reagents = list("uraniumplasmavirusfood_unstable" = 1)
-=======
-	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
->>>>>>> masterTGbranch
 	level_min = 7
 	level_max = 7
 
@@ -450,11 +387,7 @@
 
 	name = "Mix Virus 12"
 	id = "mixvirus12"
-<<<<<<< HEAD
 	required_reagents = list("uraniumplasmavirusfood_stable" = 1)
-=======
-	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
->>>>>>> masterTGbranch
 	level_min = 8
 	level_max = 8
 
@@ -828,19 +761,9 @@
 	id = "royal_bee_jelly"
 	results = list("royal_bee_jelly" = 5)
 	required_reagents = list("mutagen" = 10, "honey" = 40)
-<<<<<<< HEAD
-	result_amount = 5
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/laughter
 	name = "laughter"
 	id = "laughter"
-<<<<<<< HEAD
-	result = "laughter"
-	required_reagents = list("banana" = 1, "sugar" = 1)
-	result_amount = 2
-=======
 	results = list("laughter" = 10) // Fuck it. I'm not touching this one.
 	required_reagents = list("sugar" = 1, "banana" = 1)
->>>>>>> masterTGbranch

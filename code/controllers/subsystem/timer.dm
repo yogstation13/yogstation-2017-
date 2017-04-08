@@ -36,11 +36,7 @@ var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer/proc/runevent(datum/timedevent/event)
 	set waitfor = 0
-<<<<<<< HEAD
-	if((event.thingToCall == GLOBAL_PROC) && istext(event.procToCall))
-=======
 	if(event.thingToCall == GLOBAL_PROC && istext(event.procToCall))
->>>>>>> masterTGbranch
 		call("/proc/[event.procToCall]")(arglist(event.argList))
 	else
 		call(event.thingToCall, event.procToCall)(arglist(event.argList))
@@ -66,11 +62,7 @@ var/datum/subsystem/timer/SStimer
 	SStimer.hashes -= hash
 	return QDEL_HINT_IWILLGC
 
-<<<<<<< HEAD
-/proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
-=======
 /proc/addtimer(thingToCall, procToCall, wait, unique = TIMER_NORMAL, ...)
->>>>>>> masterTGbranch
 	if (!thingToCall || !procToCall)
 		return
 	if (!SStimer.can_fire)
@@ -83,14 +75,6 @@ var/datum/subsystem/timer/SStimer
 	var/hashlist = args.Copy()
 
 	hashlist[1] = "[thingToCall](\ref[thingToCall])"
-<<<<<<< HEAD
-	event.hash = jointext(args, null)
-	if(args.len > 4)
-		event.argList = args.Copy(5)
-
-	// Check for dupes if unique = 1.
-	if(unique)
-=======
 	event.hash = jointext(hashlist, null)
 
 	var/bad_args = unique != TIMER_NORMAL && unique != TIMER_UNIQUE
@@ -103,7 +87,6 @@ var/datum/subsystem/timer/SStimer
 
 	// Check for dupes if unique = 1.
 	if(!bad_args && unique != TIMER_NORMAL)	//faster than checking if(unique == TIMER_UNIQUE)
->>>>>>> masterTGbranch
 		var/datum/timedevent/hash_event = SStimer.hashes[event.hash]
 		if(hash_event)
 			return hash_event.id

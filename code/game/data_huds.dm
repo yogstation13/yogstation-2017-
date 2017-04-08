@@ -74,7 +74,7 @@
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
+	if(M.stat == DEAD || (FAKEDEATH in M.status_flags))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -153,11 +153,7 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-<<<<<<< HEAD
 	if(stat == DEAD || (FAKEDEATH in status_flags))
-=======
-	if(stat == DEAD || (status_flags & FAKEDEATH))
->>>>>>> masterTGbranch
 		holder.icon_state = "huddead"
 	else
 		holder.icon_state = "hudhealthy"
@@ -166,23 +162,13 @@
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	var/virus_state = check_virus()
-<<<<<<< HEAD
-	var/mob/living/simple_animal/borer/B = borer
+	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	holder.pixel_y = I.Height() - world.icon_size
 	if(XENO_HOST in status_flags)
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (FAKEDEATH in status_flags))
 		holder.icon_state = "huddead"
-	else if(B && B.controlling)
-=======
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-	holder.pixel_y = I.Height() - world.icon_size
-	if(status_flags & XENO_HOST)
-		holder.icon_state = "hudxeno"
-	else if(stat == DEAD || (status_flags & FAKEDEATH))
-		holder.icon_state = "huddead"
 	else if(has_brain_worms() && B != null && B.controlling)
->>>>>>> masterTGbranch
 		holder.icon_state = "hudbrainworm"
 	else if(virus_state == 2)
 		holder.icon_state = "hudill"

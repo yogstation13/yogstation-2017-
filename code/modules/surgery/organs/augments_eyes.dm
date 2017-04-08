@@ -17,7 +17,6 @@
 
 
 /obj/item/organ/cyberimp/eyes/Insert(var/mob/living/carbon/M, var/special = 0)
-<<<<<<< HEAD
 	if(..())
 		if(istype(owner, /mob/living/carbon/human) && eye_color)
 			var/mob/living/carbon/human/HMN = owner
@@ -29,18 +28,6 @@
 
 		owner.update_sight()
 		return 1
-=======
-	..()
-	if(ishuman(owner) && eye_color)
-		var/mob/living/carbon/human/HMN = owner
-		old_eye_color = HMN.eye_color
-		HMN.eye_color = eye_color
-		HMN.regenerate_icons()
-	if(aug_message && !special)
-		owner << "<span class='notice'>[aug_message]</span>"
-
-	owner.update_sight()
->>>>>>> masterTGbranch
 
 /obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags

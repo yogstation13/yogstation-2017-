@@ -57,12 +57,6 @@
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
-<<<<<<< HEAD
-		else
-			STOP_PROCESSING(SSmachine, src)
-=======
->>>>>>> masterTGbranch
-
 	if(!.)
 		STOP_PROCESSING(SSmachine, src)
 

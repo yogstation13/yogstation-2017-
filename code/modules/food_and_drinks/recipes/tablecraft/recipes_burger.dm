@@ -253,8 +253,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat
 	category = CAT_BURGER
-<<<<<<< HEAD
-=======
 
 /datum/crafting_recipe/food/baseballburger
 	name = "Home run baseball burger"
@@ -275,4 +273,3 @@
 
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
 	category = CAT_BURGER
->>>>>>> masterTGbranch

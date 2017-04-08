@@ -361,24 +361,13 @@
 
 /obj/item/weapon/gun/dropped(mob/user)
 	..()
-<<<<<<< HEAD
-	if(F)
-		if(F.on)
-			user.AddLuminosity(-F.brightness_on)
-			SetLuminosity(F.brightness_on)
 	var/obj/item/scope/scope = locate() in src
 	if(scope)
 		scope.zoom(user,FALSE)
-=======
 	if(gun_light)
 		if(gun_light.on)
 			user.AddLuminosity(-gun_light.brightness_on)
 			SetLuminosity(gun_light.brightness_on)
-	zoom(user,FALSE)
-	if(azoom)
-		azoom.Remove(user)
-
->>>>>>> masterTGbranch
 
 /obj/item/weapon/gun/AltClick(mob/user)
 	..()
@@ -441,12 +430,6 @@
 		qdel(pin)
 	pin = new /obj/item/device/firing_pin
 
-<<<<<<< HEAD
-/obj/item/weapon/gun/burn()
-	if(pin)
-		qdel(pin)
-	.=..()
-=======
 /////////////
 // ZOOMING //
 /////////////
@@ -511,4 +494,3 @@
 		azoom = new()
 		azoom.gun = src
 
->>>>>>> masterTGbranch

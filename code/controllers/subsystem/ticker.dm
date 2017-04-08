@@ -59,11 +59,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-<<<<<<< HEAD
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 33, 'sound/ambience/title1.ogg' = 33, 'sound/ambience/title3.ogg' =33, 'sound/ambience/clown.ogg' = 1)) // choose title music!
-=======
 	login_music = pickweight(list('sound/ambience/title2.ogg' = 15, 'sound/ambience/title1.ogg' =15, 'sound/ambience/title3.ogg' =14, 'sound/ambience/title4.ogg' =14, 'sound/misc/i_did_not_grief_them.ogg' =14, 'sound/ambience/clown.ogg' = 9)) // choose title music!
->>>>>>> masterTGbranch
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -113,8 +109,6 @@ var/datum/subsystem/ticker/ticker
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-<<<<<<< HEAD
-
 			if(world.time > next_alert_time && next_check_admin)
 				next_alert_time = world.time+1800 /* 6000 */
 
@@ -122,8 +116,6 @@ var/datum/subsystem/ticker/ticker
 
 				if(!admins_online)
 					next_check_admin = 0
-=======
->>>>>>> masterTGbranch
 
 			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -270,17 +262,13 @@ var/datum/subsystem/ticker/ticker
 			if(M.stat != DEAD)
 				var/turf/T = get_turf(M)
 				if(T && T.z==1)
-<<<<<<< HEAD
 					// The chef's meat locker is lead-lined to improve the taste of the meat
 					if (!istype(M.loc, /obj/structure/closet/secure_closet/freezer/meat))
 						M.death(0) //no mercy
 					else
 						M << "The freezer wobbles a bit, then stops. You let out a sigh of relief.";
-=======
-					M.death(0) //no mercy
 				else
 					M.notransform=TRUE //no moving for you
->>>>>>> masterTGbranch
 
 	//Now animate the cinematic
 	switch(station_missed)
@@ -548,22 +536,6 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
-<<<<<<< HEAD
-	for(var/obj/machinery/capture_the_flag/CTF in machines)
-		if(!CTF.ctf_enabled)
-			CTF.ctf_enabled = !CTF.ctf_enabled
-			CTF.TellGhost()
-
-	return 1
-
-/datum/subsystem/ticker/proc/send_random_tip()
-	var/list/randomtips = file2list("config/tips.txt")
-	var/list/memetips = file2list("config/sillytips.txt")
-	if(randomtips.len && prob(95))
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
-	else if(memetips.len)
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-=======
 	//Collects persistence features
 	SSpersistence.CollectData()
 	return 1
@@ -583,7 +555,6 @@ var/datum/subsystem/ticker/ticker
 	if(m)
 		world << "<font color='purple'><b>Tip of the round: \
 			</b>[html_encode(m)]</font>"
->>>>>>> masterTGbranch
 
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
@@ -642,14 +613,6 @@ var/datum/subsystem/ticker/ticker
 
 	minds = ticker.minds
 
-<<<<<<< HEAD
-	Bible_icon_state = ticker.Bible_icon_state
-	Bible_item_state = ticker.Bible_item_state
-	Bible_name = ticker.Bible_name
-	Bible_deity_name = ticker.Bible_deity_name
-
-=======
->>>>>>> masterTGbranch
 	syndicate_coalition = ticker.syndicate_coalition
 	factions = ticker.factions
 	availablefactions = ticker.availablefactions
@@ -658,10 +621,7 @@ var/datum/subsystem/ticker/ticker
 
 	triai = ticker.triai
 	tipped = ticker.tipped
-<<<<<<< HEAD
-=======
 	selected_tip = ticker.selected_tip
->>>>>>> masterTGbranch
 
 	timeLeft = ticker.timeLeft
 
@@ -672,8 +632,6 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
-<<<<<<< HEAD
-=======
 
 
 /datum/subsystem/ticker/proc/send_news_report()
@@ -725,4 +683,3 @@ var/datum/subsystem/ticker/ticker
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
->>>>>>> masterTGbranch

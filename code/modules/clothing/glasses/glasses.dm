@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /obj/item/clothing/glasses
 	name = "glasses"
 	materials = list(MAT_GLASS = 250)
@@ -16,7 +14,6 @@
 	if(. && user)
 		user.update_sight()
 
->>>>>>> masterTGbranch
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))

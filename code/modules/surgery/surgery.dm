@@ -1,24 +1,6 @@
 /datum/surgery
 	var/name = "surgery"
 	var/status = 1
-<<<<<<< HEAD
-	var/list/steps = list()										//Steps in a surgery
-	var/step_in_progress = 0									//Actively performing a Surgery
-	var/can_cancel = 1											//Can cancel this surgery after step 1 with cautery
-	var/list/species = list(/mob/living/carbon/human)			//Acceptable Species
-	var/location = "chest"										//Surgery location
-	var/requires_organic_bodypart = 1							//Prevents you from performing an operation on robotic limbs
-	var/list/possible_locs = list() 							//Multiple locations -- c0
-	var/ignore_clothes = 0										//This surgery ignores clothes
-	var/mob/living/carbon/target								//Operation target mob
-	var/obj/item/organ/organ									//Operable body part
-	var/requires_bodypart = TRUE								//Surgery available only when a bodypart is present, or only when it is missing.
-	var/success_multiplier = 0								//Step success propability multiplier
-	var/speedup_multiplier = 0									//How much each step is sped up by (in percent)
-
-
-/datum/surgery/New(surgery_target, surgery_location, surgery_organ)
-=======
 	var/list/steps = list()									//Steps in a surgery
 	var/step_in_progress = 0								//Actively performing a Surgery
 	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
@@ -31,46 +13,32 @@
 	var/obj/item/bodypart/operated_bodypart					//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
+	var/speedup_multiplier = 0								//How much each step is sped up by (in percent)
 
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
->>>>>>> masterTGbranch
 	..()
 	if(surgery_target)
 		target = surgery_target
 		target.surgeries += src
 		if(surgery_location)
 			location = surgery_location
-<<<<<<< HEAD
-		if(surgery_organ)
-			organ = surgery_organ
-=======
 		if(surgery_bodypart)
 			operated_bodypart = surgery_bodypart
->>>>>>> masterTGbranch
 
 /datum/surgery/Destroy()
 	if(target)
 		target.surgeries -= src
 	target = null
-<<<<<<< HEAD
-	organ = null
-	return ..()
-=======
 	operated_bodypart = null
 	return ..()
 
->>>>>>> masterTGbranch
 
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
 	return 1
 
-<<<<<<< HEAD
-=======
-
->>>>>>> masterTGbranch
 /datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
 		return 1
@@ -86,20 +54,6 @@
 	return new step_type
 
 /datum/surgery/proc/complete()
-<<<<<<< HEAD
-	qdel(src)
-
-/datum/surgery/proc/get_probability_multiplier()
-	var/probability = 0.5
-	var/turf/T = get_turf(target)
-
-	if(locate(/obj/structure/table/optable, T))
-		probability = 1
-	else if(locate(/obj/structure/table, T))
-		probability = 0.8
-	else if(locate(/obj/structure/bed, T))
-		probability = 0.7
-=======
 	feedback_add_details("surgeries_completed", type)
 	qdel(src)
 
@@ -116,8 +70,6 @@
 		propability = 0.7
 
 	return propability + success_multiplier
-
->>>>>>> masterTGbranch
 
 	return probability + success_multiplier
 

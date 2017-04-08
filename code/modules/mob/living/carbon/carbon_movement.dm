@@ -1,11 +1,4 @@
 /mob/living/carbon/movement_delay()
-<<<<<<< HEAD
-	. = ..()
-	. += grab_state * 3
-	if(legcuffed)
-		. += legcuffed.slowdown
-		legcuffed.cuff_act(src)
-=======
 	var/FP
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -18,17 +11,14 @@
 	else
 		. += grab_state * 3 //can't go fast while grabbing something.
 
->>>>>>> masterTGbranch
 	if(!get_leg_ignore()) //ignore the fact we lack legs
 		var/leg_amount = get_num_legs()
 		. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
 		if(!leg_amount)
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
-<<<<<<< HEAD
-=======
 		if(legcuffed)
 			. += legcuffed.slowdown
->>>>>>> masterTGbranch
+			legcuffed.cuff_act(src)
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1

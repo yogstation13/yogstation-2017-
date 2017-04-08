@@ -175,25 +175,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/engine/cult)
 
-<<<<<<< HEAD
-/turf/open/floor/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))//only cult things can interact with floors so far
-		if(istype(src, /turf/open/floor/engine/cult))
-			return
-		src.ChangeTurf(/turf/open/floor/engine/cult)
-		M <<"<span class='notice'>You transfer some of your corrupt energy into the floor, causing it to transform.</span>"
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		return
-	return
-
-/turf/open/floor/ratvar_act(force)
-	var/converted = (prob(40) || force)
-	if(converted)
-=======
 /turf/open/floor/ratvar_act(force)
 	. = ..()
 	if(.)
->>>>>>> masterTGbranch
 		ChangeTurf(/turf/open/floor/clockwork)
 	for(var/I in src)
 		var/atom/A = I

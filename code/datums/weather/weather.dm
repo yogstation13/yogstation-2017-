@@ -40,12 +40,9 @@
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
 
-<<<<<<< HEAD
 	var/barometer_predictable = FALSE
 	var/next_hit_time = 0 //For barometers to know when the next storm will hit
 
-=======
->>>>>>> masterTGbranch
 /datum/weather/New()
 	..()
 	SSweather.existing_weather |= src
@@ -77,10 +74,7 @@
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
 	addtimer(src, "start", telegraph_duration)
-<<<<<<< HEAD
 	next_hit_time = world.time + telegraph_duration
-=======
->>>>>>> masterTGbranch
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
@@ -119,12 +113,8 @@
 	update_areas()
 
 /datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
-<<<<<<< HEAD
-	if(L.z != target_z)
-=======
 	var/turf/mob_turf = get_turf(L)
 	if(mob_turf && (mob_turf.z != target_z))
->>>>>>> masterTGbranch
 		return
 	if(immunity_type in L.weather_immunities)
 		return

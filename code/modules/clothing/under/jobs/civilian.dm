@@ -47,7 +47,6 @@
 	item_color = "chef"
 	alt_covers_chest = 1
 
-<<<<<<< HEAD
 /obj/item/clothing/under/rank/clerk
 	desc = "Oh, look it comes with its own vest."
 	name = "clerk's uniform"
@@ -56,8 +55,6 @@
 	item_color = "clerk"
 	can_adjust = 0
 
-=======
->>>>>>> masterTGbranch
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
 	desc = "<i>'HONK!'</i>"

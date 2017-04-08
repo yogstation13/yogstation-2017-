@@ -621,7 +621,6 @@
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
->>>>>>> masterTGbranch
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

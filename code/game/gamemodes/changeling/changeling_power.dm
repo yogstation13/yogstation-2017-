@@ -60,21 +60,13 @@
 	if(c.chem_charges < chemical_cost)
 		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
 		return 0
-<<<<<<< HEAD
 	if(c.profilecount<req_dna)
-=======
-	if(c.absorbedcount < req_dna)
->>>>>>> masterTGbranch
 		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
 		return 0
 	if(req_stat < user.stat)
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
-<<<<<<< HEAD
-	if((FAKEDEATH in user.status_flags) && name != "Regenerate")
-=======
-	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
->>>>>>> masterTGbranch
+	if((FAKEDEATH in user.status_flags) && (!ignores_fakedeath))
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
 	if(c.geneticdamage > max_genetic_damage)

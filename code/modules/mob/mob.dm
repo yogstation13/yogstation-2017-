@@ -3,13 +3,10 @@
 	dead_mob_list -= src
 	living_mob_list -= src
 	all_clockwork_mobs -= src
-<<<<<<< HEAD
-=======
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
 			observe.reset_perspective(null)
->>>>>>> masterTGbranch
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -96,12 +93,6 @@ var/next_mob_id = 0
 // vision_distance (optional) define how many tiles away the message can be seen.
 // ignored_mob (optional) doesn't show any message to a given mob if TRUE.
 
-<<<<<<< HEAD
-/mob/visible_message(message, self_message, blind_message, range = 7)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-=======
 /atom/proc/visible_message(message, self_message, blind_message, vision_distance, ignored_mob)
 	var/turf/T = get_turf(src)
 	if(!T)
@@ -109,7 +100,6 @@ var/next_mob_id = 0
 	var/range = 7
 	if(vision_distance)
 		range = vision_distance
->>>>>>> masterTGbranch
 	for(var/mob/M in get_hearers_in_view(range, src))
 		if(!M.client)
 			continue

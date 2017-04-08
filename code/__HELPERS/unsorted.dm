@@ -1308,7 +1308,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			//	not worth it.
 #undef DELTA_CALC
 
-<<<<<<< HEAD
 /proc/key_name_params(var/whom, var/include_link = null, var/include_name = 1, var/anchor_params = null, var/datum/admin_ticket/T = null)
 	var/mob/M
 	var/client/C
@@ -1449,10 +1448,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		if(M.ckey == key)
 			return M
 
-/proc/flash_color(mob_or_client, color="#960000", time=20)
-=======
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
->>>>>>> masterTGbranch
 	var/client/C
 	if(istype(mob_or_client, /mob))
 		var/mob/M = mob_or_client
@@ -1468,19 +1464,11 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 	C.color = flash_color
 	spawn(0)
-<<<<<<< HEAD
-		animate(C, color = old_color, time = 20)
-
-#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
-
-#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
-=======
 		animate(C, color = initial(C.color), time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, TIMER_NORMAL, item)
->>>>>>> masterTGbranch
 
 /proc/check_for_cleanbot_bug()
 	var/static/admins_warned //bet you didn't know you could do this!
@@ -1500,8 +1488,6 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
-<<<<<<< HEAD
-=======
 
 /proc/random_nukecode()
 	var/val = rand(0, 99999)
@@ -1518,4 +1504,3 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
->>>>>>> masterTGbranch

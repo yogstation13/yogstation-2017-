@@ -37,15 +37,6 @@
 			SetLuminosity(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-<<<<<<< HEAD
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return 0
-	if(broken)
-		user << "<spawn class='warning'>The [src] refuses to turn on!</span>"
-		return 0
-=======
->>>>>>> masterTGbranch
 	on = !on
 	update_brightness(user)
 	for(var/X in actions)
@@ -215,8 +206,6 @@
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
 		STOP_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-=======
 
 /obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
 	if(fuel && on)
@@ -224,7 +213,6 @@
 			badass.</span>"
 	else
 		. = ""
->>>>>>> masterTGbranch
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0

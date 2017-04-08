@@ -114,7 +114,6 @@
 			qdel(H)
 		user << "<span class='notice'>You clear all active holograms.</span>"
 
-<<<<<<< HEAD
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
@@ -258,5 +257,3 @@
 			shockcd = 1
 			spawn(10)
 			shockcd = 0
-=======
->>>>>>> masterTGbranch

@@ -28,11 +28,7 @@
 	id = "itching_powder"
 	results = list("itching_powder" = 3)
 	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
-<<<<<<< HEAD
-	result_amount = 3
 	mix_message = "The mixture settles into a fine white powder. You hear a distant honking."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"
@@ -47,85 +43,55 @@
 	id = "sulfonal"
 	results = list("sulfonal" = 3)
 	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
-<<<<<<< HEAD
-	result_amount = 3
 	mix_message = "The mixture forms into a crystalline powder."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/lipolicide
 	name = "lipolicide"
 	id = "lipolicide"
 	results = list("lipolicide" = 3)
 	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
-<<<<<<< HEAD
-	result_amount = 3
 	mix_message = "The mixture smells like cheap diet ads."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
 	results = list("mutagen" = 3)
 	required_reagents = list("radium" = 1, "phosphorus" = 1, "chlorine" = 1)
-<<<<<<< HEAD
-	result_amount = 3
 	mix_message ="The mixture begins to froth angrily and turns a brilliant green."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/lexorin
 	name = "Lexorin"
 	id = "lexorin"
 	results = list("lexorin" = 3)
 	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
-<<<<<<< HEAD
-	result_amount = 3
 	mix_message ="The mixture forms into purple crystals."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/chloralhydrate
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
 	results = list("chloralhydrate" = 1)
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
-<<<<<<< HEAD
-	result_amount = 1
 	mix_message = "The mixture turns an oily blue and smells of rotten eggs."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
 	name = "Mute toxin"
 	id = "mutetoxin"
 	results = list("mutetoxin" = 2)
 	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
-<<<<<<< HEAD
-	result_amount = 2
 	mix_message = "The mixture smells like mimes."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/zombiepowder
 	name = "Zombie Powder"
 	id = "zombiepowder"
 	results = list("zombiepowder" = 2)
 	required_reagents = list("carpotoxin" = 5, "morphine" = 5, "copper" = 5)
-<<<<<<< HEAD
-	result_amount = 2
 	mix_message ="The mixture forms a gross, grey powder. It shifts unsettlingly."
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/mindbreaker
 	name = "Mindbreaker Toxin"
 	id = "mindbreaker"
 	results = list("mindbreaker" = 5)
 	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
-<<<<<<< HEAD
-	result_amount = 5
 	mix_message ="The mixture explodes into color."
 
 /datum/chemical_reaction/teslium
@@ -133,11 +99,8 @@
 	id = "teslium"
 	result = "teslium"
 	required_reagents = list("plasma" = 1, "silver" = 1, "blackpowder" = 1)
-	result_amount = 3
 	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
 	required_temp = 400
-=======
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/heparin
 	name = "Heparin"
@@ -152,7 +115,7 @@
 	results = list("rotatium" = 3)
 	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
-	
+
 /datum/chemical_reaction/anacea
 	name = "Anacea"
 	id = "anacea"

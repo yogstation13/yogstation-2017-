@@ -132,11 +132,7 @@
 		else
 			if(C.lying || !(CANWEAKEN in C.status_flags)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-<<<<<<< HEAD
-			if(C.m_intent=="walk" && (lube & NO_SLIP_WHEN_WALKING))
-=======
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
->>>>>>> masterTGbranch
 				return 0
 		if(!(lube&SLIDE_ICE))
 			C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
@@ -202,7 +198,7 @@
 		if(wet == TURF_WET_PERMAFROST)
 			wet = TURF_WET_ICE
 		else if(wet == TURF_WET_ICE)
-			wet = TURF_WET_WATER	
+			wet = TURF_WET_WATER
 		else
 			wet = TURF_DRY
 			if(wet_overlay)

@@ -16,15 +16,9 @@
 	pass_flags =  0
 	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
-<<<<<<< HEAD:code/game/gamemodes/demon/true_demon/_true_demon.dm
 	status_flags = list(CANPUSH)
 	languages_spoken = ALL //The devil speaks all languages meme
 	languages_understood = ALL
-=======
-	status_flags = CANPUSH
-	languages_spoken = ALL //The devil speaks all languages meme
-	languages_understood = ALL //The devil speaks all languages meme
->>>>>>> masterTGbranch:code/game/gamemodes/devil/true_devil/_true_devil.dm
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]

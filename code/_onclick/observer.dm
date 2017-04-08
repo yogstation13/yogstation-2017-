@@ -20,13 +20,9 @@
 		loc = get_turf(A)
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
-<<<<<<< HEAD
 	if(client.prefs.afreeze)
 		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
-		
-=======
->>>>>>> masterTGbranch
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return

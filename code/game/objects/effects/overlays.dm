@@ -25,10 +25,7 @@
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
-<<<<<<< HEAD
-=======
 	var/timerid
->>>>>>> masterTGbranch
 
 /obj/effect/overlay/temp/Destroy()
 	..()
@@ -40,8 +37,8 @@
 	if(randomdir)
 		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
+	timerid = QDEL_IN(src, duration)
 
-<<<<<<< HEAD
 /obj/effect/overlay/temp/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
 	duration = 5
@@ -88,9 +85,6 @@
 	name = "healing glow"
 	icon_state = "heal"
 	duration = 15
-=======
-	timerid = QDEL_IN(src, duration)
->>>>>>> masterTGbranch
 
 /obj/effect/overlay/temp/dir_setting
 	randomdir = FALSE
@@ -416,8 +410,6 @@
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 65)
-<<<<<<< HEAD
-=======
 
 /obj/effect/overlay/temp/ratvar/sigil/voltvoid
 	color = "#EC8A2D"
@@ -430,7 +422,6 @@
 	var/oldtransform = transform
 	animate(src, transform = matrix()*3, time = 1)
 	animate(transform = oldtransform, alpha = 0, time = 9)
->>>>>>> masterTGbranch
 
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
@@ -611,11 +602,8 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
-<<<<<<< HEAD
 
 /obj/effect/overlay/temp/bless //color is white by default, set to whatever is needed
 	name = "blessing glow"
 	icon_state = "bless"
 	duration = 15
-=======
->>>>>>> masterTGbranch

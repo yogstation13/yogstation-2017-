@@ -40,35 +40,18 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
-<<<<<<< HEAD
-	if(P.dismemberment)
-		check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor, def_zone)
-=======
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
 	return P.on_hit(src, armor)
->>>>>>> masterTGbranch
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
 
-<<<<<<< HEAD
-
-/proc/vol_by_throwforce_and_or_w_class(obj/item/I)
-		if(!I)
-				return 0
-		if(I.throwforce && I.w_class)
-				return Clamp((I.throwforce + I.w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
-		else if(I.w_class)
-				return Clamp(I.w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-=======
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
 				return Clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 		else if(w_class)
 				return Clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
->>>>>>> masterTGbranch
 		else
 				return 0
 
@@ -138,32 +121,6 @@
 	adjust_fire_stacks(3)
 	IgniteMob()
 
-<<<<<<< HEAD
-
-//Share fire evenly between the two mobs
-//Called in MobBump() and Crossed()
-/mob/living/proc/spreadFire(mob/living/L)
-	if(!istype(L))
-		return
-	var/L_old_on_fire = L.on_fire
-
-	if(on_fire) //Only spread fire stacks if we're on fire
-		fire_stacks /= 2
-		L.fire_stacks += fire_stacks
-		L.IgniteMob()
-
-	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
-		L.fire_stacks /= 2
-		fire_stacks += L.fire_stacks
-		IgniteMob()
-
-//Mobs on Fire end
-
-/mob/living/acid_act(acidpwr, toxpwr, acid_volume)
-	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
-
-=======
->>>>>>> masterTGbranch
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src || anchored)
 		return 0
@@ -316,58 +273,6 @@
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
-<<<<<<< HEAD
-/mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)
-//adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stunned/examined, if any
-	if(!islist(stun_absorption))
-		stun_absorption = list()
-	if(stun_absorption[key])
-		stun_absorption[key]["end_time"] = world.time + duration
-		stun_absorption[key]["priority"] = priority
-		stun_absorption[key]["stuns_absorbed"] = 0
-	else
-		stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
-		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
-
-/mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(!stat && islist(stun_absorption))
-		var/priority_absorb_key
-		var/highest_priority
-		for(var/i in stun_absorption)
-			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
-				priority_absorb_key = stun_absorption[i]
-				highest_priority = stun_absorption[i]["priority"]
-		if(priority_absorb_key)
-			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
-				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
-				else if(priority_absorb_key["visible_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
-				else if(priority_absorb_key["self_message"])
-					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
-			priority_absorb_key["stuns_absorbed"] += amount
-			return 0
-	..()
-
-/mob/living/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if(!stat && islist(stun_absorption))
-		var/priority_absorb_key
-		var/highest_priority
-		for(var/i in stun_absorption)
-			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
-				priority_absorb_key = stun_absorption[i]
-				highest_priority = priority_absorb_key["priority"]
-		if(priority_absorb_key)
-			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
-				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
-				else if(priority_absorb_key["visible_message"])
-					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
-				else if(priority_absorb_key["self_message"])
-					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
-			priority_absorb_key["stuns_absorbed"] += amount
-			return 0
-=======
 /mob/living/acid_act(acidpwr, acid_volume)
 	take_bodypart_damage(acidpwr * min(1, acid_volume * 0.1))
 	return 1
@@ -451,6 +356,5 @@
 	if(A != src)
 		end_pixel_y = get_standard_pixel_y_offset(lying)
 	used_item = get_active_held_item()
->>>>>>> masterTGbranch
 	..()
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

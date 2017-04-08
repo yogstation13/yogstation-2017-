@@ -96,12 +96,7 @@
 	var/global/list/status_overlays_equipment
 	var/global/list/status_overlays_lighting
 	var/global/list/status_overlays_environ
-<<<<<<< HEAD
-	var/health = 50
 	var/wiring_color = "yellow"
-=======
-
->>>>>>> masterTGbranch
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.

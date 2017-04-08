@@ -53,9 +53,6 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
-<<<<<<< HEAD
-	new/obj/item/device/gps/internal/lavaland/legion(src)
-=======
 	internal = new/obj/item/device/gps/internal/legion(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
@@ -65,7 +62,6 @@ Difficulty: Medium
 		if(L.stat == UNCONSCIOUS)
 			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 			A.infest(L)
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
@@ -115,11 +111,8 @@ Difficulty: Medium
 		L.update_transform()
 		update_transform()
 
-<<<<<<< HEAD
-=======
 		L.faction = faction.Copy()
 
->>>>>>> masterTGbranch
 		L.GiveTarget(target)
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
@@ -131,10 +124,7 @@ Difficulty: Medium
 				break
 		if(last_legion)
 			loot = list(/obj/item/weapon/staff/storm)
-<<<<<<< HEAD
-=======
 			elimination = 0
->>>>>>> masterTGbranch
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -158,11 +148,7 @@ Difficulty: Medium
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-<<<<<<< HEAD
-	w_class = 4
-=======
 	w_class = WEIGHT_CLASS_BULKY
->>>>>>> masterTGbranch
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
@@ -205,8 +191,5 @@ Difficulty: Medium
 	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
 	A.telegraph()
 	storm_cooldown = world.time + 200
-<<<<<<< HEAD
-=======
 
 #undef MEDAL_PREFIX
->>>>>>> masterTGbranch

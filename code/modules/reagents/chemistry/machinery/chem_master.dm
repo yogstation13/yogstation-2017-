@@ -201,7 +201,6 @@
 					. = TRUE
 				else if (amount == -1) // -1 means custom amount
 					useramount = input("Enter the Amount you want to transfer:", name, useramount) as num|null
-<<<<<<< HEAD
 					if(useramount < 0)
 						var/msg = "[usr] ([usr.ckey ? usr.ckey : "no key"]) possibly attempted an infinite reagent exploit with a chem master."
 						message_admins(msg)
@@ -210,11 +209,6 @@
 						return
 					beaker.reagents.trans_id_to(src, id, useramount)
 					. = TRUE
-=======
-					if (useramount > 0)
-						beaker.reagents.trans_id_to(src, id, useramount)
-						. = TRUE
->>>>>>> masterTGbranch
 
 		if("transferFromBuffer")
 			var/id = params["id"]

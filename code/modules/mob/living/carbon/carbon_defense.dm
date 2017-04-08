@@ -206,6 +206,10 @@
 		adjustStaminaLoss(shock_damage)
 	else
 		take_overall_damage(0,shock_damage)
+		if(dna && dna.species)
+			shock_damage *= dna.species.siemens_coeff
+			if(dna.species.specflags & CONSUMEPOWER)
+				nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
@@ -231,7 +235,7 @@
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
 
-	if(health >= 0 && !(status_flags & FAKEDEATH))
+	if(health >= 0 && !(FAKEDEATH in status_flags))
 
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \

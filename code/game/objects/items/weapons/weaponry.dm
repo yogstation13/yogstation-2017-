@@ -257,11 +257,8 @@ var/highlander_claymores = 0
 	embedded_fall_chance = 0 //Hahaha!
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
-<<<<<<< HEAD
 	hitsound = 'sound/weapons/bladeslice.ogg'
-=======
 	resistance_flags = FIRE_PROOF
->>>>>>> masterTGbranch
 
 
 /obj/item/weapon/switchblade

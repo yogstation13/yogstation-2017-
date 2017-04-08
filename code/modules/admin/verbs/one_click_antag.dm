@@ -11,22 +11,6 @@
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"
-<<<<<<< HEAD
-		<a href='?src=\ref[src];makeAntag=1'>Make Traitors</a><br>
-		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
-		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
-		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=18'>Make Clockwork Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
-		<a href='?src=\ref[src];makeAntag=12'>Make Gangsters</a><br>
-		<a href='?src=\ref[src];makeAntag=16'>Make Shadowling</a><br>
-		<a href='?src=\ref[src];makeAntag=17'>Make Cyberman</a><br>
-		<a href='?src=\ref[src];makeAntag=6'>Make Wizard (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
-=======
 		<a href='?src=\ref[src];makeAntag=traitors'>Make Traitors</a><br>
 		<a href='?src=\ref[src];makeAntag=changelings'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=revs'>Make Revs</a><br>
@@ -34,12 +18,13 @@
 		<a href='?src=\ref[src];makeAntag=clockcult'>Make Clockwork Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=blob'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=gangs'>Make Gangsters</a><br>
+		<a href='?src=\ref[src];makeAntag=shadowling'>Make Shadowling</a><br>
+		<a href='?src=\ref[src];makeAntag=cyberman'>Make Cyberman</a><br>
 		<a href='?src=\ref[src];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=centcom'>Make Centcom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
->>>>>>> masterTGbranch
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -162,11 +147,6 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-<<<<<<< HEAD
-	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_SERVANT_OF_RATVAR, temp.restricted_jobs)
-	var/mob/living/carbon/human/H = null
-
-=======
 	var/list/mob/living/carbon/human/candidates = list()
 	var/mob/living/carbon/human/H = null
 
@@ -179,7 +159,6 @@
 						if(!(applicant.job in temp.restricted_jobs))
 							candidates += applicant
 
->>>>>>> masterTGbranch
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
 
@@ -529,8 +508,7 @@
 	return 1
 
 /datum/admins/proc/makeRevenant()
-<<<<<<< HEAD
-	new /datum/round_event/ghost_role/revenant(TRUE)
+	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
 	return 1
 
 //Shadowling
@@ -573,7 +551,3 @@
 		candidates.Remove(H)
 		return 1
 	return 0
-=======
-	new /datum/round_event/ghost_role/revenant(TRUE, TRUE)
-	return 1
->>>>>>> masterTGbranch

@@ -269,13 +269,10 @@
 
 /datum/ai_laws/proc/show_laws(who)
 
-<<<<<<< HEAD
-=======
 	if (devillaws && devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
 		for(var/i in devillaws)
 			who << "666. [i]"
 
->>>>>>> masterTGbranch
 	if (zeroth)
 		who << "0. [zeroth]"
 

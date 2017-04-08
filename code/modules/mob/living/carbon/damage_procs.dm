@@ -56,7 +56,7 @@
 
 
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = 1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	if(amount > 0)
 		take_overall_damage(amount, 0)
@@ -64,7 +64,7 @@
 		heal_overall_damage(-amount, 0, 0, 1, updating_health)
 
 /mob/living/carbon/adjustFireLoss(amount)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	if(amount > 0)
 		take_overall_damage(0, amount)
@@ -148,7 +148,7 @@
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute, burn, updating_health = 1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return	//godmode
 
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
@@ -176,7 +176,7 @@
 
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
@@ -184,7 +184,7 @@
 
 
 /mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return 0
 	staminaloss = amount
 	if(updating_stamina)

@@ -51,11 +51,7 @@
 		if(16)
 			new /obj/item/device/wisp_lantern(src)
 		if(17)
-<<<<<<< HEAD
-			new /obj/item/device/immortality_talisman(src)
-=======
 			new /obj/item/borg/upgrade/modkit/aoe/turfs/andmobs(src)
->>>>>>> masterTGbranch
 		if(18)
 			new /obj/item/weapon/gun/magic/hook(src)
 		if(19)
@@ -419,7 +415,6 @@
 /obj/item/weapon/reagent_containers/glass/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
-<<<<<<< HEAD
 	w_class = 2
 	var/used = FALSE
 
@@ -443,16 +438,12 @@
 					C.emote("scream")
 				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
 				src.used = TRUE
-=======
->>>>>>> masterTGbranch
 
 /obj/item/weapon/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list("flightpotion" = 5)
 
-<<<<<<< HEAD
-=======
 /obj/item/weapon/reagent_containers/glass/bottle/potion/update_icon()
 	if(reagents.total_volume)
 		icon_state = "potionflask"
@@ -481,9 +472,6 @@
 	..()
 
 
-
-
->>>>>>> masterTGbranch
 ///Bosses
 
 
@@ -495,22 +483,7 @@
 	name = "dragon chest"
 
 /obj/structure/closet/crate/necropolis/dragon/New()
-<<<<<<< HEAD
 	new /obj/item/weapon/dragons_blood(src)
-=======
-	..()
-	var/loot = rand(1,4)
-	switch(loot)
-		if(1)
-			new /obj/item/weapon/melee/ghost_sword(src)
-		if(2)
-			new /obj/item/weapon/lava_staff(src)
-		if(3)
-			new /obj/item/weapon/spellbook/oneuse/sacredflame(src)
-			new /obj/item/weapon/gun/magic/wand/fireball(src)
-		if(4)
-			new /obj/item/weapon/dragons_blood(src)
->>>>>>> masterTGbranch
 
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
@@ -615,30 +588,8 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-<<<<<<< HEAD
 	user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
 	H.weather_immunities |= "lava"
-=======
-	var/random = rand(1,4)
-
-	switch(random)
-		if(1)
-			user << "<span class='danger'>Your appearence morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities.</span>"
-			H.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
-			H.eye_color = "fee5a3"
-			H.set_species(/datum/species/lizard)
-		if(2)
-			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
-			H.set_species(/datum/species/skeleton)
-		if(3)
-			user << "<span class='danger'>Power courses through you! You can now shift your form at will."
-			if(user.mind)
-				var/obj/effect/proc_holder/spell/targeted/shapeshift/dragon/D = new
-				user.mind.AddSpell(D)
-		if(4)
-			user << "<span class='danger'>You feel like you could walk straight through lava now.</span>"
-			H.weather_immunities |= "lava"
->>>>>>> masterTGbranch
 
 	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	qdel(src)
@@ -765,21 +716,12 @@
 	..()
 	var/loot = rand(1,3)
 	switch(loot)
-<<<<<<< HEAD
-		if(1)			
+		if(1)
 			new /obj/item/weapon/antag_spawner/slaughter_demon(src)
 		if(2)
 			new /obj/item/bloodvial/bloodcrawl(src)
 		if(3)
 			new /obj/item/bloodvial/saw(src)
-=======
-		if(1)
-			new /obj/item/mayhem(src)
-		if(2)
-			new /obj/item/blood_contract(src)
-		if(3)
-			new /obj/item/weapon/gun/magic/staff/spellblade(src)
->>>>>>> masterTGbranch
 
 /obj/item/blood_contract
 	name = "blood contract"
@@ -822,7 +764,6 @@
 
 	qdel(src)
 
-<<<<<<< HEAD
 /obj/item/bloodvial//parent typing for identical looking loot
 	name = "vial of blood" //aestetically identical to the demon spawner
 	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
@@ -931,7 +872,6 @@
 	else
 		user.mind.RemoveSpell(src)
 
-=======
 //Hierophant
 
 /obj/item/weapon/hierophant_staff
@@ -1117,4 +1057,3 @@
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
 		PoolOrNew(/obj/effect/overlay/temp/hierophant/blast, list(t, user, friendly_fire_check))
->>>>>>> masterTGbranch

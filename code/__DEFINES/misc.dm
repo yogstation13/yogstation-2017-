@@ -262,10 +262,7 @@
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BANANIUM	"$bananium"
-<<<<<<< HEAD
-=======
 #define MAT_TITANIUM	"$titanium"
->>>>>>> masterTGbranch
 #define MAT_BIOMASS		"$biomass"
 
 
@@ -486,12 +483,11 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
 
-<<<<<<< HEAD
 //outfit browsers
 #define OUTFIT_BROWSE_CHAMELEON /datum/outfit_browse/chameleon
 #define OUTFIT_BROWSE_CHANGELING null
 #define OUTFIT_BROWSE_ADMIN null
-=======
+
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
 
@@ -637,4 +633,3 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // they are here to support hotkeys
 #define INTENT_HOTKEY_LEFT  "left"
 #define INTENT_HOTKEY_RIGHT "right"
->>>>>>> masterTGbranch

@@ -421,11 +421,8 @@
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
 
-<<<<<<< HEAD
 #define add_list_to_list(L, E) L[++L.len] = E
 
-=======
->>>>>>> masterTGbranch
 #define LAZYINITLIST(L) if (!L) L = list()
 
 #define UNSETEMPTY(L) if (L && !L.len) L = null

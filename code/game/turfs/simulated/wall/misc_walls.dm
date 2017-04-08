@@ -91,42 +91,15 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-<<<<<<< HEAD:code/game/turfs/simulated/walls_misc.dm
-	START_PROCESSING(SSobj, src)
-	clockwork_construction_value += 5
-
-/turf/closed/wall/clockwork/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	clockwork_construction_value -= 5
-=======
 	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
 	realappearence.linked = src
 	change_construction_value(5)
 
 /turf/closed/wall/clockwork/examine(mob/user)
->>>>>>> masterTGbranch:code/game/turfs/simulated/wall/misc_walls.dm
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
 		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
 
-<<<<<<< HEAD:code/game/turfs/simulated/walls_misc.dm
-/turf/closed/wall/clockwork/process()
-	if(prob(2))
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
-	for(var/obj/structure/clockwork/cache/C in orange(1, src))
-		if(!C.active) //if it's off the zlevel, caches can't produce components.
-			continue
-		if(C.wall_generation_cooldown <= world.time)
-			C.wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
-			generate_cache_component()
-			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
-			C.visible_message("<span class='warning'>Something clunks around inside of [C].</span>")
-
-/turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
-	if(path != type)
-		change_construction_value(-5)
-	return ..()
-=======
 /turf/closed/wall/clockwork/Destroy()
 	be_removed()
 	return ..()
@@ -143,18 +116,13 @@
 	change_construction_value(-5)
 	qdel(realappearence)
 	realappearence = null
->>>>>>> masterTGbranch:code/game/turfs/simulated/wall/misc_walls.dm
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.remove_fuel(0,user))
 			return 0
-<<<<<<< HEAD:code/game/turfs/simulated/walls_misc.dm
-		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-=======
 		playsound(src, WT.usesound, 100, 1)
->>>>>>> masterTGbranch:code/game/turfs/simulated/wall/misc_walls.dm
 		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
 		if(!do_after(user, 120*WT.toolspeed, target = src))
 			return 0
@@ -165,13 +133,6 @@
 		return 1
 	return ..()
 
-<<<<<<< HEAD:code/game/turfs/simulated/walls_misc.dm
-/turf/closed/wall/clockwork/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
-
-=======
->>>>>>> masterTGbranch:code/game/turfs/simulated/wall/misc_walls.dm
 /turf/closed/wall/clockwork/narsie_act()
 	..()
 	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type

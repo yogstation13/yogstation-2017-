@@ -41,8 +41,6 @@ var/list/holopads = list()
 	flags = HEAR
 	languages_spoken = ROBOT | HUMAN
 	languages_understood = ROBOT | HUMAN
-<<<<<<< HEAD
-=======
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
@@ -50,7 +48,6 @@ var/list/holopads = list()
 	obj_integrity = 300
 	max_integrity = 300
 	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
->>>>>>> masterTGbranch
 	var/list/masters = list()//List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.

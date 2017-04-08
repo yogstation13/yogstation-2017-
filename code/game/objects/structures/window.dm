@@ -459,16 +459,6 @@
 			made_glow = TRUE
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
-<<<<<<< HEAD
-	for(var/obj/item/I in debris)
-		debris -= I
-		qdel(I)
-	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
-	change_construction_value(fulltile ? 3 : 2)
-
-/obj/structure/window/reinforced/clockwork/Destroy()
-	change_construction_value(fulltile ? -3 : -2)
-=======
 		made_glow = TRUE
 		amount_of_gears = 4
 	for(var/i in 1 to amount_of_gears)
@@ -484,7 +474,6 @@
 
 /obj/structure/window/reinforced/clockwork/Destroy()
 	change_construction_value(fulltile ? -2 : -1)
->>>>>>> masterTGbranch
 	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()

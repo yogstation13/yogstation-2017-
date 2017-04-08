@@ -264,20 +264,13 @@
 	name = "Bananium"
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-<<<<<<< HEAD
-=======
 	coin_type = /obj/item/weapon/coin/clown
 
 /datum/material/titanium
 	name = "Titanium"
 	id = MAT_TITANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
->>>>>>> masterTGbranch
 
 /datum/material/biomass
 	name = "Biomass"
 	id = MAT_BIOMASS
-<<<<<<< HEAD
-
-=======
->>>>>>> masterTGbranch

@@ -104,11 +104,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-<<<<<<< HEAD
 	spell_type = /obj/effect/proc_holder/spell/thrown/fireball
-=======
-	spell_type = /obj/effect/proc_holder/spell/fireball
->>>>>>> masterTGbranch
 	log_name = "FB"
 
 /datum/spellbook_entry/rod_form
@@ -428,18 +424,6 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
-<<<<<<< HEAD
-// /datum/spellbook_entry/item/cursed_heart
-//	name = "Cursed Heart"
-//	desc = "A heart that has been revived by dark magicks, the user must \
-	concentrate to ensure the heart beats, but every beat heals them. It \
-	must beat every 6 seconds. The heart is fickle, and will not work for a \
-	lich."
-//	item_path = /obj/item/organ/heart/cursed/wizard
-//	log_name = "CH"
-//	cost = 1
-//	category = "Defensive" // Badly balanced, disabling until reworked since it literally just shouts DIE ASSHOLE and you die if you misclick/are stunned
-=======
 /datum/spellbook_entry/item/battlemage
 	name = "Battlemage Armour"
 	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
@@ -447,7 +431,6 @@
 	log_name = "BM"
 	limit = 1
 	category = "Defensive"
->>>>>>> masterTGbranch
 
 /datum/spellbook_entry/item/battlemage_charge
 	name = "Battlemage Armour Charges"
@@ -511,12 +494,8 @@
 
 /datum/spellbook_entry/summon/magic
 	name = "Summon Magic"
-<<<<<<< HEAD
 	category = "Rituals"
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time. Make the gods cry."
-=======
-	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
->>>>>>> masterTGbranch
 	log_name = "SU"
 
 /datum/spellbook_entry/summon/magic/IsAvailible()
@@ -796,11 +775,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-<<<<<<< HEAD
 	spell = /obj/effect/proc_holder/spell/thrown/fireball
-=======
-	spell = /obj/effect/proc_holder/spell/fireball
->>>>>>> masterTGbranch
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."

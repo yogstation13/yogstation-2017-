@@ -674,7 +674,6 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
-<<<<<<< HEAD
 /datum/supply_pack/engineering/flood_lamp
 	name = "Flood Lamp Assembly Crate"
 	contains = list(/obj/machinery/flood_lamp,
@@ -685,7 +684,7 @@
 					/obj/item/weapon/paper/flood_lamp)
 	cost = 1500
 	crate_name = "floodlamp assembly crate"
-=======
+
 /datum/supply_pack/engineering/engine/am_shielding
 	name = "Antimatter Shielding Crate"
 	cost = 2000
@@ -714,7 +713,6 @@
 					/obj/item/weapon/am_containment)
 	crate_name = "antimatter jar crate"
 
->>>>>>> masterTGbranch
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Medical /////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////

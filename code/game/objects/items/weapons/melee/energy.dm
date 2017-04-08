@@ -7,14 +7,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/w_class_on = WEIGHT_CLASS_BULKY
 	heat = 3500
-<<<<<<< HEAD
 	var/clumsy_check = 1
-=======
 	obj_integrity = 200
 	max_integrity = 200
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
->>>>>>> masterTGbranch
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
@@ -37,14 +34,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
-<<<<<<< HEAD
-	sharpness = IS_SHARP
-	w_class = 3
-	w_class_on = 5
-=======
 	w_class = WEIGHT_CLASS_NORMAL
 	w_class_on = WEIGHT_CLASS_HUGE
->>>>>>> masterTGbranch
 	flags = CONDUCT
 	armour_penetration = 100
 	origin_tech = "combat=4;magnets=3"

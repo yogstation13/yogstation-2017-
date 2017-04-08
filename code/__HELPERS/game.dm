@@ -442,14 +442,6 @@
 
 	return candidates
 
-<<<<<<< HEAD
-/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
-	if(!M || qdeleted(M))
-		return list()
-	return L
-
-=======
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
 	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
 	if(!M || qdeleted(M) || !M.loc)
@@ -467,7 +459,6 @@
 			++i
 	return L
 
->>>>>>> masterTGbranch
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
 		return
@@ -481,7 +472,6 @@
 
 	return new_character
 
-<<<<<<< HEAD
 /proc/random_accessible_turf(z)
 	if(!z)
 		var/list/zlevels = list()
@@ -491,7 +481,7 @@
 	var/rx = rand(TRANSITIONEDGE + 1, world.maxx - TRANSITIONEDGE - 2)
 	var/ry = rand(TRANSITIONEDGE + 1, world.maxy - TRANSITIONEDGE - 2)
 	return locate(rx, ry, z)
-=======
+
 /proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
 	for(var/M in player_list)
 		if(M && !isnewplayer(M))
@@ -501,4 +491,3 @@
 	if (!client_or_usr)
 		return
 	winset(client_or_usr, "mainwindow", "flash=5")
->>>>>>> masterTGbranch

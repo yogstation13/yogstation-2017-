@@ -5,7 +5,7 @@
 
 
 /mob/living/emote(act, m_type=1, message = null)
-	if(stat == DEAD && (act != "deathgasp") || (status_flags & FAKEDEATH))
+	if(stat == DEAD && (act != "deathgasp") || (FAKEDEATH in status_flags))
 		return
 
 	var/param = null

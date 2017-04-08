@@ -77,7 +77,6 @@
 			C = directory[whom]
 	else if(istype(whom,/client))
 		C = whom
-<<<<<<< HEAD
 	if(!C)
 		if(holder)
 			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
@@ -106,13 +105,11 @@
 			wasAlreadyClicked.pm_started_flag = 1
 
 		msg = input(src, instructions, "Reply to ticket") as text|null
-=======
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
 			return
 		if(!msg)
 			msg = input(src,"Message:", "Private message to Administrator") as text|null
->>>>>>> masterTGbranch
 
 		if(!msg)
 			// If the user was the user that started PM replying initially, then
@@ -131,11 +128,7 @@
 			if(holder)
 				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 			else
-<<<<<<< HEAD
 				admin_ticket(msg)	//admin we are replying to has vanished, adminhelp instead
-=======
-				adminhelp(msg)	//admin we are replying to left. adminhelp instead
->>>>>>> masterTGbranch
 			return
 
 		//get message text, limit it's length.and clean/escape html
@@ -154,7 +147,6 @@
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-<<<<<<< HEAD
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 
@@ -212,77 +204,6 @@
 		T = null
 
 	return //This ticket system. Wow.
-=======
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)
-			return
-
-	var/rawmsg = msg
-
-	if(holder)
-		msg = emoji_parse(msg)
-
-	var/keywordparsedmsg = keywords_lookup(msg)
-
-	if(irc)
-		src << "<font color='blue'>PM to-<b>Admins</b>: [rawmsg]</font>"
-		ircreplyamount--
-		send2irc("Reply: [ckey]",rawmsg)
-	else
-		if(C.holder)
-			if(holder)	//both are admins
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
-				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg]</font>"
-
-			else		//recipient is an admin but sender is not
-				C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
-				src << "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>"
-
-			//play the recieving admin the adminhelp sound (if they have them enabled)
-			if(C.prefs.toggles & SOUND_ADMINHELP)
-				C << 'sound/effects/adminhelp.ogg'
-
-		else
-			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-				C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
-				C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
-
-				//always play non-admin recipients the adminhelp sound
-				C << 'sound/effects/adminhelp.ogg'
-
-				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-				if(config.popup_admin_pm)
-					spawn()	//so we don't hold the caller proc up
-						var/sender = src
-						var/sendername = key
-						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
-						if(C && reply)
-							if(sender)
-								C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
-							else
-								adminhelp(reply)													//sender has left, adminhelp instead
-						return
-
-			else		//neither are admins
-				src << "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>"
-				return
-
-	if(irc)
-		log_admin("PM: [key_name(src)]->IRC: [rawmsg]")
-		for(var/client/X in admins)
-			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
-	else
-		window_flash(C)
-		log_admin("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
-		//we don't use message_admins here because the sender/receiver might get it too
-		for(var/client/X in admins)
-			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
-				X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" //inform X
-
 
 
 
@@ -334,4 +255,3 @@
 	return	stealth
 
 #undef IRCREPLYCOUNT
->>>>>>> masterTGbranch

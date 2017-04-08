@@ -35,11 +35,7 @@ other types of metals and chemistry for reagents).
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = null				//The file path of the object that gets created
-<<<<<<< HEAD
-	var/list/make_reagents = list()		//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
-=======
 	var/list/make_reagents = list()			//Reagents produced. Format: "id" = amount. Currently only supported by the biogenerator.
->>>>>>> masterTGbranch
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents_list = list()			//List of reagents. Format: "id" = amount.
 	var/maxstack = 1

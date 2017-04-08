@@ -108,15 +108,12 @@
 		user << "It's filled with blood and viscera. You swear you can see it moving..."
 	if (is_operational() && (!isnull(occupant)) && (occupant.stat != DEAD))
 		user << "Current clone cycle is [round(get_completion())]% complete."
-<<<<<<< HEAD
 		var/time_to_complete = (occupant.cloneloss - (100-heal_level)) / (speed_coeff/4) //Can you guess why I divide speed_coeff by 4 instead of 2?
 		var/seconds = time_to_complete % 60
 		user << "Estimated time until completion : [(time_to_complete-seconds)/60] minutes [(seconds)] seconds."
 	else if(mess)
 		user << "It's filled with blood and vicerea. You swear you can see \
 			it moving..."
-=======
->>>>>>> masterTGbranch
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -179,13 +176,6 @@
 	H.real_name = clonename
 
 	icon_state = "pod_1"
-<<<<<<< HEAD
-=======
-	//Get the clone body ready
-	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
-	H.Paralyse(4)
->>>>>>> masterTGbranch
 
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
@@ -239,26 +229,12 @@
 
 		else if(occupant.cloneloss > (100 - heal_level))
 			occupant.Paralyse(4)
-<<<<<<< HEAD
-			//Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-(speed_coeff/2), 0, DAMAGE_CLONING)
-
-			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-(speed_coeff/2), 0, DAMAGE_CLONING)
-
-			// NOBREATH species will take brute damage in crit instead of oxyloss
-			if(no_breath_mob)
-				occupant.setBruteLoss(0, 0, DAMAGE_CLONING)
-			else
-				occupant.setOxyLoss(0, 0, DAMAGE_CLONING)
-=======
 
 			 //Slowly get that clone healed and finished.
-			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
+			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier), 0, DAMAGE_CLONING)
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
->>>>>>> masterTGbranch
+			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier), 0, DAMAGE_CLONING)
 
 			occupant.updatehealth() //Update health only once we finish healing, instead of possibly 4 times during the proc
 
@@ -373,24 +349,6 @@
 			technician, as your warranty may be affected.")
 		mess = TRUE
 		icon_state = "pod_g"
-<<<<<<< HEAD
-		if(grab_ghost_when == CLONER_MATURE_CLONE)
-			if(clonemind.current && clonemind.current.stat == DEAD)
-				clonemind.transfer_to(occupant)
-		else
-			if(occupant.mind != clonemind)
-				clonemind.transfer_to(occupant)
-		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
-		if(occupant.grab_ghost()) // We really just want to make you suffer, but only if you actually deserve it (which is most of the time)
-			flash_color(occupant, color="#960000", time=100)
-			occupant << "<span class='warning'><b>Agony blazes across your \
-				consciousness as your body is torn apart.</b><br>\
-				<i>Is this what dying is like? Yes it is.</i></span>"
-			occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		spawn(40)
-			occupant.ghostize()
-			qdel(occupant)
-=======
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
@@ -401,7 +359,6 @@
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		QDEL_IN(occupant, 40)
->>>>>>> masterTGbranch
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)

@@ -18,23 +18,6 @@
 	return FALSE
 
 
-<<<<<<< HEAD
-/mob/proc/has_left_hand()
-	return FALSE
-
-/mob/living/carbon/has_left_hand()
-	return TRUE
-=======
->>>>>>> masterTGbranch
-
-
-<<<<<<< HEAD
-/mob/proc/has_right_hand()
-	return FALSE
-
-/mob/living/carbon/has_right_hand()
-	return TRUE
-=======
 /mob/proc/has_left_hand()
 	return TRUE
 
@@ -46,7 +29,6 @@
 
 /mob/living/carbon/alien/larva/has_left_hand()
 	return 1
->>>>>>> masterTGbranch
 
 
 /mob/proc/has_right_hand()

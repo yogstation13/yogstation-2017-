@@ -862,14 +862,9 @@
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(myseed) //Could be that they're just using it as a de-weeder
 			age = 0
-<<<<<<< HEAD
-			health = 0
-			harvest = FALSE
-=======
 			plant_health = 0
 			if(harvest)
 				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
->>>>>>> masterTGbranch
 			qdel(myseed)
 			myseed = null
 		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds

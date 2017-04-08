@@ -125,14 +125,11 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
-<<<<<<< HEAD
 .borer            		{color: #804000;}
 
 .ashwalker				{color: #00ff00;}
-=======
 .borer					{color: #543354;	font-style: italic;}
 .changeling				{color: #800080;	font-style: italic;}
->>>>>>> masterTGbranch
 
 .interface				{color: #330033;}
 

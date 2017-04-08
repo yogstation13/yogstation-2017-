@@ -596,14 +596,10 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-<<<<<<< HEAD
-	M.adjustToxLoss(current_cycle*3*REM, 1, DAMAGE_CHEMICAL)
-=======
 	var/toxdamage = current_cycle*3*REM
-	M.adjustToxLoss(toxdamage)
+	M.adjustToxLoss(toxdamage, 1, DAMAGE_CHEMICAL)
 	if(M)
 		add_logs(M, get_turf(M), "has taken [toxdamage] toxin damage from amanitin toxin")
->>>>>>> masterTGbranch
 	..()
 
 /datum/reagent/toxin/lipolicide
@@ -616,15 +612,9 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
-<<<<<<< HEAD
-	if(!holder.has_reagent("nutriment"))
-		M.adjustToxLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
-	M.nutrition = max( M.nutrition - 5 * REAGENTS_METABOLISM, 0)
-=======
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
 	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
->>>>>>> masterTGbranch
 	M.overeatduration = 0
 	return ..()
 
@@ -675,6 +665,13 @@
 		. = 1
 	return ..() || .
 
+/datum/reagent/toxin/capilletum
+	name = "Capilletum"
+	id = "capilletum"
+	description = "A powerful toxin that mimics the patterns of punctured skin, matching their pigments and shapes, and spreading it around the body. Unlike other toxins, it only has short side effects like possible hunger. Easy now, it doesn't make them have a crutch for brains."
+	color = "#FFB9D2"
+	metabolization_rate = 0.3
+	toxpwr = 0
 
 /datum/reagent/toxin/rotatium //Rotatium. Fucks up your rotation and is hilarious
 	name = "Rotatium"
@@ -695,16 +692,6 @@
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
-<<<<<<< HEAD
-/datum/reagent/toxin/capilletum
-	name = "Capilletum"
-	id = "capilletum"
-	description = "A powerful toxin that mimics the patterns of punctured skin, matching their pigments and shapes, and spreading it around the body. Unlike other toxins, it only has short side effects like possible hunger. Easy now, it doesn't make them have a crutch for brains."
-	color = "#FFB9D2"
-	metabolization_rate = 0.3
-	toxpwr = 0
-
-=======
 /datum/reagent/toxin/rotatium/on_mob_delete(mob/living/M)
 	if(M && M.hud_used)
 		var/list/screens = list(M.hud_used.plane_masters["[GAME_PLANE]"], M.hud_used.plane_masters["[LIGHTING_PLANE]"])
@@ -720,7 +707,7 @@
 	color = "#3C5133"
 	metabolization_rate = 0.08 * REAGENTS_METABOLISM
 	toxpwr = 0.15
-	
+
 /datum/reagent/toxin/anacea/on_mob_life(mob/living/M)
 	var/remove_amt = 5
 	if(holder.has_reagent("calomel") || holder.has_reagent("pen_acid"))
@@ -728,8 +715,7 @@
 	for(var/datum/reagent/medicine/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.id,remove_amt)
 	return ..()
-	
->>>>>>> masterTGbranch
+
 //ACID
 
 
@@ -802,14 +788,9 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
-<<<<<<< HEAD
-	if(M.staminaloss < 50)
-		M.adjustStaminaLoss(10, 1, DAMAGE_CHEMICAL)
-=======
 	var/healthcomp = (100 - M.health)	//DOES NOT ACCOUNT FOR ADMINBUS THINGS THAT MAKE YOU HAVE MORE THAN 200/210 HEALTH, OR SOMETHING OTHER THAN A HUMAN PROCESSING THIS.
 	if(M.staminaloss < (45 - healthcomp))	//At 50 health you would have 200 - 150 health meaning 50 compensation. 60 - 50 = 10, so would only do 10-19 stamina.)
-		M.adjustStaminaLoss(10)
->>>>>>> masterTGbranch
+		M.adjustStaminaLoss(10, 1, DAMAGE_CHEMICAL)
 	if(prob(30))
 		M << "You should sit down and take a rest..."
 	..()

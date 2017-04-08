@@ -12,11 +12,7 @@
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
-<<<<<<< HEAD
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4)
-=======
-	reagents_add = list("water" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
->>>>>>> masterTGbranch
+	reagents_add = list("water" = 0.4, "vitamin" = 0.08, "nutriment" = 0.4)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/watermelon
 	seed = /obj/item/seeds/watermelon

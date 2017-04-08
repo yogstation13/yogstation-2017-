@@ -139,14 +139,10 @@
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()
 	STOP_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-	air_contents = null
-=======
 	temp_air_contents = air_contents
 
 /obj/item/weapon/tank/jetpack/suit/attack_self()
 	return
->>>>>>> masterTGbranch
 
 /obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
@@ -170,11 +166,7 @@
 
 /obj/item/weapon/tank/jetpack/suit/turn_off()
 	tank = null
-<<<<<<< HEAD
-	air_contents = null
-=======
 	air_contents = temp_air_contents
->>>>>>> masterTGbranch
 	STOP_PROCESSING(SSobj, src)
 	..()
 

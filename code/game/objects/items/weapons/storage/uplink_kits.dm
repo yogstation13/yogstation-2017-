@@ -2,19 +2,6 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-<<<<<<< HEAD
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 3, "bond" = 1, "screwed" = 3, "sabotage" = 3, "guns" = 1, "murder" = 2, "implant" = 2, "hacker" = 2, "lordsingulo" = 2, "darklord" = 1, "duo" = 1)))
-		if("bloodyspai")
-			new /obj/item/clothing/under/chameleon(src)
-			new /obj/item/clothing/mask/chameleon(src)
-			new /obj/item/weapon/card/id/syndicate(src)
-			new /obj/item/clothing/shoes/chameleon(src)
-			new /obj/item/device/camera_bug(src)
-			new /obj/item/device/multitool/ai_detect(src)
-			new /obj/item/device/encryptionkey/syndicate(src)
-			new /obj/item/weapon/reagent_containers/syringe/mulligan(src)
-			new /obj/item/weapon/switchblade(src)
-=======
 	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
@@ -29,7 +16,6 @@
 			new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/device/flashlight/emp(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
->>>>>>> masterTGbranch
 			return
 
 		if("stealth") // 31 tc
@@ -147,7 +133,6 @@
 			new /obj/item/weapon/card/emag(src) // 6 tc
 			return
 
-<<<<<<< HEAD
 		if("duo")
 			var/obj/item/weapon/implanter/imp = new /obj/item/weapon/implanter(src)
 			imp.imp = new /obj/item/weapon/implant/mindslave(imp)
@@ -157,7 +142,7 @@
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/card/emag(src)
 			return
-=======
+
 		if("ninja") // 33 tc worth
 			new /obj/item/weapon/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/weapon/implanter/adrenalin(src) // 8 tc
@@ -170,7 +155,6 @@
 			new /obj/item/weapon/storage/belt/military/assault(src) // 3 tc
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
->>>>>>> masterTGbranch
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"

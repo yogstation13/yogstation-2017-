@@ -42,11 +42,7 @@
 	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
 		return 0
-<<<<<<< HEAD
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen, user.hive_faction))
-=======
-	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
->>>>>>> masterTGbranch
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		if(new_xeno.client.prefs.unlock_content)

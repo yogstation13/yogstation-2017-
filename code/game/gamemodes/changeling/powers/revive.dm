@@ -11,10 +11,6 @@
 	user.status_flags -= FAKEDEATH
 	user.tod = null
 	user.revive(full_heal = 1)
-<<<<<<< HEAD
-	user.regenerate_limbs(1)
-	user << "<span class='notice'>We have regenerated.</span>"
-=======
 	var/list/missing = user.get_missing_limbs()
 	missing -= "head" // headless changelings are funny
 	if(missing.len)
@@ -28,7 +24,6 @@
 		user.emote("scream")
 		user.regenerate_limbs(0, list("head"))
 	user << "<span class='notice'>We have revived ourselves.</span>"
->>>>>>> masterTGbranch
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
 	return 1

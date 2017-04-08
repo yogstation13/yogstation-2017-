@@ -19,8 +19,6 @@
 	//overlays that should remain on top and not normally be removed, like c4.
 	var/list/priority_overlays
 
-<<<<<<< HEAD
-=======
 	var/list/atom_colours	 //used to store the different colors on an atom
 							//its inherent color, the colored paint applied on it, special color effect etc...
 
@@ -41,7 +39,6 @@
 		light = new(src)
 
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
->>>>>>> masterTGbranch
 
 /atom/Destroy()
 	if(alternate_appearances)

@@ -10,15 +10,8 @@
 	if(visualsOnly)
 		return
 
-<<<<<<< HEAD
-	var/obj/item/weapon/implant/mindshield/L = new(H)
-	L.imp_in = H
-	L.implanted = 1
-	H.sec_hud_set_implants()
-=======
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.implant(H, null, 1)
->>>>>>> masterTGbranch
 
 	var/obj/item/weapon/implant/krav_maga/KM = new(H)
 	KM.imp_in = H
@@ -42,16 +35,10 @@
 	belt = /obj/item/weapon/storage/belt/security/full
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
-<<<<<<< HEAD
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
-		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/gun/energy/e_gun=1,\
 		/obj/item/weapon/gun/projectile/automatic/wt550)
 	l_pocket = /obj/item/weapon/kitchen/knife/combat
-=======
-		/obj/item/clothing/mask/gas/sechailer=1,\
-		/obj/item/weapon/gun/energy/e_gun=1)
-	l_pocket = /obj/item/weapon/switchblade
->>>>>>> masterTGbranch
 
 /datum/outfit/ert/commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -94,17 +81,12 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/storage/box/handcuffs=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-<<<<<<< HEAD
+		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/weapon/gun/projectile/automatic/wt550=1,\
 		/obj/item/weapon/storage/box/emps=1,\
-		/obj/item/weapon/gun/energy/gun/advtaser=1)
+		/obj/item/weapon/gun/energy/e_gun/advtaser=1)
 	l_pocket = /obj/item/weapon/kitchen/knife/combat
 	r_pocket = /obj/item/ammo_box/magazine/wt550m9/wtap
-=======
-		/obj/item/weapon/gun/energy/e_gun=1,\
-		/obj/item/weapon/melee/baton/loaded=1,\
-		/obj/item/weapon/gun/energy/e_gun/advtaser=1)
->>>>>>> masterTGbranch
 
 /datum/outfit/ert/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -140,27 +122,17 @@
 
 	id = /obj/item/weapon/card/id/ert/Medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
-<<<<<<< HEAD
 	glasses = /obj/item/clothing/glasses/hud/health/night
-	back = /obj/item/weapon/storage/backpack/medic
-=======
-	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/weapon/storage/backpack/satchel/med
->>>>>>> masterTGbranch
 	belt = /obj/item/weapon/storage/belt/medical
 	r_hand = /obj/item/weapon/storage/firstaid/regular
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-<<<<<<< HEAD
-		/obj/item/weapon/gun/energy/gun=1,\
-		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1,\
-		/obj/item/weapon/gun/syringe/rapidsyringe=1,\
-		/obj/item/weapon/reagent_containers/syringe/lethal=1,\
-=======
 		/obj/item/weapon/gun/energy/e_gun=1,\
 		/obj/item/weapon/reagent_containers/hypospray/combat=1,\
->>>>>>> masterTGbranch
+		/obj/item/weapon/gun/syringe/rapidsyringe=1,\
+		/obj/item/weapon/reagent_containers/syringe/lethal=1,\
 		/obj/item/weapon/gun/medbeam=1)
 
 /datum/outfit/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -209,14 +181,9 @@
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer=1,\
-<<<<<<< HEAD
-		/obj/item/weapon/gun/energy/gun=1,\
+		/obj/item/weapon/gun/energy/e_gun=1,\
 		/obj/item/areaeditor/blueprints,\
 		/obj/item/weapon/rcd/combat=1)
-=======
-		/obj/item/weapon/gun/energy/e_gun=1,\
-		/obj/item/weapon/rcd/loaded=1)
->>>>>>> masterTGbranch
 
 /datum/outfit/ert/engineer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

@@ -39,11 +39,7 @@
 	telegraph_message = "<span class='warning'>The lights begin to dim... is the power going out?</span>"
 	telegraph_duration = 150
 
-<<<<<<< HEAD
-	weather_message = "<span class='userdanger'>This isn't your everday darkness... this is <i>advanced</i> darkness!</span>"
-=======
 	weather_message = "<span class='userdanger'>This isn't your average everday darkness... this is <i>advanced</i> darkness!</span>"
->>>>>>> masterTGbranch
 	weather_duration_lower = 300
 	weather_duration_upper = 300
 
@@ -93,12 +89,8 @@
 	immunity_type = "ash"
 
 	probability = 90
-
-<<<<<<< HEAD
 	barometer_predictable = TRUE
 
-=======
->>>>>>> masterTGbranch
 /datum/weather/ash_storm/impact(mob/living/L)
 	if(istype(L.loc, /obj/mecha))
 		return
@@ -114,11 +106,8 @@
 	desc = "A passing ash storm blankets the area in harmless embers."
 
 	weather_message = "<span class='notice'>Gentle embers waft down around you like grotesque snow. The storm seems to have passed you by...</span>"
-<<<<<<< HEAD
-=======
 	weather_sound = 'sound/lavaland/ash_storm_windup.ogg'
 	weather_overlay = "light_ash"
->>>>>>> masterTGbranch
 
 	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.</span>"
 
@@ -131,13 +120,7 @@
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
 	telegraph_duration = 400
-<<<<<<< HEAD
-	telegraph_message = "<span class='boldwarning'>The air begins to grow warm. Get to the maintenence tunnels!</span>"
-	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'	//TODO: Get sounds and sprite overlays
-	//telegraph_overlay = "light_ash"
-=======
-	telegraph_message = "<span class='danger'>The air begins to grow warm.</span>"
->>>>>>> masterTGbranch
+	telegraph_message = "<span class='danger'>The air begins to grow warm. Get to the maintenence tunnels!</span>"
 
 	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
 	weather_overlay = "ash_storm"
@@ -146,59 +129,25 @@
 	weather_color = "green"
 	weather_sound = 'sound/misc/bloblarm.ogg'
 
-<<<<<<< HEAD
-
-	end_duration = 100
-	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
-	//end_overlay = "light_ash"
-
-	area_type = /area
-	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
-=======
 	end_duration = 100
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer, /area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle/labor)
->>>>>>> masterTGbranch
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"
 
-<<<<<<< HEAD
-=======
 /datum/weather/rad_storm/telegraph()
 	..()
 	status_alarm("alert")
 
-
->>>>>>> masterTGbranch
 /datum/weather/rad_storm/impact(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
 	if(prob(40))
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.dna && H.dna.species)
-<<<<<<< HEAD
-				if(!(RADIMMUNE in H.dna.species.specflags))
-					if(prob(max(0,100-resist)))
-						if(prob(90))
-							randmutb(H)
-							if(prob(50))
-								H.adjustToxLoss(2)
-						else
-							randmutg(H)
-						H.domutcheck()
-		L.rad_act(20,1)
-
-/datum/weather/rad_storm/end()
-	if(..())
-		return
-	priority_announce("The radiation threat has passed. Please return to your workplaces. Emergency maintenence access will be disabled shortly.", "Anomaly Alert")
-	sleep(600) //60 seconds, i think
-	if(emergency_access)
-		revoke_maint_all_access()
-=======
 				if(!(RADIMMUNE in H.dna.species.species_traits))
 					if(prob(max(0,100-resist)))
 						H.randmuti()
@@ -209,10 +158,14 @@
 								H.randmutg()
 							H.domutcheck()
 		L.rad_act(20,1)
+
 /datum/weather/rad_storm/end()
 	if(..())
 		return
-	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
+		priority_announce("The radiation threat has passed. Please return to your workplaces. Emergency maintenence access will be disabled shortly.", "Anomaly Alert")
+	sleep(600) //60 seconds, i think
+	if(emergency_access)
+		revoke_maint_all_access()
 	status_alarm()
 
 
@@ -233,4 +186,3 @@
 		status_signal.data["picture_state"] = "radiation"
 
 	frequency.post_signal(src, status_signal)
->>>>>>> masterTGbranch

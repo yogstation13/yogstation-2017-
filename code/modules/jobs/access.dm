@@ -64,13 +64,10 @@
 /var/const/access_mineral_storeroom = 64
 /var/const/access_minisat = 65
 /var/const/access_weapons = 66 //Weapon authorization for secbots
-<<<<<<< HEAD
 /var/const/access_paramedic = 67
 /var/const/access_tcomadmin = 68 // has access to the telecomms computers
 /var/const/access_cloning = 69
-=======
-/var/const/access_network = 67
->>>>>>> masterTGbranch
+/var/const/access_network = 70
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -112,7 +109,6 @@
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return 1
-<<<<<<< HEAD
 	if(istype(M, /mob/living/silicon))
 		//AI can do whatever he wants
 		//UNLESS THEY'RE FILTHY PAI SCUM IN WHICH CASE THEY TAKE THE PLEB DOORS LIKE EVERYONE ELSE
@@ -122,11 +118,6 @@
 				return 1
 		else
 			return 1
-=======
-	if(issilicon(M))
-		//AI can do whatever it wants
-		return 1
->>>>>>> masterTGbranch
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return 1
@@ -260,12 +251,8 @@
 	            access_hydroponics, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_surgery,
 	            access_theatre, access_research, access_mining, access_mailsorting, access_weapons,
 	            access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce,
-<<<<<<< HEAD
 	            access_keycard_auth, access_tcomsat, access_tcomadmin, access_gateway, access_mineral_storeroom, access_minisat, access_paramedic, access_manufacturing,
-	            access_cloning)
-=======
-	            access_keycard_auth, access_tcomsat, access_gateway, access_mineral_storeroom, access_minisat, access_network)
->>>>>>> masterTGbranch
+	            access_cloning, access_network)
 
 /proc/get_all_centcom_access()
 	return list(access_cent_general, access_cent_thunder, access_cent_specops, access_cent_medical, access_cent_living, access_cent_storage, access_cent_teleporter, access_cent_captain)
@@ -454,15 +441,12 @@
 			return "AI Satellite"
 		if(access_weapons)
 			return "Weapon Permit"
-<<<<<<< HEAD
 		if(access_paramedic)
 			return "Paramedic Room"
 		if(access_cloning)
 			return "Cloning Room"
-=======
 		if(access_network)
 			return "Network Access"
->>>>>>> masterTGbranch
 
 /proc/get_centcom_access_desc(A)
 	switch(A)

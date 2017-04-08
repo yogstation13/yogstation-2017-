@@ -639,25 +639,9 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-<<<<<<< HEAD
-/datum/design/borg_upgrade_hyperka
-	name = "Cyborg Upgrade(Hyper-Kinetic Accelerator)"
-	id = "borg_upgrade_hyperka"
-	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
-	build_type = MECHFAB //Reqs same as human Hyper KA
-	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/borg/upgrade/hyperka
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/*/datum/design/borg_upgrade_ashplating
-	name = "Cyborg Upgrade (Ash Storm Plating)"
-	id = "borg_upgrade_ashplating"
-=======
 /datum/design/borg_upgrade_lavaproof
 	name = "Cyborg Upgrade (Lavaproof Tracks)"
 	id = "borg_upgrade_lavaproof"
->>>>>>> masterTGbranch
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/lavaproof
 	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
@@ -778,7 +762,7 @@
 	construction_time = 250
 	category = list("Misc")
 	req_tech = list("magnets" = 4, "combat" = 3, "plasmatech" = 4, "materials" = 5, "engineering" = 4, "powerstorage" = 4)
-	
+
 /datum/design/flightshoes
 	name = "Flight Shoes"
 	desc = "Flight shoes, attachable to a flight suit to provide additional functions."

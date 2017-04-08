@@ -753,7 +753,6 @@ BLIND     // can't see anything
 			body_parts_covered |= CHEST
 	return adjusted
 
-<<<<<<< HEAD
 /obj/item/clothing/under/verb/rip()
 	set name = "Tear cloth from garment"
 	set category = "Object"
@@ -766,17 +765,9 @@ BLIND     // can't see anything
 
 	src.handle_tear(usr)
 
-/obj/item/clothing/under/examine(mob/user)
-	..()
-	if(src.adjusted)
-		user << "Alt-click on [src] to wear it normally."
-	else
-		user << "Alt-click on [src] to wear it casually."
-=======
 /obj/item/clothing/proc/weldingvisortoggle(mob/user) //proc to toggle welding visors on helmets, masks, goggles, etc.
 	if(!can_use(user))
 		return FALSE
->>>>>>> masterTGbranch
 
 	visor_toggling()
 

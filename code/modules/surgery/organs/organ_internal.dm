@@ -346,7 +346,7 @@
 
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, var/mob/living/carbon/human/H)
-	if((H.status_flags & GODMODE))
+	if((GODMODE in H.status_flags))
 		return
 
 	var/species_traits = list()
@@ -761,7 +761,6 @@
 	if(inflamed)
 		S.reagents.add_reagent("badfood", 5)
 	return S
-<<<<<<< HEAD
 
 /obj/item/organ/shadowtumor
 	name = "black tumor"
@@ -792,5 +791,3 @@
 		if(health <= 0)
 			visible_message("<span class='warning'>[src] collapses in on itself!</span>")
 			qdel(src)
-=======
->>>>>>> masterTGbranch

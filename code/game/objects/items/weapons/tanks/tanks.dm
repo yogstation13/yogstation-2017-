@@ -61,11 +61,7 @@
 		qdel(air_contents)
 
 	STOP_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-	return ..()
-=======
 	. = ..()
->>>>>>> masterTGbranch
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src

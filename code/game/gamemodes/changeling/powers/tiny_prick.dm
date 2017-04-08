@@ -137,11 +137,7 @@
 	add_logs(user, target, "stung", object="armblade sting")
 
 	if(!target.drop_item())
-<<<<<<< HEAD
-		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow an armblade over it!</span>"
-=======
 		user << "<span class='warning'>The [target.get_active_held_item()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
->>>>>>> masterTGbranch
 		return
 
 	if(ismonkey(target))
@@ -152,11 +148,7 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-<<<<<<< HEAD
-	addtimer(src, "remove_fake", rand(450, 800), FALSE, target, blade)
-=======
-	addtimer(src, "remove_fake", 600, TIMER_NORMAL, target, blade)
->>>>>>> masterTGbranch
+	addtimer(src, "remove_fake", rand(450, 800), TIMER_NORMAL, target, blade)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
@@ -239,15 +231,7 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-<<<<<<< HEAD
-	spawn(rand(300,600))
-		if(target)
-			if(!target.resistances.Find(/datum/disease/lingvirus))
-				var/datum/disease/welp = new /datum/disease/lingvirus(0)
-				target.ContractDisease(welp)
-=======
 	addtimer(src, "hallucination_time", rand(300,600), TIMER_NORMAL, target)
->>>>>>> masterTGbranch
 	feedback_add_details("changeling_powers","HS")
 	return 1
 

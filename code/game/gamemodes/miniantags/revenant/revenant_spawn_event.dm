@@ -13,15 +13,9 @@
 	var/ignore_mobcheck = FALSE
 	role_name = "revenant"
 
-<<<<<<< HEAD
-/datum/round_event/ghost_role/revenant/New(my_force_spawn = FALSE, my_processing = TRUE)
-	..(my_processing)
-	force_spawn = my_force_spawn
-=======
 /datum/round_event/ghost_role/revenant/New(my_processing = TRUE, new_ignore_mobcheck = FALSE)
 	..()
 	ignore_mobcheck = new_ignore_mobcheck
->>>>>>> masterTGbranch
 
 /datum/round_event/ghost_role/revenant/spawn_role()
 	if(!ignore_mobcheck)
@@ -51,15 +45,9 @@
 				switch(L.name)
 					if("carpspawn")
 						spawn_locs += L.loc
-<<<<<<< HEAD
-	if(!spawn_locs.len) //If we can't find either, just spawn the revenant at the player's location
-		spawn_locs += get_turf(player_mind.current)
-	if(!spawn_locs.len) //If we can't find THAT, then just give up and cry
-=======
 	if(!spawn_locs) //If we can't find either, just spawn the revenant at the player's location
 		spawn_locs += get_turf(selected)
 	if(!spawn_locs) //If we can't find THAT, then just give up and cry
->>>>>>> masterTGbranch
 		return MAP_ERROR
 
 	var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant/(pick(spawn_locs))

@@ -31,15 +31,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-<<<<<<< HEAD
-/obj/item/weapon/stock_parts/cell/on_varedit(modified_var)
-	if(modified_var == "self_recharge")
-		if(self_recharge)
-			START_PROCESSING(SSobj, src)
-		else
-			STOP_PROCESSING(SSobj, src)
-	..()
-=======
 /obj/item/weapon/stock_parts/cell/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("self_recharge")
@@ -48,7 +39,6 @@
 			else
 				STOP_PROCESSING(SSobj, src)
 	. = ..()
->>>>>>> masterTGbranch
 
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)

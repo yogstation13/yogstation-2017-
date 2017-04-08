@@ -77,11 +77,11 @@
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
-	var/prev_fakedeath = (H.status_flags & FAKEDEATH)
+	var/prev_fakedeath = (FAKEDEATH in H.status_flags)
 	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
 	if(!prev_fakedeath)
-		H.status_flags &= ~FAKEDEATH
+		H.status_flags -= FAKEDEATH
 	picked_fluff_name = "Slave"
 	braintype = picked_fluff_name
 	brainmob.timeofhostdeath = H.timeofdeath

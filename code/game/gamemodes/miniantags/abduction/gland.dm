@@ -194,9 +194,6 @@
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
 		H.add_mob_blood(owner)
 
-<<<<<<< HEAD
-/obj/effect/cocoon/abductor
-=======
 /obj/item/organ/gland/bodysnatch
 	cooldown_low = 600
 	cooldown_high = 600
@@ -214,7 +211,6 @@
 	return
 
 /obj/structure/spider/cocoon/abductor
->>>>>>> masterTGbranch
 	name = "slimy cocoon"
 	desc = "Something is moving inside."
 	icon = 'icons/effects/effects.dmi'
@@ -249,7 +245,6 @@
 			M.loc = src.loc
 		qdel(src)
 
-<<<<<<< HEAD
 /obj/item/organ/gland/gib
 	cooldown_low = 12000
 	cooldown_high = 24000
@@ -353,24 +348,3 @@
 		owner.visible_message("<span class='notice'>[owner]'s limbs grow back.</span>")
 	owner.regenerate_limbs()
 	owner.update_icons()
-=======
-/obj/item/organ/gland/plasma
-	cooldown_low = 1200
-	cooldown_high = 1800
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
-	uses = -1
-
-/obj/item/organ/gland/plasma/activate()
-	owner << "<span class='warning'>You feel bloated.</span>"
-	sleep(150)
-	if(!owner) return
-	owner << "<span class='userdanger'>A massive stomachache overcomes you.</span>"
-	sleep(50)
-	if(!owner) return
-	owner.visible_message("<span class='danger'>[owner] vomits a cloud of plasma!</span>")
-	var/turf/open/T = get_turf(owner)
-	if(istype(T))
-		T.atmos_spawn_air("plasma=50;TEMP=[T20C]")
-	owner.vomit()
-	return
->>>>>>> masterTGbranch

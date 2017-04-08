@@ -188,11 +188,7 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-<<<<<<< HEAD
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //The paddles wont be stick anymore in the hands when someone remvoe you the defib
-=======
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
->>>>>>> masterTGbranch
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)

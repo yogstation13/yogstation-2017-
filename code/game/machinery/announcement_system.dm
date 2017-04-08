@@ -130,7 +130,6 @@ var/list/announcement_systems = list()
 	popup.open()
 
 /obj/machinery/announcement_system/Topic(href, href_list)
-<<<<<<< HEAD
 	if(href_list["Revert"])
 		if(check_rights(R_ADMIN))
 			if(href_list["Revert"] == "arrival")
@@ -145,10 +144,7 @@ var/list/announcement_systems = list()
 				message_admins(log)
 				log_admin(log)
 				investigate_log(log, "tcomms")
-	if(broken)
-=======
 	if(stat & BROKEN)
->>>>>>> masterTGbranch
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return

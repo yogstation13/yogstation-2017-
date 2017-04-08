@@ -168,10 +168,5 @@
 	victim << "<span class='notice'>You feel fast!</span>"
 	victim.status_flags |= GOTTAGOREALLYFAST
 	sleep(duration)
-<<<<<<< HEAD
 	victim.status_flags -= GOTTAGOREALLYFAST
 	victim << "<span class='notice'>You slow down.</span>"
-=======
-	victim.status_flags &= ~GOTTAGOREALLYFAST
-	victim << "<span class='notice'>You slow down.</span>"
->>>>>>> masterTGbranch

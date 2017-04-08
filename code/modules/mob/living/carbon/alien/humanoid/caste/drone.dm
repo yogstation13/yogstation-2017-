@@ -39,11 +39,7 @@
 	if(!isturf(user.loc))
 		user << "<span class='notice'>You can't evolve here!</span>"
 		return 0
-<<<<<<< HEAD
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal, user.hive_faction))
-=======
-	if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
->>>>>>> masterTGbranch
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return 1

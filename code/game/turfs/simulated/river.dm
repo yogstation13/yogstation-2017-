@@ -54,13 +54,8 @@
 				cur_turf = get_step(cur_turf, cur_dir)
 				continue
 			else
-<<<<<<< HEAD
-				var/turf/open/river_turf = new turf_type(cur_turf)
-				river_turf.Spread(30, 25, whitelist_area)
-=======
 				var/turf/river_turf = cur_turf.ChangeTurf(turf_type,FALSE,TRUE)
 				river_turf.Spread(25, 11, whitelist_area)
->>>>>>> masterTGbranch
 
 	for(var/WP in river_nodes)
 		qdel(WP)
@@ -72,11 +67,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 
-<<<<<<< HEAD
-/turf/proc/Spread(probability = 30, prob_loss = 25, whitelist_area)
-=======
 /turf/proc/Spread(probability = 30, prob_loss = 25, whitelisted_area)
->>>>>>> masterTGbranch
 	if(probability <= 0)
 		return
 	var/list/cardinal_turfs = list()
@@ -88,17 +79,6 @@
 		if(!T || (T.density && !ismineralturf(T)) || istype(T, /turf/open/indestructible) || (whitelisted_area && !istype(new_area, whitelisted_area)))
 			continue
 
-<<<<<<< HEAD
-	for(var/turf/F in orange(1, src))
-		var/area/A = get_area(F)
-		if((whitelist_area && !istype(A, whitelist_area)) || A.mapgen_protected)
-			continue
-		if(!F.density || istype(F, /turf/closed/mineral))
-			var/turf/L = new src.type(F)
-
-			if(L && prob(probability))
-				L.Spread(probability - prob_loss)
-=======
 		if(!logged_turf_type && ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			logged_turf_type = M.turf_type
@@ -120,7 +100,6 @@
 		else if(ismineralturf(T))
 			var/turf/closed/mineral/M = T
 			M.ChangeTurf(M.turf_type,FALSE,TRUE)
->>>>>>> masterTGbranch
 
 
 #undef RANDOM_UPPER_X

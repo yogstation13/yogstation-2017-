@@ -154,26 +154,12 @@
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 
-<<<<<<< HEAD
-	if((NOBLOOD in specflags) && heart)
-		heart.Remove(C, 1, 1)
-	else if((!(NOBLOOD in specflags)) && (!heart))
-=======
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
 		qdel(heart)
 	else if((!(NOBLOOD in species_traits)) && (!heart))
->>>>>>> masterTGbranch
 		heart = new()
 		heart.Insert(C, 1)
-
-<<<<<<< HEAD
-	if((NOBREATH in specflags) && lungs)
-		lungs.Remove(C, 1, 1)
-	else if((!(NOBREATH in specflags)) && (!lungs))
-		lungs = new()
-		lungs.Insert(C, 1)
-=======
 	if(lungs)
 		lungs.Remove(C)
 		qdel(lungs)
@@ -183,8 +169,7 @@
 			lungs = new mutantlungs()
 		else
 			lungs = new()
-		lungs.Insert(C)
->>>>>>> masterTGbranch
+		lungs.Insert(C, 1)
 
 	if((NOHUNGER in species_traits) && appendix)
 		appendix.Remove(C)
@@ -199,22 +184,16 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-<<<<<<< HEAD
-=======
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
->>>>>>> masterTGbranch
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
-<<<<<<< HEAD
-=======
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
->>>>>>> masterTGbranch
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -304,30 +283,17 @@
 
 	var/list/standing	= list()
 
-<<<<<<< HEAD
-	handle_mutant_bodyparts(H)
-
-	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
-	if(!(H.disabilities & HUSK))
-		// lipstick
-		if(H.lip_style && (LIPS in specflags) && HD)
-=======
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
 	if(!(H.disabilities & HUSK))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits) && HD)
->>>>>>> masterTGbranch
 			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]_s", "layer" = -BODY_LAYER)
 			lips.color = H.lip_color
 			standing	+= lips
 
 		// eyes
-<<<<<<< HEAD
-		if((EYECOLOR in specflags) && HD)
-=======
 		if((EYECOLOR in species_traits) && HD)
->>>>>>> masterTGbranch
 			var/image/img_eyes_s = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]_s", "layer" = -BODY_LAYER)
 			img_eyes_s.color = "#" + H.eye_color
 			standing	+= img_eyes_s
@@ -574,16 +540,9 @@
 	if(NOBREATH in species_traits)
 		H.setOxyLoss(0)
 		H.losebreath = 0
-
-<<<<<<< HEAD
-		var/takes_crit_damage = (!(NOCRITDAMAGE in specflags))
-		if((H.health < config.health_threshold_crit) && takes_crit_damage)
-			H.adjustBruteLoss(1, 1, DAMAGE_NO_MULTIPLIER)
-=======
 		var/takes_crit_damage = (!(NOCRITDAMAGE in species_traits))
 		if((H.health < HEALTH_THRESHOLD_CRIT) && takes_crit_damage)
-			H.adjustBruteLoss(1)
->>>>>>> masterTGbranch
+			H.adjustBruteLoss(1, 1, DAMAGE_NO_MULTIPLIER)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -759,23 +718,10 @@
 				if(!disable_warning)
 					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
-<<<<<<< HEAD
 			if(istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/S = H.wear_suit
 				if(S.can_hold(I))
 					return 1
-=======
-			if(!H.wear_suit.allowed)
-				if(!disable_warning)
-					H << "You somehow have a suit with no defined allowed items for suit storage, stop that."
-				return 0
-			if(I.w_class > WEIGHT_CLASS_BULKY)
-				if(!disable_warning)
-					H << "The [I.name] is too big to attach."  //should be src?
-				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
-				return 1
->>>>>>> masterTGbranch
 			return 0
 		if(slot_handcuffed)
 			if(H.handcuffed)
@@ -944,42 +890,24 @@
 
 	if(!(RADIMMUNE in species_traits))
 		if(H.radiation)
-<<<<<<< HEAD
 			if (H.radiation > radiation_faint_threshhold)
-=======
-			if (H.radiation > 100)
 				if(!H.weakened)
 					H.emote("collapse")
->>>>>>> masterTGbranch
 				H.Weaken(10)
 				H << "<span class='danger'>You feel weak.</span>"
 			switch(H.radiation)
 				if(50 to 75)
-<<<<<<< HEAD
 					if(prob(radiation_effect_mod*5))
-						H.Weaken(3)
-						H << "<span class='danger'>You feel weak.</span>"
-						H.emote("collapse")
-					if(prob(radiation_effect_mod*15))
-						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
-							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
-							spawn(50)
-								H.facial_hair_style = "Shaved"
-								H.hair_style = "Bald"
-								H.update_hair()
-=======
-					if(prob(5))
 						if(!H.weakened)
 							H.emote("collapse")
 						H.Weaken(3)
 						H << "<span class='danger'>You feel weak.</span>"
 
-					if(prob(15))
+					if(prob(radiation_effect_mod*15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
 							H << "<span class='danger'>Your hair starts to \
 								fall out in clumps...<span>"
 							addtimer(src, "go_bald", 50, TIMER_UNIQUE, H)
->>>>>>> masterTGbranch
 
 				if(75 to 100)
 					if(prob(radiation_effect_mod*1))
@@ -1012,13 +940,13 @@
 		flight = 1
 
 	if(!flightpack)	//Check for chemicals and innate speedups and slowdowns if we're moving using our body and not a flying suit
-		if(H.status_flags & GOTTAGOFAST)
+		if(GOTTAGOFAST in H.status_flags)
 			. -= 1
-		if(H.status_flags & GOTTAGOREALLYFAST)
+		if(GOTTAGOREALLYFAST in H.status_flags)
 			. -= 2
 		. += speedmod
 
-	if(H.status_flags & IGNORESLOWDOWN)
+	if(IGNORESLOWDOWN in H.status_flags)
 		ignoreslow = 1
 
 	if(H.has_gravity())
@@ -1091,9 +1019,6 @@
 				if(istype(T) && T.allow_thrust(0.01, H))
 					. -= 2
 =======
-//////////////////
-// ATTACK PROCS //
-//////////////////
 
 //////////////////
 // ATTACK PROCS //
@@ -1101,7 +1026,7 @@
 >>>>>>> masterTGbranch
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.health >= 0 && !(target.status_flags & FAKEDEATH))
+	if(target.health >= 0 && !(FAKEDEATH in target.status_flags))
 		target.help_shake_act(user)
 		if(target != user)
 			add_logs(user, target, "shaked")
@@ -1986,30 +1911,3 @@
 	if(H.dna && H.dna.species && (H.dna.species.specflags & CONSUMEPOWER) && A.Adjacent(H))
 		return species_drain_act(H, A)
 	return 0
-
-<<<<<<< HEAD
-/*
-#undef HUMAN_MAX_OXYLOSS
-#undef HUMAN_CRIT_MAX_OXYLOSS
-
-=======
->>>>>>> masterTGbranch
-#undef HEAT_DAMAGE_LEVEL_1
-#undef HEAT_DAMAGE_LEVEL_2
-#undef HEAT_DAMAGE_LEVEL_3
-
-#undef COLD_DAMAGE_LEVEL_1
-#undef COLD_DAMAGE_LEVEL_2
-#undef COLD_DAMAGE_LEVEL_3
-<<<<<<< HEAD
-
-#undef HEAT_GAS_DAMAGE_LEVEL_1
-#undef HEAT_GAS_DAMAGE_LEVEL_2
-#undef HEAT_GAS_DAMAGE_LEVEL_3
-
-#undef COLD_GAS_DAMAGE_LEVEL_1
-#undef COLD_GAS_DAMAGE_LEVEL_2
-#undef COLD_GAS_DAMAGE_LEVEL_3
-*/
-=======
->>>>>>> masterTGbranch

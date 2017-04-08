@@ -134,26 +134,10 @@
 		return 1
 	var/success = 0
 	if(prob(60))
-<<<<<<< HEAD
-		if(D.hand)
-			if(istype(D.l_hand, /obj/item))
-				var/obj/item/I = D.l_hand
-				if(D.drop_item())
-					A.put_in_hands(I)
-					success = 1
-		else
-			if(istype(D.r_hand, /obj/item))
-				var/obj/item/I = D.r_hand
-				if(D.drop_item())
-					A.put_in_hands(I)
-					success = 1
-	if(success)
-=======
 		var/obj/item/I = D.get_active_held_item()
 		if(I)
 			if(D.drop_item())
 				A.put_in_hands(I)
->>>>>>> masterTGbranch
 		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
 							"<span class='userdanger'>[A] has disarmed [D]!</span>")
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

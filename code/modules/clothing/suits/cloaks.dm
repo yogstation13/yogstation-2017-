@@ -2,11 +2,7 @@
 
 /obj/item/clothing/neck/cloak
 	name = "brown cloak"
-<<<<<<< HEAD
-	desc = "Also known as a cape."
-=======
 	desc = "It's a cape that can be worn around your neck."
->>>>>>> masterTGbranch
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
 	item_state = "qmcloak"

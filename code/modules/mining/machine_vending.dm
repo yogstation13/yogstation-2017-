@@ -154,11 +154,7 @@
 	else
 		dat += "No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID.</A><br>"
 	dat += "</div>"
-<<<<<<< HEAD
-	dat += "<br><b>Equipment point cost list:</b><BR>"//<table border='0' width='200'>
-=======
-	dat += "<br><b>Equipment point cost list:</b><BR><table border='0' width='300'>"
->>>>>>> masterTGbranch
+	dat += "<br><b>Equipment point cost list:</b><BR>"//<table border='0' width='300'>
 	for(var/datum/data/mining_equipment/prize in prize_list)
 		var/list/L = categories[prize.category]
 		if(L)
@@ -235,16 +231,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-<<<<<<< HEAD
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule", "Resonator", "Mining Drone", "Advanced Scanner", "Weather Detector")
-	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
-		return
-	switch(selection)
-		if("Survival Capsule")
-			new /obj/item/weapon/survivalcapsule(src.loc)
-		if("Resonator")
-=======
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit", "Weather Detector")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
@@ -253,18 +240,13 @@
 		if("Survival Capsule and Explorer's Webbing")
 			new /obj/item/weapon/storage/belt/mining/vendor(src.loc)
 		if("Resonator and Advanced Scanner")
->>>>>>> masterTGbranch
 			new /obj/item/weapon/resonator(src.loc)
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-<<<<<<< HEAD
-		if("Advanced Scanner")
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 		if("Weather Detector")
 			new /obj/item/device/barometer(src.loc)
-=======
 		if("Extraction and Rescue Kit")
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
@@ -274,7 +256,6 @@
 			new /obj/item/weapon/extinguisher/mini(loc)
 		if("Mining Conscription Kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
->>>>>>> masterTGbranch
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -347,9 +328,6 @@
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-<<<<<<< HEAD
-	user << "There's [points] point\s on the card."
-=======
 	user << "There's [points] point\s on the card."
 
 ///Conscript kit
@@ -383,4 +361,3 @@
 	new /obj/item/device/encryptionkey/headset_cargo(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
 	new /obj/item/weapon/card/mining_access_card(src)
->>>>>>> masterTGbranch

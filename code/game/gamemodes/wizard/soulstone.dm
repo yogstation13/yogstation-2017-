@@ -233,13 +233,10 @@
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null, _affiliation)
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
-<<<<<<< HEAD
-	if(_affiliation) newstruct.set_affiliation(_affiliation)
-	newstruct.faction |= "\ref[stoner]"
-=======
+	if(_affiliation)
+		newstruct.set_affiliation(_affiliation)
 	if(stoner)
 		newstruct.faction |= "\ref[stoner]"
->>>>>>> masterTGbranch
 	newstruct.key = target.key
 	if(newstruct.mind && ((stoner && iscultist(stoner)) || cultoverride) && ticker && ticker.mode)
 		ticker.mode.add_cultist(newstruct.mind, 0)

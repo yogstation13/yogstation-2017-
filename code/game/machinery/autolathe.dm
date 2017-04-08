@@ -131,10 +131,7 @@
 			for(var/B in D.blueprints)
 				if(B)
 					files.AddDesign2Known(B)
-<<<<<<< HEAD
-=======
 
->>>>>>> masterTGbranch
 		busy = 0
 		return 1
 

@@ -35,11 +35,8 @@ This file contains the arcane tome files.
 			M.reagents.add_reagent("unholywater",holy2unholy)
 			add_logs(user, M, "smacked", src, " removing the holy water from them")
 		return
-<<<<<<< HEAD
-	M.take_organ_damage(0, 15, 1, DAMAGE_MAGIC) //Used to be a random between 5 and 20
-=======
-	M.take_bodypart_damage(0, 15) //Used to be a random between 5 and 20
->>>>>>> masterTGbranch
+	M.take_bodypart_damage(0, 15, 1, DAMAGE_MAGIC) //Used to be a random between 5 and 20
+
 	playsound(M, 'sound/weapons/sear.ogg', 50, 1)
 	M.visible_message("<span class='danger'>[user] strikes [M] with the arcane tome!</span>", \
 					  "<span class='userdanger'>[user] strikes you with the tome, searing your flesh!</span>")
@@ -75,16 +72,6 @@ This file contains the arcane tome files.
 	text += "<font color='red'><b>Teleport</b></font><br>This rune is unique in that it requires a keyword before the scribing can begin. When invoked, it will find any other Teleport runes; \
 	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune, provided the selected rune is unblocked.<br><br>"
 
-<<<<<<< HEAD
-	text += "<font color='red'><b>Offer</b></font><br>Requires two cultists to convert a living target, or three to sacrifice a living target. Requires only one to sacrifice a corpse. This rune will see if a target placed atop it is convertable.\
-	If they are convertable, they will be converted. If they are not, they will be sacrificed. A sacrifice will place the sacrifice's soul into a soulstone, an object \
-	which holds the sacrifice's soul. They can then either be released by clicking on the soulstone, or placed into a construct shell to become a deadly construct, capable of amazing feats. Your target \
-	cannot be converted, and will be sacrificed. The Captain and Chaplain are also immune to being converted.<br><br>"
-
-	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires there to be more sacrifices than there are cultists revived in total. To perform the ritual, place the corpse you wish to revive onto \
-	the rune. When the rune is invoked, the body will be revived. Assuming the target is not moved \
-	within a few seconds, they will be brought back to life, healed of all ailments.<br><br>"
-=======
 	text += "<font color='red'><b>Offer</b></font><br><b>This rune is necessary to achieve your goals.</b> Placing a noncultist above it will convert them if it can and sacrifice them otherwise. \
 	It requires two invokers to convert a target and three to sacrifice a living target or the sacrifice target.<br>\
 	Successful conversions will produce a tome for the new cultist, in addition to healing them.<br> \
@@ -92,7 +79,6 @@ This file contains the arcane tome files.
 
 	text += "<font color='red'><b>Raise Dead</b></font><br>This rune requires the corpse of a cultist placed upon the rune, and one person sacrificed for each revival you wish to do.\
 	Provided there are remaining revivals from those sacrificed, invoking the rune will revive the cultist placed upon it.<br><br>"
->>>>>>> masterTGbranch
 
 	text += "<font color='red'><b>Electromagnetic Disruption</b></font><br>Robotic lifeforms have time and time again been the downfall of fledgling cults. This rune may allow you to gain the upper \
 	hand against these pests. By using the rune, a large electromagnetic pulse will be emitted from the rune's location. The size of the EMP will grow significantly for each additional adjacent cultist when the \
@@ -202,11 +188,7 @@ This file contains the arcane tome files.
 	if(!possible_runes.len)
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
-<<<<<<< HEAD
-	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
-=======
 	if(!src || qdeleted(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
->>>>>>> masterTGbranch
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -235,7 +217,6 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
-<<<<<<< HEAD
 			var/area/A = get_area(src)
 			var/list/clearlist = list(/area/solar,/area/toxins/test_area,/area/maintenance)
 			if(!A.valid_territory)
@@ -243,8 +224,6 @@ This file contains the arcane tome files.
 					user << "<span class='warning'>The Geometer cannot be opened \
 						in such a ridiculous place!</span>"
 					return
-=======
->>>>>>> masterTGbranch
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
 				user << "<span class='warning'>The Geometer is not interested \
@@ -286,13 +265,6 @@ This file contains the arcane tome files.
 		var/obj/structure/emergency_shield/S = V
 		if(S && !qdeleted(S))
 			qdel(S)
-<<<<<<< HEAD
-	new rune_to_scribe(Turf, chosen_keyword)
-	user << "<span class='cult'>The [lowertext(initial(rune_to_scribe.cultist_name))] rune [initial(rune_to_scribe.cultist_desc)]</span>"
-	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-			P.visible_message("<span class='warning'>[P] begins rattling in horror.</span>")
-=======
 	var/obj/effect/rune/R = new rune_to_scribe(Turf, chosen_keyword)
 	user << "<span class='cult'>The [lowertext(R.cultist_name)] rune [R.cultist_desc]</span>"
 	feedback_add_details("cult_runes_scribed", R.cultist_name)
@@ -317,4 +289,3 @@ This file contains the arcane tome files.
 		return FALSE
 
 	return TRUE
->>>>>>> masterTGbranch

@@ -205,15 +205,9 @@
 		/obj/item/weapon/storage/pill_bottle,
 		/obj/item/weapon/ore,
 		/obj/item/weapon/reagent_containers/food/drinks,
-<<<<<<< HEAD
 		/obj/item/device/barometer,
-
-=======
 		/obj/item/organ/hivelord_core,
-		/obj/item/device/wormhole_jaunter,
-		/obj/item/weapon/storage/bag/plants,
->>>>>>> masterTGbranch
-
+		/obj/item/device/wormhole_jaunter
 		)
 
 

@@ -141,11 +141,7 @@
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 	linked_node = node
-<<<<<<< HEAD
 	if(is_type_in_typecache(loc, blacklisted_turfs))
-=======
-	if(isspaceturf(loc))
->>>>>>> masterTGbranch
 		qdel(src)
 		return
 	addtimer(src, "Life", rand(150, 200))
@@ -158,11 +154,7 @@
 	set background = BACKGROUND_ENABLED
 	var/turf/U = get_turf(src)
 
-<<<<<<< HEAD
 	if(is_type_in_typecache(U, blacklisted_turfs))
-=======
-	if(isspaceturf(U))
->>>>>>> masterTGbranch
 		qdel(src)
 		return
 
@@ -171,11 +163,7 @@
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
 
-<<<<<<< HEAD
-		if (locate(/obj/structure/alien/weeds) in T || is_type_in_typecache(T, blacklisted_turfs))
-=======
 		if (locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
->>>>>>> masterTGbranch
 			continue
 
 		new /obj/structure/alien/weeds(T, linked_node)
@@ -224,13 +212,9 @@
 	icon_state = "egg_growing"
 	density = 0
 	anchored = 1
-<<<<<<< HEAD
-	health = 100
-=======
 	obj_integrity = 100
 	max_integrity = 100
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
->>>>>>> masterTGbranch
 	layer = MOB_LAYER
 	var/status = GROWING	//can be GROWING, GROWN or BURST; all mutually exclusive
 	var/hive_faction

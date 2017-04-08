@@ -38,11 +38,7 @@
 	speak_emote = list("chirps")
 	bubble_icon = "machine"
 	languages_spoken = DRONE
-<<<<<<< HEAD
 	languages_understood = DRONE | HUMAN
-=======
-	languages_understood = DRONE|HUMAN
->>>>>>> masterTGbranch
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
@@ -59,12 +55,8 @@
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
-<<<<<<< HEAD
-	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
-	var/no_living_interaction = TRUE
-=======
 	"3. Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities, You must never actively work against these goals."
->>>>>>> masterTGbranch
+	var/no_living_interaction = TRUE
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
@@ -212,21 +204,6 @@
 	msg += "*---------*</span>"
 	user << msg
 
-<<<<<<< HEAD
-/mob/living/simple_animal/drone/IsAdvancedToolUser()
-	return 1
-
-
-/mob/living/simple_animal/drone/canUseTopic(atom/movable/M, be_close = 0)
-	if(incapacitated())
-		return 0
-	if(be_close && !in_range(M, src))
-		return 0
-	return 1
-
-=======
->>>>>>> masterTGbranch
-
 /mob/living/simple_animal/drone/assess_threat() //Secbots won't hunt maintenance drones.
 	return -10
 
@@ -291,7 +268,6 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-<<<<<<< HEAD
 /mob/living/simple_animal/drone/proc/fix_light()
 	light_on = 0
 
@@ -312,12 +288,5 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/drone/has_left_hand()
-	return TRUE
-
-/mob/living/simple_animal/drone/has_right_hand()
-	return TRUE
-=======
 /mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	return 0 //So they don't die trying to fix wiring
->>>>>>> masterTGbranch

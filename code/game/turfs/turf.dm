@@ -11,15 +11,9 @@
 
 	var/blocks_air = 0
 
-<<<<<<< HEAD
-	flags = 0
-
-	var/list/proximity_checkers = list()
-=======
 	flags = CAN_BE_DIRTY
 
 	var/list/proximity_checkers
->>>>>>> masterTGbranch
 
 	var/image/obscured	//camerachunks
 
@@ -319,18 +313,12 @@
 			A.ex_act(severity, target)
 			CHECK_TICK
 
-<<<<<<< HEAD
-/turf/ratvar_act()
-	for(var/mob/M in src)
-		M.ratvar_act()
-=======
 /turf/ratvar_act(force)
 	. = (prob(40) || force)
 	for(var/I in src)
 		var/atom/A = I
 		if(ismob(A) || .)
 			A.ratvar_act()
->>>>>>> masterTGbranch
 
 /turf/proc/add_blueprints(atom/movable/AM)
 	var/image/I = new

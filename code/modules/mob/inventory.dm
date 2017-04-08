@@ -146,67 +146,7 @@
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
 /mob/proc/can_equip(obj/item/I, slot, disable_warning = 0)
-<<<<<<< HEAD
-	return 0
-
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(obj/item/W)
-	if(!put_in_hand_check(W))
-		return 0
-	if(!has_left_hand())
-		return 0
-	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
-		l_hand = W
-		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
-		W.equipped(src,slot_l_hand)
-		if(W.pulledby)
-			W.pulledby.stop_pulling()
-		update_inv_l_hand()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
-
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(obj/item/W)
-	if(!put_in_hand_check(W))
-		return 0
-	if(!has_right_hand())
-		return 0
-	if(!r_hand)
-		W.loc = src
-		r_hand = W
-		W.layer = ABOVE_HUD_LAYER
-		W.equipped(src,slot_r_hand)
-		if(W.pulledby)
-			W.pulledby.stop_pulling()
-		update_inv_r_hand()
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		return 1
-	return 0
-
-/mob/proc/put_in_hand_check(obj/item/W)
-	if(lying && !(W.flags&ABSTRACT))
-		return 0
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
-			return 0
-	if(!istype(W))
-		return 0
-	return 1
-
-//Puts the item into our active hand if possible. returns 1 on success.
-/mob/proc/put_in_active_hand(obj/item/W)
-	if(hand)
-		return put_in_l_hand(W)
-	else
-		return put_in_r_hand(W)
-=======
 	return FALSE
->>>>>>> masterTGbranch
 
 
 /mob/proc/put_in_hand(obj/item/I, hand_index)
@@ -289,25 +229,10 @@
 /mob/proc/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
 		return drop_item()
-<<<<<<< HEAD
-	return 0
-
-
-//Drops the item in our left hand
-/mob/proc/drop_l_hand()
-	if(!loc || !loc.allow_drop())
-		return
-	return unEquip(l_hand) //All needed checks are in unEquip
-
-
-//Drops the item in our right hand
-/mob/proc/drop_r_hand()
-=======
 	return FALSE
 
 
 /mob/proc/drop_all_held_items()
->>>>>>> masterTGbranch
 	if(!loc || !loc.allow_drop())
 		return
 	for(var/obj/item/I in held_items)

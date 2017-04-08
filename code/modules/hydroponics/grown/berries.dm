@@ -77,13 +77,8 @@
 	lifespan = 30
 	endurance = 25
 	mutatelist = list()
-<<<<<<< HEAD
-	genes = list(/datum/plant_gene/trait/glow/berry)
-	reagents_add = list("uranium" = 0.4, "iodine" = 0.3, "vitamin" = 0.08, "nutriment" = 0.2)
-=======
 	genes = list(/datum/plant_gene/trait/glow/berry , /datum/plant_gene/trait/noreact, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("uranium" = 0.25, "iodine" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> masterTGbranch
+	reagents_add = list("uranium" = 0.4, "iodine" = 0.3, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/glow
@@ -131,13 +126,8 @@
 	species = "bluecherry"
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
-<<<<<<< HEAD
 	mutatelist = list(/obj/item/seeds/cherry/bomb)
 	reagents_add = list("nutriment" = 0.14, "sugar" = 0.14)
-=======
-	mutatelist = list()
-	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
->>>>>>> masterTGbranch
 	rarity = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
@@ -148,7 +138,6 @@
 	filling_color = "#6495ED"
 	bitesize_mod = 2
 
-<<<<<<< HEAD
 //Cherry Bombs
 /obj/item/seeds/cherry/bomb
 	name = "pack of cherry bomb pits"
@@ -193,8 +182,6 @@
 	explosion(get_turf(src), d_strength, h_strength, l_strength, f_strength)
 	qdel(src)
 
-=======
->>>>>>> masterTGbranch
 // Grapes
 /obj/item/seeds/grape
 	name = "pack of grape seeds"

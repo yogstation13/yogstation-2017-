@@ -172,22 +172,14 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-<<<<<<< HEAD
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM)
-=======
 	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
->>>>>>> masterTGbranch
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
 		SM.languages_spoken |= HUMAN
 		SM.languages_understood |= HUMAN
-<<<<<<< HEAD
-		SM.faction |= user.faction
-=======
 		SM.mind.enslave_mind_to_creator(user)
->>>>>>> masterTGbranch
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
 		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist [user.p_them()] in completing [user.p_their()] goals at any cost.</span>"
@@ -250,11 +242,7 @@
 	user.mind.transfer_to(SM)
 	SM.languages_spoken = user.languages_spoken
 	SM.languages_understood = user.languages_understood
-<<<<<<< HEAD
-	SM.faction = user.faction
-=======
 	SM.faction = user.faction.Copy()
->>>>>>> masterTGbranch
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
 	SM << "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>"

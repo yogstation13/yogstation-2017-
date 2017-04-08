@@ -3,7 +3,7 @@
 	desc = ""
 	robust_searching = 1
 	stat_attack = 1
-	status_flags = 0
+	status_flags = list()
 	a_intent = INTENT_HARM
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss

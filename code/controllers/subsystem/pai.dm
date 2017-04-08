@@ -3,11 +3,8 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 
 /datum/subsystem/pai
 	name = "pAI"
-<<<<<<< HEAD
 	init_order = 20
 	flags = SS_NO_FIRE|SS_NO_INIT
-=======
->>>>>>> masterTGbranch
 
 	flags = SS_NO_INIT|SS_NO_FIRE
 
@@ -202,7 +199,6 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 
 	user << browse(dat, "window=findPai")
 
-<<<<<<< HEAD
 /datum/subsystem/pai/proc/availableRecruitsCount()
 	var/candidateCount = 0
 	for(var/datum/paiCandidate/c in SSpai.candidates)
@@ -241,8 +237,6 @@ var/list/obj/item/device/paicard/pai_card_list = list()
 	else if (response == "Never for this round")
 		asked[C.ckey] = NEVER_FOR_THIS_ROUND
 
-=======
->>>>>>> masterTGbranch
 /datum/paiCandidate
 	var/name
 	var/key

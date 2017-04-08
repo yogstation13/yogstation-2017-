@@ -824,7 +824,7 @@ Difficulty: Very Hard
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		L.disabilities &= ~MUTE
-		L.status_flags &= ~GODMODE
+		L.status_flags -= GODMODE
 		L.notransform = 0
 		if(holder_animal && !qdeleted(holder_animal))
 			holder_animal.mind.transfer_to(L)

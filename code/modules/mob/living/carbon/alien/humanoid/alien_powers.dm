@@ -142,24 +142,6 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
 	if(target in oview(1,user))
-<<<<<<< HEAD
-		// OBJ CHECK
-		if(isobj(target))
-			var/obj/I = target
-			if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
-
-		// TURF CHECK
-		else if(istype(target, /turf))
-			var/turf/T = target
-      
-			if(T.unacidable)
-				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
-				return 0
-
-		else// Not a type we can acid.
-=======
 		if(target.acid_act(200, 100))
 			user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
 			return 1
@@ -167,7 +149,6 @@ Doesn't work on other aliens/AI.*/
 			user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 
 
->>>>>>> masterTGbranch
 			return 0
 	else
 		src << "<span class='noticealien'>Target is too far away.</span>"

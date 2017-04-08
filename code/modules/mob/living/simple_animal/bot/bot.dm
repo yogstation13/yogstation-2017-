@@ -15,17 +15,11 @@
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
-<<<<<<< HEAD
-	status_flags = list() //no default canpush
-
-	speak_emote = list("states")
-=======
-	status_flags = NONE //no default canpush
+	status_flags = list()
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
->>>>>>> masterTGbranch
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon" , "turret")
@@ -743,11 +737,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	dat = get_controls(M)
 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
 	popup.set_content(dat)
-<<<<<<< HEAD
-	popup.open(0)
-=======
 	popup.open(use_onclose = 0)
->>>>>>> masterTGbranch
 	onclose(M,window_id,ref=src)
 	return
 

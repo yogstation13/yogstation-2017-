@@ -23,10 +23,6 @@
 /datum/objective/proc/get_target()
 	return target
 
-<<<<<<< HEAD
-=======
-
->>>>>>> masterTGbranch
 /datum/objective/proc/get_crewmember_minds()
 	. = list()
 	for(var/V in data_core.locked)

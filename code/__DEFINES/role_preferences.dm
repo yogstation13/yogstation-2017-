@@ -24,10 +24,7 @@
 #define ROLE_REVENANT			"revenant"
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
-<<<<<<< HEAD
 #define ROLE_CYBERMAN			"cyberman"
-=======
->>>>>>> masterTGbranch
 #define ROLE_BORER				"borer"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
@@ -52,10 +49,7 @@ var/global/list/special_roles = list(
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
-<<<<<<< HEAD
 	ROLE_CYBERMAN = /datum/game_mode/cybermen,
-=======
->>>>>>> masterTGbranch
 	ROLE_BORER,
 )
 

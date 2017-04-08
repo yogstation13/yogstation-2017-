@@ -145,11 +145,8 @@
 
 	var/resize = 1 //Badminnery resize
 
-<<<<<<< HEAD
-	var/permanent_sight_flags = 0
+	//var/permanent_sight_flags = 0
 
 	//Spooky shadow walking. For Spooks. //So spoopy
 	var/shadow_walk = 0
-=======
 	var/list/observers = null	//The list of people observing this mob.
->>>>>>> masterTGbranch

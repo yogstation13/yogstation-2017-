@@ -81,11 +81,7 @@
 /obj/effect/decal/cleanable/vomit/attack_hand(var/mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-<<<<<<< HEAD
 		if(H.dna.species.id == "manfly" || H.dna.species.id == "unafly" || H.dna.species.id == "flytosian" || H.dna.species.id == "flyternis")
-=======
-		if(isflyperson(H))
->>>>>>> masterTGbranch
 			playsound(get_turf(src), 'sound/items/drink.ogg', 50, 1) //slurp
 			H.visible_message("<span class='alert'>[H] extends a small proboscis into the vomit pool, sucking it with a slurping sound.</span>")
 			if(reagents)
@@ -150,11 +146,6 @@
 		qdel(src)
 
 /obj/effect/decal/cleanable/shreds/New()
-<<<<<<< HEAD
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
-	..()
-=======
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
 	..()
@@ -165,4 +156,3 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	icon_state = "salt_pile"
 	gender = NEUTER
->>>>>>> masterTGbranch

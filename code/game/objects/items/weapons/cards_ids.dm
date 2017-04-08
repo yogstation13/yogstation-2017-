@@ -324,8 +324,6 @@ update_label("John Doe", "Clowny")
 	name = "mining ID"
 	access = list(access_mining, access_mining_station, access_mineral_storeroom)
 
-<<<<<<< HEAD
-
 /obj/item/weapon/card/id/proc/ID_fluff()
 	var/job = assignment
 	var/list/idfluff = list(
@@ -376,7 +374,7 @@ update_label("John Doe", "Clowny")
 	overlays.Cut()
 	overlays += idfluff[job][1]
 	overlays += idfluff[job][2]
-=======
+
 /obj/item/weapon/card/id/away
 	name = "a perfectly generic identification card"
 	desc = "A perfectly generic identification card. Looks like it could use some flavor."
@@ -390,4 +388,3 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/away/hotel/securty
 	name = "Officer ID"
 	access = list(access_away_general, access_away_maint, access_away_sec)
->>>>>>> masterTGbranch

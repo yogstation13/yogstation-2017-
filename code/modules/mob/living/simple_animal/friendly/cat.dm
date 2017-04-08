@@ -13,13 +13,8 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 5
-<<<<<<< HEAD
-	see_in_dark = 8
-	ventcrawler = 2
-=======
 	see_in_dark = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
->>>>>>> masterTGbranch
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	minbodytemp = TCMB //he hangs out in cryo, so
@@ -85,19 +80,6 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
-<<<<<<< HEAD
-	var/list/family = list()
-	//var/cats_deployed = 0
-	//var/memory_saved = 0
-// If you're from 500 years in the future and wondering why this is commented out-One, go play a better game. Two, runtime literally did not stop fucking other cats until admins had to delete them over and over.
-///mob/living/simple_animal/pet/cat/Runtime/New()
-//	if(prob(5))
-//		icon_state = "original"
-//		icon_living = "original"
-//		icon_dead = "original_dead"
-	//Read_Memory()
-//	..()
-=======
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
 	var/cats_deployed = 0
@@ -110,7 +92,6 @@
 		icon_dead = "original_dead"
 	Read_Memory()
 	..()
->>>>>>> masterTGbranch
 
 ///mob/living/simple_animal/pet/cat/Runtime/Life()
 //	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
@@ -119,33 +100,6 @@
 //		Write_Memory()
 //	..()
 
-<<<<<<< HEAD
-//mob/living/simple_animal/pet/cat/Runtime/death()
-//	if(!memory_saved)
-//		Write_Memory(1)
-//	..()
-
-//mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-//	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-//	S["family"] 			>> family
-
-//	if(isnull(family))
-//		family = list()
-
-///mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
-//	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-//	family = list()
-//	if(!dead)
-//		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-//			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
-//				continue
-//			if(C.type in family)
-//				family[C.type] += 1
-//			else
-//				family[C.type] = 1
-//	S["family"]				<< family
-//	memory_saved = 1
-=======
 /mob/living/simple_animal/pet/cat/Runtime/make_babies()
 	var/mob/baby = ..()
 	if(baby)
@@ -177,7 +131,6 @@
 				family[C.type] = 1
 	S["family"]				<< family
 	memory_saved = 1
->>>>>>> masterTGbranch
 
 ///mob/living/simple_animal/pet/cat/Runtime/proc/Deploy_The_Cats()
 //	cats_deployed = 1
@@ -188,12 +141,8 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
-<<<<<<< HEAD
-	gold_core_spawnable = 2 
-=======
 	gender = MALE
 	gold_core_spawnable = 0
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
@@ -280,18 +229,12 @@
 	icon_dead = "cak_dead"
 	health = 50
 	maxHealth = 50
-<<<<<<< HEAD
-=======
 	gender = FEMALE
->>>>>>> masterTGbranch
 	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
 	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm = "takes a bite out of"
-<<<<<<< HEAD
-=======
 	attacked_sound = 'sound/items/eatfood.ogg'
->>>>>>> masterTGbranch
 	deathmessage = "loses its false life and collapses!"
 	death_sound = "bodyfall"
 
@@ -325,11 +268,9 @@
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
-<<<<<<< HEAD
-	if(L.a_intent == "harm" && L.reagents && !stat)
+	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
-
 
 /mob/living/simple_animal/pet/cat/mimekitty
 	name = "\improper Mimekitty"
@@ -368,9 +309,3 @@
 
 /mob/living/simple_animal/pet/cat/mimekitty/say()
 	return //MIME kitty. Not SPEAK kitty.
-
-=======
-	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
-		L.reagents.add_reagent("nutriment", 0.4)
-		L.reagents.add_reagent("vitamin", 0.4)
->>>>>>> masterTGbranch

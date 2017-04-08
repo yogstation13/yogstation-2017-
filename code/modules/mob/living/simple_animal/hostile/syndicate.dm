@@ -160,12 +160,9 @@
 	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-<<<<<<< HEAD
 	dismember_chance = 15
-=======
 	obj_damage = 0
 	environment_smash = 0
->>>>>>> masterTGbranch
 	attacktext = "cuts"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	faction = list("syndicate")

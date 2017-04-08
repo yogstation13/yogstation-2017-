@@ -68,13 +68,10 @@
 /mob/living/UnarmedAttack(atom/A)
 	A.attack_animal(src)
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	target = A
 	..()
 
-=======
->>>>>>> masterTGbranch
 /atom/proc/attack_animal(mob/user)
 	return
 

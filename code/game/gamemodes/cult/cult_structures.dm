@@ -138,19 +138,11 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
 
-<<<<<<< HEAD
-/obj/structure/cult/pylon/New()
-	START_PROCESSING(SSfastprocess, src)
-	..()
-
-/obj/structure/cult/pylon/Destroy()
-=======
 /obj/structure/destructible/cult/pylon/New()
 	START_PROCESSING(SSfastprocess, src)
 	..()
 
 /obj/structure/destructible/cult/pylon/Destroy()
->>>>>>> masterTGbranch
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -190,27 +182,6 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		if(T)
 			T.ChangeTurf(/turf/open/floor/engine/cult)
 		else
-<<<<<<< HEAD
-			last_corrupt = world.time + corrupt_delay*2
-
-/obj/structure/cult/pylon/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/clothing/suit/hooded/cultrobes/cult_shield) && iscultist(user))
-		var/obj/item/clothing/suit/hooded/cultrobes/cult_shield/S = I
-		if(S.current_charges >= 3)
-			user <<"<span class='warning'>[I] is already fully charged!</span>"
-			return
-		if(cooldowntime > world.time)
-			user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
-			return
-		if(anchored && Adjacent(user) && cooldowntime <= world.time)
-			user <<"<span class='notice'>You hold [I] up to [src]. Hold still...</span>"
-			if(do_mob(user, user, 200))
-				S.current_charges = 3
-				user <<"<span class='notice'>[I] is fully charged.</span>"
-				cooldowntime = world.time + 1200
-
-/obj/structure/cult/tome
-=======
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
 				PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, F)
@@ -220,7 +191,6 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 				last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/destructible/cult/tome
->>>>>>> masterTGbranch
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"

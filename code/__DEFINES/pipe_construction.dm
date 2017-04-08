@@ -40,11 +40,10 @@ Construction breaks otherwise
 #define DISP_SORTJUNCTION		9
 #define DISP_SORTJUNCTION_FLIP	10
 
-<<<<<<< HEAD
 #define RED_RCD_MODE 1
 #define RED_RPD_MODE 2
 #define RED_AIRLOCK_PAINTER_MODE 3
-=======
+
 //Transit tubes
 #define TRANSIT_TUBE_STRAIGHT			0
 #define TRANSIT_TUBE_STRAIGHT_CROSSING	1
@@ -61,4 +60,3 @@ Construction breaks otherwise
 #define STATION_TUBE_OPENING	1
 #define STATION_TUBE_CLOSED		2
 #define STATION_TUBE_CLOSING	3
->>>>>>> masterTGbranch

@@ -9,13 +9,9 @@
 	endWhen			= 35
 	var/interval 	= 2
 	var/list/vents  = list()
-<<<<<<< HEAD
-	var/list/gunk = list("mine_salve","unholywater","mindbreaker","uranium","toxin","cleaner","carpotoxin","condensedcapsaicin","mushroomhallucinogen","lube",
-								 "plantbgone","mutagen","charcoal","space_drugs","morphine","holywater","ethanol","mutetoxin","facid")
-=======
 	var/list/gunk = list("water","carbon","flour","radium","toxin","cleaner","nutriment","condensedcapsaicin","mushroomhallucinogen","lube",
 								 "plantbgone","banana","charcoal","space_drugs","morphine","holywater","ethanol","hot_coco","sacid")
->>>>>>> masterTGbranch
+
 
 /datum/round_event/vent_clog/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")

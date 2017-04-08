@@ -9,13 +9,8 @@
 	response_harm   = "punches"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
-<<<<<<< HEAD
-	speed = 1
-	a_intent = "harm"
-=======
 	speed = 0
 	a_intent = INTENT_HARM
->>>>>>> masterTGbranch
 	stop_automated_movement = 1
 	status_flags = list(CANPUSH)
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -26,14 +21,10 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-<<<<<<< HEAD
 	flying = 1
-	pressure_resistance = 200
-=======
 	faction = list("cult")
 	movement_type = FLYING
 	pressure_resistance = 100
->>>>>>> masterTGbranch
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/weapon/ectoplasm)
@@ -80,16 +71,11 @@
 	src << playstyle_string
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-<<<<<<< HEAD
-	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	if (src.health < src.maxHealth)
-=======
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
 	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
->>>>>>> masterTGbranch
 		msg += "<span class='warning'>"
 		if(health >= maxHealth/2)
 			msg += "[t_He] look[t_s] slightly dented.\n"
@@ -108,11 +94,6 @@
 				Beam(M,icon_state="sendbeam",time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-<<<<<<< HEAD
-		else
-			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
-=======
 			else
 				M.visible_message("<span class='danger'>[M] repairs some of [p_their()] own dents.</span>", \
 						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
@@ -121,7 +102,6 @@
 				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>"
 			else
 				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
->>>>>>> masterTGbranch
 	else if(src != M)
 		..()
 
@@ -131,15 +111,13 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-<<<<<<< HEAD
 /mob/living/simple_animal/construct/examine(mob/user)
 	. = ..()
 	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
 		user << "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>"
-=======
+
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
 	return 0
->>>>>>> masterTGbranch
 
 
 /////////////////Juggernaut///////////////

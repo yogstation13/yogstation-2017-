@@ -1,10 +1,7 @@
 var/datum/subsystem/objects/SSobj
 
 /datum/var/isprocessing = 0
-<<<<<<< HEAD:code/controllers/subsystem/objects.dm
 
-=======
->>>>>>> masterTGbranch:code/controllers/subsystem/processing/objects.dm
 /datum/proc/process()
 	set waitfor = 0
 	STOP_PROCESSING(SSobj, src)
@@ -24,11 +21,7 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects/Initialize(timeofdayl)
 	trigger_atom_spawners()
-<<<<<<< HEAD:code/controllers/subsystem/objects.dm
-	setupGenetics()
-=======
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
->>>>>>> masterTGbranch:code/controllers/subsystem/processing/objects.dm
 	for(var/thing in world)
 		var/atom/A = thing
 		A.initialize()

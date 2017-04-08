@@ -83,19 +83,11 @@
 		switch(bodytemperature)
 			if(BODYTEMP_HEAT_DAMAGE_LEVEL_1 to BODYTEMP_HEAT_DAMAGE_LEVEL_2)
 				throw_alert("temp", /obj/screen/alert/hot, 1)
-<<<<<<< HEAD
 				adjustFireLoss(2)
 			if(BODYTEMP_HEAT_DAMAGE_LEVEL_2 to BODYTEMP_HEAT_DAMAGE_LEVEL_3)
 				throw_alert("temp", /obj/screen/alert/hot, 2)
 				adjustFireLoss(3)
 			if(BODYTEMP_HEAT_DAMAGE_LEVEL_3 to INFINITY)
-=======
-				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
-			if(400 to 460)
-				throw_alert("temp", /obj/screen/alert/hot, 2)
-				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
-			if(460 to INFINITY)
->>>>>>> masterTGbranch
 				throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(on_fire)
 					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
@@ -107,19 +99,11 @@
 			switch(bodytemperature)
 				if(BODYTEMP_COLD_DAMAGE_LEVEL_2 to BODYTEMP_COLD_DAMAGE_LEVEL_1)
 					throw_alert("temp", /obj/screen/alert/cold, 1)
-<<<<<<< HEAD
 					adjustFireLoss(0.5)
 				if(BODYTEMP_COLD_DAMAGE_LEVEL_3 to BODYTEMP_COLD_DAMAGE_LEVEL_2)
 					throw_alert("temp", /obj/screen/alert/cold, 2)
 					adjustFireLoss(1.5)
 				if(-INFINITY to BODYTEMP_COLD_DAMAGE_LEVEL_3)
-=======
-					apply_damage(COLD_DAMAGE_LEVEL_1, BURN)
-				if(120 to 200)
-					throw_alert("temp", /obj/screen/alert/cold, 2)
-					apply_damage(COLD_DAMAGE_LEVEL_2, BURN)
-				if(-INFINITY to 120)
->>>>>>> masterTGbranch
 					throw_alert("temp", /obj/screen/alert/cold, 3)
 					apply_damage(COLD_DAMAGE_LEVEL_3, BURN)
 		else

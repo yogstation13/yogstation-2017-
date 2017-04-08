@@ -251,38 +251,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-<<<<<<< HEAD
-			spawn(0)
-				if(T.flags & NOJAUNT)
-					T.flags &= ~NOJAUNT
-					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-				if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
-					var/turf/open/floor/floor = T
-					if(floor.intact)
-						floor.builtin_tile.loc = floor
-					floor.broken = 0
-					floor.burnt = 0
-					floor.make_plating(1)
-				if(T.type == /turf/closed/wall && prob(15))
-					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-					T.ChangeTurf(/turf/closed/wall/rust)
-				if(T.type == /turf/closed/wall/r_wall && prob(10))
-					PoolOrNew(/obj/effect/overlay/temp/revenant, T)
-					T.ChangeTurf(/turf/closed/wall/r_wall/rust)
-				for(var/obj/structure/closet/closet in T.contents)
-					closet.open()
-				for(var/obj/structure/bodycontainer/corpseholder in T.contents)
-					if(corpseholder.connected.loc == corpseholder)
-						corpseholder.open()
-				for(var/obj/machinery/dna_scannernew/dna in T.contents)
-					dna.open_machine()
-				for(var/obj/structure/window/window in T.contents)
-					window.take_damage(rand(30,80))
-					if(window && window.fulltile)
-						PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
-				for(var/obj/machinery/light/light in T.contents)
-					light.flicker(20) //spooky
-=======
 			addtimer(src, "defile", 0, TIMER_NORMAL, T)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/proc/defile(turf/T)
@@ -315,7 +283,6 @@
 			PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
 	for(var/obj/machinery/light/light in T)
 		light.flicker(20) //spooky
->>>>>>> masterTGbranch
 
 //Malfunction: Makes bad stuff happen to robots and machines.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction
@@ -375,56 +342,6 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-<<<<<<< HEAD
-			spawn(0)
-				for(var/mob/living/mob in T.contents)
-					if(mob == user)
-						continue
-					PoolOrNew(/obj/effect/overlay/temp/revenant, mob.loc)
-					if(iscarbon(mob))
-						if(ishuman(mob))
-							var/mob/living/carbon/human/H = mob
-							if(H.dna && H.dna.species)
-								H.dna.species.handle_mutant_bodyparts(H,"#1d2953")
-								H.dna.species.handle_hair(H,"#1d2953")
-								var/old_color = H.color
-								H.color = "#1d2953"
-								spawn(20)
-									if(H && H.dna && H.dna.species)
-										H.dna.species.handle_mutant_bodyparts(H)
-										H.dna.species.handle_hair(H)
-										H.color = old_color
-							var/blightfound = 0
-							for(var/datum/disease/revblight/blight in H.viruses)
-								blightfound = 1
-								if(blight.stage < 5)
-									blight.stage++
-							if(!blightfound)
-								H.AddDisease(new /datum/disease/revblight)
-								H << "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <span class='italics'>wrong</span>")].</span>"
-						else
-							if(mob.reagents)
-								mob.reagents.add_reagent("plasma", 5)
-					else
-						mob.adjustToxLoss(5)
-				for(var/obj/effect/spacevine/vine in T.contents) //Fucking with botanists, the ability.
-					vine.color = "#823abb"
-					PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
-					spawn(10)
-						if(vine)
-							qdel(vine)
-				for(var/obj/effect/glowshroom/shroom in T.contents)
-					shroom.color = "#823abb"
-					PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
-					spawn(10)
-						if(shroom)
-							qdel(shroom)
-				for(var/obj/machinery/hydroponics/tray in T.contents)
-					PoolOrNew(/obj/effect/overlay/temp/revenant, tray.loc)
-					tray.pestlevel = rand(8, 10)
-					tray.weedlevel = rand(8, 10)
-					tray.toxic = rand(45, 55)
-=======
 			addtimer(src, "blight", 0, TIMER_NORMAL, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
@@ -463,4 +380,3 @@
 		tray.pestlevel = rand(8, 10)
 		tray.weedlevel = rand(8, 10)
 		tray.toxic = rand(45, 55)
->>>>>>> masterTGbranch

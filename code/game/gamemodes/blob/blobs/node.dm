@@ -8,21 +8,14 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 65, acid = 90)
 	health_regen = 3
 	point_return = 25
-<<<<<<< HEAD
 	atmosblock = 1
 	heatblock = 1
-=======
->>>>>>> masterTGbranch
 
 
 /obj/structure/blob/node/New(loc)
 	blob_nodes += src
 	START_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-	..(loc, h)
-=======
 	..()
->>>>>>> masterTGbranch
 
 /obj/structure/blob/node/scannerreport()
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."

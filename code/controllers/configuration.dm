@@ -45,13 +45,8 @@
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
-<<<<<<< HEAD
-	var/fps = 20
-	var/Tickcomp = 0
-=======
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
->>>>>>> masterTGbranch
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 	var/admin_who_blocked = 0	// log OOC channel
 
@@ -79,8 +74,6 @@
 
 	var/check_randomizer = 0
 
-<<<<<<< HEAD
-=======
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
 	var/panic_server_name = "somewhere else"
 
@@ -91,7 +84,6 @@
 	var/ipintel_save_bad = 1
 	var/ipintel_domain = "check.getipintel.net"
 
->>>>>>> masterTGbranch
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_antag_tokens = 0 //Defines whether the server uses the antag tokens system. Requires database.

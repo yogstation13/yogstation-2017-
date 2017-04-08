@@ -61,12 +61,8 @@ var/const/INJECT = 5 //injection
 /datum/reagents/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-	for(var/reagent in reagent_list)
-=======
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
->>>>>>> masterTGbranch
 		var/datum/reagent/R = reagent
 		qdel(R)
 	cached_reagents.Cut()
@@ -142,10 +138,7 @@ var/const/INJECT = 5 //injection
 		return
 	if(amount < 0)
 		return
-<<<<<<< HEAD
-=======
 
->>>>>>> masterTGbranch
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
@@ -439,19 +432,11 @@ var/const/INJECT = 5 //injection
 			qdel(R)
 			reagent_list -= R
 			update_total()
-<<<<<<< HEAD
-			my_atom.on_reagent_change()
-			check_slowdown(my_atom)
-			check_ignoreslow(my_atom)
-			check_gofast(my_atom)
-			check_goreallyfast(my_atom)
-=======
 			if(my_atom)
 				my_atom.on_reagent_change()
 				check_ignoreslow(my_atom)
 				check_gofast(my_atom)
 				check_goreallyfast(my_atom)
->>>>>>> masterTGbranch
 	return 1
 
 /datum/reagents/proc/check_ignoreslow(mob/M)
@@ -537,16 +522,11 @@ var/const/INJECT = 5 //injection
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
 	if(!isnum(amount) || !amount)
 		return FALSE
-<<<<<<< HEAD
-	if(amount < 0)
-		return FALSE
-=======
 
 	if(amount < 0)
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
->>>>>>> masterTGbranch
 	update_total()
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
@@ -585,15 +565,7 @@ var/const/INJECT = 5 //injection
 
 	else
 		WARNING("[my_atom] attempted to add a reagent called ' [reagent] ' which doesn't exist. ([usr])")
-<<<<<<< HEAD
-
-	if(!no_react)
-		handle_reactions()
-
-	return TRUE
-=======
 	return FALSE
->>>>>>> masterTGbranch
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
 	for(var/r_id in list_reagents)
@@ -601,12 +573,6 @@ var/const/INJECT = 5 //injection
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
-<<<<<<< HEAD
-	if(isnull(amount))
-		return FALSE
-	if(!isnum(amount))
-		return FALSE
-=======
 
 	if(isnull(amount))
 		amount = 0
@@ -616,7 +582,6 @@ var/const/INJECT = 5 //injection
 	if(!isnum(amount))
 		return FALSE
 
->>>>>>> masterTGbranch
 	if(amount < 0)
 		return FALSE
 
@@ -632,12 +597,8 @@ var/const/INJECT = 5 //injection
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
-<<<<<<< HEAD
-			my_atom.on_reagent_change()
-=======
 			if(my_atom)
 				my_atom.on_reagent_change()
->>>>>>> masterTGbranch
 			return TRUE
 
 	return FALSE

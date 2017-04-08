@@ -495,30 +495,6 @@
 	update_icon()
 
 
-<<<<<<< HEAD
-/obj/machinery/power/solar_control/proc/set_broken()
-	if(paired)
-		paired.unpair()
-	stat |= BROKEN
-	update_icon()
-
-
-/obj/machinery/power/solar_control/ex_act(severity, target)
-	..()
-	if(!qdeleted(src))
-		switch(severity)
-			if(2)
-				take_damage(rand(20,30), BRUTE, 0)
-			if(3)
-				take_damage(rand(10,20), BRUTE, 0)
-
-/obj/machinery/power/solar_control/blob_act(obj/effect/blob/B)
-	if (prob(75))
-		set_broken()
-		src.density = 0
-=======
->>>>>>> masterTGbranch
-
 
 //
 // MISC

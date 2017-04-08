@@ -363,11 +363,7 @@
 	item_state = "hostrench"
 	resistance_flags = 0
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-<<<<<<< HEAD
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio,/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
-=======
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/gun/ballistic/revolver,/obj/item/weapon/gun/ballistic/revolver/detective,/obj/item/device/radio)
->>>>>>> masterTGbranch
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/gun/ballistic/revolver,/obj/item/weapon/gun/ballistic/revolver/detective,/obj/item/device/radio,/obj/item/weapon/gun/ballistic/automatic/tommygun,/obj/item/weapon/gun/ballistic/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -382,12 +378,8 @@
 	desc = "A thick jacket with a rubbery, water-resistant shell."
 	icon_state = "pufferjacket"
 	item_state = "hostrench"
-<<<<<<< HEAD
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0)
-	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
-=======
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 50, rad = 0, fire = 0, acid = 0)
->>>>>>> masterTGbranch
+	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/puffer/vest
 	name = "puffer vest"
@@ -396,23 +388,15 @@
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	cold_protection = CHEST|GROIN
-<<<<<<< HEAD
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
-	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
-=======
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0, fire = 0, acid = 0)
->>>>>>> masterTGbranch
+	allowed = list(/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/miljacket
 	name = "military jacket"
 	desc = "A canvas jacket styled after classical American military garb. Feels sturdy, yet comfortable."
 	icon_state = "militaryjacket"
 	item_state = "militaryjacket"
-<<<<<<< HEAD
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio,/obj/item/weapon/gun/projectile/automatic/tommygun,/obj/item/weapon/gun/projectile/automatic/mini_uzi)
-=======
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/gun/ballistic/revolver,/obj/item/weapon/gun/ballistic/revolver/detective,/obj/item/device/radio)
->>>>>>> masterTGbranch
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/ballistic/revolver/detective,/obj/item/device/radio,/obj/item/weapon/gun/ballistic/automatic/tommygun,/obj/item/weapon/gun/ballistic/automatic/mini_uzi)
 
 /obj/item/clothing/suit/jacket/letterman
 	name = "letterman jacket"
@@ -515,13 +499,8 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering
 	name = "engineering winter coat"
 	icon_state = "coatengineer"
-<<<<<<< HEAD
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/weapon/rcd,/obj/item/weapon/rapid_engineering_device,/obj/item/device/geiger_counter)
-=======
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20, fire = 30, acid = 45)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
->>>>>>> masterTGbranch
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/weapon/rcd,/obj/item/weapon/pipe_dispenser,/obj/item/weapon/rapid_engineering_device,/obj/item/device/geiger_counter)
 	hoodtype = /obj/item/clothing/head/winterhood/engineering
 
 /obj/item/clothing/head/winterhood/engineering

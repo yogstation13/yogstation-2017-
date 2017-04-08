@@ -190,8 +190,6 @@
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
 	return
 
-<<<<<<< HEAD
-=======
 /mob/living/brain/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace)
 		if(ispath(mrace))
@@ -200,19 +198,14 @@
 			stored_dna.species = mrace //not calling any species update procs since we're a brain, not a monkey/human
 
 
->>>>>>> masterTGbranch
 /mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace && has_dna())
 		dna.species.on_species_loss(src)
 		var/old_species = dna.species
-<<<<<<< HEAD
-		dna.species = new mrace()
-=======
 		if(ispath(mrace))
 			dna.species = new mrace()
 		else
 			dna.species = mrace
->>>>>>> masterTGbranch
 		dna.species.on_species_gain(src, old_species)
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)

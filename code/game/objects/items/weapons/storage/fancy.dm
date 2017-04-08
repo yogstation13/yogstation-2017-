@@ -72,41 +72,7 @@
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
 	spawn_type = /obj/item/weapon/reagent_containers/food/snacks/donut
-<<<<<<< HEAD
-	var/foldable = /obj/item/stack/sheet/cardboard
-
-/obj/item/weapon/storage/fancy/donut_box/attack_self(mob/user)
-	..()
-	if(contents.len)
-		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
-	var/obj/item/I = unfold()
-	if(I)
-		user.put_in_hands(I)
-		user << "<span class='notice'>You fold [src] flat.</span>"
-
-/obj/item/weapon/storage/fancy/donut_box/attack_self_tk(mob/user)
-	if(contents.len)
-		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
-	if(unfold())
-		user << "<span class='notice'>You fold [src] flat.</span>"
-
-/obj/item/weapon/storage/fancy/donut_box/proc/unfold()
-	if(!foldable || contents.len || !ispath(foldable))
-		return null
-	close_all() //Close any open UI windows first
-	if(ismob(loc))
-		var/mob/M = loc
-		if(!M.unEquip(src))
-			return null
-		M.update_inv_l_hand()
-		M.update_inv_r_hand()
-	var/obj/item/I = new foldable(get_turf(src))
-	transfer_fingerprints_to(I)
-	qdel(src)
-	return I
-=======
 	fancy_open = TRUE
->>>>>>> masterTGbranch
 
 /*
  * Egg Box

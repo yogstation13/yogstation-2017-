@@ -473,11 +473,8 @@
 			new /obj/item/bodypart/l_arm/robot(get_turf(src))
 			user << "<span class='notice'>You remove the robot arm from [src].</span>"
 			build_step--
-<<<<<<< HEAD
 		else if(build_step == 4)
 			siren_hat.forceMove(get_turf(src))
 			siren_hat = null
 			user << "<span class='notice'>You detach the justice helmet from [src].</span>"
 			build_step--
-=======
->>>>>>> masterTGbranch

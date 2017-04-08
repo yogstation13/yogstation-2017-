@@ -16,10 +16,7 @@
 	if(imp)
 		icon_state = "implantcase-[imp.item_color]"
 		origin_tech = imp.origin_tech
-<<<<<<< HEAD
 		flags = (imp.flags & ~DROPDEL)
-=======
->>>>>>> masterTGbranch
 		reagents = imp.reagents
 	else
 		icon_state = "implantcase-0"

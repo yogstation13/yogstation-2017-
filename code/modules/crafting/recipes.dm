@@ -421,7 +421,6 @@
 				 /obj/item/stack/sheet/sinew = 3)
 	category = CAT_PRIMAL
 
-<<<<<<< HEAD
 /datum/crafting_recipe/sinew_tent
 	name = "Sinew Tent"
 	result = /obj/item/weapon/sinew_tent
@@ -516,7 +515,7 @@
 	reqs = list(/obj/item/stack/sheet/bone = 1,
 				/obj/item/stack/sheet/sinew = 2)
 	category = CAT_PRIMAL
-=======
+
 /datum/crafting_recipe/bonfire
 	name = "Bonfire"
 	time = 60
@@ -530,4 +529,3 @@
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
 	category = CAT_MISC
->>>>>>> masterTGbranch

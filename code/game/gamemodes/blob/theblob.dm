@@ -13,19 +13,11 @@
 	max_integrity = 30
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
-<<<<<<< HEAD
 	var/pulse_timestamp = 0 //we got pulsed/healed when?
 	var/brute_resist = 0.8 //multiplies brute damage by this
 	var/fire_resist = 1.5 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos
 	var/heatblock = 0 // if the blob blocks heatspread
-=======
-	var/pulse_timestamp = 0 //we got pulsed when?
-	var/heal_timestamp = 0 //we got healed when?
-	var/brute_resist = 0.5 //multiplies brute damage by this
-	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = 0 //if the blob blocks atmos and heat spread
->>>>>>> masterTGbranch
 	var/mob/camera/blob/overmind
 
 
@@ -80,7 +72,6 @@
 =======
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
->>>>>>> masterTGbranch
 
 /obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0)
@@ -107,11 +98,7 @@
 /obj/structure/blob/proc/Life()
 	return
 
-<<<<<<< HEAD
-/obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 2, expand_range = 1)
-=======
 /obj/structure/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
->>>>>>> masterTGbranch
 	src.Be_Pulsed()
 	var/expanded = FALSE
 	if(prob(70) && expand())
@@ -141,16 +128,6 @@
 					expanded = TRUE
 		if(distance <= pulse_range)
 			B.Be_Pulsed()
-<<<<<<< HEAD
-	if(expand_range)
-		if(prob(60))
-			src.expand()
-		for(var/obj/effect/blob/B in orange(expand_range, src))
-			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 3, 1))) //expand falls off with range but is faster near the blob causing the expansion
-				B.expand()
-	return
-=======
->>>>>>> masterTGbranch
 
 /obj/structure/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
@@ -282,26 +259,7 @@
 /obj/structure/blob/attack_animal(mob/living/simple_animal/M)
 	if("blob" in M.faction) //sorry, but you can't kill the blob as a blobbernaut
 		return
-<<<<<<< HEAD
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
-	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-	take_damage(damage, M.melee_damage_type, M)
-	return
-
-/obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
-	M.changeNext_move(CLICK_CD_MELEE)
-	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
-	var/damage = rand(35,50)
-	take_damage(damage, BRUTE, M)
-	return
-=======
 	..()
->>>>>>> masterTGbranch
 
 /obj/structure/blob/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -375,13 +333,8 @@
 	name = "normal blob"
 	icon_state = "blob"
 	luminosity = 0
-<<<<<<< HEAD
-	health = 20
-	maxhealth = 20
-=======
 	obj_integrity = 21
 	max_integrity = 25
->>>>>>> masterTGbranch
 	health_regen = 1
 	brute_resist = 0.25
 	fire_resist = 1

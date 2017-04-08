@@ -30,10 +30,7 @@ var/list/GPS_list = list()
 	..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-<<<<<<< HEAD
-=======
 	add_overlay("working")
->>>>>>> masterTGbranch
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -188,9 +185,6 @@ var/list/GPS_list = list()
 /obj/item/device/gps/mining/internal
 	icon_state = "gps-m"
 	gpstag = "MINER"
-<<<<<<< HEAD
-	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
-=======
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
 /obj/item/device/gps/internal/base
@@ -231,4 +225,3 @@ var/list/GPS_list = list()
 	tagged = null
 	SSfastprocess.processing -= src
 	. = ..()
->>>>>>> masterTGbranch

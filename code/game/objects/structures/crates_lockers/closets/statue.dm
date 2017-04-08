@@ -17,33 +17,6 @@
 		if(L.buckled)
 			L.buckled.unbuckle_mob(L,force=1)
 		L.visible_message("<span class='warning'>[L]'s skin rapidly turns to marble!</span>", "<span class='userdanger'>Your body freezes up! Can't... move... can't...  think...</span>")
-<<<<<<< HEAD
-
-		health = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
-		intialTox = L.getToxLoss()
-		intialFire = L.getFireLoss()
-		intialBrute = L.getBruteLoss()
-		intialOxy = L.getOxyLoss()
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			name = "statue of [H.name]"
-			H.bleedsuppress = 1
-			if(H.gender == "female")
-				icon_state = "human_female"
-		else if(ismonkey(L))
-			name = "statue of a monkey"
-			icon_state = "monkey"
-		else if(iscorgi(L))
-			name = "statue of a corgi"
-			icon_state = "corgi"
-			desc = "If it takes forever, I will wait for you..."
-
-	if(health == 0) //meaning if the statue didn't find a valid target
-		qdel(src)
-		return
-
-	START_PROCESSING(SSobj, src)
-=======
 		L.forceMove(src)
 		L.disabilities |= MUTE
 		L.faction += "mimic" //Stops mimics from instaqdeling people in statues
@@ -51,7 +24,6 @@
 		obj_integrity = L.health + 100 //stoning damaged mobs will result in easier to shatter statues
 		max_integrity = obj_integrity
 		START_PROCESSING(SSobj, src)
->>>>>>> masterTGbranch
 	..()
 
 /obj/structure/statue/petrified/process()
@@ -60,10 +32,6 @@
 	timer--
 	petrified_mob.Stun(2) //So they can't do anything while petrified
 	if(timer <= 0)
-<<<<<<< HEAD
-		dump_contents()
-=======
->>>>>>> masterTGbranch
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 
@@ -90,7 +58,7 @@
 		O.forceMove(loc)
 
 	if(petrified_mob)
-		petrified_mob.status_flags &= ~GODMODE
+		petrified_mob.status_flags -= GODMODE
 		petrified_mob.forceMove(loc)
 		petrified_mob.disabilities &= ~MUTE
 		petrified_mob.take_overall_damage((petrified_mob.health - obj_integrity + 100)) //any new damage the statue incurred is transfered to the mob

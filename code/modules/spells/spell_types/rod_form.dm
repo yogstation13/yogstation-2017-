@@ -36,7 +36,7 @@
 
 /obj/effect/immovablerod/wizard/Destroy()
 	if(wizard)
-		wizard.status_flags &= ~GODMODE
+		wizard.status_flags -= GODMODE
 		wizard.notransform = 0
 		wizard.forceMove(get_turf(src))
 	return ..()

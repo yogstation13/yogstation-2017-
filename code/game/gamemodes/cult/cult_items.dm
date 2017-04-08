@@ -187,11 +187,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-<<<<<<< HEAD
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
-=======
 			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
->>>>>>> masterTGbranch
 			user << "<span class='userdanger'>The armor squeezes at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -221,11 +217,7 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/tome,/obj/item/weapon/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-<<<<<<< HEAD
-	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50)
-=======
 	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
->>>>>>> masterTGbranch
 	slowdown = -1
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/berserkerhood
@@ -237,11 +229,7 @@
 	body_parts_covered = HEAD
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-<<<<<<< HEAD
-	armor = list(melee = -50, bullet = -50, laser = -100,energy = -50, bomb = -50, bio = -50, rad = -50)
-=======
 	armor = list(melee = -50, bullet = -50, laser = -50, energy = -50, bomb = -50, bio = -50, rad = -50, fire = 0, acid = 0)
->>>>>>> masterTGbranch
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
@@ -253,11 +241,7 @@
 			user.Dizzy(30)
 			user.Weaken(5)
 		else
-<<<<<<< HEAD
-			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
-=======
 			user << "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>"
->>>>>>> masterTGbranch
 			user << "<span class='userdanger'>The robes squeeze at your body!</span>"
 			user.emote("scream")
 			user.adjustBruteLoss(25)
@@ -380,11 +364,7 @@
 /obj/item/device/flashlight/flare/culttorch
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
-<<<<<<< HEAD
-	w_class = 2
-=======
 	w_class = WEIGHT_CLASS_SMALL
->>>>>>> masterTGbranch
 	brightness_on = 1
 	icon_state = "torch-on"
 	item_state = "torch-on"
@@ -405,11 +385,7 @@
 			if(!(user) && M.current && M.current.stat != DEAD)
 				cultists |= M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
-<<<<<<< HEAD
-		if(!Adjacent(user) || qdeleted(src) || user.incapacitated())
-=======
 		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
->>>>>>> masterTGbranch
 			return
 		if(!cultist_to_receive)
 			user << "<span class='cultitalic'>You require a destination!</span>"
@@ -434,7 +410,3 @@
 		..()
 		user << "<span class='warning'>\The [src] can only transport items!</span>"
 		return
-<<<<<<< HEAD
-=======
-
->>>>>>> masterTGbranch

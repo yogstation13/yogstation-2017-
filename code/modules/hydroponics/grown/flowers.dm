@@ -76,15 +76,9 @@
 	yield = 2
 	potency = 30
 	growthstages = 4
-<<<<<<< HEAD
-	plant_type = PLANT_WEED
-	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	reagents_add = list("nutriment" = 0.08)
-=======
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	reagents_add = list("nutriment" = 0.04)
->>>>>>> masterTGbranch
+	reagents_add = list("nutriment" = 0.08)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell

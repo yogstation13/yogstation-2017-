@@ -271,7 +271,6 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	category = CAT_MISCFOOD
 
-<<<<<<< HEAD
 /datum/crafting_recipe/dolphincereal
 	name = "Dolphin cereal"
 	reqs = list(
@@ -290,7 +289,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/dolphinandchips
 	category = CAT_MISCFOOD
-=======
 
 /datum/crafting_recipe/food/lizardwine
 	name = "Lizard wine"
@@ -336,4 +334,3 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
 	category = CAT_MISCFOOD
->>>>>>> masterTGbranch

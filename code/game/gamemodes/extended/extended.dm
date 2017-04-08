@@ -2,11 +2,7 @@
 	name = "secret extended"
 	config_tag = "secret extended"
 	required_players = 0
-<<<<<<< HEAD
 	prob_traitor_ai = 0
-	//reroll_friendly = 1
-=======
->>>>>>> masterTGbranch
 
 	announce_span = "notice"
 	announce_text = "Just have fun and enjoy the game!"

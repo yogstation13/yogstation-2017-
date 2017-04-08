@@ -14,7 +14,6 @@
 	var/list/territory_new = list()
 	var/list/territory_lost = list()
 	var/dom_attempts = 2
-<<<<<<< HEAD
 	var/points = 25
 	var/datum/atom_hud/antag/ganghud
 	var/item_list
@@ -38,14 +37,6 @@
 		/datum/gang_item/equipment/necklace,
 		/datum/gang_item/equipment/dominator
 	)
-=======
-	var/points = 15
-	var/datum/atom_hud/antag/gang/ganghud
-	var/is_deconvertible = TRUE //Can you deconvert normal gangsters from the gang
-
-	var/domination_timer
-	var/is_dominating
->>>>>>> masterTGbranch
 
 /datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
@@ -163,11 +154,7 @@
 
 		if(outfit_path)
 			var/obj/item/clothing/outfit = new outfit_path(user.loc)
-<<<<<<< HEAD
-			outfit.armor = list(melee = 20, bullet = 35, laser = 20, energy = 10, bomb = 20, bio = 0, rad = 0)
-=======
-			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 30, acid = 30)
->>>>>>> masterTGbranch
+			outfit.armor = list(melee = 20, bullet = 35, laser = 20, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 30, acid = 30)
 			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = src
 			user.put_in_hands(outfit)

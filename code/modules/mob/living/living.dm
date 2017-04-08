@@ -39,9 +39,6 @@
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-<<<<<<< HEAD
-	return QDEL_HINT_HARDDEL
-=======
 
 	return ..()
 
@@ -51,7 +48,6 @@
 	if(.)
 		if(ranged_ability && prev_client)
 			ranged_ability.remove_mousepointer(prev_client)
->>>>>>> masterTGbranch
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -236,20 +232,7 @@
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
 
-<<<<<<< HEAD
-/mob/living/ex_act(severity, target)
-	..()
-	flash_eyes()
 
-/mob/living/proc/updatehealth()
-	if(GODMODE in status_flags)
-		return
-	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-	update_stat()
-	med_hud_set_health()
-
-=======
->>>>>>> masterTGbranch
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
 /mob/living/proc/calculate_affecting_pressure(pressure)
@@ -273,139 +256,6 @@
 		if(actual < desired)
 			temperature = desired
 	return temperature
-
-
-<<<<<<< HEAD
-// MOB PROCS
-/mob/living/proc/getBruteLoss()
-	return bruteloss
-
-/mob/living/proc/adjustBruteLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/setBruteLoss(amount, updating_health=1)
-	if(GODMODE in status_flags)
-		return 0
-	bruteloss = amount
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/getOxyLoss()
-	return oxyloss
-
-/mob/living/proc/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/setOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	oxyloss = amount
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/getToxLoss()
-	return toxloss
-
-/mob/living/proc/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
-	if(updating_health)
-		updatehealth()
-	return amount
-
-/mob/living/proc/setToxLoss(amount, updating_health=1)
-	if(GODMODE in status_flags)
-		return 0
-	toxloss = amount
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/getFireLoss()
-	return fireloss
-
-/mob/living/proc/adjustFireLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/setFireLoss(amount, updating_health=1)
-	if(GODMODE in status_flags)
-		return 0
-	fireloss = amount
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/getCloneLoss()
-	return cloneloss
-
-/mob/living/proc/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/setCloneLoss(amount, updating_health=1)
-	if(GODMODE in status_flags)
-		return 0
-	cloneloss = amount
-	if(updating_health)
-		updatehealth()
-
-/mob/living/proc/getBrainLoss()
-	return brainloss
-
-/mob/living/proc/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
-
-/mob/living/proc/setBrainLoss(amount)
-	if(GODMODE in status_flags)
-		return 0
-	brainloss = amount
-
-/mob/living/proc/getStaminaLoss()
-	return staminaloss
-
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
-	return
-
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
-	if(updating_stamina)
-		update_stamina()
-
-/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
-	return
-
-/mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
-	return
-
-/mob/living/carbon/setStaminaLoss(amount, updating_stamina = 1)
-	if(GODMODE in status_flags)
-		return 0
-	staminaloss = amount
-	if(updating_stamina)
-		update_stamina()
-
-/mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
-	return
-=======
->>>>>>> masterTGbranch
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -473,25 +323,8 @@
 	var/def_zone = ran_zone(t)
 	return def_zone
 
-<<<<<<< HEAD
-// heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
-	adjustBruteLoss(-brute, updating_health, application)
-	adjustFireLoss(-burn, updating_health, application)
-	if(updating_health)
-		updatehealth()
-
-// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
-	adjustBruteLoss(brute)
-	adjustFireLoss(burn)
-	if(updating_health)
-		updatehealth()
-=======
->>>>>>> masterTGbranch
-
 /mob/living/proc/updatehealth()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
@@ -811,11 +644,6 @@
 		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
 	if(what)
-<<<<<<< HEAD
-		if(!what.mob_can_equip(who, src, where, 1))
-			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
-			return
-=======
 		var/list/where_list
 		if(islist(where))
 			where_list = where
@@ -826,7 +654,6 @@
 			if(!what.mob_can_equip(who, src, where, 1))
 				src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
 				return
->>>>>>> masterTGbranch
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
 			if(what && Adjacent(who))
@@ -844,98 +671,6 @@
 	else
 		step_towards(src,S)
 
-<<<<<<< HEAD
-/mob/living/narsie_act()
-	if(is_servant_of_ratvar(src) && !stat)
-		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
-		adjustBruteLoss(35, 1, DAMAGE_MAGIC)
-		if(src && reagents)
-			reagents.add_reagent("heparin", 5)
-		return 0
-	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
-	else
-		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
-	spawn_dust()
-	gib()
-	return
-
-/mob/living/ratvar_act()
-	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
-		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35, 1, DAMAGE_MAGIC)
-		if(src)
-			adjust_fire_stacks(1)
-			IgniteMob()
-
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
-
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		pixel_y_diff = 8
-	else if(direction & SOUTH)
-		pixel_y_diff = -8
-
-	if(direction & EAST)
-		pixel_x_diff = 8
-	else if(direction & WEST)
-		pixel_x_diff = -8
-
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
-
-/mob/living/do_attack_animation(atom/A)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying)
-	..(A, final_pixel_y)
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
-
-	// What icon do we use for the attack?
-	var/image/I
-	if(hand && l_hand) // Attacked with item in left hand.
-		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
-	else if(!hand && r_hand) // Attacked with item in right hand.
-		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
-	else // Attacked with a fist?
-		return
-
-	// Who can see the attack?
-	var/list/viewing = list()
-	for(var/mob/M in viewers(A))
-		if(M.client)
-			viewing |= M.client
-	flick_overlay(I, viewing, 5) // 5 ticks/half a second
-
-	// Scale the icon.
-	I.transform *= 0.75
-	// The icon should not rotate.
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
-	// Set the direction of the icon animation.
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		I.pixel_y = -16
-	else if(direction & SOUTH)
-		I.pixel_y = 16
-
-	if(direction & EAST)
-		I.pixel_x = -16
-	else if(direction & WEST)
-		I.pixel_x = 16
-
-	if(!direction) // Attacked self?!
-		I.pixel_z = 16
-
-	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
-
-=======
->>>>>>> masterTGbranch
 /mob/living/proc/do_jitter_animation(jitteriness)
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)

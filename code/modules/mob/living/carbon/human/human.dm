@@ -800,7 +800,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
+	if(C.stat == DEAD || (FAKEDEATH in C.status_flags))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(NOCRIT in C.status_flags)//no crit when you're stimmed

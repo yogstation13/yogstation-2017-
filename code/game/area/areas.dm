@@ -92,7 +92,6 @@ var/list/teleportlocs = list()
 	return contents
 
 
-<<<<<<< HEAD
 // ===
 
 var/list/power_alert_listeners = list()
@@ -116,9 +115,6 @@ var/list/motion_alert_listeners = list()
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
 									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
-=======
-
->>>>>>> masterTGbranch
 
 /area/New()
 	icon_state = ""
@@ -196,14 +192,9 @@ var/list/motion_alert_listeners = list()
 				a.triggerAlarm("Atmosphere", src, cameras, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.triggerAlarm("Atmosphere", src, cameras, source)
-<<<<<<< HEAD
 			for(var/L in atmos_alert_listeners)
 				var/datum/alert_listener/listener = L
 				listener.triggerAlarm("Atmosphere", src, cameras, source)
-=======
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
-				p.triggerAlarm("Atmosphere", src, cameras, source)
->>>>>>> masterTGbranch
 
 		else if (src.atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
@@ -212,14 +203,9 @@ var/list/motion_alert_listeners = list()
 				a.cancelAlarm("Atmosphere", src, source)
 			for(var/mob/living/simple_animal/drone/D in mob_list)
 				D.cancelAlarm("Atmosphere", src, source)
-<<<<<<< HEAD
 			for(var/L in atmos_alert_listeners)
 				var/datum/alert_listener/listener = L
 				listener.cancelAlarm("Atmosphere", src, source)
-=======
-			for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
-				p.cancelAlarm("Atmosphere", src, source)
->>>>>>> masterTGbranch
 
 		src.atmosalm = danger_level
 		return 1
@@ -251,15 +237,10 @@ var/list/motion_alert_listeners = list()
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
-<<<<<<< HEAD
 	for(var/L in fire_alert_listeners)
 		var/datum/alert_listener/listener = L
 		listener.triggerAlarm("Fire", src, cameras, source)
 	return
-=======
-	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
-		p.triggerAlarm("Fire", src, cameras, source)
->>>>>>> masterTGbranch
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -282,15 +263,10 @@ var/list/motion_alert_listeners = list()
 		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.cancelAlarm("Fire", src, source)
-<<<<<<< HEAD
 	for(var/L in fire_alert_listeners)
 		var/datum/alert_listener/listener = L
 		listener.cancelAlarm("Fire", src, source)
 	return
-=======
-	for(var/datum/computer_file/program/alarm_monitor/p in alarmdisplay)
-		p.cancelAlarm("Fire", src, source)
->>>>>>> masterTGbranch
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -311,7 +287,6 @@ var/list/motion_alert_listeners = list()
 			cameras += C
 
 	for (var/mob/living/silicon/SILICON in player_list)
-<<<<<<< HEAD
 		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
 
 	for (var/L in burglar_alert_listeners)
@@ -327,11 +302,6 @@ var/list/motion_alert_listeners = list()
 	for (var/L in burglar_alert_listeners)
 		var/datum/alert_listener/listener = L
 		listener.cancelAlarm("Burglar", src, trigger)
-=======
-		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
-			//Cancel silicon alert after 1 minute
-			addtimer(SILICON, "cancelAlarm", 600, TIMER_NORMAL,"Burglar",src,trigger)
->>>>>>> masterTGbranch
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1

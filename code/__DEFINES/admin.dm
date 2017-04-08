@@ -37,13 +37,12 @@
 #define R_NOJOIN		8192
 #define R_TICKET		16384
 
-<<<<<<< HEAD
 #define R_MAXPERMISSION 32768 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define TICKET_FLAG_LIST_ALL		1
 #define TICKET_FLAG_LIST_MINE		2
 #define TICKET_FLAG_LIST_UNCLAIMED	4
-=======
+
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
@@ -63,4 +62,4 @@
 #define ADMIN_JMP(src) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
 #define COORD(src) "[src ? "([src.x],[src.y],[src.z])" : "nonexistent location"]"
 #define ADMIN_COORDJMP(src) "[src ? "[COORD(src)] [ADMIN_JMP(src)]" : "nonexistent location"]"
->>>>>>> masterTGbranch
+

@@ -8,12 +8,7 @@
 	health = 100
 	maxHealth = 100
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-<<<<<<< HEAD
-
-=======
 	obj_damage = 60
-	environment_smash = 2 //Walls can't stop THE LAW
->>>>>>> masterTGbranch
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/device/encryptionkey/headset_sec
@@ -27,12 +22,8 @@
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	var/lastfired = 0
-<<<<<<< HEAD
-	var/shot_delay = 10 //deciseconds seconds between shots
 	var/emagged_shot_delay = 5 //deciseconds seconds between shots
-=======
 	var/shot_delay = 15
->>>>>>> masterTGbranch
 	var/lasercolor = ""
 	var/disabled = 0//A holder for if it needs to be disabled, if true it will not seach for targets, shoot at targets, or move, currently only used for lasertag
 

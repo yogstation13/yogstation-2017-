@@ -64,10 +64,6 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
-<<<<<<< HEAD
-	oneharvest = 1
-=======
->>>>>>> masterTGbranch
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
@@ -92,17 +88,11 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
-<<<<<<< HEAD
-	oneharvest = 1
-	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	icon_dead = "whitebeet-dead"
-	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.1)
-=======
+
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)
-	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
->>>>>>> masterTGbranch
+	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
 	seed = /obj/item/seeds/redbeet

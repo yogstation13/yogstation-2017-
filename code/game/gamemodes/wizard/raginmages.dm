@@ -3,14 +3,11 @@
 	config_tag = "raginmages"
 	required_players = 20
 	use_huds = 1
-<<<<<<< HEAD
 	prob_traitor_ai = 18
-=======
 	announce_span = "userdanger"
 	announce_text = "There are many, many wizards attacking the station!\n\
 	<span class='danger'>Wizards</span>: Accomplish your objectives and cause utter catastrophe!\n\
 	<span class='notice'>Crew</span>: Try not to die..."
->>>>>>> masterTGbranch
 	var/max_mages = 0
 	var/making_mage = 0
 	var/mages_made = 1

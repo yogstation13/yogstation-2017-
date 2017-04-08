@@ -9,23 +9,15 @@
 	a_intent = INTENT_HARM
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
-<<<<<<< HEAD
 	dismember_chance = 33
-	luminosity = 3
-=======
 	obj_damage = 400
 	luminosity = 3
 	faction = list("mining", "boss")
->>>>>>> masterTGbranch
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
 	robust_searching = 1
 	ranged_ignores_vision = TRUE
-<<<<<<< HEAD
-	stat_attack = 1
-=======
 	stat_attack = 2
->>>>>>> masterTGbranch
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	minbodytemp = 0
@@ -51,10 +43,8 @@
 	anchored = TRUE
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
-<<<<<<< HEAD
 	var/alert_admins_z_level = 1
 	var/alert_admins_area = 1
-
 	var/turf/aggroed_from = null
 	var/turf/aggro_log = null
 	var/lastTarget = "no target"
@@ -62,13 +52,11 @@
 /mob/living/simple_animal/hostile/megafauna/New()
 	..()
 	aggro_log = list()
-=======
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	qdel(internal)
 	. = ..()
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
@@ -97,16 +85,10 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		if(L.stat != DEAD)
-<<<<<<< HEAD
-			if(ranged && ranged_cooldown <= world.time)
-				OpenFire()
-
-=======
 			if(!client && ranged && ranged_cooldown <= world.time)
 				OpenFire()
 		else
 			devour(L)
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
@@ -119,7 +101,6 @@
 		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
 		([newloc.x],[newloc.y],[newloc.z])")
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/megafauna/Life()
 	..()
 	if(loc && (loc.z != ZLEVEL_LAVALAND) && alert_admins_z_level)
@@ -157,7 +138,7 @@
 	aggro_log += "Lost target [lastTarget] at [T ? "[T.x], [T.y], [T.z]" : "null loc"] after being pulled from [aggroed_from ? "[aggroed_from.x], [aggroed_from.y], [aggroed_from.z]" : "null loc"][(T && aggroed_from) ? " (distance of [get_dist(T, aggroed_from)])" : ""]."
 	aggroed_from = null
 	..()
-=======
+
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return
@@ -299,4 +280,3 @@
 	world.SetScores(player.ckey, "", global.medal_hub, global.medal_pass)
 
 #undef MEDAL_PREFIX
->>>>>>> masterTGbranch

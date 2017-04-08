@@ -37,11 +37,7 @@ Bonus
 			if(4, 5)
 				C << "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>"
 				C.dna.remove_mutation_group(possible_mutations)
-<<<<<<< HEAD
-				randmut(C, possible_mutations)
-=======
 				C.randmut(possible_mutations)
->>>>>>> masterTGbranch
 	return
 
 // Archive their DNA before they were infected.

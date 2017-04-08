@@ -62,21 +62,6 @@
 	take_damage(I.force, I.damtype, "melee", 1)
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
-<<<<<<< HEAD
-	if(user != src)
-		user.do_attack_animation(src)
-	if(send_item_attack_message(I, user))
-		if(apply_damage(I.force, I.damtype))
-			if(I.damtype == BRUTE)
-				if(prob(33))
-					I.add_mob_blood(src)
-					var/turf/location = get_turf(src)
-					add_splatter_floor(location)
-					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-						user.add_mob_blood(src)
-	return 1
-
-=======
 	send_item_attack_message(I, user)
 	if(I.force)
 		apply_damage(I.force, I.damtype)
@@ -94,7 +79,6 @@
 		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
 	else
 		return ..()
->>>>>>> masterTGbranch
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

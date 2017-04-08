@@ -42,12 +42,8 @@
 		M << "<span class='notice'>[smoke_message]</span>"
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
-<<<<<<< HEAD
-	M.adjustStaminaLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-=======
 	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-0.5*REM, 0)
->>>>>>> masterTGbranch
+	M.adjustStaminaLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 

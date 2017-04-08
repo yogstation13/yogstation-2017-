@@ -13,11 +13,8 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
-<<<<<<< HEAD
 	var/previous_dir = null // the firer's direction when the fire the projectile
 	var/obj/item/ammo_casing/ammo_casing = null
-=======
->>>>>>> masterTGbranch
 	var/suppressed = 0	//Attack message
 	var/yo = null
 	var/xo = null
@@ -53,11 +50,8 @@
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
-<<<<<<< HEAD
-=======
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
->>>>>>> masterTGbranch
 
 /obj/item/projectile/New()
 	permutated = list()

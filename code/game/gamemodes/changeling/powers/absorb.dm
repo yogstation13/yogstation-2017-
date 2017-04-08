@@ -114,7 +114,6 @@
 //datum/changeling/proc/absorb_dna(mob/living/carbon/T, mob/user)
 
 //datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
-<<<<<<< HEAD
 
 
 
@@ -172,5 +171,3 @@
 	user.Paralyse(2)
 	target << "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>"
 */
-=======
->>>>>>> masterTGbranch

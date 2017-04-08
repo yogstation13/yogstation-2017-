@@ -81,7 +81,7 @@
 /mob/living/carbon/cure_husk()
 	if(disabilities & HUSK)
 		disabilities &= ~HUSK
-		status_flags &= ~DISFIGURED
+		status_flags -= DISFIGURED
 		update_body()
 		return 1
 

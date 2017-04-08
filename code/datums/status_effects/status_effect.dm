@@ -22,11 +22,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	addtimer(src, "start_ticking", 1) //Give us time to set any variables
 
 /datum/status_effect/Destroy()
-<<<<<<< HEAD
-	STOP_PROCESSING(SSobj, src)
-=======
 	STOP_PROCESSING(SSprocessing, src)
->>>>>>> masterTGbranch
 	if(owner)
 		owner.clear_alert(id)
 		on_remove()
@@ -44,11 +40,7 @@ var/global/list/all_status_effects = list() //a list of all status effects, if f
 	if(alert_type)
 		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
 		A.attached_effect = src //so the alert can reference us, if it needs to
-<<<<<<< HEAD
-	START_PROCESSING(SSobj, src)
-=======
 	START_PROCESSING(SSprocessing, src)
->>>>>>> masterTGbranch
 
 /datum/status_effect/process()
 	if(!owner)

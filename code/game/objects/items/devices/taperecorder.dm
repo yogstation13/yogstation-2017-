@@ -57,17 +57,9 @@
 		mytape = null
 		update_icon()
 
-<<<<<<< HEAD
-/obj/item/device/taperecorder/fire_act()
-	if(mytape)
-		mytape.ruin() //Fires destroy the tape
-		mytape.erase()
-	return ..()
-=======
 /obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
 	mytape.ruin() //Fires destroy the tape
 	..()
->>>>>>> masterTGbranch
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
@@ -303,15 +295,10 @@
 
 
 /obj/item/device/tape/proc/ruin()
-<<<<<<< HEAD
-	if(!ruined)
-		overlays += "ribbonoverlay"
-=======
 	//Lets not add infinite amounts of overlays when our fireact is called
 	//repeatedly
 	if(!ruined)
 		add_overlay("ribbonoverlay")
->>>>>>> masterTGbranch
 	ruined = 1
 
 

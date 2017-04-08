@@ -419,7 +419,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				ownjob = id.assignment
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
-<<<<<<< HEAD
 				if (cartridge)
 					if (ismob(loc))
 						var/mob/M = loc
@@ -427,12 +426,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 						usr << "<span class='notice'>You remove the cartridge from the [name].</span>"
 					else
 						cartridge.loc = get_turf(src)
-=======
-				if (!isnull(cartridge))
-					U.put_in_hands(cartridge)
-					U << "<span class='notice'>You remove [cartridge] from [src].</span>"
-					scanmode = 0
->>>>>>> masterTGbranch
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
 					scanmode = 0
@@ -469,7 +462,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 						U.AddLuminosity(f_lum)
 					else
 						SetLuminosity(f_lum)
-<<<<<<< HEAD
+				update_icon()
 			if("hotline")
 				if(hotline_cd)
 					U << "<span class='notice'>[src] is still on its cooldown.</span>"
@@ -496,11 +489,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 
 			if("Medical Scan Health")
 				if(scanmode == PDA_SCAN_MEDICAL_HEALTH)
-=======
-				update_icon()
-			if("Medical Scan")
-				if(scanmode == 1)
->>>>>>> masterTGbranch
 					scanmode = 0
 				else if((!isnull(cartridge)) && (cartridge.functions & PDA_MEDICAL_FUNCTIONS))
 					scanmode = PDA_SCAN_MEDICAL_HEALTH
@@ -553,7 +541,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				if ( !(last_noise && world.time < last_noise + 20) )
 					playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
 					last_noise = world.time
-<<<<<<< HEAD
 
 //ALERT FUNCTIONS========================================
 			if("power alerts")
@@ -575,7 +562,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			if("motion alerts")
 				if(cartridge)
 					cartridge.alert_toggles ^= PDA_MOTION_ALERT
-=======
+
 			if("Gas Scan")
 				if(scanmode == 5)
 					scanmode = 0
@@ -589,7 +576,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 					_alert_drones(msg, 1)
 					U << msg
 
->>>>>>> masterTGbranch
 
 //NOTEKEEPER FUNCTIONS===================================
 
@@ -1202,10 +1188,8 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-<<<<<<< HEAD
 	for(var/V in software)
 		qdel(V)
-=======
 	if(id)
 		qdel(id)
 		id = null
@@ -1218,7 +1202,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if(inserted_item)
 		qdel(inserted_item)
 		inserted_item = null
->>>>>>> masterTGbranch
 	return ..()
 
 //AI verb and proc for sending PDA messages.

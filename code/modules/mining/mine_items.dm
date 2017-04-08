@@ -53,10 +53,7 @@
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
-<<<<<<< HEAD
-	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/device/gps/mining(src)
-=======
 	new /obj/item/device/assault_pod/mining(src)
 
 
@@ -77,7 +74,6 @@
 		dumb_rev_heads += user.mind
 		return
 	..()
->>>>>>> masterTGbranch
 
 /*********************Pickaxe & Drills**************************/
 
@@ -356,8 +352,6 @@
 		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
 		qdel(src)
 
-<<<<<<< HEAD
-
 // ************************* Barometer! ******************************
 
 /obj/item/device/barometer
@@ -441,19 +435,6 @@
 /obj/item/device/barometer/tribal
 	desc = "A device handed down from ashwalker to ashwalker. This tool is used to speak with the wind, translate it's whispers, and figure out when a storm will hit."
 	accuracy = 20
-
-//Pod turfs and objects
-
-
-//Floors
-/turf/open/floor/pod
-	name = "pod floor"
-	icon_state = "podfloor"
-	icon_regular_floor = "podfloor"
-	floor_tile = /obj/item/stack/tile/pod
-=======
->>>>>>> masterTGbranch
-
 
 //Pod turfs and objects
 
@@ -549,10 +530,7 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
-<<<<<<< HEAD
-=======
 	icon_state = "donkvendor"
->>>>>>> masterTGbranch
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "smartfridge"
 	icon_off = "smartfridge"

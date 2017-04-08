@@ -72,11 +72,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			changelings += changeling
 			changeling.special_role = "Changeling"
 			changeling.restricted_roles = restricted_jobs
-<<<<<<< HEAD
-			modePlayer += changelings
 
-=======
->>>>>>> masterTGbranch
 		return 1
 	else
 		return 0

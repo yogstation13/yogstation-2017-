@@ -46,14 +46,9 @@
 	var/list/datum/station_goal/station_goals = list()
 
 
-<<<<<<< HEAD
-/datum/game_mode/proc/announce() //to be called when round starts
-	world << "<B>Notice</B>: [src] did not define announce()"
-=======
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	world << "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>"
 	world << "<b>[announce_text]</b>"
->>>>>>> masterTGbranch
 
 
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.

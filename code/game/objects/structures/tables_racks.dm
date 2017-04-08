@@ -52,34 +52,6 @@
 
 /obj/structure/table/ratvar_act()
 	new /obj/structure/table/reinforced/brass(src.loc)
-<<<<<<< HEAD
-
-/obj/structure/table/mech_melee_attack(obj/mecha/M)
-	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
-	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
-	take_damage(200, M.damtype, 0)
-
-/obj/structure/table/attack_alien(mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] slices [src]!</span>")
-	take_damage(100, BRUTE, 0)
-
-
-/obj/structure/table/attack_animal(mob/living/simple_animal/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
-		var/dmg_dealt = user.melee_damage_upper
-		if(user.environment_smash)
-			dmg_dealt = 100
-		visible_message("<span class='warning'>[user] smashes [src]!</span>")
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
-		take_damage(dmg_dealt, user.melee_damage_type, 0)
-=======
->>>>>>> masterTGbranch
-
 
 /obj/structure/table/attack_paw(mob/user)
 	attack_hand(user)

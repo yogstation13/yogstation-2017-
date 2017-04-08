@@ -1,5 +1,4 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
-<<<<<<< HEAD
 
 var/list/barometers = list()
 
@@ -9,9 +8,6 @@ var/list/barometers = list()
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "processor"
 
-
-=======
->>>>>>> masterTGbranch
 
 /obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
 	invisibility = INVISIBILITY_ABSTRACT
@@ -29,10 +25,6 @@ var/list/barometers = list()
 				/obj/item/seeds/sunflower/moonflower = 8
 				)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> masterTGbranch
 //Free Golems
 
 /obj/item/weapon/disk/design_disk/golem_shell
@@ -130,22 +122,10 @@ var/list/barometers = list()
 		else
 			user << "You can't build a golem out of this kind of material."
 
-<<<<<<< HEAD
 
 ///Syndicate Listening Post
 
 /obj/effect/mob_spawn/human/lavaland_syndicate
-=======
-//made with xenobiology, the golem obeys its creator
-/obj/item/golem_shell/artificial
-	name = "incomplete artificial golem shell"
-	has_owner = TRUE
-
-
-///Syndicate Listening Post
-/obj/effect/mob_spawn/human/lavaland_syndicate
-	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
->>>>>>> masterTGbranch
 	name = "Syndicate Bioweapon Scientist"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/toggle/labcoat
@@ -153,7 +133,6 @@ var/list/barometers = list()
 	gloves = /obj/item/clothing/gloves/combat
 	radio = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
-<<<<<<< HEAD
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 	has_id = 1
 	id_job = "Syndicate Researcher"
@@ -330,22 +309,3 @@ var/list/barometers = list()
 	icon_state = "sleeper_s"
 /obj/effect/mob_spawn/human/orion_security/special(mob/living/L)
 	L.add_memory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")
-=======
-	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
-	id_job = "Operative"
-	id_access_list = list(access_syndicate)
-	roundstart = FALSE
-	death = FALSE
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	has_id = 1
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
-
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms
-	name = "Syndicate Comms Agent"
-	r_hand = /obj/item/weapon/melee/energy/sword/saber
-	mask = /obj/item/clothing/mask/chameleon
-	suit = /obj/item/clothing/suit/armor/vest
-	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
-	pocket2 = /obj/item/weapon/card/id/syndicate/anyone
->>>>>>> masterTGbranch

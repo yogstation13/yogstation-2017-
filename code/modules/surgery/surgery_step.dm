@@ -42,23 +42,13 @@
 		surgery.step_in_progress = 0
 		return
 
-<<<<<<< HEAD
-	var/step_time = time * (1 - surgery.get_speedup_multiplier())
-
-	if(do_after(user, step_time, target = target))
-=======
 	if(do_after(user, time * tool.toolspeed, target = target))
->>>>>>> masterTGbranch
 		var/advance = 0
 		var/prob_chance = 100
 
 		if(implement_type)	//this means it isn't a require hand or any item step.
 			prob_chance = implements[implement_type]
-<<<<<<< HEAD
-		prob_chance *= surgery.get_probability_multiplier()
-=======
 		prob_chance *= surgery.get_propability_multiplier()
->>>>>>> masterTGbranch
 
 		if(prob(prob_chance) || iscyborg(user))
 			if(success(user, target, target_zone, tool, surgery))

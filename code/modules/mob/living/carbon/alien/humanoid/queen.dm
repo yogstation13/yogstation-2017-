@@ -1,13 +1,8 @@
 /mob/living/carbon/alien/humanoid/royal
 	//Common stuffs for Praetorian and Queen
 	icon = 'icons/mob/alienqueen.dmi'
-<<<<<<< HEAD
 	status_flags = list()
-	ventcrawler = 0 //pull over that ass too fat
-=======
-	status_flags = 0
 	ventcrawler = VENTCRAWLER_NONE //pull over that ass too fat
->>>>>>> masterTGbranch
 	unique_name = 0
 	pixel_x = -16
 	bubble_icon = "alienroyal"
@@ -107,11 +102,7 @@
 
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/alien/user)
 	var/obj/item/queenpromote/prom
-<<<<<<< HEAD
 	if(alien_type_present(/mob/living/carbon/alien/humanoid/royal/praetorian, user.hive_faction))
-=======
-	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
->>>>>>> masterTGbranch
 		user << "<span class='noticealien'>You already have a Praetorian!</span>"
 		return 0
 	else
@@ -139,11 +130,7 @@
 	if(!isalienadult(M) || istype(M, /mob/living/carbon/alien/humanoid/royal))
 		user << "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>"
 		return
-<<<<<<< HEAD
-	if(alien_type_present(/mob/living/carbon/alien/humanoid/royal/praetorian, user.hive_faction))
-=======
 	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
->>>>>>> masterTGbranch
 		user << "<span class='noticealien'>You already have a Praetorian!</span>"
 		return
 

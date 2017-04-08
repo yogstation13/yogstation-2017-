@@ -172,8 +172,6 @@
 	name = "Salvation"
 	description = "In the darkest times, we will find our way home."
 
-<<<<<<< HEAD
-
 /datum/map_template/ruin/space/wizard_academy
 	id = "wizard-academy"
 	suffix = "Academy.dmm"
@@ -191,7 +189,7 @@
 	suffix = "hippie_shuttle"
 	name= "Hippie Shuttle"
 	description = "These hippies went a little too far out..."
-=======
+
 /datum/map_template/ruin/space/djstation
 	id = "djstation"
 	suffix = "djstation.dmm"
@@ -267,4 +265,3 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
->>>>>>> masterTGbranch

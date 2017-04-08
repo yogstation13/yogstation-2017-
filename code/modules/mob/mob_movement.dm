@@ -12,12 +12,6 @@
 			return 1
 	return (!mover.density || !density || lying)
 
-<<<<<<< HEAD
-=======
-
-//The byond version of these verbs wait for the next tick before acting.
-//	instant verbs however can run mid tick or even during the time between ticks.
->>>>>>> masterTGbranch
 /client/verb/moveup()
 	set name = ".moveup"
 	set instant = 1
@@ -67,14 +61,10 @@
 
 
 /client/Northwest()
-<<<<<<< HEAD
 	if(prefs.afreeze)
 		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
-	if(!usr.get_active_hand())
-=======
 	if(!usr.get_active_held_item())
->>>>>>> masterTGbranch
 		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
 		return
 	usr.drop_item()
@@ -111,14 +101,10 @@
 
 /client/verb/drop_item()
 	set hidden = 1
-<<<<<<< HEAD
 	if(prefs.afreeze)
 		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
-	if(!isrobot(mob))
-=======
 	if(!iscyborg(mob))
->>>>>>> masterTGbranch
 		mob.drop_item_v()
 	return
 
@@ -147,18 +133,12 @@
 
 
 /client/Move(n, direct)
-<<<<<<< HEAD
 	if(prefs.afreeze)
 		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return 0
 	if(world.time < move_delay)
 		return 0
-	move_delay = world.time+world.tick_lag
-=======
-	if(world.time < move_delay)
-		return 0
 	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
->>>>>>> masterTGbranch
 	if(!mob || !mob.loc)
 		return 0
 	if(mob.notransform)
@@ -422,9 +402,6 @@ proc/Can_ShadowWalk(var/mob/mob)
 	return
 
 /mob/proc/update_gravity()
-<<<<<<< HEAD
-	return
-=======
 	return
 
 //bodypart selection - Cyberboss
@@ -524,4 +501,3 @@ proc/Can_ShadowWalk(var/mob/mob)
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.toggle(src)
->>>>>>> masterTGbranch

@@ -10,13 +10,8 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "strikes"
-<<<<<<< HEAD
 	status_flags = list()
-	a_intent = "harm"
-=======
-	status_flags = 0
 	a_intent = INTENT_HARM
->>>>>>> masterTGbranch
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
@@ -289,23 +284,20 @@
 
 /obj/item/organ/hivelord_core/on_life()
 	..()
-<<<<<<< HEAD
-	if(owner)
-		owner.adjustBruteLoss(-1)
-		owner.adjustFireLoss(-1)
-		owner.adjustOxyLoss(-2)
+	if(!owner)
+		return
+	owner.adjustBruteLoss(-0.5)
+	owner.adjustFireLoss(-0.5)
+	owner.adjustOxyLoss(-1)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		CHECK_DNA_AND_SPECIES(H)
 		if(NOBLOOD in H.dna.species.specflags)
 			return
-
 		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
 			H.blood_volume += 3 // Fast blood regen
-=======
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		ui_action_click()
->>>>>>> masterTGbranch
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -448,14 +440,9 @@
 	maxHealth = 300
 	health = 300
 	harm_intent_damage = 0
-<<<<<<< HEAD
-	melee_damage_lower = 28
-	melee_damage_upper = 28
-=======
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
->>>>>>> masterTGbranch
 	attacktext = "pulverizes"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	throw_message = "does nothing to the rocky hide of the"
@@ -573,16 +560,9 @@
 			var/obj/mecha/working/ripley/D = target
 			if(D.hides < 3)
 				D.hides++
-<<<<<<< HEAD
-				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.1
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.1
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.1
-=======
 				D.armor["melee"] = min(D.armor["melee"] + 10, 70)
 				D.armor["bullet"] = min(D.armor["bullet"] + 5, 50)
 				D.armor["laser"] = min(D.armor["laser"] + 5, 50)
->>>>>>> masterTGbranch
 				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
 				D.update_icon()
 				if(D.hides == 3)
@@ -742,18 +722,11 @@
 	icon_dead = "watcher_dead"
 	pixel_x = -10
 	throw_message = "bounces harmlessly off of"
-<<<<<<< HEAD
-	melee_damage_lower = 13
-	melee_damage_upper = 13
-	attacktext = "impales"
-	a_intent = "harm"
-=======
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
->>>>>>> masterTGbranch
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	flying = TRUE
 	stat_attack = 1
@@ -902,13 +875,6 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
-<<<<<<< HEAD
-	if(stored_mob)
-		stored_mob.forceMove(get_turf(src))
-		stored_mob.adjustBruteLoss(1000)
-	else
-		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
-=======
 	var/turf/T = get_turf(src)
 	if(T)
 		if(stored_mob)
@@ -916,7 +882,6 @@
 			stored_mob = null
 		else
 			new /obj/effect/mob_spawn/human/corpse/damaged(T)
->>>>>>> masterTGbranch
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
@@ -948,16 +913,7 @@
 	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == UNCONSCIOUS)
-<<<<<<< HEAD
-				visible_message("<span class='warning'>[src.name] burrows into the flesh of [H]!</span>")
-				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
-				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
-				H.death()
-				L.stored_mob = H
-				H.forceMove(L)
-=======
 				infest(H)
->>>>>>> masterTGbranch
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
@@ -1150,15 +1106,11 @@
 
 /mob/living/simple_animal/hostile/spawner/lavaland/New()
 	..()
-<<<<<<< HEAD
-	gps = new /obj/item/device/gps/internal/lavaland(src)
-=======
 	for(var/F in RANGE_TURFS(1, src))
 		if(ismineralturf(F))
 			var/turf/closed/mineral/M = F
 			M.ChangeTurf(M.turf_type,FALSE,TRUE)
-	gps = new /obj/item/device/gps/internal(src)
->>>>>>> masterTGbranch
+	gps = new /obj/item/device/gps/internal/lavaland(src)
 
 /mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
 	qdel(gps)

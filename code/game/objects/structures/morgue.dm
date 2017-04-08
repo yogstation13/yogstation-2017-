@@ -90,11 +90,7 @@
 
 /obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
 	user << "<span class='notice'>You slam yourself into the side of [O].</span>"
-<<<<<<< HEAD
-	container_resist()
-=======
 	container_resist(user)
->>>>>>> masterTGbranch
 
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)

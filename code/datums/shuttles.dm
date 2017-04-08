@@ -303,43 +303,19 @@
 /datum/map_template/shuttle/ferry/meat
 	suffix = "meat"
 	name = "\"meat\" ferry"
-<<<<<<< HEAD
-	description = "Ahoy! We got all kinds o' meat aft here. Meat from plant \
-		people, people who be dark, not in a racist way, just they're dark \
-		black. Oh and lizard meat too,mighty popular that is. Definitely \
-		100% fresh, just ask this guy here. *person on meatspike moans* See? \
-		Definitely high quality meat, nothin' wrong with it, nothin' added, \
-		definitely no zombifyin' reagents!"
-	admin_notes = "Meat currently contains no zombifying reagents, lizard on \
-		meatspike must be spawned in."
-=======
 	description = "Ahoy! We got all kinds o' meat aft here. Meat from plant people, people who be dark, not in a racist way, just they're dark black. \
 	Oh and lizard meat too,mighty popular that is. Definitely 100% fresh, just ask this guy here. *person on meatspike moans* See? \
 	Definitely high quality meat, nothin' wrong with it, nothin' added, definitely no zombifyin' reagents!"
 	admin_notes = "Meat currently contains no zombifying reagents, lizard on meatspike must be spawned in."
->>>>>>> masterTGbranch
 
 /datum/map_template/shuttle/ferry/lighthouse
 	suffix = "lighthouse"
 	name = "The Lighthouse(?)"
-<<<<<<< HEAD
-	description = "*static*... part of a much larger vessel, possibly \
-		military in origin. The weapon markings aren't anything we've seen \
-		... static ... by almost never the same person twice, possible use \
-		of unknown storage ...  static ... seeing ERT officers onboard, but \
-		no missions are on file for ... static ... static ... annoying \
-		jingle ... only at The LIGHTHOUSE! Fulfilling needs you didn't even \
-		know you had. We've got EVERYTHING, and something else!"
-	admin_notes = "Currently larger than ferry docking port on Box, will not \
-		hit anything, but must be force docked. Trader and ERT bodyguards are \
-		not included."
-=======
 	description = "*static*... part of a much larger vessel, possibly military in origin. \
 	The weapon markings aren't anything we've seen ...static... by almost never the same person twice, possible use of unknown storage ...static... \
 	seeing ERT officers onboard, but no missions are on file for ...static...static...annoying jingle... only at The LIGHTHOUSE! \
 	Fulfilling needs you didn't even know you had. We've got EVERYTHING, and something else!"
 	admin_notes = "Currently larger than ferry docking port on Box, will not hit anything, but must be force docked. Trader and ERT bodyguards are not included."
->>>>>>> masterTGbranch
 
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
@@ -349,15 +325,13 @@
 	suffix = "meta"
 	name = "NT Recovery White-ship"
 
-<<<<<<< HEAD
 /datum/map_template/shuttle/whiteship/shitbucket_v3
 	suffix = "shitbucket_v3"
 	name = "The S.S. Shitbucket, MK.3"
-=======
+
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
 	name = "NT White UFO"
->>>>>>> masterTGbranch
 
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
@@ -366,8 +340,6 @@
 /datum/map_template/shuttle/cargo/birdboat
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
-<<<<<<< HEAD
-=======
 
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
@@ -375,4 +347,3 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	admin_notes = "Go big or go home."
 	credit_cost = 7500
->>>>>>> masterTGbranch

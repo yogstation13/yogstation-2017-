@@ -273,7 +273,6 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-<<<<<<< HEAD
 	if(polling)
 		return
 	if(user.z != ZLEVEL_STATION)
@@ -288,20 +287,6 @@
 		var/mob/dead/observer/O = pick(demon_candidates)
 		var/client/C = O.client
 		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
-=======
-	if(user.z != 1)
-		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
-		return
-	if(used)
-		return
-	var/list/demon_candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", null, null, ROLE_ALIEN, 50, src)
-	if(demon_candidates.len)
-		if(used)
-			return
-		used = 1
-		var/mob/dead/observer/theghost = pick(demon_candidates)
-		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
->>>>>>> masterTGbranch
 		user << shatter_msg
 		user << veil_msg
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)

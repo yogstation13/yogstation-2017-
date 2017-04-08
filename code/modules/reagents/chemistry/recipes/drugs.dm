@@ -31,14 +31,8 @@
 /datum/chemical_reaction/bath_salts
 	name = "bath_salts"
 	id = "bath_salts"
-<<<<<<< HEAD
-	result = "bath_salts"
+	result = list("bath_salts" = 7)
 	required_reagents = list("badfood" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
-	result_amount = 7
-=======
-	results = list("bath_salts" = 7)
-	required_reagents = list("????" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
->>>>>>> masterTGbranch
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp
@@ -46,14 +40,9 @@
 	id = "aranesp"
 	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
-<<<<<<< HEAD
-	result_amount = 3
 
 /datum/chemical_reaction/bolamine
 	name= "bolamine"
 	id = "bolamine"
-	result = "bolamine"
+	result = list("bolamine" = 2)
 	required_reagents = list("space_drugs" = 2, "frostoil" = 1)
-	result_amount = 2
-=======
->>>>>>> masterTGbranch

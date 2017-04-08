@@ -26,11 +26,7 @@
 			return 0
 	else
 		return 0
-<<<<<<< HEAD
-	if(isloyal(M) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
-=======
 	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
->>>>>>> masterTGbranch
 		return 0 //can't convert machines, shielded, or ratvar's dogs
 	return 1
 
@@ -102,20 +98,9 @@
 				else
 					explanation = "Free objective."
 			if("eldergod")
-<<<<<<< HEAD
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes around and on it. You must do this after sacrificing your target."
-		objs += "<B>Objective #[obj_count]</B>: [explanation][obj_count == cult_objectives.len ? "" : "<br>"]"
-	return objs
-
-/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
-	var/objs = get_cult_objectives()
-	cult_mind.current << objs
-	cult_mind.memory += objs + "<BR>"
-=======
 				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
->>>>>>> masterTGbranch
 
 /datum/game_mode/cult/post_setup()
 	modePlayer += cultists_to_cult

@@ -963,10 +963,6 @@ var/global/list/friendly_animal_types = list()
 		else
 			new_overlays += image
 	overlays = new_overlays
-<<<<<<< HEAD
-
-=======
->>>>>>> masterTGbranch
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals

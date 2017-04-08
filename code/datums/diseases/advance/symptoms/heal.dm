@@ -37,11 +37,7 @@ Bonus
 	var/heal_amt = 0.5
 	if(M.toxloss > 0 && prob(20))
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
-<<<<<<< HEAD
 	M.adjustToxLoss(-heal_amt, 1, DAMAGE_DISEASE)
-=======
-	M.adjustToxLoss(-heal_amt)
->>>>>>> masterTGbranch
 	return 1
 
 /*
@@ -103,19 +99,10 @@ Bonus
 
 /datum/symptom/heal/brute/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 1
-<<<<<<< HEAD
-	var/list/parts
-	if(ishuman(M))
-		var/mob/living.carbon/human/H = M
-		parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
-
-	if(!parts || !parts.len)
-=======
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
-	if(!parts.len)
->>>>>>> masterTGbranch
+	if(!parts || !parts.len)
 		return
 
 	for(var/obj/item/bodypart/L in parts)
@@ -155,19 +142,6 @@ Bonus
 
 /datum/symptom/heal/brute/plus/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/heal_amt = 2
-<<<<<<< HEAD
-	var/list/parts
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
-
-	if(M.getCloneLoss() > 0)
-		M.adjustCloneLoss(-1)
-		M.take_organ_damage(0, 1) //Deals BURN damage, which is not cured by this symptom
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#33FFCC"))
-
-	if(!parts || !parts.len)
-=======
 
 	var/list/parts = M.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
@@ -176,8 +150,7 @@ Bonus
 		M.take_bodypart_damage(0, 1) //Deals BURN damage, which is not cured by this symptom
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#33FFCC"))
 
-	if(!parts.len)
->>>>>>> masterTGbranch
+	if(!parts || !parts.len)
 		return
 
 	for(var/obj/item/bodypart/L in parts)
@@ -347,11 +320,7 @@ Bonus
 	else if(M.bodytemperature < 311)
 		M.bodytemperature = min(310, M.bodytemperature + (10 * heal_amt * TEMPERATURE_DAMAGE_COEFFICIENT))
 
-<<<<<<< HEAD
 	if(!parts || !parts.len)
-=======
-	if(!parts.len)
->>>>>>> masterTGbranch
 		return
 
 	for(var/obj/item/bodypart/L in parts)
@@ -391,11 +360,7 @@ Bonus
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/amt_healed = 1
-<<<<<<< HEAD
 	M.adjustBrainLoss(-amt_healed, 1, DAMAGE_DISEASE)
-=======
-	M.adjustBrainLoss(-amt_healed)
->>>>>>> masterTGbranch
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (not_good_mutations|bad_mutations) - mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)

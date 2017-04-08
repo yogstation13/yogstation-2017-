@@ -16,11 +16,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 	while(smooth_queue.len)
 		var/atom/A = smooth_queue[smooth_queue.len]
 		smooth_queue.len--
-<<<<<<< HEAD
-		ss_smooth_icon(A)
-=======
 		smooth_icon(A)
->>>>>>> masterTGbranch
 		if (MC_TICK_CHECK)
 			return
 	if (!smooth_queue.len)

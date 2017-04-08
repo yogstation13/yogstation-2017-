@@ -242,10 +242,6 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-<<<<<<< HEAD
-	else if(user.a_intent != "harm" && W.GetID())
-		if(secure && !opened)
-=======
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(isinspace() && !anchored)
 			return
@@ -256,7 +252,6 @@
 						"<span class='italics'>You hear a ratchet.</span>")
 	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
->>>>>>> masterTGbranch
 			togglelock(user)
 		return 1
 	else

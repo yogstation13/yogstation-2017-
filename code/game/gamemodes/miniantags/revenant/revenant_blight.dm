@@ -20,11 +20,8 @@
 		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#1d2953")
 		if(affected_mob.dna && affected_mob.dna.species)
 			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
-<<<<<<< HEAD
-=======
 			affected_mob.dna.species.handle_hair(affected_mob)
 		affected_mob << "<span class='notice'>You feel better.</span>"
->>>>>>> masterTGbranch
 	..()
 
 /datum/disease/revblight/stage_act()
@@ -63,18 +60,8 @@
 				if(affected_mob.dna && affected_mob.dna.species)
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
-<<<<<<< HEAD
-					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <span class='italics'>wrong</span>...</span>")
-					var/old_color = affected_mob.color
-					affected_mob.color = "#1d2953"
-					spawn(100)
-						if(affected_mob)
-							affected_mob = old_color
-						cure()
-=======
 				affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
 				affected_mob.add_atom_colour("#1d2953", TEMPORARY_COLOUR_PRIORITY)
 				addtimer(src, "cure", 100, TIMER_NORMAL)
->>>>>>> masterTGbranch
 		else
 			return

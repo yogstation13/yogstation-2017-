@@ -47,20 +47,11 @@
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
-<<<<<<< HEAD
-	if(selfcharge)
-		START_PROCESSING(SSobj, src)
-	update_icon()
-	return
-
-/obj/item/weapon/gun/energy/Destroy()
-=======
 
 /obj/item/weapon/gun/energy/Destroy()
 	if(power_supply)
 		qdel(power_supply)
 		power_supply = null
->>>>>>> masterTGbranch
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -82,14 +73,11 @@
 		select_fire(user)
 		update_icon()
 
-<<<<<<< HEAD
 /obj/item/weapon/gun/energy/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, params)
 	if(!chambered || !chambered.BB)
 		newshot() //prepare a new shot
 	..()
 
-=======
->>>>>>> masterTGbranch
 /obj/item/weapon/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	return power_supply.charge >= shot.e_cost
@@ -115,16 +103,8 @@
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		power_supply.use(shot.e_cost)//... drain the power_supply cell
-<<<<<<< HEAD
-		chambered = null 
-		newshot()
-	else
-		chambered = null
-	return
-=======
 	chambered = null //either way, released the prepared shot
 	recharge_newshot() //try to charge a new shot
->>>>>>> masterTGbranch
 
 /obj/item/weapon/gun/energy/proc/select_fire(mob/living/user)
 	select++
@@ -195,7 +175,6 @@
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
 
-<<<<<<< HEAD
 /obj/item/weapon/gun/energy/proc/robocharge()
 	if(isrobot(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
@@ -211,8 +190,6 @@
 		else
 			STOP_PROCESSING(SSobj, src)
 	..()
-=======
->>>>>>> masterTGbranch
 
 /obj/item/weapon/gun/energy/vv_edit_var(var_name, var_value)
 	switch(var_name)

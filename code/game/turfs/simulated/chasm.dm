@@ -11,14 +11,6 @@
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
-<<<<<<< HEAD
-	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
-
-/turf/open/chasm/New()
-	. = ..()
-	safeties_typecache = typecacheof(safeties_typecache)
-=======
->>>>>>> masterTGbranch
 
 /turf/open/chasm/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
@@ -30,29 +22,15 @@
 
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
-<<<<<<< HEAD
-	for(var/obj/O in contents)
-		if(istype(O, /obj/structure/lattice/catwalk))
-			return FALSE
-=======
->>>>>>> masterTGbranch
 	var/thing_to_check = src
 	if(AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
 		if(droppable(thing))
 			. = 1
-<<<<<<< HEAD
-			addtimer(src, "drop", 0, FALSE, thing)
-
-/turf/open/chasm/proc/droppable(atom/movable/AM)
-	if(is_safe())
-		return FALSE
-=======
 			addtimer(src, "drop", 0, TIMER_NORMAL, thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
->>>>>>> masterTGbranch
 	if(!isliving(AM) && !isobj(AM))
 		return 0
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
@@ -61,15 +39,9 @@
 		//Portals aren't affected by gravity. Probably.
 		return 0
 	//Flies right over the chasm
-<<<<<<< HEAD
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(SA.flying)
-=======
 	if(isliving(AM))
 		var/mob/MM = AM
 		if(MM.movement_type & FLYING)
->>>>>>> masterTGbranch
 			return 0
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
@@ -79,19 +51,8 @@
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
 			return 0
-<<<<<<< HEAD
-		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
-			return 0
 	return 1
 
-/turf/open/chasm/proc/is_safe()
-	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
-	return LAZYLEN(found_safeties)
-
-=======
-	return 1
-
->>>>>>> masterTGbranch
 /turf/open/chasm/proc/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
 	if(!AM || qdeleted(AM))
@@ -144,11 +105,7 @@
 	if(!AM || qdeleted(AM))
 		return
 
-<<<<<<< HEAD
-	if(isrobot(AM))
-=======
 	if(iscyborg(AM))
->>>>>>> masterTGbranch
 		var/mob/living/silicon/robot/S = AM
 		qdel(S.mmi)
 

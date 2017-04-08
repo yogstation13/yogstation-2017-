@@ -5,13 +5,9 @@
 
 	if(!prev_lying)
 		gib_animation()
-<<<<<<< HEAD
-	if(!no_organs)
-		spill_organs(no_brain)
-	spawn_gibs()
+
 	for(var/obj/item/weapon/disk/nuclear/N in GetAllContents())
 		N.forceMove(loc)
-=======
 
 	spill_organs(no_brain, no_organs, no_bodyparts)
 
@@ -19,7 +15,6 @@
 		spread_bodyparts(no_brain, no_organs)
 
 	spawn_gibs(no_bodyparts)
->>>>>>> masterTGbranch
 	qdel(src)
 
 /mob/living/proc/gib_animation()

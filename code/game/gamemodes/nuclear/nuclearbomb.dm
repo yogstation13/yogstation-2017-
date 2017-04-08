@@ -18,13 +18,6 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
 	density = 1
-<<<<<<< HEAD
-	var/icon_state_timing = "nuclearbomb_timing"
-	var/icon_state_exploding = "nuclearbomb_exploding"
-
-	var/timeleft = 60
-	var/timing = 0
-=======
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 60
@@ -37,7 +30,6 @@ var/bomb_set
 	var/timing = FALSE
 	var/exploding = FALSE
 	var/detonation_timer = null
->>>>>>> masterTGbranch
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
 	var/safety = TRUE
@@ -193,19 +185,11 @@ var/bomb_set
 				update_icon_interior()
 				update_icon_lights()
 			if(NUKE_ON_TIMING)
-<<<<<<< HEAD
-				overlays.Cut()
-				icon_state = icon_state_timing
-			if(NUKE_ON_EXPLODING)
-				overlays.Cut()
-				icon_state = icon_state_exploding
-=======
 				cut_overlays()
 				icon_state = "nuclearbomb_timing"
 			if(NUKE_ON_EXPLODING)
 				cut_overlays()
 				icon_state = "nuclearbomb_exploding"
->>>>>>> masterTGbranch
 	else
 		icon_state = initial(icon_state)
 		update_icon_interior()
@@ -242,33 +226,19 @@ var/bomb_set
 	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
-<<<<<<< HEAD
-	if (timing > 0)
-		if(countdown)
-			countdown.start()
-		else
-			countdown = new(src)
-		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
-		timeleft--
-		if (timeleft <= 0)
-=======
 	if(timing && !exploding)
 		bomb_set = TRUE
 		if(detonation_timer < world.time)
->>>>>>> masterTGbranch
 			explode()
 		else
 			var/volume = (get_time_left() <= 20 ? 30 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, 0)
-<<<<<<< HEAD
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				attack_hand(M)
 	else
 		if(countdown)
 			countdown.stop()
-=======
->>>>>>> masterTGbranch
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
@@ -627,8 +597,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	..()
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-=======
 
 /obj/item/weapon/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/claymore/highlander))
@@ -661,7 +629,6 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
 	return OXYLOSS
->>>>>>> masterTGbranch
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/diskturf = get_turf(src)

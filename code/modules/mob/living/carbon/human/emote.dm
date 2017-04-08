@@ -1,5 +1,5 @@
 /mob/living/carbon/human/emote(act,m_type=1,message = null)
-	if(stat == DEAD && (act != "deathgasp") || (status_flags & FAKEDEATH)) //if we're faking, don't emote at all
+	if(stat == DEAD && (act != "deathgasp") || (FAKEDEATH in status_flags)) //if we're faking, don't emote at all
 		return
 
 	var/param = null
@@ -44,7 +44,7 @@
 				m_type = 2
 
 		if ("collapse","collapses")
-			if(status_flags & CANPARALYSE)	//You can't collapse if you can't actually collapse.
+			if(CANPARALYSE in status_flags)	//You can't collapse if you can't actually collapse.
 				Paralyse(2)
 				adjustStaminaLoss(100) // Hampers abuse against simple mobs, but still leaves it a viable option.
 				message = "<B>[src]</B> collapses!"

@@ -186,7 +186,7 @@
 	suffix = "lavaland_surface_cugganscove.dmm"
 	allow_duplicates = FALSE
 	cost = 10
-/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc. 
+/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc.
 /datum/map_template/ruin/lavaland/xenofacility
 	name = "Xenomorph Facility"
 	id = "xenofacility"
@@ -383,8 +383,6 @@
 	suffix = "lavaland_surface_xeno_nest.dmm"
 	cost = 20
 	allow_duplicates = FALSE
-<<<<<<< HEAD
-=======
 	cost = 10
 
 /datum/map_template/ruin/lavaland/swarmer_boss
@@ -394,4 +392,3 @@
 	suffix = "lavaland_surface_swarmer_crash.dmm"
 	allow_duplicates = FALSE
 	cost = 20
->>>>>>> masterTGbranch

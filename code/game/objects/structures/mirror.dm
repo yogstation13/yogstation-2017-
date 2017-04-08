@@ -86,11 +86,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-<<<<<<< HEAD
 	var/list/races_blacklist = list("skeleton", "agent", "angel", "abomination", "military_synth","krampus")
-=======
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
->>>>>>> masterTGbranch
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()

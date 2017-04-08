@@ -174,12 +174,8 @@
 	item_state = "buckler"
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
-<<<<<<< HEAD
-	burn_state = FLAMMABLE
 	block_limit = 15
-=======
 	resistance_flags = FLAMMABLE
->>>>>>> masterTGbranch
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
@@ -265,14 +261,10 @@
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
-<<<<<<< HEAD
 	w_class = 3
 	shieldhealth = 95
-	var/active = FALSE
-=======
 	w_class = WEIGHT_CLASS_NORMAL
-	var/active = 0
->>>>>>> masterTGbranch
+	var/active = FALSE
 
 /obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)

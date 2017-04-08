@@ -42,15 +42,8 @@
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-	spawn(0)
-		fade_out()
-	spawn(10)
-		qdel(src)
-=======
 	addtimer(src, "fade_out", 0)
 	QDEL_IN(src, 10)
->>>>>>> masterTGbranch
 
 /obj/effect/particle_effect/smoke/process()
 	lifetime--

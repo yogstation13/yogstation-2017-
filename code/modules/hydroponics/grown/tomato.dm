@@ -56,13 +56,8 @@
 	yield = 2
 	icon_grow = "bluetomato-grow"
 	mutatelist = list(/obj/item/seeds/tomato/blue/bluespace)
-<<<<<<< HEAD
-	genes = list(/datum/plant_gene/trait/slip)
 	reagents_add = list("lube" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
-=======
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("lube" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> masterTGbranch
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue
@@ -84,13 +79,8 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
 	yield = 2
 	mutatelist = list()
-<<<<<<< HEAD
-	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
 	reagents_add = list("lube" = 0.4, "singulo" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
-=======
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("lube" = 0.2, "singulo" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
->>>>>>> masterTGbranch
 	rarity = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace

@@ -45,45 +45,9 @@
 					src.gib()
 
 
-<<<<<<< HEAD
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
-	shock_damage *= siemens_coeff
-	if(dna && dna.species)
-		shock_damage *= dna.species.siemens_coeff
-		if(dna.species.specflags & CONSUMEPOWER)
-			nutrition = min(nutrition + shock_damage*ELECTRICITY_TO_NUTRIMENT_FACTOR*30, NUTRITION_LEVEL_WELL_FED)
-	if(shock_damage<1 && !override)
-		return 0
-	if(reagents.has_reagent("teslium"))
-		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
-	take_overall_damage(0,shock_damage)
-	//src.adjustFireLoss(shock_damage)
-	//src.updatehealth()
-	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
-		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-		"<span class='italics'>You hear a heavy electrical crack.</span>" \
-	)
-	jitteriness += 1000 //High numbers for violent convulsions
-	do_jitter_animation(jitteriness)
-	stuttering += 2
-	if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
-		Stun(2)
-	spawn(20)
-		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
-		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
-			Stun(3)
-			Weaken(3)
-	if(override)
-		return override
-	else
-		return shock_damage
-
-=======
 /mob/living/carbon/swap_hand(held_index)
 	if(!held_index)
 		held_index = (active_hand_index % held_items.len)+1
->>>>>>> masterTGbranch
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
@@ -119,37 +83,6 @@
 	else
 		mode() // Activate held item
 
-<<<<<<< HEAD
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
-	if(on_fire)
-		M << "<span class='warning'>You can't put them out with just your bare hands!"
-		return
-
-	if(reagents.has_reagent("capilletum") && lying)
-		M << "<span class='warning'>[src] is dead!</span>"
-		return
-
-	if(health >= 0)
-
-		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
-							"<span class='notice'>You shake [src] trying to get them up!</span>")
-		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
-						"<span class='notice'>You hug [src] to make them feel better!</span>")
-
-		AdjustSleeping(-5)
-		AdjustParalysis(-3)
-		AdjustStunned(-3)
-		AdjustWeakened(-3)
-		if(resting)
-			resting = 0
-			update_canmove()
-
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
-=======
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
 		if(user != src && user.a_intent == INTENT_HELP)
@@ -159,7 +92,6 @@
 	return ..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom)
->>>>>>> masterTGbranch
 	. = ..()
 	if(hit_atom.density && isturf(hit_atom))
 		Weaken(1)
@@ -567,7 +499,7 @@
 
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	var/total_burn	= 0
 	var/total_brute	= 0
@@ -717,11 +649,7 @@
 		if(health<= HEALTH_THRESHOLD_DEAD || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-<<<<<<< HEAD
-		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
-=======
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
->>>>>>> masterTGbranch
+		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				if(NOCRIT in status_flags)//no crit when you're stimmed
 					return
@@ -806,16 +734,6 @@
 /mob/living/carbon/fakefireextinguish()
 	remove_overlay(FIRE_LAYER)
 
-<<<<<<< HEAD
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
-		amount = -amount
-		if(amount > 0)
-			blood_volume -= 5*amount
-		else
-			blood_volume -= amount
-	return ..()
-=======
 
 /mob/living/carbon/proc/devour_mob(mob/living/carbon/C, devour_time = 130)
 	C.visible_message("<span class='danger'>[src] is attempting to devour [C]!</span>", \
@@ -858,4 +776,3 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
->>>>>>> masterTGbranch

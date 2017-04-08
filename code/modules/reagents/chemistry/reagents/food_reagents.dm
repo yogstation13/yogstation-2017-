@@ -270,7 +270,6 @@
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)
 
-<<<<<<< HEAD
 /datum/reagent/consumable/sodiumchloride/overdose_process(mob/living/M)
 	if(prob(saltprob))
 		var/line = pick_list_replacements(BRAIN_DAMAGE_FILE, "salt")
@@ -279,14 +278,13 @@
 		M.say(line)
 		if(prob(emoteprob))
 			M.emote(pick("groan", "cry", "grumble", "whimper"))
-=======
+
 /datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
 	if(!istype(T))
 		return
 	if(reac_volume < 1)
 		return
 	new/obj/effect/decal/cleanable/salt(T)
->>>>>>> masterTGbranch
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"

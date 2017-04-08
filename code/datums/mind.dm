@@ -105,10 +105,7 @@
 		for(var/i in current.antag_datums)
 			var/datum/antagonist/D = i
 			D.transfer_to_new_body(new_character)
-<<<<<<< HEAD
 
-=======
->>>>>>> masterTGbranch
 	var/datum/atom_hud/antag/hud_to_transfer = antag_hud//we need this because leave_hud() will clear this list
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
@@ -230,11 +227,6 @@
 	if(gang_datum)
 		gang_datum.remove_gang_hud(src)
 
-<<<<<<< HEAD
-/*
-=======
-
->>>>>>> masterTGbranch
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
 /datum/mind/proc/enslave_mind_to_creator(mob/living/creator)
@@ -243,7 +235,6 @@
 
 	else if(is_gangster(creator))
 		ticker.mode.add_gangster(src, creator.mind.gang_datum, TRUE)
-<<<<<<< HEAD
 
 	else if(is_revolutionary_in_general(creator))
 		ticker.mode.add_revolutionary(src)
@@ -254,18 +245,6 @@
 	else if(is_nuclear_operative(creator))
 		make_Nuke(null, null, 0, FALSE)
 
-=======
-
-	else if(is_revolutionary_in_general(creator))
-		ticker.mode.add_revolutionary(src)
-
-	else if(is_servant_of_ratvar(creator))
-		add_servant_of_ratvar(current)
-
-	else if(is_nuclear_operative(creator))
-		make_Nuke(null, null, 0, FALSE)
-
->>>>>>> masterTGbranch
 	enslaved_to = creator
 
 	current.faction = creator.faction.Copy()
@@ -273,10 +252,6 @@
 	if(creator.mind.special_role)
 		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
 		current << "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>"
-<<<<<<< HEAD
-*/
-=======
->>>>>>> masterTGbranch
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -405,27 +380,11 @@
 		if(ticker.mode.config_tag == "abductor")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-<<<<<<< HEAD
-		if (iscultist(current))
-			text += "loyal|<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
-			text += "<br>Give <a href='?src=\ref[src];cult=tome'>tome</a>|<a href='?src=\ref[src];cult=amulet'>amulet</a>."
-/*
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! Set to sacrifice and <a href='?src=\ref[src];cult=escape'>escape</a> or <a href='?src=\ref[src];cult=summon'>summon</a>."
-*/
-		else if(isloyal(current))
-			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-		else if(is_convertable_to_cult(current))
-			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
-		else
-			text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Nar-Sie</i>"
-=======
 		if(src in ticker.mode.abductors)
 			text += "<b>Abductor</b>|<a href='?src=\ref[src];abductor=clear'>human</a>"
 			text += "|<a href='?src=\ref[src];common=undress'>undress</a>|<a href='?src=\ref[src];abductor=equip'>equip</a>"
 		else
 			text += "<a href='?src=\ref[src];abductor=abductor'>Abductor</a>|<b>human</b>"
->>>>>>> masterTGbranch
 
 		if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
@@ -439,17 +398,6 @@
 		if (ticker.mode.config_tag=="nuclear")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-<<<<<<< HEAD
-		if(is_servant_of_ratvar(current))
-			text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
-			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
-		else if(isloyal(current))
-			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
-		else if(is_eligible_servant(current))
-			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
-		else
-			text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Ratvar</i>"
-=======
 		if (src in ticker.mode.syndicates)
 			text += "<b>OPERATIVE</b>|<a href='?src=\ref[src];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=\ref[src];nuclear=lair'>To shuttle</a>, <a href='?src=\ref[src];common=undress'>undress</a>, <a href='?src=\ref[src];nuclear=dressup'>dress up</a>."
@@ -462,7 +410,6 @@
 				text += " Code is [code]. <a href='?src=\ref[src];nuclear=tellcode'>tell the code.</a>"
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
->>>>>>> masterTGbranch
 
 		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_special))
 			text += "|Enabled in Prefs"
@@ -584,7 +531,6 @@
 
 		sections["changeling"] = text
 
-<<<<<<< HEAD
 	/** CYBERMAN **/
 	text = "cyberman"
 	if(ticker.mode.config_tag == "cybermen")
@@ -604,9 +550,7 @@
 
 	/** MONKEY ***/
 	if (istype(current, /mob/living/carbon))
-=======
 		/** MONKEY ***/
->>>>>>> masterTGbranch
 		text = "monkey"
 		if (ticker.mode.config_tag=="monkey")
 			text = uppertext(text)
@@ -1195,7 +1139,6 @@
 				ticker.mode.forge_traitor_objectives(src)
 				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
 
-<<<<<<< HEAD
 	else if(href_list["shadowling"])
 		switch(href_list["shadowling"])
 			if("clear")
@@ -1240,8 +1183,6 @@
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 
-=======
->>>>>>> masterTGbranch
 	else if(href_list["devil"])
 		switch(href_list["devil"])
 			if("clear")
@@ -1453,13 +1394,7 @@
 		ticker.mode.finalize_traitor(src)
 		ticker.mode.greet_traitor(src)
 
-<<<<<<< HEAD
-/datum/mind/proc/make_Nuke(turf/spawnloc,nuke_code,leader=0, telecrystals = TRUE)
-	if(quiet_round)
-		return
-=======
 /datum/mind/proc/make_Nuke(turf/spawnloc, nuke_code, leader=0, telecrystals = TRUE)
->>>>>>> masterTGbranch
 	if(!(src in ticker.mode.syndicates))
 		ticker.mode.syndicates += src
 		ticker.mode.update_synd_icons_added(src)

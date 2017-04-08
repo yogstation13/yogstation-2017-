@@ -147,10 +147,7 @@ var/const/tk_maxrange = 15
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
-<<<<<<< HEAD
 		update_icon()
-=======
->>>>>>> masterTGbranch
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)

@@ -38,7 +38,6 @@
 		adjustBruteLoss(-2)
 	else
 		..()
-<<<<<<< HEAD
 
 /mob/living/simple_animal/hostile/lizard/proc/can_eat_thing(obj/item/I)
 	return is_type_in_list(I, edibles)
@@ -78,5 +77,3 @@
 		adjustBruteLoss(-2)
 	else
 		..()
-=======
->>>>>>> masterTGbranch

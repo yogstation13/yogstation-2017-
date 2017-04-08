@@ -288,19 +288,15 @@
 	icon_state = "running"
 
 /obj/screen/mov_intent/Click()
-<<<<<<< HEAD
 	if(usr.client && usr.client.prefs.afreeze)
 		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return 1
-	switch(usr.m_intent)
-=======
 	toggle(usr)
 
 /obj/screen/mov_intent/proc/toggle(mob/user)
 	if(isobserver(user))
 		return
 	switch(user.m_intent)
->>>>>>> masterTGbranch
 		if("run")
 			user.m_intent = MOVE_INTENT_WALK
 			icon_state = "walking"
@@ -315,14 +311,11 @@
 	icon_state = "pull"
 
 /obj/screen/pull/Click()
-<<<<<<< HEAD
 	if(usr.client && usr.client.prefs.afreeze)
 		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return 1
-=======
 	if(isobserver(usr))
 		return
->>>>>>> masterTGbranch
 	usr.stop_pulling()
 
 /obj/screen/pull/update_icon(mob/mymob)
@@ -386,15 +379,11 @@
 	var/selecting = "chest"
 
 /obj/screen/zone_sel/Click(location, control,params)
-<<<<<<< HEAD
 	if(usr.client && usr.client.prefs.afreeze)
 		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return 1
-=======
 	if(isobserver(usr))
 		return
-
->>>>>>> masterTGbranch
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])

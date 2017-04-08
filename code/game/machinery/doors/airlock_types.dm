@@ -435,13 +435,6 @@
 	var/turf/T = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
-<<<<<<< HEAD
-	change_construction_value(3)
-
-/obj/machinery/door/airlock/clockwork/Destroy()
-	change_construction_value(-3)
-	return ..()
-=======
 	change_construction_value(5)
 
 /obj/machinery/door/airlock/clockwork/Destroy()
@@ -459,7 +452,6 @@
 		if(GEAR_LOOSE)
 			gear_text = "<span class='heavy_alloy'>There is a wide gap between the cogwheel and the door!</span>"
 	user << gear_text
->>>>>>> masterTGbranch
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())
@@ -487,8 +479,6 @@
 /obj/machinery/door/airlock/clockwork/hasPower()
 	return TRUE //yes we do have power
 
-<<<<<<< HEAD
-=======
 /obj/machinery/door/airlock/clockwork/obj_break(damage_flag)
 	return
 
@@ -503,7 +493,6 @@
 		new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(T)
 	qdel(src)
 
->>>>>>> masterTGbranch
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0

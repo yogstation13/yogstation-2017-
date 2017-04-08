@@ -202,17 +202,10 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
-<<<<<<< HEAD
-	addtimer(src,"talk_into_impl",0,FALSE,M,message,channel,spans)
-
-/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
-
-=======
 	addtimer(src,"talk_into_impl",0, TIMER_NORMAL,M,message,channel,spans)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
->>>>>>> masterTGbranch
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -333,11 +326,7 @@
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
-<<<<<<< HEAD
 			"languages" = M.languages_spoken,
-=======
-			"languages" = languages_spoken,
->>>>>>> masterTGbranch
 			"spans" = spans,
 			"verb_say" = M.verb_say,
 			"verb_ask" = M.verb_ask,
@@ -431,11 +420,7 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-<<<<<<< HEAD
 		"languages" = M.languages_spoken,
-=======
-		"languages" = languages_spoken,
->>>>>>> masterTGbranch
 		"spans" = spans,
 		"verb_say" = M.verb_say,
 		"verb_ask" = M.verb_ask,

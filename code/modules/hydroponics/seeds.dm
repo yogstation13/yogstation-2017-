@@ -10,12 +10,7 @@
 	var/plantname = "Plants"		// Name of plant when planted.
 	var/product						// A type path. The thing that is created when the plant is harvested.
 	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overriden.
-
-<<<<<<< HEAD
-	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
-=======
 	var/growing_icon = 'icons/obj/hydroponics/growing.dmi' //the file that stores the sprites of the growing plant from this seed.
->>>>>>> masterTGbranch
 	var/icon_grow					// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
 	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
 	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
@@ -159,7 +154,6 @@
 
 	return result
 
-<<<<<<< HEAD
 /obj/item/seeds/proc/prepare_result(obj/item/weapon/reagent_containers/food/snacks/grown/T)
 	if(!T.reagents)
 		return 0
@@ -173,15 +167,6 @@
 		if(reagent_id == "blood") // Hack to make blood in plants always O-
 			T.reagents.add_reagent(reagent_id, add_amount, list("blood_type"="O-"), no_react = TRUE)
 			continue
-=======
-
-/obj/item/seeds/proc/prepare_result(var/obj/item/weapon/reagent_containers/food/snacks/grown/T)
-	if(T.reagents)
-		for(var/reagent_id in reagents_add)
-			if(reagent_id == "blood") // Hack to make blood in plants always O-
-				T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id], 1), list("blood_type"="O-"))
-				continue
->>>>>>> masterTGbranch
 
 		T.reagents.add_reagent(reagent_id, add_amount, 1, no_react = TRUE)
 	T.reagents.handle_reactions()

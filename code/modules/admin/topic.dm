@@ -133,30 +133,20 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a revenant.")
-<<<<<<< HEAD
-			if("16")
+			if("shadowling")
 				if(src.makeShadowling())
 					message_admins("[key_name(usr)] created a shadowling.")
 					log_admin("[key_name(usr)] created a shadowling.")
 				else
 					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a shadowling.")
-			if("17")
+			if("cyberman")
 				if(src.makeCyberman())
 					message_admins("[key_name(usr)] created a cyberman.")
 					log_admin("[key_name(usr)] created a cyberman.")
 				else
 					message_admins("[key_name_admin(usr)] tried to create a cyberman. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to create a cyberman.")
-			if("18")
-				if(src.makeClockCult())
-					message_admins("[key_name(usr)] started a clockwork cult.")
-					log_admin("[key_name(usr)] started a clockwork cult.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a clockwork cult.")
-=======
->>>>>>> masterTGbranch
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -1589,14 +1579,8 @@
 		if(!check_rights(R_SPAWN))
 			return
 
-<<<<<<< HEAD
 		var/mob/M = locate(href_list["makeblob"])
 		if(!M)
-=======
-		var/mob/living/carbon/human/H = locate(href_list["makeblob"])
-		if(!istype(H))
-			usr << "This can only be used on instances of type /mob/living/carbon/human."
->>>>>>> masterTGbranch
 			return
 
 		usr.client.cmd_admin_blobize(M)
@@ -2398,7 +2382,6 @@
 		custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
 
-<<<<<<< HEAD
 	else if(href_list["del_all_stuxnet"])
 		if(alert(usr, "Are you sure you would like to delete all instances of the stuxnet virus?", "Delete Stuxnet", "Yes", "No") == "Yes")
 			for(var/datum/software/malware/stuxnet/virus in active_software)
@@ -2453,7 +2436,6 @@
 			return
 		ticker.delay_end = 0
 		world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)
-=======
 	else if(href_list["set_selfdestruct_code"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2483,4 +2465,3 @@
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
 		ticker.mode.station_goals += G
 		modify_goals()
->>>>>>> masterTGbranch

@@ -25,17 +25,9 @@
 /mob/proc/ContractDisease(datum/disease/D, source = null)
 	if(!CanContractDisease(D))
 		return 0
-<<<<<<< HEAD
 	AddDisease(D, source)
 
-
 /mob/proc/AddDisease(datum/disease/D, source = null)
-=======
-	AddDisease(D)
-
-
-/mob/proc/AddDisease(datum/disease/D)
->>>>>>> masterTGbranch
 	for(var/datum/disease/advance/P in viruses)
 		if(istype(D, /datum/disease/advance))
 			var/datum/disease/advance/DD = D
@@ -61,17 +53,12 @@
 
 		DD.affected_mob.med_hud_set_status()
 
-<<<<<<< HEAD
 /mob/living/carbon/human/AddDisease(datum/disease/D, source = null)
 	..()
 	if(dna && dna.species)
 		dna.species.on_gain_disease(src, D)
 
 /mob/living/carbon/ContractDisease(datum/disease/D, source = null)
-=======
-
-/mob/living/carbon/ContractDisease(datum/disease/D)
->>>>>>> masterTGbranch
 	if(!CanContractDisease(D))
 		return 0
 
@@ -115,14 +102,10 @@
 					passed = prob(((Cl.permeability_coefficient+base_resist)*100) - 1)
 				if(passed && istype(H.wear_mask, /obj/item/clothing))
 					Cl = H.wear_mask
-<<<<<<< HEAD
-					passed = prob(((Cl.permeability_coefficient+base_resist)*100) - 1)
-=======
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_neck))
 					Cl = H.wear_neck
 					passed = prob((Cl.permeability_coefficient*100) - 1)
->>>>>>> masterTGbranch
 			if(2)
 				if(istype(H.wear_suit, /obj/item/clothing))
 					Cl = H.wear_suit

@@ -188,11 +188,7 @@
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
 	START_PROCESSING(SSobj, src)
-<<<<<<< HEAD
-	visible_message("<span class='warning'>\The [src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
-=======
 	visible_message("<span class='warning'>[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
->>>>>>> masterTGbranch
 
 /obj/item/weapon/melee/supermatter_sword/process()
 	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))

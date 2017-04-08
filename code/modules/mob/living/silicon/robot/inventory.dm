@@ -76,11 +76,6 @@
 			var/obj/item/borg/sight/S = O
 			sight_mode |= S.sight_mode
 			update_sight()
-<<<<<<< HEAD
-	else
-		src << "<span class='warning'>You need to disable a module first!</span>"
-	O.equipped(src)
-=======
 
 
 /mob/living/silicon/robot/proc/observer_screen_update(obj/item/I,add = TRUE)
@@ -97,7 +92,6 @@
 				if(!observers.len)
 					observers = null
 					break
->>>>>>> masterTGbranch
 
 /mob/living/silicon/robot/proc/uneq_active()
 	uneq_module(module_active)

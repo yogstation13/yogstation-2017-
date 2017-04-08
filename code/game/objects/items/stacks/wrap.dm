@@ -84,14 +84,8 @@
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-<<<<<<< HEAD
-			if(O.horizontal)
-				P.icon_state = "deliverycrate"
-			O.forceMove(P)
-=======
 			P.icon_state = O.delivery_icon
-			O.loc = P
->>>>>>> masterTGbranch
+			O.forceMove(P)
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else

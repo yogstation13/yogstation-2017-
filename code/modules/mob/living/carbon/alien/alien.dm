@@ -10,11 +10,7 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list("alien")
-<<<<<<< HEAD
-	ventcrawler = 2
-=======
 	ventcrawler = VENTCRAWLER_ALWAYS
->>>>>>> masterTGbranch
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
 	sight = SEE_MOBS
@@ -28,7 +24,7 @@
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = list(CANPARALYSE|CANPUSH)
+	status_flags = list(CANPARALYSE, CANPUSH)
 
 	var/heat_protection = 0.5
 	var/leaping = 0
@@ -48,25 +44,16 @@
 
 	create_bodyparts() //initialize bodyparts
 
-<<<<<<< HEAD
-	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src, 1)
-=======
 	create_internal_organs()
->>>>>>> masterTGbranch
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()
 
-<<<<<<< HEAD
 /mob/living/carbon/alien/proc/set_hive_faction(new_hive_faction)
 	hive_faction = new_hive_faction
 	for(var/obj/item/organ/alien/O in internal_organs)
 		O.hive_faction = new_hive_faction
 
-/mob/living/carbon/alien/assess_threat() // beepsky cannot be stopped
-	return 10
-=======
 /mob/living/carbon/alien/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain/alien
 	internal_organs += new /obj/item/organ/alien/hivenode
@@ -75,7 +62,6 @@
 
 /mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
 	return -10
->>>>>>> masterTGbranch
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
@@ -163,12 +149,8 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	src << "<span class='noticealien'>You begin to evolve!</span>"
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
-<<<<<<< HEAD
-	new_xeno.dir = dir
 	new_xeno.set_hive_faction(hive_faction)
-=======
 	new_xeno.setDir(dir)
->>>>>>> masterTGbranch
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name

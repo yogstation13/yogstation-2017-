@@ -494,11 +494,6 @@
 
 		output += "</table></div>"
 
-<<<<<<< HEAD
 		output += pagination
 
 	usr << browse(output,"window=lookupbans;size=900x500")
-	
-=======
-	usr << browse(output,"window=lookupbans;size=900x500")
->>>>>>> masterTGbranch

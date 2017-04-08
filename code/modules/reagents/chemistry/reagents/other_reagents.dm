@@ -364,10 +364,6 @@
 	metabolization_rate = INFINITY //So it instantly removes all of itself
 	var/datum/species/race = /datum/species/human
 	var/mutationtext = "<span class='danger'>The pain subsides. You feel... human.</span>"
-<<<<<<< HEAD
-	metabolization_rate = INFINITY //So it instantly removes all of itself
-=======
->>>>>>> masterTGbranch
 
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
@@ -377,15 +373,9 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-
-<<<<<<< HEAD
-		var/datum/species/mutation = race
-		if(prob(90) && mutation)
-=======
 		var/current_species = H.dna.species.type
 		var/datum/species/mutation = race
 		if(mutation && mutation != current_species)
->>>>>>> masterTGbranch
 			H << mutationtext
 			H.set_species(mutation)
 		else
@@ -414,7 +404,6 @@
 	id = "flymutationtoxin"
 	description = "An insectifying toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-<<<<<<< HEAD
 	race = /datum/species/human/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
@@ -450,11 +439,6 @@
 	race = /datum/species/plant/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
 
-=======
-	race = /datum/species/fly
-	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
-
->>>>>>> masterTGbranch
 /datum/reagent/stableslimetoxin/pod
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
@@ -466,11 +450,7 @@
 /datum/reagent/stableslimetoxin/jelly
 	name = "Imperfect Mutation Toxin"
 	id = "jellymutationtoxin"
-<<<<<<< HEAD
 	description = "A jellyfying toxin produced by slimes."
-=======
-	description = "An jellyfying toxin produced by slimes."
->>>>>>> masterTGbranch
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/jelly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... wobbly.</span>"
@@ -499,7 +479,6 @@
 	race = /datum/species/android
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
-<<<<<<< HEAD
 /datum/reagent/stableslimetoxin/synth //because of eph's changes there's both android AND synth
 	name = "Synth Mutation Toxin"
 	id = "synthmutationtoxin"
@@ -508,9 +487,6 @@
 	race = /datum/species/synth
 	mutationtext = "<span class='danger'>The pain subsides. You feel... artificial.</span>"
 
-
-=======
->>>>>>> masterTGbranch
 
 //BLACKLISTED RACES
 /datum/reagent/stableslimetoxin/skeleton
@@ -572,10 +548,6 @@
 	race = pick(possible_morphs)
 	..()
 
-<<<<<<< HEAD
-
-=======
->>>>>>> masterTGbranch
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	id = "mulligan"
@@ -719,11 +691,7 @@
 	color = "#808080" // rgb: 128, 128, 128
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-<<<<<<< HEAD
-	M.take_organ_damage(1*REM, 0, 0, DAMAGE_CHEMICAL)
-=======
-	M.take_bodypart_damage(1*REM, 0, 0)
->>>>>>> masterTGbranch
+	M.take_bodypart_damage(1*REM, 0, 0, application=DAMAGE_CHEMICAL)
 	. = 1
 	..()
 
@@ -804,13 +772,9 @@
 		for(var/s in C.surgeries)
 			var/datum/surgery/S = s
 			S.success_multiplier = max(0.20, S.success_multiplier)
-<<<<<<< HEAD
 			S.speedup_multiplier = max(0.75, S.speedup_multiplier)
 			// +20% success propability on each step, useful while operating in less-than-perfect conditions
 			// +75% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
-=======
-			// +20% success propability on each step, useful while operating in less-than-perfect conditions
->>>>>>> masterTGbranch
 	..()
 
 /datum/reagent/iron
@@ -1423,7 +1387,6 @@
 	name = "decaying uranium gel"
 	id = "uraniumvirusfood"
 	color = "#67ADBA" // rgb: 103,173,186
-<<<<<<< HEAD
 
 /datum/reagent/uranium/uraniumvirusfood/unstable
 	name = "unstable uranium gel"
@@ -1458,8 +1421,6 @@ datum/reagent/shadowling_blindness_smoke
 		M.adjustToxLoss(-2, 0, DAMAGE_CHEMICAL)
 		. = 1
 	return ..() || .
-=======
->>>>>>> masterTGbranch
 
 /datum/reagent/uranium/uraniumvirusfood/unstable
 	name = "unstable uranium gel"
@@ -1504,7 +1465,6 @@ datum/reagent/shadowling_blindness_smoke
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
 
-<<<<<<< HEAD
 /datum/reagent/laughter
 	name = "liquid laughter"
 	id = "laughter"
@@ -1530,7 +1490,7 @@ datum/reagent/shadowling_blindness_smoke
 
 /datum/reagent/laughter/overdose_process(mob/living/M)
 	M.emote(pick(list("laugh","giggle")))
-=======
+
 /datum/reagent/growthserum
 	name = "Growth serum"
 	id = "growthserum"
@@ -1551,7 +1511,7 @@ datum/reagent/shadowling_blindness_smoke
 			newsize = 2.5
 		if(200 to INFINITY)
 			newsize = 3.5
-		
+
 	H.resize = newsize/current_size
 	current_size = newsize
 	H.update_transform()
@@ -1561,4 +1521,3 @@ datum/reagent/shadowling_blindness_smoke
 	M.resize = 1/current_size
 	M.update_transform()
 	..()
->>>>>>> masterTGbranch

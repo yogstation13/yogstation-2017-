@@ -289,17 +289,10 @@
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookbag"
 	display_contents_with_number = 0 //This would look really stupid otherwise
-<<<<<<< HEAD
-	storage_slots = 15
-	max_combined_w_class = 45
-	max_w_class = 3
-	w_class = 4 //Bigger than a book because physics
-=======
 	storage_slots = 7
 	max_combined_w_class = 21
 	max_w_class = WEIGHT_CLASS_NORMAL
 	w_class = WEIGHT_CLASS_BULKY //Bigger than a book because physics
->>>>>>> masterTGbranch
 	can_hold = list(/obj/item/weapon/book, /obj/item/weapon/storage/book, /obj/item/weapon/spellbook)
 	resistance_flags = FLAMMABLE
 
@@ -386,9 +379,8 @@
 	max_combined_w_class = 200
 	w_class = WEIGHT_CLASS_TINY
 	preposition = "in"
-<<<<<<< HEAD
-	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse)
-	burn_state = FLAMMABLE
+	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	resistance_flags = FLAMMABLE
 
 // -----------------------------
 //       Photo Satchel
@@ -405,7 +397,3 @@
 	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots *
 	max_w_class = 3
 	can_hold = list(/obj/item/device/camera_film,/obj/item/weapon/photo,/obj/item/weapon/storage/photo_album,/obj/item/device/camera,/obj/item/weapon/storage/photobook)
-=======
-	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
-	resistance_flags = FLAMMABLE
->>>>>>> masterTGbranch

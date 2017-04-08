@@ -56,12 +56,9 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_admins()
 	if(config.usewhitelist)
 		load_whitelist()
-<<<<<<< HEAD
 	jobban_loadbanfile()
 	appearance_loadbanfile()
 	jobban_updatelegacybans()
-=======
->>>>>>> masterTGbranch
 	LoadBans()
 	load_donators()
 	investigate_reset()
@@ -124,8 +121,6 @@ var/last_irc_status = 0
 				n++
 		return n
 
-<<<<<<< HEAD
-=======
 	else if("ircstatus" in input)
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
@@ -135,7 +130,6 @@ var/last_irc_status = 0
 		send2irc("Status", status)
 		last_irc_status = world.time
 
->>>>>>> masterTGbranch
 	else if("status" in input)
 		var/list/s = list()
 		s["version"] = game_version
@@ -254,8 +248,6 @@ var/last_irc_status = 0
 							ticket.owner << "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>"
 				return msg
 
-<<<<<<< HEAD
-=======
 	else if("crossmessage" in input)
 		if(!key_valid)
 			return
@@ -288,8 +280,6 @@ var/last_irc_status = 0
 		else
 			return ircadminwho()
 
->>>>>>> masterTGbranch
-
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -307,9 +297,6 @@ var/last_irc_status = 0
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
-<<<<<<< HEAD
-	ticker.server_reboot_in_progress = 1
-=======
 	var/round_end_sound_sent = FALSE
 	if(ticker.round_end_sound)
 		round_end_sound_sent = TRUE
@@ -318,7 +305,6 @@ var/last_irc_status = 0
 			if (!C)
 				continue
 			C.Export("##action=load_rsc", ticker.round_end_sound)
->>>>>>> masterTGbranch
 	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()

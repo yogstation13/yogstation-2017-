@@ -251,7 +251,7 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
 		H.next_click = world.time + CLICK_CD_MELEE
-	else 
+	else
 		..()
 /*
 	Alt click
@@ -407,7 +407,6 @@
 		if(T)
 			T.Click(location, control, params)
 	. = 1
-<<<<<<< HEAD
 
 
 ///////////////////////////////////////
@@ -452,5 +451,3 @@
 	if(!allowed_id)
 		src << "<span class='warning'>ERROR: Invalid Access. Permissions restrained.</span>"
 		return 0
-=======
->>>>>>> masterTGbranch

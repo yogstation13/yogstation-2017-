@@ -19,10 +19,7 @@
 	yield = 4
 	potency = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
-<<<<<<< HEAD
-=======
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
->>>>>>> masterTGbranch
 	mutatelist = list(/obj/item/seeds/orange)
 	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
 
@@ -73,14 +70,9 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
-<<<<<<< HEAD
-	mutatelist = list(/obj/item/seeds/cash)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
-=======
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/firelemon)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05)
->>>>>>> masterTGbranch
+	mutatelist = list(/obj/item/seeds/firelemon, /obj/item/seeds/cash)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
@@ -89,7 +81,6 @@
 	icon_state = "lemon"
 	filling_color = "#FFD700"
 
-<<<<<<< HEAD
 // Money Lemon
 /obj/item/seeds/cash
 	name = "pack of money seeds"
@@ -98,7 +89,15 @@
 	species = "cashtree"
 	plantname = "Money Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
-=======
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "lime-grow"
+	icon_dead = "lime-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	lifespan = 55
+	endurance = 45
+	yield = 4
+	reagents_add = list("nutriment" = 0.1)
+
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon
 	name = "pack of combustible lemon seeds"
@@ -107,7 +106,6 @@
 	species = "firelemon"
 	plantname = "Combustible Lemon Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon
->>>>>>> masterTGbranch
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
@@ -115,12 +113,7 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
-<<<<<<< HEAD
 	reagents_add = list("nutriment" = 0.1)
-	rarity = 50  // Nanotrasen approves...
-=======
-	reagents_add = list("nutriment" = 0.05)
->>>>>>> masterTGbranch
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/firelemon
 	seed = /obj/item/seeds/firelemon

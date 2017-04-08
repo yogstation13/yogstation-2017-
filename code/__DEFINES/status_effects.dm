@@ -19,9 +19,5 @@
 /////////////
 // DEBUFFS //
 /////////////
-<<<<<<< HEAD
-
 #define STATUS_EFFECT_Z_LEVEL_LOCK /datum/status_effect/z_level_lock
 #define STATUS_EFFECT_Z_LEVEL_LOCK_WIZ /datum/status_effect/z_level_lock/wizard_academy
-=======
->>>>>>> masterTGbranch

@@ -2155,11 +2155,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 		sexes = 0
 		fixed_mut_color = ""
 		hair_color = ""
-<<<<<<< HEAD
-	if(H)
-		H.regenerate_icons()
-=======
->>>>>>> masterTGbranch
 
 /datum/species/synth/spec_husk(mob/living/carbon/human/H)
 	assume_disguise(null, H)

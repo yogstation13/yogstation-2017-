@@ -45,11 +45,7 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-<<<<<<< HEAD
-	w_class = 3
-=======
 	w_class = WEIGHT_CLASS_NORMAL
->>>>>>> masterTGbranch
 	flags = NODROP | DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0

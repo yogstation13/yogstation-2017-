@@ -88,15 +88,9 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 							O.show_message(text("<span class='notice'>The slime extract shudders, then forms some sort of alien machine!</span>"), 1)
 			else
 				chosen = pick(chemical_mob_spawn_meancritters)
-<<<<<<< HEAD
-			if(!C)
-				C = new chosen(get_turf(holder.my_atom))
-				C.faction |= mob_faction
-=======
 			var/spawnloc = get_turf(holder.my_atom)
 			var/mob/living/simple_animal/C = new chosen(spawnloc)
 			C.faction |= mob_faction
->>>>>>> masterTGbranch
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))

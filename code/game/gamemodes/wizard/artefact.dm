@@ -128,12 +128,8 @@
 	icon_state = "necrostone"
 	item_state = "electronic"
 	origin_tech = "bluespace=4;materials=4"
-<<<<<<< HEAD
-	w_class = 1
-	var/max_spookies = 3
-=======
 	w_class = WEIGHT_CLASS_TINY
->>>>>>> masterTGbranch
+	var/max_spookies = 3
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
@@ -163,13 +159,8 @@
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
-<<<<<<< HEAD
-	M << "<span class='userdanger'>You have been revived by <B>[user]!</B></span>"
-	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
-=======
 	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
 	M << "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>"
->>>>>>> masterTGbranch
 
 	equip_roman_skeleton(M)
 
@@ -401,13 +392,8 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/clown_shoes(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(M), slot_wear_mask)
-<<<<<<< HEAD
-			M.equip_to_slot_or_del(new /obj/item/device/assembly/bikehorn(M), slot_l_store)
-			M.equip_to_slot_or_del(sword, slot_r_hand)
-=======
 			M.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(M), slot_l_store)
 			M.put_in_hands_or_del(sword)
->>>>>>> masterTGbranch
 
 		if("killer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/overalls(M), slot_w_uniform)
@@ -599,7 +585,6 @@ var/global/list/multiverse = list()
 	heal_burn = 25
 	heal_oxy = 25
 
-<<<<<<< HEAD
 
 // Wabbajack statue, a sleeping frog statue that shoots bolts of change if
 // living carbons are put on its altar/tables
@@ -742,7 +727,7 @@ var/global/list/multiverse = list()
 
 /obj/structure/table/abductor/wabbajack/right
 	desc = "It wakes so you may sleep."
-=======
+
 //Warp Whistle: Provides uncontrolled long distance teleportation.
 
 /obj/item/warpwhistle
@@ -790,7 +775,7 @@ var/global/list/multiverse = list()
 	if(interrupted(user))
 		return
 	user.invisibility = initial(user.invisibility)
-	user.status_flags &= ~GODMODE
+	user.status_flags -= GODMODE
 	user.canmove = 1
 	on_cooldown = 2
 	sleep(40)
@@ -816,4 +801,3 @@ var/global/list/multiverse = list()
 /obj/effect/overlay/temp/tornado/New(loc)
 	..()
 	animate(src, pixel_x = -500, time = 40)
->>>>>>> masterTGbranch

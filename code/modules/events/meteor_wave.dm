@@ -3,12 +3,7 @@
 /datum/round_event_control/meteor_wave
 	name = "Meteor Wave: Normal"
 	typepath = /datum/round_event/meteor_wave
-<<<<<<< HEAD
-	weight = 3
-	growth = 1
-=======
 	weight = 4
->>>>>>> masterTGbranch
 	min_players = 5
 	max_occurrences = 3
 

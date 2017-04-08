@@ -38,13 +38,8 @@
 	M.setCloneLoss(0, 0)
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
-<<<<<<< HEAD
-	M.heal_organ_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0, DAMAGE_CHEMICAL)
-=======
 	M.heal_bodypart_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0)
->>>>>>> masterTGbranch
+	M.adjustToxLoss(-5, 0, DAMAGE_CHEMICAL)
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.disabilities = 0
@@ -167,15 +162,9 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/rezadone/on_mob_life(mob/living/M)
-<<<<<<< HEAD
 	M.adjustCloneLoss(-15, 0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
-	M.heal_organ_damage(1,1, 0)
-	M.status_flags -= DISFIGURED
-=======
-	M.setCloneLoss(0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_bodypart_damage(1,1, 0)
-	M.status_flags &= ~DISFIGURED
->>>>>>> masterTGbranch
+	M.status_flags -= DISFIGURED
 	..()
 	. = 1
 
@@ -275,7 +264,6 @@
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
-<<<<<<< HEAD
 		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
 			//The lower the blood of the patient, the better it is as a blood substitute.
 			var/const/hundred_point = BLOOD_VOLUME_NORMAL * 0.5 //100% efficiency at 50% blood level
@@ -283,13 +271,6 @@
 			var/efficiency = 1 - (H.blood_volume - hundred_point) * (1 / (zero_point - hundred_point))
 			efficiency = max(0.25, min(1, efficiency)) //clamp it and change it from a percent to a decimal
 			H.blood_volume += round(efficiency * min(2.5, reac_volume), 0.1)//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-=======
-		if(H.dna && !(NOBLOOD in H.dna.species.species_traits))
-			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
-			efficiency = min(0.75,efficiency)
-			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
->>>>>>> masterTGbranch
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -321,13 +302,9 @@
 			for(var/s in C.surgeries)
 				var/datum/surgery/S = s
 				S.success_multiplier = max(0.10, S.success_multiplier)
-<<<<<<< HEAD
 				S.speedup_multiplier = max(0.35, S.speedup_multiplier)
 				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 				// +35% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
-=======
-				// +10% success propability on each step, useful while operating in less-than-perfect conditions
->>>>>>> masterTGbranch
 
 			if(show_message)
 				M << "<span class='danger'>You feel your wounds fade away to nothing!</span>" //It's a painkiller, after all
@@ -949,23 +926,13 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-<<<<<<< HEAD
-datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
+/datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
 	M.adjustBruteLoss(-2*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 
-datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, 0, DAMAGE_CHEMICAL)
-=======
-/datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-2*REM, 0)
-	..()
-	. = 1
-
 /datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, 0)
->>>>>>> masterTGbranch
+	M.adjustBruteLoss(4*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 
@@ -977,23 +944,13 @@ datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-<<<<<<< HEAD
-datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
+/datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
 	M.adjustOxyLoss(-2*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 
-datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
-	M.adjustOxyLoss(4*REM, 0, DAMAGE_CHEMICAL)
-=======
-/datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
-	M.adjustOxyLoss(-2*REM, 0)
-	..()
-	. = 1
-
 /datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
-	M.adjustOxyLoss(4*REM, 0)
->>>>>>> masterTGbranch
+	M.adjustOxyLoss(4*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 

@@ -320,11 +320,7 @@
 	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-<<<<<<< HEAD
-		if(!istype(H.gloves, /obj/item/clothing) && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
-=======
-		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.species_traits)) // golems, etc
->>>>>>> masterTGbranch
+		if(!istype(H.gloves, /obj/item/clothing) && !(PIERCEIMMUNE in H.dna.species.species_traits)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			H.apply_damage(force*0.5, BRUTE, hit_hand)
 	else if(ismonkey(user))

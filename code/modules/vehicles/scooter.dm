@@ -50,13 +50,6 @@
 	vehicle_move_delay = initial(vehicle_move_delay)
 	if(M.get_num_legs() < 2)
 		vehicle_move_delay ++
-<<<<<<< HEAD
-		if(M.get_num_arms() <= 0)
-			if(has_buckled_mobs())//to prevent the message displaying twice due to unbuckling
-				M << "<span class='warning'>Your limbless body flops off \the [src].</span>"
-			unbuckle_mob(M)
-=======
->>>>>>> masterTGbranch
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"

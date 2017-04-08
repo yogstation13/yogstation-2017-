@@ -77,7 +77,6 @@
 		else
 			temp_msg = "Telepad ready and operational."
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
-<<<<<<< HEAD
 		t += "Sector: "
 		for (var/i in 1 to ZLEVEL_SPACEMAX)
 			if(z_co == i)
@@ -118,36 +117,6 @@
 			t += "<span class='linkOff'>Send</span> <span class='linkOff'>Receive</span></div><br>"
 			t += "<A href='?src=\ref[src];deselect=1'>Deselect</A>"
 			t += " <span class='linkOff'>Rename</span>"
-=======
-		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
-		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
-		t += "<span class='linkOn'>Set Power</span>"
-		t += "<div class='statusDisplay'>"
-
-		for(var/i = 1; i <= power_options.len; i++)
-			if(crystals.len + telepad.efficiency  < i)
-				t += "<span class='linkOff'>[power_options[i]]</span>"
-				continue
-			if(power == power_options[i])
-				t += "<span class='linkOn'>[power_options[i]]</span>"
-				continue
-			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
-		t += "</div>"
-
-		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
-		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
-
-		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
-		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
-		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
-
-		// Information about the last teleport
-		t += "<BR><div class='statusDisplay'>"
-		if(!last_tele_data)
-			t += "No teleport data found."
->>>>>>> masterTGbranch
 		else
 			t += "<div class='statusDisplay'>No beacon selected<br>Untargeted launch available</div><br>"
 			t += "<div class='statusDisplay'>x: <span class='average'>Untargeted</span><br>y: <span class='average'>Untargeted</span><br>"
@@ -314,39 +283,6 @@
 			investigate_log(log_msg, "telesci")
 			updateDialog()
 
-<<<<<<< HEAD
-=======
-/obj/machinery/computer/telescience/proc/teleport(mob/user)
-	if(rotation == null || angle == null || z_co == null)
-		temp_msg = "ERROR!<BR>Set a angle, rotation and sector."
-		return
-	if(power <= 0)
-		telefail()
-		temp_msg = "ERROR!<BR>No power selected!"
-		return
-	if(angle < 1 || angle > 90)
-		telefail()
-		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
-		return
-	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
-		telefail()
-		temp_msg = "ERROR! Sector is outside known time and space!"
-		return
-	if(teles_left > 0)
-		doteleport(user)
-	else
-		telefail()
-		temp_msg = "ERROR!<BR>Calibration required."
-		return
-	return
-
-/obj/machinery/computer/telescience/proc/eject()
-	for(var/obj/item/I in crystals)
-		I.loc = src.loc
-		crystals -= I
-	power = 0
-
->>>>>>> masterTGbranch
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(..())
 		return
@@ -440,12 +376,4 @@
 		sending = 0
 		teleport(usr, 1)
 
-<<<<<<< HEAD
 	updateDialog()
-=======
-/obj/machinery/computer/telescience/proc/recalibrate()
-	teles_left = rand(30, 40)
-	//angle_off = rand(-25, 25)
-	power_off = rand(-4, 0)
-	rotation_off = rand(-10, 10)
->>>>>>> masterTGbranch

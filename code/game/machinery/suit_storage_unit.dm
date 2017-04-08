@@ -37,7 +37,6 @@
 	mask_type = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/captain
-<<<<<<< HEAD
 	suit_type = /obj/item/clothing/suit/space/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/captain
 	mask_type = /obj/item/clothing/mask/gas
@@ -47,11 +46,6 @@
 	suit_type = /obj/item/clothing/suit/space/heads
 	helmet_type = /obj/item/clothing/head/helmet/space/heads
 	mask_type = /obj/item/clothing/mask/breath
-=======
-	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
-	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
->>>>>>> masterTGbranch
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
@@ -181,15 +175,9 @@
 			if(suit)
 				add_overlay("suit")
 			if(helmet)
-<<<<<<< HEAD
-				overlays += "helm"
-			if(shoes)
-				overlays += "storage"
-=======
 				add_overlay("helm")
 			if(storage)
 				add_overlay("storage")
->>>>>>> masterTGbranch
 	else if(occupant)
 		add_overlay("human")
 

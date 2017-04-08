@@ -40,19 +40,6 @@
 	target = null
 	return ..()
 
-<<<<<<< HEAD
-		else if(istype(target, /turf/closed/mineral))
-			var/turf/closed/mineral/M = target
-			M.ChangeTurf(M.baseturf)
-
-		else if(istype(target, /turf/open))
-			var/turf/open/floor/F = target
-			F.ChangeTurf(F.baseturf)
-
-		else if(istype(target, /turf/closed/wall))
-			var/turf/closed/wall/W = target
-			W.dismantle_wall(1)
-=======
 /obj/effect/acid/process()
 	. = 1
 	if(!target)
@@ -68,7 +55,6 @@
 				var/acid_used = min(acid_level*0.05, 20)
 				O.acid_act(10, acid_used)
 				acid_level = max(0, acid_level - acid_used*10)
->>>>>>> masterTGbranch
 
 	acid_level = max(acid_level - (5 + 2*round(sqrt(acid_level))), 0)
 	if(acid_level <= 0)
@@ -104,29 +90,6 @@
 			qdel(src)
 		else
 
-<<<<<<< HEAD
-		qdel(src)
-
-		return
-
-	x = target.x
-	y = target.y
-	z = target.z
-
-	switch(target_strength - ticks)
-		if(480)
-			visible_message("<span class='warning'>[target] is holding up against the acid!</span>")
-		if(320)
-			visible_message("<span class='warning'>[target] is being melted by the acid!</span>")
-		if(160)
-			visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
-		if(80)
-			visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
-
-	spawn(1)
-		if(src)
-			tick()
-=======
 			switch(target_strength)
 				if(24)
 					visible_message("<span class='warning'>[target] is holding up against the acid!</span>")
@@ -136,4 +99,3 @@
 					visible_message("<span class='warning'>[target] is struggling to withstand the acid!</span>")
 				if(4)
 					visible_message("<span class='warning'>[target] begins to crumble under the acid!</span>")
->>>>>>> masterTGbranch

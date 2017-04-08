@@ -232,49 +232,28 @@
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-<<<<<<< HEAD
 		if(!(stop_automated_movement_when_pulled && pulledby))
-			if(!Process_Spacemove()) // Drifting
+			if(!Process_Spacemove()) //Drifting
 				walk(src,0)
 				return 1
-			if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-				if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+			if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
+				if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
 					walk_away(src,target,retreat_distance,move_to_delay)
 				else
-					Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
+					Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
 			else
 				Goto(target,move_to_delay,minimum_distance)
-=======
-		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
-			return 1
-		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
-			else
-				Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
-		else
-			Goto(target,move_to_delay,minimum_distance)
->>>>>>> masterTGbranch
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
 				AttackingTarget()
 				GainPatience()
 			return 1
 		return 0
-<<<<<<< HEAD
 	if(environment_smash && !(stop_automated_movement_when_pulled && pulledby))
-		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
-			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
-				OpenFire(target)
-			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
-=======
-	if(environment_smash)
 		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
 			if(ranged_ignores_vision && ranged_cooldown <= world.time) //we can't see our target... but we can fire at them!
 				OpenFire(target)
 			if(environment_smash >= 2) //If we're capable of smashing through walls, forget about vision completely after finding our target
->>>>>>> masterTGbranch
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
 				return 1
@@ -299,14 +278,8 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
-<<<<<<< HEAD
-/mob/living/simple_animal/hostile/AttackingTarget(atom/T = target) //this override does do something, it sets the default to target
-	..(T)
-=======
-
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	target.attack_animal(src)
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/hostile/proc/Aggro()
 	vision_range = aggro_vision_range
@@ -405,11 +378,7 @@
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-<<<<<<< HEAD
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/girder))
-=======
 				if(is_type_in_typecache(A, environment_target_typecache))
->>>>>>> masterTGbranch
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()

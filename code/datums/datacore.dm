@@ -66,11 +66,7 @@
 			return
 
 /datum/datacore/proc/manifest()
-<<<<<<< HEAD
 	for(var/mob/living/carbon/human/H in player_list)//keep this as a typed loop, otherwise silicons cause runtimes.
-=======
-	for(var/mob/living/carbon/human/H in player_list)
->>>>>>> masterTGbranch
 		manifest_inject(H)
 
 /datum/datacore/proc/manifest_modify(name, assignment)

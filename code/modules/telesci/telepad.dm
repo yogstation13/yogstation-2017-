@@ -47,13 +47,7 @@
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			user << "<span class='caution'>You save the data in the [I.name]'s buffer.</span>"
-<<<<<<< HEAD
-			return
-			
-=======
 			return 1
-
->>>>>>> masterTGbranch
 	if(exchange_parts(user, I))
 		return
 

@@ -60,12 +60,8 @@
 		var/org_zone = check_zone(O.zone)
 		if(org_zone != "chest")
 			continue
-<<<<<<< HEAD
-		O.Remove(owner)
-=======
 		O.Remove(C)
 		O.forceMove(T)
->>>>>>> masterTGbranch
 		organ_spilled = 1
 	if(cavity_item)
 		cavity_item.forceMove(T)
@@ -283,11 +279,7 @@
 		brainmob.loc = brain //Throw mob into brain.
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		brainmob = null //Set head brainmob var to null
-<<<<<<< HEAD
-		brain.Insert(H, 1) //Now insert the brain proper
-=======
-		brain.Insert(C) //Now insert the brain proper
->>>>>>> masterTGbranch
+		brain.Insert(C, 1) //Now insert the brain proper
 		brain = null //No more brain in the head
 
 	if(ishuman(C))

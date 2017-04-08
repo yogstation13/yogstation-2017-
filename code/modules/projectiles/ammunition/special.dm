@@ -71,8 +71,4 @@
 	select_name = "spraydown"
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	e_cost = 20
-<<<<<<< HEAD
-	delay = 3
-=======
 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect
->>>>>>> masterTGbranch

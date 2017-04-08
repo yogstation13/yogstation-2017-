@@ -11,14 +11,11 @@
 	recommended_enemies = 1
 	enemy_minimum_age = 14
 	round_ends_with_antag_death = 1
-<<<<<<< HEAD
 	prob_traitor_ai = 18
-=======
 	announce_span = "danger"
 	announce_text = "There is a space wizard attacking the station!\n\
 	<span class='danger'>Wizard</span>: Accomplish your objectives and cause mayhem on the station.\n\
 	<span class='notice'>Crew</span>: Eliminate the wizard before they can succeed!"
->>>>>>> masterTGbranch
 	var/use_huds = 0
 	var/finished = 0
 

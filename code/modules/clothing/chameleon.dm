@@ -447,14 +447,9 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "syndicate=2"
-<<<<<<< HEAD
-	burn_state = FIRE_PROOF
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight, /obj/item/weapon/gun/energy/laser/chameleon)
-=======
 	resistance_flags = 0
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
->>>>>>> masterTGbranch
 
 /obj/item/clothing/suit/chameleon/New()
 	..()
@@ -582,19 +577,11 @@
 	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
-<<<<<<< HEAD
 	flags = SUPERNOSLIP
-	origin_tech = "syndicate=3"
-	burn_state = FIRE_PROOF
-	can_hold_items = 1
-	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
-=======
-	flags = NOSLIP
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
->>>>>>> masterTGbranch
 
 /obj/item/clothing/shoes/chameleon/New()
 	..()

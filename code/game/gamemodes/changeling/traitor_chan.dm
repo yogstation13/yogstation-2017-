@@ -40,10 +40,7 @@
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount/2))
 
-<<<<<<< HEAD
-	if(!possible_changelings.len)
-=======
-	if(possible_changelings.len>0)
+	if(possible_changelings.len > 0)
 		for(var/j = 0, j < num_changelings, j++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
@@ -54,7 +51,6 @@
 			changeling.restricted_roles = restricted_jobs
 		return ..()
 	else
->>>>>>> masterTGbranch
 		return 0
 
 	//THE ONLY PLACE IN ENTIRE GAMEMODE CODE I HAVE TO DO THIS IN FULL, JUST FUCKING FUCK

@@ -22,12 +22,9 @@ RCD
 	materials = list(MAT_METAL=100000)
 	origin_tech = "engineering=4;materials=2"
 	req_access_txt = "11"
-<<<<<<< HEAD
-	var/abbreviated_name = "RCD"
-=======
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
->>>>>>> masterTGbranch
+	var/abbreviated_name = "RCD"
 	var/datum/effect_system/spark_spread/spark_system
 	var/matter = 0
 	var/max_matter = 160
@@ -73,8 +70,6 @@ RCD
 	var/decongrilledelay = null //as rapid as wirecutters
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
-
-<<<<<<< HEAD
 	var/no_ammo_message = ""
 
 /obj/item/weapon/rcd/New()
@@ -82,14 +77,7 @@ RCD
 	no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \the [src] blinks yellow.</span>"
 
 /obj/item/weapon/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the [abbreviated_name] to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
-=======
-	var/no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \
-		the RCD blinks yellow.</span>"
-
-/obj/item/weapon/rcd/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
->>>>>>> masterTGbranch
+	user.visible_message("<span class='suicide'>[user] sets the [abbreviated_name] to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/rcd/verb/toggle_window_type()
@@ -368,7 +356,6 @@ RCD
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
-<<<<<<< HEAD
 			if(islavaturf(A))
 				var/turf/open/floor/plating/lava/L = A
 				if(useResource(floorcost*10, user))
@@ -377,25 +364,16 @@ RCD
 					L.ChangeTurf(/turf/open/floor/plating)
 					return TRUE
 				return FALSE
-			if(istype(A, /turf/open/floor) && (A.flags & GIRDERABLE))
-=======
-
-			if(isfloorturf(A))
->>>>>>> masterTGbranch
+			if(isfloorturf(A) && (A.flags & GIRDERABLE))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
-<<<<<<< HEAD
-						if(!istype(F, /turf/open/floor)) //The turf might have changed during the do_after
+						if(!istype(F))
 							return 0
 						if(!useResource(wallcost, user))
 							return 0
-=======
-						if(!istype(F)) return 0
-						if(!useResource(wallcost, user)) return 0
->>>>>>> masterTGbranch
 						activate()
 						F.ChangeTurf(/turf/closed/wall)
 						return 1
@@ -474,12 +452,8 @@ RCD
 						return 1
 					return 0
 				return 0
-<<<<<<< HEAD
-			if(istype(A, /turf/open/floor))
-=======
 
 			if(isfloorturf(A))
->>>>>>> masterTGbranch
 				var/turf/open/floor/F = A
 				if(istype(F, /turf/open/floor/engine) && !canRturf)
 					return 0
@@ -557,12 +531,8 @@ RCD
 					if(do_after(user, grilledelay, target = A))
 						if(locate(/obj/structure/grille) in A)
 							return 0
-<<<<<<< HEAD
 						if(!useResource(grillecost, user))
 							return 0
-=======
-						if(!useResource(grillecost, user)) return 0
->>>>>>> masterTGbranch
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
 						G.anchored = 1
@@ -584,13 +554,10 @@ RCD
 						[wname]...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, windowdelay, target = A))
-						if(locate(/obj/structure/window) in A.loc) return 0
-<<<<<<< HEAD
-						if(!useResource(windowcost, user))
+						if(locate(/obj/structure/window) in A.loc)
 							return 0
-=======
-						if(!useResource(cost, user)) return 0
->>>>>>> masterTGbranch
+						if(!useResource(cost, user))
+							return 0
 						activate()
 						var /obj/structure/window/WD = new window_type(A.loc)
 						WD.anchored = 1
@@ -612,49 +579,11 @@ RCD
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
-<<<<<<< HEAD
 	. = (matter >= amount)
-=======
-	. = matter >= amount
->>>>>>> masterTGbranch
 	if(!. && user)
 		user << no_ammo_message
 	return .
 
-<<<<<<< HEAD
-/obj/item/weapon/rcd/borg/New()
-	..()
-	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
-
-/obj/item/weapon/rcd/borg/New()
-	..()
-	desc = "A device used to rapidly build walls and floors."
-	canRturf = 1
-
-/obj/item/weapon/rcd/borg/useResource(amount, mob/user)
-	if(!isrobot(user))
-		return 0
-	var/mob/living/silicon/robot/R = user
-	if(!R.cell)
-		user << no_ammo_message
-		return 0
-	. = R.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
-	if(!. && user)
-		user << no_ammo_message
-	return .
-
-/obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
-	if(!isrobot(user))
-		return 0
-	var/mob/living/silicon/robot/R = user
-	if(!R.cell)
-		user << no_ammo_message
-		return 0
-	. = (R.cell.charge >= (amount * 72))
-	if(!. && user)
-		user << no_ammo_message
-	return .
-=======
 /obj/item/weapon/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
@@ -672,7 +601,6 @@ RCD
 	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
 	desc = "A device used to rapidly build walls and floors."
 	canRturf = 1
->>>>>>> masterTGbranch
 
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!iscyborg(user))

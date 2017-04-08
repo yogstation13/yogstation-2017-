@@ -44,11 +44,7 @@
 		last_holder = user
 	if(!(user in color_altered_mobs))
 		color_altered_mobs += user
-<<<<<<< HEAD
-	user.color = "#00FF00"
-=======
 	user.add_atom_colour("#00FF00", ADMIN_COLOUR_PRIORITY)
->>>>>>> masterTGbranch
 	START_PROCESSING(SSobj, src)
 	..()
 

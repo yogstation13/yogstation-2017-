@@ -8,20 +8,12 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
-<<<<<<< HEAD
-
-/obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
-=======
 	var/deconstructible = TRUE
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(user, I.usesound, 50, 1)
->>>>>>> masterTGbranch
 		if(!do_after(user, 50, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
@@ -44,15 +36,12 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper-open"
 
-<<<<<<< HEAD
-=======
 /obj/structure/fluff/empty_sleeper/nanotrasen
 	name = "broken hypersleep chamber"
 	desc = "A Nanotrasen hypersleep chamber - this one appears broken. \
 		There are exposed bolts for easy disassembly using a wrench."
 	icon_state = "sleeper-o"
 
->>>>>>> masterTGbranch
 /obj/structure/fluff/empty_sleeper/syndicate
 	icon_state = "sleeper_s-open"
 
@@ -61,8 +50,6 @@
 	desc = "Although comfortable, this sleeper won't function as anything but a bed ever again."
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper_open"
-<<<<<<< HEAD
-=======
 
 /obj/structure/fluff/broken_flooring
 	name = "broken tiling"
@@ -173,4 +160,3 @@
 	name = "shrine"
 	desc = "A shrine dedicated to a deity."
 	icon_state = "shrine"
->>>>>>> masterTGbranch

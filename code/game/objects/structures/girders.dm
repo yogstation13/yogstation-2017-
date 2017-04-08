@@ -7,12 +7,8 @@
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
-<<<<<<< HEAD
-	var/health = 100
-=======
 	obj_integrity = 200
 	max_integrity = 200
->>>>>>> masterTGbranch
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -40,12 +36,8 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(state == GIRDER_DISPLACED)
-<<<<<<< HEAD
 			var/turf/T = loc
 			if(!istype(T, /turf/open) || !(T.flags & GIRDERABLE))
-=======
-			if(!isfloorturf(loc))
->>>>>>> masterTGbranch
 				user << "<span class='warning'>A floor must be present to secure the girder!</span>"
 				return
 			playsound(src.loc, W.usesound, 100, 1)
@@ -91,18 +83,11 @@
 			qdel(src)
 
 	else if(istype(W, /obj/item/stack))
-<<<<<<< HEAD
 		var/turf/T = get_turf(src)
 		if (istype(T, /turf/closed/wall))
 			user << "<span class='warning'>There is already a wall present!</span>"
 			return
 		if (!istype(src.loc, /turf/open/floor) || !(T.flags & GIRDERABLE))
-=======
-		if(iswallturf(loc))
-			user << "<span class='warning'>There is already a wall present!</span>"
-			return
-		if(!isfloorturf(src.loc))
->>>>>>> masterTGbranch
 			user << "<span class='warning'>A floor must be present to build a false wall!</span>"
 			return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
@@ -337,12 +322,8 @@
 	icon_state = "reinforced"
 	state = GIRDER_REINF
 	girderpasschance = 0
-<<<<<<< HEAD
-	health = 200
-=======
 	obj_integrity = 350
 	max_integrity = 350
->>>>>>> masterTGbranch
 
 
 

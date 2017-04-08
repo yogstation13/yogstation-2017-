@@ -130,7 +130,7 @@ MASS SPECTROMETER
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
 			user << "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>"
-<<<<<<< HEAD
+
 		if(cyberman_network)
 			if(ticker.mode.is_cyberman(M.mind))
 				user << "<span class='danger'>Unknown harmful implants detected in patient's brain - recommend removal via brain surgery.</span>"
@@ -142,13 +142,7 @@ MASS SPECTROMETER
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.borer)
-=======
-
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
 		if(C.has_brain_worms())
->>>>>>> masterTGbranch
 			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
 
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
@@ -224,7 +218,6 @@ MASS SPECTROMETER
 				cyberimp_detect += "[C.name] is modified with a [CI.name].<br>"
 		if(cyberimp_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
-<<<<<<< HEAD
 			user << "<span class='notice'>[implant_detect]</span>"
 	//Organ Decay
 	if(iscarbon(M))
@@ -237,9 +230,6 @@ MASS SPECTROMETER
 					user << "<span class='notice'>\The [O] of the subject is [round(O.decay / O.decay_time, 0.1)]% decayed.</span>"
 	if(!M.getorgan(/obj/item/organ/heart))
 		user << "<span class='warning'>Subject does not have a heart.</span>"
-=======
-			user << "<span class='notice'>[cyberimp_detect]</span>"
->>>>>>> masterTGbranch
 
 /proc/chemscan(mob/living/user, mob/living/M)
 	if(ishuman(M))

@@ -1183,6 +1183,6 @@
 	if(module.can_be_pushed)
 		status_flags |= CANPUSH
 	else
-		status_flags &= ~CANPUSH
+		status_flags -= CANPUSH
 	magpulse = module.magpulsing
 	updatename()

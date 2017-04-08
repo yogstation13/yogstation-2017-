@@ -48,31 +48,6 @@ There are several things that need to be remembered:
 
 */
 
-<<<<<<< HEAD
-//DAMAGE OVERLAYS
-//constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
-/mob/living/carbon/human/update_damage_overlays()
-	remove_overlay(DAMAGE_LAYER)
-
-	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
-	overlays_standing[DAMAGE_LAYER]	= standing
-
-	var/dmgoverlaytype = ""
-	if(dna.species.exotic_damage_overlay)
-		dmgoverlaytype = dna.species.exotic_damage_overlay + "_"
-
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.brutestate)
-			standing.overlays	+= "[dmgoverlaytype][BP.icon_state]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
-		if(BP.burnstate)
-			standing.overlays	+= "[dmgoverlaytype][BP.icon_state]_0[BP.burnstate]"
-
-	apply_overlay(DAMAGE_LAYER)
-
-
-=======
->>>>>>> masterTGbranch
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair()
 	dna.species.handle_hair(src)
@@ -90,45 +65,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_fire()
 	..("Standing")
 
-<<<<<<< HEAD
-/mob/living/carbon/human/proc/update_body_parts()
-	//CHECK FOR UPDATE
-	var/oldkey = icon_render_key
-	icon_render_key = generate_icon_render_key()
-
-	//Skip bodypart generation if keys match if and only if we actually have the bodypart overlay as well
-	//If we changed our species from NODISMEMBER to one without that, we WON'T have the bodypart overlays, even if the rendering keys will match
-	if((oldkey == icon_render_key) && overlays_standing[BODYPARTS_LAYER])
-		return
-
-	remove_overlay(BODYPARTS_LAYER)
-
-	//LOAD ICONS
-	if(limb_icon_cache[icon_render_key])
-		load_limb_from_cache()
-		update_damage_overlays()
-		update_mutant_bodyparts()
-		update_hair()
-		return
-
-	//GENERATE NEW LIMBS
-	var/list/new_limbs = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(!BP.no_update)
-			BP.update_limb()
-		var/image/temp = BP.get_limb_icon()
-		if(temp)
-			new_limbs += temp
-	if(new_limbs.len)
-		overlays_standing[BODYPARTS_LAYER] = new_limbs
-		limb_icon_cache[icon_render_key] = new_limbs
-
-	apply_overlay(BODYPARTS_LAYER)
-	update_damage_overlays()
-
-=======
->>>>>>> masterTGbranch
 
 /* --------------------------------------- */
 //For legacy support.

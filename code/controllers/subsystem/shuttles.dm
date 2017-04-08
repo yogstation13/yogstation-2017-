@@ -24,11 +24,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
-<<<<<<< HEAD
 	var/canRecall = TRUE
-=======
 	var/list/hostileEnvironments = list()
->>>>>>> masterTGbranch
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -44,13 +41,10 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
-<<<<<<< HEAD
 	var/list/cooldown_ids = list()
 
-=======
 	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
->>>>>>> masterTGbranch
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -506,11 +500,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		backup_shuttle = SSshuttle.backup_shuttle
 	if (istype(SSshuttle.supply))
 		supply = SSshuttle.supply
-<<<<<<< HEAD
-=======
 	if (istype(SSshuttle.transit_turfs))
 		transit_turfs = SSshuttle.transit_turfs
->>>>>>> masterTGbranch
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum

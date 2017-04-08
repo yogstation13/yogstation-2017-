@@ -68,10 +68,7 @@
 		user.unset_machine()
 		return 0
 	return 1
-<<<<<<< HEAD
 
-=======
->>>>>>> masterTGbranch
 /obj/item/device/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 

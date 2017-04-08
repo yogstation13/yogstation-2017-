@@ -115,14 +115,10 @@
 				Dispense(/obj/item/device/abductor/silencer)
 			if("tool")
 				Dispense(/obj/item/device/abductor/gizmo)
-<<<<<<< HEAD
 			if("card")
 				Dispense(/obj/item/weapon/card/id/syndicate/abductor)
-
-=======
 			if("vest")
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
->>>>>>> masterTGbranch
 	src.updateUsrDialog()
 
 

@@ -28,11 +28,8 @@
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	seeStatic = 0 //Our programming is superior.
-<<<<<<< HEAD
 	no_living_interaction = FALSE
-=======
 	hacked = TRUE
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
@@ -75,8 +72,6 @@
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
 	drone_type = /mob/living/simple_animal/drone/snowflake
 
-<<<<<<< HEAD
-=======
 /mob/living/simple_animal/drone/polymorphed
 	default_storage = null
 	default_hatmask = null
@@ -94,7 +89,6 @@
 
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
@@ -108,13 +102,7 @@
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
-<<<<<<< HEAD
-	density = TRUE
-	speed = 1
 	ventcrawler = 0
-	faction = list("ratvar")
-	speak_emote = list("clinks", "clunks")
-=======
 	harm_intent_damage = 5
 	density = TRUE
 	speed = 1
@@ -124,7 +112,6 @@
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
->>>>>>> masterTGbranch
 	bubble_icon = "clock"
 	heavy_emp_damage = 10
 	laws = "0. Purge all untruths and honor Ratvar."
@@ -132,11 +119,8 @@
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
-<<<<<<< HEAD
 	no_living_interaction = FALSE
-=======
 	can_be_held = FALSE
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
@@ -156,23 +140,14 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-<<<<<<< HEAD
-	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert rods, \
-	metal, and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with </b><span class='heavy_brass'>:b</span><b>, and are immune to extreme \
-	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
-=======
 	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, <i>excluding a clockwork slab.</i></b>"
->>>>>>> masterTGbranch
 
 /mob/living/simple_animal/drone/cogscarab/binarycheck()
 	return FALSE
 
-<<<<<<< HEAD
-=======
 /mob/living/simple_animal/drone/cogscarab/alert_drones(msg, dead_can_hear = 0)
 	if(msg == DRONE_NET_CONNECT)
 		msg = "<span class='brass'><i>Hierophant Network:</i> [name] activated.</span>"
@@ -202,16 +177,11 @@
 /mob/living/simple_animal/drone/cogscarab/cancelAlarm(class, area/A, obj/origin)
 	return
 
->>>>>>> masterTGbranch
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
 
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
-<<<<<<< HEAD
-	titled_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES
-=======
 	titled_hierophant_message(src, msg, "nezbere", "brass", "Construct") //HIEROPHANT DRONES
 
 /mob/living/simple_animal/drone/cogscarab/ratvar_act()
 	fully_heal(TRUE)
->>>>>>> masterTGbranch

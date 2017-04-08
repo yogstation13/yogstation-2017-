@@ -14,17 +14,7 @@
 /obj/item/device/assembly/igniter/Destroy()
 	qdel(sparks)
 	sparks = null
-<<<<<<< HEAD
-	return ..()
-
-/obj/item/device/assembly/igniter/proc/set_up_sparks()
-	sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(2, 0, src)
-	sparks.attach(src)
-
-=======
 	. = ..()
->>>>>>> masterTGbranch
 
 /obj/item/device/assembly/igniter/activate()
 	if(!..())

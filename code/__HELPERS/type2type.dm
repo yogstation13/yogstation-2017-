@@ -513,7 +513,6 @@ for(var/t in test_times)
 	var/B = hex2num(copytext(A,6,0))
 	return R+G+B
 
-<<<<<<< HEAD
 //Converts a positive interger to its roman numeral equivilent. Ignores any decimals.
 //Numbers over 3999 will display with extra "M"s (don't tell the Romans) and can get comically long, so be careful.
 /proc/num2roman(A)
@@ -548,7 +547,7 @@ for(var/t in test_times)
 		if("brown") return "#8A4B08"
 		if("black") return "#000000"
 		if("white")	return "FFFFFF"
-=======
+
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
 /proc/color_hex2color_matrix(string)
 	var/length = length(string)
@@ -569,4 +568,3 @@ for(var/t in test_times)
 	if(!istype(the_matrix) || the_matrix.len != 20)
 		return "#ffffffff"
 	return rgb(the_matrix[1]*255, the_matrix[6]*255, the_matrix[11]*255, the_matrix[16]*255)
->>>>>>> masterTGbranch

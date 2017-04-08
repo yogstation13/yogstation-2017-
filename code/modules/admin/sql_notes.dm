@@ -162,14 +162,10 @@
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
 		if(!linkless)
-<<<<<<< HEAD
-			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a> <a href='?_src_=holder;noteexport=[target_ckey]'>\[Note Export\]</a></center>"
-=======
 			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a>"
 			output += " <a href='?_src_=holder;shownoteckey=[target_ckey]'>\[Refresh Page\]</a></center>"
 		else
 			output += " <a href='?_src_=holder;shownoteckeylinkless=[target_ckey]'>\[Refresh Page\]</a></center>"
->>>>>>> masterTGbranch
 		output += ruler
 		while(query_get_notes.NextRow())
 			var/secret = text2num(query_get_notes.item[1])
@@ -179,14 +175,9 @@
 			var/notetext = query_get_notes.item[3]
 			var/adminckey = query_get_notes.item[4]
 			var/last_editor = query_get_notes.item[5]
-<<<<<<< HEAD
-			//var/server = query_get_notes.item[6] //notice: this was removed because when you've got only 1 server, what is the point of displaying the long ass name that ends up being cut up anyway?
-			output += "<b>[timestamp] | [adminckey]</b>"
-=======
 			var/server = query_get_notes.item[6]
 			var/id = query_get_notes.item[7]
 			output += "<b>[timestamp] | [server] | [adminckey]</b>"
->>>>>>> masterTGbranch
 			if(!linkless)
 				output += " <a href='?_src_=holder;removenote=[id]'>\[Remove Note\]</a> <a href='?_src_=holder;secretnote=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not Secret\]"]</a> <a href='?_src_=holder;editnote=[id]'>\[Edit Note\]</a>"
 				if(last_editor)

@@ -38,11 +38,7 @@
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
-<<<<<<< HEAD
-	w_class = 1
-=======
 	w_class = WEIGHT_CLASS_TINY
->>>>>>> masterTGbranch
 	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE

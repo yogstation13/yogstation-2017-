@@ -8,10 +8,6 @@
 	var/mob/pulledby = null
 	var/languages_spoken = 0 //For say() and Hear()
 	var/languages_understood = 0
-<<<<<<< HEAD
-	var/identifier = null //Only used for AI tracking.
-=======
->>>>>>> masterTGbranch
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -85,13 +81,9 @@
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-<<<<<<< HEAD
-	update_parallax_contents()
-=======
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
->>>>>>> masterTGbranch
 	return 1
 
 /atom/movable/Destroy()
@@ -354,15 +346,9 @@
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
 
-<<<<<<< HEAD
 /atom/movable/proc/on_z_level_change()
 	for(var/atom/movable/A in contents)
 		A.on_z_level_change()
-
-/atom/movable/proc/on_pulledby(mob/new_pulledby, supress_message)
-	pulledby = new_pulledby
-	return
-=======
 
 /atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
 	if(!no_effect && (visual_effect_icon || used_item))
@@ -427,4 +413,3 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
->>>>>>> masterTGbranch

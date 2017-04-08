@@ -32,11 +32,7 @@
 
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(ishuman(user))
-<<<<<<< HEAD
-		if(stat == DEAD || (GODMODE in status_flags))
-=======
-		if(stat == DEAD || status_flags & GODMODE || !can_be_held)
->>>>>>> masterTGbranch
+		if(stat == DEAD || (GODMODE)status_flags) || !can_be_held)
 			..()
 			return
 		if(user.get_active_held_item())
@@ -110,8 +106,6 @@
 	else
 		..()
 
-<<<<<<< HEAD
-=======
 /mob/living/simple_animal/drone/getarmor(def_zone, type)
 	var/armorval = 0
 
@@ -122,7 +116,6 @@
 /mob/living/simple_animal/drone/proc/get_armor_effectiveness()
 	return 0 //multiplier for whatever head armor you wear as a drone
 
->>>>>>> masterTGbranch
 /mob/living/simple_animal/drone/proc/update_drone_hack(hack, clockwork)
 	if(!istype(src) || !mind)
 		return

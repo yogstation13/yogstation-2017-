@@ -468,7 +468,6 @@
 	name = "teddy bear"
 	desc = "A soft brown bear you can cuddle with anywhere."
 	icon = 'icons/obj/toy.dmi'
-<<<<<<< HEAD
 	icon_state = "teddybear"
 
 /obj/item/toy/stuffedmonkey
@@ -476,28 +475,6 @@
 	desc = "Looks just like the live ones on station.Except this one is made from plush"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "stuffedmonkey"
-=======
-	icon_state = "ripleytoy"
-	var/timer = 0
-	var/cooldown = 30
-	var/quiet = 0
-
-//all credit to skasi for toy mech fun ideas
-/obj/item/toy/prize/attack_self(mob/user)
-	if(timer < world.time)
-		user << "<span class='notice'>You play with [src].</span>"
-		timer = world.time + cooldown
-		if(!quiet)
-			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-	else
-		. = ..()
-
-/obj/item/toy/prize/attack_hand(mob/user)
-	if(loc == user)
-		attack_self(user)
-	else
-		. = ..()
->>>>>>> masterTGbranch
 
 
 /obj/item/toy/flowerbunch

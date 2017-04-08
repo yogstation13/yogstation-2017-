@@ -431,10 +431,9 @@
 			return -1
 		if(!canMove())
 			return -1
-<<<<<<< HEAD
 
 	closePortDoors()
-	
+
 	if(istype(S1.loc, /turf/open/space/transit))
 		var/new_movedir = turn(S1.loc.dir, 180)
 		parallax_movedir_in_area(get_area(src), new_movedir)
@@ -448,8 +447,6 @@
 //		//rotate transit docking ports, so we don't need zillions of variants
 //		if(istype(S1, /obj/docking_port/stationary/transit))
 //			S1.dir = turn(NORTH, -travelDir)
-=======
->>>>>>> masterTGbranch
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space

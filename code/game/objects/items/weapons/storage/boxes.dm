@@ -57,13 +57,10 @@
 		M.update_inv_l_hand()
 		M.update_inv_r_hand()
 	var/obj/item/I = new foldable(get_turf(src))
-<<<<<<< HEAD
 	transfer_fingerprints_to(I)
-=======
 	user.drop_item()
 	user.put_in_hands(I)
 	user.update_inv_hands()
->>>>>>> masterTGbranch
 	qdel(src)
 	return I
 
@@ -769,13 +766,8 @@
 	..()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-<<<<<<< HEAD
-		new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
-=======
-		new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/wine(src)
->>>>>>> masterTGbranch
 
 /obj/item/weapon/storage/box/ingredients/vegetarian
 	item_state = "vegetarian"
@@ -858,12 +850,8 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/spidereggs(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/carpmeat(src)
-<<<<<<< HEAD
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/meatball(src)
-=======
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src)
->>>>>>> masterTGbranch
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/faggot(src)
 

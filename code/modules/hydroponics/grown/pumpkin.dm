@@ -42,11 +42,7 @@
 	plantname = "Blumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	mutatelist = list()
-<<<<<<< HEAD
 	reagents_add = list("ammonia" = 0.4, "chlorine" = 0.4, "nutriment" = 0.4)
-=======
-	reagents_add = list("ammonia" = 0.2, "chlorine" = 0.1, "nutriment" = 0.2)
->>>>>>> masterTGbranch
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin

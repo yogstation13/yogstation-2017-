@@ -117,15 +117,10 @@
 /datum/chemical_reaction/slime/slimecrit/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-<<<<<<< HEAD
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 5, "Gold Slime")
-=======
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 5, "Gold Slime")
 	spawn(60)
 	..()
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/slime/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -137,15 +132,10 @@
 /datum/chemical_reaction/slime/slimecritlesser/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-<<<<<<< HEAD
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 3, "Lesser Gold Slime", "neutral")
-=======
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 3, "Lesser Gold Slime", "neutral")
 	spawn(60)
 	..()
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/slime/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -157,15 +147,10 @@
 /datum/chemical_reaction/slime/slimecritfriendly/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-<<<<<<< HEAD
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	addtimer(src, "chemical_mob_spawn", 50, FALSE, holder, 1, "Friendly Gold Slime", "neutral")
-=======
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
 	addtimer(src, "chemical_mob_spawn", 50, TIMER_NORMAL, holder, 1, "Friendly Gold Slime", "neutral")
 	spawn(60)
 	..()
->>>>>>> masterTGbranch
 
 /datum/chemical_reaction/slimecritstrange
 	name = "Slime Crit Strange"
@@ -302,18 +287,7 @@
 
 /datum/chemical_reaction/slime/slimefoam/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
-<<<<<<< HEAD
-	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-	spawn(50)
-		if(holder && holder.my_atom)
-			playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
-			for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
-				M.bodytemperature -= 240
-				M << "<span class='notice'>You feel a chill!</span>"
-=======
 	..()
->>>>>>> masterTGbranch
 
 
 //Dark Blue
@@ -355,15 +329,7 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-<<<<<<< HEAD
-	spawn(50)
-		if(holder && holder.my_atom)
-			var/turf/open/T = get_turf(holder.my_atom)
-			if(istype(T))
-				T.atmos_spawn_air("plasma=50;TEMP=1000")
-=======
 	addtimer(src, "slime_burn", 50, TIMER_NORMAL, holder)
-	spawn(60)
 	..()
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
@@ -384,7 +350,6 @@
 /datum/chemical_reaction/slime/slimesmoke/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	..()
->>>>>>> masterTGbranch
 
 //Yellow
 
@@ -573,12 +538,6 @@
 		touch_msg = "[key_name_admin(lastkey)]<A HREF='?_src_=holder;adminmoreinfo=\ref[toucher]'>?</A>(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[toucher]'>FLW</A>)."
 	message_admins("Slime Explosion reaction started at <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[T.loc.name] (JMP)</a>. Last Fingerprint: [touch_msg]")
 	log_game("Slime Explosion reaction started at [T.loc.name] ([T.x],[T.y],[T.z]). Last Fingerprint: [lastkey ? lastkey : "N/A"].")
-<<<<<<< HEAD
-	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently!</span>")
-	spawn(50)
-		if(holder && holder.my_atom)
-			explosion(get_turf(holder.my_atom), 1 ,3, 6)
-=======
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
 	addtimer(src, "boom", 50, TIMER_NORMAL, holder)
 	spawn(60)
@@ -600,7 +559,6 @@
 /datum/chemical_reaction/slime/slimecornoil/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	..()
->>>>>>> masterTGbranch
 
 //Light Pink
 /datum/chemical_reaction/slime/slimepotion2

@@ -258,13 +258,8 @@
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
 /turf/closed/wall/ratvar_act(force)
-<<<<<<< HEAD
-	var/converted = (prob(40) || force)
-	if(converted)
-=======
 	. = ..()
 	if(.)
->>>>>>> masterTGbranch
 		ChangeTurf(/turf/closed/wall/clockwork)
 	for(var/I in src)
 		var/atom/A = I

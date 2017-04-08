@@ -26,11 +26,7 @@
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-<<<<<<< HEAD
 					affected_mob.take_organ_damage(1, 0, 1, DAMAGE_DISEASE)
-=======
-					affected_mob.take_bodypart_damage(1)
->>>>>>> masterTGbranch
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))
@@ -49,11 +45,7 @@
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your muscles ache.</span>"
 				if(prob(20))
-<<<<<<< HEAD
 					affected_mob.take_organ_damage(1, 0, 1, DAMAGE_DISEASE)
-=======
-					affected_mob.take_bodypart_damage(1)
->>>>>>> masterTGbranch
 			if(prob(1))
 				affected_mob << "<span class='danger'>Your stomach hurts.</span>"
 				if(prob(20))

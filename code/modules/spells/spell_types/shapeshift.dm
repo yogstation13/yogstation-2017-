@@ -65,7 +65,7 @@
 	if(!caster)
 		return
 	caster.loc = shape.loc
-	caster.status_flags &= ~GODMODE
+	caster.status_flags -= GODMODE
 	caster.adjustBruteLoss(caster.health - shape.health)
 
 	clothes_req = initial(clothes_req)
@@ -76,10 +76,9 @@
 	shape.mind.transfer_to(caster)
 	qdel(shape) //Gib it maybe ?
 
-<<<<<<< HEAD
 /mob/living/simple_animal/hostile/construct/armored/shapeshift
 	affiliation = "cyan"
-=======
+
 /obj/effect/proc_holder/spell/targeted/shapeshift/dragon
 	name = "Dragon Form"
 	desc = "Take on the shape a lesser ash drake."
@@ -89,4 +88,3 @@
 	list/current_shapes = list(/mob/living/simple_animal/hostile/megafauna/dragon/lesser)
 	list/current_casters = list()
 	list/possible_shapes = list(/mob/living/simple_animal/hostile/megafauna/dragon/lesser)
->>>>>>> masterTGbranch

@@ -151,11 +151,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/M in invokers)
 			var/mob/living/L = M
 			L.say(invocation)
-<<<<<<< HEAD
-		do_invoke_glow()
-=======
 	do_invoke_glow()
->>>>>>> masterTGbranch
 
 /obj/effect/rune/proc/do_invoke_glow()
 	var/oldtransform = transform
@@ -200,11 +196,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/weapon/storage/book/bible/B = locate() in src
-<<<<<<< HEAD
-	if(B && (l_hand == B || r_hand == B))
-=======
 	if(is_holding(B))
->>>>>>> masterTGbranch
 		return B
 	return 0
 
@@ -348,10 +340,6 @@ var/list/teleport_runes = list()
 		fail_invoke()
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> masterTGbranch
 //Rite of Offering: Converts or sacrifices a target.
 /obj/effect/rune/convert
 	cultist_name = "Offer"
@@ -359,20 +347,14 @@ var/list/teleport_runes = list()
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
-<<<<<<< HEAD
-=======
 	color = "#FFFFFF"
->>>>>>> masterTGbranch
 	req_cultists = 1
 	allow_excess_invokers = 1
 	rune_in_use = FALSE
 
-<<<<<<< HEAD
-=======
 /obj/effect/rune/convert/do_invoke_glow()
 	return
 
->>>>>>> masterTGbranch
 /obj/effect/rune/convert/invoke(var/list/invokers)
 	if(rune_in_use)
 		return
@@ -387,22 +369,14 @@ var/list/teleport_runes = list()
 		return
 	rune_in_use = TRUE
 	visible_message("<span class='warning'>[src] pulses blood red!</span>")
-<<<<<<< HEAD
-	color = "#7D1717"
-	..()
-=======
 	var/oldcolor = color
 	color = "#7D1717"
->>>>>>> masterTGbranch
 	var/mob/living/L = pick(myriad_targets)
 	var/is_clock = is_servant_of_ratvar(L)
 	var/is_convertable = is_convertable_to_cult(L)
 	if(L.stat != DEAD && (is_clock || is_convertable))
-<<<<<<< HEAD
-=======
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		..()
->>>>>>> masterTGbranch
 		if(is_clock)
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
@@ -411,51 +385,15 @@ var/list/teleport_runes = list()
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
-<<<<<<< HEAD
-		do_sacrifice(L, invokers)
-	color = initial(color)
-=======
 		invocation = "Barhah hra zar'garis!"
 		..()
 		do_sacrifice(L, invokers)
 	animate(src, color = oldcolor, time = 5)
 	addtimer(src, "update_atom_colour", 5)
->>>>>>> masterTGbranch
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
 	if(invokers.len < 2)
-<<<<<<< HEAD
-		for(var/M in invokers)
-			M << "<span class='warning'>You need more invokers to convert [convertee]!</span>"
-		log_game("Offer rune failed - tried conversion with one invoker")
-		return 0
-	if(convertee.null_rod_check())
-		for(var/M in invokers)
-			M << "<span class='warning'>Something is shielding [convertee]'s mind!</span>"
-		log_game("Offer rune failed - convertee had null rod")
-		return 0
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
-	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-brutedamage)
-		convertee.adjustFireLoss(-burndamage)
-	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as their wounds heal and close" : "as the markings below them glow a bloody red"]!</span>", \
- 	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
-	ticker.mode.add_cultist(convertee.mind, 1)
-	new /obj/item/weapon/tome(get_turf(src))
-	convertee.mind.special_role = "Cultist"
-	convertee << "<span class='cultitalic'><b>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-	and something evil takes root.</b></span>"
-	convertee << "<span class='cultitalic'><b>Assist your new compatriots in their dark dealings. Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.\
-	</b></span>"
-	return 1
-
-/obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
-	if((((ishuman(sacrificial) || isrobot(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
-		for(var/M in invokers)
-=======
 		for(var/M in invokers)
 			M << "<span class='warning'>You need more invokers to convert [convertee]!</span>"
 		log_game("Offer rune failed - tried conversion with one invoker")
@@ -485,7 +423,6 @@ var/list/teleport_runes = list()
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
 		for(var/M in invokers)
->>>>>>> masterTGbranch
 			M << "<span class='cultitalic'>[sacrificial] is too greatly linked to the world! You need three acolytes!</span>"
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
 		return FALSE
@@ -495,24 +432,15 @@ var/list/teleport_runes = list()
 		sacrificed += sacrificial.mind
 		if(is_sacrifice_target(sacrificial.mind))
 			sacrifice_fulfilled = TRUE
-<<<<<<< HEAD
-		else
-			sacrificed += sacrificial
-=======
 	else
 		sacrificed += sacrificial
->>>>>>> masterTGbranch
 
 	PoolOrNew(/obj/effect/overlay/temp/cult/sac, get_turf(src))
 	for(var/M in invokers)
 		if(sacrifice_fulfilled)
 			M << "<span class='cultlarge'>\"Yes! This is the one I desire! You have done well.\"</span>"
 		else
-<<<<<<< HEAD
-			if(ishuman(sacrificial) || isrobot(sacrificial))
-=======
 			if(ishuman(sacrificial) || iscyborg(sacrificial))
->>>>>>> masterTGbranch
 				M << "<span class='cultlarge'>\"I accept this sacrifice.\"</span>"
 			else
 				M << "<span class='cultlarge'>\"I accept this meager sacrifice.\"</span>"
@@ -524,11 +452,7 @@ var/list/teleport_runes = list()
 		stone.invisibility = 0
 
 	if(sacrificial)
-<<<<<<< HEAD
-		if(isrobot(sacrificial))
-=======
 		if(iscyborg(sacrificial))
->>>>>>> masterTGbranch
 			playsound(sacrificial, 'sound/magic/Disable_Tech.ogg', 100, 1)
 			sacrificial.dust() //To prevent the MMI from remaining
 		else
@@ -566,26 +490,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
 		return
-<<<<<<< HEAD
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult_mode = ticker.mode
-		if(!cult_mode.eldergod)
-			for(var/M in invokers)
-				M << "<span class='warning'>Nar-Sie is already on this plane!</span>"
-			log_game("Summon Nar-Sie rune failed - already summoned")
-			return
-		//BEGIN THE SUMMONING
-		used = 1
-		..()
-		world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
-		var/turf/T = get_turf(src)
-		sleep(40)
-		if(src)
-			color = rgb(255, 0, 0)
-		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
-		cult_mode.eldergod = 0
-	else
-=======
+
 	if(z != ZLEVEL_STATION)
 		return
 
@@ -595,7 +500,6 @@ var/list/teleport_runes = list()
 		cult_mode = ticker.mode
 
 	if(!cult_mode && !ignore_gamemode)
->>>>>>> masterTGbranch
 		for(var/M in invokers)
 			M << "<span class='warning'>Nar-Sie does not respond!</span>"
 		fail_invoke()
@@ -640,20 +544,12 @@ var/list/teleport_runes = list()
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
 	invocation = null //Depends on the name of the user - see below
 	icon_state = "1"
-<<<<<<< HEAD
-	color = rgb(200, 0, 0)
-=======
 	color = "#C80000"
->>>>>>> masterTGbranch
 	var/static/revives_used = 0
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	..()
-<<<<<<< HEAD
-	if(iscultist(user) || isobserver(user))
-=======
 	if(iscultist(user) || user.stat == DEAD)
->>>>>>> masterTGbranch
 		var/revive_number = 0
 		if(sacrificed.len)
 			revive_number = sacrificed.len - revives_used
@@ -677,14 +573,6 @@ var/list/teleport_runes = list()
 	if(!sacrificed.len || sacrificed.len <= revives_used)
 		user << "<span class='warning'>You have sacrificed too few people to revive a cultist!</span>"
 		fail_invoke()
-<<<<<<< HEAD
-	if(potential_revive_mobs.len > 1)
-		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
-	else
-		fail_invoke()
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_revive, user))
-=======
->>>>>>> masterTGbranch
 		return
 	if(potential_revive_mobs.len > 1)
 		mob_to_revive = input(user, "Choose a cultist to revive.", "Cultist to Revive") as null|anything in potential_revive_mobs
@@ -716,20 +604,12 @@ var/list/teleport_runes = list()
 		fail_invoke()
 		return 0
 	if(!(target_mob in T.contents))
-<<<<<<< HEAD
-		user << "<span class='cultitalic'>The corpse to revive has been moved!</span>"
-=======
 		user << "<span class='cultitalic'>The cultist to revive has been moved!</span>"
->>>>>>> masterTGbranch
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target moved")
 		return 0
 	var/mob/dead/observer/ghost = target_mob.get_ghost(TRUE)
-<<<<<<< HEAD
-	if(!ghost)
-=======
 	if(!ghost && (!target_mob.mind || !target_mob.mind.active))
->>>>>>> masterTGbranch
 		user << "<span class='cultitalic'>The corpse to revive has no spirit!</span>"
 		fail_invoke()
 		log_game("Raise Dead rune failed - revival target has no ghost")
@@ -1001,25 +881,9 @@ var/list/wall_runes = list()
 	..()
 	rune_in_use = TRUE
 	var/turf/T = get_turf(src)
-<<<<<<< HEAD
-	visible_message("<span class='warning'>[src] briefly bubbles before exploding!</span>")
-	for(var/mob/living/carbon/C in viewers(T))
-		if(!iscultist(C))
-			var/obj/item/weapon/nullrod/N = C.null_rod_check()
-			if(N)
-				C << "<span class='userdanger'>\The [N] suddenly burns hotly before returning to normal!</span>"
-				continue
-			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
-			C.take_overall_damage(45,45)
-			C.Stun(7)
-			if(is_servant_of_ratvar(C))
-				C << "<span class='userdanger'>You feel unholy darkness dimming the Justiciar's light!</span>"
-				C.adjustStaminaLoss(30)
-=======
 	visible_message("<span class='warning'>[src] turns a bright, glowing orange!</span>")
 	SetLuminosity(6)
 	color = "#FC9B54"
->>>>>>> masterTGbranch
 	for(var/M in invokers)
 		var/mob/living/L = M
 		L.apply_damage(10, BRUTE, pick("l_arm", "r_arm"))
