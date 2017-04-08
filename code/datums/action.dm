@@ -37,8 +37,10 @@
 		Remove(owner)
 	owner = M
 	M.actions += src
+	button.alpha = 0
 	if(M.client)
 		M.client.screen += button
+	animate(M, alpha = 255, time = 5)
 	M.update_action_buttons()
 
 /datum/action/proc/Remove(mob/M)
@@ -88,15 +90,13 @@
 			return 1
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
-	current_button.overlays.Cut()
-	if(button_icon && button_icon_state)
+	if(button_icon && button_icon_state && (current_button.overlay_icon_state != button_icon_state))
 		var/image/img
 		img = image(button_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
-		current_button.overlays += img
-
-
+		current_button.overlays = list(img)
+		current_button.overlay_icon_state = button_icon_state
 
 //Presets for item actions
 /datum/action/item_action

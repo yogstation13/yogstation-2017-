@@ -391,116 +391,116 @@ var/list/airlock_overlays = list()
 			return
 		else
 			user << "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>"
+		user << browse(null, "window=airlock")
+		user.unset_machine()
 	if(emagged)
 		user << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
+		user << browse(null, "window=airlock")
+		user.unset_machine()
 		return
 	if(detonated)
 		user << "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>"
+		user << browse(null, "window=airlock")
+		user.unset_machine()
 		return
+	show_ai_menu(user)
 
-	//Separate interface for the AI.
-	user.set_machine(src)
-	var/t1 = text("<B>Airlock Control</B><br>\n")
-	if(src.secondsMainPowerLost > 0)
-		if(!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
-			t1 += text("Main power is offline for [] seconds.<br>\n", src.secondsMainPowerLost)
+/obj/machinery/door/airlock/proc/show_ai_menu(mob/user)
+	//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
+	//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 enable access override
+	var/dat = ""
+	dat += "<span align='right'><A href='?src=\ref[src];refresh=1'>Refresh</A></span>"
+
+	dat += "<table>"
+	dat += "<tr><td>Main Power</td>"
+	if(secondsMainPowerLost > 0)
+		dat += "<td><span class='linkOff'>Disrupt</span></td>"
+		if(wires.is_cut(WIRE_POWER1) || wires.is_cut(WIRE_POWER2))
+			dat += "<td><font color='red'>Offline: Power wire cut</font></td></tr>"
 		else
-			t1 += text("Main power is offline indefinitely.<br>\n")
+			dat += "<td><font color='red'>Offline: [secondsMainPowerLost] seconds</font></td></tr>"
 	else
-		t1 += text("Main power is online.")
+		dat += "<td><A href='?src=\ref[src];aiDisable=2'>Disrupt</A></td><td></td></tr>"
 
-	if(src.secondsBackupPowerLost > 0)
-		if(!wires.is_cut(WIRE_BACKUP1) && !wires.is_cut(WIRE_BACKUP2))
-			t1 += text("Backup power is offline for [] seconds.<br>\n", src.secondsBackupPowerLost)
+	dat += "<tr><td>Backup Power</td>"
+	if(secondsBackupPowerLost > 0)
+		dat += "<td><span class='linkOff'>Disrupt</span></td>"
+		if(wires.is_cut(WIRE_POWER1) || wires.is_cut(WIRE_POWER2))
+			dat += "<td><font color='red'>Offline: Backup power wire cut</font></td></tr>"
 		else
-			t1 += text("Backup power is offline indefinitely.<br>\n")
-	else if(src.secondsMainPowerLost > 0)
-		t1 += text("Backup power is online.")
+			dat += "<td><font color='red'>Offline: [secondsBackupPowerLost] seconds</font></td></tr>"
 	else
-		t1 += text("Backup power is offline, but will turn on if main power fails.")
-	t1 += "<br>\n"
+		dat += "<td><A href='?src=\ref[src];aiDisable=3'>Disrupt</A></td><td></td></tr>"
 
+	dat += "<tr><td>ID Scan</td>"
 	if(wires.is_cut(WIRE_IDSCAN))
-		t1 += text("IdScan wire is cut.<br>\n")
-	else if(src.aiDisabledIdScanner)
-		t1 += text("IdScan disabled. <A href='?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
+		dat += "<td><span class='linkOff'>On</span><span class='linkOff'>Off</span></td><td><font color='red'>IDScan wire cut</font></td></tr>"
+	else if(aiDisabledIdScanner)
+		dat += "<td><A href='?src=\ref[src];aiEnable=1'>On</A><span class='linkOn'>Off</span></td><td></td></tr>"
 	else
-		t1 += text("IdScan enabled. <A href='?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
+		dat += "<td><span class='linkOn'>On</span><A href='?src=\ref[src];aiDisable=1'>Off</A></td><td></td></tr>"
 
-	if(src.emergency)
-		t1 += text("Emergency Access Override is enabled. <A href='?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
-	else
-		t1 += text("Emergency Access Override is disabled. <A href='?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
-
-	if(wires.is_cut(WIRE_POWER1))
-		t1 += text("Main Power Input wire is cut.<br>\n")
-	if(wires.is_cut(WIRE_POWER2))
-		t1 += text("Main Power Output wire is cut.<br>\n")
-	if(src.secondsMainPowerLost == 0)
-		t1 += text("<A href='?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
-	if(src.secondsBackupPowerLost == 0)
-		t1 += text("<A href='?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
-
-	if(wires.is_cut(WIRE_BACKUP1))
-		t1 += text("Backup Power Input wire is cut.<br>\n")
-	if(wires.is_cut(WIRE_BACKUP2))
-		t1 += text("Backup Power Output wire is cut.<br>\n")
-
-	if(wires.is_cut(WIRE_BOLTS))
-		t1 += text("Door bolt drop wire is cut.<br>\n")
-	else if(!src.locked)
-		t1 += text("Door bolts are up. <A href='?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
-	else
-		t1 += text("Door bolts are down.")
-		if(src.hasPower())
-			t1 += text(" <A href='?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
-		else
-			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
-
+	dat += "<tr><td>Door Lights</td>"
 	if(wires.is_cut(WIRE_LIGHT))
-		t1 += text("Door bolt lights wire is cut.<br>\n")
-	else if(!src.lights)
-		t1 += text("Door bolt lights are off. <A href='?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
+		dat += "<td><span class='linkOff'>On</span><span class='linkOff'>Off</span></td><td><font color='red'>IDScan wire cut</font></td></tr>"
+	else if(lights)
+		dat += "<td><span class='linkOn'>On</span><A href='?src=\ref[src];aiDisable=10'>Off</A></td><td></td></tr>"
 	else
-		t1 += text("Door bolt lights are on. <A href='?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
+		dat += "<td><A href='?src=\ref[src];aiEnable=10'>On</A><span class='linkOn'>Off</span></td><td></td></tr>"
 
-	if(wires.is_cut(WIRE_SHOCK))
-		t1 += text("Electrification wire is cut.<br>\n")
-	if(src.secondsElectrified==-1)
-		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src)
-	else if(src.secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([] seconds). <A href='?src=\ref[];aiDisable=5'>Un-electrify it?</a><br>\n", src.secondsElectrified, src)
+	dat += "<tr><td>Emergency Access</td>"
+	if(emergency)
+		dat += "<td><A href='?src=\ref[src];aiDisable=11'>Off</A><span class='linkOn'>On</span></td><td></td></tr>"
 	else
-		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify it for 30 seconds?</a> Or, <A href='?src=\ref[];aiEnable=6'>Electrify it indefinitely until someone cancels the electrification?</a><br>\n", src, src)
+		dat += "<td><span class='linkOn'>Off</span><A href='?src=\ref[src];aiEnable=11'>On</A></td><td></td></tr>"
 
+	dat += "<tr><td>Safety Override</td>"
 	if(wires.is_cut(WIRE_SAFETY))
-		t1 += text("Door force sensors not responding.</a><br>\n")
-	else if(src.safe)
-		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'>Override?</a><br>\n",src)
+		dat += "<td><span class='linkOff'>Off</span><span class='linkOff'>On</span></td><td><font color='red'>Safety wire cut</font></td></tr>"
+	else if(safe)
+		dat += "<td><span class='linkOn'>Off</span><A href='?src=\ref[src];aiDisable=8'>On</A></td><td></td></tr>"
 	else
-		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'>Restore?</a><br>\n",src)
+		dat += "<td><A href='?src=\ref[src];aiEnable=8'>Off</A><span class='linkOn'>On</span></td><td></td></tr>"
 
+	dat += "<tr><td>Speed Override</td>"
 	if(wires.is_cut(WIRE_TIMING))
-		t1 += text("Door timing circuitry not responding.</a><br>\n")
-	else if(src.normalspeed)
-		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'>Override?</a><br>\n",src)
+		dat += "<td><span class='linkOff'>Off</span><span class='linkOff'>On</span></td><td><font color='red'>Speed wire cut</font></td></tr>"
+	else if(normalspeed)
+		dat += "<td><span class='linkOn'>Off</span><A href='?src=\ref[src];aiDisable=9'>On</A></td><td></td></tr>"
 	else
-		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'>Restore?</a><br>\n",src)
+		dat += "<td><A href='?src=\ref[src];aiEnable=9'>Off</A><span class='linkOn'>On</span></td><td></td></tr>"
 
-	if(src.welded)
-		t1 += text("Door appears to have been welded shut.<br>\n")
-	else if(!src.locked)
-		if(src.density)
-			t1 += text("<A href='?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
-		else
-			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
+	dat += "<tr><td>Electrification</td>"
+	if(wires.is_cut(WIRE_SHOCK))
+		dat += "<td><span class='linkOff'>Off</span><span class='linkOff'>On</span><span class='linkOff'>30s</span></td><td><font color='red'>Electrification wire cut</font></td></tr>"
+	else if(secondsElectrified == -1)
+		dat += "<td><A href='?src=\ref[src];aiDisable=5'>Off</A><span class='linkOn'>On</span><span class='linkOff'>30s</span></td><td></td></tr>"
+	else if(secondsElectrified > 0)
+		dat += "<td><A href='?src=\ref[src];aiDisable=5'>Off</A><span class='linkOff'>On</span><span class='linkOn'>30s</span></td><td><font color='red'>[secondsElectrified] seconds remaining</font></td></tr>"
+	else
+		dat += "<td><span class='linkOn'>Off</span><A href='?src=\ref[src];aiEnable=6'>On</A><A href='?src=\ref[src];aiEnable=5'>30s</A></td><td></td></tr>"
 
-	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
-	user << browse(t1, "window=airlock")
-	onclose(user, "airlock")
+	dat += "<tr><td>Door Bolts</td>"
+	if(wires.is_cut(WIRE_BOLTS))
+		dat += "<td><span class='linkOff'>Raised</span><span class='linkOff'>Dropped</span></td><td><font color='red'>Bolt wire cut</font></td></tr>"
+	else if(locked)
+		dat += "<td><A href='?src=\ref[src];aiEnable=4'>Raised</A><span class='linkOn'>Dropped</span></td><td></td></tr>"
+	else
+		dat += "<td><span class='linkOn'>Raised</span><A href='?src=\ref[src];aiDisable=4'>Dropped</A></td><td></td></tr>"
 
-//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
-//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 enable access override
+	dat += "<tr></tr>"
+
+	dat += "<tr><td>Door Control</td>"
+	if(density)
+		dat += "<td><A href='?src=\ref[src];aiEnable=7'>Open</A><span class='linkOn'>Close</span></td><td></td></tr>"
+	else
+		dat += "<td><span class='linkOn'>Open</span><A href='?src=\ref[src];aiEnable=7'>Close</A></td><td></td></tr>"
+
+	dat += "</table>"
+	user.set_machine(src)
+	var/datum/browser/popup = new /datum/browser(user, "airlock", "Airlock Control")
+	popup.set_content(dat)
+	popup.open(FALSE)
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
@@ -605,6 +605,7 @@ var/list/airlock_overlays = list()
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 emergency access
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 emergency access
+
 		if(href_list["aiDisable"])
 			var/code = text2num(href_list["aiDisable"])
 			switch (code)
@@ -714,24 +715,24 @@ var/list/airlock_overlays = list()
 				if(4)
 					//raise door bolts
 					if(wires.is_cut(WIRE_BOLTS))
-						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n")
+						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.")
 					else if(!src.locked)
-						usr << text("The door bolts are already up.<br>\n")
+						usr << text("The door bolts are already up.")
 					else
 						if(src.hasPower())
 							unbolt()
 							no_window_msg = "Door bolts raised."
 						else
-							usr << text("Cannot raise door bolts due to power failure.<br>\n")
+							usr << text("Cannot raise door bolts due to power failure.")
 
 				if(5)
 					//electrify door for 30 seconds
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("The electrification wire has been cut.<br>\n")
+						usr << text("The electrification wire has been cut.")
 					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n")
+						usr << text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.")
 					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.")
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
@@ -746,11 +747,11 @@ var/list/airlock_overlays = list()
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
-						usr << text("The electrification wire has been cut.<br>\n")
+						usr << text("The electrification wire has been cut.")
 					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified.<br>\n")
+						usr << text("The door is already indefinitely electrified.")
 					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
@@ -813,7 +814,7 @@ var/list/airlock_overlays = list()
 	if(nowindow)
 		if(no_window_msg)
 			usr << no_window_msg
-	else
+	if(usr.machine == src)
 		updateUsrDialog()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)

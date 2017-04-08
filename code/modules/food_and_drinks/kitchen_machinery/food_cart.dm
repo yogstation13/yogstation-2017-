@@ -1,5 +1,5 @@
-#define STORAGE_CAPACITY 30
-#define LIQUID_CAPACIY 200
+#define STORAGE_CAPACITY 60
+#define LIQUID_CAPACIY 400
 #define MIXER_CAPACITY 100
 
 /obj/machinery/food_cart

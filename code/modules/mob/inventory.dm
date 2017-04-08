@@ -26,6 +26,8 @@
 /mob/proc/put_in_l_hand(obj/item/W)
 	if(!put_in_hand_check(W))
 		return 0
+	if(!has_left_hand())
+		return 0
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
@@ -39,10 +41,11 @@
 		return 1
 	return 0
 
-
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_r_hand(obj/item/W)
 	if(!put_in_hand_check(W))
+		return 0
+	if(!has_right_hand())
 		return 0
 	if(!r_hand)
 		W.loc = src
@@ -60,6 +63,10 @@
 /mob/proc/put_in_hand_check(obj/item/W)
 	if(lying && !(W.flags&ABSTRACT))
 		return 0
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return 0
 	if(!istype(W))
 		return 0
 	return 1

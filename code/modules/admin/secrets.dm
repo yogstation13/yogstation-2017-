@@ -51,6 +51,7 @@
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
 			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=\ref[src];secrets=traitorAI'>Force traitor AI (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
 			<A href='?src=\ref[src];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
@@ -62,6 +63,7 @@
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+			<A href='?src=\ref[src];secrets=nerfwar'>Nerf War</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
 			"}
@@ -151,6 +153,7 @@
 				return
 			world.name = new_station_name()
 			station_name = world.name
+			feedback_set_details("station_name","[station_name]")
 			log_admin("[key_name(usr)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
 
@@ -284,7 +287,20 @@
 			usr.client.triple_ai()
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","TriAI")
-
+		if("traitorAI")
+			if(!check_rights(R_FUN))
+				return
+			if(ticker && ticker.mode)
+				alert(usr, "The game has already started.", null, null, null, null)
+				return
+			if(force_traitor_ai)
+				force_traitor_ai = 0
+				log_admin("[key_name_admin(usr)] set the traitor AI prob to normal.")
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the traitor AI prob to normal.</span>")
+			else
+				force_traitor_ai = 1
+				log_admin("[key_name_admin(usr)] set the traitor AI prob to 100%.")
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the traitor AI prob to 100%.</span>")
 		if("power")
 			if(!check_rights(R_FUN))
 				return
@@ -424,8 +440,7 @@
 				L.fix()
 
 		if("floorlava")
-			var/datum/weather/floor_is_lava/storm = new /datum/weather/floor_is_lava
-			storm.weather_start_up()
+			SSweather.run_weather("the floor is lava")
 
 		if("virus")
 			if(!check_rights(R_FUN))
@@ -476,7 +491,7 @@
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(0, usr, survivor_probability)
+			summon_guns(usr, survivor_probability)
 
 		if("magic")
 			if(!check_rights(R_FUN))
@@ -484,13 +499,13 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","SM")
 			var/survivor_probability = 0
-			switch(alert("Do you want this to create survivors antagonists?",,"No Antags","Some Antags","All Antags!"))
+			switch(alert("Do you want this to create adept antagonists?",,"No Antags","Some Antags","All Antags!"))
 				if("Some Antags")
 					survivor_probability = 25
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(1, usr, survivor_probability)
+			summon_magic(usr, survivor_probability)
 
 		if("events")
 			if(!check_rights(R_FUN))
@@ -561,6 +576,20 @@
 			J.total_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
+		if("nerfwar")
+			var/list/gun_type_list = list(/obj/item/weapon/gun/projectile/automatic/toy, /obj/item/weapon/gun/projectile/automatic/toy/pistol, /obj/item/weapon/gun/projectile/shotgun/toy, /obj/item/weapon/gun/projectile/shotgun/toy/crossbow)
+			for(var/mob/living/carbon/human/H in player_list)
+				if(H.stat == 2 || !(H.client))
+					continue
+				var/type = pick(gun_type_list)
+				new /obj/item/ammo_box/foambox(get_turf(H))
+				var/obj/item/weapon/gun/projectile/gun = new type(get_turf(H))
+				if(istype(gun, /obj/item/weapon/gun/projectile/automatic) && gun.mag_type)//one extra mag if the gun uses magazines.
+					new gun.mag_type(get_turf(H))
+				if(type == /obj/item/weapon/gun/projectile/shotgun/toy/crossbow)//for that sick combo cafe.
+					new /obj/item/toy/sword(get_turf(H))
+				playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
+			message_admins("[key_name_admin(usr)] has spawned foam-force guns for the entire crew.")
 
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))

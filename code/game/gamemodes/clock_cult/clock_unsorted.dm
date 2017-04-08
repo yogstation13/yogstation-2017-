@@ -147,16 +147,8 @@
 		if(.[i] != previous_states[i])
 			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>")
 
-/proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
-	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \
-	"Application" = scripture_unlock_check(SCRIPTURE_APPLICATION), \
-	"Revenant" = scripture_unlock_check(SCRIPTURE_REVENANT), \
-	"Judgement" = scripture_unlock_check(SCRIPTURE_JUDGEMENT))
-
 /proc/change_construction_value(amount)
-	var/list/scripture_states = get_scripture_states()
 	clockwork_construction_value += amount
-	scripture_unlock_alert(scripture_states)
 
 /proc/get_component_name(id) //returns a component name from a component id
 	switch(id)

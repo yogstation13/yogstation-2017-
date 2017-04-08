@@ -2,10 +2,10 @@
 /*
 CONTAINS:
 T-RAY
-DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
 MASS SPECTROMETER
+DIAGNOSTIC ANALYZER
 
 */
 
@@ -28,7 +28,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(atom/A)
 	var/flicklayer
@@ -46,7 +46,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	if(!cd)
 		scan()
@@ -134,8 +134,10 @@ MASS SPECTROMETER
 
 
 // Used by the PDA medical scanner too
-/proc/healthscan(mob/living/user, mob/living/M, mode = 1)
+/proc/healthscan(mob/living/user, mob/living/M, mode = 1, var/silicon)
 	if(user.stat || user.eye_blind)
+		return
+	if(!silicon && (issilicon(M) || istype(M, /mob/living/simple_animal/bot)))
 		return
 	//Damage specifics
 	var/oxy_loss = M.getOxyLoss()
@@ -160,6 +162,8 @@ MASS SPECTROMETER
 					if(hack.target == H)
 						user << "<span class='danger'>Unknown harmful microscopic machines detected in subject's bloodstream: Recommend treatment via Electro Magnetic Pulse or Strong Electric Shock immediately!</span>"
 						break
+
+
 	user << "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>"
 
 	// Damage descriptions
@@ -176,13 +180,17 @@ MASS SPECTROMETER
 	if (M.getCloneLoss())
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
-		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
+		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of stabilizing chemicals.</span>"
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
-		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
+		user << "\t<span class='alert'>Subject brain function is non-existent.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if (M.getBrainLoss() >= 10)
 		user << "\t<span class='alert'>Brain damage detected. Subject may have had a concussion.</span>"
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.borer)
+			user << "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>"
 
 	// Organ damage report
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
@@ -321,6 +329,9 @@ MASS SPECTROMETER
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
 		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/bz_concentration = env_gases["bz"] ? env_gases["bz"][MOLES]/total_moles : 0
+		var/agent_b_concentration = env_gases["agent_b"] ? env_gases["agent_b"][MOLES]/total_moles : 0
+		var/n2o_concentration = env_gases["n2o"] ? env_gases["n2o"][MOLES]/total_moles : 0
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -342,6 +353,18 @@ MASS SPECTROMETER
 			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+		if(n2o_concentration > 0.01)
+			user << "<span class='alert'>N2O: [round(n2o_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>N2O: [round(n2o_concentration*100, 0.01)] %</span>"
+		if(agent_b_concentration > 0.005)
+			user << "<span class='alert'>AGENT B: [round(agent_b_concentration*100, 0.01)] %. Remove flammable materials.</span>"
+		else
+			user << "<span class='info'>AGENT B: [round(agent_b_concentration*100, 0.01)] %</span>"
+		if(bz_concentration > 0.01)
+			user << "<span class='alert'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
+		else
+			user << "<span class='info'>BZ: [round(bz_concentration*100, 0.01)] %</span>"
 
 
 		for(var/id in env_gases)
@@ -441,6 +464,18 @@ MASS SPECTROMETER
 		user << "<span class='warning'>Warning: slime is hungry</span>"
 	user << "Electric change strength: [T.powerlevel]"
 	user << "Health: [round(T.health/T.maxHealth,0.01)*100]"
+	if (T.rabid == 1)
+		user << "<span class='warning'>Warning: Slime is rabid!</span>"
+
+	if (T.attacked == 10)
+		user << "<span class='warning'>Warning: Slime was just attacked!</span>"
+	else if(T.attacked < 1)
+		user << "Slime appears agitated due to prior agression.</span>"
+	else if(T.attacked < 5)
+		user << "<span class='warning'>Warning: Slime was attacked a short period of time ago.</span>"
+	else if(T.attacked < 10)
+		user << "<span class='warning'>Warning: Slime was attacked recently.</span>"
+
 	if (T.slime_mutation[4] == T.colour)
 		user << "This slime does not evolve any further."
 	else
@@ -455,5 +490,108 @@ MASS SPECTROMETER
 			user << "Possible mutations: [T.slime_mutation[1]], [T.slime_mutation[2]], [T.slime_mutation[3]], [T.slime_mutation[4]]"
 			user << "Genetic destability: [T.mutation_chance] % chance of mutation on splitting"
 	if (T.cores > 1)
-		user << "Anomalious slime core amount detected"
+		user << "Anomalious slime core amount detected."
+	if (T.mutator_used == TRUE)
+		user << "Slime has been fed a mutative chemical and cannot accept any more mutation potions."
+	if (T.Friends && T.Friends.len)
+		user << "<span class='notice'>Slime has formed lasting bonds with these organisms:</span>"
+		for (var/mob/mob in T.Friends)
+			user << "<span class='notice'>[mob.name]</span>"
+	else
+		if(prob(1))
+			user << "<span class='notice'>This slime is as lonely as you are.</span>"
+		else
+			user << "<span class='notice'>Slime has no lasting bonds with any organisms.</span>"
+	if(T.bodytemperature < (T0C + 5))
+		user << "<span class='notice'>Slime is beginning to suffer under cold temperature.:</span>"
+	else if(T.bodytemperature <= (T0C - 40)) // stun temperature
+		user << "<span class='notice'>Slime is paralyzed due to cold.</span>"
+	else if(T.bodytemperature <= (T0C - 50))
+		user << "<span class='notice'>Slime is dying due to cold temperature.</span>"
+	else if(T.bodytemperature <= 50)
+		user << "<span class='notice'>Slime is dying extremely fast due to cold temperature.</span>"
+	if (T.docile)
+		user << "<span class='notice'>Slime is docile and cannot evolve or feed.</span>"
+	if (T.stat == UNCONSCIOUS)
+		user << "<span class='notice'>Slime is in stasis.</span>"
 	user << "Growth progress: [T.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+
+
+
+
+
+/obj/item/device/diagnosticscanner
+	name = "diagnostic scanner"
+	desc = "An analyzer for silicons and other silicon based lifeforms. Open a borg for an internal scan."
+	icon_state = "diagnostic0"
+	w_class = 2
+	var/active = FALSE
+	item_state = "analyzer"
+	materials = list(MAT_METAL=200, MAT_SILVER=10)
+	origin_tech = "magnets=1;engineering=3;biotech=2"
+
+/obj/item/device/diagnosticscanner/attack_self(mob/user)
+	if(!active)
+		icon_state = "diagnostic2"
+	else
+		icon_state = "diagnostic3"
+	addtimer(src,"toggle",15,TRUE)
+
+/obj/item/device/diagnosticscanner/proc/toggle()
+	if(!active)
+		icon_state = "diagnostic1"
+		active = TRUE
+		w_class = 3
+	else
+		icon_state = "diagnostic0"
+		active = FALSE
+		w_class = 2
+
+/obj/item/device/diagnosticscanner/attack(mob/living/M, mob/living/carbon/human/user)
+	if(!active)
+		return
+	else
+		diagnosticscan(user, M)
+
+/proc/diagnosticscan(mob/living/user, mob/living/M)
+	if(isrobot(M))
+		var/mob/living/silicon/robot/R = M
+		user << "<span class='notice'>Diagnostic results for \icon[R] [R.name]:</span>"
+		user << "<span class='notice'>Overall status: <b>[round(M.health/M.maxHealth*100)]%</b></span>"
+		user << "<span class='notice'>Damage:<font color='red'>Brute</font>-<font color='#FE5800'>Burn</font></span>"
+		user << "     <font color='red'>[R.getBruteLoss()]</font> - <font color='#FE5800'>[R.getFireLoss()]</font>"
+		if(R.cell)
+			user << "<span class='notice'> \icon[R.cell] [R.cell.name] at [round(R.cell.charge/R.cell.maxcharge*100)]%.</span>"
+		user << "<span class='notice'>Designation: <b>[R.designation]</b></span>"
+		user << "<span class='notice'>Upgrades:</span>"
+		for(var/obj/item/borg/upgrade/U in R.contents)
+			user << "<span class='notice'>  \icon[U] [U.name]</span>"
+		var/healthstat
+		if(R.health == R.maxHealth)
+			healthstat = "<font color='green'>Healthy</font>"
+		else if(R.health >= 50)
+			healthstat = "<font color='blue'>Dented</font>"
+		else if(R.health >= 0)
+			healthstat = "<font color='#E84A01'>Damaged</font>"
+		else if(R.health > -100)
+			healthstat = "<font color='red'>Heavily Damaged</font>"
+		else
+			healthstat = "<font color='black'>Inoperable</font>"
+
+		user << "<span class='notice'>Status: <b>[healthstat]</b></span>"
+		if(R.opened)
+			user << "<span class='notice'> Internal scan in-progress...</span>"
+			if(do_mob(user,50,target = R))
+				user << "<span class='notice'>Silicon obeying: </span><b>[R.laws.name]</b>.</span>"
+			else
+				user << "<span class='warning'>Subject must stand still.</span>"
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(is_species(H, /datum/species/android)) //THIS WILL BE CHANGED ONCE POWERCELL PR GETS MERGED
+			healthscan(user, H)
+		if(do_mob(user, 100, target = H))
+			if(M.mind.cyberman)
+				user << "<span class='warning'><b>WARNING</b></span>: Hostile nanites detected.</span>"
+	if(issilicon(M) || istype(M, /mob/living/simple_animal/bot))
+		healthscan(user, M,,1)

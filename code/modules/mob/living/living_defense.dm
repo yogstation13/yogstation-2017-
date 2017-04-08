@@ -31,7 +31,13 @@
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
+	if(P.dismemberment)
+		check_projectile_dismemberment(P, def_zone)
 	return P.on_hit(src, armor, def_zone)
+
+/mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+	return 0
+
 
 /proc/vol_by_throwforce_and_or_w_class(obj/item/I)
 		if(!I)
@@ -210,12 +216,14 @@
 				drop_l_hand()
 				stop_pulling()
 			if(GRAB_NECK)
+				add_logs(user, src, "grabbed", addition="by the neck")
 				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
 								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
 				update_canmove() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
 			if(GRAB_KILL)
+				add_logs(user, src, "strangled")
 				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
 								"<span class='userdanger'>[user] is strangling you!</span>")
 				update_canmove() //we fall down

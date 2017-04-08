@@ -11,6 +11,8 @@
 	if(!no_organs)
 		spill_organs(no_brain)
 	spawn_gibs()
+	for(var/obj/item/weapon/disk/nuclear/N in GetAllContents())
+		N.forceMove(loc)
 	qdel(src)
 
 /mob/living/proc/gib_animation()
@@ -31,6 +33,8 @@
 
 	dust_animation()
 	spawn_dust()
+	for(var/obj/item/weapon/disk/nuclear/N in GetAllContents())
+		N.forceMove(loc)
 	qdel(src)
 
 /mob/living/proc/dust_animation()

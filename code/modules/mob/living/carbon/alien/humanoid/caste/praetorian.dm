@@ -37,7 +37,7 @@
 	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
 		return 0
-	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen, user.hive_faction))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return 1

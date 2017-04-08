@@ -35,12 +35,14 @@
 	dna.species.on_hit(proj_type, src)
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+	if(resolve_defense_modules(P, null, def_zone, PROJECTILE_ATTACK))
+		return
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/bullet))
 			lastbrutetype = "bullet"
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 			lastburntype = "laser"
-			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
+			if(check_reflect(def_zone, P.firer, src, P.previous_dir)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
 				// Find a turf near or on the original location to bounce to
@@ -65,15 +67,23 @@
 			return 2
 	return (..(P , def_zone))
 
-/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
+	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
+	if(affecting && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
+		affecting.dismember(P.damtype)
+
+
+/mob/living/carbon/human/proc/check_reflect(def_zone, mob/living/shooter, mob/defense, previousdir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+	var/mob/living/newshooter = new /mob/living/carbon/human
+	newshooter.dir = previousdir
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone) == 1)
+		if(wear_suit.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	if(l_hand)
-		if(l_hand.IsReflect(def_zone) == 1)
+		if(l_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	if(r_hand)
-		if(r_hand.IsReflect(def_zone) == 1)
+		if(r_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
 	return 0
 
@@ -82,19 +92,19 @@
 
 	if(l_hand && !istype(l_hand, /obj/item/clothing))
 		var/final_block_chance = l_hand.block_chance - (Clamp((armour_penetration-l_hand.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-		if(l_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(l_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(r_hand && !istype(r_hand, /obj/item/clothing))
 		var/final_block_chance = r_hand.block_chance - (Clamp((armour_penetration-r_hand.armour_penetration)/2,0,100)) + block_chance_modifier //Need to reset the var so it doesn't carry over modifications between attempts
-		if(r_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(r_hand.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(w_uniform)
 		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	return 0
 
@@ -108,11 +118,13 @@
 	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
 	feedback_add_details("zone_targeted","[target_area]")
 	lastbrutetype = "melee"
+	if(resolve_defense_modules(I, user, affecting, MELEE_ATTACK))
+		return
 	// the attacked_by code varies among species
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
-	if (dna)
+	if (dna && dna.species)
 		dna.species.handle_emp(src, severity)
 	//CYBERMEN STUFF
 	//I'd prefer to have a event-listener system set up for this, but for now this will do.
@@ -124,6 +136,10 @@
 				if(H.target == src)
 					H.emp_act(severity)
 	..()
+
+/mob/living/carbon/human/emag_act(mob/user)
+	if(dna && dna.species)
+		dna.species.emag_act(src, user)
 
 /mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
 	var/list/damaged = list()
@@ -236,12 +252,13 @@
 			damaged += .
 
 	//DAMAGE//
+	var/damagemod = (dna && dna.species) ? dna.species.acidmod : 1
 	for(var/obj/item/bodypart/affecting in damaged)
 		affecting.take_damage(acidity, 2*acidity)
 
 		if(affecting.name == "head")
-			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
-				affecting.take_damage(acidity, 2*acidity)
+			if(prob(min(acidpwr*damagemod*acid_volume/10, 90))) //Applies disfigurement
+				affecting.take_damage(acidity*damagemod, 2*acidity*damagemod)
 				emote("scream")
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"
@@ -274,6 +291,10 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
+		if(affecting)
+			if(M.melee_damage_type == BRUTE && M.dismember_chance > 0 && dam_zone != "chest")
+				if(prob(M.dismember_chance))
+					affecting.dismember()
 		updatehealth()
 
 
@@ -347,6 +368,8 @@
 		throwpower = I.throwforce
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
+	if(resolve_defense_modules(AM, attack_type = THROWN_PROJECTILE_ATTACK))
+		return
 	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1

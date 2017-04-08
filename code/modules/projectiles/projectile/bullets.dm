@@ -134,6 +134,7 @@
 	weaken = 5
 	stun = 5
 	forcedodge = 1
+	pass_flags = PASSGLASS
 	nodamage = 1
 	hitsound = 'sound/items/bikehorn.ogg'
 	icon = 'icons/obj/hydroponics/harvest.dmi'

@@ -152,15 +152,15 @@
 	flash_eyes(affect_silicon = 1)
 	..()
 
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))
 		return 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked)
+			adjustBruteLoss(damage * blocked, 1, application)
 		if(BURN)
-			adjustFireLoss(damage * blocked)
+			adjustFireLoss(damage * blocked, 1, application)
 		else
 			return 1
 	updatehealth()
@@ -445,6 +445,13 @@
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")
 		..(user, 1)
+		if(user.dna.species.id == "abomination")//snowflake abomination hulk damage
+			visible_message("<span class='danger'>[user] has torn into [src], damaging it significantly!</span>", \
+							"<span class='userdanger'>[user] has torn into [src], damaging it significantly!</span>")
+			playsound(loc, 'sound/weapons/bladeslice.ogg', 25, 1, -1)
+			playsound(loc, 'sound/effects/bang.ogg', 10, 1)
+			adjustBruteLoss(30)//metal is harder than skin, so less damage
+			return 1
 		adjustBruteLoss(rand(10, 15))
 		playsound(loc, "punch", 25, 1, -1)
 		visible_message("<span class='danger'>[user] has punched [src]!</span>", \

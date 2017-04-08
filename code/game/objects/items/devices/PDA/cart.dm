@@ -8,17 +8,22 @@
 
 	var/obj/item/radio/integrated/radio = null
 	var/functions = 0 //Bitflags in __DEFINES/pda.dm
-	var/remote_door_id = ""
+	var/special_functions = 0
 	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	var/alert_flags = 0 //Bitflags in __DEFINES/pda.dm
+	var/alert_toggles = 0
+	var/mode = null
+	var/spam_enabled = 0 //Enables "Send to All" Option
+	var/menu
 	var/list/area/atmos_alerts = list()
 	var/list/area/fire_alerts = list()
 	var/list/area/power_alerts = list()
-	var/alert_flags = 0 //Bitflags in __DEFINES/pda.dm
-	var/alert_toggles = 0
+	var/list/area/burglar_alerts = list()
+	var/list/area/motion_alerts = list()
+	var/list/botlist = list()
 
-	var/spam_enabled = 0 //Enables "Send to All" Option
-	var/mode = null
-	var/menu
+	//TODO: move these into an associative list so they aren't wasted on cartridges that do not use them.
+	var/remote_door_id = ""
 	var/datum/data/record/active1 = null //General
 	var/datum/data/record/active2 = null //Medical
 	var/datum/data/record/active3 = null //Security
@@ -28,11 +33,15 @@
 	var/list/atmosmonitors = list()
 	var/message1	// used for status_displays
 	var/message2
-	var/list/stored_data = list()
 	var/current_channel
-
+	var/search = ""
+	var/obj/machinery/computer/cargo/cargo_console = null
+	var/obj/item/weapon/implant/mindslave/imp = null
 	var/mob/living/simple_animal/bot/active_bot
-	var/list/botlist = list()
+
+	var/detonate_charges = 0
+	var/honk_charges = 0
+	var/mime_charges = 0
 
 /obj/item/weapon/cartridge/New()
 	..()
@@ -42,11 +51,25 @@
 		power_alert_listeners |= src
 	if(alert_flags & PDA_FIRE_ALERT)
 		fire_alert_listeners |= src
+	if(alert_flags & PDA_BURGLAR_ALERT)
+		burglar_alert_listeners |= src
+	if(alert_flags & PDA_MOTION_ALERT)
+		motion_alert_listeners |= src
+	if(special_functions & PDA_SPECIAL_SIGNAL_FUNCTIONS)
+		radio = new /obj/item/radio/integrated/signal(src)
+	if(alert_flags & PDA_HOTLINE_ALERT)
+		if(istype(loc, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = loc
+			hotline_pdas += pda
 
 /obj/item/weapon/cartridge/Destroy()
 	atmos_alert_listeners -= src
 	power_alert_listeners -= src
 	fire_alert_listeners -= src
+	burglar_alert_listeners -= src
+	motion_alert_listeners -= src
+	if(istype(src.loc, /obj/item/device/pda))
+		hotline_pdas -= src.loc
 	return ..()
 
 /obj/item/weapon/cartridge/engineering
@@ -67,6 +90,13 @@
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	functions = PDA_MEDICAL_FUNCTIONS
+	bot_access_flags = MED_BOT
+
+/obj/item/weapon/cartridge/paramedic
+	name = "\improper ParaHotline cartridge"
+	icon_state = "cart-m"
+	functions = PDA_MEDICAL_FUNCTIONS
+	alert_flags = PDA_HOTLINE_ALERT
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/chemistry
@@ -103,14 +133,14 @@
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
 	icon_state = "cart-clown"
-	functions = PDA_CLOWN_FUNCTIONS
-	var/honk_charges = 5
+	special_functions = PDA_SPECIAL_CLOWN_FUNCTIONS
+	honk_charges = 5
 
 /obj/item/weapon/cartridge/mime
 	name = "\improper Gestur-O 1000 cartridge"
 	icon_state = "cart-mi"
-	functions = PDA_MIME_FUNCTIONS
-	var/mime_charges = 5
+	special_functions = PDA_SPECIAL_MIME_FUNCTIONS
+	mime_charges = 5
 
 /obj/item/weapon/cartridge/librarian
 	name = "\improper Lib-Tweet cartridge"
@@ -130,24 +160,27 @@
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
 	desc = "A data cartridge with an integrated radio signaler module."
+	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
 
-/obj/item/weapon/cartridge/signal/toxins
+/obj/item/weapon/cartridge/toxins
 	name = "\improper Signal Ace 2 cartridge"
 	desc = "Complete with integrated radio signaler!"
 	icon_state = "cart-tox"
 	functions = PDA_ATMOS_FUNCTIONS|PDA_REAGENT_FUNCTIONS
+	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
 
-/obj/item/weapon/cartridge/signal/New()
-	..()
-	radio = new /obj/item/radio/integrated/signal(src)
-
-
+/obj/item/weapon/cartridge/cargo
+	name = "space parts & space vendors cartridge"
+	desc = "Perfect for the Cargo Technician on the go!"
+	icon_state = "cart-q"
+	functions = PDA_CARGO_FUNCTIONS
+	bot_access_flags = MULE_BOT
 
 /obj/item/weapon/cartridge/quartermaster
-	name = "space parts & space vendors cartridge"
+	name = "space parts & space vendors DELUX cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
-	functions = PDA_QUARTERMASTER_FUNCTIONS
+	functions = PDA_CARGO_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 	bot_access_flags = MULE_BOT
 
 /obj/item/weapon/cartridge/head
@@ -158,16 +191,15 @@
 /obj/item/weapon/cartridge/hop
 	name = "\improper HumanResources9001 cartridge"
 	icon_state = "cart-h"
-	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS
+	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 	bot_access_flags = MULE_BOT|CLEAN_BOT
-	functions = PDA_JANITOR_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
+	alert_flags = PDA_BURGLAR_ALERT|PDA_HOTLINE_ALERT
 	functions = PDA_SECURITY_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_SECURITY_FUNCTIONS
 	bot_access_flags = SEC_BOT
-
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
@@ -179,6 +211,7 @@
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
+	alert_flags = PDA_HOTLINE_ALERT
 	functions = PDA_MEDICAL_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_MEDICAL_FUNCTIONS
 	bot_access_flags = MED_BOT
 
@@ -186,11 +219,8 @@
 	name = "\improper Signal Ace DELUXE cartridge"
 	icon_state = "cart-rd"
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_ATMOS_FUNCTIONS
+	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
 	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
-
-/obj/item/weapon/cartridge/rd/New()
-	..()
-	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
@@ -198,44 +228,58 @@
 	icon_state = "cart-c"
 	functions = PDA_MANIFEST_FUNCTIONS|PDA_ENGINE_FUNCTIONS|PDA_SECURITY_FUNCTIONS|PDA_MEDICAL_FUNCTIONS|\
 				PDA_REAGENT_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS|\
-				PDA_NEWSCASTER_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_BOTANY_FUNCTIONS
-	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT
+				PDA_NEWSCASTER_FUNCTIONS|PDA_CARGO_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_BOTANY_FUNCTIONS
+	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
+	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT|PDA_HOTLINE_ALERT|PDA_BURGLAR_ALERT
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
-
-/obj/item/weapon/cartridge/captain/New()
-	..()
-	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/syndicate
 	name = "\improper Detomatix cartridge"
 	icon_state = "cart"
-	functions = PDA_REMOTE_DOOR_FUNCTIONS
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.
-	var/shock_charges = 4
+	special_functions = PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS | PDA_SPECIAL_DETONATE_FUNCTIONS
+	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing. //this has been here for years, guess we are still testing.
+	detonate_charges = 4
 
 /obj/item/weapon/cartridge/slavemaster
 	name = "\improper Slavemaster-2000 cartridge"
 	icon_state = "cart"
-	var/obj/item/weapon/implant/mindslave/imp = null
+	special_functions = PDA_SPECIAL_SLAVE_FUNCTIONS
 
-/obj/item/weapon/cartridge/proc/unlock()
+/obj/item/weapon/cartridge/admin
+	name = "\improper H4XMAST3R cartridge"
+	desc = "A pda cartridge used by centcomm for nefarious purposes."
+	functions = PDA_SECURITY_FUNCTIONS		| PDA_ENGINE_FUNCTIONS 	| PDA_ATMOS_FUNCTIONS |\
+				PDA_ATMOS_MONITOR_FUNCTIONS | PDA_MEDICAL_FUNCTIONS	| PDA_MANIFEST_FUNCTIONS |\
+				PDA_JANITOR_FUNCTIONS		| PDA_BOTANY_FUNCTIONS	| PDA_REAGENT_FUNCTIONS |\
+				PDA_NEWSCASTER_FUNCTIONS	| PDA_STATUS_DISPLAY_FUNCTIONS | PDA_CARGO_FUNCTIONS |\
+				PDA_QUARTERMASTER_FUNCTIONS | PDA_FORENSIC_FUNCTIONS
+	special_functions = PDA_SPECIAL_SOFTWARE_FUNCTIONS	| PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS |\
+						PDA_SPECIAL_DETONATE_FUNCTIONS	| PDA_SPECIAL_CLOWN_FUNCTIONS |\
+						PDA_SPECIAL_MIME_FUNCTIONS		| PDA_SPECIAL_SIGNAL_FUNCTIONS |\
+						PDA_SPECIAL_SLAVE_FUNCTIONS
+	alert_flags = PDA_ATMOS_ALERT | PDA_FIRE_ALERT | PDA_POWER_ALERT | PDA_BURGLAR_ALERT | PDA_MOTION_ALERT | PDA_HOTLINE_ALERT
+	icon_state = "cart"
+	spam_enabled = 1
+
+/obj/item/weapon/cartridge/proc/unlock(refresh_screen = 1)
 	if (!istype(loc, /obj/item/device/pda))
 		return
 
 	generate_menu()
-	print_to_host(menu)
+	print_to_host(menu, refresh_screen)
 	return
 
-/obj/item/weapon/cartridge/proc/print_to_host(text)
+/obj/item/weapon/cartridge/proc/print_to_host(text, refresh_screen = 1)
 	if (!istype(loc, /obj/item/device/pda))
 		return
 	var/obj/item/device/pda/P = loc
 	P.cart = text
 
-	for (var/mob/M in viewers(1, loc.loc))
-		if (M.client && M.machine == loc)
-			P.attack_self(M)
+	if(refresh_screen)
+		for (var/mob/M in viewers(1, loc.loc))
+			if (M.client && M.machine == loc)
+				P.attack_self(M)
 
 	return
 
@@ -263,6 +307,18 @@
 			fire_alerts += A
 			if(alert_toggles & PDA_FIRE_ALERT)
 				msg = "Alert: Fire alarm in \the [A]"
+		if("Burglar")
+			if(!(alert_flags & PDA_BURGLAR_ALERT) || (A in burglar_alerts))
+				return
+			burglar_alerts += A
+			if(alert_toggles & PDA_BURGLAR_ALERT)
+				msg = "Alert: Burglar alarm in \the [A]"
+		if("Motion")
+			if(!(alert_flags & PDA_MOTION_ALERT) || (A in motion_alerts))
+				return
+			motion_alerts += A
+			if(alert_toggles & PDA_MOTION_ALERT)
+				msg = "Alert: Motion alarm in \the [A]"
 		else
 			return
 	if(istype(loc, /obj/item/device/pda))
@@ -295,6 +351,18 @@
 			fire_alerts -= A
 			if(alert_toggles & PDA_FIRE_ALERT)
 				msg = "Notice: Fire alarm cleared in \the [A]"
+		if("Burglar")
+			if(!(alert_flags & PDA_BURGLAR_ALERT))
+				return
+			burglar_alerts -= A
+			if(alert_toggles & PDA_BURGLAR_ALERT)
+				msg = "Notice: Burglar alarm cleared in \the [A]"
+		if("Motion")
+			if(!(alert_flags & PDA_MOTION_ALERT))
+				return
+			motion_alerts -= A
+			if(alert_toggles & PDA_MOTION_ALERT)
+				msg = "Notice: Motion alarm cleared in \the [A]"
 		else
 			return
 	if(istype(loc, /obj/item/device/pda))
@@ -311,7 +379,7 @@
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src
-	status_signal.transmission_method = 1
+	status_signal.transmission_method = TRANSMISSION_RADIO
 	status_signal.data["command"] = command
 
 	switch(command)
@@ -323,7 +391,6 @@
 
 	frequency.post_signal(src, status_signal)
 
-
 /obj/item/weapon/cartridge/proc/generate_menu(mob/user)
 	switch(mode)
 		if(40) //signaller
@@ -331,20 +398,20 @@
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
-<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
-Frequency:
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(S.frequency)]
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
-<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
-<br>
-Code:
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[S.code]
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
-<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
+					<a href='byond://?src=\ref[src];choice=Send Signal'>Send Signal</A><BR>
+					Frequency:
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
+					[format_frequency(S.frequency)]
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
+					<a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
+					<br>
+					Code:
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
+					[S.code]
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
+					<a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
@@ -423,11 +490,26 @@ Code:
 
 		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 			menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
+			menu += "<a href='byond://?src=\ref[src];choice=Medical Search'>\[<i>search</i>\]</A><br><br>"
 			if(data_core.general)
 				for(var/datum/data/record/R in sortRecord(data_core.general))
 					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 			menu += "<br>"
-		if(441)
+		if(441) //medical record search results
+			menu = "<h4><img src=pda_medical.png> Medical Record Search Results</h4>"
+			menu += "Search: \"[search]\""
+			if(search && data_core.general)
+				var/list/filtered = list()
+				for(var/V in data_core.general)
+					var/datum/data/record/R = V
+					if(findtext(R.fields["name"], search) || findtext(R.fields["fingerprint"], search) || findtext(R.fields["rank"], search) )
+						filtered += R
+				menu += "<ul>"
+				for(var/V in sortRecord(filtered))
+					var/datum/data/record/R = V
+					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				menu += "</ul>"
+		if(442)
 			menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
 			if(active1 in data_core.general)
@@ -466,12 +548,27 @@ Code:
 			menu += "<br>"
 		if (45) //security records
 			menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
+			menu += "<a href='byond://?src=\ref[src];choice=Security Search'>\[<i>search</i>\]</A><br><br>"
 			if(data_core.general)
 				for (var/datum/data/record/R in sortRecord(data_core.general))
 					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 			menu += "<br>"
-		if(451)
+		if(451) //security record search results
+			menu = "<h4><img src=pda_cuffs.png> Security Record Search Results</h4>"
+			menu += "Search: \"[search]\""
+			if(search && data_core.general)
+				var/list/filtered = list()
+				for(var/V in data_core.general)
+					var/datum/data/record/R = V
+					if(findtext(R.fields["name"], search) || findtext(R.fields["fingerprint"], search) || findtext(R.fields["rank"], search) )
+						filtered += R
+				menu += "<ul>"
+				for(var/V in sortRecord(filtered))
+					var/datum/data/record/R = V
+					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
+				menu += "</ul>"
+		if(452)
 			menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
 			if(active1 in data_core.general)
@@ -494,12 +591,12 @@ Code:
 				menu += text("<BR>\nMinor Crimes:")
 
 				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
+						<tr>
+						<th>Crime</th>
+						<th>Details</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						</tr>"}
 				for(var/datum/data/crime/c in active3.fields["mi_crim"])
 					menu += "<tr><td>[c.crimeName]</td>"
 					menu += "<td>[c.crimeDetails]</td>"
@@ -511,12 +608,12 @@ Code:
 				menu += text("<BR>\nMajor Crimes:")
 
 				menu +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Crime</th>
-<th>Details</th>
-<th>Author</th>
-<th>Time Added</th>
-</tr>"}
+						<tr>
+						<th>Crime</th>
+						<th>Details</th>
+						<th>Author</th>
+						<th>Time Added</th>
+						</tr>"}
 				for(var/datum/data/crime/c in active3.fields["ma_crim"])
 					menu += "<tr><td>[c.crimeName]</td>"
 					menu += "<td>[c.crimeDetails]</td>"
@@ -532,7 +629,7 @@ Code:
 
 			menu += "<br>"
 
-		if (47) //quartermaster order records
+		if (47) //cargo order records
 			menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 
 			menu += "<BR><B>Supply shuttle</B><BR>"
@@ -562,12 +659,49 @@ Code:
 				var/datum/supply_order/SO = S
 				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
+		if (56) //quartermaster stock viewer
+			menu = "<h4><img src=pda_crate.png> Stock Exchange Viewer</h4>"
+			var/logged_in = "/tg/ Station 13 Cargo Department"
+			menu += "<u><b>[logged_in]</b></u><br>"
+			menu += "<table border='1' bordercolor='#000000'>"
+			menu += "<tr><th>&nbsp</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th></tr>"
 
+			for (var/V in stockExchange.stocks)
+				var/mystocks = 0
+				var/datum/stock/S = V
+				if (logged_in && (logged_in in S.shareholders))
+					mystocks = S.shareholders[logged_in]
+				menu += "<tr>"
+
+				if(S.disp_value_change > 0)
+					menu += "<td>+</td>"
+				else if(S.disp_value_change < 0)
+					menu += "<td>-</td>"
+				else
+					menu += "<td>=</td>"
+
+				menu += "<td><b>[S.short_name]</b></td>"
+				menu += "<td>[S.name]</td>"
+
+				if(!S.bankrupt)
+					menu += "<td>[S.current_value]</td>"
+				else
+					menu += "<td>0</td>"
+
+				if(mystocks)
+					menu += "<td><b>[mystocks]</b></td>"
+				else
+					menu += "<td>0</td>"
+
+				menu += "<td>[S.available_shares]</td>"
+
+				menu += "</tr>"
+			menu += "</table><br><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors DELUX PLUS for full remote stock buying and selling.</font>"
 		if (48) //Slavermaster 2000 //Whoever came up with the idea of making menu choices numerical is a idiot.
-			menu = "<h4><img src=pda_signaller.png> Slave Controller</h4>"
+			menu = "<h4><img src=pda_signaler.png> Slave Controller</h4>"
 
 			menu += "<BR><B>Available Slaves: </B><BR>"
-			if(src:imp.imp_in)
+			if(imp && imp.imp_in)
 				menu += "<ul><li>[src:imp.imp_in]<A href='byond://?src=\ref[src];choice=Detonate Slave'> *Detonate*</a></li></ul>"
 			else
 				menu += "No slaves detected."
@@ -683,7 +817,7 @@ Code:
 
 		if(51)//alerts monitoring
 			var/turf/myTurf = get_turf(src)
-			for(var/alert in atmos_alerts|fire_alerts|power_alerts)
+			for(var/alert in atmos_alerts|fire_alerts|power_alerts|burglar_alerts|motion_alerts)
 				var/area/a = alert
 				if(a.z != myTurf.z)
 					atmos_alerts -= a
@@ -705,6 +839,18 @@ Code:
 			if(alert_flags & PDA_POWER_ALERT)
 				menu += "<b>Power Alerts:</b><ul>"
 				for(var/alert in power_alerts)
+					menu += "<li>[alert]</li>"
+				menu += "</ul>"
+
+			if(alert_flags & PDA_BURGLAR_ALERT)
+				menu += "<b>Burglar Alerts:</b><ul>"
+				for(var/alert in burglar_alerts)
+					menu += "<li>[alert]</li>"
+				menu += "</ul>"
+
+			if(alert_flags & PDA_MOTION_ALERT)
+				menu += "<b>Motion Alerts:</b><ul>"
+				for(var/alert in motion_alerts)
 					menu += "<li>[alert]</li>"
 				menu += "</ul>"
 
@@ -734,32 +880,60 @@ Code:
 			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
 			bot_control()
 
+		if(55) // Admin stuff
+			menu = "<h4><img src=pda_signaler.png>Software Viewer</h4><br>\
+			<A href='byond://?src=\ref[src];choice=del_software;target=all'>\[Delete All Software\]</a><br>\
+			<A href='byond://?src=\ref[src];choice=del_software;target=all_malware'>\[Delete All Malware\]</a><br>\
+			<br>Active Software:<ul>"
+			listclearnulls(active_software)
+			for(var/V in active_software)
+				var/datum/software/M = V
+				menu += "<li>[M] in [M.host] <A href='byond://?src=\ref[src];choice=del_software;target=\ref[M]'>\[Delete\]</a></li>"
+			menu += "</ul>"
+
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
 
-	if (!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-		usr.unset_machine()
-		usr << browse(null, "window=pda")
+	if (!canuse_check(usr))
 		return
 
 	var/obj/item/device/pda/pda = loc
 
 	switch(href_list["choice"])
+		if("Medical Search")
+			search = stripped_input(usr, "Enter a search to run:", "Search")
+			if(!canuse_check(usr))
+				search = ""
+				return
+			if(search)
+				pda.mode = 441
+				mode = 441
+			else
+				search = ""
 		if("Medical Records")
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], data_core.medical)
-			pda.mode = 441
-			mode = 441
+			pda.mode = 442
+			mode = 442
 			if(!active2)
 				active1 = null
-
+		if("Security Search")
+			search = stripped_input(usr, "Enter a search to run:", "Search")
+			if(!canuse_check(usr))
+				search = ""
+				return
+			if(search)
+				pda.mode = 451
+				mode = 451
+			else
+				search = ""
 		if("Security Records")
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], data_core.security)
-			pda.mode = 451
-			mode = 451
+			pda.mode = 452
+			mode = 452
 			if(!active3)
 				active1 = null
 
@@ -835,14 +1009,35 @@ Code:
 			return
 
 		if("Detonate Slave")
-			if(istype(src, /obj/item/weapon/cartridge/slavemaster))
-				if(src:imp)
-					if (ismob(src.loc))
-						var/mob/detonator = src.loc
-						if(ismob(src:imp.loc))
-							var/mob/detonated = src:imp.loc
-							log_game("[detonator.ckey]/([detonator] has detonated [detonated.ckey]/([detonated]) with a mindslave implant");
-					src:imp.activate()
+			if(special_functions & PDA_SPECIAL_SLAVE_FUNCTIONS)
+				if(imp)
+					if(ismob(imp.loc))
+						var/mob/detonated = imp.loc
+						log_game("[usr.ckey]/([usr.real_name] has detonated [detonated.ckey]/([detonated.real_name]) with a mindslave implant");
+					imp.activate()
+
+		if("del_software")
+			if(special_functions & PDA_SPECIAL_SOFTWARE_FUNCTIONS)
+				var/target = href_list["target"]
+				if(target)
+					if(target == "all")
+						if("Yes" == alert(usr, "Delete all software?", "Delete Software", "Yes", "No"))
+							for(var/V in active_software)
+								qdel(V)
+							usr << "<span class='warning'>All software deleted.</span>"
+					else if(target == "all_malware")
+						if("Yes" == alert(usr, "Delete all malware?", "Delete Malware", "Yes", "No"))
+							for(var/datum/software/malware/M in active_software)
+								qdel(M)
+							usr << "<span class='warning'>All malware deleted.</span>"
+					else
+						var/datum/software/S = locate(target)
+						if(istype(S))
+							qdel(S)
+							usr << "<span class='warning'>Software deleted.</span>"
+						else
+							usr << "<span class='warning'>Error: software has already been deleted.</span>"
+				pda.Topic(null,list("choice"=num2text(mode)))
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])
@@ -928,3 +1123,10 @@ Code:
 			return
 
 	return menu
+
+/obj/item/weapon/cartridge/proc/canuse_check(mob/user = usr)
+	if(!user.canmove || user.stat || user.restrained() || !in_range(loc, user))
+		user.unset_machine()
+		user << browse(null, "window=pda")
+		return 0
+	return 1

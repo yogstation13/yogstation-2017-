@@ -26,6 +26,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
 
 	var/valid_territory = 1 // If it's a valid territory for gangs to claim
+	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
 	var/infestation_allowed = 1 // Does it count for an infestation score? By default, all areas count.
 
 	var/eject = null
@@ -41,6 +42,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/mapgen_protected = 0 //If the area is protected from ruins/lava rivers/etc generating on top of it
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -62,6 +64,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/area/master				// master area used for power calcluations
 	var/list/related			// the other areas of the same type as this
 //	var/list/lights				// list of all lights on this area
+
+	var/parallax_movedir = 0
+
+	var/sound_env = ROOM
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -109,6 +115,9 @@ var/list/teleportlocs = list()
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
 	infestation_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
+/area/space/mapgen_protected
+	mapgen_protected = 1
+
 /area/space/nearstation
 	icon_state = "space_near"
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
@@ -124,9 +133,11 @@ var/list/teleportlocs = list()
 	valid_territory = 0
 	icon_state = "shuttle"
 	murders_plants = 0
+	sound_env = SMALL_ENCLOSED
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
+	sound_env = LARGE_ENCLOSED
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
@@ -148,15 +159,18 @@ var/list/teleportlocs = list()
 
 /area/shuttle/supply
 	name = "Supply Shuttle"
+	sound_env = LARGE_ENCLOSED
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
+	sound_env = LARGE_ENCLOSED
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
 
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
+	sound_env = LARGE_ENCLOSED
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
@@ -166,6 +180,7 @@ var/list/teleportlocs = list()
 
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
+	sound_env = LARGE_ENCLOSED
 
 /area/start
 	name = "start area"
@@ -174,6 +189,7 @@ var/list/teleportlocs = list()
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
+	sound_env = PADDED_CELL
 
 // CENTCOM
 
@@ -183,7 +199,9 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	 //Should go without saying, no blobs should take over centcom as a win condition.
 	infestation_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	sound_env = LARGE_ENCLOSED
 
 /area/centcom/control
 	name = "Centcom Docks"
@@ -209,6 +227,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	
 	infestation_allowed = 0
 
 // PREDATORS
@@ -227,7 +246,9 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	infestation_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	sound_env = LARGE_ENCLOSED
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -244,8 +265,10 @@ var/list/teleportlocs = list()
 	icon_state = "asteroid"
 	requires_power = 0
 	has_gravity = 1
+	 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	infestation_allowed = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = 0
+	sound_env = ASTEROID
 
 /area/asteroid/cave
 	name = "Asteroid - Underground"
@@ -276,6 +299,7 @@ var/list/teleportlocs = list()
 	icon_state = "yellow"
 	requires_power = 0
 	has_gravity = 1
+	sound_env = ARENA
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
@@ -310,6 +334,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	sound_env = LARGE_ENCLOSED
 
 //Abductors
 /area/abductor_ship
@@ -318,6 +343,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	sound_env = SMALL_ENCLOSED
 
 
 //PRISON
@@ -345,6 +371,9 @@ var/list/teleportlocs = list()
 /area/prison/closet
 	name = "Prison Supply Closet"
 	icon_state = "dk_yellow"
+
+/area/prison/hallway/
+	sound_env = LARGE_ENCLOSED
 
 /area/prison/hallway/fore
 	name = "Prison Fore Hallway"
@@ -395,20 +424,24 @@ var/list/teleportlocs = list()
 /area/prison/cell_block/A
 	name = "Prison Cell Block A"
 	icon_state = "brig"
+	sound_env = PADDED_CELL
 
 /area/prison/cell_block/B
 	name = "Prison Cell Block B"
 	icon_state = "brig"
+	sound_env = PADDED_CELL
 
 /area/prison/cell_block/C
 	name = "Prison Cell Block C"
 	icon_state = "brig"
+	sound_env = PADDED_CELL
 
 //STATION13
 
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
+ 	sound_env = LARGE_ENCLOSED
 
 //Maintenance
 /area/maintenance
@@ -421,6 +454,7 @@ var/list/teleportlocs = list()
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg')
 	valid_territory = 0
+	sound_env = TUNNEL_ENCLOSED
 
 /area/maintenance/atmos_control
 	name = "Atmospherics Maintenance"
@@ -492,6 +526,9 @@ var/list/teleportlocs = list()
 
 //Hallway
 
+/area/hallway/
+	sound_env = LARGE_ENCLOSED
+
 /area/hallway/primary/fore
 	name = "Fore Primary Hallway"
 	icon_state = "hallF"
@@ -535,14 +572,17 @@ var/list/teleportlocs = list()
 	name = "Heads of Staff Meeting Room"
 	icon_state = "meeting"
 	music = null
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/captain
 	name = "Captain's Office"
 	icon_state = "captain"
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/crew_quarters/courtroom
 	name = "Courtroom"
 	icon_state = "courtroom"
+	sound_env = LARGE_ENCLOSED
 
 /area/crew_quarters/heads
 	name = "Head of Personnel's Office"
@@ -574,6 +614,7 @@ var/list/teleportlocs = list()
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
+	sound_env = SMALL_ENCLOSED
 
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
@@ -618,27 +659,33 @@ var/list/teleportlocs = list()
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/bar
 	name = "Bar"
 	icon_state = "bar"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/crew_quarters/theatre
 	name = "Theatre"
 	icon_state = "Theatre"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/library
  	name = "Library"
  	icon_state = "library"
+ 	sound_env = LARGE_SOFTFLOOR
 
 /area/chapel/main
 	name = "Chapel"
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+	sound_env = LARGE_ENCLOSED
 
 /area/chapel/office
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/lawoffice
 	name = "Law Office"
@@ -652,18 +699,22 @@ var/list/teleportlocs = list()
 /area/engine/engine_smes
 	name = "Engineering SMES"
 	icon_state = "engine_smes"
+	sound_env = SMALL_ENCLOSED
 
 /area/engine/engineering
 	name = "Engineering"
 	icon_state = "engine"
+	sound_env = LARGE_ENCLOSED
 
 /area/engine/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine"
+	sound_env = LARGE_SOFTFLOOR
 
 /area/engine/chiefs_office
 	name = "Chief Engineer's office"
 	icon_state = "engine_control"
+	sound_env = SMALL_SOFTFLOOR
 
 /area/engine/secure_construction
 	name = "Secure Construction Area"
@@ -708,23 +759,28 @@ var/list/teleportlocs = list()
 /area/maintenance/auxsolarport
 	name = "Fore Port Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/starboardsolar
 	name = "Aft Starboard Solar Maintenance"
 	icon_state = "SolarcontrolS"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/portsolar
 	name = "Aft Port Solar Maintenance"
 	icon_state = "SolarcontrolP"
+	sound_env = SMALL_ENCLOSED
 
 /area/maintenance/auxsolarstarboard
 	name = "Fore Starboard Solar Maintenance"
 	icon_state = "SolarcontrolA"
+	sound_env = SMALL_ENCLOSED
 
 
 /area/assembly/chargebay
 	name = "Mech Bay"
 	icon_state = "mechbay"
+	sound_env = LARGE_ENCLOSED
 
 /area/assembly/showroom
 	name = "Robotics Showroom"
@@ -733,6 +789,7 @@ var/list/teleportlocs = list()
 /area/assembly/robotics
 	name = "Robotics Lab"
 	icon_state = "ass_line"
+	sound_env = LARGE_ENCLOSED
 
 /area/assembly/assembly_line //Derelict Assembly Line
 	name = "Assembly Line"
@@ -747,6 +804,7 @@ var/list/teleportlocs = list()
 	name = "Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
+	sound_env = SMALL_ENCLOSED
 
 /area/gateway
 	name = "Gateway"
@@ -765,25 +823,30 @@ var/list/teleportlocs = list()
 	name = "Medbay"
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
+	sound_env = LARGE_ENCLOSED
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/medbay2
 	name = "Medbay"
 	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/medbay3
 	name = "Medbay"
 	icon_state = "medbay3"
 	music = 'sound/ambience/signal.ogg'
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/patients_rooms
 	name = "Patients' Rooms"
 	icon_state = "patients"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/cmo
 	name = "Chief Medical Officer's office"
 	icon_state = "CMO"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/robotics
 	name = "Robotics"
@@ -805,14 +868,17 @@ var/list/teleportlocs = list()
 /area/medical/chemistry
 	name = "Chemistry"
 	icon_state = "chem"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/surgery
 	name = "Surgery"
 	icon_state = "surgery"
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/exam_room
 	name = "Exam Room"
@@ -821,14 +887,17 @@ var/list/teleportlocs = list()
 /area/medical/genetics
 	name = "Genetics Lab"
 	icon_state = "genetics"
+	sound_env = LARGE_ENCLOSED
 
 /area/medical/genetics_cloning
 	name = "Cloning Lab"
 	icon_state = "cloning"
+	sound_env = SMALL_ENCLOSED
 
 /area/medical/sleeper
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
+	sound_env = LARGE_ENCLOSED
 
 //Security
 
@@ -839,10 +908,12 @@ var/list/teleportlocs = list()
 /area/security/brig
 	name = "Brig"
 	icon_state = "brig"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/processing
 	name = "Labor Shuttle Dock"
@@ -851,19 +922,23 @@ var/list/teleportlocs = list()
 /area/security/warden
 	name = "Brig Control"
 	icon_state = "Warden"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/armory
 	name = "Armory"
 	icon_state = "armory"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/hos
 	name = "Head of Security's Office"
 	icon_state = "sec_hos"
+	sound_env = SMALL_ENCLOSED
 
 /area/security/detectives_office
 	name = "Detective's Office"
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+	sound_env = MEDIUM_SOFTFLOOR
 
 /area/security/range
 	name = "Firing Range"
@@ -876,6 +951,7 @@ var/list/teleportlocs = list()
 /area/security/interrogation
 	name = "\improper Interrogation"
 	icon_state = "firingrange"
+	sound_env = SMALL_ENCLOSED
 
 /*
 /area/security/transfer/New()
@@ -897,10 +973,12 @@ var/list/teleportlocs = list()
 /area/security/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	sound_env = LARGE_ENCLOSED
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	sound_env = LARGE_ENCLOSED
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
@@ -949,6 +1027,7 @@ var/list/teleportlocs = list()
 /area/quartermaster/storage
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
+	sound_env = LARGE_ENCLOSED
 
 /area/quartermaster/qm
 	name = "Quartermaster's Office"
@@ -983,10 +1062,12 @@ var/list/teleportlocs = list()
 /area/toxins/lab
 	name = "Research and Development"
 	icon_state = "toxlab"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/xenobiology
 	name = "Xenobiology Lab"
 	icon_state = "toxlab"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/storage
 	name = "Toxins Storage"
@@ -1004,6 +1085,7 @@ var/list/teleportlocs = list()
 /area/toxins/mixing
 	name = "Toxins Mixing Room"
 	icon_state = "toxmix"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/misc_lab
 	name = "Testing Lab"
@@ -1020,6 +1102,7 @@ var/list/teleportlocs = list()
 /area/toxins/telesci
 	name = "\improper Telescience Lab"
 	icon_state = "toxtest"
+	sound_env = LARGE_ENCLOSED
 
 /area/toxins/toxlab
 	name = "\improper Toxins Lab"
@@ -1050,6 +1133,7 @@ var/list/teleportlocs = list()
 /area/storage/eva
 	name = "EVA Storage"
 	icon_state = "eva"
+	sound_env = LARGE_ENCLOSED
 
 /area/storage/secure
 	name = "Secure Storage"
@@ -1078,6 +1162,7 @@ var/list/teleportlocs = list()
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = 1
+	 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 	infestation_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/djstation/solars
@@ -1090,6 +1175,7 @@ var/list/teleportlocs = list()
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
+	 //Nope, no winning on the derelict as a blob. Gotta eat the station.
 	infestation_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
 
 /area/derelict/hallway/primary
@@ -1191,6 +1277,7 @@ var/list/teleportlocs = list()
 /area/construction
 	name = "Construction Area"
 	icon_state = "yellow"
+	sound_env = LARGE_ENCLOSED
 
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
@@ -1248,14 +1335,17 @@ var/list/teleportlocs = list()
 /area/turret_protected/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
+	sound_env = SMALL_ENCLOSED
 
 /area/turret_protected/ai_upload_foyer
 	name = "AI Upload Access"
 	icon_state = "ai_foyer"
+	sound_env = LARGE_ENCLOSED
 
 /area/turret_protected/ai
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
+	sound_env = LARGE_ENCLOSED
 
 /area/turret_protected/aisat
 	name = "AI Satellite"
@@ -1328,6 +1418,7 @@ var/list/teleportlocs = list()
 // Telecommunications Satellite
 
 /area/tcommsat
+	sound_env = LARGE_ENCLOSED
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/entrance
@@ -1378,6 +1469,7 @@ var/list/teleportlocs = list()
 	//icon_state = "NAME OF ICON"
 	requires_power = 0
 	music = "music/music.ogg"
+	sound_env = LARGE_ENCLOSED // AHAHAHHAHAHA I'm not even sorry.
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -1418,6 +1510,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
+	sound_env = PLAIN
 
 /area/spacecontent
 	name = "space"

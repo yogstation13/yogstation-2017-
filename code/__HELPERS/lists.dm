@@ -28,7 +28,7 @@
 			output += "[input[index]][comma_text]"
 			index++
 
-		return "[output][and_text][input[index]]"
+		return "[output][comma_text][and_text][input[index]]"
 
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
@@ -65,6 +65,14 @@
 	if(!L || !L.len || !A)
 		return 0
 	return L[A.type]
+
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	. = list()
+	for (var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path)
@@ -385,3 +393,13 @@
 
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
+
+#define add_list_to_list(L, E) L[++L.len] = E
+
+#define LAZYINITLIST(L) if (!L) L = list()
+
+#define UNSETEMPTY(L) if (L && !L.len) L = null
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
+#define LAZYLEN(L) length(L)

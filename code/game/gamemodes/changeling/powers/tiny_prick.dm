@@ -44,6 +44,11 @@
 		sting_feedback(user,target)
 		take_chemical_cost(user.mind.changeling)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user //it only works with H for some reason
+		if(isabomination(H))
+			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
+			return
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
@@ -58,11 +63,10 @@
 /obj/effect/proc_holder/changeling/sting/transformation
 	name = "Transformation Sting"
 	desc = "We silently sting a human, injecting a retrovirus that forces them to transform."
-	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim, and the process will damage our genomes."
+	helptext = "The victim will transform much like a changeling would. The effects will be obvious to the victim."
 	sting_icon = "sting_transform"
-	chemical_cost = 40
-	dna_cost = 3
-	genetic_damage = 100
+	chemical_cost = 30
+	dna_cost = 1
 	var/datum/changelingprofile/selected_dna = null
 
 /obj/effect/proc_holder/changeling/sting/transformation/Click()
@@ -97,8 +101,6 @@
 		var/mob/living/carbon/C = target
 		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
-			C.take_organ_damage(20, 0) //The process is extremely painful
-
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 		spawn(10)
 			C.real_name = NewDNA.real_name
@@ -108,55 +110,47 @@
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
-/*
+
 /obj/effect/proc_holder/changeling/sting/false_armblade
-	name = "False Armblade Sting"
-	desc = "We silently sting a human, injecting a retrovirus that mutates their arm to temporarily appear as an armblade."
-	helptext = "The victim will form an armblade much like a changeling would, except the armblade is dull and useless."
+	name = "Armblade Sting"
+	desc = "We silently sting a human, injecting a retrovirus that temporarily mutates their arm into an armblade."
+	helptext = "The victim will form an armblade much like a changeling would. Beware, it is as deadly as one of ours!"
 	sting_icon = "sting_armblade"
-	chemical_cost = 20
+	chemical_cost = 10
 	dna_cost = 1
 	genetic_damage = 20
 	max_genetic_damage = 10
 
-/obj/item/weapon/melee/arm_blade/false
-	desc = "A grotesque mass of flesh that used to be your arm. Although it looks dangerous at first, you can tell it's actually quite dull and useless."
-	force = 5 //Basically as strong as a punch
-
-/obj/item/weapon/melee/arm_blade/false/afterattack(atom/target, mob/user, proximity)
-	return
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		user << "<span class='warning'>Our sting appears ineffective against its DNA. Perhaps we should try something with DNA.</span>"
 		return 0
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)
-	add_logs(user, target, "stung", object="falso armblade sting")
+	add_logs(user, target, "stung", object="armblade sting")
 
 	if(!target.drop_item())
-		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow a false armblade over it!</span>"
+		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow an armblade over it!</span>"
 		return
 
 	if(ismonkey(target))
 		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
 
-	var/obj/item/weapon/melee/arm_blade/false/blade = new(target,1)
+	var/obj/item/weapon/melee/arm_blade/blade = new(target,1)
 	target.put_in_hands(blade)
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	addtimer(src, "remove_fake", 600, target, blade)
+	addtimer(src, "remove_fake", rand(450, 800), FALSE, target, blade)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
-*/
 
-/*
-/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/blade)
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 	target.visible_message("<span class='warning'>With a sickening crunch, \
 	[target] reforms their [blade.name] into an arm!</span>",
@@ -166,7 +160,6 @@
 	qdel(blade)
 	target.update_inv_l_hand()
 	target.update_inv_r_hand()
-*/
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -184,7 +177,7 @@
 	add_logs(user, target, "stung", "extraction sting")
 	if((user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.remove_profile(target)
-		user.mind.changeling.absorbedcount--
+		user.mind.changeling.profilecount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
 	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
 	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
@@ -205,7 +198,8 @@
 
 /obj/effect/proc_holder/changeling/sting/mute/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "mute sting")
-	target.silent += 30
+	if(target.reagents)
+		target.reagents.add_reagent("mutetoxin", 20)
 	feedback_add_details("changeling_powers","MS")
 	return 1
 
@@ -227,20 +221,17 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/LSD
-	name = "Hallucinogenic Pathogen Sting"
+	name = "Hallucinogenic Sting"
 	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
+	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs very quickly."
 	sting_icon = "sting_lsd"
-	chemical_cost = 50
-	dna_cost = 5
+	chemical_cost = 20
+	dna_cost = 1
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-	spawn(rand(300,600))
-		if(target)
-			if(!target.resistances.Find(/datum/disease/lingvirus))
-				var/datum/disease/welp = new /datum/disease/lingvirus(0)
-				target.ContractDisease(welp)
+	if(target.reagents)
+		target.reagents.add_reagent("mindbreaker", 30)
 	feedback_add_details("changeling_powers","HS")
 	return 1
 

@@ -40,17 +40,24 @@
 
 /obj/machinery/camera/proc/cancelAlarm()
 	if (detectTime == -1)
-		for (var/mob/living/silicon/aiPlayer in player_list)
-			if (status)
+		if (status)
+			for (var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Motion", get_area(src), src)
+			for(var/L in motion_alert_listeners)
+				var/datum/alert_listener/listener = L
+				listener.cancelAlarm("Motion", get_area(src), src)
 	detectTime = 0
 	return 1
 
 /obj/machinery/camera/proc/triggerAlarm()
-	if (!detectTime) return 0
-	for (var/mob/living/silicon/aiPlayer in player_list)
-		if (status)
+	if (!detectTime)
+		return 0
+	if (status)
+		for (var/mob/living/silicon/aiPlayer in player_list)
 			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
+		for(var/L in motion_alert_listeners)
+			var/datum/alert_listener/listener = L
+			listener.triggerAlarm("Motion", get_area(src), list(src), src)
 	detectTime = -1
 	return 1
 

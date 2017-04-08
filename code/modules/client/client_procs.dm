@@ -109,19 +109,32 @@
 	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
-	if(config.automute_on && !holder && src.last_message == message)
-		src.last_message_count++
-		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
-			src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
-			cmd_admin_mute(src, mute_type, 1)
-			return 1
-		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
-			src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
-			return 0
-	else
-		last_message = message
-		src.last_message_count = 0
-		return 0
+	if(config.automute_on && !holder)
+		if(last_message == message)
+			last_message_count++
+			if(last_message_count >= SPAM_TRIGGER_AUTOMUTE_IDENTICAL)
+				src << "<span class='danger'>You have exceeded the spam filter limit for identical messages. An auto-mute was applied.</span>"
+				cmd_admin_mute(src, mute_type, 1)
+				return 1
+			if(last_message_count >= SPAM_TRIGGER_WARNING_IDENTICAL)
+				src << "<span class='danger'>You are nearing the spam filter limit for identical messages.</span>"
+		else
+			last_message_count = 0
+			last_message = message
+
+		if((world.time - last_message_time) < SPAM_TRIGGER_AUTOMUTE_TIME)
+			fast_message_count++
+			if(fast_message_count >= SPAM_TRIGGER_AUTOMUTE)
+				src << "<span class='danger'>You have exceeded the spam filter limit for messages in a short time period. An auto-mute was applied.</span>"
+				cmd_admin_mute(src, mute_type, 1)
+				return 1
+			if(fast_message_count >= SPAM_TRIGGER_WARNING)
+				src << "<span class='danger'>You are nearing the spam filter limit for messages in a short time period.</span>"
+		else
+			fast_message_count = 0
+		last_message_time = world.time
+
+	return 0
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
@@ -268,7 +281,7 @@ var/next_external_rsc = 0
 		admin_memo_output("Show")
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
-		verbs += /client/verb/weightstats
+		//verbs += /client/verb/weightstats
 
 	add_verbs_from_config()
 	set_client_age_from_db()
@@ -345,7 +358,8 @@ var/next_external_rsc = 0
 		holder.owner = null
 		admins -= src
 		if(!total_admins_active())
-			send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
+			if(total_unresolved_tickets())
+				send_discord_message("admin", "The last remaining active admin has logged out, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src
@@ -393,7 +407,7 @@ var/next_external_rsc = 0
 	if (!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 
 	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
 	query_ip.Execute()
@@ -407,14 +421,19 @@ var/next_external_rsc = 0
 	while (query_cid.NextRow())
 		related_accounts_cid += "[query_cid.item[1]], "
 
+	var/admin_rank = "Player"
+	if (src.holder && src.holder.rank)
+		admin_rank = src.holder.rank.name
+	else
+		if (check_randomizer())
+			return
+
+
 	var/watchreason = check_watchlist(sql_ckey)
 	if(watchreason)
 		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
 		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
-	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
 
 	var/sql_ip = sanitizeSQL(src.address)
 	var/sql_computerid = sanitizeSQL(src.computer_id)
@@ -473,3 +492,81 @@ var/next_external_rsc = 0
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+/client/proc/check_randomizer()
+	. = FALSE
+	if (!config.check_randomizer)
+		return
+	var/static/cidcheck = list()
+	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
+
+	var/oldcid = cidcheck[ckey]
+	if (oldcid)
+		if (oldcid != computer_id) //IT CHANGED!!!
+			cidcheck -= ckey //so they can try again after removing the cid randomizer.
+
+			src << "<span class='userdanger'>Connection Error:</span>"
+			src << "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>"
+
+			if (!cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
+				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
+				cidcheck_failedckeys[ckey] = 1
+				note_randomizer_user()
+
+			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
+
+			del(src)
+			return TRUE
+		else
+			if (cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
+				send2irc_adminless_only("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
+				cidcheck_failedckeys -= ckey
+			cidcheck -= ckey
+	else
+		var/sql_ckey = sanitizeSQL(ckey)
+		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+		query_cidcheck.Execute()
+
+		var/lastcid
+		if (query_cidcheck.NextRow())
+			lastcid = query_cidcheck.item[1]
+
+		if (computer_id != lastcid)
+			cidcheck[ckey] = computer_id
+			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
+
+			var/url = winget(src, null, "url")
+			//special javascript to make them reconnect under a new window.
+			src << browse("<a id='link' href=byond://[url]>byond://[url]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+			winset(src, "reconnectbutton", "is-disable=true") //reconnect keeps the same cid in the randomizer, they could use this button to fake it.
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+
+			//teeheehee (in case the above method doesn't work, its not 100% reliable.)
+			src << "<pre class=\"system system\">Network connection shutting down due to read error.</pre>"
+			del(src)
+			return TRUE
+
+/client/proc/note_randomizer_user()
+	var/const/adminckey = "CID-Error"
+	var/sql_ckey = sanitizeSQL(ckey)
+	//check to see if we noted them in the last day.
+	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' AND adminckey = '[adminckey]' AND timestamp + INTERVAL 1 DAY < NOW()")
+	if(!query_get_notes.Execute())
+		var/err = query_get_notes.ErrorMsg()
+		log_game("SQL ERROR obtaining id from notes table. Error : \[[err]\]\n")
+		return
+	if (query_get_notes.NextRow())
+		return
+
+	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
+	query_get_notes = dbcon.NewQuery("SELECT adminckey FROM [format_table_name("notes")] WHERE ckey = '[sql_ckey]' ORDER BY timestamp DESC LIMIT 1")
+	if(!query_get_notes.Execute())
+		var/err = query_get_notes.ErrorMsg()
+		log_game("SQL ERROR obtaining id from notes table. Error : \[[err]\]\n")
+		return
+	if (query_get_notes.NextRow())
+		if (query_get_notes.item[1] == adminckey)
+			return
+	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)

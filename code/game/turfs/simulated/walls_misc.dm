@@ -6,6 +6,7 @@
 	walltype = "cult"
 	builtin_sheet = null
 	canSmoothWith = null
+	var/alertthreshold
 
 /turf/closed/wall/mineral/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf, src)
@@ -27,6 +28,46 @@
 		var/previouscolor = color
 		color = "#FAE48C"
 		animate(src, color = previouscolor, time = 8)
+
+/turf/closed/wall/mineral/cult/process()
+	..()
+	if(alertthreshold)
+		alertthreshold--
+
+/turf/closed/wall/mineral/cult/Bumped(atom/movable/C as mob)
+	if(istype(C,/mob/living/simple_animal/hostile/construct))
+		var/mob/living/simple_animal/hostile/construct/construct = C
+		if(!construct.phaser)
+			return
+		if(construct.pulling)
+			construct.stop_pulling()
+		construct.forceMove(get_turf(src))
+	return
+
+/turf/closed/wall/mineral/cult/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/tome) && iscultist(user))
+		if(src.density == 1)
+			user <<"<span class='notice'>Your tome passes through the wall as if it's thin air.</span>"
+			alpha = 60
+			density = 0
+			opacity = 0
+			var/messaged_admins
+			for(var/turf/open/ST in orange(1, src))
+				if(messaged_admins || alertthreshold)
+					break
+				if(istype(ST, /turf/open/space/))
+					messaged_admins = TRUE
+					message_admins("[src] <A href='?_src_=holder;jumpto=\ref[src]'>([x], [y], [z])</A> has been opened by [user]/[user.ckey] near a space vacuum.")
+					log_game("[user]/[user.ckey] used their arcane tome to open a runed wall, which was adjacent to a space tile.")
+					alertthreshold += 500
+		else
+			user <<"<span class='notice'>Your tome solidly connects with the wall.</span>"
+			alpha = initial(src.alpha)
+			density = 1
+			opacity = 1
+		return
+	else
+		..()
 
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
@@ -53,11 +94,11 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_construction_value += 5
 
 /turf/closed/wall/clockwork/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_construction_value -= 5
 	..()
 
@@ -65,6 +106,8 @@
 	if(prob(2))
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
 	for(var/obj/structure/clockwork/cache/C in orange(1, src))
+		if(!C.active) //if it's off the zlevel, caches can't produce components.
+			continue
 		if(C.wall_generation_cooldown <= world.time)
 			C.wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			generate_cache_component()

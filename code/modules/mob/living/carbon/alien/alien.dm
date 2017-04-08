@@ -31,6 +31,11 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
+	var/last_emote = 100 //Just make sure this is bigger then emote cooldown
+	var/emote_cooldown = 50 //5 seconds
+
+	var/hive_faction
+
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
 	var/datum/huggerdatum/HD = null
@@ -44,14 +49,19 @@
 	internal_organs += new /obj/item/organ/tongue/alien
 
 	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+		I.Insert(src, 1)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 //	overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)
 	..()
 
-/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
-	return -10
+/mob/living/carbon/alien/proc/set_hive_faction(new_hive_faction)
+	hive_faction = new_hive_faction
+	for(var/obj/item/organ/alien/O in internal_organs)
+		O.hive_faction = new_hive_faction
+
+/mob/living/carbon/alien/assess_threat() // beepsky cannot be stopped
+	return 10
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
 	return 0
@@ -187,6 +197,7 @@ Des: Removes all infected images from the alien.
 	src << "<span class='noticealien'>You begin to evolve!</span>"
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
 	new_xeno.dir = dir
+	new_xeno.set_hive_faction(hive_faction)
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name

@@ -100,6 +100,7 @@
 	needs_permit = 0
 	var/overheat_time = 16
 	unique_rename = 1
+	can_flashlight = 1
 	origin_tech = "combat=3;powerstorage=3;engineering=3"
 	weapon_weight = WEAPON_LIGHT
 	var/holds_charge = FALSE
@@ -148,10 +149,12 @@
 	. = ..()
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
-		// calls dropped().
-		sleep(1)
-		if(!ismob(loc))
-			empty()
+		// calls dropped()
+		addtimer(src, "empty_if_not_held", 2)
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
+	if(!ismob(loc))
+		empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
 	power_supply.use(500)
@@ -192,6 +195,11 @@
 		icon_state = "[initial(icon_state)]_empty"
 	else
 		icon_state = initial(icon_state)
+	if(F && can_flashlight)
+		var/iconF = "flight"
+		if(F.on)
+			iconF = "flight_on"
+		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini radiation crossbow"
@@ -333,7 +341,7 @@
 
 /obj/item/weapon/gun/energy/printer/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/energy/printer/process()
 	charge_tick++

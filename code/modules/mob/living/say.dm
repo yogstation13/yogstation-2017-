@@ -17,6 +17,8 @@ var/list/department_radio_keys = list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
+	  ":p" = "pheromones",	"#p" = "pheromones",	".p" = "pheromones",
+	  ":d" = "spokenbinary","#d" = "spokenbinary",	".d" = "spokenbinary",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -36,6 +38,8 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
+	  ":P" = "pheromones",	"#P" = "pheromones",	".P" = "pheromones",
+	  ":D" = "spokenbinary","#D" = "spokenbinary",	".D" = "spokenbinary",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -58,8 +62,10 @@ var/list/department_radio_keys = list(
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type,var/list/spans = list())
+/mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	if(!message)
+		return
 
 	if(stat == DEAD)
 		say_dead(message)
@@ -92,10 +98,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
-	spans += get_spans()
+		if(!message)
+			return
 
-	if(!message)
-		return
+	spans += get_spans()
 
 	//Log of what we've said, plain message, no spans or junk
 	say_log += message
@@ -119,7 +125,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-	send_speech(message, message_range, src, bubble_type, spans)
+	send_speech(message, message_range, src, bubble_type, spans, languages)
 
 	log_say("[name]/[key] : [message]")
 	return 1
@@ -141,25 +147,26 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans)
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	var/list/listening = get_hearers_in_view(message_range, source)
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
+	var/rendered = compose_message(src, languages, message, , spans)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, languages, message, , spans)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	if(bubble_type)
+		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		spawn(0)
+			flick_overlay(I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
 	return 0
@@ -219,7 +226,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 							if(1)
 								if(prob(40))
 									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
-				return 1
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
@@ -236,14 +242,13 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 							if(1)
 								if(prob(40))
 									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
-				return 1
 			if(1)
 				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
-				return 1
+		return 1
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
-			return 1
+		return 1
 	return 0
 
 /mob/living/proc/treat_message(message)

@@ -54,6 +54,13 @@ var/global/list/uplinks = list()
 		)
 		for(var/item in uplink_items[category])
 			var/datum/uplink_item/I = uplink_items[category][item]
+			if(I.restricted_roles.len)
+				var/is_inaccessible = 1
+				for(var/R in I.restricted_roles)
+					if(R == user.mind.assigned_role)
+						is_inaccessible = 0
+				if(is_inaccessible)
+					continue
 			cat["items"] += list(list(
 				"name" = I.name,
 				"cost" = I.cost,

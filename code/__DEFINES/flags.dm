@@ -18,16 +18,18 @@
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
-#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
-
-
-#define HEADBANGPROTECT		4096
-#define EARBANGPROTECT		1024
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 #define SUPERNOSLIP 2048	//prevents slipping on space lube
 
+#define DROPDEL			16384 // When dropped, it calls qdel on itself
+
+#define HEADBANGPROTECT		4096
+#define EARBANGPROTECT		1024
+
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
+
+#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
@@ -35,6 +37,7 @@
 
 //turf-only flags
 #define NOJAUNT		1
+#define GIRDERABLE	2
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -73,23 +76,20 @@
 #define EASYDISMEMBER	20
 #define EASYLIMBATTACHMENT 21
 #define TOXINLOVER		22
-#define NOCLONE			24
+#define NOMACHINERY		23
+#define THRALLAPPTITUDE	24
+#define CONSUMEPOWER	25
+#define EASYIMPLANTS	26
+#define PROTECTEDEYES	27
+#define PLANT           28
+#define NOCLONE			29
 
 #define FLYING	65536
 
 /*
-	These defines are used specifically with the atom/movable/languages bitmask.
-	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
+	Language defines were moved to language.dm
 */
-#define HUMAN 1
-#define MONKEY 2
-#define ALIEN 4
-#define ROBOT 8
-#define SLIME 16
-#define DRONE 32
-#define SWARMER 64
-#define PREDATOR 128
-#define RATVAR 128
+
 
 // Flags for reagents
 #define REAGENT_NOREACT 1

@@ -157,6 +157,8 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
+				/obj/item/clothing/shoes/sneakers/nmd = 3,
+				/obj/item/clothing/shoes/sneakers/yeezy = 1,
 				"" = 4
 				)
 
@@ -168,3 +170,38 @@
 				/obj/structure/closet/crate/secure/loot = 20,
 				"" = 80
 				)
+
+/obj/effect/spawner/mapset
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "x2"
+	color = "#FFFF00"
+	var/prob_nothing = 0
+	var/drops = 1
+
+/obj/effect/spawner/mapset/initialize()
+	if(!loc)
+		return
+	for(var/obj/structure/closet/C in loc)
+		C.open()
+
+	var/list/selected = list()
+	var/list/candidates = list()
+
+	for(var/obj/item/I in loc)
+		candidates += I
+
+	if(!prob(prob_nothing))
+		var/i = 0
+		while(candidates.len && (i<drops))
+			var/S = pick(candidates)
+			selected += S
+			candidates -= S
+			i++
+
+	for(var/V in candidates)
+		qdel(V)
+
+	for(var/obj/structure/closet/C in loc)
+		C.close()
+
+	qdel(src)

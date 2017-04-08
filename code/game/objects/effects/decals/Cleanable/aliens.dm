@@ -78,7 +78,7 @@
 /obj/effect/decal/cleanable/xenodrool
 	name = "xeno drool"
 	desc = "A nasty pool of coughed up alien spit and drool. It seems like it's still melting the surface below it... must be fresh."
-	icon = 'icons/effects/drool.dmi'
+//	icon = 'icons/effects/drool.dmi'
 	icon_state = "drool"
 
 /obj/effect/decal/cleanable/xenodrool/New()
@@ -87,7 +87,7 @@
 
 /obj/effect/decal/cleanable/xenodrool/Cross(atom/A)
 	. = ..()
-	playsound(get_turf(src), 'sound/misc/squish.ogg', 100, 0, sNoiseLevel = 500, sNoiseDesc = "someone stepped over alien drool", sNoiseMult = 2)
+	//playsound(get_turf(src), 'sound/misc/squish.ogg', 100, 0, sNoiseLevel = 500, sNoiseDesc = "someone stepped over alien drool", sNoiseMult = 2)
 
 /obj/effect/decal/cleanable/xenodrool/proc/dry_up()
 	visible_message("[src] settles down.")

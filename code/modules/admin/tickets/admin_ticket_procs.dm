@@ -51,7 +51,7 @@
 			messageSentTo += get_ckey(handling_admin)
 			handling_admin << "<span class='ticket-text-received'>-- [get_view_link(user)] [key_name_params(user, 1, 1, null, src)] -> [log_item.isAdminComment() ? get_view_link(user) : key_name_params(handling_admin, 0, 1, null, src)]: [log_item.text]</span>"
 			if(has_pref(handling_admin, SOUND_ADMINHELP))
-				handling_admin << 'sound/effects/adminhelp.ogg'
+				handling_admin << nullify_sound('sound/effects/adminhelp.ogg')
 
 	if(!log_item.for_admins && compare_ckey(owner_ckey, user) || compare_ckey(handling_admin, user))
 		if(!(get_ckey(owner) in messageSentTo))
@@ -60,7 +60,7 @@
 			if(!compare_ckey(owner_ckey, user))
 				if(!is_admin(owner)) owner << "<span class='ticket-header-recieved'>-- Administrator private message --</span>"
 				if(has_pref(owner, SOUND_ADMINHELP))
-					owner << 'sound/effects/adminhelp.ogg'
+					owner << nullify_sound('sound/effects/adminhelp.ogg')
 
 			if(compare_ckey(owner_ckey, user))
 				var/toLink
@@ -93,7 +93,7 @@
 			M << "<span class='ticket-text-received'>-- [get_view_link(user)] [key_name_params(user, 1, 1, null, src)] -> [key_name_params(handling_admin, 0, 1, null, src)]: [log_item.text_admin]</span>"
 
 		if(has_pref(M, SOUND_ADMINHELP))
-			M << 'sound/effects/adminhelp.ogg'
+			M << nullify_sound('sound/effects/adminhelp.ogg')
 
 	for(var/client/X in admins)
 		if(has_pref(X, TICKET_ALL))
@@ -136,7 +136,7 @@
 			for(var/client/X in admins)
 				X << "<span class='ticket-status'>[get_view_link(X)] is still unclaimed.</span>"
 				if(has_pref(X, SOUND_ADMINHELP))
-					X << 'sound/effects/adminhelp.ogg'
+					X << nullify_sound('sound/effects/adminhelp.ogg')
 
 /datum/admin_ticket/proc/toggle_monitor()
 	var/foundMonitor = 0
@@ -203,11 +203,14 @@
 
 	if(resolved && ticker.delay_end)
 		if(unresolvedCount == 0)
-			if(alert(usr, "You have resolved the last ticket (the server restart is currently delayed!). Would you like to restart the server now?", "Restart Server", "Restart", "Cancel") == "Restart")
-				ticker.delay_end = 0
-				world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)
+			if(check_rights_for(get_client(usr), R_TICKET)) //Only admins get to select whether to restart server or not
+				if(alert(usr, "You have resolved the last ticket (the server restart is currently delayed!). Would you like to restart the server now?", "Restart Server", "Restart", "Cancel") == "Restart")
+					ticker.delay_end = 0
+					world.Reboot("Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key].", "end_proper", "proper completion", 100)
+				else
+					message_admins("[usr.key] has closed the last ticket but chose not to restart the server. You can <A HREF='?_src_=holder;adminserverrestart=1'>restart the server</a> manually, if you choose to do so.")
 			else
-				usr << "<span class='ticket-status'>You chose not to restart the server. If you do not have permissions to restart the server normally, you can still do so by making a new ticket and resolving it again.</span>"
+				message_admins("[usr.key] closed their ticket which was the last ticket. Server can now be <A HREF='?_src_=holder;adminserverrestart=1'>restarted</a>.")
 
 	if(resolved)
 		if(!establish_db_connection())
@@ -258,12 +261,15 @@
 					<a href='?src=\ref[src];user=\ref[usr];action=monitor_admin_ticket;ticket=\ref[src]' class='monitor-button'><img border='0' width='16' height='16' class='uiIcon16 icon-pin-s' /> <span>[!is_monitor(usr.client) ? "Un" : ""]Monitor</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=resolve_admin_ticket;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[resolved ? "Un" : ""]Resolve</span></a>
 					<a href='?src=\ref[src];user=\ref[usr];action=administer_admin_ticket;ticket=\ref[src]' class='admin-button'><img border='0' width='16' height='16' class='uiIcon16 icon-flag' /> <span>Administer</span></a>
+					<a href='?src=\ref[src];user=\ref[usr];action=toggle_popup;ticket=\ref[src]' class='resolve-button'><img border='0' width='16' height='16' class='uiIcon16 icon-check' /> <span>[force_popup ? "De" : ""]Activate popups</span></a>
 				</p>"}
 		if(owner && owner.mob)
 			if(owner.mob.mind && owner.mob.mind.assigned_role)
 				content += "<p class='user-info-bar'>Role: [owner.mob.mind.assigned_role]</p>"
 				if(owner.mob.mind.special_role)
 					content += "<p class='user-info-bar'>Antagonist: [owner.mob.mind.special_role]</p>"
+				else if(iscaptive(owner.mob))
+					content += "<p class='user-info-bar>This player's body is in control of [owner.mob.getBorer(1)] ((<A HREF='?_src_=holder;adminmoreinfo=\ref[owner.mob.getBorer(1)]'>?</A>))</p>"
 				else
 					content += "<p class='user-info-bar'>Antagonist: No</p>"
 

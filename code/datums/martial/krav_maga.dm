@@ -124,17 +124,21 @@ datum/martial_art/krav_maga/grab_act(var/mob/living/carbon/human/A, var/mob/livi
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
+	var/success = 0
 	if(prob(60))
 		if(D.hand)
 			if(istype(D.l_hand, /obj/item))
 				var/obj/item/I = D.l_hand
-				D.drop_item()
-				A.put_in_hands(I)
+				if(D.drop_item())
+					A.put_in_hands(I)
+					success = 1
 		else
 			if(istype(D.r_hand, /obj/item))
 				var/obj/item/I = D.r_hand
-				D.drop_item()
-				A.put_in_hands(I)
+				if(D.drop_item())
+					A.put_in_hands(I)
+					success = 1
+	if(success)
 		D.visible_message("<span class='danger'>[A] has disarmed [D]!</span>", \
 							"<span class='userdanger'>[A] has disarmed [D]!</span>")
 		playsound(D, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

@@ -37,7 +37,7 @@
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
 				H.color = "#000000"
-		adjustHealth(-maxHealth*0.0125)
+		adjustHealth(-maxHealth*0.050)
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -56,7 +56,7 @@
 /mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_BINARY)
 		blob_chat(message)
-		return ITALICS | REDUCE_RANGE
+		return 1
 	else
 		..()
 

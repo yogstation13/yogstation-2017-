@@ -10,6 +10,30 @@
 	volume = 100
 	list_reagents = list("lube" = 100)
 
+#define WHOOPEE_CD 1000
+
+/obj/item/whoopee // in the name of all that is holy DESTROY THIS THE MOMENT YOU SEE IT, CREW.
+	name = "whopee cushion"
+	desc = "If you're reading this than you've probably already been pranked."
+	icon = ""
+	icon_state = ""
+	item_state = ""
+	var/list/fnoises = list('sound/items/fnoise1.ogg', 'sound/items/fnoise2.ogg', 'sound/items/fnoise3.ogg', 'sound/items/fnoise4.ogg')
+	var/cooldown
+
+/obj/item/whoopee/Crossed(mob/living/L)
+	if(!cooldown)
+		if(isliving(L))
+			playsound(get_turf(L), pick(fnoises), 100)
+			cooldown = TRUE
+			addtimer(src, "unsetcooldown", WHOOPEE_CD)
+	..()
+
+/obj/item/whoopee/proc/unsetcooldown()
+	cooldown = FALSE
+
+#undef WHOOPEE_CD
+
 //COMBAT CLOWN SHOES
 //Clown shoes with combat stats and noslip. Of course they still squeek.
 /obj/item/clothing/shoes/clown_shoes/combat
@@ -249,3 +273,6 @@
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"
 	icon_state = "darkhonker-broken"
+
+/obj/mecha/combat/honker/dark/loaded/aprilfools
+	operation_req_access = list(access_theatre)

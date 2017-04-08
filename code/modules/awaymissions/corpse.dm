@@ -20,12 +20,16 @@
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
+	var/jobban_type
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
 		user << "<span class='warning'>This spawner is out of charges!</span>"
+		return
+	if(jobban_type && jobban_isbanned(user, jobban_type))
+		user << "<span class='warning'>You are banned from this role.</span>"
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -85,6 +89,7 @@
 				MM.objectives += new/datum/objective(objective)
 		special(M)
 		MM.name = M.real_name
+		MM.special_role = name
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
@@ -401,6 +406,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/shorts/red
 	pocket1 = /obj/item/weapon/storage/wallet/random
+	glasses = /obj/item/clothing/glasses/sunglasses/cheap
 
 /obj/effect/mob_spawn/human/beach/alive
 	death = FALSE

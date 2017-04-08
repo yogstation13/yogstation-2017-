@@ -206,7 +206,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"pda_refresh.png"		= 'icons/pda_icons/pda_refresh.png',
 		"pda_scanner.png"		= 'icons/pda_icons/pda_scanner.png',
 		"pda_signaler.png"		= 'icons/pda_icons/pda_signaler.png',
-		"pda_status.png"		= 'icons/pda_icons/pda_status.png'
+		"pda_status.png"		= 'icons/pda_icons/pda_status.png',
+		"pda_botany.png"		= 'icons/pda_icons/pda_botany.png'
 	)
 
 /datum/asset/simple/paper
@@ -222,6 +223,17 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"large_stamp-cap.png" = 'icons/stamp_icons/large_stamp-cap.png',
 		"large_stamp-qm.png" = 'icons/stamp_icons/large_stamp-qm.png',
 		"large_stamp-law.png" = 'icons/stamp_icons/large_stamp-law.png'
+	)
+
+/datum/asset/simple/adware
+	assets = list(
+		"ad1.png" = 'icons/ads/ad1.png',
+		"ad2.png" = 'icons/ads/ad2.png',
+		"ad3.png" = 'icons/ads/ad3.png',
+		"ad4.png" = 'icons/ads/ad4.png',
+		"ad5.png" = 'icons/ads/ad5.png',
+		"ad6.png" = 'icons/ads/ad6.png',
+		"ad7.png" = 'icons/ads/ad7.png',
 	)
 
 

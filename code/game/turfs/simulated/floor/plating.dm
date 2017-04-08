@@ -78,6 +78,7 @@
 	thermal_conductivity = 0.025
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
+	unacidable = 1
 
 /turf/open/floor/engine/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -213,20 +214,25 @@
 	slowdown = 2
 	var/processing = 0
 	luminosity = 1
+	flags = 0
+	unacidable = 1
+	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
+
+/turf/open/floor/plating/lava/New()
+	. = ..()
+	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
-	burn_stuff()
-	if(!processing)
-		processing = 1
-		SSobj.processing |= src
+	if(burn_stuff(AM))
+		START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
 		processing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
@@ -236,11 +242,25 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
-/turf/open/floor/plating/lava/proc/burn_stuff()
+/turf/open/floor/plating/lava/proc/is_safe()
+	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	return LAZYLEN(found_safeties)
+
+/turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
-	for(var/thing in contents)
-		if(istype(thing, /obj))
+	var/thing_to_check = src
+	if(is_safe())
+		slowdown = 0
+		return FALSE
+	else
+		slowdown = initial(slowdown)
+	if (AM)
+		thing_to_check = list(AM)
+	for(var/thing in thing_to_check)
+		if(isobj(thing))
 			var/obj/O = thing
+			if(O.burn_state == LAVA_PROOF || O.throwing)
+				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -251,7 +271,7 @@
 			O.fire_act()
 
 
-		else if (istype(thing, /mob/living))
+		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
@@ -270,7 +290,6 @@
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)
 				L.IgniteMob()
-
 
 /turf/open/floor/plating/lava/attackby(obj/item/C, mob/user, params) //Lava isn't a good foundation to build on
 	return

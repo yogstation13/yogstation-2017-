@@ -55,35 +55,41 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
+	name = " slime meat"
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans."
 	list_reagents = list("nutriment" = 3, "slimejelly" = 3)
 	filling_color = "#00FFFF"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	name = " meat-shaped rock"
 	icon_state = "golemmeat"
 	desc = "Edible rocks, welcome to the future."
 	list_reagents = list("nutriment" = 3, "iron" = 3)
 	filling_color = "#A9A9A9"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+	name = " blue meat-shaped rock"
 	icon_state = "agolemmeat"
 	desc = "From the slime pen to the rune to the kitchen, science."
 	filling_color = "#66CDAA"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	name = " scaly meat"
 	icon_state = "lizardmeat"
-	desc = "Delicious dino damage"
+	desc = "The true purpose of all lizards."
 	filling_color = "#6B8E23"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
+	name = " plant meat"
 	icon_state = "plantmeat"
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
 	filling_color = "#E9967A"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
+	name = " pitch-black meat"
 	icon_state = "shadowmeat"
-	desc = "Ow, the edge"
+	desc = "Ow, the edge."
 	filling_color = "#202020"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
@@ -92,14 +98,14 @@
 	list_reagents = list("nutriment" = 3, "uranium" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	name = "-bone"
+	name = " bone meat"
 	icon_state = "skeletonmeat"
 	desc = "There's a point where this needs to stop, and clearly we have passed it."
 	filling_color = "#F0F0F0"
 	slice_path = null  //can't slice a bone into cutlets
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	name = " meat (rotten)"
+	name = " rotten meat"
 	icon_state = "lizardmeat" //Close enough.
 	desc = "Halfway to becoming fertilizer for your garden."
 	filling_color = "#6B8E23"
@@ -177,9 +183,8 @@
 	icon_state = "goliathmeat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("\The [src] finishes cooking!")
-	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
-	SSobj.burning -= src
+	visible_message("[src] finishes cooking!")
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(loc)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat

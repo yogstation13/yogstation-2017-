@@ -54,6 +54,7 @@ var/ticket_counter_visible_to_everyone = 0
 	var/client/pm_started_user = null
 	var/pm_started_flag = 0
 	var/error = 0
+	var/force_popup = 0
 	//var/log_file
 	var/admin_started_ticket = 0
 
@@ -98,17 +99,16 @@ var/ticket_counter_visible_to_everyone = 0
 		handling_admin << "<span class='ticket-text-sent'>Ticket created by you for [is_admin(handling_admin) ? key_name_params(ntarget, 1, 1, null, src) : key_name_params(ntarget, 1, 0, null, src)]: \"[admin_title]\"</span>"
 		log += new /datum/ticket_log(src, usr, "Ticket created by <b>[handling_admin] for [ntarget]</b>", 0)
 		if(has_pref(owner, SOUND_ADMINHELP))
-			owner << 'sound/effects/adminhelp.ogg'
+			owner << nullify_sound('sound/effects/adminhelp.ogg')
 		if(has_pref(handling_admin, SOUND_ADMINHELP))
-			handling_admin << 'sound/effects/adminhelp.ogg'
+			handling_admin << nullify_sound('sound/effects/adminhelp.ogg')
 	else
 		log += new /datum/ticket_log(src, usr, "Ticket created by <b>[owner]</b>", 0)
 		owner << "<span class='ticket-status'>Ticket created for Admins: \"[title]\"</span>"
 		if(has_pref(owner, SOUND_ADMINHELP))
-			owner << 'sound/effects/adminhelp.ogg'
+			owner << nullify_sound('sound/effects/adminhelp.ogg')
 
-	//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
-	if(usr.client.holder && owner && !owner.holder && compare_ckey(usr, handling_admin) && config.popup_admin_pm)
+	if(usr.client.holder && owner && !owner.holder && compare_ckey(usr, handling_admin) && force_popup)
 		spawn()	//so we don't hold the caller proc up
 			var/sender = usr.client
 			var/sendername = usr.client.key
@@ -136,7 +136,7 @@ var/ticket_counter_visible_to_everyone = 0
 			if(invalid)
 				admin_number_decrease++
 			if(has_pref(X, SOUND_ADMINHELP))
-				X << 'sound/effects/adminhelp.ogg'
+				X << nullify_sound('sound/effects/adminhelp.ogg')
 			X << msg
 
 	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid

@@ -106,3 +106,5 @@
         TEMP.reagents.add_reagent("tirizene", 15)
         syringes.Add(TEMP)
 
+/obj/item/weapon/gun/syringe/rapidsyringe/borg/attack_self(mob/user)
+	return

@@ -18,6 +18,7 @@
 	desc = "A magic contract previously signed by an apprentice. In exchange for instruction in the magical arts, they are bound to answer your call for aid."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
+	var/polling = FALSE
 
 /obj/item/weapon/antag_spawner/contract/attack_self(mob/user)
 	user.set_machine(src)
@@ -53,18 +54,24 @@
 	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
 		H.set_machine(src)
 		if(href_list["school"])
+			if(polling)
+				return
 			if (used)
 				H << "You already used this contract!"
 				return
-			var/list/candidates = get_candidates(ROLE_WIZARD)
+			H << "<span class='notice'>You begin searching for an apprentice...</span>"
+			polling = TRUE
+			var/list/candidates = pollCandidates("Do you want to play as a [href_list["school"]]-school wizard apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 50)
+			polling = FALSE
 			if(candidates.len)
 				src.used = 1
-				var/client/C = pick(candidates)
+				var/mob/dead/observer/O = pick(candidates)
+				var/client/C = O.client
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
 				if(H.mind)
 					ticker.mode.update_wiz_icons_added(H.mind)
 			else
-				H << "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."
+				H << "<span class='notice'>Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.</span>"
 
 /obj/item/weapon/antag_spawner/contract/spawn_antag(client/C, turf/T, type = "")
 	PoolOrNew(/obj/effect/particle_effect/smoke, T)
@@ -129,6 +136,8 @@
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
+	var/searchfor_message = "an operative"
+	var/polling = FALSE
 	var/borg_to_spawn
 	var/list/possible_types = list("Assault", "Medical")
 
@@ -148,12 +157,17 @@
 /obj/item/weapon/antag_spawner/nuke_ops/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
-
-	var/list/nuke_candidates = get_candidates(ROLE_OPERATIVE, 3000, "operative")
+	if(polling)
+		return
+	user << "<span class='notice'>You begin searching for [searchfor_message]...</span>"
+	polling = TRUE
+	var/list/nuke_candidates = pollCandidates("Do you want to play as a nuclear operative?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 50)
+	polling = FALSE
 	if(nuke_candidates.len > 0)
 		used = 1
-		var/client/C = pick(nuke_candidates)
-		spawn_antag(C, get_turf(src.loc), "syndieborg")
+		var/mob/dead/observer/O = pick(nuke_candidates)
+		var/client/C = O.client
+		spawn_antag(C, get_turf(src.loc))
 		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 		S.set_up(4, 1, src)
 		S.start()
@@ -189,6 +203,7 @@
 	borg_to_spawn = input("What type?", "Cyborg Type", type) as null|anything in possible_types
 	if(!borg_to_spawn)
 		return
+	searchfor_message = "\a [borg_to_spawn] Cyborg"
 	..()
 
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T)
@@ -234,16 +249,24 @@
 		just beyond the veil...</span>"
 	var/objective_verb = "Kill"
 	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
+	var/demon_name = "slaughter demon"
+	var/polling = FALSE
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-	var/list/demon_candidates = get_candidates(ROLE_ALIEN)
-	if(user.z != 1)
+	if(polling)
+		return
+	if(user.z != ZLEVEL_STATION)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
 		return
+	user << "<span class='notice'>You start working up the nerve to shatter the bottle...</span>"
+	polling = TRUE
+	var/list/demon_candidates = pollCandidates("Do you want to play as a [demon_name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
+	polling = FALSE
 	if(demon_candidates.len > 0)
 		used = 1
-		var/client/C = pick(demon_candidates)
+		var/mob/dead/observer/O = pick(demon_candidates)
+		var/client/C = O.client
 		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
 		user << shatter_msg
 		user << veil_msg
@@ -292,3 +315,4 @@
 		lurking just beyond the veil...</span>"
 	objective_verb = "Hug and Tickle"
 	demon_type = /mob/living/simple_animal/slaughter/laughter
+	demon_name = "laughter demon"

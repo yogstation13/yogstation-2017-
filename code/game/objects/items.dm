@@ -35,6 +35,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/list/actions = list() //list of /datum/action's that this item has.
 	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
+	var/datum/chameleon/chameleon = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -49,7 +50,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
-	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
 	var/strip_delay = 40
 	var/put_on_delay = 20
@@ -112,6 +112,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
+	//Need it for hit_reaction() and check_for_positions() calls.
+	var/thrower_dir
+
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
 		return 0
@@ -123,6 +127,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/New()
 	..()
+	if(ispath(module_holder_type, /obj/item/module_holder))
+		module_holder = new module_holder_type(src)
 	for(var/path in actions_types)
 		new path(src)
 
@@ -136,8 +142,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(ismob(loc))
 		var/mob/m = loc
 		m.unEquip(src, 1)
+	qdel(chameleon)
 	for(var/X in actions)
 		qdel(X)
+	if(module_holder)
+		qdel(module_holder)
+		module_holder = null
 	return ..()
 
 /obj/item/on_z_level_change()
@@ -257,6 +267,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		return
 	if(anchored)
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna && H.dna.species && !H.dna.species.can_grab_items)
+			return
 
 	if(burn_state == ON_FIRE)
 		var/mob/living/carbon/human/H = user
@@ -365,10 +379,28 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 
+	if(ismodule(W))
+		if(!module_holder)
+			user << "<span class='warning'>This equipment doesn't support modules.</span>"
+			return
+		var/obj/item/module/module = W
+		var/return_value = module_holder.install(module, user)
+		if(return_value != 1) //1 if success, otherwise message
+			user << "<span class='warning'>[return_value]</span>"
+		else
+			user << "<span class='notice'>You successfully install \the [module.name] into [src]."
+
+	if(ismodholder(W))
+		if(module_holder)
+			user << "<span class='notice'>There's already a module holder installed!</span>"
+			return
+		var/obj/item/module_holder/holder = W
+		if(holder.install_holder(src, user))
+			user << "<span class='notice>You install the module holder into [src].</span>"
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, atom/movable/AT)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
@@ -378,9 +410,15 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	return
 
 /obj/item/proc/dropped(mob/user)
+	if(chameleon)
+		chameleon.deregister()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
+	if(DROPDEL & flags)
+		//Prevents infinite loops where Destroy() calls an objects dropped() function
+		flags &= ~DROPDEL
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -405,12 +443,16 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	if(chameleon)
+		chameleon.register(user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
 
 /obj/item/proc/unequipped(mob/user)
+	if(chameleon)
+		chameleon.deregister()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
@@ -446,7 +488,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
 
-/obj/item/proc/IsReflect(var/def_zone) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
+/obj/item/proc/IsReflect(var/def_zone, mob/M, mob/D) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return 0
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
@@ -463,6 +505,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
+		if(H.dna.species.specflags & PROTECTEDEYES)
+			user << "<span class='danger'>This person's eyes are too strong to be gouged out!</span>"
 			return
 
 	if(ismonkey(M))
@@ -572,7 +617,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 
-/obj/item/throw_impact(atom/A)
+/obj/item/throw_impact(atom/A, tdir)
 	var/itempush = 1
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
@@ -580,6 +625,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1)
 	thrownby = thrower
+	if(thrower)
+		thrower_dir = thrower.dir
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 

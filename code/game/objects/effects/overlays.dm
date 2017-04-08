@@ -17,7 +17,7 @@
 
 /obj/effect/overlay/beam/New()
 	..()
-	spawn(10) qdel(src)
+	addtimer(src,10,"destroy_effect")
 
 /obj/effect/overlay/temp
 	icon_state = "nothing"
@@ -318,3 +318,8 @@
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+
+/obj/effect/overlay/temp/bless //color is white by default, set to whatever is needed
+	name = "blessing glow"
+	icon_state = "bless"
+	duration = 15

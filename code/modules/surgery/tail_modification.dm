@@ -34,7 +34,7 @@
 		L.dna.features -= "spines"
 	var/obj/item/severedtail/S = new(get_turf(target))
 	S.color = "#[L.dna.features["mcolor"]]"
-	S.markings = "[L.dna.features["tail"]]"
+	S.markings = "[L.dna.features["tail_lizard"]]"
 	L.update_body()
 	return 1
 
@@ -66,8 +66,8 @@
 	if(!(L.dna.features["mcolor"]))
 		L.dna.features["mcolor"] = tool.color
 	var/obj/item/severedtail/T = tool
-	L.dna.features["tail_lizard"] = T.markings
 	L.dna.species.mutant_bodyparts += "tail_lizard"
+	L.dna.features["tail_lizard"] = T.markings
 	qdel(tool)
 	L.update_body()
 	return 1

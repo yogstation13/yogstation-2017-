@@ -16,33 +16,24 @@
 	var/lifetime = 5
 	var/opaque = 1 //whether the smoke can block the view when in enough amount
 
-
-/obj/effect/particle_effect/smoke/proc/fade_out(frames = 16)
-	if(alpha == 0) //Handle already transparent case
-		return
-	if(frames == 0)
-		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
-	var/step = alpha / frames
-	for(var/i = 0, i < frames, i++)
-		alpha -= step
-		stoplag()
-
 /obj/effect/particle_effect/smoke/New()
+	alpha = 0
 	..()
+	animate(src, alpha = 255, time = 5)
 	create_reagents(500)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/effect/particle_effect/smoke/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
-	SSobj.processing.Remove(src)
-	spawn(0)
-		fade_out()
-	spawn(10)
-		qdel(src)
+	STOP_PROCESSING(SSobj, src)
+	if(opaque)
+		opacity = 0
+	animate(src, alpha = 0, time = 10)
+	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
 	lifetime--
@@ -71,6 +62,8 @@
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
 	var/list/newsmokes = list()
+	if(!t_loc)
+		return
 	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)

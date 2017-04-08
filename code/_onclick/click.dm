@@ -110,7 +110,6 @@
 
 	var/obj/item/W = get_active_hand()
 
-
 	if(W == A)
 		W.attack_self(src)
 		if(hand)
@@ -123,7 +122,9 @@
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
 		// No adjacency needed
 		if(W)
-			var/resolved = A.attackby(W,src)
+			var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+			if(!resolved && A && W)
+				resolved = A.attackby(W,src)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 		else
@@ -139,8 +140,9 @@
 	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
+				var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+				if(!resolved && A && W)
+					resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)
 					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
 			else
@@ -150,7 +152,9 @@
 			return
 		else // non-adjacent click
 			if(W)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
+				var/resolved = resolve_assault_modules(A, ARMED_RANGE_CLICK)
+				if(!resolved && A && W)
+					W.afterattack(A,src,0,params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 
@@ -259,6 +263,8 @@
 	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
 		next_click = world.time + 5
 		mind.cyberman.initiate_hack(A)
+	else if(dna && dna.species && dna.species.specAltClickOn(A))
+		return
 	else
 		..()
 
@@ -395,98 +401,31 @@
 	if(istype(A, /mob/living/carbon/human))
 		if(A == src)
 			return
-
 		var/obj/item/organ/cyberimp/eyes/hud/CIH = src.getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
-		if(istype(src.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
-			var/allowed_access = checkHUDaccess(sec=1)
-			if(!allowed_access) return
-			var/mob/living/carbon/human/AH = A
-			var/perpname = AH.get_face_name(get_id_name(""))
-			var/datum/data/record/R = find_record("name", perpname, data_core.general)
-			R = find_record("name", perpname, data_core.security)
-			if(R)
-				var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
-				if(setcriminal != "Cancel")
-					if(src.canUseHUD())
-						if(src in view(10, AH))
-							investigate_log("[AH.key] has been set from [R.fields["criminal"]] to [setcriminal] by [src.name] ([src.key]).", "records")
-							R.fields["criminal"] = setcriminal
-							AH.sec_hud_set_security_status()
-							return
-						src << "<span class='alert'>The target is out of range!</span>"
+		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
+			var/allowed_access = checkHUDaccess(1)
+			if(allowed_access)
+				security_scan_status(src, A, allowed_access)
 
 /mob/living/carbon/human/CtrlShiftClickOn(atom/A)
 	if(istype(A, /mob/living/carbon/human))
 		if(A == src)
 			return
+		var/obj/item/organ/cyberimp/eyes/hud/CIH = getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
+		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
+			var/allowed_access = checkHUDaccess(1)
+			if(allowed_access)
+				security_scan_crime(src, A, allowed_access) // check hud.dm
 
-		var/mob/living/carbon/human/AH = A
-		var/perpname = AH.get_face_name(get_id_name(""))
-		var/datum/data/record/R = find_record("name", perpname, data_core.security)
-		var/allowed_access1 = checkHUDaccess(sec=1)
-//		var/allowed_access2 = checkHUDaccess(med=1)
-
-		var/obj/item/organ/cyberimp/eyes/hud/CIH = src.getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
-		if(istype(src.glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
-			if(!allowed_access1) return
-			switch(alert("What would you like to add?","Security HUD","Minor Crime","Major Crime", "Comment", "Cancel"))
-				if("Minor Crime")
-					if(R)
-						var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
-						var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
-						if(R)
-							if (!t1 || !t2 || !allowed_access1) return
-							else if(!src.canUseHUD()) return
-							var/crime = data_core.createCrimeEntry(t1, t2, allowed_access1, worldtime2text())
-							data_core.addMinorCrime(R.fields["id"], crime)
-							src << "<span class='notice'>Successfully added a minor crime.</span>"
-							return
-				if("Major Crime")
-					if(R)
-						if(!allowed_access1) return
-						var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
-						var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
-						if(R)
-							if (!t1 || !t2 || !allowed_access1) return
-							else if (!src.canUseHUD()) return
-							var/crime = data_core.createCrimeEntry(t1, t2, allowed_access1, worldtime2text())
-							data_core.addMajorCrime(R.fields["id"], crime)
-							src << "<span class='notice'>Successfully added a major crime.</span>"
-				if("Comment")
-					if(R)
-						var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
-						if(R)
-							if (!t1 || !allowed_access1) return
-							else if(!src.canUseHUD()) return
-							var/counter = 1
-							while(R.fields[text("com_[]", counter)])
-								counter++
-							R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access1, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
-							src << "<span class='notice'>Successfully added comment.</span>"
-
-/*			FUTURE USE POSSIBLY??
-		if(istype(src.glasses, /obj/item/clothing/glasses/hud/health) || istype(CIH,/obj/item/organ/internal/cyberimp/eyes/hud/medical))
-			if(!allowed_access2) return
-*/
-
-
-/mob/living/carbon/human/proc/checkHUDaccess(var/sec = 0, var/med = 0)
-	if(!sec && !med)
-		message_admins("Yell at Super3222, something went wrong with the proc call checkHUDaccess(). Associated with [usr] so check them out.")
-		return
+/mob/living/carbon/human/proc/checkHUDaccess(var/sec)
 	var/allowed_id = null
-	var/obj/item/clothing/glasses/G = src.glasses
+	var/obj/item/clothing/glasses/G = glasses
 	if (!G.emagged)
-		if(src.wear_id)
-			var/list/access = src.wear_id.GetAccess()
-			if(sec)
-				if(access_brig in access)
-					allowed_id = src.get_authentification_name()
-					return allowed_id
-			if(med)
-				if(access_brig in access)
-					allowed_id = src.get_authentification_name()
-					return allowed_id
+		if(wear_id)
+			var/obj/item/weapon/card/id/I = get_idcard()
+			if((1 in I.access))
+				allowed_id = get_authentification_name()
+				return allowed_id
 		else
 			return 0
 	else
@@ -494,5 +433,5 @@
 		return allowed_id
 
 	if(!allowed_id)
-		src << "<span class='warning'>ERROR: Invalid Access</span>"
+		src << "<span class='warning'>ERROR: Invalid Access. Permissions restrained.</span>"
 		return 0

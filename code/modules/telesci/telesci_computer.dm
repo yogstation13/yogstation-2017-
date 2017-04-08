@@ -206,6 +206,10 @@
 				return
 			last_target = target
 			var/area/A = get_area(target)
+			if(A.noteleport)
+				temp_msg = "ERROR!<BR>Bluespace functionalities are blocked in that region. Aborting."
+				updateDialog()
+				return
 
 			teleporting = 0
 			CM.nextAllowedTime = world.time + spawn_time * 20

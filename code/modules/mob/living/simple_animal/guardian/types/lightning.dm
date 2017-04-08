@@ -22,6 +22,11 @@
 /mob/living/simple_animal/hostile/guardian/beam/AttackingTarget()
 	if(..())
 		if(isliving(target) && target != src && target != summoner)
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				if(prob(50))
+					H.drop_item()
+					H <<"<span class='warning'>[src]'s shock causes your hand to spasm, disarming you!</span>"
 			for(var/chain in enemychains)
 				var/datum/beam/B = chain
 				if(B.target == target)

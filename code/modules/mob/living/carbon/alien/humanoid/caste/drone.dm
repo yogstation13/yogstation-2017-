@@ -38,7 +38,7 @@
 	if(!isturf(user.loc))
 		user << "<span class='notice'>You can't evolve here!</span>"
 		return 0
-	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal))
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal, user.hive_faction))
 		var/mob/living/carbon/alien/humanoid/royal/praetorian/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return 1

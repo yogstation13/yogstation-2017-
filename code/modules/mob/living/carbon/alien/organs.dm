@@ -2,6 +2,7 @@
 	origin_tech = "biotech=5"
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
+	var/hive_faction
 
 /obj/item/organ/alien/New()
 	for(var/A in alien_powers)
@@ -11,12 +12,15 @@
 	..()
 
 /obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
-	..()
-	for(var/obj/effect/proc_holder/alien/P in alien_powers)
-		M.AddAbility(P)
+	if(..())
+		for(var/obj/effect/proc_holder/alien/P in alien_powers)
+			M.AddAbility(P)
+		if(isalien(M))
+			var/mob/living/carbon/alien/A = M
+			hive_faction = A.hive_faction
+		return 1
 
-
-/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0, del_after = 0)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.RemoveAbility(P)
 	..()
@@ -113,10 +117,11 @@
 		owner.adjustPlasma(regen_rate)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(isalien(M))
-		var/mob/living/carbon/alien/A = M
-		A.updatePlasmaDisplay()
+	if(..())
+		if(isalien(M))
+			var/mob/living/carbon/alien/A = M
+			A.updatePlasmaDisplay()
+		return 1
 
 /obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
 	..()
@@ -137,8 +142,9 @@
 	var/csuffix
 
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
-	..()
-	M.faction |= "alien"
+	if(..())
+		M.faction |= "alien"
+		return 1
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= "alien"

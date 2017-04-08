@@ -13,6 +13,7 @@
 	armour_penetration = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	dismember_chance = 0 //no dismember because of spammy legion heads
 	speed = 2
 	ranged = 1
 	flying = 1
@@ -89,7 +90,7 @@
 				last_legion = FALSE
 				break
 		if(last_legion)
-			loot = list(/obj/item/weapon/staff_of_storms)
+			loot = list(/obj/item/weapon/staff/storm)
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -106,46 +107,53 @@
 
 //Loot
 
-/obj/item/weapon/staff_of_storms
+/obj/item/weapon/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
 	item_state = "staffofstorms"
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = SLOT_BACK
-	item_state = "staffofstorms"
 	w_class = 4
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	var/obj/machinery/lavaland_controller/linked_machine
+	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
 
-/obj/item/weapon/staff_of_storms/attack_self(mob/user)
+/obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
-		user << "The staff is still recharging."
+		user << "<span class='warning'>The staff is still recharging!</span>"
 		return
 
-	if(!linked_machine || linked_machine.z != user.z)
-		for(var/obj/machinery/lavaland_controller/controller in machines)
-			if(controller.z == user.z)
-				linked_machine = controller
-				break
+	var/area/user_area = get_area(user)
+	var/datum/weather/A
+	for(var/V in SSweather.existing_weather)
+		var/datum/weather/W = V
+		if(W.target_z == user.z && W.area_type == user_area.type)
+			A = W
+			break
+	if(A)
 
-	if(linked_machine && linked_machine.ongoing_weather)
-		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
-			user << "The storm is already ending. It would be a waste to use the staff now."
+		if(A.stage != END_STAGE)
+			if(A.stage == WIND_DOWN_STAGE)
+				user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
+				return
+			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
+			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			A.wind_down()
 			return
-		linked_machine.ongoing_weather.duration = 0
-		user << "<span class='danger'><B>With an appropriately dramatic flourish, you dispell the storm.</B>"
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
-		storm_cooldown = world.time + 600
-
-	else if (linked_machine && !linked_machine.ongoing_weather)
-		user << "<span class='danger'><B>You lift the staff towards the heavens, calling down a terrible storm.</B>"
-		linked_machine.weather_cooldown = 0
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
-		storm_cooldown = world.time + 600
-
 	else
-		user << "You can't seem to control the weather here."
+		A = new storm_type
+		A.name = "staff storm"
+		A.area_type = user_area.type
+		A.target_z = user.z
+		A.telegraph_duration = 100
+		A.end_duration = 100
+
+	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
+	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	A.telegraph()
+	storm_cooldown = world.time + 200

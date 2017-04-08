@@ -11,6 +11,7 @@
 	recommended_enemies = 1
 	enemy_minimum_age = 14
 	round_ends_with_antag_death = 1
+	prob_traitor_ai = 18
 	var/use_huds = 0
 	var/finished = 0
 
@@ -35,8 +36,6 @@
 
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(wizardstart)
-
-	handle_AI_Traitors()
 
 	return 1
 

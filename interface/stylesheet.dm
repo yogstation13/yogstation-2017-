@@ -50,6 +50,9 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
+.genesisgreen			{color: #03ff39		font-weight: bold; font-size: 5;}
+.genesisred				{color: #FF0000; 	font-weight: bold; font-size: 5;}
+
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
@@ -115,11 +118,14 @@ h1.alert, h2.alert		{color: #000000;}
 
 .borer            		{color: #804000;}
 
+.ashwalker				{color: #00ff00;}
+
 .interface				{color: #330033;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
+.pheromone				{color: #3b2769;}
 
 .command_headset       {font-weight: bold; font-size: 3;}
 .big					{font-size: 3;}

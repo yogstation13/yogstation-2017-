@@ -1,3 +1,4 @@
+/client/var/bypass_ooc_approval = 0
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -42,16 +43,40 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
+	msg = pretty_filter(msg)
+
+	log_ooc("[mob.name]/[key] : [msg]")
+
 	var/raw_msg = msg
 
-	msg = emoji_parse(msg)
+
+	msg = pretty_filter(msg)
+
+	log_ooc("[mob.name]/[key] : [msg]")
+
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
 		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
-	send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
+	if(!findtext(raw_msg, "@"))
+		send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
+
+
+	if(!holder && !bypass_ooc_approval)
+		var/regex/R = new("((\[a-z\]+://|www\\.)\\S+)", "ig")
+
+		R.Find(msg)
+
+		for(var/G in R.group)
+			admin_link_approval(G)
+			// Only request approval for the first link
+			break
+
+		msg = R.Replace(msg, "<b>(Link removed)</b>")
+	else
+		bypass_ooc_approval = 0
 
 	var/keyname
 	if(prefs.unlock_content && (prefs.toggles & MEMBER_PUBLIC))
@@ -62,6 +87,7 @@
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
 
 	keyname += "[key]"
+	msg = emoji_parse(msg)
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)

@@ -114,6 +114,10 @@ HOSTEDBY Yogstation13-bot
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting)
 GUEST_BAN
 
+## Comment to disable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+CHECK_RANDOMIZER
+
+
 ## Uncomment to allow web client connections
 #ALLOW_WEBCLIENT
 
@@ -152,10 +156,6 @@ BANAPPEALS http://forums.yogstation.net/index.php?forms/unban-appeal-form.1/resp
 ##Remove the # mark infront of this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM.
-## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
-#POPUP_ADMIN_PM
-
 ## Remove the # to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
 
@@ -169,7 +169,7 @@ TICKLAG 0.65
 TICKCOMP 1
 
 ## Comment this out to disable automuting
-#AUTOMUTE_ON
+AUTOMUTE_ON
 
 ## Communication key for receiving data through world/Topic(), you don't want to give this out
 #COMMS_KEY default_pwd

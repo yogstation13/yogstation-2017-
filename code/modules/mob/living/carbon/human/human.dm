@@ -3,7 +3,7 @@
 	real_name = "Unknown"
 	voice_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "caucasian1_m_s"
+	icon_state = "blank"
 
 
 
@@ -47,7 +47,7 @@
 	//Note: Additional organs are generated/replaced on the dna.species level
 
 	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+		I.Insert(src, 1)
 
 	martial_art = default_martial_art
 
@@ -84,7 +84,8 @@
 		if(mind)
 			if(mind.changeling)
 				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+				stat("Extracted DNA", mind.changeling.profilecount)
+				stat("Absorbed Lifeforms", mind.changeling.absorbedcount)
 			if(mind.cyberman)
 				stat("Hacking Module: [mind.cyberman.quickhack ? "Enabled" : "Disabled"] [mind.cyberman.emp_hit ? "%$&ERROR EMP DAMAGE [mind.cyberman.emp_hit]% #?@": ""]")
 				for(var/obj/status_obj in mind.cyberman.get_status_objs(src))
@@ -125,6 +126,23 @@
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
 
+	if(locate(/mob/living/simple_animal/hostile/guardian/protector) in src)//if they've got a protector holo inside them
+		var/mob/living/simple_animal/hostile/guardian/protector/G = locate(/mob/living/simple_animal/hostile/guardian/protector)
+		if(severity == 1 && G.toggle)//can't think of a better way to do this since ex_act only works if the holo is actually hit with the explosion, which it isn't
+			apply_damage(20,BRUTE)
+		else
+			if(G.toggle && severity > 1)
+				visible_message("<span class='notice'><i>[src] glows in a <font color=\"[G.namedatum.colour]\">strange light </font>and is protected from the explosion!<i></span>")
+				return
+			else
+				if(severity == 1)
+					apply_damage(200,BRUTE)
+				if(severity == 2)
+					apply_damage(60,BRUTE)
+				if(severity == 3)
+					apply_damage(30,BRUTE)
+		visible_message("<span class='notice'><i>[src] glows in a <font color=\"[G.namedatum.colour]\">strange light </font>and is protected from the explosion!<i></span>")
+		return
 	switch (severity)
 		if (1)
 			b_loss += 500
@@ -184,14 +202,9 @@
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return
 
-/mob/living/carbon/human/bullet_act()
-	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-		if(!prob(martial_art.deflection_chance))
-			return ..()
-		if(!src.lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-			src.visible_message("<span class='danger'>[src] deflects the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-			playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
-			return 0
+/mob/living/carbon/human/bullet_act(obj/item/projectile/Proj)
+	if(martial_art && martial_art.try_deflect_projectile(src, Proj)) //Some martial arts users can deflect projectiles!
+		return
 	..()
 
 /mob/living/carbon/human/attack_ui(slot)
@@ -273,7 +286,7 @@
 
 	for (var/obj/item/bodypart/org in bodyparts)
 		if (org.can_be_bandaged && org.bandaged)
-			dat += "<tr><td><i>[org.getDisplayName()]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
+			dat += "<tr><td><i>[getLimbDisplayName(org.name)]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A></td></tr>"
@@ -833,6 +846,8 @@
 	if(C.stat == DEAD)
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
+	if(NOCRIT in C.status_flags)//no crit when you're stimmed
+		return
 	if(is_mouth_covered())
 		src << "<span class='warning'>Remove your mask first!</span>"
 		return 0
@@ -1032,33 +1047,36 @@
 	if(admin_revive)
 		regenerate_limbs()
 
-		if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
-			var/obj/item/organ/lungs/L = new()
-			L.Insert(src)
-
-		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
-			var/obj/item/organ/heart/H = new()
-			H.Insert(src)
-
-		if(!getorganslot("tongue"))
-			var/obj/item/organ/tongue/T
-
-			for(var/tongue_type in dna.species.mutant_organs)
-				if(ispath(tongue_type, /obj/item/organ/tongue))
-					T = new tongue_type()
-					T.Insert(src)
-
-			// if they have no mutant tongues, give them a regular one
-			if(!T)
-				T = new()
-				T.Insert(src)
-
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
 	..()
+
+/mob/living/carbon/human/regenerate_organs()
+	..()
+	CHECK_DNA_AND_SPECIES(src)
+	if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+
+	if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
+		var/obj/item/organ/heart/H = new()
+		H.Insert(src)
+
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T
+
+		for(var/tongue_type in dna.species.mutant_organs)
+			if(ispath(tongue_type, /obj/item/organ/tongue))
+				T = new tongue_type()
+				T.Insert(src)
+
+		// if they have no mutant tongues, give them a regular one
+		if(!T)
+			T = new()
+			T.Insert(src)
 
 /mob/living/carbon/human/proc/influenceSin()
 	var/datum/objective/sintouched/O
@@ -1104,3 +1122,8 @@
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
 	..()
+
+/mob/living/carbon/human/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(dna && dna.species && dna.species.handle_flash(src, intensity, override_blindness_check, affect_silicon, visual))
+		return 0
+	return ..()

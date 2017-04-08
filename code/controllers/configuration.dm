@@ -44,7 +44,6 @@
 	var/vote_no_dead = 0				// dead people can't vote (tbi)
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
-	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
@@ -64,13 +63,15 @@
 
 	var/server
 	var/banappeals
-	var/wikiurl = "http://www.tgstation13.org/wiki" // Default wiki link.
-	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
-	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
-	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
+	var/wikiurl = "https://wiki.yogstation.net/" // Default wiki link.
+	var/forumurl = "https://www.yogstation.net/" //default forums
+	var/rulesurl = "http://forums.yogstation.net/index.php?pages/rules/" // default rules
+	var/githuburl = "https://github.com/yogstation13/yogstation" //default github
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
+
+	var/check_randomizer = 0
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -179,6 +180,7 @@
 	var/grey_assistants = 0
 
 	var/lavaland_budget = 60
+	var/space_budget = 16
 
 	var/aggressive_changelog = 0
 
@@ -355,8 +357,6 @@
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
 					forbid_singulo_possession = 1
-				if("popup_admin_pm")
-					config.popup_admin_pm = 1
 				if("allow_holidays")
 					config.allow_holidays = 1
 				if("useircbot")
@@ -438,6 +438,8 @@
 					config.client_error_message = value
 				if("discord_token")
 					discord_token = value
+				if("check_randomizer")
+					config.check_randomizer = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
@@ -605,6 +607,8 @@
 					config.grey_assistants			= 1
 				if("lavaland_budget")
 					config.lavaland_budget			= text2num(value)
+				if("space_budget")
+					config.space_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")

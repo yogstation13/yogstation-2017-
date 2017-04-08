@@ -42,7 +42,7 @@
 	//Whitelist for jobs that have ULTRA preference for people who are accepted into the whitelist
 	var/whitelisted = 0
 
-	var/outfit = null
+	var/datum/outfit/outfit = null
 
 //Only override this proc
 /datum/job/proc/equip_items(mob/living/carbon/human/H)
@@ -66,10 +66,14 @@
 /datum/job/proc/give_donor_stuff(mob/living/carbon/human/H)
 	if(!is_donator(H))
 		return
+	if(H.client.prefs.purrbation)
+		H.purrbation()
 	if(H.client.prefs.donor_hat)
-		for(var/obj/item/weapon/storage/backpack/backpack in H.GetAllContents())
-			backpack.contents += H.client.prefs.donor_hat
-			break
+		var/obj/item/weapon/storage/backpack/BP = locate(/obj/item/weapon/storage/backpack) in H.GetAllContents()
+		if(BP)
+			var/type = donor_start_items[H.client.prefs.donor_hat]
+			var/obj/hat = new type()
+			hat.forceMove(BP)
 	switch(H.client.prefs.donor_pda)
 		if(2)//transparent
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
@@ -78,6 +82,9 @@
 			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
 			PDA.icon_state = "pda-pipboy"
 			PDA.slot_flags |= SLOT_GLOVES
+		if(4)//rainbow
+			var/obj/item/device/pda/PDA = locate(/obj/item/device/pda) in H.GetAllContents()
+			PDA.icon_state = "pda-rainbow"
 
 /datum/job/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
@@ -168,6 +175,24 @@
 	var/box = /obj/item/weapon/storage/box/survival
 
 	var/pda_slot = slot_belt
+
+/datum/outfit/job/copyFrom(datum/outfit/other)
+	..()
+	if(istype(other, /datum/outfit/job))
+		var/datum/outfit/job/J = other
+		backpack = J.backpack
+		satchel  = J.satchel
+		dufflebag = J.dufflebag
+		box = J.box
+		pda_slot = J.pda_slot
+
+/datum/outfit/job/clear()
+	..()
+	backpack = null
+	satchel  = null
+	dufflebag = null
+	box = null
+	pda_slot = slot_belt
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	switch(H.backbag)

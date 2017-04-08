@@ -21,6 +21,7 @@
 	var/power = 5 //Maximum distance launched water will travel
 	var/precision = 0 //By default, turfs picked from a spray are random, set to 1 to make it always have at least one water effect per row
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
+	var/wide = 1
 
 /obj/item/weapon/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -94,7 +95,8 @@
 		return
 	if (!safety)
 		if (src.reagents.total_volume < 1)
-			usr << "<span class='warning'>\The [src] is empty!</span>"
+			if(user)
+				user << "<span class='warning'>\The [src] is empty!</span>"
 			return
 
 		if (world.time < src.last_use + 20)
@@ -105,41 +107,45 @@
 		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
 
 		var/direction = get_dir(src,target)
+		if(user)
+			if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
+				spawn(0)
+					var/obj/B = user.buckled
+					var/movementdirection = turn(direction,180)
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					sleep(1)
+					step(B, movementdirection)
+					sleep(2)
+					step(B, movementdirection)
+					sleep(2)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
+					sleep(3)
+					step(B, movementdirection)
 
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
-			spawn(0)
-				var/obj/B = user.buckled
-				var/movementdirection = turn(direction,180)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(2)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-				sleep(3)
-				step(B, movementdirection)
-
-		else user.newtonian_move(turn(direction, 180))
-
-		var/turf/T = get_turf(target)
-		var/turf/T1 = get_step(T,turn(direction, 90))
-		var/turf/T2 = get_step(T,turn(direction, -90))
-		var/list/the_targets = list(T,T1,T2)
-		if(precision)
-			var/turf/T3 = get_step(T1, turn(direction, 90))
-			var/turf/T4 = get_step(T2,turn(direction, -90))
-			the_targets = list(T,T1,T2,T3,T4)
-
-		for(var/a=0, a<5, a++)
+			else
+				user.newtonian_move(turn(direction, 180))
+		var/list/the_targets
+		if(wide)
+			var/turf/T = get_turf(target)
+			var/turf/T1 = get_step(T,turn(direction, 90))
+			var/turf/T2 = get_step(T,turn(direction, -90))
+			the_targets = list(T,T1,T2)
+			if(precision)
+				var/turf/T3 = get_step(T1, turn(direction, 90))
+				var/turf/T4 = get_step(T2,turn(direction, -90))
+				the_targets = list(T,T1,T2,T3,T4)
+		else
+			the_targets = list(get_turf(target))
+		var/particles = (wide ? 5 : 1)
+		for(var/a=0, a<particles, a++)
 			spawn(0)
 				var/obj/effect/particle_effect/water/W = PoolOrNew( /obj/effect/particle_effect/water, get_turf(src) )
 				var/turf/my_target = pick(the_targets)

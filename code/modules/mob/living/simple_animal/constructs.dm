@@ -8,18 +8,18 @@
 	response_harm   = "punches"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
-	speed = 0
+	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = list(CANPUSH)
 	attack_sound = 'sound/weapons/punch1.ogg'
-	see_in_dark = 7
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-	faction = list("cult")
 	flying = 1
 	pressure_resistance = 200
 	unique_name = 1
@@ -29,12 +29,39 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/phaser = TRUE
+	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
-/mob/living/simple_animal/hostile/construct/New()
+/mob/living/simple_animal/hostile/construct/New(var/loc, var/_affiliation)
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+		if(_affiliation)
+			affiliation = _affiliation
+	addtimer(src, "set_affiliation", 1) //So the other code get's run first, wich might change the affiliation
+
+/mob/living/simple_animal/hostile/construct/proc/set_affiliation(var/_affiliation)
+	if(_affiliation)
+		affiliation = _affiliation
+	overlays.Cut()
+	var/image/I = image(icon, icon_state = "[icon_state]_o")
+	switch(affiliation)
+		if("Cult")
+			faction |= list("cult")
+			I.color = color2hex("red")
+			overlays += I
+		if("Wizard")
+			faction |= list("wizard")
+			ticker.mode.update_wiz_icons_added(mind)
+			I.color = color2hex("blue")
+			overlays += I
+		if("Neutral")
+			I.color = color2hex("lime")
+			overlays += I
+		else
+			I.color = color2hex(affiliation)
+			overlays += I
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
@@ -57,14 +84,9 @@
 				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-			else
-				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
-						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
 				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
-			else
-				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
 		..()
 
@@ -96,8 +118,6 @@
 	attacktext = "smashes their armored gauntlet into"
 	speed = 3
 	environment_smash = 2
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	attack_sound = 'sound/weapons/punch3.ogg'
 	status_flags = list()
 	mob_size = MOB_SIZE_LARGE
@@ -145,14 +165,12 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	maxHealth = 75
-	health = 75
+	maxHealth = 40
+	health = 40
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
@@ -172,14 +190,13 @@
 	maxHealth = 55
 	health = 55
 	response_harm = "viciously beats"
+	speed = 2
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10
 	minimum_distance = 10 //AI artificers will flee like fuck
 	attacktext = "rams"
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
 	environment_smash = 2
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -235,6 +252,14 @@
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
+/mob/living/simple_animal/hostile/construct/builder/AttackingSelf()
+	if(health < maxHealth)
+		adjustHealth(-5)
+		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
+					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
+	else
+		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
+
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -251,20 +276,21 @@
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "harvester"
 	icon_living = "harvester"
-	maxHealth = 60
-	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	speed = 0
 	attacktext = "prods"
 	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
+	attack_sound = 'sound/weapons/punch3.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+							/obj/effect/proc_holder/spell/targeted/smoke/disable,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	playstyle_string = "<B>You are a Harvester. You are strong and fast. \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = 2 //SMASH IT ALL

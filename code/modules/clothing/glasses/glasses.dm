@@ -1,7 +1,3 @@
-/obj/item/clothing/glasses
-	name = "glasses"
-	materials = list(MAT_GLASS = 250)
-
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
@@ -43,6 +39,16 @@
 	attack_verb = list("sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/clothing/glasses/meson/gar/cheap
+	name = "cheap gar mesons"
+	desc = "Do the impossible, see the inv- ... hold on a second."
+	force = 0
+	throwforce = 0
+	sharpness = null
+	vision_flags = 0
+	invis_view = 2
+	invis_view = SEE_INVISIBLE_LIVING
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
@@ -135,6 +141,13 @@
 	tint = 1
 
 	dog_fashion = /datum/dog_fashion/head
+
+/obj/item/clothing/glasses/sunglasses/cheap
+	name = "cheap sunglasses"
+	desc = "Nice and cheap, just the way Nanotrasen likes it."
+	darkness_view = 0
+	flash_protect = 0
+	tint = 0
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"

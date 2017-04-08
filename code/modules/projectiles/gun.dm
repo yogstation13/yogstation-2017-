@@ -368,10 +368,9 @@ obj/item/weapon/gun/proc/newshot()
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
-	if(zoomable)
-		var/obj/item/scope/scope = locate() in src
-		if(scope)
-			scope.zoom(user,FALSE)
+	var/obj/item/scope/scope = locate() in src
+	if(scope)
+		scope.zoom(user,FALSE)
 
 /obj/item/weapon/gun/AltClick(mob/user)
 	..()

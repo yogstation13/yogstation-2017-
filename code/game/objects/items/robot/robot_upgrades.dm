@@ -87,6 +87,9 @@
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
+				ghost << "<span class='boldnotice'>An emergency reboot module has been installed \
+					into your servo. You are being revived.</span>"
+				ghost << 'sound/machines/ping.ogg'
 
 	R.revive()
 
@@ -278,10 +281,10 @@
 	on = !on
 	if(on)
 		cyborg << "<span class='notice'>You activate the self-repair module.</span>"
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		cyborg << "<span class='notice'>You deactivate the self-repair module.</span>"
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/update_icon()
@@ -294,7 +297,7 @@
 		icon_state = "cyborg_upgrade5"
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	on = FALSE
 	update_icon()
 

@@ -34,12 +34,15 @@
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
 	var/enemy_minimum_age = 7 //How many days must players have been playing before they can play this antagonist
+	var/prob_traitor_ai = 0
 
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
+	var/list/datum/station_goal/station_goals = list()
 
-/datum/game_mode/proc/announce() //to be calles when round starts
+
+/datum/game_mode/proc/announce() //to be called when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
 
 
@@ -77,6 +80,8 @@
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
+	handle_AI_Traitors()
+
 	for(var/mob/antag in mob_list)
 		if(antag.mind)
 			if(antag.mind.special_role)
@@ -91,6 +96,7 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1
@@ -127,6 +133,10 @@
 		return null
 
 	replacementmode = pickweight(usable_modes)
+	if(config.protect_roles_from_antagonist)
+		replacementmode.restricted_jobs += replacementmode.protected_jobs
+	if(config.protect_assistant_from_antagonist)
+		replacementmode.restricted_jobs += "Assistant"
 
 	switch(SSshuttle.emergency.mode) //Rounds on the verge of ending don't get new antags, they just run out
 		if(SHUTTLE_STRANDED, SHUTTLE_ESCAPE)
@@ -141,8 +151,8 @@
 
 	var/list/antag_canadates = list()
 
-	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag)
+	for(var/mob/living/carbon/human/H in get_playing_crewmembers_for_role(replacementmode.antag_flag, replacementmode.restricted_jobs))
+		if(H.client && (H.stat != DEAD) && H.client.prefs.allow_midround_antag)
 			antag_canadates += H
 
 	if(!antag_canadates)
@@ -150,11 +160,6 @@
 		return null
 
 	antag_canadates = shuffle(antag_canadates)
-
-	if(config.protect_roles_from_antagonist)
-		replacementmode.restricted_jobs += replacementmode.protected_jobs
-	if(config.protect_assistant_from_antagonist)
-		replacementmode.restricted_jobs += "Assistant"
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
 
@@ -174,23 +179,35 @@
 	return 0
 
 /datum/game_mode/proc/handle_AI_Traitors()
-	//Handles setting up traitor AIs seperately, because >tfw no datum antags
-	//Override this to change chances for AI traitors
-	var/prob_naughty_ai = 19
-	if(prob(100-prob_naughty_ai)) return //no AI traitor made
+	//called in post_setup() every round
+	if(!force_traitor_ai && prob(100-prob_traitor_ai))
+		return //no AI traitor made
 
-	var/mob/living/silicon/ai/A
-	for(var/datum/mind/player in get_players_for_role(ROLE_TRAITOR))
-		if(istype(player.current,/mob/living/silicon/ai))
-			A = player.current
+	var/mob/living/silicon/ai/AI
+	for(var/V in ai_list)
+		AI = V
+		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client))
+			AI = null
+		else
+			break
 
-	if(!A || A.stat == DEAD || !A.client || !A.mind)
+	if(!AI || !AI.mind || is_special_character(AI))
+		if(force_traitor_ai)
+			message_admins("<span class='adminnotice'>Attempted to force traitor AI, but there were no valid AIs to make traitor.</span>")
 		return
-	if(is_special_character(A))
-		return
 
-	ticker.mode.traitors += A.mind
-	A.mind.special_role = "traitor"
+	AI.mind.special_role = "traitor"
+	traitors += AI.mind
+	update_traitor_icons_added(AI.mind)
+
+	give_traitor_ai_objectives(AI.mind)
+
+	greet_traitor(AI.mind)
+	finalize_traitor(AI.mind)
+
+/datum/game_mode/proc/give_traitor_ai_objectives(datum/mind/ai_mind)
+	if(!ai_mind)
+		return
 
 	var/objective_count = 0
 
@@ -199,44 +216,40 @@
 		switch(special_pick)
 			if(1)
 				var/datum/objective/block/block_objective = new
-				block_objective.owner = A.mind
-				A.mind.objectives += block_objective
+				block_objective.owner = ai_mind
+				ai_mind.objectives += block_objective
 				objective_count++
 			if(2)
 				var/datum/objective/purge/purge_objective = new
-				purge_objective.owner = A.mind
-				A.mind.objectives += purge_objective
+				purge_objective.owner = ai_mind
+				ai_mind.objectives += purge_objective
 				objective_count++
 			if(3)
 				var/datum/objective/robot_army/robot_objective = new
-				robot_objective.owner = A.mind
-				A.mind.objectives += robot_objective
+				robot_objective.owner = ai_mind
+				ai_mind.objectives += robot_objective
 				objective_count++
 			if(4) //Protect and strand a target
 				var/datum/objective/protect/yandere_one = new
-				yandere_one.owner = A.mind
-				A.mind.objectives += yandere_one
+				yandere_one.owner = ai_mind
+				ai_mind.objectives += yandere_one
 				yandere_one.find_target()
 				objective_count++
 				var/datum/objective/maroon/yandere_two = new
-				yandere_two.owner = A.mind
+				yandere_two.owner = ai_mind
 				yandere_two.target = yandere_one.target
-				A.mind.objectives += yandere_two
+				ai_mind.objectives += yandere_two
 				objective_count++
 
 	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
 		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = A.mind
+		kill_objective.owner = ai_mind
 		kill_objective.find_target()
-		A.mind.objectives += kill_objective
+		ai_mind.objectives += kill_objective
 
 	var/datum/objective/survive/survive_objective = new
-	survive_objective.owner = A.mind
-	A.mind.objectives += survive_objective
-
-	ticker.mode.greet_traitor(A.mind)
-	ticker.mode.finalize_traitor(A.mind)
-
+	survive_objective.owner = ai_mind
+	ai_mind.objectives += survive_objective
 
 /datum/game_mode/proc/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
@@ -353,6 +366,12 @@
 		else
 			intercepttext += i_text.build(A, pick(modePlayer))
 
+	if(station_goals.len)
+		intercepttext += "<hr><b fontsize = 10>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
+
 	print_command_report(intercepttext,"Centcom Status Summary")
 	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
@@ -365,15 +384,12 @@
 /datum/game_mode/proc/pick_candidate(list/datum/mind/candidates = antag_candidates, amount = 0, remove_from_antag_candidates = 0)
 	if(!amount)
 		return
+
 	var/list/datum/mind/chosen_ones = list()
 	// If the DB is connected, use the new function. Otherwise revert to legacy pick() selection
 	if(dbcon.IsConnected())
 		var/list/ckey_listed = list()
 		var/ckey_for_sql = ""
-
-		for(var/datum/mind/player in candidates)
-			if(istype(player.current,/mob/living/silicon/ai))
-				candidates.Remove(player) //All AI antag roles are handled seperately.  See handle_AI_Traitors()
 
 		// Add all our antag candidates to a list()
 		for (var/datum/mind/player in candidates)
@@ -400,6 +416,7 @@
 
 		for(var/client/C in clients)
 			C.last_cached_weight = output[C.ckey]
+			C.last_cached_total_weight = total
 
 		for(var/i in 1 to amount)
 			if(!candidates.len)
@@ -554,12 +571,33 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-/*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/new_player/player)
-	if(player.preferences.be_special & role)
-		return 1
-	return 0
-*/
+/datum/game_mode/proc/get_playing_crewmembers_for_role(role, restricted_jobs_for, on_station = 1)
+	var/list/mob/living/carbon/human/candidates = list()
+	var/list/crewmembers = list()
+	for(var/V in data_core.locked)
+		var/datum/data/record/R = V
+		var/mob/living/carbon/human/H = R.fields["reference"]
+		if(istype(H) && H.client)
+			crewmembers += H
+	for(var/V in crewmembers)
+		var/mob/living/carbon/human/applicant = V
+		if(!applicant.client.prefs.allow_midround_antag)
+			continue
+		if(role && !(role in applicant.client.prefs.be_special))
+			continue
+		if(applicant.stat != CONSCIOUS || !applicant.mind || applicant.mind.special_role)
+			continue
+		if(on_station)
+			var/turf/T = get_turf(applicant)
+			if(T.z != ZLEVEL_STATION)
+				continue
+		if(jobban_isbanned(applicant, role) || jobban_isbanned(applicant, "Syndicate") || !age_check(applicant.client))
+			continue
+		if(restricted_jobs_for && (applicant.job in restricted_jobs_for))
+			continue
+		candidates += applicant
+
+	return candidates
 
 /datum/game_mode/proc/num_players()
 	. = 0
@@ -719,4 +757,22 @@
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
-	remove_servant_of_ratvar(newborgie.current, TRUE)
+
+/datum/game_mode/proc/generate_station_goals()
+	var/list/possible = list()
+	for(var/T in subtypesof(/datum/station_goal))
+		var/datum/station_goal/G = T
+		if(config_tag in initial(G.gamemode_blacklist))
+			continue
+		possible += T
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		station_goals += new picked
+
+
+/datum/game_mode/proc/declare_station_goal_completion()
+	for(var/V in station_goals)
+		var/datum/station_goal/G = V
+		G.print_result()

@@ -22,6 +22,7 @@
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"
 	desc = "A tasteful grey jumpsuit that reminds you of the good old days."
+	attack_verb = list("greytided", "suited")
 	icon_state = "grey"
 	item_state = "gy_suit"
 	item_color = "grey"
@@ -65,6 +66,13 @@
 	icon_state = "red"
 	item_state = "r_suit"
 	item_color = "red"
+
+/obj/item/clothing/under/color/superb
+	name = "superb jumpsuit"
+	icon_state = "superb"
+	item_state = "superb"
+	item_color = "superb"
+	desc = "Produced by superb inc. NNYC, wearing this thing makes you feel like a <i>hypebeast</i>."
 
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"

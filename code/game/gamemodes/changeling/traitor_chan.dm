@@ -7,6 +7,7 @@
 	required_enemies = 1	// how many of each type are required
 	recommended_enemies = 3
 	reroll_friendly = 1
+	prob_traitor_ai = 18
 
 	var/list/possible_changelings = list()
 	var/const/changeling_amount = 1 //hard limit on changelings if scaling is turned off
@@ -41,7 +42,7 @@
 
 	if(!possible_changelings.len)
 		return 0
-	
+
 	//THE ONLY PLACE IN ENTIRE GAMEMODE CODE I HAVE TO DO THIS IN FULL, JUST FUCKING FUCK
 	var/list/datum/mind/alien_mutants = pick_candidate(possible_changelings, num_changelings, 1)
 

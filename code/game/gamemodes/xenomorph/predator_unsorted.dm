@@ -16,7 +16,7 @@
 	name = "predator"
 	voice_name = "predator"
 	verb_say = "clicks"
-	base_icon_state = "pred_s"
+	//base_icon_state = "pred_s"
 	icon_state = "pred_s"
 	languages_spoken = PREDATOR
 	languages_understood = HUMAN | PREDATOR

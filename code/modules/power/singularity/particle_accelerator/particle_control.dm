@@ -119,24 +119,25 @@
 		part.strength = strength
 		part.update_icon()
 
-/obj/machinery/particle_accelerator/control_box/proc/add_strength(s)
+/obj/machinery/particle_accelerator/control_box/proc/add_strength(log = TRUE)
 	if(assembled && (strength < strength_upper_limit))
 		strength++
 		strength_change()
 
-		message_admins("PA Control Computer increased to [strength] by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("PA Control Computer increased to [strength] by [key_name(usr)] in ([x],[y],[z])")
-		investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]","singulo")
+		if(log)
+			message_admins("PA Control Computer increased to [strength] by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("PA Control Computer increased to [strength] by [key_name(usr)] in ([x],[y],[z])")
+			investigate_log("increased to <font color='red'>[strength]</font> by [key_name(usr)]","singulo")
 
 
-/obj/machinery/particle_accelerator/control_box/proc/remove_strength(s)
+/obj/machinery/particle_accelerator/control_box/proc/remove_strength(log = TRUE)
 	if(assembled && (strength > 0))
 		strength--
 		strength_change()
-
-		message_admins("PA Control Computer decreased to [strength] by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in ([x],[y],[z])")
-		investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)]","singulo")
+		if(log)
+			message_admins("PA Control Computer decreased to [strength] by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+			log_game("PA Control Computer decreased to [strength] by [key_name(usr)] in ([x],[y],[z])")
+			investigate_log("decreased to <font color='green'>[strength]</font> by [key_name(usr)]","singulo")
 
 
 /obj/machinery/particle_accelerator/control_box/power_change()
@@ -209,11 +210,12 @@
 	return 0
 
 
-/obj/machinery/particle_accelerator/control_box/proc/toggle_power()
+/obj/machinery/particle_accelerator/control_box/proc/toggle_power(log = TRUE)
 	active = !active
-	investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
-	message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-	log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
+	if(log)
+		investigate_log("turned [active?"<font color='red'>ON</font>":"<font color='green'>OFF</font>"] by [usr ? key_name(usr) : "outside forces"]","singulo")
+		message_admins("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? key_name_admin(usr) : "outside forces"](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
+		log_game("PA Control Computer turned [active ?"ON":"OFF"] by [usr ? "[key_name(usr)]" : "outside forces"] in ([x],[y],[z])")
 	if(active)
 		use_power = 2
 		for(var/CP in connected_parts)

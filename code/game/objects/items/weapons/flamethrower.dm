@@ -34,7 +34,7 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	var/turf/location = loc
 	if(istype(location, /mob/))
@@ -43,8 +43,8 @@
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2)
-	if(prob(10))
-		playsound(get_turf(src), 'sound/misc/flame.ogg', 10, 0, -5, sNoiseLevel = 200) // double normal sound.
+	//if(prob(10))
+	//	playsound(get_turf(src), 'sound/misc/flame.ogg', 10, 0, -5, sNoiseLevel = 200) // double normal sound.
 	return
 
 
@@ -164,7 +164,7 @@
 			return
 		lit = !lit
 		if(lit)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 			if(!warned_admins)
 				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has lit a flamethrower.")
 				warned_admins = 1

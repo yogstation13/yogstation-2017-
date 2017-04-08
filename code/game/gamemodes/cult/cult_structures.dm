@@ -103,11 +103,11 @@
 	var/last_corrupt = 0
 
 /obj/structure/cult/pylon/New()
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	..()
 
 /obj/structure/cult/pylon/Destroy()
-	SSfastprocess.processing.Remove(src)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/cult/pylon/process()
@@ -141,6 +141,22 @@
 		else
 			last_corrupt = world.time + corrupt_delay*2
 
+/obj/structure/cult/pylon/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/suit/hooded/cultrobes/cult_shield) && iscultist(user))
+		var/obj/item/clothing/suit/hooded/cultrobes/cult_shield/S = I
+		if(S.current_charges >= 3)
+			user <<"<span class='warning'>[I] is already fully charged!</span>"
+			return
+		if(cooldowntime > world.time)
+			user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+			return
+		if(anchored && Adjacent(user) && cooldowntime <= world.time)
+			user <<"<span class='notice'>You hold [I] up to [src]. Hold still...</span>"
+			if(do_mob(user, user, 200))
+				S.current_charges = 3
+				user <<"<span class='notice'>[I] is fully charged.</span>"
+				cooldowntime = world.time + 1200
+
 /obj/structure/cult/tome
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
@@ -157,19 +173,21 @@
 	if(cooldowntime > world.time)
 		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
 		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shifter")
-	var/pickedtype
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
+	var/list/pickedtype = list()
 	switch(choice)
 		if("Supply Talisman")
-			pickedtype = /obj/item/weapon/paper/talisman/supply/weak
+			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
 		if("Shuttle Curse")
-			pickedtype = /obj/item/device/shuttle_curse
-		if("Veil Shifter")
-			pickedtype = /obj/item/device/cult_shift
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+			pickedtype += /obj/item/device/shuttle_curse
+		if("Veil Walker Set")
+			pickedtype += /obj/item/device/cult_shift
+			pickedtype += /obj/item/device/flashlight/flare/culttorch
+	if(src && !qdeleted(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+		for(var/N in pickedtype)
+			var/obj/item/D = new N(get_turf(src))
+			user << "<span class='cultitalic'>You summon [D] from the archives!</span>"
 
 /obj/effect/gateway
 	name = "gateway"

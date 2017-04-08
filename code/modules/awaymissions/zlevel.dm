@@ -81,12 +81,12 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		while(sanity > 0)
 			sanity--
-			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
+			var/turf/T = locate(rand(75, world.maxx - 75), rand(55, world.maxy - 55), z_level)
 			var/valid = TRUE
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
-				if(!(istype(new_area, whitelist)))
+				if(!(istype(new_area, whitelist)) || new_area.mapgen_protected)
 					valid = FALSE
 					break
 
@@ -94,6 +94,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 				continue
 
 			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			add_list_to_list(ruinAreas, list(ruin.name, T.x, T.y, T.z))
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)

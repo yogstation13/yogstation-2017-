@@ -73,7 +73,7 @@
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
 	can_hold_items = 1
-	valid_held_items = list(/obj/item/device/assembly/bikehorn)
+	valid_held_items = list(/obj/item/device/assembly/bikehorn,/obj/item/weapon/nullrod/clown)
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -105,7 +105,6 @@
 	body_parts_covered = LEGS|FEET
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
-	armor = list(melee = 35, bullet = 35, laser = 0, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"

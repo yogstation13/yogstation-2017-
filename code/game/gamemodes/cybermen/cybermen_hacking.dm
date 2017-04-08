@@ -949,8 +949,13 @@
 
 /datum/cyberman_hack/tech_disk/complete()
 	var/obj/item/weapon/disk/tech_disk/D = target
-	if(get_research(D.stored))
-		D.stored = null
+	var/got_research = 0
+	for(var/i in 1 to D.max_tech_stored)
+		var/datum/tech/tech = D.tech_stored[i]
+		if(tech)
+			got_research |= get_research(tech)
+		D.tech_stored[i] = null
+	if(got_research)
 		cyberman_network.message_all_cybermen("New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.")
 	..()
 

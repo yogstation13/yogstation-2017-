@@ -43,3 +43,11 @@
 /obj/item/weapon/grenade/spawnergrenade/syndiesoap
 	name = "Mister Scrubby"
 	spawner_type = /obj/item/weapon/soap/syndie
+
+/obj/item/weapon/grenade/spawnergrenade/clownbugs
+	name = "clown bug special"
+	spawner_type = /mob/living/simple_animal/cockroach/clownbug
+	deliveryamt = 20
+
+/obj/item/weapon/grenade/spawnergrenade/clownbugs/weak
+	deliveryamt = 3

@@ -179,6 +179,9 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		choose_targets()
 	return 1
 
+/obj/effect/proc_holder/spell/proc/Removed(datum/mind/M)
+	return
+
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 

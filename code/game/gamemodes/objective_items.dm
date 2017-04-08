@@ -91,6 +91,13 @@
 	difficulty = 3
 	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
 
+
+/datum/objective_item/steal/rplasma
+	name = "outdated plasma tank"
+	targetitem = /obj/item/weapon/tank/internals/royalp
+	difficulty = 5
+	excludefromjob = list("Captain", "Chief Engineer", "Chief Medical Officer", "Head of Personnel", "Research Director")
+
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
 	var/found_amount = 0
@@ -117,7 +124,7 @@
 	altitems = list(/obj/item/weapon/photo)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
-	if(istype(I, /obj/item/areaeditor/blueprints))
+	if(I.type == /obj/item/areaeditor/blueprints)
 		return 1
 	if(istype(I, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = I

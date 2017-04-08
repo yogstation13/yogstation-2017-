@@ -78,17 +78,19 @@ Shaft Miner
 /datum/outfit/job/miner
 	name = "Shaft Miner"
 
-	belt = /obj/item/device/pda/shaftminer
+	belt = /obj/item/weapon/storage/belt/mining
 	ears = /obj/item/device/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
+	r_pocket = /obj/item/device/pda/shaftminer
 	backpack_contents = list(/obj/item/weapon/crowbar=1,\
 		/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
-		/obj/item/weapon/mining_voucher=1)
+		/obj/item/weapon/mining_voucher=1,\
+		/obj/item/orecapsule=1)
 
 	backpack = /obj/item/weapon/storage/backpack/explorer
 	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
@@ -125,6 +127,7 @@ Bartender
 	suit = /obj/item/clothing/suit/armor/vest
 	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
 	shoes = /obj/item/clothing/shoes/laceup
+	l_pocket = /obj/item/weapon/lighter
 
 /datum/job/bartender/space
 	title = "Space Bartender"

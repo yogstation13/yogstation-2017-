@@ -1,5 +1,5 @@
 
-/obj/item/device/encryptionkey/
+/obj/item/device/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset.  Has no special codes in it.  WHY DOES IT EXIST?  ASK NANOTRASEN."
 	icon = 'icons/obj/radio.dmi'
@@ -11,10 +11,17 @@
 	var/syndie = 0
 	var/centcom = 0
 	var/list/channels = list()
+	var/list/encryption_keys = list()
+
+/obj/item/device/encryptionkey/New()
+	for(var/channel in channels)
+		encryption_keys += channel
 
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
 	channels = list("Syndicate" = 1)
+	//ironically the syndicate channel does not need an encryption key because of the special way syndicate frequencies are treated
+	encryption_keys = list("Command", "Security", "Engineering", "Science", "Medical", "Supply", "Service")
 	origin_tech = "syndicate=1;engineering=3;bluespace=2"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
@@ -51,15 +58,21 @@
 
 /obj/item/device/encryptionkey/headset_sci
 	name = "science radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the science channel, use :n."
+	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For supply use :u."
 	icon_state = "sci_cypherkey"
-	channels = list("Science" = 1)
+	channels = list("Science" = 1, "Supply" = 1)
 
 /obj/item/device/encryptionkey/headset_medsci
 	name = "medical research radio encryption key"
 	desc = "An encryption key for a radio headset.  To access the medical channel, use :m. For science, use :n."
 	icon_state = "medsci_cypherkey"
 	channels = list("Science" = 1, "Medical" = 1)
+
+/obj/item/device/encryptionkey/headset_medsup
+	name = "medical supply radio encryption key"
+	desc = "An encryption key for mining medic headsets. To access the medical channel, use :m. For cargo, use :u."
+	icon_state = "cargo_cypherkey"
+	channels = list("Supply" = 1, "Medical" = 1)
 
 /obj/item/device/encryptionkey/headset_com
 	name = "command radio encryption key"
@@ -75,9 +88,9 @@
 
 /obj/item/device/encryptionkey/heads/rd
 	name = "\proper the research director's encryption key"
-	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For command, use :c."
+	desc = "An encryption key for a radio headset.  To access the science channel, use :n. For command, use :c. For supply use :u"
 	icon_state = "rd_cypherkey"
-	channels = list("Science" = 1, "Command" = 1)
+	channels = list("Science" = 1, "Command" = 1, "Supply" = 1)
 
 /obj/item/device/encryptionkey/heads/hos
 	name = "\proper the head of security's encryption key"
@@ -105,9 +118,9 @@
 
 /obj/item/device/encryptionkey/headset_cargo
 	name = "supply radio encryption key"
-	desc = "An encryption key for a radio headset.  To access the supply channel, use :u."
+	desc = "An encryption key for a radio headset.  To access the supply channel, use :u for science use :n"
 	icon_state = "cargo_cypherkey"
-	channels = list("Supply" = 1)
+	channels = list("Supply" = 1, "Science" = 1)
 
 /obj/item/device/encryptionkey/headset_service
 	name = "service radio encryption key"

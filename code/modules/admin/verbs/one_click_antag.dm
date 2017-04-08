@@ -15,7 +15,7 @@
 		<a href='?src=\ref[src];makeAntag=2'>Make Changelings</a><br>
 		<a href='?src=\ref[src];makeAntag=3'>Make Revs</a><br>
 		<a href='?src=\ref[src];makeAntag=4'>Make Cult</a><br>
-		<a href='?src=\ref[src];makeAntag=15'>Make Clockwork Cult</a><br>
+		<a href='?src=\ref[src];makeAntag=18'>Make Clockwork Cult</a><br>
 		<a href='?src=\ref[src];makeAntag=11'>Make Blob</a><br>
 		<a href='?src=\ref[src];makeAntag=12'>Make Gangsters</a><br>
 		<a href='?src=\ref[src];makeAntag=16'>Make Shadowling</a><br>
@@ -42,18 +42,8 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_TRAITOR, temp.restricted_jobs, on_station = 0)
 	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_TRAITOR) && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
 
 	if(candidates.len)
 		var/numTraitors = min(candidates.len, 3)
@@ -78,17 +68,8 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_CHANGELING, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
 
 	if(candidates.len)
 		var/numChanglings = min(candidates.len, 3)
@@ -111,17 +92,8 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_REV, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_REV in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
 
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)
@@ -153,17 +125,8 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_CULTIST, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CULTIST in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
@@ -186,17 +149,8 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_SERVANT_OF_RATVAR, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
@@ -371,17 +325,8 @@
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
 
-	var/list/mob/living/carbon/human/candidates = list()
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_GANG, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_GANG in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
 
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
@@ -578,17 +523,9 @@
 		temp.restricted_jobs += temp.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
-	var/list/mob/living/carbon/human/candidates = list()
+
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_SHADOWLING, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_SHADOWLING in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							if(!(is_shadow_or_thrall(applicant)))
-								candidates += applicant
 
 	if(candidates.len)
 		H = pick(candidates)
@@ -608,17 +545,9 @@
 		temp.restricted_jobs += temp.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		temp.restricted_jobs += "Assistant"
-	var/list/mob/living/carbon/human/candidates = list()
+
+	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_CYBERMAN, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
-	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CYBERMAN in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(temp.age_check(applicant.client))
-							if(!(applicant.job in temp.restricted_jobs))
-								if(!(ticker.mode.is_cyberman(applicant.mind)))
-									candidates += applicant
 
 	if(candidates.len)
 		H = pick(candidates)

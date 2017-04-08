@@ -73,7 +73,15 @@
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		visible_message("<span class='danger'>[user] [user.attacktext] [src]!</span>")
 		add_logs(user, src, "attacked")
-
+		
+/obj/mecha/narsie_act()
+	take_damage(120, "brute")
+	check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	
+/obj/mecha/ratvar_act()
+	take_damage(120, "brute")
+	check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
+	
 /obj/mecha/attack_tk()
 	return
 

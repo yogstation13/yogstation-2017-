@@ -93,15 +93,6 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.dna.species.id == "pod")
-			randmuti(C)
-			randmut(C)
-			C.updateappearance()
-			C.domutcheck()
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
@@ -225,6 +216,7 @@
 	damage_type = BRUTE
 	damage = 4
 	range = 5
+	dismemberment = 20
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)

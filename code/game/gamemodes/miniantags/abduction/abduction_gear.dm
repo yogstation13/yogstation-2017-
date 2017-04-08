@@ -105,12 +105,12 @@
 		M.SetStunned(0)
 		M.SetWeakened(0)
 		combat_cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/abductor/proc/AbductorCheck(user)
 	if(isabductor(user))
@@ -262,7 +262,7 @@
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
 	return
@@ -271,7 +271,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
 	if(..())
@@ -361,6 +361,10 @@ Congratulations! You are now trained for xenobiology research!"}
 	force = 7
 	w_class = 3
 	actions_types = list(/datum/action/item_action/toggle_mode)
+	var/stuntime = 7
+	var/sleeptime = 60
+	var/cufftime = 30 // operates the amount of time put into cuffing someone.
+	var/safetylock = TRUE
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
@@ -394,8 +398,9 @@ Congratulations! You are now trained for xenobiology research!"}
 			item_state = "wonderprodProbe"
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!isabductor(user))
-		return
+	if(safetylock)
+		if(!isabductor(user))
+			return
 
 	if(isrobot(target))
 		..()
@@ -431,9 +436,14 @@ Congratulations! You are now trained for xenobiology research!"}
 	user.lastattacked = L
 	L.lastattacker = user
 
-	L.Stun(7)
-	L.Weaken(7)
-	L.apply_effect(STUTTER, 7)
+	L.Stun(stuntime)
+	L.Weaken(stuntime)
+	L.apply_effect(STUTTER, stuntime)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		if(C.borer)
+			C.borer.Stun(stuntime)
+			C.borer.Weaken(stuntime)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
@@ -451,7 +461,11 @@ Congratulations! You are now trained for xenobiology research!"}
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-		L.Sleeping(60)
+		L.Sleeping(sleeptime)
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			if(C.borer)
+				C.borer.staminaloss += sleeptime
 		add_logs(user, L, "put to sleep")
 	else
 		L.drowsyness += 1
@@ -469,7 +483,7 @@ Congratulations! You are now trained for xenobiology research!"}
 			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
+			if(do_mob(user, C, cufftime) && C.get_num_arms() >= 2)
 				if(!C.handcuffed)
 					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(C)
 					C.update_handcuffed()
@@ -491,15 +505,52 @@ Congratulations! You are now trained for xenobiology research!"}
 		var/mob/living/carbon/human/H = L
 		species = "<span clas=='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
-			species = "<span class='warning'>Changeling lifeform</span>"
+			species += "<br><span class='warning'>Changeling lifeform</span>"
+
+		if(L.mind && L.mind.special_role == "Servant of Ratvar")
+			species += "<br><span class='warning'>Lifeform has connections to the elder god, Ratvar.</span>"
+
+		if(L.mind && L.mind.special_role == "Cultist")
+			species += "<br><span class='warning'>Lifeform has connections to the elder god, Narsie.</span>"
+
+		if(L.mind && L.mind.special_role == "thrall")
+			species += "<br><span class='warning'>Shadowling possessed lifeform</span>"
+
+		if(L.mind && L.mind.special_role == "Shadowling")
+			species += "<br><span class='warning'>Shadowling lifeform</span>"
+
+		if(L.mind && L.mind.special_role == "Cyberman")
+			species += "<br><span class='warning'>Lifeform has a multitude of neurally connected submicrolevel binary particles.</span>"
+
 		var/obj/item/organ/gland/temp = locate() in H.internal_organs
 		if(temp)
 			helptext = "<span class='warning'>Experimental gland detected!</span>"
 		else
 			helptext = "<span class='notice'>Subject suitable for experiments.</span>"
 
+		if(H.borer)
+			helptext += "<br><span class='warning'>A [H.borer] has been identified active inside of the subject!"
+
+
 	user << "<span class='notice'>Probing result:</span>[species]"
 	user << "[helptext]"
+
+
+// Research prototype of the abductor baton
+// can only stun and cuff... infintely.
+
+/obj/item/weapon/abductor_baton/weak
+	name = "unorthodox alien baton"
+	stuntime = 5
+	sleeptime = 0
+	safetylock = FALSE
+	origin_tech = "combat=2;abductor=2"
+
+/obj/item/weapon/abductor_baton/weak/ProbeAttack()
+	return 0
+
+/obj/item/weapon/abductor_baton/weak/SleepAttack()
+	return 0
 
 /obj/item/weapon/restraints/handcuffs/energy
 	name = "hard-light energy field"
@@ -511,6 +562,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/restraints/handcuffs/energy/used
 	desc = "energy discharge"
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
@@ -518,7 +570,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
-	qdel(src)
+	. = ..()
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()

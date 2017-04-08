@@ -20,6 +20,13 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		user << "<span class='notice'>You start to deconstruct the frame...</span>"
+		if(do_after(user, 40/I.toolspeed, target = src))
+			user << "<span class='notice'>You deconstruct the frame.</span>"
+			new /obj/item/stack/sheet/metal(loc, 5)
+			qdel(src)
+		return
 	else
 		return ..()
 
@@ -32,6 +39,7 @@
 	anchored = 1
 	buckle_lying = 0
 	can_buckle = 1
+	var/spiked
 
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
@@ -40,7 +48,7 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!has_buckled_mobs())
+		if(!spiked)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
@@ -64,6 +72,7 @@
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
+			spiked = L
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
@@ -74,6 +83,8 @@
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
 			L.pixel_y = L.get_standard_pixel_y_offset(180)
+	else if(spiked)
+		user_unbuckle_mob(spiked, user)
 	else
 		..()
 
@@ -144,5 +155,6 @@
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob(M,force=1)
+		spiked = 0
 		M.emote("scream")
 		M.AdjustWeakened(10)

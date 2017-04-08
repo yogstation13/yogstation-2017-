@@ -196,6 +196,10 @@
 	suffix = "meta"
 	name = "NT Recovery White-ship"
 
+/datum/map_template/shuttle/whiteship/shitbucket_v3
+	suffix = "shitbucket_v3"
+	name = "The S.S. Shitbucket, MK.3"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "supply shuttle (Box)"

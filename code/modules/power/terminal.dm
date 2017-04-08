@@ -11,6 +11,7 @@
 	var/obj/machinery/power/master = null
 	anchored = 1
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	var/wiring_color = "yellow" //Yellow
 
 
 /obj/machinery/power/terminal/New()
@@ -27,10 +28,11 @@
 /obj/machinery/power/terminal/hide(i)
 	if(i)
 		invisibility = INVISIBILITY_MAXIMUM
-		icon_state = "term-f"
+		alpha = 125
 	else
 		invisibility = 0
-		icon_state = "term"
+		alpha = 255
+
 
 
 /obj/machinery/power/proc/can_terminal_dismantle()
@@ -66,7 +68,9 @@
 						s.set_up(5, 1, master)
 						s.start()
 						return
-					new /obj/item/stack/cable_coil(loc, 10)
+					var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 10)
+					CC.item_color = wiring_color
+					CC.update_icon()
 					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
 					qdel(src)
 
@@ -76,3 +80,15 @@
 		dismantle(user)
 	else
 		return ..()
+
+/obj/machinery/power/terminal/connect_to_network()
+	add_wires()
+	return ..()
+
+/obj/machinery/power/terminal/proc/add_wires()
+	if(istype(master, /obj/machinery/power/apc))
+		var/obj/machinery/power/apc/APC = src.master
+		wiring_color = APC.wiring_color
+		var/image/I = new('icons/obj/power.dmi', "term_wire")
+		I.color = color2code(wiring_color)
+		overlays += I

@@ -3,6 +3,7 @@
 	var/datum/action/linked_action
 	var/actiontooltipstyle = ""
 	screen_loc = null
+	var/overlay_icon_state
 
 /obj/screen/movable/action_button/Click(location,control,params)
 	var/list/modifiers = params2list(params)

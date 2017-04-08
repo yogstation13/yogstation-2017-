@@ -54,10 +54,14 @@ var/list/donor_start_items = list(\
 						/obj/item/clothing/head/sombrero/green, \
 						/obj/item/clothing/head/cone, \
 						/obj/item/clothing/head/collectable/beret, \
+						/obj/item/clothing/head/crown, \
+						/obj/item/clothing/head/flowerpower, \
+						/obj/item/clothing/head/outback, \
+						/obj/item/clothing/head/wizard/marisa/fake, \
 						/obj/item/clothing/suit/cloak/sith_cloak, \
 						/obj/item/clothing/suit/armor/sith_suit, \
 						/obj/item/clothing/suit/armor/hardsuit_clown, \
 						/obj/item/clothing/shoes/fuzzy_slippers
 						)
 
-var/list/donor_pdas = list("Normal", "Transparent", "Pip Boy")
+var/list/donor_pdas = list("Normal", "Transparent", "Pip Boy", "Rainbow")

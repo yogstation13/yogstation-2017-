@@ -329,6 +329,7 @@
 	var/list/linkedCollars = list()
 	var/info
 
+
 /obj/item/device/collarDetonator/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/clothing/head/bombCollar))
 		var/obj/item/clothing/head/bombCollar/C = W
@@ -349,6 +350,9 @@
 	if(!ishuman(user))
 		user << "<span class='warning'>You aren't sure how to use this...</span>"
 		return
+	for(var/obj/item/weapon/implant/bombcollar/I in user.contents)
+		I.linkedCollars = src.linkedCollars
+		user << "Implant updated with the latest collars"
 	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Status"))
 		if("Locks")
 			var/choice = input(user, "Select collar to change.", "Locking Control") in linkedCollars
@@ -410,3 +414,21 @@
 				var/turf/T = get_turf(C)
 				user << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
 			return
+
+/obj/item/clothing/head/crown
+	name = "crown"
+	desc = "A golden crown, to show nobility."
+	icon_state = "crown"
+	item_state = "crown"
+
+/obj/item/clothing/head/flowerpower
+	name = "flowerpower"
+	desc = "How hippie of you!"
+	icon_state = "flowerpower"
+	item_state = "flowerpower"
+
+/obj/item/clothing/head/outback
+	name = "outback"
+	desc = "Comes from the land down under!"
+	icon_state = "outback"
+	item_state = "outback"

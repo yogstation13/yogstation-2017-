@@ -49,6 +49,7 @@
 			dat += "<center><a href='?src=\ref[src];operation=mainmenu'>\[Main Menu\]</a></center>"
 			dat += "<br>Current Network: [network]<br>"
 			dat += "Selected Network Entity: [SelectedMachine.name] ([SelectedMachine.id])<br>"
+			dat += SelectedMachine.TelemonitorInfo()
 			dat += "Linked Entities: <ol>"
 			for(var/obj/machinery/telecomms/T in SelectedMachine.links)
 				if(!T.hide)
@@ -94,8 +95,9 @@
 					temp = "<font color = #D70B00>- FAILED: CANNOT PROBE WHEN BUFFER FULL -</font color>"
 
 				else
-					for(var/obj/machinery/telecomms/T in urange(25, src))
-						if(T.network == network)
+					for(var/V in telecomms_list)
+						var/obj/machinery/telecomms/T = V
+						if(T.z == z && T.network == network)
 							machinelist.Add(T)
 
 					if(!machinelist.len)
