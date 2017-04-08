@@ -31,7 +31,11 @@
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
-		user << "<span class='danger'>The crate's anti-tamper system activates!</span>"
+		to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
+		var/message = "[ADMIN_LOOKUPFLW(user)] has detonated [src.name]."
+		GLOB.bombers += message
+		message_admins(message)
+		log_game("[key_name(user)] has detonated [src.name].")
 	for(var/atom/movable/AM in src)
 		qdel(AM)
 	explosion(get_turf(src), 0, 1, 5, 5)
@@ -61,7 +65,15 @@
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
 	name = "secure engineering crate"
 	icon_state = "engi_secure_crate"
+<<<<<<< HEAD
 /obj/structure/closet/crate/secure/medical
 	desc = "A crate with a lock on it, painted in the shceme of the station's doctors."
 	name = "secure medical crate"
 	icon_state = "medical_secure_crate"
+=======
+
+/obj/structure/closet/crate/secure/science
+	name = "secure science crate"
+	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
+	icon_state = "scisecurecrate"
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

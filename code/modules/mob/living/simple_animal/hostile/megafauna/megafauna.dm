@@ -11,7 +11,7 @@
 	environment_smash = 3
 	dismember_chance = 33
 	obj_damage = 400
-	luminosity = 3
+	light_range = 3
 	faction = list("mining", "boss")
 	weather_immunities = list("lava","ash")
 	movement_type = FLYING
@@ -55,7 +55,7 @@
 	mouse_opacity = 2 // Easier to click on in melee, they're giant targets anyway
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
-	qdel(internal)
+	QDEL_NULL(internal)
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
@@ -81,8 +81,8 @@
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
-	..()
-	if(isliving(target))
+	. = ..()
+	if(. && isliving(target))
 		var/mob/living/L = target
 		if(L.stat != DEAD)
 			if(!client && ranged && ranged_cooldown <= world.time)
@@ -96,10 +96,7 @@
 	if(!.)
 		return
 	var/turf/newloc = loc
-	message_admins("Megafauna [src] \
-		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
-		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
-		([newloc.x],[newloc.y],[newloc.z])")
+	message_admins("Megafauna [src] [ADMIN_FLW(src)] moved via shuttle from [ADMIN_COORDJMP(oldloc)] to [ADMIN_COORDJMP(newloc)]")
 
 /mob/living/simple_animal/hostile/megafauna/Life()
 	..()
@@ -145,7 +142,8 @@
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-	adjustBruteLoss(-L.maxHealth/2)
+	if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
+		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
@@ -162,14 +160,13 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
-
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
-		return
+		return FALSE
 
 	if(admin_spawned)
-		return
+		return FALSE
 
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 		for(var/mob/living/L in view(7,src))
 			if(L.stat)
 				continue
@@ -180,27 +177,28 @@
 				UnlockMedal("[medaltype] [suffixm]",C)
 				SetScore(BOSS_SCORE,C,1)
 				SetScore(score_type,C,1)
+	return TRUE
 
 /proc/UnlockMedal(medal,client/player)
 
 	if(!player || !medal)
 		return
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 		spawn()
-			var/result = world.SetMedal(medal, player, global.medal_hub, global.medal_pass)
+			var/result = world.SetMedal(medal, player, GLOB.medal_hub, GLOB.medal_pass)
 			if(isnull(result))
-				global.medals_enabled = FALSE
+				GLOB.medals_enabled = FALSE
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)
-				player << "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>"
+				to_chat(player, "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>")
 
 
 /proc/SetScore(score,client/player,increment,force)
 
 	if(!score || !player)
 		return
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 		spawn()
 			var/list/oldscore = GetScore(score,player,1)
 
@@ -214,10 +212,10 @@
 
 			var/newscoreparam = list2params(oldscore)
 
-			var/result = world.SetScores(player.ckey, newscoreparam, global.medal_hub, global.medal_pass)
+			var/result = world.SetScores(player.ckey, newscoreparam, GLOB.medal_hub, GLOB.medal_pass)
 
 			if(isnull(result))
-				global.medals_enabled = FALSE
+				GLOB.medals_enabled = FALSE
 				log_game("SCORE ERROR: Could not contact hub to set score. Score:[score] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to set [score] score for [player.ckey]!")
 
@@ -226,11 +224,11 @@
 
 	if(!score || !player)
 		return
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 
-		var/scoreget = world.GetScores(player.ckey, score, global.medal_hub, global.medal_pass)
+		var/scoreget = world.GetScores(player.ckey, score, GLOB.medal_hub, GLOB.medal_pass)
 		if(isnull(scoreget))
-			global.medals_enabled = FALSE
+			GLOB.medals_enabled = FALSE
 			log_game("SCORE ERROR: Could not contact hub to get score. Score:[score] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get score: [score] for [player.ckey]!")
 			return
@@ -247,27 +245,27 @@
 
 	if(!player || !medal)
 		return
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 
-		var/result = world.GetMedal(medal, player, global.medal_hub, global.medal_pass)
+		var/result = world.GetMedal(medal, player, GLOB.medal_hub, GLOB.medal_pass)
 
 		if(isnull(result))
-			global.medals_enabled = FALSE
+			GLOB.medals_enabled = FALSE
 			log_game("MEDAL ERROR: Could not contact hub to get medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
-			player << "[medal] is unlocked"
+			to_chat(player, "[medal] is unlocked")
 
 /proc/LockMedal(medal,client/player)
 
 	if(!player || !medal)
 		return
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+	if(GLOB.medal_hub && GLOB.medal_pass && GLOB.medals_enabled)
 
-		var/result = world.ClearMedal(medal, player, global.medal_hub, global.medal_pass)
+		var/result = world.ClearMedal(medal, player, GLOB.medal_hub, GLOB.medal_pass)
 
 		if(isnull(result))
-			global.medals_enabled = FALSE
+			GLOB.medals_enabled = FALSE
 			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.ckey]!")
 		else if (result)
@@ -277,6 +275,6 @@
 
 
 /proc/ClearScore(client/player)
-	world.SetScores(player.ckey, "", global.medal_hub, global.medal_pass)
+	world.SetScores(player.ckey, "", GLOB.medal_hub, GLOB.medal_pass)
 
 #undef MEDAL_PREFIX

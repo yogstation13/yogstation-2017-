@@ -1,4 +1,4 @@
-
+#define FAILED_DB_CONNECTION_CUTOFF 5
 
 //cursors
 #define Default_Cursor	0
@@ -34,8 +34,8 @@
 
 // Deprecated! See global.dm for new configuration vars
 /*
-var/DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
-var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
+ var/DB_SERVER = "" // This is the location of your MySQL server (localhost is USUALLY fine)
+ var/DB_PORT = 3306 // This is the port your MySQL server is running on (3306 is the default)
 */
 
 DBConnection
@@ -47,6 +47,7 @@ DBConnection
 		//
 	var/server = ""
 	var/port = 3306
+	var/failed_connections = 0
 
 DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
 	src.dbi = dbi_handler
@@ -55,7 +56,26 @@ DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
 	src.default_cursor = cursor_handler
 	_db_con = _dm_db_new_con()
 
-DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
+DBConnection/proc/Connect()
+	if(IsConnected())
+		return TRUE
+
+	if(failed_connections > FAILED_DB_CONNECTION_CUTOFF)	//If it failed to establish a connection more than 5 times in a row, don't bother attempting to connect anymore.
+		return FALSE
+
+	var/user = GLOB.sqlfdbklogin
+	var/pass = GLOB.sqlfdbkpass
+	var/db = GLOB.sqlfdbkdb
+	var/address = GLOB.sqladdress
+	var/port = GLOB.sqlport
+
+	doConnect("dbi:mysql:[db]:[address]:[port]","[user]","[pass]")
+	. = IsConnected()
+	if (!. && config.sql_enabled)
+		log_sql("Connect() failed | [ErrorMsg()]")
+		++failed_connections
+
+DBConnection/proc/doConnect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
 	if(!config.sql_enabled)
 		return 0
 	if(!src) return 0
@@ -63,7 +83,9 @@ DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_han
 	if(!cursor_handler) cursor_handler = Default_Cursor
 	return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
 
-DBConnection/proc/Disconnect() return _dm_db_close(_db_con)
+DBConnection/proc/Disconnect()
+	failed_connections = 0
+	return _dm_db_close(_db_con)
 
 DBConnection/proc/IsConnected()
 	if(!config.sql_enabled) return 0
@@ -76,7 +98,7 @@ DBConnection/proc/ErrorMsg() return _dm_db_error_msg(_db_con)
 DBConnection/proc/SelectDB(database_name,dbi)
 	if(IsConnected()) Disconnect()
 	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
-	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
+	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[GLOB.sqladdress]:[GLOB.sqlport]"]",user,password)
 DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
 
 
@@ -100,9 +122,16 @@ DBQuery
 
 DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
 
-DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
+DBQuery/proc/warn_execute()
+	. = Execute()
+	if(!.)
+		to_chat(usr, "<span class='danger'>A SQL error occured during this operation, check the server logs.</span>")
+
+DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor, log_error = 1)
 	Close()
-	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+	. = _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
+	if(!. && log_error)
+		log_sql("[ErrorMsg()] | Query used: [sql]")
 
 DBQuery/proc/NextRow() return _dm_db_next_row(_db_query,item,conversions)
 
@@ -206,3 +235,6 @@ DBColumn/proc/SqlTypeName(type_handler=src.sql_type)
 #undef TIME
 #undef STRING
 #undef BLOB
+
+
+#undef FAILED_DB_CONNECTION_CUTOFF

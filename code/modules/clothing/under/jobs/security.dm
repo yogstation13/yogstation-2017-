@@ -18,11 +18,16 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 30)
 	strip_delay = 50
 	alt_covers_chest = 1
+	sensor_mode = 3
+	random_sensor = 0
 
 /obj/item/clothing/under/rank/security/grey
+	name = "grey security jumpsuit"
+	desc = "A tactical relic of years past before nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
+	
 
 /obj/item/clothing/under/rank/security/brigofficer
 	name = "brig officer's jumpsuit"
@@ -41,8 +46,12 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 30)
 	strip_delay = 50
 	alt_covers_chest = 1
+	sensor_mode = 3
+	random_sensor = 0
 
 /obj/item/clothing/under/rank/warden/grey
+	name = "grey security suit"
+	desc = "A formal relic of years past before nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood."
 	icon_state = "warden"
 	item_state = "gy_suit"
 	item_color = "warden"
@@ -59,6 +68,8 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 30)
 	strip_delay = 50
 	alt_covers_chest = 1
+	sensor_mode = 3
+	random_sensor = 0
 
 /obj/item/clothing/under/rank/det/grey
 	name = "noir suit"
@@ -80,8 +91,12 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 60
 	alt_covers_chest = 1
+	sensor_mode = 3
+	random_sensor = 0
 
 /obj/item/clothing/under/rank/head_of_security/grey
+	name = "head of security's grey jumpsuit"
+	desc = "There are old men, and there are bold men, but there are very few old, bold men."
 	icon_state = "hos"
 	item_state = "gy_suit"
 	item_color = "hos"
@@ -129,4 +144,9 @@
 	desc = "I'm a little busy right now, Calhoun."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+<<<<<<< HEAD
 	item_color = "blueshift"
+=======
+	item_color = "blueshift"
+	can_adjust = 0
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

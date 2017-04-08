@@ -15,43 +15,36 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
-	if(reskinned)
-		return
-	if(user.mind && (user.mind.assigned_role == "Chaplain"))
+	if(user.mind && (user.mind.isholy) && !reskinned)
 		reskin_holy_weapon(user)
 
 /obj/item/weapon/nullrod/proc/reskin_holy_weapon(mob/M)
+	if(SSreligion.holy_weapon_type)
+		return
 	var/obj/item/weapon/nullrod/holy_weapon
+	var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
+	var/list/display_names = list()
+	for(var/V in holy_weapons_list)
+		var/atom/A = V
+		display_names += initial(A.name)
 
-	if(SSreligion.holy_weapon)
-		holy_weapon = new SSreligion.holy_weapon
-		M << "<span class='notice'>The null rod suddenly morphs into your religions already chosen holy weapon.</span>"
-	else
-		var/list/holy_weapons_list = typesof(/obj/item/weapon/nullrod)
-		var/list/display_names = list()
-		for(var/V in holy_weapons_list)
-			var/atom/A = V
-			display_names += initial(A.name)
+	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+		return
 
-		var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-		if(!src || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
-			return
+	var/index = display_names.Find(choice)
+	var/A = holy_weapons_list[index]
 
-		var/index = display_names.Find(choice)
-		var/A = holy_weapons_list[index]
+	holy_weapon = new A
 
-		holy_weapon = new A
+	SSreligion.holy_weapon_type = holy_weapon.type
 
-		SSreligion.holy_weapon = holy_weapon.type
-
-		feedback_set_details("chaplain_weapon","[choice]")
-
+	feedback_set_details("chaplain_weapon","[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
-		M.unEquip(src)
-		M.put_in_active_hand(holy_weapon)
 		qdel(src)
+		M.put_in_active_hand(holy_weapon)
 
 /obj/item/weapon/nullrod/godhand
 	icon_state = "disintegrate"
@@ -189,7 +182,7 @@
 /obj/item/weapon/nullrod/staff/worn_overlays(isinhands)
 	. = list()
 	if(isinhands)
-		. += image(icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
+		. += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "[shield_icon]")
 
 /obj/item/weapon/nullrod/staff/blue
 	name = "blue holy staff"
@@ -327,14 +320,14 @@
 	if(possessed)
 		return
 
-	user << "You attempt to wake the spirit of the blade..."
+	to_chat(user, "You attempt to wake the spirit of the blade...")
 
 	possessed = TRUE
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	var/mob/dead/observer/theghost = null
 
-	if(candidates.len)
+	if(LAZYLEN(candidates))
 		theghost = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
@@ -348,12 +341,12 @@
 			S.real_name = input
 			S.name = input
 	else
-		user << "The blade is dormant. Maybe you can try again later."
+		to_chat(user, "The blade is dormant. Maybe you can try again later.")
 		possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		S << "You were destroyed!"
+		to_chat(S, "You were destroyed!")
 		qdel(S)
 	return ..()
 
@@ -432,12 +425,10 @@
 
 /obj/item/weapon/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
-		return
-	if(user.mind && (user.mind.assigned_role != "Chaplain"))
-		return
-	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
-	user.faction |= "carp"
-	used_blessing = TRUE
+	else if(user.mind && (user.mind.isholy))
+		to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
+		user.faction |= "carp"
+		used_blessing = TRUE
 
 /obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
@@ -461,9 +452,24 @@
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
 	slot_flags = null
-	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+/obj/item/weapon/nullrod/tribal_knife/Initialize(mapload)
+	..()
+	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
+
+/obj/item/weapon/nullrod/tribal_knife/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/nullrod/tribal_knife/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/weapon/nullrod/tribal_knife/process()
+	slowdown = rand(-2, 2)
+
 
 /obj/item/weapon/nullrod/pitchfork
 	icon_state = "pitchfork0"
@@ -473,15 +479,3 @@
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
-
-/obj/item/weapon/nullrod/tribal_knife/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/nullrod/tribal_knife/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/weapon/nullrod/tribal_knife/process()
-	slowdown = rand(-2, 2)
-

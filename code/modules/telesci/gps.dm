@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 var/list/GPS_list = list()
 
+=======
+GLOBAL_LIST_EMPTY(GPS_list)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
@@ -28,48 +32,52 @@ var/list/GPS_list = list()
 
 /obj/item/device/gps/New()
 	..()
-	GPS_list.Add(src)
+	GLOB.GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
-	GPS_list.Remove(src)
+	GLOB.GPS_list.Remove(src)
 	return ..()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = TRUE
-	overlays -= "working"
+	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(src, "reboot", 300)
+	addtimer(CALLBACK(src, .proc/reboot), 300)
 
 /obj/item/device/gps/proc/reboot()
 	emped = FALSE
-	overlays -= "emp"
+	cut_overlay("emp")
 	add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return //user not valid to use gps
 	if(emped)
-		user << "It's busted!"
+		to_chat(user, "It's busted!")
 	if(tracking)
-		overlays -= "working"
-		user << "[src] is no longer tracking, or visible to other GPS devices."
+		cut_overlay("working")
+		to_chat(user, "[src] is no longer tracking, or visible to other GPS devices.")
 		tracking = FALSE
 	else
 		add_overlay("working")
-		user << "[src] is now tracking, and visible to other GPS devices."
+		to_chat(user, "[src] is now tracking, and visible to other GPS devices.")
 		tracking = TRUE
 
 /obj/item/device/gps/attack_self(mob/user)
 	if(!tracking)
-		user << "[src] is turned off. Use alt+click to toggle it back on."
+		to_chat(user, "[src] is turned off. Use alt+click to toggle it back on.")
 		return
 
 	var/obj/item/device/gps/t = ""
+<<<<<<< HEAD
 	var/turf/gpsturf = get_turf(src)
 	var/area/gpsarea = get_area(src)
 	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+=======
+	var/gps_window_height = 110 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(emped)
 		t += "ERROR"
 	else
@@ -81,7 +89,7 @@ var/list/GPS_list = list()
 			t += "<BR>Bluespace coordinates saved: [locked_location.loc]"
 			gps_window_height += 20
 
-		for(var/obj/item/device/gps/G in GPS_list)
+		for(var/obj/item/device/gps/G in GLOB.GPS_list)
 			var/turf/pos = get_turf(G)
 			var/area/gps_area = get_area(G)
 			var/tracked_gpstag = G.gpstag

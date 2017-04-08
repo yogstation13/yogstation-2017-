@@ -221,7 +221,7 @@
 	id = "xray"
 	req_tech = list("combat" = 7, "magnets" = 5, "biotech" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 8000, MAT_METAL = 5000, MAT_TITANIUM = 2000)
+	materials = list(MAT_GOLD = 5000, MAT_URANIUM = 4000, MAT_METAL = 5000, MAT_TITANIUM = 2000, MAT_BLUESPACE = 2000)
 	build_path = /obj/item/weapon/gun/energy/xray
 	category = list("Weapons")
 
@@ -241,10 +241,11 @@
 	id = "wormholeprojector"
 	req_tech = list("combat" = 5, "engineering" = 5, "bluespace" = 7, "plasmatech" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 3000)
+	materials = list(MAT_SILVER = 2000, MAT_METAL = 5000, MAT_DIAMOND = 2000, MAT_BLUESPACE = 3000)
 	build_path = /obj/item/weapon/gun/energy/wormhole_projector
 	category = list("Weapons")
 
+<<<<<<< HEAD
 /datum/design/reciever
 	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
@@ -255,6 +256,8 @@
 	build_path = /obj/item/weaponcrafting/reciever
 	category = list("Weapons")
 
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 //WT550 Mags
 
 /datum/design/mag_oldsmg
@@ -319,12 +322,12 @@
 	category = list("Weapons")
 
 /datum/design/gravitygun
-	name = "one-point bluespace-gravitational manipulator"
+	name = "One-point Bluespace-gravitational Manipulator"
 	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
 	id = "gravitygun"
 	req_tech = list("combat" = 4, "materials" = 5, "bluespace" = 4, "powerstorage" = 4, "magnets" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 8000, MAT_GOLD = 8000, MAT_URANIUM = 8000, MAT_GLASS = 12000, MAT_METAL = 12000, MAT_DIAMOND = 3000)
+	materials = list(MAT_SILVER = 8000, MAT_URANIUM = 8000, MAT_GLASS = 12000, MAT_METAL = 12000, MAT_DIAMOND = 3000, MAT_BLUESPACE = 3000)
 	build_path = /obj/item/weapon/gun/energy/gravity_gun
 	category = list("Weapons")
 

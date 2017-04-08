@@ -8,6 +8,8 @@
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
 
+	var/static/next_mob_id = 0
+
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
 
@@ -26,7 +28,7 @@
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null
-	var/attack_log = list( )
+	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/disabilities = 0	//Carbon
@@ -74,6 +76,7 @@
 	var/weakened = 0
 	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living
+	var/list/possible_a_intents = null//Living
 	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
@@ -129,11 +132,7 @@
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
-	var/weakeyes = 0 //Are they vulnerable to flashes?
-
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
-
-	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
 
 	var/obj/control_object //Used by admins to possess objects. All mobs should have this var
 	var/atom/movable/remote_control //Calls relaymove() to whatever it is
@@ -150,3 +149,6 @@
 	//Spooky shadow walking. For Spooks. //So spoopy
 	var/shadow_walk = 0
 	var/list/observers = null	//The list of people observing this mob.
+
+	var/list/progressbars = null	//for stacking do_after bars
+	var/list/can_ride_typecache = list()

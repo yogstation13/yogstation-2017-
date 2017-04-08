@@ -9,7 +9,7 @@
 	restricted_jobs = list("AI", "Cyborg")
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
-	num_modifier = 6 // Six additional traitors
+	num_modifier = 4 // Four additional traitors
 
 	announce_text = "There are double agents trying to kill each other!\n\
 	<span class='danger'>Traitors</span>: Eliminate your targets and protect yourself!\n\
@@ -102,6 +102,7 @@
 
 		// If any check fails, remove them from our list
 		late_joining_list -= M
+<<<<<<< HEAD
 
 /datum/game_mode/traitor/double_agents/make_antag_chance(mob/living/carbon/human/character)
 	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
@@ -113,3 +114,5 @@
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

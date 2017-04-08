@@ -1,7 +1,7 @@
 //Warden and regular officers add this result to their get_access()
 /datum/job/proc/check_config_for_sec_maint()
 	if(config.jobs_have_maint_access & SECURITY_HAS_MAINT_ACCESS)
-		return list(access_maint_tunnels)
+		return list(GLOB.access_maint_tunnels)
 	return list()
 
 /*
@@ -12,6 +12,7 @@ Head of Security
 	flag = HOS
 	department_head = list("Captain")
 	department_flag = ENGSEC
+	head_announce = list("Security")
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -23,6 +24,7 @@ Head of Security
 
 	outfit = /datum/outfit/job/hos
 
+<<<<<<< HEAD
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons,
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting, access_cargo,
@@ -31,9 +33,20 @@ Head of Security
 			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_maint_tunnels, access_cargo)
+=======
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons,
+			            GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_all_personal_lockers,
+			            GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction, GLOB.access_mailsorting,
+			            GLOB.access_heads, GLOB.access_hos, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_maint_tunnels)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons,
+			            GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_all_personal_lockers,
+			            GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction, GLOB.access_mailsorting,
+			            GLOB.access_heads, GLOB.access_hos, GLOB.access_RC_announce, GLOB.access_keycard_auth, GLOB.access_gateway, GLOB.access_maint_tunnels)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/outfit/job/hos
 	name = "Head of Security"
+	jobtype = /datum/job/hos
 
 	id = /obj/item/weapon/card/id/silver
 	belt = /obj/item/device/pda/heads/hos
@@ -54,16 +67,8 @@ Head of Security
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
-/datum/outfit/job/hos/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+	implants = list(/obj/item/weapon/implant/mindshield)
 
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.implant(H, null, 1)
-
-	announce_head(H, list("Security")) //tell underlings (security radio) they have a head
 /*
 Warden
 */
@@ -81,8 +86,8 @@ Warden
 
 	outfit = /datum/outfit/job/warden
 
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_weapons) //See /datum/job/warden/get_access()
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_armory, GLOB.access_court, GLOB.access_weapons) //See /datum/job/warden/get_access()
 
 /datum/job/warden/get_access()
 	var/list/L = list()
@@ -91,6 +96,7 @@ Warden
 
 /datum/outfit/job/warden
 	name = "Warden"
+	jobtype = /datum/job/warden
 
 	belt = /obj/item/device/pda/warden
 	ears = /obj/item/device/radio/headset/headset_sec/alt
@@ -110,15 +116,8 @@ Warden
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
+	implants = list(/obj/item/weapon/implant/mindshield)
 
-/datum/outfit/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.implant(H, null, 1)
 
 /*
 Detective
@@ -137,11 +136,12 @@ Detective
 
 	outfit = /datum/outfit/job/detective
 
-	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_brig, access_weapons)
-	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court, access_brig, access_weapons)
+	access = list(GLOB.access_sec_doors, GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_court, GLOB.access_brig, GLOB.access_weapons)
+	minimal_access = list(GLOB.access_sec_doors, GLOB.access_forensics_lockers, GLOB.access_morgue, GLOB.access_maint_tunnels, GLOB.access_court, GLOB.access_brig, GLOB.access_weapons)
 
 /datum/outfit/job/detective
 	name = "Detective"
+	jobtype = /datum/job/detective
 
 	belt = /obj/item/device/pda/detective
 	ears = /obj/item/device/radio/headset/headset_sec/alt
@@ -154,6 +154,7 @@ Detective
 	r_pocket = /obj/item/weapon/lighter
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
+<<<<<<< HEAD
 		/obj/item/weapon/melee/classic_baton=1,\
 <<<<<<< HEAD
 		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1,\
@@ -162,7 +163,12 @@ Detective
 =======
 		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
 >>>>>>> masterTGbranch
+=======
+		/obj/item/weapon/melee/classic_baton=1)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	mask = /obj/item/clothing/mask/cigarette
+
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -171,9 +177,6 @@ Detective
 
 	if(visualsOnly)
 		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.implant(H, null, 1)
 
 /*
 Security Officer
@@ -192,42 +195,60 @@ Security Officer
 
 	outfit = /datum/outfit/job/security
 
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue, access_weapons, access_forensics_lockers)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_weapons) //But see /datum/job/warden/get_access()
+	access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_weapons, GLOB.access_forensics_lockers)
+	minimal_access = list(GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig, GLOB.access_court, GLOB.access_weapons) //But see /datum/job/warden/get_access()
+
 
 /datum/job/officer/get_access()
 	var/list/L = list()
 	L |= ..() | check_config_for_sec_maint()
 	return L
 
-var/list/sec_departments = list("engineering", "supply", "medical", "science")
+GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
-/datum/outfit/job/security
-	name = "Security Officer"
-
-	belt = /obj/item/device/pda/security
-	ears = /obj/item/device/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security
-	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/helmet/sec
-	suit = /obj/item/clothing/suit/armor/vest/alt
-	shoes = /obj/item/clothing/shoes/jackboots
-	l_pocket = /obj/item/weapon/restraints/handcuffs
-	r_pocket = /obj/item/device/assembly/flash/handheld
-	suit_store = /obj/item/weapon/gun/energy/e_gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
-
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel/sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
-	box = /obj/item/weapon/storage/box/security
-
-	var/department = null
+/datum/job/officer/after_spawn(mob/living/carbon/human/H, mob/M)
+	// Assign department security
+	var/department
+	if(M && M.client && M.client.prefs)
+		department = M.client.prefs.prefered_security_department
+		if(!LAZYLEN(GLOB.available_depts) || department == "None")
+			return
+		else if(department in GLOB.available_depts)
+			LAZYREMOVE(GLOB.available_depts, department)
+		else
+			department = pick_n_take(GLOB.available_depts)
+	var/ears = null
 	var/tie = null
 	var/list/dep_access = null
 	var/destination = null
 	var/spawn_point = null
+	switch(department)
+		if(SEC_DEPT_SUPPLY)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
+			dep_access = list(GLOB.access_mailsorting, GLOB.access_mining, GLOB.access_mining_station)
+			destination = /area/security/checkpoint/supply
+			spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in GLOB.department_security_spawns
+			tie = /obj/item/clothing/tie/armband/cargo
+		if(SEC_DEPT_ENGINEERING)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
+			dep_access = list(GLOB.access_construction, GLOB.access_engine)
+			destination = /area/security/checkpoint/engineering
+			spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in GLOB.department_security_spawns
+			tie = /obj/item/clothing/tie/armband/engine
+		if(SEC_DEPT_MEDICAL)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
+			dep_access = list(GLOB.access_medical)
+			destination = /area/security/checkpoint/medical
+			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
+			tie =  /obj/item/clothing/tie/armband/medblue
+		if(SEC_DEPT_SCIENCE)
+			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
+			dep_access = list(GLOB.access_research)
+			destination = /area/security/checkpoint/science
+			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
+			tie = /obj/item/clothing/tie/armband/science
 
+<<<<<<< HEAD
 /datum/outfit/job/security/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 
@@ -265,14 +286,15 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	..()
 
 	var/obj/item/clothing/under/U = H.w_uniform
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(tie)
+		var/obj/item/clothing/under/U = H.w_uniform
 		U.attachTie(new tie)
-
-	if(visualsOnly)
-		return
-
-	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
-	L.implant(H, null, 1)
+	if(ears)
+		if(H.ears)
+			qdel(H.ears)
+		H.equip_to_slot_or_del(new ears(H),slot_ears)
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access |= dep_access
@@ -296,16 +318,41 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 				else
 					break
 	if(department)
-		H << "<b>You have been assigned to [department]!</b>"
+		to_chat(M, "<b>You have been assigned to [department]!</b>")
 	else
-		H << "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>"
+		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
 
-/obj/item/device/radio/headset/headset_sec/department/New()
-	wires = new(src)
+
+
+/datum/outfit/job/security
+	name = "Security Officer"
+	jobtype = /datum/job/officer
+
+	belt = /obj/item/device/pda/security
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/security
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/helmet/sec
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_pocket = /obj/item/weapon/restraints/handcuffs
+	r_pocket = /obj/item/device/assembly/flash/handheld
+	suit_store = /obj/item/weapon/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
+
+	backpack = /obj/item/weapon/storage/backpack/security
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	box = /obj/item/weapon/storage/box/security
+
+	implants = list(/obj/item/weapon/implant/mindshield)
+
+
+/obj/item/device/radio/headset/headset_sec/alt/department/Initialize()
+	wires = new/datum/wires/radio(src)
 	secure_radio_connections = new
-
-	initialize()
 	recalculateChannels()
+	..()
 
 /obj/item/device/radio/headset/headset_sec/alt/department/engi
 	keyslot = new /obj/item/device/encryptionkey/headset_sec

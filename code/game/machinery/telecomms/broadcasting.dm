@@ -60,8 +60,14 @@
 /proc/Broadcast_Message(var/atom/movable/AM,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
+<<<<<<< HEAD
 						var/data = BROADCAST_ALL_RADIOS, var/identifier, var/compression, var/encryption, var/list/level, var/freq, var/list/spans, var/languages,
 						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell)
+=======
+						var/data, var/compression, var/list/level, var/freq, var/list/spans,
+						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell, var/datum/language/language)
+
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
 	if(!message)
@@ -70,9 +76,10 @@
 	var/list/radios = list()
 	var/list/radios_without_key = list() //radios that don't have the proper decryption key
 
-	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
+	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
 	virt.name = name
 	virt.job = job
+<<<<<<< HEAD
 <<<<<<< HEAD
 	virt.languages_spoken = languages
 	virt.languages_understood = languages
@@ -81,6 +88,8 @@
 	virt.languages_spoken = AM.languages_spoken
 	virt.languages_understood = AM.languages_understood
 >>>>>>> masterTGbranch
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	virt.source = AM
 	virt.radio = radio
 	virt.verb_say = verb_say
@@ -96,8 +105,13 @@
 
 	// --- Broadcast only to intercom devices ---
 
+<<<<<<< HEAD
 	if(data == BROADCAST_INTERCOMMS_ONLY)
 		for(var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
+=======
+	if(data == 1)
+		for(var/obj/item/device/radio/intercom/R in GLOB.all_radios["[freq]"])
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
@@ -105,7 +119,7 @@
 
 	else if(data == BROADCAST_INTERCOMMS_AND_BOUNCE)
 
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
 			if(R.subspace_transmission)
 				continue
 
@@ -118,8 +132,8 @@
 
 	else if(data == BROADCAST_CENTCOMM_RADIOS)
 
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
-			if(!R.centcom)
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
+			if(!R.independent)
 				continue
 
 			if(R.receive_range(freq, level) > -1)
@@ -128,13 +142,13 @@
 	// --- Broadcast to ALL radio devices ---
 
 	else
-		for(var/obj/item/device/radio/R in all_radios["[freq]"])
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[freq]"])
 			if(R.receive_range(freq, level) > -1)
 				radios += R
 
 		var/freqtext = num2text(freq)
-		for(var/obj/item/device/radio/R in all_radios["[SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
-			if(R.receive_range(SYND_FREQ, list(R.z)) > -1 && freqtext in radiochannelsreverse)
+		for(var/obj/item/device/radio/R in GLOB.all_radios["[GLOB.SYND_FREQ]"]) //syndicate radios use magic that allows them to hear everything. this was already the case, now it just doesn't need the allinone anymore. solves annoying bugs that aren't worth solving.
+			if(R.receive_range(GLOB.SYND_FREQ, list(R.z)) > -1 && freqtext in GLOB.reverseradiochannels)
 				radios |= R
 
 	for(var/V in radios)
@@ -152,16 +166,21 @@
 		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO)) //Adminning with 80 people on can be fun when you're trying to talk and all you can hear is radios.
 			receive -= R
 
+<<<<<<< HEAD
 	for(var/mob/R in receive_encrypted) //Filter receiver list.
 		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO))
 			receive_encrypted -= R
 
 	for(var/mob/M in player_list)
+=======
+	for(var/mob/M in GLOB.player_list)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			receive |= M
 
-	var/rendered = virt.compose_message(virt, virt.languages_spoken, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
+	var/rendered = virt.compose_message(virt, language, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
+<<<<<<< HEAD
 <<<<<<< HEAD
 		hearer.Hear(rendered, virt, virt.languages_spoken, message, freq, spans)
 
@@ -171,39 +190,43 @@
 =======
 		hearer.Hear(rendered, virt, AM.languages_spoken, message, freq, spans)
 >>>>>>> masterTGbranch
+=======
+		hearer.Hear(rendered, virt, language, message, freq, spans)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
 
 		var/blackbox_msg = "[AM] [AM.say_quote(message, spans)]"
-		if(istype(blackbox))
+		if(istype(GLOB.blackbox))
 			switch(freq)
 				if(1459)
-					blackbox.msg_common += blackbox_msg
+					GLOB.blackbox.msg_common += blackbox_msg
 				if(1351)
-					blackbox.msg_science += blackbox_msg
+					GLOB.blackbox.msg_science += blackbox_msg
 				if(1353)
-					blackbox.msg_command += blackbox_msg
+					GLOB.blackbox.msg_command += blackbox_msg
 				if(1355)
-					blackbox.msg_medical += blackbox_msg
+					GLOB.blackbox.msg_medical += blackbox_msg
 				if(1357)
-					blackbox.msg_engineering += blackbox_msg
+					GLOB.blackbox.msg_engineering += blackbox_msg
 				if(1359)
-					blackbox.msg_security += blackbox_msg
+					GLOB.blackbox.msg_security += blackbox_msg
 				if(1441)
-					blackbox.msg_deathsquad += blackbox_msg
+					GLOB.blackbox.msg_deathsquad += blackbox_msg
 				if(1213)
-					blackbox.msg_syndicate += blackbox_msg
+					GLOB.blackbox.msg_syndicate += blackbox_msg
 				if(1349)
-					blackbox.msg_service += blackbox_msg
+					GLOB.blackbox.msg_service += blackbox_msg
 				if(1347)
-					blackbox.msg_cargo += blackbox_msg
+					GLOB.blackbox.msg_cargo += blackbox_msg
 				else
-					blackbox.messages += blackbox_msg
+					GLOB.blackbox.messages += blackbox_msg
 
 	spawn(50)
 		qdel(virt)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 /proc/Broadcast_SimpleMessage(source, frequency, text, data, mob/M, compression, level)
@@ -439,6 +462,8 @@
 				R.show_message(rendered, 2)
 
 >>>>>>> masterTGbranch
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 //Use this to test if an obj can communicate with a Telecommunications Network
 
 /atom/proc/test_telecomms()
@@ -467,7 +492,7 @@
 	signal.frequency = 1459// Common channel
 
   //#### Sending the signal to all subspace receivers ####//
-	for(var/obj/machinery/telecomms/receiver/R in telecomms_list)
+	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
 
 	sleep(rand(10,25))

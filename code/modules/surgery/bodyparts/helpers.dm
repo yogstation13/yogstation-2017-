@@ -268,4 +268,4 @@
 					U.adjusted = DIGITIGRADE_STYLE
 				H.update_inv_w_uniform()
 		if(H.shoes && !swap_back)
-			H.unEquip(H.shoes)
+			H.dropItemToGround(H.shoes)

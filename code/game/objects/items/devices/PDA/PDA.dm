@@ -1,8 +1,13 @@
 
 //The advanced pea-green monochrome lcd of tomorrow.
 
+<<<<<<< HEAD
 var/global/list/obj/item/device/pda/PDAs = list()
 var/list/obj/item/device/pda/hotline_pdas = list()
+=======
+GLOBAL_LIST_EMPTY(PDAs)
+
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/device/pda
 	name = "\improper PDA"
@@ -59,27 +64,12 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
-/obj/item/device/pda/pickup(mob/user)
-	..()
-	if(fon)
-		SetLuminosity(0)
-		user.AddLuminosity(f_lum)
-
-/obj/item/device/pda/dropped(mob/user)
-	..()
-	if(fon)
-		user.AddLuminosity(-f_lum)
-		SetLuminosity(f_lum)
-
 /obj/item/device/pda/New()
 	..()
 	if(fon)
-		if(!isturf(loc))
-			loc.AddLuminosity(f_lum)
-			SetLuminosity(0)
-		else
-			SetLuminosity(f_lum)
-	PDAs += src
+		set_light(f_lum)
+
+	GLOB.PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
 	inserted_item =	new /obj/item/weapon/pen(src)
@@ -167,7 +157,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				dat += text("<br><A href='?src=\ref[src];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[worldtime2text()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
-				dat += "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
+				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
 
 				dat += "<br><br>"
 				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_SOFTWARE_FUNCTIONS))
@@ -417,8 +407,11 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
+				if(istype(id, /obj/item/weapon/card/id/syndicate))
+					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
+<<<<<<< HEAD
 				if (cartridge)
 					if (ismob(loc))
 						var/mob/M = loc
@@ -426,6 +419,12 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 						usr << "<span class='notice'>You remove the cartridge from the [name].</span>"
 					else
 						cartridge.loc = get_turf(src)
+=======
+				if (!isnull(cartridge))
+					U.put_in_hands(cartridge)
+					to_chat(U, "<span class='notice'>You remove [cartridge] from [src].</span>")
+					scanmode = 0
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					if (cartridge.radio)
 						cartridge.radio.hostpda = null
 					scanmode = 0
@@ -452,16 +451,10 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			if("Light")
 				if(fon)
 					fon = 0
-					if(src in U.contents)
-						U.AddLuminosity(-f_lum)
-					else
-						SetLuminosity(0)
+					set_light(0)
 				else
 					fon = 1
-					if(src in U.contents)
-						U.AddLuminosity(f_lum)
-					else
-						SetLuminosity(f_lum)
+					set_light(2.3)
 				update_icon()
 			if("hotline")
 				if(hotline_cd)
@@ -573,8 +566,8 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
 				if(A && alert_s)
 					var/msg = "<span class='boldnotice'>NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!</span>"
-					_alert_drones(msg, 1)
-					U << msg
+					_alert_drones(msg, TRUE)
+					to_chat(U, msg)
 
 
 //NOTEKEEPER FUNCTIONS===================================
@@ -604,7 +597,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 					if(t)
 						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
 							hidden_uplink.interact(U)
-							U << "The PDA softly beeps."
+							to_chat(U, "The PDA softly beeps.")
 							U << browse(null, "window=pda")
 							src.mode = 0
 						else
@@ -632,7 +625,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 							else
 								U.show_message("<span class='warning'>Virus sending failed!</span>", 1)
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U << browse(null, "window=pda")
 					return
@@ -648,7 +641,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 							else
 								U.show_message("<span class='warning'>Virus sending failed!</span>", 1)
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U << browse(null, "window=pda")
 					return
@@ -656,8 +649,13 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 //SYNDICATE FUNCTIONS===================================
 
 			if("Toggle Door")
+<<<<<<< HEAD
 				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_REMOTE_DOOR_FUNCTIONS))
 					for(var/obj/machinery/door/poddoor/M in machines)
+=======
+				if(cartridge && cartridge.access_remote_door)
+					for(var/obj/machinery/door/poddoor/M in GLOB.machines)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 						if(M.id == cartridge.remote_door_id)
 							if(M.density)
 								M.open()
@@ -678,7 +676,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 								U.show_message("<span class='warning'>Failure!</span>", 1)
 
 					else
-						U << "PDA not found."
+						to_chat(U, "PDA not found.")
 				else
 					U.unset_machine()
 					U << browse(null, "window=pda")
@@ -755,7 +753,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		if (ismob(loc))
 			var/mob/M = loc
 			M.put_in_hands(id)
-			usr << "<span class='notice'>You remove the ID from the [name].</span>"
+			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
 			id.loc = get_turf(src)
 		id = null
@@ -806,7 +804,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				investigate_log("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to [P.name]", "pda")
 		else
 			if(!multiple)
-				user << "<span class='notice'>ERROR: Server isn't responding.</span>"
+				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
 				return
 	photo = null
 
@@ -834,24 +832,24 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		L << "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)"
+		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	update_icon()
 	add_overlay(image(icon, icon_alert))
 
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
-			M << "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>"
+			to_chat(M, "[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
-	if(!P || qdeleted(P) || P.toff)
+	if(!P || QDELETED(P) || P.toff)
 		return null
 
 	var/obj/machinery/message_server/useMS = null
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
+	if(GLOB.message_servers)
+		for (var/obj/machinery/message_server/MS in GLOB.message_servers)
 		//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
@@ -859,7 +857,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 
 	var/datum/signal/signal = src.telecomms_process()
 
-	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
+	if(!P || QDELETED(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
 
 	var/useTC = 0
@@ -906,7 +904,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		if(id)
 			remove_id()
 		else
-			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
+			to_chat(usr, "<span class='warning'>This PDA does not have an ID in it!</span>")
 
 /obj/item/device/pda/verb/verb_remove_pen()
 	set category = "Object"
@@ -925,12 +923,12 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			var/mob/M = loc
 			M.put_in_hands(inserted_item)
 		else
-			inserted_item.forceMove(loc)
-		usr << "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>"
+			inserted_item.forceMove(get_turf(src))
+		to_chat(usr, "<span class='notice'>You remove \the [inserted_item] from \the [src].</span>")
 		inserted_item = null
 		update_icon()
 	else
-		usr << "<span class='warning'>This PDA does not have a pen in it!</span>"
+		to_chat(usr, "<span class='warning'>This PDA does not have a pen in it!</span>")
 
 //trying to insert or remove an id
 /obj/item/device/pda/proc/id_check(mob/user, obj/item/weapon/card/id/I)
@@ -944,10 +942,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				I = C
 
 	if(I && I.registered_name)
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I, src))
 			return 0
 		var/obj/old_id = id
-		I.forceMove(src)
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
@@ -957,11 +954,10 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 // access to status display signals
 /obj/item/device/pda/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/weapon/cartridge) && !cartridge)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
 		cartridge = C
-		cartridge.loc = src
-		user << "<span class='notice'>You insert [cartridge] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [cartridge] into [src].</span>")
 		if(cartridge.radio)
 			cartridge.radio.hostpda = src
 		update_icon()
@@ -969,44 +965,42 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	else if(istype(C, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/idcard = C
 		if(!idcard.registered_name)
-			user << "<span class='warning'>\The [src] rejects the ID!</span>"
+			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			return
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
 			update_label()
-			user << "<span class='notice'>Card scanned.</span>"
+			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
 			if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
 				if(!id_check(user, idcard))
 					return
-				user << "<span class='notice'>You put the ID into \the [src]'s slot.</span>"
+				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
 	else if(istype(C, /obj/item/device/paicard) && !src.pai)
-		if(!user.unEquip(C))
+		if(!user.transferItemToLoc(C, src))
 			return
-		C.loc = src
 		pai = C
-		user << "<span class='notice'>You slot \the [C] into [src].</span>"
+		to_chat(user, "<span class='notice'>You slot \the [C] into [src].</span>")
 		update_icon()
 		updateUsrDialog()
 	else if(is_type_in_list(C, contained_item)) //Checks if there is a pen
 		if(inserted_item)
-			user << "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>"
+			to_chat(user, "<span class='warning'>There is already \a [inserted_item] in \the [src]!</span>")
 		else
-			if(!user.unEquip(C))
+			if(!user.transferItemToLoc(C, src))
 				return
-			C.forceMove(src)
-			user << "<span class='notice'>You slide \the [C] into \the [src].</span>"
+			to_chat(user, "<span class='notice'>You slide \the [C] into \the [src].</span>")
 			inserted_item = C
 			update_icon()
 	else if(istype(C, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = C
 		photo = P.img
-		user << "<span class='notice'>You scan \the [C].</span>"
+		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
 	else if(hidden_uplink && hidden_uplink.active)
 		hidden_uplink.attackby(C, user, params)
 	else
@@ -1043,14 +1037,18 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			if(!isnull(A.reagents))
 				if(A.reagents.reagent_list.len > 0)
 					var/reagents_length = A.reagents.reagent_list.len
-					user << "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>"
+					to_chat(user, "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found.</span>")
 					for (var/re in A.reagents.reagent_list)
+<<<<<<< HEAD
 						var/datum/reagent/R = re
 						user << "<span class='notice'>\t [R.volume] units of [R.name]</span>"
+=======
+						to_chat(user, "<span class='notice'>\t [re]</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 				else
-					user << "<span class='notice'>No active chemical agents found in [A].</span>"
+					to_chat(user, "<span class='notice'>No active chemical agents found in [A].</span>")
 			else
-				user << "<span class='notice'>No significant chemical agents found in [A].</span>"
+				to_chat(user, "<span class='notice'>No significant chemical agents found in [A].</span>")
 
 		if(PDA_SCAN_GAS)
 			if (istype(A, /obj/item/weapon/tank))
@@ -1096,7 +1094,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		var/obj/item/weapon/paper/PP = A
 		if (!PP.info)
-			user << "<span class='warning'>Unable to scan! Paper is blank.</span>"
+			to_chat(user, "<span class='warning'>Unable to scan! Paper is blank.</span>")
 			return
 		notehtml = PP.info
 		note = replacetext(notehtml, "<BR>", "\[br\]")
@@ -1105,7 +1103,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		note = replacetext(note, "</ul>", "\[/list\]")
 		note = html_encode(note)
 		notescanned = 1
-		user << "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" //concept of scanning paper copyright brainoblivion 2009
+		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
 /obj/item/device/pda/proc/forensic_scan_report(list/scan_results)
 	var/found_something = 0
@@ -1187,9 +1185,13 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	return
 
 /obj/item/device/pda/Destroy()
+<<<<<<< HEAD
 	PDAs -= src
 	for(var/V in software)
 		qdel(V)
+=======
+	GLOB.PDAs -= src
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(id)
 		qdel(id)
 		id = null
@@ -1207,7 +1209,6 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 //AI verb and proc for sending PDA messages.
 
 /mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user)
-	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
@@ -1215,7 +1216,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		return //won't work if dead
 
 	if(src.aiPDA.toff)
-		user << "Turn on your receiver in order to send messages."
+		to_chat(user, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in get_viewable_pdas())
@@ -1224,15 +1225,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		else if (P == src.aiPDA)
 			continue
 
-		var/name = P.owner
-		if (name in names)
-			namecounts[name]++
-			name = text("[name] ([namecounts[name]])")
-		else
-			names.Add(name)
-			namecounts[name] = 1
-
-		plist[text("[name]")] = P
+		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
 
 	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
 
@@ -1256,9 +1249,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		return //won't work if dead
 	if(!isnull(aiPDA))
 		aiPDA.toff = !aiPDA.toff
-		usr << "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>"
+		to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(aiPDA.toff ? "Off" : "On")]!</span>")
 	else
-		usr << "You do not have a PDA. You should make an issue report about this."
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
@@ -1268,9 +1261,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if(!isnull(aiPDA))
 		//0
 		aiPDA.silent = !aiPDA.silent
-		usr << "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>"
+		to_chat(usr, "<span class='notice'>PDA ringer toggled [(aiPDA.silent ? "Off" : "On")]!</span>")
 	else
-		usr << "You do not have a PDA. You should make an issue report about this."
+		to_chat(usr, "You do not have a PDA. You should make an issue report about this.")
 
 /mob/living/silicon/ai/proc/cmd_show_message_log(mob/user)
 	if(user.stat == 2)
@@ -1279,14 +1272,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
-		user << "You do not have a PDA. You should make an issue report about this."
-
-//Some spare PDAs in a box
-/obj/item/weapon/storage/box/PDAs
-	name = "spare PDAs"
-	desc = "A box of spare PDA microcomputers."
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "pda"
+		to_chat(user, "You do not have a PDA. You should make an issue report about this.")
 
 /obj/item/weapon/storage/box/PDAs/New()
 	..()
@@ -1324,7 +1310,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 /proc/get_viewable_pdas()
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
-	for(var/obj/item/device/pda/P in PDAs)
+	for(var/obj/item/device/pda/P in GLOB.PDAs)
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .

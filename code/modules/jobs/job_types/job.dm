@@ -1,5 +1,4 @@
 /datum/job
-
 	//The name of the job
 	var/title = "NOPE"
 
@@ -9,6 +8,9 @@
 
 	//Determines who can demote this position
 	var/department_head = list()
+
+	//Tells the given channels that the given mob is the new department head. See communications.dm for valid channels.
+	var/list/head_announce = null
 
 	//Bitflags for the job
 	var/flag = 0
@@ -45,10 +47,18 @@
 	var/datum/outfit/outfit = null
 
 //Only override this proc
-/datum/job/proc/equip_items(mob/living/carbon/human/H)
+//H is usually a human unless an /equip override transformed it
+/datum/job/proc/after_spawn(mob/living/H, mob/M)
+	//do actions on H but send messages to M as the key may not have been transferred_yet
 
-//But don't override this
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+
+/datum/job/proc/announce(mob/living/carbon/human/H)
+	if(head_announce)
+		announce_head(H, head_announce)
+
+
+//Don't override this unless the job transforms into a non-human (Silicons do this for example)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE)
 	if(!H)
 		return 0
 
@@ -60,6 +70,7 @@
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
+<<<<<<< HEAD
 	//Donor stuff
 	give_donor_stuff(H)
 
@@ -124,6 +135,15 @@
 	if(H.r_store)
 		H.r_store.add_fingerprint(H,1)
 	return 1
+=======
+	if(!visualsOnly && announce)
+		announce(H)
+
+	if(config.enforce_human_authority && (title in GLOB.command_positions))
+		H.dna.features["tail_human"] = "None"
+		H.dna.features["ears"] = "None"
+		H.regenerate_icons()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.
@@ -137,7 +157,13 @@
 		. = src.access.Copy()
 
 	if(config.jobs_have_maint_access & EVERYONE_HAS_MAINT_ACCESS) //Config has global maint access set
-		. |= list(access_maint_tunnels)
+		. |= list(GLOB.access_maint_tunnels)
+
+/datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+	spawn(4) //to allow some initialization
+		if(H && GLOB.announcement_systems.len)
+			var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+			announcer.announce("NEWHEAD", H.real_name, H.job, channels)
 
 //If the configuration option is set to require players to be logged as old enough to play certain jobs, then this proc checks that they are, otherwise it just returns 1
 /datum/job/proc/player_old_enough(client/C)
@@ -161,8 +187,14 @@
 /datum/job/proc/config_check()
 	return 1
 
+/datum/job/proc/map_check()
+	return TRUE
+
+
 /datum/outfit/job
 	name = "Standard Gear"
+
+	var/jobtype = null
 
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/weapon/card/id
@@ -170,6 +202,8 @@
 	belt = /obj/item/device/pda
 	back = /obj/item/weapon/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
+
+	var/list/implants = null
 
 	var/backpack = /obj/item/weapon/storage/backpack
 	var/satchel  = /obj/item/weapon/storage/backpack/satchel
@@ -221,23 +255,33 @@
 	if(visualsOnly)
 		return
 
+	var/datum/job/J = SSjob.GetJobType(jobtype)
+	if(!J)
+		J = SSjob.GetJob(H.job)
+
 	var/obj/item/weapon/card/id/C = H.wear_id
 	if(istype(C))
-		var/datum/job/J = SSjob.GetJob(H.job) // Not sure the best idea
 		C.access = J.get_access()
 		C.registered_name = H.real_name
-		C.assignment = H.job
+		C.assignment = J.title
 		C.update_label()
 		H.sec_hud_set_ID()
 
 	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
 		PDA.owner = H.real_name
-		PDA.ownjob = H.job
+		PDA.ownjob = J.title
 		PDA.update_label()
 
+<<<<<<< HEAD
 /datum/outfit/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization
 		if(H && announcement_systems.len)
 			var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 			announcer.announce("NEWHEAD", H.real_name, H.job, channels)
+=======
+	if(implants)
+		for(var/implant_type in implants)
+			var/obj/item/weapon/implant/I = new implant_type(H)
+			I.implant(H, null, silent=TRUE)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

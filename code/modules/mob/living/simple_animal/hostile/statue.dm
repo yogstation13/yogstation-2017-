@@ -43,8 +43,11 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = 1
+<<<<<<< HEAD
 
 	shadow_walk = 0
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
@@ -52,7 +55,7 @@
 
 // No movement while seen code.
 
-/mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
+/mob/living/simple_animal/hostile/statue/Initialize(mapload, var/mob/living/creator)
 	..()
 	// Give spells
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil(src)
@@ -69,7 +72,7 @@
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
-			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
+			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
 		return 0
 	return ..()
 
@@ -87,10 +90,10 @@
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(can_be_seen(get_turf(loc)))
 		if(client)
-			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
-			return
+			to_chat(src, "<span class='warning'>You cannot attack, there are eyes on you!</span>")
+		return FALSE
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/statue/DestroySurroundings()
 	if(!can_be_seen(get_turf(loc)))
@@ -106,7 +109,7 @@
 	// Check for darkness
 	var/turf/T = get_turf(loc)
 	if(T && destination && T.lighting_object)
-		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+		if(T.get_lumcount()<0.1 && destination.get_lumcount()<0.1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)
 			destination = null
@@ -182,7 +185,7 @@
 	range = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
-	for(var/mob/living/L in living_mob_list)
+	for(var/mob/living/L in GLOB.living_mob_list)
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
 			L.blind_eyes(4)
@@ -202,23 +205,13 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
-				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING
-				name = "Toggle Nightvision \[ON]"
-			else
-				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
-				name = "Toggle Nightvision \[OFF]"
-
-		else
+		if(!iscarbon(target)) //Carbons should be toggling their vision via organ, this spell is used as a power for simple mobs
 			if(target.see_invisible == SEE_INVISIBLE_LIVING)
 				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
 				name = "Toggle Nightvision \[ON]"
 			else
 				target.see_invisible = SEE_INVISIBLE_LIVING
 				name = "Toggle Nightvision \[OFF]"
-
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"

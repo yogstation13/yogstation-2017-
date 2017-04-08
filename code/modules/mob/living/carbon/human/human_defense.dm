@@ -47,7 +47,7 @@
 	return number
 
 /mob/living/carbon/human/get_ear_protection()
-	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
+	if((ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT)) || (head && HAS_SECONDARY_FLAG(head, BANG_PROTECT)))
 		return 1
 
 /mob/living/carbon/human/on_hit(obj/item/projectile/P)
@@ -67,7 +67,7 @@
 		if(prob(martial_art.deflection_chance))
 			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
 				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 				return 0
 
 >>>>>>> masterTGbranch
@@ -366,10 +366,15 @@
 		damage_clothes(15, BRUTE, "melee")
 		return 1
 
-/mob/living/carbon/human/attack_hand(mob/living/carbon/human/M)
+/mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
 		return
-	dna.species.spec_attack_hand(M, src)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.a_intent == INTENT_DISARM)
+			if(H.buckled_mobs && (src in H.buckled_mobs) && H.riding_datum)
+				H.riding_datum.force_dismount(src)
+		dna.species.spec_attack_hand(H, src)
 
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/monkey/M)
@@ -381,6 +386,7 @@
 		..() //shaking
 		return 0
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -397,6 +403,20 @@
 					affecting.dismember()
 		updatehealth()
 =======
+=======
+	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
+		if(get_active_held_item() && drop_item())
+			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
+					"<span class='userdanger'>[M] disarmed [src]!</span>")
+		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
+			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
+			Weaken(5)
+			add_logs(M, src, "tackled")
+			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
+				"<span class='userdanger'>[M] has tackled down [src]!</span>")
+
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(M.limb_destroyer)
 		dismembering_strike(M, affecting.body_zone)
 
@@ -470,13 +490,14 @@
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
-			return 0
+			return FALSE
 		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
 		if(!dam_zone) //Dismemberment successful
-			return 1
+			return TRUE
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart("chest")
@@ -601,7 +622,7 @@
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
-			if (prob(70))
+			if (prob(max(70 - (bomb_armor * 0.5), 0)))
 				Paralyse(10)
 
 		if(3)
@@ -611,7 +632,7 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			if (prob(50))
+			if (prob(max(50 - (bomb_armor * 0.5), 0)))
 				Paralyse(8)
 
 	take_overall_damage(b_loss,f_loss)
@@ -639,7 +660,7 @@
 
 
 //Added a safety check in case you want to shock a human mob directly through electrocute_act.
-/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0)
+/mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	if(tesla_shock)
 		var/total_coeff = 1
 		if(gloves)
@@ -650,19 +671,24 @@
 			var/obj/item/clothing/suit/S = wear_suit
 			if(S.siemens_coefficient <= 0)
 				total_coeff -= 0.95
+			else if(S.siemens_coefficient == (-1))
+				total_coeff -= 1
 		siemens_coeff = total_coeff
+		if(tesla_ignore)
+			siemens_coeff = 0
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
 		siemens_coeff = gloves_siemens_coeff
-	if(heart_attack && !illusion)
+	if(undergoing_cardiac_arrest() && !illusion)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
-			heart_attack = 0
+			var/obj/item/organ/heart/heart = getorganslot("heart")
+			heart.beating = TRUE
 			if(stat == CONSCIOUS)
-				src << "<span class='notice'>You feel your heart beating again!</span>"
-	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion)
+				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
+	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
 
@@ -672,7 +698,7 @@
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
 			if(!informed)
-				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
+				to_chat(src, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
 				informed = 1
 			switch(severity)
 				if(1)
@@ -711,7 +737,7 @@
 				update_inv_neck()
 				update_inv_head()
 			else
-				src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>")
 		else
 			. = get_bodypart("head")
 			if(.)
@@ -732,7 +758,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
-				src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>")
 		else
 			. = get_bodypart("chest")
 			if(.)
@@ -764,7 +790,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
-				src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>")
 		else
 			. = get_bodypart("r_arm")
 			if(.)
@@ -790,7 +816,7 @@
 				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
-				src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
+				to_chat(src, "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>")
 		else
 			. = get_bodypart("r_leg")
 			if(.)
@@ -879,21 +905,21 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				src << "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status]."
+				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					src << "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>"
+					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
-				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
+				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
 
 			if(bleed_rate)
-				src << "<span class='danger'>You are bleeding!</span>"
+				to_chat(src, "<span class='danger'>You are bleeding!</span>")
 			if(staminaloss)
 				if(staminaloss > 30)
-					src << "<span class='info'>You're completely exhausted.</span>"
+					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
 				else
-					src << "<span class='info'>You feel fatigued.</span>"
+					to_chat(src, "<span class='info'>You feel fatigued.</span>")
 		else
 			if(wear_suit)
 				wear_suit.add_fingerprint(M)
@@ -960,5 +986,9 @@
 			torn_items += leg_clothes
 
 	for(var/obj/item/I in torn_items)
+<<<<<<< HEAD
 		I.take_damage(damage_amount, damage_type, damage_flag, 0)
 >>>>>>> masterTGbranch
+=======
+		I.take_damage(damage_amount, damage_type, damage_flag, 0)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

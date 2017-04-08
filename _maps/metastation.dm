@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #if !defined(MAP_FILE)
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
@@ -28,3 +29,6 @@
 	#warn a map has already been included, ignoring MetaStation.
 
 #endif
+=======
+#define FORCE_MAP "_maps/metastation.json"
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

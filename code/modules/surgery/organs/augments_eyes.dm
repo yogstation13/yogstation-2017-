@@ -1,5 +1,5 @@
-/obj/item/organ/cyberimp/eyes
-	name = "cybernetic eyes"
+/obj/item/organ/cyberimp/eyes/hud
+	name = "cybernetic hud"
 	desc = "artificial photoreceptors with specialized functionality"
 	icon_state = "eye_implant"
 	implant_overlay = "eye_implant_overlay"
@@ -7,6 +7,7 @@
 	zone = "eyes"
 	w_class = WEIGHT_CLASS_TINY
 
+<<<<<<< HEAD
 	var/sight_flags = 0
 	var/dark_view = 0
 	var/eye_color = "fff"
@@ -68,6 +69,8 @@
 	aug_message = "You see prey everywhere you look..."
 
 
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 // HUD implants
 /obj/item/organ/cyberimp/eyes/hud
 	name = "HUD implant"
@@ -76,16 +79,24 @@
 	var/HUD_type = 0
 
 /obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
+<<<<<<< HEAD
 	if(..())
 		if(HUD_type)
 			var/datum/atom_hud/H = huds[HUD_type]
 			H.add_hud_to(M)
 			M.permanent_huds |= H
 		return 1
+=======
+	..()
+	if(HUD_type)
+		var/datum/atom_hud/H = GLOB.huds[HUD_type]
+		H.add_hud_to(M)
+		M.permanent_huds |= H
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/organ/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
 	if(HUD_type)
-		var/datum/atom_hud/H = huds[HUD_type]
+		var/datum/atom_hud/H = GLOB.huds[HUD_type]
 		M.permanent_huds ^= H
 		H.remove_hud_from(M)
 	..()
@@ -93,32 +104,11 @@
 /obj/item/organ/cyberimp/eyes/hud/medical
 	name = "Medical HUD implant"
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
-	eye_color = "0ff"
-	implant_color = "#00FFFF"
 	origin_tech = "materials=4;programming=4;biotech=4"
-	aug_message = "You suddenly see health bars floating above people's heads..."
 	HUD_type = DATA_HUD_MEDICAL_ADVANCED
 
 /obj/item/organ/cyberimp/eyes/hud/security
 	name = "Security HUD implant"
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
-	eye_color = "d00"
-	implant_color = "#CC0000"
 	origin_tech = "materials=4;programming=4;biotech=3;combat=3"
-	aug_message = "Job indicator icons pop up in your vision. That is not a certified surgeon..."
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
-
-
-// Welding shield implant
-/obj/item/organ/cyberimp/eyes/shield
-	name = "welding shield implant"
-	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
-	slot = "eye_shield"
-	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
-	implant_color = "#101010"
-	flash_protect = 2
-	aug_message = null
-	eye_color = null
-
-/obj/item/organ/cyberimp/eyes/shield/emp_act(severity)
-	return

@@ -46,22 +46,27 @@
 	leave_all_antag_huds()
 =======
 /datum/mind/proc/transfer_antag_huds(datum/atom_hud/antag/newhud)
+<<<<<<< HEAD
 	leave_all_huds()
 >>>>>>> masterTGbranch
 	ticker.mode.set_antag_hud(current, antag_hud_icon_state)
+=======
+	leave_all_antag_huds()
+	SSticker.mode.set_antag_hud(current, antag_hud_icon_state)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(newhud)
 		newhud.join_hud(current)
 
 /datum/mind/proc/leave_all_antag_huds()
+<<<<<<< HEAD
 	for(var/datum/atom_hud/antag/hud in huds)
+=======
+	for(var/datum/atom_hud/antag/hud in GLOB.huds)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(current in hud.hudusers)
 			hud.leave_hud(current)
 <<<<<<< HEAD
 =======
-
-	for(var/datum/atom_hud/data/hud in huds)
-		if(current in hud.hudusers)
-			hud.remove_hud_from(current)
 
 /datum/atom_hud/antag/gang
 	var/color = null

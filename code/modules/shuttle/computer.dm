@@ -2,6 +2,7 @@
 	name = "Shuttle Console"
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
+	light_color = LIGHT_COLOR_CYAN
 	req_access = list( )
 	circuit = /obj/item/weapon/circuitboard/computer/shuttle
 	var/shuttleId
@@ -61,17 +62,17 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
+		to_chat(usr, "<span class='danger'>Access denied.</span>")
 		return
 
 	if(href_list["move"])
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 		if(M.launch_status == ENDGAME_LAUNCHED)
-			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
+			to_chat(usr, "<span class='warning'>You've already escaped. Never going back to that place again!</span>")
 			return
 		if(no_destination_swap)
 			if(M.mode != SHUTTLE_IDLE)
-				usr << "<span class='warning'>Shuttle already in transit.</span>"
+				to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 				return
 
 		if(processcooldown(shuttleId, href_list["move"]))
@@ -80,6 +81,7 @@
 
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
+<<<<<<< HEAD
 				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 				processnotification("awayspeech")
 
@@ -125,12 +127,19 @@
 		processnotification("awayspeech")
 		SSshuttle.moveShuttle(sID, mID, 1, TRUE)
 
+=======
+				say("Shuttle departing. Please stand away from the doors.")
+			if(1)
+				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
+			else
+				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1
-		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
+		to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 
 /obj/machinery/computer/shuttle/proc/awayspeech(destination)
 	return "The shuttle is blasting off to [current_destination]!"

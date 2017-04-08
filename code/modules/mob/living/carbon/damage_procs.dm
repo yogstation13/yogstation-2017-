@@ -55,25 +55,39 @@
 	return amount
 
 
+<<<<<<< HEAD
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = 1)
 	if(GODMODE in status_flags)
 		return 0
+=======
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(amount > 0)
-		take_overall_damage(amount, 0)
+		take_overall_damage(amount, 0, updating_health)
 	else
 		heal_overall_damage(-amount, 0, 0, 1, updating_health)
+	return amount
 
+<<<<<<< HEAD
 /mob/living/carbon/adjustFireLoss(amount)
 	if(GODMODE in status_flags)
 		return 0
+=======
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(amount > 0)
-		take_overall_damage(0, amount)
+		take_overall_damage(0, amount, updating_health)
 	else
-		heal_overall_damage(0, -amount)
+		heal_overall_damage(0, -amount, 0, 1, updating_health)
+	return amount
 
 
-/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(has_dna() && TOXINLOVER in dna.species.species_traits) //damage becomes healing and healing becomes damage
+/mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && has_dna() && TOXINLOVER in dna.species.species_traits) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 5*amount
@@ -143,8 +157,8 @@
 		parts -= picked
 	if(updating_health)
 		updatehealth()
-		if(update)
-			update_damage_overlays()
+	if(update)
+		update_damage_overlays()
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute, burn, updating_health = 1)

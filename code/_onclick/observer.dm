@@ -18,6 +18,7 @@
 	// Otherwise jump
 	else if(A.loc)
 		loc = get_turf(A)
+		update_parallax_contents()
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.prefs.afreeze)
@@ -30,6 +31,9 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
 		ShiftMiddleClickOn(A)
+		return
+	if(modifiers["shift"] && modifiers["ctrl"])
+		CtrlShiftClickOn(A)
 		return
 	if(modifiers["middle"])
 		MiddleClickOn(A)
@@ -76,13 +80,13 @@
 	if(awaygate)
 		user.forceMove(awaygate.loc)
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.forceMove(stationgate.loc)
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/item/weapon/storage/attack_ghost(mob/user)
 	orient2hud(user)

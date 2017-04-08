@@ -28,8 +28,13 @@
 		var/mob/living/carbon/C = target
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+<<<<<<< HEAD
 		else if(CANWEAKEN in C.status_flags)
 			addtimer(C, "do_jitter_animation", 5, TIMER_NORMAL, jitter)
+=======
+		else if(C.status_flags & CANWEAKEN)
+			addtimer(CALLBACK(C, /mob/living/carbon.proc/do_jitter_animation, jitter), 5)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
@@ -71,9 +76,9 @@
 
 /obj/effect/nettingportal/New()
 	..()
-	SetLuminosity(3)
+	set_light(3)
 	var/obj/item/device/radio/beacon/teletarget = null
-	for(var/obj/machinery/computer/teleporter/com in machines)
+	for(var/obj/machinery/computer/teleporter/com in GLOB.machines)
 		if(com.target)
 			if(com.power_station && com.power_station.teleporter_hub && com.power_station.engaged)
 				teletarget = com.target
@@ -155,7 +160,11 @@
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
+<<<<<<< HEAD
 	damage = 20
+=======
+	damage = 8
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	damage_type = TOX
 	nodamage = 0
 	stutter = 5
@@ -195,5 +204,26 @@ obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 	qdel(src)
 
 /obj/item/projectile/energy/tesla_revolver/Destroy()
+	qdel(chain)
+	return ..()
+
+
+/obj/item/projectile/energy/tesla_cannon
+	name = "tesla bolt"
+	icon_state = "tesla_projectile"
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/blue_laser
+	var/chain
+
+/obj/item/projectile/energy/tesla_cannon/fire(setAngle)
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
+	..()
+
+/obj/item/projectile/energy/tesla_cannon/on_hit(atom/target)
+	. = ..()
+	tesla_zap(src, 3, 10000, explosive = FALSE, stun_mobs = FALSE)
+	qdel(src)
+
+/obj/item/projectile/energy/tesla_cannon/Destroy()
 	qdel(chain)
 	return ..()

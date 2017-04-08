@@ -13,11 +13,19 @@
 	send_discord_message("asay", "**[usr.ckey]: ** [msg]")
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
+<<<<<<< HEAD
 		msg = "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"
 		admins << msg
 	else
 		msg = "<span class='adminobserver'><span class='prefix'>OBSERVER:</span> <EM>[key_name(usr, 1)]:</EM> <span class='message'>[msg]</span></span>"
 		admins << msg
+=======
+		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"
+		to_chat(GLOB.admins, msg)
+	else
+		msg = "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]:</EM> <span class='message'>[msg]</span></span>"
+		to_chat(GLOB.admins, msg)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

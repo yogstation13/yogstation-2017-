@@ -490,8 +490,8 @@
 
 			menu = "<h4><img src=pda_notes.png> Crew Manifest</h4>"
 			menu += "Entries cannot be modified from this terminal.<br><br>"
-			if(data_core.general)
-				for (var/datum/data/record/t in sortRecord(data_core.general))
+			if(GLOB.data_core.general)
+				for (var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					menu += "[t.fields["name"]] - [t.fields["rank"]]<br>"
 			menu += "<br>"
 
@@ -517,7 +517,7 @@
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in machines)
+			for(var/obj/machinery/computer/monitor/pMon in GLOB.machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon
@@ -564,9 +564,14 @@
 
 		if (44) //medical records //This thing only displays a single screen so it's hard to really get the sub-menu stuff working.
 			menu = "<h4><img src=pda_medical.png> Medical Record List</h4>"
+<<<<<<< HEAD
 			menu += "<a href='byond://?src=\ref[src];choice=Medical Search'>\[<i>search</i>\]</A><br><br>"
 			if(data_core.general)
 				for(var/datum/data/record/R in sortRecord(data_core.general))
+=======
+			if(GLOB.data_core.general)
+				for(var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					menu += "<a href='byond://?src=\ref[src];choice=Medical Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 			menu += "<br>"
 		if(441) //medical record search results
@@ -586,7 +591,7 @@
 		if(442)
 			menu = "<h4><img src=pda_medical.png> Medical Record</h4>"
 
-			if(active1 in data_core.general)
+			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += "Sex: [active1.fields["sex"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
@@ -600,7 +605,7 @@
 			menu += "<br>"
 
 			menu += "<h4><img src=pda_medical.png> Medical Data</h4>"
-			if(active2 in data_core.medical)
+			if(active2 in GLOB.data_core.medical)
 				menu += "Blood Type: [active2.fields["blood_type"]]<br><br>"
 
 				menu += "Minor Disabilities: [active2.fields["mi_dis"]]<br>"
@@ -622,9 +627,14 @@
 			menu += "<br>"
 		if (45) //security records
 			menu = "<h4><img src=pda_cuffs.png> Security Record List</h4>"
+<<<<<<< HEAD
 			menu += "<a href='byond://?src=\ref[src];choice=Security Search'>\[<i>search</i>\]</A><br><br>"
 			if(data_core.general)
 				for (var/datum/data/record/R in sortRecord(data_core.general))
+=======
+			if(GLOB.data_core.general)
+				for (var/datum/data/record/R in sortRecord(GLOB.data_core.general))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					menu += "<a href='byond://?src=\ref[src];choice=Security Records;target=[R.fields["id"]]'>[R.fields["id"]]: [R.fields["name"]]<br>"
 
 			menu += "<br>"
@@ -645,7 +655,7 @@
 		if(452)
 			menu = "<h4><img src=pda_cuffs.png> Security Record</h4>"
 
-			if(active1 in data_core.general)
+			if(active1 in GLOB.data_core.general)
 				menu += "Name: [active1.fields["name"]] ID: [active1.fields["id"]]<br>"
 				menu += "Sex: [active1.fields["sex"]]<br>"
 				menu += "Age: [active1.fields["age"]]<br>"
@@ -659,7 +669,7 @@
 			menu += "<br>"
 
 			menu += "<h4><img src=pda_cuffs.png> Security Data</h4>"
-			if(active3 in data_core.security)
+			if(active3 in GLOB.data_core.security)
 				menu += "Criminal Status: [active3.fields["criminal"]]<br>"
 
 				menu += text("<BR>\nMinor Crimes:")
@@ -824,7 +834,7 @@
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/mob/living/simple_animal/bot/cleanbot/B in living_mob_list)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in GLOB.living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -932,7 +942,7 @@
 			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
 			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
 			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(!current)
@@ -985,11 +995,17 @@
 			else
 				search = ""
 		if("Medical Records")
-			active1 = find_record("id", href_list["target"], data_core.general)
+			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
+<<<<<<< HEAD
 				active2 = find_record("id", href_list["target"], data_core.medical)
 			pda.mode = 442
 			mode = 442
+=======
+				active2 = find_record("id", href_list["target"], GLOB.data_core.medical)
+			pda.mode = 441
+			mode = 441
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			if(!active2)
 				active1 = null
 		if("Security Search")
@@ -1003,11 +1019,17 @@
 			else
 				search = ""
 		if("Security Records")
-			active1 = find_record("id", href_list["target"], data_core.general)
+			active1 = find_record("id", href_list["target"], GLOB.data_core.general)
 			if(active1)
+<<<<<<< HEAD
 				active3 = find_record("id", href_list["target"], data_core.security)
 			pda.mode = 452
 			mode = 452
+=======
+				active3 = find_record("id", href_list["target"], GLOB.data_core.security)
+			pda.mode = 451
+			mode = 451
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			if(!active3)
 				active1 = null
 
@@ -1066,14 +1088,14 @@
 			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
 			var/message = pda.msg_input()
 			var/datum/newscaster/feed_channel/current
-			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 				if (chan.channel_name == current_channel)
 					current = chan
 			if(current.locked && current.author != pda_owner_name)
 				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
 				pda.Topic(null,list("choice"="Refresh"))
 				return
-			news_network.SubmitArticle(message,pda.owner,current_channel)
+			GLOB.news_network.SubmitArticle(message,pda.owner,current_channel)
 			pda.Topic(null,list("choice"=num2text(mode)))
 			return
 
@@ -1187,7 +1209,7 @@
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
 		var/botcount = 0
-		for(Bot in living_mob_list) //Git da botz
+		for(Bot in GLOB.living_mob_list) //Git da botz
 			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
 				continue //Also, the PDA must have access to the bot type.
 			menu += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"

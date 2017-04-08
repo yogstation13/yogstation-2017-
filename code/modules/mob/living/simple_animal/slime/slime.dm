@@ -1,9 +1,3 @@
-var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
-	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
-	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
-	"cerulean", "sepia", "black", "pyrite")
-
-
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
@@ -13,9 +7,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	gender = NEUTER
 	var/is_adult = 0
 	var/docile = 0
-	languages_spoken = SLIME | HUMAN
-	languages_understood = SLIME | HUMAN
-	faction = list("slime")
+	faction = list("slime","neutral")
 
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
@@ -78,7 +70,12 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
+	var/static/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
+	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
+	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
+	"cerulean", "sepia", "black", "pyrite")
+
+/mob/living/simple_animal/slime/Initialize(mapload, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
 
@@ -94,6 +91,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		E.Grant(src)
 	create_reagents(100)
 	set_colour(new_colour)
+	grant_language(/datum/language/slime)
 	..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
@@ -195,9 +193,10 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			stat(null,"Power Level: [powerlevel]")
 
 
-/mob/living/simple_animal/slime/adjustFireLoss(amount)
-	..(-abs(amount)) // Heals them
-	return
+/mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced)
+		amount = -abs(amount)
+	return ..() //Heals them
 
 /mob/living/simple_animal/slime/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
@@ -221,7 +220,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			Feedon(Food)
 	..()
 
-/mob/living/simple_animal/slime/unEquip(obj/item/W)
+/mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
 
 /mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
@@ -247,7 +246,8 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			M.updatehealth()
 
 /mob/living/simple_animal/slime/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	. = ..()
+	if(.)
 		attacked += 10
 
 
@@ -316,7 +316,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			++Friends[user]
 		else
 			Friends[user] = 1
-		user << "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>"
+		to_chat(user, "<span class='notice'>You feed the slime the plasma. It chirps happily.</span>")
 		var/obj/item/stack/sheet/mineral/plasma/S = W
 		S.use(1)
 		return
@@ -325,7 +325,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		if(prob(25))
 			user.do_attack_animation(src)
 			user.changeNext_move(CLICK_CD_MELEE)
-			user << "<span class='danger'>[W] passes right through [src]!</span>"
+			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??
 			Discipline = 0
@@ -375,7 +375,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				msg += "<span class='warning'><B>It is radiating with massive levels of electrical activity!</B></span>\n"
 
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)
 	return
 
 /mob/living/simple_animal/slime/proc/discipline_slime(mob/user)
@@ -421,5 +421,5 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(..())
 		return 3
 
-/mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
-	. = ..(loc, pick(slime_colours), prob(50))
+/mob/living/simple_animal/slime/random/Initialize(mapload, new_colour, new_is_adult)
+	. = ..(mapload, pick(slime_colours), prob(50))

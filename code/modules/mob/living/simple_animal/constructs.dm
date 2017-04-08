@@ -36,7 +36,11 @@
 	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/construct/New(var/loc, var/_affiliation)
+=======
+/mob/living/simple_animal/hostile/construct/Initialize()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
@@ -68,7 +72,7 @@
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
-	src << playstyle_string
+	to_chat(src, playstyle_string)
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
@@ -84,7 +88,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
@@ -99,11 +103,11 @@
 						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>"
+				to_chat(M, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>")
 			else
-				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
+				to_chat(M, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
 	else if(src != M)
-		..()
+		return ..()
 
 /mob/living/simple_animal/hostile/construct/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -111,12 +115,16 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
+<<<<<<< HEAD
 /mob/living/simple_animal/construct/examine(mob/user)
 	. = ..()
 	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
 		user << "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>"
 
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+=======
+/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	return 0
 
 

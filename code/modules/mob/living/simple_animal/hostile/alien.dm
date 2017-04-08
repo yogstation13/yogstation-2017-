@@ -4,8 +4,8 @@
 	name = "alien hunter"
 	desc = "A toothy, musclebound predator."
 	icon = 'icons/mob/alien.dmi'
-	icon_state = "alienh_s"
-	icon_living = "alienh_s"
+	icon_state = "alienh"
+	icon_living = "alienh"
 	icon_dead = "alienh_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
@@ -47,9 +47,14 @@
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
+<<<<<<< HEAD
 	desc = "The drone variant of the xenomorph caste. Weaker physically, but by no means less dangerous."
 	icon_state = "aliend_s"
 	icon_living = "aliend_s"
+=======
+	icon_state = "aliend"
+	icon_living = "aliend"
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	icon_dead = "aliend_dead"
 	health = 100
 	maxHealth = 100
@@ -97,8 +102,8 @@
 
 /mob/living/simple_animal/hostile/alien/sentinel
 	name = "alien sentinel"
-	icon_state = "aliens_s"
-	icon_living = "aliens_s"
+	icon_state = "aliens"
+	icon_living = "aliens"
 	icon_dead = "aliens_dead"
 	desc = "The hive-guardian caste of the xenomorph species. Has very accurate spit."
 	health = 200
@@ -141,8 +146,8 @@
 
 /mob/living/simple_animal/hostile/alien/queen
 	name = "alien queen"
-	icon_state = "alienq_s"
-	icon_living = "alienq_s"
+	icon_state = "alienq"
+	icon_living = "alienq"
 	icon_dead = "alienq_dead"
 	health = 250
 	maxHealth = 250
@@ -338,10 +343,11 @@
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("[src] cleans up \the [target].")
 			qdel(target)
-			return
+			return TRUE
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
+<<<<<<< HEAD
 
 /mob/living/simple_animal/hostile/alien/maid/adjustHealth(amount)
 	. = ..()
@@ -351,3 +357,6 @@
 		desc = initial(desc)
 
 #undef ALIEN_HAUL_ASS
+=======
+		return TRUE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

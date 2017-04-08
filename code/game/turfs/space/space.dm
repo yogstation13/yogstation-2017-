@@ -14,17 +14,35 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
+	plane = PLANE_SPACE
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 
-/turf/open/space/New()
+/turf/open/space/basic/New()	//Do not convert to Initialize
+	//This is used to optimize the map loader
+	return
+
+/turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
 
-/turf/open/space/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
+	var/area/A = loc
+	if(!IS_DYNAMIC_LIGHTING(src) && IS_DYNAMIC_LIGHTING(A))
+		add_overlay(/obj/effect/fullbright)
+
+	if(requires_activation)
+		SSair.add_to_active(src)
+
+	if (light_power && light_range)
+		update_light()
+
+	if (opacity)
+		has_opaque_atom = TRUE
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
 	if(destination_z)
@@ -33,9 +51,6 @@
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
-
-/turf/open/space/ChangeTurf(path)
-	. = ..()
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -55,37 +70,41 @@
 			if(isspaceturf(t))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			set_light(2)
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)
 
+/turf/open/space/proc/CanBuildHere()
+	return TRUE
+
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
+	if(!CanBuildHere())
+		return
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
 		if(W)
-			user << "<span class='warning'>There is already a catwalk here!</span>"
+			to_chat(user, "<span class='warning'>There is already a catwalk here!</span>")
 			return
 		if(L)
 			if(R.use(1))
-				user << "<span class='notice'>You begin constructing catwalk...</span>"
+				to_chat(user, "<span class='notice'>You construct a catwalk.</span>")
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				qdel(L)
-				ReplaceWithCatwalk()
+				new/obj/structure/lattice/catwalk(src)
 			else
-				user << "<span class='warning'>You need two rods to build a catwalk!</span>"
+				to_chat(user, "<span class='warning'>You need two rods to build a catwalk!</span>")
 			return
 		if(R.use(1))
-			user << "<span class='notice'>Constructing support lattice...</span>"
+			to_chat(user, "<span class='notice'>You construct a lattice.</span>")
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			ReplaceWithLattice()
 		else
-			user << "<span class='warning'>You need one rod to build a lattice.</span>"
+			to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
 		return
 	if(istype(C, /obj/item/stack/tile/plasteel))
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
@@ -94,12 +113,12 @@
 			if(S.use(1))
 				qdel(L)
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
-				user << "<span class='notice'>You build a floor.</span>"
+				to_chat(user, "<span class='notice'>You build a floor.</span>")
 				ChangeTurf(/turf/open/floor/plating)
 			else
-				user << "<span class='warning'>You need one floor tile to build a floor!</span>"
+				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
-			user << "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>"
+			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
 /turf/open/space/Entered(atom/movable/A)
 	..()
@@ -135,22 +154,22 @@
 	cur_y = cur_pos["y"]
 
 	if(src.x <= 1)
-		next_x = (--cur_x||global_map.len)
-		y_arr = global_map[next_x]
+		next_x = (--cur_x||GLOB.global_map.len)
+		y_arr = GLOB.global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = world.maxx - 2
 	else if (src.x >= world.maxx)
-		next_x = (++cur_x > global_map.len ? 1 : cur_x)
-		y_arr = global_map[next_x]
+		next_x = (++cur_x > GLOB.global_map.len ? 1 : cur_x)
+		y_arr = GLOB.global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = 3
 	else if (src.y <= 1)
-		y_arr = global_map[cur_x]
+		y_arr = GLOB.global_map[cur_x]
 		next_y = (--cur_y||y_arr.len)
 		target_z = y_arr[next_y]
 		next_y = world.maxy - 2
 	else if (src.y >= world.maxy)
-		y_arr = global_map[cur_x]
+		y_arr = GLOB.global_map[cur_x]
 		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
 		target_z = y_arr[next_y]
 		next_y = 3
@@ -176,3 +195,23 @@
 
 /turf/open/space/acid_act(acidpwr, acid_volume)
 	return 0
+<<<<<<< HEAD
+=======
+
+
+/turf/open/space/rcd_vals(mob/user, obj/item/weapon/rcd/the_rcd)
+	if(!CanBuildHere())
+		return FALSE
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 2)
+	return FALSE
+
+/turf/open/space/rcd_act(mob/user, obj/item/weapon/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			ChangeTurf(/turf/open/floor/plating)
+			return TRUE
+	return FALSE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

@@ -33,13 +33,19 @@
 			sleep(signal.data["slow"]) // simulate the network lag if necessary
 
 		/* ###### Broadcast a message using signal.data ###### */
-		if(signal.frequency == SYND_FREQ) // if syndicate broadcast, just
+		if(signal.frequency == GLOB.SYND_FREQ) // if syndicate broadcast, just
 			Broadcast_Message(signal.data["mob"],
 							  signal.data["vmask"],
 							  signal.data["radio"], signal.data["message"],
 							  signal.data["name"], signal.data["job"],
+<<<<<<< HEAD
 							  signal.data["realname"],, signal.data["uuid"], signal.data["compression"], signal.data["encryption"], list(0, z), signal.frequency, signal.data["spans"],
 							  signal.data["languages"], signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"])
+=======
+							  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
+							  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
+							  signal.data["language"])
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
 

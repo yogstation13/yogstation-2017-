@@ -50,10 +50,10 @@
 
 /obj/structure/bodycontainer/attack_hand(mob/user)
 	if(locked)
-		user << "<span class='danger'>It's locked.</span>"
+		to_chat(user, "<span class='danger'>It's locked.</span>")
 		return
 	if(!connected)
-		user << "That doesn't appear to have a tray."
+		to_chat(user, "That doesn't appear to have a tray.")
 		return
 	if(connected.loc == src)
 		open()
@@ -89,7 +89,7 @@
 	open()
 
 /obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
-	user << "<span class='notice'>You slam yourself into the side of [O].</span>"
+	to_chat(user, "<span class='notice'>You slam yourself into the side of [O].</span>")
 	container_resist(user)
 
 /obj/structure/bodycontainer/proc/open()
@@ -175,7 +175,7 @@
 /*
  * Crematorium
  */
-var/global/list/crematoriums = new/list()
+GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/bodycontainer/crematorium
 	name = "crematorium"
 	desc = "A human incinerator. Works well on barbeque nights."
@@ -184,18 +184,18 @@ var/global/list/crematoriums = new/list()
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
-	user << "<span class='warning'>[src] is locked against you.</span>"
+	to_chat(user, "<span class='warning'>[src] is locked against you.</span>")
 	return
 
 /obj/structure/bodycontainer/crematorium/Destroy()
-	crematoriums.Remove(src)
+	GLOB.crematoriums.Remove(src)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
 	connected = new/obj/structure/tray/c_tray(src)
 	connected.connected = src
 
-	crematoriums.Add(src)
+	GLOB.crematoriums.Add(src)
 	..()
 
 /obj/structure/bodycontainer/crematorium/update_icon()
@@ -231,7 +231,7 @@ var/global/list/crematoriums = new/list()
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+				user.log_message("Cremated <b>[M]/[M.ckey]</b>", INDIVIDUAL_ATTACK_LOG)
 				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			else
 				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
@@ -246,7 +246,7 @@ var/global/list/crematoriums = new/list()
 
 		new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			locked = 0
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
@@ -286,7 +286,7 @@ var/global/list/crematoriums = new/list()
 		connected.close()
 		add_fingerprint(user)
 	else
-		user << "<span class='warning'>That's not connected to anything!</span>"
+		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
 	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)

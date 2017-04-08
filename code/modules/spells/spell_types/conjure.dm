@@ -64,7 +64,7 @@
 	cooldown_min = 10
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (item && !qdeleted(item))
+	if (item && !QDELETED(item))
 		qdel(item)
 		item = null
 	else

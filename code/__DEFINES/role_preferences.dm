@@ -30,7 +30,7 @@
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role
-var/global/list/special_roles = list(
+GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_TRAITOR = /datum/game_mode/traitor,
 	ROLE_DOUBLEAGENT = /datum/game_mode/traitor/double_agents,
 	ROLE_OPERATIVE = /datum/game_mode/nuclear,
@@ -51,7 +51,7 @@ var/global/list/special_roles = list(
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 	ROLE_CYBERMAN = /datum/game_mode/cybermen,
 	ROLE_BORER,
-)
+))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
 #define BEASSISTANT 	1

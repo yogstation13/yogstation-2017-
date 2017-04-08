@@ -41,6 +41,7 @@ RCD
 	var/list/conf_access = null
 	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 
+<<<<<<< HEAD
 	/* Construction costs */
 
 	var/wallcost = 16
@@ -71,6 +72,9 @@ RCD
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
 	var/no_ammo_message = ""
+=======
+	var/delay_mod = 1
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/weapon/rcd/New()
 	..()
@@ -94,8 +98,7 @@ RCD
 		window_type = /obj/structure/window/fulltile
 		window_type_name = "glass"
 
-	usr << "<span class='notice'>You change \the [src]'s window mode \
-		to [window_type_name].</span>"
+	to_chat(usr, "<span class='notice'>You change \the [src]'s window mode to [window_type_name].</span>")
 
 /obj/item/weapon/rcd/verb/change_airlock_access()
 	set name = "Change Airlock Access"
@@ -192,7 +195,6 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	airlockcost = initial(airlockcost)
 	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
@@ -221,7 +223,6 @@ RCD
 						airlock_type = /obj/machinery/door/airlock/external
 					if("High Security")
 						airlock_type = /obj/machinery/door/airlock/highsecurity
-						airlockcost += 2 * sheetmultiplier	//extra cost
 			else
 				airlock_type = /obj/machinery/door/airlock
 
@@ -253,18 +254,17 @@ RCD
 
 /obj/item/weapon/rcd/New()
 	..()
-
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	src.spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	rcd_list += src
+	GLOB.rcd_list += src
 
 
 /obj/item/weapon/rcd/Destroy()
 	qdel(spark_system)
 	spark_system = null
-	rcd_list -= src
+	GLOB.rcd_list -= src
 	. = ..()
 
 /obj/item/weapon/rcd/attackby(obj/item/weapon/W, mob/user, params)
@@ -277,9 +277,13 @@ RCD
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > max_matter)
+<<<<<<< HEAD
 			user << "<span class='warning'>The [abbreviated_name] can't hold any more matter-units!</span>"
 			return
 		if(!user.unEquip(W))
+=======
+			to_chat(user, "<span class='warning'>The RCD can't hold any more matter-units!</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			return
 		qdel(W)
 		matter += R.ammoamt
@@ -290,12 +294,17 @@ RCD
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
 	if(loaded)
+<<<<<<< HEAD
 		user << "<span class='notice'>The [abbreviated_name] now holds [matter]/[max_matter] matter-units.</span>"
+=======
+		to_chat(user, "<span class='notice'>The RCD now holds [matter]/[max_matter] matter-units.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
 
 /obj/item/weapon/rcd/proc/loadwithsheets(obj/item/stack/sheet/S, value, mob/user)
+<<<<<<< HEAD
     var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
     if(maxsheets > 0)
         if(S.amount > maxsheets)
@@ -314,6 +323,18 @@ RCD
         return 1
     user << "<span class='warning'>You can't insert any more [S.name] sheets into the [abbreviated_name]!"
     return 0
+=======
+	var/maxsheets = round((max_matter-matter)/value)    //calculate the max number of sheets that will fit in RCD
+	if(maxsheets > 0)
+		var/amount_to_use = min(S.amount, maxsheets)
+		S.use(amount_to_use)
+		matter += value*amount_to_use
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You insert [amount_to_use] [S.name] sheets into the RCD. </span>")
+		return 1
+	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the RCD!")
+	return 0
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
@@ -321,6 +342,7 @@ RCD
 	switch(mode)
 		if(1)
 			mode = 2
+<<<<<<< HEAD
 			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Airlock'.</span>"
 		if(2)
 			mode = 3
@@ -331,6 +353,18 @@ RCD
 		if(4)
 			mode = 1
 			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Floor & Walls'.</span>"
+=======
+			to_chat(user, "<span class='notice'>You change RCD's mode to 'Airlock'.</span>")
+		if(2)
+			mode = 3
+			to_chat(user, "<span class='notice'>You change RCD's mode to 'Deconstruct'.</span>")
+		if(3)
+			mode = 4
+			to_chat(user, "<span class='notice'>You change RCD's mode to 'Grilles & Windows'.</span>")
+		if(4)
+			mode = 1
+			to_chat(user, "<span class='notice'>You change RCD's mode to 'Floor & Walls'.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	if(prob(20))
 		src.spark_system.start()
@@ -340,6 +374,7 @@ RCD
 
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
+<<<<<<< HEAD
 	if(!proximity) return 0
 	if(istype(A,/turf/open/space/transit))
 		return 0
@@ -568,11 +603,25 @@ RCD
 		else
 			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
 			return 0
+=======
+	if(!proximity)
+		return FALSE
+	var/list/rcd_results = A.rcd_vals(user, src)
+	if(!rcd_results)
+		return FALSE
+	if(do_after(user, rcd_results["delay"] * delay_mod, target = A))
+		if(checkResource(rcd_results["cost"], user))
+			if(A.rcd_act(user, src, rcd_results["mode"]))
+				useResource(rcd_results["cost"], user)
+				activate()
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+				return TRUE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		if(user)
-			user << no_ammo_message
+			to_chat(user, no_ammo_message)
 		return 0
 	matter -= amount
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
@@ -581,7 +630,7 @@ RCD
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	. = (matter >= amount)
 	if(!. && user)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 	return .
 
 /obj/item/weapon/rcd/proc/detonate_pulse()
@@ -589,7 +638,7 @@ RCD
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
 		vibrating violently!</b></span>")
 	// 5 seconds to get rid of it
-	addtimer(src, "detonate_pulse_explode", 50)
+	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
 
 /obj/item/weapon/rcd/proc/detonate_pulse_explode()
 	explosion(src, 0, 0, 3, 1, flame_range = 1)
@@ -608,11 +657,11 @@ RCD
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			user << no_ammo_message
+			to_chat(user, no_ammo_message)
 		return 0
 	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 	return .
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
@@ -621,11 +670,11 @@ RCD
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			user << no_ammo_message
+			to_chat(user, no_ammo_message)
 		return 0
 	. = borgy.cell.charge >= (amount * 72)
 	if(!. && user)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 	return .
 
 /obj/item/weapon/rcd/loaded
@@ -635,7 +684,6 @@ RCD
 	name = "industrial RCD"
 	max_matter = 500
 	matter = 500
-	canRturf = 1
 
 /obj/item/weapon/rcd_ammo
 	name = "compressed matter cartridge"
@@ -644,10 +692,16 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	origin_tech = "materials=3"
-	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
+	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
 	var/ammoamt = 40
 
 /obj/item/weapon/rcd_ammo/large
 	origin_tech = "materials=4"
-	materials = list(MAT_METAL=12000, MAT_GLASS=8000)
+	materials = list(MAT_METAL=48000, MAT_GLASS=32000)
 	ammoamt = 160
+
+
+/obj/item/weapon/rcd/admin
+	name = "admin RCD"
+	max_matter = INFINITY
+	matter = INFINITY

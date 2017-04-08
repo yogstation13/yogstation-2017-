@@ -31,7 +31,7 @@
 	alt_covers_chest = 1
 
 /obj/item/clothing/under/rank/scientist
-	desc = "It's made of a special fiber that provides minor protection against biohazards. It has markings that denote the wearer as a scientist."
+	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
 	name = "scientist's jumpsuit"
 	icon_state = "toxins"
 	item_state = "w_suit"
@@ -119,6 +119,7 @@
 	icon_state = "scrubspurple"
 	item_color = "scrubspurple"
 	can_adjust = 0
+<<<<<<< HEAD
 
 /obj/item/clothing/under/rank/mmedical
 	desc = "It's a work uniform, designed for medics."
@@ -129,3 +130,5 @@
 	permeability_coefficient = 0.50
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	can_adjust = 0
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

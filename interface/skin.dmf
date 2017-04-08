@@ -198,6 +198,14 @@ macro "default"
 		name = "CTRL+NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -226,6 +234,10 @@ macro "default"
 		name = "F7"
 		command = "Toggle-Build-Mode-Self"
 		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
+		is-disabled = false
 	elem 
 		name = "F8"
 		command = "Invisimin"
@@ -240,6 +252,14 @@ macro "default"
 >>>>>>> masterTGbranch
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "hotkeys"
@@ -539,6 +559,14 @@ macro "hotkeys"
 		name = "NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -567,6 +595,10 @@ macro "hotkeys"
 		name = "F7"
 		command = "Stealth-Mode"
 		is-disabled = false
+	elem
+		name = "CTRL+F7"
+		command = "Stealth-Mode"
+		is-disabled = false
 	elem 
 		name = "F8"
 <<<<<<< HEAD
@@ -582,6 +614,14 @@ macro "hotkeys"
 >>>>>>> masterTGbranch
 		name = "F12"
 		command = "F12"
+		is-disabled = false
+	elem 
+		name = "ALT"
+		command = "toggle-walk-run"
+		is-disabled = false
+	elem 
+		name = "ALT+UP"
+		command = "toggle-walk-run"
 		is-disabled = false
 
 macro "robot-default"
@@ -690,6 +730,10 @@ macro "robot-default"
 		command = "resist"
 		is-disabled = false
 	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
 		name = "CTRL+O"
 		command = "ooc"
 		is-disabled = false
@@ -794,10 +838,15 @@ macro "robot-default"
 		is-disabled = false
 	elem 
 		name = "F7"
+		command = "Toggle-Build-Mode-Self"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
 		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"
+<<<<<<< HEAD
 <<<<<<< HEAD
 		command = "Invisimin"
 	elem
@@ -806,6 +855,9 @@ macro "robot-default"
 	elem
 =======
 		command = "Toggle-Build-Mode-Self"
+=======
+		command = "Invisimin"
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		is-disabled = false
 	elem 
 >>>>>>> masterTGbranch
@@ -944,6 +996,18 @@ macro "robot-hotkeys"
 	elem 
 		name = "CTRL+B"
 		command = "resist"
+		is-disabled = false	
+	elem 
+		name = "H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "CTRL+H"
+		command = "talk-wheel"
+		is-disabled = false
+	elem 
+		name = "M"
+		command = "me"
 		is-disabled = false
 	elem 
 		name = "O"
@@ -1104,10 +1168,15 @@ macro "robot-hotkeys"
 		is-disabled = false
 	elem 
 		name = "F7"
+		command = "Toggle-Build-Mode-Self"
+		is-disabled = false
+	elem
+		name = "CTRL+F7"
 		command = "Stealth-Mode"
 		is-disabled = false
 	elem 
 		name = "F8"
+<<<<<<< HEAD
 <<<<<<< HEAD
 		command = "Invisimin"
 	elem
@@ -1116,6 +1185,9 @@ macro "robot-hotkeys"
 	elem
 =======
 		command = "Toggle-Build-Mode-Self"
+=======
+		command = "Invisimin"
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		is-disabled = false
 	elem 
 >>>>>>> masterTGbranch

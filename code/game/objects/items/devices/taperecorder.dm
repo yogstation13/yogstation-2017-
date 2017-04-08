@@ -6,8 +6,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags = HEAR
 	slot_flags = SLOT_BELT
-	languages_spoken = ALL //this is a translator, after all.
-	languages_understood = ALL //this is a translator, after all.
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
 	throwforce = 0
@@ -15,14 +13,16 @@
 	var/playing = 0
 	var/playsleepseconds = 0
 	var/obj/item/device/tape/mytape
+	var/starting_tape_type = /obj/item/device/tape/random
 	var/open_panel = 0
 	var/canprint = 1
 
 
-/obj/item/device/taperecorder/New()
-	mytape = new /obj/item/device/tape/random(src)
-	update_icon()
+/obj/item/device/taperecorder/Initialize(mapload)
 	..()
+	if(starting_tape_type)
+		mytape = new starting_tape_type(src)
+	update_icon()
 
 /obj/item/device/taperecorder/AltClick()
 	if(Adjacent(usr))
@@ -34,24 +34,27 @@
 
 /obj/item/device/taperecorder/examine(mob/user)
 	..()
+<<<<<<< HEAD
 	user << "The wire panel is [open_panel ? "opened" : "closed"]."
 	user << "Hold ALT and click on the tape recorder to eject the tape."
 	user << "Hold CTRL and click on the tape recorder to play the recording."
+=======
+	to_chat(user, "The wire panel is [open_panel ? "opened" : "closed"].")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /obj/item/device/taperecorder/attackby(obj/item/I, mob/user, params)
 	if(!mytape && istype(I, /obj/item/device/tape))
-		if(!user.unEquip(I))
+		if(!user.transferItemToLoc(I,src))
 			return
-		I.loc = src
 		mytape = I
-		user << "<span class='notice'>You insert [I] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
 		update_icon()
 
 
 /obj/item/device/taperecorder/proc/eject(mob/user)
 	if(mytape)
-		user << "<span class='notice'>You remove [mytape] from [src].</span>"
+		to_chat(user, "<span class='notice'>You remove [mytape] from [src].</span>")
 		stop()
 		user.put_in_hands(mytape)
 		mytape = null
@@ -125,7 +128,7 @@
 		return
 
 	if(mytape.used_capacity < mytape.max_capacity)
-		usr << "<span class='notice'>Recording started.</span>"
+		to_chat(usr, "<span class='notice'>Recording started.</span>")
 		recording = 1
 		update_icon()
 		mytape.timestamp += mytape.used_capacity
@@ -143,7 +146,7 @@
 		recording = 0
 		update_icon()
 	else
-		usr << "<span class='notice'>The tape is full.</span>"
+		to_chat(usr, "<span class='notice'>The tape is full.</span>")
 
 
 /obj/item/device/taperecorder/verb/stop()
@@ -156,10 +159,15 @@
 	if(recording)
 		recording = 0
 		mytape.timestamp += mytape.used_capacity
+<<<<<<< HEAD
 		mytape.storedinfo += "Recording stopped."
 		add_list_to_list(mytape.storedspans, get_spans())
 		mytape.stored_speakers += get_virtual_speaker_for(src)
 		usr << "<span class='notice'>Recording stopped.</span>"
+=======
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity * 10,"mm:ss")]\] Recording stopped."
+		to_chat(usr, "<span class='notice'>Recording stopped.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	else if(playing)
 		playing = 0
@@ -183,7 +191,7 @@
 
 	playing = 1
 	update_icon()
-	usr << "<span class='notice'>Playing started.</span>"
+	to_chat(usr, "<span class='notice'>Playing started.</span>")
 	var/used = mytape.used_capacity	//to stop runtimes when you eject the tape
 	var/max = mytape.max_capacity
 	for(var/i = 1, used < max, sleep(10 * playsleepseconds))
@@ -243,12 +251,12 @@
 	if(!mytape)
 		return
 	if(!canprint)
-		usr << "<span class='notice'>The recorder can't print that fast!</span>"
+		to_chat(usr, "<span class='notice'>The recorder can't print that fast!</span>")
 		return
 	if(recording || playing)
 		return
 
-	usr << "<span class='notice'>Transcript printed.</span>"
+	to_chat(usr, "<span class='notice'>Transcript printed.</span>")
 	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
 	for(var/i = 1, mytape.storedinfo.len >= i, i++)
@@ -262,10 +270,16 @@
 
 
 //empty tape recorders
+<<<<<<< HEAD
 /obj/item/device/taperecorder/empty/New()
 	..()
 	qdel(mytape)
 	mytape = null
+=======
+/obj/item/device/taperecorder/empty
+	starting_tape_type = null
+
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/device/tape
 	name = "tape"
@@ -290,7 +304,7 @@
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
-		user << "<span class='notice'>You pull out all the tape!</span>"
+		to_chat(user, "<span class='notice'>You pull out all the tape!</span>")
 		ruin()
 
 
@@ -303,7 +317,7 @@
 
 
 /obj/item/device/tape/proc/fix()
-	overlays -= "ribbonoverlay"
+	cut_overlay("ribbonoverlay")
 	ruined = 0
 
 /obj/item/device/tape/proc/erase()
@@ -317,12 +331,17 @@
 
 
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
-	if(ruined && istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120*I.toolspeed, target = src))
-			user << "<span class='notice'>You wound the tape back in.</span>"
-			fix()
-
+	if(ruined)
+		var/delay = -1
+		if (istype(I, /obj/item/weapon/screwdriver))
+			delay = 120*I.toolspeed
+		else if(istype(I, /obj/item/weapon/pen))
+			delay = 120*1.5
+		if (delay != -1)
+			to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
+			if(do_after(user, delay, target = src))
+				to_chat(user, "<span class='notice'>You wound the tape back in.</span>")
+				fix()
 
 //Random colour tapes
 /obj/item/device/tape/random/New()

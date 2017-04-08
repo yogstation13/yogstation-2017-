@@ -132,7 +132,7 @@ Actual Adjacent procs :
 			else //is already in open list, check if it's a better way from the current turf
 				if(newg < P.g)
 					P.prevNode = cur
-					P.g = newg
+					P.g = (newg * L.len / 9)
 					P.calc_f()
 					P.nt = cur.nt + 1
 					open.ReSort(P)//reorder the changed element in the list
@@ -155,7 +155,7 @@ Actual Adjacent procs :
 	var/list/L = new()
 	var/turf/T
 
-	for(var/dir in cardinal)
+	for(var/dir in GLOB.cardinal)
 		T = get_step(src,dir)
 		if(simulated_only && !istype(T))
 			continue

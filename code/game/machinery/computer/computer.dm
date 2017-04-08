@@ -28,8 +28,6 @@
 	//cause a runtime
 	else if(ispath(circuit))
 		circuit = new circuit(null)
-	power_change()
-	update_icon()
 
 /obj/machinery/computer/Destroy()
 	if(circuit)
@@ -37,7 +35,8 @@
 		circuit = null
 	return ..()
 
-/obj/machinery/computer/initialize()
+/obj/machinery/computer/Initialize()
+	..()
 	power_change()
 
 /obj/machinery/computer/process()
@@ -85,9 +84,9 @@
 /obj/machinery/computer/power_change()
 	..()
 	if(stat & NOPOWER)
-		SetLuminosity(0)
+		set_light(0)
 	else
-		SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	update_icon()
 	return
 
@@ -109,7 +108,7 @@
 				user << "<span class='notice'>The broken glass falls out.</span>"
 =======
 		playsound(src.loc, I.usesound, 50, 1)
-		user << "<span class='notice'> You start to disconnect the monitor...</span>"
+		to_chat(user, "<span class='notice'> You start to disconnect the monitor...</span>")
 		if(do_after(user, 20*I.toolspeed, target = src))
 			deconstruct(TRUE, user)
 	else
@@ -151,7 +150,7 @@
 			A.anchored = 1
 			if(stat & BROKEN)
 				if(user)
-					user << "<span class='notice'>The broken glass falls out.</span>"
+					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				else
 					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 >>>>>>> masterTGbranch
@@ -161,7 +160,7 @@
 				A.icon_state = "3"
 			else
 				if(user)
-					user << "<span class='notice'>You disconnect the monitor.</span>"
+					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 			circuit = null

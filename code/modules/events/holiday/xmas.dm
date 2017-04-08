@@ -30,9 +30,9 @@
 		for(var/turf/open/floor/T in orange(1,xmas))
 			for(var/i=1,i<=rand(1,5),i++)
 				new /obj/item/weapon/a_gift(T)
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in mob_list)
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
-	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in machines)
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
 		Monitor.icon_state = "entertainment_xmas"
 
 /datum/round_event/presents/announce()
@@ -59,7 +59,7 @@
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
 			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
-			"Why doesn’t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+			"Why doesnï¿½t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
 		cracked = 1
@@ -136,6 +136,7 @@ var/krampusweak
 /datum/round_event/holidayrole/santa/announce()
 	priority_announce("Santa is coming to town!", "Unknown Transmission")
 
+<<<<<<< HEAD
 /datum/round_event/holidayrole/santa/dressup(var/mob/M)
 	santa = new /mob/living/carbon/human(pick(blobstart))
 	activesanta = santa
@@ -681,3 +682,61 @@ var/krampusweak
 	qdel(activekrampus)
 	sleep(100)
 	priority_announce("Well... what are we waiting for? Celebrate!", null, 'sound/christmas/deckthehalls.ogg', "Nanotrasen")
+=======
+/datum/round_event/santa/start()
+	for(var/mob/M in GLOB.dead_mob_list)
+		spawn(0)
+			var/response = alert(M, "Santa is coming to town! Do you want to be santa?", "Ho ho ho!", "Yes", "No")
+			if(response == "Yes" && M && M.client && M.stat == DEAD && !santa)
+				santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
+				santa.key = M.key
+				qdel(M)
+
+				santa.real_name = "Santa Claus"
+				santa.name = "Santa Claus"
+				santa.mind.name = "Santa Claus"
+				santa.mind.assigned_role = "Santa"
+				santa.mind.special_role = "Santa"
+
+				santa.hair_style = "Long Hair"
+				santa.facial_hair_style = "Full Beard"
+				santa.hair_color = "FFF"
+				santa.facial_hair_color = "FFF"
+
+				santa.equip_to_slot_or_del(new /obj/item/clothing/under/color/red, slot_w_uniform)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/suit/space/santa, slot_wear_suit)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/head/santa, slot_head)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/mask/breath, slot_wear_mask)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/red, slot_gloves)
+				santa.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/red, slot_shoes)
+				santa.equip_to_slot_or_del(new /obj/item/weapon/tank/internals/emergency_oxygen/double, slot_belt)
+				santa.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain, slot_ears)
+				santa.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/santabag, slot_back)
+				santa.equip_to_slot_or_del(new /obj/item/device/flashlight, slot_r_store) //most blob spawn locations are really dark.
+
+				var/obj/item/weapon/card/id/gold/santacard = new(santa)
+				santacard.update_label("Santa Claus", "Santa")
+				var/datum/job/captain/J = new/datum/job/captain
+				santacard.access = J.get_access()
+				santa.equip_to_slot_or_del(santacard, slot_wear_id)
+
+				santa.update_icons()
+
+				var/obj/item/weapon/storage/backpack/bag = santa.back
+				var/obj/item/weapon/a_gift/gift = new(santa)
+				while(bag.can_be_inserted(gift, 1))
+					bag.handle_item_insertion(gift, 1)
+					gift = new(santa)
+
+				var/datum/objective/santa_objective = new()
+				santa_objective.explanation_text = "Bring joy and presents to the station!"
+				santa_objective.completed = 1 //lets cut our santas some slack.
+				santa_objective.owner = santa.mind
+				santa.mind.objectives += santa_objective
+				santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
+				var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
+				telespell.clothes_req = 0 //santa robes aren't actually magical.
+				santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
+
+				to_chat(santa, "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

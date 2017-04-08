@@ -35,7 +35,12 @@
 
 =======
 	card.removePersonality()
+<<<<<<< HEAD
 >>>>>>> masterTGbranch
+=======
+	if(holoform)
+		card.forceMove(loc)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	update_sight()
 	clear_fullscreens()
 	close_up()
@@ -44,8 +49,12 @@
 	//mind.store_memory("Time of death: [tod]", 0)
 
 	//New pAI's get a brand new mind to prevent meta stuff from their previous life. This new mind causes problems down the line if it's not deleted here.
+<<<<<<< HEAD
 	//Read as: I have no idea what I'm doing but asking for help got me nowhere so this is what you get. - Nodrak
 	if(mind)	del(mind)
 	living_mob_list -= src
+=======
+	GLOB.living_mob_list -= src
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	ghostize()
 	qdel(src)

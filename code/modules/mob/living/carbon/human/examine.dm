@@ -178,7 +178,7 @@
 			if(!key)
 				var/foundghost = 0
 				if(mind)
-					for(var/mob/dead/observer/G in player_list)
+					for(var/mob/dead/observer/G in GLOB.player_list)
 						if(G.mind == mind)
 							foundghost = 1
 							if (G.can_reenter_corpse == 0)
@@ -327,10 +327,15 @@
 
 	if(bleedsuppress && !cauterized)
 		msg += "[t_He] [t_is] bandaged with something.\n"
+<<<<<<< HEAD
 	if(cauterized)
 		msg += "[t_He] [t_is] bearing wounds that were burnt closed.\n"
 	if(bleed_rate)
 		if(reagents.has_reagent("heparin") || (reagents.has_reagent("capilletum") && lying))
+=======
+	else if(bleed_rate)
+		if(reagents.has_reagent("heparin"))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else if(bleed_rate)
 			switch (bleed_rate)
@@ -390,7 +395,7 @@
 			else if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)
-				msg += "[t_He] [t_has] a vacant, braindead stare...\n"
+				msg += "[t_He] [t_has] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon.\n"
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
@@ -401,7 +406,7 @@
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
 			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
-				var/datum/data/record/R = find_record("name", perpname, data_core.general)
+				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 				if(R)
 					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
@@ -419,7 +424,7 @@
 						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"
 						health_r = R.fields["m_stat"]
 						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health_r]\]</a><br>"
-					R = find_record("name", perpname, data_core.medical)
+					R = find_record("name", perpname, GLOB.data_core.medical)
 					if(R)
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
@@ -429,7 +434,7 @@
 					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"
 
-						R = find_record("name", perpname, data_core.security)
+						R = find_record("name", perpname, GLOB.data_core.security)
 						if(R)
 							criminal = R.fields["criminal"]
 
@@ -440,4 +445,4 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)

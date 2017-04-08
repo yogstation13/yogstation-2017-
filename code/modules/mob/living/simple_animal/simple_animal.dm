@@ -89,8 +89,10 @@
 	var/datum/personal_crafting/handcrafting
 >>>>>>> masterTGbranch
 
+	//domestication
+	var/tame = 0
 
-/mob/living/simple_animal/New()
+/mob/living/simple_animal/Initialize()
 	..()
 	handcrafting = new()
 	if(gender == PLURAL)
@@ -99,6 +101,9 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+
+	// goats bray, cows go moo, and the fox says Geckers
+	grant_language(/datum/language/common)
 
 /mob/living/simple_animal/Login()
 	if(src && src.client)
@@ -152,7 +157,7 @@
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
-					var/anydir = pick(cardinal)
+					var/anydir = pick(GLOB.cardinal)
 					if(Process_Spacemove(anydir))
 						if(turf_is_safe(get_step(src, anydir)) )
 							Move(get_step(src, anydir), anydir)
@@ -183,9 +188,9 @@
 					else
 						randomValue -= speak.len
 						if(emote_see && randomValue <= emote_see.len)
-							emote("me", 1, pick(emote_see))
+							emote("me [pick(emote_see)]", 1)
 						else
-							emote("me", 2, pick(emote_hear))
+							emote("me [pick(emote_hear)]", 2)
 				else
 					say(pick(speak))
 			else
@@ -212,7 +217,7 @@
 		var/turf/open/ST = src.loc
 		if(ST.air)
 			var/ST_gases = ST.air.gases
-			ST.air.assert_gases(arglist(hardcoded_gases))
+			ST.air.assert_gases(arglist(GLOB.hardcoded_gases))
 
 			var/tox = ST_gases["plasma"][MOLES]
 			var/oxy = ST_gases["o2"][MOLES]
@@ -254,17 +259,17 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 	handle_temperature_damage()
 
 /mob/living/simple_animal/proc/handle_temperature_damage()
 	if((bodytemperature < minbodytemp) || (bodytemperature > maxbodytemp))
-		adjustHealth(-unsuitable_atmos_damage)
+		adjustHealth(unsuitable_atmos_damage)
 
 /mob/living/simple_animal/gib()
 	if(butcher_results)
@@ -445,25 +450,20 @@
 	if(!gibbed)
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
-		if(deathmessage)
-			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
-		else if(!del_on_death)
-			visible_message("<span class='danger'>\The [src] stops moving...</span>")
+		if(deathmessage || !del_on_death)
+			emote("deathgasp")
 	if(del_on_death)
-		ghostize()
-		stat = DEAD
+		..()
 		//Prevent infinite loops if the mob Destroy() is overriden in such
 		//a manner as to cause a call to death() again
 		del_on_death = FALSE
 		qdel(src)
-		return
 	else
 		health = 0
 		icon_state = icon_dead
-		stat = DEAD
 		density = 0
 		lying = 1
-	..()
+		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -496,7 +496,7 @@
 		. = 1
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || SSticker.current_state != GAME_STATE_PLAYING)
 		return
 	next_scan_time = world.time + 400
 	var/alone = 1
@@ -513,7 +513,7 @@
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
 
-		else if(isliving(M) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
+		else if(isliving(M) && !faction_check_mob(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			return //we never mate when not alone, so just abort early
 
 	if(alone && partner && children < 3)
@@ -529,7 +529,7 @@
 		if(be_close && !in_range(M, src))
 			return 0
 	else
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	return 1
 
@@ -792,7 +792,7 @@
 		if(istype(held_item, /obj/item/weapon/twohanded))
 			var/obj/item/weapon/twohanded/T = held_item
 			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [T.name].</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = hand_index
@@ -824,4 +824,38 @@
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
+<<<<<<< HEAD
 >>>>>>> masterTGbranch
+=======
+//ANIMAL RIDING
+/mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
+	if(riding_datum)
+		riding_datum.restore_position(buckled_mob)
+	. = ..()
+
+
+/mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user)
+	if(riding_datum)
+		if(user.incapacitated())
+			return
+		for(var/atom/movable/A in get_turf(src))
+			if(A != src && A != M && A.density)
+				return
+		M.loc = get_turf(src)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.ridden = src
+
+/mob/living/simple_animal/relaymove(mob/user, direction)
+	if(tame && riding_datum)
+		riding_datum.handle_ride(user, direction)
+
+/mob/living/simple_animal/Moved()
+	. = ..()
+	if(riding_datum)
+		riding_datum.on_vehicle_move()
+
+
+/mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
+	. = ..()
+	riding_datum = new/datum/riding/animal
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

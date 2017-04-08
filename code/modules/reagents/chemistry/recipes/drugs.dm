@@ -31,8 +31,13 @@
 /datum/chemical_reaction/bath_salts
 	name = "bath_salts"
 	id = "bath_salts"
+<<<<<<< HEAD
 	result = list("bath_salts" = 7)
 	required_reagents = list("badfood" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
+=======
+	results = list("bath_salts" = 7)
+	required_reagents = list("bad_food" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	required_temp = 374
 
 /datum/chemical_reaction/aranesp

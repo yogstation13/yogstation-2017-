@@ -14,18 +14,22 @@
 	var/mob/living/silicon/pai/pai
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 
-/obj/item/device/paicard/New()
+/obj/item/device/paicard/Initialize()
 	..()
+<<<<<<< HEAD
 <<<<<<< HEAD
 	setBaseOverlay()
 =======
 	pai_card_list += src
+=======
+	SSpai.pai_card_list += src
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	add_overlay("pai-off")
 >>>>>>> masterTGbranch
 
 /obj/item/device/paicard/Destroy()
 	//Will stop people throwing friend pAIs into the singularity so they can respawn
-	pai_card_list -= src
+	SSpai.pai_card_list -= src
 	if(!isnull(pai))
 		pai.death(0)
 	return ..()
@@ -63,6 +67,10 @@
 		else
 			dat += "<b>Radio Uplink</b><br>"
 			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
+				dat += "<A href='byond://?src=\ref[src];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
 		dat += "<A href='byond://?src=\ref[src];wipe=1'>\[Wipe current pAI personality\]</a><br>"
 	else
 <<<<<<< HEAD
@@ -138,15 +146,18 @@
 			radio.keyslot = null
 			radio.recalculateChannels()
 	if(pai)
+		if(!(loc == usr))
+			return
 		if(href_list["setdna"])
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
+				to_chat(usr, "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>")
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
+<<<<<<< HEAD
 				pai << "<span class='notice'>You have been bound to a new master.</span>"
 		if (href_list["allowholo"])
 			if (href_list["allowholo"] == "yes")
@@ -155,6 +166,10 @@
 			else
 				pai.canholo = 0
 				pai << "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>"
+=======
+				to_chat(pai, "<span class='notice'>You have been bound to a new master.</span>")
+				pai.emittersemicd = FALSE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(href_list["wipe"])
 			if (loc != usr)
 				usr.unset_machine() //check this shit to make sure people aren't keeping the dialog open
@@ -166,6 +181,7 @@
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
 				if(pai)
+<<<<<<< HEAD
 <<<<<<< HEAD
 					pai.wiped = 1
 					pai << "<span class='warning'>Your sensors fall dark, their processes suddenly terminated by an external agent.</span>"
@@ -186,6 +202,12 @@
 					pai << "<span class='danger'>Byte by byte you lose your sense of self.</span>"
 					pai << "<span class='userdanger'>Your mental faculties leave you.</span>"
 					pai << "<span class='rose'>oblivion... </span>"
+=======
+					to_chat(pai, "<span class='warning'>You feel yourself slipping away from reality.</span>")
+					to_chat(pai, "<span class='danger'>Byte by byte you lose your sense of self.</span>")
+					to_chat(pai, "<span class='userdanger'>Your mental faculties leave you.</span>")
+					to_chat(pai, "<span class='rose'>oblivion... </span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					pai.death(0)
 		if(href_list["wires"])
 			var/wire = text2num(href_list["wires"])
@@ -200,10 +222,16 @@
 			//also check this shit again before doing it
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
-				pai << "Your supplemental directives have been updated. Your new directives are:"
-				pai << "Prime Directive : <br>[pai.laws.zeroth]"
-				for(var/slaws in pai.laws.supplied)
-					pai << "Supplemental Directives: <br>[slaws]"
+		if(href_list["toggle_holo"])
+			if(pai.canholo)
+				to_chat(pai, "<span class='userdanger'>Your owner has disabled your holomatrix projectors!</span>")
+				pai.canholo = FALSE
+				to_chat(usr, "<span class='warning'>You disable your pAI's holomatrix!</span>")
+			else
+				to_chat(pai, "<span class='boldnotice'>Your owner has enabled your holomatrix projectors!</span>")
+				pai.canholo = TRUE
+				to_chat(usr, "<span class='notice'>You enable your pAI's holomatrix!</span>")
+
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1

@@ -2,11 +2,16 @@
 
 
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in mob_list)
+/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Admin PM Mob"
+<<<<<<< HEAD
 	if(!check_rights(R_BASIC))
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
+=======
+	if(!holder)
+		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	if( !ismob(M) || !M.client )
 		return
@@ -17,8 +22,13 @@
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
+<<<<<<< HEAD
 	if(!check_rights(R_BASIC))
 		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
+=======
+	if(!holder)
+		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -37,7 +47,7 @@
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	if(!check_rights(R_BASIC))
 		src << "<font color='red'>Error: Admin-PM: Only administrators may use this command.</font>"
@@ -46,12 +56,12 @@
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
-		C = directory[whom]
+		C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
 		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
 	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
@@ -64,7 +74,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	var/client/C
 	var/irc = 0
@@ -74,7 +84,7 @@
 		if(whom == "IRCKEY")
 			irc = 1
 		else
-			C = directory[whom]
+			C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
@@ -119,14 +129,14 @@
 				wasAlreadyClicked.pm_started_flag = 0
 			return
 		if(holder)
-			src << "<font color='red'>Error: Use the admin IRC channel, nerd.</font>"
+			to_chat(src, "<font color='red'>Error: Use the admin IRC channel, nerd.</font>")
 			return
 
 
 	else
 		if(!C)
 			if(holder)
-				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 			else
 				admin_ticket(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
@@ -137,9 +147,14 @@
 
 			if(!msg)
 				return
+
+			if(prefs.muted & MUTE_ADMINHELP)
+				to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
+				return
+
 			if(!C)
 				if(holder)
-					src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+					to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 				else
 					adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
 				return
@@ -152,8 +167,24 @@
 
 	msg = emoji_parse(msg)
 
+<<<<<<< HEAD
 
 	var/has_resolved_ticket = 0
+=======
+	if(irc)
+		to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [rawmsg]</font>")
+		ircreplyamount--
+		send2irc("Reply: [ckey]",rawmsg)
+	else
+		if(C.holder)
+			if(holder)	//both are admins
+				to_chat(C, "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>")
+				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg]</font>")
+
+			else		//recipient is an admin but sender is not
+				to_chat(C, "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>")
+				to_chat(src, "<font color='blue'>PM to-<b>Admins</b>: [msg]</font>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	// Search current tickets, is this user the owner or primary admin of a ticket
 	for(var/datum/admin_ticket/T in tickets_list)
@@ -162,10 +193,19 @@
 			if(T.resolved && !holder)
 				has_resolved_ticket = 1
 
+<<<<<<< HEAD
 			if(T.handling_admin && !compare_ckey(get_client(src), T.handling_admin) && !compare_ckey(get_client(src), T.owner))
 				if(!holder)
 					usr << "<span class='boldnotice'>You are not the owner or primary admin of this users ticket. You may not reply to it.</span>"
 				return
+=======
+		else
+			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
+				to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+				to_chat(C, "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>")
+				to_chat(C, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
+				to_chat(src, "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 			if(!T.resolved)
 				msg = replacetext(msg, "'", "�")
@@ -186,6 +226,7 @@
 								admin_ticket(reply)													//sender has left, adminhelp instead
 						return
 
+<<<<<<< HEAD
 				return
 
 	if(has_resolved_ticket)
@@ -202,6 +243,23 @@
 		tickets_list.Add(T)
 	else
 		T = null
+=======
+			else		//neither are admins
+				to_chat(src, "<font color='red'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</font>")
+				return
+
+	if(irc)
+		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
+		for(var/client/X in GLOB.admins)
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" )
+	else
+		window_flash(C, ignorepref = TRUE)
+		log_admin_private("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
+		//we don't use message_admins here because the sender/receiver might get it too
+		for(var/client/X in GLOB.admins)
+			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
+				to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" )
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	return //This ticket system. Wow.
 
@@ -209,7 +267,7 @@
 
 /proc/IrcPm(target,msg,sender)
 
-	var/client/C = directory[target]
+	var/client/C = GLOB.directory[target]
 
 	var/static/stealthkey
 	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
@@ -225,13 +283,13 @@
 		return "No message"
 
 	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
-	log_admin("IRC PM: [sender] -> [key_name(C)] : [msg]")
+	log_admin_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
-	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
-	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
-	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-	window_flash(C)
+	to_chat(C, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+	to_chat(C, "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>")
+	to_chat(C, "<font color='red'><i>Click on the administrator's name to reply.</i></font>")
+	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'
 
@@ -246,12 +304,12 @@
 	var/i = 0
 	while(i == 0)
 		i = 1
-		for(var/P in stealthminID)
-			if(num == stealthminID[P])
+		for(var/P in GLOB.stealthminID)
+			if(num == GLOB.stealthminID[P])
 				num++
 				i = 0
 	var/stealth = "@[num2text(num)]"
-	stealthminID["IRCKEY"] = stealth
+	GLOB.stealthminID["IRCKEY"] = stealth
 	return	stealth
 
 #undef IRCREPLYCOUNT

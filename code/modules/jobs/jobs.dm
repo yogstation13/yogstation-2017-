@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 var/const/ENGSEC			=(1<<0)
 
@@ -64,50 +65,58 @@ var/list/assistant_occupations = list(
 
 
 var/list/command_positions = list(
+=======
+GLOBAL_LIST_INIT(command_positions, list(
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	"Captain",
 	"Head of Personnel",
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
-	"Chief Medical Officer"
-)
+	"Chief Medical Officer"))
 
 
-var/list/engineering_positions = list(
+GLOBAL_LIST_INIT(engineering_positions, list(
 	"Chief Engineer",
 	"Station Engineer",
+<<<<<<< HEAD
 	"Atmospheric Technician",
 	"Signal Technician"
 )
+=======
+	"Atmospheric Technician"))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
-var/list/medical_positions = list(
+GLOBAL_LIST_INIT(medical_positions, list(
 	"Chief Medical Officer",
 	"Medical Doctor",
 	"Geneticist",
 	"Virologist",
+<<<<<<< HEAD
 	"Chemist",
 	"Paramedic",
 	"Psychiatrist"
 )
+=======
+	"Chemist"))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
-var/list/science_positions = list(
+GLOBAL_LIST_INIT(science_positions, list(
 	"Research Director",
 	"Scientist",
-	"Roboticist"
-)
+	"Roboticist"))
 
 
-var/list/supply_positions = list(
+GLOBAL_LIST_INIT(supply_positions, list(
 	"Head of Personnel",
 	"Quartermaster",
 	"Cargo Technician",
-	"Shaft Miner",
-)
+	"Shaft Miner"))
 
 
-var/list/civilian_positions = list(
+GLOBAL_LIST_INIT(civilian_positions, list(
 	"Bartender",
 	"Botanist",
 	"Cook",
@@ -117,25 +126,27 @@ var/list/civilian_positions = list(
 	"Chaplain",
 	"Clown",
 	"Mime",
+<<<<<<< HEAD
 	"Assistant",
 	"Clerk",
 	"Tourist"
 )
+=======
+	"Assistant"))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
-var/list/security_positions = list(
+GLOBAL_LIST_INIT(security_positions, list(
 	"Head of Security",
 	"Warden",
 	"Detective",
-	"Security Officer"
-)
+	"Security Officer"))
 
 
-var/list/nonhuman_positions = list(
+GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"AI",
 	"Cyborg",
-	"pAI"
-)
+	"pAI"))
 
 var/list/yog_positions = list(
 	"Waiter",
@@ -148,7 +159,7 @@ var/list/yog_positions = list(
 
 
 /proc/guest_jobbans(job)
-	return ((job in command_positions) || (job in nonhuman_positions) || (job in security_positions))
+	return ((job in GLOB.command_positions) || (job in GLOB.nonhuman_positions) || (job in GLOB.security_positions))
 
 
 
@@ -161,3 +172,36 @@ var/list/yog_positions = list(
 	for(var/datum/job/J in SSjob.occupations)
 		if(J.title == job_title)
 			return J.department_head //this is a list
+
+/proc/get_full_job_name(job)
+	var/static/regex/cap_expand = new("cap(?!tain)")
+	var/static/regex/cmo_expand = new("cmo")
+	var/static/regex/hos_expand = new("hos")
+	var/static/regex/hop_expand = new("hop")
+	var/static/regex/rd_expand = new("rd")
+	var/static/regex/ce_expand = new("ce")
+	var/static/regex/qm_expand = new("qm")
+	var/static/regex/sec_expand = new("(?<!security )officer")
+	var/static/regex/engi_expand = new("(?<!station )engineer")
+	var/static/regex/atmos_expand = new("atmos tech")
+	var/static/regex/doc_expand = new("(?<!medical )doctor|medic(?!al)")
+	var/static/regex/mine_expand = new("(?<!shaft )miner")
+	var/static/regex/chef_expand = new("chef")
+	var/static/regex/borg_expand = new("(?<!cy)borg")
+
+	job = lowertext(job)
+	job = cap_expand.Replace(job, "captain")
+	job = cmo_expand.Replace(job, "chief medical officer")
+	job = hos_expand.Replace(job, "head of security")
+	job = hop_expand.Replace(job, "head of personnel")
+	job = rd_expand.Replace(job, "research director")
+	job = ce_expand.Replace(job, "chief engineer")
+	job = qm_expand.Replace(job, "quartermaster")
+	job = sec_expand.Replace(job, "security officer")
+	job = engi_expand.Replace(job, "station engineer")
+	job = atmos_expand.Replace(job, "atmospheric technician")
+	job = doc_expand.Replace(job, "medical doctor")
+	job = mine_expand.Replace(job, "shaft miner")
+	job = chef_expand.Replace(job, "cook")
+	job = borg_expand.Replace(job, "cyborg")
+	return job

@@ -116,6 +116,16 @@
 	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
 
+<<<<<<< HEAD
+=======
+/datum/chemical_reaction/skewium
+	name = "Skewium"
+	id = "Skewium"
+	results = list("skewium" = 5)
+	required_reagents = list("rotatium" = 2, "plasma" = 2, "sacid" = 1)
+	mix_message = "<span class='danger'>Wow! it turns out if you mix rotatium with some plasma and sulphuric acid, it gets even worse!</span>"
+
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /datum/chemical_reaction/anacea
 	name = "Anacea"
 	id = "anacea"

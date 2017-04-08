@@ -38,7 +38,7 @@
 		cut_overlays()
 
 /obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)
@@ -69,7 +69,7 @@
 				if(confirm == "Yes" && !..())
 					flush = TRUE
 					if(AI && AI.loc == src)
-						AI << "Your core files are being wiped!"
+						to_chat(AI, "Your core files are being wiped!")
 						while(AI.stat != DEAD && flush)
 							AI.adjustOxyLoss(1)
 							AI.updatehealth()
@@ -78,10 +78,10 @@
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			AI << "[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"
+			to_chat(AI, "[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!")
 			. = TRUE
 		if("radio")
 			AI.radio_enabled = !AI.radio_enabled
-			AI << "Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!"
+			to_chat(AI, "Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!")
 			. = TRUE
 	update_icon()

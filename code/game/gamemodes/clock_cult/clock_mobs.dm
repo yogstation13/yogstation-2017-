@@ -1,6 +1,6 @@
-
+//The base for clockwork mobs
 /mob/living/simple_animal/hostile/clockwork
-	faction = list("ratvar")
+	faction = list("neutral", "ratvar")
 	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
@@ -11,8 +11,6 @@
 >>>>>>> masterTGbranch
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	languages_spoken = RATVAR
-	languages_understood = HUMAN|RATVAR
 	healable = FALSE
 	del_on_death = TRUE
 <<<<<<< HEAD
@@ -21,34 +19,31 @@
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
 	verb_yell = "harangues"
+<<<<<<< HEAD
 >>>>>>> masterTGbranch
+=======
+	initial_languages = list(/datum/language/common, /datum/language/ratvar)
+	only_speaks_language = /datum/language/ratvar
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	bubble_icon = "clock"
+	light_color = "#E42742"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
-	var/obj/item/clockwork/slab/internalslab //an internal slab for running scripture
-
-/mob/living/simple_animal/hostile/clockwork/New()
-	..()
-	internalslab = new/obj/item/clockwork/slab/internal(src)
-
-/mob/living/simple_animal/hostile/clockwork/Destroy()
-	qdel(internalslab)
-	internalslab = null
-	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/get_spans()
 	return ..() | SPAN_ROBOT
 
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
-	src << playstyle_string
+	add_servant_of_ratvar(src, TRUE)
+	to_chat(src, playstyle_string)
 
 <<<<<<< HEAD
 =======
 /mob/living/simple_animal/hostile/clockwork/ratvar_act()
 	fully_heal(TRUE)
 
-/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
+/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
 
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
@@ -65,6 +60,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
+<<<<<<< HEAD
 	user << msg
 
 >>>>>>> masterTGbranch
@@ -669,3 +665,6 @@
 =======
 	return host && loc == host
 >>>>>>> masterTGbranch
+=======
+	to_chat(user, msg)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

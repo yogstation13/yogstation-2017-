@@ -111,7 +111,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //It's only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(pref_species && !(pref_species.id in roundstart_species))
+	if(pref_species && !(pref_species.id in GLOB.roundstart_species))
 		var/rando_race = pick(config.roundstart_races)
 		pref_species = new rando_race()
 
@@ -160,6 +160,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			>> hotkeys
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
+	S["windowflash"]		>> windowflashing
 
 	if(islist(S["be_special"]))
 		S["be_special"] 	>> be_special
@@ -186,7 +187,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 =======
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
+<<<<<<< HEAD
 >>>>>>> masterTGbranch
+=======
+	S["parallax"]			>> parallax
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -200,9 +205,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	windowflashing		= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
+<<<<<<< HEAD
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -211,6 +218,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	donor_pda		= sanitize_integer(donor_pda, 1, donor_pdas.len, 1)
 	donor_hat		= sanitize_integer(donor_hat, 0, donor_start_items.len, 0)
 	purrbation 		= sanitize_integer(purrbation, 0, 1, initial(purrbation))
+=======
+	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
+	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
+	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
+	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
+	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	return 1
 
@@ -231,6 +245,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			<< hotkeys
 	S["tgui_fancy"]			<< tgui_fancy
 	S["tgui_lock"]			<< tgui_lock
+	S["windowflash"]		<< windowflashing
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
@@ -252,7 +267,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 =======
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
+<<<<<<< HEAD
 >>>>>>> masterTGbranch
+=======
+	S["parallax"]			<< parallax
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	return 1
 
@@ -280,8 +299,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in roundstart_species))
-		var/newtype = roundstart_species[species_id]
+	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
+		var/newtype = GLOB.roundstart_species[species_id]
 		pref_species = new newtype()
 	else
 		var/rando_race = pick(config.roundstart_races)
@@ -307,6 +326,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			>> undershirt
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
+	S["uplink_loc"]			>> uplink_spawn_loc
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -327,6 +347,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["cyborg_name"]		>> custom_names["cyborg"]
 	S["religion_name"]		>> custom_names["religion"]
 	S["deity_name"]			>> custom_names["deity"]
+	S["prefered_security_department"] >> prefered_security_department
 
 	//Jobs
 <<<<<<< HEAD
@@ -362,32 +383,33 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
 	if(gender == MALE)
-		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
-		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
-		underwear		= sanitize_inlist(underwear, underwear_m)
-		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
+		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.hair_styles_male_list)
+		underwear		= sanitize_inlist(underwear, GLOB.underwear_m)
+		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_m)
 	else
-		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
-		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
-		underwear		= sanitize_inlist(underwear, underwear_f)
-		undershirt		= sanitize_inlist(undershirt, undershirt_f)
-	socks			= sanitize_inlist(socks, socks_list)
+		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
+		underwear		= sanitize_inlist(underwear, GLOB.underwear_f)
+		undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_f)
+	socks			= sanitize_inlist(socks, GLOB.socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
-	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
-	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
+	skin_tone		= sanitize_inlist(skin_tone, GLOB.skin_tones)
+	backbag			= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
-	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
-	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
-	features["horns"] 	= sanitize_inlist(features["horns"], horns_list)
-	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
-	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
-	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
-	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
+	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
+	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
+	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
+	features["horns"] 	= sanitize_inlist(features["horns"], GLOB.horns_list)
+	features["ears"]	= sanitize_inlist(features["ears"], GLOB.ears_list, "None")
+	features["frills"] 	= sanitize_inlist(features["frills"], GLOB.frills_list)
+	features["spines"] 	= sanitize_inlist(features["spines"], GLOB.spines_list)
+	features["body_markings"] 	= sanitize_inlist(features["body_markings"], GLOB.body_markings_list)
+	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], GLOB.legs_list, "Normal Legs")
 
 <<<<<<< HEAD
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
@@ -436,6 +458,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			<< undershirt
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
+	S["uplink_loc"]			<< uplink_spawn_loc
 	S["species"]			<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
@@ -453,6 +476,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["cyborg_name"]		<< custom_names["cyborg"]
 	S["religion_name"]		<< custom_names["religion"]
 	S["deity_name"]			<< custom_names["deity"]
+	S["prefered_security_department"] << prefered_security_department
 
 	//Jobs
 <<<<<<< HEAD

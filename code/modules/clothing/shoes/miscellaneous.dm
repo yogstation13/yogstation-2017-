@@ -41,12 +41,12 @@
 	name = "magic shoes"
 	icon_state = "black"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	
+
 /obj/item/clothing/shoes/sandal/magic
 	name = "magical sandals"
 	desc = "A pair of sandals imbued with magic"
 	resistance_flags = FIRE_PROOF |  ACID_PROOF
-	
+
 /obj/item/clothing/shoes/galoshes
 	desc = "A pair of yellow rubber boots, designed to prevent slipping on wet surfaces."
 	name = "galoshes"
@@ -228,7 +228,7 @@
 		return
 
 	if(recharging_time > world.time)
-		usr << "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>"
+		to_chat(usr, "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>")
 		return
 
 	var/atom/target = get_edge_target_turf(usr, usr.dir) //gets the user's direction
@@ -236,7 +236,24 @@
 	jumping = TRUE
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
-	usr.throw_at(target,jumpdistance,1, spin=0, diagonals_first = 1)
+	usr.throw_at(target, jumpdistance, 1, spin=0, diagonals_first = 1, callback = CALLBACK(src, .proc/hop_end))
+
+/obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE
 	recharging_time = world.time + recharging_rate
+<<<<<<< HEAD
 >>>>>>> masterTGbranch
+=======
+
+/obj/item/clothing/shoes/singery
+	name = "yellow performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "ysing"
+	put_on_delay = 50
+
+/obj/item/clothing/shoes/singerb
+	name = "blue performer's boots"
+	desc = "These boots were made for dancing."
+	icon_state = "bsing"
+	put_on_delay = 50
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

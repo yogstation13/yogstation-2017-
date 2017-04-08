@@ -10,7 +10,7 @@
 		qdel(attached_hand)
 		charge_counter = charge_max
 		attached_hand = null
-		user << "<span class='notice'>You draw the power out of your hand.</span>"
+		to_chat(user, "<span class='notice'>You draw the power out of your hand.</span>")
 		return 0
 	..()
 
@@ -29,9 +29,9 @@
 		qdel(attached_hand)
 		charge_counter = charge_max
 		attached_hand = null
-		user << "<span class='warning'>Your hands are full!</span>"
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return 0
-	user << "<span class='notice'>You channel the power of the spell to your hand.</span>"
+	to_chat(user, "<span class='notice'>You channel the power of the spell to your hand.</span>")
 	return 1
 
 
@@ -58,6 +58,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
+<<<<<<< HEAD
 	sound = "sound/magic/FleshToStone.ogg"
 
 /obj/effect/proc_holder/spell/targeted/touch/bless
@@ -70,3 +71,6 @@
 	charge_max = 60
 	clothes_req = 0
 	cooldown_min = 30
+=======
+	sound = 'sound/magic/FleshToStone.ogg'
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

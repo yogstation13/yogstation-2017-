@@ -13,9 +13,9 @@
 		if(T.active_hotspot)
 			burning = 1
 
-	usr << "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
+	to_chat(usr, "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>")
 	for(var/id in GM_gases)
-		usr << "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]"
+		to_chat(usr, "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]")
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
@@ -54,12 +54,12 @@
 	set name = "Radio report"
 
 	var/filters = list(
-		"1" = "RADIO_TO_AIRALARM",
-		"2" = "RADIO_FROM_AIRALARM",
-		"3" = "RADIO_CHAT",
-		"4" = "RADIO_ATMOSIA",
-		"5" = "RADIO_NAVBEACONS",
-		"6" = "RADIO_AIRLOCK",
+		"1" = "GLOB.RADIO_TO_AIRALARM",
+		"2" = "GLOB.RADIO_FROM_AIRALARM",
+		"3" = "GLOB.RADIO_CHAT",
+		"4" = "GLOB.RADIO_ATMOSIA",
+		"5" = "GLOB.RADIO_NAVBEACONS",
+		"6" = "GLOB.RADIO_AIRLOCK",
 		"7" = "RADIO_SECBOT",
 		"8" = "RADIO_MULEBOT",
 		"_default" = "NO_FILTER"

@@ -29,8 +29,13 @@ Bonus
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/carbon/M = A.affected_mob
+<<<<<<< HEAD
 		M << "<span class='warning'>[pick("You feel hot.", "You feel like you're burning.")]</span>"
 		if(M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LEVEL_1)
+=======
+		to_chat(M, "<span class='warning'>[pick("You feel hot.", "You feel like you're burning.")]</span>")
+		if(M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			Heat(M, A)
 
 	return

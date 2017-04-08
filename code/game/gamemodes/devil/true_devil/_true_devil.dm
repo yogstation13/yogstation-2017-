@@ -14,11 +14,15 @@
 	ventcrawler = VENTCRAWLER_NONE
 	density = 1
 	pass_flags =  0
-	var/ascended = 0
+	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
+<<<<<<< HEAD
 	status_flags = list(CANPUSH)
 	languages_spoken = ALL //The devil speaks all languages meme
 	languages_understood = ALL
+=======
+	status_flags = CANPUSH
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
@@ -27,27 +31,33 @@
 
 
 
-/mob/living/carbon/true_devil/New()
+/mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 
 	create_internal_organs()
+
+	grant_all_languages(omnitongue=TRUE)
 	..()
 
 /mob/living/carbon/true_devil/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
+<<<<<<< HEAD
 <<<<<<< HEAD:code/game/gamemodes/demon/true_demon/_true_demon.dm
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src, 1)
 =======
 >>>>>>> masterTGbranch:code/game/gamemodes/devil/true_devil/_true_devil.dm
+=======
+	internal_organs += new /obj/item/organ/eyes
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	..()
 
 
 /mob/living/carbon/true_devil/proc/convert_to_archdevil()
 	maxHealth = 5000 // not an IMPOSSIBLE amount, but still near impossible.
-	ascended = 1
+	ascended = TRUE
 	health = maxHealth
 	icon_state = "arch_devil"
 
@@ -88,11 +98,11 @@
 	if(stat == DEAD)
 		msg += "<span class='deadsay'>The hellfire seems to have been extinguished, for now at least.</span>\n"
 	else if(health < (maxHealth/10))
-		msg += "<span class='warning'>You can see hellfire inside of its gaping wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its gaping wounds.</span>\n"
 	else if(health < (maxHealth/2))
-		msg += "<span class='warning'>You can see hellfire inside of its wounds.</span>\n"
+		msg += "<span class='warning'>You can see hellfire inside its wounds.</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)
 
 
 /mob/living/carbon/true_devil/IsAdvancedToolUser()
@@ -164,9 +174,8 @@
 		var/datum/objective/newobjective = new
 		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
 		S.mind.objectives += newobjective
-		S << S.playstyle_string
-		S << "<B>Objective #[1]</B>: [newobjective.explanation_text]"
-		return
+		to_chat(S, S.playstyle_string)
+		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 	else
 		return ..()
 

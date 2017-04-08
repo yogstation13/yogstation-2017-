@@ -18,7 +18,14 @@
 	// Based on the power used
 	var/teleporting = 0
 	var/obj/item/device/gps/inserted_gps
+<<<<<<< HEAD
 	var/last_target
+=======
+
+/obj/machinery/computer/telescience/New()
+	recalibrate()
+	..()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/computer/telescience/Destroy()
 	if(inserted_gps)
@@ -26,16 +33,43 @@
 		inserted_gps = null
 	return ..()
 
+<<<<<<< HEAD
+=======
+/obj/machinery/computer/telescience/examine(mob/user)
+	..()
+	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
+
+/obj/machinery/computer/telescience/Initialize(mapload)
+	..()
+	if(mapload)
+		for(var/i = 1; i <= starting_crystals; i++)
+			crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
+
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "<span class='warning'>You are too primitive to use this computer!</span>"
+	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
+<<<<<<< HEAD
 	if(istype(W, /obj/item/device/gps))
+=======
+	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
+		if(crystals.len >= max_crystals)
+			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
+			return
+		if(!user.drop_item())
+			return
+		crystals += W
+		W.loc = null
+		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
+		updateDialog()
+	else if(istype(W, /obj/item/device/gps))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(!inserted_gps)
+			if(!user.transferItemToLoc(W, src))
+				return
 			inserted_gps = W
-			user.unEquip(W)
-			W.loc = src
 			user.visible_message("[user] inserts [W] into \the [src]'s GPS device slot.", "<span class='notice'>You insert [W] into \the [src]'s GPS device slot.</span>")
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
@@ -46,7 +80,7 @@
 			offset_x = 0
 			offset_y = 0
 			M.buffer = null
-			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 	else
 		return ..()
 

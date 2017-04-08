@@ -168,9 +168,14 @@
 			T.reagents.add_reagent(reagent_id, add_amount, list("blood_type"="O-"), no_react = TRUE)
 			continue
 
+<<<<<<< HEAD
 		T.reagents.add_reagent(reagent_id, add_amount, 1, no_react = TRUE)
 	T.reagents.handle_reactions()
 	return 1
+=======
+			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id],1))
+		return 1
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /// Setters procs ///
@@ -198,7 +203,7 @@
 
 /obj/item/seeds/proc/adjust_production(adjustamt)
 	if(yield != -1)
-		production = Clamp(production + adjustamt, 2, 10)
+		production = Clamp(production + adjustamt, 1, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
@@ -211,13 +216,13 @@
 			C.value = potency
 
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
-	weed_rate = Clamp(weed_rate + adjustamt, 0, 100)
+	weed_rate = Clamp(weed_rate + adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
 /obj/item/seeds/proc/adjust_weed_chance(adjustamt)
-	weed_chance = Clamp(weed_chance + adjustamt, 0, 100)
+	weed_chance = Clamp(weed_chance + adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -248,7 +253,7 @@
 
 /obj/item/seeds/proc/set_production(adjustamt)
 	if(yield != -1)
-		production = Clamp(adjustamt, 2, 10)
+		production = Clamp(adjustamt, 1, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
@@ -261,13 +266,13 @@
 			C.value = potency
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
-	weed_rate = Clamp(adjustamt, 0, 100)
+	weed_rate = Clamp(adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
-	weed_chance = Clamp(adjustamt, 0, 100)
+	weed_chance = Clamp(adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -296,6 +301,12 @@
 	text += "- Weed Vulnerability: [weed_chance]\n"
 	if(rarity)
 		text += "- Species Discovery Value: [rarity]\n"
+	var/all_traits = ""
+	for(var/datum/plant_gene/trait/traits in genes)
+		if(istype(traits, /datum/plant_gene/trait/plant_type))
+			continue
+		all_traits += " [traits.get_name()]"
+	text += "- Plant Traits:[all_traits]\n"
 
 	text += "*---------*"
 
@@ -305,11 +316,16 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
+<<<<<<< HEAD
 	if (is_plant_analyzer(O))
 		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
+=======
+	if (istype(O, /obj/item/device/plant_analyzer))
+		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		var/text = get_analyzer_text()
 		if(text)
-			user << "<span class='notice'>[text]</span>"
+			to_chat(user, "<span class='notice'>[text]</span>")
 
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
@@ -336,14 +352,14 @@
 		for(var/i in 1 to seed.growthstages)
 			if("[seed.icon_grow][i]" in states)
 				continue
-			world << "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!"
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
 
 		if(!(seed.icon_dead in states))
-			world << "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!"
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
 
 		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
 			if(!(seed.icon_harvest in states))
-				world << "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!"
+				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
 
 /obj/item/seeds/proc/randomize_stats()
 	set_lifespan(rand(25, 60))

@@ -6,6 +6,7 @@
 /////////////////////////////////// STUNNED ////////////////////////////////////
 
 /mob/living/silicon/Stun(amount, updating = 1, ignore_canstun = 0)
+<<<<<<< HEAD
 	if((CANSTUN in status_flags) || ignore_canstun)
 		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
@@ -22,10 +23,26 @@
 		stunned = max(amount,0)
 		if(updating)
 			update_stat()
+=======
+	. = ..()
+	if(. && updating)
+		update_stat()
+
+/mob/living/silicon/SetStunned(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(. && updating)
+		update_stat()
+
+/mob/living/silicon/AdjustStunned(amount, updating = 1, ignore_canstun = 0)
+	. = ..()
+	if(. && updating)
+		update_stat()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /////////////////////////////////// WEAKENED ////////////////////////////////////
 
 /mob/living/silicon/Weaken(amount, updating = 1, ignore_canweaken = 0)
+<<<<<<< HEAD
 	if((CANWEAKEN in status_flags) || ignore_canweaken)
 		weakened = max(max(weakened,amount),0)
 		if(updating)
@@ -42,6 +59,21 @@
 		weakened = max(amount,0)
 		if(updating)
 			update_stat()
+=======
+	. = ..()
+	if(. && updating)
+		update_stat()
+
+/mob/living/silicon/SetWeakened(amount, updating = 1, ignore_canweaken = 0)
+	. = ..()
+	if(. && updating)
+		update_stat()
+
+/mob/living/silicon/AdjustWeakened(amount, updating = 1, ignore_canweaken = 0)
+	. = ..()
+	if(. && updating)
+		update_stat()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /////////////////////////////////// EAR DAMAGE ////////////////////////////////////
 

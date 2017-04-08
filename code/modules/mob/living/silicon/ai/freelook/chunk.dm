@@ -114,12 +114,17 @@
 		var/turf/t = turf
 		if(obscuredTurfs[t])
 			if(!t.obscured)
+<<<<<<< HEAD
 				t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
 <<<<<<< HEAD
 				t.obscured.plane = PLANE_AI_STATIC
 =======
 >>>>>>> masterTGbranch
 
+=======
+				t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+				t.obscured.plane = LIGHTING_PLANE+1
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
@@ -173,8 +178,14 @@
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
 		if(!t.obscured)
+<<<<<<< HEAD
 			t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
 			t.obscured.plane = PLANE_AI_STATIC
+=======
+			t.obscured = image('icons/effects/cameravis.dmi', t, null, LIGHTING_LAYER+1)
+			t.obscured.plane = LIGHTING_PLANE+1
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER
+#undef CHUNK_SIZE

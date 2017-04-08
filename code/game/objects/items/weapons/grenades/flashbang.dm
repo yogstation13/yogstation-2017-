@@ -19,11 +19,14 @@
 	qdel(src)
 
 /obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
+	if(M.stat == DEAD)	//They're dead!
+		return
 	M.show_message("<span class='warning'>BANG</span>", 2)
 	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash
+<<<<<<< HEAD
 <<<<<<< HEAD
 	if(M.flash_eyes(affect_silicon = 1))
 		if(M.weakeyes)
@@ -44,6 +47,9 @@
 		M.Stun(15)
 		M.adjust_eye_damage(8)
 	else if(M.flash_act(affect_silicon = 1))
+=======
+	if(M.flash_act(affect_silicon = 1))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		M.Stun(max(10/max(1,distance), 3))
 		M.Weaken(max(10/max(1,distance), 3))
 >>>>>>> masterTGbranch

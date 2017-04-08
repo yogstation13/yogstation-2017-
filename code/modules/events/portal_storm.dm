@@ -7,8 +7,13 @@
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
+<<<<<<< HEAD
 	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 3,\
 						/mob/living/simple_animal/hostile/syndicate/ranged/space = 1)
+=======
+	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
+						/mob/living/simple_animal/hostile/syndicate/ranged/space = 2)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
@@ -50,14 +55,14 @@
 	for(var/hostile in hostile_types)
 		number_of_hostiles += hostile_types[hostile]
 
-	var/list/b_spawns = generic_event_spawns.Copy()
+	var/list/b_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_bosses > boss_spawn.len)
 		var/turf/F = get_turf(pick_n_take(b_spawns))
 		if(!F)
 			F = safepick(get_area_turfs(pick(station_areas)))
 		boss_spawn += F
 
-	var/list/h_spawns = generic_event_spawns.Copy()
+	var/list/h_spawns = GLOB.generic_event_spawns.Copy()
 	while(number_of_hostiles > hostiles_spawn.len)
 		var/turf/T = get_turf(pick_n_take(h_spawns))
 		if(!T)

@@ -7,6 +7,7 @@
 	var/mob/living/carbon/human/patient = null
 	var/obj/structure/table/optable/table = null
 
+<<<<<<< HEAD
 	var/menu = 1 // one is the standard surgery set up two is scanning cubicles, implant cases, and possibly diskettes, three is database.
 	var/list/implants = list(
 		/obj/item/weapon/implant/mindshield,
@@ -31,9 +32,13 @@
 	var/lastscan
 
 
+=======
+	light_color = LIGHT_COLOR_BLUE
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
-/obj/machinery/computer/operating/New()
+/obj/machinery/computer/operating/Initialize()
 	..()
+<<<<<<< HEAD
 	if(ticker)
 		find_table()
 
@@ -69,10 +74,12 @@
 	implants += /obj/item/weapon/implant/chem
 
 /obj/machinery/computer/operating/initialize()
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/dir in cardinal)
+	for(var/dir in GLOB.cardinal)
 		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)
 			table.computer = src
@@ -155,6 +162,7 @@
 			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
 			dat += "Next step: [capitalize(surgery_step.name)]<BR>"
 		dat += "</div>"
+<<<<<<< HEAD
 
 	dat += "<BR><BR><B> Implants discovered in the patient:</B><BR>"
 	var/implantcheck
@@ -347,3 +355,6 @@
 		else
 			dat += "<BR>[A3.name]"
 	return dat
+=======
+	return dat
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

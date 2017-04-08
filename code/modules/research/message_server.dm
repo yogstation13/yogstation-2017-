@@ -1,4 +1,4 @@
-var/global/list/obj/machinery/message_server/message_servers = list()
+GLOBAL_LIST_INIT(message_servers, list())
 
 /datum/data_pda_msg
 	var/recipient = "Unspecified" //name of the person
@@ -79,14 +79,14 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/decryptkey = "password"
 
 /obj/machinery/message_server/New()
-	message_servers += src
+	GLOB.message_servers += src
 	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
 	..()
 	return
 
 /obj/machinery/message_server/Destroy()
-	message_servers -= src
+	GLOB.message_servers -= src
 	return ..()
 
 /obj/machinery/message_server/proc/GenerateKey()
@@ -114,7 +114,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(mob/user)
-	user << "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]"
+	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
 
@@ -130,68 +130,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 	return
 
-
-/datum/feedback_variable
-	var/variable
-	var/value
-	var/details
-
-/datum/feedback_variable/New(var/param_variable,var/param_value = 0)
-	variable = param_variable
-	value = param_value
-
-/datum/feedback_variable/proc/inc(num = 1)
-	if (isnum(value))
-		value += num
-	else
-		value = text2num(value)
-		if (isnum(value))
-			value += num
-		else
-			value = num
-
-/datum/feedback_variable/proc/dec(num = 1)
-	if (isnum(value))
-		value -= num
-	else
-		value = text2num(value)
-		if (isnum(value))
-			value -= num
-		else
-			value = -num
-
-/datum/feedback_variable/proc/set_value(num)
-	if (isnum(num))
-		value = num
-
-/datum/feedback_variable/proc/get_value()
-	if (!isnum(value))
-		return 0
-	return value
-
-/datum/feedback_variable/proc/get_variable()
-	return variable
-
-/datum/feedback_variable/proc/set_details(text)
-	if (istext(text))
-		details = text
-
-/datum/feedback_variable/proc/add_details(text)
-	if (istext(text))
-		text = replacetext(text, " ", "_")
-		if (!details)
-			details = text
-		else
-			details += " [text]"
-
-/datum/feedback_variable/proc/get_details()
-	return details
-
-/datum/feedback_variable/proc/get_parsed()
-	return list(variable,value,details)
-
-var/obj/machinery/blackbox_recorder/blackbox
-
 /obj/machinery/blackbox_recorder
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackbox"
@@ -202,6 +140,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	idle_power_usage = 10
 	active_power_usage = 100
 	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+<<<<<<< HEAD
 	var/list/messages = list()		//Stores messages of non-standard frequencies
 	var/list/messages_admin = list()
 
@@ -393,3 +332,5 @@ var/obj/machinery/blackbox_recorder/blackbox
 	if (!FV) return
 
 	FV.add_details(details)
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

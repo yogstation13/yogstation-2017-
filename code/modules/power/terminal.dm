@@ -53,25 +53,30 @@
 	if(isturf(loc))
 		var/turf/T = loc
 		if(T.intact)
-			user << "<span class='warning'>You must first expose the power terminal!</span>"
+			to_chat(user, "<span class='warning'>You must first expose the power terminal!</span>")
 			return
 
-		if(master && master.can_terminal_dismantle())
+		if(!master || master.can_terminal_dismantle())
 			user.visible_message("[user.name] dismantles the power terminal from [master].", \
 								"<span class='notice'>You begin to cut the cables...</span>")
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50*W.toolspeed, target = src))
-				if(master && master.can_terminal_dismantle())
-					if(prob(50) && electrocute_mob(user, powernet, src))
+				if(!master || master.can_terminal_dismantle())
+					if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
 						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 						s.set_up(5, 1, master)
 						s.start()
 						return
+<<<<<<< HEAD
 					var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 10)
 					CC.item_color = wiring_color
 					CC.update_icon()
 					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
+=======
+					new /obj/item/stack/cable_coil(loc, 10)
+					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					qdel(src)
 
 

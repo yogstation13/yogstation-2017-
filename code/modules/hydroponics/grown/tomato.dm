@@ -81,6 +81,10 @@
 	mutatelist = list()
 	reagents_add = list("lube" = 0.4, "singulo" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
+<<<<<<< HEAD
+=======
+	reagents_add = list("lube" = 0.2, "bluespace" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	rarity = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
@@ -119,18 +123,18 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
-		user << "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>"
+		to_chat(user, "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>")
 		return
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
 	if(awakening || isspaceturf(user.loc))
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
+	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
 	awakening = 1
 
 	spawn(30)
-		if(!qdeleted(src))
+		if(!QDELETED(src))
 			var/mob/living/simple_animal/hostile/killertomato/K = new /mob/living/simple_animal/hostile/killertomato(get_turf(src.loc))
 			K.maxHealth += round(seed.endurance / 3)
 			K.melee_damage_lower += round(seed.potency / 10)
@@ -138,8 +142,11 @@
 			K.move_to_delay -= round(seed.production / 50)
 			K.health = K.maxHealth
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
+<<<<<<< HEAD
 			if(user)
 				user.unEquip(src)
 				user.attack_log += "\[[time_stamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
 				K.spawnedBy = "[user.real_name]([user.ckey])"
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			qdel(src)

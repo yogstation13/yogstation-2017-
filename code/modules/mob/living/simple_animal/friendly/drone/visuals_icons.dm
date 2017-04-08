@@ -7,14 +7,15 @@
 
 
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
-	var/image/I = drone_overlays[cache_index]
+	var/I = drone_overlays[cache_index]
 	if(I)
 		add_overlay(I)
 
 
 /mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
-	if(drone_overlays[cache_index])
-		overlays -= drone_overlays[cache_index]
+	var/I = drone_overlays[cache_index]
+	if(I)
+		cut_overlay(I)
 		drone_overlays[cache_index] = null
 
 
@@ -150,7 +151,7 @@
 	staticOverlays.len = 0
 
 	if(seeStatic)
-		for(var/mob/living/L in mob_list)
+		for(var/mob/living/L in GLOB.mob_list)
 			if(isdrone(L))
 				continue
 			var/image/chosen

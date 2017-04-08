@@ -1,4 +1,4 @@
-#define MC_TICK_CHECK ( world.tick_usage > CURRENT_TICKLIMIT ? pause() : 0 )
+#define MC_TICK_CHECK ( ( world.tick_usage > GLOB.CURRENT_TICKLIMIT || src.state != SS_RUNNING ) ? pause() : 0 )
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
@@ -45,5 +45,29 @@
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
 
+<<<<<<< HEAD
 //Timing subsystem
 #define GLOBAL_PROC	"some_magic_bullshit"
+=======
+//SUBSYSTEM STATES
+#define SS_IDLE 0		//aint doing shit.
+#define SS_QUEUED 1		//queued to run
+#define SS_RUNNING 2	//actively running
+#define SS_PAUSED 3		//paused by mc_tick_check
+#define SS_SLEEPING 4	//fire() slept.
+#define SS_PAUSING 5 	//in the middle of pausing
+
+#define SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/##X);\
+/datum/controller/subsystem/##X/New(){\
+    NEW_SS_GLOBAL(SS##X);\
+    PreInit();\
+}\
+/datum/controller/subsystem/##X
+
+#define PROCESSING_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/processing/##X);\
+/datum/controller/subsystem/processing/##X/New(){\
+    NEW_SS_GLOBAL(SS##X);\
+    PreInit();\
+}\
+/datum/controller/subsystem/processing/##X
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

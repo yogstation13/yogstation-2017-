@@ -20,6 +20,7 @@
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
+	feedback_add_details("changeling_powers","[type]")
 	return
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
@@ -54,23 +55,33 @@
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
-		user << "<span class='warning'>We cannot do that in this form!</span>"
+		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
 	var/datum/changeling/c = user.mind.changeling
 	if(c.chem_charges < chemical_cost)
-		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
+		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0
+<<<<<<< HEAD
 	if(c.profilecount<req_dna)
 		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
+=======
+	if(c.absorbedcount < req_dna)
+		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	if(req_stat < user.stat)
-		user << "<span class='warning'>We are incapacitated.</span>"
+		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
+<<<<<<< HEAD
 	if((FAKEDEATH in user.status_flags) && (!ignores_fakedeath))
 		user << "<span class='warning'>We are incapacitated.</span>"
+=======
+	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
+		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	if(c.geneticdamage > max_genetic_damage)
-		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
+		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")
 		return 0
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -81,6 +92,8 @@
 
 //used in /mob/Stat()
 /obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
+	if(!user || QDELETED(user))
+		return 0
 	if(!ishuman(user) && !ismonkey(user))
 		return 0
 	if(req_human && !ishuman(user))

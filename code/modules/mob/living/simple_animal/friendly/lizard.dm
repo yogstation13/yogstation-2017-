@@ -75,5 +75,6 @@
 			last_health_increase = world.time
 			search_objects = 0
 		adjustBruteLoss(-2)
+		return TRUE
 	else
-		..()
+		return ..()

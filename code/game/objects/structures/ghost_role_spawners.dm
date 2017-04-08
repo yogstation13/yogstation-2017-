@@ -30,7 +30,7 @@
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
-	..()
+	return ..()
 
 //Ash walker eggs: Spawns in ash walker dens in lavaland. Ghosts become unbreathing lizards that worship the Necropolis and are advised to retrieve corpses to create more ash walkers.
 /obj/effect/mob_spawn/human/ash_walker
@@ -51,8 +51,12 @@
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
+<<<<<<< HEAD
 	new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
 	new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
+=======
+	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -67,7 +71,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 
 /obj/effect/mob_spawn/human/ash_walker/chief
 	name = "chief ashwalker egg"
@@ -106,20 +110,20 @@
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
-	..()
+	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
 	new_spawn.real_name = "Wish Granter's Victim ([rand(0,999)])"
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
-			new_spawn << "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
+			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
 		if(2)
-			new_spawn << "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
+			to_chat(new_spawn, "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>")
 		if(3)
-			new_spawn << "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
+			to_chat(new_spawn, "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>")
 		if(4)
-			new_spawn << "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
+			to_chat(new_spawn, "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>")
 
 //Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
 /obj/effect/mob_spawn/human/golem
@@ -138,40 +142,24 @@
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
 	golems, so that no golem may ever be forced to serve again.</b>"
 
-/obj/effect/mob_spawn/human/golem/New()
+/obj/effect/mob_spawn/human/golem/New(loc, datum/species/golem/species = null, has_owner = FALSE, mob/creator = null)
 	..()
+	if(species)
+		name += " ([initial(species.prefix)])"
+		mob_species = species
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
-	spawn(1)//give it time to get an owner
-		if(owner)
-			flavour_text = "You are a golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
-			Serve [owner], and assist [owner.p_them()] in completing their goals at any cost."
+		notify_ghosts("\A [initial(species.id)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	if(has_owner && creator)
+		flavour_text = "You are a golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. \
+		Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
+		owner = creator
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
 	var/datum/species/golem/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
-	new_spawn << "[initial(X.info_text)]"
+	to_chat(new_spawn, "[initial(X.info_text)]")
 	if(!owner)
-		new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 	else
 		new_spawn.mind.store_memory("<b>Serve [owner.real_name], your creator.</b>")
 		new_spawn.mind.enslave_mind_to_creator(owner)
@@ -180,6 +168,7 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
+		H.real_name = H.dna.species.random_name()
 
 /obj/effect/mob_spawn/human/golem/adamantine
 	name = "dust-caked golem shell"
@@ -239,7 +228,7 @@
 
 /obj/effect/mob_spawn/human/hermit/Destroy()
 	new/obj/structure/fluff/empty_cryostasis_sleeper(get_turf(src))
-	..()
+	return ..()
 
 //Broken rejuvenation pod: Spawns in animal hospitals in lavaland. Ghosts become disoriented interns and are advised to search for help.
 /obj/effect/mob_spawn/human/doctor/alive/lavaland
@@ -284,7 +273,7 @@
 
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	..()
+	return ..()
 
 //Space Hotel Staff
 /obj/effect/mob_spawn/human/hotel_staff //not free antag u little shits

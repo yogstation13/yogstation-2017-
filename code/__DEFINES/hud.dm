@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // for secHUDs and medHUDs and variants. The number is the location of the image on the list hud_list
 // note: if you add more HUDs, even for non-human atoms, make sure to use unique numbers for the defines!
 // /datum/atom_hud expects these to be unique
@@ -50,3 +51,11 @@
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
+=======
+//HUD styles.  Index order defines how they are cycled in F12.
+#define HUD_STYLE_STANDARD 1 //Standard hud
+#define HUD_STYLE_REDUCED 2 //Reduced hud (just hands and intent switcher)
+#define HUD_STYLE_NOHUD 3 //No hud (for screenshots)
+
+#define HUD_VERSIONS 3	//Used in show_hud(); Please ensure this is the same as the maximum index.
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

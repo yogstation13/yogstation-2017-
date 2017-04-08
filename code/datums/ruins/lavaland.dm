@@ -1,3 +1,5 @@
+// Hey! Listen! Update \config\lavaruinblacklist.txt with your new ruins!
+
 /datum/map_template/ruin/lavaland
 	prefix = "_maps/RandomRuins/LavaRuins/"
 
@@ -36,15 +38,6 @@
 	description = "Nothing good can come from this. Learn from their mistakes and turn around."
 	suffix = "lavaland_surface_cube.dmm"
 	cost = 10
-	allow_duplicates = FALSE
-
-/datum/map_template/ruin/lavaland/prisoners
-	name = "Prisoner Crash"
-	id = "prisoner-crash"
-	description = "This incredibly high security shuttle clearly didn't have 'avoiding lavafilled hellscapes' as a design priority. \
-	As such, it has crashed, waking the prisoners from their cryostasis, and setting them loose on the wastes. If they live long enough, that is."
-	suffix = "lavaland_surface_prisoner_crash.dmm"
-	cost = 15
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/seed_vault
@@ -211,7 +204,7 @@
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"
-	description = "A huge fucking bird priest awaits you in this arena."
+	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
 	cost = 0
 	allow_duplicates = FALSE

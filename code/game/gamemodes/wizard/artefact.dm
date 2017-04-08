@@ -26,7 +26,7 @@
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
-		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
+		to_chat(user, "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>")
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
@@ -114,7 +114,7 @@
 	hitsound = 'sound/items/welder2.ogg'
 
 /obj/item/weapon/scrying/attack_self(mob/user)
-	user << "<span class='notice'>You can see...everything!</span>"
+	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
@@ -143,24 +143,34 @@
 	if(!istype(user) || !user.canUseTopic(M,1))
 		return
 
+<<<<<<< HEAD
 	if(M.stat == CONSCIOUS)
 		user << "<span class='warning'>Kill or maim the victim first!</span>"
+=======
+	if(M.stat != DEAD)
+		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 
 	if(!M.mind || !M.client)
-		user << "<span class='warning'>There is no soul connected to this body...</span>"
+		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
 	check_spooky()//clean out/refresh the list
+<<<<<<< HEAD
 	if(spooky_scaries.len >= max_spookies && !unlimited)
 		user << "<span class='warning'>This artifact can only affect [max_spookies] thralls at a time!</span>"
+=======
+	if(spooky_scaries.len >= 3 && !unlimited)
+		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
-	M << "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>"
-	M << "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>"
+	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
+	to_chat(M, "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>")
 
 	equip_roman_skeleton(M)
 
@@ -183,7 +193,7 @@
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
 /obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
-		H.unEquip(I)
+		H.dropItemToGround(I)
 
 	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
 	H.equip_to_slot_or_del(new hat(H), slot_head)
@@ -212,7 +222,6 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/bonespear(H), slot_back)
 
 /////////////////////Multiverse Blade////////////////////
-var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword
 	name = "multiverse sword"
@@ -231,10 +240,11 @@ var/global/list/multiverse = list()
 	var/faction = list("unassigned")
 	var/cooldown = 0
 	var/assigned = "unassigned"
+	var/static/list/multiverse = list()
 
 /obj/item/weapon/multisword/New()
 	..()
-	multiverse |= src
+	multiverse += src
 
 
 /obj/item/weapon/multisword/Destroy()
@@ -243,7 +253,7 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
-		user << "<span class='warning'>You know better than to touch your teacher's stuff.</span>"
+		to_chat(user, "<span class='warning'>You know better than to touch your teacher's stuff.</span>")
 		return
 	if(cooldown < world.time)
 		var/faction_check = 0
@@ -255,36 +265,36 @@ var/global/list/multiverse = list()
 			faction = list("[user.real_name]")
 			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
-			user << "You bind the sword to yourself. You can now use it to summon help."
+			to_chat(user, "You bind the sword to yourself. You can now use it to summon help.")
 			if(!is_gangster(user))
 				var/datum/gang/multiverse/G = new(src, "[user.real_name]")
-				ticker.mode.gangs += G
+				SSticker.mode.gangs += G
 				G.bosses += user.mind
 				G.add_gang_hud(user.mind)
 				user.mind.gang_datum = G
-				user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
+				to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")
 				var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 				hijack_objective.owner = user.mind
 				user.mind.objectives += hijack_objective
 				hijack_objective.explanation_text = "Ensure only [user.real_name] and their copies are on the shuttle!"
-				user << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
-				ticker.mode.traitors += user.mind
+				to_chat(user, "<B>Objective #[1]</B>: [hijack_objective.explanation_text]")
+				SSticker.mode.traitors += user.mind
 				user.mind.special_role = "[user.real_name] Prime"
 		else
 			var/list/candidates = get_candidates(ROLE_WIZARD)
 			if(candidates.len)
 				var/client/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
-				user << "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>"
+				to_chat(user, "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>")
 				cooldown = world.time + 400
 				for(var/obj/item/weapon/multisword/M in multiverse)
 					if(M.assigned == assigned)
 						M.cooldown = cooldown
 
 			else
-				user << "You fail to summon any copies of yourself. Perhaps you should try again in a bit."
+				to_chat(user, "You fail to summon any copies of yourself. Perhaps you should try again in a bit.")
 	else
-		user << "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>"
+		to_chat(user, "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>")
 
 
 /obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T, mob/user)
@@ -292,16 +302,16 @@ var/global/list/multiverse = list()
 	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
 	M.mind.name = user.real_name
-	M << "<B>You are an alternate version of [user.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
-	ticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
+	to_chat(M, "<B>You are an alternate version of [user.real_name] from another universe! Help them accomplish their goals at all costs.</B>")
+	SSticker.mode.add_gangster(M.mind, user.mind.gang_datum, FALSE)
 	M.real_name = user.real_name
 	M.name = user.real_name
 	M.faction = list("[user.real_name]")
 	if(prob(50))
 		var/list/all_species = list()
 		for(var/speciestype in subtypesof(/datum/species))
-			var/datum/species/S = new speciestype()
-			if(!S.dangerous_existence)
+			var/datum/species/S = speciestype
+			if(!initial(S.dangerous_existence))
 				all_species += speciestype
 		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()
@@ -339,7 +349,7 @@ var/global/list/multiverse = list()
 		if("wizard")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/red(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
 			M.put_in_hands_or_del(sword)
@@ -453,7 +463,7 @@ var/global/list/multiverse = list()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
-	W.access += access_maint_tunnels
+	W.access += GLOB.access_maint_tunnels
 	W.assignment = "Multiverse Traveller"
 	W.registered_name = M.real_name
 	W.update_label(M.real_name)
@@ -478,15 +488,20 @@ var/global/list/multiverse = list()
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
 		if(I.is_hot())
-			target << "<span class='userdanger'>You suddenly feel very hot</span>"
+			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
 			target.bodytemperature += 50
 			GiveHint(target)
 		else if(is_pointed(I))
-			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
+			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Weaken(2)
 			GiveHint(target)
+<<<<<<< HEAD
 		else if(istype(I,/obj/item/device/assembly/bikehorn))
 			target << "<span class='userdanger'>HONK</span>"
+=======
+		else if(istype(I,/obj/item/weapon/bikehorn))
+			to_chat(target, "<span class='userdanger'>HONK</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			target << 'sound/items/AirHorn.ogg'
 			target.adjustEarDamage(0,3)
 			GiveHint(target)
@@ -498,7 +513,7 @@ var/global/list/multiverse = list()
 			user.drop_item()
 			I.loc = src
 			link = I
-			user << "You attach [I] to the doll."
+			to_chat(user, "You attach [I] to the doll.")
 			update_targets()
 
 /obj/item/voodoo/check_eye(mob/user)
@@ -515,7 +530,7 @@ var/global/list/multiverse = list()
 		if(link)
 			target = null
 			link.loc = get_turf(src)
-			user << "<span class='notice'>You remove the [link] from the doll.</span>"
+			to_chat(user, "<span class='notice'>You remove the [link] from the doll.</span>")
 			link = null
 			update_targets()
 			return
@@ -533,24 +548,16 @@ var/global/list/multiverse = list()
 					user.reset_perspective(null)
 					user.unset_machine()
 			if("r_leg","l_leg")
-				user << "<span class='notice'>You move the doll's legs around.</span>"
-				var/turf/T = get_step(target,pick(cardinal))
+				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
+				var/turf/T = get_step(target,pick(GLOB.cardinal))
 				target.Move(T)
 			if("r_arm","l_arm")
-				//use active hand on random nearby mob
-				var/list/nearby_mobs = list()
-				for(var/mob/living/L in range(1, target))
-					if(L!=target)
-						nearby_mobs |= L
-				if(nearby_mobs.len)
-					var/mob/living/T = pick(nearby_mobs)
-					log_game("[user][user.key] made [target][target.key] click on [T] with a voodoo doll.")
-					target.ClickOn(T)
-					GiveHint(target)
+				target.click_random_mob()
+				GiveHint(target)
 			if("head")
-				user << "<span class='notice'>You smack the doll's head with your hand.</span>"
+				to_chat(user, "<span class='notice'>You smack the doll's head with your hand.</span>")
 				target.Dizzy(10)
-				target << "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>"
+				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
 				GiveHint(target,user)
 		cooldown = world.time + cooldown_time
 
@@ -558,17 +565,17 @@ var/global/list/multiverse = list()
 	possible = list()
 	if(!link)
 		return
-	for(var/mob/living/carbon/human/H in living_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(md5(H.dna.uni_identity) in link.fingerprints)
 			possible |= H
 
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
 	if(prob(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
-		victim << "<span class='notice'>You feel a dark presence from [way]</span>"
+		to_chat(victim, "<span class='notice'>You feel a dark presence from [way]</span>")
 	if(prob(20) || force)
 		var/area/A = get_area(src)
-		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
+		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
 /obj/item/voodoo/fire_act(exposed_temperature, exposed_volume)
 	if(target)
@@ -739,7 +746,7 @@ var/global/list/multiverse = list()
 	var/mob/living/carbon/last_user
 
 /obj/item/warpwhistle/proc/interrupted(mob/living/carbon/user)
-	if(!user || qdeleted(src))
+	if(!user || QDELETED(src))
 		on_cooldown = FALSE
 		return TRUE
 	return FALSE
@@ -752,7 +759,7 @@ var/global/list/multiverse = list()
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/WarpWhistle.ogg', 200, 1)
 	user.canmove = 0
-	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
+	new /obj/effect/overlay/temp/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return
@@ -770,7 +777,7 @@ var/global/list/multiverse = list()
 			T = potential_T
 			break
 		breakout += 1
-	PoolOrNew(/obj/effect/overlay/temp/tornado,T)
+	new /obj/effect/overlay/temp/tornado(T)
 	sleep(20)
 	if(interrupted(user))
 		return

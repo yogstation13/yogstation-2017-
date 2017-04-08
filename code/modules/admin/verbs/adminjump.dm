@@ -1,9 +1,9 @@
-/client/proc/jumptoarea(area/A in sortedAreas)
+/client/proc/jumptoarea(area/A in GLOB.sortedAreas)
 	set name = "Jump to Area"
 	set desc = "Area to jump to"
 	set category = "Admin"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(!A)
@@ -18,7 +18,7 @@
 
 	var/turf/T = safepick(turfs)
 	if(!T)
-		src << "Nowhere to jump to!"
+		to_chat(src, "Nowhere to jump to!")
 		return
 	usr.forceMove(T)
 	log_admin("[key_name(usr)] jumped to [A]")
@@ -29,7 +29,7 @@
 	set name = "Jump to Turf"
 	set category = "Admin"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
@@ -38,12 +38,12 @@
 	feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/client/proc/jumptomob(mob/M in mob_list)
+/client/proc/jumptomob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Jump to Mob"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	log_admin("[key_name(usr)] jumped to [key_name(M)]")
@@ -55,14 +55,14 @@
 			feedback_add_details("admin_verb","JM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			A.forceMove(M.loc)
 		else
-			A << "This mob is not located in the game world."
+			to_chat(A, "This mob is not located in the game world.")
 
 /client/proc/jumptocoord(tx as num, ty as num, tz as num)
 	set category = "Admin"
 	set name = "Jump to Coordinate"
 
 	if (!holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	if(src.mob)
@@ -78,15 +78,15 @@
 	set name = "Jump to Key"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	var/list/keys = list()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		keys += M.client
 	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
-		src << "No keys found."
+		to_chat(src, "No keys found.")
 		return
 	var/mob/M = selection:mob
 	log_admin("[key_name(usr)] jumped to [key_name(M)]")
@@ -96,12 +96,12 @@
 
 	feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/Getmob(mob/M in mob_list)
+/client/proc/Getmob(mob/M in GLOB.mob_list)
 	set category = "Admin"
 	set name = "Get Mob"
 	set desc = "Mob to teleport"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	log_admin("[key_name(usr)] teleported [key_name(M)]")
@@ -115,11 +115,11 @@
 	set desc = "Key to teleport"
 
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
 
 	var/list/keys = list()
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		keys += M.client
 	var/selection = input("Please, select a player!", "Admin Jumping", null, null) as null|anything in sortKey(keys)
 	if(!selection)
@@ -139,14 +139,14 @@
 	set category = "Admin"
 	set name = "Send Mob"
 	if(!src.holder)
-		src << "Only administrators may use this command."
+		to_chat(src, "Only administrators may use this command.")
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas|null
+	var/area/A = input(usr, "Pick an area.", "Pick an area") in GLOB.sortedAreas|null
 	if(A && istype(A))
 		if(M.forceMove(safepick(get_area_turfs(A))))
 
 			log_admin("[key_name(usr)] teleported [key_name(M)] to [A]")
 			message_admins("[key_name_admin(usr)] teleported [key_name_admin(M)] to [A]")
 		else
-			src << "Failed to move mob to a valid location."
+			to_chat(src, "Failed to move mob to a valid location.")
 		feedback_add_details("admin_verb","SMOB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

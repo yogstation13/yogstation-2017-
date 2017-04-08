@@ -17,7 +17,7 @@
 	var/noserver = "<span class='alert'>ALERT: No server detected.</span>"
 	var/incorrectkey = "<span class='warning'>ALERT: Incorrect decryption key!</span>"
 	var/defaultmsg = "<span class='notice'>Welcome. Please select an option.</span>"
-	var/rebootmsg = "<span class='warning'>%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
+	var/rebootmsg = "<span class='warning'>%$&(ï¿½: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!</span>"
 	//Computer properties
 	var/screen = 0 		// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/hacking = 0		// Is it being hacked into by the AI/Cyborg
@@ -30,10 +30,12 @@
 	var/customjob		= "Admin"
 	var/custommessage 	= "This is a test, please ignore."
 
+	light_color = LIGHT_COLOR_GREEN
+
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user, params)
 	if(istype(O, /obj/item/weapon/screwdriver) && emagged)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
-		user << "<span class='warning'>It is too hot to mess with!</span>"
+		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
 		return ..()
 
@@ -47,19 +49,19 @@
 			var/obj/item/weapon/paper/monitorkey/MK = new/obj/item/weapon/paper/monitorkey
 			MK.loc = src.loc
 			// Will help make emagging the console not so easy to get away with.
-			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
+			MK.info += "<br><br><font color='red'>ï¿½%@%(*$%&(ï¿½&?*(%&ï¿½/{}</font>"
 			var/time = 100 * length(src.linkedServer.decryptkey)
-			addtimer(src, "UnmagConsole", time)
+			addtimer(CALLBACK(src, .proc/UnmagConsole), time)
 			message = rebootmsg
 		else
-			user << "<span class='notice'>A no server error appears on the screen.</span>"
+			to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
-/obj/machinery/computer/message_monitor/initialize()
+/obj/machinery/computer/message_monitor/Initialize()
+	..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
-		if(message_servers && message_servers.len > 0)
-			linkedServer = message_servers[1]
-	return
+		if(GLOB.message_servers && GLOB.message_servers.len > 0)
+			linkedServer = GLOB.message_servers[1]
 
 /obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())
@@ -225,10 +227,10 @@
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
-		user << "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>"
+		to_chat(user, "<span class='warning'>Could not complete brute-force: Linked Server Disconnected!</span>")
 	else
 		var/currentKey = src.linkedServer.decryptkey
-		user << "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>"
+		to_chat(user, "<span class='warning'>Brute-force completed! The key is '[currentKey]'.</span>")
 	src.hacking = 0
 	src.screen = 0 // Return the screen back to normal
 
@@ -267,11 +269,11 @@
 			if(auth) linkedServer.active = !linkedServer.active
 		//Find a server
 		if (href_list["find"])
-			if(message_servers && message_servers.len > 1)
-				src.linkedServer = input(usr,"Please select a server.", "Select a server.", null) as null|anything in message_servers
+			if(GLOB.message_servers && GLOB.message_servers.len > 1)
+				src.linkedServer = input(usr,"Please select a server.", "Select a server.", null) as null|anything in GLOB.message_servers
 				message = "<span class='alert'>NOTICE: Server selected.</span>"
-			else if(message_servers && message_servers.len > 0)
-				linkedServer = message_servers[1]
+			else if(GLOB.message_servers && GLOB.message_servers.len > 0)
+				linkedServer = GLOB.message_servers[1]
 				message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
 			else
 				message = noserver
@@ -374,7 +376,7 @@
 					if("Recepient")
 						//Get out list of viable PDAs
 						var/list/obj/item/device/pda/sendPDAs = get_viewable_pdas()
-						if(PDAs && PDAs.len > 0)
+						if(GLOB.PDAs && GLOB.PDAs.len > 0)
 							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
 						else
 							customrecepient = null
@@ -414,6 +416,7 @@
 								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
+<<<<<<< HEAD
 									H << "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)"
 <<<<<<< HEAD
 								log_pda("[usr.real_name]/([usr.ckey]) (PDA: [customsender])([customjob]) sent \"[custommessage]\" to [customrecepient.owner]")
@@ -421,6 +424,9 @@
 								customrecepient.overlays.Cut()
 								customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
 =======
+=======
+									to_chat(H, "\icon[customrecepient] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 								log_pda("[usr]/([usr.ckey]) (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
@@ -434,6 +440,7 @@
 								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
 								if( customrecepient.loc && ishuman(customrecepient.loc) )
 									var/mob/living/carbon/human/H = customrecepient.loc
+<<<<<<< HEAD
 									H << "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)"
 <<<<<<< HEAD
 								log_pda("[usr.real_name]/([usr.ckey]) (PDA: [PDARec.owner]([customjob])) sent \"[custommessage]\" to [customrecepient.owner]")
@@ -441,6 +448,9 @@
 								customrecepient.overlays.Cut()
 								customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
 =======
+=======
+									to_chat(H, "\icon[customrecepient] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 								log_pda("[usr]/([usr.ckey]) (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
 								customrecepient.cut_overlays()
 								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
@@ -470,8 +480,8 @@
 /obj/item/weapon/paper/monitorkey/New()
 	..()
 	spawn(10)
-		if(message_servers)
-			for(var/obj/machinery/message_server/server in message_servers)
+		if(GLOB.message_servers)
+			for(var/obj/machinery/message_server/server in GLOB.message_servers)
 				if(!isnull(server))
 					if(!isnull(server.decryptkey))
 						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."

@@ -12,6 +12,7 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
+	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -58,6 +59,7 @@
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
+<<<<<<< HEAD
 	switch(Proj.damage_type)
 		if(BRUTE)
 			adjustHealth(Proj.damage)
@@ -68,6 +70,12 @@
 				adjustHealth(Proj.damage)
 			else
 				visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+=======
+	if(prob(50))
+		return ..()
+	else
+		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 
 
@@ -79,9 +87,6 @@
 	name = "Syndicate Commando"
 	loot = list(/obj/effect/gibspawner/human)
 	speed = 1
-
-/mob/living/simple_animal/hostile/syndicate/melee/space/noloot
-	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -117,9 +122,6 @@
 	minbodytemp = 0
 	speed = 1
 	loot = list(/obj/effect/gibspawner/human)
-
-/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot
-	loot = list()
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space/Process_Spacemove(movement_dir = 0)
 	return 1

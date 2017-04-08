@@ -2,7 +2,7 @@
 
 /obj/item/weapon/storage/box/syndicate/New()
 	..()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "lordsingulo" = 1, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -16,7 +16,6 @@
 			new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate (src) // 2 tc this shit heals
 			new /obj/item/device/flashlight/emp(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
-			return
 
 		if("stealth") // 31 tc
 			new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow(src)
@@ -25,8 +24,11 @@
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
+<<<<<<< HEAD
 			new /obj/item/weapon/storage/box/chameleon(src)
 			return
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 		if("bond") // 29 tc
 			new /obj/item/weapon/gun/ballistic/automatic/pistol(src)
@@ -37,8 +39,6 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/reagent_containers/syringe/stimulants(src)
 
-			return
-
 		if("screwed") // 29 tc
 			new /obj/item/device/sbeacondrop/bomb(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
@@ -46,7 +46,6 @@
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
-			return
 
 		if("guns") // 28 tc now
 			new /obj/item/weapon/gun/ballistic/revolver(src)
@@ -57,7 +56,6 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
-			return
 
 		if("murder") // 28 tc now
 			new /obj/item/weapon/melee/energy/sword/saber(src)
@@ -66,16 +64,14 @@
 			new /obj/item/clothing/shoes/chameleon(src)
 			new /obj/item/device/encryptionkey/syndicate(src)
 			new /obj/item/weapon/grenade/syndieminibomb(src)
-			return
 
 		if("implant") // 55+ tc holy shit what the fuck this is a lottery disguised as fun boxes isn't it?
 			new /obj/item/weapon/implanter/freedom(src)
-			new /obj/item/weapon/implanter/uplink(src)
+			new /obj/item/weapon/implanter/uplink/precharged(src)
 			new /obj/item/weapon/implanter/emp(src)
 			new /obj/item/weapon/implanter/adrenalin(src)
 			new /obj/item/weapon/implanter/explosive(src)
 			new /obj/item/weapon/implanter/storage(src)
-			return
 
 		if("hacker") // 26 tc
 			new /obj/item/weapon/aiModule/syndicate(src)
@@ -83,14 +79,12 @@
 			new /obj/item/device/encryptionkey/binary(src)
 			new /obj/item/weapon/aiModule/toyAI(src)
 			new /obj/item/device/multitool/ai_detect(src)
-			return
 
 		if("lordsingulo") // 24 tc
 			new /obj/item/device/sbeacondrop(src)
 			new /obj/item/clothing/suit/space/syndicate/black/red(src)
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/weapon/card/emag(src)
-			return
 
 		if("sabotage") // 26 tc now
 			new /obj/item/weapon/grenade/plastic/c4 (src)
@@ -111,7 +105,6 @@
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/clothing/shoes/chameleon(src) //because slipping while being a dark lord sucks
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
-			return
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/weapon/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -120,7 +113,6 @@
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
-			return
 
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
@@ -131,7 +123,6 @@
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/grenade/plastic/c4 (src) // 1 tc
 			new /obj/item/weapon/card/emag(src) // 6 tc
-			return
 
 		if("duo")
 			var/obj/item/weapon/implanter/imp = new /obj/item/weapon/implanter(src)
@@ -152,14 +143,15 @@
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
 			new /obj/item/weapon/throwing_star(src)
-			new /obj/item/weapon/storage/belt/military/assault(src) // 3 tc
+			new /obj/item/weapon/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/weapon/card/id/syndicate(src) // 2 tc
 			new /obj/item/device/chameleon(src) // 7 tc
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
-	icon_state = "box_of_doom"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
@@ -169,6 +161,7 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/freedom(O)
 	O.update_icon()
+<<<<<<< HEAD
 	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_zombie
@@ -201,6 +194,8 @@
 	..()
 	return
 */
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/weapon/storage/box/syndie_kit/imp_microbomb
 	name = "Microbomb Implant (with injector)"
@@ -210,7 +205,6 @@
 	O.imp = new /obj/item/weapon/implant/explosive(O)
 	O.update_icon()
 	..()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	name = "Macrobomb Implant (with injector)"
@@ -220,7 +214,6 @@
 	O.imp = new /obj/item/weapon/implant/explosive/macro(O)
 	O.update_icon()
 	..()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	name = "boxed uplink implant (with injector)"
@@ -230,7 +223,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/uplink(O)
 	O.update_icon()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
@@ -239,7 +231,6 @@
 	..()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/syringe/bioterror(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_adrenal
 	name = "boxed adrenal implant (with injector)"
@@ -249,7 +240,6 @@
 	var/obj/item/weapon/implanter/O = new(src)
 	O.imp = new /obj/item/weapon/implant/adrenalin(O)
 	O.update_icon()
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/imp_storage
 	name = "boxed storage implant (with injector)"
@@ -257,7 +247,6 @@
 /obj/item/weapon/storage/box/syndie_kit/imp_storage/New()
 	..()
 	new /obj/item/weapon/implanter/storage(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -268,7 +257,6 @@
 	..()
 	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/emp
 	name = "boxed EMP kit"
@@ -301,7 +289,6 @@
 	new /obj/item/weapon/reagent_containers/glass/bottle/curare(src)
 	new /obj/item/weapon/reagent_containers/glass/bottle/amanitin(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
-	return
 
 /obj/item/weapon/storage/box/syndie_kit/nuke
 	name = "box"
@@ -359,3 +346,23 @@
 	for(var/i in 1 to 3)
 		new/obj/item/cardboard_cutout/adaptive(src)
 	new/obj/item/toy/crayon/rainbow(src)
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/New()
+	..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/romerol(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
+
+/obj/item/weapon/storage/box/syndie_kit/ez_clean/New()
+	..()
+	for(var/i in 1 to 3)
+		new/obj/item/weapon/grenade/chem_grenade/ez_clean(src)
+
+/obj/item/weapon/storage/box/hug/reverse_revolver/New()
+	..()
+	new /obj/item/weapon/gun/ballistic/revolver/reverse(src)
+
+/obj/item/weapon/storage/box/syndie_kit/mimery/New()
+	..()
+	new /obj/item/weapon/spellbook/oneuse/mimery_blockade(src)
+	new /obj/item/weapon/spellbook/oneuse/mimery_guns(src)

@@ -13,7 +13,11 @@
 
 	var/universal_translate = 0 // set to 1 if it can translate nonhuman speech
 
+<<<<<<< HEAD
 	req_access = list(access_tcomadmin)
+=======
+	req_access = list(GLOB.access_tcomsat)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
@@ -189,7 +193,7 @@
 	if(href_list["delete"])
 
 		if(!src.allowed(usr) && !emagged)
-			usr << "<span class='danger'>ACCESS DENIED.</span>"
+			to_chat(usr, "<span class='danger'>ACCESS DENIED.</span>")
 			return
 
 		if(SelectedServer)

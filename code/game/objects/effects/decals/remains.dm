@@ -18,3 +18,10 @@
 	desc = "They look like the remains of something mechanical. They have a strange aura about them."
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "remainsrobot"
+<<<<<<< HEAD
+=======
+
+/obj/effect/decal/cleanable/robot_debris/old
+	name = "dusty robot debris"
+	desc = "Looks like nobody has touched this in a while."
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

@@ -25,28 +25,34 @@
 	F << "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
+<<<<<<< HEAD
 /client/proc/investigate_show( subject in list("hrefs","notes","watchlist","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu", "viro", "tcomms", "pda", "ntsl", "chemistry") )
+=======
+/client/proc/investigate_show( subject in list("hrefs","notes, memos, watchlist","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu") )
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)
 		return
 	switch(subject)
+<<<<<<< HEAD
 		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "kudzu", "viro", "tcomms", "pda", "ntsl", "chemistry") //general one-round-only stuff
+=======
+		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "botany")			//general one-round-only stuff
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			var/F = investigate_subject2file(subject)
 			if(!F)
-				src << "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>"
+				to_chat(src, "<font color='red'>Error: admin_investigate: [INVESTIGATE_DIR][subject] is an invalid path or cannot be accessed.</font>")
 				return
 			src << browse(F,"window=investigate[subject];size=800x300")
 		if("hrefs")				//persistent logs and stuff
-			if(href_logfile)
-				src << browse(href_logfile,"window=investigate[subject];size=800x300")
+			if(GLOB.href_logfile)
+				src << browse(GLOB.href_logfile,"window=investigate[subject];size=800x300")
 			else if(!config.log_hrefs)
-				src << "<span class='danger'>Href logging is off and no logfile was found.</span>"
+				to_chat(src, "<span class='danger'>Href logging is off and no logfile was found.</span>")
 				return
 			else
-				src << "<span class='danger'>No href logfile was found.</span>"
+				to_chat(src, "<span class='danger'>No href logfile was found.</span>")
 				return
-		if("notes")
-			show_note()
-		if("watchlist")
-			watchlist_show()
+		if("notes, memos, watchlist")
+			browse_messages()

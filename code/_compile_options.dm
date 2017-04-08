@@ -3,7 +3,17 @@
 //#define TESTING				//By using the testing("message") proc you can create debug-feedback for people with this
 								//uncommented, but not visible in the release version)
 
+<<<<<<< HEAD
 #define MAXAGREE 6 //The current version of ruleset for the on-join disclaimer. If you want the player to receive a popup window with rule updates, increase this and compare current_agree to the new number in new_player.dm
+=======
+#ifdef TESTING
+//#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
+									//Also allows for recursive reference searching of datums.
+									//Sets world.loop_checks to false and prevents find references from sleeping
+
+//#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
+#endif
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 #define PRELOAD_RSC	1			/*set to:
 								0 to allow using external resources or on-demand behaviour;
@@ -54,6 +64,10 @@
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
+#endif
+
+#ifdef TRAVISTESTING
+#define TESTING
 #endif
 
 //Update this whenever you need to take advantage of more recent byond features

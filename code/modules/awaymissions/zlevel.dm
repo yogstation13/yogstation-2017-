@@ -1,30 +1,34 @@
 // How much "space" we give the edge of the map
-var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
+GLOBAL_LIST_INIT(potentialRandomZlevels, generateMapList(filename = "config/awaymissionconfig.txt"))
 
 /proc/createRandomZlevel()
-	if(awaydestinations.len)	//crude, but it saves another var!
+	if(GLOB.awaydestinations.len)	//crude, but it saves another var!
 		return
 
-	if(potentialRandomZlevels && potentialRandomZlevels.len)
-		world << "<span class='boldannounce'>Loading away mission...</span>"
+	if(GLOB.potentialRandomZlevels && GLOB.potentialRandomZlevels.len)
+		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
+		var/map = pick(GLOB.potentialRandomZlevels)
+		load_new_z_level(map)
+		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
 
-		var/map = pick(potentialRandomZlevels)
-		var/file = file(map)
-		if(isfile(file))
-			maploader.load_map(file)
-			smooth_zlevel(world.maxz)
-			world.log << "away mission loaded: [map]"
+/proc/reset_gateway_spawns(reset = FALSE)
+	for(var/obj/machinery/gateway/G in world)
+		if(reset)
+			G.randomspawns = GLOB.awaydestinations
+		else
+			G.randomspawns.Add(GLOB.awaydestinations)
 
-		map_transition_config.Add(AWAY_MISSION_LIST)
+/obj/effect/landmark/awaystart
+	name = "away mission spawn"
+	desc = "Randomly picked away mission spawn points"
 
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
-				continue
-			awaydestinations.Add(L)
+/obj/effect/landmark/awaystart/New()
+	GLOB.awaydestinations += src
+	..()
 
-		world << "<span class='boldannounce'>Away mission loaded.</span>"
-
-		SortAreas() //To add recently loaded areas
+/obj/effect/landmark/awaystart/Destroy()
+	GLOB.awaydestinations -= src
+	return ..()
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
@@ -57,6 +61,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		potentialMaps.Add(t)
 
 	return potentialMaps
+<<<<<<< HEAD
 
 
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
@@ -142,3 +147,5 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 	qdel(src)
 	return TRUE
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

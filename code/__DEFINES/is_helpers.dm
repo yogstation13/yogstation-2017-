@@ -26,6 +26,8 @@
 
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
+#define islava(A) (istype(A, /turf/open/floor/plating/lava))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -77,6 +79,8 @@
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
+#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
+
 #define isborer(A) (istype(A, /mob/living/simple_animal/borer))
 
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
@@ -124,7 +128,7 @@
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
@@ -145,6 +149,16 @@
 
 // ASSEMBLY HELPERS
 #define isorgan(A) (istype(A, /obj/item/organ))
+
+GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
+	/obj/item/weapon/pen,
+	/obj/item/weapon/screwdriver,
+	/obj/item/weapon/reagent_containers/syringe,
+	/obj/item/weapon/kitchen/fork)))
+
+#define is_pointed(W) (is_type_in_typecache(W, GLOB.pointed_types))
+
+#define isbodypart(A) (istype(A, /obj/item/bodypart))
 
 //Assemblies
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

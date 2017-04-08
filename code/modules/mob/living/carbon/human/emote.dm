@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /mob/living/carbon/human/emote(act,m_type=1,message = null)
 	if(stat == DEAD && (act != "deathgasp") || (FAKEDEATH in status_flags)) //if we're faking, don't emote at all
 		return
@@ -352,33 +353,131 @@
 		if ("help") //This can stay at the bottom.
 			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, catwhistle, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, smirk, smug, stare-(none)/mob, sulk, sway, stopwag, tremble, twitch, twitch_s, wave, waggle, whimper, wink, whistle, wag, yawn"
 
+=======
+/datum/emote/living/carbon/human
+	mob_type_allowed_typecache = list(/mob/living/carbon/human)
+
+/datum/emote/living/carbon/human/cry
+	key = "cry"
+	key_third_person = "cries"
+	message = "cries."
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/dap
+	key = "dap"
+	key_third_person = "daps"
+	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
+	message_param = "give daps to %t."
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/human/eyebrow
+	key = "eyebrow"
+	message = "raises an eyebrow."
+
+/datum/emote/living/carbon/human/grumble
+	key = "grumble"
+	key_third_person = "grumbles"
+	message = "grumbles!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/handshake
+	key = "handshake"
+	message = "shakes their own hands."
+	message_param = "shakes hands with %t."
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/hug
+	key = "hug"
+	key_third_person = "hugs"
+	message = "hugs themself."
+	message_param = "hugs %t."
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/mumble
+	key = "mumble"
+	key_third_person = "mumbles"
+	message = "mumbles!"
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/pale
+	key = "pale"
+	message = "goes pale for a second."
+
+/datum/emote/living/carbon/human/raise
+	key = "raise"
+	key_third_person = "raises"
+	message = "raises a hand."
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/human/salute
+	key = "salute"
+	key_third_person = "salutes"
+	message = "salutes."
+	message_param = "salutes to %t."
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/human/shrug
+	key = "shrug"
+	key_third_person = "shrugs"
+	message = "shrugs."
+
+/datum/emote/living/carbon/human/wag
+	key = "wag"
+	key_third_person = "wags"
+	message = "wags their tail."
+
+/datum/emote/living/carbon/human/wag/run_emote(mob/user, params)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(.)
+		H.startTailWag()
+	else
+		H.endTailWag()
+
+/datum/emote/living/carbon/human/wag/can_run_emote(mob/user)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || (H.dna.features["tail_human"] != "None")))
+		return TRUE
+
+/datum/emote/living/carbon/human/wag/select_message_type(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts))
+		. = null
+
+/datum/emote/living/carbon/human/wing
+	key = "wing"
+	key_third_person = "wings"
+	message = "their wings."
+
+/datum/emote/living/carbon/human/wing/run_emote(mob/user, params)
+	. = ..()
+	if(.)
+		var/mob/living/carbon/human/H = user
+		if(findtext(select_message_type(user), "open"))
+			H.OpenWings()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		else
-			..(act)
+			H.CloseWings()
 
-	if(miming)
-		m_type = 1
+/datum/emote/living/carbon/human/wing/select_message_type(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if("wings" in H.dna.species.mutant_bodyparts)
+		. = "opens " + message
+	else
+		. = "closes " + message
 
-
-
-	if (message)
-		log_emote("[name]/[key] : [message]")
-
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
- // Maybe some people are okay with that.
-
-		for(var/mob/M in dead_mob_list)
-			if(!M.client || isnewplayer(M))
-				continue //skip monkeys, leavers and new players
-			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
-
-
-		if (m_type & 1)
-			visible_message(message)
-		else if (m_type & 2)
-			audible_message(message)
-
-
+/datum/emote/living/carbon/human/wing/can_run_emote(mob/user)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
+		return TRUE
 
 //Don't know where else to put this, it's basically an emote
 /mob/living/carbon/human/proc/startTailWag()
@@ -423,3 +522,5 @@
 		dna.species.mutant_bodyparts -= "wingsopen"
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
+
+//Ayy lmao

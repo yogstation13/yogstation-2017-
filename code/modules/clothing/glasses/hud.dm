@@ -8,13 +8,13 @@
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(hud_type && slot == slot_glasses)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
 	if(hud_type && istype(user) && user.glasses == src)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
@@ -25,7 +25,7 @@
 /obj/item/clothing/glasses/hud/emag_act(mob/user)
 	if(emagged == 0)
 		emagged = 1
-		user << "<span class='warning'>PZZTTPFFFT</span>"
+		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 		desc = desc + " The display flickers slightly."
 
 /obj/item/clothing/glasses/hud/health
@@ -52,6 +52,16 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/health/sunglasses
+	name = "Medical HUDSunglasses"
+	desc = "Sunglasses with a medical HUD."
+	icon_state = "sunhudmed"
+	origin_tech = "magnets=3;biotech=3;engineering=3"
+	darkness_view = 1
+	flash_protect = 1
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/blue
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
@@ -86,11 +96,28 @@
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chameleon Security HUD"
+<<<<<<< HEAD
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
+=======
+	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	flash_protect = 1
 
-/obj/item/clothing/glasses/hud/security/chameleon/attack_self(mob/user)
-	chameleon(user)
+	// Yes this code is the same as normal chameleon glasses, but we don't
+	// have multiple inheritance, okay?
+	var/datum/action/item_action/chameleon/change/chameleon_action
+
+/obj/item/clothing/glasses/hud/security/chameleon/New()
+	..()
+	chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/clothing/glasses
+	chameleon_action.chameleon_name = "Glasses"
+	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
+	chameleon_action.initialize_disguises()
+
+/obj/item/clothing/glasses/hud/security/chameleon/emp_act(severity)
+	. = ..()
+	chameleon_action.emp_randomise()
 
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
@@ -99,9 +126,9 @@
 	icon_state = "hudpatch"
 
 /obj/item/clothing/glasses/hud/security/sunglasses
-	name = "HUDSunglasses"
-	desc = "Sunglasses with a HUD."
-	icon_state = "sunhud"
+	name = "Security HUDSunglasses"
+	desc = "Sunglasses with a security HUD."
+	icon_state = "sunhudsec"
 	origin_tech = "magnets=3;combat=3;engineering=3"
 	darkness_view = 1
 	flash_protect = 1
@@ -150,7 +177,7 @@
 		return
 
 	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.remove_hud_from(user)
 
 	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
@@ -161,7 +188,7 @@
 		hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
+		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/toggle/thermal

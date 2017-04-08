@@ -11,7 +11,7 @@
 	var/list/forenames = list()
 	var/list/ckeys = list()
 	var/founds = ""
-	for(var/mob/M in mob_list)
+	for(var/mob/M in GLOB.mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
 			indexing += M.mind.name
@@ -84,14 +84,57 @@
 	return msg
 
 
+<<<<<<< HEAD
 /proc/keywords_lookup_ai(mob/living/ML, msg)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+=======
+/client/var/adminhelptimerid = 0
+
+/client/proc/giveadminhelpverb()
+	src.verbs |= /client/verb/adminhelp
+	adminhelptimerid = 0
+
+/client/verb/adminhelp(msg as text)
+	set category = "Admin"
+	set name = "Adminhelp"
+
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+
+	//handle muting and automuting
+	if(prefs.muted & MUTE_ADMINHELP)
+		to_chat(src, "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>")
+		return
+	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+		return
+
+	//clean the input msg
+	if(!msg)
+		return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg)	return
+	var/original_msg = msg
+
+	//remove our adminhelp verb temporarily to prevent spamming of admins.
+	src.verbs -= /client/verb/adminhelp
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
+
+	msg = keywords_lookup(msg)
+
+	if(!mob)
+		return						//this doesn't happen
+
+	var/ref_client = "\ref[src]"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_FULLMONTY_NONAME(mob)] [ADMIN_SMITE(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	//explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
 
+<<<<<<< HEAD
 	//generate keywords lookup
 	var/list/surnames = list()
 	var/list/forenames = list()
@@ -99,6 +142,13 @@
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)	indexing += M.mind.name
+=======
+	for(var/client/X in GLOB.admins)
+		if(X.prefs.toggles & SOUND_ADMINHELP)
+			X << 'sound/effects/adminhelp.ogg'
+		window_flash(X, ignorepref = TRUE)
+		to_chat(X, msg)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
@@ -118,6 +168,7 @@
 			//ckeys
 			ckeys[M.ckey] = M
 
+<<<<<<< HEAD
 	var/list/jobs = list()
 	var/list/job_count = list()
 	for(var/datum/mind/M in ticker.minds)
@@ -160,21 +211,34 @@
 							continue
 		msg += "[original_word] "
 	return msg
+=======
+	//show it to the person adminhelping too
+	to_chat(src, "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>")
+
+	//send it to irc if nobody is on and tell us how many were on
+	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
+	log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	if(admin_number_present <= 0)
+		to_chat(src, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
+	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	return
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /proc/get_admin_counts(requiredflags = R_BAN)
-	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
-	for(var/client/X in admins)
-		.["total"]++
+	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
+	for(var/client/X in GLOB.admins)
+		.["total"] += X
 		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			.["noflags"]++
+			.["noflags"] += X
 		else if(X.is_afk())
-			.["afk"]++
+			.["afk"] += X
 		else if(X.holder.fakekey)
-			.["stealth"]++
+			.["stealth"] += X
 		else
-			.["present"]++
+			.["present"] += X
 
 /proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
+<<<<<<< HEAD
 	var/admin_number_total = 0		//Total number of admins
 	var/admin_number_afk = 0		//Holds the number of admins who are afk
 	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
@@ -200,6 +264,23 @@
 		else
 			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
 	return admin_number_present
+=======
+	var/list/adm = get_admin_counts(requiredflags)
+	var/list/activemins = adm["present"]
+	. = activemins.len
+	if(. <= 0)
+		var/final = ""
+		var/list/afkmins = adm["afk"]
+		var/list/stealthmins = adm["stealth"]
+		var/list/powerlessmins = adm["noflags"]
+		var/list/allmins = adm["total"]
+		if(!afkmins.len && !stealthmins.len && !powerlessmins.len)
+			final = "[msg] - No admins online"
+		else
+			final = "[msg] - All admins stealthed\[[english_list(stealthmins)]\], AFK\[[english_list(afkmins)]\], or lacks +BAN\[[english_list(powerlessmins)]\]! Total: [allmins.len] "
+		send2irc(source,final)
+		send2otherserver(source,final)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /proc/send2irc(msg,msg2)
@@ -208,27 +289,32 @@
 	return
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(global.cross_allowed)
+	if(config.cross_allowed)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
 		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
+		message["key"] = GLOB.comms_key
 		message["crossmessage"] = type
 
-		world.Export("[global.cross_address]?[list2params(message)]")
+		world.Export("[config.cross_address]?[list2params(message)]")
 
 
 /proc/ircadminwho()
-	var/msg = "Admins: "
-	for(var/client/C in admins)
-		msg += "[C] "
+	var/list/message = list("Admins: ")
+	var/list/admin_keys = list()
+	for(var/adm in GLOB.admins)
+		var/client/C = adm
+		admin_keys += "[C][C.holder.fakekey ? "(Stealth)" : ""][C.is_afk() ? "(AFK)" : ""]"
 
-		if(C.holder.fakekey)
-			msg += "(Stealth)"
+	for(var/admin in admin_keys)
+		if(LAZYLEN(admin_keys) > 1)
+			message += ", [admin]"
+		else
+			message += "[admin]"
 
-		if(C.is_afk())
-			msg += "(AFK)"
-		msg += ", "
-
+<<<<<<< HEAD
 	return msg
+=======
+	return jointext(message, "")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

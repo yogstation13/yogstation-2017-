@@ -9,8 +9,11 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+<<<<<<< HEAD
 			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			John hates all of you.<BR>
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			<BR>
 			"}
 
@@ -21,8 +24,8 @@
 			<A href='?src=\ref[src];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
 			<A href='?src=\ref[src];secrets=list_bombers'>Bombing List</A><BR>
 			<A href='?src=\ref[src];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
-			<A href='?src=\ref[src];secrets=list_signalers'>Show last [length(lastsignalers)] signalers</A><BR>
-			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(lawchanges)] law changes</A><BR>
+			<A href='?src=\ref[src];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
+			<A href='?src=\ref[src];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
 			<A href='?src=\ref[src];secrets=showailaws'>Show AI Laws</A><BR>
 			<A href='?src=\ref[src];secrets=showgm'>Show Game Mode</A><BR>
 			<A href='?src=\ref[src];secrets=manifest'>Show Crew Manifest</A><BR>
@@ -30,11 +33,13 @@
 			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
 			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
+			<A href='?src=\ref[src];secrets=set_name'>Rename Station Name</A><BR>
 			<A href='?src=\ref[src];secrets=reset_name'>Reset Station Name</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=moveferry'>Move Ferry</A><BR>
+			<A href='?src=\ref[src];secrets=togglearrivals'>Toggle Arrivals Ferry</A><BR>
 			<A href='?src=\ref[src];secrets=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<A href='?src=\ref[src];secrets=movelaborshuttle'>Move Labor Shuttle</A><BR>
 			<BR>
@@ -59,6 +64,7 @@
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
@@ -97,9 +103,9 @@
 	switch(item)
 		if("admin_log")
 			var/dat = "<B>Admin Log<HR></B>"
-			for(var/l in admin_log)
+			for(var/l in GLOB.admin_log)
 				dat += "<li>[l]</li>"
-			if(!admin_log.len)
+			if(!GLOB.admin_log.len)
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
 
@@ -117,18 +123,11 @@
 
 		if("show_admins")
 			var/dat = "<B>Current admins:</B><HR>"
-			if(admin_datums)
-				for(var/ckey in admin_datums)
-					var/datum/admins/D = admin_datums[ckey]
+			if(GLOB.admin_datums)
+				for(var/ckey in GLOB.admin_datums)
+					var/datum/admins/D = GLOB.admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
-
-		if("show_current_watchlist")
-			var/dat = "<B>Watchlist: </B><HR>"
-			if(current_watchlist)
-				for(var/ckey in current_watchlist)
-					dat += "[ckey] - [current_watchlist[ckey]]"
-				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
 
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
@@ -158,37 +157,53 @@
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
 					D.cure(D)
+		if("set_name")
+			if(!check_rights(R_ADMIN))
+				return
+			var/new_name = input(usr, "Please input a new name for the station.", "What?", "") as text|null
+			if(!new_name)
+				return
+			change_station_name(new_name)
+			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
+			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
 				return
+<<<<<<< HEAD
 			world.name = new_station_name()
 			station_name = world.name
 			feedback_set_details("station_name","[station_name]")
+=======
+			var/new_name = new_station_name()
+			change_station_name(new_name)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			log_admin("[key_name(usr)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
+			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))
 				return
 			var/dat = "<B>Bombing List<HR>"
-			for(var/l in bombers)
+			for(var/l in GLOB.bombers)
 				dat += text("[l]<BR>")
 			usr << browse(dat, "window=bombers")
 
 		if("list_signalers")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
-			for(var/sig in lastsignalers)
+			var/dat = "<B>Showing last [length(GLOB.lastsignalers)] signalers.</B><HR>"
+			for(var/sig in GLOB.lastsignalers)
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lastsignalers;size=800x500")
 
 		if("list_lawchanges")
 			if(!check_rights(R_ADMIN))
 				return
-			var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
-			for(var/sig in lawchanges)
+			var/dat = "<B>Showing last [length(GLOB.lawchanges)] law changes.</B><HR>"
+			for(var/sig in GLOB.lawchanges)
 				dat += "[sig]<BR>"
 			usr << browse(dat, "window=lawchanges;size=800x500")
 
@@ -218,7 +233,20 @@
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
 				message_admins("[key_name_admin(usr)] moved the centcom ferry")
 				log_admin("[key_name(usr)] moved the centcom ferry")
-
+			
+		if("togglearrivals")
+			if(!check_rights(R_ADMIN))
+				return
+			var/obj/docking_port/mobile/arrivals/A = SSshuttle.arrivals
+			if(A)
+				var/new_perma = !A.perma_docked
+				A.perma_docked = new_perma
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ShA[new_perma ? "s" : "g"]")
+				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
+				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
+			else
+				to_chat(usr, "<span class='admin'>There is no arrivals shuttle</span>")
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
 				return
@@ -226,17 +254,17 @@
 		if("showgm")
 			if(!check_rights(R_ADMIN))
 				return
-			if(!ticker || !ticker.mode)
+			if(!SSticker || !SSticker.mode)
 				alert("The game hasn't started yet!")
-			else if (ticker.mode)
-				alert("The game mode is [ticker.mode.name]")
-			else alert("For some reason there's a ticker, but not a game mode")
+			else if (SSticker.mode)
+				alert("The game mode is [SSticker.mode.name]")
+			else alert("For some reason there's a SSticker, but not a game mode")
 		if("manifest")
 			if(!check_rights(R_ADMIN))
 				return
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
-			for(var/datum/data/record/t in data_core.general)
+			for(var/datum/data/record/t in GLOB.data_core.general)
 				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=manifest;size=440x410")
@@ -245,7 +273,7 @@
 				return
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
@@ -255,7 +283,7 @@
 				return
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
@@ -266,7 +294,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				spawn(0)
 					H.monkeyize()
 			ok = 1
@@ -274,12 +302,12 @@
 		if("allspecies")
 			if(!check_rights(R_FUN))
 				return
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 			if(result)
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
-				var/newtype = species_list[result]
-				for(var/mob/living/carbon/human/H in mob_list)
+				var/newtype = GLOB.species_list[result]
+				for(var/mob/living/carbon/human/H in GLOB.mob_list)
 					H.set_species(newtype)
 
 		if("corgi")
@@ -287,7 +315,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","M")
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				spawn(0)
 					H.corgize()
 			ok = 1
@@ -342,7 +370,7 @@
 		if("traitor_all")
 			if(!check_rights(R_FUN))
 				return
-			if(!ticker || !ticker.mode)
+			if(!SSticker || !SSticker.mode)
 				alert("The game hasn't started yet!")
 				return
 			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
@@ -350,31 +378,31 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","TA([objective])")
-			for(var/mob/living/carbon/human/H in player_list)
+			for(var/mob/living/carbon/human/H in GLOB.player_list)
 				if(H.stat == 2 || !H.client || !H.mind) continue
 				if(is_special_character(H)) continue
 				//traitorize(H, objective, 0)
-				ticker.mode.traitors += H.mind
+				SSticker.mode.traitors += H.mind
 				H.mind.special_role = "traitor"
 				var/datum/objective/new_objective = new
 				new_objective.owner = H
 				new_objective.explanation_text = objective
 				H.mind.objectives += new_objective
-				ticker.mode.greet_traitor(H.mind)
-				//ticker.mode.forge_traitor_objectives(H.mind)
-				ticker.mode.finalize_traitor(H.mind)
-			for(var/mob/living/silicon/A in player_list)
+				SSticker.mode.greet_traitor(H.mind)
+				//SSticker.mode.forge_traitor_objectives(H.mind)
+				SSticker.mode.finalize_traitor(H.mind)
+			for(var/mob/living/silicon/A in GLOB.player_list)
 				if(A.stat == 2 || !A.client || !A.mind) continue
 				if(ispAI(A)) continue
 				else if(is_special_character(A)) continue
-				ticker.mode.traitors += A.mind
+				SSticker.mode.traitors += A.mind
 				A.mind.special_role = "traitor"
 				var/datum/objective/new_objective = new
 				new_objective.owner = A
 				new_objective.explanation_text = objective
 				A.mind.objectives += new_objective
-				ticker.mode.greet_traitor(A.mind)
-				ticker.mode.finalize_traitor(A.mind)
+				SSticker.mode.greet_traitor(A.mind)
+				SSticker.mode.finalize_traitor(A.mind)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
 			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
 
@@ -384,19 +412,19 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BC")
 
-			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", MAX_EX_LIGHT_RANGE) as num|null
+			var/newBombCap = input(usr,"What would you like the new bomb cap to be. (entered as the light damage range (the 3rd number in common (1,2,3) notation)) Must be above 4)", "New Bomb Cap", GLOB.MAX_EX_LIGHT_RANGE) as num|null
 			if (newBombCap < 4)
 				return
 
-			MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
-			MAX_EX_HEAVY_RANGE = round(newBombCap/2)
-			MAX_EX_LIGHT_RANGE = newBombCap
+			GLOB.MAX_EX_DEVESTATION_RANGE = round(newBombCap/4)
+			GLOB.MAX_EX_HEAVY_RANGE = round(newBombCap/2)
+			GLOB.MAX_EX_LIGHT_RANGE = newBombCap
 			//I don't know why these are their own variables, but fuck it, they are.
-			MAX_EX_FLASH_RANGE = newBombCap
-			MAX_EX_FLAME_RANGE = newBombCap
+			GLOB.MAX_EX_FLASH_RANGE = newBombCap
+			GLOB.MAX_EX_FLAME_RANGE = newBombCap
 
-			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</span>")
-			log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
+			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]</span>")
+			log_admin("[key_name(usr)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
 
 
 		if("lightsout")
@@ -413,7 +441,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
-			for(var/obj/machinery/light/L in machines)
+			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
 
 		if("anime")
@@ -422,7 +450,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","CC")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
-			for(var/mob/living/carbon/human/H in mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				H << sound('sound/AI/animes.ogg')
 
 				if(H.dna.species.id == "human")
@@ -436,11 +464,11 @@
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.unEquip(H.w_uniform)
+					H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else
-					H << "You're not kawaii enough for this."
+					to_chat(H, "You're not kawaii enough for this.")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -448,7 +476,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","WO")
 			message_admins("[key_name_admin(usr)] fixed all lights")
-			for(var/obj/machinery/light/L in machines)
+			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
 
 		if("floorlava")
@@ -475,8 +503,8 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","RET")
-			for(var/mob/living/carbon/human/H in player_list)
-				H << "<span class='boldannounce'>You suddenly feel stupid.</span>"
+			for(var/mob/living/carbon/human/H in GLOB.player_list)
+				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
 				H.setBrainLoss(60)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
@@ -485,7 +513,7 @@
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","EgL")
-			for(var/obj/machinery/door/airlock/W in machines)
+			for(var/obj/machinery/door/airlock/W in GLOB.machines)
 				if(W.z == ZLEVEL_STATION && !istype(get_area(W), /area/bridge) && !istype(get_area(W), /area/crew_quarters) && !istype(get_area(W), /area/security/prison))
 					W.req_access = list()
 			message_admins("[key_name_admin(usr)] activated Egalitarian Station mode")
@@ -522,7 +550,7 @@
 		if("events")
 			if(!check_rights(R_FUN))
 				return
-			if(!SSevent.wizardmode)
+			if(!SSevents.wizardmode)
 				if(alert("Do you want to toggle summon events on?",,"Yes","No") == "Yes")
 					summonevents()
 					feedback_inc("admin_secrets_fun_used",1)
@@ -535,15 +563,15 @@
 						feedback_inc("admin_secrets_fun_used",1)
 						feedback_add_details("admin_secrets_fun_used","SE")
 					if("Turn Off Summon Events")
-						SSevent.toggleWizardmode()
-						SSevent.resetFrequency()
+						SSevents.toggleWizardmode()
+						SSevents.resetFrequency()
 
 		if("dorf")
 			if(!check_rights(R_FUN))
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DF")
-			for(var/mob/living/carbon/human/B in mob_list)
+			for(var/mob/living/carbon/human/B in GLOB.mob_list)
 				B.facial_hair_style = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
@@ -554,7 +582,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
 			usr.client.only_one()
+			send_to_playing_players('sound/misc/highlander.ogg')
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+
+		if("delayed_onlyone")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","OO")
+			usr.client.only_one_delayed()
+			send_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
@@ -566,19 +603,19 @@
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in machines)
+			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (access_maint_tunnels in M.req_access)
-					M.req_access = list(access_brig)
+				if (GLOB.access_maint_tunnels in M.req_access)
+					M.req_access = list(GLOB.access_brig)
 			message_admins("[key_name_admin(usr)] made all maint doors brig access-only.")
 		if("maint_access_engiebrig")
 			if(!check_rights(R_DEBUG))
 				return
-			for(var/obj/machinery/door/airlock/maintenance/M in machines)
+			for(var/obj/machinery/door/airlock/maintenance/M in GLOB.machines)
 				M.check_access()
-				if (access_maint_tunnels in M.req_access)
+				if (GLOB.access_maint_tunnels in M.req_access)
 					M.req_access = list()
-					M.req_one_access = list(access_brig,access_engine)
+					M.req_one_access = list(GLOB.access_brig,GLOB.access_engine)
 			message_admins("[key_name_admin(usr)] made all maint doors engineering and brig access-only.")
 		if("infinite_sec")
 			if(!check_rights(R_DEBUG))
@@ -606,11 +643,7 @@
 		if("ctfbutton")
 			if(!check_rights(R_ADMIN))
 				return
-			var/ctf_enabled = FALSE
-			for(var/obj/machinery/capture_the_flag/CTF in machines)
-				ctf_enabled = CTF.toggle_ctf()
-			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
-			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+			toggle_all_ctf(usr)
 		if("masspurrbation")
 			if(!check_rights(R_FUN))
 				return
@@ -635,4 +668,4 @@
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)
-			world << text("<B>A secret has been activated by []!</B>", usr.key)
+			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))

@@ -3,5 +3,11 @@
 #define MAP_ERROR 4
 #define WAITING_FOR_SOMETHING 5
 
+<<<<<<< HEAD
 #define PREDICTEDHOUR 36000
 #define PREDICTEDHALFHOUR 18000
+=======
+#define EVENT_CANT_RUN 0
+#define EVENT_READY 1
+#define EVENT_CANCELLED 2
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

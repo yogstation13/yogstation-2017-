@@ -4,14 +4,20 @@
 	set hidden = 1
 	if(!canSuicide())
 		return
+<<<<<<< HEAD
 <<<<<<< HEAD:code/modules/client/verbs/suicide.dm
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	var/oldkey = ckey
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 	if(ckey != oldkey)
 		return
+<<<<<<< HEAD
 =======
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
 >>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
@@ -173,7 +179,7 @@
 >>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 		death(0)
 	else
-		src << "Aborting suicide attempt."
+		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
@@ -223,16 +229,16 @@
 		return TRUE
 >>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 	else if(stat == DEAD)
-		src << "You're already dead!"
+		to_chat(src, "You're already dead!")
 	else if(stat == UNCONSCIOUS)
-		src << "You need to be conscious to suicide!"
+		to_chat(src, "You need to be conscious to suicide!")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
+		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 <<<<<<< HEAD:code/modules/client/verbs/suicide.dm
 	if(borer && borer.controlling)
@@ -240,7 +246,7 @@
 	return 1
 =======
 	if(has_brain_worms())
-		src << "You can't bring yourself to commit suicide!"
+		to_chat(src, "You can't bring yourself to commit suicide!")
 		return
 	return TRUE
 >>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm

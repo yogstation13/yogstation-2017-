@@ -139,14 +139,19 @@
 
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
 		if(src.dna.check_mutation(HULK))
-			src << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
+			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return 0
 		if(NOGUNS in src.dna.species.species_traits)
-			src << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
+			to_chat(src, "<span class='warning'>Your fingers don't fit in the trigger guard!</span>")
 			return 0
 
+<<<<<<< HEAD
 	if(martial_art && martial_art.no_ranged_weapons) //great dishonor to famiry
 		src << "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>"
+=======
+	if(martial_art && martial_art.no_guns) //great dishonor to famiry
+		to_chat(src, "<span class='warning'>Use of ranged weaponry would bring dishonor to the clan.</span>")
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 
 	return .

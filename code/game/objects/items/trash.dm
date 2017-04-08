@@ -68,6 +68,7 @@
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
 
+<<<<<<< HEAD
 /obj/item/trash/toritose
 	name = "toritos"
 	icon_state = "toritose"
@@ -101,3 +102,15 @@
 				return
 
 			user << "<span class='warning'>You have successfully added [naughty] to the naughty list.</span>"
+=======
+/obj/item/trash/coal
+	name = "lump of coal"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "slag"
+	desc = "Someone's gotten on the naughty list."
+
+/obj/item/trash/coal/burn()
+	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
+	new /obj/item/weapon/ore/diamond(loc)
+	qdel(src)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

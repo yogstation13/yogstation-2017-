@@ -48,6 +48,7 @@
 	Compiler.Holder = src
 	server_radio = new()
 
+<<<<<<< HEAD
 /obj/machinery/telecomms/server/Destroy()
 	// Garbage collects all the NTSL datums.
 	if(Compiler)
@@ -56,6 +57,16 @@
 	encryptionkey.forceMove(get_turf(src))
 	encryptionkey = null
 	..()
+=======
+/obj/item/weapon/circuitboard/machine/telecomms/server
+	name = "Telecommunication Server (Machine Board)"
+	build_path = /obj/machinery/telecomms/server
+	origin_tech = "programming=2;engineering=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/subspace/filter = 1)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(signal.data["message"])
@@ -84,7 +95,12 @@
 				log.parameters["realname"] = signal.data["realname"]
 				log.parameters["encryption"] = encryption
 
+<<<<<<< HEAD
 				log.parameters["uspeech"] = signal.data["languages"]
+=======
+				//log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
+				// TODO languages: ^ I don't know what this does
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)
@@ -230,25 +246,25 @@
 
 /obj/machinery/telecomms/server/presets/science
 	id = "Science Server"
-	freq_listening = list(SCI_FREQ)
+	freq_listening = list(GLOB.SCI_FREQ)
 	autolinkers = list("science")
 	keytype = /obj/item/device/encryptionkey/headset_sci
 
 /obj/machinery/telecomms/server/presets/medical
 	id = "Medical Server"
-	freq_listening = list(MED_FREQ)
+	freq_listening = list(GLOB.MED_FREQ)
 	autolinkers = list("medical")
 	keytype = /obj/item/device/encryptionkey/headset_med
 
 /obj/machinery/telecomms/server/presets/supply
 	id = "Supply Server"
-	freq_listening = list(SUPP_FREQ)
+	freq_listening = list(GLOB.SUPP_FREQ)
 	autolinkers = list("supply")
 	keytype = /obj/item/device/encryptionkey/headset_cargo
 
 /obj/machinery/telecomms/server/presets/service
 	id = "Service Server"
-	freq_listening = list(SERV_FREQ)
+	freq_listening = list(GLOB.SERV_FREQ)
 	autolinkers = list("service")
 	keytype = /obj/item/device/encryptionkey/headset_service
 
@@ -266,22 +282,23 @@
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
-	freq_listening = list(COMM_FREQ)
+	freq_listening = list(GLOB.COMM_FREQ)
 	autolinkers = list("command")
 	keytype = /obj/item/device/encryptionkey/headset_com
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"
-	freq_listening = list(ENG_FREQ)
+	freq_listening = list(GLOB.ENG_FREQ)
 	autolinkers = list("engineering")
 	keytype = /obj/item/device/encryptionkey/headset_eng
 
 /obj/machinery/telecomms/server/presets/security
 	id = "Security Server"
-	freq_listening = list(SEC_FREQ)
+	freq_listening = list(GLOB.SEC_FREQ)
 	autolinkers = list("security")
 	keytype = /obj/item/device/encryptionkey/headset_sec
 
+<<<<<<< HEAD
 
 /obj/item/weapon/circuitboard/machine/telecomms/server
 	name = "circuit board (Telecommunication Server)"
@@ -291,3 +308,8 @@
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/subspace/filter = 1)
+=======
+/obj/machinery/telecomms/server/presets/common/birdstation/New()
+	..()
+	freq_listening = list()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

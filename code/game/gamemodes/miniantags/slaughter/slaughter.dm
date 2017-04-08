@@ -48,7 +48,11 @@
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
+<<<<<<< HEAD
 /*/mob/living/simple_animal/slaughter/New()
+=======
+/mob/living/simple_animal/slaughter/Initialize()
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
@@ -120,7 +124,7 @@
 	real_name = "laughter demon"
 	desc = "A large, adorable creature covered in armor with pink bows."
 	speak_emote = list("giggles","titters","chuckles")
-	emote_hear = list("gaffaws","laughs")
+	emote_hear = list("guffaws","laughs")
 	response_help  = "hugs"
 	attacktext = "wildly tickles"
 	attack_sound = 'sound/items/bikehorn.ogg'
@@ -178,8 +182,7 @@
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
 			M.grab_ghost(force = TRUE)
 			playsound(T, feast_sound, 50, 1, -1)
-			M << "<span class='clown'>You leave [src]'s warm embrace, \
-				and feel ready to take on the world.</span>"
+			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
 
 /mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
 	if(consumed_mobs)

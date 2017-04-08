@@ -59,8 +59,8 @@ var/list/barometers = list()
 /obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
 	..()
 	var/species
-	if(istype(I, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/O = I
+	if(istype(I, /obj/item/stack/))
+		var/obj/item/stack/O = I
 
 		if(istype(O, /obj/item/stack/sheet/metal))
 			species = /datum/species/golem
@@ -107,20 +107,21 @@ var/list/barometers = list()
 		if(istype(O, /obj/item/stack/sheet/bluespace_crystal))
 			species = /datum/species/golem/bluespace
 
+		if(istype(O, /obj/item/stack/sheet/runed_metal))
+			species = /datum/species/golem/runic
+
+		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
+			species = /datum/species/golem/cloth
+
 		if(species)
 			if(O.use(10))
-				user << "You finish up the golem shell with ten sheets of [O]."
-				var/obj/effect/mob_spawn/human/golem/G = new shell_type(get_turf(src))
-				G.mob_species = species
-				var/datum/species/golem/S = species
-				G.name += " ([initial(S.id)])"
-				if(has_owner)
-					G.owner = user
+				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
+				new shell_type(get_turf(src), species, has_owner, user)
 				qdel(src)
 			else
-				user << "You need at least ten sheets to finish a golem."
+				to_chat(user, "You need at least ten sheets to finish a golem.")
 		else
-			user << "You can't build a golem out of this kind of material."
+			to_chat(user, "You can't build a golem out of this kind of material.")
 
 
 ///Syndicate Listening Post
@@ -133,24 +134,33 @@ var/list/barometers = list()
 	gloves = /obj/item/clothing/gloves/combat
 	radio = /obj/item/device/radio/headset/syndicate/alt
 	back = /obj/item/weapon/storage/backpack
+<<<<<<< HEAD
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 	has_id = 1
 	id_job = "Syndicate Researcher"
 	id_access = "syndicate"
+=======
+	pocket1 = /obj/item/weapon/gun/ballistic/automatic/pistol
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	roundstart = FALSE
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+<<<<<<< HEAD
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
 	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!")
 
+=======
+	id_access_list = list(GLOB.access_syndicate)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"
 	r_hand = /obj/item/weapon/melee/energy/sword/saber
 	mask = /obj/item/clothing/mask/chameleon
 	suit = /obj/item/clothing/suit/armor/vest
+<<<<<<< HEAD
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 	id_job = "Syndicate Comms Agent"
@@ -309,3 +319,7 @@ var/list/barometers = list()
 	icon_state = "sleeper_s"
 /obj/effect/mob_spawn/human/orion_security/special(mob/living/L)
 	L.add_memory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")
+=======
+	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
+	pocket2 = /obj/item/weapon/card/id/syndicate/anyone
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

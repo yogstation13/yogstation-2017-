@@ -1,4 +1,4 @@
-var/list/department_radio_keys = list(
+GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":r" = "right hand",	"#r" = "right hand",	".r" = "right hand",
 	  ":l" = "left hand",	"#l" = "left hand",		".l" = "left hand",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
@@ -17,8 +17,14 @@ var/list/department_radio_keys = list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
+<<<<<<< HEAD
 	  ":p" = "pheromones",	"#p" = "pheromones",	".p" = "pheromones",
 	  ":d" = "spokenbinary","#d" = "spokenbinary",	".d" = "spokenbinary",
+=======
+	  ":x" = "cords",		"#x" = "cords",			".x" = "cords",
+	  ":p" = "admin",		"#p" = "admin",			".p" = "admin",
+	  ":d" = "deadmin",		"#d" = "deadmin",		".d" = "deadmin",
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -38,8 +44,14 @@ var/list/department_radio_keys = list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
+<<<<<<< HEAD
 	  ":P" = "pheromones",	"#P" = "pheromones",	".P" = "pheromones",
 	  ":D" = "spokenbinary","#D" = "spokenbinary",	".D" = "spokenbinary",
+=======
+	  ":X" = "cords",		"#X" = "cords",			".X" = "cords",
+	  ":P" = "admin",		"#P" = "admin",			".P" = "admin",
+	  ":D" = "deadmin",		"#D" = "deadmin",		".D" = "deadmin",
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -57,31 +69,23 @@ var/list/department_radio_keys = list(
 	  ":ô" = "alientalk",	"#ô" = "alientalk",		".ô" = "alientalk",
 	  ":å" = "Syndicate",	"#å" = "Syndicate",		".å" = "Syndicate",
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
-	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"
-)
+	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"))
 
+<<<<<<< HEAD
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 /mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+=======
+/mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
+	if(sanitize)
+		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(!message || message == "")
 		return
 
-
-	if(stat == DEAD)
-		say_dead(message)
-		return
-
-	if(check_emote(message))
-		return
-
-	if(!can_speak_basic(message)) //Stat is seperate so I can handle whispers properly.
-		return
-
 	var/message_mode = get_message_mode(message)
-
-	if(stat && !(message_mode in crit_allowed_modes))
-		return
+	var/original_message = message
 
 	if(message_mode == MODE_HEADSET || message_mode == MODE_ROBOT)
 		message = copytext(message, 2)
@@ -90,23 +94,76 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
 
-	if(handle_inherent_channels(message, message_mode)) //Hiveminds, binary chat & holopad.
+	if(message_mode == "admin")
+		if(client)
+			client.cmd_admin_say(message)
+		return
+
+	if(message_mode == "deadmin")
+		if(client)
+			client.dsay(message)
+		return
+
+	if(stat == DEAD)
+		say_dead(original_message)
+		return
+
+	if(check_emote(original_message))
+		return
+
+	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
+		return
+	
+	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
+	if(stat && !(message_mode in crit_allowed_modes))
+		return
+
+	// language comma detection.
+	var/datum/language/message_language = get_message_language(message)
+	if(message_language)
+		// No, you cannot speak in xenocommon just because you know the key
+		if(can_speak_in_language(message_language))
+			language = message_language
+		message = copytext(message, 3)
+
+		// Trim the space if they said ",0 I LOVE LANGUAGES"
+		if(findtext(message, " ", 1, 2))
+			message = copytext(message, 2)
+
+	if(!language)
+		language = get_default_language()
+
+	// Detection of language needs to be before inherent channels, because
+	// AIs use inherent channels for the holopad. Most inherent channels
+	// ignore the language argument however.
+
+	if(handle_inherent_channels(message, message_mode, language)) //Hiveminds, binary chat & holopad.
 		return
 
 	if(!can_speak_vocal(message))
-		src << "<span class='warning'>You find yourself unable to speak!</span>"
+		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
 		return
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
+		if(!message)
+			return
 
 	spans += get_spans()
 
-	//Log of what we've said, plain message, no spans or junk
-	say_log += message
+	if(language)
+		var/datum/language/L = GLOB.language_datums[language]
+		if(!istype(L))
+			L = new language
+			GLOB.language_datums[language] = L
+
+		spans |= L.spans
+
+	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
+	log_message(message, INDIVIDUAL_SAY_LOG)
 
 	var/message_range = 7
-	var/radio_return = radio(message, message_mode, spans)
+	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & NOPASS) //There's a whisper() message_mode, no need to continue the proc if that is called
 		return
 	if(radio_return & ITALICS)
@@ -124,12 +181,16 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
+<<<<<<< HEAD
 	send_speech(message, message_range, src, bubble_type, spans, languages)
+=======
+	send_speech(message, message_range, src, bubble_type, spans, message_language=language)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	log_say("[name]/[key] : [message]")
 	return 1
 
-/mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans)
 	if(!client)
 		return
 	var/deaf_message
@@ -141,31 +202,42 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	if(!(message_langs & languages_understood) || force_compose) //force_compose is so AIs don't end up without their hrefs.
-		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans)
+
+	// Recompose message for AI hrefs, language incomprehension.
+	message = compose_message(speaker, message_language, raw_message, radio_freq, spans)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
+<<<<<<< HEAD
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
+=======
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	var/list/listening = get_hearers_in_view(message_range, source)
-	for(var/mob/M in player_list)
+	for(var/mob/M in GLOB.player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
-	var/rendered = compose_message(src, languages_spoken, message, , spans)
+	var/rendered = compose_message(src, message_language, message, , spans)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
+		AM.Hear(rendered, src, message_language, message, , spans, message_language)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
+<<<<<<< HEAD
 	if(bubble_type)
 		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		spawn(0)
 			flick_overlay(I, speech_bubble_recipients, 30)
+=======
+	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /mob/proc/binarycheck()
 	return 0
@@ -177,7 +249,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 /mob/living/proc/can_speak_basic(message) //Check BEFORE handling of xeno and ling channels
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot speak in IC (muted).</span>")
 			return 0
 		if(client.handle_spam_prevention(message,MUTE_IC))
 			return 0
@@ -205,50 +277,71 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(copytext(message, 1, 2) == ";")
 		return MODE_HEADSET
 	else if(length(message) > 2)
-		return department_radio_keys[copytext(message, 1, 3)]
+		return GLOB.department_radio_keys[copytext(message, 1, 3)]
+
+/mob/living/proc/get_message_language(message)
+	var/static/list/langlist
+	if(!langlist)
+		langlist = subtypesof(/datum/language)
+
+	if(copytext(message, 1, 2) == ",")
+		var/key = copytext(message, 2, 3)
+		for(var/ld in langlist)
+			var/datum/language/LD = ld
+			if(initial(LD.key) == key)
+				return LD
+	return null
 
 /mob/living/proc/handle_inherent_channels(message, message_mode)
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(3)
 				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
-				for(var/mob/M in mob_list)
-					if(M in dead_mob_list)
+				for(var/mob/M in GLOB.mob_list)
+					if(M in GLOB.dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
-						M << "[link] [msg]"
+						to_chat(M, "[link] [msg]")
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg
+								to_chat(M, msg)
 							if(2)
-								M << msg
+								to_chat(M, msg)
 							if(1)
 								if(prob(40))
-									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
+									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
-				for(var/mob/M in mob_list)
-					if(M in dead_mob_list)
+				for(var/mob/M in GLOB.mob_list)
+					if(M in GLOB.dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
-						M << "[link] [msg]"
+						to_chat(M, "[link] [msg]")
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg
+								to_chat(M, msg)
 							if(2)
-								M << msg
+								to_chat(M, msg)
 							if(1)
 								if(prob(40))
-									M << "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>"
+									to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
 			if(1)
-				src << "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>"
-		return 1
+				to_chat(src, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
+		return TRUE
 	if(message_mode == MODE_ALIEN)
 		if(hivecheck())
 			alien_talk(message)
-		return 1
-	return 0
+		return TRUE
+	if(message_mode == MODE_VOCALCORDS)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			var/obj/item/organ/vocal_cords/V = C.getorganslot("vocal_cords")
+			if(V && V.can_speak_with())
+				V.handle_speech(message) //message
+				V.speak_with(message) //action
+		return TRUE
+	return FALSE
 
 /mob/living/proc/treat_message(message)
 	if(getBrainLoss() >= 60)
@@ -267,22 +360,22 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	return message
 
-/mob/living/proc/radio(message, message_mode, list/spans)
+/mob/living/proc/radio(message, message_mode, list/spans, language)
 	switch(message_mode)
 		if(MODE_R_HAND)
 			for(var/obj/item/r_hand in get_held_items_for_side("r", all = TRUE))
 				if (r_hand)
-					return r_hand.talk_into(src, message, , spans)
+					return r_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE
 		if(MODE_L_HAND)
 			for(var/obj/item/l_hand in get_held_items_for_side("l", all = TRUE))
 				if (l_hand)
-					return l_hand.talk_into(src, message, , spans)
+					return l_hand.talk_into(src, message, , spans, language)
 				return ITALICS | REDUCE_RANGE
 
 		if(MODE_INTERCOM)
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, message, , spans)
+				I.talk_into(src, message, , spans, language)
 			return ITALICS | REDUCE_RANGE
 
 		if(MODE_BINARY)
@@ -311,3 +404,15 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if (getBrainLoss() >= 60)
 		return "gibbers, \"[tempinput]\""
 	return ..()
+
+/mob/living/get_default_language()
+	if(selected_default_language)
+		if(has_language(selected_default_language))
+			return selected_default_language
+		else
+			selected_default_language = null
+
+	. = ..()
+
+/mob/living/proc/open_language_menu(mob/user)
+	language_menu.ui_interact(user)

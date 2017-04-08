@@ -12,34 +12,58 @@
 #define NOBLUDGEON		4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 #define MASKINTERNALS	8		// mask allows internals
 #define HEAR 			16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define HANDSLOW        32		// If an item has this flag, it will slow you to carry it
 #define CONDUCT			64		// conducts electricity (metal etc.)
 #define ABSTRACT    	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
-#define FPRINT			256		// takes a fingerprint
+#define OVERLAY_QUEUED  256		//atom queued to SSoverlay
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc
+<<<<<<< HEAD
 #define SUPERNOSLIP 2048	//prevents slipping on space lube
 
 #define EARBANGPROTECT		1024
 
 #define OPENCONTAINER	4096	// is an open container for chemistry purposes
 #define HEADBANGPROTECT		4096
+=======
+#define CLEAN_ON_MOVE 2048
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
-#define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
-#define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define BLOCK_GAS_SMOKE_EFFECT 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
+#define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define DROPDEL			16384 // When dropped, it calls qdel on itself
-#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
+
+/* Secondary atom flags, access using the SECONDARY_FLAG macros */
+
+#define SLOWS_WHILE_IN_HAND "slows_while_in_hand"
+#define NO_EMP_WIRES "no_emp_wires"
+#define HOLOGRAM "hologram"
+#define FROZEN "frozen"
+#define STATIONLOVING "stationloving"
+#define INFORM_ADMINS_ON_RELOCATE "inform_admins_on_relocate"
+#define BANG_PROTECT "bang_protect"
+
+// A mob with OMNITONGUE has no restriction in the ability to speak
+// languages that they know. So even if they wouldn't normally be able to
+// through mob or tongue restrictions, this flag allows them to ignore
+// those restrictions.
+#define OMNITONGUE "omnitongue"
 
 //turf-only flags
 #define NOJAUNT		1
+<<<<<<< HEAD
 #define GIRDERABLE	2
 #define UNUSED_TRANSIT_TURF 4
 #define CAN_BE_DIRTY 8 //If a turf can be made dirty at roundstart. This is also used in areas.
+=======
+#define UNUSED_TRANSIT_TURF 2
+#define CAN_BE_DIRTY 4 //If a turf can be made dirty at roundstart. This is also used in areas.
+#define NO_DEATHRATTLE 16 // Do not notify deadchat about any deaths that occur on this turf.
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
@@ -88,10 +112,24 @@
 #define GROUND 1
 #define FLYING 2
 
+<<<<<<< HEAD
 
 /*
 	Language defines were moved to language.dm
 */
 
+=======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 // Flags for reagents
 #define REAGENT_NOREACT 1
+
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF 1
+#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE 4
+#define ON_FIRE 8
+#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE 64 //doesn't take damage
+
+// language secondary flags for atoms

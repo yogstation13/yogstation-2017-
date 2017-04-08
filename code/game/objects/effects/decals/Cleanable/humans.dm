@@ -21,6 +21,16 @@
 		blood_DNA |= C.blood_DNA.Copy()
 	..()
 
+/obj/effect/decal/cleanable/blood/old
+	name = "dried blood"
+	desc = "Looks like it's been here a while.  Eew."
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/old/Initialize()
+	..()
+	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
+	blood_DNA["Non-human DNA"] = "A+"
+
 /obj/effect/decal/cleanable/blood/splatter
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
@@ -162,7 +172,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = 0
 
-/obj/effect/decal/cleanable/blood/gibs/New()
+/obj/effect/decal/cleanable/blood/gibs/Initialize()
 	..()
 	reagents.add_reagent("liquidgibs", 5)
 
@@ -195,12 +205,22 @@
 /obj/effect/decal/cleanable/blood/gibs/torso
 	random_icon_states = list("gibtorso")
 
-
 /obj/effect/decal/cleanable/blood/gibs/limb
 	random_icon_states = list("gibleg", "gibarm")
 
 /obj/effect/decal/cleanable/blood/gibs/core
 	random_icon_states = list("gibmid1", "gibmid2", "gibmid3")
+
+/obj/effect/decal/cleanable/blood/gibs/old
+	name = "old rotting gibs"
+	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
+	bloodiness = 0
+
+/obj/effect/decal/cleanable/blood/gibs/old/Initialize()
+	..()
+	setDir(pick(1,2,4,8))
+	icon_state += "-old"
+	blood_DNA["Non-human DNA"] = "A+"
 
 
 /obj/effect/decal/cleanable/blood/drip
@@ -251,23 +271,23 @@
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
 	cut_overlays()
 
-	for(var/Ddir in cardinal)
+	for(var/Ddir in GLOB.cardinal)
 		if(entered_dirs & Ddir)
 			var/image/I
-			if(bloody_footprints_cache["entered-[blood_state]-[Ddir]"])
-				I = bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
+			if(GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"])
+				I = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			else
 				I =  image(icon,"[blood_state]1",dir = Ddir)
-				bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
+				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
 			if(I)
 				add_overlay(I)
 		if(exited_dirs & Ddir)
 			var/image/I
-			if(bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
-				I = bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
+			if(GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
+				I = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			else
 				I = image(icon,"[blood_state]2",dir = Ddir)
-				bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
+				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
 			if(I)
 				add_overlay(I)
 
@@ -285,7 +305,7 @@
 			else
 				. += "some <B>[initial(S.name)]</B> \icon[S]\n"
 
-	user << .
+	to_chat(user, .)
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)
 	if(blood_state != C.blood_state) //We only replace footprints of the same type as us
