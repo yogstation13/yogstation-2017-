@@ -354,7 +354,4 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 	name = "spider cutlet"
-<<<<<<< HEAD
-=======
 	tastes = list("cobwebs" = 1)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

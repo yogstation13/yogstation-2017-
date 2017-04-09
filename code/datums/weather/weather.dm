@@ -73,12 +73,8 @@
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
 				M << sound(telegraph_sound)
-<<<<<<< HEAD
-	addtimer(src, "start", telegraph_duration)
-	next_hit_time = world.time + telegraph_duration
-=======
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+	next_hit_time = world.time + telegraph_duration
 
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)

@@ -303,7 +303,7 @@
 	return(gain)
 
 /mob/living/narsie_act()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 
 	if(is_servant_of_ratvar(src) && !stat)
@@ -330,7 +330,7 @@
 
 
 /mob/living/ratvar_act()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 
 	if(stat != DEAD && !is_servant_of_ratvar(src))

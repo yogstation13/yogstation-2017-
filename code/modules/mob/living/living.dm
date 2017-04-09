@@ -274,7 +274,7 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustBruteLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	bruteloss = Clamp(bruteloss + amount, 0, maxHealth*2)
@@ -291,14 +291,14 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-/mob/living/proc/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustOxyLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
-/mob/living/proc/setOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/setOxyLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	oxyloss = amount
@@ -308,7 +308,7 @@
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-/mob/living/proc/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustToxLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
@@ -326,7 +326,7 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustFireLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	fireloss = Clamp(fireloss + amount, 0, maxHealth*2)
@@ -343,7 +343,7 @@
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-/mob/living/proc/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustCloneLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
@@ -360,7 +360,7 @@
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
-/mob/living/proc/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustBrainLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
@@ -373,10 +373,10 @@
 /mob/living/proc/getStaminaLoss()
 	return staminaloss
 
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
-/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/alien/adjustStaminaLoss(amount, updating_stamina = 1)
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = 1)
@@ -814,7 +814,7 @@
 /mob/living/narsie_act()
 	if(is_servant_of_ratvar(src) && !stat)
 		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
-		adjustBruteLoss(35, 1, DAMAGE_MAGIC)
+		adjustBruteLoss(35)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return 0
@@ -829,7 +829,7 @@
 /mob/living/ratvar_act()
 	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
 		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35, 1, DAMAGE_MAGIC)
+		adjustFireLoss(35)
 		if(src)
 			adjust_fire_stacks(1)
 			IgniteMob()

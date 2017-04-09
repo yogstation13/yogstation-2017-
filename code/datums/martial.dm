@@ -9,8 +9,8 @@
 	var/block_chance = 0 //Chance to block melee attacks using items while on throw mode.
 	var/restraining = 0 //used in cqc's disarm_act to check if the disarmed is being restrained and so whether they should be put in a chokehold or not
 	var/help_verb = null
-<<<<<<< HEAD
 	var/no_ranged_weapons = FALSE
+	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
 
 /datum/martial_art/proc/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj)
 	if(user.incapacitated() || (user.dna && user.dna.check_mutation(HULK)))
@@ -20,10 +20,6 @@
 		playsound(user, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 		return TRUE
 	return FALSE
-=======
-	var/no_guns = FALSE
-	var/allow_temp_override = TRUE //if this martial art can be overridden by temporary martial arts
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
@@ -96,12 +92,9 @@
 		if(!H.martial_art.allow_temp_override)
 			return
 		base = H.martial_art
-<<<<<<< HEAD
 		no_ranged_weapons = no_ranged_weapons || base.no_ranged_weapons
-=======
 	if(help_verb)
 		H.verbs += help_verb
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
@@ -275,7 +268,6 @@
 /datum/martial_art/the_sleeping_carp
 	name = "The Sleeping Carp"
 	deflection_chance = 100
-	no_guns = TRUE
 	allow_temp_override = FALSE
 	help_verb = /mob/living/carbon/human/proc/sleeping_carp_help
 	no_ranged_weapons = TRUE
@@ -715,11 +707,7 @@
 	name = "bo staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts. Can be wielded to both kill and incapacitate."
 	force = 10
-<<<<<<< HEAD
-	w_class = 3
-=======
 	w_class = WEIGHT_CLASS_BULKY
->>>>>>> masterTGbranch
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 30
@@ -785,13 +773,7 @@
 
 /obj/item/weapon/twohanded/bostaff/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
 	if(wielded)
-<<<<<<< HEAD
 		if((attack_type == MELEE_ATTACK) || (attack_type == UNARMED_ATTACK)) //Don't use a stick against fucking bullets and lasers
 			final_block_chance = max(final_block_chance, melee_block_chance)
 		return ..(owner, attack_text, final_block_chance, damage, attack_type, AT)
 	return 0
-=======
-		return ..()
-	return 0
-
->>>>>>> masterTGbranch

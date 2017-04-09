@@ -289,12 +289,10 @@
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
-<<<<<<< HEAD
 	if(polling)
-=======
+		return
 	if(user.z != 1)
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	if(user.z != ZLEVEL_STATION)
 		user << "<span class='notice'>You should probably wait until you reach the station.</span>"
@@ -305,18 +303,10 @@
 	polling = FALSE
 	if(demon_candidates.len > 0)
 		used = 1
-<<<<<<< HEAD
-		var/mob/dead/observer/O = pick(demon_candidates)
-		var/client/C = O.client
-		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
-		user << shatter_msg
-		user << veil_msg
-=======
 		var/mob/dead/observer/theghost = pick(demon_candidates)
 		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 		qdel(src)
 	else

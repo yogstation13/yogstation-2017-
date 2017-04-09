@@ -112,7 +112,7 @@
 	var/turf/T = get_turf(src)
 	if(occupant)
 		var/mob/living/carbon/human/H = occupant
-		if(occupant.health >= 100 || (istype(H) && H.dna && H.dna.species && (DAMAGE_CHEMICAL in H.dna.species.heal_immunities)) ) // Don't bother with fully healed people or people that cryo cannot heal.
+		if(occupant.health >= 100 || (istype(H) && H.dna && H.dna.species) ) // Don't bother with fully healed people or people that cryo cannot heal.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.

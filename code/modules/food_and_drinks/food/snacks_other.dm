@@ -112,11 +112,7 @@
 	name = "burned mess"
 	desc = "Someone should be demoted from cook for this."
 	icon_state = "badrecipe"
-<<<<<<< HEAD
-	list_reagents = list("badfood" = 30)
-=======
 	list_reagents = list("bad_food" = 30)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	filling_color = "#8B4513"
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries

@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/drone/attack_hand(mob/user)
 	if(ishuman(user))
-		if(stat == DEAD || (GODMODE)status_flags) || !can_be_held)
+		if(stat == DEAD || (GODMODE in status_flags) || !can_be_held)
 			..()
 			return
 		if(user.get_active_held_item())

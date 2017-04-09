@@ -298,8 +298,6 @@
 	autolinkers = list("security")
 	keytype = /obj/item/device/encryptionkey/headset_sec
 
-<<<<<<< HEAD
-
 /obj/item/weapon/circuitboard/machine/telecomms/server
 	name = "circuit board (Telecommunication Server)"
 	build_path = /obj/machinery/telecomms/server
@@ -308,8 +306,3 @@
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/subspace/filter = 1)
-=======
-/obj/machinery/telecomms/server/presets/common/birdstation/New()
-	..()
-	freq_listening = list()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

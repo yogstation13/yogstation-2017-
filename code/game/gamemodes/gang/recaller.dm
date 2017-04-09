@@ -59,15 +59,9 @@
 
 		var/isboss = (user.mind == gang.bosses[1])
 		dat += "Registration: <B>[gang.name] Gang [isboss ? "Boss" : "Lieutenant"]</B><br>"
-<<<<<<< HEAD
-		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/start_state.num_territories)*100, 1)]%</B><br>"
-		dat += "Gang Influence: <B>[gang.points]</B><br>"
-		dat += "Time until Influence grows: <B>[(gang.points >= 999) ? ("--:--") : (time2text(ticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
-=======
 		dat += "Organization Size: <B>[gang.gangsters.len + gang.bosses.len]</B> | Station Control: <B>[round((gang.territory.len/GLOB.start_state.num_territories)*100, 1)]%</B><br>"
 		dat += "Gang Influence: <B>[gang.points]</B><br>"
 		dat += "Time until Influence grows: <B>[(gang.points >= 999) ? ("--:--") : (time2text(SSticker.mode.gang_points.next_point_time - world.time, "mm:ss"))]</B><br>"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		dat += "<hr>"
 
 
@@ -117,10 +111,6 @@
 		var/datum/gang_item/G = gang.item_list[href_list["purchase"]]
 		if(G && G.can_buy(usr, gang, src))
 			G.purchase(usr, gang, src, FALSE)
-<<<<<<< HEAD
-=======
-
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	attack_self(usr)
 
 
@@ -130,12 +120,9 @@
 	var/message = stripped_input(user,"Discreetly send a gang-wide message.","Send Message") as null|text
 	if(!message || !can_use(user))
 		return
-<<<<<<< HEAD
-=======
 	if(user.z > 2)
 		to_chat(user, "<span class='info'>\icon[src]Error: Station out of range.</span>")
 		return
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	var/list/members = list()
 	members += gang.gangsters
 	members += gang.bosses

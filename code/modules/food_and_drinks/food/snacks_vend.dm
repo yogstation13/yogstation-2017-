@@ -80,7 +80,7 @@
 	trash = /obj/item/trash/syndi_cakes
 	list_reagents = list("nutriment" = 4, "doctorsdelight" = 5)
 	filling_color = "#F5F5DC"
-<<<<<<< HEAD
+	tastes = list("sweetness" = 3, "cake" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/toritose
 	name = "toritos"
@@ -98,6 +98,3 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1, "sugar" = 2)
 	junkiness = 12
-=======
-	tastes = list("sweetness" = 3, "cake" = 1)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

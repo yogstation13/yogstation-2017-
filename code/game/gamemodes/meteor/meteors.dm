@@ -118,23 +118,15 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 			get_hit()
 
 /obj/effect/meteor/Destroy()
-<<<<<<< HEAD
 	GLOB.meteor_list -= src
-=======
-	meteor_list -= src
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
 /obj/effect/meteor/New()
 	..()
-<<<<<<< HEAD
 	GLOB.meteor_list += src
 	if(SSaugury)
 		SSaugury.register_doom(src, threat)
-=======
-	meteor_list += src
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	SpinAnimation()
 	QDEL_IN(src, lifetime)
 

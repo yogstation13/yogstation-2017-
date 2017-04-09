@@ -85,18 +85,15 @@
 		animal_damage = min(animal_damage, 20*user.environment_smash)
 		attack_generic(user, animal_damage, user.melee_damage_type, "melee", play_soundeffect)
 		add_logs(user, src, "attacked")
-<<<<<<< HEAD
-		
+		return 1
+
 /obj/mecha/narsie_act()
 	take_damage(120, "brute")
 	check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-	
+
 /obj/mecha/ratvar_act()
 	take_damage(120, "brute")
 	check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
-	
-=======
-		return 1
 
 
 /obj/mecha/hulk_damage()
@@ -111,7 +108,6 @@
 /obj/mecha/blob_act(obj/structure/blob/B)
 	take_damage(30, BRUTE, "melee", 0, get_dir(src, B))
 
->>>>>>> masterTGbranch
 /obj/mecha/attack_tk()
 	return
 
@@ -294,18 +290,6 @@
 
 
 /obj/mecha/mech_melee_attack(obj/mecha/M)
-<<<<<<< HEAD
-	if(M.damtype =="brute")
-		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-	else if(M.damtype == "fire")
-		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-	else
-		return
-	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-	take_damage(M.force, damtype, M.dir)
-	add_logs(M.occupant, src, "attacked", M, "(INTENT: [uppertext(M.occupant.a_intent)]) (DAMTYPE: [uppertext(M.damtype)])")
-	return
-=======
 	if(!has_charge(melee_energy_drain))
 		return 0
 	use_power(melee_energy_drain)
@@ -356,5 +340,3 @@
 			else if(damtype == TOX)
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
-
->>>>>>> masterTGbranch

@@ -46,37 +46,6 @@
 /obj/item/attack_self_tk(mob/user)
 	attack_self(user)
 
-<<<<<<< HEAD
-/obj/attack_tk(mob/user)
-	if(user.stat)
-		return
-	if(anchored)
-		..()
-		return
-
-	var/obj/item/tk_grab/O = new(src)
-	user.put_in_active_hand(O)
-	O.host = user
-	O.focus_object(src)
-	add_hiddenprint(user)
-	return
-
-/obj/item/attack_tk(mob/user)
-	if(user.stat)
-		return
-	var/obj/item/tk_grab/O = new(src)
-	user.put_in_active_hand(O)
-	O.host = user
-	O.focus_object(src)
-	add_hiddenprint(user)
-	return
-
-
-/mob/attack_tk(mob/user)
-	return // needs more thinking about
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
-
 /*
 	TK Grab Item (the workhorse of old TK)
 
@@ -153,19 +122,6 @@
 
 
 	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
-<<<<<<< HEAD
-		var/obj/item/I = focus
-		var/resolved = target.attackby(I, user, params)
-		if(!resolved && target && I)
-			I.afterattack(target,user,1) // for splashing with beakers
-			update_icon()
-	else
-		apply_focus_overlay()
-		focus.throw_at(target, 10, 1,user)
-		last_throw = world.time
-		user.changeNext_move(CLICK_CD_MELEE)
-		update_icon()
-=======
 		apply_focus_overlay()
 		melee_item_attack_chain(tk_user, focus, target, params) //isn't copying the attack chain fun. we should do it more often.
 		if(check_if_focusable(focus))
@@ -175,7 +131,6 @@
 		focus.throw_at(target, 10, 1,user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	update_icon()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
 	var/d = get_dist(user, target)

@@ -190,10 +190,7 @@
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
 	else
-<<<<<<< HEAD
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
-=======
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 
 ////////////////////////////////////////////////////
@@ -381,4 +378,3 @@
 
 /obj/effect/landmark/sectele/perma
 	arrest_type = "perma"
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

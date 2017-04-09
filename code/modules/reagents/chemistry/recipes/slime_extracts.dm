@@ -358,15 +358,10 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/TU = get_turf(holder.my_atom)
 	TU.visible_message("<span class='danger'>The slime extract begins to vibrate adorably!</span>")
-<<<<<<< HEAD
-	addtimer(src, "slime_burn", 50, TIMER_NORMAL, holder)
-	..()
-=======
 	addtimer(CALLBACK(src, .proc/slime_burn, holder), 50)
 	var/obj/item/slime_extract/M = holder.my_atom
 	deltimer(M.qdel_timer)
 	M.qdel_timer = addtimer(CALLBACK(src, .proc/delete_extract, holder), 55, TIMER_STOPPABLE)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/chemical_reaction/slime/slimefire/proc/slime_burn(datum/reagents/holder)
 	if(holder && holder.my_atom)

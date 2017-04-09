@@ -245,7 +245,6 @@
 	build_path = /obj/item/weapon/gun/energy/wormhole_projector
 	category = list("Weapons")
 
-<<<<<<< HEAD
 /datum/design/reciever
 	name = "Modular Receiver"
 	desc = "A prototype modular receiver and trigger assembly for a variety of firearms."
@@ -256,8 +255,6 @@
 	build_path = /obj/item/weaponcrafting/reciever
 	category = list("Weapons")
 
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 //WT550 Mags
 
 /datum/design/mag_oldsmg

@@ -1,7 +1,9 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-SUBSYSTEM_DEF(shuttle)
-	name = "Shuttle"
+var/datum/controller/subsystem/shuttle/SSshuttle
+
+/datum/controller/subsystem/shuttle
+	name = "Shuttles"
 	wait = 10
 	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
@@ -24,7 +26,6 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
-	var/canRecall = TRUE
 	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
@@ -41,12 +42,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
-	var/list/cooldown_ids = list()
-
 	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
 	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
+
+/datum/controller/subsystem/shuttle/New()
+	NEW_SS_GLOBAL(SSshuttle)
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
@@ -74,12 +76,12 @@ SUBSYSTEM_DEF(shuttle)
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(GLOB.transit_markers.len == 0)
+	if(transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
 	// transit zone
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(transit_markers[1])
+	var/turf/B = get_turf(transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -88,11 +90,11 @@ SUBSYSTEM_DEF(shuttle)
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(GLOB.transit_markers.len == 0)
+	if(transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
-	var/turf/A = get_turf(GLOB.transit_markers[1])
-	var/turf/B = get_turf(GLOB.transit_markers[2])
+	var/turf/A = get_turf(transit_markers[1])
+	var/turf/B = get_turf(transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -177,8 +179,8 @@ SUBSYSTEM_DEF(shuttle)
 			return
 		emergency = backup_shuttle
 
-	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	if(world.time - round_start_time < config.shuttle_refuel_delay)
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
@@ -238,13 +240,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
-<<<<<<< HEAD:code/controllers/subsystem/shuttles.dm
-	if(!canRecall)
-		return
 	if(ticker.mode.name == "meteor")
-=======
-	if(SSticker.mode.name == "meteor")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc:code/controllers/subsystem/shuttle.dm
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
@@ -262,7 +258,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
-	for(var/thing in GLOB.shuttle_caller_list)
+	for(var/thing in shuttle_caller_list)
 		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
@@ -328,16 +324,8 @@ SUBSYSTEM_DEF(shuttle)
 			return 2
 	return 0	//dock successful
 
-/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed, ignoreCD)
-	for(var/a in cooldown_ids)
-		if(a == shuttleId)
-			if(!ignoreCD)
-				return 3
 
-<<<<<<< HEAD:code/controllers/subsystem/shuttles.dm
-=======
 /datum/controller/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc:code/controllers/subsystem/shuttle.dm
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 

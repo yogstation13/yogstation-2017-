@@ -35,10 +35,10 @@ Bonus
 			if(3, 4)
 <<<<<<< HEAD
 				M << "<span class='warning'><b>[pick("You feel very frail.", "You think you might faint.")]</span>"
-				M.adjustStaminaLoss(15, 1, DAMAGE_DISEASE)
+				M.adjustStaminaLoss(15)
 			else
 				M << "<span class='userdanger'>[pick("You feel tremendously weak!", "Your body trembles as exhaustion creeps over you.")]</span>"
-				M.adjustStaminaLoss(30, 1, DAMAGE_DISEASE)
+				M.adjustStaminaLoss(30)
 =======
 				to_chat(M, "<span class='warning'><b>[pick("You feel very frail.", "You think you might faint.")]</span>")
 				M.adjustStaminaLoss(15)

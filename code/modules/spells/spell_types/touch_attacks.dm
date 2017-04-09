@@ -58,7 +58,6 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
-<<<<<<< HEAD
 	sound = "sound/magic/FleshToStone.ogg"
 
 /obj/effect/proc_holder/spell/targeted/touch/bless
@@ -71,6 +70,3 @@
 	charge_max = 60
 	clothes_req = 0
 	cooldown_min = 30
-=======
-	sound = 'sound/magic/FleshToStone.ogg'
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

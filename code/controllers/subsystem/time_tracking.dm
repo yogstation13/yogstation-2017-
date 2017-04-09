@@ -1,7 +1,9 @@
-SUBSYSTEM_DEF(time_track)
+var/datum/controller/subsystem/time_track/SStime_track
+
+/datum/controller/subsystem/time_track
 	name = "Time Tracking"
 	wait = 600
-	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY|SS_NO_TICK_CHECK
+	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY
 
 	var/time_dilation_current = 0
 
@@ -14,6 +16,9 @@ SUBSYSTEM_DEF(time_track)
 	var/last_tick_realtime = 0
 	var/last_tick_byond_time = 0
 	var/last_tick_tickcount = 0
+
+/datum/controller/subsystem/time_track/New()
+	NEW_SS_GLOBAL(SStime_track)
 
 /datum/controller/subsystem/time_track/fire()
 

@@ -99,13 +99,8 @@
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
 	generate_station_goals()
-<<<<<<< HEAD
 	GLOB.start_state = new /datum/station_state()
 	GLOB.start_state.count(1)
-=======
-	start_state = new /datum/station_state()
-	start_state.count(1)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	return 1
 
 
@@ -158,15 +153,9 @@
 
 	var/list/antag_candidates = list()
 
-<<<<<<< HEAD
 	for(var/mob/living/carbon/human/H in get_playing_crewmembers_for_role(replacementmode.antag_flag, replacementmode.restricted_jobs))
 		if(H.client && (H.stat != DEAD) && H.client.prefs.allow_midround_antag)
 			antag_canadates += H
-=======
-	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag)
-			antag_candidates += H
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	if(!antag_candidates)
 		message_admins("Convert_roundtype failed due to no antag candidates.")
@@ -174,16 +163,12 @@
 
 	antag_candidates = shuffle(antag_candidates)
 
-<<<<<<< HEAD
-	message_admins("The roundtype will be converted. If you have other plans for the station or think the round should end <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
-=======
 	if(config.protect_roles_from_antagonist)
 		replacementmode.restricted_jobs += replacementmode.protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		replacementmode.restricted_jobs += "Assistant"
 
 	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;toggle_midround_antag=\ref[usr]'>stop the creation of antags</A> or <A HREF='?_src_=holder;end_round=\ref[usr]'>end the round now</A>.")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	spawn(rand(600,1800)) //somewhere between 1 and 3 minutes from now
 		if(!config.midround_antag[SSticker.mode.config_tag])
@@ -399,15 +384,9 @@
 			G.on_report()
 			intercepttext += G.get_report()
 
-<<<<<<< HEAD
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
-=======
-	print_command_report(intercepttext,"Centcom Status Summary")
-	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
-	if(security_level < SEC_LEVEL_BLUE)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		set_security_level(SEC_LEVEL_BLUE)
 
 // Function to pull an antag from our list of antag candidates, by default, use antag_candidates, but can specify
@@ -604,7 +583,7 @@
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
 
-<<<<<<< HEAD
+
 /datum/game_mode/proc/get_playing_crewmembers_for_role(role, restricted_jobs_for, on_station = 1)
 	var/list/mob/living/carbon/human/candidates = list()
 	var/list/crewmembers = list()
@@ -632,14 +611,6 @@
 		candidates += applicant
 
 	return candidates
-=======
-/*
-/datum/game_mode/proc/check_player_role_pref(var/role, var/mob/dead/new_player/player)
-	if(player.preferences.be_special & role)
-		return 1
-	return 0
-*/
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/game_mode/proc/num_players()
 	. = 0
@@ -795,16 +766,10 @@
 		M.key = theghost.key
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-<<<<<<< HEAD
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
 	SSticker.mode.remove_revolutionary(newborgie, 0)
 	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
-=======
-	ticker.mode.remove_cultist(newborgie, 0, 0)
-	ticker.mode.remove_revolutionary(newborgie, 0)
-	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()
@@ -823,8 +788,4 @@
 /datum/game_mode/proc/declare_station_goal_completion()
 	for(var/V in station_goals)
 		var/datum/station_goal/G = V
-<<<<<<< HEAD
 		G.print_result()
-=======
-		G.print_result()
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

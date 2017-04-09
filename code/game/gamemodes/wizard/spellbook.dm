@@ -977,13 +977,12 @@
 	new real_type(loc)
 	qdel(src)
 
-<<<<<<< HEAD
 /obj/item/weapon/spellbook/oneuse/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"
 	icon_state ="booksacredflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."
-=======
+
 /obj/item/weapon/spellbook/oneuse/mime
 	spell = /obj/effect/proc_holder/spell/targeted/mime/speak
 	spellname = "how to mime"
@@ -1010,7 +1009,3 @@
 	icon_state ="bookcharge"
 	desc = "This version has no limits unlike the roundstart mimes!"
 	color = "#000000"
-
-
-
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

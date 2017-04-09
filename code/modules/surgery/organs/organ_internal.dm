@@ -195,10 +195,9 @@
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
-<<<<<<< HEAD
 		if(Restart())
 			user.visible_message("<span class='notice'>[user] squeezes [src] to make it beat again!</span>")
-			addtimer(src, "stop_if_unowned", 80)
+			addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
 		else
 			user.visible_message("<span class='warning'>[user] squeezes [src], but it does not start to beat.</span>")
 
@@ -209,13 +208,6 @@
 			if(H.heart_attack)
 				H.heart_attack = 0
 		return 1
-=======
-		visible_message("<span class='notice'>[user] squeezes [src] to \
-			make it beat again!</span>", "<span class='notice'>You squeeze \
-			[src] to make it beat again!</span>")
-		Restart()
-		addtimer(CALLBACK(src, .proc/stop_if_unowned), 80)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/organ/heart/proc/Stop()
 	beating = 0
@@ -315,9 +307,9 @@
 				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
 				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
 				cursed_heart.add_colour = TRUE
-				H.adjustBruteLoss(-cursed_heart.heal_brute, 1, DAMAGE_MAGIC)
-				H.adjustFireLoss(-cursed_heart.heal_burn, 1, DAMAGE_MAGIC)
-				H.adjustOxyLoss(-cursed_heart.heal_oxy, 1, DAMAGE_MAGIC)
+				H.adjustBruteLoss(-cursed_heart.heal_brute)
+				H.adjustFireLoss(-cursed_heart.heal_burn)
+				H.adjustOxyLoss(-cursed_heart.heal_oxy)
 
 
 /datum/client_colour/cursed_heart_blood
@@ -828,8 +820,7 @@
 /obj/item/organ/appendix/prepare_eat()
 	var/obj/S = ..()
 	if(inflamed)
-<<<<<<< HEAD
-		S.reagents.add_reagent("badfood", 5)
+		S.reagents.add_reagent("bad_food", 5)
 	return S
 
 /obj/item/organ/shadowtumor
@@ -861,9 +852,6 @@
 		if(health <= 0)
 			visible_message("<span class='warning'>[src] collapses in on itself!</span>")
 			qdel(src)
-=======
-		S.reagents.add_reagent("bad_food", 5)
-	return S
 
 /mob/living/proc/regenerate_organs()
 	return 0
@@ -920,17 +908,18 @@
 	var/see_invisible = SEE_INVISIBLE_LIVING
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/HMN = owner
-		old_eye_color = HMN.eye_color
-		if(eye_color)
-			HMN.eye_color = eye_color
-			HMN.regenerate_icons()
-		else
-			eye_color = HMN.eye_color
-	M.update_tint()
-	owner.update_sight()
+	if(..())
+		if(ishuman(owner))
+			var/mob/living/carbon/human/HMN = owner
+			old_eye_color = HMN.eye_color
+			if(eye_color)
+				HMN.eye_color = eye_color
+				HMN.regenerate_icons()
+			else
+				eye_color = HMN.eye_color
+		M.update_tint()
+		owner.update_sight()
+		return 1
 
 /obj/item/organ/eyes/Remove(mob/living/carbon/M, special = 0)
 	..()

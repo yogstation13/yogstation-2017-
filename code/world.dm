@@ -29,23 +29,12 @@
 #endif
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
-<<<<<<< HEAD
-	href_logfile = file("data/logs/[date_string] hrefs.htm")
-	diary = file("data/logs/[date_string].log")
-	admindiary = file("data/logs/[date_string] Admin.log")
-	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	admindiary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
-=======
 	GLOB.href_logfile = file("data/logs/[date_string] hrefs.htm")
 	GLOB.diary = file("data/logs/[date_string].log")
 	GLOB.diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	GLOB.diary << "\n\nStarting up. [time_stamp()]\n---------------------"
 	GLOB.diaryofmeanpeople << "\n\nStarting up. [time_stamp()]\n---------------------"
 	GLOB.changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	var/roundfile = file("data/roundcount.txt")
 	yog_round_number = text2num(file2text(roundfile))
@@ -72,16 +61,12 @@
 	load_donators()
 	investigate_reset()
 
-<<<<<<< HEAD
 	setup_pretty_filter()
 
 	if(config && config.server_name != null && config.server_suffix && world.port > 0)
 		config.server_name += " #[(world.port % 1000) / 100]"
 
-	timezoneOffset = text2num(time2text(0,"hh")) * 36000
-=======
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	if(config.sql_enabled)
 		if(!GLOB.dbcon.Connect())

@@ -159,7 +159,7 @@
 	dust()
 
 /mob/living/simple_animal/drone/ratvar_act()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 
 	if(internal_storage)

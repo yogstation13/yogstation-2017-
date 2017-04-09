@@ -138,7 +138,7 @@
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle)
 =======
-	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/shuttle)
+	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/shuttle, , /area/storage/emergency, /area/storage/emergency2)
 >>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	target_z = ZLEVEL_STATION
 

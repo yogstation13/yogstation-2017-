@@ -52,7 +52,7 @@
 				var/datum/software/M = V
 				if(antivirus_check(M))
 					M.uninfect()
-			timerID = addtimer(src, "antivirus_sweep", wait_time)
+			timerID = addtimer(CALLBACK(src, .proc/antivirus_sweep), wait_time)
 
 /datum/software/antivirus/nt_antivirus/uninfect()
 	deltimer(timerID)

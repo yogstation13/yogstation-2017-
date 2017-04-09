@@ -73,7 +73,6 @@
 	ckey = ckey(key)
 	soulOwner = src
 
-<<<<<<< HEAD
 /datum/mind/proc/get_outfit_browser(type)
 	if(!outfit_browsers)
 		outfit_browsers = list()
@@ -83,11 +82,10 @@
 	B = new type(src)
 	outfit_browsers[type] = B
 	return B
-=======
+
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	return ..()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(outfit_browsers)
@@ -202,13 +200,8 @@
 
 
 /datum/mind/proc/remove_gang()
-<<<<<<< HEAD
-	ticker.mode.remove_gangster(src,0,1,1)
+	SSticker.mode.remove_gangster(src,0,1,1)
 	remove_objectives()
-=======
-		SSticker.mode.remove_gangster(src,0,1,1)
-		remove_objectives()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
@@ -1427,15 +1420,8 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
-<<<<<<< HEAD
-	if(quiet_round)
-		return
-	if(!(src in ticker.mode.traitors))
-		ticker.mode.traitors += src
-=======
 	if(!(src in SSticker.mode.traitors))
 		SSticker.mode.traitors += src
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		special_role = "traitor"
 		SSticker.mode.forge_traitor_objectives(src)
 		SSticker.mode.finalize_traitor(src)
@@ -1484,15 +1470,8 @@
 			current.real_name = "[syndicate_name()] Operative #[SSticker.mode.syndicates.len-1]"
 
 /datum/mind/proc/make_Changling()
-<<<<<<< HEAD
-	if(quiet_round)
-		return
-	if(!(src in ticker.mode.changelings))
-		ticker.mode.changelings += src
-=======
 	if(!(src in SSticker.mode.changelings))
 		SSticker.mode.changelings += src
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		current.make_changeling()
 		special_role = "Changeling"
 		SSticker.mode.forge_changeling_objectives(src)
@@ -1500,15 +1479,10 @@
 		SSticker.mode.update_changeling_icons_added(src)
 
 /datum/mind/proc/make_Wizard()
-<<<<<<< HEAD
-	if(quiet_round)
-		return
 	if(!(src in ticker.mode.wizards))
 		ticker.mode.wizards += src
-=======
 	if(!(src in SSticker.mode.wizards))
 		SSticker.mode.wizards += src
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		special_role = "Wizard"
 		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
@@ -1643,11 +1617,7 @@
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		if(istype(S, spell))
-<<<<<<< HEAD
 			S.Removed(src)
-			qdel(S)
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			spell_list -= S
 			qdel(S)
 

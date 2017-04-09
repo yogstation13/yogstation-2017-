@@ -163,13 +163,9 @@
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		try_to_weld(I, user)
 		return 1
-<<<<<<< HEAD
 	else if(istype(I, /obj/item/weapon/katana/energy))
 		return ..()
-	else if(!(I.flags & NOBLUDGEON) && user.a_intent != "harm")
-=======
 	else if(!(I.flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
->>>>>>> masterTGbranch
 		try_to_activate_door(user)
 		return 1
 	return ..()

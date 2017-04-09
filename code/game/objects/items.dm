@@ -38,14 +38,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-<<<<<<< HEAD
-	var/list/actions = list() //list of /datum/action's that this item has.
-	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
 	var/datum/chameleon/chameleon = null
-=======
 	var/list/actions //list of /datum/action's that this item has.
 	var/list/actions_types //list of paths of action datums to give to the item on New().
->>>>>>> masterTGbranch
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -106,8 +101,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	//Need it for hit_reaction() and check_for_positions() calls.
 	var/thrower_dir
 
@@ -121,14 +114,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
-=======
->>>>>>> masterTGbranch
-/obj/item/New()
-	if (!armor)
-		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
-=======
 /obj/item/Initialize()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if (!materials)
 		materials = list()
 	..()
@@ -139,7 +125,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 	actions_types = null
 
 /obj/item/Destroy()
-<<<<<<< HEAD
 	if(high_risk)
 		var/turf/T = get_turf(src)
 		if(high_risk_item_notifications)
@@ -150,12 +135,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		var/mob/m = loc
 		m.unEquip(src, 1)
 	qdel(chameleon)
-=======
 	flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	for(var/X in actions)
 		qdel(X)
 	if(module_holder)
@@ -163,7 +146,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		module_holder = null
 	return ..()
 
-<<<<<<< HEAD
 /obj/item/on_z_level_change()
 	if(high_risk)
 		var/turf/T = get_turf(src)
@@ -177,9 +159,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 			log_game("Antag objective item [src] changed z levels at (no loc). Last associated key is [src.fingerprintslast].")
 	..()
 
-/obj/item/blob_act(obj/effect/blob/B)
-	qdel(src)
-=======
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
@@ -188,7 +167,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		return 0
 	else
 		return 1
->>>>>>> masterTGbranch
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -364,61 +342,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-<<<<<<< HEAD
-	if(unique_rename && istype(W, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		if(istype(W,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = W
-			if(S.use_to_pickup)
-				if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-					if(isturf(src.loc))
-						var/list/rejections = list()
-						var/success = 0
-						var/failure = 0
-
-						for(var/obj/item/I in src.loc)
-							if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
-								failure = 1
-								continue
-							if(I.type in rejections) // To limit bag spamming: any given type only complains once
-								continue
-							if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
-								rejections += I.type	// therefore full bags are still a little spammy
-								failure = 1
-								continue
-
-							success = 1
-							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-						if(success && !failure)
-							user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
-						else if(success)
-							user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
-						else
-							user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
-
-				else if(S.can_be_inserted(src))
-					S.handle_item_insertion(src)
-
-	if(ismodule(W))
-		if(!module_holder)
-			user << "<span class='warning'>This equipment doesn't support modules.</span>"
-			return
-		var/obj/item/module/module = W
-		var/return_value = module_holder.install(module, user)
-		if(return_value != 1) //1 if success, otherwise message
-			user << "<span class='warning'>[return_value]</span>"
-		else
-			user << "<span class='notice'>You successfully install \the [module.name] into [src]."
-
-	if(ismodholder(W))
-		if(module_holder)
-			user << "<span class='notice'>There's already a module holder installed!</span>"
-			return
-		var/obj/item/module_holder/holder = W
-		if(holder.install_holder(src, user))
-			user << "<span class='notice>You install the module holder into [src].</span>"
-=======
 	if(istype(W,/obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
@@ -467,7 +390,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 
 	progress.update(progress.goal - things.len)
 	return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -658,7 +580,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		throw_at(S,14,3, spin=0)
 	else ..()
 
-<<<<<<< HEAD
 /obj/item/acid_act(acidpwr, acid_volume)
 	. = 1
 	if(unacidable)
@@ -689,34 +610,19 @@ GLOBAL_DATUM_INIT(fire_overlay, /image, image("icon" = 'icons/effects/fire.dmi',
 		if(!findtext(desc, "it looks slightly melted...")) //it looks slightly melted... it looks slightly melted... it looks slightly melted... etc.
 			desc += " it looks slightly melted..." //needs a space at the start, formatting
 
-/obj/item/throw_impact(atom/A, tdir)
-=======
 /obj/item/throw_impact(atom/A)
-<<<<<<< HEAD
->>>>>>> masterTGbranch
-	var/itempush = 1
-	if(w_class < 4)
-		itempush = 0 //too light to push anything
-	return A.hitby(src, 0, itempush)
-=======
 	if(A && !QDELETED(A))
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
 		return A.hitby(src, 0, itempush)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	thrownby = thrower
-<<<<<<< HEAD
 	if(thrower)
 		thrower_dir = thrower.dir
-	. = ..()
-	throw_speed = initial(throw_speed) //explosions change this.
-=======
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /obj/item/proc/after_throw(datum/callback/callback)

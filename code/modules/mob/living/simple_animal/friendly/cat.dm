@@ -93,21 +93,12 @@
 	Read_Memory()
 	..()
 
-<<<<<<< HEAD
 ///mob/living/simple_animal/pet/cat/Runtime/Life()
 //	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
 //		Deploy_The_Cats()
 //	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 //		Write_Memory()
 //	..()
-=======
-/mob/living/simple_animal/pet/cat/Runtime/Life()
-	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
-		Deploy_The_Cats()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory()
-	..()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /mob/living/simple_animal/pet/cat/Runtime/make_babies()
 	var/mob/baby = ..()

@@ -94,7 +94,7 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(!help_check)
-		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
+		if(user.stat > stat_allowed  || (FAKEDEATH in user.status_flags))
 			return FALSE
 		if(restraint_check && user.restrained())
 			return FALSE

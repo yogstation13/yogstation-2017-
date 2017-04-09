@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(job)
+var/datum/controller/subsystem/job/SSjob
+
+/datum/controller/subsystem/job
 	name = "Jobs"
 	init_order = 14
 	flags = SS_NO_FIRE
@@ -9,9 +11,12 @@ SUBSYSTEM_DEF(job)
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
-	var/list/prioritized_jobs = list()
 
 	var/list/prioritized_jobs = list()
+
+/datum/controller/subsystem/job/New()
+	NEW_SS_GLOBAL(SSjob)
+
 
 /datum/controller/subsystem/job/Initialize(timeofday)
 	if(!occupations.len)
@@ -47,7 +52,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/Debug(text)
-	if(!GLOB.Debug2)
+	if(!Debug2)
 		return 0
 	job_debug.Add(text)
 	return 1
@@ -104,9 +109,6 @@ SUBSYSTEM_DEF(job)
 		if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
 			Debug("FOC non-human failed, Player: [player]")
 			continue
-		if(((job.title in command_positions) || (job.title in nonhuman_positions)) && (player.client.prefs.toggles & QUIET_ROUND))
-			Debug("FOC quiet check failed, Player: [player]")
-			continue
 		if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 			Debug("FOC pass, Player: [player], Level:[level]")
 			candidates += player
@@ -114,7 +116,6 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
 	Debug("GRJ Giving random job, Player: [player]")
-	. = FALSE
 	for(var/datum/job/job in shuffle(occupations))
 		if(!job)
 			continue
@@ -122,7 +123,7 @@ SUBSYSTEM_DEF(job)
 		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
 			continue
 
-		if(job.title in GLOB.command_positions) //If you want a command position, select it!
+		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -144,11 +145,12 @@ SUBSYSTEM_DEF(job)
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			Debug("GRJ Random job given, Player: [player], Job: [job]")
-			if(AssignRole(player, job.title))
-				return TRUE
+			AssignRole(player, job.title)
+			unassigned -= player
+			break
 
 /datum/controller/subsystem/job/proc/ResetOccupations()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if((player) && (player.mind))
 			player.mind.assigned_role = null
 			player.mind.special_role = null
@@ -160,15 +162,9 @@ SUBSYSTEM_DEF(job)
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
-<<<<<<< HEAD:code/controllers/subsystem/jobs.dm
-/datum/subsystem/job/proc/FillHeadPosition()
-	for(var/level = 1 to 4)
-		for(var/command_position in command_positions)
-=======
 /datum/controller/subsystem/job/proc/FillHeadPosition()
 	for(var/level = 1 to 3)
-		for(var/command_position in GLOB.command_positions)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc:code/controllers/subsystem/job.dm
+		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
 				continue
@@ -186,7 +182,7 @@ SUBSYSTEM_DEF(job)
 //This proc is called at the start of the level loop of DivideOccupations() and will cause head jobs to be checked before any other jobs of the same level
 //This is also to ensure we get as many heads as possible
 /datum/controller/subsystem/job/proc/CheckHeadPositions(level)
-	for(var/command_position in GLOB.command_positions)
+	for(var/command_position in command_positions)
 		var/datum/job/job = GetJob(command_position)
 		if(!job)
 			continue
@@ -197,6 +193,8 @@ SUBSYSTEM_DEF(job)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
+	return
+
 
 /datum/controller/subsystem/job/proc/FillAIPosition()
 	var/ai_selected = 0
@@ -204,7 +202,7 @@ SUBSYSTEM_DEF(job)
 	if(!job)
 		return 0
 	for(var/i = job.total_positions, i > 0, i--)
-		for(var/level = 1 to 4)
+		for(var/level = 1 to 3)
 			var/list/candidates = list()
 			candidates = FindOccupationCandidates(job, level)
 			if(candidates.len)
@@ -225,14 +223,14 @@ SUBSYSTEM_DEF(job)
 	//Setup new player list and get the jobs list
 	Debug("Running DO")
 
-	//Holder for Triumvirate is stored in the SSticker, this just processes it
-	if(SSticker)
+	//Holder for Triumvirate is stored in the ticker, this just processes it
+	if(ticker)
 		for(var/datum/job/ai/A in occupations)
-			if(SSticker.triai)
+			if(ticker.triai)
 				A.spawn_positions = 3
 
 	//Get the players who are ready
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.ready && player.mind && !player.mind.assigned_role)
 			unassigned += player
 
@@ -260,7 +258,7 @@ SUBSYSTEM_DEF(job)
 	//People who wants to be assistants, sure, go on.
 	Debug("DO, Running Assistant Check 1")
 	var/datum/job/assist = new /datum/job/assistant()
-	var/list/assistant_candidates = FindOccupationCandidates(assist, 4)
+	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
 	Debug("AC1, Candidates: [assistant_candidates.len]")
 	for(var/mob/dead/new_player/player in assistant_candidates)
 		Debug("AC1 pass, Player: [player]")
@@ -288,7 +286,7 @@ SUBSYSTEM_DEF(job)
 
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(occupations)
-	for(var/level = 1 to 4)
+	for(var/level = 1 to 3)
 		//Check the head jobs first each level
 		CheckHeadPositions(level)
 
@@ -358,8 +356,7 @@ SUBSYSTEM_DEF(job)
 			RejectPlayer(player)
 
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
-		if(!GiveRandomJob(player))
-			AssignRole(player, "Assistant") //If everything is already filled, make them an assistant
+		GiveRandomJob(player)
 
 	return 1
 
@@ -380,7 +377,7 @@ SUBSYSTEM_DEF(job)
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
 			if(sloc.name != rank)
 				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
 				continue
@@ -390,7 +387,7 @@ SUBSYSTEM_DEF(job)
 			break
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			S = get_turf(pick(GLOB.latejoin))
+			S = get_turf(pick(latejoin))
 		if(!S) //final attempt, lets find some area in the arrivals shuttle to spawn them in to.
 			log_world("Couldn't find a round start latejoin spawn point.")
 			for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
@@ -449,10 +446,10 @@ SUBSYSTEM_DEF(job)
 	if(equip_needed < 0) // -1: infinite available slots
 		equip_needed = 12
 	for(var/i=equip_needed-5, i>0, i--)
-		if(GLOB.secequipment.len)
-			var/spawnloc = GLOB.secequipment[1]
+		if(secequipment.len)
+			var/spawnloc = secequipment[1]
 			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
-			GLOB.secequipment -= spawnloc
+			secequipment -= spawnloc
 		else //We ran out of spare locker spawns!
 			break
 
@@ -469,31 +466,20 @@ SUBSYSTEM_DEF(job)
 	for(var/datum/job/job in occupations)
 		var/tmp_str = "|[job.title]|"
 
-<<<<<<< HEAD:code/controllers/subsystem/jobs.dm
-		var/level1 = 0 //ultra
-		var/level2 = 0 //high
-		var/level3 = 0 //medium
-		var/level4 = 0 //low
-		var/level5 = 0 //never
-		var/level6 = 0 //banned
-		var/level7 = 0 //account too young
-		for(var/mob/new_player/player in player_list)
-=======
 		var/level1 = 0 //high
 		var/level2 = 0 //medium
 		var/level3 = 0 //low
 		var/level4 = 0 //never
 		var/level5 = 0 //banned
 		var/level6 = 0 //account too young
-		for(var/mob/dead/new_player/player in GLOB.player_list)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc:code/controllers/subsystem/job.dm
+		for(var/mob/dead/new_player/player in player_list)
 			if(!(player.ready && player.mind && !player.mind.assigned_role))
 				continue //This player is not ready
 			if(jobban_isbanned(player, job.title))
-				level6++
+				level5++
 				continue
 			if(!job.player_old_enough(player.client))
-				level7++
+				level6++
 				continue
 			if(player.client.prefs.GetJobDepartment(job, 1) & job.flag)
 				level1++
@@ -501,11 +487,9 @@ SUBSYSTEM_DEF(job)
 				level2++
 			else if(player.client.prefs.GetJobDepartment(job, 3) & job.flag)
 				level3++
-			else if(player.client.prefs.GetJobDepartment(job, 4) & job.flag)
-				level4++
-			else level5++ //not selected
+			else level4++ //not selected
 
-		tmp_str += "ULTRA=[level1]|HIGH=[level2]|MEDIUM=[level3]|LOW=[level4]|NEVER=[level5]|BANNED=[level6]|YOUNG=[level7]|-"
+		tmp_str += "HIGH=[level1]|MEDIUM=[level2]|LOW=[level3]|NEVER=[level4]|BANNED=[level5]|YOUNG=[level6]|-"
 		feedback_add_details("job_preferences",tmp_str)
 
 /datum/controller/subsystem/job/proc/PopcapReached()
@@ -528,7 +512,6 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/Recover()
 	set waitfor = FALSE
 	var/oldjobs = SSjob.occupations
-<<<<<<< HEAD:code/controllers/subsystem/job.dm
 	sleep(20)
 	for (var/datum/job/J in oldjobs)
 		INVOKE_ASYNC(src, .proc/RecoverJob, J)
@@ -540,38 +523,3 @@ SUBSYSTEM_DEF(job)
 	newjob.total_positions = J.total_positions
 	newjob.spawn_positions = J.spawn_positions
 	newjob.current_positions = J.current_positions
-=======
-	spawn(20)
-		for (var/datum/job/J in oldjobs)
-			spawn(-1)
-				var/datum/job/newjob = GetJob(J.title)
-				if (!istype(newjob))
-					return
-				newjob.total_positions = J.total_positions
-				newjob.spawn_positions = J.spawn_positions
-				newjob.current_positions = J.current_positions
-
-// Use it for generic or non-generic (in new_player.dm) reasons.
-/datum/subsystem/job/proc/IsJobAvailable(rank, var/mob/new_player/NP)
-	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)
-		return 0
-	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == "Assistant")
-			if(NP)
-				if(isnum(NP.client.player_age) && NP.client.player_age <= 14) //Newbies can always be assistants
-					return 1
-			for(var/datum/job/J in SSjob.occupations)
-				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
-		else
-			return 0
-	if(jobban_isbanned(src,rank))
-		return 0
-	if(NP)
-		if(!job.player_old_enough(NP.client))
-			return 0
-		if(config.enforce_human_authority && !NP.client.prefs.pref_species.qualifies_for_rank(rank, NP.client.prefs.features))
-			return 0
-	return 1
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee:code/controllers/subsystem/jobs.dm

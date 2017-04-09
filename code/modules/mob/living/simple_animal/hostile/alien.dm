@@ -347,7 +347,7 @@
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
-<<<<<<< HEAD
+		return TRUE
 
 /mob/living/simple_animal/hostile/alien/maid/adjustHealth(amount)
 	. = ..()
@@ -357,6 +357,3 @@
 		desc = initial(desc)
 
 #undef ALIEN_HAUL_ASS
-=======
-		return TRUE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

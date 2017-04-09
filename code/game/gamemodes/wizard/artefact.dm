@@ -143,13 +143,8 @@
 	if(!istype(user) || !user.canUseTopic(M,1))
 		return
 
-<<<<<<< HEAD
-	if(M.stat == CONSCIOUS)
-		user << "<span class='warning'>Kill or maim the victim first!</span>"
-=======
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 
 	if(!M.mind || !M.client)
@@ -157,13 +152,8 @@
 		return
 
 	check_spooky()//clean out/refresh the list
-<<<<<<< HEAD
 	if(spooky_scaries.len >= max_spookies && !unlimited)
-		user << "<span class='warning'>This artifact can only affect [max_spookies] thralls at a time!</span>"
-=======
-	if(spooky_scaries.len >= 3 && !unlimited)
-		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+		to_chat(user, "<span class='warning'>This artifact can only affect [max_spookies] undead at a time!</span>")
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
@@ -495,13 +485,8 @@
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
 			target.Weaken(2)
 			GiveHint(target)
-<<<<<<< HEAD
 		else if(istype(I,/obj/item/device/assembly/bikehorn))
-			target << "<span class='userdanger'>HONK</span>"
-=======
-		else if(istype(I,/obj/item/weapon/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			target << 'sound/items/AirHorn.ogg'
 			target.adjustEarDamage(0,3)
 			GiveHint(target)
@@ -791,7 +776,7 @@
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
 		last_user.invisibility = initial(last_user.invisibility)
-		last_user.status_flags &= ~GODMODE
+		last_user.status_flags -= GODMODE
 		last_user.canmove = 1
 	return ..()
 

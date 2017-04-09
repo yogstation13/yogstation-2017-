@@ -722,7 +722,7 @@ mob/verb/makePAI(var/turf/t in view())
 	. = ..()
 
 /mob/living/silicon/pai/updatehealth()
-	if(status_flags & GODMODE)
+	if(GODMODE in status_flags)
 		return
 	health = maxHealth - getBruteLoss() - getFireLoss()
 	update_stat()

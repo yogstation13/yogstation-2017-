@@ -212,11 +212,7 @@
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE
 	use_power(power_used_per_shot)
-<<<<<<< HEAD
-	addtimer(CALLBACK(src,"ready_cannon"),600)
-=======
-	addtimer(src, "ready_cannon", 600)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+	addtimer(CALLBACK(src,.proc/ready_cannon),600)
 
 /obj/machinery/bsa/full/proc/ready_cannon()
 	ready = TRUE

@@ -1,4 +1,6 @@
-SUBSYSTEM_DEF(title)
+var/datum/controller/subsystem/title/SStitle
+
+/datum/controller/subsystem/title
 	name = "Title Screen"
 	flags = SS_NO_FIRE|SS_NO_INIT
 
@@ -7,15 +9,15 @@ SUBSYSTEM_DEF(title)
 	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
-/datum/controller/subsystem/title/PreInit()
+/datum/controller/subsystem/title/New()
+	NEW_SS_GLOBAL(SStitle)
+
 	if(file_path && icon)
 		return
 
 	if(fexists("data/previous_title.dat"))
-		var/previous_path = file2text("data/previous_title.dat")
-		if(istext(previous_path))
-			previous_icon = new(previous_icon)
-	fdel("data/previous_title.dat")
+		previous_icon = new("data/previous_title.dat")
+		fdel("data/previous_title.dat")	//linger not
 
 	var/list/provisional_title_screens = flist("config/title_screens/images/")
 	var/list/title_screens = list()
@@ -41,18 +43,9 @@ SUBSYSTEM_DEF(title)
 		if(splash_turf)
 			splash_turf.icon = icon
 
-/datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
-	. = ..()
-	if(.)
-		switch(var_name)
-			if("icon")
-				if(splash_turf)
-					splash_turf.icon = icon
-
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
-		var/F = file("data/previous_title.dat")
-		F << file_path
+		fcopy(file_path, "data/previous_title.dat")
 
 /datum/controller/subsystem/title/Recover()
 	icon = SStitle.icon

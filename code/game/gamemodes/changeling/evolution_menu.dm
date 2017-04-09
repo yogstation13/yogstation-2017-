@@ -27,13 +27,8 @@
 		to_chat(user, "We have reached our capacity for abilities.")
 		return
 
-<<<<<<< HEAD
 	if(FAKEDEATH in user.status_flags)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		user << "We lack the energy to evolve new abilities right now."
-=======
-	if(user.status_flags & FAKEDEATH)//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
 		to_chat(user, "We lack the energy to evolve new abilities right now.")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 
 	geneticpoints -= thepower.dna_cost

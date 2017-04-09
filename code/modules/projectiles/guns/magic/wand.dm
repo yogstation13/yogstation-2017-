@@ -71,7 +71,7 @@
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
 <<<<<<< HEAD
 	</span>"
-	user.adjustOxyLoss(500, 1, DAMAGE_MAGIC)
+	user.adjustOxyLoss(500)
 =======
 	</span>")
 	user.adjustOxyLoss(500)

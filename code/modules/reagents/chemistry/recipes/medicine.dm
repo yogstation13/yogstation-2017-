@@ -247,12 +247,9 @@
 	mix_message = "The mixture congeals into a shimmery, rainbow fluid and smells of mango."
 	results = list("tricordrazine" = 3)
 	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
-<<<<<<< HEAD
-=======
 
 /datum/chemical_reaction/corazone
 	name = "Corazone"
 	id = "corazone"
 	results = list("corazone" = 3)
 	required_reagents = list("phenol" = 2, "lithium" = 1)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

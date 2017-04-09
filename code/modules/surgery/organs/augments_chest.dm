@@ -30,13 +30,8 @@
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
 		return
-<<<<<<< HEAD
-	owner.reagents.add_reagent("badfood",poison_amount / severity) //food poisoning
-	owner << "<span class='warning'>You feel like your insides are burning.</span>"
-=======
 	owner.reagents.add_reagent("bad_food", poison_amount / severity)
 	to_chat(owner, "<span class='warning'>You feel like your insides are burning.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /obj/item/organ/cyberimp/chest/nutriment/plus

@@ -82,50 +82,6 @@
 		HS.ToggleHelmet()
 
 	post_equip(H, visualsOnly)
-<<<<<<< HEAD
-	H.update_body()
-	return 1
-
-/datum/outfit/proc/copyFrom(datum/outfit/other)
-	name = other.name
-	uniform = other.uniform
-	suit = other.suit
-	back = other.back
-	belt = other.belt
-	gloves = other.gloves
-	shoes = other.shoes
-	head = other.head
-	mask = other.mask
-	ears = other.ears
-	glasses = other.glasses
-	id = other.id
-	l_pocket = other.l_pocket
-	r_pocket = other.r_pocket
-	suit_store = other.suit_store
-	r_hand = other.r_hand
-	l_hand = other.l_hand
-	backpack_contents = other.backpack_contents.Copy()
-
-/datum/outfit/proc/clear()
-	name = null
-	uniform = null
-	suit = null
-	back = null
-	belt = null
-	gloves = null
-	shoes = null
-	head = null
-	mask = null
-	ears = null
-	glasses = null
-	id = null
-	l_pocket = null
-	r_pocket = null
-	suit_store = null
-	r_hand = null
-	l_hand = null
-	backpack_contents.Cut()
-=======
 
 	if(!visualsOnly)
 		apply_fingerprints(H)
@@ -176,4 +132,43 @@
 	for(var/obj/item/I in H.held_items)
 		I.add_fingerprint(H,1)
 	return 1
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+
+/datum/outfit/proc/copyFrom(datum/outfit/other)
+	name = other.name
+	uniform = other.uniform
+	suit = other.suit
+	back = other.back
+	belt = other.belt
+	gloves = other.gloves
+	shoes = other.shoes
+	head = other.head
+	mask = other.mask
+	ears = other.ears
+	glasses = other.glasses
+	id = other.id
+	l_pocket = other.l_pocket
+	r_pocket = other.r_pocket
+	suit_store = other.suit_store
+	r_hand = other.r_hand
+	l_hand = other.l_hand
+	backpack_contents = other.backpack_contents.Copy()
+
+/datum/outfit/proc/clear()
+	name = null
+	uniform = null
+	suit = null
+	back = null
+	belt = null
+	gloves = null
+	shoes = null
+	head = null
+	mask = null
+	ears = null
+	glasses = null
+	id = null
+	l_pocket = null
+	r_pocket = null
+	suit_store = null
+	r_hand = null
+	l_hand = null
+	backpack_contents.Cut()

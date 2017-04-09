@@ -15,10 +15,6 @@
 	//sound not longer matches the text, but an audible warning is probably good
 
 /datum/round_event/radiation_storm/start()
-<<<<<<< HEAD
-	SSweather.run_weather("radiation storm",1)
+	SSweather.run_weather("radiation storm",ZLEVEL_STATION)
 	if(!emergency_access)
 		make_maint_all_access()
-=======
-	SSweather.run_weather("radiation storm",ZLEVEL_STATION)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

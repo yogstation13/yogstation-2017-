@@ -55,30 +55,18 @@
 	return amount
 
 
-<<<<<<< HEAD
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = 1)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(amount > 0)
 		take_overall_damage(amount, 0, updating_health)
 	else
 		heal_overall_damage(-amount, 0, 0, 1, updating_health)
 	return amount
 
-<<<<<<< HEAD
-/mob/living/carbon/adjustFireLoss(amount)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(amount > 0)
 		take_overall_damage(0, amount, updating_health)
 	else

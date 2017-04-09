@@ -79,20 +79,11 @@
 	var/HUD_type = 0
 
 /obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
-<<<<<<< HEAD
 	if(..())
 		if(HUD_type)
-			var/datum/atom_hud/H = huds[HUD_type]
+			var/datum/atom_hud/H = GLOB.huds[HUD_type]
 			H.add_hud_to(M)
 			M.permanent_huds |= H
-		return 1
-=======
-	..()
-	if(HUD_type)
-		var/datum/atom_hud/H = GLOB.huds[HUD_type]
-		H.add_hud_to(M)
-		M.permanent_huds |= H
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/organ/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
 	if(HUD_type)

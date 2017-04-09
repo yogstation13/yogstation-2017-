@@ -50,35 +50,24 @@
 
 /obj/machinery/camera/proc/cancelAlarm()
 	if (detectTime == -1)
-<<<<<<< HEAD
-		if (status)
-			for (var/mob/living/silicon/aiPlayer in player_list)
-=======
 		for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 			if (status)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 				aiPlayer.cancelAlarm("Motion", get_area(src), src)
-			for(var/L in motion_alert_listeners)
-				var/datum/alert_listener/listener = L
-				listener.cancelAlarm("Motion", get_area(src), src)
+		for(var/L in motion_alert_listeners)
+			var/datum/alert_listener/listener = L
+			listener.cancelAlarm("Motion", get_area(src), src)
 	detectTime = 0
 	return 1
 
 /obj/machinery/camera/proc/triggerAlarm()
-<<<<<<< HEAD
 	if (!detectTime)
 		return 0
-	if (status)
-		for (var/mob/living/silicon/aiPlayer in player_list)
-=======
-	if (!detectTime) return 0
 	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
 		if (status)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
-		for(var/L in motion_alert_listeners)
-			var/datum/alert_listener/listener = L
-			listener.triggerAlarm("Motion", get_area(src), list(src), src)
+	for(var/L in motion_alert_listeners)
+		var/datum/alert_listener/listener = L
+		listener.triggerAlarm("Motion", get_area(src), list(src), src)
 	detectTime = -1
 	return 1
 

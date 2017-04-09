@@ -10,7 +10,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return 0
-	if(C.status_flags & GODMODE)
+	if(GODMODE in C.status_flags)
 		return 0
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

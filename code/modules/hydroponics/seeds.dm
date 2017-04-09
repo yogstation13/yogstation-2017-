@@ -167,15 +167,9 @@
 		if(reagent_id == "blood") // Hack to make blood in plants always O-
 			T.reagents.add_reagent(reagent_id, add_amount, list("blood_type"="O-"), no_react = TRUE)
 			continue
-
-<<<<<<< HEAD
 		T.reagents.add_reagent(reagent_id, add_amount, 1, no_react = TRUE)
 	T.reagents.handle_reactions()
 	return 1
-=======
-			T.reagents.add_reagent(reagent_id, 1 + round(potency * reagents_add[reagent_id],1))
-		return 1
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /// Setters procs ///
@@ -316,13 +310,8 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-<<<<<<< HEAD
 	if (is_plant_analyzer(O))
-		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
-=======
-	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		var/text = get_analyzer_text()
 		if(text)
 			to_chat(user, "<span class='notice'>[text]</span>")

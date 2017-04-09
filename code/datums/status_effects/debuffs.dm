@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /datum/status_effect/z_level_lock
 	id = "z_lock"
 	duration = -1
@@ -25,7 +24,7 @@
 
 /datum/status_effect/z_level_lock/wizard_academy
 	message = "<span class='userdanger'>You cannot leave the wizard academy!</span>"
-=======
+
 //Largely negative status effects go here, even if they have small benificial effects
 
 /datum/status_effect/sigil_mark //allows the affected target to always trigger sigils while mindless
@@ -57,4 +56,3 @@
 	owner.adjustBruteLoss(0.1)
 	owner.adjustFireLoss(0.1)
 	owner.adjustToxLoss(0.2, TRUE, TRUE)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

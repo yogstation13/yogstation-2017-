@@ -59,7 +59,6 @@
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)
 		return
-<<<<<<< HEAD
 	switch(Proj.damage_type)
 		if(BRUTE)
 			adjustHealth(Proj.damage)
@@ -70,12 +69,6 @@
 				adjustHealth(Proj.damage)
 			else
 				visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-=======
-	if(prob(50))
-		return ..()
-	else
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 
 

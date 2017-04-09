@@ -912,7 +912,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 	//Check each staff member has been replaced, by cross referencing changeling minds, changeling current dna, the staff minds and their original DNA names
 	var/success = 0
-<<<<<<< HEAD
 	for(var/datum/mind/changeling in ticker.mode.changelings)
 		if(success >= department_minds.len) //We did it, stop here!
 			return 1
@@ -925,21 +924,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 						check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
 						success++ //A living changeling staff member made it to centcomm
 						break
-=======
-	changelings:
-		for(var/datum/mind/changeling in SSticker.mode.changelings)
-			if(success >= department_minds.len) //We did it, stop here!
-				return 1
-			if(ishuman(changeling.current))
-				var/mob/living/carbon/human/H = changeling.current
-				var/turf/cloc = get_turf(changeling.current)
-				if(cloc && cloc.onCentcom() && (changeling.current.stat != DEAD)) //Living changeling on centcomm....
-					for(var/name in check_names) //Is he (disguised as) one of the staff?
-						if(H.dna.real_name == name)
-							check_names -= name //This staff member is accounted for, remove them, so the team don't succeed by escape as 7 of the same engineer
-							success++ //A living changeling staff member made it to centcomm
-							continue changelings
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	if(success >= department_minds.len)
 		return 1

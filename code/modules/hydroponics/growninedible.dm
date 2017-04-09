@@ -61,8 +61,4 @@
 				T.on_throw_impact(src, hit_atom)
 
 /obj/item/weapon/grown/microwave_act(obj/machine/microwave/M)
-<<<<<<< HEAD
 	return
-=======
-	return
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

@@ -16,7 +16,7 @@
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/M)
 	if(M.getOxyLoss() && prob(30))
-		M.adjustOxyLoss(-1, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(-1)
 		. = 1
 	..()
 
@@ -48,7 +48,7 @@
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/M)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-1*REM)
 		. = 1
 	..()
 
@@ -102,7 +102,7 @@
 	glass_desc = "Berry juice. Or maybe it's poison. Who cares?"
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1)
 	. = 1
 	..()
 
@@ -299,7 +299,7 @@
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.AdjustSleeping(-1, 0)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-1)
 	if (M.bodytemperature < 310)  //310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(310, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
@@ -359,7 +359,7 @@
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.AdjustSleeping(-2, 0)
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-1)
 	if (M.bodytemperature > 310)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	..()
@@ -605,10 +605,10 @@
 	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-0.5, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(-0.5, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(-0.5, 0, DAMAGE_CHEMICAL)
-	M.adjustOxyLoss(-0.5, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(-0.5)
+	M.adjustFireLoss(-0.5)
+	M.adjustToxLoss(-0.5)
+	M.adjustOxyLoss(-0.5)
 	if(M.nutrition && (M.nutrition - 2 > 0))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
 			M.nutrition -= 2

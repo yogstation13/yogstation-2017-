@@ -380,10 +380,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/M)
 	if(M.mind && M.mind.special_role in list("Revolutionary", "Head Revolutionary")) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.adjustBruteLoss(-1, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-1, 0, DAMAGE_CHEMICAL)
-		M.adjustToxLoss(-1, 0, DAMAGE_CHEMICAL)
-		M.adjustOxyLoss(-5, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(-1)
+		M.adjustFireLoss(-1)
+		M.adjustToxLoss(-1)
+		M.adjustOxyLoss(-5)
 		. = 1
 	return ..() || .
 
@@ -711,7 +711,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
 		var/mob/living/carbon/human/H = M
 		if(!H.shoes)
-			H.adjustBruteLoss(-3, 0, DAMAGE_CHEMICAL)
+			H.adjustBruteLoss(-3)
 			. = 1
 	return ..() || .
 
@@ -1088,11 +1088,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)
 	if(M.stat == UNCONSCIOUS && M.health <= 0)
-		M.adjustBruteLoss(-7, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-7, 0, DAMAGE_CHEMICAL)
-		M.adjustToxLoss(-7, 0, DAMAGE_CHEMICAL)
-		M.adjustOxyLoss(-7, 0, DAMAGE_CHEMICAL)
-		M.adjustCloneLoss(-7, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(-7)
+		M.adjustFireLoss(-7)
+		M.adjustToxLoss(-7)
+		M.adjustOxyLoss(-7)
+		M.adjustCloneLoss(-7)
 		. = 1
 	return ..() || .
 

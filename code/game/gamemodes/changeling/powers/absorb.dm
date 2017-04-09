@@ -46,13 +46,8 @@
 				target.take_overall_damage(40)
 
 		feedback_add_details("changeling_powers","A[stage]")
-<<<<<<< HEAD
 		if(!do_mob(user, target, absorbtimer))
-			user << "<span class='warning'>Our absorption of [target] has been interrupted!</span>"
-=======
-		if(!do_mob(user, target, 150))
 			to_chat(user, "<span class='warning'>Our absorption of [target] has been interrupted!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			changeling.isabsorbing = 0
 			return
 

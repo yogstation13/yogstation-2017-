@@ -43,13 +43,8 @@
 		// Changeling egg can survive in aliens!
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
-<<<<<<< HEAD
 			if(XENO_HOST in C.status_flags)
-				src << "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>"
-=======
-			if(C.status_flags & XENO_HOST)
 				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 				return
 			Infect(target)
 			to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")

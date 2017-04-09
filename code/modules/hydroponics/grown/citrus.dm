@@ -22,7 +22,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/orange)
 	reagents_add = list("vitamin" = 0.08, "limejuice" = 0.2, "nutriment" = 0.1)
-	
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	seed = /obj/item/seeds/lime
 	name = "lime"
@@ -70,14 +70,9 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
-<<<<<<< HEAD
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/firelemon, /obj/item/seeds/cash)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
-=======
-	mutatelist = list(/obj/item/seeds/cash)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1, "lemonjuice" = 0.2)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1, "lemonjuice" = 0.2))
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon

@@ -197,13 +197,6 @@
 /obj/machinery/door/window/ratvar_act()
 	new/obj/machinery/door/window/clockwork(src.loc, dir)
 	qdel(src)
-<<<<<<< HEAD
-
-/obj/machinery/door/window/bullet_act(obj/item/projectile/P)
-	. = ..()
-	take_damage(round(P.damage / 2), P.damage_type, 0)
-=======
->>>>>>> masterTGbranch
 
 /obj/machinery/door/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))

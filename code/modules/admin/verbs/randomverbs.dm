@@ -113,16 +113,11 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-<<<<<<< HEAD
 	if(GODMODE in M.status_flags)
 		M.status_flags -= GODMODE
 	else
 		M.status_flags |= GODMODE
-	usr << "<span class='adminnotice'>Toggled [(GODMODE in M.status_flags) ? "ON" : "OFF"]</span>"
-=======
-	M.status_flags ^= GODMODE
 	to_chat(usr, "<span class='adminnotice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")

@@ -149,13 +149,7 @@
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-<<<<<<< HEAD
-	languages_spoken = ALL
-	languages_understood = ALL
 	status_flags = list(GODMODE) // Please don't punch the barkeeper
-=======
-	status_flags = GODMODE // Please don't punch the barkeeper
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	unique_name = FALSE // disables the (123) number suffix
 
 /mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
@@ -168,13 +162,7 @@
 	name = "Barmaid"
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
-<<<<<<< HEAD
 	status_flags = list(GODMODE)
-	languages_spoken = ALL
-	languages_understood = ALL
-=======
-	status_flags = GODMODE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE

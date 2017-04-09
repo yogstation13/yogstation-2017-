@@ -152,11 +152,7 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP | DROPDEL
-<<<<<<< HEAD
-	w_class = 5.0
-=======
 	w_class = WEIGHT_CLASS_HUGE
->>>>>>> masterTGbranch
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
@@ -416,11 +412,7 @@
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 
-<<<<<<< HEAD
 /obj/item/weapon/shield/changeling/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type, atom/movable/AT)
-=======
-/obj/item/weapon/shield/changeling/hit_reaction()
->>>>>>> masterTGbranch
 	if(remaining_uses < 1)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -480,11 +472,7 @@
 	icon_state = "lingspacehelmet"
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	flags = STOPSPRESSUREDMAGE | NODROP | DROPDEL //Again, no THICKMATERIAL.
-<<<<<<< HEAD
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-=======
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 90)
->>>>>>> masterTGbranch
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /***************************************\
@@ -527,9 +515,5 @@
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
 	flags = NODROP | DROPDEL
-<<<<<<< HEAD
-	armor = list(melee = 30, bullet = 30, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0)
-=======
 	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 10, bio = 4, rad = 0, fire = 90, acid = 90)
->>>>>>> masterTGbranch
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE

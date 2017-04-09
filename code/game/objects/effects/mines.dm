@@ -169,10 +169,5 @@
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
 	victim.status_flags |= GOTTAGOREALLYFAST
 	sleep(duration)
-<<<<<<< HEAD
 	victim.status_flags -= GOTTAGOREALLYFAST
-	victim << "<span class='notice'>You slow down.</span>"
-=======
-	victim.status_flags &= ~GOTTAGOREALLYFAST
 	to_chat(victim, "<span class='notice'>You slow down.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

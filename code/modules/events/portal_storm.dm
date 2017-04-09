@@ -7,13 +7,8 @@
 
 /datum/round_event/portal_storm/syndicate_shocktroop
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
-<<<<<<< HEAD
 	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 3,\
 						/mob/living/simple_animal/hostile/syndicate/ranged/space = 1)
-=======
-	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 8,\
-						/mob/living/simple_animal/hostile/syndicate/ranged/space = 2)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"

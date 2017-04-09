@@ -61,24 +61,14 @@
 	if(c.chem_charges < chemical_cost)
 		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0
-<<<<<<< HEAD
-	if(c.profilecount<req_dna)
-		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
-=======
 	if(c.absorbedcount < req_dna)
 		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	if(req_stat < user.stat)
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
-<<<<<<< HEAD
 	if((FAKEDEATH in user.status_flags) && (!ignores_fakedeath))
-		user << "<span class='warning'>We are incapacitated.</span>"
-=======
-	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
 		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	if(c.geneticdamage > max_genetic_damage)
 		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")

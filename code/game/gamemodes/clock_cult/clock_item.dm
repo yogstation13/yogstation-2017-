@@ -11,10 +11,10 @@
 /obj/item/clockwork/New()
 	..()
 	ratvar_act()
-	GLOB.all_clockwork_objects += src
+	all_clockwork_objects += src
 
 /obj/item/clockwork/Destroy()
-	GLOB.all_clockwork_objects -= src
+	all_clockwork_objects -= src
 	return ..()
 
 /obj/item/clockwork/examine(mob/user)

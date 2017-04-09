@@ -48,10 +48,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
-<<<<<<< HEAD
 	light_color = LIGHT_COLOR_BLUE
-=======
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/weapon/card/id))
@@ -558,9 +555,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
-<<<<<<< HEAD
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-=======
 
 		if ("arrivalmessage")
 			if(!allowed(usr))
@@ -617,7 +612,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			else
 				usr << "<span class='notice'>Surprisingly... there aren't any jobs to prioritize.</span>"
 
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()
@@ -668,9 +662,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
 	icon_screen = "idce"
-
-<<<<<<< HEAD
 	light_color = LIGHT_COLOR_YELLOW
-=======
+
 #undef ID_PRIORITIZE_LEN
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

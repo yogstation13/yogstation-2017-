@@ -16,13 +16,7 @@
 	pass_flags =  0
 	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
-<<<<<<< HEAD
 	status_flags = list(CANPUSH)
-	languages_spoken = ALL //The devil speaks all languages meme
-	languages_understood = ALL
-=======
-	status_flags = CANPUSH
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
@@ -42,16 +36,10 @@
 /mob/living/carbon/true_devil/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
-<<<<<<< HEAD
-<<<<<<< HEAD:code/game/gamemodes/demon/true_demon/_true_demon.dm
+	internal_organs += new /obj/item/organ/eyes
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
 		I.Insert(src, 1)
-=======
->>>>>>> masterTGbranch:code/game/gamemodes/devil/true_devil/_true_devil.dm
-=======
-	internal_organs += new /obj/item/organ/eyes
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	..()
 
 
@@ -146,16 +134,9 @@
 			attack_message = "[user] has [message_verb] [src] with [I]!"
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
-<<<<<<< HEAD:code/game/gamemodes/demon/true_demon/_true_demon.dm
-		"<span class='userdanger'>[attack_message]</span>")
-	return 1
-
-/mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
-	A.attack_hand(src)
-=======
 		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
 	return TRUE
->>>>>>> masterTGbranch:code/game/gamemodes/devil/true_devil/_true_devil.dm
+
 
 /mob/living/carbon/true_devil/Process_Spacemove(movement_dir = 0)
 	return 1

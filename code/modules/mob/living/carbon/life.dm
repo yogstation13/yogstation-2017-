@@ -292,13 +292,8 @@
 				stomach_contents.Remove(M)
 				qdel(M)
 				continue
-<<<<<<< HEAD
-			if(SSmob.times_fired%3==1)
-				if(!(GODMODE in M.status_flags))
-=======
 			if(SSmobs.times_fired%3==1)
-				if(!(M.status_flags & GODMODE))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+				if(!(GODMODE in M.status_flags))
 					M.adjustBruteLoss(5)
 				nutrition += 10
 

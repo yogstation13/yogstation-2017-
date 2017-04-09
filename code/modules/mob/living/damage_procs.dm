@@ -9,7 +9,7 @@
 	standard 0 if fail
 */
 
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (hit_percent <= 0))
 		return 0
@@ -59,7 +59,7 @@
 			return getStaminaLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0, application=DAMAGE_PHYSICAL)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -135,15 +135,9 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-<<<<<<< HEAD
-/mob/living/proc/adjustBruteLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	bruteloss = Clamp((bruteloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
@@ -152,27 +146,16 @@
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
-<<<<<<< HEAD
-/mob/living/proc/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	oxyloss = Clamp((oxyloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-<<<<<<< HEAD
-/mob/living/proc/setOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-=======
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(status_flags & GODMODE)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+	if(GODMODE in status_flags)
 		return 0
 	oxyloss = amount
 	if(updating_health)
@@ -182,29 +165,17 @@
 /mob/living/proc/getToxLoss()
 	return toxloss
 
-<<<<<<< HEAD
-/mob/living/proc/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	toxloss = Clamp((toxloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-<<<<<<< HEAD
-/mob/living/proc/setToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	toxloss = amount
 	if(updating_health)
 		updatehealth()
@@ -213,15 +184,9 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-<<<<<<< HEAD
-/mob/living/proc/adjustFireLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	fireloss = Clamp((fireloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
@@ -230,29 +195,17 @@
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
-<<<<<<< HEAD
-/mob/living/proc/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	cloneloss = Clamp((cloneloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-<<<<<<< HEAD
-/mob/living/proc/setCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
-	if(GODMODE in status_flags)
-		return 0
-=======
 /mob/living/proc/setCloneLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
+	if(!forced && (GODMODE in status_flags))
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	cloneloss = amount
 	if(updating_health)
 		updatehealth()
@@ -261,12 +214,12 @@
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
-/mob/living/proc/adjustBrainLoss(amount), application=DAMAGE_PHYSICAL
+/mob/living/proc/adjustBrainLoss(amount)
 	if(GODMODE in status_flags)
 		return 0
 	brainloss = Clamp((brainloss + (amount * config.damage_multiplier)), 0, maxHealth*2)
 
-/mob/living/proc/setBrainLoss(amount, application=DAMAGE_PHYSICAL)
+/mob/living/proc/setBrainLoss(amount)
 	if(GODMODE in status_flags)
 		return 0
 	brainloss = amount
@@ -275,7 +228,7 @@
 	return staminaloss
 
 <<<<<<< HEAD
-/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/adjustStaminaLoss(amount, updating_stamina = 1)
 =======
 /mob/living/proc/adjustStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
@@ -286,28 +239,28 @@
 
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_bodypart_damage(brute, burn, updating_health = 1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/heal_bodypart_damage(brute, burn, updating_health = 1)
 	adjustBruteLoss(-brute, 0, application) //zero as argument for no instant health update
 	adjustFireLoss(-burn, 0, application)
 	if(updating_health)
 		updatehealth()
 
 // damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute, burn, updating_health = 1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/take_bodypart_damage(brute, burn, updating_health = 1)
 	adjustBruteLoss(brute, 0, application) //zero as argument for no instant health update
 	adjustFireLoss(burn, 0, application)
 	if(updating_health)
 		updatehealth()
 
 // heal MANY bodyparts, in random order
-/mob/living/proc/heal_overall_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1, application=DAMAGE_PHYSICAL)
+/mob/living/proc/heal_overall_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
 	adjustBruteLoss(-brute, 0, application) //zero as argument for no instant health update
 	adjustFireLoss(-burn, 0), application
 	if(updating_health)
 		updatehealth()
 
 // damage MANY bodyparts, in random order
-/mob/living/proc/take_overall_damage(brute, burn, updating_health = 1), application=DAMAGE_PHYSICAL
+/mob/living/proc/take_overall_damage(brute, burn, updating_health = 1)
 	adjustBruteLoss(brute, 0, application) //zero as argument for no instant health update
 	adjustFireLoss(burn, 0, application)
 	if(updating_health)

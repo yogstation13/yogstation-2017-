@@ -165,13 +165,8 @@
 	name = "Turbine Computer (Computer Board)"
 	build_path = /obj/machinery/computer/turbine_computer
 	origin_tech = "programming=4;engineering=4;powerstorage=4"
-<<<<<<< HEAD
 /obj/item/weapon/circuitboard/computer/cooldown_holder/telesci_console
 	name = "circuit board (Telescience Console)"
-=======
-/obj/item/weapon/circuitboard/computer/telesci_console
-	name = "Telescience Console (Computer Board)"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	build_path = /obj/machinery/computer/telescience
 	origin_tech = "programming=3;bluespace=3;plasmatech=4"
 /obj/item/weapon/circuitboard/computer/message_monitor
@@ -210,13 +205,8 @@
 	name = "DNA Machine (Computer Board)"
 	build_path = /obj/machinery/computer/scan_consolenew
 	origin_tech = "programming=2;biotech=2"
-<<<<<<< HEAD
 /obj/item/weapon/circuitboard/computer/cooldown_holder/communications
 	name = "circuit board (Communications)"
-=======
-/obj/item/weapon/circuitboard/computer/communications
-	name = "Communications (Computer Board)"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=3;magnets=3"
 /obj/item/weapon/circuitboard/computer/card

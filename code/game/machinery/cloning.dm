@@ -224,8 +224,8 @@
 
 	attempting = FALSE
 	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE, 1, DAMAGE_CLONING)
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 	return TRUE
 
@@ -254,7 +254,7 @@
 
 			 //Slowly get that clone healed and finished.
 <<<<<<< HEAD
-			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier), 0, DAMAGE_CLONING)
+			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
 =======
 			occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
 			var/progress = CLONE_INITIAL_DAMAGE - occupant.getCloneLoss()
@@ -275,7 +275,7 @@
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 			//Premature clones may have brain damage.
-			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier), 0, DAMAGE_CLONING)
+			occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
 
 <<<<<<< HEAD
 			occupant.updatehealth() //Update health only once we finish healing, instead of possibly 4 times during the proc

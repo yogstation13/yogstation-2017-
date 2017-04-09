@@ -27,7 +27,7 @@
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
-	
+
 
 /obj/item/clothing/under/rank/security/brigofficer
 	name = "brig officer's jumpsuit"
@@ -143,10 +143,5 @@
 /obj/item/clothing/under/rank/security/blueshirt
 	desc = "I'm a little busy right now, Calhoun."
 	icon_state = "blueshift"
-	item_state = "blueshift"
-<<<<<<< HEAD
-	item_color = "blueshift"
-=======
 	item_color = "blueshift"
 	can_adjust = 0
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

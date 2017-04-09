@@ -6,6 +6,8 @@
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
 	screen_crack = null
+	paiAllowed = 1
+	light_color = LIGHT_COLOR_GREEN
 	var/list/prizes = list(
 		/obj/item/weapon/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
@@ -41,18 +43,11 @@
 		/obj/item/stack/tile/fakepit/loaded						= 2,
 		/obj/item/toy/toy_xeno									= 2,
 		/obj/item/weapon/storage/box/actionfigure				= 1,
-<<<<<<< HEAD
-		/obj/item/weapon/restraints/handcuffs/fake              = 2)
-	paiAllowed = 1
-=======
 		/obj/item/weapon/restraints/handcuffs/fake              = 2,
 		/obj/item/weapon/grenade/chem_grenade/glitter/pink		= 1,
 		/obj/item/weapon/grenade/chem_grenade/glitter/blue		= 1,
 		/obj/item/weapon/grenade/chem_grenade/glitter/white		= 1,
 		/obj/item/toy/eightball									= 2)
-
-	light_color = LIGHT_COLOR_GREEN
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/computer/arcade/New()
 	..()

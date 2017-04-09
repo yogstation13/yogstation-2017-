@@ -43,11 +43,7 @@
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 	anchored = 1
-<<<<<<< HEAD
-
 	shadow_walk = 0
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null

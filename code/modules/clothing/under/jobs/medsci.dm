@@ -119,7 +119,6 @@
 	icon_state = "scrubspurple"
 	item_color = "scrubspurple"
 	can_adjust = 0
-<<<<<<< HEAD
 
 /obj/item/clothing/under/rank/mmedical
 	desc = "It's a work uniform, designed for medics."
@@ -128,7 +127,5 @@
 	item_state = "w_suit"
 	item_color = "mmedical"
 	permeability_coefficient = 0.50
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0, fire = 0, acid = 0)
 	can_adjust = 0
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

@@ -74,11 +74,7 @@
 	if(!robots)
 		dat += "No Cyborg Units detected within access parameters."
 		dat += "<BR>"
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> masterTGbranch
 	var/drones = 0
 	for(var/mob/living/simple_animal/drone/D in GLOB.mob_list)
 		if(D.hacked)

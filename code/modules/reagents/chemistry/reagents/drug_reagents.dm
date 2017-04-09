@@ -45,7 +45,7 @@
 	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
 	M.AdjustWeakened(-1, 0)
-	M.adjustStaminaLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-0.5*REM)
 	..()
 	. = 1
 
@@ -69,30 +69,30 @@
 	. = 1
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
-	M.adjustBrainLoss(2*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBruteLoss(2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(2*REM)
+	M.adjustToxLoss(2*REM)
+	M.adjustBruteLoss(2*REM)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
-	M.adjustBrainLoss(5*REM, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(5*REM)
 	..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(5*REM)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(5*REM)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustBrainLoss(5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBruteLoss(5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(5*REM)
+	M.adjustToxLoss(5*REM)
+	M.adjustBruteLoss(5*REM)
 	..()
 	. = 1
 
@@ -113,14 +113,14 @@
 	..()
 
 /datum/reagent/drug/krokodil/overdose_process(mob/living/M)
-	M.adjustBrainLoss(0.25*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(0.25*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(0.25*REM)
+	M.adjustToxLoss(0.25*REM)
 	..()
 	. = 1
 
 /datum/reagent/drug/krokodil/addiction_act_stage1(mob/living/M)
-	M.adjustBrainLoss(2*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(2*REM)
+	M.adjustToxLoss(2*REM)
 	..()
 	. = 1
 
@@ -133,7 +133,7 @@
 	if(prob(25))
 <<<<<<< HEAD
 		M << "<span class='danger'>Your skin starts to peel away...</span>"
-	M.adjustBruteLoss(3*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(3*REM)
 =======
 		to_chat(M, "<span class='danger'>Your skin starts to peel away...</span>")
 	M.adjustBruteLoss(3*REM, 0)
@@ -146,14 +146,14 @@
 	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 <<<<<<< HEAD
 		M << "<span class='userdanger'>Your skin falls off easily!</span>"
-		M.adjustBruteLoss(50*REM, 0, DAMAGE_CHEMICAL) // holy shit your skin just FELL THE FUCK OFF
+		M.adjustBruteLoss(50*REM) // holy shit your skin just FELL THE FUCK OFF
 =======
 		to_chat(M, "<span class='userdanger'>Your skin falls off easily!</span>")
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		M.set_species(/datum/species/krokodil_addict)
 	else
-		M.adjustBruteLoss(5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(5*REM)
 	..()
 	. = 1
 
@@ -187,10 +187,10 @@
 	M.AdjustParalysis(-2, 0)
 	M.AdjustStunned(-2, 0)
 	M.AdjustWeakened(-2, 0)
-	M.adjustStaminaLoss(-2, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-2)
 	M.status_flags |= GOTTAGOREALLYFAST
 	M.Jitter(2)
-	M.adjustBrainLoss(0.25, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(0.25)
 	if(prob(5))
 		M.emote(pick("twitch", "shiver"))
 	..()
@@ -208,8 +208,8 @@
 		if(I)
 			M.drop_item()
 	..()
-	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
-	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1), 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1)
+	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
 	. = 1
 
 /datum/reagent/drug/methamphetamine/addiction_act_stage1(mob/living/M)
@@ -241,7 +241,7 @@
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(20)
 	M.Dizzy(20)
-	M.adjustToxLoss(5, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(5)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -265,9 +265,9 @@
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
-	M.adjustStaminaLoss(-5, 0, DAMAGE_CHEMICAL)
-	M.adjustBrainLoss(0.5, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(0.1, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-5)
+	M.adjustBrainLoss(0.5)
+	M.adjustToxLoss(0.1)
 	M.hallucination += 10
 	if(M.canmove && !istype(M.loc, /atom/movable))
 		step(M, pick(GLOB.cardinal))
@@ -294,7 +294,7 @@
 		for(var/i = 0, i < 8, i++)
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(5)
-	M.adjustBrainLoss(10, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(10)
 	if(prob(20))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -306,7 +306,7 @@
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(10)
 	M.Dizzy(10)
-	M.adjustBrainLoss(10, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(10)
 	if(prob(30))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -318,7 +318,7 @@
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(15)
 	M.Dizzy(15)
-	M.adjustBrainLoss(10, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(10)
 	if(prob(40))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -330,8 +330,8 @@
 			step(M, pick(GLOB.cardinal))
 	M.Jitter(50)
 	M.Dizzy(50)
-	M.adjustToxLoss(5, 0, DAMAGE_CHEMICAL)
-	M.adjustBrainLoss(10, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(5)
+	M.adjustBrainLoss(10)
 	if(prob(50))
 		M.emote(pick("twitch","drool","moan"))
 	..()
@@ -349,8 +349,8 @@
 	if(prob(5))
 <<<<<<< HEAD
 		M << "<span class='notice'>[high_message]</span>"
-	M.adjustStaminaLoss(-18, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(0.5, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-18)
+	M.adjustToxLoss(0.5)
 =======
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.adjustStaminaLoss(-18, 0)
@@ -358,6 +358,6 @@
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(prob(50))
 		M.losebreath++
-		M.adjustOxyLoss(1, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(1)
 	..()
 	. = 1

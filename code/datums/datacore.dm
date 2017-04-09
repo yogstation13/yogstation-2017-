@@ -77,15 +77,10 @@
 			return
 
 /datum/datacore/proc/manifest()
-<<<<<<< HEAD
-	for(var/mob/living/carbon/human/H in player_list)//keep this as a typed loop, otherwise silicons cause runtimes.
-		manifest_inject(H)
-=======
 	for(var/mob/dead/new_player/N in GLOB.player_list)
 		if(ishuman(N.new_character))
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/datacore/proc/manifest_modify(name, assignment)
 	var/datum/data/record/foundrecord = find_record("name", name, GLOB.data_core.general)

@@ -17,10 +17,10 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
-	
+
 	var/face_y_offset = 0
 	var/hair_y_offset = 0
-	
+
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 
@@ -48,8 +48,6 @@
 	var/clonemod = 1
 	var/staminamod = 1
 	var/brainmod = 1
-	var/damage_immunities = list() //damage applications that this species is immune to (DAMAGE_CHEMICAL, DAMAGE_MAGIC, etc.)
-	var/heal_immunities = list() //heal applications that this species is immune to
 	var/stamina_recover_normal = 3
 	var/stamina_recover_sleeping = 10
 	var/stunmod = 1		// multiplier for stun duration
@@ -618,7 +616,7 @@
 		H.losebreath = 0
 		var/takes_crit_damage = (!(NOCRITDAMAGE in species_traits))
 		if((H.health < HEALTH_THRESHOLD_CRIT) && takes_crit_damage)
-			H.adjustBruteLoss(1, 1, DAMAGE_NO_MULTIPLIER)
+			H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1574,7 +1572,7 @@
 <<<<<<< HEAD
 	return 1
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, application=DAMAGE_PHYSICAL)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
 	if(!damage || blocked <= 0)
 =======
@@ -1850,25 +1848,25 @@
 		if(!(mutations_list[COLDRES] in H.dna.mutations)) // COLD DAMAGE
 			switch(breath.temperature)
 				if(-INFINITY to low_temp_level_3)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3*coldmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_3*coldmod, BURN, "head")
 					H.lastburntype = "coldburn"
 				if(low_temp_level_3 to low_temp_level_2)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2*coldmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_2*coldmod, BURN, "head")
 					H.lastburntype = "coldburn"
 				if(low_temp_level_2 to low_temp_level_1)
-					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1*coldmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
+					H.apply_damage(COLD_GAS_DAMAGE_LEVEL_1*coldmod, BURN, "head")
 					H.lastburntype = "coldburn"
 
 		if(!(RESISTTEMP in specflags)) // HEAT DAMAGE
 			switch(breath.temperature)
 				if(high_temp_level_1 to high_temp_level_2)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1*heatmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
+					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_1*heatmod, BURN, "head")
 					H.lastburntype = "hotburn"
 				if(high_temp_level_1 to 1000)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2*heatmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
+					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_2*heatmod, BURN, "head")
 					H.lastburntype = "hotburn"
 				if(1000 to INFINITY)
-					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3*heatmod, BURN, "head", application=DAMAGE_NO_MULTIPLIER)
+					H.apply_damage(HEAT_GAS_DAMAGE_LEVEL_3*heatmod, BURN, "head")
 					H.lastburntype = "hotburn"
 
 =======

@@ -33,15 +33,9 @@
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
 	friendly = "touches"
-<<<<<<< HEAD
 	status_flags = list()
-	wander = 0
-	density = 0
-=======
-	status_flags = 0
 	wander = FALSE
 	density = FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	movement_type = FLYING
 	anchored = TRUE
 	mob_size = MOB_SIZE_TINY

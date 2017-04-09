@@ -243,12 +243,9 @@
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-<<<<<<< HEAD
+			new /obj/item/clothing/glasses/welding(src.loc)
 		if("Weather Detector")
 			new /obj/item/device/barometer(src.loc)
-=======
-			new /obj/item/clothing/glasses/welding(src.loc)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if("Extraction and Rescue Kit")
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)

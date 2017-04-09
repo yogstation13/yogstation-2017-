@@ -19,9 +19,9 @@
 	var/interdiction_range = 14 //how large an area it drains and disables in
 	var/static/list/rage_messages = list("...", "Disgusting.", "Die.", "Foul.", "Worthless.", "Mortal.", "Unfit.", "Weak.", "Fragile.", "Useless.", "Leave my sight!")
 
-/obj/structure/destructible/clockwork/powered/interdiction_lens/Initialize()
+/obj/structure/destructible/clockwork/powered/interdiction_lens/New()
 	..()
-	update_current_glow()
+	set_light(1.4, 0.8, "#F42B9D")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
@@ -30,25 +30,12 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='neovgre_small'>If it fails to drain any electronics or has nothing to return power to, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>")
 
-/obj/structure/destructible/clockwork/powered/interdiction_lens/update_anchored(mob/user, do_damage)
-	..()
-	update_current_glow()
-
 /obj/structure/destructible/clockwork/powered/interdiction_lens/toggle(fast_process, mob/living/user)
 	. = ..()
-	update_current_glow()
-
-/obj/structure/destructible/clockwork/powered/interdiction_lens/proc/update_current_glow()
 	if(active)
-		if(disabled)
-			set_light(2, 1.6, "#151200")
-		else
-			set_light(2, 1.6, "#EE54EE")
+		set_light(2, 1.6, "#EE54EE")
 	else
-		if(anchored)
-			set_light(1.4, 0.8, "#F42B9D")
-		else
-			set_light(0)
+		set_light(1.4, 0.8, "#F42B9D")
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, !issilicon(user), NO_DEXTERY))
@@ -58,7 +45,7 @@
 		toggle(0, user)
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/forced_disable(bad_effects)
-	if(disabled || !anchored)
+	if(disabled)
 		return FALSE
 	if(!active)
 		toggle(0)
@@ -66,8 +53,8 @@
 	recharging = world.time + recharge_time
 	flick("interdiction_lens_discharged", src)
 	icon_state = "interdiction_lens_inactive"
+	set_light(2, 1.6, "#151200")
 	disabled = TRUE
-	update_current_glow()
 	return TRUE
 
 /obj/structure/destructible/clockwork/powered/interdiction_lens/process()
@@ -97,7 +84,7 @@
 		var/efficiency = get_efficiency_mod()
 		var/rage_modifier = get_efficiency_mod(TRUE)
 
-		for(var/i in GLOB.ai_list)
+		for(var/i in ai_list)
 			var/mob/living/silicon/ai/AI = i
 			if(AI && AI.stat != DEAD && !is_servant_of_ratvar(AI))
 				unconverted_ai = TRUE

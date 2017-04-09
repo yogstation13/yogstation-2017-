@@ -244,17 +244,17 @@
 		M.AdjustParalysis(-1, 0)
 		M.AdjustStunned(-2, 0)
 		M.AdjustWeakened(-2, 0)
-		M.adjustToxLoss(-2, 0, DAMAGE_CHEMICAL)
-		M.adjustOxyLoss(-2, 0, DAMAGE_CHEMICAL)
-		M.adjustBruteLoss(-2, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-2, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-2)
+		M.adjustOxyLoss(-2)
+		M.adjustBruteLoss(-2)
+		M.adjustFireLoss(-2)
 	else
 		M.adjustBrainLoss(3)
 <<<<<<< HEAD
-		M.adjustToxLoss(2, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(2, 0, DAMAGE_CHEMICAL)
-		M.adjustOxyLoss(2, 0, DAMAGE_CHEMICAL)
-		M.adjustBruteLoss(2, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(2)
+		M.adjustFireLoss(2)
+		M.adjustOxyLoss(2)
+		M.adjustBruteLoss(2)
 =======
 		M.adjustToxLoss(1, 0)
 		M.adjustFireLoss(2, 0)
@@ -273,9 +273,9 @@
 /datum/reagent/hellwater/on_mob_life(mob/living/M)
 	M.fire_stacks = min(5,M.fire_stacks + 3)
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
-	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(1, 0, DAMAGE_CHEMICAL)		//Hence the other damages... ain't I a bastard?
-	M.adjustBrainLoss(5, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1)
+	M.adjustFireLoss(1)		//Hence the other damages... ain't I a bastard?
+	M.adjustBrainLoss(5)
 	holder.remove_reagent(src.id, 1)
 
 /datum/reagent/medicine/omnizine/godblood
@@ -706,7 +706,7 @@
 		step(M, pick(GLOB.cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(2)
 	..()
 
 /datum/reagent/sulfur
@@ -740,7 +740,7 @@
 	taste_description = "chlorine"
 
 /datum/reagent/chlorine/on_mob_life(mob/living/M)
-	M.take_bodypart_damage(1*REM, 0, 0, application=DAMAGE_CHEMICAL)
+	M.take_bodypart_damage(1*REM, 0, 0)
 	. = 1
 	..()
 
@@ -753,7 +753,7 @@
 	taste_description = "acid"
 
 /datum/reagent/fluorine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1*REM)
 	. = 1
 	..()
 
@@ -956,7 +956,7 @@
 	..()
 
 /datum/reagent/fuel/on_mob_life(mob/living/M)
-	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1)
 	. = 1
 	..()
 
@@ -983,7 +983,7 @@
 			qdel(C)
 
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(5,10), 1, DAMAGE_CHEMICAL)
+			M.adjustToxLoss(rand(5,10))
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1061,7 +1061,7 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(prob(80))
-		M.adjustBrainLoss(1*REM, 1, DAMAGE_CHEMICAL)
+		M.adjustBrainLoss(1*REM)
 	if(prob(50))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
@@ -1139,8 +1139,8 @@
 /datum/reagent/diethylamine/overdose_process(mob/living/M)
 	var/mob/living/carbon/C = M
 	if(istype(C))
-		C.adjustToxLoss(5, 1, DAMAGE_CHEMICAL)
-		C.adjustBrainLoss(2, 1, DAMAGE_CHEMICAL)
+		C.adjustToxLoss(5)
+		C.adjustBrainLoss(2)
 
 /datum/reagent/carbondioxide
 	name = "Carbon Dioxide"
@@ -1252,7 +1252,7 @@
 
 /datum/reagent/plantnutriment/on_mob_life(mob/living/M)
 	if(prob(tox_prob))
-		M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(1*REM)
 		. = 1
 	..()
 
@@ -1267,7 +1267,7 @@
 	..()
 	var/mob/living/L = M
 	if(istype(L))
-		L.adjustOxyLoss(2, 1, DAMAGE_CHEMICAL)
+		L.adjustOxyLoss(2)
 	M.losebreath += 0.5
 
 /datum/reagent/plantnutriment/left4zednutriment
@@ -1560,8 +1560,8 @@ datum/reagent/shadowling_blindness_smoke
 	else
 		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
 		M.heal_organ_damage(2,2, 0)
-		M.adjustOxyLoss(-2, 0, DAMAGE_CHEMICAL)
-		M.adjustToxLoss(-2, 0, DAMAGE_CHEMICAL)
+		M.adjustOxyLoss(-2)
+		M.adjustToxLoss(-2)
 		. = 1
 	return ..() || .
 

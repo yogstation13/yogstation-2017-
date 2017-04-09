@@ -167,36 +167,13 @@
 	var/sentience_type = SENTIENCE_ORGANIC
 
 /obj/item/slimepotion/sentience/afterattack(mob/living/M, mob/user)
-<<<<<<< HEAD
 	if(!do_checks(M, user))
 		return ..()
 	var/mob/living/simple_animal/SM = M
-	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
-=======
-	if(being_used || !ismob(M))
-		return
-	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		to_chat(user, "<span class='warning'>[M] is already too intelligent for this to work!</span>")
-		return ..()
-	if(M.stat)
-		to_chat(user, "<span class='warning'>[M] is dead!</span>")
-		return ..()
-	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != sentience_type)
-		to_chat(user, "<span class='warning'>[src] won't work on [SM].</span>")
-		return ..()
-
-
-
 	to_chat(user, "<span class='notice'>You offer [src] to [SM]...</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	being_used = 1
 
-<<<<<<< HEAD
-	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
-=======
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_ALIEN, 50, SM)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+	var/list/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_ALIEN, 50, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -216,14 +193,14 @@
 	if(being_used || !ismob(M))
 		return 0
 	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
+		to_chat(user, "<span class='warning'>[M] is already too intelligent for this to work!</span>")
 		return 0
 	if(M.stat)
-		user << "<span class='warning'>[M] is dead!</span>"
+		to_chat(user, "<span class='warning'>[M] is dead!</span>")
 		return 0
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
-		user << "<span class='warning'>The potion won't work on [SM].</span>"
+		to_chat(user, "<span class='warning'>The potion won't work on [SM].</span>")
 		return 0
 	return 1
 

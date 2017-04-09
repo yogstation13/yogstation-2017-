@@ -220,13 +220,8 @@
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
-<<<<<<< HEAD
-	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
-	reagents_add = list("radium" = 0.2, "phosphorus" = 0.2, "nutriment" = 0.08)
-=======
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap, /obj/item/seeds/glowshroom/shadowshroom)
-	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+	reagents_add = list("radium" = 0.2, "phosphorus" = 0.2, "nutriment" = 0.08)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom
 	seed = /obj/item/seeds/glowshroom

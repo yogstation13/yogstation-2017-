@@ -12,10 +12,10 @@
 
 /obj/effect/clockwork/New()
 	..()
-	GLOB.all_clockwork_objects += src
+	all_clockwork_objects += src
 
 /obj/effect/clockwork/Destroy()
-	GLOB.all_clockwork_objects -= src
+	all_clockwork_objects -= src
 	return ..()
 
 /obj/effect/clockwork/examine(mob/user)

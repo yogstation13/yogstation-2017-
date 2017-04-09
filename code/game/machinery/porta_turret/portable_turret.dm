@@ -917,8 +917,4 @@
 			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
 				on = 0
 				spawn(100)
-<<<<<<< HEAD
 					on = 1
-=======
-					on = 1
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

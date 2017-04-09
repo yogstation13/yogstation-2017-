@@ -430,13 +430,10 @@
 		to_chat(user, "<span class='notice'>You complete the Securitron! Beep boop.</span>")
 		var/mob/living/simple_animal/bot/secbot/S = new /mob/living/simple_animal/bot/secbot(get_turf(src))
 		S.name = created_name
-<<<<<<< HEAD
 		if(siren_hat)
 			S.siren_hat = siren_hat
 			siren_hat.forceMove(S)
-=======
 		S.baton_type = I.type
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		qdel(I)
 		qdel(src)
 

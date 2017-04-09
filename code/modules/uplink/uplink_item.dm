@@ -84,11 +84,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	var/list/exclude_modes = list() // Game modes to disallow this item from.
 	var/list/restricted_roles = list() //If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
-<<<<<<< HEAD
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
-=======
 	var/list/restricted_roles = list() //The jobs allow to buy this weapon.
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
@@ -131,7 +128,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	if(src in GLOB.uplink_items)
 		GLOB.uplink_items -= src	//Take us out instead of leaving a null!
 	return ..()
-	
+
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts
 	category = "Discounted Gear"
@@ -761,12 +758,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!"
 	item = /obj/item/weapon/storage/box/chameleon
 	cost = 4
-<<<<<<< HEAD
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/traitor/double_agents)//being able to completely change your appearance infinitely when you have an assassin is dumb
-=======
-	exclude_modes = list(/datum/game_mode/nuclear)
-	player_minimum = 20
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/uplink_item/stealthy_tools/chameleon/nuke
 	cost = 6
@@ -1243,14 +1235,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/bundle
 	name = "Cybernetic Implants Bundle"
-<<<<<<< HEAD
-	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. \
-			They must be implanted via surgery."
-	item = /obj/item/weapon/storage/box/cyber_implants/bundle
-=======
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
 	item = /obj/item/weapon/storage/box/cyber_implants
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	cost = 40
 	cant_discount = TRUE
 
@@ -1368,12 +1354,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
-<<<<<<< HEAD
 	exclude_modes = list(/datum/game_mode/nuclear)
-=======
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	cant_discount = TRUE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/uplink_item/badass/surplus
 	name = "Syndicate Surplus Crate"
@@ -1382,12 +1364,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/structure/closet/crate
 	cost = 20
 	player_minimum = 25
-<<<<<<< HEAD
 	exclude_modes = list(/datum/game_mode/nuclear)
-=======
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	cant_discount = TRUE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
 	var/list/uplink_items = get_uplink_items(SSticker.mode)

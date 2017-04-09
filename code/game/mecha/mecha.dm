@@ -182,11 +182,8 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-<<<<<<< HEAD
-=======
 		if(AI)
 			AI.gib() //No wreck, no AI to recover
->>>>>>> masterTGbranch
 	STOP_PROCESSING(SSobj, src)
 	GLOB.poi_list.Remove(src)
 	equipment.Cut()

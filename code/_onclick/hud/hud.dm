@@ -205,11 +205,7 @@
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
-<<<<<<< HEAD
-	create_parallax()
-=======
 	update_parallax_pref(screenmob)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
@@ -268,8 +264,4 @@
 	for(var/obj/screen/human/equip/E in static_inventory)
 		E.screen_loc = ui_equip_position(mymob)
 	if(mymob.hud_used)
-<<<<<<< HEAD
 		show_hud(HUD_STYLE_STANDARD,mymob)
-=======
-		show_hud(HUD_STYLE_STANDARD,mymob)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

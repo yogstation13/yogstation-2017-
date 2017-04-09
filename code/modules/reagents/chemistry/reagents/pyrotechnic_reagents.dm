@@ -18,7 +18,7 @@
 		Wall.add_overlay(image('icons/effects/effects.dmi',"thermite"))
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
-	M.adjustFireLoss(1, 0, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(1)
 	..()
 	. = 1
 
@@ -49,7 +49,7 @@
 /datum/reagent/clf3/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(4)
 	var/burndmg = max(0.4*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg, 0, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(burndmg)
 	M.IgniteMob()
 	..()
 	. = 1
@@ -162,7 +162,7 @@
 /datum/reagent/phlogiston/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
 	var/burndmg = max(0.3*M.fire_stacks, 0.3)
-	M.adjustFireLoss(burndmg, 0, DAMAGE_CHEMICAL)
+	M.adjustFireLoss(burndmg)
 	M.IgniteMob()
 	..()
 	. = 1
@@ -209,7 +209,7 @@
 /datum/reagent/cryostylane/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(15,30), 1, DAMAGE_CHEMICAL)
+			M.adjustToxLoss(rand(15,30))
 
 /datum/reagent/pyrosium
 	name = "Pyrosium"

@@ -41,7 +41,7 @@
 	M.setOxyLoss(0, 0)
 	M.radiation = 0
 	M.heal_bodypart_damage(5,5, 0)
-	M.adjustToxLoss(-5, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-5)
 	M.hallucination = 0
 	M.setBrainLoss(0)
 	M.disabilities = 0
@@ -89,7 +89,7 @@
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
-		M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(1)
 		. = 1
 	..()
 
@@ -107,7 +107,7 @@
 		holder.remove_reagent("histamine", 5)
 	M.hallucination = max(0, M.hallucination - 10)
 	if(prob(30))
-		M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(1)
 		. = 1
 	..()
 
@@ -133,21 +133,21 @@
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
 <<<<<<< HEAD
 			M.status_flags -= DISFIGURED
-			M.adjustCloneLoss(-7, 0, DAMAGE_CHEMICAL)
-			M.adjustOxyLoss(-9, 0, DAMAGE_CHEMICAL)
-			M.adjustBruteLoss(-5, 0, DAMAGE_CHEMICAL)
-			M.adjustFireLoss(-5, 0, DAMAGE_CHEMICAL)
-			M.adjustToxLoss(-5, 0, DAMAGE_CHEMICAL)
+			M.adjustCloneLoss(-7)
+			M.adjustOxyLoss(-9)
+			M.adjustBruteLoss(-5)
+			M.adjustFireLoss(-5)
+			M.adjustToxLoss(-5)
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
 			M.status_flags -= DISFIGURED
-			M.adjustCloneLoss(-2, 0, DAMAGE_CHEMICAL)
-			M.adjustOxyLoss(-7, 0, DAMAGE_CHEMICAL)
-			M.adjustBruteLoss(-3, 0, DAMAGE_CHEMICAL)
-			M.adjustFireLoss(-3, 0, DAMAGE_CHEMICAL)
-			M.adjustToxLoss(-3, 0, DAMAGE_CHEMICAL)
+			M.adjustCloneLoss(-2)
+			M.adjustOxyLoss(-7)
+			M.adjustBruteLoss(-3)
+			M.adjustFireLoss(-3)
+			M.adjustToxLoss(-3)
 =======
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-9, 0)
 			M.adjustBruteLoss(-5, 0)
@@ -155,7 +155,7 @@
 			M.adjustToxLoss(-5, 0)
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-1, 0)
 			M.adjustOxyLoss(-7, 0)
 			M.adjustBruteLoss(-3, 0)
@@ -165,11 +165,11 @@
 			. = 1
 		if(225 to T0C)
 			M.status_flags -= DISFIGURED
-			M.adjustCloneLoss(-1, 0, DAMAGE_CHEMICAL)
-			M.adjustOxyLoss(-5, 0, DAMAGE_CHEMICAL)
-			M.adjustBruteLoss(-1, 0, DAMAGE_CHEMICAL)
-			M.adjustFireLoss(-1, 0, DAMAGE_CHEMICAL)
-			M.adjustToxLoss(-1, 0, DAMAGE_CHEMICAL)
+			M.adjustCloneLoss(-1)
+			M.adjustOxyLoss(-5)
+			M.adjustBruteLoss(-1)
+			M.adjustFireLoss(-1)
+			M.adjustToxLoss(-1)
 			. = 1
 	..()
 
@@ -184,15 +184,15 @@
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-7, 0)
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-3, 0)
 			. = 1
 		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
+			M.status_flags -= DISFIGURED
 			M.adjustCloneLoss(-2, 0)
 			. = 1
 	..()
@@ -214,7 +214,7 @@
 	. = 1
 
 /datum/reagent/medicine/rezadone/overdose_process(mob/living/M)
-	M.adjustToxLoss(3, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(3)
 	M.Dizzy(10)
 	M.Jitter(10)
 	..()
@@ -238,11 +238,11 @@
 /datum/reagent/medicine/silver_sulfadiazine/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.adjustToxLoss(0.5*reac_volume, 1, DAMAGE_CHEMICAL)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getFireLoss())
-			M.adjustFireLoss(-reac_volume, 1, DAMAGE_CHEMICAL)
+			M.adjustFireLoss(-reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
@@ -259,15 +259,15 @@
 
 /datum/reagent/medicine/oxandrolone/on_mob_life(mob/living/M)
 	if(M.getFireLoss() > 25)
-		M.adjustFireLoss(-4*REM, 0, DAMAGE_CHEMICAL) //Twice as effective as silver sulfadiazine for severe burns
+		M.adjustFireLoss(-4*REM) //Twice as effective as silver sulfadiazine for severe burns
 	else
-		M.adjustFireLoss(-0.5*REM, 0, DAMAGE_CHEMICAL) //But only a quarter as effective for more minor ones
+		M.adjustFireLoss(-0.5*REM) //But only a quarter as effective for more minor ones
 	..()
 	. = 1
 
 /datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M)
 	if(M.getFireLoss()) //It only makes existing burns worse
-		M.adjustFireLoss(4.5*REM, 0, DAMAGE_CHEMICAL) // it's going to be healing either 4 or 0.5
+		M.adjustFireLoss(4.5*REM) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -281,11 +281,11 @@
 /datum/reagent/medicine/styptic_powder/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.adjustToxLoss(0.5*reac_volume, DAMAGE_CHEMICAL)
+			M.adjustToxLoss(0.5*reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='warning'>You don't feel so good...</span>")
 		else if(M.getBruteLoss())
-			M.adjustBruteLoss(-reac_volume, 1, DAMAGE_CHEMICAL)
+			M.adjustBruteLoss(-reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
@@ -303,8 +303,8 @@
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/M)
 	if(prob(33))
 <<<<<<< HEAD
-		M.adjustBruteLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(-0.5*REM)
+		M.adjustFireLoss(-0.5*REM)
 =======
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
@@ -348,8 +348,8 @@
 		var/mob/living/carbon/N = M
 <<<<<<< HEAD
 		N.hal_screwyhud = 5
-	M.adjustBruteLoss(-0.25*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(-0.25*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(-0.25*REM)
+	M.adjustFireLoss(-0.25*REM)
 =======
 		N.hal_screwyhud = SCREWYHUD_HEALTHY
 	M.adjustBruteLoss(-0.25*REM, 0)
@@ -396,8 +396,8 @@
 		if (M.stat == DEAD)
 			show_message = 0
 		if(method in list(PATCH, TOUCH))
-			M.adjustBruteLoss(-1.25 * reac_volume, DAMAGE_CHEMICAL)
-			M.adjustFireLoss(-1.25 * reac_volume, DAMAGE_CHEMICAL)
+			M.adjustBruteLoss(-1.25 * reac_volume)
+			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
 	..()
@@ -412,7 +412,7 @@
 	taste_description = "ash"
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-2*REM)
 	. = 1
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -430,18 +430,18 @@
 	var/healrate = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/M)
-	M.adjustToxLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustOxyLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBruteLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(-healrate*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-healrate*REM)
+	M.adjustOxyLoss(-healrate*REM)
+	M.adjustBruteLoss(-healrate*REM)
+	M.adjustFireLoss(-healrate*REM)
 	..()
 	. = 1
 
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/M)
-	M.adjustToxLoss(1.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustOxyLoss(1.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBruteLoss(1.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(1.5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(1.5*REM)
+	M.adjustOxyLoss(1.5*REM)
+	M.adjustBruteLoss(1.5*REM)
+	M.adjustFireLoss(1.5*REM)
 	..()
 	. = 1
 
@@ -467,7 +467,7 @@
 		if(R != src)
 			M.reagents.remove_reagent(R.id,2.5)
 	if(M.health > 20)
-		M.adjustToxLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(2.5*REM)
 		. = 1
 	..()
 
@@ -495,7 +495,7 @@
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/M)
 	if(M.radiation > 0)
 		M.radiation -= 4
-	M.adjustToxLoss(-2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-2*REM)
 	if(M.radiation < 0)
 		M.radiation = 0
 	for(var/datum/reagent/R in M.reagents.reagent_list)
@@ -516,15 +516,15 @@
 
 /datum/reagent/medicine/sal_acid/on_mob_life(mob/living/M)
 	if(M.getBruteLoss() > 25)
-		M.adjustBruteLoss(-4*REM, 0, DAMAGE_CHEMICAL) //Twice as effective as styptic powder for severe bruising
+		M.adjustBruteLoss(-4*REM) //Twice as effective as styptic powder for severe bruising
 	else
-		M.adjustBruteLoss(-0.5*REM, 0, DAMAGE_CHEMICAL) //But only a quarter as effective for more minor ones
+		M.adjustBruteLoss(-0.5*REM) //But only a quarter as effective for more minor ones
 	..()
 	. = 1
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
 	if(M.getBruteLoss()) //It only makes existing bruises worse
-		M.adjustBruteLoss(4.5*REM, 0, DAMAGE_CHEMICAL) // it's going to be healing either 4 or 0.5
+		M.adjustBruteLoss(4.5*REM) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -537,7 +537,7 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
-	M.adjustOxyLoss(-3*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustOxyLoss(-3*REM)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	..()
@@ -552,11 +552,11 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
-	M.adjustOxyLoss(-12*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustOxyLoss(-12*REM)
 	M.silent = max(M.silent, 5)
 	if(prob(33))
-		M.adjustBruteLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustBruteLoss(-0.5*REM)
+		M.adjustFireLoss(-0.5*REM)
 	..()
 	. = 1
 
@@ -575,27 +575,27 @@
 	M.AdjustParalysis(-0.5, 0)
 	M.AdjustStunned(-0.5, 0)
 	M.AdjustWeakened(-0.5, 0)
-	M.adjustStaminaLoss(-2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-2*REM)
 	..()
 	. = 1
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
 	if(prob(44))
-		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(2*REM)
 		M.losebreath++
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
 	if(prob(44))
-		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(2*REM)
 		M.losebreath += 2
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage2(mob/living/M)
 	if(prob(44))
-		M.adjustToxLoss(3*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(3*REM)
 		M.losebreath += 3
 		M.adjustStaminaLoss(2.5*REM, 0)
 		. = 1
@@ -603,17 +603,17 @@
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage3(mob/living/M)
 	if(prob(44))
-		M.adjustToxLoss(4*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(4*REM)
 		M.losebreath += 4
-		M.adjustStaminaLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustStaminaLoss(2.5*REM)
 		. = 1
 	..()
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage4(mob/living/M)
 	if(prob(44))
-		M.adjustToxLoss(5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(5*REM)
 		M.losebreath += 5
-		M.adjustStaminaLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustStaminaLoss(2.5*REM)
 		. = 1
 	..()
 /datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/M) //when it runs out
@@ -698,7 +698,7 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
-		M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(1*REM)
 		. = 1
 		M.Dizzy(3)
 		M.Jitter(3)
@@ -709,7 +709,7 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
-		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(2*REM)
 		. = 1
 		M.Dizzy(4)
 		M.Jitter(4)
@@ -720,7 +720,7 @@
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.drop_item()
-		M.adjustToxLoss(3*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(3*REM)
 		. = 1
 		M.Dizzy(5)
 		M.Jitter(5)
@@ -766,10 +766,10 @@
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/M)
 	if(M.health < 0)
-		M.adjustToxLoss(-2*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustBruteLoss(-2*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-2*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustOxyLoss(-5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-2*REM)
+		M.adjustBruteLoss(-2*REM)
+		M.adjustFireLoss(-2*REM)
+		M.adjustOxyLoss(-5*REM)
 		. = 1
 	M.losebreath = 0
 	if(prob(20))
@@ -778,7 +778,7 @@
 	..()
 
 /datum/reagent/medicine/atropine/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(0.5*REM)
 	. = 1
 	M.Dizzy(1)
 	M.Jitter(1)
@@ -795,16 +795,16 @@
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/M)
 	if(M.health < 0)
-		M.adjustToxLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustBruteLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustFireLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustToxLoss(-0.5*REM)
+		M.adjustBruteLoss(-0.5*REM)
+		M.adjustFireLoss(-0.5*REM)
 	if(M.oxyloss > 35)
 		M.setOxyLoss(35, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	if(M.losebreath < 0)
 		M.losebreath = 0
-	M.adjustStaminaLoss(-0.5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-0.5*REM)
 	. = 1
 	if(prob(20))
 		M.AdjustParalysis(-1, 0)
@@ -814,8 +814,8 @@
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
 	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustStaminaLoss(2.5*REM)
+		M.adjustToxLoss(1*REM)
 		M.losebreath++
 		. = 1
 	..()
@@ -842,8 +842,8 @@
 				spawn (100) //so the ghost has time to re-enter
 					return
 			else
-				M.adjustOxyLoss(-20, 0, DAMAGE_CHEMICAL)
-				M.adjustToxLoss(-20, 0, DAMAGE_CHEMICAL)
+				M.adjustOxyLoss(-20)
+				M.adjustToxLoss(-20)
 				M.updatehealth()
 				if(M.revive())
 					M.emote("gasp")
@@ -851,8 +851,8 @@
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(0.5*REM)
+	M.adjustFireLoss(0.5*REM)
 	..()
 	. = 1
 
@@ -863,7 +863,7 @@
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
-	M.adjustBrainLoss(-3*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBrainLoss(-3*REM)
 	..()
 
 /datum/reagent/medicine/mutadone
@@ -892,7 +892,7 @@
 	M.slurring = 0
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3*REM, 0, 1)
-	M.adjustToxLoss(-0.2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(-0.2*REM)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.drunkenness = max(H.drunkenness - 10, 0)
@@ -911,14 +911,14 @@
 	M.status_flags |= GOTTAGOFAST
 	M.status_flags |= IGNORESLOWDOWN
 	M.status_flags |= NOCRIT
-	M.adjustOxyLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustToxLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBruteLoss(-1*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustFireLoss(-1*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustOxyLoss(-1*REM)
+	M.adjustToxLoss(-1*REM)
+	M.adjustBruteLoss(-1*REM)
+	M.adjustFireLoss(-1*REM)
 	M.AdjustParalysis(-3, 0)
 	M.AdjustStunned(-3, 0)
 	M.AdjustWeakened(-3, 0)
-	M.adjustStaminaLoss(-5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustStaminaLoss(-5*REM)
 	if(M.health < 0)//once you start dropping below crit it's obvious you're on stims
 		M.Jitter(5)
 		if(prob(10))
@@ -932,8 +932,8 @@
 
 /datum/reagent/medicine/stimulants/overdose_process(mob/living/M)
 	if(prob(33))
-		M.adjustStaminaLoss(2.5*REM, 0, DAMAGE_CHEMICAL)
-		M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
+		M.adjustStaminaLoss(2.5*REM)
+		M.adjustToxLoss(1*REM)
 		M.losebreath++
 		. = 1
 	..()
@@ -948,30 +948,30 @@
 	addiction_threshold = 5
 
 /datum/reagent/medicine/stimulants/longterm/addiction_act_stage1(mob/living/M)
-	M.adjustToxLoss(5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustStaminaLoss(5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(5*REM)
+	M.adjustStaminaLoss(5*REM)
 	..()
 	. = 1
 
 /datum/reagent/medicine/stimulants/longterm/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(6*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustStaminaLoss(5*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(6*REM)
+	M.adjustStaminaLoss(5*REM)
 	M.Stun(2, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/stimulants/longterm/addiction_act_stage3(mob/living/M)
-	M.adjustToxLoss(7*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustStaminaLoss(5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBrainLoss(1*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(7*REM)
+	M.adjustStaminaLoss(5*REM)
+	M.adjustBrainLoss(1*REM)
 	M.Stun(2, 0)
 	..()
 	. = 1
 
 /datum/reagent/medicine/stimulants/longterm/addiction_act_stage4(mob/living/M)
-	M.adjustToxLoss(8*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustStaminaLoss(5*REM, 0, DAMAGE_CHEMICAL)
-	M.adjustBrainLoss(2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(8*REM)
+	M.adjustStaminaLoss(5*REM)
+	M.adjustBrainLoss(2*REM)
 	M.Stun(2, 0)
 	..()
 	. = 1
@@ -1001,12 +1001,12 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/bicaridine/on_mob_life(mob/living/M)
-	M.adjustBruteLoss(-2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(-2*REM)
 	..()
 	. = 1
 
 /datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(4*REM)
 	..()
 	. = 1
 
@@ -1019,12 +1019,12 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
-	M.adjustOxyLoss(-2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustOxyLoss(-2*REM)
 	..()
 	. = 1
 
 /datum/reagent/medicine/dexalin/overdose_process(mob/living/M)
-	M.adjustOxyLoss(4*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustOxyLoss(4*REM)
 	..()
 	. = 1
 

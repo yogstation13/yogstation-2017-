@@ -334,8 +334,6 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
 	category = CAT_MISCFOOD
-<<<<<<< HEAD
-=======
 
 /datum/crafting_recipe/food/branrequests
 	name = "Bran Requests Cereal"
@@ -345,4 +343,3 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
 	category = CAT_MISCFOOD
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

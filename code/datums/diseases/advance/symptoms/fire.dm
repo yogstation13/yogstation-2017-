@@ -47,13 +47,13 @@ Bonus
 /datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = (sqrt(20+A.totalStageSpeed()*2))-(sqrt(max(0, 16+A.totalStealth())))
 	M.adjust_fire_stacks(get_stacks)
-	M.adjustFireLoss(get_stacks/2, 1, DAMAGE_DISEASE)
+	M.adjustFireLoss(get_stacks/2)
 	return 1
 
 /datum/symptom/fire/proc/Firestacks_stage_5(mob/living/M, datum/disease/advance/A)
 	var/get_stacks = (sqrt(max(0, 20+A.totalStageSpeed()*3)))-(sqrt(max(0, 16+A.totalStealth())))
 	M.adjust_fire_stacks(get_stacks)
-	M.adjustFireLoss(get_stacks, 1, DAMAGE_DISEASE)
+	M.adjustFireLoss(get_stacks)
 	return 1
 
 /*

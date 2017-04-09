@@ -18,11 +18,8 @@
 	var/junkiness = 0  //for junk food. used to lower human satiety.
 	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
-<<<<<<< HEAD
 	var/can_always_eat = 0
-=======
 	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
@@ -103,15 +100,9 @@
 			else if(fullness > 50 && fullness < 150)
 				to_chat(M, "<span class='notice'>You hungrily begin to [eatverb] \the [src].</span>")
 			else if(fullness > 150 && fullness < 500)
-<<<<<<< HEAD
-				M << "<span class='notice'>You [eatverb] \the [src].</span>"
-			else if((fullness > 500 && fullness < 600) || can_always_eat)
-				M << "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>"
-=======
 				to_chat(M, "<span class='notice'>You [eatverb] \the [src].</span>")
-			else if(fullness > 500 && fullness < 600)
+			else if(fullness > 500 && fullness < 600 || can_always_eat)
 				to_chat(M, "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(M, "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return 0

@@ -29,13 +29,8 @@
 		user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
-<<<<<<< HEAD
 	if(FAKEDEATH in user.status_flags)
-		user << "<span class='warning'>We are already reviving.</span>"
-=======
-	if(user.status_flags & FAKEDEATH)
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death
 		switch(alert("Are we sure we wish to fake our own death?",,"Yes", "No"))

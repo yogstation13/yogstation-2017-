@@ -821,7 +821,7 @@
 	if(C.stat == DEAD || (FAKEDEATH in C.status_flags))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 =======
-	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
+	if(C.stat == DEAD || (FAKEDEATH in C.status_flags))
 		to_chat(src, "<span class='warning'>[C.name] is dead!</span>")
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return

@@ -100,7 +100,7 @@
 /obj/item/weapon/claymore/highlander/pickup(mob/living/user)
 	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
-	user.status_flags += IGNORESLOWDOWN
+	user.status_flags |= IGNORESLOWDOWN
 
 /obj/item/weapon/claymore/highlander/dropped(mob/living/user)
 	user.status_flags -= IGNORESLOWDOWN

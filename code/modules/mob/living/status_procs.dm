@@ -32,7 +32,7 @@
 		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
 
 /mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
-	if(!stat && islist(stun_absorption) && (status_flags & CANSTUN || ignore_canstun))
+	if(!stat && islist(stun_absorption) && ((CANSTUN in status_flags) || ignore_canstun))
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
@@ -54,7 +54,7 @@
 ///////////////////////////////// WEAKEN /////////////////////////////////////
 
 /mob/living/Weaken(amount, updating = 1, ignore_canweaken = 0)
-	if(!stat && islist(stun_absorption) && (status_flags & CANWEAKEN || ignore_canweaken))
+	if(!stat && islist(stun_absorption) && ((CANWEAKEN in status_flags) || ignore_canweaken))
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)

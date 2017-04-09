@@ -98,21 +98,10 @@
 	if(ismonkey(target))
 		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
-<<<<<<< HEAD
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(CANWEAKEN in C.status_flags)
-=======
 	var/mob/living/carbon/C = target
 	if(istype(C))
-		if(C.status_flags & CANWEAKEN)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+		if(CANWEAKEN in C.status_flags)
 			C.do_jitter_animation(500)
-<<<<<<< HEAD
-			C.take_bodypart_damage(20, 0) //The process is extremely painful
-
-=======
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		target.visible_message("<span class='danger'>[target] begins to violenty convulse!</span>","<span class='userdanger'>You feel a tiny prick and a begin to uncontrollably convulse!</span>")
 	feedback_add_details("changeling_powers","TS")
 	. = TRUE
@@ -139,11 +128,7 @@
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-<<<<<<< HEAD
-		user << "<span class='warning'>Our sting appears ineffective against its DNA. Perhaps we should try something with DNA.</span>"
-=======
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	return 1
 
@@ -162,11 +147,7 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-<<<<<<< HEAD
-	addtimer(src, "remove_fake", rand(450, 800), TIMER_NORMAL, target, blade)
-=======
-	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), 600)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+	addtimer(CALLBACK(src, .proc/remove_fake, target, blade), rand(450, 800))
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
@@ -250,12 +231,8 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-<<<<<<< HEAD
-	addtimer(CALLBACK(src, .proc/hallucination_time, target), rand(300,600))
-=======
 	if(target.reagents)
 		target.reagents.add_reagent("mindbreaker", 30)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	feedback_add_details("changeling_powers","HS")
 	return 1
 

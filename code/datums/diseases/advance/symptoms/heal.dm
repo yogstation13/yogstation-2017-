@@ -38,7 +38,7 @@ Bonus
 	if(M.toxloss > 0 && prob(20))
 <<<<<<< HEAD
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(M), "#66FF99"))
-	M.adjustToxLoss(-heal_amt, 1, DAMAGE_DISEASE)
+	M.adjustToxLoss(-heal_amt)
 =======
 		new /obj/effect/overlay/temp/heal(get_turf(M), "#66FF99")
 	M.adjustToxLoss(-heal_amt)
@@ -365,7 +365,7 @@ Bonus
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
 	var/amt_healed = 1
-	M.adjustBrainLoss(-amt_healed, 1, DAMAGE_DISEASE)
+	M.adjustBrainLoss(-amt_healed)
 	//Non-power mutations, excluding race, so the virus does not force monkey -> human transformations.
 	var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations) - GLOB.mutations_list[RACEMUT]
 	M.dna.remove_mutation_group(unclean_mutations)

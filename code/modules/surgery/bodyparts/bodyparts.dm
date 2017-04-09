@@ -106,13 +106,11 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute, burn, application=DAMAGE_PHYSICAL, updating_health = 1)
+/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
 	if(owner)
 		if(GODMODE in owner.status_flags)
 			return 0	//godmode
-		if(owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
-			if(application in owner.dna.species.damage_immunities)
-				return
+		if(owner.dna && owner.dna.species)
 			brute *= owner.dna.species.brutemod
 			burn *= owner.dna.species.burnmod
 	brute	= max(brute * config.damage_multiplier,0)
@@ -155,10 +153,7 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1, application=DAMAGE_PHYSICAL)
-	if(owner && owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
-		if(application in owner.dna.species.heal_immunities)
-			return
+/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
 

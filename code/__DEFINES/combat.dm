@@ -28,24 +28,6 @@
 #define DROWSY		"drowsy"
 #define JITTER		"jitter"
 
-<<<<<<< HEAD
-//damage application types
-#define DAMAGE_PHYSICAL 1
-#define DAMAGE_CHEMICAL 2
-#define DAMAGE_DISEASE 	3
-#define DAMAGE_CLONING 	4
-#define DAMAGE_MAGIC 	5
-#define DAMAGE_NO_MULTIPLIER	6
-
-//I hate adding defines like this but I'd much rather deal with bitflags than lists and string searches
-#define BRUTELOSS 1
-#define FIRELOSS 2
-#define TOXLOSS 4
-#define OXYLOSS 8
-#define SHAME 16
-
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN				1
 #define CANWEAKEN			2

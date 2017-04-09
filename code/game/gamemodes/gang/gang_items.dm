@@ -22,11 +22,7 @@
 		var/obj/item/O = new item_path(user.loc)
 		user.put_in_hands(O)
 	if(spawn_msg)
-<<<<<<< HEAD
-		user << spawn_msg
-=======
 		to_chat(user, spawn_msg)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/gang_item/proc/can_buy(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	return gang && (gang.points >= get_cost(user, gang, gangtool)) && can_see(user, gang, gangtool)
@@ -96,11 +92,7 @@
 
 /datum/gang_item/function/outfit/spawn_item(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(gang && gang.gang_outfit(user, gangtool))
-<<<<<<< HEAD
-		user << "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>"
-=======
 		to_chat(user, "<span class='notice'><b>Gang Outfits</b> can act as armor with moderate protection against ballistic and melee attacks. Every gangster wearing one will also help grow your gang's influence.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(gangtool)
 			gangtool.outfits -= 1
 
@@ -126,11 +118,7 @@
 	name = "10mm Pistol"
 	id = "pistol"
 	cost = 25
-<<<<<<< HEAD
-	item_path = /obj/item/weapon/gun/projectile/automatic/pistol
-=======
 	item_path = /obj/item/weapon/gun/ballistic/automatic/pistol
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/gang_item/weapon/ammo/pistol_ammo
 	name = "10mm Ammo"
@@ -141,19 +129,13 @@
 /datum/gang_item/weapon/uzi
 	name = "Uzi SMG"
 	id = "uzi"
-<<<<<<< HEAD
 	cost = 45
-	item_path = /obj/item/weapon/gun/projectile/automatic/mini_uzi
-=======
-	cost = 60
 	item_path = /obj/item/weapon/gun/ballistic/automatic/mini_uzi
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	id = "uzi"
 
 /datum/gang_item/weapon/ammo/uzi_ammo
 	name = "Uzi Ammo"
 	id = "uzi_ammo"
-<<<<<<< HEAD
 	cost = 15
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
 
@@ -169,11 +151,6 @@
 	cost = 45
 	item_path = /obj/item/ammo_box/magazine/tommygunm45
 
-=======
-	cost = 40
-	item_path = /obj/item/ammo_box/magazine/uzim9mm
-
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 //SLEEPING CARP
 
 /datum/gang_item/weapon/bostaff
@@ -185,7 +162,6 @@
 /datum/gang_item/weapon/sleeping_carp_scroll
 	name = "Sleeping Carp Scroll (one-use)"
 	id = "sleeping_carp_scroll"
-<<<<<<< HEAD
 	cost = 25
 	item_path = /obj/item/weapon/sleeping_carp_scroll
 	spawn_msg = "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
@@ -195,10 +171,6 @@
 	id = "throwing_weapons"
 	cost = 55
 	item_path = /obj/item/weapon/storage/box/syndie_kit/throwing_weapons
-=======
-	cost = 30
-	item_path = /obj/item/weapon/sleeping_carp_scroll
-	spawn_msg = "<span class='notice'>Anyone who reads the <b>sleeping carp scroll</b> will learn secrets of the sleeping carp martial arts style.</span>"
 
 /datum/gang_item/weapon/wrestlingbelt
 	name = "Wrestling Belt"
@@ -206,8 +178,6 @@
 	cost = 20
 	item_path = /obj/item/weapon/storage/belt/champion/wrestling
 	spawn_msg = "<span class='notice'>Anyone wearing the <b>wresting belt</b> will know how to be effective with wrestling.</span>"
-
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 ///////////////////
 //EQUIPMENT
@@ -220,45 +190,25 @@
 /datum/gang_item/equipment/spraycan
 	name = "Territory Spraycan"
 	id = "spraycan"
-<<<<<<< HEAD
 	cost = 3
-=======
-	cost = 5
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	item_path = /obj/item/toy/crayon/spraycan/gang
 
 /datum/gang_item/equipment/necklace
 	name = "Gold Necklace"
 	id = "necklace"
 	cost = 1
-<<<<<<< HEAD
-	item_path = /obj/item/clothing/tie/dope_necklace
-=======
 	item_path = /obj/item/clothing/neck/necklace/dope
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/gang_item/equipment/c4
 	name = "C4 Explosive"
 	id = "c4"
-<<<<<<< HEAD
 	cost = 5
-<<<<<<< HEAD
-=======
-	cost = 10
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	item_path = /obj/item/weapon/grenade/plastic/c4
-=======
-	item_path = /obj/item/weapon/c4
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /datum/gang_item/equipment/implant_breaker
 	name = "Implant Breaker"
 	id = "implant_breaker"
-<<<<<<< HEAD
-	cost = 15
-=======
 	cost = 10
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	item_path = /obj/item/weapon/implanter/gang
 	spawn_msg = "<span class='notice'>The <b>implant breaker</b> is a single-use device that destroys all implants within the target before trying to recruit them to your gang. Also works on enemy gangsters.</span>"
 
@@ -383,11 +333,7 @@
 		var/obj/item/O = new item_path(user.loc, gang) //we need to override this whole proc for this one argument
 		user.put_in_hands(O)
 	if(spawn_msg)
-<<<<<<< HEAD
-		user << spawn_msg
-=======
 		to_chat(user, spawn_msg)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"
@@ -422,11 +368,7 @@
 	if(gang && isboss(user, gang))
 		item_type = /obj/item/device/gangtool/spare/lt
 		if(gang.bosses.len < 3)
-<<<<<<< HEAD
-			user << "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>"
-=======
 			to_chat(user, "<span class='notice'><b>Gangtools</b> allow you to promote a gangster to be your Lieutenant, enabling them to recruit and purchase items like you. Simply have them register the gangtool. You may promote up to [3-gang.bosses.len] more Lieutenants</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	else
 		item_type = /obj/item/device/gangtool/spare
 	var/obj/item/device/gangtool/spare/tool = new item_type(user.loc)

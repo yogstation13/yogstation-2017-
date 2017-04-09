@@ -28,10 +28,11 @@
 	radio.on = 0
 	laws = new /datum/ai_laws/ratvar()
 	braintype = picked_fluff_name
-	GLOB.all_clockwork_objects += src
+	all_clockwork_objects += src
+	brainmob.languages_spoken = RATVAR
 
 /obj/item/device/mmi/posibrain/soul_vessel/Destroy()
-	GLOB.all_clockwork_objects -= src
+	all_clockwork_objects -= src
 	return ..()
 
 /obj/item/device/mmi/posibrain/soul_vessel/examine(mob/user)
@@ -88,16 +89,12 @@
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
-	var/prev_fakedeath = (FAKEDEATH in H.status_flags)
+	var/prev_fakedeath = (H.status_flags & FAKEDEATH)
 	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
 	H.death()
 	if(!prev_fakedeath)
-<<<<<<< HEAD
-		H.status_flags -= FAKEDEATH
-=======
 		H.status_flags &= ~FAKEDEATH
 	H.apply_status_effect(STATUS_EFFECT_SIGILMARK) //let them be affected by vitality matrices
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	picked_fluff_name = "Slave"
 	braintype = picked_fluff_name
 	brainmob.timeofhostdeath = H.timeofdeath

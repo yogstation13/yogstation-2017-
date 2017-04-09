@@ -154,7 +154,7 @@
 	flash_eyes(affect_silicon = 1)
 	..()
 
-/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))
 		return 0

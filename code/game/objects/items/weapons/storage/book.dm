@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		return
 	if(!chaplain)
 		user << "<span class='danger'>The book sizzles in your hands.</span>"
-		user.take_bodypart_damage(0, 10, 1, DAMAGE_DISEASE)
+		user.take_bodypart_damage(0, 10)
 =======
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

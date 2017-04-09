@@ -160,7 +160,7 @@
 					return
 				uses = 0 // we sacrifice all of our uses!
 				animate(user, alpha = initial(user.alpha), time = 80)
-				addtimer(src, "reverttarget", 85, FALSE, target)
+				addtimer(CALLBACK(src, .proc/reverttarget, target), 85)
 
 			else
 				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
@@ -186,7 +186,7 @@
 		user << "<span class='warning'>You poke [target] extinguishing one of your charges.</span>"
 		uses--
 		animate(target, alpha = 0, time = 5)
-		addtimer(src, "reverttarget",80, FALSE, target)
+		addtimer(CALLBACK(src, .proc/reverttarget, target), 80)
 
 /obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
 	if(A)

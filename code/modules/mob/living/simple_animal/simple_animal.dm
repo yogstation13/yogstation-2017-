@@ -825,8 +825,6 @@
 			client.screen |= l_hand
 
 <<<<<<< HEAD
->>>>>>> masterTGbranch
-=======
 //ANIMAL RIDING
 /mob/living/simple_animal/unbuckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	if(riding_datum)
@@ -858,4 +856,3 @@
 /mob/living/simple_animal/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/animal
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

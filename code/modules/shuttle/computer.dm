@@ -103,7 +103,7 @@
 	if(cooldownlen)
 		if(!(shuttleId in SSshuttle.cooldown_ids))
 			SSshuttle.cooldown_ids.Add("[shuttleId]")
-			addtimer(src, "endcooldown", cooldownlen, FALSE, shuttleID, moveID)
+			addtimer(CALLBACK(src, .proc/endcooldown, shuttleID, moveID), cooldownlen)
 			sending = TRUE
 			return 1
 	return 0

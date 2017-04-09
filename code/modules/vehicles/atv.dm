@@ -4,7 +4,6 @@
 	desc = "An all-terrain vehicle built for traversing rough terrain with ease. One of the few old-earth technologies that are still relevant on most planet-bound outposts."
 	icon_state = "atv"
 	var/static/image/atvcover = null
-<<<<<<< HEAD
 	var/datum/action/atvlight/vlight
 
 /obj/vehicle/atv/examine(mob/user)
@@ -14,12 +13,10 @@
 			user << "<span class='notice'>The lights are on.</span>"
 		else
 			user << "<span class='notice'>The lights are off.</span>"
-=======
 
 /obj/vehicle/atv/buckle_mob(mob/living/buckled_mob, force = 0, check_loc = 1)
 	. = ..()
 	riding_datum = new/datum/riding/atv
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/vehicle/atv/New()
 	..()
@@ -60,12 +57,8 @@
 		add_overlay(atvcover)
 		vlight.Grant(M)
 	else
-<<<<<<< HEAD
-		overlays -= atvcover
 		vlight.Remove(M)
-=======
 		cut_overlay(atvcover)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 

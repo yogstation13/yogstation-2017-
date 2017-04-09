@@ -52,7 +52,7 @@
 	else if(current_damage < set_damage)
 		take_overall_damage(0, set_damage - current_damage)
 
-/mob/living/carbon/human/adjustBruteLoss(amount, updating_health, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/adjustBruteLoss(amount, updating_health)
 	if(GODMODE in status_flags)
 		return 0
 	if(amount > 0)
@@ -60,7 +60,7 @@
 	else
 		heal_overall_damage(-amount, 0, application)
 
-/mob/living/carbon/human/adjustFireLoss(amount, updating_health, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/adjustFireLoss(amount, updating_health)
 	if(GODMODE in status_flags)
 		return 0
 	if(amount > 0)
@@ -68,84 +68,56 @@
 	else
 		heal_overall_damage(0, -amount, application)
 
-/mob/living/carbon/human/adjustOxyLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/adjustOxyLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
-	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
-		if(amount > 0)
-			if(application in dna.species.damage_immunities)
-				return
-		else
-			if(application in dna.species.heal_immunities)
-				return
 	oxyloss = Clamp(oxyloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
-/mob/living/carbon/human/adjustToxLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/adjustToxLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
 	if(dna && dna.species)
-		if(application != DAMAGE_NO_MULTIPLIER)
-			if(TOXINLOVER in dna.species.specflags)
-				amount = -amount
-				if(amount > 0)
-					blood_volume -= 5*amount
-				else
-					blood_volume -= amount
+		if(TOXINLOVER in dna.species.specflags)
+			amount = -amount
 			if(amount > 0)
-				if(application in dna.species.damage_immunities)
-					return 0
-				amount *= dna.species.toxmod
+				blood_volume -= 5*amount
 			else
-				if(application in dna.species.heal_immunities)
-					return 0
+				blood_volume -= amount
+		if(amount > 0)
+			amount *= dna.species.toxmod
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 	return amount
 
-/mob/living/carbon/human/adjustCloneLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/adjustCloneLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
-	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+	if(dna && dna.species)
 		if(amount > 0)
-			if(application in dna.species.damage_immunities)
-				return 0
 			amount *= dna.species.clonemod
-		else
-			if(application in dna.species.heal_immunities)
-				return 0
 	cloneloss = Clamp(cloneloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
 
 
-/mob/living/carbon/human/adjustBrainLoss(amount, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/adjustBrainLoss(amount, updating_health=1)
 	if(GODMODE in status_flags)
 		return 0
-	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+	if(dna && dna.species)
 		if(amount > 0)
-			if(application in dna.species.damage_immunities)
-				return 0
 			amount *= dna.species.brainmod
-		else
-			if(application in dna.species.heal_immunities)
-				return 0
 	brainloss = Clamp(brainloss + amount, 0, maxHealth*2)
 
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina = 1)
 	if(GODMODE in status_flags)
 		return 0
-	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+	if(dna && dna.species)
 		if(amount > 0)
-			if(application in dna.species.damage_immunities)
-				return 0
 			amount *= dna.species.staminamod
-		else
-			if(application in dna.species.heal_immunities)
-				return 0
 	staminaloss = Clamp(staminaloss + amount, 0, maxHealth*2)
 	if(updating_stamina)
 		update_stamina()
@@ -183,7 +155,7 @@
 //Heals ONE external organ, organ gets randomly selected from damaged ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/heal_organ_damage(brute, burn, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/heal_organ_damage(brute, burn)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 	if(!parts.len)
 		return
@@ -195,7 +167,7 @@
 //Damages ONE external organ, organ gets randomly selected from damagable ones.
 //It automatically updates damage overlays if necesary
 //It automatically updates health status
-/mob/living/carbon/human/take_organ_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/take_organ_damage(brute, burn, updating_health=1)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
 	if(!parts.len)
 		return
@@ -206,7 +178,7 @@
 
 
 //Heal MANY bodyparts, in random order
-/mob/living/carbon/human/heal_overall_damage(brute, burn, updating_health=1, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/heal_overall_damage(brute, burn, updating_health=1)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
 
 	var/update = 0
@@ -228,10 +200,10 @@
 			update_damage_overlays(0)
 
 // damage MANY bodyparts, in random order
-/mob/living/carbon/human/take_overall_damage(brute, burn, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/take_overall_damage(brute, burn)
 	if(GODMODE in status_flags)
 		return	//godmode
-	if(dna && dna.species && application != DAMAGE_NO_MULTIPLIER)
+	if(dna && dna.species)
 		brute *= dna.species.brutemod
 		burn *= dna.species.burnmod
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
@@ -258,6 +230,6 @@
 ////////////////////////////////////////////
 
 
-/mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
+/mob/living/carbon/human/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	// depending on the species, it will run the corresponding apply_damage code there
 	return dna.species.apply_damage(damage, damagetype, def_zone, blocked, src, application)

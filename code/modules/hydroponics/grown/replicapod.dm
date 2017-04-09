@@ -65,13 +65,8 @@
 						break
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
-<<<<<<< HEAD
-						make_podman = 1
-						if(isliving(M))
-=======
 						make_phytosian = 1
-						if(istype(M, /mob/living))
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+						if(isliving(M))
 							var/mob/living/L = M
 							make_phytosian = !L.hellbound
 						break
@@ -82,13 +77,8 @@
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
-<<<<<<< HEAD
-					make_podman = 1
-					if(isliving(M))
-=======
 					make_phytosian = 1
-					if(istype(M, /mob/living))
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+					if(isliving(M))
 						var/mob/living/L = M
 						make_phytosian = !L.hellbound
 					ckey_holder = M.ckey

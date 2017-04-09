@@ -312,11 +312,7 @@ What a mess.*/
 				active2 = null
 
 			if("Log In")
-<<<<<<< HEAD
 				if(isaiorborg(usr))
-=======
-				if(issilicon(usr))
->>>>>>> masterTGbranch
 					var/mob/living/silicon/borg = usr
 					active1 = null
 					active2 = null
@@ -452,16 +448,12 @@ What a mess.*/
 							sleep(30)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
-<<<<<<< HEAD
-								new /obj/item/weapon/poster/wanted(src.loc, photo.img, wanted_name, info)
-=======
 								if(globalprint)
 									for(var/obj/machinery/computer/secure_data/SD in SSmachine.processing)
 										if(SD.z == z)
 											new /obj/item/weapon/poster/legit/wanted(get_turf(SD), photo.img, wanted_name, info)
 								else
 									new /obj/item/weapon/poster/legit/wanted(get_turf(src), photo.img, wanted_name, info)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 							printing = 0
 
 //RECORD DELETE

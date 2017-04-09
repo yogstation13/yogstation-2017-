@@ -8,11 +8,9 @@
 	active_power_usage = 500
 	circuit = /obj/item/weapon/circuitboard/computer/crew
 
-<<<<<<< HEAD
 /obj/machinery/computer/crew/New()
 	monitor = crewmonitor
 	return ..()
-<<<<<<< HEAD
 
 /obj/machinery/computer/crew/attacked_by(obj/item/I, mob/living/user)
 	..()
@@ -45,11 +43,7 @@
 
 		G.savedlocation = "([pos.x], [pos.y], [pos.z])"
 		user << "<span class='notice'>Your GPS has saved the last position of [M.name].</span>"
-=======
->>>>>>> masterTGbranch
-=======
 	light_color = LIGHT_COLOR_BLUE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))

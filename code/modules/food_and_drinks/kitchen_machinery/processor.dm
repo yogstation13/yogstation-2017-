@@ -307,10 +307,5 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/processor/slime
-<<<<<<< HEAD
-	name = "circuit board (Slime Processor)"
-	build_path = /obj/machinery/processor/slime
-=======
 	name = "Slime Processor (Machine Board)"
 	build_path = /obj/machinery/processor/slime
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

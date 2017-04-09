@@ -239,10 +239,6 @@
 				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
 /obj/machinery/door/airlock/proc/hallucinate_shock(mob/living/user)
 	var/image/shock_image = image(user, user, dir = user.dir)
 	var/image/electrocution_skeleton_anim = image('icons/mob/human.dmi', user, icon_state = "electrocuted_base", layer=ABOVE_MOB_LAYER)
@@ -271,9 +267,7 @@
 	user.jitteriness = max(user.jitteriness - 990, 10) //Still jittery, but vastly less
 	user.Stun(3)
 	user.Weaken(3)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
->>>>>>> masterTGbranch
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != NOT_ELECTRIFIED)
 		return 1
@@ -555,27 +549,12 @@
 			src.hack(user)
 			return
 		else
-<<<<<<< HEAD
-			user << "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>"
-		user << browse(null, "window=airlock")
-		user.unset_machine()
-	if(emagged)
-		user << "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>"
-		user << browse(null, "window=airlock")
-		user.unset_machine()
-		return
-	if(detonated)
-		user << "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>"
-		user << browse(null, "window=airlock")
-		user.unset_machine()
-=======
 			to_chat(user, "<span class='warning'>Airlock AI control has been blocked with a firewall. Unable to hack.</span>")
 	if(emagged)
 		to_chat(user, "<span class='warning'>Unable to interface: Airlock is unresponsive.</span>")
 		return
 	if(detonated)
 		to_chat(user, "<span class='warning'>Unable to interface. Airlock control panel damaged.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	show_ai_menu(user)
 
@@ -828,16 +807,10 @@
 				if(5)
 					//un-electrify door
 					if(wires.is_cut(WIRE_SHOCK))
-<<<<<<< HEAD
-						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(src.secondsElectrified==-1 || src.secondsElectrified>0)
-						src.secondsElectrified = 0
-						no_window_msg = "Door un-electrified."
-=======
 						to_chat(usr, text("Can't un-electrify the airlock - The electrification wire is cut."))
 					else if(isElectrified())
 						set_electrified(0)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+						no_window_msg = "Door un-electrified.
 
 				if(8)
 					// Safeties!  We don't need no stinking safeties!
@@ -905,42 +878,24 @@
 				if(4)
 					//raise door bolts
 					if(wires.is_cut(WIRE_BOLTS))
-<<<<<<< HEAD
-						usr << text("The door bolt drop wire is cut - you can't raise the door bolts.")
-					else if(!src.locked)
-						usr << text("The door bolts are already up.")
-=======
 						to_chat(usr, text("The door bolt drop wire is cut - you can't raise the door bolts.<br>\n"))
 					else if(!src.locked)
 						to_chat(usr, text("The door bolts are already up.<br>\n"))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					else
 						if(src.hasPower())
 							unbolt()
 							no_window_msg = "Door bolts raised."
 						else
-<<<<<<< HEAD
-							usr << text("Cannot raise door bolts due to power failure.")
-=======
 							to_chat(usr, text("Cannot raise door bolts due to power failure.<br>\n"))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 				if(5)
 					//electrify door for 30 seconds
 					if(wires.is_cut(WIRE_SHOCK))
-<<<<<<< HEAD
-						usr << text("The electrification wire has been cut.")
-					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.")
-					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.")
-=======
 						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
 					else if(secondsElectrified==ELECTRIFIED_PERMANENT)
 						to_chat(usr, text("The door is already indefinitely electrified. You'd have to un-electrify it before you can re-electrify it with a non-forever duration.<br>\n"))
 					else if(isElectrified())
 						to_chat(usr, text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n"))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					else
 						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
 						add_logs(usr, src, "electrified")
@@ -955,18 +910,6 @@
 				if(6)
 					//electrify door indefinitely
 					if(wires.is_cut(WIRE_SHOCK))
-<<<<<<< HEAD
-						usr << text("The electrification wire has been cut.")
-					else if(src.secondsElectrified==-1)
-						usr << text("The door is already indefinitely electrified.")
-					else if(src.secondsElectrified!=0)
-						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.")
-					else
-						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified")
-						src.secondsElectrified = -1
-						no_window_msg = "Door electrified"
-=======
 						to_chat(usr, text("The electrification wire has been cut.<br>\n"))
 					else if(secondsElectrified==ELECTRIFIED_PERMANENT)
 						to_chat(usr, text("The door is already indefinitely electrified.<br>\n"))
@@ -976,7 +919,6 @@
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						add_logs(usr, src, "electrified")
 						set_electrified(ELECTRIFIED_PERMANENT)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 				if (8) // Not in order >.>
 					// Safeties!  Maybe we do need some stinking safeties!
@@ -1356,14 +1298,11 @@
 	else
 		playsound(src.loc, 'sound/machines/airlockforced.ogg', 30, 1)
 
-<<<<<<< HEAD
-=======
 	if(autoclose && normalspeed)
 		addtimer(CALLBACK(src, .proc/autoclose), 150)
 	else if(autoclose && !normalspeed)
 		addtimer(CALLBACK(src, .proc/autoclose), 15)
 
->>>>>>> masterTGbranch
 	if(!density)
 		return 1
 	if(!SSticker || !SSticker.mode)
@@ -1380,22 +1319,9 @@
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
-<<<<<<< HEAD
-
-	if(autoclose && normalspeed)
-		addtimer(src, "autoclose", 150)
-	else if(autoclose && !normalspeed)
-		addtimer(src, "autoclose", 10)
-
-=======
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-<<<<<<< HEAD
-		addtimer(src, "close", 2)
->>>>>>> masterTGbranch
-=======
 		addtimer(CALLBACK(src, .proc/close), 2)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	return 1
 
 

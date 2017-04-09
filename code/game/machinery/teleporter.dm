@@ -305,7 +305,6 @@
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
-<<<<<<< HEAD
 						human.set_species(/datum/species/human/fly)
 					if(human.dna && human.dna.species.id == "lizard")
 						human.set_species(/datum/species/lizard/fly)
@@ -313,12 +312,7 @@
 						human.set_species(/datum/species/plant/fly)
 					if(human.dna && human.dna.species.id == "android")
 						human.set_species(/datum/species/android/fly)
-					M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-=======
-						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
-						human.set_species(/datum/species/fly)
-
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+					to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return

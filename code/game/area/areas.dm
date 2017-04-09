@@ -336,7 +336,6 @@ var/list/motion_alert_listeners = list()
 		for (var/obj/machinery/camera/C in RA)
 			cameras += C
 
-<<<<<<< HEAD
 	for (var/mob/living/silicon/SILICON in player_list)
 		SILICON.triggerAlarm("Burglar", src, cameras, trigger)
 
@@ -344,7 +343,7 @@ var/list/motion_alert_listeners = list()
 		var/datum/alert_listener/listener = L
 		listener.triggerAlarm("Burglar", src, cameras, trigger)
 
-	addtimer(src, "clear_burglaralerts", 600, , trigger)
+	addtimer(CALLBACK(src, .proc/clear_burglaralerts, trigger), 600)
 
 /area/proc/clear_burglaralerts(trigger)
 	for (var/mob/living/silicon/SILICON in player_list)
@@ -353,12 +352,6 @@ var/list/motion_alert_listeners = list()
 	for (var/L in burglar_alert_listeners)
 		var/datum/alert_listener/listener = L
 		listener.cancelAlarm("Burglar", src, trigger)
-=======
-	for (var/mob/living/silicon/SILICON in GLOB.player_list)
-		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
-			//Cancel silicon alert after 1 minute
-			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1

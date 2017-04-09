@@ -136,8 +136,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
-/datum/species/lizard/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, application=DAMAGE_PHYSICAL)
-	if((damagetype == STAMINA) && (application == DAMAGE_PHYSICAL) && (damage > 5))
+/datum/species/lizard/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	if((damagetype == STAMINA) && (damage > 5))
 		damage += 10
 	return ..(damage, damagetype, def_zone, blocked, H, application)
 
@@ -245,8 +245,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	radiation_effect_mod = 0
 	radiation_faint_threshhold = 999
 	toxmod = 0
-	//damage_immunities = list(DAMAGE_CHEMICAL)
-	//heal_immunities = list(DAMAGE_CHEMICAL)
 	limb_default_status = ORGAN_SEMI_ROBOTIC
 	invis_sight = SEE_INVISIBLE_MINIMUM
 	disease_resist = 60
@@ -313,12 +311,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "oil")
-		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		return 1
 
 	if(chem.id == "welding_fuel")
-		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		return 1
 
@@ -331,13 +329,13 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(chem.id == "teslium")
 		H.status_flags |= GOTTAGOFAST
 		if(H.health < 50 && H.health > 0)
-			H.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
-			H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
-			H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+			H.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1)
+			H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1)
+			H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1)
 		H.AdjustParalysis(-3)
 		H.AdjustStunned(-3)
 		H.AdjustWeakened(-3)
-		H.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_PHYSICAL)
+		H.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER, 1)
 		H.nutrition = max(H.nutrition + 5 * REAGENTS_METABOLISM, 0)
 		chem.current_cycle++
 		return 1
@@ -439,7 +437,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/android/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -477,7 +475,6 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	acidmod = 2
 	roundstart = 1
 	speedmod = 0.33
-	damage_immunities = list()
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	var/no_light_heal = FALSE
 	var/light_heal_multiplier = 1
@@ -496,7 +493,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(3)
 		H.losebreath += 0.5
 		H.confused = max(H.confused, 1)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
@@ -506,19 +503,19 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H << "<span class='warning'>Your skin rustles and wilts! You are dying!</span>"
 		return 1
 	if(chem.id == "saltpetre")
-		H.adjustFireLoss(-2.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustFireLoss(-2.5*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		chem.current_cycle++
 		return 1
 	if(chem.id == "ammonia")
-		H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		chem.current_cycle++
 		return 1
 	if(chem.id == "robustharvestnutriment")
-		H.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
 		for(var/V in H.reagents.reagent_list)//slow down the processing of harmful reagents.
 			var/datum/reagent/R = V
 			if(istype(R, /datum/reagent/toxin) || istype(R, /datum/reagent/drug))
@@ -527,8 +524,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		chem.current_cycle++
 		return 1
 	if(chem.id == "left4zednutriment")
-		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustToxLoss(1*REAGENTS_EFFECT_MULTIPLIER)
 		if(prob(10))
 			if(prob(95))
 				randmutb(H)
@@ -538,10 +535,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		chem.current_cycle++
 		return 1
 	if(chem.id == "eznutriment")
-		H.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustOxyLoss(-4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustOxyLoss(-4*REAGENTS_EFFECT_MULTIPLIER)
 		if(H.health < -50)
-			H.adjustOxyLoss(-HUMAN_CRIT_MAX_OXYLOSS, 1, DAMAGE_CHEMICAL)
+			H.adjustOxyLoss(-HUMAN_CRIT_MAX_OXYLOSS)
 		if(chem.volume >= 15 && !is_type_in_list(chem, H.reagents.addiction_list))
 			var/datum/reagent/new_reagent = new chem.type()
 			H.reagents.addiction_list.Add(new_reagent)
@@ -558,10 +555,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			chem.overdosed = 1
 			chem.overdose_start(H)
 			return 0
-		H.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
-		H.adjustOxyLoss(-2*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustBruteLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustFireLoss(-0.5*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustToxLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
+		H.adjustOxyLoss(-2*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		chem.current_cycle++
 		return 1
@@ -580,13 +577,13 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		return 1
 	if(istype(chem, /datum/reagent/consumable/ethanol)) //istype so all alcohols work
 		var/datum/reagent/consumable/ethanol/ethanol = chem
-		H.adjustBrainLoss(2, 1, DAMAGE_CHEMICAL)
-		H.adjustToxLoss(0.4, 1, DAMAGE_CHEMICAL)
+		H.adjustBrainLoss(2)
+		H.adjustToxLoss(0.4)
 		H.confused = max(H.confused, 1)
 		if(ethanol.boozepwr > 80 && chem.volume > 30)
 			if(chem.current_cycle > 50)
 				H.sleeping += 3
-			H.adjustToxLoss(4*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+			H.adjustToxLoss(4*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, chem.metabolization_rate * REAGENTS_METABOLISM)
 		chem.current_cycle++
 		return 0 // still get all the normal effects.
@@ -596,7 +593,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	switch(proj_type)
 		if(/obj/item/projectile/energy/floramut)
 			H.rad_act(rand(20, 30))
-			H.adjustFireLoss(5, 1, DAMAGE_CHEMICAL)
+			H.adjustFireLoss(5)
 			H.visible_message("<span class='warning'>[H] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 			if(prob(80))
 				randmutb(H)
@@ -783,7 +780,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/plant/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -852,7 +849,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 
@@ -1868,7 +1865,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
-		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
+		H.adjustToxLoss(3*REAGENTS_EFFECT_MULTIPLIER)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
 

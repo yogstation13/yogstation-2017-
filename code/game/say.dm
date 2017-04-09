@@ -18,23 +18,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"1217" = "blueteamradio"
 	))
 
-<<<<<<< HEAD
-/atom/movable/proc/say(message, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
-=======
 /atom/movable/proc/say(message, datum/language/language = null)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(!can_speak())
 		return
 	if(message == "" || !message)
 		return
 	var/list/spans = get_spans()
-<<<<<<< HEAD
-	send_speech(message, 7, src, , spans, languages)
-=======
 	if(!language)
 		language = get_default_language()
 	send_speech(message, 7, src, , spans, message_language=language)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans)
 	return
@@ -42,13 +34,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/can_speak()
 	return 1
 
-<<<<<<< HEAD
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
-	var/rendered = compose_message(src, languages, message, , spans)
-=======
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null)
 	var/rendered = compose_message(src, message_language, message, , spans)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, message_language, message, , spans)
 
@@ -113,21 +100,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		if(AM)
 			return AM.say_quote(raw_message, spans, message_langs)
 		else
-<<<<<<< HEAD
-			return speaker.say_quote(raw_message, spans, message_langs)
-	else if(message_langs & MONKEY)
-		return "chimpers."
-	else if(message_langs & ALIEN)
-		return "hisses."
-	else if(message_langs & ROBOT)
-		return "beeps rapidly."
-	else if(message_langs & DRONE)
-		return "chitters."
-	else if(message_langs & SWARMER)
-		return "hums."
-=======
 			return speaker.say_quote(raw_message, spans)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	else
 		return "makes a strange sound."
 
@@ -192,11 +165,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
-<<<<<<< HEAD
-
-/atom/movable/virtualspeaker/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 /proc/get_virtual_speaker_for(atom/movable/AM, obj/item/device/radio/radio)
 	if(!AM)
@@ -216,5 +184,3 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		var/mob/M = AM
 		virt.job = M.job
 	return virt
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

@@ -196,11 +196,6 @@
 
 /obj/item/weapon/grown/novaflower/pickup(mob/living/carbon/human/user)
 	..()
-<<<<<<< HEAD
 	if(!istype(user.gloves, /obj/item/clothing))
-		user << "<span class='danger'>The [name] burns your bare hand!</span>"
-=======
-	if(!user.gloves)
 		to_chat(user, "<span class='danger'>The [name] burns your bare hand!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		user.adjustFireLoss(rand(1, 5))

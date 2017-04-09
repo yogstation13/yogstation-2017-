@@ -1218,10 +1218,7 @@
 	if(module.can_be_pushed)
 		status_flags |= CANPUSH
 	else
-<<<<<<< HEAD
 		status_flags -= CANPUSH
-=======
-		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
 		flags |= CLEAN_ON_MOVE
@@ -1230,7 +1227,6 @@
 
 	hat_offset = module.hat_offset
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	magpulse = module.magpulsing
 	updatename()
 

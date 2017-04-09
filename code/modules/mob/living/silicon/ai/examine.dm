@@ -21,10 +21,6 @@
 			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
 	msg += "*---------*</span>"
 
-<<<<<<< HEAD
 	to_chat(user, msg)
-=======
-	user << msg
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	..()
