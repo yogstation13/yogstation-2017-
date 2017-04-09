@@ -18055,6 +18055,7 @@
 "aIm" = (
 /obj/item/device/assembly/bikehorn/rubberducky,
 /obj/structure/table,
+/obj/item/clothing/shoes/sneakers/nmd,
 /turf/open/floor/plasteel{
 	tag = "icon-greenyellowfull (WEST)";
 	icon_state = "greenyellowfull";
@@ -18760,6 +18761,7 @@
 	},
 /obj/item/key,
 /obj/structure/table,
+/obj/item/clothing/shoes/sneakers/nmd,
 /turf/open/floor/plasteel{
 	tag = "icon-greenyellowfull (WEST)";
 	icon_state = "greenyellowfull";
@@ -30339,6 +30341,7 @@
 	pixel_x = 0;
 	pixel_y = -32
 	},
+/obj/structure/displaycase/royalp,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bjA" = (
@@ -67972,11 +67975,11 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "cFM" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
@@ -68033,11 +68036,11 @@
 /turf/open/floor/plasteel/shuttle/purple,
 /area/shuttle/transport)
 "cFX" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
@@ -83460,7 +83463,7 @@ bcM
 aUW
 bag
 bgl
-bhG
+bkB
 biZ
 bkD
 blZ

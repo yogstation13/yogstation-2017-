@@ -158,6 +158,7 @@
 	density = 0
 	circuit = null
 	clockwork = TRUE //it'd look very weird
+	screen_crack = null
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
