@@ -416,8 +416,11 @@ obj/item/weapon/gun/proc/newshot()
 			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
 
 	semicd = 1
+	var/suicidetim = 120
+	if(target.is_nearcrit())
+		suicidetim = 20 // yes. 2 seconds if they're in near crit.
 
-	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
+	if(!do_mob(user, target, suicidetim) || user.zone_selected != "mouth")
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
