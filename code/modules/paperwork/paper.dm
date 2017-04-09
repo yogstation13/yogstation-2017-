@@ -415,3 +415,21 @@
 			<b>4.</b> If you feel it necessary, detonation of a collar will kill the person wearing it while also destroying the collar.<br>\
 			<b>5.</b> The implant allows you to check status and bind collars to you, so they detonate when you die, or act like you do. Click the detonator in-hand to sync<br>\
 			<i>Do not use bomb collars solely for executions! They are expensive and not easily replacable - use lethal injections instead.</i>"
+
+/obj/item/weapon/paper/morgue
+	name = "Morgue Operating Guide"
+	info = "<small> Printed by NanoTrasen Health and Wellbeing Department, July 2551. </small> <br> <br>\
+			<center> Keep your workplace CLEAN, SAFE, and EFFICIENT by following these guidelines. </center> <br>\
+			<b> Mark VI-2 Cadaver Storage Unit Technical Details: </b> <br>\
+			Capacity: 1 person <br>\
+			Pale light: Empty <br>\
+			Red light: Uncloneable corpse <br>\
+			Blue light: Cloneable corpse <br>\
+			Orange light: Non-biological objects inside <br>\
+			<b> Standard Morgue Operating Procedures: </b> <br>\
+			1. A corpse arrives at the morgue. <br>\
+			2. Inspect the body. <br>\
+			3. If the body is cloneable, send it to Genetics. (Refer to H-87 Cloning Apparatus Manual for details as to 'cloneable'.) <br>\
+			4. If the body is not cloneable, send it to Robotics to be debrained and cyborged. <br>\
+			5. If Robotics does not wish for the body, Robotics is understaffed, or the body does not contain a brain, send the body to the Chapel to be given a proper space burial or cremation. <br>\
+			6. If none of these options are available, send the body to the Kitchen to be <b>properly embalmed and stored.</b> Any rumors regarding human meat being served in the station's rations are completely false."
