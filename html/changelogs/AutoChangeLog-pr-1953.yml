@@ -1,0 +1,5 @@
+author: matskuman5
+delete-after: True
+changes: 
+  - rscdel: "The old interrogation observation room has been bulldozed..."
+  - rscadd: "...and replaced with a new, small medbay for the brig! Contains a sleeper and some first aid kits, as well as a syringe gun and morphine."
