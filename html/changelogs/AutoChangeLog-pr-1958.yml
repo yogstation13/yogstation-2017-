@@ -1,0 +1,6 @@
+author: Super3222, HippieStation
+delete-after: True
+changes: 
+  - rscadd: "NearCrit has been ported from HippieStation."
+  - rscadd: "Nearcrit involves the first stage of the critical phase. When your HP is equal to or under 0, but above -50 then you are in nearcrit. Be mindful that below -50 you will enter the standard critical phase."
+  - rscadd: "In nearcrit you will be subdued to crawling on the ground, and there's more. So happy experimenting."
