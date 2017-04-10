@@ -297,7 +297,7 @@
 /obj/machinery/power/supermatter_shard/proc/supermatter_pull()
 	//following is adapted from singulo code
 	// Let's just make this one loop.
-	for(var/atom/X in orange(15), src )
+	for(var/atom/X in orange(15,src))
 		X.singularity_pull(src, STAGE_FIVE)
 
 	return
