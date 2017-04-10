@@ -174,6 +174,8 @@
 	var/unique = 0		//0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
+	var/reading_time = 600
+	var/being_read = 0
 
 /obj/item/weapon/book/attack_self(mob/living/user)
 	if(is_blind(user))
@@ -181,31 +183,19 @@
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
 		return
+	if((winexists(user, "book")) || (being_read == 1))
+		user << "<span class='notice'>You are already reading a book!</span>"
+		return
 	if(dat)
+		being_read = 1
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
-		onclose(user, "book")
-		var/readingtime = 600
-		var/stimulants = 0
-		var/class = 0
-		for(var/s in list("hot_coco","coffee","tea","soy_latte","cafe_latte","pumpkin_latte","hot_ramen"))
-			if(user.reagents.has_reagent(s))
-				readingtime = 300
-				stimulants = 1
-				break
-			
-		for(var/d in list("whiskey","gintonic","whiskey_cola","irish_cream","driestmartini"))
-			if(user.reagents.has_reagent(d))
-				readingtime = max(600,readingtime + 50)	//classy reading alcohols slows down reading
-				class = 1
-				break
-		while(do_after(user,readingtime,progress = 0))	//60 seconds of reading by default
+		while(do_after(user,reading_time,progress = 1) && winexists(user, "book"))	//60 seconds of reading by default
 			user.adjustBrainLoss(-5)
 			user.adjustStaminaLoss(-20)
-			if(stimulants)
-				user.heal_organ_damage(1,1)
-			if(class && prob(20))
-				user.maxHealth += 2	//knowledge is power 20% of the time
+			user.heal_organ_damage(1,1)
+		onclose(user, "book")
+		being_read = 0
 	if(!dat)
 		user << "<span class='notice'>This book is completely blank!</span>"
 
