@@ -33553,8 +33553,22 @@
 /area/medical/medbay)
 "bqe" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/weapon/paper_bin{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/weapon/pen{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/machinery/button/door{
+	desc = "A remote control switch for the medbay foyer.";
+	id = "MedbayFoyer";
+	name = "Medbay Doors Control";
+	normaldoorcontrol = 1;
+	pixel_x = -5;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel{
 	icon_state = "red";
 	dir = 1
@@ -35138,7 +35152,7 @@
 "btd" = (
 /obj/machinery/status_display,
 /turf/closed/wall,
-/area/security/checkpoint/medical)
+/area/medical/medbay)
 "bte" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/medical{
@@ -69140,7 +69154,7 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
-"ZxL" = (
+"ZxK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -69149,11 +69163,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
-"ZxM" = (
+"ZxL" = (
 /obj/machinery/newscaster,
 /turf/closed/wall,
 /area/medical/morgue)
-"ZxN" = (
+"ZxM" = (
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -69162,14 +69176,14 @@
 	icon_state = "white"
 	},
 /area/medical/medbay)
-"ZxO" = (
+"ZxN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel,
 /area/storage/emergency{
 	name = "Paramedic Staging Area"
 	})
-"ZxP" = (
+"ZxO" = (
 /obj/structure/bodycontainer/morgue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -69177,7 +69191,7 @@
 	dir = 5
 	},
 /area/medical/morgue)
-"ZxQ" = (
+"ZxP" = (
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
@@ -69185,14 +69199,14 @@
 	icon_state = "dark"
 	},
 /area/medical/morgue)
-"ZxR" = (
+"ZxQ" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 5
 	},
 /area/medical/morgue)
-"ZxS" = (
+"ZxR" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -69203,14 +69217,14 @@
 	icon_state = "dark"
 	},
 /area/medical/morgue)
-"ZxT" = (
+"ZxS" = (
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 5
 	},
 /area/medical/morgue)
-"ZxU" = (
+"ZxT" = (
 /obj/structure/chair/office/dark,
 /obj/effect/landmark/start{
 	name = "Paramedic"
@@ -69219,7 +69233,7 @@
 /area/storage/emergency{
 	name = "Paramedic Staging Area"
 	})
-"ZxV" = (
+"ZxU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
 	scrub_N2O = 0;
@@ -69234,7 +69248,7 @@
 /area/storage/emergency{
 	name = "Paramedic Staging Area"
 	})
-"ZxW" = (
+"ZxV" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1;
@@ -69244,7 +69258,7 @@
 	icon_state = "dark"
 	},
 /area/medical/morgue)
-"ZxX" = (
+"ZxW" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -69252,7 +69266,7 @@
 	icon_state = "dark"
 	},
 /area/medical/morgue)
-"ZxY" = (
+"ZxX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -69263,7 +69277,7 @@
 /area/storage/emergency{
 	name = "Paramedic Staging Area"
 	})
-"ZxZ" = (
+"ZxY" = (
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Morgue APC";
@@ -69278,7 +69292,7 @@
 	icon_state = "dark"
 	},
 /area/medical/morgue)
-"Zya" = (
+"ZxZ" = (
 /obj/structure/table,
 /obj/machinery/recharger,
 /turf/open/floor/plasteel{
@@ -69286,32 +69300,29 @@
 	dir = 1
 	},
 /area/security/checkpoint/medical)
-"Zyb" = (
+"Zya" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/plasteel{
 	icon_state = "red";
 	dir = 1
 	},
 /area/security/checkpoint/medical)
-"Zyc" = (
+"Zyb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
-"Zyd" = (
+"Zyc" = (
 /obj/structure/chair/office/dark{
 	dir = 1
 	},
 /obj/effect/landmark/start{
 	name = "Security Officer"
 	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = -30
-	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
-"Zye" = (
+"Zyd" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -69319,9 +69330,12 @@
 	pixel_x = 0
 	},
 /obj/machinery/light,
+/obj/structure/reagent_dispensers/peppertank{
+	pixel_y = -30
+	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
-"Zyf" = (
+"Zye" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
@@ -69339,7 +69353,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
-"Zyg" = (
+"Zyf" = (
 /obj/structure/table,
 /obj/item/roller{
 	pixel_x = -1;
@@ -69363,7 +69377,7 @@
 	dir = 6
 	},
 /area/security/checkpoint/medical)
-"Zyh" = (
+"Zyg" = (
 /obj/structure/window{
 	tag = "icon-window (EAST)";
 	icon_state = "window";
@@ -69376,7 +69390,7 @@
 	icon_state = "dark"
 	},
 /area/medical/morgue)
-"Zyi" = (
+"Zyh" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Medbay Security Post";
 	req_access_txt = "63"
@@ -69389,7 +69403,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
-"Zyj" = (
+"Zyi" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -69409,6 +69423,10 @@
 	icon_state = "white"
 	},
 /area/medical/medbay)
+"Zyj" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/medical/sleeper)
 "Zyk" = (
 /obj/item/weapon/book/manual/wiki/plasmaman,
 /turf/closed/wall,
@@ -105576,8 +105594,8 @@ bll
 bmS
 bjY
 bjY
-Zyc
-Zyc
+Zyb
+Zyb
 buA
 bvY
 bxv
@@ -105834,7 +105852,7 @@ bmT
 bjY
 bqe
 brI
-btd
+Zyb
 buA
 bvY
 bxw
@@ -105842,7 +105860,7 @@ byG
 byG
 YoV
 bBC
-byG
+Zyj
 byG
 bHF
 bJc
@@ -106089,9 +106107,9 @@ bjX
 bjX
 bmT
 bjY
-Zya
-Zyd
-biv
+ZxZ
+Zyc
+Zyb
 buA
 bvY
 bxv
@@ -106342,15 +106360,15 @@ baV
 baV
 bhc
 bir
-ZxN
+ZxM
 blm
 bmU
 bjY
 bqf
 brJ
-Zyi
+Zyh
 buC
-Zyj
+Zyi
 bxv
 byG
 bAl
@@ -106603,8 +106621,8 @@ biC
 bkh
 biC
 biv
-Zyb
-Zye
+Zya
+Zyd
 biv
 buA
 bvY
@@ -106861,7 +106879,7 @@ blu
 bmV
 biv
 bqg
-Zyf
+Zye
 btf
 buA
 bwa
@@ -107627,12 +107645,12 @@ baV
 bfV
 baV
 biC
-ZxO
+ZxN
+ZxT
 ZxU
-ZxV
-ZxY
-ZxY
-ZxY
+ZxX
+ZxX
+ZxX
 bti
 buE
 bwd
@@ -107889,7 +107907,7 @@ blw
 bnd
 blq
 bqj
-Zyg
+Zyf
 btj
 buA
 bwe
@@ -108398,11 +108416,11 @@ baV
 bfW
 bhg
 bix
-ZxP
-ZxP
+ZxO
+ZxO
 blr
 boD
-ZxR
+ZxQ
 bkd
 brE
 buA
@@ -108655,7 +108673,7 @@ baV
 baV
 bhh
 biw
-ZxQ
+ZxP
 bkd
 bmY
 boE
@@ -108912,11 +108930,11 @@ baV
 baV
 bhi
 biw
-ZxR
-ZxR
+ZxQ
+ZxQ
 bkd
-ZxR
-ZxR
+ZxQ
+ZxQ
 brN
 btm
 buH
@@ -109426,11 +109444,11 @@ baV
 baV
 baV
 biw
-ZxR
-ZxR
+ZxQ
+ZxQ
 bkd
-ZxR
-ZxR
+ZxQ
+ZxQ
 boJ
 btn
 buI
@@ -109682,13 +109700,13 @@ bdN
 baV
 baV
 baV
-ZxM
+ZxL
 bkd
 bkd
-ZxW
+ZxV
 boI
 bqq
-Zyh
+Zyg
 biw
 biw
 bwl
@@ -109940,8 +109958,8 @@ baV
 baV
 baV
 biw
-ZxR
-ZxR
+ZxQ
+ZxQ
 bkd
 boJ
 bqr
@@ -110452,11 +110470,11 @@ bcq
 bdO
 beQ
 beQ
-ZxL
+ZxK
 biA
-ZxS
-ZxS
-ZxS
+ZxR
+ZxR
+ZxR
 boK
 bqs
 bqs
@@ -110711,10 +110729,10 @@ baV
 baV
 bhm
 biw
-ZxT
-ZxT
-ZxX
-ZxZ
+ZxS
+ZxS
+ZxW
+ZxY
 bqt
 bqt
 bqt
