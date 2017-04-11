@@ -111,6 +111,8 @@
 			lava_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/maint))
+			maint_room_templates[R.name] = R
 
 
 /proc/preloadShuttleTemplates()
