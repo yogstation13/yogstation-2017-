@@ -6,7 +6,6 @@
 "r" = (/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "u" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/whitebeet,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "A" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/ambrosia,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"B" = (/obj/machinery/light/small{dir = 8},/turf/template_noop,/area/template_noop)
 "D" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/carrot,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "G" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/tobacco,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "K" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
@@ -23,6 +22,6 @@ TjYeGK
 TnrQlT
 TRrrUT
 TAiDuT
-TTTTBT
+TTTTTT
 "}
 

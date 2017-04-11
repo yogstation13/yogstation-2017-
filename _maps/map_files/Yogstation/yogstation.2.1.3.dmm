@@ -68075,6 +68075,12 @@
 	},
 /turf/open/floor/plating,
 /area/tcommsat/computer)
+"gMZ" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Garden")
+	},
+/turf/closed/wall,
+/area/maintenance/fpmaint2)
 "icO" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -69154,12 +69160,6 @@
 /area/ai_monitored/storage/secure{
 	name = "\improper Telecoms Satellite"
 	})
-"ZFD" = (
-/obj/effect/landmark/maintroom{
-	template_names = list("Garden")
-	},
-/turf/closed/wall,
-/area/maintenance/fpmaint2)
 
 (1,1,1) = {"
 aaa
@@ -84694,7 +84694,7 @@ aty
 aty
 aty
 aty
-ZFD
+gMZ
 aMt
 aOi
 aOi

@@ -36,7 +36,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + 120
+	ranged_cooldown = (world.time + 120) / scaling
 
 	if(prob(20+anger_modifier)) //Major attack
 		telegraph()
@@ -48,26 +48,60 @@
 			spiral_shoot(rand(0, 1))
 
 	else if(prob(20))
-		ranged_cooldown = world.time + 30
+		ranged_cooldown = (world.time + 30) / scaling
 		random_shots()
 	else
 		if(prob(70))
-			ranged_cooldown = world.time + 20
+			ranged_cooldown = (world.time + 20) / scaling
 			blast()
 		else
-			ranged_cooldown = world.time + 40
+			ranged_cooldown = (world.time + 40) / scaling
 			dir_shots(diagonals)
-			sleep(10)
+			sleep(10 / scaling)
 			dir_shots(cardinal)
-			sleep(10)
+			sleep(10 / scaling)
 			dir_shots(diagonals)
-			sleep(10)
+			sleep(10 / scaling)
 			dir_shots(cardinal)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
 	..()
 	internal = new/obj/item/device/gps/internal/lavaland/colossus(src)
+
+// VAR SCALING //
+	rawScaling = rand(70,150)
+	scaling = rawScaling / 100
+	maxHealth = round(maxHealth * scaling, 1)
+	health = round(health * scaling, 1)
+	move_to_delay = move_to_delay / scaling
+
+	if(rawScaling < 80)
+		var/prefix = "miserable"
+		name = "[prefix] [name]"
+		return
+	if(rawScaling < 99 && rawScaling > 80)
+		var/prefix = "crippled"
+		name = "[prefix] [name]"
+		return
+	if(rawScaling >= 100 && rawScaling <= 120)
+		var/prefix = "dangerous"
+		name = "[prefix] [name]"
+		loot += /obj/item/weapon/ore/diamond
+		return
+	if(rawScaling > 120 && rawScaling < 145)
+		var/prefix = "powerful"
+		name = "[prefix] [name]"
+		loot += list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/diamond)
+		return
+	if(rawScaling > 145)
+		var/prefix = "perfect"
+		name = "[prefix] [name]"
+		loot += list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/diamond)
+		loot += pick(/obj/item/clothing/suit/space/hardsuit/shielded, /obj/item/weapon/shield/energy, /obj/item/organ/cyberimp/eyes/shield) //Third one being a fuck you, seeing as mining loves to have these.
+		return
+
+// VAR SCALING END //
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	qdel(internal)
@@ -103,7 +137,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
 
-	sleep(10)
+	sleep(10/scaling)
 	spawn()
 		spiral_shoot()
 	spawn()
@@ -113,7 +147,7 @@
 	spawn()
 		var/counter = counter_start
 		var/turf/marker
-		for(var/i in 1 to 80)
+		for(var/i in 1 to round(80*scaling, 16))
 			switch(counter)
 				if(1)
 					marker = locate(x, y - 2, z)
@@ -170,6 +204,8 @@
 	P.firer = src
 	P.yo = marker.y - startloc.y
 	P.xo = marker.x - startloc.x
+	P.damage = round(P.damage * src.scaling, 1)
+	P.speed = P.speed / src.scaling
 	if(target)
 		P.original = target
 	else
@@ -195,7 +231,7 @@
 		shoot_projectile(E)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
-	for(var/mob/M in range(10,src))
+	for(var/mob/M in range(10*scaling,src))
 		if(M.client)
 			M.client.color = rgb(200, 0, 0)
 			spawn(1)
