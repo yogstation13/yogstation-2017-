@@ -117,7 +117,7 @@
 			erase_data()
 			for (var/obj/C in src)
 				C.loc = src.loc
-			if (stat & BROKEN)
+			if ((stat & BROKEN) || computer_health != initial(src.computer_health))
 				user << "<span class='notice'>The broken glass falls out.</span>"
 				new /obj/item/weapon/shard(src.loc)
 				new /obj/item/weapon/shard(src.loc)
