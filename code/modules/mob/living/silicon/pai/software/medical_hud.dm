@@ -15,7 +15,7 @@
 	if(args["toggle"])
 		user.medHUD = !user.medHUD
 		if(user.medHUD)
-			user.add_med_hud()
+			user.add_hud(user.med_hud)
 		else
 			var/datum/atom_hud/med = huds[user.med_hud]
 			med.remove_hud_from(user)
