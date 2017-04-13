@@ -221,14 +221,11 @@
 	if(!clockwork_component_cache["replicant_alloy"])
 		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return 0
-	if(clockwork_component_cache["replicant_alloy"])
-		clockwork_component_cache["replicant_alloy"]--
-		var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
-		user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
-		user.put_in_hands(A)
-		return 1
-	else
-		..()
+	clockwork_component_cache["replicant_alloy"]--
+	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
+	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
+	user.put_in_hands(A)
+	return 1
 
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
