@@ -318,6 +318,16 @@
 	build_path = /obj/item/ammo_casing/shotgun/techshell
 	category = list("Ammo")
 
+/datum/design/combatdart
+	name = "Combat Dart"
+	desc = "A strong combat build dart. It can be reloaded and pierces armor"
+	id = "combatdart"
+	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 3, "medical" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_SILVER = 1500)
+	build_path = /obj/item/dart_casing/combat
+	category = list("Ammo")
+
 /datum/design/suppressor
 	name = "Universal Suppressor"
 	desc = "A reverse-engineered universal suppressor that fits on most small arms with threaded barrels."

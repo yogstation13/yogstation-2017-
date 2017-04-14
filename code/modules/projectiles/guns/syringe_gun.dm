@@ -21,18 +21,15 @@
 /obj/item/weapon/gun/syringe/newshot()
 	if(!syringes.len) return
 
-	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-
-	if(!S) return
-
-	chambered.BB = new S.projectile_type (src)
-
-	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
-	chambered.BB.name = S.name
-	syringes.Remove(S)
-
-	qdel(S)
-	return
+	var/obj/item/dart_casing/D = syringes[1]
+	for(var/obj/item/weapon/reagent_containers/syringe/S in D)
+		if(!D)	return
+		chambered.BB = new D.projectile_type (src)
+		S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
+		chambered.BB.name = D.name
+		syringes.Remove(D)
+		qdel(D)
+		break
 
 /obj/item/weapon/gun/syringe/process_chamber()
 	return
@@ -52,7 +49,7 @@
 		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
 
-	var/obj/item/weapon/reagent_containers/syringe/S = syringes[syringes.len]
+	var/obj/item/dart_casing/S = syringes[syringes.len]
 
 	if(!S) return 0
 	S.loc = user.loc
@@ -63,7 +60,7 @@
 	return 1
 
 /obj/item/weapon/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = 1)
-	if(istype(A, /obj/item/weapon/reagent_containers/syringe))
+	if(istype(A, /obj/item/dart_casing))
 		if(syringes.len < max_syringes)
 			if(!user.unEquip(A))
 				return

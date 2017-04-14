@@ -85,16 +85,6 @@
 	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
 	category = list("Medical Designs")
 
-/datum/design/piercesyringe
-	name = "Piercing Syringe"
-	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
-	id = "piercesyringe"
-	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 7)
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
-	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
-	category = list("Medical Designs")
-
 /datum/design/bluespacebodybag
 	name = "Bluespace body bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."

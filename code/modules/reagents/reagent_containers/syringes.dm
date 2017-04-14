@@ -12,7 +12,7 @@
 	volume = 15
 	var/mode = SYRINGE_DRAW
 	var/busy = 0		// needed for delayed drawing of blood
-	var/projectile_type = /obj/item/projectile/bullet/dart/syringe
+	var/allow_ammo = 1  //If we allow it to be used in the darts
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/reagent_containers/syringe/New()
@@ -179,6 +179,7 @@
 		filling.icon_state = "syringe[rounded_vol]"
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
+		return filling
 
 /obj/item/weapon/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
@@ -252,9 +253,87 @@
 	. = ..()
 	reagents.set_reacting(FALSE)
 
-/obj/item/weapon/reagent_containers/syringe/piercing
-	name = "piercing syringe"
-	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
-	volume = 10
-	projectile_type = /obj/item/projectile/bullet/dart/syringe/piercing
-	origin_tech = "combat=3;materials=4;engineering=5"
+
+/obj/item/dart_casing
+	name = "syringe casing"
+	desc = "A casing made for syringes to be used in needle guns."
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "dart_0_medical"
+	w_class = 1
+	var/purpose = "medical"
+	var/loaded            //If it's loaded
+	var/max_chemicals = 1 //The amount of different chemicals it allows
+	var/allow_reload      //If you can insert and remove needles freely
+	var/projectile_type = /obj/item/projectile/bullet/dart/syringe
+	var/reagent
+
+/obj/item/dart_casing/medical
+	name = "medical dart"
+	icon_state = "dart_0_medical"
+	purpose = "medical"
+	max_chemicals = 3
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/medical
+
+/obj/item/dart_casing/combat
+	name = "combat dart"
+	icon_state = "dart_0_combat"
+	purpose = "combat"
+	allow_reload = 1
+	max_chemicals = 5
+	projectile_type = /obj/item/projectile/bullet/dart/syringe/combat
+
+/obj/item/dart_casing/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/reagent_containers/syringe) && !contents.len)
+		var/obj/item/weapon/reagent_containers/syringe/S = I
+		if(!S.allow_ammo)
+			user << "<span class='warning'>[S] does not fit in [src]!</span>"
+			return
+		if(S.reagents.reagent_list.len > max_chemicals)
+			user << "<span class='warning'>[src] rejects [S] due to build in safety precautions!</span>"
+			return
+		else
+			if(!user.unEquip(S))
+				return
+			S.loc = src
+			update_icon()
+			user << "<span class='notice'>You insert [S] into [src].</span>"
+			playsound(src,'sound/machines/click.ogg',10,1)
+			return 1
+	else
+		..()
+
+
+/obj/item/dart_casing/update_icon()
+	overlays.Cut()
+	loaded = 0
+	name = "empty [purpose] dart"
+	for(var/obj/item/weapon/reagent_containers/syringe/I in src)
+		if(I.update_icon())
+			overlays += I.update_icon()
+		if(contents.len)
+			loaded = 1
+			reagent = I.reagents.reagent_list[1]
+			name = "[reagent] [purpose] dart"
+	icon_state = "dart_[loaded]_[purpose]"
+
+
+
+/obj/item/dart_casing/attack_self(mob/user)
+	if(contents.len && allow_reload)
+		user.put_in_hands(src.contents[1])
+		user << "<span class='notice'>You empty [src].</span>"
+		playsound(src,'sound/machines/click.ogg',10,1)
+		update_icon()
+	else
+		..()
+
+/obj/item/dart_casing/dropped()
+	update_icon()
+	..()
+
+/obj/item/dart_casing/New(var/loc, var/reagent_to_add, var/reagent_amount = 15, allow_reload, max_chemicals)
+	..()
+	if(reagent_to_add)
+		var/obj/item/weapon/reagent_containers/syringe/S = new /obj/item/weapon/reagent_containers/syringe(src)
+		S.reagents.add_reagent(reagent_to_add, reagent_amount)
+	update_icon()
