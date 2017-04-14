@@ -33,6 +33,9 @@ They will then assume the normal shadowling form and gain their abilities.
 The shadowling will seem OP, and that's because it kinda is. Being restricted to the dark while being alone most of the time is extremely difficult and as such the shadowling needs powerful abilities.
 Made by Xhuis
 
+ARGS:
+EZ - Reduced thrall requirement to win, if there's not likely to be enough people about otherwise
+
 */
 
 
@@ -41,8 +44,29 @@ Made by Xhuis
 	GAMEMODE
 */
 
+/proc/is_thrall(var/mob/living/M)
+	return istype(M) && M.mind && M.mind.special_role == "thrall"
 
-/datum/game_mode
+
+/proc/is_shadow_or_thrall(var/mob/living/M)
+	return istype(M) && M.mind && (M.mind.special_role == "thrall" || M.mind.special_role == "shadowling")
+
+
+/proc/is_shadow(var/mob/living/M)
+	return istype(M) && M.mind && M.mind.special_role == "shadowling"
+
+
+/datum/game_mode/shadowling
+	name = "shadowling"
+	config_tag = "shadowling"
+	antag_flag = ROLE_SHADOWLING
+	end_condition = END_CONDITION_WEAK
+	required_players = 30
+	required_enemies = 2
+	recommended_enemies = 2
+	restricted_jobs = list("AI", "Cyborg")
+	prob_traitor_ai = 18
+
 	var/list/datum/mind/shadows = list()
 	var/list/datum/mind/thralls = list()
 	var/list/shadow_objectives = list()
@@ -51,35 +75,13 @@ Made by Xhuis
 	var/shadowling_dead = 0 //is shadowling kill
 	var/objective_explanation
 
-
-/proc/is_thrall(var/mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.thralls)
-
-
-/proc/is_shadow_or_thrall(var/mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.thralls) || (M.mind in ticker.mode.shadows))
-
-
-/proc/is_shadow(var/mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.shadows)
-
-
-/datum/game_mode/shadowling
-	name = "shadowling"
-	config_tag = "shadowling"
-	antag_flag = ROLE_SHADOWLING
-	required_players = 30
-	required_enemies = 2
-	recommended_enemies = 2
-	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	prob_traitor_ai = 18
-
 /datum/game_mode/shadowling/announce()
 	world << "<b>The current game mode is - Shadowling!</b>"
 	world << "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
 
-/datum/game_mode/shadowling/pre_setup()
+/datum/game_mode/shadowling/pre_setup(datum/game/G, list/a)
+	args = a
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -88,15 +90,16 @@ Made by Xhuis
 
 	var/shadowlings = max(2, round(num_players()/10))
 
-	var/list/datum/mind/shadowmen = pick_candidate(amount = shadowlings)
-	update_not_chosen_candidates()
+	var/list/datum/mind/shadowmen = G.prepare_candidates(antag_flag, shadowlings)
 
 	for(var/v in shadowmen)
 		var/datum/mind/shadow = v
 		shadows += shadow
-		modePlayer += shadow
-		shadow.special_role = "Shadowling"
+		shadow.special_role = "shadowling"
 		shadow.restricted_roles = restricted_jobs
+
+	if(has_arg("EZ"))
+		required_thralls = 7 //For special situations when there may not be 15 live non-antag players by the time the 'lings get around to their conversions
 
 	return 1
 
@@ -114,7 +117,7 @@ Made by Xhuis
 	..()
 	return
 
-/datum/game_mode/proc/greet_shadow(datum/mind/shadow)
+/datum/game_mode/shadowling/proc/greet_shadow(datum/mind/shadow)
 	shadow.current << "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>"
 	shadow.current << "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>"
 	shadow.current << "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>"
@@ -122,7 +125,7 @@ Made by Xhuis
 	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
 
 
-/datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)
+/datum/game_mode/shadowling/proc/process_shadow_objectives(datum/mind/shadow_mind)
 	var/objective = "enthrall" //may be devour later, but for now it seems murderbone-y
 
 	if(objective == "enthrall")
@@ -132,7 +135,7 @@ Made by Xhuis
 		shadow_mind.current << "<b>Objective #1</b>: [objective_explanation]<br>"
 
 
-/datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
+/datum/game_mode/shadowling/proc/finalize_shadowling(datum/mind/shadow_mind)
 	var/mob/living/carbon/human/S = shadow_mind.current
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hatch(null))
 	shadow_mind.AddSpell(new /obj/effect/proc_holder/spell/self/shadowling_hivemind(null))
@@ -142,7 +145,7 @@ Made by Xhuis
 			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
 
-/datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
+/datum/game_mode/shadowling/proc/add_thrall(datum/mind/new_thrall_mind)
 	if(!istype(new_thrall_mind))
 		return 0
 	if(!(new_thrall_mind in thralls))
@@ -164,7 +167,7 @@ Made by Xhuis
 			replace_jobbaned_player(new_thrall_mind.current, ROLE_SHADOWLING, ROLE_SHADOWLING)
 		return 1
 
-/datum/game_mode/proc/remove_thrall(datum/mind/thrall_mind, var/kill = 0)
+/datum/game_mode/shadowling/proc/remove_thrall(datum/mind/thrall_mind, var/kill = 0)
 	if(!istype(thrall_mind) || !(thrall_mind in thralls) || !isliving(thrall_mind.current)) return 0 //If there is no mind, the mind isn't a thrall, or the mind's mob isn't alive, return
 	update_shadow_icons_removed(thrall_mind)
 	thralls.Remove(thrall_mind)
@@ -188,7 +191,7 @@ Made by Xhuis
 						  under their command...</span>")
 	return 1
 
-/datum/game_mode/proc/remove_shadowling(datum/mind/ling_mind)
+/datum/game_mode/shadowling/proc/remove_shadowling(datum/mind/ling_mind)
 	if(!istype(ling_mind) || !(ling_mind in shadows)) return 0
 	update_shadow_icons_removed(ling_mind)
 	shadows.Remove(ling_mind)
@@ -212,7 +215,7 @@ Made by Xhuis
 			M.gib()
 
 
-/datum/game_mode/shadowling/proc/check_shadow_victory()
+/datum/game_mode/shadowling/check_finished()
 	var/success = 0 //Did they win?
 	if(shadow_objectives.Find("enthrall"))
 		success = shadowling_ascended
@@ -220,11 +223,11 @@ Made by Xhuis
 
 
 /datum/game_mode/shadowling/declare_completion()
-	if(check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
+	if(check_finished() && EMERGENCY_ESCAPED_OR_ENDGAMED) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
 		world << "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>"
-	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
+	else if(shadowling_dead && !check_finished()) //If the shadowlings have ascended, they can not lose the round
 		world << "<span class='redtext'>The shadowlings have been killed by the crew!</span>"
-	else if(!check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED)
+	else if(!check_finished() && EMERGENCY_ESCAPED_OR_ENDGAMED)
 		world << "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>"
 	else
 		world << "<span class='redtext'>The shadowlings have failed!</span>"
@@ -232,7 +235,7 @@ Made by Xhuis
 	return 1
 
 
-/datum/game_mode/proc/auto_declare_completion_shadowling()
+/datum/game_mode/shadowling/round_report()
 	var/text = ""
 	if(shadows.len)
 		text += "<br><span class='big'><b>The shadowlings were:</b></span>"
@@ -310,12 +313,12 @@ Made by Xhuis
 			H.adjustBrainLoss(-25)
 			H.adjustCloneLoss(-1)
 
-/datum/game_mode/proc/update_shadow_icons_added(datum/mind/shadow_mind)
+/datum/game_mode/shadowling/proc/update_shadow_icons_added(datum/mind/shadow_mind)
 	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
 	shadow_hud.join_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, ((shadow_mind in shadows) ? "shadowling" : "thrall"))
 
-/datum/game_mode/proc/update_shadow_icons_removed(datum/mind/shadow_mind)
+/datum/game_mode/shadowling/proc/update_shadow_icons_removed(datum/mind/shadow_mind)
 	var/datum/atom_hud/antag/shadow_hud = huds[ANTAG_HUD_SHADOW]
 	shadow_hud.leave_hud(shadow_mind.current)
 	set_antag_hud(shadow_mind.current, null)
