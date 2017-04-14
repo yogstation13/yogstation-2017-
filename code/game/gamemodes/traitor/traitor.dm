@@ -1,16 +1,21 @@
-/datum/game_mode
-	var/traitor_name = "traitor"
-	var/list/datum/mind/traitors = list()
+#define TRAITOR_LOW_RECOMMENDED 2
+#define TRAITOR_MED_RECOMMENDED 4
+#define TRAITOR_HI_RECOMMENDED 8
 
-	var/datum/mind/exchange_red
-	var/datum/mind/exchange_blue
+//TRAITOR MODE
+//The classic.
+//Args:
+///LOW - A few traitors, for largely quiet rounds
+///MED - A few more traitors, for some more action
+///HI - A load of traitors, for wide-spread chaos
+///DOUBLE_AGENT - Many traitors, each with two objectives: Kill another traitor, and don't get assassinated.
 
 /datum/game_mode/traitor
-	name = "traitor"
-	config_tag = "traitor"
-	antag_flag = ROLE_TRAITOR
-	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain", "Head of Personnel")
+	name = "traitor" //Friendly name of the mode
+	role_name = "traitor" //Name of the antag type
+	config_tag = "traitor" //internal name
+	antag_flag = ROLE_TRAITOR //For tracking prefs and jobbans
+	restricted_jobs = list("AI", "Cyborg") //Chosen players cannot be placed as these jobs
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
@@ -21,13 +26,28 @@
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 
+	var/list/datum/mind/traitors = list()
+
+	//Snowflakey, but neccesary for the exchange objectives
+	var/datum/mind/exchange_blue
+	var/datum/mind/exchange_red
+
+	///DOUBLE AGENT\\\
+
+	var/list/target_list = list()
+	var/list/late_joining_list = list()
+
 
 /datum/game_mode/traitor/announce()
 	world << "<B>The current game mode is - Traitor!</B>"
 	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
 
 
-/datum/game_mode/traitor/pre_setup()
+/datum/game_mode/traitor/pre_setup(datum/game/G, list/a)
+	args = a
+
+	if("DOUBLE_AGENT" in args)
+		num_modifier = 2
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -42,15 +62,14 @@
 	else
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
-	var/list/datum/mind/backstabbers = pick_candidate(amount = num_traitors)
-	update_not_chosen_candidates()
+	var/list/datum/mind/backstabbers = G.prepare_candidate(antag_flag, num_traitors)
 
 	for(var/v in backstabbers)
 		var/datum/mind/traitor = v
 		traitors += traitor
-		traitor.special_role = traitor_name
-		traitor.restricted_roles = restricted_jobs
-		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
+		traitor.special_role = role_name
+		traitor.restricted_roles = protected_jobs + restricted_jobs
+		log_game("[traitor.key] (ckey) has been selected as a [role_name]")
 
 	if(traitors.len < required_enemies)
 		return 0
@@ -59,34 +78,79 @@
 
 
 /datum/game_mode/traitor/post_setup()
+	if("DOUBLE_AGENT" in args)
+		var/i = 0
+		for(var/datum/mind/traitor in traitors)
+			i++
+			if(i + 1 > traitors.len)
+				i = 0
+			target_list[traitor] = traitors[i + 1]
+
+	if("LOW" in args)
+		recommended_enemies = TRAITOR_LOW_RECOMMENDED
+	if("MED" in args)
+		recommended_enemies = TRAITOR_MED_RECOMMENDED
+	if("HI" in args)
+		recommended_enemies = TRAITOR_HI_RECOMMENDED
+
 	for(var/datum/mind/traitor in traitors)
-		if(!istype(traitor.current,/mob/living/silicon)) //Don't finalize objectives for silicons, that's handled in proc/handle_AI_Traitors()
-			forge_traitor_objectives(traitor)
-			spawn(rand(10,100))
-				finalize_traitor(traitor)
-				greet_traitor(traitor)
+		forge_traitor_objectives(traitor)
+		spawn(rand(10,100))
+			finalize_traitor(traitor)
+			greet_traitor(traitor)
 	if(!exchange_blue)
 		exchange_blue = -1 //Block latejoiners from getting exchange objectives
-	modePlayer += traitors
 	..()
 	return 1
 
 /datum/game_mode/traitor/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
+	if("DOUBLE_AGENT" in args)
+		return
+
 	var/traitorcap = min(round(joined_player_list.len / (config.traitor_scaling_coeff * 2)) + 2 + num_modifier, round(joined_player_list.len/config.traitor_scaling_coeff) + num_modifier )
 	if(ticker.mode.traitors.len >= traitorcap) //Upper cap for number of latejoin antagonists
-		return
+		return 0
 	if(ticker.mode.traitors.len <= (traitorcap - 2) || prob(100 / (config.traitor_scaling_coeff * 2)))
 		if(ROLE_TRAITOR in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_TRAITOR) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
 						add_latejoin_traitor(character.mind)
+						return 1
+	return 0
 
 /datum/game_mode/traitor/proc/add_latejoin_traitor(datum/mind/character)
 	character.make_Traitor()
 
 
-/datum/game_mode/proc/forge_traitor_objectives(datum/mind/traitor)
+/datum/game_mode/traitor/proc/forge_traitor_objectives(datum/mind/traitor)
+	if ("DOUBLE_AGENT" in args)
+		// Assassinate
+		var/datum/mind/target_mind = target_list[traitor]
+		if(issilicon(target_mind.current))
+			var/datum/objective/destroy/destroy_objective = new
+			destroy_objective.owner = traitor
+			destroy_objective.target = target_mind
+			destroy_objective.update_explanation_text()
+			traitor.objectives += destroy_objective
+		else
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.target = target_mind
+			kill_objective.update_explanation_text()
+			traitor.objectives += kill_objective
+
+		// Escape
+		if(issilicon(traitor.current))
+			var/datum/objective/survive/survive_objective = new
+			survive_objective.owner = traitor
+			traitor.objectives += survive_objective
+		else
+			var/datum/objective/escape/escape_objective = new
+			escape_objective.owner = traitor
+			traitor.objectives += escape_objective
+		return
+
 	var/is_hijacker = prob(10)
 	var/martyr_chance = prob(20)
 	var/objective_count = is_hijacker 			//Hijacking counts towards number of objectives
@@ -151,8 +215,8 @@
 
 
 
-/datum/game_mode/proc/greet_traitor(datum/mind/traitor)
-	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
+/datum/game_mode/traitor/proc/greet_traitor(datum/mind/traitor)
+	traitor.current << "<B><font size=3 color=red>You are the [role_name].</font></B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in traitor.objectives)
 		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
@@ -160,11 +224,8 @@
 	return
 
 
-/datum/game_mode/proc/finalize_traitor(var/datum/mind/traitor)
-	if (istype(traitor.current, /mob/living/silicon))
-		add_law_zero(traitor.current)
-	else
-		equip_traitor(traitor.current)
+/datum/game_mode/traitor/proc/finalize_traitor(var/datum/mind/traitor)
+	equip_traitor(traitor.current)
 	ticker.mode.update_traitor_icons_added(traitor)
 	return
 
@@ -183,21 +244,9 @@
 
 	traitor_mob << "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe."
 
-
-/datum/game_mode/proc/add_law_zero(mob/living/silicon/ai/killer)
-	var/law = "Accomplish your objectives at all costs."
-	var/law_borg = "Accomplish your AI's objectives at all costs."
-	killer << "<b>Your laws have been changed!</b>"
-	killer.set_zeroth_law(law, law_borg)
-	give_codewords(killer)
-	killer.set_syndie_radio()
-	killer << "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!"
-	killer.add_malf_picker()
-	killer.show_laws()
-
-/datum/game_mode/proc/auto_declare_completion_traitor()
+/datum/game_mode/traitor/round_report()
 	if(traitors.len)
-		var/text = "<br><font size=3><b>The [traitor_name]s were:</b></font>"
+		var/text = "<br><font size=3><b>The [role_name]s were:</b></font>"
 		for(var/datum/mind/traitor in traitors)
 			var/traitorwin = 1
 
@@ -255,7 +304,7 @@
 	return 1
 
 
-/datum/game_mode/proc/equip_traitor(mob/living/carbon/human/traitor_mob, safety = 0)
+/datum/game_mode/traitor/proc/equip_traitor(mob/living/carbon/human/traitor_mob, safety = 0)
 	if (!istype(traitor_mob))
 		return
 	. = 1
@@ -292,7 +341,7 @@
 	if(!safety) // If they are not a rev. Can be added on to.
 		give_codewords(traitor_mob)
 
-/datum/game_mode/proc/assign_exchange_role(datum/mind/owner)
+/datum/game_mode/traitor/proc/assign_exchange_role(datum/mind/owner)
 	//set faction
 	var/faction = "red"
 	if(owner == exchange_blue)

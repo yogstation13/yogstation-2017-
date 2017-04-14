@@ -28,19 +28,21 @@
 	world << "<B>The current game mode is - Extended!</B>"
 	world << "<B>Just have fun!</B>"
 
-/datum/game_mode/extended/pre_setup()
+/datum/game_mode/extended/pre_setup(datum/game/G, list/a)
+	args = a
 	return 1
 
 /datum/game_mode/extended/post_setup()
+	generate_station_goals()
 	..()
 
-/datum/game_mode/extended/generate_station_goals()
+/datum/game_mode/extended/proc/generate_station_goals()
 	for(var/T in subtypesof(/datum/station_goal))
 		var/datum/station_goal/G = new T
-		station_goals += G
+		ticker.game.station_goals += G
 		G.on_report()
 
 /datum/game_mode/extended/send_intercept(report = 0)
 	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", 'sound/AI/commandreport.ogg')
-	for (var/datum/station_goal/G in station_goals)
+	for (var/datum/station_goal/G in ticker.game.station_goals)
 		G.send_report()

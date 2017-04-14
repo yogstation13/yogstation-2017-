@@ -1,6 +1,5 @@
-/datum/game_mode
-	var/list/ape_infectees = list()
-
+//MONKEY MODE
+//Xenomorphs lite, now with monkeys.
 /datum/game_mode/monkey
 	name = "monkey"
 	config_tag = "monkey"
@@ -9,6 +8,8 @@
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
+
+	end_condition = END_CONDITION_STRONG //not a lot can override a monkey takeover, except maybe getting nuked
 
 	restricted_jobs = list("Cyborg", "AI")
 
@@ -20,19 +21,17 @@
 
 	var/players_per_carrier = 30
 
+	var/list/ape_infectees = list()
 
-/datum/game_mode/monkey/pre_setup()
+
+/datum/game_mode/monkey/pre_setup(datum/game/G, list/a)
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
-
-	for(var/j = 0, j < carriers_to_make, j++)
-		if (!antag_candidates.len)
-			break
-		var/datum/mind/carrier = pick_candidate()
+	var/list/datum/mind/candidates = G.prepare_candidates(antag_flag, carriers_to_make)
+	for(var/datum/mind/carrier in candidates)
 		carriers += carrier
 		carrier.special_role = "monkey"
 		carrier.restricted_roles = restricted_jobs
 		log_game("[carrier.key] (ckey) has been selected as a Jungle Fever carrier")
-		antag_candidates -= carrier
 
 	if(!carriers.len)
 		return 0
@@ -67,19 +66,17 @@
 
 /datum/game_mode/monkey/check_finished()
 	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return 1
+		return ..()
 
-	if(!round_converted)
-		for(var/datum/mind/monkey_mind in ape_infectees)
-			continuous_sanity_checked = 1
-			if(monkey_mind.current && monkey_mind.current.stat != DEAD)
+	for(var/datum/mind/monkey_mind in ape_infectees)
+		if(monkey_mind.current && monkey_mind.current.stat != DEAD)
+			return 0
+
+	var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(H.mind && H.stat != DEAD)
+			if(H.HasDisease(D))
 				return 0
-
-		var/datum/disease/D = new /datum/disease/transformation/jungle_fever() //ugly but unfortunately needed
-		for(var/mob/living/carbon/human/H in living_mob_list)
-			if(H.mind && H.stat != DEAD)
-				if(H.HasDisease(D))
-					return 0
 
 	..()
 
@@ -96,11 +93,11 @@
 	else
 		return 0
 
-/datum/game_mode/proc/add_monkey(datum/mind/monkey_mind)
+/datum/game_mode/monkey/proc/add_monkey(datum/mind/monkey_mind)
 	ape_infectees |= monkey_mind
 	monkey_mind.special_role = "Infected Monkey"
 
-/datum/game_mode/proc/remove_monkey(datum/mind/monkey_mind)
+/datum/game_mode/monkey/proc/remove_monkey(datum/mind/monkey_mind)
 	ape_infectees.Remove(monkey_mind)
 	monkey_mind.special_role = null
 

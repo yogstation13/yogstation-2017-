@@ -174,8 +174,9 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				H.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
 				H.loc = A
 				sleep(50)
-				if(!ticker.mode.shadowling_ascended)
+				var/datum/game_mode/shadowling/mode = ticker.game.get_mode_by_tag("shadowling")
+				if(istype(mode) && mode.shadowling_ascended)
 					SSshuttle.emergency.request(null, 0.3)
-				ticker.mode.shadowling_ascended = 1
+				mode.shadowling_ascended = 1
 				A.mind.RemoveSpell(src)
 				qdel(H)

@@ -383,23 +383,32 @@ var/bomb_set
 			off_station = 1
 	else
 		off_station = 2
-
-	if(ticker.mode && ticker.mode.name == "nuclear emergency")
+	var/datum/game_mode/nuclear/nmode = ticker.game.get_mode_by_tag("nuclear")
+	var/datum/game_mode/gang/gmode = ticker.game.get_mode_by_tag("gang")
+	var/datum/game_mode/blob/bmode = ticker.game.get_mode_by_tag("blob")
+	if(nmode && istype(nmode))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		var/datum/game_mode/nuclear/GM = ticker.mode
-		GM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		GM.nuke_off_station = off_station
-	ticker.station_explosion_cinematic(off_station,null)
-	if(ticker.mode)
-		ticker.mode.explosion_in_progress = 0
-		if(ticker.mode.name == "nuclear emergency")
-			var/datum/game_mode/nuclear/GM = ticker.mode
-			GM.nukes_left --
+		nmode.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		nmode.nuke_off_station = off_station
+
+	var/nuketype = ""
+	if(gmode && istype(gmode))
+		nuketype = "gang war"
+	if(nmode && istype(nmode))
+		nuketype = "nuclear emergency"
+	if(bmode && istype(bmode))
+		nuketype = "blob"
+	ticker.station_explosion_cinematic(off_station,nuketype)
+	if(ticker.game.modes.len)
+		var/datum/game_mode/generic = ticker.game.modes[1] //The variables needed are common to all modes so it shouldn't matter which one
+		generic.explosion_in_progress = 0
+		if(nmode && istype(nmode))
+			nmode.nukes_left--
 		else
 			world << "<B>The station was destoyed by the nuclear blast!</B>"
-		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
+		generic.station_was_nuked = (off_station<2)		//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
 														//kinda shit but I couldn't  get permission to do what I wanted to do.
-		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+		if(!ticker.game.check_completion())			//All the modes that have nukes should signal END_CONDITION_STRONG when the nuke goes off to reduce this
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 			return
@@ -465,11 +474,11 @@ This is here to make the tiles around the station mininuke change when it's arme
 	else
 		off_station = 2
 
-	if(ticker.mode && ticker.mode.name == "nuclear emergency")
+	var/datum/game_mode/nuclear/nmode = ticker.game.get_mode_by_tag("nuclear")
+	if(nmode && istype(nmode))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-		var/datum/game_mode/nuclear/GM = ticker.mode
-		GM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		GM.nuke_off_station = off_station
+		nmode.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
+		nmode.nuke_off_station = off_station
 	if(!off_station)
 		ticker.station_explosion_cinematic(1, "HONK")
 	for(var/V in mob_list)
@@ -499,15 +508,15 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 			H.dna.add_mutation(CLOWNMUT)
 			H.adjustBrainLoss(60)
-	if(ticker.mode)
-		ticker.mode.explosion_in_progress = 0
-		if(ticker.mode.name == "nuclear emergency")
-			var/datum/game_mode/nuclear/GM = ticker.mode
-			GM.nukes_left --
+	if(ticker.game.modes.len)
+		var/datum/game_mode/generic = ticker.game.modes[1]
+		generic.explosion_in_progress = 0
+		if(nmode && istype(nmode))
+			nmode.nukes_left --
 		else
 			world << "<B>The station was honked by the bananium blast!</B>"
-		ticker.mode.station_was_nuked = (off_station<2)
-		if(!ticker.mode.check_finished())
+		generic.station_was_nuked = (off_station<2)
+		if(!ticker.game.check_completion())
 			world.Reboot("Station honked by Bananium Bomb.", "end_error", "clown nuke - unhandled ending")
 			return
 	return

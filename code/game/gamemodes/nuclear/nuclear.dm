@@ -1,6 +1,9 @@
-/datum/game_mode
-	var/list/datum/mind/syndicates = list()
-	var/nukeops_lastname = ""
+//NOOKULAR EMERGENCY
+//A team of highly-equipped syndicate agents tries and repeatedly fails to steal the nuke disk.
+//ARGS:
+///GODMODE - Infinite telecrystals for the ops, for when you just need 5 mauraders killing EVERYTHING.
+///CUTS - Budget cuts leave the syndies with a reduced telecrystal budget.
+///HONK - 100,000% unfun
 
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
@@ -9,6 +12,7 @@
 	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
+	end_condition = END_CONDITION_STRONG
 	enemy_minimum_age = 14
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.
 
@@ -16,27 +20,28 @@
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 
+	var/list/datum/mind/syndicates = list()
+	var/nukeops_lastname = ""
+
 
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
 	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
-/datum/game_mode/nuclear/pre_setup()
+/datum/game_mode/nuclear/pre_setup(datum/game/G, list/a)
+	args = a
+
 	var/n_players = num_players()
 	var/n_agents = min(round(n_players / 10, 1), agents_possible)
 
-	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
-		n_agents = antag_candidates.len
-
-	var/list/datum/mind/new_cops = pick_candidate(amount = n_agents)
-	update_not_chosen_candidates()
+	var/list/datum/mind/new_cops = G.prepare_candidates(antag_flag, n_agents)
 
 	for(var/v in new_cops)
 		var/datum/mind/new_syndicate = v
 		syndicates += new_syndicate
-		new_syndicate.assigned_role = "Syndicate"
-		new_syndicate.special_role = "Syndicate"//So they actually have a special role/N
+		new_syndicate.assigned_role = "operative"
+		new_syndicate.special_role = "operative"//So they actually have a special role/N
 		log_game("[new_syndicate.key] (ckey) has been selected as a nuclear operative")
 
 	return 1
@@ -98,7 +103,7 @@
 	return ..()
 
 
-/datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
+/datum/game_mode/nuclear/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
 		nukeops_lastname = nukelastname(synd_mind.current)
@@ -137,24 +142,33 @@
 
 
 
-/datum/game_mode/proc/forge_syndicate_objectives(datum/mind/syndicate)
+/datum/game_mode/nuclear/proc/forge_syndicate_objectives(datum/mind/syndicate)
 	var/datum/objective/nuclear/syndobj = new
 	syndobj.owner = syndicate
 	syndicate.objectives += syndobj
 
 
-/datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
+/datum/game_mode/nuclear/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
 	if(you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
+	if(has_arg("GODMODE"))
+		syndicate.current << "<span class='notice'>Due to the importance of your task, you have been granted full access to the syndicate treasury.</span>"
+	if(has_arg("CUTS"))
+		syndicate.current << "<span class='notice'>Due to budget cutbacks, your equipment budget has been reduced.  You are still expected to complete your task.</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
 		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		obj_count++
 	return
 
-/datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+/datum/game_mode/nuclear/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
 	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
-
+	if(has_arg("GODMODE"))
+		synd_mob.equipOutfit(/datum/outfit/syndicate/all_crystals)
+		return 1
+	if(has_arg("CUTS"))
+		synd_mob.equipOutfit(/datum/outfit/syndicate/ghetto)
+		return 1
 	if(telecrystals)
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else
@@ -167,7 +181,7 @@
 		return 1
 	return ..()
 
-/datum/game_mode/proc/are_operatives_dead()
+/datum/game_mode/nuclear/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
 		if (istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
 			return 0
@@ -247,8 +261,8 @@
 	return
 
 
-/datum/game_mode/proc/auto_declare_completion_nuclear()
-	if( syndicates.len || (ticker && istype(ticker.mode,/datum/game_mode/nuclear)) )
+/datum/game_mode/nuclear/round_report()
+	if(syndicates.len)
 		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
 		var/purchases = ""
 		var/TC_uses = 0
@@ -305,6 +319,11 @@
 /datum/outfit/syndicate/no_crystals
 	tc = 0
 
+/datum/outfit/syndicate/all_crystals //ISHYGDDT
+	tc = INFINITY
+
+/datum/outfit/syndicate/ghetto
+	tc = 12
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
 	var/obj/item/device/radio/R = H.ears

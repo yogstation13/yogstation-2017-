@@ -97,6 +97,13 @@
 	else
 		explanation_text = "Free Objective"
 
+/datum/objective/assassinate/wizard
+	dangerrating = 30
+
+/datum/objective/assassinate/wizard/update_explaination_text()
+	..()
+	explanation_text = "Eliminate the rival wizard [target.name] for betraying the Space Wizard Federation."
+
 
 /datum/objective/mutiny
 	var/target_role_type=0
@@ -763,6 +770,18 @@ var/global/list/possible_items_special = list()
 	for(var/V in ticker.mode.traitors - owner)
 		var/datum/mind/M = V
 		if(M.special_role == "adept" && ishuman(M.current) && !(M.current.stat & DEAD))
+			var/turf/T = get_turf(M.current)
+			if(T && T.z == ZLEVEL_STATION)
+				return 0
+	return 1
+
+/datum/objective/only_one
+	explanation_text = "Be the last living individual on the station."
+
+/datum/objective/only_one/check_completion()
+	for(var/V in ticker.minds - owner)
+		var/datum/mind/M = V
+		if(istype(M) && ishuman(M.current) && !(M.current.stat & DEAD))
 			var/turf/T = get_turf(M.current)
 			if(T && T.z == ZLEVEL_STATION)
 				return 0

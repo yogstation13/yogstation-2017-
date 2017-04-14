@@ -6,15 +6,17 @@
 // this will also check they're not a head, so it can just be called freely
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
-/datum/game_mode
-	var/list/datum/mind/head_revolutionaries = list()
-	var/list/datum/mind/revolutionaries = list()
+//REVOLUTION MODE
+//Assistants with neuralizers and ghetto weapons face off against the station's security forces.
+//ARGS:
+///ESCAPE - The escape shuttle will leave, and the round can therefore end with headrevs still alive.
 
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
 	antag_flag = ROLE_REV
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg", "Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Shaft Miner")
+	end_condition = END_CONDITION_STRONG
+	protected_jobs = list("AI", "Cyborg", "Chief Engineer", "Research Director", "Chief Medical Officer", "Shaft Miner")
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 3
@@ -24,6 +26,9 @@
 	var/check_counter = 0
 	var/max_headrevs = 3
 	var/list/datum/mind/heads_to_kill = list()
+
+	var/list/datum/mind/head_revolutionaries = list()
+	var/list/datum/mind/revolutionaries = list()
 
 ///////////////////////////
 //Announces the game type//
@@ -36,7 +41,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/revolution/pre_setup()
+/datum/game_mode/revolution/pre_setup(datum/game/G, list/a)
+	args = a
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -44,13 +50,13 @@
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/list/datum/mind/communists = pick_candidate(amount = max_headrevs)
-	update_not_chosen_candidates()
+	var/list/datum/mind/communists = G.prepare_candidates(antag_flag, max_headrevs)
 
 	for(var/v in communists)
 		var/datum/mind/lenin = v
 		head_revolutionaries += lenin
 		lenin.restricted_roles = restricted_jobs
+		lenin.special_role = "headrev"
 
 	if(head_revolutionaries.len < required_enemies)
 		return 0
@@ -81,8 +87,9 @@
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
-	modePlayer += head_revolutionaries
-	SSshuttle.emergencyNoEscape = 1
+
+	if(!has_arg("ESCAPE"))
+		SSshuttle.emergencyNoEscape = 1
 	..()
 
 
@@ -91,12 +98,12 @@
 	if(check_counter >= 5)
 		if(!finished)
 			check_heads()
-			ticker.mode.check_win()
+			check_win()
 		check_counter = 0
 	return 0
 
 
-/datum/game_mode/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
+/datum/game_mode/revolution/proc/forge_revolutionary_objectives(datum/mind/rev_mind)
 	var/list/heads = get_living_heads()
 	for(var/datum/mind/head_mind in heads)
 		var/datum/objective/mutiny/rev_obj = new
@@ -105,7 +112,7 @@
 		rev_obj.explanation_text = "Assassinate or exile [head_mind.name], the [head_mind.assigned_role]."
 		rev_mind.objectives += rev_obj
 
-/datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
+/datum/game_mode/revolution/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
 	var/obj_count = 1
 	update_rev_icons_added(rev_mind)
 	if (you_are)
@@ -215,7 +222,7 @@
 //////////////////////////////////////
 //Checks if the revs have won or not//
 //////////////////////////////////////
-/datum/game_mode/revolution/check_win()
+/datum/game_mode/revolution/proc/check_win()
 	if(check_rev_victory())
 		finished = 1
 	else if(check_heads_victory())
@@ -226,8 +233,9 @@
 //Checks if the round is over//
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
+	check_win()
 	if(config.continuous["revolution"])
-		if(finished != 0)
+		if(finished > 1)
 			SSshuttle.emergencyNoEscape = 0
 			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 				SSshuttle.emergency.mode = SHUTTLE_DOCKED
@@ -243,15 +251,15 @@
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
 /proc/is_revolutionary(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+	return M && istype(M) && M.mind && M.mind.special_role == "rev"
 
 /proc/is_head_revolutionary(mob/M)
-	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+	return M && istype(M) && M.mind && M.mind.special_role == "headrev"
 
 /proc/is_revolutionary_in_general(mob/M)
 	return is_revolutionary(M) || is_head_revolutionary(M)
 
-/datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
+/datum/game_mode/revolution/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
 		return 0
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
@@ -267,7 +275,7 @@
 	rev_mind.current.Stun(5)
 	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
-	rev_mind.special_role = "Revolutionary"
+	rev_mind.special_role = "rev"
 	update_rev_icons_added(rev_mind)
 	if(jobban_isbanned(rev_mind.current, ROLE_REV))
 		replace_jobbaned_player(rev_mind.current, ROLE_REV, ROLE_REV)
@@ -275,7 +283,7 @@
 //////////////////////////////////////////////////////////////////////////////
 //Deals with players being converted from the revolution (Not a rev anymore)//  // Modified to handle borged MMIs.  Accepts another var if the target is being borged at the time  -- Polymorph.
 //////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
+/datum/game_mode/revolution/proc/remove_revolutionary(datum/mind/rev_mind , beingborged)
 	var/remove_head = 0
 	if(beingborged && (rev_mind in head_revolutionaries))
 		head_revolutionaries -= rev_mind
@@ -305,7 +313,7 @@
 /////////////////////////////////////
 //Adds the rev hud to a new convert//
 /////////////////////////////////////
-/datum/game_mode/proc/update_rev_icons_added(datum/mind/rev_mind)
+/datum/game_mode/revolution/proc/update_rev_icons_added(datum/mind/rev_mind)
 	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
 	revhud.join_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, ((rev_mind in head_revolutionaries) ? "rev_head" : "rev"))
@@ -313,7 +321,7 @@
 /////////////////////////////////////////
 //Removes the hud from deconverted revs//
 /////////////////////////////////////////
-/datum/game_mode/proc/update_rev_icons_removed(datum/mind/rev_mind)
+/datum/game_mode/revolution/proc/update_rev_icons_removed(datum/mind/rev_mind)
 	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
 	revhud.leave_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, null)
@@ -322,12 +330,13 @@
 //Checks for rev victory//
 //////////////////////////
 /datum/game_mode/revolution/proc/check_rev_victory()
-	for(var/datum/mind/rev_mind in head_revolutionaries)
-		for(var/datum/objective/mutiny/objective in rev_mind.objectives)
-			if(!(objective.check_completion()))
-				return 0
+	for(var/datum/mind/head_rev in head_revolutionaries)
+		for(var/datum/objective/mutiny/objective in head_rev.objectives)
+			if(istype(objective)) //Edge cases
+				if(!(objective.check_completion()))
+					return 0
 
-		return 1
+			return 1
 
 /////////////////////////////
 //Checks for a head victory//
@@ -353,9 +362,9 @@
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_revolution()
+/datum/game_mode/revolution/round_report()
 	var/list/targets = list()
-	if(head_revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+	if(head_revolutionaries.len)
 		var/num_revs = 0
 		var/num_survivors = 0
 		for(var/mob/living/carbon/survivor in living_mob_list)
@@ -372,14 +381,14 @@
 		text += "<br>"
 		world << text
 
-	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+	if(revolutionaries.len)
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
 		world << text
 
-	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
+	if( head_revolutionaries.len || revolutionaries.len )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
 		var/list/heads = get_all_heads()
 		for(var/datum/mind/head in heads)

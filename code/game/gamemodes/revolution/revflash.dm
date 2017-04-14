@@ -12,8 +12,13 @@
 	var/rev_cooldown = 0
 
 /obj/item/device/assembly/flash/rev/attack(mob/living/M, mob/user)
+	var/datum/game_mode/revolution/mode = ticker.game.get_mode_by_tag("revolution")
+	if(!mode || !istype(mode))
+		user << "<span class='warning'>The device fails to activate!</span>"
+		return 0
+
 	if(rev_cooldown)
-		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+		if(user.mind && (user.mind in mode.head_revolutionaries))
 			user.visible_message("<span class='warning'>The flash is currently on a cooldown.</span>")
 		else
 			user.visible_message("<span class='warning'>A red light flickers on and off from the [src].</span>")
@@ -37,6 +42,10 @@
 
 /obj/item/device/assembly/flash/rev/flash_carbon(mob/living/carbon/M, mob/user = null, power = 5, targeted = 1)
 	add_logs(user, M, "flashed", src)
+	var/datum/game_mode/revolution/mode = ticker.game.get_mode_by_tag("revolution")
+	if(!mode || !istype(mode))
+		user << "<span class='warning'>You aren't sure what just happened, and resolve to make a bug report about the circumstances that led up to this moment on the Github!</span>"
+		return
 	var/resisted = 0
 	if(user && targeted)
 		if(M.weakeyes)
@@ -44,13 +53,13 @@
 		if(M.flash_eyes(1, 1))
 			M.confused += power
 			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
-				if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+				if(user.mind && (user.mind in mode.head_revolutionaries))
 					if(M.client)
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize() //give them a mind datum if they don't have one.
 							if(!isloyal(M))
-								if(user.mind in ticker.mode.head_revolutionaries)
-									if(ticker.mode.add_revolutionary(M.mind))
+								if(user.mind in mode.head_revolutionaries)
+									if(mode.add_revolutionary(M.mind))
 										times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 									else
 										resisted = 1

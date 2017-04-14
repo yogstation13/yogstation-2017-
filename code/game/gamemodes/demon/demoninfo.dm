@@ -228,6 +228,9 @@ var/global/list/lawlorify = list (
 
 
 /datum/devilinfo/proc/increase_arch_devil()
+	var/datum/game_mode/devil/mode = ticker.game.get_mode_by_tag("devil")
+	if(mode && istype(mode))
+		mode.devil_ascended++
 	var/mob/living/carbon/true_devil/D = owner.current
 	D << "<span class='warning'>You feel as though your form is about to ascend."
 	sleep(50)

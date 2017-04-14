@@ -1,3 +1,5 @@
+//This file is one of several that governs the behavior of the demons themselves.  If you're looking for the mode, try devil.dm.
+
 var/global/list/whiteness = list (
 	/obj/item/clothing/under/color/white = 2,
 	/obj/item/clothing/under/rank/bartender = 1,

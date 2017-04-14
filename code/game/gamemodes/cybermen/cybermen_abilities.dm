@@ -59,12 +59,18 @@
 	button_icon_state = "cyberman_objectives"
 
 /datum/action/cyberman/cyberman_disp_objectives/Trigger()
-	cyberman_network.display_all_cybermen_objectives(usr.mind)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
+	mode.cyberman_network.display_all_cybermen_objectives(usr.mind)
 
 ////////////////////
 //Actual abilities//
 ////////////////////
 /datum/cyberman_datum/proc/initiate_hack(atom/target, mob/living/carbon/human/user = usr)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
 	if(user.stat)//no more hacking while a ghost
 		return
 	if(!validate(user) )
@@ -85,7 +91,7 @@
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			H << "<span class='warning'>You feel a tiny prick!</span>"
-		cyberman_network.message_all_cybermen("<span class='notice'>[newHack.display_verb] of [newHack.target_name] started by [user.real_name].</span>")
+		mode.cyberman_network.message_all_cybermen("<span class='notice'>[newHack.display_verb] of [newHack.target_name] started by [user.real_name].</span>")
 		if(newHack.start())
 			select_hack(user, newHack)
 	else
@@ -127,6 +133,10 @@
 		user.mind.cyberman.manual_selected_hack = hack
 
 /datum/cyberman_datum/proc/use_broadcast(mob/living/carbon/human/user = usr)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		user << "<span class='warning'>You have no connection to the cyberman network!</span>"
+		return 0
 	if(user.stat == DEAD || user.stat == UNCONSCIOUS)//you can still use it while stunned.
 		user << "<span class='warning'>You can't use that right now!</span>"
 		return 0
@@ -135,10 +145,10 @@
 		return 0
 	var/input = stripped_input(user, "Enter a message to share with all other Cybermen.", "Cybermen Broadcast", "")
 	if(input)
-		cyberman_network.log_broadcast("[user.real_name]([user.ckey ? user.ckey : "No ckey"]) Sent a Cyberman Broadcast: [input]")
+		mode.cyberman_network.log_broadcast("[user.real_name]([user.ckey ? user.ckey : "No ckey"]) Sent a Cyberman Broadcast: [input]")
 		log_say("[key_name(user)] : [input]")
 		//user.say_log_silent += "Cyberman Broadcast: [input]"
-		for(var/datum/mind/cyberman in cyberman_network.cybermen)
+		for(var/datum/mind/cyberman in mode.cyberman_network.cybermen)
 			var/distorted_message = input
 			if(cyberman.cyberman.emp_hit)
 				distorted_message = Gibberish2(input, cyberman.cyberman.emp_hit*1.6)
@@ -148,8 +158,11 @@
 	return 1
 
 /datum/cyberman_datum/proc/get_user_selected_hack(mob/living/carbon/human/user = usr, display, null_option)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
 	var/list/hacks = list()
-	for(var/datum/cyberman_hack/hack in cyberman_network.active_cybermen_hacks)
+	for(var/datum/cyberman_hack/hack in mode.cyberman_network.active_cybermen_hacks)
 		hacks += hack.target_name
 	if(null_option)
 		hacks += null_option
@@ -157,7 +170,7 @@
 	if(!target_hack_name || target_hack_name == null_option)
 		return null
 	var/datum/cyberman_hack/target_hack = null
-	for(var/datum/cyberman_hack/hack in cyberman_network.active_cybermen_hacks)//this will have issues if two different hacked objects have the same name.
+	for(var/datum/cyberman_hack/hack in mode.cyberman_network.active_cybermen_hacks)//this will have issues if two different hacked objects have the same name.
 		if(hack.target_name == target_hack_name)
 			target_hack = hack
 			break
@@ -234,30 +247,32 @@ var/list/cybermen_debug_abilities = list(/datum/admins/proc/become_cyberman,
 /datum/admins/proc/reroll_cybermen_objective()
 	set category = "Cyberman Debug"
 	set name = "Reroll Objective"
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
 	if(alert("Set a new random Cyberman objective?", usr, "Yes", "No") == "No" )
 		return
-	if(!cyberman_network)
+	if(!mode || !istype(mode) || !mode.cyberman_network)
 		usr << "There is no Cyberman network to change the objective of."
 		return
 
 	message_admins("[key_name_admin(usr)] re-rolled the current cybermen objective.")
 	log_admin("[key_name(usr)] re-rolled the current cybermen objective.")
 
-	cyberman_network.message_all_cybermen("Re-assigning current objective...")
-	cyberman_network.cybermen_objectives -= cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len]
-	cyberman_network.generate_cybermen_objective(cyberman_network.cybermen_objectives.len+1)
-	cyberman_network.display_current_cybermen_objective()
+	mode.cyberman_network.message_all_cybermen("Re-assigning current objective...")
+	mode.cyberman_network.cybermen_objectives -= mode.cyberman_network.cybermen_objectives[mode.cyberman_network.cybermen_objectives.len]
+	mode.cyberman_network.generate_cybermen_objective(mode.cyberman_network.cybermen_objectives.len+1)
+	mode.cyberman_network.display_current_cybermen_objective()
 
 /datum/admins/proc/force_complete_cybermen_objective()
 	set category = "Cyberman Debug"
 	set name = "Force Complete Objective"
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
 	if(alert("Set current Cybermen objective as completed?", usr, "Yes", "No") == "No" )
 		return
-	if(!cyberman_network)
+	if(!mode || !istype(mode) || !mode.cyberman_network)
 		usr << "There is no Cyberman network to complete the objective of."
 		return
-	if(cyberman_network.cybermen_objectives.len)
-		var/datum/objective/cybermen/O = cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len]
+	if(mode.cyberman_network.cybermen_objectives.len)
+		var/datum/objective/cybermen/O = mode.cyberman_network.cybermen_objectives[mode.cyberman_network.cybermen_objectives.len]
 		if(O)
 			O.completed = 1
 			message_admins("[key_name_admin(usr)] has force-completed the cybermen objective: \"[O.explanation_text]\".")
@@ -270,8 +285,8 @@ var/list/cybermen_debug_abilities = list(/datum/admins/proc/become_cyberman,
 /datum/admins/proc/set_cybermen_objective()
 	set category = "Cyberman Debug"
 	set name = "Set Current Objective"
-
-	if(!cyberman_network)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
 		usr << "There is no Cyberman network to set the objective of."
 		return
 	var/list/objective_options = list()
@@ -290,16 +305,16 @@ var/list/cybermen_debug_abilities = list(/datum/admins/proc/become_cyberman,
 	message_admins("[key_name_admin(usr)] has set the current cybermen objective to: \"[chosen_objective.explanation_text]\".")
 	log_admin("[key_name(usr)] has set the current cybermen objective to: \"[chosen_objective.explanation_text]\".")
 
-	cyberman_network.message_all_cybermen("Re-assigning current objective...")
-	cyberman_network.cybermen_objectives -= cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len]
-	cyberman_network.cybermen_objectives += chosen_objective
-	cyberman_network.display_current_cybermen_objective()
+	mode.cyberman_network.message_all_cybermen("Re-assigning current objective...")
+	mode.cyberman_network.cybermen_objectives -= mode.cyberman_network.cybermen_objectives[mode.cyberman_network.cybermen_objectives.len]
+	mode.cyberman_network.cybermen_objectives += chosen_objective
+	mode.cyberman_network.display_current_cybermen_objective()
 
 /datum/admins/proc/set_cybermen_queued_objective()
 	set category = "Cyberman Debug"
 	set name = "Set Queued Objective"
-
-	if(!cyberman_network)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
 		usr << "There is no Cyberman network to set the objective of."
 		return
 	var/list/objective_options = list()
@@ -318,7 +333,7 @@ var/list/cybermen_debug_abilities = list(/datum/admins/proc/become_cyberman,
 	message_admins("[key_name_admin(usr)] has set the queued cybermen objective to: \"[chosen_objective.explanation_text]\".")
 	log_admin("[key_name(usr)] has set the queued cybermen objective to: \"[chosen_objective.explanation_text]\".")
 
-	cyberman_network.queued_cybermen_objective = chosen_objective
+	mode.cyberman_network.queued_cybermen_objective = chosen_objective
 
 /datum/admins/proc/start_auto_hack(atom/target in world)
 	set category = "Cyberman Debug"
@@ -335,14 +350,14 @@ var/list/cybermen_debug_abilities = list(/datum/admins/proc/become_cyberman,
 /datum/admins/proc/cybermen_collective_broadcast()
 	set category = "Cyberman Debug"
 	set name = "Cyberman Collective Broadcast"
-
-	if(!cyberman_network)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
 		usr << "You cannot make a Cyberman Collective Broadcast, there are no cybermen to hear it."
 		return
 	var/input = stripped_input(usr, "Enter a message to share with all other Cybermen. This message will not be distorted by EMP effects.", "Cybermen Collective Broadcast", "")
 	if(input)
-		cyberman_network.log_broadcast("[usr] Sent a Cyberman Collective Broadcast: [input]", 1)
-		for(var/datum/mind/cyberman in cyberman_network.cybermen)
+		mode.cyberman_network.log_broadcast("[usr] Sent a Cyberman Collective Broadcast: [input]", 1)
+		for(var/datum/mind/cyberman in mode.cyberman_network.cybermen)
 			cyberman.current << "<span class='cybermancollective'>Cyberman Collective: [input]</span>"
 		for(var/mob/dead in dead_mob_list)
 			dead << "<span class='cybermancollective'>Cyberman Collective: [input]</span>"

@@ -19,12 +19,11 @@
 #warn Warning: Cybermen debug text and abilities are enabled
 #endif
 
-var/datum/cyberman_network/cyberman_network
-
 /datum/game_mode/cybermen
 	name = "cybermen"
 	config_tag = "cybermen"
 	antag_flag = ROLE_CYBERMAN
+	end_condition = END_CONDITION_NONE
 	#ifdef CYBERMEN_DEBUG
 	required_players = 1
 	required_enemies = 1
@@ -34,16 +33,18 @@ var/datum/cyberman_network/cyberman_network
 	#endif
 	recommended_enemies = 3
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	prob_traitor_ai = 18
 	//yogstat_name = "cybermen"
+
+	var/datum/cyberman_network/cyberman_network
 
 /datum/game_mode/cybermen/announce()
 	world << "The gamemode is Cybermen."
 
-/datum/game_mode/cybermen/pre_setup()
+/datum/game_mode/cybermen/pre_setup(datum/game/G, list/a)
+	args = a
 	if(!cyberman_network)
-		new /datum/cyberman_network()
+		cyberman_network = new /datum/cyberman_network()
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -56,8 +57,7 @@ var/datum/cyberman_network/cyberman_network
 	var/cybermen_num = max(3, round(num_players()/14))
 	#endif
 
-	var/list/datum/mind/tinmen = pick_candidate(amount = cybermen_num)
-	update_not_chosen_candidates()
+	var/list/datum/mind/tinmen = G.prepare_candidates(antag_flag, cybermen_num)
 
 	for(var/v in tinmen)
 		var/datum/mind/cyberman = v
@@ -89,7 +89,7 @@ var/datum/cyberman_network/cyberman_network
 	return mind && mind.cyberman && (mind in cybermen)
 */
 
-/datum/game_mode/proc/is_cyberman(datum/mind/mind)//better for logging errors
+/datum/game_mode/cybermen/proc/is_cyberman(datum/mind/mind)//better for logging errors
 	if(!mind || !cyberman_network)
 		return 0
 	var/in_cybermen = (mind in cyberman_network.cybermen)
@@ -99,7 +99,7 @@ var/datum/cyberman_network/cyberman_network
 		return 0
 	return mind.cyberman
 
-/datum/game_mode/proc/add_cyberman(datum/mind/cyberman, message_override)
+/datum/game_mode/cybermen/proc/add_cyberman(datum/mind/cyberman, message_override)
 	if(!cyberman_network)
 		new /datum/cyberman_network()
 	if(is_cyberman(cyberman))
@@ -132,7 +132,7 @@ var/datum/cyberman_network/cyberman_network
 	cyberman.current << "<span class='notice'>\n\"Cybermen\" is an experimental gamemode. If you find any bugs, please submit an issue on the server's github. If a bug prevents you from completing an objective, or you are not properly assigned an objective, contact an admin via ahelp.</span>"
 	cyberman_network.display_all_cybermen_objectives(cyberman)
 
-/datum/game_mode/proc/remove_cyberman(datum/mind/cyberman, var/message_override)
+/datum/game_mode/cybermen/proc/remove_cyberman(datum/mind/cyberman, var/message_override)
 	if(!is_cyberman(cyberman) )
 		return
 	//drop all installed parts (except limbs)
@@ -162,7 +162,7 @@ var/datum/cyberman_network/cyberman_network
 /datum/game_mode/cybermen/check_finished()
 	return ..() || cyberman_network.cybermen_win
 
-/datum/game_mode/cybermen/check_win()
+/datum/game_mode/cybermen/proc/check_win()
 	return cyberman_network.cybermen_win == 1
 
 /datum/game_mode/cybermen/declare_completion()
@@ -186,7 +186,7 @@ var/datum/cyberman_network/cyberman_network
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=crewwin&action=add&changed=1")
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_cybermen()
+/datum/game_mode/cybermen/round_report()
 	if(cyberman_network && cyberman_network.cybermen.len > 0)
 		world << "<br><span class='big'><b>The Cybermens' Objectives were:</b></span>"
 		var/datum/objective/cybermen/O
@@ -235,7 +235,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 	var/list/cyberman_broadcast_log = list()
 
 /datum/cyberman_network/New()
-	cyberman_network = src
+
 	START_PROCESSING(SSobj, src)
 	generate_cybermen_objective(1)//there must always be an objective or it will cause runtimes.
 	message_admins("The Cyberman Network has been initialized.")
@@ -385,7 +385,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 		return 0
 	if(ticker.mode.is_cyberman(H.mind))
 		return 1
-	for(var/datum/cyberman_hack/human/hack in cyberman_network.active_cybermen_hacks)
+	for(var/datum/cyberman_hack/human/hack in active_cybermen_hacks)
 		if(hack.target == H)
 			return 1
 	return 0
@@ -465,14 +465,17 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 		return
 	if(user.stat || user.stunned || emp_hit)
 		return
-	if(cyberman_network.active_cybermen_hacks.len == 0)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
+	if(mode.cyberman_network.active_cybermen_hacks.len == 0)
 		return
 	update_processing_power(user)
-	if(manual_selected_hack && (manual_selected_hack in cyberman_network.active_cybermen_hacks) )
+	if(manual_selected_hack && (manual_selected_hack in mode.cyberman_network.active_cybermen_hacks) )
 		selected_hack = manual_selected_hack
-	else if(cyberman_network.active_cybermen_hacks.len > 0)
+	else if(mode.cyberman_network.active_cybermen_hacks.len > 0)
 		var/best_preference = -1
-		for(var/datum/cyberman_hack/current_hack in cyberman_network.active_cybermen_hacks)
+		for(var/datum/cyberman_hack/current_hack in mode.cyberman_network.active_cybermen_hacks)
 			var/this_preference = current_hack.get_preference_for(user)
 			if(this_preference > best_preference)
 				best_preference = this_preference
@@ -492,6 +495,9 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 	emp_hit = max(60, emp_hit)
 
 /datum/cyberman_datum/proc/get_status_objs(mob/living/carbon/human/user)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
 	var/list/obj/status_obj/status_objs = list()
 	var/obj/status_obj/temp = new /obj/status_obj()
 	if(selected_hack)
@@ -500,7 +506,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 	else
 		temp.assign_obj(null, "Currently Processing Hack(auto): none")
 	status_objs += temp
-	for(var/datum/cyberman_hack/hack in cyberman_network.active_cybermen_hacks)
+	for(var/datum/cyberman_hack/hack in mode.cyberman_network.active_cybermen_hacks)
 		if(hack && hack != selected_hack)
 			temp = new /obj/status_obj()
 			temp.assign_obj(hack, hack.get_status(user))
