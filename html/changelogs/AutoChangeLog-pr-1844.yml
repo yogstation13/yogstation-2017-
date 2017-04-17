@@ -1,0 +1,10 @@
+author: Super3222
+delete-after: True
+changes: 
+  - tweak: "Mining Medics can no longer leave the mining station."
+  - rscadd: "Mining Medics have more durable EMT jackets that can carry large oxygen tanks."
+  - rscadd: "Mining Medic's lockers spawn with a mini fire extinguisher."
+  - rscadd: "Mining Medics spawn with a medical webbing - a fusion between an actual webbing and a medical belt."
+  - rscadd: "Mining Medic's lockers spawn with two new hyposprays. One containing kelatone and the other containing bicardine."
+  - tweak: "The ATV action button sprites show whether it's on or off."
+  - experiment: "Made it impossible to tell where ruins are on the crew monitor console. Also re-enabled the lavaland minimap."
