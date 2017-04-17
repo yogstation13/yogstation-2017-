@@ -1,17 +1,13 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/datum/game_mode
-	var/list/datum/mind/cult = list()
-	var/list/cult_objectives = list()
-
 /proc/iscultist(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
+	var/datum/game_mode/cult/mode = ticker.game.get_mode_by_tag("cult")
+	return istype(M) && M.mind && mode && istype(mode) && (M.mind in mode.cult)
 
 /proc/is_sacrifice_target(datum/mind/mind)
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult_mode = ticker.mode
-		if(mind == cult_mode.sacrifice_target)
-			return 1
+	var/datum/game_mode/cult/mode = ticker.game.get_mode_by_tag("cult")
+	if(mode && istype(mode))
+		return (mind == mode.sacrifice_target)
 	return 0
 
 /proc/is_convertable_to_cult(mob/living/M)
@@ -34,7 +30,8 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Chaplain","AI", "Cyborg")
+	end_condition = END_CONDITION_WEAK
 	protected_jobs = list()
 	required_players = 24
 	required_enemies = 4
@@ -51,13 +48,18 @@
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
 	var/list/cultists_to_cult = list() //the cultists we'll convert
 
+	var/list/datum/mind/cult = list()
+	var/list/cult_objectives = list()
+
 
 /datum/game_mode/cult/announce()
 	world << "<B>The current game mode is - Cult!</B>"
 	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - sacrifice your target and summon Nar-Sie at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy water will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
 
 
-/datum/game_mode/cult/pre_setup()
+/datum/game_mode/cult/pre_setup(datum/game/G, list/a)
+	args = a
+
 	cult_objectives += "sacrifice"
 	cult_objectives += "eldergod"
 
@@ -70,8 +72,7 @@
 	//cult scaling goes here
 	recommended_enemies = 3 + round(num_players()/15)
 
-	var/list/datum/mind/cultists = pick_candidate(amount = recommended_enemies)
-	update_not_chosen_candidates()
+	var/list/datum/mind/cultists = G.prepare_candidates(antag_flag,recommended_enemies)
 
 	for(var/v in cultists)
 		var/datum/mind/cultist = v
@@ -109,7 +110,6 @@
 	cult_mind.memory += objs + "<BR>"
 
 /datum/game_mode/cult/post_setup()
-	modePlayer += cultists_to_cult
 	if("sacrifice" in cult_objectives)
 		var/list/possible_targets = get_unconvertables()
 		if(!possible_targets.len)
@@ -130,7 +130,7 @@
 		add_cultist(cult_mind, 0)
 	..()
 
-/datum/game_mode/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)
+/datum/game_mode/cult/proc/equip_cultist(mob/living/carbon/human/mob,tome = 0)
 	if(!istype(mob))
 		return
 	if (mob.mind)
@@ -144,7 +144,7 @@
 		. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
 	mob << "These will help you start the cult on this station. Use them well, and remember - you are not the only one. If you need help, read https://forums.yogstation.net/index.php?threads/hematolagnia-or-how-i-learned-to-stop-worrying-and-play-bloodcult.12348/ .</span>"
 
-/datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
+/datum/game_mode/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
 		"backpack" = slot_in_backpack,
 		"left pocket" = slot_l_store,
@@ -168,7 +168,7 @@
 			B.show_to(mob)
 		return 1
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
+/datum/game_mode/cult/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
 		return 0
 	if(cult_mind.current.gain_antag_datum(/datum/antagonist/cultist))
@@ -176,7 +176,7 @@
 			cult_mind.current.Paralyse(5)
 		return 1
 
-/datum/game_mode/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
+/datum/game_mode/cult/proc/remove_cultist(datum/mind/cult_mind, show_message = 1, stun)
 	if(cult_mind.current)
 		var/datum/antagonist/cultist/cult_datum = cult_mind.current.has_antag_datum(/datum/antagonist/cultist, TRUE)
 		if(!cult_datum)
@@ -241,6 +241,8 @@
 
 	var/text = ""
 
+
+
 	if(cult_objectives.len)
 		text += "<br><b>The cultists' objectives were:</b>"
 		for(var/obj_count=1, obj_count <= cult_objectives.len, obj_count++)
@@ -277,8 +279,8 @@
 	return 1
 
 
-/datum/game_mode/proc/auto_declare_completion_cult()
-	if( cult.len || (ticker && istype(ticker.mode,/datum/game_mode/cult)) )
+/datum/game_mode/cult/round_report()
+	if( cult.len )
 		var/text = "<br><font size=3><b>The cultists were:</b></font>"
 		for(var/datum/mind/cultist in cult)
 			text += printplayer(cultist)

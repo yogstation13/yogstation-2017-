@@ -71,8 +71,8 @@
 
 	while(weighted_score < head_revolutionaries.len) //das vi danya
 		var/datum/mind/trotsky = pick(head_revolutionaries)
-		antag_candidates += trotsky
 		head_revolutionaries -= trotsky
+		trotsky.special_role = null
 		update_rev_icons_removed(trotsky)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)

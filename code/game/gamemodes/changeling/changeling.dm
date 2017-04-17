@@ -1,6 +1,9 @@
 #define LING_FAKEDEATH_TIME					400 //40 seconds
 #define LING_DEAD_GENETICDAMAGE_HEAL_CAP	50	//The lowest value of geneticdamage handle_changeling() can take it to while dead.
 #define LING_ABSORB_RECENT_SPEECH			8	//The amount of recent spoken lines to gain on absorbing a mob
+#define LING_LOW_COUNT						2
+#define LING_MED_COUNT						4
+#define LING_HI_COUNT						7
 
 var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda","Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi","Chi","Psi","Omega")
 var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
@@ -8,16 +11,12 @@ var/list/slot2slot = list("head" = slot_head, "wear_mask" = slot_wear_mask, "bac
 var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mask" = /obj/item/clothing/mask/changeling, "back" = /obj/item/changeling, "wear_suit" = /obj/item/clothing/suit/changeling, "w_uniform" = /obj/item/clothing/under/changeling, "shoes" = /obj/item/clothing/shoes/changeling, "belt" = /obj/item/changeling, "gloves" = /obj/item/clothing/gloves/changeling, "glasses" = /obj/item/clothing/glasses/changeling, "ears" = /obj/item/changeling, "wear_id" = /obj/item/changeling, "s_store" = /obj/item/changeling)
 
 
-/datum/game_mode
-	var/list/datum/mind/changelings = list()
-
-
 /datum/game_mode/changeling
 	name = "changeling"
 	config_tag = "changeling"
 	antag_flag = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	end_condition = END_CONDITION_NONE
 	required_players = 15
 	required_enemies = 1
 	recommended_enemies = 4
@@ -42,15 +41,18 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
 	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
 
-	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
+	var/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 
 	var/changeling_team_objective_type = null //If this is not null, we hand our this objective to all lings
+
+	var/list/datum/mind/changelings = list()
 
 /datum/game_mode/changeling/announce()
 	world << "<b>The current game mode is - Changeling!</b>"
 	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
 
-/datum/game_mode/changeling/pre_setup()
+/datum/game_mode/changeling/pre_setup(datum/game/G, list/a)
+	args = a
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
@@ -58,21 +60,27 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
+	if(has_arg("LOW"))
+		changeling_amount = LING_LOW_COUNT
+	if(has_arg("MED"))
+		changeling_amount = LING_MED_COUNT
+	if(has_arg("HI"))
+		changeling_amount = LING_HI_COUNT
+
 	var/num_changelings = 1
 
 	if(config.changeling_scaling_coeff)
 		num_changelings = max(1, min( round(num_players()/(config.changeling_scaling_coeff*2))+2, round(num_players()/config.changeling_scaling_coeff) ))
 	else
 		num_changelings = max(1, min(num_players(), changeling_amount))
-	if(antag_candidates.len>0)
-		var/list/lings = pick_candidate(amount = num_changelings)
-		for(var/M in lings)
-			var/datum/mind/changeling = M
-			antag_candidates -= changeling
-			changelings += changeling
-			changeling.restricted_roles = restricted_jobs
-			modePlayer += changelings
 
+	var/list/lings = G.prepare_candidates(antag_flag,num_changelings)
+	for(var/M in lings)
+		var/datum/mind/changeling = M
+		changelings += changeling
+		changeling.special_role = "Changeling"
+		changeling.restricted_roles = restricted_jobs
+	if(lings.len > 0)
 		return 1
 	else
 		return 0
@@ -98,7 +106,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		changeling.special_role = "Changeling"
 		forge_changeling_objectives(changeling)
 		greet_changeling(changeling)
-		ticker.mode.update_changeling_icons_added(changeling)
+		update_changeling_icons_added(changeling)
 	..()
 	return
 
@@ -113,6 +121,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 
+//I'm leaving this as a global game_mode function because shenanigans
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling, var/team_mode = 0)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".
 	//No escape alone because changelings aren't suited for it and it'd probably just lead to rampant robusting
@@ -197,7 +206,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		..(changeling,0)
 
 
-/datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
+/datum/game_mode/changeling/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
 		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
 	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
@@ -237,7 +246,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			return ..()
 	return 0*/
 
-/datum/game_mode/proc/auto_declare_completion_changeling()
+/datum/game_mode/changeling/round_report()
 	if(changelings.len)
 		var/text = "<br><font size=3><b>The changelings were:</b></font>"
 		for(var/datum/mind/changeling in changelings)
