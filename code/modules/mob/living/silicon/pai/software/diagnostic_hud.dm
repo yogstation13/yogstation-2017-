@@ -15,7 +15,7 @@
 	if(args["toggle"])
 		user.diagHUD = !user.diagHUD
 		if(user.diagHUD)
-			user.add_diag_hud()
+			user.add_hud(user.d_hud)
 		else
 			var/datum/atom_hud/diag = huds[user.d_hud]
 			diag.remove_hud_from(user)
