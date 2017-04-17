@@ -5026,11 +5026,6 @@
 	icon_state = "dark"
 	},
 /area/security/interrogation)
-"aiU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/floor/plating,
-/area/security/interrogation)
 "aiV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire{
@@ -5952,14 +5947,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
-/area/security/interrogation)
-"aks" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/floor/plating,
 /area/security/interrogation)
 "akt" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6936,21 +6923,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/brig)
-"amh" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
 /area/security/brig)
 "ami" = (
 /obj/structure/cable/yellow{
@@ -15606,13 +15578,6 @@
 	dir = 5
 	},
 /area/security/checkpoint2)
-"aDC" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Firefighting equipment";
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
 "aDD" = (
 /obj/machinery/vending/assist,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -16437,14 +16402,6 @@
 	dir = 4
 	},
 /area/security/checkpoint2)
-"aFg" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
-"aFh" = (
-/obj/structure/closet/l3closet,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
 "aFi" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -17994,19 +17951,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
-"aIc" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
-"aId" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/chair/stool,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
 "aIe" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/lights/mixed,
@@ -18699,10 +18643,6 @@
 /area/hallway/secondary/entry)
 "aJy" = (
 /obj/structure/closet/firecloset/full,
-/turf/open/floor/plating,
-/area/maintenance/fpmaint2)
-"aJz" = (
-/obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "aJA" = (
@@ -29523,14 +29463,6 @@
 /obj/structure/sign/securearea{
 	name = "\improper STAY CLEAR HEAVY MACHINERY";
 	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/disposal)
-"bhG" = (
-/obj/machinery/conveyor{
-	dir = 6;
-	id = "garbage";
-	verted = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -68808,6 +68740,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"UCg" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Garden")
+	},
+/turf/closed/wall,
+/area/maintenance/fpmaint2)
 "UUd" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -69193,10 +69131,6 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/medical)
-"Zyk" = (
-/obj/item/weapon/book/manual/wiki/plasmaman,
-/turf/closed/wall,
-/area/medical/sleeper)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -84516,9 +84450,9 @@ ayJ
 azW
 aBe
 aCj
-asN
-asN
-asN
+aFi
+aJy
+aJy
 aty
 ayC
 aKZ
@@ -84778,7 +84712,7 @@ aty
 aty
 aty
 aty
-aty
+UCg
 aMt
 aOi
 aOi
@@ -85031,10 +84965,10 @@ awo
 aBg
 aCk
 aty
-aFg
 asN
-aIc
-aJy
+asN
+asN
+asN
 aty
 aMu
 aMu
@@ -85288,10 +85222,10 @@ awo
 aBh
 aCj
 aty
-aFh
 asN
 asN
-aJy
+asN
+asN
 aty
 aMv
 aOj
@@ -85545,10 +85479,10 @@ azY
 aBi
 aCl
 aty
-aFi
 asN
 asN
-aFi
+asN
+asN
 aty
 aMv
 aOk
@@ -85801,11 +85735,11 @@ ayM
 azZ
 aBj
 aCm
-aDC
+aty
 asN
 asN
-aId
-aJz
+asN
+asN
 aty
 aMw
 aOl
@@ -86058,12 +85992,12 @@ awo
 awo
 aBk
 aCn
-aCr
-aCr
-aCr
-aCr
-aCr
-aCr
+aty
+aty
+aty
+aty
+aty
+aty
 aMv
 aOm
 aPp
