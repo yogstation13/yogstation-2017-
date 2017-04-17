@@ -1116,3 +1116,9 @@
 	if(dna && dna.species && dna.species.handle_flash(src, intensity, override_blindness_check, affect_silicon, visual))
 		return 0
 	return ..()
+
+/mob/living/carbon/human/is_nearcrit()
+	if(health <= config.health_threshold_crit && health > HEALTH_THRESHOLD_DEEPCRIT)
+		if(!(NOCRIT in status_flags))
+			return TRUE
+	return FALSE
