@@ -81,17 +81,17 @@
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE
-	health = 50
-	maxHealth = 50
+	health = 30
+	maxHealth = 30
 	density = TRUE
 	speed = 1
 	ventcrawler = 0
 	faction = list("ratvar")
 	speak_emote = list("clinks", "clunks")
 	bubble_icon = "clock"
-	heavy_emp_damage = 10
+	heavy_emp_damage = 15
 	laws = "0. Purge all untruths and honor Ratvar."
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
+	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
@@ -108,9 +108,16 @@
 	SetLuminosity(2,1)
 	qdel(access_card) //we don't have free access
 	access_card = null
-	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
+	
+/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver) && stat == DEAD)
+		try_reactivate(user)
+	else
+		..()
+
+/mob/living/simple_animal/drone/cogscarab/can_use_guns(obj/item/weapon/gun/G)
+	return 0
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
