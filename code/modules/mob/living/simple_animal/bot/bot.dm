@@ -111,6 +111,7 @@
 
 /mob/living/simple_animal/bot/New()
 	..()
+	verbs -= /mob/living/verb/pulled //no pulling people around as medbot and shit
 	access_card = new /obj/item/weapon/card/id(src)
 //This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.access += access_robotics
