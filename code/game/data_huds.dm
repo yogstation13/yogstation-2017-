@@ -8,7 +8,8 @@
 /* DATA HUD DATUMS */
 
 /atom/proc/add_to_all_human_data_huds()
-	for(var/datum/atom_hud/data/human/hud in huds) hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/human/hud in huds)
+		hud.add_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
 	for(var/datum/atom_hud/data/hud in huds) hud.remove_from_hud(src)
@@ -44,8 +45,38 @@
 /datum/atom_hud/data/human/security/advanced
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
+
 /datum/atom_hud/data/diagnostic
 	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD)
+
+/datum/atom_hud/data/diagnostic/advanced
+	var/list/path_images = list()
+
+/datum/atom_hud/data/diagnostic/advanced/proc/remove_path_image(image/I)
+	path_images -= I
+	for(var/V in hudusers)
+		var/mob/M = V
+		if(M && M.client)
+			M.client.images -= I
+
+/datum/atom_hud/data/diagnostic/advanced/proc/add_path_image(image/I)
+	path_images |= I
+	for(var/V in hudusers)
+		var/mob/M = V
+		if(M && M.client)
+			M.client.images |= I
+
+/datum/atom_hud/data/diagnostic/advanced/remove_hud_from(mob/M)
+	..()
+	if(!M || !M.client)
+		return
+	M.client.images -= path_images
+
+/datum/atom_hud/data/diagnostic/advanced/add_hud_to(mob/M)
+	..()
+	if(!M || !M.client)
+		return
+	M.client.images |= path_images
 
 /* MED/SEC/DIAG HUD HOOKS */
 

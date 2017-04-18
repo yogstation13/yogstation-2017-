@@ -20,6 +20,10 @@
 
 	faction = list("neutral", "silicon")
 
+	var/path_image_icon = 'icons/obj/aibots.dmi'
+	var/path_image_icon_state = "path_indicator"
+	var/path_image_color = "#FFFFFF"
+
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
 	var/list/users = list() //for dialog updates
@@ -125,11 +129,11 @@
 	bot_core = new bot_core_type(src)
 
 	prepare_huds()
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
-	diag_hud_set_bothealth()
-	diag_hud_set_botstat()
-	diag_hud_set_botmode()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in huds)
+		diag_hud.add_to_hud(src)
+		diag_hud_set_bothealth()
+		diag_hud_set_botstat()
+		diag_hud_set_botmode()
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
@@ -143,6 +147,7 @@
 	qdel(Radio)
 	qdel(access_card)
 	qdel(bot_core)
+	clear_path()
 	return ..()
 
 /mob/living/simple_animal/bot/bee_friendly()
@@ -150,6 +155,7 @@
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
+	clear_path()
 	..()
 
 /mob/living/simple_animal/bot/proc/explode()
@@ -439,14 +445,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/bot_move(dest, move_speed)
 
 	if(!dest || !path || path.len == 0) //A-star failed or a path/destination was not set.
-		path = list()
+		clear_path()
 		return 0
 	dest = get_turf(dest) //We must always compare turfs, so get the turf of the dest var if dest was originally something else.
 	var/turf/last_node = get_turf(path[path.len]) //This is the turf at the end of the path, it should be equal to dest.
 	if(get_turf(src) == dest) //We have arrived, no need to move again.
 		return 1
 	else if(dest != last_node) //The path should lead us to our given destination. If this is not true, we must stop.
-		path = list()
+		clear_path()
 		return 0
 	var/step_count = move_speed ? move_speed : base_speed //If a value is passed into move_speed, use that instead of the default speed var.
 
@@ -465,14 +471,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(path.len > 1)
 		step_towards(src, path[1])
 		if(get_turf(src) == path[1]) //Successful move
-			path -= path[1]
+			remove_from_path(path[1])
 			tries = 0
 		else
 			tries++
 			return 0
 	else if(path.len == 1)
 		step_to(src, dest)
-		path = list()
+		clear_path()
 	return 1
 
 
@@ -489,7 +495,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	path = get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access)
+	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -497,6 +503,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(!on)
 			turn_on() //Saves the AI the hassle of having to activate a bot manually.
 		access_card = all_access //Give the bot all-access while under the AI's command.
+		if(ckey)
+			addtimer(src, "bot_reset", 300, TRUE) //if the bot is player controlled, they only get the extra access for 30 seconds, otherwise it would stay around forever
 		if(message)
 			calling_ai << "<span class='notice'>\icon[src] [name] called to [end_area.name]. [path.len-1] meters to destination.</span>"
 		pathset = 1
@@ -506,7 +514,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(message)
 			calling_ai << "<span class='danger'>Failed to calculate a valid route. Ensure destination is clear of obstructions and within range.</span>"
 		calling_ai = null
-		path = list()
+		clear_path()
 
 /mob/living/simple_animal/bot/proc/call_mode() //Handles preparing a bot for a call, as well as calling the move proc.
 //Handles the bot's movement during a call.
@@ -521,7 +529,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(calling_ai) //Simple notification to the AI if it called a bot. It will not know the cause or identity of the bot.
 		calling_ai << "<span class='danger'>Call command to a bot has been reset.</span>"
 		calling_ai = null
-	path = list()
+	clear_path()
 	summon_target = null
 	pathset = 0
 	access_card.access = prev_access
@@ -586,7 +594,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(path.len > 0 && patrol_target)		// valid path
 		var/turf/next = path[1]
 		if(next == loc)
-			path -= next
+			remove_from_path(next)
 			return
 
 
@@ -663,6 +671,8 @@ Pass a positive integer as an argument to override a bot's default speed.
 			mode = BOT_SUMMON
 			speak("Responding.", radio_channel)
 			calc_summon_path()
+			if(ckey)
+				addtimer(src, "bot_reset", 300, TRUE) //if the bot is player controlled, they only get the extra access for 30 seconds, otherwise it would stay around forever
 
 		if("ejectpai")
 			ejectpairemote(user)
@@ -694,16 +704,61 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
 	summon_step()
 
+/mob/living/simple_animal/bot/proc/add_to_path(turf/T)
+	var/direction = NORTH
+	if(path.len)
+		direction = get_dir(path[path.len], T)
+	else
+		direction = get_dir(src, T)
+	if(path.len > 1)
+		var/turf/T2 = path[path.len - 1]
+		var/image/I2 = path[path[path.len]]
+		var/dir2 = get_dir(T2, path[path.len])
+		I2.dir = dir2|direction
+		if((dir2 != direction) && ((dir2 & NORTH) || (dir2 & SOUTH)))
+			var/matrix/ntransform = matrix(transform)
+			ntransform.Turn(90)
+			if((I2.dir == NORTHWEST) || (I2.dir == SOUTHEAST))
+				ntransform.Scale(-1, 1)
+			else
+				ntransform.Scale(1, -1)
+			I2.transform = ntransform
+	var/image/I = image(path_image_icon, T, path_image_icon_state, ABOVE_OPEN_TURF_LAYER, dir=direction)
+	I.color = path_image_color
+	path[T] = I
+	var/datum/atom_hud/data/diagnostic/advanced/hud = huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
+	hud.add_path_image(I)
+	if(client)
+		client.images |= I
+
+/mob/living/simple_animal/bot/proc/set_path(list/L)
+	clear_path()
+	if(!L)
+		return
+	for(var/V in L)
+		add_to_path(V)
+
+/mob/living/simple_animal/bot/proc/clear_path()
+	for(var/V in path)
+		remove_from_path(V)
+
+/mob/living/simple_animal/bot/proc/remove_from_path(turf/T)
+	var/datum/atom_hud/data/diagnostic/advanced/hud = huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
+	hud.remove_path_image(path[T])
+	if(client)
+		client.images -= path[T]
+	path -= T
+
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	path = get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid)
+	set_path(get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	spawn()
-		path = get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid)
+		set_path(get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid))
 		if(!path.len) //Cannot reach target. Give up and announce the issue.
 			speak("Summon command failed, destination unreachable.",radio_channel)
 			bot_reset()
@@ -720,7 +775,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	else if(path.len > 0 && summon_target)		//Proper path acquired!
 		var/turf/next = path[1]
 		if(next == loc)
-			path -= next
+			remove_from_path(next)
 			return
 
 		var/moved = bot_move(summon_target, 3)	// Move attempt
@@ -882,10 +937,15 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	access_card.access += player_access
 	diag_hud_set_botmode()
+	bot_reset()
+	for(var/V in path)
+		client.images |= path[V]
 
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
 	bot_reset()
+	for(var/V in path)
+		client.images -= path[V]
 
 /mob/living/simple_animal/bot/revive(full_heal = 0, admin_revive = 0)
 	if(..())
