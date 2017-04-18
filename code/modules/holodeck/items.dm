@@ -67,6 +67,63 @@
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = 4 //Stops people from hiding it in their bags/pockets
+	
+	var/chaotic = FALSE
+
+/obj/item/toy/beach_ball/holoball/attackby(obj/item/nuke_core/core, mob/user, params)
+	if(istype(core))
+		qdel(core) //baseballs are made of lead so no radiation
+		chaotic = TRUE
+		user.verbs += /mob/living/carbon/human/proc/chaos_dunk
+		desc += " It seems to be glowing slightly."
+		user << "<span class='danger'>As you insert the plutonium core into the basketball you feel a surge of newfound powers...</span>"
+
+/mob/living/carbon/human/proc/chaos_dunk()
+	set category = "Spells"
+	set name = "Chaos Dunk"
+
+	var/mob/living/carbon/human/user = usr
+	var/obj/item/toy/beach_ball/holoball/bball = user.get_active_hand()
+
+	if(!istype(bball))
+		user << "<span class='warning'>You need to be holding the basketball in your active hand!</span>"
+		return
+
+	if(!bball.chaotic)
+		user << "<span class='warning'>This ball doesn't feel quite right.</span>"
+		return
+		
+	user.verbs -= /mob/living/carbon/human/proc/chaos_dunk
+
+	bball.flags = NODROP
+	user.stunned = INFINITY
+
+	for(var/i = 0, i < 50, i++)
+		user.pixel_y += 8
+		if(i%8 == 0)
+			user.emote("flip")
+		sleep(1)
+		
+	user.alpha = 0
+
+	sleep(20)
+	priority_announce("A massive influx of negative b-ball protons has been detected in [get_area(user)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
+	for(var/mob/M in player_list)
+		M << 'sound/machines/Alarm.ogg'
+	sleep(100)
+
+	user.alpha = 255
+	user.adjust_fire_stacks(20)
+	user.IgniteMob()
+
+	for(var/i = 0, i < 20, i++)
+		user.pixel_y -= 20
+		if(i%6 == 0)
+			user.emote("flip")
+		sleep(1)
+
+	explosion(get_turf(user), 14, 28, 56, 112)
+	user.gib() //In case they are wearing a bomb suit
 
 /obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"
