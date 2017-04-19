@@ -89,6 +89,7 @@
 
 /obj/item/toy/beach_ball/holoball/chaos
 	desc = "Come on and SLAM!"
+	color = "green"
 	actions_types = list(/datum/action/item_action/chaos_dunk)
 	var/fail = FALSE
 
