@@ -146,3 +146,4 @@ See tgui/LICENSE.md for more details.
 
 All assets including icons and sound are under a Creative Commons 3.0 BY-SA
 license (http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
+.
