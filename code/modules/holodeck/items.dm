@@ -67,63 +67,6 @@
 	item_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
 	w_class = 4 //Stops people from hiding it in their bags/pockets
-	
-	var/chaotic = FALSE
-
-/obj/item/toy/beach_ball/holoball/attackby(obj/item/nuke_core/core, mob/user, params)
-	if(istype(core))
-		qdel(core) //baseballs are made of lead so no radiation
-		chaotic = TRUE
-		user.verbs += /mob/living/carbon/human/proc/chaos_dunk
-		desc += " It seems to be glowing slightly."
-		user << "<span class='danger'>As you insert the plutonium core into the basketball you feel a surge of newfound powers...</span>"
-
-/mob/living/carbon/human/proc/chaos_dunk()
-	set category = "Spells"
-	set name = "Chaos Dunk"
-
-	var/mob/living/carbon/human/user = usr
-	var/obj/item/toy/beach_ball/holoball/bball = user.get_active_hand()
-
-	if(!istype(bball))
-		user << "<span class='warning'>You need to be holding the basketball in your active hand!</span>"
-		return
-
-	if(!bball.chaotic)
-		user << "<span class='warning'>This ball doesn't feel quite right.</span>"
-		return
-		
-	user.verbs -= /mob/living/carbon/human/proc/chaos_dunk
-
-	bball.flags = NODROP
-	user.stunned = INFINITY
-
-	for(var/i = 0, i < 50, i++)
-		user.pixel_y += 8
-		if(i%8 == 0)
-			user.emote("flip")
-		sleep(1)
-		
-	user.alpha = 0
-
-	sleep(20)
-	priority_announce("A massive influx of negative b-ball protons has been detected in [get_area(user)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
-	for(var/mob/M in player_list)
-		M << 'sound/machines/Alarm.ogg'
-	sleep(100)
-
-	user.alpha = 255
-	user.adjust_fire_stacks(20)
-	user.IgniteMob()
-
-	for(var/i = 0, i < 20, i++)
-		user.pixel_y -= 20
-		if(i%6 == 0)
-			user.emote("flip")
-		sleep(1)
-
-	explosion(get_turf(user), 14, 28, 56, 112)
-	user.gib() //In case they are wearing a bomb suit
 
 /obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"
@@ -140,6 +83,83 @@
 		if(prob(5))
 			M.Weaken(3)
 			visible_message("<span class='danger'>[M] is knocked right off \his feet!</span>")
+
+/datum/action/item_action/chaos_dunk
+	name = "Chaos Dunk"
+
+/obj/item/toy/beach_ball/holoball/chaos
+	desc = "Come on and SLAM!"
+	actions_types = list(/datum/action/item_action/chaos_dunk)
+	var/fail = FALSE
+
+/obj/item/toy/beach_ball/holoball/chaos/ui_action_click(mob/user, actiontype)
+	if(actiontype != /datum/action/item_action/chaos_dunk)
+		..()
+		return
+	if(fail)
+		user << "<span class='warning'>This ball is battered and burnt - it will not be able to handle a chaos slam.</span>"
+		return
+	if(!ishuman(user))
+		user << "<span class='warning'>You are not rad enough to perform this sick trick!</span>"
+	var/mob/living/carbon/human/H = user
+
+	if(src != H.get_active_hand())
+		H << "<span class='warning'>You need to be holding the basketball in your active hand!</span>"
+		return
+	var/turf/T = user.loc
+	if(!T)
+		H << "<span class='warning'>You can't dunk here!</span>"
+		return
+	message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
+	flags = NODROP
+	user.stunned = INFINITY
+
+	for(var/i = 0, i < 50, i++)
+		H.pixel_y += 8
+		if(i%6 == 0)
+			H.emote("flip")
+		sleep(1)
+
+	H.alpha = 0
+
+	sleep(20)
+	if(T.z == ZLEVEL_STATION)
+		priority_announce("A measured 19.7 MJs of negative b-ball protons has been detected in [get_area(user)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
+		for(var/mob/M in player_list)
+			M << 'sound/machines/Alarm.ogg'
+	sleep(100)
+
+	H.alpha = 255
+	H.adjust_fire_stacks(20)
+	H.IgniteMob()
+
+	for(var/i = 0, i < 20, i++)
+		H.pixel_y -= 20
+		if(i%6 == 0)
+			H.emote("flip")
+		sleep(1)
+
+	if(fail)
+		flags &= ~NODROP
+		H.visible_message("<span clas='danger'>[user] fails the chaos dunk and lands on his face!</span>")
+		H.adjustBruteLoss(200)
+		H.death()
+		H.stunned = 0
+		playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 100, 0)
+	else
+		H.visible_message("<span class='userdanger'>[user] ascends into godhood!</span>")
+		explosion(get_turf(H), 16, 32, 64, 128, 1, 1)
+		H.gib() //In case they are wearing a bomb suit
+
+/obj/item/toy/beach_ball/holoball/chaos/Topic(href, list/href_list)
+	if(..())
+		return TRUE
+	if(!check_rights())
+		return
+	if(!fail && href_list["badmin_block"])
+		fail = TRUE
+		message_admins("[key_name_admin(usr)] prevented a chaos slam")
+		return TRUE
 
 //
 // Structures
