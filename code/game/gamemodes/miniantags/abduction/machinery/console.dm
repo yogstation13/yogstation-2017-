@@ -30,6 +30,25 @@
 	var/obj/machinery/abductor/pad/pad
 	var/obj/machinery/computer/camera_advanced/abductor/camera
 	var/list/datum/icon_snapshot/disguises = list()
+	
+	
+/obj/item/weapon/circuitboard/abductor/console
+	name = "abductor motherboard"
+	build_path = /obj/machinery/abductor/console
+	origin_tech = "programming=5;biotech=7;engineering=6;alien=5"
+	req_components = list(
+							/obj/item/weapon/stock_parts/manipulator/femto = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 1)
+
+/obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "console", "console", I))
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	
+
 
 /obj/machinery/abductor/console/attack_hand(mob/user)
 	if(..())
