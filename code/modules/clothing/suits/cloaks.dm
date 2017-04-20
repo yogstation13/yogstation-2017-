@@ -66,7 +66,7 @@
 	icon_state = "dragon"
 	desc = "A suit of armour fashioned from the remains of an ash drake. "
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear)
-	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
+	armor = list(melee = 80, bullet = 30, laser = 60, energy = 40, bomb = 70, bio = 60, rad = 50)
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/cloakhood/drake
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -78,10 +78,25 @@
 	name = "drake helm"
 	icon_state = "dragon"
 	desc = "The skull of a dragon."
-	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
+	armor = list(melee = 80, bullet = 30, laser = 60, energy = 20, bomb = 70, bio = 60, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	unacidable = 1
+	
+/obj/item/clothing/suit/hooded/cloak/drake/equipped(mob/user, slot)
+	..()
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return //no nonhumans wearing suit sanity
+	H.weather_immunities = list("lava","ash")
+	
+/obj/item/clothing/head/cloakhood/drake/equipped(mob/user, slot)
+	..()
+	var/mob/living/carbon/human/H = user
+ 	if(!istype(H))
+		return
+ 	if("lava" in H.weather_immunities)
+		l_int = 1
 
 /* //wip
 /obj/item/clothing/cloak/wizard //Not actually obtainable until proper balancing can be done
