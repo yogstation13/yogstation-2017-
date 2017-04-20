@@ -27,12 +27,13 @@
 	icon_state = "captain"
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	armor = list(melee = 35, bullet = 35, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 	dog_fashion = /datum/dog_fashion/head/captain
 
-//Captain: This is no longer space-worthy
 /obj/item/clothing/head/caphat/parade
 	name = "captain's parade cap"
 	desc = "Worn only by Captains with an abundance of class."
@@ -62,7 +63,7 @@
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	icon_state = "detective"
-	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 25, bullet = 35, laser = 25, energy = 10, bomb = 100, bio = 0, rad = 0) //it seems fitting that if the det is killed by a bomb the only remaining thing is his slightly scuffed hat
 	var/candy_cooldown = 0
 
 	dog_fashion = /datum/dog_fashion/head/detective
@@ -127,7 +128,7 @@
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
-	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0)
+	armor = list(melee = 50, bullet = 40, laser = 45, energy = 20, bomb = 25, bio = 10, rad = 0)
 	strip_delay = 80
 
 /obj/item/clothing/head/HoS/beret
@@ -135,16 +136,11 @@
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
 
-/obj/item/clothing/head/HoS/beret/recovery
-	name = "recovery beret"
-	desc = "A pretty robust beret for Recovery Agents. Given that it's in pretty old fashion, and envy's paramedics."
-	icon_state = "wardenberet"
-
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 45, bullet = 25, laser = 35, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 	dog_fashion = /datum/dog_fashion/head/warden
@@ -153,7 +149,7 @@
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
 	icon_state = "beret_badge"
-	armor = list(melee = 40, bullet = 30, laser = 30,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 35, bullet = 30, laser = 35,energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 	dog_fashion = null
 
@@ -161,12 +157,17 @@
 	name = "head of security's beret"
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
 	icon_state = "hosberet"
+	
+/obj/item/clothing/head/HoS/beret/recovery
+	name = "recovery beret"
+	desc = "A pretty robust beret for Recovery Agents. Given that it's in pretty old fashion, and envy's paramedics."
+	icon_state = "wardenberet"
 
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "wardenberet"
-	armor = list(melee = 40, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer
