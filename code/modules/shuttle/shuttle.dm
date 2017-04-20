@@ -571,15 +571,10 @@
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
 				M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+						a bluespace ripple!</span>",
 						"<span class='userdanger'>You feel an immense \
 						crushing pressure as the space around you ripples.</span>")
-				if(M.anchored)
-					M.gib()
-				else
-					M.Paralyse(10)
-					M.ex_act(2)
-					step(M, dir)
+				M.gib()
 				continue
 
 			if(!AM.anchored)
