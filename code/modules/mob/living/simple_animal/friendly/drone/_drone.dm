@@ -67,6 +67,12 @@
 	var/hacked = 0 //If we have laws to destroy the station
 	var/datum/personal_crafting/handcrafting
 
+/datum/mob/living/simple_animal/drone/spec_life(mob/living/simple_animal/drone = D)
+	if(D.stat == DEAD)
+		return
+	if(D.z = ZLEVEL_CENTCOM)
+		D.gib()
+
 /mob/living/simple_animal/drone/New()
 	. = ..()
 
@@ -95,6 +101,9 @@
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 
+/mob/living/simple_animal/drone/can_use_guns(var/obj/item/weapon/gun/G)
+	src << "<span class='warning'>Stop trying to kill people as a drone, asshole.</span>"
+	return FALSE
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
