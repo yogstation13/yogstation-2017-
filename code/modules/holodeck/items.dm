@@ -114,11 +114,12 @@
 	message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
 	flags = NODROP
 	user.stunned = INFINITY
+	user.update_canmove()
 
+	spawn(0)
+		H.SpinAnimation(10, 3, 1, 3)
 	for(var/i = 0, i < 50, i++)
 		H.pixel_y += 8
-		if(i%6 == 0)
-			H.emote("flip")
 		sleep(1)
 
 	H.alpha = 0
@@ -134,10 +135,10 @@
 	H.adjust_fire_stacks(20)
 	H.IgniteMob()
 
+	spawn(0)
+		H.SpinAnimation(3, 6, 1, 3)
 	for(var/i = 0, i < 20, i++)
 		H.pixel_y -= 20
-		if(i%6 == 0)
-			H.emote("flip")
 		sleep(1)
 
 	if(fail)
@@ -149,7 +150,7 @@
 		playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 100, 0)
 	else
 		H.visible_message("<span class='userdanger'>[user] ascends into godhood!</span>")
-		explosion(get_turf(H), 16, 32, 64, 128, 1, 1)
+		explosion(get_turf(H), 14, 28, 56, 112, 1, 1)
 		H.gib() //In case they are wearing a bomb suit
 
 /obj/item/toy/beach_ball/holoball/chaos/Topic(href, list/href_list)
