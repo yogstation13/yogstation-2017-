@@ -123,63 +123,7 @@
 		if(4)
 			new_spawn << "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
 
-//Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
-/obj/effect/mob_spawn/human/golem
-	name = "inert golem shell"
-	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
-	mob_species = /datum/species/golem
-	roundstart = FALSE
-	death = FALSE
-	anchored = 0
-	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
-	golems, so that no golem may ever be forced to serve again.</b>"
-	jobban_type = "lavaland"
-
-/obj/effect/mob_spawn/human/golem/New()
-	..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
-
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
-	var/datum/species/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.set_cloned_appearance()
-
-
-/obj/effect/mob_spawn/human/golem/adamantine
-	name = "dust-caked golem shell"
-	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
-	anchored = 1
-	density = 1
-	mob_species = /datum/species/golem/adamantine
+//GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
 /obj/effect/mob_spawn/human/hermit

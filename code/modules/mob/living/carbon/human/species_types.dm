@@ -1071,75 +1071,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	owner.mind.transfer_to(selected_body)
 
 /*
- GOLEMS
+GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 */
-
-/datum/species/golem
-	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
-	name = "Golem"
-	id = "golem"
-	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	speedmod = 2
-	armor = 55
-	siemens_coeff = 0
-	punchdamagelow = 5
-	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
-	nojumpsuit = 1
-	sexes = 1
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-	// To prevent golem subtypes from overwhelming the odds when random species
-	// changes, only the Random Golem type can be chosen
-	blacklisted = TRUE
-	dangerous_existence = TRUE
-	limbs_id = "golem"
-	fixed_mut_color = "aaa"
-
-/datum/species/golem/random
-	name = "Random Golem"
-	blacklisted = FALSE
-	dangerous_existence = FALSE
-
-/datum/species/golem/random/New()
-	. = ..()
-	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
-	name = initial(golem_type.name)
-	id = initial(golem_type.id)
-	meat = initial(golem_type.meat)
-
-/datum/species/golem/adamantine
-	name = "Adamantine Golem"
-	id = "adamantine"
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
-	fixed_mut_color = "4ed"
-
-/datum/species/golem/plasma
-	name = "Plasma Golem"
-	id = "plasma"
-	fixed_mut_color = "a3d"
-
-/datum/species/golem/diamond
-	name = "Diamond Golem"
-	id = "diamond"
-	fixed_mut_color = "0ff"
-
-/datum/species/golem/gold
-	name = "Gold Golem"
-	id = "gold"
-	fixed_mut_color = "ee0"
-
-/datum/species/golem/silver
-	name = "Silver Golem"
-	id = "silver"
-	fixed_mut_color = "ddd"
-
-/datum/species/golem/uranium
-	name = "Uranium Golem"
-	id = "uranium"
-	fixed_mut_color = "7f0"
-
 
 /*
  FLIES

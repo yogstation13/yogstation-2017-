@@ -35,6 +35,10 @@
 	dna.species.on_hit(proj_type, src)
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
+	var/spec_return = dna.species.bullet_act(P, src)
+	if(spec_return)
+		return spec_return
+
 	if(resolve_defense_modules(P, null, def_zone, PROJECTILE_ATTACK))
 		return
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
@@ -76,6 +80,8 @@
 /mob/living/carbon/human/proc/check_reflect(def_zone, mob/living/shooter, mob/defense, previousdir) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	var/mob/living/newshooter = new /mob/living/carbon/human
 	newshooter.dir = previousdir
+	if(dna.species.reflective)
+		return 1
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
