@@ -123,9 +123,23 @@
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
+	if((user.disabilities & CLUMSY) && prob(50))
+		M = user
+		return eyestab(M,user)
+
+	if(user.zone_selected == "head")
+		var/obj/item/bodypart/affecting = M.get_bodypart(check_zone(user.zone_selected))
+		if(affecting && (affecting.status == ORGAN_ROBOTIC || affecting.status == ORGAN_SEMI_ROBOTIC) && user.a_intent == "help")
+			playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] starts to recalibrate the screws on [M]'s [affecting.name].</span>", "<span class='notice'>You start to recalibrate the screws on [M]'s [affecting.name].</span>")
+			if(!do_mob(user, M, 50))
+				return
+			item_heal_robotic(M, user, 0, 0, 5)
+			return
+
 	if(user.zone_selected != "eyes" && user.zone_selected != "head")
 		return ..()
-	if(user.disabilities & CLUMSY && prob(50))
+	if((user.disabilities & CLUMSY) && prob(50))
 		M = user
 	return eyestab(M,user)
 
@@ -279,8 +293,8 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
-	if(affecting && affecting.status == ORGAN_ROBOTIC && user.a_intent != "harm")
-		if(src.remove_fuel(1))
+	if(affecting && (affecting.status == ORGAN_ROBOTIC || affecting.status == ORGAN_SEMI_ROBOTIC) && user.a_intent == "help")
+		if(src.remove_fuel(1, user))
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))

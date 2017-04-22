@@ -111,13 +111,15 @@
 		..()
 		return
 
+#define MAX_INVIS_TOUCH_USES 5
+
 /obj/item/weapon/melee/touch_attack/nothing
 	name = "nothing"
 	catchphrase = "..."
 	desc = "There's nothing there"
 	icon_state = "nothing"
 	item_state = "nothing"
-	var/uses = 3
+	var/uses = 5
 	var/list/things = list()
 	var/list/blacklist = list (
 						/obj/item/weapon/bombcore,
@@ -127,7 +129,6 @@
 						/obj/item/weapon/gun/,
 						/obj/item/weapon/disk/nuclear,
 						/obj/item/weapon/storage,
-						/obj/structure/closet,
 						/obj/item/device/transfer_valve
 						)
 	var/useblacklist = FALSE
@@ -154,19 +155,13 @@
 	if(iscarbon(target))
 		if(target == user)
 			if(user.job == "Mime")
-				if(uses < 3)
+				if(uses < MAX_INVIS_TOUCH_USES)
 					user << "<span class='warning'>You've got to have more charges than that!</span>"
 					return
 				uses = 0 // we sacrifice all of our uses!
-				var/passes = 5
-				while(passes > 0)
-					if(!user)
-						break
-					passes--
-					user.alpha = 0
-					sleep(3)
-					user.alpha = initial(user.alpha)
-					sleep(2)
+				animate(user, alpha = initial(user.alpha), time = 80)
+				addtimer(src, "reverttarget", 85, FALSE, target)
+
 			else
 				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
 		else
@@ -176,9 +171,9 @@
 		if(istype(target, /obj/structure/chair))
 			target.visible_message("[target] [target.alpha == 0 ? "reappears" : "vanishes"]!</span>")
 			if(target.alpha)
-				target.alpha = 0
+				animate(target, alpha = 0, time = 5)
 			else
-				target.alpha = initial(target.alpha)
+				animate(target, alpha = initial(target.alpha), time = 8)
 			if(!(target in things))// to be restored later
 				things += target
 			return
@@ -190,12 +185,14 @@
 		things += target
 		user << "<span class='warning'>You poke [target] extinguishing one of your charges.</span>"
 		uses--
-		target.alpha = 0
+		animate(target, alpha = 0, time = 5)
 		addtimer(src, "reverttarget",80, FALSE, target)
 
 /obj/item/weapon/melee/touch_attack/proc/reverttarget(atom/A)
 	if(A)
-		A.alpha = initial(A.alpha)
+		animate(A, alpha = initial(A.alpha), time = 10)
 
 /obj/item/weapon/melee/touch_attack/nothing/roundstart
 	useblacklist = TRUE
+
+#undef MAX_INVIS_TOUCH_USES

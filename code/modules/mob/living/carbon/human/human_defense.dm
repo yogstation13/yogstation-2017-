@@ -124,7 +124,7 @@
 	return dna.species.spec_attacked_by(I, user, affecting, a_intent, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
-	if (dna)
+	if (dna && dna.species)
 		dna.species.handle_emp(src, severity)
 	//CYBERMEN STUFF
 	//I'd prefer to have a event-listener system set up for this, but for now this will do.
@@ -136,6 +136,10 @@
 				if(H.target == src)
 					H.emp_act(severity)
 	..()
+
+/mob/living/carbon/human/emag_act(mob/user)
+	if(dna && dna.species)
+		dna.species.emag_act(src, user)
 
 /mob/living/carbon/human/acid_act(acidpwr, toxpwr, acid_volume)
 	var/list/damaged = list()
@@ -248,12 +252,13 @@
 			damaged += .
 
 	//DAMAGE//
+	var/damagemod = (dna && dna.species) ? dna.species.acidmod : 1
 	for(var/obj/item/bodypart/affecting in damaged)
 		affecting.take_damage(acidity, 2*acidity)
 
 		if(affecting.name == "head")
-			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
-				affecting.take_damage(acidity, 2*acidity)
+			if(prob(min(acidpwr*damagemod*acid_volume/10, 90))) //Applies disfigurement
+				affecting.take_damage(acidity*damagemod, 2*acidity*damagemod)
 				emote("scream")
 				facial_hair_style = "Shaved"
 				hair_style = "Bald"

@@ -64,6 +64,7 @@
 		/obj/item/clothing/suit/poncho/green,
 		/obj/item/clothing/suit/poncho/red,
 		/obj/item/clothing/suit/snowman,
+		/obj/item/clothing/shoes/sneakers/yeezy/orange,
 		/obj/item/clothing/head/snowman)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)

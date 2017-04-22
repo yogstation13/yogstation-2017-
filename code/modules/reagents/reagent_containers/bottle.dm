@@ -337,6 +337,12 @@
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
 
+/obj/item/weapon/reagent_containers/glass/bottle/drugs
+	name = "Bottle of drugs"
+	desc = "A bottle containing Space Drugs."
+	icon_state = "bottle3"
+	list_reagents = list("space_drugs" = 10)
+
 //self refilling bottles
 
 /obj/item/weapon/reagent_containers/glass/bottle/self_fill
@@ -361,3 +367,9 @@
 		reagents.add_reagent(randomchem, fillrate)
 		update_icon()
 	return 1
+
+/obj/item/weapon/reagent_containers/glass/bottle/mutetoxin
+	name = "Bottle of Mutetoxin"
+	desc = "Perfect tool for a stealthy assassin."
+	icon_state = "bottle3"
+	list_reagents = list("mutetoxin" = 30)

@@ -65,7 +65,7 @@
 				M.existing_shuttle = SSshuttle.getShuttle(S.port_id)
 				addtimer(M, "action_load", 1, TIMER_UNIQUE, S)//we have to wait until the world is initialized to avoid runtimes
 				break
-/*
+
 /datum/map_template/ruin/space/deep_storage
 	id = "deep-storage"
 	suffix = "deepstorage.dmm"
@@ -188,4 +188,9 @@
 		of the area exists in any record. After all, it's not like \
 		some doofus with an EVA suit and jetpack can just waltz around \
 		in space and find it..."
-*/
+
+/datum/map_template/ruin/space/hippie_shuttle
+	id = "hippie_shuttle"
+	suffix = "hippie_shuttle"
+	name= "Hippie Shuttle"
+	description = "These hippies went a little too far out..."

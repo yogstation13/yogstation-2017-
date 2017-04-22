@@ -57,6 +57,10 @@
 		motion_alert_listeners |= src
 	if(special_functions & PDA_SPECIAL_SIGNAL_FUNCTIONS)
 		radio = new /obj/item/radio/integrated/signal(src)
+	if(alert_flags & PDA_HOTLINE_ALERT)
+		if(istype(loc, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = loc
+			hotline_pdas += pda
 
 /obj/item/weapon/cartridge/Destroy()
 	atmos_alert_listeners -= src
@@ -64,6 +68,8 @@
 	fire_alert_listeners -= src
 	burglar_alert_listeners -= src
 	motion_alert_listeners -= src
+	if(istype(src.loc, /obj/item/device/pda))
+		hotline_pdas -= src.loc
 	return ..()
 
 /obj/item/weapon/cartridge/engineering
@@ -84,6 +90,13 @@
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	functions = PDA_MEDICAL_FUNCTIONS
+	bot_access_flags = MED_BOT
+
+/obj/item/weapon/cartridge/paramedic
+	name = "\improper ParaHotline cartridge"
+	icon_state = "cart-m"
+	functions = PDA_MEDICAL_FUNCTIONS
+	alert_flags = PDA_HOTLINE_ALERT
 	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/chemistry
@@ -184,6 +197,7 @@
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
 	icon_state = "cart-hos"
+	alert_flags = PDA_BURGLAR_ALERT|PDA_HOTLINE_ALERT
 	functions = PDA_SECURITY_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_SECURITY_FUNCTIONS
 	bot_access_flags = SEC_BOT
 
@@ -197,6 +211,7 @@
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
 	icon_state = "cart-cmo"
+	alert_flags = PDA_HOTLINE_ALERT
 	functions = PDA_MEDICAL_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_REAGENT_FUNCTIONS|PDA_MEDICAL_FUNCTIONS
 	bot_access_flags = MED_BOT
 
@@ -215,7 +230,7 @@
 				PDA_REAGENT_FUNCTIONS|PDA_STATUS_DISPLAY_FUNCTIONS|PDA_ATMOS_FUNCTIONS|PDA_ATMOS_MONITOR_FUNCTIONS|\
 				PDA_NEWSCASTER_FUNCTIONS|PDA_CARGO_FUNCTIONS|PDA_QUARTERMASTER_FUNCTIONS|PDA_JANITOR_FUNCTIONS|PDA_BOTANY_FUNCTIONS
 	special_functions = PDA_SPECIAL_SIGNAL_FUNCTIONS
-	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT
+	alert_flags = PDA_ATMOS_ALERT|PDA_FIRE_ALERT|PDA_POWER_ALERT|PDA_HOTLINE_ALERT|PDA_BURGLAR_ALERT
 	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
 	spam_enabled = 1
 
@@ -243,7 +258,7 @@
 						PDA_SPECIAL_DETONATE_FUNCTIONS	| PDA_SPECIAL_CLOWN_FUNCTIONS |\
 						PDA_SPECIAL_MIME_FUNCTIONS		| PDA_SPECIAL_SIGNAL_FUNCTIONS |\
 						PDA_SPECIAL_SLAVE_FUNCTIONS
-	alert_flags = PDA_ATMOS_ALERT | PDA_FIRE_ALERT | PDA_POWER_ALERT | PDA_BURGLAR_ALERT | PDA_MOTION_ALERT
+	alert_flags = PDA_ATMOS_ALERT | PDA_FIRE_ALERT | PDA_POWER_ALERT | PDA_BURGLAR_ALERT | PDA_MOTION_ALERT | PDA_HOTLINE_ALERT
 	icon_state = "cart"
 	spam_enabled = 1
 

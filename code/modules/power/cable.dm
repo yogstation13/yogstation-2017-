@@ -475,11 +475,11 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil/attack_self(mob/user)
 	if(amount >= 15)
+		use(15)
 		var/obj/item/weapon/restraints/handcuffs/cable/O = new /obj/item/weapon/restraints/handcuffs/cable(src.loc)
 		user.put_in_hands(O)
 		O.item_color = item_color
 		O.update_icon()
-		use(15)
 
 
 /obj/item/stack/cable_coil/cyborg
@@ -518,7 +518,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return ..()
 
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == ORGAN_ROBOTIC)
+	if(affecting && (affecting.status == ORGAN_ROBOTIC || affecting.status == ORGAN_SEMI_ROBOTIC))
 		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 		if(!do_mob(user, H, 50))
 			return

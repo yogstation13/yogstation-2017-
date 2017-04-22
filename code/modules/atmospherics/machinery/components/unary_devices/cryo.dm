@@ -76,7 +76,8 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	if(occupant)
-		if(occupant.health >= 100) // Don't bother with fully healed people.
+		var/mob/living/carbon/human/H = occupant
+		if(occupant.health >= 100 || (istype(H) && H.dna && H.dna.species && (DAMAGE_CHEMICAL in H.dna.species.heal_immunities)) ) // Don't bother with fully healed people or people that cryo cannot heal.
 			on = FALSE
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.

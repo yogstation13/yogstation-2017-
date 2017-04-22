@@ -26,6 +26,8 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	var/rotation_time = 0 //Do we animate a rotation, and how quickly do we rotate
+	var/cur_rotation = 0  //Current rotation time
 	burn_state = LAVA_PROOF
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
@@ -148,6 +150,7 @@
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
+			rotation_time = 0
 		if(STAGE_TWO)
 			if((check_turfs_in(1,1))&&(check_turfs_in(2,1))&&(check_turfs_in(4,1))&&(check_turfs_in(8,1)))
 				current_size = STAGE_TWO
@@ -160,6 +163,7 @@
 				dissipate_delay = 5
 				dissipate_track = 0
 				dissipate_strength = 5
+				rotation_time = 8
 		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = STAGE_THREE
@@ -172,6 +176,7 @@
 				dissipate_delay = 4
 				dissipate_track = 0
 				dissipate_strength = 20
+				rotation_time = 8
 		if(STAGE_FOUR)
 			if((check_turfs_in(1,3))&&(check_turfs_in(2,3))&&(check_turfs_in(4,3))&&(check_turfs_in(8,3)))
 				current_size = STAGE_FOUR
@@ -184,6 +189,7 @@
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
+				rotation_time = 8
 		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
@@ -193,6 +199,7 @@
 			grav_pull = 10
 			consume_range = 4
 			dissipate = 0 //It cant go smaller due to e loss
+			rotation_time = 8
 		if(STAGE_SIX) //This only happens if a stage 5 singulo consumes a supermatter shard.
 			current_size = STAGE_SIX
 			icon = 'icons/effects/352x352.dmi'
@@ -202,6 +209,10 @@
 			grav_pull = 15
 			consume_range = 5
 			dissipate = 0
+			rotation_time = 11.5
+	if(rotation_time != cur_rotation)
+		SpinAnimation(rotation_time, segments = 8)
+		cur_rotation = rotation_time
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 		return 1
@@ -397,6 +408,10 @@
 		if(M.stat == CONSCIOUS)
 			if (istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
+				if(H.dna && H.dna.species && (PROTECTEDEYES in H.dna.species.specflags))
+					H << "<span class='notice'>You look directly into the [src.name], but your lizard eyes protect you from its mesmerizing gaze!</span>"
+					return
+
 				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
 					var/obj/item/clothing/glasses/meson/MS = H.glasses
 					if(MS.vision_flags == SEE_TURFS)

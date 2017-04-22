@@ -89,9 +89,15 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/take_damage(brute, burn)
-	if(owner && (GODMODE in owner.status_flags))
-		return 0	//godmode
+/obj/item/bodypart/proc/take_damage(brute, burn, application=DAMAGE_PHYSICAL)
+	if(owner)
+		if(GODMODE in owner.status_flags)
+			return 0	//godmode
+		if(owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
+			if(application in owner.dna.species.damage_immunities)
+				return
+			brute *= owner.dna.species.brutemod
+			burn *= owner.dna.species.burnmod
 	brute	= max(brute,0)
 	burn	= max(burn,0)
 
@@ -129,9 +135,11 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, robotic)
-
-	if(robotic && status != ORGAN_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
+/obj/item/bodypart/proc/heal_damage(brute, burn, robotic, application=DAMAGE_PHYSICAL)
+	if(owner && owner.dna && owner.dna.species && application != DAMAGE_NO_MULTIPLIER)
+		if(application in owner.dna.species.heal_immunities)
+			return
+	if(robotic && status == ORGAN_ORGANIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
 
 	if(!robotic && status == ORGAN_ROBOTIC) //This makes robolimbs not healable by chems.
@@ -164,15 +172,15 @@
 
 
 //Change organ status
-/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb)
+/obj/item/bodypart/proc/change_bodypart_status(new_limb_status, heal_limb=0)
 	status = new_limb_status
 	if(heal_limb)
 		burn_dam = 0
 		brute_dam = 0
 		brutestate = 0
 		burnstate = 0
-	if(owner)
 		owner.updatehealth()
+	if(owner)
 		owner.update_body() //if our head becomes robotic, we remove the lizard horns and human hair.
 		owner.update_hair()
 		owner.update_damage_overlays()
@@ -367,7 +375,7 @@
 
 /////////////////////////////////////////////////////////////////////////
 
-/obj/item/bodypart/proc/getDisplayName() //Added "Chest" and "Head" just in case, this may not be needed
+/proc/getLimbDisplayName(var/name) //Added "Chest" and "Head" just in case, this may not be needed
 	switch(name)
 		if("l_leg")		return "left leg"
 		if("r_leg")		return "right leg"
