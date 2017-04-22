@@ -1,7 +1,7 @@
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
-/*
+
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
 	suffix = "abandonedzoo.dmm"
@@ -45,7 +45,7 @@
 	suffix = "asteroid5.dmm"
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
-*/
+
 /datum/map_template/ruin/space/freeminer_asteroid
 	id = "freeminer_asteroid"
 	suffix = "freeminer_asteroid.dmm"
