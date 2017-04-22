@@ -19,6 +19,7 @@
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
 	allow_pai = 0
+	path_image_color = "#FF0000"
 
 	var/lastfired = 0
 	var/shot_delay = 10 //deciseconds seconds between shots

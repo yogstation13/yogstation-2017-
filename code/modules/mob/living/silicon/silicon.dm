@@ -33,17 +33,17 @@
 	var/multihud = FALSE //If you can use more than one hud at the same time
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
+	var/d_hud = DATA_HUD_DIAGNOSTIC
 
 	var/law_change_counter = 0
 
 /mob/living/silicon/New()
 	..()
 	silicon_mobs |= src
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
-	diag_hud_set_status()
-	diag_hud_set_health()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in huds)
+		diag_hud.add_to_hud(src)
+		diag_hud_set_status()
+		diag_hud_set_health()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -370,7 +370,9 @@
 /mob/living/silicon/proc/sensor_mode()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) as null|anything in list("Security", "Medical","Diagnostic","Disable")
+	if(!sensor_type)
+		return
 	if(!multihud)
 		remove_hud(sec_hud)
 		remove_hud(med_hud)

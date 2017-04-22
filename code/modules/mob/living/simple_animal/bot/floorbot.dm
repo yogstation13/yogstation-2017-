@@ -16,6 +16,7 @@
 	bot_core = /obj/machinery/bot_core/floorbot
 	window_id = "autofloor"
 	window_name = "Automatic Station Floor Repairer v1.1"
+	path_image_color = "#FFA500"
 
 	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
 	var/targetdirection
@@ -227,9 +228,9 @@
 		if(path.len == 0)
 			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
+				set_path(get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0))
 			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
+				set_path(get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0))
 
 			if(!bot_move(target))
 				add_to_ignore(target)
@@ -246,7 +247,7 @@
 				shuffle = TRUE
 				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
-					path = list()
+					clear_path()
 					return
 			if(istype(target, /turf/) && emagged < 2)
 				repair(target)
@@ -260,7 +261,7 @@
 					anchored = 0
 					mode = BOT_IDLE
 					target = null
-			path = list()
+			clear_path()
 			return
 
 	oldloc = loc
