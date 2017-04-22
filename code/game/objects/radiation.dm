@@ -34,6 +34,7 @@
 	if(amount)
 		var/blocked = getarmor(null, "rad")
 
+		if(!silent && !(blocked == 100))
 			src << "Your skin feels warm."
 
 		apply_effect(amount, IRRADIATE, blocked)
