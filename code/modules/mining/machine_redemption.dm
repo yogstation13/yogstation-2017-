@@ -190,7 +190,7 @@
 				inserted_id.verb_pickup()
 				inserted_id = null
 			if(href_list["choice"] == "claim")
-				if(access_mining_station in inserted_id.access)
+				if(access_mineral_storeroom in inserted_id.access)
 					inserted_id.mining_points += points
 					points = 0
 				else
