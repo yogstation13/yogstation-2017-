@@ -190,7 +190,7 @@
 
 /obj/item/toy/beach_ball/holoball/chaos/instant
 	desc = "Come on and SLAM immediately!"
-	var/instant_dunk = TRUE
+	instant_dunk = TRUE
 
 //
 // Structures
