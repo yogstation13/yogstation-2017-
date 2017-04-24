@@ -92,6 +92,7 @@
 	color = "green"
 	actions_types = list(/datum/action/item_action/chaos_dunk)
 	var/fail = FALSE
+	var/instant_dunk = FALSE //If an admin wants to dunk without the whole warmup portion
 
 /obj/item/toy/beach_ball/holoball/chaos/ui_action_click(mob/user, actiontype)
 	if(actiontype != /datum/action/item_action/chaos_dunk)
@@ -111,10 +112,35 @@
 	if(!T)
 		H << "<span class='warning'>You can't dunk here!</span>"
 		return
-	message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
+
+	if(!instant_dunk)
+		if(alert("Are you ready to jam?",,"Let's slam!","Let's not!") != "Let's slam!")
+			return
+		message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
+		if(T.z == ZLEVEL_STATION)
+			priority_announce("[user] is attempting a Chaos Dunk in [get_area(user)]. Steal the ball at all costs!","Nanotrasen Basketball Association","sound/misc/notice1.ogg")
+		for(var/obj/item/I in H)
+			if(istype(I, /obj/item/toy/beach_ball/holoball/chaos))
+				continue
+			qdel(I)
+		
+		var/obj/item/clothing/under/shorts/purple/barkleys_shorts = new
+		barkleys_shorts.flags = NODROP
+		H.equip_to_appropriate_slot(barkleys_shorts)
+		H << "<span class='danger'>You call forth the spirit of Barkley and begin channeling his power...</span>"
+		H << "<span class='danger'>Show off your dribbling skills and evade your opponents!<span>"
+		for(var/i=1 to 60)
+			if(H.get_active_hand() != src && H.get_inactive_hand() != src)
+				H << "<span class='danger'>Better luck next season, ball hog!</span>"
+				fail = TRUE
+				return
+			sleep(10)
+
+	H.visible_message("<span class='userdanger'>[user] leaps into the air!</span>")
 	flags = NODROP
-	user.stunned = INFINITY
-	user.update_canmove()
+	H.stunned = INFINITY
+	H.status_flags |= GODMODE //So you can't get killed mid dunk
+	H.update_canmove()
 
 	spawn(0)
 		H.SpinAnimation(10, 3, 1, 3)
@@ -125,10 +151,9 @@
 	H.alpha = 0
 
 	sleep(20)
-	if(T.z == ZLEVEL_STATION)
-		priority_announce("A measured 19.7 MJs of negative b-ball protons has been detected in [get_area(user)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
-		for(var/mob/M in player_list)
-			M << 'sound/machines/Alarm.ogg'
+	priority_announce("A measured 19.7 MJs of negative b-ball protons has been detected in [get_area(user)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
+	for(var/mob/M in player_list)
+		M << 'sound/machines/Alarm.ogg'
 	sleep(100)
 
 	H.alpha = 255
@@ -141,6 +166,7 @@
 		H.pixel_y -= 20
 		sleep(1)
 
+	H.status_flags &= ~GODMODE
 	if(fail)
 		flags &= ~NODROP
 		H.visible_message("<span clas='danger'>[user] fails the chaos dunk and lands on his face!</span>")
@@ -150,7 +176,7 @@
 		playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 100, 0)
 	else
 		H.visible_message("<span class='userdanger'>[user] ascends into godhood!</span>")
-		explosion(get_turf(H), 14, 28, 56, 112, 1, 1)
+		explosion(get_turf(H), 12, 24, 48, 96, 1, 1)
 		H.gib() //In case they are wearing a bomb suit
 
 /obj/item/toy/beach_ball/holoball/chaos/Topic(href, list/href_list)
@@ -162,6 +188,10 @@
 		fail = TRUE
 		message_admins("[key_name_admin(usr)] prevented a chaos slam")
 		return TRUE
+
+/obj/item/toy/beach_ball/holoball/chaos/instant
+	desc = "Come on and SLAM immediately!"
+	var/instant_dunk = TRUE
 
 //
 // Structures
