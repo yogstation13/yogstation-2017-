@@ -116,7 +116,6 @@
 	if(!instant_dunk)
 		if(alert("Are you ready to jam?",,"Let's slam!","Let's not!") != "Let's slam!")
 			return
-		message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
 		if(T.z == ZLEVEL_STATION)
 			priority_announce("[user] is attempting a Chaos Dunk in [get_area(user)]. Steal the ball at all costs!","Nanotrasen Basketball Association","sound/misc/notice1.ogg")
 		for(var/obj/item/I in H)
@@ -135,7 +134,7 @@
 				fail = TRUE
 				return
 			sleep(10)
-
+	message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
 	H.visible_message("<span class='userdanger'>[user] leaps into the air!</span>")
 	flags = NODROP
 	H.stunned = INFINITY
