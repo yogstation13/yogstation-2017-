@@ -92,7 +92,11 @@
 	color = "green"
 	actions_types = list(/datum/action/item_action/chaos_dunk)
 	var/fail = FALSE
+	var/slam_ready = FALSE
 	var/instant_dunk = FALSE //If an admin wants to dunk without the whole warmup portion
+
+/obj/item/toy/beach_ball/holoball/chaos/afterattack(atom/target as mob|obj|turf|area, mob/user)
+	return
 
 /obj/item/toy/beach_ball/holoball/chaos/ui_action_click(mob/user, actiontype)
 	if(actiontype != /datum/action/item_action/chaos_dunk)
@@ -122,13 +126,13 @@
 			if(istype(I, /obj/item/toy/beach_ball/holoball/chaos))
 				continue
 			qdel(I)
-		
+
 		var/obj/item/clothing/under/shorts/purple/barkleys_shorts = new
 		barkleys_shorts.flags = NODROP
 		H.equip_to_appropriate_slot(barkleys_shorts)
 		H << "<span class='danger'>You call forth the spirit of Barkley and begin channeling his power...</span>"
 		H << "<span class='danger'>Show off your dribbling skills and evade your opponents!<span>"
-		for(var/i=1 to 60)
+		while(!slam_ready)
 			if(H.get_active_hand() != src && H.get_inactive_hand() != src)
 				H << "<span class='danger'>Better luck next season, ball hog!</span>"
 				fail = TRUE
@@ -236,7 +240,16 @@
 	else
 		return ..()
 
+/obj/structure/holohoop/spirit
+	name = "spirit basketball hoop"
+	desc = "You can hear the Space Jam theme playing faintly in the distance..."
+	density = 0
 
+/obj/structure/holohoop/spirit/attackby(obj/item/toy/beach_ball/holoball/chaos/bball, mob/user, params)
+	if(!istype(bball))
+		return
+	if(get_dist(src,user)<2)
+		bball.slam_ready = TRUE
 
 //
 // Machines
