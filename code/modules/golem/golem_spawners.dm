@@ -114,8 +114,9 @@
 //ADAMANTINE RUIN
 
 /obj/effect/customgolemrune
+	name = "blueprint golem rune"
 	anchored = 1
-	desc = ""
+	desc = "Add 10 pieces of a mineral to the rune to finish construction."
 	name = "rune"
 	icon = 'icons/obj/rune.dmi'
 	icon_state = "customgolem"
