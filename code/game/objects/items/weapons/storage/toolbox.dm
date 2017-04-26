@@ -93,7 +93,7 @@
 	I = new /obj/item/device/multitool(src)
 	I.toolspeed = 1.5
 	I = new /obj/item/clothing/gloves/combat/stealth(src)
-	I = new /obj/item/stack/cable_coil(src,30,red)
+	I = new /obj/item/stack/cable_coil(src,30,"red")
 
 
 /obj/item/weapon/storage/toolbox/drone
