@@ -128,7 +128,6 @@
 	burnmod = 0.5
 	brutemod = 2
 	speedmod = 0.5
-<<<<<<< HEAD
 	traits = "As a <span class='danger'>Glass Golem</span>, you're vulnerable to brute attacks, but resistant to burning and are immune to lasers!"
 
 /datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
