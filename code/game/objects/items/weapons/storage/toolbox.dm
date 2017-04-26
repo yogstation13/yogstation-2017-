@@ -80,7 +80,7 @@
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
 	var/obj/item/I
-	I = new /obj/item/weapon/screwdriver(src, "red")
+	I = new /obj/item/weapon/screwdriver/nuke(src, "red")
 	I.toolspeed = 1.5
 	I = new /obj/item/weapon/wrench(src)
 	I.toolspeed = 1.5
@@ -93,7 +93,8 @@
 	I = new /obj/item/device/multitool(src)
 	I.toolspeed = 1.5
 	I = new /obj/item/clothing/gloves/combat/stealth(src)
-	I.toolspeed = 1.5
+	I = new /obj/item/stack/cable_coil(src,30,red)
+
 
 /obj/item/weapon/storage/toolbox/drone
 	name = "mechanical toolbox"
