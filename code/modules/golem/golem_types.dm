@@ -105,7 +105,7 @@
 	siemens_coeff = 2
 	burnmod = 0.5 //Silver has a high thermal conductivity. So burn disperses?
 	meat = /obj/item/stack/sheet/mineral/silver
-	info_text = "As a <span class='danger'>Silver Golem</span>, you are resistant to burn!"
+	traits = "As a <span class='danger'>Silver Golem</span>, you are resistant to burn!"
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
