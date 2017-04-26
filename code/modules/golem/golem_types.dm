@@ -19,6 +19,11 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	var/traits = "You are a golem"
+
+/datum/species/golem/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C << traits
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -38,11 +43,12 @@
 	id = "iron"
 	fixed_mut_color = "aaa"
 	meat = /obj/item/stack/sheet/metal
+	armor = 50
 	siemens_coeff = 2
 	punchdamagelow = 8
 	punchdamagehigh = 20
 	stunmod = 1.5
-	info_text = "As an <span class='danger'>Iron Golem</span>, your punches pack a punch!"
+	traits = "As an <span class='danger'>Iron Golem</span>, your punches pack a punch!"
 
 
 /datum/species/golem/adamantine
@@ -51,7 +57,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
 	fixed_mut_color = "4ed"
 	armor = 55
-	info_text = "As an <span class='danger'>Adamantine Golem</span>, you are not special!"
+	traits = "As an <span class='danger'>Adamantine Golem</span>, you have decent armor!"
 
 /datum/species/golem/plasma
 	name = "Plasma Golem"
@@ -64,7 +70,7 @@
 	speedmod = 1
 	heatmod = 2
 	meat = /obj/item/stack/sheet/mineral/plasma
-	info_text = "As a <span class='danger'>Plasma Golem</span>, you dissolve on death!"
+	traits = "As a <span class='danger'>Plasma Golem</span>, you dissolve on death!"
 
 /datum/species/golem/plasma/spec_death(gibbed, mob/living/carbon/human/H)
 	var/turf/open/T = get_turf(H)
@@ -80,7 +86,7 @@
 	stunmod = 0.5
 	staminamod = 1.5
 	meat = /obj/item/stack/sheet/mineral/diamond
-	info_text = "As a <span class='danger'>Diamond Golem</span>, you are very durable, but very slow!"
+	traits = "As a <span class='danger'>Diamond Golem</span>, you are very durable, but very slow!"
 
 /datum/species/golem/gold
 	name = "Gold Golem"
@@ -89,7 +95,7 @@
 	armor = 30
 	speedmod = 1
 	meat = /obj/item/stack/sheet/mineral/gold
-	info_text = "As a <span class='danger'>Golden Golem</span>, your armor is weaker, but are faster!"
+	traits = "As a <span class='danger'>Golden Golem</span>, your armor is both weaker and lighter!"
 
 /datum/species/golem/silver
 	name = "Silver Golem"
@@ -99,7 +105,7 @@
 	siemens_coeff = 2
 	burnmod = 0.5 //Silver has a high thermal conductivity. So burn disperses?
 	meat = /obj/item/stack/sheet/mineral/silver
-	info_text = "As a <span class='danger'>Silver Golem</span>, you are resistent to burn!"
+	traits = "As a <span class='danger'>Silver Golem</span>, you are resistent to burn!"
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
@@ -107,7 +113,7 @@
 	fixed_mut_color = "7f0"
 	meat = /obj/item/stack/sheet/mineral/uranium
 	armor = 40
-	info_text = "As a <span class='danger'>Uranium Golem</span>, you radiate!"
+	traits = "As a <span class='danger'>Uranium Golem</span>, your armor emits radiating pulses!"
 
 /datum/species/golem/uranium/spec_life(mob/living/carbon/human/H)
 	radiation_pulse(get_turf(H), 2, 4, 2, 0)
@@ -117,12 +123,16 @@
 	id = "glass"
 	fixed_mut_color = "5a96b4aa"
 	meat = /obj/item/stack/sheet/glass
-	reflective = TRUE
+	reflective = FALSE
 	armor = 10
 	burnmod = 0.5
 	brutemod = 2
 	speedmod = 0.5
-	info_text = "As a <span class='danger'>Glass Golem</span>, you're vulnerable to brute attacks, but resistent to burn and you reflect lasers!"
+	traits = "As a <span class='danger'>Glass Golem</span>, you're vulnerable to brute attacks, but resistent to burning and you reflect lasers!"
+
+/datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	if(istype(P, /obj/item/projectile/beam))
+		return -1
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
@@ -130,7 +140,7 @@
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/weapon/shard(get_turf(H))
 	playsound(src, "shatter", 70, 1)
-	H.visible_message("<span class='danger'>[H]'s glass body shaters into pieces...</span>")
+	H.visible_message("<span class='danger'>[H]'s glass body shatters into pieces...</span>")
 	qdel(H)
 
 /datum/species/golem/glass/r_glass
@@ -138,11 +148,11 @@
 	id = "r_glass"
 	fixed_mut_color = "4193B9A"
 	meat = /obj/item/stack/sheet/rglass
-	reflective = TRUE
+	reflective = FALSE
 	armor = 30
 	brutemod = 1.5
 	speedmod = 1
-	info_text = "As a <span class='danger'>Reinforced Glass Golem</span>, you reflect lasers and have a weaker armor!"
+	traits = "As a <span class='danger'>Reinforced Glass Golem</span>, you reflect lasers, but have a weaker armor!"
 
 /datum/species/golem/plasteel
 	name = "Plasteel Golem"
@@ -153,7 +163,7 @@
 	speedmod = 3
 	siemens_coeff = 1
 	meat = /obj/item/stack/sheet/plasteel
-	info_text = "As a <span class='danger'>Plasteel Golem</span>, your armor is strong, but you're considerably slower!"
+	traits = "As a <span class='danger'>Plasteel Golem</span>, your armor is strong, but you're considerably slower!"
 
 /datum/species/golem/sand
 	name = "Sand Golem"
@@ -164,7 +174,7 @@
 	burnmod = 3.5 //2 welder hits for crit
 	speedmod = 0
 	meat = /obj/item/stack/sheet/mineral/sandstone
-	info_text = "As a <span class='danger'>Sand Golem</span>, you're immune to all but burn damage!"
+	traits = "As a <span class='danger'>Sand Golem</span>, you're immune to all but burn damage!"
 
 /datum/species/golem/sand/spec_death(gibbed, mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
@@ -189,7 +199,7 @@
 	meat = /obj/item/stack/sheet/mineral/abductor
 	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	speedmod = 1
-	info_text = "As an <span class='danger'>Alien Alloy Golem</span>, you regenerate. You are, however, only able to be heard by other alloy golems!"
+	traits = "As an <span class='danger'>Alien Alloy Golem</span>, you regenerate. You are, however, only able to be heard by other alloy golems!"
 
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -208,7 +218,7 @@
 	burnmod = 2
 	speedmod = 1.5
 	var/datum/species/plant/plant //Just pass the procs from phytosians
-	info_text = "As a <span class='danger'>Wooden Golem</span>, you regenerate in light, but are weak to fire!"
+	traits = "As a <span class='danger'>Wooden Golem</span>, you regenerate in light, but are weak to fire!"
 
 /datum/species/golem/wood/New()
 	..()
@@ -228,7 +238,7 @@
 	armor = 70
 	speedmod = 3
 	burnmod = 0.8
-	info_text = "As a <span class='danger'>Mythril Golem</span>, you can walk through lava and storms like rivers and rain!"
+	traits = "As a <span class='danger'>Mythril Golem</span>, you can walk through lava and storms like rivers and rain!"
 
 /datum/species/golem/mythril/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -245,3 +255,30 @@
 		playsound(H, "sound/magic/lightningbolt.ogg", 70, 1)
 		H.visible_message("<span class='danger'>The [P.name] harmlessly dissipates on [H]'s dense body!</span>")
 		return 2
+
+/datum/species/golem/bananium
+	name = "Bananium Golem"
+	id = "bananium"
+	fixed_mut_color = "ff0"
+	say_mod = "honks"
+	var/obj/item/weapon/implant/sad_trombone/honker
+	meat = /obj/item/stack/sheet/mineral/bananium
+
+/datum/species/golem/bananium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	honker = new/obj/item/weapon/implant/sad_trombone()
+	honker.implant(C)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		H.dna.add_mutation(CLOWNMUT)
+
+/datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	honker.removed(C)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		H.dna.remove_mutation(CLOWNMUT)
+
+/datum/species/golem/bananium/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+	playsound(get_turf(H), 'sound/items/bikehorn.ogg', 50, 0)
+	..()

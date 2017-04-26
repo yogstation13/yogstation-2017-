@@ -70,7 +70,6 @@
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/can_grab_items = TRUE
 	var/reflective = FALSE     //Wheter lasers and such bounce back
-	var/info_text = null
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/sight_mod = 0 //Add these flags to your mob's sight flag. For shadowlings and things to see people through walls.
@@ -722,7 +721,6 @@
 	return 0 //Unsupported slot
 
 /datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << info_text
 	return
 
 /datum/species/proc/after_equip_job(datum/job/J, mob/living/carbon/human/H)

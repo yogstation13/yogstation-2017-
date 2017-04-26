@@ -11,7 +11,7 @@
 "k" = (/obj/machinery/door/airlock/shuttle,/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "l" = (/obj/machinery/computer/arcade/battle,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "m" = (/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
-"n" = (/obj/effect/mob_spawn/human/golem/adamantine,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
+"n" = (/obj/effect/mob_spawn/human/golem/free/adamantine,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "o" = (/obj/machinery/mineral/equipment_vendor/golem,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "p" = (/obj/item/weapon/resonator,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)
 "q" = (/obj/machinery/mineral/ore_redemption,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/golem_ship)

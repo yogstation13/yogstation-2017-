@@ -12,6 +12,7 @@
 	/obj/item/stack/sheet/mineral/sandstone = /datum/species/golem/sand,
 	/obj/item/stack/sheet/mineral/wood = /datum/species/golem/wood,
 	/obj/item/stack/sheet/mineral/mythril = /datum/species/golem/mythril,
+	/obj/item/stack/sheet/mineral/bananium = /datum/species/golem/bananium,
 	/obj/item/stack/sheet/plasteel = /datum/species/golem/plasteel
 	)
 	if(!golemTypes[S.type])
