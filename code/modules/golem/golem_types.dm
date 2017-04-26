@@ -23,7 +23,7 @@
 
 /datum/species/golem/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C << traits
+	C << "<span class='notice'>[traits]</span>"
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -105,7 +105,7 @@
 	siemens_coeff = 2
 	burnmod = 0.5 //Silver has a high thermal conductivity. So burn disperses?
 	meat = /obj/item/stack/sheet/mineral/silver
-	traits = "As a <span class='danger'>Silver Golem</span>, you are resistent to burn!"
+	info_text = "As a <span class='danger'>Silver Golem</span>, you are resistant to burn!"
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
@@ -128,7 +128,8 @@
 	burnmod = 0.5
 	brutemod = 2
 	speedmod = 0.5
-	traits = "As a <span class='danger'>Glass Golem</span>, you're vulnerable to brute attacks, but resistent to burning and you reflect lasers!"
+<<<<<<< HEAD
+	traits = "As a <span class='danger'>Glass Golem</span>, you're vulnerable to brute attacks, but resistant to burning and are immune to lasers!"
 
 /datum/species/golem/glass/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(istype(P, /obj/item/projectile/beam))
