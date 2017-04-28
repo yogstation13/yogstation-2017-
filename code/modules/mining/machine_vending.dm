@@ -300,6 +300,8 @@
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
 		if("Advanced Scanner")
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+	feedback_add_details("mining_voucher_redeemed", selection)
+	qdel(voucher)
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/free_miner
 	name = "circuit board (Free Miner Ship Equipment Vendor)"
