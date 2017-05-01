@@ -81,10 +81,10 @@
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
 	pass_flags = PASSTABLE || PASSMOB
-	health = 50
-	maxHealth = 50
+	health = 70
+	maxHealth = 70
 	density = TRUE
-	speed = 1
+	speed = 2
 	ventcrawler = 0
 	faction = list("ratvar")
 	speak_emote = list("clinks", "clunks")

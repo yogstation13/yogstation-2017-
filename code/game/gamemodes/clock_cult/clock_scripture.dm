@@ -727,14 +727,28 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Pnyy sbegu...", "...gur jbexref-bs Nezbere.")
 	channel_time = 50
-	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	required_components = list("guvax_capacitor" = 3, "hierophant_ansible" = 3)
+	consumed_components = list("guvax_capacitor" = 3, "hierophant_ansible" = 3)
 	object_path = /obj/structure/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	human_only = TRUE
 	tier = SCRIPTURE_SCRIPT
+
+/datum/clockwork_scripture/create_object/cogscarab/check_special_requirements()
+	var/human_servants = 0
+	var/active_scarabs = 0
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(is_servant_of_ratvar(H) && H.stat != DEAD)
+			human_servants++
+	for(var/mob/living/simple_animal/drone/cogscarab/C in living_mob_list)
+		if(C.stat != DEAD)
+			active_scarabs++
+	if(active_scarabs > (human_servants / 2))
+		invoker <<"<span class='brass'>There are not enough human servants on the Heirophant Network to support another scarab. Convert more.</span>"
+		return 0
+	return 1
 
 
 
