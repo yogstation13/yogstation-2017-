@@ -1,5 +1,3 @@
-#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune))
-
 /obj/item/weapon/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
@@ -12,6 +10,7 @@
 	w_class = 3
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	burn_state = FLAMMABLE
+	var/janiLocate = TRUE
 	var/mopping = 0
 	var/mopcount = 0
 	var/mopcap = 5
@@ -19,11 +18,24 @@
 
 /obj/item/weapon/mop/New()
 	..()
+	if(janiLocate)
+		janitorial_items += src
 	create_reagents(mopcap)
 
+/obj/item/weapon/mop/Destroy()
+	. = ..()
+	if(janiLocate)
+		janitorial_items -= src
 
 obj/item/weapon/mop/proc/clean(turf/A)
-	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
+	if(!reagents.total_volume)
+		return
+	var/cleaner_vol = 0
+	for(var/V in reagents.reagent_list)
+		var/datum/reagent/R = V
+		if(R.cleans)
+			cleaner_vol += R.volume
+	if((cleaner_vol / reagents.total_volume) > 0.5)
 		A.clean_blood()
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))
@@ -32,11 +44,12 @@ obj/item/weapon/mop/proc/clean(turf/A)
 			var/turf/closed/C = A
 			C.thermite = 0
 	reagents.reaction(A, TOUCH, 5)	//Needed for proper floor wetting.
-	reagents.remove_any(1)			//reaction() doesn't use up the reagents
+	reagents.remove_all(1)			//reaction() doesn't use up the reagents
 
 
 /obj/item/weapon/mop/afterattack(atom/A, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
 	if(reagents.total_volume < 1)
 		user << "<span class='warning'>Your mop is dry!</span>"
@@ -50,6 +63,9 @@ obj/item/weapon/mop/proc/clean(turf/A)
 		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
 
 		if(do_after(user, src.mopspeed, target = turf))
+			if(reagents.total_volume < 1)
+				user << "<span class='warning'>Your mop is dry!</span>"
+				return
 			user << "<span class='notice'>You finish mopping.</span>"
 			clean(turf)
 
@@ -67,6 +83,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 	J.update_icon()
 
 /obj/item/weapon/mop/cyborg
+	janiLocate = FALSE
 
 /obj/item/weapon/mop/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	return

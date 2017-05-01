@@ -716,7 +716,7 @@
 				menu += "<h4>Located Mops:</h4>"
 
 				var/ldat
-				for (var/obj/item/weapon/mop/M in world)
+				for (var/obj/item/weapon/mop/M in janitorial_items)
 					var/turf/ml = get_turf(M)
 
 					if(ml)
@@ -733,7 +733,7 @@
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
-				for (var/obj/structure/janitorialcart/B in world)
+				for (var/obj/structure/janitorialcart/B in janitorial_items)
 					var/turf/bl = get_turf(B)
 
 					if(bl)

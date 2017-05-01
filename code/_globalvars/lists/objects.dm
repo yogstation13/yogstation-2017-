@@ -26,3 +26,4 @@ var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to ch
 // A list of all zombie_infection organs, for any mass "animation"
 var/global/list/zombie_infection_list = list()
 var/global/list/meteor_list = list() //list of all meteors
+var/global/list/janitorial_items = list() //for the janitor PDA's custodial locator

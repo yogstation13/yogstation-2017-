@@ -40,10 +40,9 @@
 			reagents.clear_reagents()
 			C.visible_message("<span class='notice'>[user] has touched \the [C] with \the [src].</span>")
 
-	else if(istype(A) && src in user)
+	else if(istype(A) && (src in user))
 		user.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
 			A.clean_blood()
-			A.wash_cream()
 	return

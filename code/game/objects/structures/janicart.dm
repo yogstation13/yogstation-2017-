@@ -18,7 +18,11 @@
 
 /obj/structure/janitorialcart/New()
 	create_reagents(100)
+	janitorial_items += src
 
+/obj/structure/janitorialcart/Destroy()
+	. = ..()
+	janitorial_items -= src
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
 	if(reagents.total_volume < 1)

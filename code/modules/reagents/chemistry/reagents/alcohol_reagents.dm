@@ -136,6 +136,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Number one drink AND fueling choice for Russians worldwide."
 	color = "#0064C8" // rgb: 0, 100, 200
 	boozepwr = 65
+	cleans = TRUE
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/M)
 	M.radiation = max(M.radiation-2,0)
