@@ -733,7 +733,7 @@
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
-				for (var/obj/structure/janitorialcart/B in janitorial_items)
+				for (var/obj/structure/mopbucket/janitorialcart/B in janitorial_items)
 					var/turf/bl = get_turf(B)
 
 					if(bl)

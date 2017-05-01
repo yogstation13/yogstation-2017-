@@ -56,12 +56,12 @@
 
 /obj/item/weapon/storage/bag/trash/cyborg
 
-/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/mopbucket/janitorialcart/J)
 	J.put_in_cart(src, user)
 	J.mybag=src
 	J.update_icon()
 
-/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/mopbucket/janitorialcart/J)
 	return
 
 /obj/item/weapon/storage/bag/trash/bluespace

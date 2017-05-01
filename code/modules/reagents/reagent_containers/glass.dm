@@ -230,13 +230,14 @@
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/mop))
+	if(istype(O, /obj/item/weapon/mop) && (user.a_intent == "help"))
 		if(reagents.total_volume < 1)
 			user << "<span class='warning'>[src] is out of water!</span>"
 		else
 			reagents.trans_to(O, 5)
 			user << "<span class='notice'>You wet [O] in [src].</span>"
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return 1 //no afterattack
 	else if(isprox(O))
 		user << "<span class='notice'>You add [O] to [src].</span>"
 		qdel(O)

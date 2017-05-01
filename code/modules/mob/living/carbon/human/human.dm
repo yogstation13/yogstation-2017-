@@ -920,6 +920,8 @@
 		if(H.bloody_hands)
 			H.bloody_hands = 0
 			H.update_inv_gloves()
+	if(H.shoes)
+		H.shoes.clean_blood()
 	update_icons()	//apply the now updated overlays to the mob
 
 

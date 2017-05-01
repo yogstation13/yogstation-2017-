@@ -250,7 +250,7 @@
 	if(!used)
 		U << failmsg
 
-/obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/device/lightreplacer/proc/janicart_insert(mob/user, obj/structure/mopbucket/janitorialcart/J)
 	J.put_in_cart(src, user)
 	J.myreplacer = src
 	J.update_icon()
