@@ -76,7 +76,7 @@
 				var/turf/closed/C = A
 				if(C.thermite)
 					C.thermite = 0
-					Wall.overlays.Cut()
+					C.overlays.Cut()
 		reagents.reaction(A, TOUCH, 5)	//Needed for proper floor wetting
 		reagents.remove_all(1)			//reaction() doesn't use up the reagents
 	else if(user.a_intent != "harm")
