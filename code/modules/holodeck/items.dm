@@ -102,6 +102,7 @@
 		return
 	if(!ishuman(user))
 		user << "<span class='warning'>You are not rad enough to perform this sick trick!</span>"
+		return
 	var/mob/living/carbon/human/H = user
 
 	if(src != H.get_active_hand())
