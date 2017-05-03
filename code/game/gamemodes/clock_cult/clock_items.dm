@@ -1,3 +1,5 @@
+//set scarab_usable to FALSE if you don't want cogscarabs using your item.
+
 /obj/item/clockwork
 	name = "meme blaster"
 	desc = "What the fuck is this? It looks kinda like a frog."
@@ -5,6 +7,7 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
 	w_class = 2
+	scarab_usable = TRUE
 
 /obj/item/clockwork/New()
 	..()
@@ -101,8 +104,8 @@
 		if(/datum/action/item_action/clock/hierophant)
 			show_hierophant(user)
 		if(/datum/action/item_action/clock/guvax)
-			if(!nonhuman_usable && !ishuman(user))
-				return
+			/*if(!nonhuman_usable && !ishuman(user))
+				return*/
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/guvax/convert = new
 				convert.slab = src
@@ -111,8 +114,8 @@
 			else
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 		if(/datum/action/item_action/clock/vanguard)
-			if(!nonhuman_usable && !ishuman(user))
-				return
+			/*if(!nonhuman_usable && !ishuman(user))
+				return*/
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/vanguard/antistun = new
 				antistun.slab = src
@@ -185,9 +188,9 @@
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
-	if(!nonhuman_usable && !ishuman(user))
+	/*if(!nonhuman_usable && !ishuman(user))
 		user << "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
-		return 0
+		return 0*/
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
