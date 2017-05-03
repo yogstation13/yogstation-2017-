@@ -166,7 +166,7 @@
 /obj/item/weapon/storage/box/beakers/New()
 	..()
 	for(var/i in 1 to 7)
-		new /obj/item/weapon/reagent_containers/glass/beaker( src )
+		new /obj/item/weapon/reagent_containers/glass/beaker/large( src )
 
 /obj/item/weapon/storage/box/injectors
 	name = "box of DNA injectors"
