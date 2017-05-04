@@ -94,6 +94,17 @@
 	var/fail = FALSE
 	var/slam_ready = FALSE
 	var/instant_dunk = FALSE //If an admin wants to dunk without the whole warmup portion
+	var/jamming = FALSE
+
+/obj/item/toy/beach_ball/holoball/chaos/attack(mob/living/M, mob/user)
+	if(!jamming)
+		return
+	if(istype(M))
+		M.Weaken(2)
+		user.do_attack_animation(M)
+		playsound(get_turf(user), 'sound/effects/hit_kick.ogg', 100, 0)
+		user.visible_message("<span class='danger'>[user] slams [M] onto the ground!</span>")
+		user.changeNext_move(CLICK_CD_MELEE) //Who the fuck mixed camelcase with snakecase?
 
 /obj/item/toy/beach_ball/holoball/chaos/afterattack(atom/target as mob|obj|turf|area, mob/user)
 	return
@@ -107,6 +118,7 @@
 		return
 	if(!ishuman(user))
 		user << "<span class='warning'>You are not rad enough to perform this sick trick!</span>"
+		return
 	var/mob/living/carbon/human/H = user
 
 	if(src != H.get_active_hand())
@@ -120,6 +132,7 @@
 	if(!instant_dunk)
 		if(alert("Are you ready to jam?",,"Let's slam!","Let's not!") != "Let's slam!")
 			return
+		jamming = TRUE
 		if(T.z == ZLEVEL_STATION)
 			priority_announce("[user] is attempting a Chaos Dunk in [get_area(user)]. Steal the ball at all costs!","Nanotrasen Basketball Association","sound/misc/notice1.ogg")
 		for(var/obj/item/I in H)
@@ -127,17 +140,22 @@
 				continue
 			qdel(I)
 
+		if(blobstart.len > 0)
+			var/turf/targetturf = get_turf(pick(blobstart))
+			new /obj/structure/holohoop/spirit(targetturf)
+			world << "Spawned chaos hoop in [get_area(targetturf)]"
+
 		var/obj/item/clothing/under/shorts/purple/barkleys_shorts = new
 		barkleys_shorts.flags = NODROP
 		H.equip_to_appropriate_slot(barkleys_shorts)
 		H << "<span class='danger'>You call forth the spirit of Barkley and begin channeling his power...</span>"
 		H << "<span class='danger'>Show off your dribbling skills and evade your opponents!<span>"
-		while(!slam_ready)
+		while(!slam_ready) //I feel like this is a really bad way to code this
 			if(H.get_active_hand() != src && H.get_inactive_hand() != src)
 				H << "<span class='danger'>Better luck next season, ball hog!</span>"
 				fail = TRUE
 				return
-			sleep(10)
+			sleep(30)
 	message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
 	H.visible_message("<span class='userdanger'>[user] leaps into the air!</span>")
 	flags = NODROP
@@ -179,7 +197,7 @@
 		playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 100, 0)
 	else
 		H.visible_message("<span class='userdanger'>[user] ascends into godhood!</span>")
-		explosion(get_turf(H), 12, 24, 48, 96, 1, 1)
+		explosion(get_turf(H), 25, 60, 150, 250, 1, 1)
 		H.gib() //In case they are wearing a bomb suit
 
 /obj/item/toy/beach_ball/holoball/chaos/Topic(href, list/href_list)
