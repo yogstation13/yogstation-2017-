@@ -133,6 +133,34 @@ macro "default"
 		command = "F12"
 
 macro "hotkeys"
+	elem 
+		name = "NUMPAD1"
+		command = "body-r-leg"
+		is-disabled = false
+	elem 
+		name = "NUMPAD2"
+		command = "body-groin"
+		is-disabled = false
+	elem 
+		name = "NUMPAD3"
+		command = "body-l-leg"
+		is-disabled = false
+	elem 
+		name = "NUMPAD4"
+		command = "body-r-arm"
+		is-disabled = false
+	elem 
+		name = "NUMPAD5"
+		command = "body-chest"
+		is-disabled = false
+	elem 
+		name = "NUMPAD6"
+		command = "body-l-arm"
+		is-disabled = false
+	elem 
+		name = "NUMPAD8"
+		command = "body-toggle-head"
+		is-disabled = false
 	elem
 		name = "TAB"
 		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
