@@ -259,7 +259,7 @@
 		explosion(get_turf(jammer), 25, 60, 150, 250, 1, 1)
 		jammer.gib() //In case they are wearing a bomb suit
 	jamming = FALSE
-	imminent = FALSE
+	dunking = FALSE
 	if(hoop)
 		qdel(hoop)
 
