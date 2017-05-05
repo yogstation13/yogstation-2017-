@@ -138,7 +138,7 @@
 	if(health)
 		health = 0
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/effect/cyrogenicbubble/process()
 	if(health)
@@ -165,14 +165,13 @@
 			health -= weapon.force
 
 /obj/effect/cyrogenicbubble/attack_animal(mob/living/simple_animal/M)
-	if(..())
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		if(damage > health)
-			ejectEgg()
-			qdel(src)
-			visible_message("<span class='warning'>[M] [M.attacktext] [src]</span>")
-		else
-			health -= damage
+	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
+	if(damage > health)
+		ejectEgg()
+		qdel(src)
+		visible_message("<span class='warning'>[M] [M.attacktext] [src]</span>")
+	else
+		health -= damage
 
 /obj/effect/cyrogenicbubble/proc/ejectEgg()
 	if(ashwalker)
