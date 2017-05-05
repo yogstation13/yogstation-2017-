@@ -86,11 +86,15 @@
 			var/roll_for_shatter = check_shatter(owner, damage)
 			if(roll_for_shatter) // the damage to the sheld is processed, but we'll still be able to block it
 				final_block_chance += 50
+				owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+					"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 				return ..()
 			else
 				return 0
 		else
 			final_block_chance += 50
+			owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+				"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 			return ..()
 
 	else if(attack_type == UNARMED_ATTACK)
@@ -98,6 +102,8 @@
 			return 0
 		else
 			final_block_chance += 50
+			owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+				"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 			return ..()
 
 
@@ -110,9 +116,13 @@
 				return 0
 			else
 				final_block_chance += 50
+				owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+					"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 				return ..()
 		else
 			final_block_chance += 50
+			owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+				"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 			return ..()
 
 	else if(attack_type == PROJECTILE_ATTACK)
@@ -128,8 +138,12 @@
 			target = get_step(target, pick(alldirs))
 		src.throw_at(target,7,1, spin = 1)
 		final_block_chance -= 50
+		owner.visible_message("<span class='danger'>[owner] fails to block [attack_text] with [src]!</span>",\
+			"<span class='danger'>[owner] block [attack_text] with [src]!</span>")
 		return ..()
 	else
+		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+			"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
 
 /obj/item/weapon/shield/riot/examine(mob/user)

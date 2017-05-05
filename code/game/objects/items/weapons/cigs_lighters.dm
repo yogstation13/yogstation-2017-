@@ -250,6 +250,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	open_flame()
 	if(reagents && reagents.total_volume)
+		reagents.chem_temp += 20
 		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)

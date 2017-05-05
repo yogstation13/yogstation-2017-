@@ -102,6 +102,8 @@ var/list/preferences_datums = list()
 
 	var/soundenv = TRUE
 
+	var/donor_ooc_tag = FALSE
+
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)

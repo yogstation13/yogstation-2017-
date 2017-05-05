@@ -58,15 +58,9 @@ Captain
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
-	minor_announce("Captain [H.real_name] on deck!")
+	var/on_deck = list("on deck!", "has arrived!")
 
-	if(world.time >  CHALLENGE_TIME_LIMIT) // latejoin captain?
-		var/obj/item/station_charter/C = locate() in H
-		if(C)
-			var/worldtimer = world.time
-			if(worldtimer > LATEJOINCHARTERCAP)
-				worldtimer = LATEJOINCHARTERCAP
-			C.additional_time = worldtimer
+	minor_announce("Captain [H.real_name] [pick(on_deck)]")
 
 /*
 Head of Personnel

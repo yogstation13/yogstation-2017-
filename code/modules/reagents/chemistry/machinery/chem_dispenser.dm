@@ -287,6 +287,12 @@
 
 	if(default_deconstruction_crowbar(I))
 		return
+
+	if(istype(I, /obj/item/weapon/wrench))
+		visible_message("[user] starts wrenching [src].")
+		if(do_after(user, 50/I.toolspeed, target = src))
+			anchored = !anchored
+			visible_message("[user] [anchored ? "wrenches down" : "unwrenches"] [src].</span>")
 	return ..()
 
 /obj/machinery/chem_dispenser/constructable/deconstruction()

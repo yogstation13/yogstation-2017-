@@ -103,7 +103,9 @@
 
 			else if(!(key in C.prefs.ignoring))
 				if(is_donator(src))
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+					var/donortag = (prefs.donor_ooc_tag ? "\[Donator\]" : "")
+
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>[donortag] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 

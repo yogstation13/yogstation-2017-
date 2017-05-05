@@ -29,16 +29,18 @@
 	var/alt_name = get_alt_name()
 
 	var/whispers = "whispers"
-	var/critical = FALSE
-	if(InCritical() && !is_nearcrit())
-		critical = TRUE
+	var/critical = InCritical()
+	var/nearcrit = is_nearcrit()
+
+	if(nearcrit)
+		whispers = "painfully whispers"
 
 	// We are unconscious but not in critical, so don't allow them to whisper.
 	if(stat == UNCONSCIOUS && !critical)
 		return
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
-	if(critical)
+	if(critical && !nearcrit)
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
 		var/message_len = length(message)
