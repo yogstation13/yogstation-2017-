@@ -147,12 +147,17 @@
 		ejectEgg()
 	if(progress == 150)
 		ejectEgg()
-		if(ishuman(ashwalker))
-			var/mob/living/carbon/human/H = ashwalker
-			var/datum/species/lizard/ashwalker/cosmic/C = H.dna.species
-			C.rebirth = FALSE
 	else
 		healAshwalker()
+
+/obj/effect/cyrogenicbubble/proc/reset_rebirth()
+	if(!ashwalker)
+		return
+
+	if(ishuman(ashwalker))
+		var/mob/living/carbon/human/H = ashwalker
+		var/datum/species/lizard/ashwalker/cosmic/C = H.dna.species
+		C.rebirth = FALSE
 
 /obj/effect/cyrogenicbubble/attackby(obj/item/weapon, mob/user)
 	. = ..()
@@ -178,6 +183,7 @@
 		ashwalker.real_name = name
 		ashwalker.name = name
 		ashwalker = null
+		reset_rebirth()
 	qdel(src)
 
 /obj/effect/cyrogenicbubble/proc/healAshwalker()
