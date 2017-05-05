@@ -191,6 +191,8 @@
 		var/obj/item/clothing/shoes/sneakers/yeezy/orange/jordans = new
 		jordans.flags = NODROP
 		H.equip_to_appropriate_slot(jordans)
+		//hey it works
+		H.dna.species.no_equip = list(slot_head, slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_l_store, slot_r_store, slot_belt, slot_back, slot_s_store, slot_wear_id)
 		H << "<span class='danger'>You call forth the spirit of Barkley and begin channeling his power...</span>"
 		H << "<span class='danger'>Show off your dribbling skills and evade your opponents!<span>"
 		H << "<span class='warning'><b>You hear the Space Jam theme coming from the [dir2text(get_dir(get_turf(H), get_turf(hoop)))]...</span>"
