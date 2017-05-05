@@ -128,7 +128,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 
 /obj/item/device/jauntbeacon/attack_self(mob/user)
 	user << "<span class='warning'>You set up [src].</span>"
-	var/obj/machinery/jauntbeacon/J = new (get_turf(user))
+	new /obj/machinery/jauntbeacon(get_turf(user))
 	qdel(src)
 
 /obj/machinery/jauntbeacon
@@ -144,7 +144,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	..()
 	name = "deployed jaunt beacon [rand(1,999)]"
 	if(jauntlist)
-		jauntbeacons += J
+		jauntbeacons += src
 
 /obj/machinery/jauntbeacon/attack_hand(mob/user)
 	if(bolted)
