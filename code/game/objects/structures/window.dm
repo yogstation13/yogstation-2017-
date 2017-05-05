@@ -247,6 +247,14 @@
 				user << "<span class='notice'>You successfully disassemble [src].</span>"
 				qdel(src)
 			return
+		else if(istype(I, /obj/item/toy/beach_ball/holoball/chaos))
+			var/obj/item/toy/beach_ball/holoball/chaos/B = I
+			if(!B.jamming)
+				return
+			user.changeNext_move(CLICK_CD_MELEE)
+			user.do_attack_animation(src)
+			shatter()
+			return
 	return ..()
 
 
