@@ -98,14 +98,15 @@ Shaft Miner
 	box = /obj/item/weapon/storage/box/engineer
 
 
-/datum/outfit/job/miner/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/miner/post_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
 
-	var/obj/item/clothing/under/U = H.w_uniform
-	var/obj/item/clothing/tie/medic/M = new(get_turf(H))
-	U.attachTie(M)
-	H << "<span class='notice'>You have a camera attached to your jumpsuit that allows the mining medic \
-		to monitor you. Whether you keep it on or not is up to you.</span>"
+	if(!visualsOnly)
+		var/obj/item/clothing/under/U = H.w_uniform
+		var/obj/item/clothing/tie/medic/M = new(get_turf(H))
+		U.attachTie(M)
+		H << "<span class='notice'>You have a camera attached to your jumpsuit that allows the mining medic \
+			to monitor you. Whether you keep it on or not is up to you.</span>"
 /*
 Bartender
 */

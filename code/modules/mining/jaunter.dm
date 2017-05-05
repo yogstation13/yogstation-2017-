@@ -36,13 +36,16 @@
 		var/list/jauntlist = list()
 		for(var/obj/machinery/jauntbeacon/J in jauntbeacons)
 			if(J.on)
-				jauntlist += J
-				J.visible_message("<span class='warning'>[src] begins to light up.</span>")
+				if(!(J in jauntlist))
+					jauntlist += J
+					J.visible_message("<span class='warning'>[src] begins to light up.</span>")
 
 		var/obj/machinery/jauntbeacon/closestJ = get_closest_atom(/obj/machinery/jauntbeacon, jauntlist, user)
-		destinations += closestJ
+		if(closestJ)
+			destinations += closestJ
 
 	// In the event golem beacon is destroyed, send to station instead
+	// Or in the event that all of the jaunter beacons are gone, send em to the station
 	if(destinations.len)
 		return destinations
 
@@ -126,7 +129,6 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 /obj/item/device/jauntbeacon/attack_self(mob/user)
 	user << "<span class='warning'>You set up [src].</span>"
 	var/obj/machinery/jauntbeacon/J = new (get_turf(user))
-	jauntbeacons += J
 	qdel(src)
 
 /obj/machinery/jauntbeacon
@@ -134,12 +136,15 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	density = 0
 	icon = 'icons/obj/machines/jauntbeacon.dmi'
 	icon_state = "beacon-off"
-	var/bolted // 0 not bolted. 1 bolted. 2 cannot be unbolted.
+	var/bolted // 0 not anchored. 1 anchored. 2 cannot be unbolted.
 	var/on = FALSE
+	var/jauntlist = TRUE
 
 /obj/machinery/jauntbeacon/New()
 	..()
 	name = "deployed jaunt beacon [rand(1,999)]"
+	if(jauntlist)
+		jauntbeacons += J
 
 /obj/machinery/jauntbeacon/attack_hand(mob/user)
 	if(bolted)
@@ -158,6 +163,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 		if(do_after(user, 50, target = src))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			bolted = !bolted
+			anchored = bolted
 			user << "<span class='warning'>You [bolted ? "tighten" : "loosen"] [src]'s bolts.</span>"
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(bolted == 2)
@@ -176,6 +182,10 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	else
 		..()
 
+/obj/machinery/jauntbeacon/Destroy()
+	..()
+	jauntbeacons -= src
+
 #define JAUNT_MOTHER_CD 1000
 
 /obj/machinery/jauntbeacon/mother
@@ -184,6 +194,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	bolted = 2
 	on = TRUE
 	icon_state = "beacon"
+	jauntlist = FALSE
 	var/cooldown = FALSE
 
 /obj/machinery/jauntbeacon/mother/attack_hand(mob/user)
@@ -194,7 +205,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				return
 			var/obj/item/device/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
 			if(!chosenjaunt)
-				if(0 > length(jauntbeacons))
+				if(0 == length(jauntbeacons))
 					user << "<span class='notice'>[src] cannot detect other jaunt beacons.</span>"
 					return
 				user << "<span class='notice'>You decide not to use [src].</span>"
@@ -204,13 +215,14 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			togglecooldown(TRUE)
 			teleport(user, chosenjaunt)
 			addtimer(src, "togglecooldown", JAUNT_MOTHER_CD, TRUE, FALSE)
-		else
-			user << "<span class='notice'>[src] isn't turned on...</span>"
 	else
 		user << "<span class='notice'>[src] needs to be bolted.</span>"
 
 /obj/machinery/jauntbeacon/mother/proc/teleport(mob/user, obj/machinery/jauntbeacon/J)
 	if(!user || !J)
+		return
+	if(get_dist(user, src) > 1)
+		visible_message("<span class='notice'>[src] stops powering up, and falls into a sublte cooldown.</span>")
 		return
 	visible_message("<span class='notice'>[user] starts ascending!</span>",
 			"<span class='notice'>[user] starts ascending!</span>")

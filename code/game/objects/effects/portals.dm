@@ -27,6 +27,9 @@
 		if(A.noteleport) // No point in persisting if the target is unreachable.
 			destroy_effect()
 			return
+	else // no area, no service
+		destroy_effect()
+		return
 	for(var/mob/M in src.loc)
 		src.teleport(M)
 	if(lifespan > 0)
