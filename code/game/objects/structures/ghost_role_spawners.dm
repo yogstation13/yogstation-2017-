@@ -151,7 +151,6 @@
 			var/mob/living/carbon/human/H = ashwalker
 			var/datum/species/lizard/ashwalker/cosmic/C = H.dna.species
 			C.rebirth = FALSE
-		qdel(src)
 	else
 		healAshwalker()
 
@@ -179,6 +178,7 @@
 		ashwalker.real_name = name
 		ashwalker.name = name
 		ashwalker = null
+	qdel(src)
 
 /obj/effect/cyrogenicbubble/proc/healAshwalker()
 	if(!ashwalker)
