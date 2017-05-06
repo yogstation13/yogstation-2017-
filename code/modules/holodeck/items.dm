@@ -328,7 +328,7 @@
 	desc = "Hey, you, whatcha gonna do?"
 	density = 0
 	luminosity = 1
-	color = "blue"
+	icon_state = "hoop-spirit"
 
 /obj/structure/holohoop/spirit/New()
 	..()
