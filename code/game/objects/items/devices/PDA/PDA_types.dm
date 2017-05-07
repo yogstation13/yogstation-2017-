@@ -32,7 +32,7 @@
 	icon_state = "pda-iwatch"
 	slot_flags = SLOT_GLOVES
 	item_state = "iwatch"
-	desc = "A watch with inbuilt computer functions, it looks slick and fashionable, ctrl click it to use it whilst on your wrists"
+	desc = "A watch with inbuilt computer functions, it looks slick and fashionable, ctrl click it to use it whilst on your wrists."
 	exempt = 1 //exempt, will not update name the same way as normal pdas when ID added
 	icon_alert = "pda-rwatch" //custom alert icon for a watch that's not as gross
 
@@ -54,17 +54,20 @@
 	user << desc
 	user << " The time is: [gameTimestamp(format = "hh:mm:ss")]"
 
-
-
-/obj/item/device/pda/phone
-	name = "Smartphone"
-	icon_state = "phone"
-	item_state = "phone"
-	desc = "A new take on the timeless PDA design, it does about everything you could want except phone people."
-	exempt = 1 //exempt, will not update name the same way as normal pdas when ID added
-	icon_alert = "pda-rphone" //custom alert icon for a watch that's not as gross
-	ttone = "buzz"
 //ACKNOWLEDGEMENT: The buzz sound for the phone and watches can be found here: https://www.youtube.com/watch?v=zn8ORi6UUJE
+
+
+
+//obj/item/device/pda/phone
+//	name = "Smartphone"
+//	icon_state = "phone"
+//	item_state = "phone"
+//	desc = "A new take on the timeless PDA design, it does about everything you could want except phone people."
+//	exempt = 1 //exempt, will not update name the same way as normal pdas when ID added
+//	icon_alert = "pda-rphone" //custom alert icon for a watch that's not as gross
+//	ttone = "buzz"
+
+//re-add this if you feel like it, not hugely lore friendly
 
 
 
