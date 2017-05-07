@@ -134,25 +134,25 @@ macro "default"
 
 macro "hotkeys"
 	elem 
-		add: numpad1 = "r-leg"
+		add: numpad1 = "body-r-leg"
 		is-disabled = false
 	elem 
-		add: numpad1 = "groin"
+		add: numpad1 = "body-groin"
 		is-disabled = false
 	elem 
-		add: numpad1 = "l-leg"
+		add: numpad1 = "body-l-leg"
 		is-disabled = false
 	elem 
-		add: numpad1 = "r-arm"
+		add: numpad1 = "body-r-arm"
 		is-disabled = false
 	elem 
-		add: numpad1 = "chest"
+		add: numpad1 = "body-chest"
 		is-disabled = false
 	elem 
-		add: numpad1 = "l-arm"
+		add: numpad1 = "body-l-arm"
 		is-disabled = false
 	elem 
-		add: numpad1 = "head"
+		add: numpad1 = "body-toggle-head"
 		is-disabled = false
 	elem
 		name = "TAB"
