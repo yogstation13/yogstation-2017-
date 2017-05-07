@@ -406,25 +406,28 @@ proc/Can_ShadowWalk(var/mob/mob)
 /mob/proc/update_gravity()
 	return
 	
-//Body hotkeys bullshit, don't ask, i don't understand it either.
+//Body hotkeys bullshit, don't ask why we don't have a working toggle head, i couldn't make it work.
+	/client/proc/check_has_body_select()
+		return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel)
+		
 	/client/verb/body_toggle_head()
-    set name = "body-toggle-head"
-    set hidden = 1
-
-    if(!check_has_body_select())
-        return
-
-    var/next_in_line
-    switch(mob.zone_selected)
-        if("head")
-            next_in_line = "eyes"
-        if("eyes")
-            next_in_line = "mouth"
-        else
-            next_in_line = "head"
-
-    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
-    selector.set_selected_zone(next_in_line, mob)
+ 	set name = "body-toggle-head"
+ 	set hidden = 1
+ 
+ 	if(!check_has_body_select())
+ 		return
+ 
+ 	var/next_in_line
+ 	switch(mob.zone_selected)
+ 		if("head")
+ 			next_in_line = "eyes"
+ 		if("eyes")
+ 			next_in_line = "mouth"
+ 		else
+ 			next_in_line = "head"
+ 
+ 	var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+ 	selector.set_selected_zone(next_in_line, mob)
 
 /client/verb/body_r_arm()
     set name = "body-r-arm"
