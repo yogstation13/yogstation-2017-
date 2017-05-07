@@ -547,3 +547,14 @@
 
 /obj/item/clothing/head/winterhood/superb
 	icon_state = "winterhood_superb"
+
+
+/obj/item/clothing/suit/hooded/wintercoat/bape
+	name = "snape camo hoodie"
+	icon_state = "coatbape"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	hoodtype = /obj/item/clothing/head/winterhood/bape
+	desc = "A canvas hoody which has a hood with a small monster on it."
+
+/obj/item/clothing/head/winterhood/bape
+	icon_state = "winterhood_bape"

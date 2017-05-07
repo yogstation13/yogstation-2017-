@@ -120,6 +120,11 @@
 	item_color = "nmd_nt"
 	desc = "Very stylish shoes produced by nanotrasen in a collaboration with galactic sneakers inc."
 
+/obj/item/clothing/shoes/sneakers/nmd/humanracer
+	name = "NMD humanoid racers"
+	icon_state = "nmd_humanracer"
+	item_color = "nmd_humanracer"
+	desc = "Bright, flashy, expensive, these shoes were made in collaboration with the rapper big S."
 
 
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
