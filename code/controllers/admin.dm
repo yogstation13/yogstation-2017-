@@ -3,7 +3,7 @@
 	var/target
 
 /obj/effect/statclick/New(text, target)
-	name = text
+	name = text //kek no fuck date me baby
 	src.target = target
 
 /obj/effect/statclick/proc/update(text)
