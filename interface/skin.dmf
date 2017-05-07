@@ -134,32 +134,25 @@ macro "default"
 
 macro "hotkeys"
 	elem 
-		name = "NUMPAD1"
-		command = "body-r-leg"
+		add: numpad1 = "r-leg"
 		is-disabled = false
 	elem 
-		name = "NUMPAD2"
-		command = "body-groin"
+		add: numpad1 = "groin"
 		is-disabled = false
 	elem 
-		name = "NUMPAD3"
-		command = "body-l-leg"
+		add: numpad1 = "l-leg"
 		is-disabled = false
 	elem 
-		name = "NUMPAD4"
-		command = "body-r-arm"
+		add: numpad1 = "r-arm"
 		is-disabled = false
 	elem 
-		name = "NUMPAD5"
-		command = "body-chest"
+		add: numpad1 = "chest"
 		is-disabled = false
 	elem 
-		name = "NUMPAD6"
-		command = "body-l-arm"
+		add: numpad1 = "l-arm"
 		is-disabled = false
 	elem 
-		name = "NUMPAD8"
-		command = "body-toggle-head"
+		add: numpad1 = "head"
 		is-disabled = false
 	elem
 		name = "TAB"
