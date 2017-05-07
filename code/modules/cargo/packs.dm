@@ -370,10 +370,10 @@
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barriers Crate"
-	contains = list(/obj/item/weapon/grenade/barrier,
-					/obj/item/weapon/grenade/barrier,
-					/obj/item/weapon/grenade/barrier,
-					/obj/item/weapon/grenade/barrier)
+	contains = list(/obj/machinery/deployable/barrier,
+					/obj/machinery/deployable/barrier,
+					/obj/machinery/deployable/barrier,
+					/obj/machinery/deployable/barrier)
 	cost = 2000
 	crate_name = "security barriers crate"
 

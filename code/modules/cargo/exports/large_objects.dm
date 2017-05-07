@@ -111,4 +111,4 @@
 /datum/export/large/barrier
 	cost = 325
 	unit_name = "security barrier"
-	export_types = list(/obj/item/weapon/grenade/barrier, /obj/structure/barricade/security)
+	export_types = list(/obj/machinery/deployable/barrier, /obj/machinery/deployable/barrier)
