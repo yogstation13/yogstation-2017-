@@ -899,6 +899,7 @@
 /obj/item/weapon/storage/box/pillow/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] is cuddling \ with the [src.name]! It looks like \he's trying to commit social suicide.</span>")
+	src.say("You make my kokoro go doki-doki, [user]!")
 	if (H && !qdeleted(H))
 		for(var/obj/item/W in H)
 			H.unEquip(W)
