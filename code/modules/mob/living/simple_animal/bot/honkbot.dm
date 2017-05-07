@@ -117,9 +117,9 @@
 
 /obj/item/projectile/clownblast
 	name = "honk"
-	icon_state = "banana"
+	icon_state = null
 	hitsound = 'sound/items/bikehorn.ogg'
-	damage = 5
+	damage = 0
 	damage_type = STAMINA
 	flag = "energy"
 
@@ -127,6 +127,7 @@
 /obj/item/projectile/clownblast/syndicate
 	name = "loud honk"
 	icon_state = "banana"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	hitsound = 'sound/items/AirHorn.ogg'
 	damage = 0
 	damage_type = 1
@@ -135,6 +136,10 @@
 	stutter = 6
 	jitter = 20
 	flag = "energy"
+
+/obj/item/projectile/clownblast/syndicate/New()
+	..()
+	SpinAnimation()
 
 /obj/item/projectile/clownblast/syndicate/on_hit(atom/target, blocked = 0)
 	. = ..()

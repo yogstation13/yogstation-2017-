@@ -130,6 +130,7 @@
 	stun = 4
 
 /obj/item/projectile/bullet/honker
+	name = "ethereal honk"
 	damage = 0
 	weaken = 5
 	stun = 5
