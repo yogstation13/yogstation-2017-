@@ -588,6 +588,7 @@
 	var/realProc
 	var/cooldownMax = 60
 	var/cooldown
+	var/note //In case you need to store something
 
 /obj/item/weapon/relic/New()
 	..()
@@ -601,7 +602,7 @@
 	revealed = TRUE
 	name = realName
 	cooldownMax = rand(60,300)
-	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon","fakeClone","cutter")
 	origin_tech = pick("engineering=[rand(2,5)]","magnets=[rand(2,5)]","plasmatech=[rand(2,5)]","programming=[rand(2,5)]","powerstorage=[rand(2,5)]")
 
 /obj/item/weapon/relic/attack_self(mob/user)
@@ -707,3 +708,57 @@
 		message_admins("[RelicType] relic activated by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")
+
+/obj/item/weapon/relic/proc/humanClone(mob/user)
+	if(!note)
+		user << "<span class='danger'>[src] begins to glow!</span>"
+		spawn(rand(50, 100))
+			icon_state = ""
+			overlays += image(user.icon, user.icon_state)
+			overlays += user.overlays
+			name = user.name
+			throwSmoke(get_turf(src))
+			note = 1
+	if(note)
+		user << "<span class='danger'>[src] begins to dim!</span>"
+		icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
+		overlays.Cut()
+		name = realName
+		throwSmoke(get_turf(src))
+		note = 0
+
+
+/obj/item/weapon/relic/proc/cutter(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(ishuman(H))
+		for(var/obj/item/bodypart/BP in H.bodyparts)
+			H << "<span class='warning'>[src] begins violently tearing at your [BP.name]!</span>"
+			while((BP.brute_dam) < 40) //Approximately 4 seconds. Can be pretty lethal.
+				if(src.loc == user)
+					BP.brute_dam += 4
+					H << "<span class='warning'>[src] stabs your [BP.name]!!</span>"
+					sleep(4)
+					playsound(src,'sound/weapons/bladeslice.ogg',40,1) //This'll better fucking alert you.
+				else
+					return //This will lag extremely bad if you don't.
+			note = 0
+			if(prob(60))
+				BP.dismember(BRUTE)
+				playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
+				warn_admins(user, "Cutter")
+			else
+				H << "<span class='warning'>[src] shuts down, you got lucky!</span>"
+				return 0
+	else
+		H << "<span class='notice'>[src] judges you unworthy.</span>" //Should appear to everything that doesn't support dismembering.
+																	     //NODISMEMBER, monkeys, drones, etc
+
+
+
+
+
+
+
+
+
+
