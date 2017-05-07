@@ -141,6 +141,7 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t2 = disarm-intent
 \t3 = grab-intent
 \t4 = harm-intent
+\tNumpad = Body target selection (Press 8 repeatedly for Head->Eyes->Mouth)
 </font>"}
 
 	var/other = {"<font color='purple'>
