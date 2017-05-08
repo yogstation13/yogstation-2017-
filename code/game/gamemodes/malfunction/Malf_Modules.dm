@@ -315,7 +315,7 @@
 		return
 
 	if (istype(M, /obj/machinery))
-		if(M.no_malf_ai_cheesing)
+		if(M.no_malf_ai_overloading)
 			src << "<span class='warning'> Can't overload this device.</span>"
 			return
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
