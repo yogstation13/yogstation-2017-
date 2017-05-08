@@ -314,12 +314,9 @@
 	if(!canUseTopic())
 		return
 
-	if(istype(M, /obj/machinery))
-		if(M.no_malf_ai_cheesing)
-			return
-
-
 	if (istype(M, /obj/machinery))
+		if(M.no_malf_ai_cheesing)
+			src << "<span class='warning'> Can't overload this device.</span>"
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
@@ -351,7 +348,7 @@
 
 	if (istype(M, /obj/machinery))
 		if(!M.can_be_overridden())
-			src << "Can't override this device."
+			src << "<span class='warning'> Can't override this device.<span>"
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
