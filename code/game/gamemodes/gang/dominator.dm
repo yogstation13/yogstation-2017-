@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1
 	layer = HIGH_OBJ_LAYER
+	no_malf_ai_cheesing = TRUE
 	var/maxhealth = 200
 	var/health = 200
 	var/datum/gang/gang

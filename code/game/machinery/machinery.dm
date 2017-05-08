@@ -110,6 +110,7 @@ Class Procs:
 	var/power_channel = EQUIP
 		//EQUIP,ENVIRON or LIGHT
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
+	var/no_malf_ai_cheesing = FALSE //Stops malf AI from blowing shit up
 	var/uid
 	var/global/gl_uid = 1
 	var/panel_open = 0

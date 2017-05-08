@@ -314,6 +314,11 @@
 	if(!canUseTopic())
 		return
 
+	if(istype(M, /obj/machinery))
+		if(M.no_malf_ai_cheesing)
+			return
+
+
 	if (istype(M, /obj/machinery))
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
