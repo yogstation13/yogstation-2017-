@@ -304,7 +304,6 @@
 			qdel(wire_overlay)
 		else
 			wires_exposed = TRUE
-			user << "<span class='notice'>You open the wiring panel on the [src.name].</span>"
 			var/image/wires = wire_icon
 			wire_overlay = wires
 			overlays += wire_overlay
