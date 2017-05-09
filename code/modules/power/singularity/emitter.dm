@@ -182,7 +182,7 @@
 
 
 		if(!can_fire)
-			visible_message("<span class='danger'>The [src.name] hums!</span>","<span class='userdanger'>You feel a humming.</span>")
+			visible_message("<span class='danger'>The [src.name] hums!</span>","<span class='userdanger'>You feel a vibration in the air.</span>")
 			return
 		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
