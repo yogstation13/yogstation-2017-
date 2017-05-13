@@ -49,7 +49,6 @@
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	specflags = list()
 	roundstart = 0
-	limbs_id = "fly"
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 
 

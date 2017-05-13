@@ -13251,7 +13251,7 @@
 /area/maintenance/fpmaint)
 "ayV" = (
 /turf/closed/wall,
-/area/gateway)
+/area/clerk)
 "ayW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -13850,30 +13850,30 @@
 "aAf" = (
 /obj/structure/piano,
 /turf/open/floor/plating,
-/area/gateway)
+/area/clerk)
 "aAg" = (
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aAh" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aAi" = (
 /obj/machinery/camera{
 	c_tag = "Gift Shop Backroom";
 	network = list("SS13","Prison")
 	},
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aAj" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Gift Shop Maintenance";
 	req_access_txt = "36"
 	},
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aAk" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -14514,20 +14514,20 @@
 	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plating,
-/area/gateway)
+/area/clerk)
 "aBu" = (
 /obj/item/target,
 /obj/item/target/alien,
 /obj/item/target/syndicate,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aBv" = (
 /obj/structure/rack,
 /obj/effect/landmark/costume,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aBw" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -14543,7 +14543,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/gateway)
+/area/clerk)
 "aBx" = (
 /obj/machinery/camera{
 	c_tag = "EVA Maintenance";
@@ -15074,7 +15074,7 @@
 	req_access_txt = "36"
 	},
 /turf/open/floor/plasteel,
-/area/gateway)
+/area/clerk)
 "aCA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -15751,7 +15751,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aDS" = (
 /obj/structure/table,
 /obj/machinery/button/door{
@@ -15769,7 +15769,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aDT" = (
 /obj/structure/table,
 /obj/item/device/instrument/violin,
@@ -15778,7 +15778,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aDU" = (
 /obj/structure/flora/kirbyplants{
 	desc = "A plastic potted plant.";
@@ -15790,7 +15790,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aDV" = (
 /obj/structure/rack{
 	dir = 1
@@ -16509,7 +16509,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aFs" = (
 /obj/structure/chair,
 /obj/effect/landmark/start{
@@ -16520,7 +16520,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aFt" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light{
@@ -16532,7 +16532,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aFu" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -17139,7 +17139,7 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/gateway)
+/area/clerk)
 "aGF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -17154,7 +17154,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aGG" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -17166,7 +17166,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aGH" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced{
@@ -17177,7 +17177,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aGI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -17190,7 +17190,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aGJ" = (
 /obj/item/weapon/a_gift,
 /obj/item/weapon/a_gift{
@@ -17206,13 +17206,13 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aGK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/gateway)
+/area/clerk)
 "aGL" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -18033,7 +18033,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aIm" = (
 /obj/item/device/assembly/bikehorn/rubberducky,
 /obj/structure/table,
@@ -18043,7 +18043,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aIn" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
@@ -18730,7 +18730,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aJL" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -18745,7 +18745,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aJM" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
@@ -19433,7 +19433,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "aLm" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -67939,7 +67939,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "cFL" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/plasteel/shuttle/white,
@@ -68406,7 +68406,7 @@
 	icon_state = "greenyellowfull";
 	dir = 8
 	},
-/area/gateway)
+/area/clerk)
 "ClK" = (
 /obj/machinery/door/airlock/hatch{
 	autoclose = 0;
