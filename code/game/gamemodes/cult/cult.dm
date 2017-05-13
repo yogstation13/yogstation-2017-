@@ -43,7 +43,6 @@
 	prob_traitor_ai = 18
 
 	var/finished = 0
-	var/global/list/manifest_construct_cooldown
 	var/eldergod = 1 //for the summon god objective
 
 	var/acolytes_needed = 10 //for the survive objective
