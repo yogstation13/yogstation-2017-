@@ -801,6 +801,11 @@ var/list/teleportlocs = list()
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	
+/area/gateway
+	name = "Gateway"
+	icon_state = "teleporter"
+	music = "signal"
 
 //MedBay
 
