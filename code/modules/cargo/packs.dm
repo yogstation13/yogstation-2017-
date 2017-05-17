@@ -122,20 +122,22 @@
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
 	hidden = TRUE
-	cost = 2000
+	cost = 5000
 	contains = list(/obj/item/weapon/storage/box/emps,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/pen/sleepy,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
+					/obj/item/weapon/grenade/chem_grenade/incendiary
+					/obj/item/weapon/grenade/chem_grenade/bioterrorfoam
+					/obj/item/clothing/under/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 14000
+	cost = 20000
 	contains = list(/obj/item/weapon/storage/box/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
@@ -1319,21 +1321,6 @@
 					/obj/item/clothing/head/helmet/space/plasmaman,
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
-
-/datum/supply_pack/misc/sneakers
-	name = "Crep Crate"
-	cost = 2000
-	contains = list(/obj/item/clothing/shoes/sneakers/nmd/collab,
-					/obj/item/clothing/shoes/sneakers/nmd,
-					/obj/item/clothing/shoes/sneakers/yeezy/black,
-					/obj/item/clothing/shoes/sneakers/yeezy/orange,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy/black,
-					/obj/item/clothing/shoes/sneakers/yeezy)
-	crate_name = "Sneaker Drop"
 
 
 /datum/supply_pack/misc/superb
