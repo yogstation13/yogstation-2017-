@@ -342,9 +342,10 @@
 		//Don't dump us into clone if we somehow got a body during cloning finished
 		if(clonemind.current && clonemind.current.stat == DEAD)
 			clonemind.transfer_to(occupant)
-		occupant.grab_ghost()
-		occupant << "<span class='notice'><b>The world is suddenly bright \
-			and sudden and loud!</b><br>\
+		else
+			occupant.ckey = clonemind.key
+		occupant << "<span class='notice'><b>The world is sudden, bright \
+			and loud!</b><br>\
 			<i>You feel your body weight suddenly, as your mind suddenly \
 			comprehends where you are and what is going on.</i></span>"
 		occupant.flash_eyes()
