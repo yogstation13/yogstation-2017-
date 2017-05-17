@@ -335,7 +335,7 @@
 		
 		
 /obj/item/device/lightreplacer/cyborg/attack_self(mob/user)
-	if(robot(user))
+	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		
 		if(emagged)
