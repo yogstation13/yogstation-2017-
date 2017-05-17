@@ -335,14 +335,14 @@
 		
 		
 /obj/item/device/lightreplacer/cyborg/attack_self(mob/user)
-	if(iscyborg(user))
+	if(robot(user))
 		var/mob/living/silicon/robot/R = user
 		
 		if(emagged)
-			to_chat(user, "<span class='notice'>You flush your light replacer of plasma, and return it to normal.</span>")
+			user << "<span class='notice'> You flush your light replacer of plasma, and return it to normal.</span>"
 			emagged = 0
 		if(R.emagged)
-			to_chat(user, "<span class='warning'>You flood your light replacer with plasma! Lights you replace will now explode.</span>")
+			user << "<span class='notice'> You flood your light replacer with plasma! Lights you replace will now explode.</span>"
 			Emag()
 		
 			
