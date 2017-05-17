@@ -27,7 +27,8 @@ var/list/admin_verbs_basic = list(
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
-	/client/proc/stop_sounds
+	/client/proc/stop_sounds,
+	/client/proc/reset_all_tcs
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -84,7 +85,9 @@ var/list/admin_verbs_admin = list(
 	/client/proc/check_ruins,
 	/datum/admins/proc/borer_panel,
 	/client/proc/respawn_character,
-	/client/proc/rejuv_all
+	/client/proc/rejuv_all,
+	/client/proc/reset_idconsole_msg,
+	/client/proc/lock_idconsole
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -112,7 +115,6 @@ var/list/admin_verbs_fun = list(
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
-	/client/proc/reset_all_tcs,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,

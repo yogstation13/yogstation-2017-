@@ -460,6 +460,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			say("Book has been sent to the printing queue!")
 			if(!print_busy && print_queue.len)
 				print_book(print_queue[1])
+				src.add_fingerprint(usr)
+				return
 		else
 			say("The printing queue is full!")
 	src.add_fingerprint(usr)

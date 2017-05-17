@@ -296,6 +296,8 @@
 		else
 			msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
 
+	if(is_nearcrit())
+		msg += "<B>[t_He] looks haunting as they crawl on the ground hanging on for dear life.</B>\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
@@ -418,6 +420,7 @@
 						if(R)
 							criminal = R.fields["criminal"]
 
+						msg += "<span class='deptradio'>Operate your security HUD faster by using ALT + SHIFT + CLICK to operate a targets criminal status or CTRL + SHIFT + CLICK to add crimes or comments.</span>\n"
 						msg += "<span class='deptradio'>Criminal status:</span> <a href='?src=\ref[src];hud=s;status=1'>\[[criminal]\]</a>\n"
 						msg += "<span class='deptradio'>Security record:</span> <a href='?src=\ref[src];hud=s;view=1'>\[View\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "

@@ -140,7 +140,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		return
 	if(!chaplain)
 		user << "<span class='danger'>The book sizzles in your hands.</span>"
-		user.take_organ_damage(0,10)
+		user.take_organ_damage(0, 10, 1, DAMAGE_DISEASE)
 		return
 
 	if (user.disabilities & CLUMSY && prob(50))

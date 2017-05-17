@@ -70,7 +70,7 @@
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
 	speed = 0
-	boost = world.time + 50
+	boost = world.time + 20
 
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
@@ -98,11 +98,12 @@
 	user.visible_message("<span class='warning'>[user]'s eyes flare a deep crimson!</span>", \
 						 "<span class='userdanger'>You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!</span>")
 	user.drop_item()
-	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
+	src.Insert(user, 1) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
 /obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
-	..()
-	M.bloodcrawl = BLOODCRAWL
+	if(..())
+		M.bloodcrawl = BLOODCRAWL
+		return 1
 
 /obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()

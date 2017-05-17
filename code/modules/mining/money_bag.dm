@@ -9,8 +9,8 @@
 	burntime = 20
 	w_class = 4
 	max_w_class = 3
-	storage_slots = 80
-	max_combined_w_class = 40
+	storage_slots = INFINITY
+	max_combined_w_class = INFINITY
 	can_hold = list(/obj/item/weapon/coin, /obj/item/stack/spacecash)
 
 

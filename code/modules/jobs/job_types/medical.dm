@@ -18,10 +18,12 @@ Chief Medical Officer
 
 	access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic,
+			access_cloning)
 	minimal_access = list(access_medical, access_morgue, access_genetics, access_heads, access_mineral_storeroom,
 			access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
-			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic)
+			access_keycard_auth, access_sec_doors, access_maint_tunnels, access_paramedic,
+			access_cloning)
 
 /datum/outfit/job/cmo
 	name = "Chief Medical Officer"
@@ -64,8 +66,8 @@ Medical Doctor
 
 	outfit = /datum/outfit/job/doctor
 
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_surgery)
+	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics, access_mineral_storeroom, access_cloning)
+	minimal_access = list(access_medical, access_morgue, access_surgery, access_cloning)
 
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
@@ -131,8 +133,8 @@ Geneticist
 
 	outfit = /datum/outfit/job/geneticist
 
-	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_research)
+	access = list(access_medical, access_morgue, access_chemistry, access_virology, access_genetics, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage, access_cloning)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_research, access_cloning)
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"
@@ -199,20 +201,19 @@ Mining Medic
 	outfit = /datum/outfit/job/miningmedic
 
 	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mailsorting, access_mineral_storeroom)
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"
 	backpack_contents = list(/obj/item/roller = 1,\
 		/obj/item/weapon/kitchen/knife/combat/survival = 1,\
-		/obj/item/weapon/survivalcapsule = 1)
-	belt = /obj/item/device/pda/medical
+		/obj/item/device/gps/mining = 1)
+	belt = /obj/item/weapon/storage/belt/mining/medical
 	ears = /obj/item/device/radio/headset/headset_medcargo
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	uniform = /obj/item/clothing/under/rank/miner/medic
 	l_hand = /obj/item/weapon/storage/firstaid/regular
-	l_pocket = /obj/item/device/flashlight/pen
-	r_pocket = /obj/item/device/gps/mining
+	l_pocket =  /obj/item/device/pda/medical
 	gloves = /obj/item/clothing/gloves/color/latex
 	mask = /obj/item/clothing/mask/surgical
 
@@ -232,7 +233,7 @@ Paramedic
 
 	outfit = /datum/outfit/job/paramedic
 
-	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic)
+	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic, access_cloning)
 	minimal_access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_paramedic)
 
 /datum/outfit/job/paramedic
@@ -276,5 +277,4 @@ Psychiatrist
 	glasses = /obj/item/clothing/glasses/regular
 	belt = /obj/item/device/pda
 	ears = /obj/item/device/radio/headset/headset_med
-
 

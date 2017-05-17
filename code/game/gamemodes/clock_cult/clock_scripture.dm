@@ -24,10 +24,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/invokers_required = 1 //How many people are required, assuming that a scripture requires multiple
 	var/multiple_invokers_used = FALSE //If scripture requires more than one invoker
 	var/multiple_invokers_optional = FALSE //If scripture can have multiple invokers to bolster its effects
+	var/human_only = FALSE
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
 
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && has_requirements() && check_special_requirements())
+		if(invoker.z != ZLEVEL_STATION && invoker.z != ZLEVEL_CENTCOM)
+			invoker << "<span class='warning'>You are too far from Rat'Var's light! Return to the station!</span>"
+			return 0
 		if(slab.busy)
 			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
 			return 0
@@ -48,6 +52,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/proc/can_recite() //If the words can be spoken
 	if(!ticker || !ticker.mode || !slab || !invoker)
+		return 0
+	if(human_only && !ratvar_awakens && !ishuman(invoker)) //human_only means cogscarabs can't use it
+		invoker << "<span class='warning'>Your body lacks the biological functions to recite this scripture!</span>"
+		return 0
+	if((tier == SCRIPTURE_REVENANT || tier == SCRIPTURE_JUDGEMENT) && !ishuman(invoker)) //nonhumans can't invoke the super strong stuff
+		invoker << "<span class='warning'>Your body lacks the biological functions to recite this scripture!</span>"
 		return 0
 	if(!invoker.can_speak_vocal())
 		invoker << "<span class='warning'>You are unable to speak the words of the scripture!</span>"
@@ -373,6 +383,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
+	human_only = TRUE
 	tier = SCRIPTURE_DRIVER
 	var/flee_time = 27 //allow fleeing for 3 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
@@ -705,6 +716,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
 	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
 	usage_tip = "The vessel can be used as a teleport target for Spatial Gateway, though it is generally better-used by placing it in a shell."
+	human_only = TRUE
 	tier = SCRIPTURE_SCRIPT
 
 
@@ -715,13 +727,28 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
 	invocations = list("Pnyy sbegu...", "...gur jbexref-bs Nezbere.")
 	channel_time = 50
-	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	required_components = list("guvax_capacitor" = 3, "hierophant_ansible" = 3)
+	consumed_components = list("guvax_capacitor" = 3, "hierophant_ansible" = 3)
 	object_path = /obj/structure/clockwork/shell/cogscarab
 	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
+	human_only = TRUE
 	tier = SCRIPTURE_SCRIPT
+
+/datum/clockwork_scripture/create_object/cogscarab/check_special_requirements()
+	var/human_servants = 0
+	var/active_scarabs = 0
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(is_servant_of_ratvar(H) && H.stat != DEAD)
+			human_servants++
+	for(var/mob/living/simple_animal/drone/cogscarab/C in living_mob_list)
+		if(C.stat != DEAD)
+			active_scarabs++
+	if(active_scarabs > (human_servants / 2))
+		invoker <<"<span class='brass'>There are not enough human servants on the Heirophant Network to support another scarab. Convert more.</span>"
+		return 0
+	return 1
 
 
 
@@ -758,6 +785,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
+	human_only = TRUE
 	tier = SCRIPTURE_APPLICATION
 
 
@@ -827,6 +855,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("belligerent_eye" = 2, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	usage_tip = "Marauders are useful as personal bodyguards and frontline warriors, although they do little damage."
+	human_only = TRUE
 	tier = SCRIPTURE_APPLICATION
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
@@ -1189,7 +1218,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/mob/living/L in view(7, invoker))
 				if(is_servant_of_ratvar(L))
 					continue
-				invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10)
+				invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10,alphafade=1)
 				var/randdamage = rand(40, 60)
 				if(iscarbon(L))
 					L.electrocute_act(randdamage, "Nzcrentr's power", 1, randdamage)

@@ -214,13 +214,13 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	. = ..()
-	if(stat != DEAD)
+	if(stat != DEAD)	
 		if(health < maxHealth/2)
-			angry = 1
-			visible_message("<span class='alertalien'>[src] screeches in rage!</span>")
+			angry = TRUE
 		else
-			angry = 0
-			visible_message("<span class='alertalien'>[src] appears to have calmed down.</span>")
+			angry = FALSE
+
+			
 
 /mob/living/simple_animal/hostile/alien/queen/large/Aggro()
 	..()

@@ -57,6 +57,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/list/materials = list()
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
+	var/scarab_usable = FALSE //can clockwork cogscarabs use this item?
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
@@ -180,6 +181,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 //OXYLOSS = 8
 //Output a creative message and then return the damagetype done
 /obj/item/proc/suicide_act(mob/user)
+	return
+
+/obj/item/proc/cuff_act(mob/user) // effect for cuffs/legcuffs. attached to movement_delay() inside of carbon_movement.dm
 	return
 
 /obj/item/verb/move_to_top()
@@ -502,6 +506,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
 			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			return
+		if(H.dna.species.specflags & PROTECTEDEYES)
+			user << "<span class='danger'>This person's eyes are too strong to be gouged out!</span>"
 			return
 
 	if(ismonkey(M))

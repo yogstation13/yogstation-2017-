@@ -46,6 +46,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	new /obj/item/device/gps/mining(src)
 
 /*********************Pickaxe & Drills**************************/
 
@@ -196,6 +197,7 @@
 	icon_state = "away"
 	requires_power = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"

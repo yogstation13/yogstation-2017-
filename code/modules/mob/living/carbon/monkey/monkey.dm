@@ -39,7 +39,7 @@
 	internal_organs += new /obj/item/organ/tongue
 
 	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+		I.Insert(src, 1)
 
 	..()
 
@@ -309,10 +309,10 @@
 /mob/living/carbon/monkey/fully_heal(admin_revive = 0)
 	if(!getorganslot("lungs"))
 		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
+		L.Insert(src, 1)
 	if(!getorganslot("tongue"))
 		var/obj/item/organ/tongue/T = new()
-		T.Insert(src)
+		T.Insert(src, 1)
 	..()
 
 /mob/living/carbon/monkey/IsVocal()
@@ -322,3 +322,9 @@
 
 /mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
 	return 1
+
+/mob/living/carbon/monkey/is_nearcrit()
+	if(health <= config.health_threshold_crit && health > HEALTH_THRESHOLD_DEEPCRIT)
+		if(!(NOCRIT in status_flags))
+			return TRUE
+	return FALSE
