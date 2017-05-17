@@ -128,8 +128,8 @@
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/pen/sleepy,
-					/obj/item/weapon/grenade/chem_grenade/incendiary
-					/obj/item/weapon/grenade/chem_grenade/bioterrorfoam
+					/obj/item/weapon/grenade/chem_grenade/incendiary,
+					/obj/item/weapon/grenade/chem_grenade/bioterrorfoam,
 					/obj/item/clothing/under/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
@@ -955,6 +955,17 @@
 	contains = list(/mob/living/simple_animal/pet/fox,
 					/obj/item/clothing/tie/petcollar)
 	crate_name = "fox crate"
+
+/datum/supply_pack/organic/critter/crabs
+	name = "Creb crate"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab)
+	crate_name = "Crab crate"
 
 /datum/supply_pack/organic/critter/butterfly
 	name = "Butterflies Crate"
