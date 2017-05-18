@@ -343,9 +343,9 @@
 		if(!clonemind.current || clonemind.current.stat == DEAD)
 			clonemind.transfer_to(occupant)
 			occupant.ckey = clonemind.ckey //For some reason, this doesn't initialize directly
-		occupant << "<span class='notice'><b>The world is sudden, bright \
+		occupant << "<span class='notice'><b>The world is bright \
 			and loud!</b><br>\
-			<i>You feel your body weight suddenly, as your mind suddenly \
+			<i>You feel your body weight, as your mind suddenly \
 			comprehends where you are and what is going on.</i></span>"
 		occupant.flash_eyes()
 
