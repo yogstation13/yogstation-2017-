@@ -340,10 +340,9 @@
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		//Don't dump us into clone if we somehow got a body during cloning finished
-		if(clonemind.current && clonemind.current.stat == DEAD)
+		if(!clonemind.current || clonemind.current.stat == DEAD)
 			clonemind.transfer_to(occupant)
-		else
-			occupant.ckey = clonemind.key
+			occupant.ckey = clonemind.ckey //For some reason, this doesn't initialize directly
 		occupant << "<span class='notice'><b>The world is sudden, bright \
 			and loud!</b><br>\
 			<i>You feel your body weight suddenly, as your mind suddenly \
