@@ -10,7 +10,7 @@
 	desc = "Used to control the Free Miner Ship."
 	circuit = /obj/item/weapon/circuitboard/computer/white_ship/miner
 	shuttleId = "whiteship"
-	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_mining"
+	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_mining0;whiteship_mining1;whiteship_mining2"
 	req_access = list(access_freeminercap)
 
 /obj/effect/mob_spawn/human/free_miner
