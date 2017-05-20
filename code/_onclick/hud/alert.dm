@@ -244,6 +244,31 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "alien"
 //	icon_state = ""
 
+/obj/screen/alert/alien_findqueen
+	name = "Find Queen"
+	desc = "The Queen is somewhere. Hopefully not with the Captain again."
+	alerttooltipstyle = "alien"
+
+/obj/screen/alert/alien_findqueen/MouseEntered(location,control,params)
+	var/msg = "You can't find the Queen!"
+	if(isalien(usr))
+		var/mob/living/carbon/alien/humanoid/H = usr
+		message_admins("searchign....")
+		for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
+			message_admins("queen found1 they ckey is [Q.ckey]")
+			if(compareAlienSuffix(Q, H))
+				var/area/A = get_area(Q)
+				if(A)
+					message_admins("found their area [A.name]")
+					msg = "The Queen is in [A.name]"
+				else
+					msg = "You can't detect the queen!"
+					message_admins("no can do")
+				break
+
+	openToolTip(usr,src,params,title = name,content = msg,theme = alerttooltipstyle)
+
+
 
 //BLOBS
 

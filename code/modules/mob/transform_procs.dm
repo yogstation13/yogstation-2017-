@@ -378,10 +378,8 @@
 	switch(alien_caste)
 		if("Hunter")
 			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(loc)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(loc)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(loc)
+		if("Worker")
+			new_xeno = new /mob/living/carbon/alien/humanoid/worker(loc)
 
 	new_xeno.a_intent = "harm"
 	new_xeno.key = key

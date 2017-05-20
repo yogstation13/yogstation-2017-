@@ -20,7 +20,7 @@
 	else
 		return FALSE
 
-/datum/game_mode/xenomorph/proc/findQueen(var/mind) // 1 yes i found her, 0 no shes out with another hive again
+/datum/game_mode/proc/findQueen(var/mind) // 1 yes i found her, 0 no shes out with another hive again
 	var/queen
 	for(var/datum/mind/M in xenomorphs["QUEEN"])
 		if(mind)
@@ -55,7 +55,7 @@
 				continue
 		M.current << "<span class = '[spans1]'><span class = '[spans2]'>[string]</span></span>"
 
-/proc/compareAlienSuffix(mob/living/carbon/alien/A1, mob/living/carbon/alien/A2, var/col1, var/col2)
+/proc/compareAlienSuffix(mob/living/carbon/alien/A1, mob/living/carbon/alien/A2, col1, col2)
 	if(!A1)
 		if(!col1)
 			return
@@ -91,3 +91,13 @@
 		return TRUE
 	else
 		return FALSE
+
+
+/datum/game_mode/xenomorph/proc/getQueen()
+	if(length(xenomorphs["QUEEN"]) > 1)
+		message_admins("ALERT! There is more than one queen alive. Check this gamemodes xenomorph list for more information. \
+			Report to a Coder if you can.")
+		return
+	for(var/datum/mind/M in xenomorphs["QUEEN"])
+		if(M.special_role == "xeno queen")
+			return M

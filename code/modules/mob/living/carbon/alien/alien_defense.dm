@@ -29,17 +29,24 @@ In all, this is a lot like the monkey code. /N
 			grabbedby(M)
 
 		else
-			if (health > 0)
-				M.do_attack_animation(src)
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-				var/damage = 1
-				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
-						"<span class='userdanger'>[M.name] bites [src]!</span>")
-				adjustBruteLoss(damage)
-				add_logs(M, src, "attacked")
-				updatehealth()
+			if(compareAlienSuffix(src, M))
+				if (health > 0)
+					M.do_attack_animation(src)
+					playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+					var/damage = 1
+					visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
+							"<span class='userdanger'>[M.name] bites [src]!</span>")
+					adjustBruteLoss(damage)
+					add_logs(M, src, "attacked")
+					updatehealth()
+				else
+					M << "<span class='warning'>[name] is too injured for that.</span>"
 			else
-				M << "<span class='warning'>[name] is too injured for that.</span>"
+				M.do_attack_animation(src)
+				visible_message("<span class='warning'>[M] slices [src]!</span>", "<span class='warning'>[M] slices [src]!</span>")
+				var/damage = rand(10, 20)
+				adjustBruteLoss(damage)
+
 	return
 
 
@@ -96,3 +103,20 @@ In all, this is a lot like the monkey code. /N
 		adjustBruteLoss(damage)
 		add_logs(M, src, "attacked")
 		updatehealth()
+
+/mob/living/carbon/alien/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
+	if(istype(P, /obj/item/projectile/bullet))
+		message_admins("Xeno hit by bullet")
+		if(P.firer)
+			message_admins("P firer detected")
+			if(get_dist(get_turf(P.firer), src) <= 4)
+				var/turf/firerturf = get_turf(P.firer)
+				message_admins("It starts")
+				for(var/i, i < 5, i++)
+					message_admins("Hit splatter. GO!")
+					var/obj/effect/decal/cleanable/blood/hitsplatter/xeno/X = new(src)
+					var/n = rand(3,7)
+					var/turf/targ = get_ranged_target_turf(src, get_dir(src, firerturf), n)
+					X.GoTo(targ, n)
+	return .

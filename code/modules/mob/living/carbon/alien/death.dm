@@ -18,4 +18,4 @@
 		ticker.mode.xenomorphs["SENITELS"] -= mind
 		ticker.mode.xenomorphs["DRONES"] -= mind
 */
-	..()
+	return ..()

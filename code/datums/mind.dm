@@ -1907,11 +1907,11 @@
 	..()
 	mind.special_role = "Hunter"
 
-/mob/living/carbon/alien/humanoid/drone/mind_initialize()
+/mob/living/carbon/alien/humanoid/worker/mind_initialize()
 	..()
 	mind.special_role = "Drone"
 
-/mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
+/mob/living/carbon/alien/humanoid/worker/mind_initialize()
 	..()
 	mind.special_role = "Sentinel"
 	//XENO LARVA

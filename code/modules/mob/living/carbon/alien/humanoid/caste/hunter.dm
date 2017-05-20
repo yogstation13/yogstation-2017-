@@ -16,7 +16,7 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/hunter/movement_delay()
-	if(prob(80))
+	if(prob(20))
 		. = -1
 	. += ..()
 
@@ -82,7 +82,8 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(5)
+				if(!L.resting && !L.weakened)	L.Weaken(3)
+				else			src << "<span class='warning'>[L] is already down!</span>"
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 

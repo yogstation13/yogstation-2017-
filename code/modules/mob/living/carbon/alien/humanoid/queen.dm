@@ -23,6 +23,7 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
+	has_fine_manipulation = TRUE
 
 
 /mob/living/carbon/alien/humanoid/royal/queen/New()
@@ -38,7 +39,8 @@
 
 	real_name = src.name
 	HD = new /datum/huggerdatum/queen
-	HD.assemble(src)
+	var/datum/huggerdatum/queen/QHD = HD
+	QHD.assemble(src)
 
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
 	internal_organs += new /obj/item/organ/alien/resinspinner
@@ -168,6 +170,7 @@
 	if(A)
 		A.desc = objective
 		playsound(chosenxeno.loc, 'sound/voice/hiss5.ogg', 50, 1, 1)
+	log_game("Alien Queen ([user.ckey]) has given [chosenxeno] the objective: [objective]")
 	return 1
 
 /obj/effect/proc_holder/alien/royal/queen/globalobjective
@@ -190,4 +193,22 @@
 				H << "<span class='aliensmallannounce'>New Objective!</span><span class='notice'>(Check the alert at the top right corner)</span>"
 
 	user << "<span class='alertalien'>Your Colony's Currrent Objective:</span> <span class='notice'>[objective]</span>"
+	log_game("Alien Queen ([user.ckey]) has globaly given out the objective: [objective]")
+	return 1
+
+/obj/effect/proc_holder/alien/royal/queen/hivebalance
+	name = "Toggle Hive Balance"
+	desc = "With this toggled on, when the hives number of hunters and workers do not equal each other, new-evolving \
+		Aliens will be forced to evolve into the smaller caste."
+	plasma_cost = 10
+	action_icon_state = "global-order"
+
+/obj/effect/proc_holder/alien/royal/queen/hivebalance/fire(mob/living/carbon/alien/user)
+	user.HD.hivebalance = !user.HD.hivebalance
+
+	for(var/mob/living/carbon/alien/humanoid/H in living_mob_list)
+		if(compareAlienSuffix(user, H))
+			H << "<span class=''>The Queen has [user.HD.hivebalance ? "enabled" : "disabled"] the hives balancing system."
+
+	log_game("Alien Queen ([user.ckey]) has toggeled their hives balance [user.HD.hivebalance ? "on" : "off"]")
 	return 1

@@ -10,12 +10,13 @@ var/list/colony_database = list()
 	var/species = null
 	var/changetraits = FALSE
 	var/list/traits = list("name" = null, "desc" = null, "see_in_the_dark" = null, "heat_protection" = null)
-
+	var/hivebalance = TRUE
+/*
 /datum/huggerdatum/proc/assemble(var/suffix)
 	if(suffix)
 		colony_suffix = suffix
-
-/datum/huggerdatum/default/New(var/mob/living/carbon/alien/origin, var/spec)
+*/
+/datum/huggerdatum/default/New(mob/living/carbon/alien/origin, spec)
 	name = "[origin.name]"
 	owner = origin
 
@@ -23,7 +24,7 @@ var/list/colony_database = list()
 		if(spec != "human")
 			choseTraits(spec)
 
-/datum/huggerdatum/proc/choseTraits(var/datum/species/S)
+/datum/huggerdatum/proc/choseTraits(datum/species/S, spec)
 	if(!S)
 		return
 
@@ -43,7 +44,9 @@ var/list/colony_database = list()
 			traits["heat_protection"] = 0.2
 			changetraits = TRUE
 
-/datum/huggerdatum/queen/assemble(var/origin)
+/datum/huggerdatum/queen
+
+/datum/huggerdatum/queen/proc/assemble(origin)
 	name = "queen"
 	owner = origin
 	colony_suffix += pick("4N", "PB", "3Y", "A4", "0X", "JD")

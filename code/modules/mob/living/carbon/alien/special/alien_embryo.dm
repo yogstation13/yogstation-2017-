@@ -1,7 +1,7 @@
 /mob/living/carbon/brain/alien
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
-	stat = CONSCIOUS
+	//stat = CONSCIOUS
 
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
@@ -16,6 +16,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 	var/mob/living/carbon/brain/alien/embryo
 	var/premature
 	var/polling = FALSE
+	var/attemptinggrow = FALSE
 
 /obj/item/organ/body_egg/alien_embryo/on_find(mob/living/finder)
 	..()
@@ -34,34 +35,34 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 /obj/item/organ/body_egg/alien_embryo/New()
 	..()
 	embryo = new /mob/living/carbon/brain/alien(src)
-	if(findClient())
-		premature = TRUE
+//	if(findClient())
+//		premature = TRUE
 
 /obj/item/organ/body_egg/alien_embryo/proc/findClient() // returns 1 if we can't find anything
-	if(!owner)
-		return
-	if(!src)
-		return
 	if(polling)
 		return
-	message_admins("POLLING!")
+	if(embryo.ckey)
+		return
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as an embryo growing inside of [owner]?", ROLE_ALIEN, null, ROLE_ALIEN, 100, embryo)
 	var/client/C = null
 	polling = TRUE
 
 	sleep(100)
 	if(candidates.len)
+		listclearnulls(candidates)
 		C = pick(candidates)
 	else
 		polling = FALSE
 		return 1
-
-	if(!src)
+	if(!owner)
+		return
+	if(!C.key || !C)
 		return
 
-	embryo.key = C.key
-	embryo << "<span class='alertalien'>Darkness surrounds you, and you grow bigger as you drain the nutrients out of your host. In time you'll soon be a fully grown...</span>"
-	embryo << "<span class='alertalien'>For now you are only a fetush slowly regenerating...</span>"
+	if(!embryo.key)
+		embryo.key = C.key
+		embryo << "<span class='alertalien'>Darkness surrounds you, and you grow bigger as you drain the nutrients out of your host. In time you'll soon be a fully grown...</span>"
+		embryo << "<span class='alertalien'>For now you are only a fetush slowly regenerating...</span>"
 
 /obj/item/organ/body_egg/alien_embryo/prepare_eat()
 	var/obj/S = ..()
@@ -111,23 +112,67 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 				AttemptGrow(0)
 				return
 		AttemptGrow()
+/obj/item/organ/body_egg/alien_embryo/proc/join_infest_count()
+	if(ticker.mode.queensuffix == colony)
+		if(owner in ticker.mode.living_alien_targets)
+			ticker.mode.message_xenomorphs("Your hive has successfully transformed another targetted human!", FALSE, "alienannounce")
+			ticker.mode.infested_count++
 
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
 
+	if(attemptinggrow)
+		return
+
+	attemptinggrow = TRUE
+	if(owner.stat == DEAD)
+		if(embryo)
+			embryo << "<span class='warning'>You see the light... and it BURNS!!! Your host has died.</span>"
+		owner.visible_message("<span class='danger'>[owner]'s belly begins to swell up to an enormous rate, and pops as a dead \
+						immature larva falls to the ground. It seems like it didn't gather enough living \
+						nutrients to become a living larva.",\
+						"<span class='danger'>[owner]'s belly begins to grow swollen, and pops as a dead \
+						immature larva falls to the ground. It seems like it didn't gather enough living \
+						nutrients to become a living larva.")
+		log_game("[owner] ([owner.ckey]) was gibbed while dead because their alien embryo tried to grow.")
+		var/mob/living/carbon/alien/larva/dead_xeno = new(get_turf(owner))
+		owner.gib()
+		join_infest_count()
+		dead_xeno.adjustBruteLoss(300)
+		dead_xeno.desc = "It seems swollen up, and immature. It's host must've died before it was released."
+		dead_xeno.color = "#0A0000"
+		attemptinggrow = FALSE
+		return
+
 	if(premature == TRUE)
-		if(findClient()) // returns 1 if we can't find anything
+		if(findClient()) // this proc returns 1 if the spot hasn't been filled.
 			stage = 4 // Let's try again later.
+			attemptinggrow = FALSE
 			return
 		else
 			premature = FALSE
 	if(embryo)
 		embryo.SetSleeping(0)
+
+	join_infest_count()
+
 	var/overlay = image('icons/mob/alien.dmi', loc = owner, icon_state = "burst_lie")
-	owner.overlays += overlay
+	if(owner)
+		owner.overlays += overlay
 
 	var/atom/xeno_loc = get_turf(owner)
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
-	new_xeno.key = embryo.key
+	if(embryo)
+		if(embryo.key)
+			new_xeno.key = embryo.key
+		else
+			if(owner)
+				if(owner.ckey)
+					new_xeno.ckey = owner.ckey
+
+	if(!new_xeno.ckey)
+		if(!polling)
+			offer_control(new_xeno) // last option, ping all of the ghosts
+
 	new_xeno << sound('sound/voice/hiss5.ogg',0,0,0,100)	//To get the player's attention
 	new_xeno.canmove = 0 //so we don't move during the bursting animation
 	new_xeno.notransform = 1
@@ -140,19 +185,26 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 			new_xeno.notransform = 0
 			new_xeno.invisibility = 0
 			new_xeno.HD = new(new_xeno)
-			new_xeno.HD.assemble("[colony]")
+			new_xeno.HD.colony_suffix = colony
 			contact_queen()
 		if(gib_on_success)
 			owner.overlays -= overlay
 			var/overlay2 = image('icons/mob/alien.dmi', loc = owner, icon_state = "bursted_lie")
+			owner << "<span class='genesisred'>Your bloated stomach starts shaking!</span>"
+			owner.ghostize(1)
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
-				var/obj/item/bodypart/B = H.get_bodypart("chest")
-				B.take_damage(200)
+				var/obj/item/bodypart/B1 = H.get_bodypart("chest")
+				B1.take_damage(200)
 				H.dna.species.specflags |= NOCLONE
+				var/obj/item/bodypart/B2 = H.get_bodypart("head")
+				var/obj/item/organ/brain/brain = locate() in B2
+				if(brain)
+					qdel(brain)
 			else
 				owner.adjustBruteLoss(200)
 				owner.updatehealth()
+			playsound(xeno_loc, "sound/effects/splat.ogg", 100, 1)
 			owner.overlays += overlay2
 		else
 			owner.adjustBruteLoss(40)

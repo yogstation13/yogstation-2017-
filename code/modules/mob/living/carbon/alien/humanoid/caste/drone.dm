@@ -1,22 +1,24 @@
-/mob/living/carbon/alien/humanoid/drone
-	name = "alien drone"
+/mob/living/carbon/alien/humanoid/worker
+	name = "alien worker"
 	caste = "d"
-	maxHealth = 125
-	health = 125
+	maxHealth = 150
+	health = 150
 	icon_state = "aliend_s"
 	tackle_chance = 3
+	has_fine_manipulation = TRUE
 
 
-/mob/living/carbon/alien/humanoid/drone/New()
+/mob/living/carbon/alien/humanoid/worker/New()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/neurotoxinthroat/normal
-	tail = new /obj/item/weapon/xenomorphtail/drone(src)
+	tail = new /obj/item/weapon/xenomorphtail/worker(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/evolve(null))
+	AddAbility(new /obj/effect/proc_holder/alien/sneak)
 	..()
 
-/mob/living/carbon/alien/humanoid/drone/movement_delay()
+/mob/living/carbon/alien/humanoid/worker/movement_delay()
 	. = ..()
 
 /obj/effect/proc_holder/alien/evolve
@@ -24,7 +26,7 @@
 	desc = "Praetorian"
 	plasma_cost = 500
 
-	action_icon_state = "alien_evolve_drone"
+	action_icon_state = "alien_evolve_worker"
 
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/humanoid/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)

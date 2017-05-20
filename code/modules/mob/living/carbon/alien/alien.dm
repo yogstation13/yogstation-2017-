@@ -203,12 +203,6 @@ Des: Removes all infected images from the alien.
 		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
-	if(!HD)
-		message_admins("THE ALEIN_EVOLVE() WORKS")
-		new_xeno.HD = new(new_xeno)
-		new_xeno.HD.colony_suffix = HD.colony_suffix
-	else
-		message_admins("THE ALIEN EVOVLE DOES NOT WORK")
 	qdel(src)
 
 #undef HEAT_DAMAGE_LEVEL_1
@@ -249,3 +243,14 @@ Des: Removes all infected images from the alien.
 
 	if(see_override)
 		see_invisible = see_override
+
+/mob/living/carbon/alien/proc/findQueen()
+	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
+		if(compareAlienSuffix(src, Q))
+			return Q
+		else
+			return FALSE
+	return FALSE
+
+/mob/living/carbon/alien/can_use_guns()
+	return 0

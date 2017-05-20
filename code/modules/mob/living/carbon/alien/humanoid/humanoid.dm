@@ -27,6 +27,7 @@
 		AddAbility(new/obj/effect/proc_holder/alien/boil(null))
 	throw_alert("alientutorial", /obj/screen/alert/tutorial)
 	throw_alert("alienobjective", /obj/screen/alert/alien_objective)
+	throw_alert("alienfindqueen", /obj/screen/alert/alien_findqueen)
 	..()
 
 

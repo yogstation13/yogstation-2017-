@@ -38,6 +38,6 @@
 /obj/item/weapon/xenomorphtail/sentinel
 	force = 20
 
-/obj/item/weapon/xenomorphtail/drone
+/obj/item/weapon/xenomorphtail/worker
 	force = 10
 	chemical = /datum/reagent/toxin

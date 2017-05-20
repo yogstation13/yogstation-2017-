@@ -76,3 +76,10 @@
 				var/obj/item/bodypart/B = H.get_bodypart(user.zone_selected)
 				B.dismember()
 				visible_message("[user] prys off [target]'s [B]!")
+	if(istype(target, /mob/living/carbon/alien/humanoid))
+		var/mob/living/carbon/alien/humanoid/A = target
+		if(A.stat == DEAD)
+			if(A.tail)
+				visible_message("<span class='warning'>[target]'s tail flies off in a bloody arc!</span>") // see what i did ther
+				A.tail.forceMove(get_turf(A))
+				A.tail = null

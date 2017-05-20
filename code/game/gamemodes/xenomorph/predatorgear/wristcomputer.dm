@@ -176,7 +176,6 @@
 		if(SACRIFICE_MODE)
 			sacrificeact(user)
 
-
 /datum/action/item_action/switchcomputermode
 	name = "Switch Computer Mode"
 	button_icon_state = "computertoggle"
@@ -228,11 +227,11 @@
 		return
 	switch(type)
 		if("all")
-			cancelmode(POWER_MODE)
-			cancelmode(CLOAKING_MODE)
-			cancelmode(HACKING_MODE)
-			cancelmode(DISTRACTION_MODE)
-			cancelmode(SACRIFICE_MODE)
+			cancelmode(POWER_MODE, user)
+			cancelmode(CLOAKING_MODE, user)
+			cancelmode(HACKING_MODE, user)
+			cancelmode(DISTRACTION_MODE, user)
+			cancelmode(SACRIFICE_MODE, user)
 
 		if(POWER_MODE)
 			if(powerstatus)
@@ -243,6 +242,7 @@
 				cloakingstatus = FALSE
 				if(user)
 					animate(user, alpha = 255,time = 5)
+					playsound(get_turf(user), 'sound/items/cloak_down.ogg', 50, 0)
 
 		if(DISTRACTION_MODE)
 			if(distractionstatus)
@@ -320,6 +320,7 @@
 	else
 		animate(user, alpha = 255,time = 15)
 		visible_message("<span class='warning'>[user] is exposed!</span>")
+		playsound(get_turf(user), 'sound/items/cloak_down.ogg', 50, 0)
 
 /obj/item/yautijacomputer/proc/exchangecost(num) // returning false means it cannot be done
 	if(!num)

@@ -52,7 +52,10 @@
 	var/turf/T = get_turf(user)
 	user << "<span class='warning'>Scanning...</span>"
 
-	while(range < 22)
+	var/start_range = 7
+	var/range_increment = 7
+	var/max_range = 21
+	for (var/i = start_range, i <= max_range, i += range_increment)
 		for(var/mob/living/carbon/human/H in orange(range, T))
 			if(H.stat == DEAD)
 				continue
@@ -61,15 +64,11 @@
 			if(H == user)
 				continue
 			discovered += H
-			playsound(user, 'sound/items/predatorheartbeat.ogg', 50+range*4, 1)
+			playsound(user, 'sound/items/predatorheartbeat.ogg', 50+i*4, 1)
 			user << "<span class='warning'>You sense [H] within [range] tiles [dir2text(get_dir(get_turf(user), get_turf(H)))].</span>"
-			sleep(10)
-
-		range += 7
-		if(range == 21)
-			cooldown = TRUE
-			addtimer(src, "revertcooldown", HEARTSENSORCD)
-			break
+			sleep(15) // take a breather! that heartbeat.ogg plays for like 2 seconds
+	cooldown = TRUE
+	addtimer(src, "revertcooldown", HEARTSENSORCD)
 
 /obj/item/heartsensor/proc/revertcooldown()
 	cooldown = FALSE

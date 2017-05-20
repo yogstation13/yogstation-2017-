@@ -506,6 +506,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, "pAI", null, FALSE, 100, M)
 	var/mob/dead/observer/theghost = null
 
+	listclearnulls(candidates)
+
 	if(candidates.len)
 		theghost = pick(candidates)
 		M << "Your mob has been taken over by a ghost!"

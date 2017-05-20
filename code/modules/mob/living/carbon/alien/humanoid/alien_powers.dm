@@ -144,7 +144,8 @@ Doesn't work on other aliens/AI.*/
 	var/list/structures = list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
-		"resin nest" = /obj/structure/bed/nest)
+		"resin nest" = /obj/structure/bed/nest,
+		"resin door" = /obj/machinery/door/resin)
 
 	action_icon_state = "alien_resin"
 
@@ -152,7 +153,7 @@ Doesn't work on other aliens/AI.*/
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		user << "<span class='danger'>There is already a resin structure there.</span>"
 		return 0
-	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
+	var/obj/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
 	if(!choice)
 		return 0
 	if (!cost_check(check_turf,user))
@@ -161,7 +162,12 @@ Doesn't work on other aliens/AI.*/
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
 	choice = structures[choice]
-	new choice(user.loc)
+	var/obj/newturf = new choice(user.loc)
+	if(istype(newturf, /obj/machinery/door/resin))
+		var/obj/machinery/door/resin/R = newturf
+		if(isalien(user))
+			var/mob/living/carbon/alien/A = user
+			R.colony = A.HD
 	return 1
 
 /obj/effect/proc_holder/alien/regurgitate

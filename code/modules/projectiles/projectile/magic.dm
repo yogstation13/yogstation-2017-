@@ -196,7 +196,7 @@
 					if(prob(50))
 						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 					else
-						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+						new_mob = new /mob/living/carbon/alien/humanoid/worker(M.loc)
 					new_mob.languages_spoken |= HUMAN
 					new_mob.languages_understood |= HUMAN
 

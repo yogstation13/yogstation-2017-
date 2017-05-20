@@ -79,8 +79,10 @@
 		user.clear_fullscreen("thermal")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			C.hud_used.increase_scopedisplay.invisibility = INVISIBILITY_ABSTRACT
-			C.hud_used.decrease_scopedisplay.invisibility = INVISIBILITY_ABSTRACT
+			if(C)
+				if(C.hud_used)
+					C.hud_used.increase_scopedisplay.invisibility = INVISIBILITY_ABSTRACT
+					C.hud_used.decrease_scopedisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /obj/item/scope/security/yautija/AltClick()
 	if(Adjacent(usr))

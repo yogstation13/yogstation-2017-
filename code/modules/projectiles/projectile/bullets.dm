@@ -282,6 +282,10 @@
 
 		var/mob/living/carbon/human/H = target
 		H.silent += damage * 2 // SILENCE!
+		if(H.check_shields(damage, name, src))
+			visible_message("<span class='warning'>[src] is deflected!</span>",\
+				"<span class='warning'>[src] is deflected!</span>")
+			return
 		if(H.dna.species.armor > damage*2) // species like golems are resistant to the alien acid
 			damage -= round((damage/2))
 		else
@@ -290,7 +294,7 @@
 			nodamage = 1
 			damage = 0
 
-/obj/item/projectile/bullet/neurospit/proc/splashAcid(obj/item/item, turf/turf)
+/obj/item/projectile/bullet/neurospit/proc/splashAcid(obj/item, turf/turf)
 	if(item)
 		new /obj/effect/acid(get_turf(item), item)
 	if(turf)

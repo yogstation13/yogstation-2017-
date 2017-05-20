@@ -92,3 +92,17 @@
 /obj/effect/decal/cleanable/xenodrool/proc/dry_up()
 	visible_message("[src] settles down.")
 	desc = "A nasty pool of coughed up alien spit and drool. It appears to be settling down, so it must have been here for awhile."
+
+/obj/effect/decal/cleanable/blood/hitsplatter/xeno
+	name = "alien acid"
+	color = "#00ff00" // HERP A DERP can't bother them spriters
+
+/obj/effect/decal/cleanable/blood/hitsplatter/xeno/Bump(atom/A)
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
+		H.acid_act(rand(15,20),rand(15,20),rand(15,20))
+	if(splattering)	return
+	if(A)
+		new /obj/effect/acid(get_turf(A), A)
+	..()
+
