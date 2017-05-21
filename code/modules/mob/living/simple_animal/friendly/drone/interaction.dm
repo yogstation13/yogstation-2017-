@@ -112,6 +112,17 @@
 							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
 		update_drone_hack(FALSE)
 		return
+	else if (istype(I, /obj/item/weapon/wirecutters) && user != src
+		if(hack)
+			if(hacked)
+				return
+			if(clockwork)
+				return
+		else
+			user.visible_message("<span class='warning'>[user] snips [src]'s head off with the wirecutters!</span>"
+			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+			adjustBruteLoss(300)
+			return
 	else
 		..()
 
