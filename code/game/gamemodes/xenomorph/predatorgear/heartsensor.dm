@@ -18,13 +18,11 @@
 
 /obj/item/heartsensor/New()
 	..()
-	SSobj.processing |= src
-	//START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/item/heartsensor/Destroy()
 	..()
-	SSobj.processing.Remove(src)
-	//STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/heartsensor/examine(mob/user)
 	..()
@@ -56,7 +54,7 @@
 	var/range_increment = 7
 	var/max_range = 21
 	for (var/i = start_range, i <= max_range, i += range_increment)
-		for(var/mob/living/carbon/human/H in orange(range, T))
+		for(var/mob/living/carbon/human/H in orange(i, T))
 			if(H.stat == DEAD)
 				continue
 			if((H in discovered))

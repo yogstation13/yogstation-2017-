@@ -9,7 +9,7 @@
 
 /datum/game_mode/proc/FindWorkers(dead)
 	var/wcount
-	for(var/datum/mind/D in xenomorphs["DRONES"])
+	for(var/datum/mind/D in xenomorphs["WORKERS"])
 		if(dead)
 			wcount++
 		else if(D.current.stat != DEAD)
@@ -107,17 +107,11 @@ var/list/turf/xenomorphweeds = list()
 	M.assigned_role = "xeno hunter"
 	M.special_role = "xeno hunter"
 
-/datum/game_mode/xenomorph/proc/AddSenitel(var/datum/mind/M)
-	xenomorphs["SENITELS"] += M
+/datum/game_mode/xenomorph/proc/AddWorker(var/datum/mind/M)
+	xenomorphs["WORKERS"] += M
 	xenomorphs += M
-	M.assigned_role = "xeno sentinel"
-	M.special_role = "xeno sentinel"
-
-/datum/game_mode/xenomorph/proc/AddDrone(var/datum/mind/M)
-	xenomorphs["DRONES"] += M
-	xenomorphs += M
-	M.assigned_role = "xeno drone"
-	M.special_role = "xeno drone"
+	M.assigned_role = "xeno worker"
+	M.special_role = "xeno worker"
 
 /datum/game_mode/xenomorph/pre_setup()
 	var/player_count = 10
@@ -140,7 +134,7 @@ var/list/turf/xenomorphweeds = list()
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno hunter")
 			continue
 		else
-			AddSenitel(alive_xenomorph)
+			AddWorker(alive_xenomorph)
 			log_game("[alive_xenomorph.key] (ckey) has been selected as a xeno worker")
 			continue
 		continue
@@ -148,8 +142,8 @@ var/list/turf/xenomorphweeds = list()
 
 /datum/game_mode/xenomorph/proc/check_roundstart_alert()
 	if(length(xenomorphs) > roundstartxenocount)
-		priority_announce("Xenomorphic lifesigns detected coming aboard [station_name()]. \
-		Secure any exterior access, including ducting and ventilation. All personel are \
+		priority_announce("Xenomorphic lifesigns detected aboard [station_name()]. \
+		Secure any exterior access, including ducting and ventilation. All personnel are \
 		instructed to assist in the extermination of this species. This is not a drill.",\
 		"CRITICAL: Biohazard Alert", 'sound/AI/commandreport.ogg')
 		roundstartalert = TRUE // now we can jostle between called and uncalled.
@@ -163,29 +157,23 @@ var/list/turf/xenomorphweeds = list()
 	var/list/spawns = list()
 
 	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "xeno_spawn")
+		if(A.name == "xeno_game_spawn")
 			spawns += A
 	var/RNGspawn
 
 	if(length(spawns))
 		RNGspawn  = pick(spawns)
-		message_admins("found xeno-sapwn")
 	else
 		RNGspawn = pick(blobstart)
-
-	message_admins("RNG SPAWN = [RNGspawn]")
 
 	objective = pick(OBJECTIVE_CONQUER, OBJECTIVE_INFESTATION)
 
 	for(var/datum/mind/alien_brethern in xenomorphs) // spawning
 		var/greeted_forged_moved
 		for(var/turf/open/floor/F in orange(1, RNGspawn))
-			message_admins("Found a spot.")
 			if(greeted_forged_moved)
-				message_admins("already picked")
 				continue
 			if(isalien(alien_brethern))
-				message_admins("post set up found an aline being picked again wowzers.")
 				continue
 			var/list/turf/floors = list()
 			floors += F
@@ -194,7 +182,6 @@ var/list/turf/xenomorphweeds = list()
 
 			greet_xeno_and_transform(alien_brethern, alien_brethern.assigned_role)
 			greeted_forged_moved = TRUE
-			message_admins("done picking")
 
 	roundstartxenocount = length(xenomorphs)
 	. = ..()

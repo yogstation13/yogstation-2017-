@@ -911,6 +911,7 @@ var/global/list/friendly_animal_types = list()
 	flat_icon.BecomeAlphaMask()
 	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "invsthermal_base")
 	blank_icon.AddAlphaMask(flat_icon)
+	return blank_icon
 
 //Find's the average colour of the icon
 //By vg's ComicIronic

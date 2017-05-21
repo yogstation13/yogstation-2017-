@@ -32,10 +32,11 @@
 		return
 	var/mob/living/carbon/alien/larva/L = user
 
-	if(L.handcuffed || L.legcuffed) // Cuffing larvas ? Eh ?
+	if(L.handcuffed || L.legcuffed)
 		user << "<span class='danger'>You cannot evolve when you are cuffed.</span>"
+		return
 
-	if(L.amount_grown >= L.max_grown)	//TODO ~Carn
+	if(L.amount_grown >= L.max_grown)
 		L << "<span class='name'>You are growing into a beautiful alien! It is time to choose a caste.</span>"
 		L << "<span class='info'>There are two to choose from:"
 		L << "<span class='name'>Hunters</span> <span class='info'>are the most agile caste tasked with hunting for hosts. They are faster than a human and can even pounce, but are not much tougher than a drone.</span>"
@@ -83,22 +84,11 @@
 
 		var/colonysuffix
 		if(L.HD)
-			message_admins("Larva has HD")
 			if(L.HD.colony_suffix)
-				message_admins("Larva has HD suffix")
 				colonysuffix = L.HD.colony_suffix
-				message_admins("Assigned the var [colonysuffix]")
-			else
-				message_admins("L has no colony suffix")
 
-		message_admins("Adding an HD")
 		new_xeno.HD = new/datum/huggerdatum()
-		message_admins("HD check: [new_xeno.HD]")
-		message_admins("HD check: [L.HD]")
-		message_admins("colonysuffix var check: [colonysuffix]")
 		new_xeno.HD.colony_suffix = colonysuffix
-
-		message_admins("HD check: [new_xeno.HD] and [new_xeno.HD.colony_suffix] is the suffix.")
 
 		L.alien_evolve(new_xeno)
 		var/obj/item/organ/alien/hivenode/H = new_xeno.getorganslot("hivenode")
