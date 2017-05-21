@@ -721,7 +721,19 @@
 
 	pre_noise = FALSE
 	post_noise = FALSE
-	reagent_contents = list("nothing" = 1, "mutetoxin" = 1)
+	
+
+/obj/item/toy/crayon/spraycan/clowncan
+	name = "clown's spraycan"
+	desc = "Honk! A spraycan"
+	icon_state = "clowncan_cap"
+	icon_capped = "clowncan_cap"
+	icon_uncapped = "clowncan"
+	use_overlays = FALSE
+	can_change_colour = TRUE
+	paint_color = "#FFFFFF"
+	pre_noise = FALSE
+	post_noise = TRUE
 
 #undef RANDOM_GRAFFITI
 #undef RANDOM_LETTER

@@ -30,7 +30,8 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1
+		/obj/item/device/megaphone/clown = 1,
+		/obj/item/toy/crayon/spraycan/clowncan = 1
 		)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
@@ -86,8 +87,9 @@ Mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
-	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
-		/obj/item/toy/crayon/mime=1)
+	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing = 1,\
+		/obj/item/toy/crayon/mime = 1,
+		/obj/item/toy/crayon/spraycan/mimecan = 1)
 
 	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
