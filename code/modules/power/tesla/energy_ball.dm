@@ -51,6 +51,22 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	return ..()
 
 /obj/singularity/energy_ball/process()
+	for(var/obj/singularity/energy_ball/EB in range(3, src))
+		if(EB != src)
+			visible_message("<span class='warning'><b>[src]'s energy field contacts [EB] and destabilizes!</b></span>")
+			for(var/mob/living/L in range(5, src))
+				L << "<span class='userdanger'>Your body twitches horribly before disintegrating from the intense electric energy!</span>"
+				if(ishuman(L))
+					L.emote("scream")
+				L.dust()
+			for(var/mob/living/L in range(40, src))
+				L << 'sound/effects/supermatter.ogg'
+				L << 'sound/magic/lightningbolt.ogg'
+				L << "<i>Your skin tingles as a wave of energy passes through the air.</i>"
+			qdel(EB)
+			qdel(src)
+			return
+
 	if(!orbiting)
 		handle_energy()
 
