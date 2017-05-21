@@ -127,10 +127,6 @@
 	var/turf/open/T = src
 	T.atmos_spawn_air("plasma=400;TEMP=1000")
 
-/turf/closed/wall/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)//Doesn't fucking work because walls don't interact with air :(
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
 /turf/closed/wall/mineral/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
@@ -154,6 +150,14 @@
 	hardness = 70
 	explosion_block = 0
 	canSmoothWith = list(/turf/closed/wall/mineral/wood, /obj/structure/falsewall/wood)
+	
+/turf/closed/wall/mineral/wood/attackby(obj/item/weapon/W, mob/user, params)
+	if(W.is_hot() > 300) //hot weapon? burn the wood
+		WoodRoast()
+
+/turf/closed/wall/mineral/wood/proc/WoodRoast()
+	new /obj/structure/girder(src)
+	ChangeTurf(/turf/open/floor/plasteel)
 
 /turf/closed/wall/mineral/iron
 	name = "rough metal wall"
@@ -163,7 +167,7 @@
 	walltype = "iron"
 	mineral = "rods"
 	sheet_type = /obj/item/stack/rods
-	canSmoothWith = list(/turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron)
+	canSmoothWith = list(/turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron, /turf/closed/wall,/obj/structure/falsewall/iron)
 
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"
@@ -172,7 +176,7 @@
 	icon_state = "snow"
 	walltype = "snow"
 	mineral = "snow"
-	hardness = 80
+	hardness = 0
 	sheet_type = /obj/item/stack/sheet/mineral/snow
 	canSmoothWith = null
 
@@ -184,6 +188,6 @@
 	walltype = "abductor"
 	mineral = "abductor"
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
-	slicing_duration = 200   //alien wall takes twice as much time to slice
+	slicing_duration = 400   //alien wall takes 4x as much time to slice
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
