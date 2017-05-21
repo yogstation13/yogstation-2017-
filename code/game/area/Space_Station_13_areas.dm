@@ -953,6 +953,10 @@ var/list/teleportlocs = list()
 	icon_state = "firingrange"
 	sound_env = SMALL_ENCLOSED
 
+/area/security/medical
+	name = "Brig Medical"
+	icon_state = "medbay"
+
 /*
 /area/security/transfer/New()
 	..()

@@ -66,6 +66,10 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 
+/obj/item/clothing/glasses/hud/diagnostic/advanced
+	name = "Advanced Diagnostic HUD"
+	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
+
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."

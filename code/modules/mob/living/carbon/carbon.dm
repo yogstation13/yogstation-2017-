@@ -460,10 +460,6 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
-		else
-			unEquip(I)
-			I.dropped()
-			return
 		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
@@ -738,13 +734,22 @@
 		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= config.health_threshold_crit)
+		if(paralysis || sleeping || getOxyLoss() > 50 || (FAKEDEATH in status_flags) || health <= HEALTH_THRESHOLD_DEEPCRIT)
 			if(stat == CONSCIOUS)
 				if(NOCRIT in status_flags)//no crit when you're stimmed
 					return
 				stat = UNCONSCIOUS
 				blind_eyes(1)
 				update_canmove()
+		else if(health <= config.health_threshold_crit)
+			if(NOCRIT in status_flags)
+				return
+			Weaken(3)
+			update_canmove()
+			if(prob(15))
+				emote(pick("moan", "cough", "groan", "whimper"))
+			if(is_nearcrit())
+				jitteriness += 2
 		else
 			if(stat == UNCONSCIOUS)
 				stat = CONSCIOUS

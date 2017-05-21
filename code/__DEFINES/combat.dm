@@ -95,3 +95,6 @@
  #define DISARM "disarm"
  #define GRAB "grab"
  #define HELP "help"
+
+// Crit Stuff (nearcrit)
+#define HEALTH_THRESHOLD_DEEPCRIT -50
