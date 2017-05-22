@@ -139,11 +139,8 @@
 		jammer.Weaken(5)
 		playsound(get_turf(jammer), 'sound/misc/sadtrombone.ogg', 100, 0)
 	if(prob(10))
-		jammer << "<span class='warning'><b>You hear the Space Jam theme coming from the [dir2text(get_dir(get_turf(jammer), get_turf(hoop)))]...</span>"
-		if(prob(25))
-			for(var/mob/M in player_list)
-				if(jammer != M)
-					M << "<span class='warning'><b>You hear the Space Jam theme coming from the [dir2text(get_dir(get_turf(jammer), get_turf(hoop)))]...</span>"
+		for(var/mob/M in player_list)
+			M << "<span class='warning'><b>You hear the Space Jam theme coming from the [dir2text(get_dir(get_turf(M), get_turf(hoop)))]...</b></span>"
 
 /obj/item/toy/beach_ball/holoball/chaos/ui_action_click(mob/user, actiontype)
 	if(actiontype != /datum/action/item_action/chaos_dunk)
@@ -169,8 +166,10 @@
 		if(alert("Are you ready to jam?",,"Let's slam!","Let's not!") != "Let's slam!")
 			return
 		if(blobstart.len > 0)
-			var/turf/targetturf = get_turf(pick(blobstart))
-			hoop = new /obj/structure/holohoop/spirit(targetturf)
+			while(!hoop)
+				var/turf/targetturf = get_turf(pick(blobstart))
+				if(get_dist(user, targetturf) > 40)
+					hoop = new /obj/structure/holohoop/spirit(targetturf)
 		else
 			H << "bit of a fuckup here"
 			return
