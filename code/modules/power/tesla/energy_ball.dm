@@ -64,7 +64,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 					if(ishuman(L))
 						L.emote("scream")
 					L.dust()
-				empulse(loc, 10, 40)
+				empulse(loc, 25, 40)
 				qdel(EB)
 				qdel(src)
 				return
