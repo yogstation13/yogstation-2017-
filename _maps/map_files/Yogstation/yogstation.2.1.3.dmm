@@ -23968,8 +23968,8 @@
 	},
 /area/crew_quarters/kitchen)
 "aVX" = (
-/obj/structure/table,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/deepfryer,
 /turf/open/floor/plasteel{
 	icon_state = "cafeteria"
 	},
