@@ -15,6 +15,7 @@ insert ascii eagle on american flag background here
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
+	flags = OPENCONTAINER
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 
@@ -33,10 +34,13 @@ insert ascii eagle on american flag background here
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	RefreshParts()
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	..()
+	if(!reagents.total_volume && user.job == "Cook")
+		user << "You need to refill [src] with nutriment."
 	if(frying)
 		usr << "You can make out [frying] in the oil."
+
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!reagents.total_volume)
