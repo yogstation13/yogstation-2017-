@@ -64,7 +64,7 @@
 	//...sec hud images...
 	sec_hud_set_ID()
 	sec_hud_set_implants()
-	sec_hud_set_security_status()
+	update_face_dependant_huds()
 	//...and display them.
 	add_to_all_human_data_huds()
 

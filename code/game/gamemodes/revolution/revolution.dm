@@ -309,6 +309,11 @@
 	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
 	revhud.join_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, ((rev_mind in head_revolutionaries) ? "rev_head" : "rev"))
+	var/datum/atom_hud/data/human/rev/rev_datahud = huds[DATA_HUD_REV]
+	rev_datahud.add_hud_to(rev_mind.current)
+	if(ishuman(rev_mind.current))
+		var/mob/living/carbon/human/H = rev_mind.current
+		H.update_rev_hud()
 
 /////////////////////////////////////////
 //Removes the hud from deconverted revs//
@@ -317,6 +322,12 @@
 	var/datum/atom_hud/antag/revhud = huds[ANTAG_HUD_REV]
 	revhud.leave_hud(rev_mind.current)
 	set_antag_hud(rev_mind.current, null)
+
+	var/datum/atom_hud/data/human/rev/rev_datahud = huds[DATA_HUD_REV]
+	rev_datahud.remove_hud_from(rev_mind.current)
+	if(ishuman(rev_mind.current))
+		var/mob/living/carbon/human/H = rev_mind.current
+		H.update_rev_hud()
 
 //////////////////////////
 //Checks for rev victory//

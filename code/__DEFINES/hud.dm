@@ -17,6 +17,7 @@
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"13"
 #define CYBERMEN_HACK_HUD	"14"
+#define REV_APPEARANCE_HUD	"15"
 
 //data HUD (medhud, sechud) defines
 #define DATA_HUD_SECURITY_BASIC			1
@@ -45,6 +46,7 @@
 #define DATA_HUD_CYBERMEN_HACK	23
 #define ANTAG_HUD_SUMMON_MAGIC	24
 #define ANTAG_HUD_ASHWALKER		25
+#define DATA_HUD_REV			26
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
