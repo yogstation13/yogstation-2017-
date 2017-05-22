@@ -60,10 +60,11 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 					L << 'sound/magic/lightningbolt.ogg'
 					L << "<i>Your skin tingles as a wave of energy passes through the air.</i>"
 				for(var/mob/living/L in range(5, src))
-					L << "<span class='userdanger'>Your body twitches horribly before disintegrating from the intense electric energy!</span>"
+					L << "<span class='userdanger'>Your body twitches violently before disintegrating from the intense electric energy!</span>"
 					if(ishuman(L))
 						L.emote("scream")
 					L.dust()
+				empulse(loc, 10, 40)
 				qdel(EB)
 				qdel(src)
 				return
