@@ -261,13 +261,3 @@
 	if(L.a_intent == "harm" && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
-
-/mob/living/simple_animal/pet/cat/mimekitty/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "harm")
-		M << "<span class='warning'>You can't bring yourself to kick [src]!</span>"
-		return 0
-	else
-		if(M && stat != DEAD)
-			flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
-			emote("me", 1, "purrs!")
-	. = ..()
