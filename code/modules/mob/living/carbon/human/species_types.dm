@@ -466,7 +466,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Phytosian"
 	id = "plant"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE, PLANT)
+	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE, PLANT,LIPS)
 	attack_verb = "slic"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -768,7 +768,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	// Phytosian turned into fly-like abominations in teleporter accidents.
 	name = "Flytosian"
 	id = "flytosian"
-	specflags = list(THRALLAPPTITUDE, PLANT)
+	specflags = list(THRALLAPPTITUDE, PLANT,LIPS)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
