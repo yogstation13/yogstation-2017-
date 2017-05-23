@@ -55,7 +55,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		if(EB != src && !orbiting)
 			if(!(EB in src.orbiting_balls))
 				visible_message("<span class='warning'><b>[src]'s electrical field contacts [EB] and destabilizes!</b></span>")
-				for(var/mob/living/L in range(40, src))
+				for(var/mob/living/L in range(100, src))
 					L << 'sound/effects/supermatter.ogg'
 					L << 'sound/magic/lightningbolt.ogg'
 					L << "<i>Your skin tingles as a wave of energy passes through the air.</i>"
