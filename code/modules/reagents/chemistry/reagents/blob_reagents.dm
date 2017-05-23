@@ -656,9 +656,9 @@
 					if(setting_type)
 						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, pull)))
 						var/throw_range = 5 - distance
-						X.throw_at_fast(throw_target, throw_range, 1)
+						X.throw_at(throw_target, throw_range, 1)
 					else
-						X.throw_at_fast(pull, distance, 1)
+						X.throw_at(pull, distance, 1)
 				else
 					spawn(0)
 						if(setting_type)
