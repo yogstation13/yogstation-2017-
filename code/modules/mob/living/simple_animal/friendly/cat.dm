@@ -134,7 +134,7 @@
 
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
-	gold_core_spawnable = 2 
+	gold_core_spawnable = 2
 
 /mob/living/simple_animal/pet/cat/Life()
 	if(!stat && !buckled && !client)
@@ -261,43 +261,3 @@
 	if(L.a_intent == "harm" && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)
-
-
-/mob/living/simple_animal/pet/cat/mimekitty
-	name = "\improper Mimekitty"
-	desc = "The rare and powerful Mimekitty."
-	icon_state = "mimekitty"
-	icon_living = "mimekitty"
-	icon_dead = "mimekitty_dead"
-	gender = FEMALE
-	var/following = 0
-
-/mob/living/simple_animal/pet/cat/mimekitty/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == "harm")
-		M << "<span class='warning'>You can't bring yourself to kick [src]!</span>"
-		return 0
-	else
-		if(M && stat != DEAD)
-			flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
-			emote("me", 1, "purrs!")
-	. = ..()
-
-/mob/living/simple_animal/pet/cat/mimekitty/Life()
-	if (following)
-		return ..()
-	for(var/mob/living/carbon/M in view(7, src))
-		if (istype(M) && M.name == "Mimekitty")
-			var/mob/living/target = M
-			following = 1
-			spawn(0)
-				while(target in view(7, src))
-					if(!target.Adjacent(src))
-						step_to(src,target)
-					sleep(3)
-				following = 0
-			break;
-	return ..()
-
-/mob/living/simple_animal/pet/cat/mimekitty/say()
-	return //MIME kitty. Not SPEAK kitty.
-
