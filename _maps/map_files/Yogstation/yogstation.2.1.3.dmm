@@ -20812,7 +20812,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aOD" = (
-/mob/living/simple_animal/pet/cat/mimekitty,
+/mob/living/simple_animal/hostile/honkbot,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aOE" = (
