@@ -39,6 +39,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/requires_power = 1
 	var/always_unpowered = 0	// This gets overriden to 1 for space in area/New().
+	var/apc_allowed = 1         //If we can create an APC here. (Lavaland wastes etc)
 
 	var/outdoors = 0 //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 	var/mapgen_protected = 0 //If the area is protected from ruins/lava rivers/etc generating on top of it
