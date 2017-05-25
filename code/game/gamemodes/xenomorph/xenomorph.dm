@@ -44,16 +44,10 @@ var/list/turf/xenomorphweeds = list()
 	name = "alien"
 	config_tag = "alien"
 	antag_flag = ROLE_ALIEN
-	/*
 	required_players = 30
 	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
-	*/
-	required_players = 1
-	required_enemies = 1
-	enemy_minimum_age = 0
-
 	var/objective
 	var/alien_weed_control_count
 	var/infest_prc
