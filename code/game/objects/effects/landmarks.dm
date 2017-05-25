@@ -62,8 +62,6 @@
 			xeno_spawn += loc
 			qdel(src)
 			return
-		if("dreamland")
-			dreamland += loc
 	return 1
 
 /obj/effect/landmark/Destroy()
