@@ -93,6 +93,7 @@
 	var/global/list/status_overlays_environ
 	var/health = 50
 	var/wiring_color = "yellow"
+	var/mob/living/silicon/ai/malfhacker
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
@@ -136,6 +137,11 @@
 
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = Clamp(malfai.malf_picker.processing_time - 10,0,1000)
+	if(malfhacker)
+		malfhacker << "Hack aborted. The designated APC has stopped responding and no longer exists on the power network."
+		malfhacker.malfhack = null
+		malfhacker.malfhacking = FALSE
+		malfhacker = null
 	area.power_light = 0
 	area.power_equip = 0
 	area.power_environ = 0
@@ -799,11 +805,13 @@
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
 	malf.malfhacking = TRUE
+	malfhacker = malf
 	addtimer(src, "malfhacked", 600, FALSE, malf)
 
 /obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
+	malfhacker = null
 	malf.malfhack = null
 	malf.malfhacking = FALSE
 	if(src && !src.aidisabled)

@@ -273,3 +273,6 @@
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"
 	icon_state = "darkhonker-broken"
+
+/obj/mecha/combat/honker/dark/loaded/aprilfools
+	operation_req_access = list(access_theatre)

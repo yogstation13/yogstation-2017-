@@ -1,0 +1,4 @@
+author: Paragonid
+delete-after: True
+changes: 
+  - spellcheck: "Fix echo effect settings toggle notification typo."

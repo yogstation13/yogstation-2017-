@@ -1320,6 +1320,50 @@
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
 
+/datum/supply_pack/misc/sneakers
+	name = "Crep Crate"
+	cost = 2000
+	contains = list(/obj/item/clothing/shoes/sneakers/nmd/collab,
+					/obj/item/clothing/shoes/sneakers/nmd,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy/orange,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy,
+					/obj/item/clothing/shoes/sneakers/yeezy/black,
+					/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Sneaker Drop"
+
+
+/datum/supply_pack/misc/superb
+	name = "Designer Clothes Bundle"
+	cost = 800
+	contains = list(/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb)
+	crate_name = "Designer clothes crate"
+
+
+
+/datum/supply_pack/misc/yeezy
+	name = "One Singular Pair Of Sneakers"
+	cost = 450
+	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Small Sneaker Crate"
+
+
+
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
 	cost = 1000
