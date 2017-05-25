@@ -69,6 +69,8 @@
 					PoolOrNew(/obj/effect/hotspot, F)
 	if(istype(T, /turf/closed/wall/))
 		var/turf/closed/wall/W = T
+		if(W.walltype = "rwall") //use thermite
+			return
 		if(prob(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
 
@@ -79,6 +81,7 @@
 			M.IgniteMob()
 			if(!locate(/obj/effect/hotspot) in M.loc)
 				PoolOrNew(/obj/effect/hotspot, M.loc)
+
 /datum/reagent/sorium
 	name = "Sorium"
 	id = "sorium"
