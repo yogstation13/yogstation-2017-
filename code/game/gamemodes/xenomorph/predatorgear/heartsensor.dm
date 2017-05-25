@@ -7,6 +7,18 @@
 	name = "Toggle HeartSensor"
 	button_icon_state = "heartsensor-off"
 
+/datum/action/item_action/heartsensor/Trigger()
+	if(!..())
+		return 0
+	UpdateButtonIcon()
+
+/datum/action/item_action/heartsensor/UpdateButtonIcon(status_only = FALSE)
+	..()
+	if(!target)
+		return
+	var/obj/item/heartsensor/H = target
+	button.icon_state = "heartsensor-[H.status ? "on" : "off"]"
+
 /obj/item/heartsensor
 	name = "persistent heart sensor"
 	desc = "Rapidly searches for, and reports back heartbeats."
@@ -32,9 +44,6 @@
 	status = !status
 	user << "<span class='warning'>You [status ? "enable" : "disable"] [src].</span>"
 	owner = user
-	for(var/datum/action/item_action/heartsensor/H in actions)
-		H.button_icon_state = "heartsensor-[status ? "on" : "off"]"
-		H.UpdateButtonIcon()
 
 /obj/item/heartsensor/process()
 	if(!status)

@@ -10,7 +10,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/twohanded/spear/combistick, /obj/item/weapon/shuriken)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/predator
 	actions_types = list(/datum/action/item_action/retractwristblades, /datum/action/item_action/toggle_helmet)
-	var/obj/item/heartsensor/HS // TO DO : merge this into an action button.
+	var/obj/item/heartsensor/HS
 
 /obj/item/clothing/suit/space/hardsuit/predator/New()
 	..()

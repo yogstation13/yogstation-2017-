@@ -39,7 +39,20 @@
 
 /datum/action/item_action/togglecomp
 	name = "Toggle Computer"
-	button_icon_state = "computeractivate" // I guess this goes here....?
+	button_icon_state = "computeractivate"
+
+/datum/action/item_action/togglecomp/Trigger()
+	if(!..())
+		return 0
+	UpdateButtonIcon()
+
+
+/datum/action/item_action/togglecomp/UpdateButtonIcon(status_only = FALSE)
+	..()
+	if(!target)
+		return
+	button.icon_state = "computertoggle"
+
 
 /obj/item/yautijaholster/New()
 	..()
@@ -77,6 +90,12 @@
 /datum/action/item_action/activatecomputer
 	name = "Activate Yautija Computer"
 	button_icon_state = "computeractivate"
+
+/datum/action/item_action/activatecomputer/UpdateButtonIcon(status_only = FALSE)
+	..()
+	if(!target)
+		return
+	button.icon_state = "computeractivate"
 
 /obj/item/yautijacomputer
 	name = "alien wrist computer"
@@ -187,6 +206,12 @@
 		var/obj/item/I = target
 		I.CtrlClick()
 	return TRUE
+
+/datum/action/item_action/switchcomputermode/UpdateButtonIcon(status_only = FALSE)
+	..()
+	if(!target)
+		return
+	button.icon_state = "computertoggle"
 
 
 /obj/item/yautijacomputer/CtrlClick()

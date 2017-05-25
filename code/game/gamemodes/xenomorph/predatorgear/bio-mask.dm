@@ -2,6 +2,11 @@
 	name = "Toggle BioMask Enhancement"
 	button_icon_state = "thermal-off"
 
+/datum/action/item_action/toggle_yautja_biomask/Trigger()
+	if(!..())
+		return 0
+	UpdateButtonIcon()
+
 /obj/item/clothing/head/helmet/space/hardsuit/predator/AltClick()
 	if(tightenedscope)
 		tightenedscope.AltClick(usr)
@@ -18,6 +23,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	on = FALSE
 	var/obj/item/scope/security/yautija/tightenedscope
+	actions_types = list(/datum/action/item_action/toggle_yautja_biomask)
 
 /obj/item/clothing/head/helmet/space/hardsuit/predator/New()
 	..()
@@ -42,8 +48,6 @@
 		user << "<span class='danger'>You activate your helmets thermal imaging and low-light amplification systems. This will also block tracking from potential enemy forces.</span>"
 		for(var/datum/action/item_action/toggle_helmet_light/THL in src)
 			THL.button_icon_state = "thermal-on"
-			THL.UpdateButtonIcon()
-
 	else
 		user.see_invisible = SEE_INVISIBLE_LIVING
 		user.sight &= ~SEE_MOBS
@@ -51,4 +55,3 @@
 		user << "<span class='danger'>You deactivate your helmets special functions. You are now vunerable to tracking.</span>"
 		for(var/datum/action/item_action/toggle_helmet_light/THL in src)
 			THL.button_icon_state = "thermal-off"
-			THL.UpdateButtonIcon()

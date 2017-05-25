@@ -2,6 +2,12 @@
 	name = "Toggle Wristblades"
 	button_icon_state = "wristblades"
 
+/datum/action/item_action/retractwristblades/UpdateButtonIcon(status_only = FALSE)
+	..()
+	if(!target)
+		return
+	button.icon_state = "wristblades"
+
 /datum/action/item_action/retractwristblades/Trigger()
 	var/mob/user = owner
 	if(ishuman(user))

@@ -13,6 +13,21 @@
 	name = "Toggle Plasma Gun"
 	button_icon_state = "predgun-on"
 
+/datum/action/item_action/toggleyautijatank/UpdateButtonIcon(status_only = FALSE)
+	..()
+	if(!target)
+		return
+	var/obj/item/weapon/predatortank/P = target
+	if(P.P.selfcharge)
+		button.icon_state = "predgun-on"
+	else
+		button.icon_state = "predgun-off"
+
+/datum/action/item_action/toggleyautijatank/Trigger()
+	if(!..())
+		return 0
+	UpdateButtonIcon()
+
 /obj/item/weapon/predatortank/New()
 	..()
 	P = new(src)
@@ -26,26 +41,22 @@
 					user.unEquip(P, 1)
 					P.forceMove(src)
 					P.selfcharge = TRUE
-					for(var/datum/action/item_action/toggleyautijatank/TYT in actions)
-						TYT.button_icon_state = "predgun-on"
-						TYT.UpdateButtonIcon()
+				//	for(var/datum/action/item_action/toggleyautijatank/TYT in actions)
+				//		TYT.button_icon_state = "predgun-on"
+
+		// we're taking the plasma gun out of the tank here
 		else
 			var/mob/living/carbon/human/H = user
-			var/returned
+			P.selfcharge = FALSE
 			if(!H.r_hand)
 				H.put_in_r_hand(P)
-				P.selfcharge = FALSE
-				returned = TRUE
 			else if (!H.l_hand)
 				H.put_in_l_hand(P)
-				P.selfcharge = FALSE
-				returned = TRUE
 			else
 				H << "<span class='warning'>You have something in your hand right now.</span>"
-			if(returned)
-				for(var/datum/action/item_action/toggleyautijatank/TYT in actions)
-					TYT.button_icon_state = "predgun-off"
-					TYT.UpdateButtonIcon()
+		//	if(returned)
+			//	for(var/datum/action/item_action/toggleyautijatank/TYT in actions)
+				//	TYT.button_icon_state = "predgun-off"
 	else
 		user << "<span class='warning'>Your plasma tank is missing it's gun...</span>"
 

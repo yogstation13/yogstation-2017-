@@ -44,10 +44,15 @@ var/list/turf/xenomorphweeds = list()
 	name = "alien"
 	config_tag = "alien"
 	antag_flag = ROLE_ALIEN
+	/*
 	required_players = 30
 	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age = 14
+	*/
+	required_players = 1
+	required_enemies = 1
+	enemy_minimum_age = 0
 
 	var/objective
 	var/alien_weed_control_count
@@ -87,10 +92,7 @@ var/list/turf/xenomorphweeds = list()
 		AddHunter(M)
 
 	if(istype(M.current, /mob/living/carbon/alien/humanoid/worker))
-		AddSenitel(M)
-
-	if(istype(M.current, /mob/living/carbon/alien/humanoid/worker))
-		AddDrone(M)
+		AddWorker(M)
 
 	M.current.memory += translate_objective() + "<BR>"
 
@@ -154,15 +156,8 @@ var/list/turf/xenomorphweeds = list()
 	alien_weed_control_count = rand(950,1250)
 	infest_prc = rand(45,75)
 
-	var/list/spawns = list()
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "xeno_game_spawn")
-			spawns += A
-	var/RNGspawn
-
-	if(length(spawns))
-		RNGspawn  = pick(spawns)
+	if(length(xeno_game_spawn))
+		RNGspawn  = pick(xeno_game_spawn)
 	else
 		RNGspawn = pick(blobstart)
 
@@ -421,6 +416,7 @@ var/list/turf/xenomorphweeds = list()
 			var/text2 = "<BR><FONT size = 2><B>The Predators were:</B></FONT>"
 			for(var/datum/mind/pred1 in predators)
 				text2 += printplayer(predators)
+			world << text2
 		return 1
 
 /datum/game_mode/xenomorph/proc/translate_objective()

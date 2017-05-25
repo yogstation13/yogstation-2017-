@@ -42,6 +42,7 @@
 		M.client.screen += button
 	animate(M, alpha = 255, time = 5)
 	M.update_action_buttons()
+	UpdateButtonIcon()
 
 /datum/action/proc/Remove(mob/M)
 	if(M.client)
@@ -49,6 +50,7 @@
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
 	M.actions -= src
 	M.update_action_buttons()
+	UpdateButtonIcon()
 	owner = null
 
 /datum/action/proc/Trigger()

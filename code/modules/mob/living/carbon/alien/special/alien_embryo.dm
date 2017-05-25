@@ -124,7 +124,7 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 		return
 
 	attemptinggrow = TRUE
-	if(owner.stat == DEAD)
+	if(owner.stat == DEAD && !owner.suiciding) // suicides don't count
 		if(embryo)
 			embryo << "<span class='warning'>You see the light... and it BURNS!!! Your host has died.</span>"
 		owner.visible_message("<span class='danger'>[owner]'s belly begins to swell up to an enormous rate, and pops as a dead \
