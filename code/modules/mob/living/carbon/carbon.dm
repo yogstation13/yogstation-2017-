@@ -1,5 +1,6 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
+	var/datum/dream/dream = new()
 
 /mob/living/carbon/New()
 	create_reagents(1000)
@@ -730,8 +731,10 @@
 				if(NOCRIT in status_flags)//no crit when you're stimmed
 					return
 				stat = UNCONSCIOUS
-				blind_eyes(1)
 				update_canmove()
+				if(!dream.Dream(src))
+					blind_eyes(1)
+
 		else if(health <= config.health_threshold_crit)
 			if(NOCRIT in status_flags)
 				return
@@ -803,4 +806,5 @@
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
+
 

@@ -69,3 +69,7 @@ var/list/datum/map_template/maint_room_templates = list()
 
 var/list/datum/map_template/shuttle_templates = list()
 var/list/datum/map_template/shelter_templates = list()
+
+//List of dream landmarks
+var/list/dreamland = list()
+var/list/legiondream = list()

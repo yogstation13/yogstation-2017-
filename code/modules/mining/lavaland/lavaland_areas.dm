@@ -3,6 +3,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = 1
+	dream_type = "legion"
 
 /area/lavaland/surface
 	name = "Lavaland"
