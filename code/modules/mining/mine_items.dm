@@ -197,6 +197,7 @@
 	icon_state = "away"
 	requires_power = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"

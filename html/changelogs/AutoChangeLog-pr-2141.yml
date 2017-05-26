@@ -1,0 +1,4 @@
+author: ArgyleSweatshop
+delete-after: True
+changes: 
+  - bugfix: "The library computer has received a hardware update. Printing books no longer restarts the computer."

@@ -1,0 +1,7 @@
+author: Cruix
+delete-after: True
+changes: 
+  - bugfix: "AIs no longer have to wait for bot pathing to finish after making a call command to interact with objects"
+  - bugfix: "Drones can no longer use chaos basketballs to do a chaos dunk"
+  - bugfix: "Fixed gang implant breakers sometimes not working"
+  - rscadd: "Implanting people now has a progress bar for the user over the implantee's head"

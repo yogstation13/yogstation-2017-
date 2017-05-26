@@ -405,7 +405,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
 			var/allowed_access = checkHUDaccess(1)
 			if(allowed_access)
-				security_scan_status(src, A)
+				security_scan_status(src, A, allowed_access)
 
 /mob/living/carbon/human/CtrlShiftClickOn(atom/A)
 	if(istype(A, /mob/living/carbon/human))
@@ -415,7 +415,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
 			var/allowed_access = checkHUDaccess(1)
 			if(allowed_access)
-				security_scan_crime(src, A) // check hud.dm
+				security_scan_crime(src, A, allowed_access) // check hud.dm
 
 /mob/living/carbon/human/proc/checkHUDaccess(var/sec)
 	var/allowed_id = null
@@ -423,7 +423,7 @@
 	if (!G.emagged)
 		if(wear_id)
 			var/obj/item/weapon/card/id/I = get_idcard()
-			if((1 in I))
+			if((1 in I.access))
 				allowed_id = get_authentification_name()
 				return allowed_id
 		else

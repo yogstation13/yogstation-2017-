@@ -51,7 +51,7 @@
 			messageSentTo += get_ckey(handling_admin)
 			handling_admin << "<span class='ticket-text-received'>-- [get_view_link(user)] [key_name_params(user, 1, 1, null, src)] -> [log_item.isAdminComment() ? get_view_link(user) : key_name_params(handling_admin, 0, 1, null, src)]: [log_item.text]</span>"
 			if(has_pref(handling_admin, SOUND_ADMINHELP))
-				handling_admin << 'sound/effects/adminhelp.ogg'
+				handling_admin << nullify_sound('sound/effects/adminhelp.ogg')
 
 	if(!log_item.for_admins && compare_ckey(owner_ckey, user) || compare_ckey(handling_admin, user))
 		if(!(get_ckey(owner) in messageSentTo))
@@ -60,7 +60,7 @@
 			if(!compare_ckey(owner_ckey, user))
 				if(!is_admin(owner)) owner << "<span class='ticket-header-recieved'>-- Administrator private message --</span>"
 				if(has_pref(owner, SOUND_ADMINHELP))
-					owner << 'sound/effects/adminhelp.ogg'
+					owner << nullify_sound('sound/effects/adminhelp.ogg')
 
 			if(compare_ckey(owner_ckey, user))
 				var/toLink
@@ -93,7 +93,7 @@
 			M << "<span class='ticket-text-received'>-- [get_view_link(user)] [key_name_params(user, 1, 1, null, src)] -> [key_name_params(handling_admin, 0, 1, null, src)]: [log_item.text_admin]</span>"
 
 		if(has_pref(M, SOUND_ADMINHELP))
-			M << 'sound/effects/adminhelp.ogg'
+			M << nullify_sound('sound/effects/adminhelp.ogg')
 
 	for(var/client/X in admins)
 		if(has_pref(X, TICKET_ALL))
@@ -136,7 +136,7 @@
 			for(var/client/X in admins)
 				X << "<span class='ticket-status'>[get_view_link(X)] is still unclaimed.</span>"
 				if(has_pref(X, SOUND_ADMINHELP))
-					X << 'sound/effects/adminhelp.ogg'
+					X << nullify_sound('sound/effects/adminhelp.ogg')
 
 /datum/admin_ticket/proc/toggle_monitor()
 	var/foundMonitor = 0

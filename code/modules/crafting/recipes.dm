@@ -325,7 +325,7 @@
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
-		/obj/item/weapon/grenade/plastic/c4 = 1,
+		/obj/item/weapon/c4 = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)

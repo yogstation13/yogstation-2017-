@@ -54,6 +54,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
+	var/body_attack_log
+	var/body_say_log
 
 /mob/dead/observer/New(mob/body)
 	alpha = 0
@@ -71,9 +73,12 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	updateallghostimages()
 
 	var/turf/T
-	if(ismob(body))
+	if(isliving(body))
+		var/mob/living/L = body
 		T = get_turf(body)				//Where is the body located?
-		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
+		//preserve our logs by copying them to our ghost
+		body_attack_log = L.attack_log
+		body_say_log = L.say_log
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -258,6 +263,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
+		ghostize(1)
+	else if(istype(src, /mob/living/carbon/brain))
 		ghostize(1)
 	else
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")

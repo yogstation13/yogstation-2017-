@@ -29,7 +29,9 @@
 	var/alt_name = get_alt_name()
 
 	var/whispers = "whispers"
-	var/critical = InCritical()
+	var/critical = FALSE
+	if(InCritical() && !is_nearcrit())
+		critical = TRUE
 
 	// We are unconscious but not in critical, so don't allow them to whisper.
 	if(stat == UNCONSCIOUS && !critical)
@@ -45,6 +47,8 @@
 		whispers = "whispers in their final breath"
 
 	message = treat_message(message)
+	if(!message)
+		return
 
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)

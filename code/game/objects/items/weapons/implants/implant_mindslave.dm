@@ -86,10 +86,7 @@
 
 /obj/item/weapon/implanter/mindslave
 	name = "implanter (freedom)"
-
-/obj/item/weapon/implanter/mindslave/New()
-	imp = new /obj/item/weapon/implant/mindslave(src)
-	..()
+	imptype = /obj/item/weapon/implant/mindslave
 
 /datum/objective/mindslave
 	martyr_compatible = 1

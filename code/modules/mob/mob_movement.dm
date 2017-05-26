@@ -190,6 +190,17 @@
 
 	move_delay = mob.movement_delay() + world.time
 
+	if(isliving(mob))
+		var/mob/living/L = mob
+		if(L.is_nearcrit())
+			L.visible_message("<span class='danger'>[L] crawls forward!</span>",
+			"<span class='userdanger'>You crawl forward at the expense of some of your strength.</span>")
+			L.apply_damage(1, OXY)
+			playsound(L.loc, pick('sound/misc//bodyscrape-01.ogg', 'sound/misc/bodyscrape-02.ogg'), 20, 1, -4)
+		else if(L.lying) // legless people.
+			if(prob(25))
+				playsound(L.loc, pick('sound/misc/bodyscrape-01.ogg', 'sound/misc/bodyscrape-02.ogg'), 20, 1, -4)
+
 	if(mob.confused)
 		if(mob.confused > 40)
 			step(mob, pick(cardinal))

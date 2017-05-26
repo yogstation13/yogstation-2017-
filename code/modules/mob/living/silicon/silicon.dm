@@ -30,19 +30,20 @@
 	var/lawcheck[1]
 	var/ioncheck[1]
 
+	var/multihud = FALSE //If you can use more than one hud at the same time
 	var/med_hud = DATA_HUD_MEDICAL_ADVANCED //Determines the med hud to use
 	var/sec_hud = DATA_HUD_SECURITY_ADVANCED //Determines the sec hud to use
-	var/d_hud = DATA_HUD_DIAGNOSTIC //There is only one kind of diag hud
+	var/d_hud = DATA_HUD_DIAGNOSTIC
 
 	var/law_change_counter = 0
 
 /mob/living/silicon/New()
 	..()
 	silicon_mobs |= src
-	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
-	diag_hud.add_to_hud(src)
-	diag_hud_set_status()
-	diag_hud_set_health()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in huds)
+		diag_hud.add_to_hud(src)
+		diag_hud_set_status()
+		diag_hud_set_health()
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -358,43 +359,51 @@
 /mob/living/silicon/assess_threat() //Secbots won't hunt silicon units
 	return -10
 
-/mob/living/silicon/proc/remove_med_sec_hud()
-	var/datum/atom_hud/secsensor = huds[sec_hud]
-	var/datum/atom_hud/medsensor = huds[med_hud]
-	var/datum/atom_hud/diagsensor = huds[d_hud]
-	secsensor.remove_hud_from(src)
-	medsensor.remove_hud_from(src)
-	diagsensor.remove_hud_from(src)
-
-/mob/living/silicon/proc/add_sec_hud()
-	var/datum/atom_hud/secsensor = huds[sec_hud]
+/mob/living/silicon/proc/add_hud(hud)
+	var/datum/atom_hud/secsensor = huds[hud]
 	secsensor.add_hud_to(src)
 
-/mob/living/silicon/proc/add_med_hud()
-	var/datum/atom_hud/medsensor = huds[med_hud]
-	medsensor.add_hud_to(src)
-
-/mob/living/silicon/proc/add_diag_hud()
-	var/datum/atom_hud/diagsensor = huds[d_hud]
-	diagsensor.add_hud_to(src)
+/mob/living/silicon/proc/remove_hud(hud)
+	var/datum/atom_hud/secsensor = huds[hud]
+	secsensor.remove_hud_from(src)
 
 /mob/living/silicon/proc/sensor_mode()
 	if(incapacitated())
 		return
-	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
-	remove_med_sec_hud()
+	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) as null|anything in list("Security", "Medical","Diagnostic","Disable")
+	if(!sensor_type)
+		return
+	if(!multihud)
+		remove_hud(sec_hud)
+		remove_hud(med_hud)
+		remove_hud(d_hud)
+	var/hudToToggle = null
+	var/message = null
 	switch(sensor_type)
 		if ("Security")
-			add_sec_hud()
-			src << "<span class='notice'>Security records overlay enabled.</span>"
+			hudToToggle = sec_hud
+			message = "Security records overlay"
 		if ("Medical")
-			add_med_hud()
-			src << "<span class='notice'>Life signs monitor overlay enabled.</span>"
+			hudToToggle = med_hud
+			message = "Life signs monitor overlay"
 		if ("Diagnostic")
-			add_diag_hud()
-			src << "<span class='notice'>Robotics diagnostic overlay enabled.</span>"
+			hudToToggle = d_hud
+			message = "Robotics diagnostic overlay"
 		if ("Disable")
+			if(multihud)
+				remove_hud(sec_hud)
+				remove_hud(med_hud)
+				remove_hud(d_hud)
 			src << "Sensor augmentations disabled."
+
+	if(hudToToggle)
+		var/datum/atom_hud/theHud = huds[hudToToggle]
+		if(multihud && (src in theHud.hudusers))
+			remove_hud(hudToToggle)
+			src << "<span class='notice'>[message] disabled.</span>"
+		else
+			add_hud(hudToToggle)
+			src << "<span class='notice'>[message] enabled.</span>"
 
 
 /mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)

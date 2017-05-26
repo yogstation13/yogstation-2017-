@@ -367,3 +367,9 @@
 		reagents.add_reagent(randomchem, fillrate)
 		update_icon()
 	return 1
+
+/obj/item/weapon/reagent_containers/glass/bottle/mutetoxin
+	name = "Bottle of Mutetoxin"
+	desc = "Perfect tool for a stealthy assassin."
+	icon_state = "bottle3"
+	list_reagents = list("mutetoxin" = 30)

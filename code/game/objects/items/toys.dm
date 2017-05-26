@@ -1200,6 +1200,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoy"
 	var/cooldown = 0
+	var/list/toysaylist = list()
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
 
@@ -1209,7 +1210,13 @@
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)
 		cooldown = world.time + 50
-		user << "<span class='notice'>The [src] says \"[toysay]\"</span>"
+		var/msg = toysay
+		if(length(toysaylist))
+			if(toysay)
+				if(!(toysay in toysaylist))
+					toysaylist += toysay
+			msg = pick(toysaylist)
+		user << "<span class='notice'>The [src] says \"[msg]\"</span>"
 		playsound(user, toysound, 20, 1)
 
 /obj/item/toy/figure/cmo
@@ -1398,3 +1405,14 @@
 	name = "Warden action figure"
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
+
+/obj/item/toy/figure/jexp
+	name = "JEXP action figure"
+	icon_state = "jexp"
+	toysaylist = list(
+			"150 rounds as Captain sounds PERFECT!",
+			"Brig Officers! Perfect for newbies, but they'll get better costumes than regular officers!",
+			"S H I T C O D E",
+			"C O P Y P A S T A",
+			"Whitelisting is the best listing!",
+			"Incompetence can no longer exist! The heads must be PERFECT!")

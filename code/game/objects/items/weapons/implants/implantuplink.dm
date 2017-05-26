@@ -28,7 +28,4 @@
 
 /obj/item/weapon/implanter/uplink
 	name = "implanter (uplink)"
-
-/obj/item/weapon/implanter/uplink/New()
-	imp = new /obj/item/weapon/implant/uplink(src)
-	..()
+	imptype = /obj/item/weapon/implant/uplink

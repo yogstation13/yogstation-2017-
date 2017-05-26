@@ -35,6 +35,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	var/dominate_cooldown = 150
 	var/control_cooldown = 3000
 	var/leaving = 0
+	var/obj/item/organ/borer_home/vessel = null
 
 
 /mob/living/simple_animal/borer/New()
@@ -197,6 +198,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	var/obj/item/organ/borer_home/B = new/obj/item/organ/borer_home(victim)
 	B.Insert(victim)
 	B.borer = src
+	vessel = B
 	loc = victim
 
 	log_game("[src]/([src.ckey]) has infected [victim]/([victim.ckey]")
@@ -212,6 +214,12 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		for(var/image/hud in victim.client.images)
 			if(hud.icon_state == "borer")
 				victim.client.images -= hud
+
+	leaving = 0
+	var/obj/item/organ/borer_home/oldhome = vessel
+	oldhome.borer = null
+	vessel = null
+	qdel(oldhome) //deletes the borer vessel within the host they're leaving
 
 	victim.borer = null
 	victim = null
@@ -297,7 +305,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	name = "borer vessel"
 	zone = "head"
 	slot = "brain tumor"
-	desc = "A hunk of alien flesh molded from the inside of a human brain. It now resembles a once operatable command center for a borer. Home is where the heart is. Or in this case, the head."
+	desc = "A hunk of alien flesh molded from the inside of a human brain. It now resembles a once operable command center for a borer. Home is where the heart is. Or in this case, the head."
 	icon_state = "eggsac"
 	var/mob/living/simple_animal/borer/borer = null
 

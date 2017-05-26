@@ -29,6 +29,7 @@
 	power_light = 0
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambimine.ogg')
+	sound_env = CAVE // implies that lavaland has torn it into pieces.
 
 /area/mine/lobby
 	name = "Mining station"

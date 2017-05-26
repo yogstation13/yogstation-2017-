@@ -32,7 +32,16 @@ var/datum/subsystem/mapping/SSmapping
 
 	// Set up Z-level transistions.
 	setup_map_transitions()
+
+	seedMaint()
+
 	..()
+
+/datum/subsystem/mapping/proc/seedMaint()
+	world << "<span class='boldannounce'>Loading ruins...</span>"
+	for(var/V in maintroom_landmarks)
+		var/obj/effect/landmark/maintroom/LM = V
+		LM.load()
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT

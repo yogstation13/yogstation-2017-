@@ -157,6 +157,8 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
+				/obj/item/clothing/shoes/sneakers/nmd = 3,
+				/obj/item/clothing/shoes/sneakers/yeezy = 1,
 				"" = 4
 				)
 

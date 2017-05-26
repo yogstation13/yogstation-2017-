@@ -1,0 +1,5 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscadd: "Cogscarabs can now use clockwork slabs."
+  - rscdel: "Cogscarabs can no longer pick up anything that isn't cult-related or a tool."

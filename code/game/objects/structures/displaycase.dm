@@ -255,3 +255,5 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 
+/obj/structure/displaycase/royalp
+	start_showpiece_type = /obj/item/weapon/tank/internals/royalp

@@ -322,3 +322,9 @@
 
 /mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
 	return 1
+
+/mob/living/carbon/monkey/is_nearcrit()
+	if(health <= config.health_threshold_crit && health > HEALTH_THRESHOLD_DEEPCRIT)
+		if(!(NOCRIT in status_flags))
+			return TRUE
+	return FALSE

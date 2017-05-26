@@ -1,0 +1,4 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscdel: "Removed pulling from simple animal bots. Yes, this means pAI medbots and the wizard ED-201."

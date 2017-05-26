@@ -153,6 +153,7 @@ var/const/VOX_DELAY = 600
 
 		var/sound_file = vox_sounds[word]
 		var/sound/voice = sound(sound_file, wait = 2, channel = VOX_CHANNEL)
+		voice.environment = GENERIC
 		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level

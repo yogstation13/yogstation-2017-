@@ -1,0 +1,5 @@
+author: Time-Green
+delete-after: True
+changes: 
+  - bugfix: "Fixes infinite replicant alloy bug"
+  - bugfix: "Fixes instant repairing screens with screwdriver"

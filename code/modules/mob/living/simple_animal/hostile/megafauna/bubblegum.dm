@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + ranged_cooldown_time
+	ranged_cooldown = world.time + ranged_cooldown_time / scaling
 
 	if(!charging)
 		blood_warp()
@@ -58,9 +58,9 @@
 			charge()
 		else
 			charge()
-			sleep(10)
+			sleep(round(10 / scaling, 1))
 			charge()
-			sleep(10)
+			sleep(round(10 / scaling, 1))
 			charge()
 
 
@@ -75,6 +75,41 @@
 	if(istype(loc, /obj/effect/dummy/slaughter))
 		bloodspell.phased = 1*/
 	new/obj/item/device/gps/internal/lavaland/bubblegum(src)
+	
+// VAR SCALING //
+	rawScaling = rand(60,130)
+	scaling = rawScaling / 100
+	maxHealth = round(maxHealth * scaling, 1)
+	health = round(health * scaling, 1)
+	melee_damage_lower = round(melee_damage_lower * scaling, 1)
+	melee_damage_upper = round(melee_damage_upper * scaling, 1)
+	aggro_vision_range = round(aggro_vision_range * scaling, 1)
+	
+	if(rawScaling <= 75)
+		var/prefix = "peasant"
+		name = "[prefix] [name]"
+		return
+	if(rawScaling < 100 && rawScaling > 75)
+		var/prefix = "squire"
+		name = "[prefix] [name]"
+		return
+	if(rawScaling > 100 && rawScaling <= 115)
+		var/prefix = "champion"
+		name = "[prefix] [name]"
+		loot += /obj/item/weapon/ore/diamond
+		return
+	if(rawScaling > 115 && rawScaling < 125)
+		var/prefix = "prince"
+		name = "[prefix] [name]"
+		loot += list(/obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+		return
+	if(rawScaling > 125)
+		var/prefix = "king"
+		name = "[prefix] [name]"
+		loot += list(/obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
+		loot += pick(/obj/item/clothing/suit/space/hardsuit/syndi, /obj/item/bloodvial/saw, /obj/structure/closet/crate/freezer/blood)
+
+// VAR SCALING END //
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
 	if(charging)
@@ -105,7 +140,7 @@
 	charging = 1
 	DestroySurroundings()
 	new/obj/effect/overlay/temp/dragon_swoop(T)
-	sleep(5)
+	sleep(round(5 / scaling, 3))
 	throw_at(T, 7, 1, src, 0)
 	charging = 0
 
@@ -125,7 +160,7 @@
 		if(isliving(A))
 			var/mob/living/L = A
 			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
-			L.apply_damage(40, BRUTE)
+			L.apply_damage(round(40 / scaling,1), BRUTE)
 			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)
@@ -160,7 +195,7 @@
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
 	spawn(0)
 		var/turf/E = get_edge_target_turf(src, src.dir)
-		var/range = 25
+		var/range = round(25 * scaling, 1)
 		for(var/turf/open/J in getline(src,E))
 			if(!range)
 				break
@@ -171,7 +206,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
 	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")
-	for(var/obj/effect/decal/cleanable/blood/H in range(src, 10))
+	for(var/obj/effect/decal/cleanable/blood/H in range(src, 10 * scaling))
 		if(prob(25))
 			new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/slaughter(H.loc)
 

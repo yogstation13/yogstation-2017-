@@ -67,6 +67,7 @@
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
 	activated = 0
+	uses = 1
 	origin_tech = "materials=2;biotech=4;programming=4;syndicate=3"
 	var/datum/gang/gang
 
@@ -87,17 +88,19 @@
 	return dat
 
 /obj/item/weapon/implant/gang/implant(mob/target)
-	if(..())
+	. = ..()
+	if(. == 1)
 		for(var/obj/item/weapon/implant/I in target)
 			if(I != src)
 				qdel(I)
 
 		if(!target.mind || target.stat == DEAD)
-			return 0
+			qdel(src)
+			return
 
 		var/success
-		if(target.mind in ticker.mode.get_gangsters())
-			if(ticker.mode.remove_gangster(target.mind,0,1))
+		if(target.mind in ticker.mode.get_all_gangsters())
+			if(ticker.mode.remove_gangster(target.mind, FALSE, TRUE, FALSE))
 				success = 1	//Was not a gang boss, convert as usual
 		else
 			success = 1
@@ -107,14 +110,15 @@
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel the influence of your enemies try to invade your mind!</span>")
 
 		qdel(src)
-		return -1
+		return
 
 /obj/item/weapon/implanter/gang
 	name = "implanter (gang)"
+	imptype = null
 
 /obj/item/weapon/implanter/gang/New(loc, var/gang)
+	..()
 	if(!gang)
 		qdel(src)
 		return
 	imp = new /obj/item/weapon/implant/gang(src,gang)
-	..()

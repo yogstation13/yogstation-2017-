@@ -37,6 +37,40 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/lavaland/dragon(src)
+	
+
+// VAR SCALING //
+	if(istype(src,/mob/living/simple_animal/hostile/megafauna/dragon/lesser))
+		rawScaling = 20
+		scaling = 0.2
+	else
+		rawScaling = rand(90,140)
+		scaling = rawScaling / 100
+	maxHealth = round(maxHealth * scaling, 1)
+	health = round(health * scaling, 1)
+	
+	if(istype(src,/mob/living/simple_animal/hostile/megafauna/dragon/lesser))
+		return
+	if(rawScaling < 100)
+		var/prefix = "kindling"
+		name = "[prefix] [name]"
+		return
+	if(rawScaling >= 100 && rawScaling <= 115)
+		var/prefix = "fiery"
+		name = "[prefix] [name]"
+		loot += /obj/item/weapon/ore/diamond
+		return
+	if(rawScaling > 115 && rawScaling < 130)
+		var/prefix = "blazing"
+		name = "[prefix] [name]"
+		return
+	if(rawScaling >= 130)
+		var/prefix = "infernal"
+		name = "[prefix] [name]"
+		loot += pick(/obj/item/clothing/suit/armor/reactive/fire, /obj/item/clothing/suit/hooded/cloak/drake, /obj/item/weapon/dragons_blood) //Blood is now the fuck you drop seeing as it's pretty crap.
+		return
+
+// VAR SCALING END //
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
 	qdel(internal)
@@ -124,12 +158,14 @@
 			swoop_attack()
 			swoop_attack()
 			swoop_attack()
+	else if(prob(5))
+		xoxo_and_friends()
 	else
 		fire_walls()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_rain()
 	visible_message("<span class='danger'>Fire rains from the sky!</span>")
-	for(var/turf/turf in range(12,get_turf(src)))
+	for(var/turf/turf in range(round(12*scaling,1),get_turf(src)))
 		if(prob(10))
 			new /obj/effect/overlay/temp/target(turf)
 
@@ -142,7 +178,7 @@
 	for(var/d in attack_dirs)
 		spawn(0)
 			var/turf/E = get_edge_target_turf(src, d)
-			var/range = 10
+			var/range = round(10*scaling,1)
 			for(var/turf/open/J in getline(src,E))
 				if(!range)
 					break
@@ -151,7 +187,7 @@
 				J.hotspot_expose(700,50,1)
 				for(var/mob/living/L in J)
 					if(L != src)
-						L.adjustFireLoss(20)
+						L.adjustFireLoss(round(20*scaling,1))
 						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
 				sleep(1)
 
@@ -170,10 +206,10 @@
 	icon_state = "swoop"
 	visible_message("<span class='danger'>[src] swoops up high!</span>")
 	if(prob(50))
-		animate(src, pixel_x = 500, pixel_z = 500, time = 10)
+		animate(src, pixel_x = 500, pixel_z = 500, time = round(10/scaling,1))
 	else
-		animate(src, pixel_x = -500, pixel_z = 500, time = 10)
-	sleep(30)
+		animate(src, pixel_x = -500, pixel_z = 500, time = round(10/scaling,1))
+	sleep(round(10/scaling,1))
 
 	var/turf/tturf
 	if(fire_rain)
@@ -186,8 +222,8 @@
 		tturf = get_turf(src)
 	forceMove(tturf)
 	new/obj/effect/overlay/temp/dragon_swoop(tturf)
-	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
-	sleep(10)
+	animate(src, pixel_x = 0, pixel_z = 0, time = round(10/scaling,1))
+	sleep(round(10/scaling,1))
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
 		if(L == src)
@@ -207,6 +243,20 @@
 	swooping = 0
 	density = 1
 
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/xoxo_and_friends()
+	visible_message("<span class='danger'>[src] shoots fire into the sky!</span>")
+	var/xoxofiring = rand(1, 2)
+	for(var/turf/turf in range(round(12*scaling,1),get_turf(src)))
+		if(IsOdd(xoxofiring))
+			new /obj/effect/overlay/temp/target(turf)
+			xoxofiring++
+		else
+			xoxofiring++
+	spawn(25)
+	visible_message("<span class='danger'>[src] roars and calls for aid!</span>")	
+	var/mob/living/simple_animal/hostile/megafauna/dragon/lesser/L = new(src.loc)
+	L.faction = list("mining")
+
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
@@ -223,11 +273,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
-	maxHealth = 300
-	health = 300
 	faction = list("neutral")
-	melee_damage_upper = 30
-	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	butcher_results = list(/obj/item/weapon/ore/diamond = 1, /obj/item/stack/sheet/sinew = 1, /obj/item/stack/sheet/animalhide/ashdrake = 2, /obj/item/stack/sheet/bone = 6)
 	loot = list()
-

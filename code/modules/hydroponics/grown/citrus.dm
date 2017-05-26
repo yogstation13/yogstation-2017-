@@ -20,8 +20,8 @@
 	potency = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	mutatelist = list(/obj/item/seeds/orange)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
-
+	reagents_add = list("vitamin" = 0.08, "limejuice" = 0.2, "nutriment" = 0.1)
+	
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	seed = /obj/item/seeds/lime
 	name = "lime"
@@ -45,7 +45,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/lime)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1, "orangejuice" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange
 	seed = /obj/item/seeds/orange
@@ -69,7 +69,7 @@
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"
 	mutatelist = list(/obj/item/seeds/cash)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1, "lemonjuice" = 0.2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon

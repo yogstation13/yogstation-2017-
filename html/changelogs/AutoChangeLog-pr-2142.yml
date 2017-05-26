@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "AIs can now activate their diagnostic hud to see the paths that bots will take when patrolling or when summoned."
+  - bugfix: "Player controlled bots now lose their all access from an AI summon after 30 seconds instead of keeping it forever."

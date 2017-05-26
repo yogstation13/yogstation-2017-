@@ -506,3 +506,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		M << "There were no ghosts willing to take control."
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
+
+/mob/proc/is_nearcrit()
+	return FALSE

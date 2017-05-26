@@ -107,7 +107,7 @@
 
 /obj/item/organ/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
+	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/plant/pod,/datum/species/fly, /datum/species/android))
 	owner.set_species(species)
 
 /obj/item/organ/gland/ventcrawling

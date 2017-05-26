@@ -172,7 +172,7 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, SM)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_ALIEN, 50, SM)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -469,6 +469,8 @@
 			continue
 		if (O.orbiting)
 			continue
+		if(jobban_isbanned(O, "xenobio"))
+			continue
 		ghost = O
 		break
 	if(ghost)
@@ -484,6 +486,8 @@
 		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
 			continue
 		if (O.orbiting)
+			continue
+		if(jobban_isbanned(O, "xenobio"))
 			continue
 		ghost = O
 		break

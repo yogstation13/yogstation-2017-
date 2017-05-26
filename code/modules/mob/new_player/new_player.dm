@@ -35,7 +35,7 @@
 			output += "<p><span class='linkOn'><b>Ready</b></span> <a href='byond://?src=\ref[src];ready=0'>X</a></p>"
 		else
 			output += "<p><a href='byond://?src=\ref[src];ready=1'>Ready</a> <span class='linkOff'>X</span></p>"
-			
+
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A></p>"
 		if(joining_forbidden)
@@ -354,30 +354,8 @@
 								break
 				usr << "<span class='notice'>Vote successful.</span>"
 
-/mob/new_player/proc/IsJobAvailable(rank)
-	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)
-		return 0
-	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == "Assistant")
-			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return 1
-			for(var/datum/job/J in SSjob.occupations)
-				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return 0
-		else
-			return 0
-	if(jobban_isbanned(src,rank))
-		return 0
-	if(!job.player_old_enough(src.client))
-		return 0
-	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
-		return 0
-	return 1
-
-
 /mob/new_player/proc/AttemptLateSpawn(rank)
-	if(!IsJobAvailable(rank))
+	if(!SSjob.IsJobAvailable(rank, src))
 		src << alert("[rank] is not available. Please try another.")
 		return 0
 
@@ -457,23 +435,45 @@
 			if(!SSshuttle.canRecall())
 				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
 
+	if(ticker.identification_console_message)
+		dat += "<div class='notice'>[station_name()] has delievered the following message, \"[ticker.identification_console_message]\"</div><br>"
+
 	var/available_job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && SSjob.IsJobAvailable(job.title, src))
 			available_job_count++;
+
+	if(length(SSjob.prioritized_jobs))
+		dat += "<div class='notice'>The Head of Personnel has flagged these jobs as high priority:"
+		var/amt = length(SSjob.prioritized_jobs)
+		var/amt_count
+		for(var/a in SSjob.prioritized_jobs)
+			amt_count++
+			if(amt_count == amt) // checks for the last job added.
+				if(amt == 1) // we only have one prioritized job.
+					dat += " [a]"
+				else if(amt == 2)
+					dat += " and [a]"
+				else
+					dat += ", and [a]"
+			else
+				dat += " [a][amt == 2 ? "" : ","]" // this is to prevent "Jaintor, and Medical Doctor" so it outputs "Jaintor and Medical Doctor"
+		dat += "</div><br>"
 
 	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
-		if(job && IsJobAvailable(job.title))
+		if(job && SSjob.IsJobAvailable(job.title, src))
 			job_count++;
+			var/prior
 			if (job_count > round(available_job_count / 2))
 				dat += "</div><div class='jobsColumn'>"
 			var/position_class = "otherPosition"
-			if (job.title in command_positions)
-				position_class = "commandPosition"
-			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+			if (job.title in SSjob.prioritized_jobs)
+				prior = TRUE
+
+			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'><span class='[prior ? "good" : ""]'>[prior ? "(!)" : ""][job.title]</span> ([job.current_positions])</a><br>"
 	if(!job_count) //if there's nowhere to go, assistant opens up.
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title != "Assistant") continue

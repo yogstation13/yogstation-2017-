@@ -81,6 +81,7 @@
 #define CONSUMEPOWER	25
 #define EASYIMPLANTS	26
 #define PROTECTEDEYES	27
+#define PLANT           28
 
 #define FLYING	65536
 

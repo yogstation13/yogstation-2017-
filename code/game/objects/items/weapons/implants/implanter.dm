@@ -10,7 +10,12 @@
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
+	var/imptype = /obj/item/weapon/implant
 
+/obj/item/weapon/implanter/New()
+	..()
+	if(imptype)
+		imp = new imptype(src)
 
 /obj/item/weapon/implanter/update_icon()
 	if(imp)
@@ -29,7 +34,7 @@
 			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
 
 		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50)))
+		if(T && (M == user || do_after(user, 50,target = M)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				if(imp.implant(M, user))
 					if (M == user)
@@ -58,20 +63,11 @@
 	spawn(1)
 		update_icon()
 
-
-
-
 /obj/item/weapon/implanter/adrenalin
 	name = "implanter (adrenalin)"
-
-/obj/item/weapon/implanter/adrenalin/New()
-	imp = new /obj/item/weapon/implant/adrenalin(src)
-	..()
+	imptype = /obj/item/weapon/implant/adrenalin
 
 
 /obj/item/weapon/implanter/emp
 	name = "implanter (EMP)"
-
-/obj/item/weapon/implanter/emp/New()
-	imp = new /obj/item/weapon/implant/emp(src)
-	..()
+	imptype = /obj/item/weapon/implant/emp

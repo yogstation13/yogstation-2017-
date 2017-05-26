@@ -1,0 +1,5 @@
+author: Cruix
+delete-after: True
+changes: 
+  - rscadd: "Added a framework for random rooms in maintenance."
+  - tweak: "The room in maintenance to the left of primary tool storage will now randomly select from a pool of one rooms. The one room it will always choose is a ghetto hydroponics room."

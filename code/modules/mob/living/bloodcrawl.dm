@@ -50,9 +50,17 @@
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
+	var/obj/item/weapon/disk/nuclear/nukedisk = null
+	var/list/all_items = GetAllContents()
 
 	src.visible_message("<span class='warning'>[src] sinks into the pool of blood!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+	for(var/obj/I in all_items) //Check for items
+		if(istype(I, /obj/item/weapon/disk/nuclear))
+			nukedisk = I
+			unEquip(nukedisk)
+			nukedisk.forceMove(get_turf(src.loc))
+			src.visible_message("<span class='warning'>[nukedisk] appears on the ground!</span>")
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
 	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
@@ -81,9 +89,9 @@
 	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
-		victim.forceMove(src)
 		victim.emote("scream")
 		src.visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
+		victim.forceMove(src)
 		kidnapped = TRUE
 
 	if(kidnapped)
@@ -161,16 +169,18 @@
 	if(src.notransform)
 		src << "<span class='warning'>Finish eating first!</span>"
 		return 0
-	src.loc = B.loc
-	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
-	exit_blood_effect(B)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		for(var/obj/item/weapon/bloodcrawl/BC in C)
-			BC.flags = null
-			C.unEquip(BC)
-			qdel(BC)
-	qdel(src.holder)
-	src.holder = null
+	B.visible_message("<span class='warning'>[B] begins to bubble...</B>")
+	if(do_after(src, 25, target = B))
+		forceMove(get_turf(B.loc))
+		client.eye = src
+		visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
+		exit_blood_effect(B)
+		if(iscarbon(src))
+			var/mob/living/carbon/C = src
+			for(var/obj/item/weapon/bloodcrawl/BC in C)
+				BC.flags = null
+				C.unEquip(BC)
+				qdel(BC)
+		qdel(holder)
+		holder = null
 	return 1

@@ -57,7 +57,7 @@
 
 /mob/living/simple_animal/cockroach/clownbug
 	name = "clown bug"
-	desc = "Absolutely disgusting, almost as horrid as that one green clown."
+	desc = "Absolutely disgusting... almost as horrid as that one green clown."
 	icon_state = "clownbug"
 	icon_dead = "clownbug"
 
@@ -66,5 +66,5 @@
 	if(T)
 		new /mob/living/simple_animal/cockroach/clownbug(T) //OH GOD NO, WHY.
 		playsound(loc, 'sound/items/bikehorn.ogg', 100, 0)
-	new /obj/item/weapon/bikehorn(src.loc)
+	new /obj/item/device/assembly/bikehorn(src.loc)
 	..()

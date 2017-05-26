@@ -768,6 +768,16 @@
 	icon_state = "shirt_white"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/shirt_superb
+	name = "Box Logo Shirt"
+	icon_state = "shirt_bogo"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/shirt_camobogo
+	name = "Superb Camo Shirt"
+	icon_state = "shirt_camo"
+	gender = NEUTER
+
 /datum/sprite_accessory/undershirt/shirt_black
 	name = "Black Shirt"
 	icon_state = "shirt_black"

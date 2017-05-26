@@ -115,6 +115,16 @@
 	build_path = /obj/item/device/extinguisher_refill
 	category = list("Medical Designs")
 
+/datum/design/diagnosticscanner
+	name = "Diagnostic scanner"
+	desc = "An analyzer for scanning cyborg integrity."
+	id = "diagnosticscanner"
+	req_tech = list("biotech" = 3, "engineering" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
+	build_path = /obj/item/device/diagnosticscanner
+	category = list("Medical Designs")
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////

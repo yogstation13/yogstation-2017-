@@ -50,15 +50,10 @@
 
 /obj/item/weapon/implanter/bombcollar
 	name = "implanter (collar console)"
-
-/obj/item/weapon/implanter/bombcollar/New()
-	imp = new /obj/item/weapon/implant/bombcollar(src)
-	..()
+	imptype = /obj/item/weapon/implant/bombcollar
 
 /obj/item/weapon/implantcase/bombcollar
 	name = "implant case - 'Collar Console'"
 	desc = "A glass case containing an implant version of the collar detonator."
+	imptype = /obj/item/weapon/implant/bombcollar
 
-/obj/item/weapon/implantcase/bombcollar/New()
-	imp = new /obj/item/weapon/implant/bombcollar(src)
-	..()

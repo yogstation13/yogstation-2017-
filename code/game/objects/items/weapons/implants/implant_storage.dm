@@ -45,7 +45,4 @@
 
 /obj/item/weapon/implanter/storage
 	name = "implanter (storage)"
-
-/obj/item/weapon/implanter/storage/New()
-	imp = new /obj/item/weapon/implant/storage(src)
-	..()
+	imptype = /obj/item/weapon/implant/storage

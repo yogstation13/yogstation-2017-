@@ -66,6 +66,10 @@
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 
+/obj/item/clothing/glasses/hud/diagnostic/advanced
+	name = "Advanced Diagnostic HUD"
+	hud_type = DATA_HUD_DIAGNOSTIC_ADVANCED
+
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
@@ -180,12 +184,9 @@
 	..()
 
 // ctrl + shift
-/proc/security_scan_crime(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A)
+/proc/security_scan_crime(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A, allowed_access)
 	var/perpname = A.get_face_name(H.get_id_name(""))
 	var/datum/data/record/R = find_record("name", perpname, data_core.security)
-	var/allowed_access = H.checkHUDaccess(1)
-	if(!H.canUseHUD())
-		return
 	switch(alert("What would you like to add?","Security HUD","Minor Crime","Major Crime", "Comment", "Cancel"))
 		if("Minor Crime")
 			if(R)
@@ -217,9 +218,7 @@
 					H << "<span class='notice'>Successfully added comment.</span>"
 
 // ctrl + alt
-/proc/security_scan_status(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A)
-	var/allowed_access = H.checkHUDaccess(sec=1)
-	if(!allowed_access) return
+/proc/security_scan_status(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A, allowed_access)
 	var/perpname = A.get_face_name(H.get_id_name(""))
 	var/datum/data/record/R = find_record("name", perpname, data_core.general)
 	R = find_record("name", perpname, data_core.security)

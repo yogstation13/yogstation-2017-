@@ -273,3 +273,34 @@
 /obj/effect/landmark/event_spawn/Destroy()
 	generic_event_spawns -= src
 	return ..()
+
+/obj/effect/landmark/maintroom
+	var/list/template_names = list()
+
+/obj/effect/landmark/maintroom/New()
+	..()
+	maintroom_landmarks += src
+
+/obj/effect/landmark/maintroom/Destroy()
+	maintroom_landmarks -= src
+	return ..()
+
+/obj/effect/landmark/maintroom/proc/load(template_name)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+	if(!template_name)
+		for(var/t in template_names)
+			if(!maint_room_templates[t])
+				world.log << "Maintenance room spawner placed at ([T.x], [T.y], [T.z]) has invalid ruin name of \"[t]\" in its list"
+				template_names -= t
+		template_name = safepick(template_names)
+	if(!template_name)
+		return FALSE
+	var/datum/map_template/template = maint_room_templates[template_name]
+	if(!template)
+		return FALSE
+	world.log << "Ruin \"[template_name]\" placed at ([T.x], [T.y], [T.z])"
+	template.load(T, centered = FALSE)
+	template.loaded++
+	return TRUE
