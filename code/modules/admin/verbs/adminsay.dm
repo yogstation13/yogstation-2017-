@@ -21,3 +21,9 @@
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/asay_popup(message as text)
+	set name = "asay"
+	set category = "Admin"
+	set hidden = 1
+	src.cmd_admin_say(message)
+

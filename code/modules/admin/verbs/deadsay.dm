@@ -30,3 +30,10 @@
 			M.show_message(rendered, 2)
 
 	feedback_add_details("admin_verb","D") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+/client/verb/dsay_popup(message as text)
+	set name = "dsay"
+	set category = "Admin"
+	set hidden = 1
+	src.dsay(message)
