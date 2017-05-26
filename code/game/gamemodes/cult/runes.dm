@@ -932,7 +932,7 @@ var/list/teleport_runes = list()
 		add_logs(user, ghost_to_spawn, "captured [ghost_to_spawn.name]'s soul", S)
 		S.transfer_soul("VICTIM", ghost_to_spawn, user)
 		user <<"<span class='userdanger'>Your life energy is drained by the rune, allowing [ghost_to_spawn] to return to the physical realm.</span>"
-		manifest_construct_cooldown = world.time + 3000 //5 minutes
+		manifest_construct_cooldown = world.time + 1800 //3 minutes
 		user.apply_damage(25, BRUTE)
 		return
 	var/mob/living/carbon/human/new_human = new(get_turf(src))
