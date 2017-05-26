@@ -182,8 +182,8 @@
 		ashwalker.forceMove(get_turf(src))
 		ashwalker.real_name = name
 		ashwalker.name = name
-		ashwalker = null
 		reset_rebirth()
+		ashwalker = null
 	qdel(src)
 
 /obj/effect/cyrogenicbubble/proc/healAshwalker()
