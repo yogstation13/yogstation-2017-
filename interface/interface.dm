@@ -227,3 +227,81 @@ Any-Mode: (hotkey doesn't need to be on)
 	set name = ".swinset"
 	set hidden = 1
 	winset(src, null, x)
+
+//Bodypart hotkeys
+
+/client/proc/prepare_aim_hotkey()
+	if(mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel))
+		spawn(0)
+			mob.hud_used.zone_select.update_icon()
+		return 1
+	return 0
+
+/client/verb/aim_head()
+	set name = "head"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	switch(mob.zone_selected)
+		if("head")
+			mob.zone_selected = "eyes"
+		if("eyes")
+			mob.zone_selected = "mouth"
+		else
+			mob.zone_selected = "head"
+
+/client/verb/aim_chest()
+	set name = "chest"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	mob.zone_selected = "chest"
+
+/client/verb/aim_l_arm()
+	set name = "left_arm"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	mob.zone_selected = "l_arm"
+
+/client/verb/aim_r_arm()
+	set name = "right_arm"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	mob.zone_selected = "r_arm"
+
+/client/verb/aim_l_leg()
+	set name = "left_leg"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	mob.zone_selected = "l_leg"
+
+/client/verb/aim_r_leg()
+	set name = "right_leg"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	mob.zone_selected = "r_leg"
+
+/client/verb/aim_groin()
+	set name = "groin"
+	set hidden = 1
+
+	if(!prepare_aim_hotkey())
+		return
+
+	mob.zone_selected = "groin"
