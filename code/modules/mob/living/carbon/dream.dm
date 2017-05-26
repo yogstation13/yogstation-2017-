@@ -26,6 +26,7 @@
 	if(!owner.sleeping)
 		STOP_PROCESSING(SSobj, src)
 		wake_up()
+		return
 	owner.reset_perspective(dream)
 
 
@@ -35,8 +36,7 @@
 	owner.update_stat()
 	dreaming = FALSE
 	owner.hud_used.show_hud(1)
-	spawn(0)       //Doesn't work normally for some reason
-		owner.reset_perspective()
+	owner.reset_perspective()
 
 /*Dreaming landmarks. (Yes, you can add mobs to it)
 var/list/dreamland = list()          //These are located in _globalvars > lists > mapping.dm
@@ -67,7 +67,7 @@ var/list/legiondream = list()
 		dreaming_type = "dreamland"
 	return dreaming_type
 
-//Area's
+//Areas
 /area/dream
 	name = "Dreamland"
 	icon_state = "dream1"
