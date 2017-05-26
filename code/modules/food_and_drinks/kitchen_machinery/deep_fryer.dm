@@ -55,6 +55,7 @@ insert ascii eagle on american flag background here
 			frying = I
 			frying.forceMove(src)
 			icon_state = "fryer_on"
+			playsound(src.loc, "hiss", 40, 1, 1)
 
 /obj/machinery/deepfryer/process()
 	..()
