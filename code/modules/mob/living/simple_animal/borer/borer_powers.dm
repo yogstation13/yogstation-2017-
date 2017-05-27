@@ -401,8 +401,9 @@ mob/living/carbon/proc/release_control()
 	set desc = "Release control of your host's body."
 
 	if(borer && borer.host_brain)
-		if(alert(src, "Sure you want to give up your control so soon?", "Confirm", "Yes", "No") != "Yes")
-			return
+		if(!borer.docile) //if the borer is docile they have to give up control regardless
+			if(alert(src, "Sure you want to give up your control so soon?", "Confirm", "Yes", "No") != "Yes")
+				return
 		src << "<span class='danger'>You withdraw your probosci, releasing control of [borer.host_brain]</span>"
 
 		borer.detatch()

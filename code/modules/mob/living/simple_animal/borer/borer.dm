@@ -148,7 +148,6 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		for(var/M in banned_borer_emotes)
 			if(M == message)
 				src << "<span class='warning'>You don't have the strength to do this...</span>"
-			//	src << "Nice try, asshole."
 				pass = FALSE
 				break
 
