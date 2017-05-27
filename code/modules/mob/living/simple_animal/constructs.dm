@@ -29,7 +29,7 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
-	var/phaser = FALSE
+	var/phaser = TRUE
 	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
@@ -39,7 +39,7 @@
 		AddSpell(new spell(null))
 		if(_affiliation)
 			affiliation = _affiliation
-	addtimer(src, "set_affiliation", 1) //So the other code get's run first, wich might change the affiliation
+	addtimer(src, "set_affiliation", 1) //So the other code gets run first, which might change the affiliation
 
 /mob/living/simple_animal/hostile/construct/proc/set_affiliation(var/_affiliation)
 	if(_affiliation)
@@ -78,15 +78,19 @@
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
-		if(health < maxHealth)
-			adjustHealth(-5)
-			if(src != M)
-				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
-						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-		else
-			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+		var/mob/living/simple_animal/hostile/construct/builder/C = M
+		if(affiliation == C.affiliation)//in the unlikely case that there's a wizard or a miner that got his hands on a soulstone
+			if(health < maxHealth)
+				adjustHealth(-5)
+				if(src != M)
+					Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+					M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
+							   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+			else
+				if(src != M)
+					M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+		else //if they aren't on our team, attack!
+			..()
 	else if(src != M)
 		..()
 
