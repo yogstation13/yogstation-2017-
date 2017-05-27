@@ -7,6 +7,10 @@
 /*
  * Gifts
  */
+
+
+var/list/gift_blacklist = list(/obj/item/toy/beach_ball/holoball/chaos)
+
 /obj/item/weapon/a_gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
@@ -74,6 +78,12 @@
 
 	if(!ispath(gift_type,/obj/item))
 		return
+
+	for(var/a in gift_blacklist)
+		if(ispath(a, gift_type))
+			gift_type_list -= gift_type
+			gift_type = pick(gift_type_list)
+			break
 
 	var/obj/item/I = new gift_type(M)
 	M.unEquip(src, 1)
