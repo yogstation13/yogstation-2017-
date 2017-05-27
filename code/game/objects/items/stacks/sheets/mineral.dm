@@ -59,6 +59,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
+	desc = "Use this on the ground to quickly deploy barricades."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
