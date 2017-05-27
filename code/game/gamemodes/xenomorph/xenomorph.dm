@@ -150,6 +150,8 @@ var/list/turf/xenomorphweeds = list()
 	alien_weed_control_count = rand(950,1250)
 	infest_prc = rand(45,75)
 
+	var/RNGspawn
+
 	if(length(xeno_game_spawn))
 		RNGspawn  = pick(xeno_game_spawn)
 	else
