@@ -649,7 +649,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/astral/examine(mob/user)
 	..()
 	if(affecting)
-		user << "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>"
+		user << "<span class='cultitalic'>A translucent field encases [affecting] above the rune!</span>"
 
 /obj/effect/rune/astral/can_invoke(mob/living/user)
 	if(rune_in_use)
