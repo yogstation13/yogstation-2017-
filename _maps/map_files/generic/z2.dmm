@@ -687,7 +687,7 @@
 "og" = (/obj/structure/table/wood,/obj/item/pizzabox,/turf/open/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "oh" = (/obj/structure/chair/stool,/obj/effect/landmark{name = "Syndicate-Spawn"},/turf/open/floor/plasteel/bar{dir = 2},/area/syndicate_mothership)
 "oi" = (/obj/machinery/computer/telecrystals/uplinker,/turf/open/floor/plasteel/podhatch{dir = 9},/area/syndicate_mothership)
-"oj" = (/obj/structure/toilet{icon_state = "toilet00"; dir = 8},/obj/structure/window/reinforced/tinted{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/machinery/door/window{tag = "icon-right (WEST)"; name = "Tactical Toilet"; icon_state = "right"; dir = 8; opacity = 1},/turf/open/floor/plasteel/freezer{dir = 2},/area/syndicate_mothership)
+"oj" = (/obj/machinery/disposal/bin/toilet{icon_state = "toilet00"; dir = 8},/obj/structure/window/reinforced/tinted{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/machinery/door/window{tag = "icon-right (WEST)"; name = "Tactical Toilet"; icon_state = "right"; dir = 8; opacity = 1},/turf/open/floor/plasteel/freezer{dir = 2},/area/syndicate_mothership)
 "ok" = (/turf/open/floor/plating/airless,/area/syndicate_mothership)
 "ol" = (/turf/open/floor/plating/airless{dir = 2; icon_state = "warnplate"},/area/syndicate_mothership)
 "on" = (/obj/structure/table/wood,/obj/item/device/pda/quartermaster,/turf/open/floor/carpet{heat_capacity = 1e+006},/area/centcom/supply)
