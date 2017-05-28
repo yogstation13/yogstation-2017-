@@ -35,7 +35,7 @@
 
 /obj/mecha/working/ripley/HasProximity(atom/movable/AM as mob|obj)
 	if (istype(AM, /obj/item/weapon/ore))
-		if(. && (locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment))
+		if((locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in equipment))
 			var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in cargo
 			var/obj/item/weapon/ore/O = AM
 			if(ore_box)
