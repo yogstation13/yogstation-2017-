@@ -554,7 +554,8 @@
 			if(..()) //mech was thrown
 				return
 			if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
-				obstacle.mech_melee_attack(src)
+				if(get_charge())
+					obstacle.mech_melee_attack(src)
 				if(!obstacle || (obstacle && !obstacle.density))
 					step(src,dir)
 			if(istype(obstacle, /obj))
