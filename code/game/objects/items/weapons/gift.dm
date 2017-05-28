@@ -31,7 +31,7 @@
 		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
 		return
 
-	var/static/list/gift_type_blacklist = list(subtypesof(/obj/item/toy/beach_ball/holoball/chaos + (typesof(/obj/item/toy/cards) + /obj/item/toy/cards/deck) - /obj/item/toy/figure - /obj/item/toy/ammo - /obj/item/toy/toy_mech - /obj/item/toy/toy_mech/ranged - /obj/item/toy/toy_mech/melee))
+	var/static/list/gift_type_blacklist = list(subtypesof(/obj/item/toy/beach_ball/holoball/chaos + (typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo + /obj/item/toy/toy_mech + /obj/item/toy/toy_mech/ranged + /obj/item/toy/toy_mech/melee))
 
 	var/gift_type_list = list(/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,
