@@ -28,7 +28,8 @@
 		var/turf/T = get_turf(src)
 		for(var/obj/item/weapon/ore/O in T)
 			if(orestorage.can_be_inserted(O))
-				orestorage.handle_item_insertion(O, 1, user = H)
+				if(O.loc == T)
+					orestorage.handle_item_insertion(O, 1, user = H)
 
 /obj/item/weapon/ore/uranium
 	name = "uranium ore"

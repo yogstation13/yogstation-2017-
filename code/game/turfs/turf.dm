@@ -52,17 +52,6 @@
 				return
 		coil.place_turf(src, user)
 		return 1
-	if(istype(C, /obj/item/stack/sheet/mineral/sandbags))
-		var/obj/item/stack/sheet/mineral/sandbags/S = C
-		user << "<span class='notice'>You start building a barricade...</span>"
-		if(do_after(user, 30, target = src))
-			new /obj/structure/barricade/sandbags(get_turf(src))
-			S.use(1)
-			user << "<span class='notice'>You construct a sand barricade.</span>"
-		else
-			user << "<span class='notice'>You have been interrupted!</span>"
-		return 1
-
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
