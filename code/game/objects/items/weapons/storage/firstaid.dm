@@ -25,7 +25,7 @@
 	if(empty) return
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/medical/bandage/normal(src)
+	new /obj/item/medical/bandage/quality(src)
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/medical/bandage/burn(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -44,8 +44,8 @@
 	icon_state = pick("ointment","firefirstaid")
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
-	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/medical/bandage/burn(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
@@ -60,10 +60,11 @@
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
-	for(var/i in 1 to 3)
+	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	new /obj/item/weapon/reagent_containers/syringe/calomel(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
@@ -76,8 +77,9 @@
 /obj/item/weapon/storage/firstaid/o2/New()
 	..()
 	if(empty) return
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
@@ -92,11 +94,13 @@
 /obj/item/weapon/storage/firstaid/brute/New()
 	..()
 	if(empty) return
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/bruise_pack(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/device/healthanalyzer(src)
+	new /obj/item/medical/bandage/quality(src)
+	new /obj/item/weapon/reagent_containers/pill/salicyclic(src)
 	return
 
 /obj/item/weapon/storage/firstaid/tactical
@@ -115,6 +119,23 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
+	new /obj/item/device/healthanalyzer(src)
+	return
+	
+/obj/item/weapon/storage/firstaid/genetic
+	name = "genetic trauma medical kit"
+	desc = "A first aid kit for genetic and radiation damage."
+	icon_state = "antitoxfirstaid2"
+	item_state = "firstaid-toxin"
+
+/obj/item/weapon/storage/firstaid/genetic/New()
+	..()
+	if(empty) return
+	new /obj/item/device/healthanalyzer(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 	return
 
 
