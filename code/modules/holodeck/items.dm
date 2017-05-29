@@ -206,7 +206,7 @@
 	dunking = TRUE
 	STOP_PROCESSING(SSobj, src)
 	var/turf/T = jammer.loc
-	message_admins("[key_name_admin(jammer)] is about to dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
+	message_admins("[key_name_admin(jammer)] is about to dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'><span class='genesisred'>\[PREVENT\]</span></a>")
 	jammer.visible_message("<span class='userdanger'>[jammer] leaps into the air!</span>")
 	flags = NODROP
 	jammer.stunned = INFINITY
