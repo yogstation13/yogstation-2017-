@@ -106,11 +106,12 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 	var/image/googly_eyes = null
+	var/check_obj = TRUE
 	gold_core_spawnable = 0
 
-/mob/living/simple_animal/hostile/mimic/copy/New(loc, obj/copy, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/New(loc, obj/copy, mob/living/creator, destroy_original = 0, eyes = 1)
 	..(loc)
-	CopyObject(copy, creator, destroy_original)
+	CopyObject(copy, creator, destroy_original, eyes)
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
@@ -135,11 +136,13 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		faction |= "\ref[owner]"
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/O)
+	if(!check_obj)
+		return 1
 	if((istype(O, /obj/item) || istype(O, /obj/structure)) && !is_type_in_list(O, protected_objects))
 		return 1
 	return 0
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0, eyes)
 	if(destroy_original || CheckObject(O))
 		O.loc = src
 		name = O.name
@@ -148,8 +151,9 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		icon_state = O.icon_state
 		icon_living = icon_state
 		overlays = O.overlays
-		googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
-		overlays += googly_eyes
+		if(eyes)
+			googly_eyes = image('icons/mob/mob.dmi',"googly_eyes")
+			overlays += googly_eyes
 		if(istype(O, /obj/structure) || istype(O, /obj/machinery))
 			health = (anchored * 50) + 50
 			destroy_objects = 1

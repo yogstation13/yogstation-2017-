@@ -730,6 +730,7 @@ var/global/list/possible_items_special = list()
 		return 0
 	return 1
 
+
 /datum/objective/destroy/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -930,6 +931,13 @@ var/global/list/possible_items_special = list()
 	if(success >= department_minds.len)
 		return 1
 	return 0
+
+/datum/objective/blood
+	dangerrating = 10
+	var/bloodtarget
+
+/datum/objective/blood/update_explanation_text()
+	explanation_text = "Carry [bloodtarget] units of blood by the end of the shift."
 
 
 

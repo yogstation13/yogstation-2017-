@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/retaliate/bat
+/mob/living/simple_animal/hostile/bat
 	name = "Space Bat"
 	desc = "A rare breed of bat which roosts in spaceships, probably not vampiric."
 	icon_state = "bat"
@@ -18,7 +18,7 @@
 	melee_damage_upper = 5
 	attacktext = "bites"
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSDOOR
 	faction = list("hostile")
 	attack_sound = 'sound/weapons/bite.ogg'
 	environment_smash = 0
@@ -34,3 +34,25 @@
 	//Space bats need no air to fly in.
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
+
+/mob/living/simple_animal/hostile/bat/vampire
+	desc = "A rare breed of bat which preys in spaceships. This one seems pretty vampiric."
+	maxHealth = 200
+	gold_core_spawnable = 0
+	var/mob/living/carbon/human/vamp = null
+	var/obj/effect/proc_holder/vampire/battrans/S = null
+
+/mob/living/simple_animal/hostile/bat/vampire/verb/humanform()
+	set category = "Vampire"
+	set name = "Human Form"
+
+	src << "<span class='noticevampire'>You return to a humanoid form.</span>"
+	vamp.forceMove(loc)
+	vamp.status_flags &= GODMODE
+	mind.transfer_to(vamp)
+	vamp.adjustBruteLoss(maxHealth - health)
+	S.turnOnCD()
+	qdel(src)
+	S.vbat = null
+	for(var/obj/effect/proc_holder/vampire/battrans/B in vamp.abilities)
+		B.switchonCD(150)

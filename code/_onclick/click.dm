@@ -210,6 +210,9 @@
 	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
 		next_click = world.time + 5
 		mind.cyberman.initiate_hack(A)
+	else if(!src.stat && src.mind && src.mind.vampire && src.mind.vampire.chosen_click_attack && !(A == src))
+		next_click = world.time + mind.vampire.chosen_click_attack.clickdelay
+		mind.vampire.chosen_click_attack.action_on_click(src, mind.vampire, A)
 	else
 		swap_hand()
 
@@ -405,7 +408,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
 			var/allowed_access = checkHUDaccess(1)
 			if(allowed_access)
-				security_scan_status(src, A, allowed_access)
+				security_scan_status(src, A)
 
 /mob/living/carbon/human/CtrlShiftClickOn(atom/A)
 	if(istype(A, /mob/living/carbon/human))
@@ -415,7 +418,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
 			var/allowed_access = checkHUDaccess(1)
 			if(allowed_access)
-				security_scan_crime(src, A, allowed_access) // check hud.dm
+				security_scan_crime(src, A) // check hud.dm
 
 /mob/living/carbon/human/proc/checkHUDaccess(var/sec)
 	var/allowed_id = null
@@ -423,7 +426,7 @@
 	if (!G.emagged)
 		if(wear_id)
 			var/obj/item/weapon/card/id/I = get_idcard()
-			if((1 in I.access))
+			if((1 in I))
 				allowed_id = get_authentification_name()
 				return allowed_id
 		else

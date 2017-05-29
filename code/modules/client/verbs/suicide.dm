@@ -10,6 +10,13 @@
 		return
 	if(!canSuicide())
 		return
+	if(istype(pulledby, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = pulledby
+		if(H.mind.vampire)
+			if(H.mind.vampire.isDraining)
+				src << "<span class='vampirenotice'>You can't escape from me....</span>"
+				H << "<span class='vampirealert'>[src] has attempted to suicide, but was prevented!</span>"
+		return
 	if(confirm == "Yes")
 		suiciding = 1
 		log_game("[key_name(src)] (job: [job ? "[job]" : "None"]) commited suicide at [get_area(src)].")

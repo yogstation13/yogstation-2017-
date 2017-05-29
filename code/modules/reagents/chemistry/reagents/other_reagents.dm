@@ -172,6 +172,9 @@
 	if(!data) data = 1
 	data++
 	M.jitteriness = max(M.jitteriness-5,0)
+	if(M.mind.vampire)
+		if(!M.mind.vampire.thousand_unlocked)
+			M.take_organ_damage(1)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
@@ -450,7 +453,7 @@
 	id = "podmutationtoxin"
 	description = "A vegetalizing toxin produced by slimes."
 	color = "#5EFF3B" //RGB: 94, 255, 59
-	race = /datum/species/plant/pod
+	race = /datum/species/plant
 	mutationtext = "<span class='danger'>The pain subsides. You feel... plantlike.</span>"
 
 /datum/reagent/stableslimetoxin/jelly
@@ -1471,3 +1474,21 @@ datum/reagent/romerol
 
 /datum/reagent/laughter/overdose_process(mob/living/M)
 	M.emote(pick(list("laugh","giggle")))
+
+/datum/reagent/vampire
+	name = "unknown serum"
+	id = "vamp"
+	description = "A miracle chemical. One that's never been seen before."
+	color = "#FFFFFF"
+	metabolization_rate = 1
+
+/datum/reagent/vampire/on_mob_life(mob/living/carbon/human/H)
+	if(H)
+		if(H.mind)
+			if(!H.mind.vampire)
+				H.mind.vampire = new(H.mind)
+				H.mind.vampire.vampire = H
+				H.mind.vampire.Basic()
+		else
+			H.reagents.add_reagent("vamp",1)
+	..()
