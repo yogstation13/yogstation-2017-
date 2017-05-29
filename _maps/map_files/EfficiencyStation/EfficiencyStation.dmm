@@ -52496,7 +52496,7 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "bRW" = (
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/simple_animal/hostile/bat{
 	desc = "It's a spider! Run for it!";
 	icon_state = "guard";
 	name = "Sergeant Araneus"
