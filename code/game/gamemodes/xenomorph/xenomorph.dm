@@ -259,7 +259,6 @@ var/list/turf/xenomorphweeds = list()
 
 /datum/game_mode/xenomorph/check_finished()
 	..()
-
 	if(alien_weed_control_count <= xenomorphweeds.len)
 		return TRUE
 
@@ -399,6 +398,7 @@ var/list/turf/xenomorphweeds = list()
 	else
 		world << "<B>The Yautja Predators were not summoned this round.</B>"
 	..()
+	return 1
 
 /datum/game_mode/xenomorph/proc/auto_declare_completion_alien()
 	if(istype(ticker.mode,/datum/game_mode/xenomorph) )
