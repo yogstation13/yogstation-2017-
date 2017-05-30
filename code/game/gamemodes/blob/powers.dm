@@ -110,18 +110,18 @@
 
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
-	set name = "Create Shield Blob (10)"
+	set name = "Create Shield Blob (5)"
 	set desc = "Create a shield blob, which will block fire and is hard to kill."
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
-	createSpecial(10, /obj/effect/blob/shield, 0, 0, T)
+	createSpecial(5, /obj/effect/blob/shield, 0, 0, T)
 
 /mob/camera/blob/verb/create_resource()
 	set category = "Blob"
 	set name = "Create Resource Blob (40)"
 	set desc = "Create a resource tower which will generate resources for you."
-	createSpecial(40, /obj/effect/blob/resource, 4, 1)
+	createSpecial(60, /obj/effect/blob/resource, 4, 1)
 
 /mob/camera/blob/verb/create_node()
 	set category = "Blob"
@@ -137,7 +137,7 @@
 
 /mob/camera/blob/verb/create_blobbernaut()
 	set category = "Blob"
-	set name = "Create Blobbernaut (40)"
+	set name = "Create Blobbernaut (60)"
 	set desc = "Create a powerful blobbernaut which is mildly smart and will attack enemies."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
@@ -150,7 +150,7 @@
 	if(B.health < B.maxhealth * 0.5)
 		src << "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>"
 		return
-	if(!can_buy(40))
+	if(!can_buy(60))
 		return
 	B.maxhealth = initial(B.maxhealth) * 0.25 //factories that produced a blobbernaut have much lower health
 	B.check_health()
@@ -184,14 +184,14 @@
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
-	set name = "Relocate Core (80)"
+	set name = "Relocate Core (100)"
 	set desc = "Swaps the locations of your core and the selected node."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
 	if(!B)
 		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
-	if(!can_buy(80))
+	if(!can_buy(100))
 		return
 	var/turf/old_turf = blob_core.loc
 	blob_core.loc = T
@@ -236,7 +236,7 @@
 		return
 	if(can_buy(5))
 		var/attacksuccess = FALSE
-		last_attack = world.time
+		last_attack = world.time * 2
 		for(var/mob/living/L in T)
 			if("blob" in L.faction) //no friendly/dead fire
 				continue
@@ -316,9 +316,9 @@
 
 /mob/camera/blob/verb/chemical_reroll()
 	set category = "Blob"
-	set name = "Reactive Chemical Adaptation (40)"
+	set name = "Reactive Chemical Adaptation (60)"
 	set desc = "Replaces your chemical with a random, different one."
-	if(free_chem_rerolls || can_buy(40))
+	if(free_chem_rerolls || can_buy(60))
 		set_chemical()
 		if(free_chem_rerolls)
 			free_chem_rerolls--
