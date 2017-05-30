@@ -104,10 +104,12 @@ var/const/MAX_ACTIVE_TIME = 400
 				icon_state = "[initial(icon_state)]"
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
-	..()
+	return ..()
+	/* -- Temporarily disabled.
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"
 		Attach(hit_atom)
+	*/
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
 	if(!isliving(M))

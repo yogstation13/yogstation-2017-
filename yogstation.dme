@@ -1397,6 +1397,7 @@
 #include "code\modules\mob\living\carbon\update_icons.dm"
 #include "code\modules\mob\living\carbon\alien\alien.dm"
 #include "code\modules\mob\living\carbon\alien\alien_defense.dm"
+#include "code\modules\mob\living\carbon\alien\damage_procs.dm"
 #include "code\modules\mob\living\carbon\alien\death.dm"
 #include "code\modules\mob\living\carbon\alien\life.dm"
 #include "code\modules\mob\living\carbon\alien\login.dm"

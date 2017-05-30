@@ -36,7 +36,7 @@
 	if(a_intent == "sting")
 		stinger_delay = 1
 	. = ..()
-	. += move_delay_add + config.alien_delay + sneaking	+ stinger_delay//move_delay_add is used to slow aliens with stuns
+	. += move_delay_add + config.alien_delay + sneaking	+ stinger_delay + damage_delay()//move_delay_add is used to slow aliens with stuns
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)

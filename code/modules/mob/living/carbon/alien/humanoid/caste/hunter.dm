@@ -5,6 +5,7 @@
 	health = 125
 	icon_state = "alienh_s"
 	tackle_chance = 4
+	pounce_cooldown_time = 50
 	var/obj/screen/leap_icon = null
 
 /mob/living/carbon/alien/humanoid/hunter/New()
