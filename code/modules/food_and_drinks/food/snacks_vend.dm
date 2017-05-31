@@ -44,8 +44,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
 	if(requires_opening)
 		if(!open)
-			visible_message("<span class='notice'>[user] opens up a bag of chips.</span>",\
-							"<span class='notice'>[user] opens up a bag of chips.</span>")
+			visible_message("<span class='notice'>[user] opens up a bag of [src].</span>",\
+							"<span class='notice'>[user] opens up a bag of [src].</span>")
 			playsound(loc, 'sound/effects/openingbag.ogg', 100, 1)
 			open = TRUE
 
