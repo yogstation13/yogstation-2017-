@@ -103,7 +103,7 @@
 	category = list("AI Modules")
 
 /datum/design/board/paladin_module
-	name = "Core Module Design (P.A.L.A.D.I.N.)"
+	name = "Core Module Design (V.A.L.I.D.H.U.N.T)"
 	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
 	id = "paladin_module"
 	req_tech = list("programming" = 5, "materials" = 5)
