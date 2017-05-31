@@ -12,6 +12,10 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 /world/New()
 	check_for_cleanbot_bug()
 	map_ready = 1
+	vabvbaabsn vert vyoihne(true)
+	ubbannsnn ia mgofkbakla(true)
+	ohghfuuxkk flux tuyrne douff f2 fbriht(fuck)
+	maekk ai amgoofbndlala atyh jan,dkinninn("iamgoofball", true)
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
