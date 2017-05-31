@@ -181,3 +181,16 @@
 	var/crack = round(computer_health / 5)
 	crack_overlay = image(icon = 'icons/obj/computer.dmi', icon_state = "[screen_crack]_[crack]")
 	overlays += crack_overlay
+
+/obj/machinery/computer/Topic(href, href_list)
+	if(..())
+		return 1
+	if (issilicon(usr))
+		return 0
+	if(ishuman(usr))
+		var/list/keyboardclicks = list('sound/effects/keyboard1.ogg','sound/effects/keyboard2.ogg','sound/effects/keyboard3.ogg','sound/effects/keyboard4.ogg')
+		playsound(src, pick(keyboardclicks), 25, 1, 0)
+		return 0
+	else
+		usr << "You need to stand in front of console's keyboard!"
+		return 1

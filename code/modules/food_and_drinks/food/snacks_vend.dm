@@ -19,6 +19,8 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 3)
 	junkiness = 25
 	filling_color = "#8B0000"
+	requires_opening = TRUE
+	open = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -29,6 +31,23 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 3)
 	junkiness = 20
 	filling_color = "#FFD700"
+	requires_opening = TRUE
+	open = FALSE
+
+/obj/item/weapon/reagent_containers/food/snacks/chips/attack(mob/M, mob/user)
+	if(ishuman(M))
+		if(!open)
+			user << "<span class='warning'>You haven't opened the bag yet!</span>"
+			return
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/attack_self(mob/user)
+	if(requires_opening)
+		if(!open)
+			visible_message("<span class='notice'>[user] opens up a bag of chips.</span>",\
+							"<span class='notice'>[user] opens up a bag of chips.</span>")
+			playsound(loc, 'sound/effects/openingbag.ogg', 100, 1)
+			open = TRUE
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"
@@ -55,6 +74,8 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 3)
 	junkiness = 25
 	filling_color = "#FFD700"
+	requires_opening = TRUE
+	open = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"
@@ -72,6 +93,8 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 1, "sodiumchloride" = 5)
 	junkiness = 21
 	filling_color = "#FF0000"
+	requires_opening = TRUE
+	open = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/borer
 	name = "borer yummies"

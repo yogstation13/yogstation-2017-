@@ -3,13 +3,15 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
-	anchored = 1
+	anchored = 0
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = FIRE_PROOF
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
+	var/creates_scraping_noise = TRUE
+	var/scrapingsound = 'sound/effects/chair_scrape.ogg'
 
 /obj/structure/chair/New()
 	..()
@@ -46,6 +48,8 @@
 /obj/structure/chair/Move(atom/newloc, direct)
 	..()
 	handle_rotation()
+	if(creates_scraping_noise)
+		playsound(loc, scrapingsound, 3, 1)
 
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)
@@ -166,6 +170,7 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+	scrapingsound = 'sound/effects/woodenchair_scrape.ogg'
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -187,6 +192,8 @@
 	buildstackamount = 2
 	var/image/armrest = null
 	item_chair = null
+	creates_scraping_noise = FALSE
+	anchored = 1
 
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
