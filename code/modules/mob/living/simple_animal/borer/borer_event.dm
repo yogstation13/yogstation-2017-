@@ -36,9 +36,9 @@
 		if(H.stat != DEAD)
 			total_humans++
 
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, 200)
 
-	var/list/candidates = get_candidates("borer", null, ROLE_BORER)
-
+	sleep(210)
 
 	total_borer_hosts_needed = round(6 + total_humans/7)
 	spawncount += total_borer_hosts_needed
@@ -47,6 +47,8 @@
 		var/obj/vent = pick_n_take(vents)
 		for(var/client/C in candidates)
 			if(!(C.prefs.toggles & MIDROUND_ANTAG))
+				candidates -= C
+			if((jobban_isbanned(C, "borer")))
 				candidates -= C
 		if(!candidates.len)
 			return kill()
