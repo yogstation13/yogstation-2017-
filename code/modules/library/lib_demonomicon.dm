@@ -21,6 +21,7 @@
 		return
 	if(inUse)
 		user << "<span class='notice'>Someone else is reading it.</span>"
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/U = user
 		if(U.check_acedia())
