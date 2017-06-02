@@ -48,8 +48,6 @@
 		for(var/client/C in candidates)
 			if(!(C.prefs.toggles & MIDROUND_ANTAG))
 				candidates -= C
-			if((jobban_isbanned(C, "borer")))
-				candidates -= C
 		if(!candidates.len)
 			return kill()
 		var/client/C = pick(candidates)
