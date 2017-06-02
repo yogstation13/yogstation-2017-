@@ -31,15 +31,9 @@
 		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
-		var/willpower = 98
 		if(U.job in list("Librarian")) // the librarian is both faster, and more accurate than normal crew members at research
 			speed = 45
 			correctness = 100
-			willpower = 100
-		if(U.job in list("Captain", "Security Officer", "Head of Security", "Detective", "Warden"))
-			willpower = 99
-		if(U.job in list("Clown")) // WHO GAVE THE CLOWN A DEMONOMICON?  BAD THINGS WILL HAPPEN!
-			willpower = 25
 		correctness -= U.getBrainLoss() *0.5 //Brain damage makes researching hard.
 		speed += U.getBrainLoss() * 3
 		user.visible_message("[user] opens [title] and begins reading intently.")
@@ -50,8 +44,5 @@
 			var/datum/devilinfo/devil = devilInfo(usedName, 0)
 			user << browse("Information on [devilName]<br><br><br>[lawlorify[LORE][devil.ban]]<br>[lawlorify[LORE][devil.bane]]<br>[lawlorify[LORE][devil.obligation]]<br>[lawlorify[LORE][devil.banish]]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		inUse = 0
-		sleep(10)
-		if(!prob(willpower))
-			U.influenceSin()
 		onclose(user, "book")
 
