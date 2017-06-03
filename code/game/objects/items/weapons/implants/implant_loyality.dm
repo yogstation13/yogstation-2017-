@@ -22,9 +22,13 @@
 		var/obj/item/weapon/implant/mindslave/imp = locate(/obj/item/weapon/implant/mindslave) in target
 		if(imp)
 			imp.removed(target)
-		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_shadow_or_thrall(target))
+		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_thrall(target))
 			target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
+			qdel(src)
+			return -1
+		if((target.mind in (is_shadow(target)))
+			removed(target, 1) //be silent about it and reduce implant powergaming with slings
 			qdel(src)
 			return -1
 		if(target.mind in ticker.mode.revolutionaries | ticker.mode.get_gangsters())
