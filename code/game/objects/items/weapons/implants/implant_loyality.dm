@@ -27,7 +27,7 @@
 			removed(target, 1)
 			qdel(src)
 			return -1
-		if((target.mind in (is_shadow(target)))
+		if(is_shadow(target))
 			removed(target, 1) //be silent about it and reduce implant powergaming with slings
 			qdel(src)
 			return -1
