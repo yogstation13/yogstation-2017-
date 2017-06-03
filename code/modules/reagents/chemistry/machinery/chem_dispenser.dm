@@ -46,9 +46,10 @@
 	var/list/emagged_reagents = list(
 		"space_drugs",
 		"morphine",
-		"carpotoxin",
+		"mutetoxin",
 		"mine_salve",
-		"toxin"
+		"toxin",
+		"polonium"
 	)
 
 /obj/machinery/chem_dispenser/New()
@@ -160,7 +161,7 @@
 				overlays.Cut()
 				investigate_log("Beaker ejected <b><font color='red'><a href='?_src_=vars;Vars=\ref[beaker]'>\ref[beaker]</a></font></b> by <b>[key_name(usr)]</b>","chemistry")
 				for(var/datum/reagent/RE in R.reagent_list)
-					investigate_log("<b><font color='blue'> ¤ [RE.volume]x [RE.name] ([RE.id])</font></b>","chemistry")
+					investigate_log("<b><font color='blue'> Â¤ [RE.volume]x [RE.name] ([RE.id])</font></b>","chemistry")
 				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
@@ -354,7 +355,8 @@
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb"
+		"atomicbomb",
+		"bacchus_blessing"
 	)
 
 
