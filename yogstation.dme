@@ -1966,4 +1966,5 @@
 #include "interface\interface.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "C:\Users\Phil\Desktop\YogsGit\yogstation\_maps\map_files\MinskyStation\MinskyStation.dmm"
 // END_INCLUDE
