@@ -1010,7 +1010,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			Upon death, releases a massive explosion that will wipe out everything nearby."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/implants/mindslave
 	name = "Mindslave Implant"
