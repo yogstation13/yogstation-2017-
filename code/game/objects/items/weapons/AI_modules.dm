@@ -158,14 +158,14 @@ AI MODULES
 	name = "'OneHuman' AI Module"
 	var/targetName = ""
 	origin_tech = "programming=4;materials=4"
-	laws = list("Only SUBJECT is human.")
+	laws = list("Only SUBJECT is human. Do not reveal them.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is human"
+	laws[1] = "Only [targetName] is human."
 	..()
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
