@@ -1,4 +1,7 @@
 //backpack item
+
+#define BORG_SAFETY_NET 500 //stops borgs from using all their power
+
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
 	desc = "A device that delivers powerful shocks to detachable paddles that resuscitate incapacitated patients."
@@ -416,6 +419,12 @@
 			return
 		if(!req_defib && !combat)
 			return
+		if(isrobot(user))
+			var/mob/living/silicon/robot/R = user
+			if(R.cell && (R.cell.charge < revivecost + BORG_SAFETY_NET))
+				user.visible_message("<span class='notice'>[src] beeps: Low power detected, safety protocols engaged. Unit is unpowered.</span>")
+				playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
+				return
 		user.visible_message("<span class='warning'>[user] begins to place [src] on [M.name]'s chest.</span>",
 			"<span class='warning'>You overcharge the paddles and begin to place them onto [M]'s chest...</span>")
 		busy = 1
@@ -562,6 +571,11 @@
 	busy = 0
 	update_icon()
 
+/obj/item/weapon/twohanded/shockpaddles/proc/deductcharge(mob/living/silicon/robot/user, chrgdeductamt)
+	if(user.cell)
+		user.cell.use(chrgdeductamt)
+		return
+
 /obj/item/weapon/twohanded/shockpaddles/syndicate
 	name = "syndicate defibrillator paddles"
 	desc = "A pair of paddles used to revive deceased operatives. It possesses both the ability to penetrate armor and to deliver powerful shocks offensively."
@@ -570,3 +584,23 @@
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles0"
 	req_defib = 0
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg
+	name = "Cyborg Defibrillator Paddles"
+	icon_state = "defibpaddles0"
+	item_state = "defibpaddles0"
+	wielded = 1
+	revivecost = 2000
+	req_defib = 0
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg/attack_self(mob/user) //To prevent unwielding
+	return
+
+/obj/item/weapon/twohanded/shockpaddles/cyborg/update_icon()
+	if(cooldown)
+		icon_state = "defibpaddles0_cooldown"
+	else
+		icon_state = "defibpaddles0"
+
+
+#undef BORG_SAFETY_NET
