@@ -320,7 +320,7 @@
 		AI.control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		AI.radio_enabled = 0 	//No talking on the built-in radio for you either!
 		AI.forceMove(card)
-		card.AI = src
+		card.AI = card
 		AI << "You have been downloaded to a mobile storage device. Remote device connection severed."
 		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 		card.update_icon()
