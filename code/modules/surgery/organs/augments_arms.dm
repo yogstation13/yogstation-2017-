@@ -180,3 +180,22 @@
 		items_list += new /obj/item/weapon/kitchen/knife/combat/cyborg(src)
 		return 1
 	return 0
+
+
+
+/obj/item/organ/cyberimp/arm/surgical
+	name = "S.U.R.G.E.R.Y 5000 toolset"
+	desc = "A device which holds multiple tools used for surgery, the SURGERY 5000 series comes with rapid release tool action."
+	origin_tech = "materials=3;engineering=2;biotech=4"
+	contents = newlist(/obj/item/weapon/retractor, /obj/item/weapon/hemostat, /obj/item/weapon/cautery,
+		/obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, /obj/item/weapon/circular_saw, /obj/item/weapon/surgical_drapes)
+
+/obj/item/organ/cyberimp/arm/surgical/l/zone = "l_arm"
+
+/obj/item/organ/cyberimp/arm/surgical/emag_act()
+        if(!(locate/obj/item/weapon/reagent_containers/syringe/lethal/choral) in items_list))
+		usr << "<span class='notice'>You unlock [src]'s patient pacification functions!</span>"
+		items_list += new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+		return 1
+	return 0
+
