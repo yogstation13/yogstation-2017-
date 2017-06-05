@@ -1,7 +1,7 @@
 
 //make incision
 /datum/surgery_step/incise
-	name = "make incision"
+	name = "make an incision"
 	implements = list(/obj/item/weapon/scalpel = 100, /obj/item/weapon/melee/energy/sword = 75, /obj/item/weapon/kitchen/knife = 65, /obj/item/weapon/shard = 45)
 	time = 16
 
@@ -76,7 +76,7 @@
 
 //saw bone
 /datum/surgery_step/saw
-	name = "saw bone"
+	name = "saw the bone"
 	implements = list(/obj/item/weapon/circular_saw = 100, /obj/item/weapon/melee/energy/sword/cyborg/saw = 100, /obj/item/weapon/melee/arm_blade = 75, /obj/item/weapon/mounted_chainsaw = 65, /obj/item/weapon/twohanded/required/chainsaw = 50, /obj/item/weapon/twohanded/fireaxe = 50, /obj/item/weapon/hatchet = 35, /obj/item/weapon/kitchen/knife/butcher = 25)
 	time = 54
 
@@ -93,7 +93,7 @@
 
 //drill bone
 /datum/surgery_step/drill
-	name = "drill bone"
+	name = "drill the bone"
 	implements = list(/obj/item/weapon/surgicaldrill = 100, /obj/item/weapon/pickaxe/drill = 60, /obj/item/mecha_parts/mecha_equipment/drill = 60, /obj/item/weapon/screwdriver = 20)
 	time = 30
 
