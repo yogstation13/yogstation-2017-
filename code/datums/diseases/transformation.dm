@@ -240,3 +240,52 @@
 	stage4	= list("<span class='danger'>You're ravenous.</span>")
 	stage5	= list("<span class='danger'>You have become a morph.</span>")
 	new_form = /mob/living/simple_animal/hostile/morph
+
+
+/datum/disease/transformation/rage_virus
+	name = "Rage Virus"
+	//cure_text = "Whiskey"
+	//cures = list("whiskey")
+	spread_text = "zombie Bites"
+	spread_flags = SPECIAL | BLOOD
+	viable_mobtypes = list(/mob/living/carbon/human)
+	permeability_mod = 1
+	cure_chance = 1
+	longevity = 30
+	desc = "Crewmembers with this disease will bite other humans, causing them to turn into zombies."
+	severity = BIOHAZARD
+	stage_prob = 4
+	visibility_flags = 0
+	agent = "Rage T-1"
+	new_form = /mob/living/carbon/human/zombie
+
+	stage1	= list("<span class='notice'>You twitch violently.</span>", "<span class='warning'>Your teeth feel itchy.</span>")
+	stage2	= list("<span class='notice'>You twitch violently.</span>", "<span class='warning'>You feel unreasonably angry.</span>", "<span class='warning'>You stare unnecessarily long at your co-workers.</span>")
+	stage3	= list("<span class='warning'>You twitch violently.</span>", "<span class='warning'>You feel unreasonably angry.</span>",
+					"<span class='warning'>You find yourself staring at the head of your coworkers.</span>", "<span class='warning'>Your co-workers suddenly look very tasty.</span>")
+	stage4	= list("<span class='warning'>You twitch extremely violently.</span>", "<span class='warning'>You feel unreasonably full of rage.</span>",
+					"<span class='warning'>You find yourself staring at the head of your coworkers.</span>", "<span class='warning'>You wretch forward as you try to control your rage.</span>")
+	stage5	= list("<span class='warning'>You are angry at your coworkers, filled by the desire to eat brains.</span>", "<span class='warning'>Mmmmmm....... braaaaainns...</span>")
+
+/datum/disease/transformation/rage_virus/do_disease_transformation(var/mob/living/carbon/affected_mob)
+	if(!istype(affected_mob, /mob/living/carbon/human))
+		return
+	if(!iszombiemob(affected_mob))
+		ticker.mode.add_zombie(affected_mob.mind)
+		affected_mob.zombieize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE | TR_HASHNAME)
+		if(stage5)
+			affected_mob << pick(stage5)
+
+/datum/disease/transformation/rage_virus/stage_act()
+	..()
+	switch(stage)
+		if(2)
+			if(prob(2))
+				affected_mob << "<span class='notice'>Your [pick("back", "arm", "leg", "elbow", "head")] twitches violently.</span>"
+		if(3)
+			if(prob(4))
+				affected_mob << "<span class='danger'>Your head hurts inexplicably. You feel extremely angry.</span>"
+				affected_mob.confused += 10
+		if(4)
+			if(prob(3))
+				affected_mob.say(pick("Uuuuuurrrr!", "URRrrr!", "UUhhhhhhhhhhhh!", "UUUuurrrrrrhhhhhhhhhhhhh."))

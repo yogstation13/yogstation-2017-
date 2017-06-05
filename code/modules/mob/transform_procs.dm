@@ -521,6 +521,91 @@
 	. = new_mob
 	qdel(src)
 
+/mob/living/carbon/proc/zombieize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG), newname = null)
+	if (notransform)
+		return
+	//Handle items on mob
+
+	//first implants
+	var/list/implants = list()
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/obj/item/weapon/implant/W in src)
+			implants += W
+
+	if(tr_flags & TR_KEEPITEMS)
+		for(var/obj/item/W in (src.contents-implants))
+			unEquip(W)
+
+	//Make mob invisible and spawn animation
+	regenerate_icons()
+	notransform = 1
+	canmove = 0
+	stunned = 1
+	icon = null
+	invisibility = 101
+	var/atom/movable/overlay/animation = new /atom/movable/overlay( loc )
+	animation.icon_state = "blank"
+	animation.icon = 'icons/mob/mob.dmi'
+	animation.master = src
+	flick("h2zombie", animation)
+	sleep(22)
+	//animation = null
+	var/mob/living/carbon/human/zombie/O = new /mob/living/carbon/human/zombie( loc )
+	qdel(animation)
+
+
+
+	// hash the original name?
+	if	(tr_flags & TR_HASHNAME)
+		O.name = "zombie ([copytext(md5(real_name), 2, 6)])"
+		O.real_name = "zombie ([copytext(md5(real_name), 2, 6)])"
+	if (newname) //if there's a name as an argument, always take that one over the current name
+		O.name = newname
+		O.real_name = newname
+
+	//handle DNA and other attributes
+	O.dna = dna
+	dna = null
+//	if (!(tr_flags & TR_KEEPSE))
+//		O.dna.struc_enzymes = setblock(O.dna.struc_enzymes, RACEBLOCK, construct_block(BAD_MUTATION_DIFFICULTY,BAD_MUTATION_DIFFICULTY))
+	if(suiciding)
+		O.suiciding = suiciding
+	O.loc = loc
+	O.a_intent = "harm"
+
+	//keep viruses?
+	if (tr_flags & TR_KEEPVIRUS)
+		O.viruses = viruses
+		viruses = list()
+		for(var/datum/disease/D in O.viruses)
+			D.affected_mob = O
+
+	//keep damage?
+	if (tr_flags & TR_KEEPDAMAGE)
+		O.setToxLoss(getToxLoss())
+		O.adjustBruteLoss(getBruteLoss())
+		O.setOxyLoss(getOxyLoss())
+		O.adjustFireLoss(getFireLoss())
+
+	//re-add implants to new mob
+	for(var/obj/item/weapon/implant/I in implants)
+		I.loc = O
+		I.implanted = O
+
+	//transfer mind and delete old mob
+	if(mind)
+		mind.transfer_to(O)
+		if(O.mind.changeling)
+			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+	if (tr_flags & TR_DEFAULTMSG)
+		O << "<B>You are now a zombie.</B>"
+	updateappearance(O)
+	. = O
+	if ( !(tr_flags & TR_KEEPSRC) ) //flag should be used if zombieize() is called inside another proc of src so that one does not crash
+		qdel(src)
+	return
+
+
 /* Certain mob types have problems and should not be allowed to be controlled by players.
  *
  * This proc is here to force coders to manually place their mob in this list, hopefully tested.

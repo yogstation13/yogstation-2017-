@@ -27,9 +27,9 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/internal/brain
+	internal_organs += new /obj/item/organ/appendix
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
 
 	if(name == "zombie")
 		name = text("zombie ([rand(1, 1000)])")
@@ -56,8 +56,8 @@
 	//Prepare our med HUD...
 	..()
 	//...and display it.
-	for(var/datum/atom_hud/data/medical/hud in huds)
-		hud.add_to_hud(src)
+	for(var/datum/atom_hud/data/human/medical/hud in huds)
+		hud.add_hud_to(src)
 
 /mob/living/carbon/human/zombie/Move(NewLoc, direct)
 	..(NewLoc, direct)
@@ -121,7 +121,7 @@
 			if (prob(50))
 				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 
-				var/isZombie = is_zombie(src)
+				var/isZombie = iszombiemob(src)
 				var/isInfected = is_infected(src)
 				//var/isDead = (src.stat == DEAD ? 1 : 0)
 				var/isUnconcious = (src.stat == UNCONSCIOUS ? 1 : 0)
@@ -164,7 +164,6 @@
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name] ferociously!</span>", \
 					"<span class='userdanger'>[M.name] has attempted to bite [name] ferociously!</span>")
-	return
 
 /mob/living/carbon/human/zombie/attack_larva(mob/living/carbon/alien/larva/L as mob)
 
@@ -211,10 +210,9 @@
 					damage = rand(10, 15)
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
-						spawn( 0 )
-							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
+						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
-							return
+						return
 				adjustBruteLoss(damage)
 				updatehealth()
 			else
@@ -226,11 +224,13 @@
 				if (M == src || anchored)
 					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+		//		var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
-				M.put_in_active_hand(G)
+		//		M.put_in_active_hand(G)
 
-				G.synch()
+				grabbedby(M)
+
+			//	G.synch()
 
 				LAssailant = M
 
@@ -248,7 +248,6 @@
 							playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 							visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 									"<span class='userdanger'>[M] has disarmed [src]!</span>")
-	return
 
 /mob/living/carbon/human/zombie/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
@@ -287,11 +286,13 @@
 		if ("grab")
 			if (M == src || anchored)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+		//	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
 
-			M.put_in_active_hand(G)
+	//		M.put_in_active_hand(G)
 
-			G.synch()
+			grabbedby(M)
+
+		//	G.synch()
 
 			LAssailant = M
 
@@ -311,7 +312,6 @@
 							"<span class='userdanger'>[M] has disarmed [name]!</span>")
 			adjustBruteLoss(damage)
 			updatehealth()
-	return
 
 /*/mob/living/carbon/zombie/attack_animal(mob/living/simple_animal/M as mob)
 	if(M.melee_damage_upper == 0)
@@ -335,25 +335,10 @@
 		adjustBruteLoss(damage)
 		updatehealth()
 
-/mob/living/carbon/human/zombie/Stat()
-	..()
-	statpanel("Status")
-	stat(null, text("Intent: []", a_intent))
-	stat(null, text("Move Mode: []", m_intent))
-	if(client && mind)
-		if (client.statpanel == "Status")
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Extracted DNA", mind.changeling.profilecount)
-				stat("Absorbed Lifeforms", mind.changeling.absorbedcount)
-	return
-
-
 /mob/living/carbon/human/zombie/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
 	internal = null
-	return
 
 ///mob/living/carbon/human/zombie/var/co2overloadtime = null
 ///mob/living/carbon/human/zombie/var/temperature_resistance = T0C+75
@@ -371,7 +356,6 @@
 			adjustBruteLoss(30)
 			if (prob(50))
 				Paralyse(10)
-	return
 
 /mob/living/carbon/human/zombie/blob_act()
 	if (stat != 2)
@@ -391,9 +375,8 @@
 /mob/living/carbon/human/zombie/put_in_hand_check(obj/item/W)
 	if(istype(W, /obj/item/weapon/card))
 		return 1
-
 	if(istype(W, /obj/item/weapon) || istype(W, /obj/item/clothing/suit/armor) || istype(W, /obj/item/clothing/suit/bio_suit) || istype(W, /obj/item/clothing/head/helmet))
-		src << "You Zombified brain struggles to comprehend picking up the [W]. Somehow it is just too complicated to operate."
+		src << "You brain struggles to comprehend picking up the [W]. Somehow it is just too complicated to operate."
 		return 0
 	return ..(W)
 
@@ -403,47 +386,14 @@
 /mob/living/carbon/human/zombie/canBeHandcuffed()
 	return 1
 
-/mob/living/carbon/human/zombie/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
-	if(judgebot.emagged == 2)
-		return 10 //Everyone is a criminal!
-	var/threatcount = 0
-
-	//Securitrons can't identify zombies
-	if(!lasercolor && judgebot.idcheck )
-		threatcount += 4
-
-	//Lasertag bullshit
-	if(lasercolor)
-		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
-				threatcount += 4
-
-		if(lasercolor == "r")
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
-				threatcount += 4
-
-		return threatcount
-
-	//Check for weapons
-	if(judgebot.weaponscheck)
-		if(judgebot.check_for_weapons(l_hand))
-			threatcount += 4
-		if(judgebot.check_for_weapons(r_hand))
-			threatcount += 4
-
-	//Loyalty implants imply trustworthyness
-	if(isloyal(src))
-		threatcount -= 1
-
-	return threatcount
+/mob/living/carbon/human/zombie/assess_threat(obj/machinery/bot/secbot/judgebot, lasercolor)
+	return 0
 
 /mob/living/carbon/human/zombie/proc/urrizeText(var/message)
 	var/len = (length(message) / 10) + 1
-
 	message = ""
 	for(var/i = 0; i < len; i++)
 		message += pick("urrrrr", "Urrrhh", "URRR!", "URRRRR?", "Urrrrhhhhhhh", "uuuuuuuur", "uuhhhhhh", "uuuh", "urrrh")+" "
-
 	return message
 
 /mob/living/carbon/human/zombie/say(message, bubble_type)
@@ -466,7 +416,8 @@
 	if(GODMODE in status_flags)	return 0
 	amount = amount / 3
 	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
+//	if(updating_health)
+//		updatehealth()
 
 /mob/living/carbon/human/zombie/adjustOxyLoss(amount)
 	return 0
@@ -484,28 +435,33 @@
 	if(GODMODE in status_flags)	return 0
 	amount = amount * 2
 	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates() //we update our health right away.
+//	if(updating_health)
+//		updatehealth()
 
 /mob/living/carbon/human/zombie/adjustCloneLoss(amount)
 	if(GODMODE in status_flags)	return 0
 	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates()
+//	if(updating_health)
+//		updatehealth()
 
 /mob/living/carbon/human/zombie/setCloneLoss(amount)
 	if(GODMODE in status_flags)	return 0
 	cloneloss = amount
-	handle_regular_status_updates()
+	//if(updating_health)
+	//	updatehealth()
 
 /mob/living/carbon/human/zombie/adjustBrainLoss(amount)
 	if(GODMODE in status_flags)	return 0
 	amount = amount * 2
 	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
-	handle_regular_status_updates()
+//	if(updating_health)
+	//	updatehealth()
 
 /mob/living/carbon/human/zombie/setBrainLoss(amount)
 	if(GODMODE in status_flags)	return 0
 	brainloss = amount
-	handle_regular_status_updates() //we update our health right away.
+//	if(updating_health)
+	//	updatehealth()
 
 /mob/living/carbon/human/zombie/adjustStaminaLoss(amount)
 	if(GODMODE in status_flags)	return 0
@@ -516,10 +472,6 @@
 	if(GODMODE in status_flags)	return 0
 	amount = amount / 5
 	staminaloss = amount
-
-
-
-
 
 /mob/living/carbon/human/zombie/Jitter(amount)
 	amount = amount / 7

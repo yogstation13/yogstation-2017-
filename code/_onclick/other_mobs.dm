@@ -155,3 +155,11 @@
 */
 /mob/new_player/ClickOn()
 	return
+
+/*
+	Zombies
+*/
+/mob/living/carbon/human/zombie/UnarmedAttack(atom/A)
+	A.attack_paw(src)
+/atom/proc/attack_paw_zombie(mob/user)
+	return

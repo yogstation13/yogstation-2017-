@@ -53,6 +53,15 @@
 		"Species 3157",
 		"Small Prick"
 	)
+	var/list/zombies = list(
+		"Diseased",
+		"Forlorn",
+		"Crazed",
+		"Muertos",
+		"Walkers",
+		"Clickers"
+	)
+
 
 
 /datum/intercept_text/proc/build(mode_type, datum/mind/correct_person)
@@ -88,6 +97,10 @@
 		if("shadowling")
 			src.text = ""
 			src.build_shadowling(correct_person)
+			return src.text
+		if("zombies")
+			src.text = ""
+			src.build_zombies(correct_person)
 			return src.text
 		else
 			return null
@@ -289,3 +302,8 @@
 	Be wary of dark areas and ensure all lights are kept well-maintained. Closely monitor all crew for suspicious behavior and perform dethralling surgery if they have obvious tells. Investigate all \
 	reports of odd or suspicious sightings in maintenance."
 	src.text += "<br><br>"
+
+/datum/intercept_text/proc/build_zombies(datum/mind/correct_person)
+	src.text += "<BR><BR>Centcom has recently received a report of a plague infecting outlying space stations. We believe that one member of your crew may "
+	src.text += "have been previously escaped a quarantined station. It is believed that knowledge of this report amongst the crew will cause widespread panic "
+	src.text += "and witchhunts. In the event of a confirmed case of infection, activate quarantine protocols immediately and contain the outbreak."
