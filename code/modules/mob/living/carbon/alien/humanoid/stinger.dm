@@ -6,6 +6,8 @@
 	desc = "A curious tail with a dagger sharp ail. It drags itself around the xenomorph picking up on anything that might be around it."
 	force = 15
 	hitsound = 'sound/xenomorph/xeno_tailwhip1.ogg'
+	icon = 'icon/mob/alien.dmi'
+	icon_state = "xenotail"
 	var/datum/reagent/chemical = null // will the tail inject a chemical into someone?
 	var/chemregain // operates as a cooldown
 	var/chemexcess = 15 // how many reagents are we going to pump into our target?
@@ -34,9 +36,7 @@
 /obj/item/weapon/xenomorphtail/hunter
 	force = 10
 	chemical = /datum/reagent/toxin/xenotoxin
-
-/obj/item/weapon/xenomorphtail/sentinel
-	force = 20
+	icon_state = "huntertail"
 
 /obj/item/weapon/xenomorphtail/worker
 	force = 10

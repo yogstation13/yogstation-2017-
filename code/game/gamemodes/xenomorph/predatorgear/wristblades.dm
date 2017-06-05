@@ -89,3 +89,10 @@
 				visible_message("<span class='warning'>[target]'s tail flies off in a bloody arc!</span>") // see what i did ther
 				A.tail.forceMove(get_turf(A))
 				A.tail = null
+				A.icon_state = "alien[A.caste]_notail"
+				return
+
+			if(istype(A, /mob/living/carbon/alien/humanoid/royal))
+				user << "<span class='warning>You can't slice off [target]'s tail!</span>"
+			else
+				user << "<span class='warning'>[target] is missing it's tail!</span>'

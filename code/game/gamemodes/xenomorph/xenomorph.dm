@@ -44,10 +44,10 @@ var/list/turf/xenomorphweeds = list()
 	name = "alien"
 	config_tag = "alien"
 	antag_flag = ROLE_ALIEN
-	required_players = 30
-	required_enemies = 1
-	recommended_enemies = 3
-	enemy_minimum_age = 14
+	required_players =  1//30
+	required_enemies = 1 //1
+	recommended_enemies = 1 //3
+	enemy_minimum_age =  1//14
 	var/objective
 	var/alien_weed_control_count
 	var/infest_prc
@@ -66,7 +66,7 @@ var/list/turf/xenomorphweeds = list()
 	those puny meatbags! Always listen to your queen. You cannot disobey her.\n<B>Personnel</B> : Stop the xenomorphs at \
 	all costs! Burn down their weeds and stop the takeover! Save Space Station 13!</B>"
 
-/datum/game_mode/proc/Xregister(var/datum/mind/M)
+/datum/game_mode/proc/Xregister(datum/mind/M)
 	if(!M)
 		return FALSE
 
@@ -77,7 +77,7 @@ var/list/turf/xenomorphweeds = list()
 		return TRUE
 
 
-/datum/game_mode/xenomorph/proc/AddXenomorph(var/datum/mind/M)
+/datum/game_mode/xenomorph/proc/AddXenomorph(datum/mind/M)
 	if(!M)	return
 	if(!M.current)	return
 	if(!Xregister(M)) return
@@ -91,19 +91,19 @@ var/list/turf/xenomorphweeds = list()
 	M.current.memory += translate_objective() + "<BR>"
 
 
-/datum/game_mode/xenomorph/proc/AddQueen(var/datum/mind/M)
+/datum/game_mode/xenomorph/proc/AddQueen(datum/mind/M)
 	xenomorphs["QUEEN"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno queen"
 	M.special_role = "xeno queen"
 
-/datum/game_mode/xenomorph/proc/AddHunter(var/datum/mind/M)
+/datum/game_mode/xenomorph/proc/AddHunter(datum/mind/M)
 	xenomorphs["HUNTERS"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno hunter"
 	M.special_role = "xeno hunter"
 
-/datum/game_mode/xenomorph/proc/AddWorker(var/datum/mind/M)
+/datum/game_mode/xenomorph/proc/AddWorker(datum/mind/M)
 	xenomorphs["WORKERS"] += M
 	xenomorphs += M
 	M.assigned_role = "xeno worker"
@@ -290,10 +290,10 @@ var/list/turf/xenomorphweeds = list()
 	if(!yautjalaunch)
 		check_for_predator()
 
-	if(!calculateXenos())
+	if(!calculateXenos()) // xenomorphs still exist
 		return FALSE
 	else
-		return TRUE
+		return TRUE // 0 xenomorphs exist
 
 
 #define PREDATOR_COEFF 0.45 // 45%
@@ -317,6 +317,7 @@ var/list/turf/xenomorphweeds = list()
 	predatorwave++
 
 /datum/game_mode/xenomorph/declare_completion()
+	..()
 	var/predcount
 	for(var/datum/mind/M in predators)
 		if(M.current.stat != DEAD)
@@ -397,22 +398,25 @@ var/list/turf/xenomorphweeds = list()
 			world << "<B>The Yautja Predators hunted down [trophynames]."
 	else
 		world << "<B>The Yautja Predators were not summoned this round.</B>"
-	..()
-	return 1
+	//..()
+	return
 
 /datum/game_mode/xenomorph/proc/auto_declare_completion_alien()
-	if(istype(ticker.mode,/datum/game_mode/xenomorph) )
+	world << "running auto declare!"
+	if(ticker && istype(ticker.mode,/datum/game_mode/xenomorph))
 		if(length(xenomorphs["QUEEN"]))
 			var/queenlen = length(xenomorphs["QUEEN"])
 			var/text = "<FONT size = 2><B>The xenomorph queen[(queenlen > 1 ? "s were" : " was")]:</B></FONT>"
 			for(var/datum/mind/xeno in xenomorphs["QUEEN"])
 				text += printplayer(xeno)
+				world << "print"
 			world << text
 		if(predators.len)
 			var/text2 = "<BR><FONT size = 2><B>The Predators were:</B></FONT>"
 			for(var/datum/mind/pred1 in predators)
 				text2 += printplayer(predators)
 			world << text2
+		world << "this shit just ran"
 		return 1
 
 /datum/game_mode/xenomorph/proc/translate_objective()
