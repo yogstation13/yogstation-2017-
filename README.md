@@ -18,7 +18,7 @@ Follow this: http://www.tgstation13.org/wiki/Setting_up_git
 
 Option 2:
 Install GitHub::windows from http://windows.github.com/
-It handles most of the setup and configuraton of Git for you.
+It handles most of the setup and configuration of Git for you.
 Then you simply search for the yogstation repository and click the big clone
 button.
 
@@ -65,7 +65,7 @@ The format is
 byondkey = Rank
 ```
 
-where the admin rank must be properly capitalised.
+where the admin rank must be properly capitalized.
 
 Finally, to start the server, run Dream Daemon and enter the path to your
 compiled yogstation.dmb file.  Make sure to set the port to the one you
@@ -100,9 +100,9 @@ the new version.
 * [DreamStation](https://tgstation13.org/wiki/Dreamstation)
 * [EfficiencyStation](https://tgstation13.org/wiki/Efficiency_Station)
 
-All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
+All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it; for example, MiniStation changes the uplink items for the map. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
-If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
+If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, on the left side of the screen, and then make sure the map code file you want is ticked.
 
 If you are hosting a server, and want randomly picked maps to be played each round, you can enable map rotation in [config.txt](config/config.txt) and then set the maps to be picked in the [maps.txt](config/maps.txt) file.
 
