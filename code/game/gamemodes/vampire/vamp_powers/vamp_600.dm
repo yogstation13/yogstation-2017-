@@ -24,6 +24,9 @@
 	if(H.reagents.get_reagent_amount("omnizine") < 30 && H.reagents.get_reagent_amount("omnizine") + 10 <= 30)
 		H.reagents.add_reagent("omnizine", 10) // while stimulants do heal, I want to make sure that they're getting something out of this 100%
 
+	feedback_add_details("vampire_powers","clear stuns 2")
+	return 1
+
 /obj/effect/proc_holder/vampire/cloakofdarkness
 	name = "Cloak of Darkness"
 	desc = "Blend into the darkness. You become less visible the darker the area you are in."
@@ -38,6 +41,9 @@
 		HM.force_lose(H)
 	else
 		HM.force_give(H)
+
+	feedback_add_details("vampire_powers","cloak_of_dark")
+	return 1
 
 
 #define RENDGHOST_MONEYCOUNT 20
@@ -82,5 +88,7 @@
 		if(H.mind.vampire)
 			if(H.mind.vampire.bloodcount < H.mind.vampire.get_limit())
 				H.mind.vampire.bloodcount += min(H.mind.vampire.bloodcount + RENDGHOST_MONEYCOUNT, H.mind.vampire.get_limit())
+	feedback_add_details("vampire_powers","rend ghost")
+	return 1
 
 #undef RENDGHOST_MONEYCOUNT

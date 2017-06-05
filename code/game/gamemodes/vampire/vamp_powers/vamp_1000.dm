@@ -27,6 +27,9 @@
 	H.visible_message("<span class='warning'>[H] points at the ground beneath them!</span>",\
 		"<span class='warning'>You focus your energy towards the ground.</span>")
 
+	feedback_add_details("vampire_powers","summon coffin")
+	return 1
+
 /obj/effect/proc_holder/vampire/setsummonturf
 	name = "Set Summon Turf"
 	desc = "Activating this will set the turf below you as a hometurf."
@@ -48,3 +51,6 @@
 
 	V.hometurf = get_turf(H)
 	H << "<span class='vampirealert'>Home turf updated.</span>"
+	feedback_add_details("vampire_powers","hometurf")
+
+	return 1

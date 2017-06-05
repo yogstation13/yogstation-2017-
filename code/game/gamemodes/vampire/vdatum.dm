@@ -88,7 +88,7 @@
 /datum/vampire/proc/EightHundred()
 	eighthundred_unlocked = TRUE
 	vampire.dna.species.heatmod = 1
-	vampire << "<span class='noticevampire'>Your glare and hypnotize abilities works through sunglasses and gas masks now.</span>"
+	vampire << "<span class='noticevampire'>Your glare and hypnotize abilities have grown powerful enough to break through sunglasses and gas masks now.</span>"
 	install_eyes(new /obj/item/organ/cyberimp/eyes/vampire/strong(get_turf(vampire)))
 
 	vampire.AddVampireSpell(new /obj/effect/proc_holder/vampire/charm(null))

@@ -46,6 +46,9 @@
 	for(var/obj/machinery/computer/C in view(12, H))
 		C.take_damage(100)
 
+	feedback_add_details("vampire_powers","vampire_scream")
+	return 1
+
 
 /obj/effect/proc_holder/vampire/batswarm
 	name = "Bat Swarm"
@@ -68,3 +71,4 @@
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)
 				step(B, pick(NORTH,SOUTH,EAST,WEST))
+	feedback_add_details("vampire_powers","bat swarm")

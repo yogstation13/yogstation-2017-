@@ -21,6 +21,9 @@
 	H.SetWeakened(0)
 	H.adjustStaminaLoss(-(H.getStaminaLoss()))
 
+	feedback_add_details("vampire_powers","clear stuns")
+	return 1
+
 
 /obj/effect/proc_holder/vampire/hypno
 	name = "Hypnotize"
@@ -75,6 +78,8 @@
 					return
 	target << "<span class='warning'>Your knees suddenly feel heavy. Your body begins to sink to the floor.</span>"
 	addtimer(src, "sleeptarget", 400, FALSE, target, H) // 4 seconds...
+
+	feedback_add_details("vampire_powers","hypnotize")
 
 
 /obj/effect/proc_holder/vampire/hypno/proc/sleeptarget(mob/living, mob/user) // in the future, make it check for a range so that the target can get away? or make it check for a garlic necklace.

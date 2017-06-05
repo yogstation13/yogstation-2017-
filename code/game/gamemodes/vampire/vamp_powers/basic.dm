@@ -62,6 +62,9 @@
 		sleep(20)
 
 	H << "<span class='noticevampire'>You have finished draining [target]</span>"
+	feedback_add_details("vampire_powers","bite")
+
+	return 1
 
 
 /obj/effect/proc_holder/vampire/bite/proc/check_status(mob/living/L, datum/vampire/V, mob/living/carbon/human/T, rate)
@@ -140,6 +143,8 @@
 		H << "<span class='noticevampire'>You paralyze [T].</span>"
 		T.Stun(5)
 
+	feedback_add_details("vampire_powers","gaze")
+
 
 /////////////////////////////
 ////	BLOOD TRACKING	/////
@@ -197,6 +202,8 @@
 							V.tracking = chosentarget
 							V.tracking.UpdateBloodTracking()
 
+	feedback_add_details("vampire_powers","blood track")
+
 ////////////////////////////////
 ////////	TRACING		////////
 ////////////////////////////////
@@ -215,6 +222,7 @@
 	H.digitalcamo = !H.digitalcamo
 	H << "<span class='alertvampire'>You toggle [H.digitalcamo ? "on" : "off"] on your digital cloak, and the AI can no longer \
 			track you.</span>"
+	feedback_add_details("vampire_powers","digital tracking")
 	return 1
 
 
@@ -233,5 +241,6 @@
 
 	H << "<span class='alertvampire'>You toggle [H.digitalinvis ? "on" : "off"] on your digital cloak, and the AI can no longer \
 			see you.</span>"
+	feedback_add_details("vampire_powers","digital visibility")
 	return 1
 

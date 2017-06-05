@@ -28,6 +28,7 @@
 		vbat.verbs += /mob/living/simple_animal/hostile/bat/vampire/verb/humanform
 		H.mind.transfer_to(vbat)
 		vbat.adjustBruteLoss(H.maxHealth - H.health)
+	feedback_add_details("vampire_powers","bat transformation")
 
 /obj/effect/proc_holder/vampire/radiomalf
 	name = "Radio Malfunction"
@@ -63,6 +64,8 @@
 				radio.broadcasting = 0
 
 	playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
+
+	feedback_add_details("vampire_powers","radio-malf")
 
 
 /obj/effect/proc_holder/vampire/coffin
@@ -101,3 +104,6 @@
 	H << "<span class='vampirealert'>You have sucessfully designated your coffin. While you are in \
 		the coffin you will slowly regenerate health and blood. Once you become strong enough you will \
 		be able to regenerate limbs while inside.</span>"
+
+	feedback_add_details("vampire_powers","coffin")
+	return 1

@@ -64,7 +64,7 @@
 	return
 
 /datum/game_mode/vampire/proc/forge_objectives(datum/mind/M)
-	var/blood_hunt = rand(600,900)
+	var/blood_hunt = pick(800,1000)
 	var/is_stealing = prob(50)
 
 	var/datum/objective/blood/blood_objective = new

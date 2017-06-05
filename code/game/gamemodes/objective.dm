@@ -937,10 +937,52 @@ var/global/list/possible_items_special = list()
 	var/bloodtarget
 
 /datum/objective/blood/update_explanation_text()
-	explanation_text = "Carry [bloodtarget] units of blood by the end of the shift."
+	explanation_text = "Earn [bloodtarget] before the shift ends."
 
+/datum/objective/blood/check_completion()
+	if(owner && owner.vampire)
+		var/pass = FALSE
+		switch(bloodtarget)
+			if(800)
+				pass = owner.vampire.thousand_unlocked
+			if(1000)
+				pass = owner.vampire.eighthundred_unlocked
+		if(pass)
+			return 1
+	return 0
 
+// blood2 is currently not in the game. it might persuade players NOT to use their blood experimentally which is
+// not what I want for Vampire Mode.
 
+/datum/objective/blood2
+	dangerrating = 10
+	var/bloodtarg
+
+/datum/objective/blood2/update_explanation_text()
+	explanation_text = "Save [bloodtarg] units of blood before the shift ends."
+
+/datum/objective/blood2/check_completion()
+	if(owner && owner.vampire)
+		if(owner.vampire.bloodcount >= bloodtarg)
+			return 1
+		else
+			return 0
+	return 0
+
+/datum/objective/charmIan
+	dangerrating = 1
+
+/datum/objective/charmIan/update_explanation_text()
+	explanation_text = "Charm Ian"
+
+/datum/objective/charmIan/check_completion()
+	var/pass = FALSE
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/I in living_mob_list)
+		if(I.faction == "Vampire")
+			pass = TRUE
+			break
+
+	return pass
 
 //A subtype of impersonate_derpartment
 //This subtype always picks as many command staff as it can (HoS,HoP,Cap,CE,CMO,RD)

@@ -27,9 +27,11 @@
 	if(!(istype(charm, /mob/living/simple_animal/hostile)))
 		var/mob/living/simple_animal/hostile/mimic/copy/C
 		C.check_obj = FALSE
-		C = new(get_turf(H), charm, H, destroy_original = TRUE, eyes = FALSE)
+		C = new(get_turf(H), charm, H, destroy_original = FALSE, eyes = FALSE)
 		C.faction += "Vampire"
 	else
 		charm.faction += "Vampire"
 
 	H << "<span class='noticevampire'>[charm] suddenly likes you more.</span>"
+	feedback_add_details("vampire_powers","charm")
+	return 1
