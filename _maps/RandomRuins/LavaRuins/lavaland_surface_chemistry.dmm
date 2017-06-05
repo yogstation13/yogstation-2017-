@@ -1,0 +1,77 @@
+"aa" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"ab" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"ac" = (/turf/template_noop,/area/space)
+"ad" = (/turf/closed/wall/shuttle{dir = 8; icon_state = "diagonalWall3"},/area/lavaland/surface/outdoors)
+"ae" = (/turf/closed/wall/shuttle{icon_state = "wall3"},/area/lavaland/surface/outdoors)
+"af" = (/obj/machinery/door/airlock/centcom,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"ag" = (/turf/closed/wall/shuttle{dir = 1; icon_state = "diagonalWall3"},/area/lavaland/surface/outdoors)
+"ah" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 4},/obj/structure/window/reinforced/tinted{tag = "icon-twindow (EAST)"; icon_state = "twindow"; dir = 4},/turf/template_noop,/area/lavaland/surface/outdoors)
+"ai" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/airless/shuttle/red,/area/lavaland/surface/outdoors)
+"aj" = (/turf/open/floor/plasteel/airless/shuttle/red,/area/lavaland/surface/outdoors)
+"ak" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel/airless/shuttle/red,/area/lavaland/surface/outdoors)
+"al" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/airless/shuttle/red,/area/lavaland/surface/outdoors)
+"am" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"an" = (/obj/item/weapon/paper/crumpled/bloody{info = "Week 2, day 6. <B>Success!<B> I've managed to synthesize a small amount of solid plasma! The block I created took days to stabilize and cool down, but after running some tests it's exceeding all my expectactions. I'll have to refine the process more before sending a sample to CentComm, but soon we won't have to waste thousands of credits sending those miners to work in this... hellscape anymore. The rest of my mineral samples remained stable too. I'll just have to hope those Space Pirates won't track me down after I stole their trisulfideoxide again... I've hidden the recipe in the safe for now. Code is 8124."},/obj/effect/decal/cleanable/blood,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"ao" = (/turf/closed/wall/shuttle{dir = 2; icon_state = "diagonalWall3"},/area/lavaland/surface/outdoors)
+"ap" = (/obj/machinery/door/airlock/centcom,/turf/open/space,/area/lavaland/surface/outdoors)
+"aq" = (/turf/closed/wall/shuttle{dir = 4; icon_state = "diagonalWall3"},/area/lavaland/surface/outdoors)
+"ar" = (/obj/item/clothing/under/pirate,/obj/effect/decal/cleanable/blood,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"as" = (/obj/item/clothing/head/helmet/space/pirate,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"at" = (/obj/item/stack/sheet/metal,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"au" = (/turf/closed/wall/r_wall,/area/lavaland/surface/outdoors)
+"av" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aw" = (/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"ax" = (/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"ay" = (/obj/item/weapon/wrench,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"az" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aA" = (/obj/structure/sign/chemistry,/turf/closed/wall/r_wall,/area/lavaland/surface/outdoors)
+"aB" = (/obj/structure/table,/obj/item/device/flashlight/lamp,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aC" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bottle/mutagen,/obj/item/weapon/extinguisher,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aD" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/bottle/plasma,/obj/item/weapon/reagent_containers/glass/bottle/plasma{pixel_x = 5; pixel_y = 6},/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aE" = (/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aF" = (/obj/structure/fans,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aG" = (/obj/structure/closet/wardrobe/chemistry_white,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aH" = (/obj/item/weapon/storage/secure/safe{code = "8124"; dir = 1},/obj/item/weapon/paper{info = "Mix 30 units of O2 with precisely 12 units of \[br]\[i]*a few paragraphs are torn out*\[/i] \[br]within an oxygenated atmosphere of roughly 650-degree Chlorine. Once the gray mass has solidifed, carefully remove it (hot!) and place in distilled water. Check the object regularly. Once the outer layer peels off, the plasma should shine below! \[br]Note, the recipe is a work-in-progress and should not be attempted without proper safety precautions."; name = "Plasma Synthetizing Recipe"},/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aI" = (/obj/structure/table,/obj/item/weapon/reagent_containers/glass/beaker/bluespace{pixel_y = -6},/obj/item/weapon/reagent_containers/glass/beaker/bluespace{pixel_x = 5; pixel_y = 5},/obj/item/weapon/reagent_containers/glass/beaker/bluespace{pixel_x = -7},/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aJ" = (/mob/living/simple_animal/hostile/pirate,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aK" = (/obj/effect/decal/cleanable/chem_pile,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aL" = (/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aM" = (/mob/living/simple_animal/hostile/pirate/ranged,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aN" = (/obj/structure/cable/yellow{d2 = 2; icon_state = "0-2"},/obj/machinery/light{dir = 4; icon_state = "tube1"},/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aO" = (/obj/structure/table,/obj/item/stack/sheet/mineral/silver,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aP" = (/obj/machinery/chem_master,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aQ" = (/obj/machinery/chem_dispenser,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aR" = (/obj/machinery/chem_heater,/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aS" = (/obj/effect/decal/cleanable/blood,/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aT" = (/obj/structure/cable/yellow{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/item/weapon/crowbar,/obj/structure/cable/yellow{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aU" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aV" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aW" = (/obj/machinery/power/port_gen/pacman{sheets = 100},/obj/structure/cable/yellow,/turf/open/floor/plating,/area/lavaland/surface/outdoors)
+"aX" = (/obj/structure/table,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aY" = (/obj/structure/table,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma{pixel_x = -6; pixel_y = 1},/obj/item/stack/sheet/mineral/plasma{pixel_x = 3},/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"aZ" = (/obj/structure/table,/obj/item/stack/sheet/mineral/diamond,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"ba" = (/obj/structure/table,/obj/item/stack/sheet/mineral/gold{pixel_y = 4},/obj/item/stack/sheet/mineral/gold,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+"bb" = (/obj/structure/table,/obj/item/stack/cable_coil/yellow,/turf/open/floor/plasteel/cmo,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaabababababaaacacacacacac
+aaaaabababababaaaaababababaaacacacacacac
+ababadaeafaeagababababababaaacacacacacac
+ababahaiajakaeababababababaaacacacacacac
+ababahaiajalaeabamabanababaaacacacacacac
+ababaoaeapaeaqabamaramabamaaaaacacacacac
+ababababababababamasamamatamaaacacacacac
+acaaaaaaabaaaaaaauavauatawaxaaacacacacac
+acacacaaaaaaaaaaauaxauayaxaxaaaaacacacac
+acacacaaaaauauauauazaAauauauaaaaacacacac
+acacaaaaaaauaBaCaDaEaFaGaHauaaaaaaacacac
+acacaaaaaaauaIaJaEaKaLaMaNauaaaaacacacac
+acacacaaaaauaOaEaPaQaRaSaTauaaaaacacacac
+acacaaaaaaauaEaKaJaUaVaEaWauaaaaacacacac
+acacaaaaaaauaXaYaXaZbabbaXauaaaaaaaaacac
+acacacaaaaauauauauauauauauauaaaaaaaaacac
+acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacac
+acacaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacac
+acaaaaaaaaacaaacacaaaaacacaaaaaaacacacac
+acacacacacacaaacacacacacacacacacacacacac
+"}
