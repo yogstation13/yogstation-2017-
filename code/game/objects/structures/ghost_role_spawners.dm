@@ -182,6 +182,7 @@
 		ashwalker.forceMove(get_turf(src))
 		ashwalker.real_name = name
 		ashwalker.name = name
+		ashwalker.blood_volume = BLOOD_VOLUME_NORMAL
 		reset_rebirth()
 		ashwalker = null
 	qdel(src)
