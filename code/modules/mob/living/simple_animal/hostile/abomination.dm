@@ -36,6 +36,6 @@
 	. = ..()
 	if(target)
 		if(screamCD < world.time)
-			visible_message("[src] grows a wicked smile before dropping their jaw and inhaling.")
+			visible_message("[src.name] grows a wicked smile before dropping their jaw and inhaling.")
 			scream.choose_targets(src)
 			screamCD = world.time + 1200
