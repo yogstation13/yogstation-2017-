@@ -20,7 +20,7 @@
 	desc = "An armoured hood for exploring harsh environments."
 	icon_state = "explorer"
 	body_parts_covered = HEAD
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
@@ -116,6 +116,10 @@
 			return
 
 /obj/item/weapon/lazarus_injector/emp_act()
+	if(!malfunctioning)
+		malfunctioning = 1
+
+/obj/item/weapon/lazarus_injector/emag_act()
 	if(!malfunctioning)
 		malfunctioning = 1
 
