@@ -117,7 +117,7 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("ALIEN"   ,	ALIEN)
 	interpreter.SetVar("ROBOT"   ,	ROBOT)
 	interpreter.SetVar("SLIME"   ,	SLIME)
-	interpreter.SetVar("DRONE"   ,	DRONE)
+	/*interpreter.SetVar("DRONE"   ,	DRONE)*/
 
 	var/curlang = HUMAN
 	if(istype(signal.data["mob"], /atom/movable))
