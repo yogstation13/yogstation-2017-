@@ -195,7 +195,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker/cosmic/spec_life(mob/living/carbon/human/H)
 	. = ..()
 	if(H.health < 0)
-		if(rebirthcount > 3)
+		if(rebirthcount >= 3)
 			return
 		if(rebirth)
 			return
