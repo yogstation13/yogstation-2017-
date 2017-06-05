@@ -156,20 +156,28 @@
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 20
+	damage = 30
 	damage_type = TOX
 	nodamage = 0
 	stutter = 5
-	irradiate = 35
-	stun = 1
+	irradiate = 50
+	stun = 2
 
 obj/item/projectile/energy/bolt/on_hit(target, blocked = 0)
 	..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.confused)//if they've already been shot
-			C.silent = 3 // if you can't hit another shot in 3 seconds you don't deserve the mute
+			C.silent = 6 // if you can't hit another shot in 6 seconds you don't deserve the mute
 		C.confused = 3
+		if(!(RADIMMUNE in C.dna.species.specflags))
+			randmuti(C)
+			if(prob(80))
+				if(prob(90))
+					randmutb(C)
+				else
+					randmutg(C)
+			C.domutcheck()
 
 /obj/item/projectile/energy/bolt/large
 	damage = 20
