@@ -2,9 +2,9 @@
 	name = "Borer"
 	typepath = /datum/round_event/borer
 	weight = 15
-	max_occurrences = 1
+	max_occurrences = 0
 
-	earliest_start = 12000
+	earliest_start = 180000
 
 /datum/round_event/borer
 	announceWhen = 3000 //Borers get 5 minutes till the crew tries to murder them.
