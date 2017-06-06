@@ -22,6 +22,18 @@
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
+/obj/item/device/aicard/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/stock_parts/cell/potato))
+		var/obj/item/weapon/stock_parts/cell/potato/P = W
+		if(P.storage)
+			if(P.storage.AI)
+				P.transfer_ai(AI_TRANS_TO_CARD, user, P.storage.AI, src)
+				P.storage.AI = null // since that proc works normally for [Core] -> [Intellicard] we have to manually turn off this var
+				P.name = initial(P.name)
+				P.desc = initial(P.desc)
+				return 0
+	return ..()
+
 /obj/item/device/aicard/update_icon()
 	if(AI)
 		name = "[initial(name)]- [AI.name]"
