@@ -95,4 +95,4 @@
 			if(istype(A, /mob/living/carbon/alien/humanoid/royal))
 				user << "<span class='warning>You can't slice off [target]'s tail!</span>"
 			else
-				user << "<span class='warning'>[target] is missing it's tail!</span>'
+				user << "<span class='warning'>[target] is missing it's tail!</span>"

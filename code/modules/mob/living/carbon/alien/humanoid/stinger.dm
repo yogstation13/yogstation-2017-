@@ -6,7 +6,7 @@
 	desc = "A curious tail with a dagger sharp ail. It drags itself around the xenomorph picking up on anything that might be around it."
 	force = 15
 	hitsound = 'sound/xenomorph/xeno_tailwhip1.ogg'
-	icon = 'icon/mob/alien.dmi'
+	icon = 'icons/mob/alien.dmi'
 	icon_state = "xenotail"
 	var/datum/reagent/chemical = null // will the tail inject a chemical into someone?
 	var/chemregain // operates as a cooldown
