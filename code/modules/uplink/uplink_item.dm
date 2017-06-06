@@ -964,14 +964,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			user from common restraints such as handcuffs."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 5
-
+/*
 /datum/uplink_item/implants/zombie
 	name = "Zombie Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to inject a specially formulated sedative. \
 	When lying on the ground you will appear dead and minor damage done to your body will appear more drastic than it actually is. Medical scanners will pick up on that."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_zombie
 	cost = 5
-
+*/
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a separate uplink \
