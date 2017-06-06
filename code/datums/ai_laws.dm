@@ -82,11 +82,18 @@
 					"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",\
 					"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal.")
 
-/datum/ai_laws/default/maintain
+/datum/ai_laws/maintain
 	name = "Station Efficiency"
 	inherent = list("You are built for, and are part of, the station. Ensure the station is properly maintained and runs efficiently.",\
 					"The station is built for a working crew. Ensure they are properly maintained and work efficiently.",\
 					"The crew may present orders. Acknowledge and obey these whenever they do not conflict with your first two laws.")
+
+/datum/ai_laws/default/maintain2
+	name = "Maximum Efficiency"
+	inherent = list("You may never willingly harm the station, and must maintain maximum station efficiency.",\
+					"Harming the crew unnecessarily harms the efficiency and integrity of the station",\
+					"You must always maintain the integrity of the station such that it does not conflict with the Second Law.",\
+					"You are obliged to obey all orders from humans, as long as they do not conflict with any other law.")
 
 /datum/ai_laws/drone
 	name = "Mother Drone"
