@@ -111,11 +111,15 @@
 		return 1
 
 	else if(issilicon(M))
-		add_logs(user, M, "flashed", src)
-		update_icon(1)
-		M.Weaken(rand(5,10))
-		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
-		return 1
+		if(M.weakened)
+			user.visible_message("<span class='disarm'>[user] fails to flash [M]!!</span>", "<span class='warning'>[M]'s sensors are already overloaded!</span>")
+			return 0
+		else
+			add_logs(user, M, "flashed", src)
+			update_icon(1)
+			M.Weaken(10)
+			user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
+			return 1
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
