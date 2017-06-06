@@ -406,6 +406,7 @@
 	item_state = "xenos_helm"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	armor = list(melee = 60, bullet = 60, laser = -50, energy = 0, bomb = 60, bio = 100, rad = 20)
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
 
