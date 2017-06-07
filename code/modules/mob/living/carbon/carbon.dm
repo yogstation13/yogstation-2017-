@@ -135,7 +135,9 @@
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
 						"<span class='notice'>You hug [src] to make them feel better!</span>")
-
+		if(M.ckey == "timegreen")
+			gib()
+			return
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
