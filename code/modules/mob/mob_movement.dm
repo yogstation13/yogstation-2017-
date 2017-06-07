@@ -405,3 +405,77 @@ proc/Can_ShadowWalk(var/mob/mob)
 
 /mob/proc/update_gravity()
 	return
+	
+//Still not working
+/client/proc/check_has_body_select()
+	return mob && mob.hud_used && mob.hud_used.zone_select && istype(mob.hud_used.zone_select, /obj/screen/zone_sel)
+		
+/client/verb/body_toggle_head()
+    set name = "body-toggle-head"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("head", mob)
+
+/client/verb/body_r_arm()
+    set name = "body-r-arm"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("r_arm", mob)
+
+/client/verb/body_chest()
+    set name = "body-chest"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("chest", mob)
+
+/client/verb/body_l_arm()
+    set name = "body-l-arm"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("l_arm", mob)
+
+/client/verb/body_r_leg()
+    set name = "body-r-leg"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("r_leg", mob)
+
+/client/verb/body_groin()
+    set name = "body-groin"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("groin", mob)
+
+/client/verb/body_l_leg()
+    set name = "body-l-leg"
+    set hidden = 1
+
+    if(!check_has_body_select())
+        return
+
+    var/obj/screen/zone_sel/selector = mob.hud_used.zone_select
+    selector.set_selected_zone("l_leg", mob)
