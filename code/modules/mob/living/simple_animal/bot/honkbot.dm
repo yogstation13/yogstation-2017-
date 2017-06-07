@@ -1,4 +1,3 @@
-//Floorbot assemblies
 /obj/item/weapon/honkbox
 	desc = "It's a medkit with a bikehorn crudely glued to the side. Why would someone make this?"
 	name = "bikehorn and medkit"
@@ -47,7 +46,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	environment_smash = 0
-	var/emagged = 0 //Allow drones to be emagged.
+	var/emagged = 0
 	attacktext = "honks"
 	projectiletype = /obj/item/projectile/clownblast
 	attack_sound = 'sound/items/bikehorn.ogg'
@@ -85,7 +84,7 @@
 		..()
 		return
 
-	//Making a honkbox steo 2
+	//Making a honkbox step 2
 
 	var/obj/item/weapon/honkbox_mask/A = new /obj/item/weapon/honkbox_mask
 
@@ -120,9 +119,8 @@
 	name = "honk"
 	icon_state = "banana"
 	hitsound = 'sound/items/bikehorn.ogg'
-	damage = 0
-	damage_type = BURN
-	nodamage = 1
+	damage = 5
+	damage_type = STAMINA
 	flag = "energy"
 
 
@@ -168,13 +166,19 @@
 	if(last_honk <= 0)
 		last_honk = honk_rate
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-		visible_message("<span>[src] honks his horn.</span>")
+		visible_message("<span>[src] honks its horn.</span>")
 	if(emagged == 2)
 		last_banana--
 		if(last_banana <= 0)
 			new /obj/item/weapon/grown/bananapeel(src.loc,100)
 			last_banana = banana_rate
 		projectiletype = /obj/item/projectile/clownblast/syndicate
+
+/mob/living/simple_animal/hostile/honkbot/AttackingSelf()
+	if(last_honk <= 0)
+		last_honk = honk_rate
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		visible_message("<span>[src] honks its horn.</span>")
 
 /mob/living/simple_animal/hostile/honkbot/death(gibbed)
  	visible_message("<span class='danger'>[src] is destroyed!</span>")
