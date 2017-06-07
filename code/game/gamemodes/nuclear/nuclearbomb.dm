@@ -84,7 +84,7 @@ var/bomb_set
 
 	switch(deconstruction_state)
 		if(NUKESTATE_INTACT)
-			if(istype(I, /obj/item/weapon/screwdriver/nuke))
+			if(istype(I, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				user << "<span class='notice'>You start removing [src]'s front panel's screws...</span>"
 				if(do_after(user, 60/I.toolspeed,target=src))
