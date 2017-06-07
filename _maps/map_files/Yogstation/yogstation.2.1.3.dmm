@@ -5308,6 +5308,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/mob/living/simple_animal/pet/dog/corgi/tactical/roxie,
 /turf/open/floor/plasteel,
 /area/security/main)
 "ajs" = (
