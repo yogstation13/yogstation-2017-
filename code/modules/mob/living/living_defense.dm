@@ -264,10 +264,6 @@
 		return 1
 
 /mob/living/attack_paw_zombie(mob/living/carbon/human/zombie/M)
-	if (!ticker)
-		M << "You cannot attack people before the game has started."
-		return 0
-
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		M << "No attacking people at spawn, you jackass."
 		return 0
@@ -276,71 +272,43 @@
 		if (prob(50))
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 
-			var/isZombie = is_zombie(src)
+			var/isZombie = iszombiemob(src)
 			var/isInfected = is_infected(src)
-			//var/isDead = (src.stat == DEAD ? 1 : 0)
 			var/isUnconcious = (src.stat == UNCONSCIOUS ? 1 : 0)
-			var/isCritical = src.InCritical()
 
-			var/knockOver = 1
-			var/allowDamage = 1
 			var/selfMessage = ""
 			var/localMessage = ""
 			if(isZombie)
-				selfMessage = "Your zombified brain doesn't let you really bite into another zombie, instead you just nibble the flesh."
-				localMessage = "[M.name] nibbles [name]."
-				allowDamage = 0
-				knockOver = 0
+				selfMessage = "Your zombified brain can't find anything of value in [name]."
 			else if(isInfected)
-				selfMessage = "Your zombified brain doesn't let you really bite into an infected, instead you just nibble the flesh transferring more of the infection. Quickening the transition."
-				localMessage = "[M.name] nibbles [name]."
-				allowDamage = 0
-			else if(isCritical)
-				selfMessage = "You struggle to find any meat on [name], he twitches a little! This body seems to not have much left to eat."
-				localMessage = "[M.name] eats [name], he twitches a little!"
-				allowDamage = 0
+				selfMessage = "You bite a cunk out of [name] worsening the infection."
 			else if(isUnconcious)
-				selfMessage = "You eat a chunk out of [name], he twitches a lot! It would be tasty, if that part of your brain still worked."
-				localMessage = "[M.name] eats [name], he twitches a lot!"
-			else //if(isDead)
-				selfMessage = "You bite a chunk out of [name]! It would be tasty, if that part of your brain still worked."
-				localMessage = "[M.name] bites [name]!"
+				selfMessage = "You eat a chunk out of [name], [gender == MALE ? "he" : "she"] twitches a lot!"
+				localMessage = "[M.name] eats [name], [gender == MALE ? "he" : "she"] twitches a lot!"
 
-			visible_message("<span class='danger'>[selfMessage]</span>", \
-					"<span class='userdanger'>[localMessage]</span>")
+			if(!selfMessage)
+				selfMessage = "You bite a chunk out of [name]!"
+			if(!localMessage)
+				localMessage = "[M.name] bites [name] ferociously!"
 
-			if(knockOver)
-				src << "<span class='danger'>The pain of being bitten causes you to drop what you are holding and fall over!</span>"
-				drop_l_hand()
-				drop_r_hand()
-				fall(1)
-				resting = 1
-				update_canmove()
-				spawn(rand(30, 70))
-					resting = 0
-					update_canmove()
+			visible_message("<span class='userdanger'>[localMessage]</span>", \
+					"<span class='danger'>[selfMessage]</span>")
 
-			if(allowDamage)
-				var/damage = rand(20, 30)
-				if (health > -100)
-					adjustBruteLoss(damage)
-					health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-					AddDisease(new /datum/disease/transformation/rage_virus, M)
+			var/damage = rand(20, 30)
+			if (health > -100)
+				adjustBruteLoss(damage)
+				AddDisease(new /datum/disease/transformation/rage_virus, M)
 			else
 				for(var/datum/disease/D in viruses)
 					if(D.stage < 5)
 						D.stage++
 						D.process()
 
-			/*var/totalRage = 0
-			for(var/datum/disease/D in viruses)
-				world << "disease=[D]"
-				if(istype(D, /datum/disease/transformation/rage_virus))
-					totalRage++
-					world << "totalRage=[totalRage]"
-					if(totalRage % 2 == 0)
-						world << "D.stage=[D.stage]"*/
-
+			if(isInfected)
+				for(var/datum/disease/transformation/rage_virus/RV in viruses)
+					if(RV.stage > 5)
+						RV.stage++
+						RV.process()
 
 			return 1
 		else
@@ -352,7 +320,7 @@
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
 	if(istype(M, /mob/living/carbon/human/zombie))
 		var/mob/living/carbon/human/zombie/Z = M;
-		attack_paw_zombie(Z)
+		attack_paw_zombie(Z) // zombies do something else.
 		return;
 	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."

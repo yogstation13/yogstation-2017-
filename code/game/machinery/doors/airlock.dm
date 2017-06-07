@@ -67,6 +67,8 @@ var/list/airlock_overlays = list()
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
 
+	var/zombieknocking
+
 	explosion_block = 1
 
 /obj/machinery/door/airlock/New()
@@ -558,6 +560,24 @@ var/list/airlock_overlays = list()
 		if(src.isElectrified())
 			if(src.shock(user, 100))
 				return
+
+	if(iszombiemob(user))
+		if(zombieknocking)
+			open(2)
+			if(zombieknocking)
+				zombieknocking = FALSE
+			playsound(get_turf(src), 'sound/machines/airlockforced.ogg', 100, 1)
+			return
+		user << "<span class='warning'>You start banging on the door. If another zombie comes by, and bangs on it \
+			the door will force open.</span>"
+		zombieknocking = TRUE
+		playsound(get_turf(src), 'sound/effects/zombie_door_pounding.ogg', 100, 1)
+		if(do_after(user, 100, target = src))
+			zombieknocking = FALSE
+		else
+			zombieknocking = FALSE
+		return
+
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user

@@ -14,37 +14,21 @@
 	name = "zombie"
 	voice_name = "zombie"
 	verb_say = "moans"
-	icon = 'icons/mob/zombie.dmi'
-	icon_state = "zombie1"
+//	icon = 'icons/mob/zombie.dmi'
+//	icon_state = "zombie1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	//languages_spoken = ZOMBIE
-	//languages_understood = ZOMBIE
 	ventcrawler = 1
 
 /mob/living/carbon/human/zombie/New()
 	create_reagents(1000)
-	verbs += /mob/living/proc/mob_sleep
-	verbs += /mob/living/proc/lay_down
-
-	internal_organs += new /obj/item/organ/appendix
-	internal_organs += new /obj/item/organ/heart
-	internal_organs += new /obj/item/organ/brain
-
-	if(name == "zombie")
-		name = text("zombie ([rand(1, 1000)])")
+	name = text("zombie ([rand(1, 1000)])")
 	real_name = name
 	gender = pick(MALE, FEMALE)
-
 	disabilities |= CLUMSY
-
+	internal_organs += new /obj/item/organ/body_egg/zombie_infection/non_infectious
 	..()
-
-/proc/is_zombie(mob/user)
-	if(istype(user, /mob/living/carbon/human/zombie))
-		return 1
-	else
-		return 0
+	set_species(/datum/species/zombie)
 
 /proc/is_infected(mob/M)
 	for(var/datum/disease/D in M.viruses)
@@ -53,9 +37,7 @@
 	return 0
 
 /mob/living/carbon/human/zombie/prepare_data_huds()
-	//Prepare our med HUD...
 	..()
-	//...and display it.
 	for(var/datum/atom_hud/data/human/medical/hud in huds)
 		hud.add_hud_to(src)
 
@@ -65,115 +47,11 @@
 	if(stat != DEAD && rand(1,20) == 1)
 		say("This message will be turned into urrs.")
 
-/mob/living/carbon/human/zombie/movement_delay()
-	var/tally = 0
-	if(reagents)
-		if(reagents.has_reagent("hyperzine")) return -1
-
-		if(reagents.has_reagent("nuka_cola")) return -1
-
-	// Health will be ignored, zombies feel no pain
-	//var/health_deficiency = (100 - health)
-	//if(health_deficiency >= 45) tally += (health_deficiency / 25)
-
-	// Zombies will not feel the cold
-	//if (bodytemperature < 283.222)
-	//	tally += (283.222 - bodytemperature) / 10 * 1.75
-
-	// Add generic slowness for zombie
-	return tally+config.zombie_delay+(rand(1, 3))
-
-/mob/living/carbon/human/zombie/Bump(atom/movable/AM as mob|obj, yes)
-	if ((!( yes ) || now_pushing))
-		return
-	now_pushing = 1
-	if(ismob(AM))
-		var/mob/tmob = AM
-		if(!(CANPUSH in tmob.status_flags))
-			now_pushing = 0
-			return
-
-		tmob.LAssailant = src
-	now_pushing = 0
-	..()
-	if (!istype(AM, /atom/movable))
-		return
-	if (!( now_pushing ))
-		now_pushing = 1
-		if (!( AM.anchored ))
-			var/t = get_dir(src, AM)
-			if (istype(AM, /obj/structure/window))
-				if(AM:ini_dir == NORTHWEST || AM:ini_dir == NORTHEAST || AM:ini_dir == SOUTHWEST || AM:ini_dir == SOUTHEAST)
-					for(var/obj/structure/window/win in get_step(AM,t))
-						now_pushing = 0
-						return
-			step(AM, t)
-		now_pushing = null
-
-
-/mob/living/carbon/human/zombie/attack_paw(mob/M as mob)
-	//..()
-
-	if (M.a_intent == "help")
-		help_shake_act(M)
-	else
-		if (M.a_intent == "harm" && !M.is_muzzled())
-			if (prob(50))
-				playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-
-				var/isZombie = iszombiemob(src)
-				var/isInfected = is_infected(src)
-				//var/isDead = (src.stat == DEAD ? 1 : 0)
-				var/isUnconcious = (src.stat == UNCONSCIOUS ? 1 : 0)
-				var/isCritical = src.InCritical()
-
-				var/allowDamage = 1
-				var/selfMessage = ""
-				var/localMessage = ""
-				if(isZombie)
-					selfMessage = "Your zombified brain doesn't let you really bite into another zombie, instead you just nibble the flesh."
-					localMessage = "[M.name] nibbles [name]."
-					allowDamage = 0
-				else if(isInfected)
-					selfMessage = "Your zombified brain doesn't let you really bite into an infected, instead you just nibble the flesh."
-					localMessage = "[M.name] nibbles [name]."
-					allowDamage = 0
-				else if(isCritical)
-					selfMessage = "You struggle to find any meat on [name], he twitches a little! This body seems to not have much left to eat."
-					localMessage = "[M.name] eats [name], he twitches a little!"
-					allowDamage = 0
-				else if(isUnconcious)
-					selfMessage = "You eat a chunk out of [name], he twitches a lot! It would be tasty, if that part of your brain still worked."
-					localMessage = "[M.name] eats [name], he twitches a lot!"
-				else //if(isDead)
-					selfMessage = "You bite a chunk out of [name]! It would be tasty, if that part of your brain still worked."
-					localMessage = "[M.name] bites [name] ferociously!"
-
-				visible_message("<span class='userdanger'>[localMessage]</span>", \
-						"<span class='danger'>[selfMessage]</span>")
-
-				if(allowDamage)
-					var/damage = rand(20, 30)
-					if (health > -100)
-						adjustBruteLoss(damage)
-						health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
-
-				for(var/datum/disease/D in M.viruses)
-					//contract_disease(D,1,0)
-					src.ForceContractDisease(D)
-			else
-				visible_message("<span class='danger'>[M.name] has attempted to bite [name] ferociously!</span>", \
-					"<span class='userdanger'>[M.name] has attempted to bite [name] ferociously!</span>")
-
 /mob/living/carbon/human/zombie/attack_larva(mob/living/carbon/alien/larva/L as mob)
-
 	switch(L.a_intent)
 		if("help")
 			visible_message("<span class='notice'>[L] rubs its head against [src].</span>")
-
-
 		else
-
 			var/damage = rand(1, 3)
 			visible_message("<span class='danger'>[L] bites [src]!</span>", \
 					"<span class='userdanger'>[L] bites [src]!</span>")
@@ -223,17 +101,8 @@
 			if (M.a_intent == "grab")
 				if (M == src || anchored)
 					return
-
-		//		var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-		//		M.put_in_active_hand(G)
-
 				grabbedby(M)
-
-			//	G.synch()
-
 				LAssailant = M
-
 				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 				visible_message("<span class='warning'>[M] has grabbed [name] passively!</span>")
 			else
@@ -286,16 +155,7 @@
 		if ("grab")
 			if (M == src || anchored)
 				return
-		//	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-	//		M.put_in_active_hand(G)
-
 			grabbedby(M)
-
-		//	G.synch()
-
-			LAssailant = M
-
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			visible_message("<span class='warning'>[M] has grabbed [name] passively!</span>")
 
@@ -313,20 +173,6 @@
 			adjustBruteLoss(damage)
 			updatehealth()
 
-/*/mob/living/carbon/zombie/attack_animal(mob/living/simple_animal/M as mob)
-	if(M.melee_damage_upper == 0)
-		M.emote("[M.friendly] [src]")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		visible_message("<span class='danger'>[M] [M.attacktext] [src]!</span>", \
-				"<span class='userdanger'>[M] [M.attacktext] [src]!</span>")
-		add_logs(M, src, "attacked", admin=0)
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-		updatehealth()*/
-
-
 /mob/living/carbon/human/zombie/attack_slime(mob/living/simple_animal/slime/M as mob)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 35)
@@ -334,14 +180,6 @@
 			damage = rand(20, 40)
 		adjustBruteLoss(damage)
 		updatehealth()
-
-/mob/living/carbon/human/zombie/verb/removeinternal()
-	set name = "Remove Internals"
-	set category = "IC"
-	internal = null
-
-///mob/living/carbon/human/zombie/var/co2overloadtime = null
-///mob/living/carbon/human/zombie/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/human/zombie/ex_act(severity)
 	..()
@@ -406,8 +244,6 @@
 
 /mob/living/carbon/human/zombie/say_quote(var/text)
 	return "[verb_say], \"[text]\"";
-
-
 
 /mob/living/carbon/human/zombie/check_breath(datum/gas_mixture/breath)
 	return
@@ -497,9 +333,10 @@
 	return
 
 /mob/living/carbon/human/zombie/Weaken(amount, ignore_canweaken = 0)
-	amount = amount / 10
-	..(amount, ignore_canweaken)
-	return
+	return 0
+//	amount = amount / 10
+//	..(amount, ignore_canweaken)
+//	return
 
 /mob/living/carbon/human/zombie/SetWeakened(amount)
 	amount = amount / 10
@@ -555,3 +392,37 @@
 	amount = amount / 10
 	..(amount)
 	return
+
+/mob/living/carbon/human/zombie/bullet_act(obj/item/projectile/P, def_zone)
+	if(P)
+		if(P.def_zone)
+			if(P.def_zone == "head")
+				if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
+					P.on_hit(src, 100, def_zone)
+					return 2
+				P.damage = P.damage * 1.5 // damage to head is 1.5x stronger
+			else
+				if(!stunned)
+					Stun(P.damage)
+				visible_message("<span class='warning'>[P] smacks against [src]'s [def_zone], but doesn't do any \
+								damage!</span>",\
+								"<span class='warning'>[P] smacks against [src]'s [def_zone], but doesn't do any \
+								damage!</span>")
+				return 2
+		return (..(P , def_zone))
+
+/mob/living/carbon/human/zombie/check_shields(damage, attack_text, atom/movable/AM, attack_type, armour_penetration, targpart)
+	if(targpart)
+		damage = damage * 1.5
+		..(damage, attack_text, AM, attack_type, armour_penetration, targpart)
+	else
+		if(!stunned)
+			Stun(damage)
+			var/hittext = "smacks"
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				hittext = pick(I.attack_verb)
+			visible_message("<span class='warning'>[AM] [hittext] [src], but doesn't do any \
+								damage!</span>",\
+								"<span class='warning'>[AM] [hittext] [src], but doesn't do any \
+								damage!</span>")

@@ -247,7 +247,7 @@
 	//cure_text = "Whiskey"
 	//cures = list("whiskey")
 	spread_text = "zombie Bites"
-	spread_flags = SPECIAL | BLOOD
+	spread_flags = SPECIAL
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 1
 	cure_chance = 1

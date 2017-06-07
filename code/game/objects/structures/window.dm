@@ -136,6 +136,9 @@
 	if(!can_be_reached(user))
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
+	if(istype(user, /mob/living/carbon/human/zombie))
+		attack_generic(user, rand(30,50), BRUTE)
+		return
 	user.visible_message("[user] knocks on [src].")
 	add_fingerprint(user)
 	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)

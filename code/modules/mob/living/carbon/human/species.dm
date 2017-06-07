@@ -1179,7 +1179,7 @@
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		user.do_attack_animation(H)
-		if(H.check_shields(I.force, "the [I.name]", user, MELEE_ATTACK, I.armour_penetration))
+		if(H.check_shields(I.force, "the [I.name]", user, MELEE_ATTACK, I.armour_penetration, target_area))
 			return 0
 
 	var/hit_area
