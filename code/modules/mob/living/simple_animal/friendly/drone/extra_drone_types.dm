@@ -91,7 +91,7 @@
 	bubble_icon = "clock"
 	heavy_emp_damage = 10
 	laws = "0. Purge all untruths and honor Ratvar."
-	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
+	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled/ratvar
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
