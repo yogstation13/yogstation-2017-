@@ -64,6 +64,7 @@
 	var/faction = "wizard"
 	var/broken = 0
 	var/braindead_check = 0
+	var/announce
 
 /obj/structure/academy_wizard_spawner/New()
 	START_PROCESSING(SSobj, src)
@@ -127,6 +128,17 @@
 	current_wizard = wizbody
 
 	give_control()
+
+	if(!announce)
+		announce = TRUE
+		addtimer(src, "announcement", 500)
+
+
+/obj/strucutre/academy_wizard_spawner/proc/announcement()
+	priority_announce("Attention! A derelict space ship controlled by the Wizard Federation has \
+		been detected in your star system. Designation to the ship can be controlled by this station's \
+		on-board teleporter.", null, \
+		'sound/machines/Alarm.ogg', "Central Command")
 
 /obj/structure/academy_wizard_spawner/proc/update_status()
 	if(health<0)
