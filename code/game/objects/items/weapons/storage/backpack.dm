@@ -334,11 +334,15 @@
 
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
-	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/weldingtool/hugetank(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/stack/cable_coil/random(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
+	new /obj/item/device/lightreplacer(src)
+	new /obj/item/weapon/soap/syndie(src)
+	new /obj/item/weapon/rcd(src)
+	new /obj/item/weapon/pipe_dispenser(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/clown
 	name = "clown's dufflebag"
