@@ -474,6 +474,8 @@ var/const/INJECT = 5 //injection
 	if(istype(M, /mob))
 		if(M.reagents.has_reagent("stimulants"))
 			return 1
+		if(M.mind.vampire)
+			return 1
 		else
 			M.status_flags -= NOCRIT
 

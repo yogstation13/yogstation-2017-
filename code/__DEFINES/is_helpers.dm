@@ -84,6 +84,8 @@
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
 
+#define isvampirebat(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/bat/vampire))
+
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
 #define isAI(A) (istype(A, /mob/living/silicon/ai))
