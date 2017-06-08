@@ -1,4 +1,6 @@
 /mob/living/carbon/examine(mob/user)
+	user.reveal_examine(src, 1)
+
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 
 	if (handcuffed)

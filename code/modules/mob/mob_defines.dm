@@ -151,3 +151,6 @@
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
+
+	// For revealing examines. Check mob.dm for reveal_examine()
+	var/examineCD

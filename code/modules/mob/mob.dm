@@ -968,3 +968,38 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+#define REV_EXAMINE_CD 60
+
+/mob/proc/reveal_examine(atom/A, range) // we are examining A, and revealing ourselves
+	if(src == A) // so no one can tell if we're checking ourselves out
+		return
+	if(istype(src, /mob/dead/observer))
+		return
+	if(stat != CONSCIOUS)
+		return
+	if(!isliving(src))
+		return
+	if(invisibility)
+		return
+	if(!alpha)
+		return
+	if(client.prefs.examine_throttle == NO_VISIBLE)
+		return
+	if(client.prefs.examine_throttle == HALF_VISIBLE)
+		if(examineCD)
+			if(world.time > examineCD) // time has passed
+				examineCD = 0
+			else // we're still on the CD.
+				return
+		else
+			examineCD = world.time + REV_EXAMINE_CD
+			return
+	if(istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/human = src
+		if((istype(human.head, /obj/item/clothing/head/helmet/space/hardsuit)))
+			return
+	for(var/mob/M in view(src, range))
+		M << "<span class='small'>[src] looks at [A].</span>"
+
+#undef REV_EXAMINE_CD

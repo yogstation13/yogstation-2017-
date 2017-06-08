@@ -126,6 +126,7 @@ h1.alert, h2.alert		{color: #000000;}
 .command_headset       {font-weight: bold; font-size: 3;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
+.small					{font-size: 1}
 .greentext				{color: #00FF00;	font-size: 3;}
 .redtext				{color: #FF0000;	font-size: 3;}
 .clown					{color: #FF69Bf;	font-size: 3; font-family: "Comic Sans MS", cursive, sans-serif; font-weight: bold;}
