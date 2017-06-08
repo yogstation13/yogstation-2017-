@@ -94,7 +94,7 @@
 			if(holder)
 				if(!holder.fakekey || C.holder)
 					var/tag = "[find_admin_rank(src)]"
-					if(check_rights_for(src, R_ADMIN) || holder.rank.name == ("SeniorCoder" || "Coder"))
+					if(find_admin_rank(src))
 						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
 					else
 						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
@@ -103,7 +103,7 @@
 
 			else if(!(key in C.prefs.ignoring))
 				if(is_donator(src))
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[D\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 				else
 					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
@@ -216,53 +216,63 @@ var/global/normal_ooc_colour = OOC_COLOR
 /client/proc/find_admin_rank(client)
 	var/client/C = client
 
+	var/info
+
 	switch(C.holder.rank.name)
+
 		if("CouncilMember")
-			return "\[Council\]"
+			info = "\[Council\]"
 
 		if("ModeratorV2")
-			return "\[Moderator\]"
+			info = "\[M+\]"
 
 		if("Moderator")
-			return "\[Moderator\]"
+			info = "\[M\]"
 
 		if("Administrator")
-			return "\[Admin\]"
+			info = "\[A\]"
 
 		if("PrimaryAdmin")
-			return "\[PrimaryAdmin\]"
+			info = "\[PA\]"
 
 		if("SeniorAdmin")
-			return "\[SeniorAdmin\]"
+			info = "\[SA\]"
 
 		if("HeadCoder")
-			return "\[HeadCoder\]"
+			info = "\[HC\]"
 
 		if("ModeratorOnProbation")
-			return "\[ModOnProbation\]"
+			info = "\[M-\]"
 
 		if("ProbationAdmin")
-			return "\[AdminOnProbation\]"
+			info = "\[A-\]"
+
 		if("NonPlayingAdmin")
-			return "\[Admin\]"
+			info = "\[A-\]"
 
 		if("NonPlayingMod")
-			return "\[Moderator\]"
+			info = "\[M-\]"
 
 		if("AdminOnVacation")
-			return "\[AdminOnVacation\]"
+			info = "\[A-\]"
 
 		if("ModeratorOnVacation")
-			return "\[ModOnVacation\]"
+			info = "\[M-\]"
 
 		if("SeniorCoder")
-			return "\[SeniorCoder\]"
+			info = "\[SC\]"
 
 		if("Coder")
-			return "\[Coder\]"
+			info = "\[C\]"
 
 		if("Bot")
-			return "\[YogBot\]"
+			info = "\[YogBot\]"
 
 		if("RetiredAdmin")
-			return "\[Retmin\]"
+			info = "\[RA\]"
+
+		if("!localhost!")
+			info = "\[Overlord\]"
+
+
+	return info
