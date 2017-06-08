@@ -1453,8 +1453,3 @@
 	var/new_y = target.y*2 - thrower.y
 	target = locate(new_x,new_y,z)
 	..()
-
-
-
-
-
