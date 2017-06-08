@@ -169,6 +169,7 @@
 	health = 40
 	melee_damage_lower = 25
 	melee_damage_upper = 25
+	dismember_chance = 20
 	retreat_distance = 2 //AI wraiths will move in and out of combat
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -270,7 +271,7 @@
 
 
 /////////////////////////////Harvester/////////////////////////
-/mob/living/simple_animal/hostile/construct/harvester
+/mob/living/simple_animal/hostile/construct/builder/harvester
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
@@ -281,7 +282,7 @@
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	speed = 0
-	attacktext = "prods"
+	attacktext = "slams"
 	environment_smash = 3
 	attack_sound = 'sound/weapons/punch3.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
@@ -291,6 +292,6 @@
 	playstyle_string = "<B>You are a Harvester. You are strong and fast. \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
 
-/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
+/mob/living/simple_animal/hostile/construct/builder/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = 2 //SMASH IT ALL

@@ -801,9 +801,9 @@ Sorry Giacom. Please don't be mad :(
 			reagents.add_reagent("heparin", 5)
 		return 0
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/harvester, src, null, 0)
 	else
-		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
+		new /mob/living/simple_animal/hostile/construct/builder/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return
