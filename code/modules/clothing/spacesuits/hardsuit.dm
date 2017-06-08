@@ -108,7 +108,7 @@
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
 	icon_state = "hardsuit0-engineering"
 	item_state = "eng_helm"
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 35, bomb = 10, bio = 100, rad = 75)
 	item_color = "engineering"
 
 /obj/item/clothing/suit/space/hardsuit/engine
@@ -116,7 +116,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
 	icon_state = "hardsuit-engineering"
 	item_state = "eng_hardsuit"
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 35, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 
 /obj/item/clothing/suit/space/hardsuit/engine/New()
@@ -130,7 +130,7 @@
 	icon_state = "hardsuit0-atmospherics"
 	item_state = "atmo_helm"
 	item_color = "atmospherics"
-	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 0)
+	armor = list(melee = 30, bullet = 5, laser = 10, energy = 35, bomb = 10, bio = 100, rad = 0)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
@@ -152,7 +152,7 @@
 	icon_state = "hardsuit0-white"
 	item_state = "ce_helm"
 	item_color = "white"
-	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 90)
+	armor = list(melee = 40, bullet = 5, laser = 15, energy = 35, bomb = 50, bio = 100, rad = 100)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
@@ -162,7 +162,7 @@
 	name = "advanced hardsuit"
 	desc = "An advanced suit that protects against hazardous, low pressure environments. Shines with a high polish."
 	item_state = "ce_hardsuit"
-	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 90)
+	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 100)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
@@ -200,7 +200,7 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	item_color = "syndi"
-	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	armor = list(melee = 45, bullet = 50, laser = 45, energy = 15, bomb = 35, bio = 100, rad = 50)
 	on = 1
 	var/obj/item/clothing/suit/space/hardsuit/syndi/linkedsuit = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_mode)
@@ -294,7 +294,7 @@
 	alt_desc = "An elite version of the syndicate helmet, with improved armour and fire shielding. It is in combat mode. Property of Gorlex Marauders."
 	icon_state = "hardsuit0-syndielite"
 	item_color = "syndielite"
-	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 35, bomb = 55, bio = 100, rad = 70)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	visor_flags_inv = 0
@@ -309,7 +309,7 @@
 	icon_state = "hardsuit0-syndielite"
 	item_color = "syndielite"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
-	armor = list(melee = 60, bullet = 60, laser = 50, energy = 25, bomb = 55, bio = 100, rad = 70)
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 35, bomb = 55, bio = 100, rad = 70)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
@@ -334,32 +334,6 @@
 	item_state = "s_suit"
 	item_color = "owl"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/owl
-
-
-	//Wizard hardsuit
-/obj/item/clothing/head/helmet/space/hardsuit/wizard
-	name = "gem-encrusted hardsuit helmet"
-	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
-	icon_state = "hardsuit0-wiz"
-	item_state = "wiz_helm"
-	item_color = "wiz"
-	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
-	heat_protection = HEAD												//Uncomment to enable firesuit protection
-	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
-
-/obj/item/clothing/suit/space/hardsuit/wizard
-	icon_state = "hardsuit-wiz"
-	name = "gem-encrusted hardsuit"
-	desc = "A bizarre gem-encrusted suit that radiates magical energies."
-	item_state = "wiz_hardsuit"
-	w_class = 3
-	unacidable = 1
-	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
-	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
 
 
 	//Medical hardsuit
@@ -427,7 +401,30 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 100, bio = 100, rad = 60)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
 
+		//Wizard hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/wizard
+	name = "gem-encrusted hardsuit helmet"
+	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
+	icon_state = "hardsuit0-wiz"
+	item_state = "wiz_helm"
+	item_color = "wiz"
+	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
+/obj/item/clothing/suit/space/hardsuit/wizard
+	icon_state = "hardsuit-wiz"
+	name = "gem-encrusted hardsuit"
+	desc = "A bizarre gem-encrusted suit that radiates magical energies."
+	item_state = "wiz_hardsuit"
+	w_class = 3
+	unacidable = 1
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
+	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
 
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
@@ -436,7 +433,7 @@
 	icon_state = "hardsuit0-sec"
 	item_state = "sec_helm"
 	item_color = "sec"
-	armor = list(melee = 30, bullet = 15, laser = 30,energy = 10, bomb = 10, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 25, laser = 40,energy = 30, bomb = 10, bio = 100, rad = 50)
 
 
 /obj/item/clothing/suit/space/hardsuit/security
@@ -445,7 +442,7 @@
 	desc = "A special suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
 	item_state = "sec_hardsuit"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/gun/energy,/obj/item/weapon/reagent_containers/spray/pepper,/obj/item/weapon/gun/projectile,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50)
+	armor = list(melee = 40, bullet = 35, laser = 40, energy = 30, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
 
 /obj/item/clothing/suit/space/hardsuit/security/New()
@@ -464,7 +461,7 @@
 	icon_state = "hardsuit-hos"
 	name = "head of security's hardsuit"
 	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor."
-	armor = list(melee = 45, bullet = 25, laser = 30, energy = 10, bomb = 25, bio = 100, rad = 50)
+	armor = list(melee = 45, bullet = 45, laser = 50, energy = 30, bomb = 25, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 
 
@@ -609,8 +606,48 @@
 	item_state = "syndie_helm"
 	item_color = "syndi"
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
+	
+//////Wizard Version
 
+/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
+	name = "gem-encrusted hardsuit helmet"
+	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
+	icon_state = "hardsuit0-wiz"
+	item_state = "wiz_helm"
+	item_color = "wiz"
+	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
+	heat_protection = HEAD												//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 
+/obj/item/clothing/suit/space/hardsuit/shielded/wizard
+	icon_state = "hardsuit-wiz"
+	name = "gem-encrusted hardsuit"
+	desc = "A bizarre gem-encrusted suit that radiates magical energies."
+	item_state = "wiz_hardsuit"
+	w_class = 3
+	unacidable = 1
+	armor = list(melee = 40, bullet = 40, laser = 40, energy = 20, bomb = 35, bio = 100, rad = 50)
+	allowed = list(/obj/item/weapon/teleportation_scroll,/obj/item/weapon/tank/internals)
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard
+	recharge_delay = 400
+	recharge_rate = 0.5 //How quickly the shield recharges once it starts charging
+	
+///////HoS version
+
+/obj/item/clothing/suit/space/hardsuit/shielded/hos
+	icon_state = "hardsuit-hos"
+	name = "head of security's hardsuit"
+	desc = "A special bulky suit that protects against hazardous, low pressure environments. Has an additional layer of armor, and an inbuilt shield generator."
+	armor = list(melee = 45, bullet = 45, laser = 50, energy = 30, bomb = 25, bio = 100, rad = 50)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
+	max_charges = 2
+	recharge_delay = 600
+	recharge_rate = 0.5 //How quickly the shield recharges once it starts charging
+
+////
 ////mining medic///
 
 /obj/item/clothing/suit/space/hardsuit/mining/mmedic

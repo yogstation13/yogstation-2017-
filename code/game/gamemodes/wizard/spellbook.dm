@@ -201,6 +201,7 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
 	log_name = "LD"
 	category = "Defensive"
+	cost = 4
 
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
@@ -330,8 +331,8 @@
 
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
-	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
-	item_path = /obj/item/clothing/suit/space/hardsuit/wizard
+	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space, and comes with a shield-generator enchantment."
+	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
 	log_name = "HS"
 	category = "Defensive"
 

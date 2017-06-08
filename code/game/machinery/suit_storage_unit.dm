@@ -61,7 +61,7 @@
 	shoes_type = /obj/item/clothing/shoes/magboots/security
 
 /obj/machinery/suit_storage_unit/hos
-	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
+	suit_type = /obj/item/clothing/suit/space/hardsuit/shielded/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	shoes_type = /obj/item/clothing/shoes/magboots/security
 
@@ -246,13 +246,17 @@
 			helmet = null
 			qdel(helmet)
 			suit = null
-			qdel(suit) // Delete everything but the occupant.
+			qdel(suit)
 			mask = null
 			qdel(mask)
 			shoes = null
 			qdel(shoes)
 			extra_items = null
 			qdel(extra_items)
+			if(occupant)
+				occupant.ghostize()
+				qdel(occupant)
+				new /obj/effect/decal/cleanable/ash(src)
 			// The wires get damaged too.
 			wires.cut_all()
 		else
