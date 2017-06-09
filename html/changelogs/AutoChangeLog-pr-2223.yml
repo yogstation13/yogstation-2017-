@@ -1,0 +1,4 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - rscdel: "Reinforced walls can't be burnt by chlorine triflouride anymore."
