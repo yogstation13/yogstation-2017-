@@ -2312,6 +2312,7 @@
 	pin = /obj/item/device/firing_pin
 	},
 /obj/item/clothing/suit/armor/laserproof,
+/obj/item/clothing/head/helmet/laserproof,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 8
