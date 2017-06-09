@@ -1,27 +1,59 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/turf/open/floor/plating/asteroid/airless,/area/space)
-"c" = (/turf/closed/mineral,/area/space)
-"d" = (/turf/closed/mineral/random/high_chance,/area/space)
+"x" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
+"K" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
+"N" = (/obj/docking_port/stationary{dir = 2; dwidth = 11; height = 22; id = "whiteship_mining2"; name = "Medium Asteroid"; width = 35},/turf/open/space,/area/space)
+"Y" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aaaaabbbbaaaaaaaaaab
-aaabbbbbbbbaaaaabbaa
-aabbbbbcbbbbbbaaabaa
-abbbbbcccbbbbbaaaaaa
-abbbcccccccddbbaaaaa
-abbbcccccccddbbaaaaa
-abbbcccdddccdbbbbaaa
-aaabcccccdddcccbbaaa
-aabbbddcccddccdbbbba
-aabbbddcccddccccbbba
-aabbbddccdddccccbbba
-aabbbddcdddcccddbbba
-aaabbddcdcccccddbbba
-aaaabbbbdccccdddbbba
-aaaaaabbcccdcccbbbba
-aaabaabbbbbccccbbaaa
-baaaaaaabbbbbccbaaaa
-aaaaaaaaaaaabbbbaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaxxxxaaaaaaaaaaxaaaaaaaaaaaaaaa
+aaaaaaxxxxxxxxaaaaaxxaaaaaaaaaaaaaaaaa
+aaaaaxxxxxYxxxxxxaaaxaaaaaaaaaxxxxaaaa
+aaaaxxxxxYYYxxxxxaaaaaaaaaaaaxYYYxaaaa
+aaaaxxxYYYYYYYYYxxaaaaaaaaaaaxYYYxaaaa
+aaaaxxxYYYYYYYYYxxaxaaaaaaaaaaxYYxaaaa
+aaaaxxxYYYYYYYYYxxxxxaaaaaaaaaaxxxaaaa
+aaaaaaxYYYYYYYYYYYYxxxaaaaaaaaaaaaaaaa
+aaaaaxxxYYYYYYYYYYYYxxxaaaaaaaaaaaaaaa
+aaaaaxxxYYYYYYYYYYYYxxxxaaaaaaaaaaaaaa
+aaaaaxxxYYYYYYYYYYYYYxxxaaaaaaaaaaaaaa
+aaaaaxxxYYYYYYYYYYYYYYxxxxaaaaaaaaaaaa
+aaaaaaxxYYYYYYYYYYYYYYYxxxaaaaaaaaaaaa
+aaaaxxxYYYYYYYYYYYYYYYYYxxxaaaaaaaaaaa
+aaaaxxxYYYYYYYYYYYYYYYYYYYxxaaaaaaaaaa
+aaaaaxxYYYYYYYYYYYYYYYYYYYxxxaaaaaaaaa
+aaaxaxxxYYYYYYYYxxYYYYYYYYYxxaaaaaaaaa
+aaaaaxxxYYYYYYYYKxYYYYYYYYYYxxaaaaaaaa
+aaaaaaxxxYYYYYYYYYYYYYYYYYYYYxxaaaaaaa
+aaaaaaxxYYYYYYYYYYYYYYYYYYYYYYxxaaaaaa
+aaaaaaxYYYxYYYYYYYYYYYYYYYYYYYYxaaaaaa
+aaaaaaxYYYYYYYYYYYYYYYYYYYYYYYYxxaaaaa
+aaaaaaaYYYYYYYYYYYYYYYYYYYYYYYYxxaaaaa
+aaaaaaaYYYYYYYYYYYYYYYYYYYYYYYYxxaaaaa
+aaaaaaaxYYYYYYYYYYYYYYYYYYYYYYYYxaaaaa
+aaaaaaaxxYYYYYYYYYYYxYYYYYYYYYYxaaaaaa
+aaaaaaxYYYYYYYYYYYYYxYYYYYYYYYYxaaaaaa
+aaaaaaxxxYYYYYYYYYYYxYYYYYYYYYYaaaaaaa
+aaaaaaaaxYYYYYYYYYYxxxYYYYYYYYYaaaaaaa
+aaaaaaaaaxxxYYYYYYYxxxYYYYYYYYxaaaaaaa
+aaaaaaaaaaaxxYYYYYxxYxxYYYYYYxxaaaaaaa
+aaaaaaaaaaaaxxxxYYxxYxxxYYYYYxaaaaaaaa
+aaaaaaaaaaaaaaaxxxxxxxxxxxxxxaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaNaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
+

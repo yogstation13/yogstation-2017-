@@ -29372,25 +29372,11 @@
 	dir = 2
 	},
 /area/shuttle/escape)
-"bhv" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrivals Docking Bay 4";
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "bhw" = (
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "warning"
 	},
-/area/hallway/secondary/entry)
-"bhx" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrivals Docking Bay 3";
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bhy" = (
 /obj/item/device/radio/intercom{
@@ -33303,14 +33289,6 @@
 	supply_display = 1
 	},
 /turf/closed/wall,
-/area/quartermaster/office)
-"bpG" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass_mining{
-	name = "Delivery Office";
-	req_access_txt = "50"
-	},
-/turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bpH" = (
 /obj/machinery/mineral/ore_redemption{
@@ -37710,7 +37688,7 @@
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = "GeneticsDoor";
 	name = "Genetics";
-	req_access_txt = "69"
+	req_access_txt = "71"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -39995,7 +39973,7 @@
 "bBO" = (
 /obj/machinery/door/airlock/glass_research{
 	name = "Genetics Research";
-	req_access_txt = "5; 9; 69"
+	req_access_txt = "5; 9; 71"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -68196,6 +68174,14 @@
 /area/ai_monitored/storage/secure{
 	name = "\improper Telecoms Satellite"
 	})
+"mer" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 4";
+	req_access_txt = "0";
+	req_one_access_txt = "30;69"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "mFS" = (
 /obj/structure/closet/wardrobe/botanist,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -68566,6 +68552,14 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"IvH" = (
+/obj/machinery/door/airlock/external{
+	name = "Arrivals Docking Bay 3";
+	req_access_txt = "0";
+	req_one_access_txt = "13;69"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "IEQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68760,6 +68754,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
+"UXl" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/airlock/glass_mining{
+	name = "Delivery Office";
+	req_access_txt = "0";
+	req_one_access_txt = "50;69"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "VbF" = (
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -78817,9 +78820,9 @@ cFO
 axl
 axo
 ayC
-bhv
+mer
 avn
-bhv
+mer
 blT
 bnC
 bnC
@@ -80616,9 +80619,9 @@ cGb
 axl
 axo
 ayC
-bhx
+IvH
 avn
-bhx
+IvH
 blV
 bnC
 bpl
@@ -92700,7 +92703,7 @@ bej
 bej
 bej
 bnV
-bpG
+UXl
 bej
 bsx
 bej
