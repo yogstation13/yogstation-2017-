@@ -436,6 +436,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	user.updateappearance(mutcolor_update=1)
 	user.update_body()
 	user.domutcheck()
+	user.dna.sting_extractable = FALSE
 
 	//vars hackery. not pretty, but better than the alternative.
 	for(var/slot in slots)

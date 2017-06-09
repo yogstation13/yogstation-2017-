@@ -75,11 +75,14 @@
 	if(changeling.chosen_sting)
 		unset_sting(user)
 		return
-	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
+	if(user.mind.changeling.stored_profiles.len < 2)
+		user << "<span class = 'warning'>We do not have enough stored DNA for this.</span>"
+		return
+	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA", FALSE, FALSE)
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.specflags)
-		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
+		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!</span>"
 		return
 	..()
 
@@ -92,6 +95,8 @@
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/transformation/sting_action(mob/user, mob/target)
+	if(!user || !user.mind | !user.mind.changeling | !(selected_dna in user.mind.changeling.stored_profiles))
+		return
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
@@ -105,8 +110,13 @@
 		spawn(10)
 			C.real_name = NewDNA.real_name
 			NewDNA.transfer_identity(C, transfer_SE=1)
+			C.dna.sting_extractable = FALSE
 			C.updateappearance(mutcolor_update=1)
 			C.domutcheck()
+	user.mind.changeling.stored_profiles -= selected_dna
+	user.mind.changeling.profilecount--
+	qdel(selected_dna)
+	selected_dna = null
 	feedback_add_details("changeling_powers","TS")
 	return 1
 
@@ -175,16 +185,21 @@
 
 /obj/effect/proc_holder/changeling/sting/extract_dna/sting_action(mob/user, mob/living/carbon/human/target)
 	add_logs(user, target, "stung", "extraction sting")
-	if((user.mind.changeling.has_dna(target.dna)))
-		user.mind.changeling.remove_profile(target)
-		user.mind.changeling.profilecount--
-		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
 	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
 	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
 		if(ewi.target == target.mind)
 			protect = 1
 			break
+	if((user.mind.changeling.has_dna(target.dna)))
+		user.mind.changeling.remove_profile(target)
+		user.mind.changeling.add_new_profile(target, user, protect)
+		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
+		return 1
+	if(!target.dna.sting_extractable)
+		user << "<span class='warning'>[target]'s DNA is damaged, we must absorb them to extract their DNA.</span>"
+		return 0
 	user.mind.changeling.add_new_profile(target, user, protect)
+	target.dna.sting_extractable = FALSE
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
