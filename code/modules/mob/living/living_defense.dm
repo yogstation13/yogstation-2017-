@@ -263,8 +263,56 @@
 		add_logs(M, src, "attacked")
 		return 1
 
+/mob/living/attack_paw_zombie(mob/living/carbon/human/zombie/M)
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		M << "No attacking people at spawn, you jackass."
+		return 0
+
+	if (M.a_intent == "harm" && !M.is_muzzled())
+		if (prob(50))
+			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+
+			var/isZombie = iszombiemob(src)
+			var/isInfected = is_infected(src)
+			var/isUnconcious = (src.stat == UNCONSCIOUS ? 1 : 0)
+
+			var/selfMessage = ""
+			var/localMessage = ""
+			if(isZombie)
+				selfMessage = "Your zombified brain can't find anything of value in [name]."
+			else if(isInfected)
+				selfMessage = "You bite a cunk out of [name] worsening the infection."
+			else if(isUnconcious)
+				selfMessage = "You eat a chunk out of [name], [gender == MALE ? "he" : "she"] twitches a lot!"
+				localMessage = "[M.name] eats [name], [gender == MALE ? "he" : "she"] twitches a lot!"
+
+			if(!selfMessage)
+				selfMessage = "You bite a chunk out of [name]!"
+			if(!localMessage)
+				localMessage = "[M.name] bites [name] ferociously!"
+
+			visible_message("<span class='userdanger'>[localMessage]</span>", \
+					"<span class='danger'>[selfMessage]</span>")
+			adjustBruteLoss(rand(20, 30))
+			AddDisease(new /datum/disease/transformation/rage_virus, M)
+
+			if(isInfected)
+				for(var/datum/disease/transformation/rage_virus/RV in viruses)
+					if(RV.stage > 5)
+						RV.stage++
+						RV.process()
+			return 1
+		else
+			visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", \
+				"<span class='userdanger'>[M.name] has attempted to bite [name]!</span>")
+	return 0
+
 
 /mob/living/attack_paw(mob/living/carbon/monkey/M)
+	if(istype(M, /mob/living/carbon/human/zombie))
+		var/mob/living/carbon/human/zombie/Z = M;
+		attack_paw_zombie(Z) // zombies do something else.
+		return;
 	if(!ticker || !ticker.mode)
 		M << "You cannot attack people before the game has started."
 		return 0

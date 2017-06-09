@@ -158,6 +158,7 @@
 	var/alien_delay = 0
 	var/slime_delay = 0
 	var/animal_delay = 0
+	var/zombie_delay = 0
 
 	var/gateway_delay = 18000 //How long the gateway takes before it activates. Default is half an hour.
 	var/ghost_interaction = 0

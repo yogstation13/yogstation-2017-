@@ -369,6 +369,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return 0
 	if(!istype(M))
 		return 0
+	if(iszombiemob(M))
+		return 2
 	if(issilicon(M))
 		if(isrobot(M)) //For cyborgs, returns 1 if the cyborg has a law 0 and special_role. Returns 0 if the borg is merely slaved to an AI traitor.
 			var/mob/living/silicon/robot/R = M

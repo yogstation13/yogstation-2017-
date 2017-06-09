@@ -87,7 +87,7 @@
 			return 1
 	return 0
 
-/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armour_penetration = 0)
+/mob/living/carbon/human/proc/check_shields(damage = 0, attack_text = "the attack", atom/movable/AM, attack_type = MELEE_ATTACK, armour_penetration = 0, targpart)
 	var/block_chance_modifier = round(damage / -3)
 
 	if(l_hand && !istype(l_hand, /obj/item/clothing))

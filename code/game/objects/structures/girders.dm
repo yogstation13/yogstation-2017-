@@ -284,6 +284,12 @@
 	M.visible_message("[src] shatters into [M]!")
 	qdel(src)
 
+/obj/structure/girder/attack_hand(mob/user)
+	if(iszombiemob(user))
+		health -= rand(20,30)
+		if(health <= 0)
+			dismantle()
+	..()
 
 
 /obj/structure/girder/CanAStarPass(ID, dir, caller)

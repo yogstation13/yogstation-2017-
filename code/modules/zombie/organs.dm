@@ -9,6 +9,7 @@
 	var/datum/species/old_species
 	var/living_transformation_time = 5
 	var/converts_living = FALSE
+	var/infectious = TRUE
 
 /obj/item/organ/body_egg/zombie_infection/New()
 	. = ..()
@@ -59,7 +60,10 @@
 		old_species = owner.dna.species.type
 
 	owner.grab_ghost()
-	owner.set_species(/datum/species/zombie/infectious)
+	if(infectious)
+		owner.set_species(/datum/species/zombie/infectious)
+	else
+		owner.set_species(/datum/species/zombie)
 	var/old_stat = owner.stat // Save for the message
 	owner.revive(full_heal = TRUE)
 	switch(old_stat)
@@ -78,5 +82,8 @@
 			owner.do_jitter_animation(living_transformation_time)
 			owner.Stun(living_transformation_time)
 			owner << "<span class='alertalien'>You are now a zombie!</span>"
+
+/obj/item/organ/body_egg/zombie_infection/non_infectious
+	infectious = FALSE
 
 #undef START_TIMER

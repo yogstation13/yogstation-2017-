@@ -98,6 +98,8 @@
 
 #define isliving(A) (istype(A, /mob/living))
 
+#define iszombiemob(A) (istype(A, /mob/living/carbon/human/zombie))
+
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
 #define isnewplayer(A) (istype(A, /mob/new_player))
