@@ -7,6 +7,7 @@
 /*
  * Gifts
  */
+
 /obj/item/weapon/a_gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
@@ -29,6 +30,8 @@
 	if(M && M.mind && M.mind.special_role == "Santa")
 		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
 		return
+
+	var/static/list/gift_type_blacklist = list(subtypesof(/obj/item/toy/beach_ball/holoball/chaos + (typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo + /obj/item/toy/toy_mech + /obj/item/toy/toy_mech/ranged + /obj/item/toy/toy_mech/melee))
 
 	var/gift_type_list = list(/obj/item/weapon/sord,
 		/obj/item/weapon/storage/wallet,
@@ -68,7 +71,8 @@
 		/obj/item/clothing/head/snowman)
 
 	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
-	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo + /obj/item/toy/toy_mech + /obj/item/toy/toy_mech/ranged + /obj/item/toy/toy_mech/melee)) //All toys, except for abstract types and syndicate cards.
+	gift_type_list += subtypesof(/obj/item/toy/)
+	gift_type_list -= gift_type_blacklist
 
 	var/gift_type = pick(gift_type_list)
 
