@@ -158,8 +158,6 @@
 			swoop_attack()
 			swoop_attack()
 			swoop_attack()
-	else if(prob(5 + anger_modifier))
-		xoxo_and_friends()
 	else
 		fire_walls()
 
