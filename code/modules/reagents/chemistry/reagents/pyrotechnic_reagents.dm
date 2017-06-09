@@ -69,7 +69,7 @@
 					PoolOrNew(/obj/effect/hotspot, F)
 	if(istype(T, /turf/closed/wall/))
 		var/turf/closed/wall/W = T
-		if(W.walltype = "rwall") //use thermite
+		if(W.walltype == "rwall") //use thermite
 			return
 		if(prob(reac_volume))
 			W.ChangeTurf(/turf/open/floor/plating)
