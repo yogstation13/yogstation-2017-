@@ -1,0 +1,4 @@
+author: Larissa Mayrink
+delete-after: True
+changes: 
+  - rscadd: "Adds a reflector helmet to the game. It comes with the same abilities as the reflector vest - but for your head."
