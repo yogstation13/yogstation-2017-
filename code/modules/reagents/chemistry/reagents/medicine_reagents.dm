@@ -127,6 +127,9 @@
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
 			M.status_flags -= DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_face_dependant_huds()
 			M.adjustCloneLoss(-7, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-9, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-5, 0, DAMAGE_CHEMICAL)
@@ -135,6 +138,9 @@
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
 			M.status_flags -= DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_face_dependant_huds()
 			M.adjustCloneLoss(-2, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-7, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-3, 0, DAMAGE_CHEMICAL)
@@ -142,7 +148,9 @@
 			M.adjustToxLoss(-3, 0, DAMAGE_CHEMICAL)
 			. = 1
 		if(225 to T0C)
-			M.status_flags -= DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_face_dependant_huds()
 			M.adjustCloneLoss(-1, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-5, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-1, 0, DAMAGE_CHEMICAL)
@@ -164,6 +172,9 @@
 	M.adjustCloneLoss(-15, 0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_organ_damage(1,1, 0)
 	M.status_flags -= DISFIGURED
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_face_dependant_huds()
 	..()
 	. = 1
 

@@ -1041,6 +1041,7 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	update_face_dependant_huds()
 	..()
 
 /mob/living/carbon/human/regenerate_organs()

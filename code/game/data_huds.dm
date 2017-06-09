@@ -243,7 +243,7 @@
 				holder.icon_state = "hud_imp_chem"
 
 /mob/living/carbon/human/proc/update_face_dependant_huds()
-	sec_hud_set_security_status()
+	sec_hud_set_ID()
 	update_rev_hud()
 
 /mob/living/carbon/human/proc/update_rev_hud()
