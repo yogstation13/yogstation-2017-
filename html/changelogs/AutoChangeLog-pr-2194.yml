@@ -1,0 +1,6 @@
+author: Time-Green
+delete-after: True
+changes: 
+  - bugfix: "Fixes wallets becoming invisible with head ID's inside"
+  - bugfix: "Fixes people with fly limbs becoming invisible"
+  - bugfix: "Fixes the clerks office being called gateway"
