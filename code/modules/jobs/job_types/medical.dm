@@ -13,6 +13,7 @@ Chief Medical Officer
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	whitelisted = 1
 
 	outfit = /datum/outfit/job/cmo
 

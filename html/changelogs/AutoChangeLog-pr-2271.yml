@@ -1,0 +1,7 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "ZOMBIE MODE!"
+  - rscadd: "Zombies, attack the crew."
+  - rscadd: "Crew, attack the zombies."
+  - rscadd: "Whoever makes it to centcom alive wins."

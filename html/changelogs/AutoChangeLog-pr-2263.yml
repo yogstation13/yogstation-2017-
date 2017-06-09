@@ -1,0 +1,4 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Undeployed jaunter beacons and wrenches spawn in the survival capsule vendor."

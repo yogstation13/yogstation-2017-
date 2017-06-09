@@ -14,7 +14,8 @@
 
 /obj/item/weapon/implanter/New()
 	..()
-	imp = new imptype(src)
+	if(imptype)
+		imp = new imptype(src)
 
 /obj/item/weapon/implanter/update_icon()
 	if(imp)
@@ -33,7 +34,7 @@
 			M.visible_message("<span class='warning'>[user] is attemping to implant [M].</span>")
 
 		var/turf/T = get_turf(M)
-		if(T && (M == user || do_after(user, 50)))
+		if(T && (M == user || do_after(user, 50,target = M)))
 			if(user && M && (get_turf(M) == T) && src && imp)
 				if(imp.implant(M, user))
 					if (M == user)

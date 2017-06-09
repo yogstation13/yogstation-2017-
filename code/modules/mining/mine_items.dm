@@ -197,6 +197,7 @@
 	icon_state = "away"
 	requires_power = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
@@ -567,6 +568,9 @@
 	else
 		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
+
+	new /obj/item/device/jauntbeacon(src)
+	new /obj/item/weapon/wrench(src)
 
 //Fans
 /obj/structure/fans

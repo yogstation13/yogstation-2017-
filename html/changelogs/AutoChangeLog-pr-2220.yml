@@ -1,0 +1,7 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - tweak: "Blobbernauts now die more quickly upon losing their factory."
+  - tweak: "Blobbernauts die more quickly off of the blow."
+  - tweak: "Sorium blob doesn't stun you anymore."
+  - tweak: "Lowers blobbernaut max health from 200 to 160."

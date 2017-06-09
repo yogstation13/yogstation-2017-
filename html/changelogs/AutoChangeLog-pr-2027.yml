@@ -1,0 +1,8 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "Miners can use jaunter beacons to set destination points for jaunters."
+  - rscadd: "Miners spawn with a jaunter beacon in their hand. Activate it in your hand to deploy, wrench it down to bolt it, and then click on it to turn it on."
+  - rscadd: "Mining Medics start with a mother jaunter beacon that can be used to teleport to other jaunters."
+  - rscadd: "Centcomm has raised the budget for mining medics, and has reapproached the design of their office. This includes the mother jaunter and their new camera console."
+  - rscadd: "Miners have a mini camera clipped to their jumpsuits that are linked to the Mining Medic's new camera console. The camera can be taken off."

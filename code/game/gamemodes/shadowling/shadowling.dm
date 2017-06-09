@@ -281,6 +281,7 @@ Made by Xhuis
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)
 			H.adjustToxLoss(-5)
+			H.adjustOxyLoss(-5)
 			H.adjustBrainLoss(-25) //Shad O. Ling gibbers, "CAN U BE MY THRALL?!!"
 			H.adjustCloneLoss(-1)
 			H.SetWeakened(0)

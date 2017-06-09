@@ -1,0 +1,4 @@
+author: Paragonid
+delete-after: True
+changes: 
+  - rscadd: "Preserve echo effect settings across sessions."

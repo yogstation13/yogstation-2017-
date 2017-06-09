@@ -278,7 +278,7 @@ var/next_external_rsc = 0
 			config.allow_vote_restart = 0
 		add_admin_verbs()
 		add_donor_verbs()
-		admin_memo_output("Show")
+		addtimer(src, "admin_memo_output", 1, TRUE, "Show")
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			src << "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>"
 		//verbs += /client/verb/weightstats
