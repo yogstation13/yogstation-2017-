@@ -95,6 +95,7 @@
 	var/instant_dunk = FALSE //If an admin wants to dunk without the whole warmup portion
 	var/jamming = FALSE
 	var/dunking = FALSE
+	var/asking = FALSE
 	var/mob/living/carbon/human/jammer = null
 	var/obj/structure/holohoop/spirit/hoop = null
 
@@ -131,6 +132,8 @@
 		fail = TRUE
 		jamming = FALSE
 		STOP_PROCESSING(SSobj, src)
+		if(hoop)
+			qdel(hoop)
 	..()
 
 /obj/item/toy/beach_ball/holoball/chaos/process()
@@ -146,14 +149,19 @@
 	if(actiontype != /datum/action/item_action/chaos_dunk)
 		..()
 		return
+	if(asking)
+		return
 	if(fail)
 		user << "<span class='warning'>This ball is battered and burnt - it will not be able to handle a chaos slam.</span>"
 		return
 	if(!ishuman(user))
 		user << "<span class='warning'>You are not rad enough to perform this sick trick!</span>"
 		return
+	if(jamming)
+		user << "<span class='warning'>You are already jamming!</span>"
+		return
 	var/mob/living/carbon/human/H = user
-
+	
 	if(src != H.get_active_hand())
 		H << "<span class='warning'>You need to be holding the basketball in your active hand!</span>"
 		return
@@ -163,8 +171,11 @@
 		return
 
 	if(!instant_dunk)
+		asking = TRUE
 		if(alert("Are you ready to jam?",,"Let's slam!","Let's not!") != "Let's slam!")
+			asking = FALSE
 			return
+		asking = FALSE
 		if(blobstart.len > 0)
 			while(!hoop)
 				var/turf/targetturf = get_turf(pick(blobstart))
