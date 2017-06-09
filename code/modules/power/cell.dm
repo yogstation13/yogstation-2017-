@@ -274,7 +274,7 @@
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
-	desc = "A rechargable starch based power cell."
+	desc = "A rechargable starch based power cell. Surprisingly, it's powerful enough to hold an entire AI."
 	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
 	origin_tech = "powerstorage=1;biotech=1"
@@ -282,6 +282,47 @@
 	maxcharge = 300
 	materials = list()
 	rating = 1
+	var/obj/item/device/aicard/storage
+
+/obj/item/weapon/stock_parts/cell/potato/New()
+	. = ..()
+	storage = new(src)
+
+/obj/item/weapon/stock_parts/cell/potato/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+	if(!..())
+		return
+	if(!AI)
+		return
+	if(!card)
+		return
+	if(!AI.mind)
+		user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+		return
+
+	if(interaction == AI_TRANS_FROM_CARD)
+		if(storage.AI)
+			return
+		storage.AI = AI
+		AI.control_disabled = 1
+		AI.radio_enabled = 0
+		AI.forceMove(src)
+		AI << "You are a potato."
+		name = AI.name
+		desc = "This isn't your average potato..."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully in a potato."
+		card.AI = null
+		card.update_icon()
+
+	else if(interaction == AI_TRANS_TO_CARD) //  [potato] -> [card]. handled in aicard.dm
+		AI.ai_restore_power()//So the AI initially has power.
+		AI.control_disabled = 1//Can't control things remotely if you're stuck in a card!
+		AI.radio_enabled = 0 	//No talking on the built-in radio for you either!
+		AI.forceMove(card)
+		AI.loc = card
+		card.AI = AI
+		AI << "You have been downloaded to a mobile storage device. Remote device connection severed."
+		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		card.update_icon()
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"
