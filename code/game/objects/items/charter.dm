@@ -14,7 +14,7 @@
 	var/cooldown // that's not needed, but hey. can stop spam.
 	var/cooldownLEN = 60
 
-	var/additional_time
+	var/cooldownbonus = FALSE // 0 for not given, 1 for given.
 
 /obj/item/station_charter/New()
 	..()
@@ -30,14 +30,15 @@
 		return
 
 	cooldown = world.time + cooldownLEN // six seconds sounds fine, right?
+	if(!cooldownbonus)
+		var/admins_number = admins.len
+		if(!admins_number)
+			user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
+			expire_date += 1200 // 2 more minutes
+			cooldownbonus = TRUE
+			return
 
-	var/admins_number = admins.len
-	if(!admins_number && !additional_time)
-		user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
-		additional_time += 1200 // 2 more minutes
-		return
-
-	if(world.time > expire_date+additional_time) //5 minutes + whatever
+	if(world.time > expire_date) //5 minutes from arrival + whatever
 		user << "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now."
 		return
 

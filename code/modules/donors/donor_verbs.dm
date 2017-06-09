@@ -1,7 +1,6 @@
 
 var/list/donor_verbs_list = list(
-	/client/proc/donor_ooc,
-	/client/proc/donator_oocname
+	/client/proc/donor_ooc
 	)
 
 /client/proc/add_donor_verbs()
@@ -138,8 +137,3 @@ var/global/normal_donor_ooc_colour = "#333333"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	src << msg
-
-/client/proc/donator_oocname()
-	set name = "Toggle Donor OOC Tag"
-	set desc = "For when \[Donator\] gets annoying."
-	prefs.donor_ooc_tag = !prefs.donor_ooc_tag
