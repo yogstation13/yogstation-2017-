@@ -1,0 +1,4 @@
+author: X-TheDark
+delete-after: True
+changes: 
+  - bugfix: "Chief Medical Officer can now be set to Ultra for people whitelisted for the feature."
