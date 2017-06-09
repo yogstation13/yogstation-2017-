@@ -293,23 +293,14 @@
 
 			visible_message("<span class='userdanger'>[localMessage]</span>", \
 					"<span class='danger'>[selfMessage]</span>")
-
-			var/damage = rand(20, 30)
-			if (health > -100)
-				adjustBruteLoss(damage)
-				AddDisease(new /datum/disease/transformation/rage_virus, M)
-			else
-				for(var/datum/disease/D in viruses)
-					if(D.stage < 5)
-						D.stage++
-						D.process()
+			adjustBruteLoss(rand(20, 30))
+			AddDisease(new /datum/disease/transformation/rage_virus, M)
 
 			if(isInfected)
 				for(var/datum/disease/transformation/rage_virus/RV in viruses)
 					if(RV.stage > 5)
 						RV.stage++
 						RV.process()
-
 			return 1
 		else
 			visible_message("<span class='danger'>[M.name] has attempted to bite [name]!</span>", \
