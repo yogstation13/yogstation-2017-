@@ -1429,7 +1429,7 @@
 
 /obj/item/toy/boomerang/throw_impact(atom/hit_atom)
 	if(iscarbon(src.loc)) //Did someone catch it?
-		..()
+		return ..()
 	throw_at(thrownby, throw_range+3, throw_speed, null)
 	..()
 
@@ -1449,7 +1449,7 @@
 	throw_range = 14
 
 /obj/item/toy/frisbee/throw_at(atom/target, range, speed, mob/thrower, spin=0)
-	var/new_x = target.x*2 - thrower.x  //I created this formula myself, it's beautiful
-	var/new_y = target.y*2 - thrower.y
+	var/new_x = Clamp(target.x*2 - thrower.x,0,world.maxx)  //I created this formula myself, it's beautiful
+	var/new_y = Clamp(target.y*2 - thrower.y,0,world.maxy)
 	target = locate(new_x,new_y,z)
 	..()
