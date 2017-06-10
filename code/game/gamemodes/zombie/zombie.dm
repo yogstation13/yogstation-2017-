@@ -11,6 +11,7 @@
 	restricted_jobs = list("Cyborg", "AI")
 	var/carriers_to_make = 1
 	var/list/carriers = list()
+	var/list/survivors = list() // population count.
 	var/zombies_to_win = 0
 	var/escaped_zombies = 0
 	var/players_per_carrier = 7
@@ -48,6 +49,7 @@
 		zombie_infectees += carriermind
 		var/obj/item/organ/body_egg/zombie_infection/Z = new(carriermind.current)
 		Z.Insert(carriermind.current)
+		Z.reanimation_timer = world.time + 1200 // flat out 2 minutes, ready set GO.
 	..()
 
 /datum/game_mode/zombies/check_finished()
@@ -58,7 +60,20 @@
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H.client && !iszombie(H))
 			total_humans++
+		if(H.stat != DEAD && !(H in survivors) && (H.z == ZLEVEL_STATION))
+			if(!iszombie(H))
+				survivors += H // survivor list is basically the population list, but we only take in people involved in the zombie round.
 	if(total_humans == 0)
+		return 1
+
+	var/survivorcut = round((length(survivors)) - (length(survivors) * .10)) // we take the total amount of people in the round, and figure out how much is 10%
+	var/nonturned_survivor
+	for(var/mob/living/M in survivors) // now we spoon through our population list to figure out whos still alive.
+		if(M.client)
+			if(M.stat != DEAD)
+				if(!iszombie(M))
+					nonturned_survivor++
+	if(survivorcut >= nonturned_survivor) // if the active survivor population is reduced to 10%, game over.
 		return 1
 	else if(!roundend)
 		return 0
