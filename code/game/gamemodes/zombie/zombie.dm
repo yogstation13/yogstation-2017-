@@ -66,14 +66,14 @@
 	if(total_humans == 0)
 		return 1
 
-	var/survivorcut = round((length(survivors)) - (length(survivors) * .10)) // we take the total amount of people in the round, and figure out how much is 10%
-	var/nonturned_survivor
+	var/survivorcut = max((length(survivors) * 0.10), 1) // we take the total amount of people in the round, and figure out how much is 10%
+	var/nonturned_survivors
 	for(var/mob/living/M in survivors) // now we spoon through our population list to figure out whos still alive.
 		if(M.client)
 			if(M.stat != DEAD)
 				if(!iszombie(M))
-					nonturned_survivor++
-	if(survivorcut >= nonturned_survivor) // if the active survivor population is reduced to 10%, game over.
+					nonturned_survivors++
+	if(survivorcut >= nonturned_survivors) // if the active survivor population is reduced to 10%, game over.
 		return 1
 	else if(!roundend)
 		return 0
