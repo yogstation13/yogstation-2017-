@@ -62,6 +62,8 @@
 	owner.set_species(/datum/species/zombie/infectious)
 	var/old_stat = owner.stat // Save for the message
 	owner.revive(full_heal = TRUE)
+	owner.languages_spoken = ZOMBIE
+	owner.languages_understood = ZOMBIE
 	switch(old_stat)
 		if(DEAD, UNCONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] staggers to \
