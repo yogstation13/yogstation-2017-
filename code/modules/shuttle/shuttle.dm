@@ -65,6 +65,13 @@
 		)
 
 
+//returns turfs within our projected rectangle in no particular order
+/obj/docking_port/proc/return_turfs()
+	var/list/L = return_coords()
+	var/turf/T0 = locate(L[1],L[2],z)
+	var/turf/T1 = locate(L[3],L[4],z)
+	return block(T0,T1)
+
 //returns turfs within our projected rectangle in a specific order.
 //this ensures that turfs are copied over in the same order, regardless of any rotation
 /obj/docking_port/proc/return_ordered_turfs(_x, _y, _z, _dir, area/A)
@@ -385,7 +392,7 @@
 			return -1
 
 	closePortDoors()
-	
+
 	if(istype(S1.loc, /turf/open/space/transit))
 		var/new_movedir = turn(S1.loc.dir, 180)
 		parallax_movedir_in_area(get_area(src), new_movedir)
@@ -426,7 +433,7 @@
 			A0.contents += T0
 
 	//move or squish anything in the way ship at destination
-	roadkill(L1, S1.dir)
+	roadkill(L0, L1, S1.dir)
 
 	for(var/i=1, i<=L0.len, ++i)
 		var/turf/T0 = L0[i]
@@ -558,34 +565,38 @@
 			spawn(0)
 				Door.close()
 
-/obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
+/obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
 	var/list/hurt_mobs = list()
-	for(var/turf/T in L)
-		for(var/atom/movable/AM in T)
-			if(isliving(AM) && (!(AM in hurt_mobs)))
-				hurt_mobs |= AM
-				var/mob/living/M = AM
-				if(M.buckled)
-					M.buckled.unbuckle_mob(M, 1)
-				if(M.pulledby)
-					M.pulledby.stop_pulling()
-				M.stop_pulling()
-				M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
-						"<span class='userdanger'>You feel an immense \
-						crushing pressure as the space around you ripples.</span>")
-				if(M.anchored)
-					M.gib()
-				else
-					M.Paralyse(10)
-					M.ex_act(2)
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		var/turf/T1 = L1[i]
+		if(!T0 || !T1)
+			continue
+		if(T0.type == T0.baseturf)
+			continue
+		// The corresponding tile will not be changed, so no roadkill
+		for(var/atom/movable/AM in T1)
+			if(ismob(AM))
+				if(isliving(AM))
+					var/mob/living/M = AM
+					if(M.buckled)
+						M.buckled.unbuckle_mob(M, 1)
+					if(M.pulledby)
+						M.pulledby.stop_pulling()
+					M.stop_pulling()
+					M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
+					if(!hurt_mobs[M])
+						M.Paralyse(10)
+						M.ex_act(2)
+						hurt_mobs[M] = TRUE
 					step(M, dir)
-				continue
-
-			if(!AM.anchored)
-				step(AM, dir)
-			else
-				qdel(AM)
+			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+					continue
+				if(!AM.anchored)
+					step(AM, dir)
+				else
+					qdel(AM)
 /*
 //used to check if atom/A is within the shuttle's bounding box
 /obj/docking_port/mobile/proc/onShuttleCheck(atom/A)
