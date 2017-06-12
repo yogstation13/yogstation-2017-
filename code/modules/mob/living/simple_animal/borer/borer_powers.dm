@@ -414,22 +414,23 @@ mob/living/carbon/proc/release_control()
 	set category = "Borer"
 	set name = "Reproduce"
 	set desc = "Vomit out your younglings."
-	var/reproducing = 0 //l-lewd
+	var/poll_time = 100
 
 	if(istype(src, /mob/living/carbon/brain))
 		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
 		return
+
 	if(!borer)
 		return
 
-	if(reproducing)
+	if(world.time < borer.next_spawn_time)
 		src << "<span class='warning'>We are already reproducing.</span>"
 		return
 
 	if(borer.chemicals >= 100)
 		src << "<span class='notice'>We prepare our host for the creation of a new borer.</span>"
-		reproducing = 1
-		var/list/Bcandidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 100) // we use this to FIND candidates. not necessarily use them.
+		borer.next_spawn_time = world.time + poll_time
+		var/list/Bcandidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, poll_time) // we use this to FIND candidates. not necessarily use them.
 		if(!Bcandidates.len)
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
@@ -444,7 +445,6 @@ mob/living/carbon/proc/release_control()
 		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
 		var/mob/dead/observer/O = pick(Bcandidates)
 		newborer.key = O.key
-		reproducing = 0
 	else
 		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
 		return

@@ -26,6 +26,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 
 	var/mob/living/carbon/victim = null
 	var/mob/living/captive_brain/host_brain = null
+	var/next_spawn_time = 0
 	var/docile = 0
 	var/controlling = 0
 	var/chemicals = 50
