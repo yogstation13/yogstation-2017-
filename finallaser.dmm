@@ -1,0 +1,37 @@
+"a" = (/turf/closed/wall,/area/space)
+"b" = (/obj/machinery/door/airlock/centcom,/turf/open/floor/engine,/area/space)
+"c" = (/turf/open/floor/engine,/area/space)
+"d" = (/turf/open/floor/plating,/turf/open/floor/plasteel/warningline{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/area/space)
+"e" = (/turf/open/floor/plating,/obj/item/weapon/paper{desc = ""; info = "To use the FLEIJA laser system, place an exposed wire node under the energy core, then wrench it down and activate it, it will charge from the station's power grid. WARNING, due to the delecate nature of the laser's systems, it must be calibrated regularly, simply click the console to recalibrate. Once the fleija system is charged, NT naval command will input the target and fire it automatically, when it does fire, we recommend you hold onto something..."; name = "FLEIJA laser operational manual"},/obj/item/stack/cable_coil/yellow,/turf/open/floor/plasteel/warningline{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/area/space)
+"f" = (/turf/open/floor/plating,/obj/item/stack/cable_coil/yellow,/turf/open/floor/plasteel/warningline{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/area/space)
+"g" = (/turf/open/floor/plating,/obj/item/weapon/storage/toolbox/electrical,/obj/item/weapon/paper{desc = ""; info = "To use the FLEIJA laser system, place an exposed wire node under the energy core, then wrench it down and activate it, it will charge from the station's power grid. WARNING, due to the delecate nature of the laser's systems, it must be calibrated regularly, simply click the console to recalibrate. Once the fleija system is charged, NT naval command will input the target and fire it automatically, when it does fire, we recommend you hold onto something..."; name = "FLEIJA laser operational manual"},/turf/open/floor/plasteel/warningline{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/area/space)
+"h" = (/turf/open/floor/plating,/obj/item/weapon/storage/toolbox/mechanical,/obj/item/weapon/paper{desc = ""; info = "To use the FLEIJA laser system, place an exposed wire node under the energy core, then wrench it down and activate it, it will charge from the station's power grid. WARNING, due to the delecate nature of the laser's systems, it must be calibrated regularly, simply click the console to recalibrate. Once the fleija system is charged, NT naval command will input the target and fire it automatically, when it does fire, we recommend you hold onto something..."; name = "FLEIJA laser operational manual"},/turf/open/floor/plasteel/warningline{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/area/space)
+"i" = (/turf/open/floor/plating,/obj/machinery/firing_console,/turf/open/floor/plasteel/warningline{tag = "icon-warningline (NORTH)"; icon_state = "warningline"; dir = 1},/area/space)
+"j" = (/obj/structure/railing/corner{dir = 1},/turf/open/floor/engine,/area/space)
+"k" = (/obj/structure/railing,/turf/open/floor/engine,/area/space)
+"l" = (/obj/structure/railing/corner,/turf/open/floor/engine,/area/space)
+"m" = (/obj/structure/railing/middle,/turf/open/floor/engine,/area/space)
+"n" = (/turf/open/space,/turf/open/floor/plating/glass/g8,/area/space)
+"o" = (/obj/structure/railing/middle{dir = 1},/turf/open/floor/engine,/area/space)
+"p" = (/turf/open/space,/obj/machinery/deathray,/turf/open/floor/plating/glass/g8,/area/space)
+"q" = (/obj/structure/railing/corner{dir = 4},/turf/open/floor/engine,/area/space)
+"r" = (/obj/structure/railing/corner{dir = 8},/turf/open/floor/engine,/area/space)
+"s" = (/turf/open/floor/plating,/obj/item/device/laserbattery,/turf/open/floor/plasteel/warningline,/area/space)
+"t" = (/turf/open/floor/plating,/turf/open/floor/plasteel/warningline,/area/space)
+"u" = (/turf/open/floor/plating,/obj/item/weapon/paper{desc = ""; info = "To use the FLEIJA laser system, place an exposed wire node under the energy core, then wrench it down and activate it, it will charge from the station's power grid. WARNING, due to the delecate nature of the laser's systems, it must be calibrated regularly, simply click the console to recalibrate. Once the fleija system is charged, NT naval command will input the target and fire it automatically, when it does fire, we recommend you hold onto something..."; name = "FLEIJA laser operational manual"},/obj/item/stack/cable_coil/yellow,/turf/open/floor/plasteel/warningline,/area/space)
+"v" = (/turf/open/floor/plating,/obj/item/weapon/paper{desc = ""; info = "To use the FLEIJA laser system, place an exposed wire node under the energy core, then wrench it down and activate it, it will charge from the station's power grid. WARNING, due to the delecate nature of the laser's systems, it must be calibrated regularly, simply click the console to recalibrate. Once the fleija system is charged, NT naval command will input the target and fire it automatically, when it does fire, we recommend you hold onto something..."; name = "FLEIJA laser operational manual"},/turf/open/floor/plasteel/warningline,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaa
+bccccccccccb
+addefghddida
+ajkkkkkkkkla
+amnnnnnnnnoa
+amnnnnnnnnoa
+amnnnnnnnnoa
+ampnnnnnnnoa
+aqkkkkkkkkra
+astuvvvtvtta
+bccccccccccb
+aaaaaaaaaaaa
+"}

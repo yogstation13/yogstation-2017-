@@ -8,6 +8,53 @@
 	icon_state = "rockvault"
 	floor_tile = /obj/item/stack/tile/plasteel
 
+/turf/open/floor/plating/glass
+	icon_state = "glass9"
+	desc = "A thick duraglass tile, you can see space from here!."
+	floor_tile = /obj/item/stack/tile/plasteel
+	layer = ABOVE_OBJ_LAYER
+
+/turf/open/floor/plating/glass/g2
+	icon_state = "glass3"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/plating/glass/g3
+	icon_state = "glass4"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/plating/glass/g4
+	icon_state = "glass5"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/plating/glass/g5
+	icon_state = "glass6"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/plating/glass/g6
+	icon_state = "glass7"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/plating/glass/g7
+	icon_state = "glass8"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/plating/glass/g8
+	icon_state = "glass1"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+
+/turf/open/floor/plating/glass/attackby(obj/item/C, mob/user, params) 		//prevents idiots from unscrewing my floors and making everything look like ass
+	if(intact && istype(C, /obj/item/weapon/crowbar))
+		if(broken || burnt)
+			user << "<span class='danger'>You can't remove this tile, as it would leak into space!.</span>"
+
+		else
+
+			user << "<span class='danger'>You can't remove this tile, as it would leak into space!.</span>"
+		return 0
+	return 0
+	//Cockblocked :^)
+
 /turf/open/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"

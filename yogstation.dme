@@ -13,6 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
+#include "finallaser.dmm"
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
@@ -572,10 +573,12 @@
 #include "code\game\mecha\working\working.dm"
 #include "code\game\objects\buckling.dm"
 #include "code\game\objects\empulse.dm"
+#include "code\game\objects\eventprops.dm"
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\objs.dm"
 #include "code\game\objects\radiation.dm"
+#include "code\game\objects\railing.dm"
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\weapons.dm"
 #include "code\game\objects\effects\alien_acid.dm"
