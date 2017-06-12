@@ -10,7 +10,7 @@
 
 /turf/open/floor/plating/glass
 	icon_state = "glass9"
-	desc = "A thick duraglass tile, you can see space from here!."
+	desc = "A thick duraglass tile, you can see space from here!"
 	floor_tile = /obj/item/stack/tile/plasteel
 	layer = ABOVE_OBJ_LAYER
 
