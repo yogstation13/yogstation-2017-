@@ -23,7 +23,8 @@
 
 /datum/species/golem/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C << "<span class='notice'>[traits]</span>"
+	spawn(10) //Nailed it
+		C << "<span class='notice'>[traits]</span>"
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -47,6 +48,7 @@
 	siemens_coeff = 2
 	punchdamagelow = 8
 	punchdamagehigh = 20
+	punchstunthreshold = 15
 	stunmod = 1.5
 	traits = "As an <span class='danger'>Iron Golem</span>, your punches pack a punch!"
 
@@ -139,7 +141,7 @@
 		H.unEquip(I)
 	for(var/i=1, i <= rand(3,5), i++)
 		new /obj/item/weapon/shard(get_turf(H))
-	playsound(src, "shatter", 70, 1)
+	playsound(H, "shatter", 70, 1)
 	H.visible_message("<span class='danger'>[H]'s glass body shatters into pieces...</span>")
 	qdel(H)
 
@@ -247,8 +249,8 @@
 
 /datum/species/golem/mythril/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.weather_immunities |= "ash"
-	C.weather_immunities |= "lava"
+	C.weather_immunities -= "ash"
+	C.weather_immunities -= "lava"
 
 /datum/species/golem/mythril/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(istype(P, /obj/item/projectile/magic))
@@ -275,6 +277,7 @@
 /datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	honker.removed(C)
+	honker = null
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		H.dna.remove_mutation(CLOWNMUT)

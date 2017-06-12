@@ -92,7 +92,6 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.set_cloned_appearance()
 
-
 /obj/effect/mob_spawn/human/golem/free
 	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
 	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \

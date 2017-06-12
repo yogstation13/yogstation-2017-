@@ -15,6 +15,9 @@
 	/obj/item/stack/sheet/mineral/bananium = /datum/species/golem/bananium,
 	/obj/item/stack/sheet/plasteel = /datum/species/golem/plasteel
 	)
-	if(!golemTypes[S.type])
-		return 0
-	return golemTypes[S.type]
+	var/golem
+	for(var/i in 1 to golemTypes.len)
+		if(istype(S, golemTypes[i]))
+			golem = golemTypes[golemTypes[i]]   //Index ception. First one gets the sheet, second one the golem species.
+			break
+	return golem
