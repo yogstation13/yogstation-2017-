@@ -110,6 +110,7 @@
 	uniform = null
 
 /obj/effect/mob_spawn/human/ash_walker/cosmic/special(mob/living/new_spawn)
+	..()
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.languages_spoken |= HUMAN
