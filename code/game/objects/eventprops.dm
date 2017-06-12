@@ -43,8 +43,8 @@
 		playsound_global('sound/effects/planetdeath.ogg', repeat=0, channel=1, volume=100)
 		random = rand(100, 4000)
 		icon_state = "explosion"
-		name = "debris field"
-		desc = "a husk of a once large planet floating in the distance..it makes you feel remorse for all the people living down there"
+		name = "Debris Field"
+		desc = "A husk of a once large planet floating in the distance, it makes you feel remorse for all the people who once lived down there..."
 		destroyed = 1
 		for(var/mob/M in mob_list)
 			shake_camera(M, 15, 1)
@@ -55,10 +55,6 @@
 		sleep(500)
 		random = rand(10000,99999)
 		priority_announce("This is syndicate command, we just lost [random] civilians in a massive strike!", "Syndicate Open Broadcast", 'sound/AI/commandreport.ogg')
-		name = "debris field"
-		desc = "a husk of a once large planet floating in the distance..it makes you feel remorse for all the people that once lived down there"
-
-
 
 
 //a massive death ray that hangs low, below the station
