@@ -154,7 +154,7 @@
 	armor = 30
 	brutemod = 1.5
 	speedmod = 1
-	traits = "As a <span class='danger'>Reinforced Glass Golem</span>, you reflect lasers, but have a weaker armor!"
+	traits = "As a <span class='danger'>Reinforced Glass Golem</span>, lasers pass though you, but have a weaker armor!"
 
 /datum/species/golem/plasteel
 	name = "Plasteel Golem"
@@ -277,6 +277,7 @@
 /datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	honker.removed(C)
+	qdel(honker)
 	honker = null
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
