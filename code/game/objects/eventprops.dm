@@ -84,7 +84,7 @@
 	ready = 0
 	for(var/obj/item/device/laserbattery/L in world)
 		L.firing = 0
-		continue
+
 	for(var/obj/planet/P in world)
 		P.kaboom() //blow up the planet
 
