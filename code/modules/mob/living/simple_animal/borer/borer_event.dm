@@ -38,8 +38,6 @@
 
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, 200)
 
-	sleep(210)
-
 	total_borer_hosts_needed = round(6 + total_humans/7)
 	spawncount += total_borer_hosts_needed
 
