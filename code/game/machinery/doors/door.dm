@@ -94,7 +94,9 @@
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
-
+	if(isHackerman(user))
+		emag_act()
+		return	
 	if(density && !emagged)
 		if(allowed(user) || src.emergency == 1)
 			open()
