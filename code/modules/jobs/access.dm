@@ -479,13 +479,4 @@
 		return "Centcom"
 	return "Unknown" //Return unknown if none of the above apply
 	
-/obj/proc/isHackerman(mob/M)
-	//check if mob has emag
-	if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		if(istype(H.get_active_hand(), /obj/item/weapon/card/emag) || istype(H.wear_id, /obj/item/weapon/card/emag))
-			return 1
-	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
-		var/mob/living/carbon/george = M
-		if(istype(george.get_active_hand(), /obj/item/weapon/card/emag))
-			return 1
+
