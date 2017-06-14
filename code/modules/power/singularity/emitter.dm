@@ -14,9 +14,6 @@
 	idle_power_usage = 10
 	active_power_usage = 300
 
-
-	var/wire_icon = "emitter_wires"
-	var/wire_overlay
 	var/wires_exposed = FALSE
 	var/hackable = TRUE
 	var/can_activate = TRUE
@@ -119,13 +116,15 @@
 			user << "<span class='warning'>The emitter isn't connected to a wire!</span>"
 			return 1
 		if(!src.locked)
+			var/pass = TRUE
 			if(src.active && can_deactivate)
 				src.active = 0
 				user << "<span class='notice'>You turn off \the [src].</span>"
 				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [key_name(user)]","singulo")
-			if(!src.active && can_activate)
+				pass = FALSE
+			if(!src.active && can_activate && pass)
 				src.active = 1
 				user << "<span class='notice'>You turn on \the [src].</span>"
 				src.shot_number = 0
@@ -294,25 +293,17 @@
 			user << "<span class='danger'>Access denied.</span>"
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(!hackable)
-			return
-		if(wires_exposed)
-			wires_exposed = FALSE
-			user << "<span class='notice'>You close the wiring panel on the [src.name].</span>"
-			overlays.Remove(wire_overlay)
-			qdel(wire_overlay)
-		else
-			wires_exposed = TRUE
-			var/image/wires = wire_icon
-			wire_overlay = wires
-			overlays += wire_overlay
-
 
 	if(is_wire_tool(W) && wires_exposed)
 		wires.interact(user)
 
 	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
+		if(!hackable)
+			return
+		if(wires_exposed)
+			wires_exposed = FALSE
+		else
+			wires_exposed = TRUE
 		return
 
 	if(exchange_parts(user, W))
