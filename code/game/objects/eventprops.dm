@@ -15,11 +15,6 @@
 	var/ready = 0
 	var/firing = 0
 
-/obj/machinery/deathray/New()
-	START_PROCESSING(SSobj, src)
-
-
-
 
 /obj/planet
 	icon = 'icons/obj/planet.dmi'
