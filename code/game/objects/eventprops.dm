@@ -18,13 +18,7 @@
 /obj/machinery/deathray/New()
 	START_PROCESSING(SSobj, src)
 
-/obj/machinery/deathray/process()
-	if(ready)
-		if(!firing) //prevents infinite looping
-			firing = 1
-			charge()
-	else if(!ready)
-		return
+
 
 
 /obj/planet
@@ -282,6 +276,7 @@
 		firing = 1
 		for(var/obj/machinery/deathray/L in world) //fire all lasers in the world
 			L.ready = 1
+			L.charge()
 		STOP_PROCESSING(SSobj, src)
 
 
@@ -336,3 +331,4 @@
 
 	if(power_drained >= max_power)
 		charged()
+		
