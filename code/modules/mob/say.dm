@@ -1,7 +1,14 @@
 //Speech verbs.
-/mob/verb/say_verb(message as text)
+/mob/verb/say_verb()
 	set name = "Say"
 	set category = "IC"
+	if(isliving(src) && stat == CONSCIOUS)
+		var/mob/living/L = src
+		var/image/I = image('icons/mob/talk.dmi', L, "[L.bubble_icon]3", FLY_LAYER)
+		L.type_icon = I
+		overlays += L.type_icon
+
+	var/message = input(src,,"Say")
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message) //Immersive pretty filters
@@ -12,6 +19,9 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
+	if(isliving(src))
+		var/mob/living/L = src
+		overlays.Remove(L.type_icon)
 	usr.say(message)
 
 /mob/verb/whisper(message as text)
