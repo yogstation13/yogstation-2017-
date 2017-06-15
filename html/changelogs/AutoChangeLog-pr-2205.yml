@@ -1,0 +1,4 @@
+author: Time-Green
+delete-after: True
+changes: 
+  - bugfix: "Fixes not getting placed in your new cloned body in certain events"
