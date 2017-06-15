@@ -1,4 +1,0 @@
-author: Jc1469
-delete-after: True
-changes: 
-  - tweak: "Fix air is now an admin verb instead of a server one."

@@ -1,4 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "The autolathe can now print x5 and x10 amounts of items, rather than printing the items one by one."

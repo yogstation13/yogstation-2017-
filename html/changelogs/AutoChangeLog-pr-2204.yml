@@ -1,6 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "The special operations crate from cargo now comes with slightly better supplies."
-  - rscadd: "The null_entry crate now costs more."
-  - tweak: "Those ugly-ass shoes can't be ordered from cargo anymore."

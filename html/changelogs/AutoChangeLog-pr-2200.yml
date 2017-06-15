@@ -1,4 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - bugfix: "CNS rebooters will now actually hurt if you are EMPd with one equipped."
