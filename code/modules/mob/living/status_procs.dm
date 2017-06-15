@@ -17,4 +17,5 @@
 		ear_deaf = deaf
 
 /mob/living/Sleeping(amount, updating = 1)
+	overlays.Remove(type_icon)
 	..()
