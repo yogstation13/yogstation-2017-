@@ -1,0 +1,4 @@
+author: X-TheDark
+delete-after: True
+changes: 
+  - bugfix: "Borer 'Reproduce' verb can no longer be spammed."
