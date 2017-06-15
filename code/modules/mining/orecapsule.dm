@@ -3,6 +3,7 @@
 	desc = "A small one-use capsule that summons an orebox."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "capsule2"
+	w_class = 1
 	var/obj/structure/ore_box/box
 
 /obj/item/orecapsule/attack_self(mob/user)

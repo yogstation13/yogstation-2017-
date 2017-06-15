@@ -52,7 +52,6 @@
 				return
 		coil.place_turf(src, user)
 		return 1
-
 	return 0
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)

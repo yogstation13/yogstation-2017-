@@ -59,6 +59,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/sandbags
 	name = "sandbags"
+	desc = "Use this on the ground to quickly deploy barricades."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "sandbags"
 	singular_name = "sandbag"
@@ -74,6 +75,27 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/obj/item/stack/sheet/mineral/sandbags/afterattack(atom/target, mob/user)
+	if(istype(target, /turf/open/floor))
+		var/turf/open/floor/F = target
+		var/occupied
+		for(var/obj/structure/barricade/sandbags/S in F)
+			if(occupied)
+				occupied = TRUE
+				break
+		if(occupied)
+			user << "<span class='notice'>A sandbag is already deployed in that spot.</span>"
+			return
+
+		user << "<span class='notice'>You start building a barricade...</span>"
+		if(do_after(user, 25, target = F))
+			new /obj/structure/barricade/sandbags(get_turf(F))
+			use(1)
+			user << "<span class='notice'>You construct a sand barricade.</span>"
+		else
+			user << "<span class='notice'>You have been interrupted!</span>"
+		return 1
 
 /*
  * Diamond
