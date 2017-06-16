@@ -57,6 +57,7 @@
 	var/timer = 450
 
 /obj/machinery/doomsday_device/process()
+	var/datum/game_mode/malfunction/mode = ticker.game.get_mode_by_tag("malfunction")
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
@@ -68,6 +69,8 @@
 		qdel(src)
 	if(!timing)
 		return
+	if((timer == 450) && mode && istype(mode) && mode.has_arg("QUICKNUKE"))
+		timer = 225
 	if(timer <= 0)
 		timing = 0
 		detonate(T.z)

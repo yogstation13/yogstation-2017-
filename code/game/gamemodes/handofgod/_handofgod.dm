@@ -5,7 +5,18 @@ var/global/list/global_handofgod_structuretypes = list()
 #define CONDUIT_RANGE	15
 
 
-/datum/game_mode
+/datum/game_mode/hand_of_god
+	name = "hand of god"
+	config_tag = "handofgod"
+	antag_flag = ROLE_HOG_CULTIST
+
+	required_players = 25
+	required_enemies = 8
+	recommended_enemies = 8
+	restricted_jobs = list("Chaplain","AI", "Cyborg")
+
+	prob_traitor_ai = 18
+
 	var/list/datum/mind/red_deities = list()
 	var/list/datum/mind/red_deity_prophets = list()
 	var/list/datum/mind/red_deity_followers = list()
@@ -17,19 +28,6 @@ var/global/list/global_handofgod_structuretypes = list()
 	var/list/datum/mind/unassigned_followers = list() //for roundstart team assigning
 	var/list/datum/mind/assigned_to_red = list()
 	var/list/datum/mind/assigned_to_blue = list()
-
-
-/datum/game_mode/hand_of_god
-	name = "hand of god"
-	config_tag = "handofgod"
-	antag_flag = ROLE_HOG_CULTIST		//Followers use ROLE_HOG_CULTIST, Gods are picked later on with ROLE_HOG_GOD
-
-	required_players = 25
-	required_enemies = 8
-	recommended_enemies = 8
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
-
-	prob_traitor_ai = 18
 
 /datum/game_mode/hand_of_god/announce()
 	world << "<B>The current game mode is - Hand of God!</B>"
@@ -43,15 +41,16 @@ var/global/list/global_handofgod_structuretypes = list()
 //Pre setup//
 /////////////
 
-/datum/game_mode/hand_of_god/pre_setup()
+/datum/game_mode/hand_of_god/pre_setup(datum/game/G, list/a)
+	args = a
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
 
-	var/list/datum/mind/hogs = pick_candidate(amount = recommended_enemies)
-	update_not_chosen_candidates()
+	var/list/datum/mind/hogs = G.prepare_candidates(antag_flag, recommended_enemies)
 
 	for(var/F in hogs)
 		var/datum/mind/follower = F
@@ -76,28 +75,15 @@ var/global/list/global_handofgod_structuretypes = list()
 
 //Pick a follower to uplift into a god
 /datum/game_mode/hand_of_god/post_setup()
-
-	//Find viable red god
-	var/list/red_god_possibilities = get_players_for_role(ROLE_HOG_GOD)
-	red_god_possibilities &= red_deity_followers //followers only
-	if(!red_god_possibilities.len) //No candidates? just pick any follower regardless of prefs
-		red_god_possibilities = red_deity_followers
-
 	//Make red god
-	var/datum/mind/red_god = pick_n_take(red_god_possibilities)
+	var/datum/mind/red_god = pick_n_take(red_deity_followers)
 	if(red_god)
 		red_god.current.become_god("red")
 		remove_hog_follower(red_god,0)
 		add_god(red_god,"red")
 
-	//Find viable blue god
-	var/list/blue_god_possibilities = get_players_for_role(ROLE_HOG_GOD)
-	blue_god_possibilities &= blue_deity_followers //followers only
-	if(!blue_god_possibilities.len) //No candidates? just pick any follower regardless of prefs
-		blue_god_possibilities = blue_deity_followers
-
 	//Make blue god
-	var/datum/mind/blue_god = pick_n_take(blue_god_possibilities)
+	var/datum/mind/blue_god = pick_n_take(blue_deity_followers)
 	if(blue_god)
 		blue_god.current.become_god("blue")
 		remove_hog_follower(blue_god,0)
@@ -107,9 +93,9 @@ var/global/list/global_handofgod_structuretypes = list()
 	//Forge objectives
 	//This is done here so that both gods exist
 	if(red_god)
-		ticker.mode.forge_deity_objectives(red_god)
+		forge_deity_objectives(red_god)
 	if(blue_god)
-		ticker.mode.forge_deity_objectives(blue_god)
+		forge_deity_objectives(blue_god)
 
 
 	..()
@@ -118,7 +104,7 @@ var/global/list/global_handofgod_structuretypes = list()
 //Objective Procs//
 ///////////////////
 
-/datum/game_mode/proc/forge_deity_objectives(datum/mind/deity)
+/datum/game_mode/hand_of_god/proc/forge_deity_objectives(datum/mind/deity)
 	switch(rand(1,100))
 		if(1 to 30)
 			var/datum/objective/deicide/deicide = new
@@ -169,7 +155,7 @@ var/global/list/global_handofgod_structuretypes = list()
 //Greet procs//
 ///////////////
 
-/datum/game_mode/proc/greet_hog_follower(datum/mind/follower_mind,colour)
+/datum/game_mode/hand_of_god/proc/greet_hog_follower(datum/mind/follower_mind,colour)
 	if(follower_mind in blue_deity_prophets || follower_mind in red_deity_prophets)
 		follower_mind.current << "<span class='danger'><B>You have been appointed as the prophet of the [colour] deity! You are the only one who can communicate with your deity at will. Guide your followers, but be wary, for many will want you dead.</span>"
 	else if(colour)
@@ -182,7 +168,7 @@ var/global/list/global_handofgod_structuretypes = list()
 //Convert procs//
 /////////////////
 
-/datum/game_mode/proc/add_hog_follower(datum/mind/follower_mind, colour = "No Colour")
+/datum/game_mode/hand_of_god/proc/add_hog_follower(datum/mind/follower_mind, colour = "No Colour")
 	var/mob/living/carbon/human/H = follower_mind.current
 	if(isloyal(H))
 		H << "<span class='danger'>Your mindshield implant blocked the influence of the [colour] deity. </span>"
@@ -208,7 +194,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	return 1
 
 
-/datum/game_mode/proc/add_god(datum/mind/god_mind, colour = "No Colour")
+/datum/game_mode/hand_of_god/proc/add_god(datum/mind/god_mind, colour = "No Colour")
 	remove_hog_follower(god_mind, announce = 0)
 	if(colour == "red")
 		red_deities += god_mind
@@ -222,7 +208,7 @@ var/global/list/global_handofgod_structuretypes = list()
 //Deconvert proc//
 //////////////////
 
-/datum/game_mode/proc/remove_hog_follower(datum/mind/follower_mind, announce = 1)//deconverts both
+/datum/game_mode/hand_of_god/proc/remove_hog_follower(datum/mind/follower_mind, announce = 1)//deconverts both
 	if(follower_mind.current)
 		if(is_handofgod_cultist(follower_mind.current) || is_handofgod_prophet(follower_mind.current))
 			follower_mind.remove_hog_follower_prophet()
@@ -252,37 +238,49 @@ var/global/list/global_handofgod_structuretypes = list()
 
 
 /proc/is_handofgod_bluecultist(A)
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.mind)
-			if(H.mind in ticker.mode.blue_deity_followers|ticker.mode.blue_deity_prophets)
+			if(H.mind in mode.blue_deity_followers|mode.blue_deity_prophets)
 				return 1
 	return 0
 
 
 /proc/is_handofgod_redcultist(A)
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.mind)
-			if(H.mind in ticker.mode.red_deity_followers|ticker.mode.red_deity_prophets)
+			if(H.mind in mode.red_deity_followers|mode.red_deity_prophets)
 				return 1
 	return 0
 
 
 /proc/is_handofgod_blueprophet(A)
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.mind)
-			if(H.mind in ticker.mode.blue_deity_prophets)
+			if(H.mind in mode.blue_deity_prophets)
 				return 1
 	return 0
 
 
 /proc/is_handofgod_redprophet(A)
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.mind)
-			if(H.mind in ticker.mode.red_deity_prophets)
+			if(H.mind in mode.red_deity_prophets)
 				return 1
 	return 0
 
@@ -297,39 +295,48 @@ var/global/list/global_handofgod_structuretypes = list()
 
 
 /proc/is_handofgod_prophet(A) //any of them what so ever, blue, red, hot pink, whatever
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
 		if(H.mind)
-			if(H.mind in ticker.mode.blue_deity_prophets|ticker.mode.red_deity_prophets)
+			if(H.mind in mode.blue_deity_prophets|mode.red_deity_prophets)
 				return 1
 	return 0
 
 
 /mob/camera/god/proc/is_handofgod_myprophet(A)
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(!ishuman(A))
 		return 0
 	var/mob/living/carbon/human/H = A
 	if(!H.mind)
 		return 0
 	if(side == "red")
-		if(H.mind in ticker.mode.red_deity_prophets)
+		if(H.mind in mode.red_deity_prophets)
 			return 1
 	else if(side == "blue")
-		if(H.mind in ticker.mode.blue_deity_prophets)
+		if(H.mind in mode.blue_deity_prophets)
 			return 1
 
 
 /mob/camera/god/proc/is_handofgod_myfollowers(mob/A)
+	var/datum/game_mode/hand_of_god/mode = ticker.game.get_mode_by_tag("handofgod")
+	if(!mode || !istype(mode))
+		return 0
 	if(!ishuman(A))
 		return 0
 	var/mob/living/carbon/human/H = A
 	if(!H.mind)
 		return 0
 	if(side == "red")
-		if(H.mind in ticker.mode.red_deity_prophets|ticker.mode.red_deity_followers)
+		if(H.mind in mode.red_deity_prophets|mode.red_deity_followers)
 			return 1
 	else if(side == "blue")
-		if(H.mind in ticker.mode.blue_deity_prophets|ticker.mode.blue_deity_followers)
+		if(H.mind in mode.blue_deity_prophets|mode.blue_deity_followers)
 			return 1
 
 //////////////////////
@@ -444,7 +451,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	return 1
 
 
-/datum/game_mode/proc/update_hog_icons_added(datum/mind/hog_mind,side)
+/datum/game_mode/hand_of_god/proc/update_hog_icons_added(datum/mind/hog_mind,side)
 	var/hud_key
 	var/rank = 0
 	if(side == "red")
@@ -466,7 +473,7 @@ var/global/list/global_handofgod_structuretypes = list()
 		set_antag_hud(hog_mind.current, "hog-[side]-[rank]")
 
 
-/datum/game_mode/proc/update_hog_icons_removed(datum/mind/hog_mind,side)
+/datum/game_mode/hand_of_god/proc/update_hog_icons_removed(datum/mind/hog_mind,side)
 	var/hud_key
 	if(side == "red")
 		hud_key = ANTAG_HUD_HOG_RED

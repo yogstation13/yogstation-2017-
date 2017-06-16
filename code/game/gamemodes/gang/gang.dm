@@ -4,10 +4,6 @@
 var/list/gang_name_pool = list("Clandestine", "Prima", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Donk", "Gene", "Gib", "Tunnel", "Diablo", "Psyke", "Osiron", "Sirius", "Sleeping Carp")
 var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple")
 
-/datum/game_mode
-	var/list/datum/gang/gangs = list()
-	var/datum/gang_points/gang_points
-
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
 
@@ -23,12 +19,17 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	name = "gang war"
 	config_tag = "gang"
 	antag_flag = ROLE_GANG
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("AI", "Cyborg", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 20
 	required_enemies = 2
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 	prob_traitor_ai = 18
+
+	var/list/datum/gang/gangs = list()
+	var/datum/gang_points/gang_points
+
+	var/datum/gang/winner = null
 
 ///////////////////////////
 //Announces the game type//
@@ -41,7 +42,9 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//
 ///////////////////////////////////////////////////////////////////////////////
-/datum/game_mode/gang/pre_setup()
+/datum/game_mode/gang/pre_setup(datum/game/G, list/a)
+	args = a
+
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 
@@ -53,21 +56,20 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(prob(num_players() * 2))
 		gangs_to_create ++
 
-	var/list/datum/mind/mafiosos = pick_candidate(amount = gangs_to_create)
-	update_not_chosen_candidates()
+	var/list/datum/mind/mafiosos = G.prepare_candidates(antag_flag, gangs_to_create)
 
 	for(var/v in mafiosos)
 		//Create the gang
-		var/datum/gang/G = new()
-		gangs += G
+		var/datum/gang/gang = new()
+		gangs += gang
 
 		//Now assign a boss for the gang
 		var/datum/mind/boss = v
-		G.bosses += boss
-		boss.gang_datum = G
-		boss.special_role = "[G.name] Gang Boss"
+		gang.bosses += boss
+		boss.gang_datum = gang
+		boss.special_role = "[gang.name] Gang Boss"
 		boss.restricted_roles = restricted_jobs
-		log_game("[boss.key] has been selected as the Boss for the [G.name] Gang")
+		log_game("[boss.key] has been selected as the Boss for the [gang.name] Gang")
 
 	if(gangs.len < 2) //Need at least two gangs
 		return 0
@@ -83,17 +85,16 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				forge_gang_objectives(boss_mind)
 				greet_gang(boss_mind)
 				equip_gang(boss_mind.current,G)
-				modePlayer += boss_mind
 	..()
 
 
-/datum/game_mode/proc/forge_gang_objectives(datum/mind/boss_mind)
+/datum/game_mode/gang/proc/forge_gang_objectives(datum/mind/boss_mind)
 	var/datum/objective/rival_obj = new
 	rival_obj.owner = boss_mind
 	rival_obj.explanation_text = "Be the first gang to successfully takeover the station with a Dominator."
 	boss_mind.objectives += rival_obj
 
-/datum/game_mode/proc/greet_gang(datum/mind/boss_mind, you_are=1)
+/datum/game_mode/gang/proc/greet_gang(datum/mind/boss_mind, you_are=1)
 	var/obj_count = 1
 	if (you_are)
 		boss_mind.current << "<FONT size=3 color=red><B>You are the Boss of the [boss_mind.gang_datum.name] Gang!</B></FONT>"
@@ -104,7 +105,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ///////////////////////////////////////////////////////////////////////////
 //This equips the bosses with their gear, and makes the clown not clumsy//
 ///////////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/equip_gang(mob/living/carbon/human/mob, gang)
+/datum/game_mode/gang/proc/equip_gang(mob/living/carbon/human/mob, gang)
 	if(!istype(mob))
 		return
 
@@ -164,7 +165,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ///////////////////////////////////////////
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
-/datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
+/datum/game_mode/gang/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
 	if(!G || (gangster_mind in get_all_gangsters()) || (gangster_mind.enslaved_to && !is_gangster(gangster_mind.enslaved_to)))
 		return 0
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
@@ -191,7 +192,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 ////////////////////////////////////////////////////////////////////
 //Deals with players reverting to neutral (Not a gangster anymore)//
 ////////////////////////////////////////////////////////////////////
-/datum/game_mode/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
+/datum/game_mode/gang/proc/remove_gangster(datum/mind/gangster_mind, beingborged, silent, remove_bosses=0)
 	var/datum/gang/gang = gangster_mind.gang_datum
 	if(!gang)
 		return 0
@@ -234,19 +235,19 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //Helper Procs//
 ////////////////
 
-/datum/game_mode/proc/get_all_gangsters()
+/datum/game_mode/gang/proc/get_all_gangsters()
 	var/list/all_gangsters = list()
 	all_gangsters += get_gangsters()
 	all_gangsters += get_gang_bosses()
 	return all_gangsters
 
-/datum/game_mode/proc/get_gangsters()
+/datum/game_mode/gang/proc/get_gangsters()
 	var/list/gangsters = list()
 	for(var/datum/gang/G in gangs)
 		gangsters += G.gangsters
 	return gangsters
 
-/datum/game_mode/proc/get_gang_bosses()
+/datum/game_mode/gang/proc/get_gang_bosses()
 	var/list/gang_bosses = list()
 	for(var/datum/gang/G in gangs)
 		gang_bosses += G.bosses
@@ -259,7 +260,12 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //Announces the end of the game with all relavent information stated//
 //////////////////////////////////////////////////////////////////////
 
-/datum/game_mode/proc/auto_declare_completion_gang(datum/gang/winner)
+/datum/game_mode/gang/check_finished()
+	if(winner) //Winner is set in the gang_points datum's process()
+		return 1
+	return 0
+
+/datum/game_mode/gang/declare_completion()
 	if(gangs.len)
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The loyalists win!"]</span><br>"
@@ -268,6 +274,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
 			feedback_set_details("round_end_result","win - gang domination complete")
 
+/datum/game_mode/gang/round_report()
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
 		text += "<br>The [G.name] Gang Bosses were:"
@@ -292,9 +299,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	START_PROCESSING(SSobj, src)
 
 /datum/gang_points/process(seconds)
+	var/datum/game_mode/gang/mode = ticker.game.get_mode_by_tag("gang")
 	var/list/winners = list() //stores the winners if there are any
 
-	for(var/datum/gang/G in ticker.mode.gangs)
+	for(var/datum/gang/G in mode.gangs)
 		if(world.time > next_point_time)
 			G.income()
 
@@ -312,7 +320,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 				G.domination(0.5)
 			priority_announce("Multiple station takeover attempts have made simultaneously. Conflicting takeover attempts appears to have restarted.","Network Alert")
 		else
-			ticker.mode.explosion_in_progress = 1
-			ticker.station_explosion_cinematic(1)
-			ticker.mode.explosion_in_progress = 0
-			ticker.force_ending = pick(winners)
+			mode.explosion_in_progress = 1
+			ticker.station_explosion_cinematic(1, "gang war")
+			mode.explosion_in_progress = 0
+			mode.winner = pick(winners)

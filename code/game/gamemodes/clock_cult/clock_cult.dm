@@ -72,26 +72,25 @@ This file's folder contains:
 // GAME MODE //
 ///////////////
 
-/datum/game_mode
+/datum/game_mode/clockwork_cult
+	name = "clockwork cult"
+	config_tag = "clockwork_cult"
+	antag_flag = ROLE_SERVANT_OF_RATVAR
+	end_condition = END_CONDITION_WEAK
+	required_players = 30
+	required_enemies = 2
+	recommended_enemies = 4
+	enemy_minimum_age = 14
+	protected_jobs = list("Chaplain", "AI", "Cyborg")
+	prob_traitor_ai = 18
+	var/list/servants_to_serve = list()
+	var/roundstart_player_count
+
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
 	var/clockwork_objective = CLOCKCULT_GATEWAY //The objective that the servants must fulfill
 	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
-
-/datum/game_mode/clockwork_cult
-	name = "clockwork cult"
-	config_tag = "clockwork_cult"
-	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 30
-	required_enemies = 2
-	recommended_enemies = 4
-	enemy_minimum_age = 14
-	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
-	restricted_jobs = list("Chaplain", "Captain")
-	prob_traitor_ai = 18
-	var/list/servants_to_serve = list()
-	var/roundstart_player_count
 
 /datum/game_mode/clockwork_cult/announce()
 	world << "<b>The game mode is: Clockwork Cult!</b>"
@@ -99,7 +98,8 @@ This file's folder contains:
 	world << "<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>"
 	world << "<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>"
 
-/datum/game_mode/clockwork_cult/pre_setup()
+/datum/game_mode/clockwork_cult/pre_setup(datum/game/G, list/a)
+	args = a
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
@@ -108,13 +108,11 @@ This file's folder contains:
 
 	roundstart_player_count = num_players()
 
-	var/list/datum/mind/followers_of_holy_light = pick_candidate(amount = starter_servants)
-	update_not_chosen_candidates()
+	var/list/datum/mind/followers_of_holy_light = G.prepare_candidates(antag_flag,starter_servants)
 
 	for(var/v in followers_of_holy_light)
 		var/datum/mind/servant = v
 		servants_to_serve += servant
-		modePlayer += servant
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
 
@@ -162,7 +160,7 @@ This file's folder contains:
 	M << greeting_text
 	return 1
 
-/datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
+/datum/game_mode/clockwork_cult/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
 	if(!L || !istype(L))
 		return 0
 	var/slot = "At your feet"
@@ -224,25 +222,23 @@ This file's folder contains:
 	..()
 	return 0 //Doesn't end until the round does
 
-/datum/game_mode/proc/auto_declare_completion_clockwork_cult()
+/datum/game_mode/clockwork_cult/round_report()
 	var/text = ""
-	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
-		var/datum/game_mode/clockwork_cult/C = ticker.mode
-		if(C.check_clockwork_victory())
-			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
+	if(C.check_clockwork_victory())
+		text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+		feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
+	else
+		var/half_victory = FALSE
+		if(clockwork_objective == CLOCKCULT_GATEWAY)
+			var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+			if(G)
+				half_victory = TRUE
+		if(half_victory)
+			text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway was successfully constructed!</b></span>"
+			feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
 		else
-			var/half_victory = FALSE
-			if(clockwork_objective == CLOCKCULT_GATEWAY)
-				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
-				if(G)
-					half_victory = TRUE
-			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway was successfully constructed!</b></span>"
-				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
-			else
-				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
+			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+			feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
 		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"

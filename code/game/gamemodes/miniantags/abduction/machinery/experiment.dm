@@ -151,6 +151,9 @@
 	add_fingerprint(usr)
 
 /obj/machinery/abductor/experiment/proc/Experiment(mob/occupant,type)
+	var/datum/game_mode/abduction/mode = ticker.game.get_mode_by_tag("abduction")
+	if(!mode || !istype(mode))
+		return //Shenanigans
 	var/mob/living/carbon/human/H = occupant
 	var/point_reward = 0
 	if(H in history)
@@ -178,14 +181,14 @@
 		H << "<span class='warning'><b>Your mind snaps!</b></span>"
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
-		ticker.mode.abductees += H.mind
+		mode.abductees += H.mind
 		H.mind.objectives += O
 		var/obj_count = 1
 		H << "<span class='notice'>Your current objectives:</span>"
 		for(var/datum/objective/objective in H.mind.objectives)
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
-		ticker.mode.update_abductor_icons_added(H.mind)
+		mode.update_abductor_icons_added(H.mind)
 
 		for(var/obj/item/organ/gland/G in H.internal_organs)
 			G.Start()

@@ -802,20 +802,28 @@
 	if(malf.malfhacking)
 		malf << "You are already hacking an APC."
 		return
+	var/apc_value = 10 //default value
+	var/apc_time = 600 //one minute
+	var/datum/game_mode/malfunction/mode = ticker.game.get_mode_by_tag("malfunction")
+	if(mode && istype(mode)) //Malf AIs can exist without the gamemode, but we want to give the mode first say if it exists
+		apc_value = mode.apc_value
+		apc_time = mode.apc_time
+
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
 	malf.malfhacking = TRUE
 	malfhacker = malf
-	addtimer(src, "malfhacked", 600, FALSE, malf)
+	addtimer(src, "malfhacked", apc_time, FALSE, malf, apc_value)
 
-/obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
+/obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf, value)
 	if(!istype(malf))
 		return
+
 	malfhacker = null
 	malf.malfhack = null
 	malf.malfhacking = FALSE
 	if(src && !src.aidisabled)
-		malf.malf_picker.processing_time += 10
+		malf.malf_picker.processing_time += value
 
 		malfai = malf.parent || malf
 		malfhack = TRUE

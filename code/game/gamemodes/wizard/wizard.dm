@@ -1,33 +1,81 @@
-/datum/game_mode
-	var/list/datum/mind/wizards = list()
-	var/list/datum/mind/apprentices = list()
+//WIZARD MODE
+//An angry nerd with godlike powers is unleashed upon the station.
+//ARGS:
+///DUO - Two standard wizards, but each must eliminate the other in addition to their objectives.
+///TRIFECTA - High stakes, magic fueled double agent (plus normal objectives)
+///RAGING - Forget one wizard, an entire wizard invasion force boards Space Station 13.
+///BULLSHIT_RAGING - The wizards don't stop.  The wizards never stop.  WHY WON'T THE WIZARDS STOP?
+///ONLY_ONE - Everyone becomes a wizard, imbued with great magical powers and a desire to kill everyone but themselves.
 
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
+	end_condition = END_CONDITION_WEAK //If there's other modes in play, the death of the wizard won't end them.
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 14
-	round_ends_with_antag_death = 1
 	prob_traitor_ai = 18
 	var/use_huds = 0
 	var/finished = 0
 
+	//raging mages vars
+	var/max_mages = 1 //Determines wizard respawn ability
+	var/mages_made = 0
+	var/making_mage = 0
+	var/time_check = 1500
+	var/time_checked
+	var/spawn_delay_min = 500
+	var/spawn_delay_max = 700
+
+	var/list/datum/mind/wizards = list()
+	var/list/datum/mind/apprentices = list()
+	var/list/datum/mind/target_list = list() //For double-agent esque modes
+
 /datum/game_mode/wizard/announce()
 	world << "<B>The current game mode is - Wizard!</B>"
+	if(has_arg("RAGING"))
+		world << "<B>The <span class='warning'>Space Wizard Federation</span> is pissed, help defeat all the space wizards!</B>"
+		return
+	if(has_arg("BULLSHIT_RAGING"))
+		world << "<B>The <span class='warning'>Space Wizard Federation</span> is super pissed, survive the onslaught and escape!</B>"
+		return
+	if(has_arg("ONLY_ONE"))
+		world << "<B>The <span class='warning'>Space Wizard Federation</span> has ordered a bunch of wizards to kill each other for their own amusment!</B>"
+		return
 	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 
-/datum/game_mode/wizard/pre_setup()
-	//Potential here, people. Magin' Rages Light
-	var/list/datum/mind/selected_wizards = pick_candidate(amount = required_enemies)
-	update_not_chosen_candidates()
+/datum/game_mode/wizard/pre_setup(datum/game/G, list/a)
+	args = a
+	time_checked = world.time
+
+	if(has_arg("RAGING"))
+		max_mages = round(num_players() / 8)
+		if(max_mages < 1)
+			max_mages = 1
+		if(max_mages > 20) //haha yeah right
+			max_mages = 20
+
+	if(has_arg("BULLSHIT_RAGING"))
+		max_mages = INFINITY //hey, it's in the name
+
+	var/roundstart_wizards = 1
+	if(has_arg("DUO"))
+		roundstart_wizards = 2
+	if(has_arg("TRIFECTA"))
+		roundstart_wizards = 3
+	if(has_arg("ONLY_ONE"))
+		roundstart_wizards = num_players()
+		end_condition = END_CONDITION_STRONG //Objective is to kill EVERYTHING, other modes be damned
+
+	mages_made += roundstart_wizards
+
+	var/list/datum/mind/selected_wizards = G.prepare_candidates(antag_flag, roundstart_wizards)
 
 	for(var/v in selected_wizards)
 		var/datum/mind/wizard = v
 		wizards += wizard
-		modePlayer += wizard
 		wizard.assigned_role = "Wizard"
 		wizard.special_role = "Wizard"
 		if(wizardstart.len == 0)
@@ -35,12 +83,23 @@
 			return 0
 
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(wizardstart)
+		if(has_arg("ONLY_ONE"))
+			wiz.current.loc = pick(blobstart) //Not enough room on the wizard ship for all players, drop them straight on the station.
+		else
+			wiz.current.loc = pick(wizardstart)
 
 	return 1
 
 
 /datum/game_mode/wizard/post_setup()
+	if (has_arg("DUO") || has_arg("TRIFECTA")) //The only difference between these two is the number of wizards spawned, if you want you can add more options
+		var/i = 0
+		for(var/datum/mind/wizard in wizards)
+			i++
+			if(i + 1 > wizards.len)
+				i = 0
+			target_list[wizard] = wizards[i + 1]
+
 	for(var/datum/mind/wizard in wizards)
 		log_game("[wizard.key] (ckey) has been selected as a Wizard")
 		equip_wizard(wizard.current)
@@ -53,7 +112,13 @@
 	return
 
 
-/datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
+/datum/game_mode/wizard/proc/forge_wizard_objectives(datum/mind/wizard)
+	if (has_arg("DUO") || has_arg("TRIFECTA")) //Simply adds on to the standard objective set
+		forge_backstab_objectives(wizard)
+	if (has_arg("ONLY_ONE"))
+		var/datum/objective/only_one/killemall = new
+		wizard.objectives += killemall
+		return
 	switch(rand(1,100))
 		if(1 to 30)
 
@@ -100,8 +165,14 @@
 				wizard.objectives += hijack_objective
 	return
 
+/datum/game_mode/wizard/proc/forge_backstab_objectives(datum/mind/wizard)
+	var/datum/objective/assassinate/wizard/kill_objective = new
+	kill_objective.owner = wizard
+	kill_objective.target = target_list[wizard]
+	kill_objective.update_explanation_text()
+	wizard.objectives += kill_objective
 
-/datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
+/datum/game_mode/wizard/proc/name_wizard(mob/living/carbon/human/wizard_mob)
 	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
@@ -119,10 +190,16 @@
 	return
 
 
-/datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
-	if (you_are)
-		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
-	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+/datum/game_mode/wizard/proc/greet_wizard(datum/mind/wizard, you_are=1)
+	if (has_arg("RAGING") || has_arg("BULLSHIT_RAGING"))
+		if (you_are)
+			wizard.current << "<span class='boldannounce'>You are a Space Wizard!</span>"
+		wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+		wizard.current << "<b>Objective Alpha</b>: Make sure the station pays for its actions against our diplomats."
+	else
+		if (you_are)
+			wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
+		wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in wizard.objectives)
@@ -131,14 +208,14 @@
 	return
 
 
-/datum/game_mode/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
+/datum/game_mode/wizard/proc/learn_basic_spells(mob/living/carbon/human/wizard_mob)
 	if(!istype(wizard_mob) || !wizard_mob.mind)
 		return 0
 	wizard_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(null)) //Wizards get Magic Missile and Ethereal Jaunt by default
 	wizard_mob.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(null))
 
 
-/datum/game_mode/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
+/datum/game_mode/wizard/proc/equip_wizard(mob/living/carbon/human/wizard_mob)
 	if (!istype(wizard_mob))
 		return
 	if(wizard_mob.dna && wizard_mob.dna.species.dangerous_existence)
@@ -172,6 +249,17 @@
 
 
 /datum/game_mode/wizard/check_finished()
+	if (has_arg("RAGING") || has_arg("BULLSHIT_RAGING"))
+		return check_raging_completion()
+
+	if (has_arg("ONLY_ONE"))
+		var/living_wizards = 0
+		var/how_many_there_can_be = 1
+		for (var/datum/mind/wizard in wizards)
+			if(isliving(wizard.current) && wizard.current.stat!=DEAD)
+				living_wizards++
+		if (living_wizards <= how_many_there_can_be)
+			return 1
 
 	for(var/datum/mind/wizard in wizards)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
@@ -183,6 +271,108 @@
 
 	return ..()
 
+/datum/game_mode/wizard/proc/check_raging_completion()
+	var/wizards_alive = 0
+	for(var/datum/mind/wizard in wizards)
+		if(!istype(wizard.current,/mob/living/carbon))
+			continue
+		if(istype(wizard.current,/mob/living/carbon/brain))
+			continue
+		if(wizard.current.stat==DEAD)
+			continue
+		if(wizard.current.stat==UNCONSCIOUS)
+			if(wizard.current.health < 0)
+				wizard.current << "<font size='4'>The Space Wizard Federation is upset with your performance and have terminated your employment.</font>"
+				wizard.current.death()
+			continue
+		wizards_alive++
+	if(!time_checked)
+		time_checked = world.time
+	if("BULLSHIT_RAGING" in args)
+		if(world.time > time_checked + time_check)
+			max_mages = INFINITY
+			time_checked = world.time
+			make_more_mages()
+			return ..()
+	if (wizards_alive)
+		if(world.time > time_checked + time_check && (mages_made < max_mages))
+			time_checked = world.time
+			make_more_mages()
+
+	else
+		if(mages_made >= max_mages)
+			finished = 1
+			return ..()
+		else
+			make_more_mages()
+	return ..()
+
+/datum/game_mode/wizard/proc/make_more_mages()
+
+	if(making_mage)
+		return 0
+	if(mages_made >= max_mages)
+		return 0
+	making_mage = 1
+	mages_made++
+	var/list/mob/dead/observer/candidates = list()
+	var/mob/dead/observer/theghost = null
+	spawn(rand(spawn_delay_min, spawn_delay_max))
+		message_admins("SWF is still pissed, sending another wizard - [max_mages - mages_made] left.")
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client && !G.client.holder && !G.client.is_afk() && (ROLE_WIZARD in G.client.prefs.be_special))
+				if(!jobban_isbanned(G, ROLE_WIZARD) && !jobban_isbanned(G, "Syndicate"))
+					if(ticker.game.age_check(G.client, src))
+						candidates += G
+		if(!candidates.len)
+			message_admins("No applicable ghosts for the next ragin' mage, asking ghosts instead.")
+			var/time_passed = world.time
+			for(var/mob/dead/observer/G in player_list)
+				if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
+					if(ticker.game.age_check(G.client, src))
+						spawn(0)
+							switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
+								if("Yes")
+									if((world.time-time_passed)>300)//If more than 30 game seconds passed.
+										continue
+									candidates += G
+								if("No")
+									continue
+
+			sleep(300)
+		if(!candidates.len)
+			message_admins("This is awkward, sleeping until another mage check...")
+			making_mage = 0
+			mages_made--
+			return
+		else
+			shuffle(candidates)
+			for(var/mob/i in candidates)
+				if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+
+				theghost = i
+				break
+
+		if(theghost)
+			var/mob/living/carbon/human/new_character= makeBody(theghost)
+			new_character.mind.make_Wizard()
+			making_mage = 0
+			wizards += new_character
+			return 1
+
+/datum/game_mode/wizard/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
+	if(!G_found || !G_found.key)
+		return
+
+	//First we spawn a dude.
+	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
+
+	G_found.client.prefs.copy_to(new_character)
+	new_character.dna.update_dna_identity()
+	new_character.key = G_found.key
+
+	return new_character
+
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
@@ -191,7 +381,7 @@
 	return 1
 
 
-/datum/game_mode/proc/auto_declare_completion_wizard()
+/datum/game_mode/wizard/round_report()
 	if(wizards.len)
 		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
 
@@ -269,15 +459,15 @@ Made a proc so this is not repeated 14 (or more) times.*/
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
-	return istype(M) && M.mind && ticker && ticker.mode && ((M.mind in ticker.mode.wizards) || (M.mind in ticker.mode.apprentices))
+	return istype(M) && M.mind && (M.mind.special_role == "Wizard")
 
 
-/datum/game_mode/proc/update_wiz_icons_added(datum/mind/wiz_mind)
+/datum/game_mode/wizard/proc/update_wiz_icons_added(datum/mind/wiz_mind)
 	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
 	wizhud.join_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, ((wiz_mind in wizards) ? "wizard" : "apprentice"))
 
-/datum/game_mode/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
+/datum/game_mode/wizard/proc/update_wiz_icons_removed(datum/mind/wiz_mind)
 	var/datum/atom_hud/antag/wizhud = huds[ANTAG_HUD_WIZ]
 	wizhud.leave_hud(wiz_mind.current)
 	set_antag_hud(wiz_mind.current, null)

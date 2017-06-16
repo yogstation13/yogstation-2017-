@@ -76,12 +76,15 @@
 	return new /datum/cyberman_hack/analyze/id(src)
 
 /obj/item/get_cybermen_hack()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return null
 	var/is_analyze_target = 0
-	for(var/name in cyberman_network.cybermen_analyze_targets)
-		if(istype(src, cyberman_network.cybermen_analyze_targets[name]))
+	for(var/name in mode.cyberman_network.cybermen_analyze_targets)
+		if(istype(src, mode.cyberman_network.cybermen_analyze_targets[name]))
 			is_analyze_target = 1
 			break
-	if(cyberman_network && is_analyze_target)//this includes all possible objectives, not just current ones. This allows cybermen to complete objectives instantly, if they analyzed lots of things and get lucky.
+	if(is_analyze_target)//this includes all possible objectives, not just current ones. This allows cybermen to complete objectives instantly, if they analyzed lots of things and get lucky.
 		return new /datum/cyberman_hack/analyze(src)
 	return null
 
@@ -176,16 +179,21 @@
 
 /datum/cyberman_hack/New(atom/target, mob/living/carbon/human/user = usr)
 	name = "[display_verb] of \the [target_name]"
-	if(!cyberman_network)
-		new /datum/cyberman_network()
 	src.target = target
 	if(target)
 		target_name = target.name
 	else
 		target_name = "\[unknown\]"
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		message_admins("[usr.real_name]([usr.ckey]) has initiated a cyberman hack on [target] without the mode running!")
+		return
 
 /datum/cyberman_hack/proc/start()
-	cyberman_network.log_hacking("[usr.real_name]([usr.ckey]) started a hack of \the [target_name]")
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
+	mode.cyberman_network.log_hacking("[usr.real_name]([usr.ckey]) started a hack of \the [target_name]")
 	if(target)
 		if(!target.hud_list)
 			target.hud_list = list()
@@ -195,11 +203,14 @@
 	hud.add_to_hud(target)
 
 	if(start_helper())
-		cyberman_network.active_cybermen_hacks += src
+		mode.cyberman_network.active_cybermen_hacks += src
 		return 1
 	return 0
 
 /datum/cyberman_hack/proc/start_helper()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
 	if(!target)
 		drop("<span class='warning'>cannot perform [display_verb] on \the [target_name], target does not exist.</span>")
 		return 0
@@ -207,7 +218,7 @@
 		drop("<span class='warning'>cannot perform [display_verb] on \the [target_name], target is not of the correct type for this hack.</span>")
 		log_game("A hack was attempted on an object of an inncorrect type. object was: [target]. Expected type: [required_type]. Please contact a coder aboud this bug.")
 		return 0
-	for(var/datum/cyberman_hack/H in cyberman_network.active_cybermen_hacks)//no hacking the same thing more than once at the same time.
+	for(var/datum/cyberman_hack/H in mode.cyberman_network.active_cybermen_hacks)//no hacking the same thing more than once at the same time.
 		if(H.target == target && !istype(H, /datum/cyberman_hack/multiple_vector/))//special case - since sometimes a multi-vector hack has a component that hacks the multi-vector's target (i.e., the AI hack). Multi vectors have their own check for repeats.
 			drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")
 			return 0
@@ -297,16 +308,22 @@
 	return get_dist(H, target) <= H.mind.cyberman.hack_max_maintain_dist
 
 /datum/cyberman_hack/proc/complete()//you don't need to check for null or qdeleted here, because complete is always called by process(), which already does that. Unless someone cheats and calls complete() when they're not supposed to.
-	if(target && !(target in cyberman_network.cybermen_hacked_objects))//no repeats, hopefully.
-		cyberman_network.cybermen_hacked_objects += target
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
+	if(target && !(target in mode.cyberman_network.cybermen_hacked_objects))//no repeats, hopefully.
+		mode.cyberman_network.cybermen_hacked_objects += target
 	var/message = "[display_verb] of \the [target_name] has successfully completed."
 	outputMessage("<span class='notice'>[message]</span>")
-	cyberman_network.log_hacking(message)
+	mode.cyberman_network.log_hacking(message)
 	qdel(src)
 
 /datum/cyberman_hack/proc/drop(messageOverride, list/datum/mind/messageLimiter)//messageLimiter, if it is initialized, overrides outputLimiter.
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
 	var/message = messageOverride ? messageOverride : "<span class='warning'>[display_verb] of \the [target_name] has failed for unknown reasons.</span>"
-	cyberman_network.log_hacking(message)
+	mode.cyberman_network.log_hacking(message)
 	outputMessage(message, messageLimiter)
 	qdel(src)
 
@@ -320,7 +337,10 @@
 			if(M && M.current)
 				M.current << message
 	else
-		cyberman_network.message_all_cybermen(message)
+		var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+		if(!mode || !istype(mode) || !mode.cyberman_network)
+			return
+		mode.cyberman_network.message_all_cybermen(message)
 
 /datum/cyberman_hack/proc/get_status(mob/living/user)
 	if(!target || qdeleted(target))
@@ -333,7 +353,10 @@
 	return result
 
 /datum/cyberman_hack/Destroy()
-	cyberman_network.active_cybermen_hacks -= src
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return ..()
+	mode.cyberman_network.active_cybermen_hacks -= src
 	if(target)
 		var/datum/atom_hud/data/cybermen/hud = huds[DATA_HUD_CYBERMEN_HACK]
 		hud.remove_from_hud(target)
@@ -372,8 +395,11 @@
 /datum/cyberman_hack/proc/component_hack_start(multi_vector_hack_type, atom/multi_vector_hack_target) //call this in the start() method of a component hack.
 	if(!start_helper())
 		return 0
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
 	cost = 65535//Effectively infinite. there is a more elegant way to do this, but in practice, no hack will ever come close to this progress. 2^16-1 for no particular reason.
-	for(var/datum/cyberman_hack/multiple_vector/H in cyberman_network.active_cybermen_hacks)
+	for(var/datum/cyberman_hack/multiple_vector/H in mode.cyberman_network.active_cybermen_hacks)
 		if(istype(H, multi_vector_hack_type) && H.target == multi_vector_hack_target)
 			return H.add_component_hack(src)
 	var/datum/cyberman_hack/multiple_vector/new_multiple_vector_hack = new multi_vector_hack_type(multi_vector_hack_target)
@@ -387,13 +413,19 @@
 	var/tick_best_hack_pref
 
 /datum/cyberman_hack/multiple_vector/start(datum/cyberman_hack/first_component_hack)
-	cyberman_network.log_hacking("[usr.real_name]([usr.ckey]) started a multiple vector hack of \the [target_name] through \the [first_component_hack.target_name]")
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
+	mode.cyberman_network.log_hacking("[usr.real_name]([usr.ckey]) started a multiple vector hack of \the [target_name] through \the [first_component_hack.target_name]")
 	if(start_helper(first_component_hack))
 		return 1
 	return 0
 
 /datum/cyberman_hack/multiple_vector/start_helper(datum/cyberman_hack/first_component_hack)
-	for(var/datum/cyberman_hack/multiple_vector/H in cyberman_network.active_cybermen_hacks)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
+	for(var/datum/cyberman_hack/multiple_vector/H in mode.cyberman_network.active_cybermen_hacks)
 		if(istype(H, src.type) && H.target == target)
 			drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")//this should never happen, because whatever started this should have checked to see if it could join H before starting this one.
 			return 0
@@ -403,7 +435,7 @@
 		if(!target.hud_list[CYBERMEN_HACK_HUD])
 			target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
 	component_hacks += first_component_hack
-	cyberman_network.active_cybermen_hacks += src
+	mode.cyberman_network.active_cybermen_hacks += src
 	return 1
 
 /datum/cyberman_hack/multiple_vector/process()
@@ -908,11 +940,14 @@
 	..()
 
 /datum/cyberman_hack/analyze/id/complete()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
 	var/obj/item/weapon/card/id/id = target
 	if(target)
 		for(var/access in id.GetAccess() )
-			if(!(access in cyberman_network.cybermen_access_downloaded))
-				cyberman_network.cybermen_access_downloaded += access//cybermen_access_downloaded needs it's own list so you can't hack a card and then give the card captain access later.
+			if(!(access in mode.cyberman_network.cybermen_access_downloaded))
+				mode.cyberman_network.cybermen_access_downloaded += access//cybermen_access_downloaded needs it's own list so you can't hack a card and then give the card captain access later.
 	..()
 
 /*
@@ -956,7 +991,10 @@
 			got_research |= get_research(tech)
 		D.tech_stored[i] = null
 	if(got_research)
-		cyberman_network.message_all_cybermen("New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.")
+		var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+		if(!mode || !istype(mode) || !mode.cyberman_network)
+			return
+		mode.cyberman_network.message_all_cybermen("New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.")
 	..()
 
 //RnD SERVER
@@ -972,7 +1010,10 @@
 		if(get_research(T))
 			found_any = 1
 	if(found_any)
-		cyberman_network.message_all_cybermen("<span class='notice'>New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.</span>")
+		var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+		if(!mode || !istype(mode) || !mode.cyberman_network)
+			return ..()
+		mode.cyberman_network.message_all_cybermen("<span class='notice'>New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.</span>")
 	..()
 
 //RnD SERVER CONSOLE
@@ -994,6 +1035,9 @@
 		return 0
 
 /datum/cyberman_hack/machinery/RnDserverControl/complete()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return ..()
 	var/obj/machinery/computer/rdservercontrol/C = target
 	var/obj/machinery/r_n_d/server/S = C.temp_server
 	if(S && S.files && S.files.known_tech)
@@ -1002,9 +1046,9 @@
 			if(get_research(T))
 				found_any = 1
 		if(found_any)
-			cyberman_network.message_all_cybermen("<span class='notice'>New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.</span>")
+			mode.cyberman_network.message_all_cybermen("<span class='notice'>New research levels uploaded. Cybermen network now has [calc_research_levels()] research level\s.</span>")
 	else
-		cyberman_network.message_all_cybermen("<span class='warning'>Warning - RnD Server Control was not linked to a server, no research could be downloaded.</span>")
+		mode.cyberman_network.message_all_cybermen("<span class='warning'>Warning - RnD Server Control was not linked to a server, no research could be downloaded.</span>")
 	..()
 
 //HELPERS
@@ -1012,22 +1056,28 @@
 /datum/cyberman_hack/proc/get_research(datum/tech/new_tech)
 	if(!new_tech)
 		return 0
-	for(var/list/datum/tech/old_tech in cyberman_network.cybermen_research_downloaded)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
+	for(var/list/datum/tech/old_tech in mode.cyberman_network.cybermen_research_downloaded)
 		if(new_tech.id == old_tech.id)
 			if(new_tech.level > old_tech.level)
-				cyberman_network.cybermen_research_downloaded -= old_tech
-				cyberman_network.cybermen_research_downloaded += new_tech
+				mode.cyberman_network.cybermen_research_downloaded -= old_tech
+				mode.cyberman_network.cybermen_research_downloaded += new_tech
 				return 1
 			else
 				return 0
 	if(new_tech.level > 1)//we don't need any level 1 research.
-		cyberman_network.cybermen_research_downloaded += new_tech
+		mode.cyberman_network.cybermen_research_downloaded += new_tech
 		return 1
 	return 0
 
 /datum/cyberman_hack/proc/calc_research_levels()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
 	var/current_amount = 0
-	for(var/datum/tech/current_data in cyberman_network.cybermen_research_downloaded)
+	for(var/datum/tech/current_data in mode.cyberman_network.cybermen_research_downloaded)
 		if(current_data.level)
 			current_amount += (current_data.level-1)
 	return current_amount
@@ -1045,9 +1095,12 @@
 
 /datum/cyberman_hack/human/New()
 	..()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
 	var/mob/living/carbon/human/H = target
-	cost = 400 + 200*cyberman_network.cybermen.len//you can just convert a bunch of people at once to keep the cost down. Possible expoit, but won't worry about it now.
-	if(istype(cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len], /datum/objective/cybermen/exterminate/eliminate_humans/))//discourages murderboning. Hopefully.
+	cost = 400 + 200*mode.cyberman_network.cybermen.len//you can just convert a bunch of people at once to keep the cost down. Possible expoit, but won't worry about it now.
+	if(istype(mode.cyberman_network.cybermen_objectives[mode.cyberman_network.cybermen_objectives.len], /datum/objective/cybermen/exterminate/eliminate_humans/))//discourages murderboning. Hopefully.
 		cost = min(cost, 3000)
 	if(isloyal(H))
 		cost = cost*2
@@ -1218,15 +1271,18 @@
 	explanation = "Bypasses the password lock on the self-destruct console. Not permitted unless the collective authorizes the destruction of the station."
 
 /datum/cyberman_hack/machinery/nuke/start_helper()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return
 	//no shenanigans with the nuke unless it's the current objective
-	if(!cyberman_network || !istype(cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len], /datum/objective/cybermen/exterminate/nuke_station))
-		cyberman_network.log_hacking("[usr] attempted to start a cyberman hack on the station self-destruct terminal. This was blocked, as it is not a current Cyberman objective.", 1)
+	if(!istype(mode.cyberman_network.cybermen_objectives[mode.cyberman_network.cybermen_objectives.len], /datum/objective/cybermen/exterminate/nuke_station))
+		mode.cyberman_network.log_hacking("[usr] attempted to start a cyberman hack on the station self-destruct terminal. This was blocked, as it is not a current Cyberman objective.", 1)
 		drop("<span class='warning'>You cannot hack the station self-destruct terminal unless you have an objective to do so!</span>")
 		return 0
 	if(!..())
 		return 0
 	//might want to go delta here
-	cyberman_network.log_hacking("[usr] attempted to start a cyberman hack on the station self-destruct terminal. This was allowed, as it is a current Cyberman objective.", 1)
+	mode.cyberman_network.log_hacking("[usr] attempted to start a cyberman hack on the station self-destruct terminal. This was allowed, as it is a current Cyberman objective.", 1)
 	return 1
 
 /datum/cyberman_hack/machinery/nuke/complete()
@@ -1365,10 +1421,13 @@
 		..()
 
 /datum/cyberman_hack/machinery/shuttle_console/complete()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return ..()
 	var/obj/machinery/computer/emergency_shuttle/C = target
 	if(!C.emagged && SSshuttle.emergency.mode == SHUTTLE_DOCKED)
 		var/time = SSshuttle.emergency.timeLeft()
-		cyberman_network.log_hacking("Cybermen have hacked the emergency shuttle [time] seconds before launch.", 1)
+		mode.cyberman_network.log_hacking("Cybermen have hacked the emergency shuttle [time] seconds before launch.", 1)
 		log_game("Cybermen have hacked the emergency shuttle in ([C.x],[C.y],[C.z]) [time] seconds before launch.")
 		minor_announce("The emergency shuttle will launch in 10 seconds", "SYSTEM ERROR:",null,1)
 		SSshuttle.emergency.setTimer(100)
@@ -1399,9 +1458,12 @@
 	return 0
 
 /datum/cyberman_hack/multiple_vector/telecomms/complete()
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return ..()
 	for(var/obj/machinery/telecomms/hub/hub in telecomms_list)//for now it disables all hubs on all z-levels. Might someday make it only on a particular z-level.
 		hub.toggled = 0
-		cyberman_network.cybermen_hacked_objects += hub//need this for objectives
+		mode.cyberman_network.cybermen_hacked_objects += hub//need this for objectives
 	..()
 
 //component hacks
@@ -1476,7 +1538,10 @@
 		if(P.rating >= C.rating)
 			drop("You already have an equal or better part installed!")
 			return 0
-	for(var/datum/cyberman_hack/upgrade/hack in cyberman_network.active_cybermen_hacks)
+	var/datum/game_mode/cyberman/mode = ticker.game.get_mode_by_tag("cybermen")
+	if(!mode || !istype(mode) || !mode.cyberman_network)
+		return 0
+	for(var/datum/cyberman_hack/upgrade/hack in mode.cyberman_network.active_cybermen_hacks)
 		if(hack != src && hack.installer == installer)
 			drop("<span class='warning'>You are already installing a part! Cancel that hack to start this one.</span>")
 			return 0

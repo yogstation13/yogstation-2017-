@@ -238,11 +238,12 @@
 	newstruct.key = target.key
 	if(newstruct.mind)
 		if(stoner && iscultist(stoner) || cultoverride)
-			if(ticker.mode.name == "cult")
-				ticker.mode:add_cultist(newstruct.mind, 0)
+			var/datum/game_mode/cult/mode = ticker.game.get_mode_by_tag("cult")
+			if(mode && istype(mode))
+				mode:add_cultist(newstruct.mind, 0)
 			else
-				ticker.mode.cult += newstruct.mind
-			ticker.mode.update_cult_icons_added(newstruct.mind)
+				newstruct << "<span class='warning'>You feel vaguely uneasy.</span>"
+			mode.update_cult_icons_added(newstruct.mind)
 	newstruct << newstruct.playstyle_string
 	if(iscultist(stoner))
 		newstruct << "<b>You are still bound to serve the cult and [stoner], follow their orders and help them complete their goals at all costs.</b>"

@@ -1,12 +1,5 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-//Few global vars to track the blob
-var/list/blobs = list() //complete list of all blobs made.
-var/list/blob_cores = list()
-var/list/overminds = list()
-var/list/blob_nodes = list()
-var/list/blobs_legit = list() //used for win-score calculations, contains only blobs counted for win condition
-
 #define BLOB_NO_PLACE_TIME 1800 //time, in deciseconds, blobs are prevented from bursting in the gamemode
 
 /datum/game_mode/blob
@@ -18,7 +11,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	required_enemies = 1
 	recommended_enemies = 1
 
-	round_ends_with_antag_death = 1
+	end_condition = END_CONDITION_STRONG
 
 	var/burst = 0
 
@@ -32,14 +25,19 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	var/messagedelay_high = 3600 //blob report will be sent after a random value between these (minimum 4 minutes, maximum 6 minutes)
 
 	var/list/blob_overminds = list()
+	var/list/blobs = list() //complete list of all blobs made.
+	var/list/blob_cores = list()
+	var/list/overminds = list()
+	var/list/blob_nodes = list()
+	var/list/blobs_legit = list() //used for win-score calculations, contains only blobs counted for win condition
 
-/datum/game_mode/blob/pre_setup()
+/datum/game_mode/blob/pre_setup(datum/game/G, list/a)
+	args = a
 	cores_to_spawn = max(round(num_players()/players_per_core, 1), 1)
 
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
-	var/list/datum/mind/infestators = pick_candidate(amount = cores_to_spawn)
-	update_not_chosen_candidates()
+	var/list/datum/mind/infestators = G.prepare_candidates(antag_flag,cores_to_spawn)
 
 	for(var/v in infestators)
 		var/datum/mind/blob = v

@@ -96,11 +96,19 @@
 
 // Surgery stuffs, and enthralling.
 /obj/item/organ/thrall_tumor/Remove(mob/living/carbon/M, special = 0, del_after = 0, adminbus = 0)
-	ticker.mode.remove_thrall(M.mind,!adminbus && prob(30))
+	var/datum/game_mode/shadowling/mode = ticker.game.get_mode_by_tag("shadowling")
+	if(!mode || (!istype(mode))) //Admin shenanigans put a tumor in someone's head without shadowling mode running, can't do anything about it really
+		M << "<span class='userdanger'>It's not entirely clear what just happened, but you don't feel very strongly about your shadowling overlords anymore.</span>"
+		return
+	mode.remove_thrall(M.mind,!adminbus && prob(30))
 	..()
 
 /obj/item/organ/thrall_tumor/Insert(mob/living/carbon/M, special = 0)
 	if(..())
-		ticker.mode.add_thrall(M.mind)
+		var/datum/game_mode/shadowling/mode = ticker.game.get_mode_by_tag("shadowling")
+		if(!mode || (!istype(mode))) //Admin shenanigans put a tumor in someone's head without shadowling mode running, can't do anything about it really
+			M << "<span class='userdanger'>You decide that you quite like the darkness, and don't mind the fellows with the red eyes.</span>"
+			return
+		mode.add_thrall(M.mind)
 		M.mind.special_role = "thrall"
 		return 1

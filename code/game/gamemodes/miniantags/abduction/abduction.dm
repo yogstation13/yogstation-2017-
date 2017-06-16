@@ -1,8 +1,3 @@
-/datum/game_mode
-	var/abductor_teams = 0
-	var/list/datum/mind/abductors = list()
-	var/list/datum/mind/abductees = list()
-
 /datum/game_mode/abduction
 	name = "abduction"
 	config_tag = "abduction"
@@ -10,7 +5,6 @@
 	recommended_enemies = 2
 	required_players = 15
 	var/max_teams = 4
-	abductor_teams = 1
 	prob_traitor_ai = 18
 	var/list/datum/mind/scientists = list()
 	var/list/datum/mind/agents = list()
@@ -18,15 +12,22 @@
 	var/list/team_names = list()
 	var/finished = 0
 
+	var/abductor_teams = 0
+	var/list/datum/mind/abductors = list()
+	var/list/datum/mind/abductees = list()
+
 /datum/game_mode/abduction/announce()
 	world << "<B>The current game mode is - Abduction!</B>"
 	world << "There are alien <b>abductors</b> sent to [world.name] to perform nefarious experiments!"
 	world << "<b>Abductors</b> - kidnap the crew and replace their organs with experimental ones."
 	world << "<b>Crew</b> - don't get abducted and stop the abductors."
 
-/datum/game_mode/abduction/pre_setup()
+/datum/game_mode/abduction/pre_setup(datum/game/G, list/a)
+	args = a
+
 	abductor_teams = max(1, min(max_teams,round(num_players()/config.abductor_scaling_coeff)))
-	var/possible_teams = max(1,round(antag_candidates.len / 2))
+	var/list/datum/mind/candidates = G.prepare_candidates(antag_flag, abductor_teams * 2)
+	var/possible_teams = max(1,round(candidates.len / 2))
 	abductor_teams = min(abductor_teams,possible_teams)
 
 	abductors.len = 2*abductor_teams
@@ -35,13 +36,13 @@
 	team_objectives.len = abductor_teams
 	team_names.len = abductor_teams
 
-	for(var/i=1,i<=abductor_teams,i++)
-		if(!make_abductor_team(i))
+	for(var/i=0,i<abductor_teams,i++)
+		if(!make_abductor_team(candidates, i))
 			return 0
 
 	return 1
 
-/datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
+/datum/game_mode/abduction/proc/make_abductor_team(list/candidates, team_number,preset_agent=null,preset_scientist=null)
 	//Team Name
 	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
 	//Team Objective
@@ -51,21 +52,20 @@
 	//Team Members
 
 	if(!preset_agent || !preset_scientist)
-		if(antag_candidates.len <=2)
+		if(candidates.len <=2)
 			return 0
 
 	var/datum/mind/scientist
 	var/datum/mind/agent
+	var/index = (2*team_number) + 1
 
 	if(!preset_scientist)
-		scientist = pick_candidate()
-		antag_candidates -= scientist
+		scientist = candidates[index]
 	else
 		scientist = preset_scientist
 
 	if(!preset_agent)
-		agent = pick_candidate()
-		antag_candidates -= agent
+		agent = candidates[index + 1]
 	else
 		agent = preset_agent
 
@@ -282,7 +282,7 @@
 	..()
 	return 1
 
-/datum/game_mode/proc/auto_declare_completion_abduction()
+/datum/game_mode/abduction/round_report()
 	var/text = ""
 	if(abductors.len)
 		text += "<br><span class='big'><b>The abductors were:</b></span>"
@@ -343,12 +343,12 @@
 				return 0
 	return 0
 
-/datum/game_mode/proc/update_abductor_icons_added(datum/mind/alien_mind)
+/datum/game_mode/abduction/proc/update_abductor_icons_added(datum/mind/alien_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_ABDUCTOR]
 	hud.join_hud(alien_mind.current)
 	set_antag_hud(alien_mind.current, ((alien_mind in abductors) ? "abductor" : "abductee"))
 
-/datum/game_mode/proc/update_abductor_icons_removed(datum/mind/alien_mind)
+/datum/game_mode/abduction/proc/update_abductor_icons_removed(datum/mind/alien_mind)
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_ABDUCTOR]
 	hud.leave_hud(alien_mind.current)
 	set_antag_hud(alien_mind.current, null)

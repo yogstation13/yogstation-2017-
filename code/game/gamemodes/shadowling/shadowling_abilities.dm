@@ -344,11 +344,15 @@
 	allied_targeting = DISALLOW_ALLIED_TARGETING
 
 /obj/effect/proc_holder/spell/targeted/shadow/enthrall/cast(list/targets, mob/living/carbon/human/user = usr)
-	listclearnulls(ticker.mode.thralls)
+	var/datum/game_mode/shadowling/mode = ticker.game.get_mode_by_tag("shadowling")
+	if(!mode || (!istype(mode))) //You can't enthrall anyone if the shadowling mode isn't running
+		user << "<span class='warning'>You feel no connection to the hivemind, and don't think enthralling anyone would be a good idea without it.</span>"
+		return
+	listclearnulls(mode.thralls)
 	if(!shadowling_check(user))
 		return
 	if(user.dna.species.id != "shadowling")
-		if(ticker.mode.thralls.len >= 5)
+		if(mode.thralls.len >= 5)
 			user << "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>"
 			revert_cast()
 			return
@@ -693,6 +697,11 @@
 	sa_targeting = DISALLOW_SA_TARGETING
 
 /obj/effect/proc_holder/spell/targeted/shadow/revive_thrall/cast(list/targets,mob/user = usr)
+	var/datum/game_mode/shadowling/mode = ticker.game.get_mode_by_tag("shadowling")
+	if(!mode || (!istype(mode))) //Is the mode running?
+		user << "<span class='warning'>You feel no connection to the hivemind, and cannot revive any thralls.</span>"
+		return
+
 	if(!shadowling_check(user))
 		revert_cast()
 		return
@@ -713,7 +722,7 @@
 					revert_cast()
 					return
 				var/empowered_thralls = 0
-				for(var/datum/mind/M in ticker.mode.thralls)
+				for(var/datum/mind/M in mode.thralls)
 					if(!ishuman(M.current))
 						return
 					var/mob/living/carbon/human/H = M.current
@@ -994,6 +1003,11 @@
 	sa_targeting = DISALLOW_SA_TARGETING
 
 /obj/effect/proc_holder/spell/targeted/shadow/hypnosis/cast(list/targets,mob/living/simple_animal/ascendant_shadowling/user = usr)
+	var/datum/game_mode/shadowling/mode = ticker.game.get_mode_by_tag("shadowling")
+	if(!mode || (!istype(mode))) //You can't enthrall anyone if the shadowling mode isn't running
+		user << "<span class='userdanger'>For all your godlike powers, you can't seem to manage this right now.</span>"
+		return
+
 	if(user.incorporeal_move)
 		revert_cast()
 		user << "<span class='warning'>You are not in the same plane of existence. Unphase first.</span>"
@@ -1020,7 +1034,7 @@
 		user << "<span class='shadowling'>You instantly rearrange <b>[target]</b>'s memories, hyptonitizing them into a thrall.</span>"
 		target << "<span class='userdanger'><font size=3>An agonizing spike of pain drives into your mind, and--</font></span>"
 		target.mind.special_role = "thrall"
-		ticker.mode.add_thrall(target.mind)
+		mode.add_thrall(target.mind)
 
 
 /obj/effect/proc_holder/spell/self/shadowling_phase_shift //Permanent version of shadow walk with no drawback. Toggleable.
