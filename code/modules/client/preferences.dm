@@ -100,7 +100,7 @@ var/list/preferences_datums = list()
 	var/quiet_round = 0
 	var/purrbation = null
 
-	var/soundenv = TRUE
+	var/soundenv = 1
 
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)

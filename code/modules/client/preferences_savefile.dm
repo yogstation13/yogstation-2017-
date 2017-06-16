@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -108,6 +108,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		donor_pda = 1
 	if(current_version < 17)
 		donor_hat = 0
+	if(current_version < 18)
+		soundenv = 1
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -235,6 +237,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["donor_pda"]			>> donor_pda
 	S["donor_hat"]			>> donor_hat
 	S["purrbation"]         >> purrbation
+	S["soundenv"]			>> soundenv
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -258,6 +261,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	donor_pda		= sanitize_integer(donor_pda, 1, donor_pdas.len, 1)
 	donor_hat		= sanitize_integer(donor_hat, 0, donor_start_items.len, 0)
 	purrbation 		= sanitize_integer(purrbation, 0, 1, initial(purrbation))
+	soundenv		= sanitize_integer(soundenv, 0, 1, initial(soundenv))
 
 	return 1
 
@@ -294,7 +298,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["donor_pda"]			<< donor_pda
 	S["donor_hat"]			<< donor_hat
 	S["purrbation"]			<< purrbation
-
+	S["soundenv"]			<< soundenv
 
 	return 1
 
