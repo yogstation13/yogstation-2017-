@@ -19,3 +19,7 @@
 /mob/living/Sleeping(amount, updating = 1)
 	overlays.Remove(type_icon)
 	..()
+
+/mob/living/SetSleeping(amount, updating = 1)
+	overlays.Remove(type_icon)
+	..()

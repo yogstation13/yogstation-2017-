@@ -1,6 +1,6 @@
 //Speech verbs.
-/mob/verb/say_verb()
-	set name = "Say"
+/mob/verb/say_verb_hotkey()
+	set name = "say_key"
 	set category = "IC"
 	if(isliving(src) && stat == CONSCIOUS)
 		var/mob/living/L = src
@@ -9,6 +9,9 @@
 		overlays += L.type_icon
 
 	var/message = input(src,,"Say")
+	if(isliving(src))
+		var/mob/living/L = src
+		overlays.Remove(L.type_icon)
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message) //Immersive pretty filters
@@ -19,9 +22,21 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
-	if(isliving(src))
-		var/mob/living/L = src
-		overlays.Remove(L.type_icon)
+	usr.say(message)
+
+/mob/verb/say_verb(message as text)
+	set name = "Say"
+	set category = "IC"
+	var/oldmsg = message
+	message = pretty_filter(message)
+	if(oldmsg != message) //Immersive pretty filters
+		usr << "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
+		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
+		log_say("[name]/[ckey]: [oldmsg]")
+		return
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
 	usr.say(message)
 
 /mob/verb/whisper(message as text)
