@@ -60,9 +60,6 @@
 			return
 
 	log_ooc("[mob.name]/[key] : [raw_msg]")
-	if(!findtext(raw_msg, "@"))
-		send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
-
 
 	if(!holder && !bypass_ooc_approval)
 		var/regex/R = new("((\[a-z\]+://|www\\.)\\S+)", "ig")
@@ -87,6 +84,7 @@
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
 
 	keyname += "[key]"
+	webhook_send_ooc(msg)
 	msg = emoji_parse(msg)
 
 	for(var/client/C in clients)

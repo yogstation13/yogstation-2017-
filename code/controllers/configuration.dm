@@ -436,9 +436,11 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
-				if("discord_token")
-					discord_token = value
-				if("check_randomizer")
+				if("webhook_address")
+					webhook_address = value
+				if("webhook_key")
+					webhook_key = value
+				if("webhook_key")
 					config.check_randomizer = 1
 
 				else
