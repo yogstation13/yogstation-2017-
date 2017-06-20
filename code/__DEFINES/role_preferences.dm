@@ -30,6 +30,8 @@
 #define ROLE_CYBERMAN			"cyberman"
 #define ROLE_BORER				"borer"
 #define ROLE_VAMPIRE			"vampire"
+#define	ROLE_ZOMBIE				"zombie"
+
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -59,4 +61,6 @@ var/global/list/special_roles = list(
 	ROLE_CYBERMAN = /datum/game_mode/cybermen,
 	ROLE_BORER,
 	ROLE_VAMPIRE = /datum/game_mode/vampire,
+	ROLE_ZOMBIE = /datum/game_mode/zombies,
+
 )

@@ -12,7 +12,7 @@
 	maxHealth = 200
 	loot = list(/obj/effect/gibspawner, /obj/item/device/assembly/signaler/anomaly)
 	del_on_death = 1
-	var/meat_counter
+	var/meat_counter = 2
 	var/mob/living/carbon/human/chief = null
 	var/spawn_chief = TRUE
 

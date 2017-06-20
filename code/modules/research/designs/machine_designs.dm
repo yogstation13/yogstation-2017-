@@ -386,3 +386,12 @@
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_path = /obj/item/weapon/circuitboard/machine/plantgenes
 	category = list ("Misc. Machinery")
+
+/datum/design/board/deepfryer
+	name = "Machine Design (Deep Fryer)"
+	desc = "The circuit board for a Deep Fryer."
+	id = "deepfryer"
+	req_tech = list("programming" = 1)
+	build_path = /obj/item/weapon/circuitboard/machine/deep_fryer
+	category = list ("Misc. Machinery")
+

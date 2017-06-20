@@ -16,6 +16,7 @@ var/list/GPS_list = list()
 	var/emagged = 0
 	var/savedlocation // preferably filled with x,y,z
 	var/intelligent
+	var/can_ping = FALSE
 
 
 /obj/item/device/gps/examine(mob/user)
@@ -100,7 +101,10 @@ var/list/GPS_list = list()
 					else
 						code = "\[Away\]"
 					code += " | " // so we have room.
-				t += "<BR>[code][tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])"
+				var/ping
+				if(can_ping)
+					ping = " <A href='?src=\ref[src];ping=\ref[G]'>PING</A>"
+				t += "<BR>[code][tracked_gpstag]: [format_text(gps_area.name)] ([pos.x], [pos.y], [pos.z])[ping]"
 			else
 				continue
 	var/datum/browser/popup = new(user, "GPS", name, 360, min(gps_window_height, 350))
@@ -120,7 +124,12 @@ var/list/GPS_list = list()
 			else
 				name = "global positioning system ([gpstag])"
 			attack_self(usr)
-
+	if(href_list["ping"])
+		var/obj/item/device/gps/GPS = locate(href_list["ping"])
+		GPS.visible_message("<span class='notice'>The GPS device announces: [gpstag] has pinged your GPS.</span>",\
+			"<span class='notice'>The GPS device announces: [gpstag] has pinged your GPS.</span>")
+		playsound(get_turf(GPS), 'sound/machines/ping.ogg', 50, 0)
+		usr << "<span class='notice'>[GPS.gpstag] has been pinged.</span>"
 
 /obj/item/device/gps/attackby(obj/item/I, mob/user, params)
 	..()
@@ -163,6 +172,12 @@ var/list/GPS_list = list()
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 	channel = "lavaland"
 	intelligent = TRUE
+
+/obj/item/device/gps/mining/medic
+	name = "recovery medic GPS"
+	icon_state = "gps-c"
+	desc = "Unfortunately, Nanotrasen scrapped the name recovery medic and went with mining medic. For whatever reason they haven't touch this model's name."
+	can_ping = TRUE
 
 /obj/item/device/gps/internal
 	icon_state = null

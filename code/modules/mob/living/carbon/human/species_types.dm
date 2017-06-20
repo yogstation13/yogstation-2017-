@@ -49,7 +49,6 @@
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	specflags = list()
 	roundstart = 0
-	limbs_id = "fly"
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 
 
@@ -186,6 +185,33 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
+
+/datum/species/lizard/ashwalker/cosmic
+	name = "Cosmic Ashwalker"
+	var/rebirth
+	var/rebirthcount = 0
+
+/datum/species/lizard/ashwalker/cosmic/spec_life(mob/living/carbon/human/H)
+	. = ..()
+	if(H.health < 0)
+		if(rebirthcount >= 3)
+			return
+		if(rebirth)
+			return
+		if(H.stat == DEAD) // we only heal when they're close to death. not actually dead.
+			return
+		rebirth = TRUE
+		rebirthcount++
+		H << "<span class='notice'>Your body is entering cryogenic rebirth. You will soon be restored to your physical form. Once this happens your soul will be dragged back into your body."
+		H.death()
+		var/obj/effect/cyrogenicbubble/CB = new(get_turf(H))
+		CB.name = H.real_name
+		H.forceMove(CB)
+		CB.ashwalker = H
+		if(rebirthcount >= 3)
+			H << "<span class='notice'>You notice that your body isn't regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>"
+			//H << "<span class='notice'>If only there was a mutant out there with the same powers as you... female too.</span>"
+
 
 /datum/species/lizard/fly
 	// lizards turned into fly-like abominations in teleporter accidents.

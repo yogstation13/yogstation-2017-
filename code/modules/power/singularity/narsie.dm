@@ -5,6 +5,7 @@
 	pixel_x = -89
 	pixel_y = -85
 	density = 0
+	notify_admins = FALSE
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
@@ -136,6 +137,7 @@
 //Wizard narsie
 /obj/singularity/narsie/wizard
 	grav_pull = 0
+	notify_admins = FALSE
 
 /obj/singularity/narsie/wizard/eat()
 	set background = BACKGROUND_ENABLED
