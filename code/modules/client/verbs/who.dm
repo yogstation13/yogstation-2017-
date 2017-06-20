@@ -100,11 +100,6 @@
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-<<<<<<< HEAD
 		msg += "<span class='info'>Adminhelps are also sent to Discord. If no admins are available in game adminhelp anyways and an admin on Discord may see it and respond.</span>"
-	src << msg
-=======
-		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
 	to_chat(src, msg)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 

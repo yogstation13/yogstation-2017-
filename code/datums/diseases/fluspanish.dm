@@ -21,13 +21,8 @@
 			if(prob(5))
 				affected_mob.emote("cough")
 			if(prob(1))
-<<<<<<< HEAD
-				affected_mob << "<span class='danger'>You're burning in your own skin!</span>"
-				affected_mob.take_organ_damage(0, 5)
-=======
 				to_chat(affected_mob, "<span class='danger'>You're burning in your own skin!</span>")
 				affected_mob.take_bodypart_damage(0,5)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 		if(3)
 			affected_mob.bodytemperature += 20
@@ -36,11 +31,6 @@
 			if(prob(5))
 				affected_mob.emote("cough")
 			if(prob(5))
-<<<<<<< HEAD
-				affected_mob << "<span class='danger'>You're burning in your own skin!</span>"
-				affected_mob.take_organ_damage(0, 5)
-=======
 				to_chat(affected_mob, "<span class='danger'>You're burning in your own skin!</span>")
 				affected_mob.take_bodypart_damage(0,5)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	return

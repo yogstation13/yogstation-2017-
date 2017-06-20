@@ -125,35 +125,6 @@
 
 		M.show_message(msg,1,blind_message,2)
 
-<<<<<<< HEAD
-// Show a message to all player mobs who sees this atom
-// Use for objects performing visible actions
-// message is output to anyone who can see, e.g. "The [src] does something!"
-// blind_message (optional) is what blind people will hear e.g. "You hear something!"
-
-/atom/proc/visible_message(message, blind_message, range = 7)
-	var/turf/T = get_turf(src)
-	if(!T)
-		return
-	for(var/mob/M in get_hearers_in_view(range, src))
-		if(!M.client)
-			continue
-		var/msg = message
-		if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
-			if(blind_message) // then people see blind message if there is one, otherwise nothing.
-				msg = blind_message
-			else
-				continue
-		else if(T.lighting_object)
-			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
-				if(blind_message)
-					msg = blind_message
-				else
-					continue
-		M.show_message(msg,1,blind_message,2)
-
-=======
->>>>>>> masterTGbranch
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
 // message is the message output to anyone who can hear.

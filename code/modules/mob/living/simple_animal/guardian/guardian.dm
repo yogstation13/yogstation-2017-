@@ -184,17 +184,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	return 0
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
-<<<<<<< HEAD
-	if(src.loc == summoner)
-		src << "<span class='danger'><B>You must be manifested to attack!</span></B>"
-		return 0
-	if(target == summoner && !(istype(src,/mob/living/simple_animal/hostile/guardian/healer)))
-		return 0
-=======
 	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to attack!</span></B>")
 		return FALSE
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	else
 		return ..()
 
@@ -218,22 +210,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	. = amount
 	if(summoner)
 		if(loc == summoner)
-<<<<<<< HEAD
-			return 0
-		if(amount > 0)
-			if(amount < 10)
-				summoner.visible_message("<span class='warning'>[summoner] winces as small bruises appear on their skin.</span>", , 3)
-			else
-				summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner]!</B></span>")
-			summoner.adjustBruteLoss(amount)
-			summoner << "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>"
-=======
 			return FALSE
 		summoner.adjustBruteLoss(amount)
 		if(amount > 0)
 			to_chat(summoner, "<span class='danger'><B>Your [name] is under attack! You take damage!</span></B>")
 			summoner.visible_message("<span class='danger'><B>Blood sprays from [summoner] as [src] takes damage!</B></span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			if(summoner.stat == UNCONSCIOUS)
 				to_chat(summoner, "<span class='danger'><B>Your body can't take the strain of sustaining [src] in this condition, it begins to fall apart!</span></B>")
 				summoner.adjustCloneLoss(amount * 0.5) //dying hosts take 50% bonus damage as cloneloss
@@ -455,13 +436,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			else
 				to_chat(src, "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>")
 		else
-<<<<<<< HEAD
-			src << "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>"
-=======
 			to_chat(src, "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>")
 	else
 		verbs -= /mob/living/proc/guardian_reset
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 ////////parasite tracking/finding procs
 

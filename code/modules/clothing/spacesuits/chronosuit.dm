@@ -200,28 +200,6 @@
 	if(!activating && !activated && !teleporting)
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
-<<<<<<< HEAD
-		if(user && ishuman(user))
-			if(user.wear_suit == src)
-				user << "\nChronosuitMK4 login: root"
-				user << "Password:\n"
-				user << "root@ChronosuitMK4# chronowalk4 --start\n"
-				if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helmet"
-					helmet = user.head
-					helmet.flags |= NODROP
-					helmet.suit = src
-					src.flags |= NODROP
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner"
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
-					new_camera(user)
-					START_PROCESSING(SSobj, src)
-					activated = 1
-				else
-					user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet"
-					user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helmet. <b>Aborting...</b>"
-=======
 		if(user && ishuman(user) && user.wear_suit == src)
 			to_chat(user, "\nChronosuitMK4 login: root")
 			to_chat(user, "Password:\n")
@@ -239,14 +217,8 @@
 				START_PROCESSING(SSobj, src)
 				activated = 1
 			else
-<<<<<<< HEAD
-				user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm"
-				user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>"
->>>>>>> masterTGbranch
-=======
 				to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm")
 				to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
 		activating = 0

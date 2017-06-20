@@ -57,9 +57,8 @@
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-<<<<<<< HEAD
-	burn_state = FIRE_PROOF
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 10, bio = 10, rad = 0)
+	resistance_flags = 0
+	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35, fire = 0, acid = 0)
 
 /obj/item/clothing/gloves/chitinhands
 	name = "chitin gauntlets"
@@ -70,9 +69,5 @@
 	strip_delay = 40
 	put_on_delay = 20
 	body_parts_covered = ARMS
-	burn_state = FIRE_PROOF
-	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35)
-=======
 	resistance_flags = 0
 	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35, fire = 0, acid = 0)
->>>>>>> masterTGbranch

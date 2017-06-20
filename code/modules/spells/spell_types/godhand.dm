@@ -194,8 +194,5 @@
 
 /obj/item/weapon/melee/touch_attack/nothing/roundstart
 	useblacklist = TRUE
-<<<<<<< HEAD
-=======
 
 #undef MAX_INVIS_TOUCH_USES
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

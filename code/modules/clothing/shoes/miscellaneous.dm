@@ -78,12 +78,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
-<<<<<<< HEAD
-	can_hold_items = 1
-	valid_held_items = list(/obj/item/device/assembly/bikehorn,/obj/item/weapon/nullrod/clown)
-=======
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes/clown
->>>>>>> masterTGbranch
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -195,7 +190,6 @@
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
-<<<<<<< HEAD
 	can_hold_items = 1
 
 /obj/item/clothing/shoes/fuzzy_slippers
@@ -203,7 +197,6 @@
 	desc = "No animals were harmed in the making of these fuzzy slippers"
 	icon_state = "fuzzyslippers"
 	item_state = "fuzzyslippers"
-=======
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 
 /obj/item/clothing/shoes/bhop
@@ -241,9 +234,6 @@
 /obj/item/clothing/shoes/bhop/proc/hop_end()
 	jumping = FALSE
 	recharging_time = world.time + recharging_rate
-<<<<<<< HEAD
->>>>>>> masterTGbranch
-=======
 
 /obj/item/clothing/shoes/singery
 	name = "yellow performer's boots"
@@ -256,4 +246,3 @@
 	desc = "These boots were made for dancing."
 	icon_state = "bsing"
 	put_on_delay = 50
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

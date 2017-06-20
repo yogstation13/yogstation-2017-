@@ -71,9 +71,6 @@
 
 	var/list/status_effects //a list of all status effects the mob has
 
-<<<<<<< HEAD
-	var/slipping = FALSE
-=======
 	var/list/implants = null
 	var/tesla_ignore = FALSE
 
@@ -81,4 +78,3 @@
 
 	var/datum/language/selected_default_language
 	var/datum/language_menu/language_menu
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

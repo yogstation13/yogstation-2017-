@@ -47,14 +47,9 @@
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
-<<<<<<< HEAD
 	desc = "The drone variant of the xenomorph caste. Weaker physically, but by no means less dangerous."
-	icon_state = "aliend_s"
-	icon_living = "aliend_s"
-=======
 	icon_state = "aliend"
 	icon_living = "aliend"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	icon_dead = "aliend_dead"
 	health = 100
 	maxHealth = 100

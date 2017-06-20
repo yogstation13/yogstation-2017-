@@ -65,11 +65,8 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-<<<<<<< HEAD
 	shoes_type = /obj/item/clothing/shoes/magboots/security
-=======
 	storage_type = /obj/item/weapon/tank/internals/oxygen
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
@@ -218,13 +215,8 @@
 	if(!is_operational())
 		to_chat(user, "<span class='warning'>The unit is not operational!</span>")
 		return
-<<<<<<< HEAD
-	if(occupant || helmet || suit || shoes || (extra_items && extra_items.len))
-		user << "<span class='warning'>It's too cluttered inside to fit in!</span>"
-=======
-	if(occupant || helmet || suit || storage)
+	if(occupant || helmet || suit || shoes || storage)
 		to_chat(user, "<span class='warning'>It's too cluttered inside to fit in!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 
 	if(target == user)
@@ -293,11 +285,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-<<<<<<< HEAD
-		if(user && electrocute_mob(user, src, src))
-=======
-		if(electrocute_mob(user, src, src, 1, TRUE))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+		if(user && electrocute_mob(user, src, src, 1, TRUE))
 			return 1
 
 /obj/machinery/suit_storage_unit/relaymove(mob/user)
@@ -340,22 +328,9 @@
 			if(!user.drop_item())
 				return
 			mask = I
-<<<<<<< HEAD
-		else if(istype(I, shoes_type) || istype(I, /obj/item/clothing/shoes))
-			if(shoes)
-				user << "<span class='warning'>The unit already contains a pair of shoes!</span>"
-				return
-			if(!user.drop_item())
-				return
-			shoes = I
-		else if(extra_items)
-			if(extra_items.len >= extra_items_max)
-				user << "<span class='warning'>The auxiliary storage compartment is full!</span>"
-=======
 		else
 			if(storage)
 				to_chat(user, "<span class='warning'>The auxiliary storage compartment is full!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 				return
 			if(!user.drop_item())
 				return
@@ -442,34 +417,13 @@
 		if("dispense")
 			if(!state_open)
 				return
-<<<<<<< HEAD
-			switch(params["item"])
-				if("helmet")
-					helmet.loc = loc
-					helmet = null
-				if("suit")
-					suit.loc = loc
-					suit = null
-				if("mask")
-					mask.loc = loc
-					mask = null
-				if("shoes")
-					shoes.loc = loc
-					shoes = null
-				if("extra_items")
-					var/item_num = text2num(params["item_num"])
-					var/obj/item/thing = extra_items[item_num]
-					thing.loc = loc
-					extra_items -= thing
-=======
-			
-			var/static/list/valid_items = list("helmet", "suit", "mask", "storage")
+
+			var/static/list/valid_items = list("helmet", "suit", "mask", "shoes", "storage")
 			var/item_name = params["item"]
 			if(item_name in valid_items)
 				var/obj/item/I = vars[item_name]
 				vars[item_name] = null
 				if(I)
 					I.forceMove(loc)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			. = TRUE
 	update_icon()

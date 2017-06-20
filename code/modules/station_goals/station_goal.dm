@@ -13,11 +13,7 @@
 
 /datum/station_goal/proc/send_report()
 	priority_announce("Priority Nanotrasen directive received. Project \"[name]\" details inbound.", "Incoming Priority Message", 'sound/AI/commandreport.ogg')
-<<<<<<< HEAD
-	print_command_report(get_report(),"Nanotrasen Directive [pick(GLOB.phonetic_alphabet)] \Roman[rand(1,50)]", announce=FALSE)
-=======
-	print_command_report(get_report(),"Nanotrasen Directive \Roman[rand(1,50)]")
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+	print_command_report(get_report(),"Nanotrasen Directive [pick(phonetic_alphabet)] \Roman[rand(1,50)]", announce=FALSE)
 	on_report()
 
 /datum/station_goal/proc/on_report()
@@ -32,21 +28,12 @@
 
 /datum/station_goal/proc/print_result()
 	if(check_completion())
-<<<<<<< HEAD
 		to_chat(world, "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>")
 	else
 		to_chat(world, "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>")
 
 /datum/station_goal/Destroy()
-	SSticker.mode.station_goals -= src
-=======
-		world << "<b>Station Goal</b> : [name] :  <span class='greenannounce'>Completed!</span>"
-	else
-		world << "<b>Station Goal</b> : [name] : <span class='boldannounce'>Failed!</span>"
-
-/datum/station_goal/Destroy()
 	ticker.mode.station_goals -= src
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	. = ..()
 
 /datum/station_goal/Topic(href, href_list)
@@ -74,8 +61,4 @@
 //Should keep sec busy.
 //Maybe after completion you'll get some ling detecting gear or some station wide DNA scan ?
 
-<<<<<<< HEAD
 */
-=======
-*/
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

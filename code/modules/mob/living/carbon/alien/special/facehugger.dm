@@ -210,14 +210,9 @@
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
-<<<<<<< HEAD
-		if((!LC || LC.status != ORGAN_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
+		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			var/obj/item/organ/body_egg/alien_embryo/embryo = new /obj/item/organ/body_egg/alien_embryo(target)
 			embryo.hive_faction = hive_faction
-=======
-		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			new /obj/item/organ/body_egg/alien_embryo(target)
->>>>>>> masterTGbranch
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target

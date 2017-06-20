@@ -96,11 +96,7 @@
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chameleon Security HUD"
-<<<<<<< HEAD
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
-=======
-	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	flash_protect = 1
 
 	// Yes this code is the same as normal chameleon glasses, but we don't

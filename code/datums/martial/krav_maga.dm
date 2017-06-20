@@ -132,11 +132,7 @@
 /datum/martial_art/krav_maga/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
 	if(check_streak(A,D))
 		return 1
-<<<<<<< HEAD
-	var/success = 0
-=======
 	var/obj/item/I = null
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(prob(60))
 		I = D.get_active_held_item()
 		if(I)

@@ -44,18 +44,9 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-<<<<<<< HEAD
-<<<<<<< HEAD
 	flags = HEADBANGPROTECT | THICKMATERIAL
-	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
-=======
-	flags = HEADBANGPROTECT
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	armor = list(melee = 45, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0, fire = 50, acid = 50)
-	flags_inv = HIDEEARS|HIDEFACE
->>>>>>> masterTGbranch
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEFACE

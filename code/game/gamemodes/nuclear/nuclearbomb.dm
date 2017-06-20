@@ -453,22 +453,6 @@
 
 	if(istype(SSticker.mode, /datum/game_mode/nuclear))
 		var/obj/docking_port/mobile/Shuttle = SSshuttle.getShuttle("syndicate")
-<<<<<<< HEAD
-		var/datum/game_mode/nuclear/GM = ticker.mode
-		GM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
-		GM.nuke_off_station = off_station
-	ticker.station_explosion_cinematic(off_station,null)
-	if(ticker.mode)
-		ticker.mode.explosion_in_progress = 0
-		if(ticker.mode.name == "nuclear emergency")
-			var/datum/game_mode/nuclear/GM = ticker.mode
-			GM.nukes_left --
-		else
-			world << "<B>The station was destoyed by the nuclear blast!</B>"
-		ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-														//kinda shit but I couldn't  get permission to do what I wanted to do.
-		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
-=======
 		var/datum/game_mode/nuclear/NM = SSticker.mode
 		NM.syndies_didnt_escape = (Shuttle && Shuttle.z == ZLEVEL_CENTCOM) ? 0 : 1
 		NM.nuke_off_station = off_station
@@ -479,7 +463,6 @@
 			var/datum/game_mode/nuclear/NM = SSticker.mode
 			NM.nukes_left --
 		if(!SSticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
 

@@ -269,8 +269,6 @@
 	icon_state = "papersack_smile"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-<<<<<<< HEAD
-
 /obj/item/clothing/head/bombCollar
 	name = "bomb collar"
 	desc = "A metal collar with electronic locks designed to be worn around the neck. Can be triggered with a remote detonator."
@@ -440,7 +438,7 @@
 	desc = "Comes from the land down under!"
 	icon_state = "outback"
 	item_state = "outback"
-=======
+
 /obj/item/clothing/head/crown
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
@@ -452,4 +450,4 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the land."
 	icon_state = "fancycrown"
->>>>>>> masterTGbranch
+

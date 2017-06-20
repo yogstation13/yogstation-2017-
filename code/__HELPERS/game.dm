@@ -498,7 +498,6 @@
 
 	return new_character
 
-<<<<<<< HEAD
 /proc/random_accessible_turf(z)
 	if(!z)
 		var/list/zlevels = list()
@@ -509,12 +508,8 @@
 	var/ry = rand(TRANSITIONEDGE + 1, world.maxy - TRANSITIONEDGE - 2)
 	return locate(rx, ry, z)
 
-/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
-	for(var/M in player_list)
-=======
 /proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of to_chat(world, where needed)
 	for(var/M in GLOB.player_list)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(M && !isnewplayer(M))
 			to_chat(M, thing)
 

@@ -23,7 +23,7 @@
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = FALSE // can you customize the description/name of the thing?
-	
+
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 
 /obj/vv_edit_var(vname, vval)
@@ -200,33 +200,4 @@
 /obj/examine(mob/user)
 	..()
 	if(unique_rename)
-<<<<<<< HEAD
-		user << "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
-
-/obj/proc/rename_obj(mob/M)
-	var/input = stripped_input(M,"What do you want to name \the [name]?", ,"", MAX_NAME_LEN)
-	var/oldname = name
-
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
-		if(oldname == input)
-			M << "You changed \the [name] to... well... \the [name]."
-			return
-		else
-			name = input
-			M << "\The [oldname] has been successfully been renamed to \the [input]."
-			return
-	else
-		return
-
-/obj/proc/redesc_obj(mob/M)
-	var/input = stripped_input(M,"Describe \the [name] here", ,"", 100)
-
-	if(!qdeleted(src) && M.canUseTopic(src, BE_CLOSE) && input != "")
-		desc = input
-		M << "You have successfully changed \the [name]'s description."
-		return
-	else
-		return
-=======
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

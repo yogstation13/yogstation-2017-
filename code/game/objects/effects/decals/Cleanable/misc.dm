@@ -58,13 +58,11 @@
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 
-<<<<<<< HEAD
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
-=======
+
 /obj/effect/decal/cleanable/cobweb/fire_act()
 	destroy_effect()
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/effect/decal/cleanable/molten_object
 	name = "gooey grey mass"

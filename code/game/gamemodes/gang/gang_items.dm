@@ -404,39 +404,22 @@
 
 /datum/gang_item/equipment/dominator/get_extra_info(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	if(gang)
-<<<<<<< HEAD
-		return "(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)"
-=======
 		return "(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/gang_item/equipment/dominator/purchase(mob/living/carbon/user, datum/gang/gang, obj/item/device/gangtool/gangtool)
 	var/area/usrarea = get_area(user.loc)
 	var/usrturf = get_turf(user.loc)
-<<<<<<< HEAD
-	if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || user.z != 1)
-		user << "<span class='warning'>You can only use this on the station!</span>"
-=======
 	if(initial(usrarea.name) == "Space" || isspaceturf(usrturf) || usr.z != 1)
 		to_chat(user, "<span class='warning'>You can only use this on the station!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return FALSE
 
 	for(var/obj/obj in usrturf)
 		if(obj.density)
-<<<<<<< HEAD
-			user << "<span class='warning'>There's not enough room here!</span>"
-			return FALSE
-
-	if(!(usrarea.type in gang.territory|gang.territory_new))
-		user << "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>"
-=======
 			to_chat(user, "<span class='warning'>There's not enough room here!</span>")
 			return FALSE
 
 	if(!(usrarea.type in gang.territory|gang.territory_new))
 		to_chat(user, "<span class='warning'>The <b>dominator</b> can be spawned only on territory controlled by your gang!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return FALSE
 	return ..()
 

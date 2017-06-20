@@ -128,13 +128,8 @@
 		user.start_pulling(src, supress_message)
 		return
 
-<<<<<<< HEAD
 	if(!(CANPUSH in status_flags))
-		user << "<span class='warning'>[src] can't be grabbed more aggressively!</span>"
-=======
-	if(!(status_flags & CANPUSH))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	grippedby(user)
 

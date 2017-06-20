@@ -239,12 +239,8 @@
 			if(response == "Yes")
 				toggle_all_ctf(user)
 		return
-<<<<<<< HEAD
-	if(ticker.current_state < GAME_STATE_PLAYING)
-=======
 
 	if(SSticker.current_state < GAME_STATE_PLAYING)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	if(user.ckey in team_members)
 		if(user.ckey in recently_dead_ckeys)
@@ -314,17 +310,10 @@
 	for(var/mob/M in GLOB.mob_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
-<<<<<<< HEAD
-			M << "<span class='narsie'>[team] team wins!</span>"
-			M << "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>"
-			for(var/obj/item/weapon/twohanded/ctf/W in M)
-				M.unEquip(W)
-=======
 			to_chat(M, "<span class='narsie'>[team] team wins!</span>")
 			to_chat(M, "<span class='userdanger'>The game has been reset! Teams have been cleared. The machines will be active again in 30 seconds.</span>")
 			for(var/obj/item/weapon/twohanded/ctf/W in M)
 				M.dropItemToGround(W)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			M.dust()
 	for(var/obj/machinery/control_point/control in GLOB.machines)
 		control.icon_state = "dominator"

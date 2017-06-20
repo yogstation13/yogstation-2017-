@@ -22,30 +22,6 @@
 
 
 /mob/living/proc/phaseout(obj/effect/decal/cleanable/B)
-<<<<<<< HEAD
-	var/turf/bloodloc = get_turf(B.loc)
-	if(Adjacent(bloodloc))
-		if(iscarbon(src))
-			var/mob/living/carbon/C = src
-			if(C.l_hand || C.r_hand)
-				//TODO make it toggleable to either forcedrop the items, or deny
-				//entry when holding them
-				// literally only an option for carbons though
-				C << "<span class='warning'>You may not hold items while blood crawling!</span>"
-				return 0
-			var/obj/item/weapon/bloodcrawl/B1 = new(C)
-			var/obj/item/weapon/bloodcrawl/B2 = new(C)
-			B1.icon_state = "bloodhand_left"
-			B2.icon_state = "bloodhand_right"
-			C.put_in_hands(B1)
-			C.put_in_hands(B2)
-			C.regenerate_icons()
-		src.notransform = TRUE
-		spawn(0)
-			bloodpool_sink(B)
-			src.notransform = FALSE
-		return 1
-=======
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		for(var/obj/item/I in C.held_items)
@@ -66,7 +42,6 @@
 		bloodpool_sink(B)
 		src.notransform = FALSE
 	return 1
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
 	var/turf/mobloc = get_turf(src.loc)
@@ -188,19 +163,6 @@
 	if(src.notransform)
 		to_chat(src, "<span class='warning'>Finish eating first!</span>")
 		return 0
-<<<<<<< HEAD
-	src.loc = B.loc
-	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] rises out of the pool of blood!</B>")
-	exit_blood_effect(B)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		for(var/obj/item/weapon/bloodcrawl/BC in C)
-			BC.flags = null
-			qdel(BC)
-	qdel(src.holder)
-	src.holder = null
-=======
 	B.visible_message("<span class='warning'>[B] begins to bubble...</B>")
 	if(do_after(src, 25, target = B))
 		forceMove(get_turf(B.loc))
@@ -215,5 +177,4 @@
 				qdel(BC)
 		qdel(holder)
 		holder = null
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	return 1

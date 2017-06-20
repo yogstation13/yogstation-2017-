@@ -48,10 +48,7 @@
 	return FALSE
 
 /obj/item/device/detective_scanner/proc/scan(atom/A, mob/user)
-<<<<<<< HEAD
-=======
 	set waitfor = 0
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(!scanning)
 		// Can remotely scan objects and mobs.
 		if(!in_range(A, user) && !(A in view(world.view, user)))

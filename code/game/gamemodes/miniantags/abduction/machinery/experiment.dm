@@ -46,11 +46,7 @@
 	var/breakout_time = 600
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-<<<<<<< HEAD
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
-=======
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
 	if(do_after(user,(breakout_time), target = src))
@@ -58,18 +54,11 @@
 			return
 
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-<<<<<<< HEAD
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
-
-		open_machine()
-
-=======
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()
 
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
 	var/icon/photo = null
 	var/g = (H.gender == FEMALE) ? "f" : "m"

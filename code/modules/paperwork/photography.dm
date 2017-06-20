@@ -499,8 +499,7 @@
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
-<<<<<<< HEAD
-	usr << "<span class='notice'>You print a photograph.</span>"
+	to_chat(usr, "<span class='notice'>You print a photograph.</span>")
 
 /*
  * Photo book
@@ -514,8 +513,7 @@
 	can_hold = list(/obj/item/weapon/photo)
 	storage_slots = 70
 	burn_state = 0 //Burnable
-=======
-	to_chat(usr, "<span class='notice'>You print a photograph.</span>")
+
 
 // Picture frames
 
@@ -637,4 +635,3 @@
 		add_overlay(getFlatIcon(framed))
 	else
 		icon_state = initial(icon_state)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

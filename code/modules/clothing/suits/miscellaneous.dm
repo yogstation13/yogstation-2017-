@@ -496,13 +496,8 @@
 	icon_state = "coatengineer"
 	item_state = "coatengineer"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 20, fire = 30, acid = 45)
-<<<<<<< HEAD
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/weapon/rcd,/obj/item/weapon/pipe_dispenser,/obj/item/weapon/rapid_engineering_device,/obj/item/device/geiger_counter)
-	hoodtype = /obj/item/clothing/head/winterhood/engineering
-=======
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner, /obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser,/obj/item/weapon/rapid_engineering_device,/obj/item/device/geiger_counter)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/clothing/head/hooded/winterhood/engineering
 	icon_state = "winterhood_engineer"
@@ -510,13 +505,9 @@
 /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	name = "atmospherics winter coat"
 	icon_state = "coatatmos"
-<<<<<<< HEAD
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/weapon/pipe_dispenser,/obj/item/device/analyzer,/obj/item/device/geiger_counter)
-	hoodtype = /obj/item/clothing/head/winterhood/engineering/atmos
-=======
 	item_state = "coatatmos"
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/atmos
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/clothing/head/hooded/winterhood/engineering/atmos
 	icon_state = "winterhood_atmos"
@@ -525,9 +516,9 @@
 	name = "signal technician's winter coat"
 	icon_state = "coatsignaltech"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/radio,/obj/item/device/analyzer,/obj/item/device/multitool,/obj/item/device/assembly/signaler)
-	hoodtype = /obj/item/clothing/head/winterhood/engineering/tcomms
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/tcomms
 
-/obj/item/clothing/head/winterhood/engineering/tcomms
+/obj/item/clothing/head/hooded/winterhood/engineering/tcomms
 	icon_state = "winterhood_signaltech"
 
 /obj/item/clothing/suit/hooded/wintercoat/hydro
@@ -537,11 +528,7 @@
 	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/hydro
 
-<<<<<<< HEAD
-/obj/item/clothing/head/winterhood/hydro
-=======
 /obj/item/clothing/head/hooded/winterhood/hydro
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	icon_state = "winterhood_hydro"
 
 /obj/item/clothing/suit/hooded/wintercoat/cargo

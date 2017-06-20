@@ -169,12 +169,9 @@
 	name = "Guide to Advanced Mimery Vol 2"
 	desc = "There aren't any words written..."
 	icon_state ="bookmime"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
-=======
 	..()
 
 /obj/effect/proc_holder/spell/targeted/touch/mime/strong
 	hand_path = "/obj/item/weapon/melee/touch_attack/nothing"
 	charge_max = 1500
 	cooldown_min = 1000
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

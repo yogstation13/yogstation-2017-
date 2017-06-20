@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-var/list/GPS_list = list()
-
-=======
 GLOBAL_LIST_EMPTY(GPS_list)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /obj/item/device/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016. Alt+click to toggle power."
@@ -71,13 +66,9 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return
 
 	var/obj/item/device/gps/t = ""
-<<<<<<< HEAD
 	var/turf/gpsturf = get_turf(src)
 	var/area/gpsarea = get_area(src)
-	var/gps_window_height = 110 + GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
-=======
 	var/gps_window_height = 110 + GLOB.GPS_list.len * 20 // Variable window height, depending on how many GPS units there are to show
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(emped)
 		t += "ERROR"
 	else

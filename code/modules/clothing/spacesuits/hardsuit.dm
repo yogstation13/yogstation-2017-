@@ -148,10 +148,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75, fire = 100, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 	resistance_flags = FIRE_PROOF
-
-/obj/item/clothing/suit/space/hardsuit/engine/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -477,14 +474,7 @@
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
 
-<<<<<<< HEAD
-/obj/item/clothing/suit/space/hardsuit/security/New()
- 	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
- 	..()
-
-=======
 	//Head of Security hardsuit
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	name = "head of security's hardsuit helmet"
 	desc = "a special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
@@ -582,13 +572,8 @@
 		s.start()
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
-<<<<<<< HEAD
-		recharge_cooldown = world.time + recharge_delay
-		START_PROCESSING(SSobj, src)
-=======
 		if(recharge_rate)
 			START_PROCESSING(SSobj, src)
->>>>>>> masterTGbranch
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")
 			shield_state = "broken"
@@ -690,11 +675,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	slowdown = 0
-
-
-/obj/item/clothing/suit/space/hardsuit/shielded/syndi/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi
 	name = "blood-red hardsuit helmet"
@@ -702,7 +683,6 @@
 	icon_state = "hardsuit1-syndi"
 	item_state = "syndie_helm"
 	item_color = "syndi"
-<<<<<<< HEAD
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 
 

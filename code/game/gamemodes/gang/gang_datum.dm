@@ -80,9 +80,8 @@
 			if("purple")
 				color_hex = "#DA00FF"
 
-<<<<<<< HEAD
-	name = (gangname ? gangname : pick(gang_name_pool))
-	gang_name_pool -= name
+	name = (gangname ? gangname : pick(GLOB.gang_name_pool))
+	GLOB.gang_name_pool -= name
 	if(name == "Sleeping Carp")
 		fighting_style = "martial"
 		buyable_items = list(
@@ -100,10 +99,6 @@
 			/datum/gang_item/equipment/necklace,
 			/datum/gang_item/equipment/dominator
 		)
-=======
-	name = (gangname ? gangname : pick(GLOB.gang_name_pool))
-	GLOB.gang_name_pool -= name
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		if(name == "Donk")
@@ -245,13 +240,9 @@
 		var/mob/living/mob = get(tool.loc,/mob/living)
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
-<<<<<<< HEAD
-				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
+				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>")
 				if(beep)
 					mob << sound('sound/machines/twobeep.ogg')
-=======
-				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			return
 
 

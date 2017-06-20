@@ -168,12 +168,8 @@
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
-<<<<<<< HEAD
 	no_living_interaction = FALSE
-	src << laws
-=======
 	to_chat(src, laws)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	seeStatic = FALSE
 	updateSeeStaticMobs()
 

@@ -29,12 +29,7 @@
 /////////////
 // DEBUFFS //
 /////////////
-<<<<<<< HEAD
 #define STATUS_EFFECT_Z_LEVEL_LOCK /datum/status_effect/z_level_lock
 #define STATUS_EFFECT_Z_LEVEL_LOCK_WIZ /datum/status_effect/z_level_lock/wizard_academy
-=======
-
 #define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
-
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

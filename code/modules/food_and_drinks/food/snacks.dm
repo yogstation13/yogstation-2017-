@@ -39,9 +39,7 @@
 	if(!usr)
 		return
 	if(!reagents.total_volume)
-<<<<<<< HEAD
 		usr.unEquip(src)	//so icons update :[
-<<<<<<< HEAD
 
 		if(trash)
 			if(ispath(trash, /obj/item/weapon/grown) && istype(src, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -58,13 +56,7 @@
 				I.forceMove(usr.loc)
 				if(usr.can_equip(I, slot_l_hand) || usr.can_equip(I, slot_r_hand))
 					usr.put_in_hands(I)
-=======
-		var/obj/item/trash_item = generate_trash(usr)
-		usr.put_in_hands(trash_item)
->>>>>>> masterTGbranch
-=======
-		var/obj/item/trash_item = generate_trash(usr)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+		var/obj/item/trash_item = generate_trash(usr.loc)
 		qdel(src)
 		usr.put_in_hands(trash_item)
 

@@ -99,11 +99,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-<<<<<<< HEAD
-	armor = list(melee = 80, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
-=======
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
->>>>>>> masterTGbranch
 	flags_inv = HIDEJUMPSUIT
 	flags = THICKMATERIAL
 	strip_delay = 80
@@ -115,9 +111,8 @@
 	icon_state = "bonearmor"
 	item_state = "bonearmor"
 	blood_overlay_type = "armor"
-<<<<<<< HEAD
-	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
 
 /obj/item/clothing/suit/armor/chitinplate
 	name = "chitin plate"
@@ -125,10 +120,7 @@
 	icon_state = "chitenplate"
 	item_state = "chitenplate"
 	blood_overlay_type = "armor"
-	armor = list(melee = 50, bullet = 25, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0)
-=======
-	armor = list(melee = 35, bullet = 25, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
->>>>>>> masterTGbranch
+	armor = list(melee = 50, bullet = 25, laser = 15, energy = 10, bomb = 35, bio = 0, rad = 0, fire = 50, acid = 50)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 
 /obj/item/clothing/suit/armor/pathfinder

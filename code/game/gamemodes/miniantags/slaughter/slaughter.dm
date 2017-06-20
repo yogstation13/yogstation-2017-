@@ -48,16 +48,12 @@
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
 
-<<<<<<< HEAD
-/*/mob/living/simple_animal/slaughter/New()
-=======
 /mob/living/simple_animal/slaughter/Initialize()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/slaughter))
-		bloodspell.phased = 1*/
+		bloodspell.phased = 1
 
 /mob/living/simple_animal/slaughter/Life()
 	..()

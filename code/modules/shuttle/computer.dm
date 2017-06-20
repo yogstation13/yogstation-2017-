@@ -81,7 +81,6 @@
 
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
-<<<<<<< HEAD
 				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 				processnotification("awayspeech")
 
@@ -126,14 +125,6 @@
 	if(!noMove)
 		processnotification("awayspeech")
 		SSshuttle.moveShuttle(sID, mID, 1, TRUE)
-
-=======
-				say("Shuttle departing. Please stand away from the doors.")
-			if(1)
-				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
-			else
-				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)

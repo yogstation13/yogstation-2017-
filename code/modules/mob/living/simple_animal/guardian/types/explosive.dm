@@ -17,22 +17,6 @@
 			stat(null, "Bomb Cooldown Remaining: [max(round((bomb_cooldown - world.time)*0.1, 0.1), 0)] seconds")
 
 /mob/living/simple_animal/hostile/guardian/bomb/AttackingTarget()
-<<<<<<< HEAD
-	if(..())
-		if(prob(40))
-			if(isliving(target))
-				var/mob/living/M = target
-				if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
-					PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(M))
-					do_teleport(M, M, 10)
-					for(var/mob/living/L in range(1, M))
-						if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
-							continue
-						if(L != src && L != summoner)
-							L.apply_damage(15, BRUTE)
-					PoolOrNew(/obj/effect/overlay/temp/explosion, get_turf(M))
-					playsound(get_turf(M),'sound/effects/Explosion2.ogg', 200, 1)
-=======
 	. = ..()
 	if(. && prob(40) && isliving(target))
 		var/mob/living/M = target
@@ -45,7 +29,6 @@
 				if(L != src && L != summoner)
 					L.apply_damage(15, BRUTE)
 			new /obj/effect/overlay/temp/explosion(get_turf(M))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
@@ -56,21 +39,12 @@
 	if(isobj(A))
 		if(bomb_cooldown <= world.time && !stat)
 			var/obj/guardian_bomb/B = new /obj/guardian_bomb(get_turf(A))
-<<<<<<< HEAD
-			src << "<span class='danger'><B>Success! Bomb armed!</span></B>"
-			bomb_cooldown = world.time + 300
-			B.spawner = src
-			B.disguise(A)
-		else
-			src << "<span class='danger'><B>Your powers are on cooldown! You must wait 30 seconds between bombs.</span></B>"
-=======
 			to_chat(src, "<span class='danger'><B>Success! Bomb armed!</span></B>")
 			bomb_cooldown = world.time + 200
 			B.spawner = src
 			B.disguise(A)
 		else
 			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/guardian_bomb
 	name = "bomb"

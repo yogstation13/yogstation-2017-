@@ -51,9 +51,6 @@
 
 /mob/living/simple_animal/bot/rad_act(amount)
 	. = ..(amount, TRUE)
-<<<<<<< HEAD
-=======
 
 /mob/living/simple_animal/drone/rad_act(amount)
 	. = ..(amount, TRUE)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

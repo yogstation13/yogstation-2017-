@@ -220,12 +220,6 @@
 	var/occ_health = occupant.health > min_health || chem == "epinephrine"
 	return amount && occ_health
 
-<<<<<<< HEAD
-/obj/machinery/sleeper/emag_act(mob/user)
-	if(!emagged)
-		src.emagged = 1
-		user << "You breach the safety mechanics.."
-=======
 /obj/machinery/sleeper/proc/reset_chem_buttons()
 	scrambled_chems = FALSE
 	LAZYINITLIST(chem_buttons)
@@ -237,7 +231,6 @@
 	var/list/av_chem = available_chems.Copy()
 	for(var/chem in av_chem)
 		chem_buttons[chem] = pick_n_take(av_chem) //no dupes, allow for random buttons to still be correct
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 
 /obj/machinery/sleeper/syndie

@@ -43,8 +43,6 @@
 	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_TRAITOR, temp.restricted_jobs, on_station = 0)
 	var/mob/living/carbon/human/H = null
 
-<<<<<<< HEAD
-=======
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
 			if(!applicant.stat)
@@ -55,7 +53,6 @@
 								if(!(applicant.job in temp.restricted_jobs))
 									candidates += applicant
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(candidates.len)
 		var/numTraitors = min(candidates.len, 3)
 
@@ -82,8 +79,6 @@
 	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_CHANGELING, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
 
-<<<<<<< HEAD
-=======
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
@@ -93,7 +88,6 @@
 						if(!(applicant.job in temp.restricted_jobs))
 							candidates += applicant
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(candidates.len)
 		var/numChanglings = min(candidates.len, 3)
 
@@ -118,8 +112,6 @@
 	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_REV, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
 
-<<<<<<< HEAD
-=======
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_REV in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
@@ -129,7 +121,6 @@
 						if(!(applicant.job in temp.restricted_jobs))
 							candidates += applicant
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)
 
@@ -163,8 +154,6 @@
 	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_CULTIST, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
 
-<<<<<<< HEAD
-=======
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_CULTIST in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
@@ -174,7 +163,6 @@
 						if(!(applicant.job in temp.restricted_jobs))
 							candidates += applicant
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
 
@@ -384,8 +372,6 @@
 	var/list/candidates = temp.get_playing_crewmembers_for_role(ROLE_GANG, temp.restricted_jobs)
 	var/mob/living/carbon/human/H = null
 
-<<<<<<< HEAD
-=======
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_GANG in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
@@ -395,7 +381,6 @@
 						if(!(applicant.job in temp.restricted_jobs))
 							candidates += applicant
 
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
 			H = pick(candidates)

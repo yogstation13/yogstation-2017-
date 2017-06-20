@@ -60,28 +60,17 @@
 				death(0)
 				return
 
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		var/suicide_message = pick("[src] is attempting to bite \his tongue off! It looks like \he's trying to commit suicide.", \
-							"[src] is jamming \his thumbs into \his eye sockets! It looks like \he's trying to commit suicide.", \
-							"[src] is twisting \his own neck! It looks like \he's trying to commit suicide.", \
-							"[src] is holding \his breath! It looks like \he's trying to commit suicide.")
-=======
 		var/suicide_message = pick("[src] is attempting to bite [p_their()] tongue off! It looks like [p_theyre()] trying to commit suicide.", \
 							"[src] is jamming [p_their()] thumbs into [p_their()] eye sockets! It looks like [p_theyre()] trying to commit suicide.", \
 							"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 							"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 
 		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-/mob/living/carbon/brain/verb/suicide()
-=======
 /mob/living/brain/verb/suicide()
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 	set hidden = 1
 	if(!canSuicide())
 		return
@@ -90,16 +79,9 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>", \
-						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. It looks like it's lost the will to live.</span>")
-		spawn(50)
-			death(0)
-=======
 		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", \
 						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>")
 		death(0)
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 
 /mob/living/carbon/monkey/verb/suicide()
 	set hidden = 1
@@ -110,14 +92,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-		visible_message("<span class='danger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is attempting to bite \his tongue. It looks like \he's trying to commit suicide.</span>")
-=======
 		visible_message("<span class='danger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide.</span>")
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
 
@@ -130,13 +106,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		visible_message("<span class='danger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>")
-=======
 		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -150,13 +121,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		visible_message("<span class='danger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down. It looks like \he's trying to commit suicide.</span>")
-=======
 		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 		//put em at -175
 		adjustOxyLoss(max(maxHealth * 2 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
 		death(0)
@@ -190,13 +156,8 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is thrashing wildly! It looks like \he's trying to commit suicide.</span>", \
-=======
 		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
 				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 				"<span class='italics'>You hear thrashing.</span>")
 		//put em at -175
 		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
@@ -211,23 +172,14 @@
 		return
 	if(confirm == "Yes")
 		suiciding = 1
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		visible_message("<span class='danger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>", \
-						"<span class='userdanger'>[src] begins to fall down. It looks like \he's lost the will to live.</span>")
-=======
 		visible_message("<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
 						"<span class='userdanger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>")
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 		death(0)
 
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-		return 1
-=======
 		return TRUE
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm
 	else if(stat == DEAD)
 		to_chat(src, "You're already dead!")
 	else if(stat == UNCONSCIOUS)
@@ -240,13 +192,7 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
-<<<<<<< HEAD:code/modules/client/verbs/suicide.dm
-	if(borer && borer.controlling)
-		src << "You can't commit suicide while you're controlling your host!"
-	return 1
-=======
 	if(has_brain_worms())
 		to_chat(src, "You can't bring yourself to commit suicide!")
 		return
 	return TRUE
->>>>>>> masterTGbranch:code/modules/client/verbs/suicide.dm

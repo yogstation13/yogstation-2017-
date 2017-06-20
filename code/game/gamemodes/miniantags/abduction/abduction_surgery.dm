@@ -33,11 +33,7 @@
 	if(IC)
 		user.visible_message("[user] pulls [IC] out of [target]'s [target_zone]!", "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>")
 		user.put_in_hands(IC)
-<<<<<<< HEAD
 		IC.Remove(target, special = 1, 0)
-=======
-		IC.Remove(target)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 1
 	else
 		to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone]!</span>")

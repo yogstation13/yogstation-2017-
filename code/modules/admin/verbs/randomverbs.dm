@@ -193,7 +193,6 @@
 	feedback_add_details("admin_verb","MUTE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-<<<<<<< HEAD
 /client/proc/cmd_admin_add_random_ai_law()
 	set category = "Fun"
 	set name = "Add Random AI Law"
@@ -214,8 +213,6 @@
 	feedback_add_details("admin_verb","ION") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 //I use this proc for respawn character too. /N
 /proc/create_xeno(ckey)
 	if(!ckey)
@@ -756,7 +753,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] changed the security level to [level]")
 		feedback_add_details("admin_verb","CSL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-<<<<<<< HEAD
 /client/proc/reset_all_tcs()
 	set category = "Admin"
 	set name = "Reset Telecomms Scripts"
@@ -778,10 +774,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
 	feedback_add_details("admin_verb","RAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in nuke_list)
-=======
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in GLOB.nuke_list)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	set name = "Toggle Nuke"
 	set category = "Fun"
 	set popup_menu = 0

@@ -320,19 +320,7 @@
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
-<<<<<<< HEAD
-	uniform = /obj/item/clothing/under/rank/clown
-	shoes = /obj/item/clothing/shoes/clown_shoes
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas/clown_hat
-	pocket1 = /obj/item/device/assembly/bikehorn
-	back = /obj/item/weapon/storage/backpack/clown
-	has_id = 1
-	id_job = "Clown"
-	id_access = "Clown"
-=======
 	outfit_type = /datum/outfit/job/clown
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/effect/mob_spawn/human/scientist
 	name = "Scientist"
@@ -366,11 +354,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
-<<<<<<< HEAD
-	id_access = "Space Bartender"
-=======
 	id_access_list = list(GLOB.access_bar)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE

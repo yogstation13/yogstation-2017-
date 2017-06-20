@@ -95,12 +95,7 @@
 				log.parameters["realname"] = signal.data["realname"]
 				log.parameters["encryption"] = encryption
 
-<<<<<<< HEAD
 				log.parameters["uspeech"] = signal.data["languages"]
-=======
-				//log.parameters["uspeech"] = signal.data["languages"] & HUMAN //good enough
-				// TODO languages: ^ I don't know what this does
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 				// If the signal is still compressed, make the log entry gibberish
 				if(signal.data["compression"] > 0)

@@ -56,17 +56,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	// Used for displaying in ghost chat, without changing the actual name
 	// of the mob
 	var/deadchat_name
-	var/body_attack_log
-	var/body_say_log
+	//var/body_attack_log
+	//var/body_say_log
 
-<<<<<<< HEAD
 /mob/dead/observer/Initialize()
 	invisibility = GLOB.observer_default_invisibility
 
-=======
-/mob/dead/observer/New(mob/body)
-	alpha = 0
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 	verbs += /mob/dead/observer/proc/dead_tele
 
 	if(config.cross_allowed)
@@ -84,19 +79,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	updateallghostimages()
 
 	var/turf/T
-<<<<<<< HEAD
-	var/mob/body = loc
 	if(ismob(body))
-		T = get_turf(body)				//Where is the body located?
-		logging = body.logging			//preserve our logs by copying them to our ghost
-=======
-	if(isliving(body))
 		var/mob/living/L = body
 		T = get_turf(body)				//Where is the body located?
 		//preserve our logs by copying them to our ghost
-		body_attack_log = L.attack_log
-		body_say_log = L.say_log
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
+		logging = body.logging
+		//body_attack_log = L.attack_log
+		//body_say_log = L.say_log
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -373,12 +362,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		usr << "Can't become a pAI candidate while not dead!"
 
-/mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source)
 =======
+>>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 /mob/dead/observer/proc/notify_cloning(var/message, var/sound, var/atom/source, flashwindow = TRUE)
 	if(flashwindow)
 		window_flash(client)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	if(message)
 		to_chat(src, "<span class='ghostalert'>[message]</span>")
 		if(source)

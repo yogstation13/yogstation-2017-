@@ -213,16 +213,11 @@
 	screen_loc = ui_acti
 
 /obj/screen/act_intent/Click(location, control, params)
-<<<<<<< HEAD
-
 	if(usr.client && usr.client.prefs.afreeze)
 		usr.client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return 1
 
-	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
-=======
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/screen/act_intent/segmented/Click(location, control, params)
 	if(usr.client.prefs.toggles & INTENT_STYLE)

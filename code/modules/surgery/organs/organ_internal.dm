@@ -273,16 +273,10 @@
 			last_pump = world.time //lets be extra fair *sigh*
 
 /obj/item/organ/heart/cursed/Insert(mob/living/carbon/M, special = 0)
-<<<<<<< HEAD
 	if(..())
 		if(owner)
-			owner << "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>"
+			to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
 		return 1
-=======
-	..()
-	if(owner)
-		to_chat(owner, "<span class ='userdanger'>Your heart has been replaced with a cursed one, you have to pump this one manually otherwise you'll die!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/action/item_action/organ_action/cursed_heart
 	name = "Pump your blood"
@@ -715,8 +709,6 @@
 	desc = "According to leading xenobiologists the evolutionary benefit of having a second mouth in your mouth is \"that it looks badass\"."
 	icon_state = "tonguexeno"
 	say_mod = "hisses"
-<<<<<<< HEAD
-=======
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
@@ -726,7 +718,6 @@
 		/datum/language/common,
 		/datum/language/ratvar,
 		/datum/language/monkey))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
 	playsound(owner, "hiss", 25, 1, 1)
@@ -1004,8 +995,9 @@
 	return
 
 /obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
-	..()
-	set_light(15)
+	if(..())
+		set_light(15)
+		return 1
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)

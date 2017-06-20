@@ -17,14 +17,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":o" = "AI Private",	"#o" = "AI Private",	".o" = "AI Private",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
-<<<<<<< HEAD
 	  ":p" = "pheromones",	"#p" = "pheromones",	".p" = "pheromones",
 	  ":d" = "spokenbinary","#d" = "spokenbinary",	".d" = "spokenbinary",
-=======
 	  ":x" = "cords",		"#x" = "cords",			".x" = "cords",
-	  ":p" = "admin",		"#p" = "admin",			".p" = "admin",
-	  ":d" = "deadmin",		"#d" = "deadmin",		".d" = "deadmin",
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+	  //":p" = "admin",		"#p" = "admin",			".p" = "admin",
+	  //":d" = "deadmin",		"#d" = "deadmin",		".d" = "deadmin",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -44,14 +41,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":O" = "AI Private",	"#O" = "AI Private",	".O" = "AI Private",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
-<<<<<<< HEAD
 	  ":P" = "pheromones",	"#P" = "pheromones",	".P" = "pheromones",
 	  ":D" = "spokenbinary","#D" = "spokenbinary",	".D" = "spokenbinary",
-=======
 	  ":X" = "cords",		"#X" = "cords",			".X" = "cords",
-	  ":P" = "admin",		"#P" = "admin",			".P" = "admin",
-	  ":D" = "deadmin",		"#D" = "deadmin",		".D" = "deadmin",
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
+	  //":P" = "admin",		"#P" = "admin",			".P" = "admin",
+	  //":D" = "deadmin",		"#D" = "deadmin",		".D" = "deadmin",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -71,21 +65,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	  ":é" = "Supply",		"#é" = "Supply",		".é" = "Supply",
 	  ":ï" = "changeling",	"#ï" = "changeling",	".ï" = "changeling"))
 
-<<<<<<< HEAD
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-<<<<<<< HEAD
-=======
 /mob/living/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null)
 	if(sanitize)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
-	if(!message || message == "")
-=======
 	if(!message)
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 		return
 
 	var/message_mode = get_message_mode(message)
@@ -117,7 +102,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(!can_speak_basic(original_message)) //Stat is seperate so I can handle whispers properly.
 		return
-	
+
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(stat && !(message_mode in crit_allowed_modes))
 		return
@@ -152,7 +137,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		message = treat_message(message)
 		if(!message)
 			return
-<<<<<<< HEAD
 
 	spans += get_spans()
 
@@ -163,10 +147,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			GLOB.language_datums[language] = L
 
 		spans |= L.spans
-=======
-
-	spans += get_spans()
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 	//Log what we've said with an associated timestamp, using the list's len for safety/to prevent overwriting messages
 	log_message(message, INDIVIDUAL_SAY_LOG)
@@ -190,11 +170,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
 		spans |= SPAN_ITALICS
 
-<<<<<<< HEAD
-	send_speech(message, message_range, src, bubble_type, spans, languages)
-=======
 	send_speech(message, message_range, src, bubble_type, spans, message_language=language)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 	log_say("[name]/[key] : [message]")
 	return 1
@@ -217,11 +193,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-<<<<<<< HEAD
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
-=======
 /mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	var/list/listening = get_hearers_in_view(message_range, source)
 	for(var/mob/M in GLOB.player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7 && M.z == z)) && client) // client is so that ghosts don't have to listen to mice
@@ -236,17 +208,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-<<<<<<< HEAD
-	if(bubble_type)
-		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		spawn(0)
-			flick_overlay(I, speech_bubble_recipients, 30)
-=======
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /mob/proc/binarycheck()
 	return 0

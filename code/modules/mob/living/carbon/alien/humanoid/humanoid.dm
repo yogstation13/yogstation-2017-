@@ -112,7 +112,7 @@
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 =======
 //For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
-/proc/get_alien_type(var/alienpath)
+/proc/get_alien_type(var/alienpath, hive_faction)
 	for(var/mob/living/carbon/alien/humanoid/A in GLOB.living_mob_list)
 >>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(!istype(A, alienpath))

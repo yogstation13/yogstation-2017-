@@ -19,12 +19,7 @@
 
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
-<<<<<<< HEAD
-	if(mergeable_decal)
-		qdel(C)
-=======
 	destroy_effect()
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee
 
 /obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))

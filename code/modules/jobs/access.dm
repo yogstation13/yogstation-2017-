@@ -500,15 +500,11 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 			return "Surgery"
 		if(GLOB.access_theatre)
 			return "Theatre"
-<<<<<<< HEAD
-		if(access_manufacturing)
+		if(GLOB.access_manufacturing)
 			return "Gift Shop"
-		if(access_research)
-=======
 		if(GLOB.access_manufacturing)
 			return "Manufacturing"
 		if(GLOB.access_research)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			return "Science"
 		if(GLOB.access_mining)
 			return "Mining"
@@ -538,13 +534,9 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 			return "Keycode Auth."
 		if(GLOB.access_tcomsat)
 			return "Telecommunications"
-<<<<<<< HEAD
-		if(access_tcomadmin)
+		if(GLOB.access_tcomadmin)
 			return "Telecomms Admin"
-		if(access_gateway)
-=======
 		if(GLOB.access_gateway)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			return "Gateway"
 		if(GLOB.access_sec_doors)
 			return "Brig"
@@ -554,15 +546,11 @@ GLOBAL_VAR_CONST(access_away_generic4, 208)
 			return "AI Satellite"
 		if(GLOB.access_weapons)
 			return "Weapon Permit"
-<<<<<<< HEAD
-		if(access_paramedic)
+		if(GLOB.access_paramedic)
 			return "Paramedic Room"
-		if(access_cloning)
+		if(GLOB.access_cloning)
 			return "Cloning Room"
-		if(access_network)
-=======
 		if(GLOB.access_network)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			return "Network Access"
 		if(GLOB.access_cloning)
 			return "Cloning Room"

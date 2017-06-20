@@ -5,13 +5,8 @@
 /client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Admin PM Mob"
-<<<<<<< HEAD
 	if(!check_rights(R_BASIC))
-		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
-=======
-	if(!holder)
 		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	if( !ismob(M) || !M.client )
 		return
@@ -22,13 +17,8 @@
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
-<<<<<<< HEAD
 	if(!check_rights(R_BASIC))
-		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
-=======
-	if(!holder)
 		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	var/list/client/targets[0]
 	for(var/client/T)

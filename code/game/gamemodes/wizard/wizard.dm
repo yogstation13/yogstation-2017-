@@ -34,8 +34,6 @@
 			wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
 			return 0
 
-<<<<<<< HEAD
-=======
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
@@ -44,10 +42,8 @@
 	if(GLOB.wizardstart.len == 0)
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	for(var/datum/mind/wiz in wizards)
 		wiz.current.loc = pick(GLOB.wizardstart)
-
 	return 1
 
 

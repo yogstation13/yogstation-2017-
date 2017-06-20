@@ -197,7 +197,6 @@
 		return
 
 <<<<<<< HEAD
-<<<<<<< HEAD
 	for(var/obj/item/RCD in rcd_list)
 		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
 			if(istype(RCD.loc, /obj/item/weapon/rapid_engineering_device))
@@ -208,10 +207,7 @@
 					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
 					qdel(RCD)
 =======
-	for(var/I in rcd_list)
-=======
 	for(var/I in GLOB.rcd_list)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
 			var/obj/item/weapon/rcd/RCD = I
 			RCD.detonate_pulse()

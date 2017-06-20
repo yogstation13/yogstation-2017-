@@ -7,18 +7,13 @@
 	var/rendered = "<i><span class='alien'>Hivemind, <span class='name'>[shown_name]</span> <span class='message'>[message_a]</span></span></i>"
 	for(var/mob/S in GLOB.player_list)
 		if(!S.stat && S.hivecheck())
-<<<<<<< HEAD
 			if(speakerNode && iscarbon(S))
 				var/mob/living/carbon/C = S
 				var/obj/item/organ/alien/hivenode/N = C.getorgan(/obj/item/organ/alien/hivenode)
 				if(N && (N.hive_faction != speakerNode.hive_faction))
 					continue
-			S << rendered
-		if(S in dead_mob_list)
-=======
 			to_chat(S, rendered)
 		if(S in GLOB.dead_mob_list)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 			var/link = FOLLOW_LINK(S, src)
 			to_chat(S, "[link] [rendered]")
 

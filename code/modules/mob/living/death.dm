@@ -36,13 +36,9 @@
 		buckled.unbuckle_mob(src,force=1)
 
 	dust_animation()
-<<<<<<< HEAD
-	spawn_dust()
+	spawn_dust(just_ash)
 	for(var/obj/item/weapon/disk/nuclear/N in GetAllContents())
 		N.forceMove(loc)
-=======
-	spawn_dust(just_ash)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	qdel(src)
 
 /mob/living/proc/dust_animation()

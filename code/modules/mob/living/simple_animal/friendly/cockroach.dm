@@ -58,8 +58,6 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-<<<<<<< HEAD
-=======
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /mob/living/simple_animal/cockroach/clownbug
@@ -75,4 +73,3 @@
 		playsound(loc, 'sound/items/bikehorn.ogg', 100, 0)
 	new /obj/item/device/assembly/bikehorn(src.loc)
 	..()
->>>>>>> 28ddabeef062fb57d651603d8047812b7521a8ee

@@ -115,16 +115,12 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-<<<<<<< HEAD
-/mob/living/simple_animal/construct/examine(mob/user)
+/mob/living/simple_animal/hostile/construct/examine(mob/user)
 	. = ..()
 	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
-		user << "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>"
+		to_chat(user, "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>")
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
-=======
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	return 0
 
 

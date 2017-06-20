@@ -16,22 +16,15 @@
 	var/free_pen = 0
 	var/promotable = 0
 
-<<<<<<< HEAD
 /obj/item/device/gangtool/examine(mob/user)
 	..()
 	if((user.mind && user.mind.gang_datum) || isobserver(user))
 		user = "This small but complex Syndicate-manufactured device allows trained agents to access a variety of weapons and tools that will help them in taking over Nanotrasen stations."
 
-
-/obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
-	if(!ticker.mode.gang_points)
-		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
-=======
 /obj/item/device/gangtool/Initialize() //Initialize supply point income if it hasn't already been started
 	..()
 	if(!SSticker.mode.gang_points)
 		SSticker.mode.gang_points = new /datum/gang_points(SSticker.mode)
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /obj/item/device/gangtool/attack_self(mob/user)
 	if (!can_use(user))

@@ -94,15 +94,9 @@
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-<<<<<<< HEAD
 		if(W.welding && !stat && user.a_intent == "help")
 			if(mode != MINEDRONE_IDLE)
 				user << "<span class='info'>[src] is moving around too much to repair!</span>"
-=======
-		if(W.welding && !stat)
-			if(AIStatus != AI_OFF && AIStatus != AI_IDLE)
-				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 				return
 			if(maxHealth == health)
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
@@ -111,13 +105,8 @@
 					adjustBruteLoss(-10)
 					to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
 			return
-<<<<<<< HEAD
 	if(is_mining_scanner(I))
 		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
-=======
-	if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner))
-		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		DropOre()
 		return
 	..()
@@ -139,13 +128,9 @@
 			if(MINEDRONE_COLLECT)
 				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
 			if(MINEDRONE_ATTACK)
-<<<<<<< HEAD
 				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
 			else
 				M << "<span class='warning'>[src] does not seem to be responding!</span>"
-=======
-				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return
 	..()
 
@@ -336,17 +321,7 @@
 
 /datum/action/innate/minedrone/toggle_light/Activate()
 	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-<<<<<<< HEAD
 	user.toggle_light()
-=======
-
-	if(user.light_on)
-		user.set_light(0)
-	else
-		user.set_light(6)
-	user.light_on = !user.light_on
-	to_chat(user, "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 /datum/action/innate/minedrone/toggle_meson_vision
 	name = "Toggle Meson Vision"

@@ -93,7 +93,6 @@ GLOBAL_LIST_INIT(admin_verbs_admin, AVerbsAdmin())
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/check_ruins,
 	/datum/admins/proc/borer_panel,
 	/client/proc/respawn_character,
 	/client/proc/rejuv_all,
@@ -218,7 +217,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug, AVerbsDebug())
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 <<<<<<< HEAD
-	/client/proc/check_ruins,
 	/datum/admins/proc/borer_panel
 =======
 	/client/proc/jump_to_ruin,
@@ -324,15 +322,11 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	/client/proc/debug_huds,
 	/client/proc/customiseSNPC,
 	/client/proc/resetSNPC,
-<<<<<<< HEAD
 	/client/proc/toggleSNPC,
 	/datum/admins/proc/cybermen_panel,
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
-	/client/proc/check_ruins,
 	/datum/admins/proc/borer_panel,
-=======
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 	)
 
 /client/proc/add_admin_verbs()
@@ -968,7 +962,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 
 	if(!holder)
 		return
-	
+
 	if(has_antag_hud())
 		toggle_antag_hud()
 
@@ -1079,20 +1073,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
 	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
 	message_admins("[src] revived [revive_count] mobs.")
 	log_admin("[src] revived [revive_count] mobs.")
-
-/client/proc/check_ruins()
-	set name = "Check Ruins"
-	set category = "Debug"
-	set desc = "Check all loaded ruins."
-	log_admin("[key_name(usr)] checked ruins.")
-	message_admins("[key_name_admin(usr)] checked ruins.")
-	var/dat = "<center><b>Ruins</b></center><br>"
-	for(var/V in ruinAreas)
-		var/list/L = V
-		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
-	usr << browse(dat, "window=checkruin;size=350x500")
-
-
 
 /client/proc/admin_pick_random_player()
 	set category = "Admin"

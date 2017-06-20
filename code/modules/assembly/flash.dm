@@ -306,12 +306,8 @@
 		addtimer(CALLBACK(src, .proc/update_icon), 5)
 
 	if(holder)
-<<<<<<< HEAD
-		holder.update_icon()
-=======
 		holder.update_icon()
 
 /obj/item/device/assembly/flash/shield/hit_reaction(obj/item/weapon/W, mob/user, params)
 	activate()
 	return ..()
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc

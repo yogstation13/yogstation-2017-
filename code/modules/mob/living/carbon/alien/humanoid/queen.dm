@@ -102,13 +102,8 @@
 
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/alien/user)
 	var/obj/item/queenpromote/prom
-<<<<<<< HEAD
-	if(alien_type_present(/mob/living/carbon/alien/humanoid/royal/praetorian, user.hive_faction))
-		user << "<span class='noticealien'>You already have a Praetorian!</span>"
-=======
-	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
+	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian, user.hive_faction))
 		to_chat(user, "<span class='noticealien'>You already have a Praetorian!</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 		return 0
 	else
 		for(prom in user)

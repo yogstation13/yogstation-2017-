@@ -44,13 +44,8 @@
 						charged_item = I
 						break
 				else
-<<<<<<< HEAD
-					L << "<span class='warning'>Glowing red letters appear on the front cover...</span>"
-					L << "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>"
-=======
 					to_chat(L, "<span class='caution'>Glowing red letters appear on the front cover...</span>")
 					to_chat(L, "<span class='warning'>[pick("NICE TRY BUT NO!","CLEVER BUT NOT CLEVER ENOUGH!", "SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!", "CUTE!", "YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?")]</span>")
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 					burnt_out = 1
 			else if(istype(item, /obj/item/weapon/gun/magic))
 				var/obj/item/weapon/gun/magic/I = item

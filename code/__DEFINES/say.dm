@@ -15,12 +15,8 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
-<<<<<<< HEAD
 #define MODE_PHEROMONES "pheromones"
-#define MODE_SPOKEN_BINARY "spokenbinary"
-=======
 #define MODE_VOCALCORDS "cords"
->>>>>>> c5999bcdb3efe2d0133e297717bcbc50cfa022bc
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
