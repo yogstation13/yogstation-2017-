@@ -16,7 +16,7 @@ var/const/MAX_ACTIVE_TIME = 400
 	item_state = "facehugger"
 	w_class = 1 //note: can be picked up by aliens unlike most other items of w_class below 4
 	flags = MASKINTERNALS
-	throw_range = 5
+	throw_range = 2
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
@@ -28,7 +28,8 @@ var/const/MAX_ACTIVE_TIME = 400
 	var/strength = 5
 
 	var/attached = 0
-	var/hive_faction
+
+	var/colony_suffix = null
 
 /obj/item/clothing/mask/facehugger/lamarr
 	name = "Lamarr"
@@ -103,10 +104,12 @@ var/const/MAX_ACTIVE_TIME = 400
 				icon_state = "[initial(icon_state)]"
 
 /obj/item/clothing/mask/facehugger/throw_impact(atom/hit_atom)
-	..()
+	return ..()
+	/* -- Temporarily disabled.
 	if(stat == CONSCIOUS)
 		icon_state = "[initial(icon_state)]"
 		Attach(hit_atom)
+	*/
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)
 	if(!isliving(M))
@@ -134,6 +137,10 @@ var/const/MAX_ACTIVE_TIME = 400
 			H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 								"<span class='userdanger'>[src] smashes against [H]'s [H.head]!</span>")
 			Die()
+			return 0
+		if(H.is_face_and_mouth_protected())
+			H.visible_message("<span class='danger'>[src] bounces off of [H]'s [H.wear_mask.name]!</span>", \
+							"<span class='userdanger'>[src] bounces off of [H]'s [H.wear_mask.name]!</span>")
 			return 0
 	if(iscarbon(M))
 		var/mob/living/carbon/target = M
@@ -184,8 +191,10 @@ var/const/MAX_ACTIVE_TIME = 400
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart("chest")
 		if((!LC || LC.status != ORGAN_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
-			var/obj/item/organ/body_egg/alien_embryo/embryo = new /obj/item/organ/body_egg/alien_embryo(target)
-			embryo.hive_faction = hive_faction
+			var/obj/item/organ/body_egg/alien_embryo/alien_embryo
+
+			alien_embryo = new /obj/item/organ/body_egg/alien_embryo(target)
+			alien_embryo.colony = colony_suffix
 
 		if(iscorgi(target))
 			var/mob/living/simple_animal/pet/dog/corgi/C = target

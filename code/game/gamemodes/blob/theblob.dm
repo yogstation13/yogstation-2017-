@@ -22,7 +22,7 @@
 
 /obj/effect/blob/New(loc)
 	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+	if(Ablob.infestation_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
 	src.dir = pick(1, 2, 4, 8)

@@ -41,6 +41,10 @@
 			if(charging || panel_open)
 				return 1
 
+			if(G.flags & NODROP)
+				user << "<span class='notice'>[G] is attached to your hand!</span>"
+				return
+
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
 			if(!isarea(a) || a.power_equip == 0)

@@ -338,6 +338,20 @@
 	..()
 	. = 1
 
+/datum/reagent/toxin/xenotoxin
+	name = "Xenomorph Toxin"
+	id = "xenotoxin"
+	description = "A rich poison that saps the energy fiercly out of it's recipient, and drifts them away into a forced sleep."
+	color = ""
+	toxpwr = 0
+
+/datum/reagent/toxin/xenotoxin/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(2*REM)
+	if(M.staminaloss > 20)
+		if(!M.reagents.has_reagent("epinephrine"))
+			M.Sleeping(2, 0)
+	..()
+
 /datum/reagent/toxin/polonium
 	name = "Polonium"
 	id = "polonium"

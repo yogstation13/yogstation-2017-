@@ -225,3 +225,94 @@
 		weaken = 0
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
+
+
+/obj/item/projectile/bullet/neurospit
+	name = "neurotoxin spit"
+	icon_state = "neurotoxin"
+	damage_type = BURN
+	damage = 5
+
+/obj/item/projectile/bullet/neurospit/on_hit(atom/target, blocked = 0)
+	if(isalien(target))
+		nodamage = 1
+		damage = 0
+
+	if(isitem(target))
+		var/obj/item/I = target
+
+		switch(damage)
+
+			if(10)
+				if(I.w_class == (1 || 2))
+					splashAcid(I)
+
+			if(15)
+				if(I.w_class <= 3)
+					splashAcid(I)
+
+
+			if(20)
+				if(I.w_class <= 4)
+					splashAcid(I)
+
+	if(istype(target, /obj/structure))
+		if(damage == (15 || 20 || 25))
+			splashAcid(target)
+		else
+			failText(target)
+
+	if(istype(target, /obj/machinery))
+		if(damage >= 20)
+			splashAcid(target)
+		else
+			failText(target)
+
+
+	if(istype(target, /turf/closed/wall))
+		if(damage == 25)
+			splashAcid(turf = target)
+		else
+			failText(target)
+
+
+	if(istype(target, /mob/living/carbon/human))
+		if(damage <= 5)
+			return
+
+		var/mob/living/carbon/human/H = target
+		H.silent += damage * 2 // SILENCE!
+		if(H.check_shields(damage, name, src))
+			visible_message("<span class='warning'>[src] is deflected!</span>",\
+				"<span class='warning'>[src] is deflected!</span>")
+			return
+		if(H.dna.species.armor > damage*2) // species like golems are resistant to the alien acid
+			damage -= round((damage/2))
+		else
+			H.acid_act(damage,damage,damage)
+			// we take off the load because most of the damage comes from the acid_act()
+			nodamage = 1
+			damage = 0
+
+/obj/item/projectile/bullet/neurospit/proc/splashAcid(obj/item, turf/turf)
+	if(item)
+		new /obj/effect/acid(get_turf(item), item)
+	if(turf)
+		new /obj/effect/acid(turf, turf)
+
+/obj/item/projectile/bullet/neurospit/proc/failText(var/target)
+	visible_message("<span class='warning'>[src] slaps against [target], and the mixture begins to bubble! Nothing happens, and the [target] withstands the heat.</span>", "<span class='warning'>[src] slaps against [target].</span>")
+
+
+/obj/item/projectile/bullet/neurospit/average
+	damage = 10
+	stun = 3
+
+/obj/item/projectile/bullet/neurospit/moderate
+	damage = 15
+
+/obj/item/projectile/bullet/neurospit/strong
+	damage = 20
+
+/obj/item/projectile/bullet/neurospit/bulky
+	damage = 25

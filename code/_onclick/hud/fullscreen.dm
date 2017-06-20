@@ -106,3 +106,8 @@
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
+
+/obj/screen/fullscreen/thermal
+	icon = 'icons/mob/screen_gen.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "thermal"

@@ -855,6 +855,26 @@ var/list/airlock_overlays = list()
 		update_icon()
 		C.loc = src
 		charge = C
+	else if(istype(C, /obj/item/weapon/predator))
+		if(!density)
+			return
+		if(!ispredator(user))
+			user << "<span class='warning'>You try with all your might to open the airlock! It's not budging!</span>"
+			if(do_after(user, 500, target = src))
+				user << "<span class='warning'>Yeah ... seriously. It's not budging.</span>"
+				return
+
+		user.visible_message("<span class='warning'>[user] sticks their claws into the middle of [src]...</span>",\
+						"<span class='noticealien'>You begin pushing [src] open with all your might!</span>",\
+						"<span class='warning'>You hear groaning metal...</span>")
+		var/open_up = 20
+		if(hasPower())
+			open_up += 50
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+
+		if(do_after(user, open_up, target = src))
+			if(!open(2) && density)
+				user << "<span class='warning'>[src] doesn't seem to open...</span>"
 	else
 		return ..()
 

@@ -3,6 +3,8 @@
 	icon_state = "alien_s"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	macro_hotkeys = "xeno-hotkeys"
+	macro_default = "xeno-default"
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
@@ -13,16 +15,28 @@
 	var/custom_pixel_x_offset = 0 //for admin fuckery.
 	var/custom_pixel_y_offset = 0
 	var/sneaking = 0 //For sneaky-sneaky mode and appropriate slowdown
+	var/tackle_chance = 3
+	var/obj/item/weapon/xenomorphtail/tail
+//	pressure_resistance = -5
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/humanoid/New()
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
+	if(!(istype(src, /mob/living/carbon/alien/humanoid/royal)))
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/headbite(null))
+		AddAbility(new/obj/effect/proc_holder/alien/boil(null))
+	throw_alert("alientutorial", /obj/screen/alert/tutorial)
+	throw_alert("alienobjective", /obj/screen/alert/alien_objective)
+	throw_alert("alienfindqueen", /obj/screen/alert/alien_findqueen)
 	..()
 
 
 /mob/living/carbon/alien/humanoid/movement_delay()
+	var/stinger_delay
+	if(a_intent == "sting")
+		stinger_delay = 1
 	. = ..()
-	. += move_delay_add + config.alien_delay + sneaking	//move_delay_add is used to slow aliens with stuns
+	. += move_delay_add + config.alien_delay + sneaking	+ stinger_delay + damage_delay()//move_delay_add is used to slow aliens with stuns
 
 /mob/living/carbon/alien/humanoid/emp_act(severity)
 	if(r_store) r_store.emp_act(severity)
@@ -184,7 +198,9 @@
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
-		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
+		playsound(get_turf(src), pick('sound/xenomorph/xeno_hiss.ogg', 'sound/xenomorph/xeno_hiss2.ogg', 'sound/xenomorph/xeno_hiss3.ogg'), 50, 0, -5)
+		if(prob(10))
+			emote("tail")
 	..()
 
 /mob/living/carbon/alien/humanoid/grabbedby(mob/living/carbon/user, supress_message = 0)
@@ -192,3 +208,6 @@
 		devour_mob(pulling, devour_time = 60)
 	else
 		..()
+
+/mob/living/carbon/alien/humanoid/on_vent_leave()
+	playsound(get_turf(src), 'sound/xenomorph/xeno_ventleave.ogg', 100, 0)

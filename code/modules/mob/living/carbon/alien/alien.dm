@@ -38,6 +38,8 @@
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
+	var/datum/huggerdatum/HD = null
+
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -50,6 +52,7 @@
 		I.Insert(src, 1)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
+//	overlay_fullscreen("thermal", /obj/screen/fullscreen/thermal)
 	..()
 
 /mob/living/carbon/alien/proc/set_hive_faction(new_hive_faction)
@@ -137,6 +140,11 @@
 	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!
+	if(!stunned && !eye_blurry)
+		var/flashstun = 5
+		if(nightvision)
+			flashstun = flashstun * 2
+		flash_eyes(flashstun)
 	return
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R) //can metabolize all reagents
@@ -168,8 +176,6 @@ Des: Gives the client of the alien an image on each infected mob.
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 					client.images += I
-	return
-
 
 /*----------------------------------------
 Proc: RemoveInfectionImages()
@@ -180,7 +186,6 @@ Des: Removes all infected images from the alien.
 		for(var/image/I in client.images)
 			if(dd_hasprefix_case(I.icon_state, "infected"))
 				qdel(I)
-	return
 
 /mob/living/carbon/alien/canBeHandcuffed()
 	return 1
@@ -239,3 +244,13 @@ Des: Removes all infected images from the alien.
 	if(see_override)
 		see_invisible = see_override
 
+/mob/living/carbon/alien/proc/findQueen()
+	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
+		if(compareAlienSuffix(src, Q))
+			return Q
+		else
+			return FALSE
+	return FALSE
+
+/mob/living/carbon/alien/can_use_guns()
+	return 0

@@ -20,8 +20,11 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 				"<span class='userdanger'>[M] has slashed at [src]!</span>")
 
+			if(check_shields(damage, "[M.name]'s slash"))
+				visible_message("<span class='danger'>[src] blocks [M]'s slash!</span>")
+				return 0
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			if (prob(30))
+			if (prob(5))
 				visible_message("<span class='danger'>[M] has wounded [src]!</span>", \
 					"<span class='userdanger'>[M] has wounded [src]!</span>")
 				apply_effect(4, WEAKEN, armor_block)
@@ -30,9 +33,12 @@
 
 		if(M.a_intent == "disarm")
 			var/randn = rand(1, 100)
-			if (randn <= 80)
+			if (randn <= 60)
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Weaken(5)
+				var/successfultackle = M.tackle_chance
+				if(weakened < 2)
+					successfultackle = round(successfultackle / 2)
+				Weaken(successfultackle)
 				add_logs(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -46,4 +52,15 @@
 					playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 					visible_message("<span class='danger'>[M] has tried to disarm [src]!</span>", \
 						"<span class='userdanger'>[M] has tried to disarm [src]!</span>")
+		if(M.a_intent == "sting")
+			if(M.tail)
+				visible_message("<span class='danger'>[M]'s tail swoops down and punctures [src]!</span>", \
+				"<span class='userdanger'>[M] punctures [src] with it's tail!</span>")
+				if(check_shields(M.tail.force, "[M]'s tail", M.tail))
+					visible_message("<span class='danger'>[M]'s tail rickashays away from [src]!</span>", \
+						"<span class='danger'[M]'s tail is blocked!</span>")
+				else
+					M.tail.attack(src, M)
+			else
+				M << "<span class='aliennotice'>You cannot use this intent.</span>"
 	return

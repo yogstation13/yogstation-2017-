@@ -183,7 +183,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/proc/suicide_act(mob/user)
 	return
 
-/obj/item/proc/cuff_act(mob/user) // effect for cuffs/legcuffs. attached to movement_delay() inside of carbon_movement.dm
+/obj/item/proc/cuff_act(mob/user)
 	return
 
 /obj/item/verb/move_to_top()

@@ -82,6 +82,7 @@
 #define EASYIMPLANTS	26
 #define PROTECTEDEYES	27
 #define PLANT           28
+#define NOCLONE			29
 
 #define FLYING	65536
 

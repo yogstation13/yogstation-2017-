@@ -9,3 +9,13 @@
 
 /mob/living/carbon/alien/dust_animation()
 	new /obj/effect/overlay/temp/dust_animation(loc, "dust-a")
+
+
+/mob/living/carbon/alien/death(gibbed)
+/*	if(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/xenomorph))
+		ticker.mode.xenomorphs["QUEEN"] -= mind
+		ticker.mode.xenomorphs["HUNTERS"] -= mind
+		ticker.mode.xenomorphs["SENITELS"] -= mind
+		ticker.mode.xenomorphs["DRONES"] -= mind
+*/
+	return ..()

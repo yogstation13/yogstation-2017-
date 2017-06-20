@@ -368,6 +368,9 @@
 	if (find_record("ckey", subject.ckey, records))
 		scantemp = "<font class='average'>Subject already in database.</font>"
 		return
+	if((NOCLONE in subject.dna.species.specflags))
+		scantemp = "<font class='bad'>Subject's genetic DNA is impossible to unscramble.</font>"
+		return
 
 	var/datum/data/record/R = new()
 	if(subject.dna.species)

@@ -76,3 +76,5 @@
 	update_canmove()
 	med_hud_set_health()
 	med_hud_set_status()
+	if(gibbed)
+		RemoveAlienThermal()

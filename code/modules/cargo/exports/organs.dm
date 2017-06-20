@@ -12,11 +12,6 @@
 	unit_name = "alien brain"
 	export_types = list(/obj/item/organ/brain/alien)
 
-/datum/export/organ/alien/acid
-	cost = 1500
-	unit_name = "alien acid gland"
-	export_types = list(/obj/item/organ/alien/acid)
-
 /datum/export/organ/alien/hivenode
 	cost = 2000
 	unit_name = "alien hive node"
@@ -25,7 +20,7 @@
 /datum/export/organ/alien/neurotoxin
 	cost = 2000
 	unit_name = "alien neurotoxin gland"
-	export_types = list(/obj/item/organ/alien/neurotoxin)
+	export_types = list(/obj/item/organ/alien/neurotoxinthroat)
 
 /datum/export/organ/alien/resinspinner
 	cost = 1000

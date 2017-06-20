@@ -136,6 +136,11 @@
 	delay = 10
 	e_cost = 10
 
+/obj/item/ammo_casing/energy/plasma/predator
+	projectile_type = /obj/item/projectile/plasma/adv/yautija
+	delay = 50
+	e_cost = 1000
+
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0

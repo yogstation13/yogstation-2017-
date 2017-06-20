@@ -170,7 +170,7 @@
 	smooth = SMOOTH_MORE
 	var/blacklisted_turfs
 
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/New(pos, node, created)
 	blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/floor/plating/lava))
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
@@ -188,8 +188,11 @@
 		qdel(src)
 		return
 	spawn(rand(150, 200))
-		if(src)
+		if(src && created)
 			Life()
+			var/area/xenospread = get_area(loc)
+			if(xenospread.infestation_allowed)
+				xenomorphweeds += src
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -211,7 +214,7 @@
 		if (locate(/obj/structure/alien/weeds) in T || is_type_in_typecache(T, blacklisted_turfs))
 			continue
 
-		new /obj/structure/alien/weeds(T, linked_node)
+		new /obj/structure/alien/weeds(T, linked_node, created = TRUE)
 
 
 /obj/structure/alien/weeds/ex_act(severity, target)
@@ -226,15 +229,21 @@
 //Weed nodes
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
-	desc = "Blue bioluminescence shines from beneath the surface."
+	desc = "Blue bioluminescence shines from beneath the surface. It's origin is unknown but, it seems to be sponging off of some sort of energy in the area."
 	icon_state = "weednode"
 	luminosity = 1
 	var/node_range = NODERANGE
+	health = 30
 
 
-/obj/structure/alien/weeds/node/New()
+/obj/structure/alien/weeds/node/New(pos, node, created)
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	..(loc, src)
+	..(loc, src, created)
+
+
+/obj/structure/alien/weeds/node/Destroy()
+	xenomorphweeds -= src
+	return ..()
 
 #undef NODERANGE
 
@@ -263,9 +272,12 @@
 	var/hive_faction
 
 
-/obj/structure/alien/egg/New()
-	var/obj/item/clothing/mask/facehugger/facehugger = new /obj/item/clothing/mask/facehugger(src)
-	facehugger.hive_faction = hive_faction
+/obj/structure/alien/egg/New(suffix)
+	var/obj/item/clothing/mask/facehugger/FH
+	FH = new(src)
+	if(suffix)
+		FH.colony_suffix = suffix
+
 	..()
 	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 		Grow()

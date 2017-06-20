@@ -4,18 +4,24 @@
 	dwidth = 3
 	width = 7
 	height = 7
+	var/zlevel_stuck = TRUE
 
 /obj/docking_port/mobile/assault_pod/request()
-	if(z == initial(src.z)) //No launching pods that have already launched
+	if(zlevel_stuck)
+		if(z == initial(src.z)) //No launching pods that have already launched
+			return ..()
+	else
 		return ..()
-
 
 /obj/docking_port/mobile/assault_pod/dock(obj/docking_port/stationary/S1)
 	..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
 		playsound(get_turf(src.loc), 'sound/effects/Explosion1.ogg',50,1)
 
-
+/obj/docking_port/mobile/assault_pod/predator
+	name = "predator pod"
+	id = "pred"
+	zlevel_stuck = FALSE
 
 /obj/item/device/assault_pod
 	name = "Assault Pod Targetting Device"
@@ -28,6 +34,8 @@
 	var/width = 7
 	var/height = 7
 	var/lz_dir = 1
+	var/one_use = TRUE
+	var/obj/docking_port/stationary/landing_zone
 
 
 /obj/item/device/assault_pod/attack_self(mob/living/user)
@@ -54,5 +62,20 @@
 			S.possible_destinations = "[landing_zone.id]"
 
 	user << "Landing zone set."
+	if(one_use)
+		qdel(src)
 
-	qdel(src)
+#define PREDPOD_CD 900000
+
+/obj/item/device/assault_pod/predator
+	shuttle_id = "pred"
+	one_use = FALSE
+	var/cooldown
+
+/obj/item/device/assault_pod/predator/attack_self(mob/user)
+	if(cooldown > world.time)
+		user << "<span class='warning'>[src] is not ready.</span>"
+		return
+	..()
+	cooldown = world.time + PREDPOD_CD
+	user << "<span class='warning'>[src] will be ready again in fifteen minutes.</span>"

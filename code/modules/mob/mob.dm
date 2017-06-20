@@ -968,3 +968,6 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/on_vent_leave()
+	return
