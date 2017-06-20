@@ -66,7 +66,9 @@
 /var/const/access_weapons = 66 //Weapon authorization for secbots
 /var/const/access_paramedic = 67
 /var/const/access_tcomadmin = 68 // has access to the telecomms computers
-/var/const/access_cloning = 69
+/var/const/access_freeminer = 69 // has access to leave the free miner ship
+/var/const/access_freeminercap = 70 // has access to move the free miner ship
+/var/const/access_cloning = 71
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

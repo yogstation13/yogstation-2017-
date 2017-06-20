@@ -671,6 +671,11 @@ var/list/teleportlocs = list()
 	icon_state = "Theatre"
 	sound_env = LARGE_SOFTFLOOR
 
+
+/area/clerk
+	name = "Clerks office"
+	icon_state = "cafeteria"
+
 /area/library
  	name = "Library"
  	icon_state = "library"
@@ -806,16 +811,16 @@ var/list/teleportlocs = list()
 	music = "signal"
 	sound_env = SMALL_ENCLOSED
 
-/area/gateway
-	name = "Gateway"
-	icon_state = "teleporter"
-	music = "signal"
-
 /area/AIsattele
 	name = "Abandoned Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	
+/area/gateway
+	name = "Gateway"
+	icon_state = "teleporter"
+	music = "signal"
 
 //MedBay
 

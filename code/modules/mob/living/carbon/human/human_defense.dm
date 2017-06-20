@@ -79,6 +79,9 @@
 	if(wear_suit)
 		if(wear_suit.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
+	if(head)
+		if(head.IsReflect(def_zone, newshooter, defense) == 1)
+			return 1
 	if(l_hand)
 		if(l_hand.IsReflect(def_zone, newshooter, defense) == 1)
 			return 1
