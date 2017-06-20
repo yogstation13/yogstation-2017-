@@ -73,7 +73,8 @@ var/datum/subsystem/ticker/ticker
 				'sound/ambience/title-halflife.ogg',
 				'sound/ambience/title-lanius.ogg',
 				'sound/ambience/title-mars.ogg',
-				'sound/ambience/title-musique.ogg'))
+				'sound/ambience/title-musique.ogg',
+				'sound/ambience/title-mrbluesky.ogg'))
 
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
