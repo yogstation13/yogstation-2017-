@@ -10,8 +10,9 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/abomination/screech/cast(list/targets,mob/user = usr)
 	if(!isabomination(user))
-		revert_cast()
-		return
+		if(!istype(user, /mob/living/simple_animal/hostile/abomination))
+			revert_cast()
+			return
 	playMagSound()
 	user.visible_message("<span class='warning'><b>[usr] unhinges their jaw and releases a horrifying shriek!</span>")
 	for(var/turf/T in targets)
@@ -183,5 +184,4 @@
 				HM.force_lose(H)
 			changeling.reverting = 1
 			changeling.geneticdamage += 10
-
 

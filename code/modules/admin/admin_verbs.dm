@@ -87,7 +87,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/respawn_character,
 	/client/proc/rejuv_all,
 	/client/proc/reset_idconsole_msg,
-	/client/proc/lock_idconsole
+	/client/proc/lock_idconsole,
+	/client/proc/fix_air,
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -138,7 +139,6 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-	/client/proc/fix_air,
 #if SERVERTOOLS
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,

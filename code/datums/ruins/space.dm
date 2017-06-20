@@ -46,6 +46,26 @@
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
 
+/datum/map_template/ruin/space/freeminer_asteroid
+	id = "freeminer_asteroid"
+	suffix = "freeminer_asteroid.dmm"
+	name = "Free Miner Asteroid"
+	description = "Some space miners still cling to the old way of getting that \
+		sweet, sweet plasma - painstakingly digging it out of free-floating asteroids\
+		instead of flying down to the hellscape of lavaland."
+	allow_duplicates = FALSE
+	allow_duplicates_global = FALSE
+
+/datum/map_template/ruin/space/freeminer_asteroid/load(turf/T, centered = FALSE)
+	. = ..()
+	if(.)
+		var/datum/map_template/shuttle/S = shuttle_templates["whiteship_miner"]
+		if(S)
+			for(var/obj/machinery/shuttle_manipulator/M in machines)
+				M.existing_shuttle = SSshuttle.getShuttle(S.port_id)
+				addtimer(M, "action_load", 1, TIMER_UNIQUE, S)//we have to wait until the world is initialized to avoid runtimes
+				break
+
 /datum/map_template/ruin/space/deep_storage
 	id = "deep-storage"
 	suffix = "deepstorage.dmm"
