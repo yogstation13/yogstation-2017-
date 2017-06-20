@@ -108,6 +108,11 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if(cartridge)
 		cartridge.unlock(0) //refresh the cartridge screen
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((NOMACHINERY in H.dna.species.specflags))
+			user << "<span class='warning'>It's some sort of rock! Good for throwing.</span>"
+			return 1
 	user.set_machine(src)
 
 	if(software)

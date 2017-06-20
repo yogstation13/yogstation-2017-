@@ -132,6 +132,8 @@
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(0, "[user]'s [name]", user, MELEE_ATTACK)) //No message; check_shields() handles that
 			playsound(L, 'sound/weapons/Genhit.ogg', 50, 1)
+			H.visible_message("<span class='danger'>[H] blocks [user]'s [name]!</span>",\
+			"<span class='danger'>[H] blocks [user]'s [name]!</span>")
 			return 0
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc

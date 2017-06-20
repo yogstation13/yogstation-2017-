@@ -18,7 +18,7 @@
 			jitteriness = min(jitteriness + 20, NEARCRIT_JITTERCAP)
 			emote(pick("moan", "cry"))
 			if(prob(10))
-				flash_color(src, color = "#FF0000", time = 3)
+				flash_color(src, color = "#FF0000", time = 5)
 				src << "<span class='genesisred'>THE PAIN!</span>" // todo: pain system. ;)
 
 
