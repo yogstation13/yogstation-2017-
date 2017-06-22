@@ -217,6 +217,10 @@ var/global/normal_ooc_colour = OOC_COLOR
 	var/client/C = client
 
 	switch(C.holder.rank.name)
+
+		if("Host")
+			return "\[Host\]"
+
 		if("CouncilMember")
 			return "\[Council\]"
 
