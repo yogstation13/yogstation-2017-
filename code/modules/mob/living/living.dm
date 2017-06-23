@@ -759,8 +759,7 @@ Sorry Giacom. Please don't be mad :(
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
 	what.add_fingerprint(src)
 	if(do_mob(src, who, what.strip_delay))
-		if(what && what == who.get_item_by_slot(where) && Adjacent(who))
-			who.unEquip(what)
+		if(what && (what == who.get_item_by_slot(where)) && Adjacent(who) && who.unEquip(what))
 			add_logs(src, who, "stripped", addition="of [what]")
 
 // The src mob is trying to place an item on someone
@@ -776,8 +775,7 @@ Sorry Giacom. Please don't be mad :(
 			return
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
-			if(what && Adjacent(who))
-				unEquip(what)
+			if(what && Adjacent(who) && unEquip(what))
 				who.equip_to_slot_if_possible(what, where, 0, 1)
 				add_logs(src, who, "equipped", what)
 
