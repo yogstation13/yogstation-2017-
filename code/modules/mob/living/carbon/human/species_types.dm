@@ -833,6 +833,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
+	roundstart = 0
 
 /*
  SHADOWPEOPLE
@@ -1174,7 +1175,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
 	name = "Human?"
-	id = "fly"
+	id = "manfly"
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
