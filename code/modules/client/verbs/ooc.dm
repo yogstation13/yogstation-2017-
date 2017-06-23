@@ -217,11 +217,12 @@ var/global/normal_ooc_colour = OOC_COLOR
 	var/client/C = client
 
 	switch(C.holder.rank.name)
+
+		if("Host")
+			return "\[Host\]"
+
 		if("CouncilMember")
 			return "\[Council\]"
-
-		if("ModeratorV2")
-			return "\[Moderator\]"
 
 		if("Moderator")
 			return "\[Moderator\]"
@@ -232,31 +233,14 @@ var/global/normal_ooc_colour = OOC_COLOR
 		if("PrimaryAdmin")
 			return "\[PrimaryAdmin\]"
 
-		if("SeniorAdmin")
-			return "\[SeniorAdmin\]"
+		if("Tribunal")
+			return "\[Tribunal\]"
 
 		if("HeadCoder")
 			return "\[HeadCoder\]"
 
 		if("ModeratorOnProbation")
 			return "\[ModOnProbation\]"
-
-		if("ProbationAdmin")
-			return "\[AdminOnProbation\]"
-		if("NonPlayingAdmin")
-			return "\[Admin\]"
-
-		if("NonPlayingMod")
-			return "\[Moderator\]"
-
-		if("AdminOnVacation")
-			return "\[AdminOnVacation\]"
-
-		if("ModeratorOnVacation")
-			return "\[ModOnVacation\]"
-
-		if("SeniorCoder")
-			return "\[SeniorCoder\]"
 
 		if("Coder")
 			return "\[Coder\]"
