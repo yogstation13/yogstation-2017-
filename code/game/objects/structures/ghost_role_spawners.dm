@@ -126,7 +126,7 @@
 	icon_state = "bluespace"
 	density = 1
 	var/health = 100
-	var/progress = 0 // needs 300
+	var/progress = 0
 	var/mob/living/ashwalker
 
 /obj/effect/cyrogenicbubble/New()
@@ -143,13 +143,11 @@
 
 /obj/effect/cyrogenicbubble/process()
 	if(health)
-		progress++
+		progress = min(50, progress + 1) // capped at 50, its all we need.
 	else
 		ejectEgg()
-	if(progress == 150)
+	if(progress == 50)
 		ejectEgg()
-	else
-		healAshwalker()
 
 /obj/effect/cyrogenicbubble/proc/reset_rebirth()
 	if(!ashwalker)
@@ -161,13 +159,13 @@
 		C.rebirth = FALSE
 
 /obj/effect/cyrogenicbubble/attackby(obj/item/weapon, mob/user)
-	. = ..()
 	if(health)
 		if(weapon.force > health)
 			ejectEgg()
 			qdel(src)
 		else
 			health -= weapon.force
+	playsound(loc, weapon.hitsound, 50, 1, 1)
 
 /obj/effect/cyrogenicbubble/attack_animal(mob/living/simple_animal/M)
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -180,24 +178,24 @@
 
 /obj/effect/cyrogenicbubble/proc/ejectEgg()
 	if(ashwalker)
+		if(progress == 50)
+			ashwalker.revive(1) // full heal
+		else
+			// if they didn't make it to 50, then they'll be healed, but not completely
+			// scaling is multiplied by 2, based on the fact that damage varies and I don't want to exactly set their brute/fire/tox/oxy damage
+			ashwalker.adjustToxLoss(-progress*2, 0)
+			ashwalker.adjustOxyLoss(-progress*2, 0)
+			ashwalker.adjustBruteLoss(-progress*2, 0)
+			ashwalker.adjustFireLoss(-progress*2, 0)
+			ashwalker.revive()
 		ashwalker.forceMove(get_turf(src))
 		ashwalker.real_name = name
 		ashwalker.name = name
 		ashwalker.blood_volume = BLOOD_VOLUME_NORMAL
 		reset_rebirth()
+		ashwalker.grab_ghost()
 		ashwalker = null
 	qdel(src)
-
-/obj/effect/cyrogenicbubble/proc/healAshwalker()
-	if(!ashwalker)
-		return
-	ashwalker.adjustToxLoss(-1, 0)
-	ashwalker.adjustOxyLoss(-1, 0)
-	ashwalker.adjustBruteLoss(-1, 0)
-	ashwalker.adjustFireLoss(-1, 0)
-	if(ashwalker.stat == DEAD) // one does not DIE in the cyro bubble.
-		ashwalker.revive()
-
 
 /obj/effect/cyrogenicbubble/return_air()
 	if(get_turf(src))
