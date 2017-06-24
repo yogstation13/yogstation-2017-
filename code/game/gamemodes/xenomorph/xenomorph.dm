@@ -41,13 +41,13 @@ var/list/turf/xenomorphweeds = list()
 	var/infested_count
 
 /datum/game_mode/xenomorph
-	name = "alien"
-	config_tag = "alien"
+	name = "xenomorph"
+	config_tag = "xenomorph"
 	antag_flag = ROLE_ALIEN
-	required_players =  1//30
-	required_enemies = 1 //1
-	recommended_enemies = 1 //3
-	enemy_minimum_age =  1//14
+	required_players =  30
+	required_enemies = 1
+	recommended_enemies = 3
+	enemy_minimum_age =  14
 	var/objective
 	var/alien_weed_control_count
 	var/infest_prc
@@ -55,7 +55,6 @@ var/list/turf/xenomorphweeds = list()
 	var/ERTlaunch = FALSE
 	var/roundstartalert = FALSE
 	var/roundstartxenocount
-
 
 /datum/game_mode/xenomorph/announce()
 	world << "<B>The current gamemode is - Alien Infestation!</B>"
@@ -76,7 +75,6 @@ var/list/turf/xenomorphweeds = list()
 	else
 		return TRUE
 
-
 /datum/game_mode/xenomorph/proc/AddXenomorph(datum/mind/M)
 	if(!M)	return
 	if(!M.current)	return
@@ -89,7 +87,6 @@ var/list/turf/xenomorphweeds = list()
 		AddWorker(M)
 
 	M.current.memory += translate_objective() + "<BR>"
-
 
 /datum/game_mode/xenomorph/proc/AddQueen(datum/mind/M)
 	xenomorphs["QUEEN"] += M
@@ -176,13 +173,11 @@ var/list/turf/xenomorphweeds = list()
 
 	roundstartxenocount = length(xenomorphs)
 	. = ..()
-
 	var/colony
 	var/datum/mind/M = xenomorphs["QUEEN"][1]
 	var/mob/living/carbon/alien/A = M.current // runtime error because at random the selected mobs aren't turned into xenomorphs.
 	colony = A.HD.colony_suffix
 	queensuffix = A.HD.colony_suffix
-
 	if(colony)
 		for(var/datum/mind/xenos in xenomorphs)
 			if(xenos.special_role == "xeno queen")
@@ -193,7 +188,6 @@ var/list/turf/xenomorphweeds = list()
 		message_admins("ERROR: Queen failed to configure a colony suffix. Reloading the queensuffix. Please check the mode under TICKER.")
 		update_queen_suffix()
 		message_admins("ERROR (2): If the following space is blank then something is very wrong: [queensuffix].")
-
 	return .
 
 /datum/game_mode/xenomorph/proc/greet_xeno_and_transform(datum/mind/hbrain, role)
@@ -219,11 +213,7 @@ var/list/turf/xenomorphweeds = list()
 	if(!hbrain)
 		message_admins("ERROR: [ticker.mode] has failed to greet and transform [hbrain.current] / [hbrain.current.ckey]. Contact a coder!")
 		return
-
 	hbrain.transfer_to(l)
-	if(!objective)
-		objective = pick(OBJECTIVE_CONQUER, OBJECTIVE_INFESTATION) // giving it another shot.
-
 	l.mind.special_role = hbrain.special_role
 	l.mind.assigned_role = hbrain.assigned_role
 	hbrain.current = l
@@ -233,7 +223,7 @@ var/list/turf/xenomorphweeds = list()
 	if(hbrain.special_role != "xeno queen") 	A.HD = new /datum/huggerdatum/default(origin = l)
 	qdel(M)
 
-/datum/game_mode/xenomorph/proc/check_for_ERT()
+/datum/game_mode/xenomorph/proc/check_for_ERT() // the premesis is: if there's 1/8 of the crew left centcom is called. ERT might be removed because of two reasons: (1) it's bs to the xenos who fought to kick the crews ass (2) crew could get laid back, and depend on ERT to fix their problem
 	var/totalcrew = 0
 	var/deadcrew = 0
 	var/alivecrew = 0
@@ -430,7 +420,7 @@ var/list/turf/xenomorphweeds = list()
 				at the very start of the shift. Late joins are not counted, though may help you."
 
 /*		if(OBJECTIVE_KILL)
-			return "Your mission is brutal. Your Queen has declared full out war on Space Station 13, and your goal is to \
+			return "Your mission will be brutal. Your Queen has declared full out war on Space Station 13, and your goal is to \
 				carry out her decree. The objective is to massacre [murder_prc]% of the crewmembers." */
 
 /datum/game_mode/xenomorph/proc/check_hive_progress()

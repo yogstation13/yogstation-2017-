@@ -277,11 +277,10 @@
 
 
 	if(istype(target, /mob/living/carbon/human))
-		if(damage <= 5)
-			return
-
 		var/mob/living/carbon/human/H = target
 		H.silent += damage * 2 // SILENCE!
+		if(damage <= 5)
+			return
 		if(H.check_shields(damage, name, src))
 			visible_message("<span class='warning'>[src] is deflected!</span>",\
 				"<span class='warning'>[src] is deflected!</span>")
