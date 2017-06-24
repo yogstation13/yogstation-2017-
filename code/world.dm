@@ -88,6 +88,13 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	config.Tickcomp = 0
 	world.fps = 20
+	var/list/webhookData = list(                                 \
+														"map_name" = map_name,             \
+														 "round" = yog_round_number,       \
+														 "revision" = revdata.commit,      \
+														 "changelog_hash" = changelog_hash)
+
+	webhook_send_roundstatus("lobby", webhookData)
 
 	return
 
@@ -250,10 +257,11 @@ var/last_irc_status = 0
 		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
 	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
+	webhook_send_roundstatus("endgame")
 	ticker.server_reboot_in_progress = 1
-	sleep(delay)
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
+	sleep(delay)
 	if(ticker.delay_end)
 		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		ticker.server_reboot_in_progress = 0

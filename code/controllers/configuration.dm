@@ -440,7 +440,7 @@
 					webhook_address = value
 				if("webhook_key")
 					webhook_key = value
-				if("webhook_key")
+				if("check_randomizer")
 					config.check_randomizer = 1
 
 				else
