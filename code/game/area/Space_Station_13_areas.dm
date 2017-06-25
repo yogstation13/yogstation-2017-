@@ -85,6 +85,162 @@ var/list/teleportlocs = list()
 
 /*-----------------------------------------------------------------------------*/
 
+//Tinystation
+/area/ruinstation
+	name = "Ruin Stations"
+	icon_state = "green"
+
+/area/ruinstation/lstation
+	name = "Lizard Station"
+	icon_state = "green"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lprison
+	name = "Place-To-Imprison"
+	icon_state = "sec_prison"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lcommand
+	name = "Place-To-Command"
+	icon_state = "bridge"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lbrig
+	name = "Place-To-Stand"
+	icon_state = "brig"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lsec
+	name = "Place-To-Eat-Donut"
+	icon_state = "security"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lwarden
+	name = "Place-To-Guard-Guns"
+	icon_state = "Warden"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/larmory
+	name = "Place-To-Store-Guns"
+	icon_state = "armory"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lhos
+	name = "Place-To-Keep-Peace"
+	icon_state = "sec_hos"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/linterrogation
+	name = "Place-To-Torture-Peeps"
+	icon_state = "security_sub"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lhallway
+	name = "Place-To-Walk"
+	icon_state = "hallC"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/latmos
+	name = "Place-To-Breath"
+	icon_state = "atmos"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lengineering
+	name = "Place-Of-Repairer"
+	icon_state = "engine"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lminingwing
+	name = "Place-Of-Miner"
+	icon_state = "mining"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lcargo
+	name = "Place-To-Load-Crate"
+	icon_state = "quartstorage"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lrobotics
+	name = "Place-To-Build-Bots"
+	icon_state = "ass_line"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lrd
+	name = "Place-Of-Smart-Lizard"
+	icon_state = "head_quarters"
+	sound_env = SMALL_ENCLOSED
+
+
+/area/ruinstation/lstation/lmed
+	name = "Place-To-Heal"
+	icon_state = "medbay"
+	sound_env = SMALL_ENCLOSED
+
+
+/area/ruinstation/lstation/lcloning
+	name = "Place-To-Clone"
+	icon_state = "cloning"
+	sound_env = SMALL_ENCLOSED
+
+
+/area/ruinstation/lstation/lsurgery
+	name = "Place-To-Surgery"
+	icon_state = "surgery"
+	sound_env = SMALL_ENCLOSED
+
+
+/area/ruinstation/lstation/lmorgue
+	name = "Place-To-Die"
+	icon_state = "morgue"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lchem
+	name = "Place-To-Alchemy"
+	icon_state = "chem"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lmedstorage
+	name = "Place-To-Drink"
+	icon_state = "medbay2"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lhydro
+	name = "Place-To-Farm"
+	icon_state = "hydro"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lkitchen
+	name = "Place-To-Fry"
+	icon_state = "kitchen"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lbar
+	name = "Place-To-Drink"
+	icon_state = "bar"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/ljanitor
+	name = "Place-Of-Cleaner"
+	icon_state = "janitor"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/leva
+	name = "Place-Thats-Secure"
+	icon_state = "eva"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lcrash
+	name = "Shuttle-That-Crashed"
+	icon_state = "storage"
+	sound_env = SMALL_ENCLOSED
+
+/area/ruinstation/lstation/lsolar
+	name = "Collects-The-Energy"
+	icon_state = "panelsA"
+	sound_env = SMALL_ENCLOSED
+
+
+//I DON'T KNOW, SOMEONE DID THIS AND FORGOT TO NOTE
 /area/engine/
 
 /area/turret_protected/
@@ -801,7 +957,7 @@ var/list/teleportlocs = list()
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
-	
+
 /area/gateway
 	name = "Gateway"
 	icon_state = "teleporter"

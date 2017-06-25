@@ -140,6 +140,12 @@
 	desc = "A pretty robust beret for Recovery Agents. Given that it's in pretty old fashion, and envy's paramedics."
 	icon_state = "wardenberet"
 
+/obj/item/clothing/head/HoS/beret/peacekeeper
+	name = "peacekeeper beret"
+	desc = "A beret for asserting your power over all other lizards."
+	icon_state = "hosberetblack"
+
+
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
@@ -149,12 +155,29 @@
 
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/warden/policehat
+	name = "Police hat"
+	desc = "It's a police hat."
+	icon_state = "policehelm"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 20
+
+	dog_fashion = /datum/dog_fashion/head/warden
+
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
 	icon_state = "beret_badge"
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
+	dog_fashion = null
+
+/obj/item/clothing/head/beret/sec/commander
+	name = "commander beret"
+	desc = "A beret with the commanding insignia emblazoned on it."
+	icon_state = "beret_badge"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	strip_delay = 20
 	dog_fashion = null
 
 /obj/item/clothing/head/beret/sec/navyhos

@@ -104,8 +104,8 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/I)
-	if(circuit && !(flags & NODECONSTRUCT))
+/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'>You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
@@ -128,13 +128,6 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-		return TRUE
-	return FALSE
-
-/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
-		if(!default_deconstruction_screwdriver(user, null, null, I))
-			return ..()
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.isOn())

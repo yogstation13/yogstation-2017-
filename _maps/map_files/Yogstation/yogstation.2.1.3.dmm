@@ -68488,12 +68488,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
-"DYZ" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
-/area/shuttle/syndicate)
 "FCq" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/subspace/ansible,
@@ -79783,7 +79777,7 @@ aaa
 aaa
 aaa
 aah
-aal
+aak
 aak
 aak
 aag
@@ -80040,8 +80034,8 @@ aaa
 aaa
 aaa
 aah
-DYZ
-aaq
+aal
+aak
 aak
 aag
 aay

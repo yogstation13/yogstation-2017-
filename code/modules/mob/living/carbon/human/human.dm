@@ -398,7 +398,8 @@
 					if(pocket_item == (pocket_id == slot_r_store ? r_store : l_store)) //item still in the pocket we search
 						unEquip(pocket_item)
 				else
-					if(place_item && usr.unEquip(place_item))
+					if(place_item)
+						usr.unEquip(place_item)
 						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 
 				// Update strip window
