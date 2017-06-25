@@ -84,7 +84,7 @@
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
 
 	keyname += "[key]"
-	webhook_send_ooc(msg)
+	webhook_send_ooc(key, msg)
 	msg = emoji_parse(msg)
 
 	for(var/client/C in clients)
