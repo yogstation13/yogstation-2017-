@@ -15,7 +15,6 @@
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
-#include "_maps\map_files\Yogstation\tinystation.lizard.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -1851,6 +1850,7 @@
 #include "code\modules\shuttle\emergency.dm"
 #include "code\modules\shuttle\ferry.dm"
 #include "code\modules\shuttle\manipulator.dm"
+#include "code\modules\shuttle\navigation_computer.dm"
 #include "code\modules\shuttle\shuttle.dm"
 #include "code\modules\shuttle\special.dm"
 #include "code\modules\shuttle\supply.dm"
