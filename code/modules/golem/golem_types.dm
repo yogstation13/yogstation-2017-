@@ -23,8 +23,10 @@
 
 /datum/species/golem/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	spawn(10) //Nailed it
-		C << "<span class='notice'>[traits]</span>"
+	addtimer(src, "explain_traits", 10, , C)
+
+/datum/species/golem/proc/explain_traits(mob/living/carbon/C)
+	C << "<span class='notice'>[traits]</span>"
 
 /datum/species/golem/random
 	name = "Random Golem"
