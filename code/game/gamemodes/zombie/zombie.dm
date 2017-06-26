@@ -73,8 +73,21 @@
 			if(M.stat != DEAD)
 				if(!iszombie(M))
 					nonturned_survivors++
-	if(survivorcut >= nonturned_survivors) // if the active survivor population is reduced to 10%, game over.
-		return 1
+
+	if(survivorcut >= nonturned_survivors) // if the active survivor population is reduced to 10%, auto-shuttle call
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL)
+				return
+			if(SHUTTLE_CALL)
+				RETURN
+			if(SHUTTLE_DOCKED)
+				return
+			if(SHUTTLE_ESCAPE)
+				return
+			if(SHUTTLE_STRANDED)
+				return
+		SSshuttle.emergency.request(null, 0.1) // cannot be recalled woohoo
+		priority_announce("We have discovered that your station might be in trouble. We're sending help as soon as we can.", "Central Command",'sound/AI/commandreport.ogg')
 	else if(!roundend)
 		return 0
 	else // only happens in declare_completion()

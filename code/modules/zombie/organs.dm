@@ -22,6 +22,10 @@
 	..()
 	if(owner)
 		if(iszombie(owner))
+			if(owner.onfire)
+				if(owner.stat == DEAD)
+					ashify(owner)
+					return
 			owner.adjustBruteLoss(-2)
 			owner.adjustFireLoss(-2)
 		else
@@ -29,6 +33,16 @@
 				if(prob(20))
 					owner <<"<span class='danger'>You feel sick.</span>"
 				owner.adjustToxLoss(3)
+
+/obj/item/organ/body_egg/zombie_infection/proc/ashify()
+	for(var/obj/I in owner)
+		owner.unEquip(I)
+		if(I.burnstate == FLAMMABLE)
+			I.burn()
+	new /obj/effect/decal/cleanable/ash(get_turf(owner))
+	visible_message("<span class='warning'>[owner] burns into ashes!</span>",\
+				"<span class='warning'>[owner] burns into ashes!</span>")
+	qdel(owner)
 
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
 	finder << "<span class='warning'>Inside the head is a disgusting black \
