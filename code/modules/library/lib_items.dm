@@ -174,18 +174,29 @@
 	var/unique = 0		//0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
+	var/reading_time = 600
+	var/being_read = 0
 
-/obj/item/weapon/book/attack_self(mob/user)
+/obj/item/weapon/book/attack_self(mob/living/user)
 	if(is_blind(user))
 		return
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
 		return
+	if((winexists(user, "book")) || (being_read == 1))
+		user << "<span class='notice'>You are already reading a book!</span>"
+		return
 	if(dat)
+		being_read = 1
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
+		while(do_after(user,reading_time,progress = 1) && winexists(user, "book"))	//60 seconds of reading by default
+			user.adjustBrainLoss(-5)
+			user.adjustStaminaLoss(-20)
+			user.heal_organ_damage(1,1)
 		onclose(user, "book")
-	else
+		being_read = 0
+	if(!dat)
 		user << "<span class='notice'>This book is completely blank!</span>"
 
 
