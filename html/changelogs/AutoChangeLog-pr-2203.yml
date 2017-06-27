@@ -1,5 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "Emagged light replacers are slightly more deadly."
-  - rscadd: "Emagged janitor cyborgs can now replace lightbulbs with rigged lights that explode when the power turns on."

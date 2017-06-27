@@ -1,6 +1,0 @@
-author: ShadowDeath6
-delete-after: True
-changes: 
-  - rscadd: "Cooldown on summoning spirits into soulstones via manifest rune."
-  - rscadd: "Adds description information on pylons and shielded robes. You could recharge robes?"
-  - rscadd: "Cults can no longer use the manifest rune while there are more living constructs than living cultists."

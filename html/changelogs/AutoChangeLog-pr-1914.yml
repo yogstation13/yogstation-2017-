@@ -1,6 +1,0 @@
-author: ArgyleSweatshop
-delete-after: True
-changes: 
-  - rscadd: "I've ported over a gravitation pull mechanic that activates on explosion- this is based on singularity code."
-  - rscadd: "I also added the \"exploded\" variable to stop admin log spam on exploding supermatters."
-  - rscadd: "I updated the explode proc and the general process with the new mechanics."

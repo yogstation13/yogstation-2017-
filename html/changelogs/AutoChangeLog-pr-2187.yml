@@ -1,4 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - rscadd: "Gives emitters wires to: Activate, disable and fire."

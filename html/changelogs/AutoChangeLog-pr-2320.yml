@@ -1,5 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - bugfix: "fixes pod people being roundstart"
-  - bugfix: "fly people being invisible (not manfly, but the unused, raw fly person"
