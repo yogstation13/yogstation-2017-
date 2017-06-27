@@ -9,7 +9,7 @@
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
 	var/roundstart = 0
-	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
+	var/self_delay = 0 //pills are instant, this is because patches inherit their aplication from pills
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
@@ -29,9 +29,8 @@
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
-		if(self_delay)
-			if(!do_mob(user, M, self_delay))
-				return 0
+		if(!do_mob(user, user, self_delay))
+			return 0
 		M << "<span class='notice'>You [apply_method] [src].</span>"
 
 	else
