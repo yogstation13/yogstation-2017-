@@ -68611,6 +68611,12 @@
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
+"LHX" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Garden", "Surgery")
+	},
+/turf/closed/wall,
+/area/maintenance/fpmaint2)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -68741,12 +68747,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
-"UCg" = (
-/obj/effect/landmark/maintroom{
-	template_names = list("Garden")
-	},
-/turf/closed/wall,
-/area/maintenance/fpmaint2)
 "UUd" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -84722,7 +84722,7 @@ aty
 aty
 aty
 aty
-UCg
+LHX
 aMt
 aOi
 aOi
