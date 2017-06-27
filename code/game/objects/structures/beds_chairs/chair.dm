@@ -3,7 +3,7 @@
 	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
-	anchored = 0
+	anchored = 1
 	can_buckle = 1
 	buckle_lying = 0 //you sit in a chair, not lay
 	burn_state = FIRE_PROOF
@@ -171,6 +171,7 @@
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
 	scrapingsound = 'sound/effects/woodenchair_scrape.ogg'
+	anchored = 0
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -243,6 +244,7 @@
 	can_buckle = 0
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
+	anchored = 0
 
 /obj/structure/chair/stool/narsie_act()
 	return
@@ -268,6 +270,7 @@
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
+	anchored = 0
 
 /obj/item/chair
 	name = "chair"
