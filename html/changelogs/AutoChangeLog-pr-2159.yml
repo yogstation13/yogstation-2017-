@@ -1,0 +1,9 @@
+author: Cruix
+delete-after: True
+changes: 
+  - tweak: "mops can now clean objects and people when on help intent and deal more damage, but are bulky items."
+  - rscadd: "the advanced mop now fits in backpacks and refills itself with water."
+  - rscadd: "janiborgs now have an advanced mop instead of a regular one."
+  - bugfix: "the janitor's custodial locator no longer tracks the location of janiborg mops."
+  - tweak: "janitors now start with all-access so they can clean more."
+  - tweak: "due to rampant abuse, janitors no longer start with all-access."
