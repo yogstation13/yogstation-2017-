@@ -1,0 +1,5 @@
+author: ShadowDeath6
+delete-after: True
+changes: 
+  - tweak: "Bruise packs and ointment no longer have a delay."
+  - tweak: "Pills and patches now have a delay- 3 seconds to apply."
