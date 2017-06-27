@@ -241,7 +241,6 @@
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
-	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	if(iscarbon(L))
@@ -263,6 +262,7 @@
 			var/washears = 1
 			var/washglasses = 1
 
+			H.wash_cream()
 			M.color = null //Washes off the colorful reagent color, mainly a counter to the clowns rainbow crayon
 
 			if(H.wear_suit)
