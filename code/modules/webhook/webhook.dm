@@ -7,11 +7,11 @@
 	webhook_send("roundstatus", query)
 
 /proc/webhook_send_asay(var/ckey, var/message)
-	var/list/query = list("ckey" = ckey, "message" = message)
+	var/list/query = list("ckey" = url_encode(ckey), "message" = url_encode(message))
 	webhook_send("asaymessage", query)
 
 /proc/webhook_send_ooc(var/ckey, var/message)
-	var/list/query = list("ckey" = ckey, "message" = message)
+	var/list/query = list("ckey" = url_encode(ckey), "message" = url_encode(message))
 	webhook_send("oocmessage", query)
 
 /proc/webhook_send(var/method, var/data)
