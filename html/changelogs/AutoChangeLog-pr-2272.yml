@@ -1,0 +1,5 @@
+author: Time-Green
+delete-after: True
+changes: 
+  - rscadd: "Adds a frisbee to the gift vendor"
+  - rscadd: "Adds a boomerang to the gift vendor"
