@@ -94,7 +94,7 @@
 
 /obj/structure/cult/pylon
 	name = "pylon"
-	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
+	desc = "A floating crystal that slowly heals those faithful to Nar'Sie. Holding shielded robes up to it will recharge the protective magics within the robe."
 	icon_state = "pylon"
 	luminosity = 5
 	var/heal_delay = 25
