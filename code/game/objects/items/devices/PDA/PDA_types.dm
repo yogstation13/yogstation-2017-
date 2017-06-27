@@ -27,6 +27,49 @@
 /obj/item/device/pda/ai/pai
 	ttone = "assist"
 
+/obj/item/device/pda/iwatch
+	name = "Smartwatch"
+	icon_state = "pda-iwatch"
+	slot_flags = SLOT_GLOVES
+	item_state = "iwatch"
+	desc = "A watch with inbuilt computer functions, it looks slick and fashionable, ctrl click it to use it whilst on your wrists."
+	exempt = 1 //exempt, will not update name the same way as normal pdas when ID added
+	icon_alert = "pda-rwatch" //custom alert icon for a watch that's not as gross
+
+
+/obj/item/device/pda/iwatch/examine(mob/user) //tells the time, yes it's a freaking watch duhhh
+	..()
+	user << " The time is: [gameTimestamp(format = "hh:mm:ss")]"
+
+/obj/item/device/pda/iwatch/rosegold
+	name = "Smartwatch"
+	icon_state = "pda-iwatchrosegold"
+	item_state = "iwatchrose"
+	slot_flags = SLOT_GLOVES
+	desc = "A watch with inbuilt computer functions, it has a pink tinge and is perfect for the ladies, ctrl click it to use it whilst on your wrists."
+	exempt = 1 //exempt, will not update name the same way as normal pdas when ID added
+	icon_alert = "pda-rwatch" //custom alert icon for a watch that's not as gross
+
+/obj/item/device/pda/iwatch/rosegold/examine(mob/user) //tells the time, yes it's a freaking watch duhhh
+	user << desc
+	user << " The time is: [gameTimestamp(format = "hh:mm:ss")]"
+
+//ACKNOWLEDGEMENT: The buzz sound for the phone and watches can be found here: https://www.youtube.com/watch?v=zn8ORi6UUJE
+
+
+
+//obj/item/device/pda/phone
+//	name = "Smartphone"
+//	icon_state = "phone"
+//	item_state = "phone"
+//	desc = "A new take on the timeless PDA design, it does about everything you could want except phone people."
+//	exempt = 1 //exempt, will not update name the same way as normal pdas when ID added
+//	icon_alert = "pda-rphone" //custom alert icon for a watch that's not as gross
+//	ttone = "buzz"
+
+//re-add this if you feel like it, not hugely lore friendly
+
+
 
 /obj/item/device/pda/medical
 	name = "medical PDA"

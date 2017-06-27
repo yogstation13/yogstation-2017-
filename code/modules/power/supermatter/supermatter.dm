@@ -82,16 +82,17 @@
 	poi_list -= src
 	. = ..()
 
-/obj/machinery/power/supermatter_shard/proc/explode()
+/obj/machinery/power/supermatter_shard/proc/prep_explode()
 	investigate_log("has exploded.", "supermatter")
 	grav_pulling = 1
 	exploded = 1
 
-	spawn(1500)
-		explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
-		
-		qdel(src)
-		return
+	addtimer(src, "explode", 1500)
+
+/obj/machinery/power/supermatter_shard/proc/explode()
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
+	qdel(src)
+	return
 	
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/L = loc
@@ -102,7 +103,9 @@
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(istype(L, /turf/open/space))	// Stop processing this stuff if we've been ejected.
+	if(grav_pulling)
+		supermatter_pull()
+	else if(isspaceturf(L))// Stop processing this stuff if we've been ejected.
 		return
 	
 	if(grav_pulling)
@@ -137,7 +140,7 @@
 				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
 				mob.rad_act(rads)
 
-			explode()
+			prep_explode()
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = L.return_air()
