@@ -1,0 +1,6 @@
+author: Kmc2000
+delete-after: True
+changes: 
+  - rscadd: "Added in smartwatches! check the hop's PDA painter or a clothesmate to find them"
+  - rscadd: "Misc clothing items, check the clothesmate!"
+  - tweak: "Changed a grammar error with the emergency hotline PDA feature"
