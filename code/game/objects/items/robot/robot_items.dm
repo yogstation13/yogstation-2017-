@@ -332,6 +332,21 @@
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)
 		cooldown = world.time + 600
 		log_game("[user.ckey]([user]) used an emagged Cyborg Harm Alarm in ([user.x],[user.y],[user.z])")
+		
+		
+/obj/item/device/lightreplacer/cyborg/attack_self(mob/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		
+		if(emagged)
+			user << "<span class='notice'> You flush your light replacer of plasma, and return it to normal.</span>"
+			emagged = 0
+		if(R.emagged)
+			user << "<span class='notice'> You flood your light replacer with plasma! Lights you replace will now explode.</span>"
+			Emag()
+		
+			
+
 
 /**********************************************************************
 						HUD/SIGHT things
