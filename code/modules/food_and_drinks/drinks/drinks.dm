@@ -264,6 +264,16 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
+	var/cracked
+
+/obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
+	if(cracked)
+		..()
+		return
+
+	visible_message("<span class='notice'>[user] cracks open [src]!</span>", "<span class='notice'>You crack open a can of [src]!</span>")
+	playsound(loc, 'sound/effects/opencan.ogg', rand(5,15), 1)
+	cracked = TRUE
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_selected == "head")
@@ -272,6 +282,10 @@
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
 		crushed_can.icon_state = icon_state
 		qdel(src)
+
+	if(!cracked)
+		user << "<span class='warning'>The can isn't open yet!</span>"
+		return
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola
