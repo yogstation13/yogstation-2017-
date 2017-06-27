@@ -1048,6 +1048,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 									/obj/item/device/camera_film = 30,
 									/obj/item/weapon/storage/photo_album = 5,
 									/obj/item/weapon/storage/photobook = 5,
+									/obj/item/toy/frisbee = 2,
+									/obj/item/toy/boomerang = 2,
 									/obj/item/weapon/storage/bag/photo = 5),
 					"Clothing" = list(/datum/data/vending_product/random/uniform = 4,
 									/datum/data/vending_product/random/shoes = 4,
