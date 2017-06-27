@@ -2,13 +2,24 @@
 /client/verb/admin_ticket(ticket_title as text)
 	set category = "Admin"
 	set name = "Adminhelp"
+	
+	var/obscurevariablebeingusedforthis = alert("Which do you wish to use?", "Admin-help Redirect", "Adminhelp", "Wiki", "Bug Report")
+	if(!obscurevariablebeingusedforthis)
+		usr << "<span class='ticket-status'>Please select one of the options to receive help.</span>"
+		return
 
+	if(obscurevariablebeingusedforthis == "Wiki")
+		usr << "<span class='ticket-status'>Here is a link to the TGStation wiki: https://tgstation13.org/wiki/Main_Page</span>"
+		return
+	if(obscurevariablebeingusedforthis == "Bug Report")
+		usr << "<span class='ticket-status'>Here is a link to our github issues page where you can report bugs.  Please check if a report exists about what you are reporting first. https://github.com/yogstation13/yogstation/issues</span>"
+		return
 	if(prefs.muted & MUTE_ADMINHELP)
 		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
 		return
 
 	if(!ticket_title)
-		usr << "<span class='ticket-status'>You did not supply a message for your ticket. Ignoring your request.</span>"
+		usr << "<span class='ticket-status'>You did not supply a message for your ticket. A ticket has not been made.</span>"
 		return
 
 	ticket_title = replacetext(ticket_title, "'", "\'")
