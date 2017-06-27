@@ -121,6 +121,7 @@
 	hitsound = 'sound/items/bikehorn.ogg'
 	damage = 0
 	damage_type = STAMINA
+	nodamage = TRUE
 	flag = "energy"
 
 
@@ -129,8 +130,6 @@
 	icon_state = "banana"
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	hitsound = 'sound/items/AirHorn.ogg'
-	damage = 0
-	damage_type = 1
 	stun = 6
 	weaken = 6
 	stutter = 6
