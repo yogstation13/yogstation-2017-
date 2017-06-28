@@ -376,7 +376,7 @@
 	if(health)
 		health -= damage
 
-	if(health < 0)
+	if(health <= 0)
 		fallover()
 
 /obj/machinery/vending/proc/fallover()
