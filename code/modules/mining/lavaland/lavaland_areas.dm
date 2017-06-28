@@ -3,6 +3,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = 1
+	always_unpowered = TRUE
 
 /area/lavaland/surface
 	name = "Lavaland"

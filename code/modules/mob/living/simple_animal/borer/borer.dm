@@ -26,6 +26,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 
 	var/mob/living/carbon/victim = null
 	var/mob/living/captive_brain/host_brain = null
+	var/next_spawn_time = 0
 	var/docile = 0
 	var/controlling = 0
 	var/chemicals = 50
@@ -148,7 +149,6 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		for(var/M in banned_borer_emotes)
 			if(M == message)
 				src << "<span class='warning'>You don't have the strength to do this...</span>"
-			//	src << "Nice try, asshole."
 				pass = FALSE
 				break
 

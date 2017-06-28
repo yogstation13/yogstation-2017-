@@ -569,6 +569,9 @@
 		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
 
+	new /obj/item/device/jauntbeacon(src)
+	new /obj/item/weapon/wrench(src)
+
 //Fans
 /obj/structure/fans
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
