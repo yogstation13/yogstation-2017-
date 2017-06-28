@@ -152,6 +152,8 @@
 	if(!qdeleted(src))
 		if(prob(25))
 			malfunction()
+		if(!fallen_over)
+			fallover()
 
 /obj/machinery/vending/blob_act(obj/effect/blob/B)
 	malfunction()

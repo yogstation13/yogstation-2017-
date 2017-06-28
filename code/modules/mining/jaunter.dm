@@ -203,7 +203,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			if(cooldown)
 				user << "<span class='warning'>[src] is on a cooldown...</span>"
 				return
-			var/obj/item/device/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
+			var/obj/machinery/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
 			if(!chosenjaunt)
 				if(0 == length(jauntbeacons))
 					user << "<span class='notice'>[src] cannot detect other jaunt beacons.</span>"
