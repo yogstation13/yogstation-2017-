@@ -1,51 +1,51 @@
 macro "default"
 	elem 
-		name = "Tab"
+		name = "TAB"
 		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem 
-		name = "Center+REP"
+		name = "CENTER+REP"
 		command = ".center"
 	elem 
-		name = "Northeast"
+		name = "NORTHEAST"
 		command = ".northeast"
 	elem 
-		name = "Southeast"
+		name = "SOUTHEAST"
 		command = ".southeast"
 	elem 
-		name = "Southwest"
+		name = "SOUTHWEST"
 		command = ".southwest"
 	elem 
-		name = "Northwest"
+		name = "NORTHWEST"
 		command = ".northwest"
 	elem 
-		name = "CTRL+West"
+		name = "CTRL+WEST"
 		command = "westface"
 	elem 
-		name = "West+REP"
+		name = "WEST+REP"
 		command = ".moveleft"
 	elem 
-		name = "CTRL+North"
+		name = "CTRL+NORTH"
 		command = "northface"
 	elem 
-		name = "North+REP"
+		name = "NORTH+REP"
 		command = ".moveup"
 	elem 
-		name = "CTRL+East"
+		name = "CTRL+EAST"
 		command = "eastface"
 	elem 
-		name = "East+REP"
+		name = "EAST+REP"
 		command = ".moveright"
 	elem 
-		name = "CTRL+South"
+		name = "CTRL+SOUTH"
 		command = "southface"
 	elem 
-		name = "South+REP"
+		name = "SOUTH+REP"
 		command = ".movedown"
 	elem 
-		name = "Insert"
+		name = "INSERT"
 		command = "a-intent right"
 	elem 
-		name = "Delete"
+		name = "DELETE"
 		command = "delete-key-pressed"
 	elem 
 		name = "CTRL+1"
@@ -77,9 +77,6 @@ macro "default"
 	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-	elem 
-		name = "CTRL+O"
-		command = "ooc"
 	elem 
 		name = "CTRL+Q"
 		command = ".northwest"
@@ -116,6 +113,9 @@ macro "default"
 	elem 
 		name = "F5"
 		command = "Aghost"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
 	elem 
 		name = "F6"
 		command = "Player-Panel"
@@ -206,10 +206,6 @@ macro "hotkeys"
 		name = "CTRL+4"
 		command = "a-intent harm"
 	elem 
-		name = "5"
-	elem 
-		name = "CTRL+5"
-	elem 
 		name = "A+REP"
 		command = ".moveleft"
 	elem 
@@ -329,52 +325,58 @@ macro "hotkeys"
 	elem 
 		name = "F12"
 		command = "F12"
+	elem "asay"
+		name = ","
+		command = "asay"
+	elem "dsay"
+		name = "."
+		command = "dsay"
 
 macro "robot-default"
 	elem 
-		name = "Tab"
+		name = "TAB"
 		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem 
-		name = "Center+REP"
+		name = "CENTER+REP"
 		command = ".center"
 	elem 
-		name = "Northeast"
+		name = "NORTHEAST"
 		command = ".northeast"
 	elem 
-		name = "Southeast"
+		name = "SOUTHEAST"
 		command = ".southeast"
 	elem 
-		name = "Northwest"
+		name = "NORTHWEST"
 		command = "unequip-module"
 	elem 
-		name = "CTRL+West"
+		name = "CTRL+WEST"
 		command = "westface"
 	elem 
-		name = "West+REP"
+		name = "WEST+REP"
 		command = ".moveleft"
 	elem 
-		name = "CTRL+North"
+		name = "CTRL+NORTH"
 		command = "northface"
 	elem 
-		name = "North+REP"
+		name = "NORTH+REP"
 		command = ".moveup"
 	elem 
-		name = "CTRL+East"
+		name = "CTRL+EAST"
 		command = "eastface"
 	elem 
-		name = "East+REP"
+		name = "EAST+REP"
 		command = ".moveright"
 	elem 
-		name = "CTRL+South"
+		name = "CTRL+SOUTH"
 		command = "southface"
 	elem 
-		name = "South+REP"
+		name = "SOUTH+REP"
 		command = ".movedown"
 	elem 
-		name = "Insert"
+		name = "INSERT"
 		command = "a-intent right"
 	elem 
-		name = "Delete"
+		name = "DELETE"
 		command = "delete-key-pressed"
 	elem 
 		name = "CTRL+1"
@@ -395,6 +397,9 @@ macro "robot-default"
 		name = "CTRL+B"
 		command = "resist"
 	elem 
+		name = "CTRL+O"
+		command = "ooc"
+	elem 
 		name = "CTRL+D+REP"
 		command = ".moveright"
 	elem 
@@ -403,9 +408,6 @@ macro "robot-default"
 	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
-	elem 
-		name = "CTRL+O"
-		command = "ooc"
 	elem 
 		name = "CTRL+Q"
 		command = "unequip-module"
@@ -457,49 +459,49 @@ macro "robot-default"
 
 macro "robot-hotkeys"
 	elem 
-		name = "Tab"
+		name = "TAB"
 		command = ".winset \"mainwindow.macro=robot-default input.focus=true input.background-color=#d3b5b5\""
 	elem 
-		name = "Center+REP"
+		name = "CENTER+REP"
 		command = ".center"
 	elem 
-		name = "Northeast"
+		name = "NORTHEAST"
 		command = ".northeast"
 	elem 
-		name = "Southeast"
+		name = "SOUTHEAST"
 		command = ".southeast"
 	elem 
-		name = "Northwest"
+		name = "NORTHWEST"
 		command = "unequip-module"
 	elem 
-		name = "CTRL+West"
+		name = "CTRL+WEST"
 		command = "westface"
 	elem 
-		name = "West+REP"
+		name = "WEST+REP"
 		command = ".moveleft"
 	elem 
-		name = "CTRL+North"
+		name = "CTRL+NORTH"
 		command = "northface"
 	elem 
-		name = "North+REP"
+		name = "NORTH+REP"
 		command = ".moveup"
 	elem 
-		name = "CTRL+East"
+		name = "CTRL+EAST"
 		command = "eastface"
 	elem 
-		name = "East+REP"
+		name = "EAST+REP"
 		command = ".moveright"
 	elem 
-		name = "CTRL+South"
+		name = "CTRL+SOUTH"
 		command = "southface"
 	elem 
-		name = "South+REP"
+		name = "SOUTH+REP"
 		command = ".movedown"
 	elem 
-		name = "Insert"
+		name = "INSERT"
 		command = "a-intent right"
 	elem 
-		name = "Delete"
+		name = "DELETE"
 		command = "delete-key-pressed"
 	elem 
 		name = "1"
@@ -538,11 +540,17 @@ macro "robot-hotkeys"
 		name = "CTRL+B"
 		command = "resist"
 	elem 
+		name = "O"
+		command = "ooc"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+	elem 
 		name = "D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem 
 		name = "CTRL+D+REP"
-		command = ".east"
+		command = ".moveright"
 	elem 
 		name = "F"
 		command = "a-intent left"
@@ -556,354 +564,11 @@ macro "robot-hotkeys"
 		name = "CTRL+G"
 		command = "a-intent right"
 	elem 
-		name = "O"
-		command = "ooc"
-	elem 
-		name = "CTRL+O"
-		command = "ooc"
-	elem 
 		name = "Q"
 		command = "unequip-module"
 	elem 
 		name = "CTRL+Q"
 		command = "unequip-module"
-	elem "s_key"
-		name = "S+REP"
-		command = ".south"
-	elem 
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem 
-		name = "T"
-		command = "say"
-	elem "w_key"
-		name = "W+REP"
-		command = ".north"
-	elem 
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem 
-		name = "X"
-		command = ".northeast"
-	elem 
-		name = "CTRL+X"
-		command = ".northeast"
-	elem 
-		name = "Y"
-		command = "Activate-Held-Object"
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-	elem 
-		name = "Z"
-		command = "Activate-Held-Object"
-	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-	elem 
-		name = "F1"
-		command = "adminhelp"
-	elem 
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem 
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem 
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem 
-		name = "F5"
-		command = "Aghost"
-	elem 
-		name = "F6"
-		command = "Player-Panel"
-	elem 
-		name = "F7"
-		command = "Admin-PM"
-	elem 
-		name = "F8"
-		command = "Invisimin"
-	elem 
-		name = "F9"
-		command = "Adminlisttickets"
-	elem 
-		name = "F12"
-		command = "F12"
-
-macro "xeno-default"
-	elem 
-		name = "Tab"
-		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
-	elem 
-		name = "Center+REP"
-		command = ".center"
-	elem 
-		name = "Northeast"
-		command = ".northeast"
-	elem 
-		name = "Southeast"
-		command = ".southeast"
-	elem 
-		name = "Southwest"
-		command = ".southwest"
-	elem 
-		name = "Northwest"
-		command = ".northwest"
-	elem 
-		name = "CTRL+West"
-		command = "westface"
-	elem 
-		name = "West+REP"
-		command = ".west"
-	elem 
-		name = "CTRL+North"
-		command = "northface"
-	elem 
-		name = "North+REP"
-		command = ".north"
-	elem 
-		name = "CTRL+East"
-		command = "eastface"
-	elem 
-		name = "East+REP"
-		command = ".east"
-	elem 
-		name = "CTRL+South"
-		command = "southface"
-	elem 
-		name = "South+REP"
-		command = ".south"
-	elem 
-		name = "Insert"
-		command = "a-intent right"
-	elem 
-		name = "Delete"
-		command = "delete-key-pressed"
-	elem 
-		name = "CTRL+1"
-		command = "a-intent help"
-	elem 
-		name = "CTRL+2"
-		command = "a-intent disarm"
-	elem 
-		name = "CTRL+3"
-		command = "a-intent grab"
-	elem 
-		name = "CTRL+4"
-		command = "a-intent harm"
-	elem 
-		name = "CTRL+5"
-		command = "a-intent sting"
-	elem 
-		name = "CTRL+A+REP"
-		command = ".west"
-	elem 
-		name = "CTRL+B"
-		command = "resist"
-	elem 
-		name = "CTRL+D+REP"
-		command = ".east"
-	elem 
-		name = "CTRL+E"
-		command = "quick-equip"
-	elem 
-		name = "CTRL+F"
-		command = "a-intent left"
-	elem 
-		name = "CTRL+G"
-		command = "a-intent right"
-	elem 
-		name = "CTRL+O"
-		command = "ooc"
-	elem 
-		name = "CTRL+Q"
-		command = ".northwest"
-	elem 
-		name = "CTRL+R"
-		command = ".southwest"
-	elem 
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem 
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem 
-		name = "CTRL+X"
-		command = ".northeast"
-	elem 
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-	elem 
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-	elem 
-		name = "F1"
-		command = "adminhelp"
-	elem 
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem 
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem 
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem 
-		name = "F5"
-		command = "Aghost"
-	elem 
-		name = "F6"
-		command = "Player-Panel"
-	elem 
-		name = "F7"
-		command = "Admin-PM"
-	elem 
-		name = "F8"
-		command = "Invisimin"
-	elem 
-		name = "F9"
-		command = "Adminlisttickets"
-	elem 
-		name = "F12"
-		command = "F12"
-
-macro "xeno-hotkeys"
-	elem 
-		name = "Tab"
-		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
-	elem 
-		name = "Center+REP"
-		command = ".center"
-	elem 
-		name = "Northeast"
-		command = ".northeast"
-	elem 
-		name = "Southeast"
-		command = ".southeast"
-	elem 
-		name = "Southwest"
-		command = ".southwest"
-	elem 
-		name = "Northwest"
-		command = ".northwest"
-	elem 
-		name = "CTRL+West"
-		command = "westface"
-	elem 
-		name = "West+REP"
-		command = ".west"
-	elem 
-		name = "CTRL+North"
-		command = "northface"
-	elem 
-		name = "North+REP"
-		command = ".north"
-	elem 
-		name = "CTRL+East"
-		command = "eastface"
-	elem 
-		name = "East+REP"
-		command = ".east"
-	elem 
-		name = "CTRL+South"
-		command = "southface"
-	elem 
-		name = "South+REP"
-		command = ".south"
-	elem 
-		name = "Insert"
-		command = "a-intent right"
-	elem 
-		name = "Delete"
-		command = "delete-key-pressed"
-	elem 
-		name = "1"
-		command = "a-intent help"
-	elem 
-		name = "CTRL+1"
-		command = "a-intent help"
-	elem 
-		name = "2"
-		command = "a-intent disarm"
-	elem 
-		name = "CTRL+2"
-		command = "a-intent disarm"
-	elem 
-		name = "3"
-		command = "a-intent grab"
-	elem 
-		name = "CTRL+3"
-		command = "a-intent grab"
-	elem 
-		name = "4"
-		command = "a-intent harm"
-	elem 
-		name = "CTRL+4"
-		command = "a-intent harm"
-	elem 
-		name = "5"
-		command = "a-intent sting"
-	elem 
-		name = "CTRL+5"
-		command = "a-intent sting"
-	elem 
-		name = "A+REP"
-		command = ".west"
-	elem 
-		name = "CTRL+A+REP"
-		command = ".west"
-	elem 
-		name = "B"
-		command = "resist"
-	elem 
-		name = "CTRL+B"
-		command = "resist"
-	elem 
-		name = "D+REP"
-		command = ".moveright"
-	elem 
-		name = "CTRL+D+REP"
-		command = ".moveright"
-	elem 
-		name = "E"
-		command = "quick-equip"
-	elem 
-		name = "CTRL+E"
-		command = "quick-equip"
-	elem 
-		name = "F"
-		command = "a-intent left"
-	elem 
-		name = "CTRL+F"
-		command = "a-intent left"
-	elem 
-		name = "G"
-		command = "a-intent right"
-	elem 
-		name = "CTRL+G"
-		command = "a-intent right"
-	elem 
-		name = "M"
-		command = "me"
-	elem 
-		name = "O"
-		command = "ooc"
-	elem 
-		name = "CTRL+O"
-		command = "ooc"
-	elem 
-		name = "Q"
-		command = ".northwest"
-	elem 
-		name = "CTRL+Q"
-		command = ".northwest"
-	elem 
-		name = "R"
-		command = ".southwest"
-	elem 
-		name = "CTRL+R"
-		command = ".southwest"
 	elem "s_key"
 		name = "S+REP"
 		command = ".movedown"
@@ -988,9 +653,8 @@ menu "menu"
 		name = ""
 		command = ""
 		category = "&File"
-	elem "reconnectbutton"
 		saved-params = "is-checked"
-	elem 
+	elem "reconnectbutton"
 		name = "&Reconnect"
 		command = ".reconnect"
 		category = "&File"
@@ -1135,7 +799,6 @@ window "mapwindow"
 		font-size = 7
 		text-color = none
 		is-default = true
-		drop-zone = true
 		saved-params = "icon-size"
 
 window "infowindow"
@@ -1236,7 +899,6 @@ window "outputwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		is-default = true
 		saved-params = "max-lines"
 
@@ -1255,9 +917,7 @@ window "statwindow"
 		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		is-default = true
-		drop-zone = true
 		saved-params = ""
 
 window "Telecomms IDE"
@@ -1308,7 +968,6 @@ window "Telecomms IDE"
 		anchor2 = 99,100
 		font-family = "sans-serif"
 		font-size = 9
-		background-color = #ffffff
 		saved-params = "max-lines"
 	elem "button2"
 		type = BUTTON
@@ -1336,7 +995,6 @@ window "Telecomms IDE"
 		anchor2 = 100,80
 		font-family = "Courier"
 		font-size = 10
-		background-color = #ffffff
 		saved-params = ""
 		command = "cancel"
 		multi-line = true

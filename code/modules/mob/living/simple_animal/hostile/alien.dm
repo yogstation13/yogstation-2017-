@@ -327,7 +327,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 1,
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/brain/alien = 1, //alien maids are also really smart as well, but the economic downturn is hard on everyone. 5 years at xeno college and a masters in egg laying for a part time job cleaning floors.
-							/obj/item/weapon/reagent_containers/glass/rag = 1)
+							/obj/item/weapon/mop/rag = 1)
 
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()

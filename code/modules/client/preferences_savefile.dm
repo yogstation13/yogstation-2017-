@@ -230,6 +230,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_accs"]			>> ghost_accs
 	S["ghost_others"]		>> ghost_others
 	S["preferred_map"]		>> preferred_map
+	S["clientfps"]			>> clientfps
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
 	S["inquisitive_ghost"]	>> inquisitive_ghost
@@ -291,6 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_accs"]			<< ghost_accs
 	S["ghost_others"]		<< ghost_others
 	S["preferred_map"]		<< preferred_map
+	S["clientfps"]			<< clientfps
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost

@@ -126,7 +126,7 @@
 	icon_state = "bluespace"
 	density = 1
 	var/health = 100
-	var/progress = 0 // needs 300
+	var/progress = 0
 	var/mob/living/ashwalker
 
 /obj/effect/cyrogenicbubble/New()
@@ -143,13 +143,11 @@
 
 /obj/effect/cyrogenicbubble/process()
 	if(health)
-		progress++
+		progress = min(50, progress + 1) // capped at 50, its all we need.
 	else
 		ejectEgg()
-	if(progress == 150)
+	if(progress == 50)
 		ejectEgg()
-	else
-		healAshwalker()
 
 /obj/effect/cyrogenicbubble/proc/reset_rebirth()
 	if(!ashwalker)
@@ -161,13 +159,13 @@
 		C.rebirth = FALSE
 
 /obj/effect/cyrogenicbubble/attackby(obj/item/weapon, mob/user)
-	. = ..()
 	if(health)
 		if(weapon.force > health)
 			ejectEgg()
 			qdel(src)
 		else
 			health -= weapon.force
+	playsound(loc, weapon.hitsound, 50, 1, 1)
 
 /obj/effect/cyrogenicbubble/attack_animal(mob/living/simple_animal/M)
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -180,24 +178,24 @@
 
 /obj/effect/cyrogenicbubble/proc/ejectEgg()
 	if(ashwalker)
+		if(progress == 50)
+			ashwalker.revive(1) // full heal
+		else
+			// if they didn't make it to 50, then they'll be healed, but not completely
+			// scaling is multiplied by 2, based on the fact that damage varies and I don't want to exactly set their brute/fire/tox/oxy damage
+			ashwalker.adjustToxLoss(-progress*2, 0)
+			ashwalker.adjustOxyLoss(-progress*2, 0)
+			ashwalker.adjustBruteLoss(-progress*2, 0)
+			ashwalker.adjustFireLoss(-progress*2, 0)
+			ashwalker.revive()
 		ashwalker.forceMove(get_turf(src))
 		ashwalker.real_name = name
 		ashwalker.name = name
 		ashwalker.blood_volume = BLOOD_VOLUME_NORMAL
 		reset_rebirth()
+		ashwalker.grab_ghost()
 		ashwalker = null
 	qdel(src)
-
-/obj/effect/cyrogenicbubble/proc/healAshwalker()
-	if(!ashwalker)
-		return
-	ashwalker.adjustToxLoss(-1, 0)
-	ashwalker.adjustOxyLoss(-1, 0)
-	ashwalker.adjustBruteLoss(-1, 0)
-	ashwalker.adjustFireLoss(-1, 0)
-	if(ashwalker.stat == DEAD) // one does not DIE in the cyro bubble.
-		ashwalker.revive()
-
 
 /obj/effect/cyrogenicbubble/return_air()
 	if(get_turf(src))
@@ -236,63 +234,7 @@
 		if(4)
 			new_spawn << "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
 
-//Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
-/obj/effect/mob_spawn/human/golem
-	name = "inert golem shell"
-	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
-	mob_species = /datum/species/golem
-	roundstart = FALSE
-	death = FALSE
-	anchored = 0
-	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
-	golems, so that no golem may ever be forced to serve again.</b>"
-	jobban_type = "lavaland"
-
-/obj/effect/mob_spawn/human/golem/New()
-	..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
-
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
-	var/datum/species/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.set_cloned_appearance()
-
-
-/obj/effect/mob_spawn/human/golem/adamantine
-	name = "dust-caked golem shell"
-	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
-	anchored = 1
-	density = 1
-	mob_species = /datum/species/golem/adamantine
+//GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
 /obj/effect/mob_spawn/human/hermit
