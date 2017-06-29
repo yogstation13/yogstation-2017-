@@ -77,7 +77,7 @@
 				if(C.thermite)
 					C.thermite = 0
 					C.overlays.Cut()
-		reagents.reaction(A, TOUCH, 5)	//Needed for proper floor wetting
+		reagents.reaction(A, TOUCH, 200)	//Needed for proper floor wetting
 		reagents.remove_all(1)			//reaction() doesn't use up the reagents
 	else if(user.a_intent != "harm")
 		A.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
