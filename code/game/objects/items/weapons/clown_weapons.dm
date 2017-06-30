@@ -13,10 +13,10 @@
 #define WHOOPEE_CD 1000
 
 /obj/item/whoopee // in the name of all that is holy DESTROY THIS THE MOMENT YOU SEE IT, CREW.
-	name = "whopee cushion"
+	name = "whoopee cushion"
 	desc = "If you're reading this than the clown, or some other sinister fiend, probably pranked you."
-	icon_state = "whopee"
-	item_state = "whopee"
+	icon_state = "whoopee"
+	item_state = "whoopee"
 	var/list/fnoises = list('sound/items/fnoise1.ogg', 'sound/items/fnoise2.ogg', 'sound/items/fnoise3.ogg', 'sound/items/fnoise4.ogg')
 	var/cooldown
 
