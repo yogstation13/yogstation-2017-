@@ -147,7 +147,9 @@
 			if ("gunshot")
 				soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 			if ("ricochet")
-				soundin = pick(	'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+				soundin = pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+			if ("pour")
+				soundin = pick('sound/effects/water_pour1.ogg', 'sound/effects/water_pour2.ogg', 'sound/effects/water_pour3.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
