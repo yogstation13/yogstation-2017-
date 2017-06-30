@@ -104,8 +104,8 @@
 	update_icon()
 	return
 
-/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+/obj/machinery/computer/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/I)
+	if(circuit && !(flags & NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user << "<span class='notice'>You start to disconnect the monitor...</span>"
 		if(do_after(user, 20/I.toolspeed, target = src))
@@ -128,6 +128,13 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
+		return TRUE
+	return FALSE
+
+/obj/machinery/computer/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(!default_deconstruction_screwdriver(user, null, null, I))
+			return ..()
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == "help")
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.isOn())
@@ -181,3 +188,14 @@
 	var/crack = round(computer_health / 5)
 	crack_overlay = image(icon = 'icons/obj/computer.dmi', icon_state = "[screen_crack]_[crack]")
 	overlays += crack_overlay
+
+/obj/machinery/computer/Topic(href, href_list)
+	if(..())
+		return 1
+	if (issilicon(usr))
+		return 0
+	if(ishuman(usr))
+		var/list/keyboardclicks = list('sound/effects/keyboard1.ogg','sound/effects/keyboard2.ogg','sound/effects/keyboard3.ogg','sound/effects/keyboard4.ogg')
+		playsound(src, pick(keyboardclicks), 25, 1, 0)
+		return 0
+	return 0

@@ -10,7 +10,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/New()
 	..()
-	var/loot = rand(1,24)
+	var/loot = rand(1,23)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)

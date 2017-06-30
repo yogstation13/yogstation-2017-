@@ -157,7 +157,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
-	desc = "Empowered garb which creates a powerful shield around the user."
+	desc = "Empowered garb which creates a powerful shield around the user. Use on a pylon to restore its charges."
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	w_class = 4

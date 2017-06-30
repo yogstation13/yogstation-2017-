@@ -258,4 +258,6 @@ ANNOUNCE_ADMIN_LOGOUT
 #CLIENT_ERROR_VERSION 509
 #CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 
-#DISCORD_TOKEN nodiscord
+#Used to send round data to a webhook. Address must use HTTP without SSL because byond is horrible
+#WEBHOOK_ADDRESS http://example.com
+#WEBHOOK_KEY webkey

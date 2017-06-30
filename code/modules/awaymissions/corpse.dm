@@ -18,6 +18,7 @@
 	var/uses = 1			//how many times can we spawn from it. set to -1 for infinite.
 	var/brute_damage = 0
 	var/oxy_damage = 0
+	var/assigned_role
 	density = 1
 	anchored = 1
 	var/jobban_type
@@ -90,6 +91,8 @@
 		special(M)
 		MM.name = M.real_name
 		MM.special_role = name
+		if(assigned_role)
+			MM.assigned_role = assigned_role
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
