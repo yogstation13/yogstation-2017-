@@ -53,6 +53,11 @@
 		new CB.build_path(loc, CB)
 		qdel(src)
 
+/obj/machinery/computer/arcade/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
+	if(emagged)
+		return 0
+	return ..()
+
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/weapon/gun/energy/pulse/prize(src)

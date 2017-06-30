@@ -7821,7 +7821,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/item/weapon/mop,
 /turf/open/floor/plasteel{
 	dir = 2;
