@@ -57,6 +57,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/body_attack_log
 	var/body_say_log
 
+	var/list/rejectedRoles = list()
+
 /mob/dead/observer/New(mob/body)
 	alpha = 0
 	verbs += /mob/dead/observer/proc/dead_tele

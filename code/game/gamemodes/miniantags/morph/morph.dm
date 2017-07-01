@@ -208,7 +208,7 @@
 	role_name = "morphling"
 
 /datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = get_candidates("alien", null, ROLE_ALIEN)
+	var/list/candidates = get_candidates("alien", null, ROLE_SPECIAL)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
