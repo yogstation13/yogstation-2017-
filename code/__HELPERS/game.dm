@@ -403,7 +403,7 @@
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
 				continue
-		if(M.type in G.rejectedRoles)
+		if(M && G.client && M.type in G.client.rejectedRoles)
 			continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))
@@ -425,7 +425,8 @@
 					G << "<span class='danger'>Choice registered: No.</span>"
 				if(3)
 					G << "<span class='danger'>Choice registered: Never.</span>"
-					G.rejectedRoles += M.type
+					if(M && G.client)
+						G.client.rejectedRoles += M.type
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
