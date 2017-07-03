@@ -261,7 +261,7 @@
 		return
 	user << "<span class='notice'>You start working up the nerve to shatter the bottle...</span>"
 	polling = TRUE
-	var/list/demon_candidates = pollCandidates("Do you want to play as a [demon_name]?", ROLE_SPECIAL, null, ROLE_SPECIAL, 50)
+	var/list/demon_candidates = pollCandidates("Do you want to play as a [demon_name]?", ROLE_ALIEN, null, ROLE_ALIEN, 50)
 	polling = FALSE
 	if(demon_candidates.len > 0)
 		used = 1

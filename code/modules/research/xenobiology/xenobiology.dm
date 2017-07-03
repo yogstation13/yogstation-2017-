@@ -172,7 +172,7 @@
 	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
 	being_used = 1
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_SPECIAL, 50, SM)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_ALIEN, 50, SM)
 	var/mob/dead/observer/theghost = null
 	if(candidates.len)
 		theghost = pick(candidates)
@@ -227,7 +227,7 @@
 	if(SM.sentience_type != animal_type)
 		user << "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" //no controlling machines
 		return ..()
-	if(jobban_isbanned(user, ROLE_SPECIAL)) //ideally sentience and trasnference potions should be their own unique role.
+	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
 		user << "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>"
 		return
 
