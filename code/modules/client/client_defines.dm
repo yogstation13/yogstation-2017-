@@ -60,3 +60,5 @@
 
 	var/last_cached_weight //For weight checking, prevents query spam
 	var/last_cached_total_weight //For weight checking, prevents query spam
+
+	var/list/rejectedRoles = list() //Mid-round ghost roles they hit NEVER on

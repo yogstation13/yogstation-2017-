@@ -391,7 +391,7 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300)
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, mob/M)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
@@ -403,6 +403,8 @@
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
 				continue
+		if(M && G.client && (M.type in G.client.rejectedRoles))
+			continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))
 				continue
@@ -411,7 +413,7 @@
 				continue
 		spawn(0)
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never", StealFocus=0, Timeout=poll_time))
 				if(1)
 					G << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>poll_time)
@@ -421,6 +423,10 @@
 						candidates += G
 				if(2)
 					G << "<span class='danger'>Choice registered: No.</span>"
+				if(3)
+					G << "<span class='danger'>Choice registered: Never.</span>"
+					if(M && G.client)
+						G.client.rejectedRoles += M.type
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
@@ -431,7 +437,7 @@
 	return candidates
 
 /proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, M)
 	if(!M || qdeleted(M))
 		return list()
 	return L
