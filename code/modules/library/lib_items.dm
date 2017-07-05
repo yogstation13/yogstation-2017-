@@ -155,6 +155,14 @@
 	new /obj/item/weapon/book/manual/research_and_development(src)
 	update_icon()
 
+/obj/structure/bookcase/manuals/law/New()
+	..()
+	new /obj/item/weapon/book/manual/wiki/security_space_law(src)
+	new /obj/item/weapon/book/manual/wiki/security_space_law(src)
+	new /obj/item/weapon/book/manual/wiki/security_space_law(src)
+	new /obj/item/weapon/book/manual/wiki/security_space_law(src)
+	new /obj/item/weapon/book/manual/wiki/security_space_law(src)
+	update_icon()
 
 /*
  * Book
