@@ -111,7 +111,7 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	valid_territory = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg','sound/ambience/space.ogg' )
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/mapgen_protected
@@ -235,6 +235,7 @@ var/list/teleportlocs = list()
 	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/syndicate.ogg')
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -801,7 +802,7 @@ var/list/teleportlocs = list()
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
-	
+
 /area/gateway
 	name = "Gateway"
 	icon_state = "teleporter"
