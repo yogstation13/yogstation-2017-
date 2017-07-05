@@ -17,7 +17,7 @@
 	use_power = 1
 	idle_power_usage = 30
 	active_power_usage = 200
-	power_channel = EQUIP
+	power_channel = 1
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
