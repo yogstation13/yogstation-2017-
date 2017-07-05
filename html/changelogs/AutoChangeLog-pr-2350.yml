@@ -1,4 +1,0 @@
-author: Time-Green
-delete-after: True
-changes: 
-  - rscadd: "When a ghost role gets prompted, also gives another option: \"Never\", clicking this will never send you a notification for that kind of mob ever again. Unless you re-join the living in wich case it resets."

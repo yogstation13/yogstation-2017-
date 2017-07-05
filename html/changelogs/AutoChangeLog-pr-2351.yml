@@ -1,4 +1,0 @@
-author: AdamElTablawy
-delete-after: True
-changes: 
-  - rscadd: "Putting two teslas in a containment field will not obliterate the entire station anymore-now it just causes significant damage."
