@@ -403,7 +403,7 @@
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
 				continue
-		if(M && G.client && M.type in G.client.rejectedRoles)
+		if(M && G.client && (M.type in G.client.rejectedRoles))
 			continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))
