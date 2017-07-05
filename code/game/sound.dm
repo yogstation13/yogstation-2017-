@@ -155,7 +155,7 @@
 		V << sound(file, repeat, wait, channel, volume)
 
 /proc/nullify_sound(file, repeat, wait, volume, channel)
-	var/sound/S = sound(file, repeat, wait, volume, channel)
+	var/sound/S = sound(file, repeat, wait, channel, volume)
 	S.environment = ROOM
 	S.echo = 0
 	return S
