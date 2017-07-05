@@ -9783,13 +9783,6 @@
 	layer = 2.9
 	},
 /obj/item/weapon/storage/briefcase/lawyer,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	name = "Prison Monitor";
-	network = list("Prison");
-	pixel_x = 0;
-	pixel_y = 30
-	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "arH" = (
@@ -10166,9 +10159,6 @@
 /obj/item/device/flashlight/lamp/green{
 	pixel_x = -3;
 	pixel_y = 2
-	},
-/obj/item/device/taperecorder{
-	pixel_x = 3
 	},
 /turf/open/floor/wood,
 /area/lawoffice)
@@ -11242,7 +11232,18 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "auM" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching Prison Wing holding areas.";
+	dir = 1;
+	name = "Prison Monitor";
+	network = list("Prison");
+	pixel_x = 0;
+	pixel_y = -25
+	},
+/obj/structure/table/wood,
+/obj/item/device/taperecorder{
+	pixel_x = 3
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "auN" = (
@@ -69200,7 +69201,9 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/pen/blue,
+/obj/item/weapon/pen/blue{
+	pixel_x = 3
+	},
 /obj/item/weapon/pen/red{
 	pixel_x = 9;
 	pixel_y = 3
