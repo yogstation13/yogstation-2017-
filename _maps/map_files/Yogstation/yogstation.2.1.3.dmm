@@ -17753,13 +17753,6 @@
 	},
 /turf/closed/wall,
 /area/library)
-"aHC" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/library)
 "aHD" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -68846,6 +68839,13 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"Xvh" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Library Maintenance";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "XXK" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/dropper,
@@ -112218,7 +112218,7 @@ aaa
 aDd
 aED
 aFX
-aHC
+Xvh
 aIV
 aKv
 aLP
