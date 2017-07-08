@@ -110,6 +110,7 @@
 	update_rev_icons_added(rev_mind)
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
+		explain_rev_hud(rev_mind.current)
 	for(var/datum/objective/objective in rev_mind.objectives)
 		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 		rev_mind.special_role = "Head Revolutionary"
@@ -251,6 +252,23 @@
 /proc/is_revolutionary_in_general(mob/M)
 	return is_revolutionary(M) || is_head_revolutionary(M)
 
+/datum/game_mode/proc/explain_rev_hud(mob/M)
+	if(!M)
+		return
+	var/static/list/images
+	if(!images)
+		images = list(icon('icons/mob/hud.dmi', "rev_head"), icon('icons/mob/hud.dmi', "rev"), icon('icons/mob/hud.dmi', "rev_maybe"), icon('icons/mob/hud.dmi', "rev_convertable"), icon('icons/mob/hud.dmi', "rev_enemyhead"))
+		for(var/V in images)
+			var/icon/I = V
+			I.Crop(23, 23, 32, 32)
+			I.Scale(32, 32)
+	M << "<span class='notice'>\icon[images[1]] Head Revolutionary: Protect them.<br>\
+								\icon[images[2]] Revolutionary: Assist them.<br>\
+								\icon[images[3]] Unknown: Take off their mask to expose their identity.<br>\
+								\icon[images[4]] Crewmember: Take them to a head revolutionary to convert them, if possible.<br>\
+								\icon[images[5]] Head of Staff: Kill them to win the revolution!\
+								</span>"
+
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
 		return 0
@@ -265,7 +283,8 @@
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 		carbon_mob.flash_eyes(1, 1)
 	rev_mind.current.Stun(5)
-	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>"
+	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>"
+	explain_rev_hud(rev_mind.current)
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
 	update_rev_icons_added(rev_mind)
