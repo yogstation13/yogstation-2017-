@@ -8,7 +8,7 @@
 		L.type_icon = I
 		overlays += L.type_icon
 
-	var/message = input(src,,"Say")
+	var/message = input(src,,"Say") as text|null
 	if(isliving(src))
 		var/mob/living/L = src
 		overlays.Remove(L.type_icon)
