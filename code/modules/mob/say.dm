@@ -1,7 +1,6 @@
 //Speech verbs.
 /mob/verb/say_verb_hotkey()
 	set name = "say_key"
-	set category = "IC"
 	if(isliving(src) && stat == CONSCIOUS)
 		var/mob/living/L = src
 		var/image/I = image('icons/mob/talk.dmi', L, "[L.bubble_icon]3", FLY_LAYER)
