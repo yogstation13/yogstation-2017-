@@ -216,15 +216,6 @@ var/list/teleportlocs = list()
 /area/centcom/holding
 	name = "Holding Facility"
 
-/area/centcom/abuse
-	name = "AB-use facility"
-	icon_state = "centcom"
-	requires_power = 0
-	has_gravity = 1
-	noteleport = 1
-	blob_allowed = 0
-
-
 //SYNDICATES
 
 /area/syndicate_mothership
