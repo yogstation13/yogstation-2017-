@@ -23,7 +23,7 @@
 	return 1
 
 /datum/dream/process()
-	if(!owner.sleeping)
+	if(owner.stat != UNCONSCIOUS)
 		STOP_PROCESSING(SSobj, src)
 		wake_up()
 		return
