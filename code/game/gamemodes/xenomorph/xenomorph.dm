@@ -44,7 +44,7 @@ var/list/turf/xenomorphweeds = list()
 	name = "xenomorph"
 	config_tag = "xenomorph"
 	antag_flag = ROLE_ALIEN
-	required_players =  30
+	required_players =  2
 	required_enemies = 1
 	recommended_enemies = 3
 	enemy_minimum_age =  14
@@ -146,6 +146,7 @@ var/list/turf/xenomorphweeds = list()
 
 	alien_weed_control_count = rand(950,1250)
 	infest_prc = rand(45,75)
+	gain_alien_targets()
 
 	var/RNGspawn
 
@@ -154,7 +155,7 @@ var/list/turf/xenomorphweeds = list()
 	else
 		RNGspawn = pick(blobstart)
 
-	objective = pick(OBJECTIVE_CONQUER, OBJECTIVE_INFESTATION)
+	objective = pick(/*OBJECTIVE_CONQUER*/OBJECTIVE_INFESTATION, OBJECTIVE_INFESTATION)
 
 	for(var/datum/mind/alien_brethern in xenomorphs) // spawning
 		var/greeted_forged_moved
@@ -192,7 +193,8 @@ var/list/turf/xenomorphweeds = list()
 
 /datum/game_mode/xenomorph/proc/greet_xeno_and_transform(datum/mind/hbrain, role)
 	if(!role)
-		message_admins("ERROR: Xeno Mode's greet_xeno_and_transform() reported a null role.")
+		message_admins("ERROR: Xeno Mode's greet_xeno_and_transform() reported a null role. (1/2)")
+		message_admins("ERROR: [hbrain] / [hbrain.current] / [hbrain.ckey] had the null role. (2/2)")
 		return
 	var/mob/living/l
 	var/mob/living/M = hbrain.current
@@ -201,14 +203,11 @@ var/list/turf/xenomorphweeds = list()
 		if("xeno hunter")
 			l = new /mob/living/carbon/alien/humanoid/hunter(hbrain.current.loc)
 
-		if("xeno sentinel")
+		if("xeno worker")
 			l = new /mob/living/carbon/alien/humanoid/worker(hbrain.current.loc)
 
 		if("xeno queen")
 			l = new /mob/living/carbon/alien/humanoid/royal/queen(hbrain.current.loc)
-
-		if("xeno drone")
-			l = new /mob/living/carbon/alien/humanoid/worker(hbrain.current.loc)
 
 	if(!hbrain)
 		message_admins("ERROR: [ticker.mode] has failed to greet and transform [hbrain.current] / [hbrain.current.ckey]. Contact a coder!")
@@ -245,7 +244,7 @@ var/list/turf/xenomorphweeds = list()
 					and exterminate the xenomorphs. <BR> \
 					By the time you read this there were [totalcrew] crewmembers in total. [deadcrew] are now deceased, and [alivecrew] are on board."
 		makeEmergencyresponseteam(TRUE, type, num, obj)
-		priority_announce("An Emergency Response Team has been dispatched to your station. Please standby.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
+		priority_announce("An Emergency Response Team is being dispatched to your station. Please standby.", null, 'sound/AI/commandreport.ogg', "Alert - Nanotrasen")
 
 /datum/game_mode/xenomorph/check_finished()
 	..()
@@ -289,32 +288,39 @@ var/list/turf/xenomorphweeds = list()
 #define PREDATOR_COEFF 0.45 // 45%
 
 /datum/game_mode/xenomorph/proc/check_for_predator()
-	if(xenomorphweeds.len)
-		var/weedcount = length(xenomorphweeds)
-		var/pred = alien_weed_control_count * PREDATOR_COEFF
-		if(weedcount > pred)
-			summonpredators()
-			yautjalaunch = TRUE
+	switch(objective)
+		if(OBJECTIVE_CONQUER)
+			if(xenomorphweeds.len)
+				var/weedcount = length(xenomorphweeds)
+				var/pred = alien_weed_control_count * PREDATOR_COEFF
+				if(weedcount > pred)
+					summonpredators()
+					yautjalaunch = TRUE
+		if(OBJECTIVE_INFESTATION)
+			if(length(living_alien_targets))
+				if(PREDATOR_COEFF * length(living_alien_targets) < infested_count) // xenos got past 45%
+					summonpredators()
+					yautjalaunch = TRUE
+
 
 /datum/game_mode/proc/summonpredators()
 	for(var/obj/effect/landmark/A in landmarks_list)
 		if(A.name == "pred[predatorwave]")
 			var/obj/effect/mob_spawn/human/predator/P = new(get_turf(A))
-			notify_ghosts("A Predator Cyropod has been awakened!", source = P, action = NOTIFY_ORBIT)
+			notify_ghosts("A new Predator Cyropod is online!", source = P, action = NOTIFY_ORBIT)
 			var/obj/effect/landmark/L = new(get_turf(A))
 			L.name = "pred[predatorwave + 1]"
 			qdel(A)
 	predatorwave++
 
 /datum/game_mode/xenomorph/declare_completion()
-	..()
 	var/predcount
 	for(var/datum/mind/M in predators)
 		if(M.current.stat != DEAD)
 			predcount++
 
 	var/predtotal = 4 // it initializes on 4
-	predtotal += predatorwave * 4 // since 4 is the current limit on the map.
+	predtotal += predatorwave * 4 // since 4 pods respawn each wave
 
 	var/win = FALSE
 	var/xenowin
@@ -343,7 +349,7 @@ var/list/turf/xenomorphweeds = list()
 		if(!calculateXenos())
 			feedback_set_details("round_end_result","win - xenomorphs took over")
 			if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-				world << "<FONT size = 5><B>Xenomorphs Major Win!</B></FONT>"
+				world << "<FONT size = 5><B>Xenomorph Major Win!</B></FONT>"
 				world << "<B>[xenowin]</B>"
 			else if(SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
 				world << "<FONT size = 5><B>Xenomorph Minor Win!</B></FONT>"
@@ -385,13 +391,13 @@ var/list/turf/xenomorphweeds = list()
 		for(var/mob/M in global_trophy_targets)
 			trophynames += M.name + ", the [M.job], "
 		if(length(trophynames))
-			world << "<B>The Yautja Predators hunted down [trophynames]."
+			world << "<B>The Yautja hunted down [trophynames]."
 	else
-		world << "<B>The Yautja Predators were not summoned this round.</B>"
-	//..()
-	return
+		world << "<B>The Yautja were not summoned this round.</B>"
+	..()
+	return 1
 
-/datum/game_mode/xenomorph/proc/auto_declare_completion_alien()
+/datum/game_mode/xenomorph/proc/auto_declare_completion_xenomorph()
 	world << "running auto declare!"
 	if(ticker && istype(ticker.mode,/datum/game_mode/xenomorph))
 		if(length(xenomorphs["QUEEN"]))
@@ -412,8 +418,8 @@ var/list/turf/xenomorphweeds = list()
 /datum/game_mode/xenomorph/proc/translate_objective()
 	switch(objective)
 		if(OBJECTIVE_CONQUER)
-			return "Your mission is to continously plant alien weeds on the station until you've finally conquered it. \
-				Throughout this mission your hive will be updated on how far they've gone."
+			return "Your mission is to plant alien weeds on the station. \
+				Throughout this mission your hive will be updated on how close you are to taking over.."
 
 		if(OBJECTIVE_INFESTATION)
 			return "Your mission is to infest [infest_prc]% of crewmembers. This only involves the personnel which arrived \

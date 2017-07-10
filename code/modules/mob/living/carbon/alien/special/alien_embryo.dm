@@ -1,7 +1,6 @@
 /mob/living/carbon/brain/alien
 	languages_spoken = ALIEN
 	languages_understood = ALIEN
-	//stat = CONSCIOUS
 
 // This is to replace the previous datum/disease/alien_embryo for slightly improved handling and maintainability
 // It functions almost identically (see code/datums/diseases/alien_embryo.dm)
@@ -35,8 +34,6 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 /obj/item/organ/body_egg/alien_embryo/New()
 	..()
 	embryo = new /mob/living/carbon/brain/alien(src)
-//	if(findClient())
-//		premature = TRUE
 
 /obj/item/organ/body_egg/alien_embryo/proc/findClient() // returns 1 if we can't find anything
 	if(polling)
@@ -112,10 +109,11 @@ var/const/ALIEN_AFK_BRACKET = 450 // 45 seconds
 				AttemptGrow(0)
 				return
 		AttemptGrow()
+
 /obj/item/organ/body_egg/alien_embryo/proc/join_infest_count()
 	if(ticker.mode.queensuffix == colony)
-		if(owner in ticker.mode.living_alien_targets)
-			ticker.mode.message_xenomorphs("Your hive has successfully transformed another targetted human!", FALSE, "alienannounce")
+		if(owner.mind in ticker.mode.living_alien_targets)
+			ticker.mode.message_xenomorphs("Your hive has successfully infected another target!", FALSE, "alienannounce")
 			ticker.mode.infested_count++
 
 /obj/item/organ/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success = 1)
