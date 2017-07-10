@@ -392,6 +392,14 @@
 	name = "paper- Smelting Operations Closed"
 	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
+/obj/item/weapon/paper/druglab
+	name = "Security Notice"
+	info = "<small> On September 20th, 2551 </small> <br> <br> Janitor: Don't touch this until the detective's given you the all clear. We don't want to mess the evidence up now that we've catched the most notorious drug baron this side of Tau Ceti."
+
+/obj/item/weapon/paper/syndie_agent
+	name = "Briefing"
+	info = "<i> Good work. The info on the security protocols you've provided us with is of great value. As a token of our gratitude, the ship will approach the station sometime next week, so make sure you evacuate before that. Keep us updated with how your objectives are proceeding. <br> <br> Don't dissappoint us. <br> <br> <small> Syndicate High Command </small> </i>"
+
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
@@ -405,6 +413,10 @@
 /obj/item/weapon/paper/crumpled/bloody/hippie
 	name = "Diary: Day 71"
 	info = "<i> The text is written in shaky handwriting, and is barely readable. <i> <br> <br> Rose achieved enlightenment yesterday. <br> <br> She didn't go as peacefully as she always said she would, so we had to give her a hand. We planned on giving her a... funeral of sorts by dumping her body outside, but we found out that when you've been stuck with no fuel for months, you'll do anything for a bite to eat. Her earthly remains didn't go to waste. <br> <br> Fuel's running low. Not sure how long the rest of us will last. <br> <br> I'm planning on giving myself a last ride with the sweet angel of ecstasy, but the others can't know. <br> <br> The stars are so fucking beautiful out here, man."
+
+/obj/item/weapon/paper/crumpled/bloody/xenokitchen
+	name = "Final Warning"
+	info = "<i> Samuel: While the crew deeply appreciates your role in dealing with the xeno infestation, we remain firmly disinterested in your culinary innovations. Any further attempts to serve 'alternative cuisine' to your fellow crew members will be considered grounds for your immediate reassignment.</i>"
 
 /obj/item/weapon/paper/bombcollars
 	name = "Bomb Collar User's Guide"

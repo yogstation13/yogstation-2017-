@@ -17753,6 +17753,13 @@
 	},
 /turf/closed/wall,
 /area/library)
+"aHC" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Library Maintenance";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "aHD" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -68481,12 +68488,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
-"DYZ" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
-/area/shuttle/syndicate)
 "FCq" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/subspace/ansible,
@@ -68604,12 +68605,6 @@
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
-"LHX" = (
-/obj/effect/landmark/maintroom{
-	template_names = list("Garden", "Surgery")
-	},
-/turf/closed/wall,
-/area/maintenance/fpmaint2)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -68740,6 +68735,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"UCg" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Garden","Surgery")
+	},
+/turf/closed/wall,
+/area/maintenance/fpmaint2)
 "UUd" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68839,13 +68840,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
-"Xvh" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
 "XXK" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/dropper,
@@ -69133,6 +69127,18 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyg" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle/syndicate)
+"Zyh" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Detective","Greytide","Kitchen")
+	},
+/turf/closed/wall,
+/area/maintenance/aft)
 "Zyi" = (
 /turf/closed/wall,
 /area/security/medical)
@@ -69141,6 +69147,12 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/medical)
+"Zyk" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Druglab","Agent","Electric")
+	},
+/turf/closed/wall,
+/area/maintenance/asmaint2)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -80040,7 +80052,7 @@ aaa
 aaa
 aaa
 aah
-DYZ
+Zyg
 aaq
 aak
 aag
@@ -84722,7 +84734,7 @@ aty
 aty
 aty
 aty
-LHX
+UCg
 aMt
 aOi
 aOi
@@ -90680,7 +90692,7 @@ bHm
 bHm
 bHm
 bHm
-bHm
+Zyh
 bMZ
 bMZ
 cda
@@ -90934,9 +90946,9 @@ bBh
 aaa
 aaa
 bHm
-bVX
-bXm
-bXm
+bMZ
+bMZ
+bMZ
 bHm
 bMZ
 ccb
@@ -91449,9 +91461,9 @@ aaa
 aaa
 bHm
 bMZ
-bMY
 bMZ
-bZK
+bMZ
+bHm
 bMZ
 ccb
 cdg
@@ -91707,7 +91719,7 @@ aaa
 bHm
 bMZ
 bMZ
-bYK
+bMZ
 bHm
 bMZ
 ccb
@@ -91962,9 +91974,9 @@ bBh
 aaa
 aaa
 bHm
-bVY
-bXn
-bYL
+bMZ
+bMZ
+bMZ
 bHm
 bMZ
 ccb
@@ -112218,7 +112230,7 @@ aaa
 aDd
 aED
 aFX
-Xvh
+aHC
 aIV
 aKv
 aLP
@@ -117681,7 +117693,7 @@ cbU
 cbU
 bny
 bny
-coj
+bUI
 bny
 bny
 bny
@@ -119729,7 +119741,7 @@ bny
 bny
 bny
 bny
-bny
+Zyk
 bny
 bny
 bUI
@@ -119982,10 +119994,10 @@ bZF
 bZF
 bZG
 bny
-ceS
 bUI
-cha
-chO
+bUI
+bUI
+bUI
 bny
 cjQ
 ckC
@@ -120238,11 +120250,11 @@ aaa
 aaa
 bYE
 bZH
-cdS
-ceT
+bny
 bUI
-chb
-chP
+bUI
+bUI
+bUI
 bny
 cjR
 bUI
@@ -120495,12 +120507,12 @@ aaa
 aaa
 bYF
 bZG
-cdS
-ceS
+bny
 bUI
-chc
 bUI
-ciN
+bUI
+bUI
+bny
 bUI
 bUI
 clr
@@ -120754,9 +120766,9 @@ bYE
 bZH
 bny
 bny
-cdS
-cdS
-cdS
+bny
+bny
+bny
 bny
 bny
 bny
