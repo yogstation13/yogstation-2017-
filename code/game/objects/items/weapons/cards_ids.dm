@@ -55,6 +55,7 @@
 	origin_tech = "magnets=2;syndicate=2"
 	flags = NOBLUDGEON
 	var/prox_check = TRUE //If the emag requires you to be in range
+	slot_flags = SLOT_ID
 
 /obj/item/weapon/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"

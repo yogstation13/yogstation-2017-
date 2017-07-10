@@ -94,7 +94,9 @@
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
-
+	if(isHackerman(user))
+		emag_act()
+		return	
 	if(density && !emagged)
 		if(allowed(user) || src.emergency == 1)
 			open()
@@ -344,3 +346,14 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 /obj/machinery/door/proc/unlock()
 	return
+
+/obj/machinery/door/proc/isHackerman(mob/M)
+	//check if mob has emag
+	if(istype(M.get_active_hand(), /obj/item/weapon/card/emag))
+		return 1
+		
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.wear_id, /obj/item/weapon/card/emag))
+			return 1
+		

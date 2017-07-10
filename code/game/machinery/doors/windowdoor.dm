@@ -76,7 +76,9 @@
 	src.add_fingerprint(user)
 	if(!src.requiresID())
 		user = null
-
+	if(isHackerman(user))
+		emag_act()
+		return
 	if(allowed(user))
 		open_and_close()
 	else
