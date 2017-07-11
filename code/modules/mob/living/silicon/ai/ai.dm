@@ -746,6 +746,11 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 
+	for(var/turf/open/floor/bluegrid/AI/A)
+		if(A.nuking == 1)
+			src << "ERROR lighting circuits overriden by outside forces, perhaps the self destruct sequence has been activated?."
+			return //nuke overriding tiles
+
 	var/lightinput = input(src, "Choose a colour for your floors:") as null|anything in light_list
 
 	switch(lightinput)

@@ -59,6 +59,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
+	var/nuking = 0 //is a nuke active?
 
 /turf/open/floor/bluegrid/AI //exclusive AI version of floor for mood lighting
 	floor_tile = /obj/item/stack/tile/plasteel

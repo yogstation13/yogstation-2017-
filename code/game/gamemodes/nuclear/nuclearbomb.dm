@@ -426,6 +426,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 		for(var/N in nuke_tiles)
 			var/turf/open/floor/T = N
 			T.icon_state = (timing ? "rcircuitanim" : T.icon_regular_floor)
+		for(var/turf/open/floor/bluegrid/AI/A)
+			A.nuking = 1 //only applies to AI tiles, cockblocks the AI from having a disco whilst the nuke goes off
 
 /obj/machinery/nuclearbomb/selfdestruct/set_anchor()
 	return
