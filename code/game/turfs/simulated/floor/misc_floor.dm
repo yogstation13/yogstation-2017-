@@ -60,6 +60,10 @@
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
+/turf/open/floor/bluegrid/AI //exclusive AI version of floor for mood lighting
+	floor_tile = /obj/item/stack/tile/plasteel
+	icon_state = "bcircuit"
+
 /turf/open/floor/bluegrid/New()
 	..()
 	nuke_tiles += src
