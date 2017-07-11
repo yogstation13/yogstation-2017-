@@ -10136,10 +10136,16 @@
 "asp" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
+	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
+/obj/item/weapon/pen{
+	pixel_x = -3
+	},
+/obj/item/weapon/ashtray{
+	pixel_x = 6;
+	pixel_y = 3
+	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "asq" = (
@@ -17753,6 +17759,13 @@
 	},
 /turf/closed/wall,
 /area/library)
+"aHC" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Library Maintenance";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "aHD" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -24298,6 +24311,7 @@
 "aWM" = (
 /obj/structure/table,
 /obj/structure/disposalpipe/segment,
+/obj/item/weapon/ashtray,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aWN" = (
@@ -34212,9 +34226,14 @@
 /area/crew_quarters/captain)
 "bry" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = -4
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/item/weapon/ashtray{
+	pixel_x = 4
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
@@ -68481,12 +68500,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
-"DYZ" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
-/area/shuttle/syndicate)
 "FCq" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/subspace/ansible,
@@ -68604,12 +68617,6 @@
 	icon_state = "dark"
 	},
 /area/tcommsat/computer)
-"LHX" = (
-/obj/effect/landmark/maintroom{
-	template_names = list("Garden", "Surgery")
-	},
-/turf/closed/wall,
-/area/maintenance/fpmaint2)
 "MyD" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -68740,6 +68747,12 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
+"UCg" = (
+/obj/effect/landmark/maintroom{
+	template_names = list("Garden","Surgery")
+	},
+/turf/closed/wall,
+/area/maintenance/fpmaint2)
 "UUd" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -68839,13 +68852,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
-"Xvh" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
 "XXK" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/dropper,
@@ -69133,6 +69139,12 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyh" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor4"
+	},
+/area/shuttle/syndicate)
 "Zyi" = (
 /turf/closed/wall,
 /area/security/medical)
@@ -69141,6 +69153,16 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/medical)
+"Zyk" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/ashtray{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/crew_quarters/bar)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -80040,7 +80062,7 @@ aaa
 aaa
 aaa
 aah
-DYZ
+Zyh
 aaq
 aak
 aag
@@ -84722,7 +84744,7 @@ aty
 aty
 aty
 aty
-LHX
+UCg
 aMt
 aOi
 aOi
@@ -105290,7 +105312,7 @@ aRm
 aSM
 aUl
 aVQ
-aXl
+Zyk
 aXl
 baG
 bch
@@ -105807,7 +105829,7 @@ aVS
 aRk
 aXl
 cFn
-bci
+aRk
 aKh
 baV
 baV
@@ -106064,7 +106086,7 @@ aVR
 aRk
 aZf
 aRk
-bcj
+aRk
 aKh
 baV
 baV
@@ -106321,7 +106343,7 @@ aVT
 aRk
 aZg
 aRk
-bck
+aRk
 aKh
 baV
 baV
@@ -112218,7 +112240,7 @@ aaa
 aDd
 aED
 aFX
-Xvh
+aHC
 aIV
 aKv
 aLP
