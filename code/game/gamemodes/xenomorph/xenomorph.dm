@@ -155,7 +155,7 @@ var/list/turf/xenomorphweeds = list()
 	else
 		RNGspawn = pick(blobstart)
 
-	objective = pick(/*OBJECTIVE_CONQUER*/OBJECTIVE_INFESTATION, OBJECTIVE_INFESTATION)
+	objective = pick(OBJECTIVE_CONQUER, OBJECTIVE_INFESTATION)
 
 	for(var/datum/mind/alien_brethern in xenomorphs) // spawning
 		var/greeted_forged_moved
