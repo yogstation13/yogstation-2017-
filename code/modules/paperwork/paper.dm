@@ -394,7 +394,7 @@
 
 /obj/item/weapon/paper/druglab
 	name = "Security Notice"
-	info = "<small> On September 20th, 2551 </small> <br> <br> Janitor: Don't touch this until the detective's given you the all clear. We don't want to mess the evidence up now that we've catched the most notorious drug baron this side of Tau Ceti."
+	info = "<small> On September 20th, 2551 </small> <br> <br> Janitor: Don't touch this until the detective's given you the all clear. We don't want to mess the evidence up now that we've caught the most notorious drug baron this side of Tau Ceti."
 
 /obj/item/weapon/paper/syndie_agent
 	name = "Briefing"

@@ -103,7 +103,7 @@
 	name = "freezer"
 	desc = "It smells... funky."
 
-/obj/structure/closet/crate/freezer/New()
+/obj/structure/closet/crate/freezer/xeno/New()
 	. = ..()
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
