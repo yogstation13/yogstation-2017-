@@ -62,6 +62,7 @@
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		playsound(src, "pour", 50, 1)
 		user << "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>"
 
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
@@ -75,6 +76,7 @@
 
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		playsound(src, "pour", 50, 1)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>"
 
 	else if(reagents.total_volume)
@@ -236,7 +238,6 @@
 		else
 			reagents.trans_to(O, 5)
 			user << "<span class='notice'>You wet [O] in [src].</span>"
-			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return 1 //no afterattack
 	else if(isprox(O))
 		user << "<span class='notice'>You add [O] to [src].</span>"

@@ -122,3 +122,9 @@
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
 	scope.zoom(L, FALSE)
 	..()
+
+/obj/item/scope/security/toy
+	desc = "Use your binoculars to recon the area, Snake!"
+	zoom_amt = 1
+	max_zoom = 5
+	min_zoom = 1

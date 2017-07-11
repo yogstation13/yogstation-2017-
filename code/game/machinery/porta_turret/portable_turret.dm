@@ -55,7 +55,7 @@
 	var/shot_sound 			//what sound should play when the turret fires
 	var/eshot_sound			//what sound should play when the emagged turret fires
 
-	var/faction = "neutral"
+	var/faction = "silicon"
 
 	var/datum/effect_system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 

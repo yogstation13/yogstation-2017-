@@ -82,7 +82,7 @@
 		if(ear_damage < 100)
 			adjustEarDamage(-0.05,-1)
 
-	if (getBrainLoss() >= 60 && stat != DEAD)
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
 		if (prob(3))
 			if(prob(25))
 				emote("drool")

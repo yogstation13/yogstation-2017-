@@ -40,7 +40,8 @@
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/weapon/restraints/handcuffs/fake              = 2)
+		/obj/item/weapon/restraints/handcuffs/fake              = 2,
+		/obj/item/scope/security/toy							= 2)
 	paiAllowed = 1
 
 /obj/machinery/computer/arcade/New()

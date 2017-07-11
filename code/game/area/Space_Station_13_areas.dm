@@ -69,6 +69,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/sound_env = ROOM
 
+	var/dream_type //A special type of dream that occurs in the area. example: = "legion"
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -112,7 +114,7 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	valid_territory = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg',)
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg','sound/ambience/space.ogg' )
 	infestation_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/mapgen_protected
@@ -246,9 +248,9 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
-	 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	infestation_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/syndicate.ogg')
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -816,7 +818,7 @@ var/list/teleportlocs = list()
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
-	
+
 /area/gateway
 	name = "Gateway"
 	icon_state = "teleporter"
@@ -1171,7 +1173,7 @@ var/list/teleportlocs = list()
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = 1
-	 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
+	
 	infestation_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/djstation/solars
@@ -1184,7 +1186,7 @@ var/list/teleportlocs = list()
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
-	 //Nope, no winning on the derelict as a blob. Gotta eat the station.
+	
 	infestation_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
 
 /area/derelict/hallway/primary
