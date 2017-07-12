@@ -116,7 +116,8 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
+		/mob/living/silicon/ai/proc/ai_mood_lights, /mob/living/silicon/ai/proc/control_integrated_radio, \
+		/mob/living/silicon/ai/proc/set_automatic_say_channel)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -730,6 +731,48 @@ var/list/ai_list = list()
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
 	return
 
+/mob/living/silicon/ai/proc/ai_mood_lights()
+	set name = "Change core lighting"
+	set desc = "Changes the lighting in your AI core."
+	set category = "AI Commands"
+	var/light_list[] = list(
+		"default",
+		"green",
+		"yellow",
+		"pink",
+		"PARTY"
+		)
+
+	if(stat == 2)
+		return //won't work if dead
+
+	for(var/turf/open/floor/bluegrid/AI/A)
+		if(A.nuking == 1)
+			src << "ERROR lighting circuits overriden by outside forces, perhaps the self destruct sequence has been activated?."
+			return //nuke overriding tiles
+
+	var/lightinput = input(src, "Choose a colour for your floors:") as null|anything in light_list
+
+	switch(lightinput)
+		if("default")
+			for(var/turf/open/floor/bluegrid/AI/A)
+				A.icon_state = "bcircuit"
+		if("green")
+			for(var/turf/open/floor/bluegrid/AI/A)
+				A.icon_state = "gcircuit"
+		if("yellow")
+			for(var/turf/open/floor/bluegrid/AI/A)
+				A.icon_state = "ycircuit"
+		if("pink")
+			for(var/turf/open/floor/bluegrid/AI/A)
+				A.icon_state = "pcircuit"
+		if("PARTY")
+			for(var/turf/open/floor/bluegrid/AI/A)
+				A.icon_state = "partycircuit"
+
+
+
+
 /mob/living/silicon/ai/proc/corereturn()
 	set category = "Malfunction"
 	set name = "Return to Main Core"
@@ -911,3 +954,4 @@ var/list/ai_list = list()
 	if(..()) //successfully ressuscitated from death
 		icon_state = "ai"
 		. = 1
+

@@ -26844,7 +26844,7 @@
 	pixel_x = -27;
 	pixel_y = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bbU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -27535,7 +27535,7 @@
 	},
 /area/turret_protected/ai)
 "bds" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bdt" = (
 /turf/open/floor/plasteel{
@@ -27564,7 +27564,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bdw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -28013,7 +28013,7 @@
 /obj/machinery/porta_turret/ai{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bex" = (
 /obj/structure/cable/yellow{
@@ -28024,7 +28024,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bey" = (
 /obj/machinery/flasher{
@@ -28046,7 +28046,7 @@
 	icon_state = "1-4";
 	tag = ""
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bez" = (
 /obj/machinery/camera{
@@ -28062,7 +28062,7 @@
 	pixel_x = 0;
 	tag = ""
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "beA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -28079,7 +28079,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "beB" = (
 /obj/structure/cable/yellow{
@@ -28090,13 +28090,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "beC" = (
 /obj/machinery/porta_turret/ai{
 	dir = 8
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "beD" = (
 /obj/machinery/vending/cigarette,
@@ -28578,7 +28578,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bfK" = (
 /turf/closed/wall,
@@ -28602,7 +28602,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	req_access_txt = 1
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bfN" = (
 /obj/machinery/computer/arcade,
@@ -29024,7 +29024,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bgM" = (
 /obj/structure/cable/yellow{
@@ -29036,7 +29036,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bgN" = (
 /obj/item/device/radio/intercom{
@@ -29070,7 +29070,7 @@
 	pixel_x = -26;
 	pixel_y = 28
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bgO" = (
 /obj/structure/cable/yellow{
@@ -29082,7 +29082,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bgP" = (
 /obj/machinery/ai_slipper{
@@ -29092,7 +29092,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bgQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -29663,7 +29663,7 @@
 	icon_state = "1-2";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "big" = (
 /obj/machinery/power/apc{
@@ -30311,7 +30311,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bjD" = (
 /obj/structure/cable/yellow{
@@ -30320,7 +30320,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bjE" = (
 /obj/structure/cable/yellow{
@@ -30333,7 +30333,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bjF" = (
 /obj/structure/cable/yellow{
@@ -30341,7 +30341,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bjG" = (
 /obj/machinery/requests_console{
@@ -30994,7 +30994,7 @@
 /area/bridge/meeting_room)
 "bkY" = (
 /obj/machinery/light,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bkZ" = (
 /obj/machinery/camera/motion{
@@ -31012,7 +31012,7 @@
 	icon_state = "motion0";
 	uses = 10
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "blb" = (
 /obj/item/device/radio/intercom{
@@ -31781,7 +31781,7 @@
 	name = "AI Chamber";
 	req_access_txt = "16"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai)
 "bmD" = (
 /obj/machinery/newscaster/security_unit{
@@ -32610,10 +32610,10 @@
 /obj/structure/window/reinforced,
 /obj/item/weapon/aiModule/core/full/asimovpp,
 /obj/item/weapon/aiModule/core/full/robocop,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "boj" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bok" = (
 /obj/machinery/flasher{
@@ -32622,14 +32622,14 @@
 	id = "AI"
 	},
 /obj/machinery/computer/upload/ai,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bol" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /obj/machinery/computer/upload/borg,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bom" = (
 /obj/structure/table{
@@ -32649,7 +32649,7 @@
 /obj/item/weapon/aiModule/core/freeformcore,
 /obj/item/weapon/aiModule/reset/purge,
 /obj/item/weapon/aiModule/supplied/protectStation,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bon" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -34172,7 +34172,7 @@
 "brs" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/core/full/custom,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "brt" = (
 /turf/open/floor/plasteel{
@@ -34188,7 +34188,7 @@
 "brv" = (
 /obj/structure/table,
 /obj/item/weapon/aiModule/supplied/freeform,
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "brw" = (
 /obj/structure/bed,
@@ -34933,7 +34933,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bsM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -34941,7 +34941,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bsN" = (
 /obj/structure/table,
@@ -34958,14 +34958,14 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bsP" = (
 /obj/structure/table,
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bsQ" = (
 /turf/closed/wall/r_wall,
@@ -35726,7 +35726,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/bluegrid/AI,
 /area/turret_protected/ai_upload)
 "bun" = (
 /obj/structure/cable/yellow{
@@ -68606,7 +68606,7 @@
 /area/tcommsat/computer)
 "LHX" = (
 /obj/effect/landmark/maintroom{
-	template_names = list("Garden", "Surgery")
+	template_names = list("Garden","Surgery")
 	},
 /turf/closed/wall,
 /area/maintenance/fpmaint2)
