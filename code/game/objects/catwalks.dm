@@ -68,6 +68,9 @@
 				new /obj/item/stack/rods(src.loc)
 				new /obj/structure/lattice(src.loc)
 				qdel(src)
+	if (istype(C, /obj/item/weapon/wirecutters))
+		qdel(src)
+		new /obj/item/stack/rods(src.loc)
 	return ..()
 
 /obj/structure/catwalk/Crossed()
