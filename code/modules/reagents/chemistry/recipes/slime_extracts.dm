@@ -555,6 +555,21 @@
 	Z.loc = get_turf(holder.my_atom)
 	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
 
+//Golem
+/datum/chemical_reaction/customgolem
+	name = "Custom Golem"
+	id = "c_golem"
+	result = null
+	required_reagents = list("strange_reagent" = 5)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/adamantine
+	required_other = 1
+
+/datum/chemical_reaction/customgolem/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/effect/customgolemrune/Z = new /obj/effect/customgolemrune
+	Z.loc = get_turf(holder.my_atom)
+
 //Bluespace
 /datum/chemical_reaction/slimefloor2
 	name = "Bluespace Floor"

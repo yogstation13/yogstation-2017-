@@ -34,7 +34,12 @@
 	if(amount)
 		var/blocked = getarmor(null, "rad")
 
-		if(!silent)
+		var/pass = 1
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna && H.dna.species && (RADIMMUNE in H.dna.species.specflags))
+				pass = 0
+		if(pass && (!silent && blocked != 100))
 			src << "Your skin feels warm."
 
 		apply_effect(amount, IRRADIATE, blocked)

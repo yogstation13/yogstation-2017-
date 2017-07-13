@@ -83,6 +83,7 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
 	/client/proc/check_ruins,
+	/datum/admins/proc/locate_item,
 	/datum/admins/proc/borer_panel,
 	/client/proc/respawn_character,
 	/client/proc/rejuv_all,
@@ -171,6 +172,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/check_ruins,
+	/datum/admins/proc/locate_item,
 	/datum/admins/proc/borer_panel
 	)
 var/list/admin_verbs_possess = list(
@@ -258,6 +260,7 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
 	/client/proc/check_ruins,
+	/datum/admins/proc/locate_item,
 	/datum/admins/proc/borer_panel,
 	)
 
@@ -934,6 +937,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check Ruins"
 	set category = "Debug"
 	set desc = "Check all loaded ruins."
+	if(!check_rights(R_ADMIN))
+		return
 	log_admin("[key_name(usr)] checked ruins.")
 	message_admins("[key_name_admin(usr)] checked ruins.")
 	var/dat = "<center><b>Ruins</b></center><br>"
@@ -942,7 +947,68 @@ var/list/admin_verbs_hideable = list(
 		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
 	usr << browse(dat, "window=checkruin;size=350x500")
 
+/datum/admins/proc/locate_item(type_in as text)
+	set name = "Locate Atoms"
+	set category = "Debug"
+	set desc = "Locate all items of a particular type."
+	var/const/MAX_ITEMS = 500
+	if(!check_rights(R_ADMIN))
+		return
+	var/type = pick_closest_path(type_in)
+	if(!type)
+		return
 
+	var/strict = FALSE
+	type_in = alert("Strict type ([type]) or type and all subtypes?",,"Strict type", "Type and subtypes", "Cancel")
+	if(type_in == "Cancel")
+		return
+	else if(type_in == "Strict type")
+		strict = TRUE
+
+	var/range
+	type_in = alert("Locate in range or in world?",, "Range", "World", "Cancel")
+	if(type_in == "Cancel")
+		return
+	if(type_in == "Range")
+		if(!usr.loc)
+			return
+		var/range_in = input("Range?") as num
+		range = max(0, range_in)
+
+	log_admin("[key_name(usr)] located all atoms of type [type] in [isnull(range) ? "the world" : "in range [range] of [usr.x], [usr.y], [usr.z]"].")
+	message_admins("[key_name_admin(usr)] located atoms of type [type] in [isnull(range) ? "the world" : "in range [range] of [usr.x], [usr.y], [usr.z]"].")
+	var/list/items = list()
+	if(isnull(range))
+		for(var/V in world)
+			var/atom/A = V
+			if((strict && A.type == type) || (!strict && istype(A, type)) )
+				if(istype(A, /atom/movable))
+					items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservefollow=\ref[A]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+				else
+					items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+				if(items.len > MAX_ITEMS)
+					break
+			CHECK_TICK
+	else
+		for(var/VV in RANGE_TURFS(range, usr))
+			var/turf/T = VV
+			for(var/V in T.GetAllContents())
+				var/atom/A = V
+				if((strict && A.type == type) || (!strict && istype(A, type)) )
+					if(istype(A, /atom/movable))
+						items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservefollow=\ref[A]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+					else
+						items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+					if(items.len > MAX_ITEMS)
+						break
+				CHECK_TICK
+			if(items.len > MAX_ITEMS)
+				break
+	if(items.len >= MAX_ITEMS)
+		items += "...(More than [MAX_ITEMS] items)"
+	else
+		items += "[items.len] items"
+	usr << items.Join("<br>")
 
 /client/proc/admin_pick_random_player()
 	set category = "Admin"

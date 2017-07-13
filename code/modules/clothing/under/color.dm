@@ -74,6 +74,13 @@
 	item_color = "superb"
 	desc = "Produced by superb inc. NNYC, wearing this thing makes you feel like a <i>hypebeast</i>."
 
+/obj/item/clothing/under/color/palace
+	name = "trifecta jeans and shirt"
+	icon_state = "palace"
+	item_state = "palace"
+	item_color = "palace"
+	desc = "Produced by castel skateboards inc in a collab with superb, stop wearing this you <i>hypebeast</i>."
+
 /obj/item/clothing/under/color/white
 	name = "white jumpsuit"
 	icon_state = "white"

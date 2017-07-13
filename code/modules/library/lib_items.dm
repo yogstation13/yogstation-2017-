@@ -178,6 +178,7 @@
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
+	playsound(loc, 'sound/effects/page_flip.ogg', 50, 1, -1)
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
 		return

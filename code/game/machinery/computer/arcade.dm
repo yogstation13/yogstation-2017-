@@ -40,7 +40,8 @@
 		/obj/item/weapon/coin/antagtoken						= 2,
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/weapon/restraints/handcuffs/fake              = 2)
+		/obj/item/weapon/restraints/handcuffs/fake              = 2,
+		/obj/item/scope/security/toy							= 2)
 	paiAllowed = 1
 
 /obj/machinery/computer/arcade/New()
@@ -52,6 +53,11 @@
 		var/obj/item/weapon/circuitboard/CB = new choice()
 		new CB.build_path(loc, CB)
 		qdel(src)
+
+/obj/machinery/computer/arcade/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
+	if(emagged)
+		return 0
+	return ..()
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million

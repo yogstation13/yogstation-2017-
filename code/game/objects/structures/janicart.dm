@@ -1,13 +1,41 @@
-/obj/structure/janitorialcart
+/obj/structure/mopbucket
+	name = "mop bucket"
+	desc = "Fill it with water, but don't forget a mop!"
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "mopbucket"
+	density = 0
+	anchored = 0
+	flags = OPENCONTAINER
+	var/amount_per_transfer_from_this = 5 //required for OPENCONTAINER
+
+
+/obj/structure/mopbucket/New()
+	..()
+	create_reagents(100)
+
+/obj/structure/mopbucket/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/mop))
+		wet_mop(I, user)
+		return 1
+	else
+		return ..()
+
+/obj/structure/mopbucket/proc/wet_mop(obj/item/weapon/mop/mop, mob/user)
+	if(reagents.total_volume < 1)
+		user << "<span class='warning'>[src] is out of water!</span>"
+		return 0
+	else
+		reagents.trans_to(mop, mop.mopcap)
+		user << "<span class='notice'>You wet [mop] in [src].</span>"
+		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+		return 1
+
+/obj/structure/mopbucket/janitorialcart
 	name = "janitorial cart"
 	desc = "This is the alpha and omega of sanitation."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "cart"
-	anchored = 0
 	density = 1
-	flags = OPENCONTAINER
-	//copypaste sorry
-	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
 	var/obj/item/weapon/mop/mymop = null
 	var/obj/item/weapon/reagent_containers/spray/cleaner/myspray = null
@@ -16,21 +44,15 @@
 	var/const/max_signs = 4
 
 
-/obj/structure/janitorialcart/New()
-	create_reagents(100)
+/obj/structure/mopbucket/janitorialcart/New()
+	..()
+	janitorial_items += src
 
+/obj/structure/mopbucket/janitorialcart/Destroy()
+	. = ..()
+	janitorial_items -= src
 
-/obj/structure/janitorialcart/proc/wet_mop(obj/item/weapon/mop, mob/user)
-	if(reagents.total_volume < 1)
-		user << "<span class='warning'>[src] is out of water!</span>"
-		return 0
-	else
-		reagents.trans_to(mop, 5)
-		user << "<span class='notice'>You wet [mop] in [src].</span>"
-		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-		return 1
-
-/obj/structure/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
+/obj/structure/mopbucket/janitorialcart/proc/put_in_cart(obj/item/I, mob/user)
 	if(!user.drop_item())
 		return
 	I.loc = src
@@ -39,19 +61,19 @@
 	return
 
 
-/obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
+/obj/structure/mopbucket/janitorialcart/attackby(obj/item/I, mob/user, params)
 	var/fail_msg = "<span class='warning'>There is already one of those in [src]!</span>"
 
-	if(istype(I, /obj/item/weapon/mop))
-		var/obj/item/weapon/mop/m=I
-		if(m.reagents.total_volume < m.reagents.maximum_volume)
-			if (wet_mop(m, user))
-				return
+	if(istype(I, /obj/item/weapon/mop) && I.w_class > 2)
+		var/obj/item/weapon/mop/M = I
+		if(M.reagents.total_volume < M.reagents.maximum_volume)
+			if (wet_mop(M, user))
+				return 1
 		if(!mymop)
-			m.janicart_insert(user, src)
+			M.janicart_insert(user, src)
 		else
 			user << fail_msg
-
+		return 1
 	else if(istype(I, /obj/item/weapon/storage/bag/trash))
 		if(!mybag)
 			var/obj/item/weapon/storage/bag/trash/t=I
@@ -89,7 +111,7 @@
 	else
 		return ..()
 
-/obj/structure/janitorialcart/attack_hand(mob/user)
+/obj/structure/mopbucket/janitorialcart/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat
 	if(mybag)
@@ -107,7 +129,7 @@
 	popup.open()
 
 
-/obj/structure/janitorialcart/Topic(href, href_list)
+/obj/structure/mopbucket/janitorialcart/Topic(href, href_list)
 	if(!in_range(src, usr))
 		return
 	if(!isliving(usr))
@@ -148,7 +170,7 @@
 	updateUsrDialog()
 
 
-/obj/structure/janitorialcart/update_icon()
+/obj/structure/mopbucket/janitorialcart/update_icon()
 	overlays.Cut()
 	if(mybag)
 		overlays += "cart_garbage"

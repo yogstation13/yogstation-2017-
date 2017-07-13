@@ -146,6 +146,7 @@
 				R.add_reagent(reagent, actual)
 				energy = max(energy - actual / 10, 0)
 				investigate_log("Dispensed <b><font color='red'>[actual]x [reagent]</font></b> by <b>[key_name(usr)]</b> energy=[energy]","chemistry")
+				playsound(src, "pour", 50, 1)
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
