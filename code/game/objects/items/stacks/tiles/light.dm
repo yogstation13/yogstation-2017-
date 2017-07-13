@@ -8,6 +8,8 @@
 	turf_type = /turf/open/floor/light
 	var/state = 0
 
+/obj/item/stack/tile/light/tech
+	name = "light tile"
 /obj/item/stack/tile/light/New(var/loc, var/amount=null)
 	..()
 	if(prob(5))

@@ -51,6 +51,7 @@
 		return
 	else
 		currentcolor++
+
 	if(currentcolor > coloredlights.len)
 		on = 0
 	update_icon()
@@ -70,3 +71,40 @@
 			user << "<span class='notice'>You replace the light bulb.</span>"
 		else
 			user << "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>"
+
+
+
+
+/turf/open/floor/techlight
+	name = "integrated floor light"
+	broken_states = list("techlight_broken")
+	icon_state = "light_on"
+	floor_tile = /obj/item/stack/tile/light/tech
+	var/on  = 1
+	var/typ = ""
+
+/turf/open/floor/techlight/tube
+	name = "floor light tube"
+	icon_state = "techlight_on1"
+
+
+/turf/open/floor/techlight/update_icon()
+	..()
+	if(on)
+		icon_state = "techlight_on[typ]"
+		SetLuminosity(1)
+
+	else
+		SetLuminosity(0)
+		icon_state = "techlight_off[typ]"
+
+/turf/open/floor/techlight/attack_hand(mob/user)
+	if(!on)
+		on = 1
+		return
+	else
+		on = 0
+
+/turf/open/floor/techlight/ChangeTurf(turf/T)
+	SetLuminosity(0)
+	..()

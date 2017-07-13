@@ -162,3 +162,8 @@
 	name = "resting contraption"
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+
+/obj/structure/bed/double
+	name = "double bed"
+	icon_state = "doublebed"
+	desc = "cozy enough to ERP in"
