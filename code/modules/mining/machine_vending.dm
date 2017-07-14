@@ -1,10 +1,3 @@
-#define TOOL "Tools" // tool that miners can actively use.
-#define WEAPON "Weapons" // may be along the lines of a tool, but may as well do a lot in combat.
-#define MEDS "Meds" // self explanatory. our miners need to patch themselves.
-#define MININGDRONE "Mining Drone" // drones are coming in.
-#define MISC "Miscellaneous" // random crap that nobody buys
-#define EQUIP "Equipment" // equipment that miners can wear.
-
 /**********************Mining Equipment Vendor**************************/
 
 /obj/machinery/mineral/equipment_vendor
@@ -16,44 +9,44 @@
 	anchored = 1
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800, TOOL),
-		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400, TOOL),
-		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400, TOOL),
-		new /datum/data/mining_equipment("Barometer",			/obj/item/device/barometer/mining,										300, TOOL),
-		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750, TOOL),
-		new /datum/data/mining_equipment("Orebox Capsule",	/obj/item/orecapsule,													100, TOOL),
-		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500, MEDS),
-		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600, MEDS),
-		new /datum/data/mining_equipment("Fire First-Aid Kit",	/obj/item/weapon/storage/firstaid/fire,									600, MEDS),
-		new /datum/data/mining_equipment("Toxin First-Aid Kit",	/obj/item/weapon/storage/firstaid/toxin,								600, MEDS),
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    	50, MEDS),
-		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				  		200, MEDS),
-		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining/alt,								500, EQUIP),
-		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600, EQUIP),
-		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining/lavaland,		            2500, EQUIP),
-		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								1000, EQUIP),
-		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750, WEAPON),
-		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		750, WEAPON),
-		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		750, WEAPON),
-		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		750, WEAPON),
-		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		1500, WEAPON),
-		new /datum/data/mining_equipment("Plasma Cutter" ,		/obj/item/weapon/gun/energy/plasmacutter,								1500, WEAPON),
-		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		2000, WEAPON),
-		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		500, MININGDRONE),
-		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_upgrade,      			   			   		400, MININGDRONE),
-		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_upgrade/health,      			   	       		400, MININGDRONE),
-		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_upgrade/cooldown,      			   	   		600, MININGDRONE),
-		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000, MININGDRONE),
-		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		800, MISC),
-		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000, MISC),
-		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   		500, MISC),
-		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		200, MISC),
-		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    		100, MISC),
-		new /datum/data/mining_equipment("Absinthe",            /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100, MISC),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    		150, MISC),
-		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						          		200, MISC),
-		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300, MISC),
-		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300, MISC),
+		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800, "Tools"),
+		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400, "Tools"),
+		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400, "Tools"),
+		new /datum/data/mining_equipment("Barometer",			/obj/item/device/barometer/mining,										300, "Tools"),
+		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750, "Tools"),
+		new /datum/data/mining_equipment("Orebox Capsule",	/obj/item/orecapsule,														100, "Tools"),
+		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500, "Meds"),
+		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600, "Meds"),
+		new /datum/data/mining_equipment("Fire First-Aid Kit",	/obj/item/weapon/storage/firstaid/fire,									600, "Meds"),
+		new /datum/data/mining_equipment("Toxin First-Aid Kit",	/obj/item/weapon/storage/firstaid/toxin,								600, "Meds"),
+		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,	    	50, "Meds"),
+		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/medipens/utility,	 				  		200, "Meds"),
+		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining/alt,								500, "Equipment"),
+		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600, "Equipment"),
+		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining/lavaland,		            2500, "Equipment"),
+		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								1000, "Equipment"),
+		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750, "Weapons"),
+		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		750, "Weapons"),
+		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		750, "Weapons"),
+		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		750, "Weapons"),
+		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		1500, "Weapons"),
+		new /datum/data/mining_equipment("Plasma Cutter" ,		/obj/item/weapon/gun/energy/plasmacutter,								1500, "Weapons"),
+		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		2000, "Weapons"),
+		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		500, "Mining Drone"),
+		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_upgrade,      			   			   		400, "Mining Drone"),
+		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_upgrade/health,      			   	       		400, "Mining Drone"),
+		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_upgrade/cooldown,      			   	   		600, "Mining Drone"),
+		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000, "Mining Drone"),
+		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		800, "Miscellaneous"),
+		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000, "Miscellaneous"),
+		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   		500, "Miscellaneous"),
+		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		200, "Miscellaneous"),
+		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,    		100, "Miscellaneous"),
+		new /datum/data/mining_equipment("Absinthe",            /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100, "Miscellaneous"),
+		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    		150, "Miscellaneous"),
+		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						          		200, "Miscellaneous"),
+		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300, "Miscellaneous"),
+		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300, "Miscellaneous"),
 		)
 
 /datum/data/mining_equipment/

@@ -430,6 +430,7 @@
 	if(welding)
 		if(get_fuel() >= 1)
 			user << "<span class='notice'>You switch [src] on.</span>"
+			playsound(src, "sound/effects/welder_ignite.ogg", 50, 1)
 			force = 15
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'

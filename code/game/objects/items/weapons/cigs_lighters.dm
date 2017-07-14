@@ -41,6 +41,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/match/proc/matchignite()
 	if(lit == 0)
+		playsound(loc, 'sound/effects/match_light.ogg', 50, 1, -1)
 		lit = 1
 		icon_state = "match_lit"
 		damtype = "fire"

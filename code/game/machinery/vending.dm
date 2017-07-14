@@ -152,6 +152,8 @@
 	if(!qdeleted(src))
 		if(prob(25))
 			malfunction()
+		if(!fallen_over)
+			fallover()
 
 /obj/machinery/vending/blob_act(obj/effect/blob/B)
 	malfunction()
@@ -376,7 +378,7 @@
 	if(health)
 		health -= damage
 
-	if(health < 0)
+	if(health <= 0)
 		fallover()
 
 /obj/machinery/vending/proc/fallover()
