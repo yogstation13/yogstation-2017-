@@ -296,3 +296,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/honeybun
 	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/cinnamonroll
+	name = "Cinnamon Roll"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/cinnamon = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	category = CAT_PASTRY

@@ -289,3 +289,11 @@
 	bonus_reagents = list("nutriment" = 1, "honey" = 1)
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
+
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	name = "Cinnamon Roll"
+	desc = "Too perfect for this world, too pure"
+	icon_state = "cinnamonroll"
+	bonus_reagents = list("nutriment" = 1, "cinnamon" = 1)
+	list_reagents = list("nutriment" = 5, "cinnamon" = 5, "sugar" = 5)
+	filling_color = "#F2CE91"

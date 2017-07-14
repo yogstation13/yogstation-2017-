@@ -23,7 +23,8 @@
 	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
 	 "blackpepper" = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
-	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
+	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
+	 "cinnamon" = list("cinnamonshaker", "cinnamon shaker", "A spice obtained from the bark of a cinnamomum tree"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
@@ -180,6 +181,13 @@
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
 	list_reagents = list("soysauce" = 50)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/cinnamon
+	name = "cinnamon shaker"
+	desc = "A spice obtained from the bark of a cinnamomum tree"
+	icon_state = "cinnamonshaker"
+	list_reagents = list("cinnamon" = 50)
 	possible_states = list()
 
 
