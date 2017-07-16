@@ -52,6 +52,7 @@
 	DB.ckey = C.ckey
 	setInvisibility()
 	DB.overlay_fullscreen("dream", /obj/screen/fullscreen/blind)
+	DB << "<span class='notice'>As your conciousness fades, you find yourself in a dreamworld.</span>"
 
 	spawn(30)
 		DB.clear_fullscreens()
@@ -59,9 +60,9 @@
 
 /datum/dream/proc/setInvisibility()
 	for(var/mob/living/carbon/human/dream/D in mob_list)
-		if(D == owner)
+		if(D == DB)
 			continue
-		var/image/invis = D.staticOverlays["blank"]
+		var/image/invis = D.staticOverlays["invisible"]
 		DB.staticOverlays |= invis
 		world << "2"
 		if(DB.client)

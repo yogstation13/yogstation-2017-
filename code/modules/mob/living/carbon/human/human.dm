@@ -900,6 +900,12 @@
 	staticOverlay.override = 1
 	staticOverlays["animal"] = staticOverlay
 
+	staticOverlay = image(icon('icons/effects/effects.dmi', "invisible"), loc = src)
+	staticOverlay.override = 1
+	staticOverlays["invisible"] = staticOverlay
+
+
+
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))

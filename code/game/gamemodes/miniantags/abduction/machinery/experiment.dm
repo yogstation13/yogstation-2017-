@@ -162,7 +162,7 @@
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
-	if(H.mind != null && H.ckey != null)
+	if(H.mind && H.isActive(0))
 		history += H
 		abductee_minds += H.mind
 		say("Processing specimen...")
