@@ -180,7 +180,7 @@
 		if(!B.key || !B.mind || B.stat == DEAD)
 			user << "<span class='warning'>The MMI indicates the brain is completely unresponsive.</span>"
 
-		else if(!B.client)
+		else if(!B.isActive())
 			user << "<span class='warning'>The MMI indicates the brain is currently inactive; it might change.</span>"
 
 		else

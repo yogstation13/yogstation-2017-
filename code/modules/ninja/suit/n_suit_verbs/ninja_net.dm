@@ -8,7 +8,7 @@
 
 	if(!ninjacost(200,N_STEALTH_CANCEL) && iscarbon(C))
 		var/mob/living/carbon/human/H = affecting
-		if(C.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
+		if(C.isActive())//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 			if(!locate(/obj/effect/energy_net) in C.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(H.loc, C.loc))
 					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.

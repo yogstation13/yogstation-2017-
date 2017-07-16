@@ -144,12 +144,7 @@
 	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	. = ..()
-	var/reset_perspective = TRUE
-	if(istype(src, /mob/living/carbon))
-		var/mob/living/carbon/C = src
-		if(C.dream.dreaming)
-			reset_perspective = FALSE        //Don't want dreamers to get buggy
-	if(client && reset_perspective)
+	if(client)
 		reset_perspective(destination)
 	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 

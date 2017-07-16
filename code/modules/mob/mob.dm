@@ -968,3 +968,7 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/isActive() //Replacement of the if(client). Current use is with dreaming
+	if(client)
+		return 1

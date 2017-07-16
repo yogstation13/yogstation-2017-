@@ -84,6 +84,9 @@
 	return B
 
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
+	if(iscarbon(new_character))
+		var/mob/living/carbon/C = new_character
+		C.pauseDream()
 	if(outfit_browsers)
 		for(var/V in outfit_browsers)
 			var/datum/outfit_browse/B = V

@@ -51,7 +51,7 @@ var/global/posibrain_notif_cooldown = 0
 		spawn(askDelay) //Seperate from the global cooldown.
 			notified = 0
 			update_icon()
-			if(brainmob.client)
+			if(brainmob.isActive())
 				visible_message(success_message)
 			else
 				visible_message(fail_message)
@@ -132,7 +132,7 @@ var/global/posibrain_notif_cooldown = 0
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
-				if(!src.brainmob.client)
+				if(!src.brainmob.isActive())
 					msg += "It appears to be in stand-by mode.\n" //afk
 			if(DEAD)
 				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"

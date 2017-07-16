@@ -732,8 +732,8 @@
 					return
 				stat = UNCONSCIOUS
 				update_canmove()
-				if(!dream.Dream(src))
-					blind_eyes(1)
+				dream.Dream(src)
+				blind_eyes(1)
 
 		else if(health <= config.health_threshold_crit)
 			if(NOCRIT in status_flags)
@@ -807,4 +807,34 @@
 
 	..()
 
+/mob/living/carbon/proc/pauseDream() //This shuts down the dream and brings them back to the old dreaming state for the remainder of their sleep
+	if(disableDream())
+		spawn(0)
+			enableDream()
 
+/mob/living/carbon/proc/disableDream()
+	if(dream)
+		dream.canDream = FALSE
+		dream.stopDream()
+		return 1
+	return 0
+
+/mob/living/carbon/proc/enableDream()
+	if(dream)
+		dream.canDream = TRUE
+		return 1
+	return 0
+
+/mob/living/carbon/isActive(var/pullClientBack = 1)
+	..()
+	world << "1"
+	if(dream)
+		world << "2"
+		if(pullClientBack)
+			world << "3"
+			pauseDream()
+			world << "4"
+			return 1
+		else if(ishuman(dream.DB) && dream.DB.ckey)
+			world << "5"
+			return 1

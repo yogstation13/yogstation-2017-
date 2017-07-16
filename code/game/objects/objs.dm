@@ -65,6 +65,10 @@
 	else
 		return null
 
+
+
+
+
 /obj/proc/updateUsrDialog()
 	if(in_use)
 		var/is_in_use = 0
@@ -220,4 +224,6 @@
 /obj/proc/CanAStarPass()
 	. = !density
 
+/obj/dreamClick(mob/living/carbon/C)
+	examine(C)
 

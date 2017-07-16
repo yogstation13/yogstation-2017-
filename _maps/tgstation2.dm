@@ -13,6 +13,7 @@ z6 = empty space
 z7 = empty space
 z8 = empty space
 z9 = empty space
+z10 = dreamland
 */
 
 #if !defined(MAP_FILE)
@@ -31,12 +32,13 @@ z9 = empty space
         #include "map_files\generic\z7.dmm"
         #include "map_files\generic\z8.dmm"
 		#include "map_files\generic\z9.dmm"
+		#include "map_files\generic\z10.dmm"
 
 		#define MAP_PATH "map_files/YogStation"
         #define MAP_FILE "yogstation.2.1.3.dmm"
         #define MAP_NAME "Box Station"
 
-        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
+        #define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = SELFLOOPING, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED, DREAMLAND = SELFLOOPING)
 
 #elif !defined(MAP_OVERRIDE)
 

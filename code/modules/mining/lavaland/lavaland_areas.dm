@@ -4,7 +4,7 @@
 	icon_state = "mining"
 	has_gravity = 1
 	always_unpowered = TRUE
-	dream_type = "legion"
+	dreamtype = "legion"
 
 /area/lavaland/surface
 	name = "Lavaland"

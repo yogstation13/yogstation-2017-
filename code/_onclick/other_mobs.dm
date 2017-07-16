@@ -38,6 +38,10 @@
 /atom/proc/interact(mob/user)
 	return
 
+/atom/proc/dreamClick(mob/living/carbon/C)
+	return
+
+
 /*
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
 	return

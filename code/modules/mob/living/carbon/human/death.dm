@@ -14,6 +14,8 @@
 	new /obj/effect/decal/remains/human(loc)
 
 /mob/living/carbon/human/death(gibbed)
+	if(dream && dream.dreaming)
+		dream.stopDream()
 	if(stat == DEAD)
 		return
 	stat = DEAD
