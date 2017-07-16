@@ -74,3 +74,15 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/bread/mimana
 	category = CAT_BREAD
+
+/datum/crafting_recipe/food/frenchtoast
+	name = "French toast"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
+		/datum/reagent/consumable/cinnamon = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/eggyolk = 5,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/frenchtoast
+	category = CAT_BREAD

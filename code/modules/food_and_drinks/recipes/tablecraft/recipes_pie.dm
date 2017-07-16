@@ -159,3 +159,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pie/frostypie
 	category = CAT_PIE
+
+/datum/crafting_recipe/food/buttcinnpie
+	name = "Butterscotch cinnamon pie"
+	reqs = list(
+		/datum/reagent/consumable/milk = 5,
+		/datum/reagent/consumable/sugar = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/pie/plain = 1,
+		/datum/reagent/consumable/cinnamon = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/buttcinnpie
+	category = CAT_PIE

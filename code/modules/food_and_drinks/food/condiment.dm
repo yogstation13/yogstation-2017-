@@ -190,6 +190,16 @@
 	list_reagents = list("cinnamon" = 50)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/cinnamon/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is attempting the cinnamon challenge! It looks like \he's trying to commit suicide!</span>");
+	sleep(20)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	B1.reagents.add_reagent("cinnamon", 25)
+	B1.reagents.add_reagent("potassium", 2)
+	B1.reagents.add_reagent("phosphorus", 2)
+	B1.reagents.add_reagent("sugar", 2)
+	playsound(loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+	return (OXYLOSS)
 
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!

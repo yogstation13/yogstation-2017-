@@ -188,3 +188,20 @@
 	desc = "Tastes like blue and cold."
 	icon_state = "frostypie"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/buttcinnpie
+	name = "butterscotch cinnamon pie"
+	desc = "Surprise! It is a butterscotch cinnamon pie."
+	icon_state = "buttcinnpie"
+	slice_path = /obj/item/weapon/reagent_containers/food/snacks/buttcinnpieslice
+	slices_num = 5
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 5, "cinnamon" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/buttcinnpieslice
+	name = "butterscotch cinnamon pie slice"
+	desc = "A slice of butterscotch cinnamon pie. Just one."
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "buttcinnpieslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#D2691E"
+	list_reagents = list("nutriment" = 5, "cinnamon" = 5, "sugar" = 5, "vitamin" = 3)

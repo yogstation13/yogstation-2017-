@@ -154,3 +154,12 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = ""
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/frenchtoast
+	name = "french toast"
+	desc = "This toast looks like it'll surrender at any moment!"
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "frenchtoast"
+	bitesize = 3
+	filling_color = "#D2691E"
+	list_reagents = list("nutriment" = 10, "cinnamon" = 5, "sugar" = 5)
