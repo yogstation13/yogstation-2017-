@@ -64,9 +64,7 @@
 			continue
 		var/image/invis = D.staticOverlays["invisible"]
 		DB.staticOverlays |= invis
-		world << "2"
 		if(DB.client)
-			world << "1"
 			DB.client.images |= invis
 
 /datum/dream/process()

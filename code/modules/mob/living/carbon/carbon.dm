@@ -827,14 +827,9 @@
 
 /mob/living/carbon/isActive(var/pullClientBack = 1)
 	..()
-	world << "1"
 	if(dream)
-		world << "2"
 		if(pullClientBack)
-			world << "3"
 			pauseDream()
-			world << "4"
 			return 1
 		else if(ishuman(dream.DB) && dream.DB.ckey)
-			world << "5"
 			return 1
