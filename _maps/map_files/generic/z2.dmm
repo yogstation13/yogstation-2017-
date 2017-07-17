@@ -4256,9 +4256,7 @@
 	},
 /area/syndicate_mothership)
 "oj" = (
-/obj/structure/toilet{
-	icon_state = "toilet00";
-	dir = 8
+/obj/machinery/disposal/bin/toilet{
 	},
 /obj/structure/window/reinforced/tinted{
 	tag = "icon-rwindow (NORTH)";
