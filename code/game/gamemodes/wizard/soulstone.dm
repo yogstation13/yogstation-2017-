@@ -156,7 +156,7 @@
 			if(contents.len)
 				return 0
 			var/mob/living/carbon/T = target
-			if(!T.isActive())
+			if(T.isActive())
 				for(var/obj/item/W in T)
 					T.unEquip(W)
 				init_shade(T, user)
