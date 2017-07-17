@@ -265,7 +265,7 @@
 	},
 /area/holodeck/rec_center/court)
 "aT" = (
-/turf/open/floor/holoflo
+/turf/open/floor/holofloor{
 	dir = 2;
 	icon_state = "green"
 	},
