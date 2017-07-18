@@ -141,13 +141,13 @@ The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "starving"
 
 /obj/screen/alert/gross
-	name = "grossed out"
+	name = "Grossed out."
 	desc = "That was kind of gross..."
 	icon_state = "gross"
 
 /obj/screen/alert/verygross
-	name = "Very grossed out"
-	desc = "OH GOD I'M GOING TO VOMIT"
+	name = "Very grossed out."
+	desc = "I'm not feeling very well.."
 	icon_state = "gross2"
 
 /obj/screen/alert/disgusted
