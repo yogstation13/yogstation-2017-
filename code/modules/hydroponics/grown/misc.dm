@@ -120,7 +120,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon_stick
 	seed = /obj/item/seeds/cinnamomum
 	name = "Cinnamon"
-	desc = "Straight from the bark!."
+	desc = "Straight from the bark!"
 	icon_state = "cinnamon_stick"
 	filling_color = "#FFD700"
 	bitesize_mod = 2
