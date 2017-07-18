@@ -13,7 +13,8 @@ To add a new dream area:
 
 var/list/dream_index = list(
 	"dreamland" = dreamland,
-	"legion"    = legiondream
+	"legion"    = legiondream,
+	"shuttle"   = shuttledream
 	)
 
 /obj/effect/dream_eye
@@ -23,6 +24,10 @@ var/list/dream_index = list(
 /obj/effect/dream_eye/legion
 	name = "legion dream"
 	dreamtype = "legion"
+
+/obj/effect/dream_eye/shuttle
+	name = "startrek dream"
+	dreamtype = "shuttle"
 
 
 /obj/effect/dream_eye/New()
@@ -46,11 +51,21 @@ var/list/dream_index = list(
 	requires_power = 0
 	has_gravity = 1
 
+/area/dream/grassland
+	name = "Grassland"
+	ambientsounds = list('sound/ambience/dream1.ogg')
+
+/area/dream/legion
+	name = "Lavaland"
+
+/area/dream/startrek
+	name = "Shuttle"
+
 
 /turf/closed/indestructible/mist
 	name = "mist"
 	desc = "A thick wall of mist."
-	icon = 'icons/obj/dream.dmi'
+	icon = 'icons/obj/dream/dream.dmi'
 	icon_state = "mist"
 
 
@@ -64,3 +79,19 @@ var/list/dream_index = list(
 	name = null
 	desc = null
 	icon_state = null
+
+/obj/effect/dream
+	icon = 'icons/obj/dream/dream.dmi'
+
+/obj/effect/dream/hyperdrive
+	name = "hyperdrive"
+	desc = "An experimental drive that allows ships to bend space-time to accelerate, it has only seen use in a few select ships due to the magnitude \
+	of what it offers."
+	icon = 'icons/obj/dream/startrek.dmi'
+	icon_state = "ftl_drive_trek_on"
+
+/obj/effect/dream/trekscreen
+	name = "viewscreen"
+	desc = "A screen with the layout of the ship, and a few other readouts on it."
+	icon = 'icons/obj/dream/startrek.dmi'
+	icon_state = "trekscreen"

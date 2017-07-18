@@ -135,6 +135,7 @@ var/list/teleportlocs = list()
 	icon_state = "shuttle"
 	murders_plants = 0
 	sound_env = SMALL_ENCLOSED
+	dreamtype = "shuttle"
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
