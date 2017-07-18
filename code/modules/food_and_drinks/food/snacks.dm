@@ -112,9 +112,10 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(foodtype & H.dna.species.toxic_food)
-					M << "<span class='notice'>You don't want to eat this.</span>"
+					M.grossedout += 80
 				else if(foodtype & H.dna.species.disliked_food)
-					M << "<span class='notice'>That tasted like crap!</span>"
+					M << "<span class='notice'>That was..kind of gross.</span>"
+					M.grossedout += 30
 			if(reagents.total_volume)
 				var/fraction = min(bitesize/reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)

@@ -228,6 +228,14 @@
 /mob/proc/set_drugginess(amount)
 	return
 
+/////////////////////////////////// GROSSED OUT ////////////////////////////////////
+
+/mob/proc/adjust_grossedoutness(amount)
+	return
+
+/mob/proc/set_grossedoutness(amount)
+	return
+
 /////////////////////////////////// BLIND DISABILITY ////////////////////////////////////
 
 /mob/proc/cure_blind() //when we want to cure the BLIND disability only.
@@ -243,13 +251,3 @@
 
 /mob/proc/become_nearsighted()
 	return
-
-
-
-
-
-
-
-
-
-

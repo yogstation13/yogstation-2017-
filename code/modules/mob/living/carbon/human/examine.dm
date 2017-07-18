@@ -316,6 +316,13 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
+	if(grossedout >= GROSSEDOUT_LEVEL_DISGUSTED)
+		msg += "[t_He] looks disguted\n"
+	else if(grossedout <= GROSSEDOUT_LEVEL_VERYGROSSEDOUT)
+		msg += "[t_He] looks really grossed out\n"
+	else if(grossedout >= GROSSEDOUT_LEVEL_GROSSEDOUT)
+		msg += "[t_He] looks a bit grossed out\n"
+
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
 

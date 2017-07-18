@@ -140,6 +140,21 @@ The box in your backpack has an oxygen tank and gas mask in it."
 	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
 
+/obj/screen/alert/gross
+	name = "gross"
+	desc = "That was kind of gross..."
+	icon_state = "hot"
+
+/obj/screen/alert/verygross
+	name = "Very grossed"
+	desc = "OH GOD I'M GOING TO VOMIT"
+	icon_state = "lowpressure"
+
+/obj/screen/alert/disgusted
+	name = "DISGUSTED"
+	desc = "ABSOLUTELY DISGUSTIN'"
+	icon_state = "cold"
+
 /obj/screen/alert/hot
 	name = "Too Hot"
 	desc = "You're flaming hot! Get somewhere cooler and take off any insulating clothing like a fire suit."
