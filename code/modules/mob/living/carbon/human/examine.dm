@@ -316,11 +316,11 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
-	if(grossedout >= GROSSEDOUT_LEVEL_DISGUSTED)
+	if(disgust >= DISGUST_LEVEL_DISGUSTED)
 		msg += "[t_He] looks disguted\n"
-	else if(grossedout <= GROSSEDOUT_LEVEL_VERYGROSSEDOUT)
+	else if(disgust <= DISGUST_LEVEL_VERYGROSS)
 		msg += "[t_He] looks really grossed out\n"
-	else if(grossedout >= GROSSEDOUT_LEVEL_GROSSEDOUT)
+	else if(disgust >= DISGUST_LEVEL_GROSS)
 		msg += "[t_He] looks a bit grossed out\n"
 
 	if(blood_volume < BLOOD_VOLUME_SAFE)

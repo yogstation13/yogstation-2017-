@@ -230,10 +230,10 @@
 
 /////////////////////////////////// GROSSED OUT ////////////////////////////////////
 
-/mob/proc/adjust_grossedoutness(amount)
+/mob/proc/adjust_disgustness(amount)
 	return
 
-/mob/proc/set_grossedoutness(amount)
+/mob/proc/set_disgustness(amount)
 	return
 
 /////////////////////////////////// BLIND DISABILITY ////////////////////////////////////

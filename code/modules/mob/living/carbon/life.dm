@@ -381,8 +381,8 @@
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)
 
-	if(grossedout)
-		adjust_grossedoutness(-1)
+	if(disgust)
+		adjust_disgustness(-1)
 
 /mob/living/carbon/proc/regenStamina()
 	if(sleeping)

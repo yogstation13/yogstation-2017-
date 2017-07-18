@@ -108,7 +108,7 @@
 #define BLOOD_VOLUME_SURVIVE		122
 
 //Might as well put grossed out levels here too huehuehue
-#define GROSSEDOUT_LEVEL_MAXEDOUT 150 //We can always add PTSD later
-#define GROSSEDOUT_LEVEL_DISGUSTED 75
-#define GROSSEDOUT_LEVEL_VERYGROSSEDOUT 50
-#define GROSSEDOUT_LEVEL_GROSSEDOUT 25
+#define DISGUST_LEVEL_MAXEDOUT 150 //We can always add PTSD later
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25
