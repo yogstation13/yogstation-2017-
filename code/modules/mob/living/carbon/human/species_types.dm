@@ -1259,7 +1259,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	heatmod = 2
 	speedmod = 1
 	disliked_food = GROSS
-	toxic_food = TOXIC || RAW
+	toxic_food = TOXIC | RAW
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()

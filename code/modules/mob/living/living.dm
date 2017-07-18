@@ -519,7 +519,7 @@ Sorry Giacom. Please don't be mad :(
 	SetStunned(0, 0)
 	SetWeakened(0, 0)
 	SetSleeping(0, 0)
-	set_disgustness(0)
+	set_disgust(0)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310

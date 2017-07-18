@@ -109,15 +109,16 @@
 			if(M.satiety > -200)
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			var/fraction = min(bitesize/reagents.total_volume, 1)
+			var/fraction = min(bitesize / reagents.total_volume, 1)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(foodtype & H.dna.species.toxic_food)
-					M << "<span class='notice'>What the hell was in that thing.</span>"
-					M.disgust += 10 + 5 * fraction
+					M << fraction
+					M << "<span class='notice'>What the hell was that thing!</span>"
+					M.adjust_disgust(25 + 30 * fraction)
 				else if(foodtype & H.dna.species.disliked_food)
-					M << "<span class='notice'>That was..kind of gross.</span>"
-					M.disgust += 2.5 + 5 * fraction
+					M << "<span class='notice'>That didn't taste too good..</span>"
+					M.adjust_disgust(10 + 25 * fraction)
 			if(reagents.total_volume)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)

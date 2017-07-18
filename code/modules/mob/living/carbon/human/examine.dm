@@ -318,7 +318,7 @@
 
 	if(disgust >= DISGUST_LEVEL_DISGUSTED)
 		msg += "[t_He] looks disguted\n"
-	else if(disgust <= DISGUST_LEVEL_VERYGROSS)
+	else if(disgust >= DISGUST_LEVEL_VERYGROSS)
 		msg += "[t_He] looks really grossed out\n"
 	else if(disgust >= DISGUST_LEVEL_GROSS)
 		msg += "[t_He] looks a bit grossed out\n"

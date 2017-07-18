@@ -54,10 +54,10 @@
 		clear_fullscreen("high")
 		clear_alert("high")
 
-/mob/living/carbon/adjust_disgustness(amount)
+/mob/living/carbon/adjust_disgust(amount)
 	var/old_disgust = disgust
 	if(amount>0)
-		disgust = min(disgust+amount, disgust_LEVEL_MAXEDOUT)
+		disgust = min(disgust+amount, DISGUST_LEVEL_MAXEDOUT)
 		if(disgust > DISGUST_LEVEL_DISGUSTED)
 			throw_alert("disgust", /obj/screen/alert/disgusted)
 		else if(disgust >= DISGUST_LEVEL_VERYGROSS)
@@ -78,7 +78,7 @@
 		else if(disgust < DISGUST_LEVEL_GROSS)
 			clear_alert("disgust")
 
-/mob/living/carbon/set_disgustness(amount)
+/mob/living/carbon/set_disgust(amount)
 	disgust = amount
 	if(disgust > DISGUST_LEVEL_DISGUSTED)
 		throw_alert("disgust", /obj/screen/alert/disgusted)

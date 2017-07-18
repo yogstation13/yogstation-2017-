@@ -382,7 +382,7 @@
 		hallucination = max(hallucination-2,0)
 
 	if(disgust)
-		adjust_disgustness(-1)
+		adjust_disgust(-1)
 
 /mob/living/carbon/proc/regenStamina()
 	if(sleeping)

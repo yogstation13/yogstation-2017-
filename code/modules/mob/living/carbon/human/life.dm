@@ -398,13 +398,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
 
 	if(disgust)
-		var/pukeprob = 0.20 * disgust
+		var/pukeprob = 0.2 * disgust
 		if(disgust >= DISGUST_LEVEL_GROSS)
 			if(prob(25))
 				stuttering += 1
 				confused += 2
 			if(prob(10) && !stat)
-				src << "<span class='warning'>You feel king of iffy...</span>"
+				src << "<span class='warning'>You feel kind of iffy...</span>"
 			jitteriness = max(jitteriness - 3, 0)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
