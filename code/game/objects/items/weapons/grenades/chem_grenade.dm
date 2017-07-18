@@ -489,12 +489,12 @@
 	beakers += B1
 	beakers += B2
 
-/obj/item/weapon/grenade/chem_grenade/teargas
+/obj/item/weapon/grenade/chem_grenade/pukonium
 	name = "teargas grenade"
 	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
 	stage = READY
 
-/obj/item/weapon/grenade/chem_grenade/teargas/New()
+/obj/item/weapon/grenade/chem_grenade/pukonium/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
