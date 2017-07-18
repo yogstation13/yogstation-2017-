@@ -71,8 +71,7 @@
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
-				return 0
-			else if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
 				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
 				return 0
 			else if(fullness <= 50)
@@ -110,9 +109,12 @@
 			if(M.satiety > -200)
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(foodtype & M.dna.species.toxic_food)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(foodtype & H.dna.species.toxic_food)
 					M << "<span class='notice'>You don't want to eat this.</span>"
-			else if(foodtype & M.dna.species.disliked_food)
+				else if(foodtype & H.dna.species.disliked_food)
+					M << "<span class='notice'>That tasted like crap!</span>"
 			if(reagents.total_volume)
 				var/fraction = min(bitesize/reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)

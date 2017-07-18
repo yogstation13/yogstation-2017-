@@ -43,7 +43,7 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/trash/deadmouse/M = new(src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(src.loc)
 		M.icon_state = icon_dead
 		if(toast)
 			M.color = "#3A3A3A"
@@ -108,4 +108,4 @@
 	bitesize = 3
 	eatverb = "devours"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
-	foodtype = GROSS | MEAT
+	foodtype = GROSS | MEAT | RAW
