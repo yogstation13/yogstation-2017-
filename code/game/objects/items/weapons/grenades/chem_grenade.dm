@@ -490,8 +490,8 @@
 	beakers += B2
 
 /obj/item/weapon/grenade/chem_grenade/pukonium
-	name = "teargas grenade"
-	desc = "Used for nonlethal riot control. Contents under pressure. Do not directly inhale contents."
+	name = "pukonium grenade"
+	desc = "Filled with some of the most rancid stuff ever, will probably make anyone within a mile of it dry heave."
 	stage = READY
 
 /obj/item/weapon/grenade/chem_grenade/pukonium/New()
@@ -503,6 +503,9 @@
 	B1.reagents.add_reagent("potassium", 40)
 	B2.reagents.add_reagent("phosphorus", 40)
 	B2.reagents.add_reagent("sugar", 40)
+
+	beakers += B1
+	beakers += B2
 
 #undef EMPTY
 #undef WIRED

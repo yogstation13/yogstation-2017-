@@ -1478,10 +1478,10 @@ datum/reagent/romerol
 /datum/reagent/pukonium
 	name = "pukonium"
 	id = "pukonium"
-	description = "Refined faraway in the lands of Adam El-Tablawania, this liquid is known to be the most vile thing on earth"
+	description = "Refined faraway in the lands of Adam El-Tablawania, this liquid is known to be the most vile thing on earth."
 	color = "360f0f"
 
 /datum/reagent/pukonium/on_mob_life(mob/living/M)
 	M.adjust_disgust(2)
-	M << "<span class='notice'>OH GOD ITS SO VILE.</span>"
+	M << "<span class='warning'>OH GOD ITS SO VILE!</span>"
 	..()
