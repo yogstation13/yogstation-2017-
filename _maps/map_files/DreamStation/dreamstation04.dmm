@@ -62577,7 +62577,7 @@
 "cpH" = (
 /obj/structure/grille/broken,
 /obj/item/device/assembly/mousetrap,
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
