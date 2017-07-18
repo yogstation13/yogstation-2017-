@@ -100,8 +100,12 @@
 	response_harm   = "splats"
 	gold_core_spawnable = 0
 
-/obj/item/trash/deadmouse
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
+	bitesize = 3
+	eatverb = "devours"
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	foodtype = GROSS | MEAT
