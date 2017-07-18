@@ -410,7 +410,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
 				confused += 2.5
 				stuttering += 1
-				vomit()
+				vomit(10, 0, 1, 0, 1, 0, 4)
 			Dizzy(5)
 		if(disgust >= DISGUST_LEVEL_DISGUSTED)
 			if(prob(50))

@@ -544,13 +544,13 @@
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0, var/stunamount = 10)
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
 		if(stun)
-			Weaken(10)
+			Weaken(stunamount)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -806,5 +806,3 @@
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
-
-
