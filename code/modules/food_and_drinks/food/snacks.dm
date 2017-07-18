@@ -113,7 +113,6 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(foodtype & H.dna.species.toxic_food)
-					M << fraction
 					M << "<span class='notice'>What the hell was that thing?!</span>"
 					M.adjust_disgust(25 + 30 * fraction)
 				else if(foodtype & H.dna.species.disliked_food)
