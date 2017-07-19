@@ -79,7 +79,7 @@
 			if(SHUTTLE_RECALL)
 				return
 			if(SHUTTLE_CALL)
-				RETURN
+				return
 			if(SHUTTLE_DOCKED)
 				return
 			if(SHUTTLE_ESCAPE)

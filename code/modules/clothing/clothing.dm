@@ -53,7 +53,19 @@
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
 
+/obj/item/clothing/proc/take_teardamage(amount)
+	var/bearer = loc
+	if(amount > tearhealth || 0 >= tearhealth - amount)
+		visible_message(break_message(), break_message())
+		qdel(src)
 
+	if (ishuman(bearer))
+		var/mob/living/carbon/human/H = bearer
+		H.update_inv_w_uniform()
+	tearhealth -= amount
+
+/obj/item/clothing/proc/break_message()
+	return "<span class='warning'>[src] falls apart and breaks!</span>"
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -378,31 +390,30 @@ BLIND     // can't see anything
 	adjusted = 0
 	..()
 
-/obj/item/clothing/under/proc/handle_tear(mob/user)
+/obj/item/clothing/under/proc/handle_tear(mob/user, ripcount = 1)
 	if (canbetorn)
-		if (tearhealth >= 20)
-			tearhealth -= 20
-			permeability_coefficient += 0.20
-			if (armor)
-				if (armor["brute"])
-					armor["brute"] -= 2
-				if (armor["melee"])
-					armor["melee"] -= 2
-			if (user)
-				if (user.loc)
-					new /obj/item/clothing/torncloth(user.loc)
+		take_teardamage(20)
+		permeability_coefficient += 0.20
+		if (armor)
+			if (armor["brute"])
+				armor["brute"] -= 2
+			if (armor["melee"])
+				armor["melee"] -= 2
+		if (user)
+			if (user.loc)
+				new /obj/item/clothing/torncloth(user.loc)
+				if(!qdeleted(src))
 					user.visible_message("You hear cloth tearing.", "A segment of [src] falls away to the floor, torn apart.", "*riiip*")
-			return 1
-		else
-			//no more cloth left on the item, so nix it
-			user.visible_message("[src] falls away to tatters, stripped to its barest seams.")
-			qdel(src)
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				H.update_inv_w_uniform()
+
+		var/new_ripcount = ripcount - 1
+		if(ripcount)
+			handle_tear(user, ripcount = new_ripcount)
 		return 1
 	else
 		return 0
+
+/obj/item/clothing/under/break_message()
+	return "[src] falls away to tatters, stripped to its barest seams."
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)

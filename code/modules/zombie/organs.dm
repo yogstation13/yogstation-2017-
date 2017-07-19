@@ -9,6 +9,7 @@
 	var/datum/species/old_species
 	var/living_transformation_time = 5
 	var/converts_living = FALSE
+	var/strength = 1
 
 /obj/item/organ/body_egg/zombie_infection/New()
 	. = ..()
@@ -22,26 +23,25 @@
 	..()
 	if(owner)
 		if(iszombie(owner))
-			if(owner.onfire)
+			if(owner.on_fire)
 				if(owner.stat == DEAD)
 					ashify(owner)
 					return
-			owner.adjustBruteLoss(-2)
-			owner.adjustFireLoss(-2)
 		else
-			if(prob(45))
-				if(prob(20))
-					owner <<"<span class='danger'>You feel sick.</span>"
-				owner.adjustToxLoss(3)
+			if(prob(5))
+				owner <<"<span class='danger'>You feel sick.</span>"
+				owner.adjustToxLoss(strength)
+			strength = min(strength + 1, 30)
 
 /obj/item/organ/body_egg/zombie_infection/proc/ashify()
-	for(var/obj/I in owner)
+	for(var/obj/item/I in owner)
 		owner.unEquip(I)
-		if(I.burnstate == FLAMMABLE)
+		if(I.burn_state == FLAMMABLE)
 			I.burn()
 	new /obj/effect/decal/cleanable/ash(get_turf(owner))
 	visible_message("<span class='warning'>[owner] burns into ashes!</span>",\
 				"<span class='warning'>[owner] burns into ashes!</span>")
+	log_game("[owner] (zombie) has burned to death.")
 	qdel(owner)
 
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
