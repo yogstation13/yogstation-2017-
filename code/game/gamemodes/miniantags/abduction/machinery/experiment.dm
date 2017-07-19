@@ -175,6 +175,7 @@
 			if(3)
 				H << "<span class='warning'>You feel intensely watched.</span>"
 		sleep(5)
+		H << "<span class='userdanger'><b>AAAAAAAAAAAAAAAAAAAAAAAAA-</b></span>"
 		H << "<span class='warning'><b>Your mind snaps!</b></span>"
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
@@ -186,6 +187,7 @@
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 		ticker.mode.update_abductor_icons_added(H.mind)
+		H << "<span class='warning'><b>You can't remember how you got here or what was did to you..</b></span>"
 
 		for(var/obj/item/organ/gland/G in H.internal_organs)
 			G.Start()
