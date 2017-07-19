@@ -808,9 +808,8 @@
 	..()
 
 /mob/living/carbon/proc/pauseDream() //This shuts down the dream and brings them back to the old dreaming state for the remainder of their sleep
-	if(disableDream())
-		spawn(0)
-			enableDream()
+	if(dream && dream.canDream && disableDream())
+		addtimer(src,"enableDream",0)
 
 /mob/living/carbon/proc/disableDream()
 	if(dream)

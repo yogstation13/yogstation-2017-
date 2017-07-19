@@ -116,6 +116,10 @@ var/next_mob_id = 0
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
 /atom/proc/visible_message(message, blind_message, range = 7)
+	if(isobj(src))
+		var/obj/O = src
+		if(O.nomessage)
+			return 0
 	var/turf/T = get_turf(src)
 	if(!T)
 		return

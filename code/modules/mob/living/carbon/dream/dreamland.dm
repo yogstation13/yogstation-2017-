@@ -14,20 +14,29 @@ To add a new dream area:
 var/list/dream_index = list(
 	"dreamland" = dreamland,
 	"legion"    = legiondream,
-	"shuttle"   = shuttledream
+	"shuttle"   = shuttledream,
+	"bar"       = bardream
 	)
 
 /obj/effect/dream_eye
 	name = "dreamland"
 	var/dreamtype = "dreamland"
+	var/dream_message = "<span class='notice'>As your conciousness fades, you find yourself in a dreamworld.</span>" //What you get when u go to sleep
 
 /obj/effect/dream_eye/legion
 	name = "legion dream"
 	dreamtype = "legion"
+	dream_message = "<span class='notice'>When you fall asleep in the wastes, it appears even your dreams are hostile.</span>"
 
 /obj/effect/dream_eye/shuttle
 	name = "startrek dream"
 	dreamtype = "shuttle"
+	dream_message = "<span class='notice'>As you go unconscious, you see what might or will be.</span>"
+
+/obj/effect/dream_eye/bar
+	name = "bar"
+	dreamtype = "bar"
+	dream_message = "<span class='notice'>As your consciousness fades, you find yourself in a place only the librarian could dream of..</span>"
 
 
 /obj/effect/dream_eye/New()
@@ -52,15 +61,20 @@ var/list/dream_index = list(
 	has_gravity = 1
 
 /area/dream/grassland
-	name = "Grassland"
+	name = "Grass dream"
 	ambientsounds = list('sound/ambience/dream1.ogg')
 
 /area/dream/legion
-	name = "Lavaland"
+	name = "Lavaland dream "
 
 /area/dream/startrek
-	name = "Shuttle"
+	name = "Shuttle dream"
 
+/area/dream/bar
+	name = "Bar dream"
+
+
+//Dream props
 
 /turf/closed/indestructible/mist
 	name = "mist"
@@ -82,6 +96,54 @@ var/list/dream_index = list(
 
 /obj/effect/dream
 	icon = 'icons/obj/dream/dream.dmi'
+
+
+//Lustyxenoadminbusbar
+
+/obj/effect/dream/adminbus
+	name = "adminbus"
+	desc = "Where only the shittiest of shits reside."
+
+/obj/effect/dream/adminbus/backwall
+	icon_state = "backwall"
+
+/obj/effect/dream/adminbus/frontwalltop
+	icon_state = "frontwalltop"
+
+/obj/effect/dream/adminbus/frontwallbottom
+	icon_state = "frontwallbottom"
+
+/obj/effect/dream/adminbus/frontwallbottomrear
+	icon_state = "frontwallbottomrear"
+
+/obj/effect/dream/adminbus/reartire
+	icon_state = "reartire"
+
+/obj/effect/dream/adminbus/topdoor
+	icon_state = "topdoor"
+
+/obj/effect/dream/adminbus/bottomdoor
+	icon_state = "bottomdoor"
+
+/obj/effect/dream/adminbus/fronttire
+	icon_state = "fronttire"
+
+/obj/effect/dream/adminbus/hoodbottom
+	icon_state = "hoodbottom"
+
+/obj/effect/dream/adminbus/hoodtop
+	icon_state = "hoodtop"
+
+/obj/effect/dream/adminbus/wheredahoodat
+	icon_state = "wheredahoodat"
+
+/obj/effect/dream/adminbus/backseat
+	icon_state = "backseat"
+
+/obj/effect/dream/adminbus/driverseat
+	icon_state = "driverseat"
+
+//Startrek shuttle
 
 /obj/effect/dream/hyperdrive
 	name = "hyperdrive"

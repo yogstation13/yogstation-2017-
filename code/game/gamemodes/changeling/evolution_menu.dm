@@ -378,6 +378,8 @@ var/list/sting_paths
 	mind.changeling.purchasedpowers += revive_abilities
 
 	var/mob/living/carbon/C = src	//only carbons have dna now, so we have to typecaste
+	if(C.dream)
+		qdel(C.dream) //Completely get rid of the dream datum. We really dont need changelings dreaming as alot of their powers are supposed to work while sleeping
 	if(ishuman(C))
 		var/datum/changelingprofile/prof = mind.changeling.add_new_profile(C, src)
 		mind.changeling.first_prof = prof

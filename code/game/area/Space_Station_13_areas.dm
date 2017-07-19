@@ -567,6 +567,7 @@ var/list/teleportlocs = list()
 	name = "Captain's Office"
 	icon_state = "captain"
 	sound_env = MEDIUM_SOFTFLOOR
+	dreamtype = "bar"
 
 /area/crew_quarters/courtroom
 	name = "Courtroom"
@@ -654,6 +655,7 @@ var/list/teleportlocs = list()
 	name = "Bar"
 	icon_state = "bar"
 	sound_env = LARGE_SOFTFLOOR
+	dreamtype = "bar"
 
 /area/crew_quarters/theatre
 	name = "Theatre"

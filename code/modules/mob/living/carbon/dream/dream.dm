@@ -24,7 +24,7 @@
 	START_PROCESSING(SSobj, src)
 	return 1
 
-/datum/dream/proc/startDream(mob/living/carbon/C, dream)
+/datum/dream/proc/startDream(mob/living/carbon/C, obj/effect/dream_eye/dream)
 	var/turf/DS = get_turf(dream)
 	if(!ishuman(DB))
 		DB = new DB(DS)
@@ -37,10 +37,10 @@
 			H.dna.transfer_identity(DB, transfer_SE=0)
 			DB.updateappearance(mutcolor_update=1)
 		if(isalien(C))
-			var/obj/item/clothing/suit/xenos/suit
-			var/obj/item/clothing/head/xenos/head
+			var/obj/item/clothing/suit/xenos/suit = new()
+			var/obj/item/clothing/head/xenos/head = new()
 			DB.equip_to_slot_if_possible(head, slot_head)
-			DB.equip_to_slot_if_possible(suit, slot_w_uniform)
+			DB.equip_to_slot_if_possible(suit, slot_wear_suit)
 		else if(ismonkey(C))
 			var/obj/item/clothing/suit/monkeysuit/suit = new()
 			var/obj/item/clothing/mask/gas/monkeymask/mask = new()
@@ -52,7 +52,7 @@
 	DB.ckey = C.ckey
 	setInvisibility()
 	DB.overlay_fullscreen("dream", /obj/screen/fullscreen/blind)
-	DB << "<span class='notice'>As your conciousness fades, you find yourself in a dreamworld.</span>"
+	DB << dream.dream_message
 
 	spawn(30)
 		DB.clear_fullscreens()
@@ -68,6 +68,8 @@
 			DB.client.images |= invis
 
 /datum/dream/process()
+	if(!owner)
+		terminateDream()
 	if(owner.stat != UNCONSCIOUS)
 		STOP_PROCESSING(SSobj, src)
 		stopDream()
@@ -86,8 +88,8 @@
 	owner.ckey = DB.ckey
 
 /datum/dream/proc/terminateDream()
-	DB << "<span class='combat'>Your body is gone...</span>"
-	spawn(50)
+	if(DB.client || DB.key) //Only do this if it didnt get caught by other code
+		DB << "<span class='combat'>Your body is gone...</span>"
 		DB.ghostize()
 		qdel(DB)
 		qdel(src)
@@ -114,4 +116,7 @@
 	return
 
 /mob/living/carbon/human/dream/start_pulling()
+	return
+
+/mob/living/carbon/human/dream/suicide()
 	return

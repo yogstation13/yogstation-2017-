@@ -1,0 +1,56 @@
+"a" = (/turf/open/floor/holofloor/asteroid,/area/space)
+"b" = (/turf/open/floor/light,/area/space)
+"c" = (/turf/closed/wall,/area/space)
+"d" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/space,/area/space)
+"e" = (/obj/machinery/door/airlock/glass_large,/turf/open/floor/wood,/area/space)
+"f" = (/turf/open/floor/wood,/area/space)
+"g" = (/obj/structure/chair{dir = 4},/turf/open/floor/wood,/area/space)
+"h" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/space)
+"i" = (/obj/structure/chair{dir = 8},/turf/open/floor/wood,/area/space)
+"j" = (/obj/structure/table/wood,/obj/item/weapon/kitchen/fork,/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/turf/open/floor/wood,/area/space)
+"k" = (/obj/structure/chair/stool,/turf/open/floor/wood,/area/space)
+"l" = (/obj/structure/table/wood,/turf/open/floor/wood{icon_state = "wood-broken4"},/area/space)
+"m" = (/turf/open/floor/wood{icon_state = "wood-broken4"},/area/space)
+"n" = (/obj/item/stack/spacecash/c1000,/turf/open/floor/wood,/area/space)
+"o" = (/obj/structure/railing/middle{name = "pole"},/turf/open/floor/wood,/area/space)
+"p" = (/obj/structure/table/wood,/obj/item/stack/spacecash/c1000,/turf/open/floor/wood,/area/space)
+"q" = (/mob/living/simple_animal/hostile/alien/maid,/turf/open/floor/wood,/area/space)
+"r" = (/obj/structure/railing/middle{name = "pole"},/obj/item/stack/spacecash/c200,/turf/open/floor/wood,/area/space)
+"s" = (/obj/item/stack/spacecash/c200,/turf/open/floor/wood,/area/space)
+"t" = (/obj/structure/chair{dir = 4},/turf/open/floor/wood{icon_state = "wood-broken4"},/area/space)
+"u" = (/obj/item/stack/spacecash/c200,/turf/open/floor/wood{icon_state = "wood-broken4"},/area/space)
+"v" = (/obj/structure/table/wood,/obj/item/weapon/kitchen/fork,/turf/open/floor/wood,/area/space)
+"w" = (/obj/machinery/vending/boozeomat,/turf/open/floor/wood,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+abbbbbbbbbbbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+abbbbbbbbbbbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+abbbbbbbbbbbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+abbbbbbbbbbbaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+cccddddddcccefefcccddddccdddcc
+cffffffffffffffffffffffffffffc
+cghhiffffffffffffffffffffghhic
+cghjifffffffkkkkkffffffffgjlic
+cffmfffffffhhhhhhhfffffffffffc
+cfffffffffghfffffhiffffffffffc
+cfffffffffghnfonfhiffffffffffc
+cffffffmffgpfqrsfhiffffffgjhic
+cfkkkffffftluffnshiffffffglvic
+chhhhkfffffhhphhhhfffffffffffc
+cfffhkffffffkkkkkfffffffffffmc
+cwwfhkfffffffffffffffffffffffc
+cccccccccccccccccccccccccccccc
+"}

@@ -18,6 +18,9 @@
 	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
 	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
 
+	var/nomessage = FALSE   //Do we want to participate in visible_message? Not in dreaming
+
+
 /obj/New()
 	..()
 
