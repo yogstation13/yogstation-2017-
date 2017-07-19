@@ -187,7 +187,7 @@
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 		ticker.mode.update_abductor_icons_added(H.mind)
-		H << "<span class='warning'><b>You can't remember how you got here or what was did to you..</b></span>"
+		H << "<span class='warning'><b>You can't remember how you got here or what was done to you..</b></span>"
 
 		for(var/obj/item/organ/gland/G in H.internal_organs)
 			G.Start()
