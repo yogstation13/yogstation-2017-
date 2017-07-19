@@ -255,7 +255,7 @@
 	..()
 	modules += new /obj/item/weapon/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash/cyborg(src)
-	modules += new /obj/item/weapon/mop/cyborg(src)
+	modules += new /obj/item/weapon/mop/advanced/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
 	drying_agent = new(src)

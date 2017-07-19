@@ -101,7 +101,7 @@
 
 
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))
+	if(istype(M,/mob/living/simple_animal/hostile/construct/builder))
 		if(istype(src, /turf/closed/wall/mineral/cult))
 			return
 		src.ChangeTurf(/turf/closed/wall/mineral/cult/artificer)

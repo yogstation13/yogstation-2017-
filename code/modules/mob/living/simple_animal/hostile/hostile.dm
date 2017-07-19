@@ -77,9 +77,9 @@
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 		. += Mobs
 
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
+		var/static/hostile_objects = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha, /obj/effect/cyrogenicbubble))
 
-		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
+		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_objects))
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
@@ -164,6 +164,8 @@
 			return 1
 	if(isobj(the_target))
 		if(is_type_in_list(the_target, wanted_objects))
+			return 1
+		else if (istype(the_target, /obj/effect/cyrogenicbubble))
 			return 1
 	return 0
 

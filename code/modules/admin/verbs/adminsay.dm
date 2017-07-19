@@ -10,7 +10,7 @@
 		return
 
 	log_adminsay("[key_name(src)] : [msg]")
-	send_discord_message("asay", "**[usr.ckey]: ** [msg]")
+	webhook_send_asay(key_name(src), msg)
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
 		msg = "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"
@@ -20,4 +20,10 @@
 		admins << msg
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/asay_popup(message as text)
+	set name = "asay"
+	set category = "Admin"
+	set hidden = 1
+	src.cmd_admin_say(message)
 
