@@ -673,7 +673,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(O)
 
 /obj/item/weapon/ashtray/attack_self(mob/living/user)
-	if(amount_of_stubs == 0)
+	if(!amount_of_stubs)
 		return
 	else
 		user << "<span class='notice'>You empty the [src] onto the ground.</span>"
