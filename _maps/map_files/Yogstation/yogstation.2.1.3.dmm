@@ -69148,6 +69148,19 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"ZxZ" = (
+/obj/structure/closet{
+	name = "Evidence Closet"
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/security/Cells)
 "Zya" = (
 /turf/closed/wall/r_wall,
 /area/security/Permabrig)
@@ -94537,7 +94550,7 @@ aiq
 amc
 amP
 anF
-aop
+ZxZ
 Zyk
 apu
 apR
