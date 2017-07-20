@@ -950,6 +950,14 @@ var/list/teleportlocs = list()
 	name = "Brig Medical"
 	icon_state = "medbay"
 
+/area/security/Cells
+	name = "Holding Cell"
+	icon_state = "brig"
+
+/area/security/Permabrig
+	name = "Permanent Cell"
+	icon_state = "sec_prison"
+
 /*
 /area/security/transfer/New()
 	..()
