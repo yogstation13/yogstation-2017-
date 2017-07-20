@@ -12502,10 +12502,11 @@
 /turf/open/floor/plating,
 /area/maintenance/auxsolarport)
 "axx" = (
-/obj/structure/cable/yellow,
 /obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4";
+	tag = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/auxsolarport)
@@ -13150,16 +13151,15 @@
 /area/maintenance/auxsolarport)
 "ayL" = (
 /obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
+	d1 = 4;
 	d2 = 8;
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/auxsolarport)
@@ -68606,7 +68606,7 @@
 /area/tcommsat/computer)
 "LHX" = (
 /obj/effect/landmark/maintroom{
-	template_names = list("Garden", "Surgery")
+	template_names = list("Garden","Surgery")
 	},
 /turf/closed/wall,
 /area/maintenance/fpmaint2)
