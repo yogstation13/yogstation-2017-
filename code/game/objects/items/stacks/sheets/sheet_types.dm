@@ -59,7 +59,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=1"
-	no_variants = FALSE
+	novariants = FALSE
 
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
@@ -96,7 +96,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=2"
-	no_variants = FALSE
+	novariants = FALSE
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
