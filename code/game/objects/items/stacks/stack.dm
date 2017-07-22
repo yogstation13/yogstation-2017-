@@ -18,7 +18,7 @@
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
-	var/no_variants = TRUE //If this object should change sprites based on amount
+	var/novariants = TRUE //If this object should change sprites based on amount
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
