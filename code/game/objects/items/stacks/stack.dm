@@ -56,6 +56,27 @@
 	else
 		return (amount)
 
+/obj/item/stack/update_icon()
+	if(novariants)
+		return ..()
+	if(amount == 1)
+		icon_state = initial(icon_state)
+	else if (amount <= (max_amount * (1/5)))
+		icon_state = "[initial(icon_state)]_2"
+	else if (amount <= (max_amount * (2/5)))
+		icon_state = "[initial(icon_state)]_3"
+	else if (amount <= (max_amount * (3/5)))
+		icon_state = "[initial(icon_state)]_4"
+	else if (amount <= (max_amount * (4/5)))
+		icon_state = "[initial(icon_state)]_5"
+	else if (amount < (max_amount * (5/5)))
+		icon_state = "[initial(icon_state)]_6"
+	else if (amount == max_amount)
+		icon_state = "[initial(icon_state)]_7"
+	..()
+
+
+
 /obj/item/stack/attack_self(mob/user)
 	interact(user)
 
