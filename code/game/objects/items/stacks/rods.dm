@@ -31,18 +31,16 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	var/amount = get_amount()
 	if((amount <= 5) && (amount > 0))
 		icon_state = "rods_[amount]"
-	else if (amount <= (max_amount * (1/5)))
+	else if (amount <= 15)
 		icon_state = "[initial(icon_state)]_6"
-	else if (amount <= (max_amount * (2/5)))
+	else if (amount <= 30)
 		icon_state = "[initial(icon_state)]_7"
-	else if (amount <= (max_amount * (3/5)))
-		icon_state = "[initial(icon_state)]_8"
 	else if (amount <= (max_amount * (4/5)))
-		icon_state = "[initial(icon_state)]_9"
+		icon_state = "[initial(icon_state)]_8"
 	else if (amount < (max_amount * (5/5)))
-		icon_state = "[initial(icon_state)]_10"
+		icon_state = "[initial(icon_state)]_9"
 	else if (amount == max_amount)
-		icon_state = "[initial(icon_state)]_11"
+		icon_state = "[initial(icon_state)]_10"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
