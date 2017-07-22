@@ -26,6 +26,7 @@
 		src.amount = amount
 	if(!merge_type)
 		merge_type = src.type
+		update_icon()
 	return
 
 /obj/item/stack/Destroy()
@@ -234,6 +235,8 @@
 	S.copy_evidences(src)
 	use(transfer)
 	S.add(transfer)
+	update_icon()
+	S.update_icon()
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
