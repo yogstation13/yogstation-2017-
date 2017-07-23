@@ -194,3 +194,81 @@
 	suffix = "hippie_shuttle"
 	name= "Hippie Shuttle"
 	description = "These hippies went a little too far out..."
+
+/datum/map_template/ruin/space/colony
+	id = "colony"
+	suffix = "colony.dmm"
+	name= "colony"
+	description = "A station forgotten by time filled with cryopods."
+
+/datum/map_template/ruin/space/wreckedship
+	id = "wreckedship"
+	suffix = "wreckedship.dmm"
+	name= "Wrecked Ship"
+	description = "A crashed ship wrecked beyond repair."
+
+/datum/map_template/ruin/space/powerstation
+	id = "powerstation"
+	suffix = "powerstation.dmm"
+	name= "power station"
+	description = "A old power station forgotten by the original corp who built it."
+
+/datum/map_template/ruin/space/orionship
+	id = "orionship"
+	suffix = "orionship.dmm"
+	name= "orion ship"
+	description = "Man, i don't have the slightest idea, ask kmc who this is supposed to be."
+
+/datum/map_template/ruin/space/colonistship
+	id = "colonistship"
+	suffix = "colonistship.dmm"
+	name= "colonist ship"
+	description = "A ship full of colonists ready to start a colony."
+
+/datum/map_template/ruin/space/abandonedteleporter
+	id = "abandonedteleporter"
+	suffix = "abandonedteleporter.dmm"
+	name= "abandoned teleporter"
+	description = "Its a abandoned teleporter, duh."
+
+/datum/map_template/ruin/space/djstation
+	id = "djstation"
+	suffix = "djstation.dmm"
+	name= "djstation"
+	description = "Some bullshit from the old derelict station."
+
+/datum/map_template/ruin/space/derelictbig
+	id = "derelictbig"
+	suffix = "derelictbig.dmm"
+	name= "derelict station"
+	description = "Its the old KSS13, but now random."
+
+/datum/map_template/ruin/space/derelicttcom
+	id = "derelicttcom"
+	suffix = "derelicttcom.dmm"
+	name= "derelict telecoms"
+	description = "Its the tcoms minisat from z3 but now random."
+
+/datum/map_template/ruin/space/derelictteleroom
+	id = "derelictteleroom"
+	suffix = "derelictteleroom.dmm"
+	name= "derelict teleroom"
+	description = "Its the teleporter station from z3 but now random."
+
+/datum/map_template/ruin/space/wreckedclownship
+	id = "wreckedclownship"
+	suffix = "wreckedclownship.dmm"
+	name= "wrecked clown ship"
+	description = "A ship trying to get back to the clown planet crashed into a asteroid."
+
+/datum/map_template/ruin/space/lostshuttle
+	id = "lostshuttle"
+	suffix = "lostshuttle.dmm"
+	name= "long lost ship"
+	description = "A ship lost long ago during crew transfer."
+
+/datum/map_template/ruin/space/ambush
+	id = "ambush"
+	suffix = "ambush.dmm"
+	name= "ambush ship"
+	description = "A pirate ship sending a false distress signal to ambush space merchants."

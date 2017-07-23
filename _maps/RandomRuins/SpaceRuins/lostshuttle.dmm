@@ -1,0 +1,59 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall (NORTHWEST)"; icon_state = "wall"; dir = 9},/area/ruin/unpowered/no_grav)
+"c" = (/turf/closed/wall/shuttle,/area/ruin/unpowered/no_grav)
+"d" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall (NORTHEAST)"; icon_state = "wall"; dir = 5},/area/ruin/unpowered/no_grav)
+"e" = (/obj/machinery/vending/snack,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"f" = (/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"g" = (/obj/structure/table,/obj/item/weapon/paper{desc = "That's it, the food will end soon, the crew was killed by carps, we lost in our way somehow, i cant fix the computer, at least i can end this quick"; pixel_y = 3},/obj/item/weapon/pen{pixel_x = -3; pixel_y = 2},/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"h" = (/obj/machinery/computer,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"i" = (/obj/structure/table,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"j" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"k" = (/obj/effect/decal/cleanable/blood/old,/turf/closed/wall/shuttle,/area/ruin/unpowered/no_grav)
+"l" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f10"; dir = 2},/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/effect/decal/remains/human,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"n" = (/obj/structure/chair{dir = 1},/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/ammo_casing/caseless,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"o" = (/mob/living/simple_animal/hostile/carp,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"p" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"q" = (/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"r" = (/obj/structure/table,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"s" = (/obj/item/chair,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"t" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"u" = (/obj/structure/door_assembly/door_assembly_shuttle,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"v" = (/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/blood/old,/obj/effect/decal/remains/human,/obj/item/ammo_casing/caseless,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"w" = (/obj/item/weapon/crowbar,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"x" = (/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"y" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"z" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"A" = (/obj/item/weapon/tank/internals/air,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"B" = (/mob/living/simple_animal/hostile/carp,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"C" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"D" = (/obj/item/chair,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"E" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (EAST)"; icon_state = "tracks"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"F" = (/obj/effect/decal/cleanable/blood/tracks{tag = "icon-tracks (SOUTHEAST)"; icon_state = "tracks"; dir = 6},/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"G" = (/obj/effect/decal/remains/human,/obj/item/chair,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"H" = (/obj/structure/window/reinforced,/turf/closed/wall/shuttle,/area/ruin/unpowered/no_grav)
+"I" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/ruin/unpowered/no_grav)
+"J" = (/turf/closed/wall/shuttle{icon_state = "swall_f14"},/area/ruin/unpowered/no_grav)
+"K" = (/turf/closed/wall/shuttle{icon_state = "swall_f12"},/area/ruin/unpowered/no_grav)
+"L" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f9"; dir = 2},/area/ruin/unpowered/no_grav)
+"M" = (/obj/structure/window/reinforced,/turf/open/floor/plasteel/shuttle,/area/ruin/unpowered/no_grav)
+"N" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"O" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaa
+aaaaabcccccccdaaaaa
+bcccccefghifjccckcl
+cmmmccfffnfffccopqc
+cqoqccfffffffccqrsc
+cmqtcccccucccccqvqc
+ctqtccfffwfffccqxoc
+kyqtcczABffffccqxqc
+ctqtccfffffBfccoxqc
+CqoqqCfBiiiffCqqxqC
+CqqqoCffiiiDfCEEFqC
+cttccczfffGffcccqqc
+HHHHIcJffffBKcLHMMH
+NNNNaIcJjjjKcLaNNNN
+OOOOaaIcccccLaaOOOO
+"}

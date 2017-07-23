@@ -13,6 +13,7 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	var/gravity = TRUE
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 
@@ -46,6 +47,12 @@
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
 	feedback_add_details("mobs_killed_mining","[src.type]")
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/mob_negates_gravity()
+    return gravity
+
+/mob/living/simple_animal/hostile/asteroid/mob_has_gravity()
+    return ..() || mob_negates_gravity()
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
