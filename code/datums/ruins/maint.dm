@@ -2,6 +2,7 @@
 	prefix = "_maps/RandomRuins/MaintRuins/"
 	cost = 0
 
+
 /datum/map_template/ruin/maint/garden
 	id = "garden"
 	suffix = "maint_garden.dmm"
@@ -9,7 +10,13 @@
 	description = "An enterprising assistant, bored out of his mind, managed to \
 	gather, purchase, and steal enough tools to put together a functional hydroponics facility."
 
-//Mining Wing
+/datum/map_template/ruin/maint/surgery
+	id = "surgery"
+	suffix = "maint_surgery.dmm"
+	name = "Surgery"
+	description = "An abandoned surgery studio, probably never legitimate."
+
+//mining wing
 /datum/map_template/ruin/maint/lavaland
 	id = "mining1"
 	suffix = "mining_1.dmm"
