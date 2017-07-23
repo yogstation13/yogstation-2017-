@@ -5062,7 +5062,7 @@
 "bTr" = (/obj/item/device/flashlight/lamp,/turf/open/floor/plating/airless{dir = 1; icon_state = "warnplate"},/area/toxins/test_area)
 "bTs" = (/obj/structure/chair,/turf/open/floor/plating/airless{dir = 5; icon_state = "warnplate"},/area/toxins/test_area)
 "bTt" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'BOMB RANGE"; name = "BOMB RANGE"},/turf/closed/wall,/area/space)
-"bTu" = (/obj/effect/landmark/maintroom{template_names = list("mining_1","mining_2")},/turf/open/space,/area/space)
+"bTu" = (/obj/effect/landmark/maintroom{template_names = list("mining1","mining2")},/turf/open/space,/area/space)
 "bTv" = (/turf/closed/wall,/area/construction)
 "bTw" = (/obj/structure/closet/crate,/turf/open/floor/plating,/area/construction)
 "bTx" = (/turf/open/floor/plating,/area/construction)
