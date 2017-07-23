@@ -1,0 +1,50 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall3 (NORTHWEST)"; icon_state = "wall3"; dir = 9},/area/ruin/unpowered/no_grav)
+"c" = (/turf/closed/wall/shuttle{tag = "icon-wall3 (WEST)"; icon_state = "wall3"; dir = 8; layer = 2},/area/ruin/unpowered/no_grav)
+"d" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/space,/area/ruin/unpowered/no_grav)
+"e" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall3 (NORTHEAST)"; icon_state = "wall3"; dir = 5; layer = 2},/area/ruin/unpowered/no_grav)
+"f" = (/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"g" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"h" = (/obj/machinery/computer,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"i" = (/obj/structure/chair{dir = 8},/obj/effect/gibspawner/human,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"j" = (/obj/item/clothing/suit/space/syndicate/black,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/head/helmet/space/syndicate/black,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"k" = (/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plasteel/podhatch{dir = 10},/area/ruin/unpowered/no_grav)
+"l" = (/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plasteel/podhatch{tag = "icon-podhatch (SOUTHEAST)"; icon_state = "podhatch"; dir = 6},/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/alien/weeds/node,/mob/living/carbon/alien/humanoid/drone,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"n" = (/obj/structure/alien/weeds,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"o" = (/obj/effect/gibspawner/xeno,/obj/structure/alien/weeds,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"p" = (/obj/machinery/door/airlock/hatch,/obj/structure/alien/weeds,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"q" = (/obj/structure/alien/weeds,/obj/structure/alien/weeds,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"r" = (/obj/effect/gibspawner/xeno,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"s" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
+"t" = (/obj/structure/alien/weeds/node,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"u" = (/obj/structure/table,/obj/item/clothing/suit/space/syndicate,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/head/helmet/space/syndicate,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"v" = (/mob/living/carbon/alien/humanoid/drone,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"w" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 3; pixel_y = 3},/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = -3; pixel_y = -3},/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"x" = (/obj/structure/fluff/empty_sleeper/syndicate,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"y" = (/obj/structure/fluff/empty_sleeper/syndicate,/obj/effect/gibspawner/human,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"z" = (/obj/effect/gibspawner/human,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/ruin/unpowered/no_grav)
+"A" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall3 (SOUTHWEST)"; icon_state = "wall3"; dir = 10; layer = 2},/area/ruin/unpowered/no_grav)
+"B" = (/obj/structure/fluff/empty_sleeper/syndicate,/obj/effect/gibspawner/human,/turf/open/floor/plasteel/airless/shuttle/red,/area/ruin/unpowered/no_grav)
+"C" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall3 (SOUTHEAST)"; icon_state = "wall3"; dir = 6},/area/ruin/unpowered/no_grav)
+"D" = (/obj/structure/window/reinforced,/turf/closed/wall/shuttle{tag = "icon-wall3 (WEST)"; icon_state = "wall3"; dir = 8; layer = 2},/area/ruin/unpowered/no_grav)
+"E" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"F" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/open/space,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aabcccddddddccceaa
+bccccffghhifjcccce
+ccklcccfmffcccklcc
+cfnnnoccppccfffffc
+cffnqnnnnnnnfrfffc
+sfffnntnnnnffffffs
+sfffnnnonnfffffrfs
+ccccccccppcccccccc
+cuvfffwcffcxfyffxc
+ccffzffcffcyrxfxcc
+AcfrfzfcffcxfffBcC
+accffffsffsffxccca
+aAccDDDDDDDDDccCaa
+aaaAEEEEEEEEECaaaa
+aaaaFFFFFFFFFaaaaa
+"}

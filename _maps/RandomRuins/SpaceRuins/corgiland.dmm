@@ -1,0 +1,31 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_corgi"; name = "Asteroid Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
+"d" = (/turf/open/floor/vines,/area/ruin/unpowered/no_grav)
+"e" = (/turf/open/floor/grass,/area/ruin/unpowered/no_grav)
+"f" = (/mob/living/simple_animal/pet/dog/corgi,/turf/open/floor/grass,/area/ruin/unpowered/no_grav)
+"g" = (/mob/living/simple_animal/pet/dog/corgi/puppy,/turf/open/floor/grass,/area/ruin/unpowered/no_grav)
+"h" = (/mob/living/simple_animal/pet/dog/corgi/tactical,/turf/open/floor/grass,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaabaaaaaaaaaaa
+aaaaaaccccccaaaaaaaa
+aaaaacccccccccaaaaaa
+aaaccccccccccccaaaaa
+aaccccccccccccccaaaa
+aaccccccccccccccccaa
+acccccccddddddccccca
+ccccccdddeeeeddcccca
+ccccdddefeeeggddcccc
+ccccdefeeeefeggdcccc
+ccccdeeeeggeeeedcccc
+ccccddeeheggeeddcccc
+cccccdddeeeehedcccca
+cccccccdddeeeddcccaa
+accccccccdddddccccaa
+aaaccccccccccccccaaa
+aaaacccccccccccccaaa
+aaaaacccccccccccaaaa
+aaaaaacccccccccaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}

@@ -1,0 +1,33 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
+"c" = (/turf/open/floor/plating/asteroid/airless/cave,/turf/closed/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/ruin/unpowered/no_grav)
+"d" = (/turf/closed/wall/shuttle,/area/ruin/unpowered/no_grav)
+"e" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 8},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"f" = (/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"g" = (/obj/effect/mob_spawn/human/alive,/turf/open/floor/plasteel/airless/shuttle,/area/ruin/unpowered/no_grav)
+"h" = (/obj/item/weapon/tank/internals/oxygen,/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space,/turf/open/floor/plasteel/airless/shuttle,/area/ruin/unpowered/no_grav)
+"i" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/airless/shuttle,/area/ruin/unpowered/no_grav)
+"j" = (/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"k" = (/turf/open/floor/plating/asteroid/airless/cave,/turf/closed/wall/shuttle{icon_state = "swall_f5"; dir = 2},/area/ruin/unpowered/no_grav)
+"l" = (/obj/structure/chair,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"m" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"n" = (/obj/structure/rack,/obj/item/weapon/storage/firstaid,/obj/item/device/radio,/obj/item/weapon/reagent_containers/hypospray/medipen/survival,/obj/item/weapon/kitchen/knife/combat/survival,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/table,/obj/item/seeds/apple{pixel_x = 8},/obj/item/seeds/corn{pixel_y = 9},/obj/item/seeds/grape,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"p" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"q" = (/turf/open/space,/area/ruin/unpowered/no_grav)
+"r" = (/obj/item/weapon/shovel,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"s" = (/obj/structure/sink/puddle,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"t" = (/obj/docking_port/stationary{dir = 2; dwidth = 3; height = 12; id = "mining_distress2"; name = "DISTRESS Signal"; width = 12},/turf/open/space,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aabbbbbbaa
+abbcddebba
+bbbfghijbb
+bbjkddejbb
+bbjjjjjjjb
+bbbjljjjmb
+bbbnojpjmb
+qbbbbrsbbb
+aqbbbbbbba
+aaqqqtqqaa
+"}

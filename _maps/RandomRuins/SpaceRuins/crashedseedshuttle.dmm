@@ -1,0 +1,55 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_distress3"; name = "DISTRESS Signal"; width = 8},/turf/open/space,/area/space)
+"c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
+"d" = (/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"e" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"f" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f6"; dir = 2},/area/ruin/unpowered/no_grav)
+"g" = (/obj/structure/window/shuttle,/obj/structure/window/shuttle,/obj/structure/grille,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"h" = (/obj/item/weapon/shard,/obj/item/weapon/shard,/obj/item/stack/rods,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"i" = (/obj/structure/lattice,/obj/item/weapon/shard,/obj/item/weapon/shard,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"j" = (/turf/closed/wall/shuttle,/area/ruin/unpowered/no_grav)
+"k" = (/obj/structure/frame/computer,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"l" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_z = 5},/obj/item/weapon/pen,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"m" = (/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"n" = (/obj/structure/lattice,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/chair{dir = 1},/obj/effect/decal/remains/human,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"p" = (/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"q" = (/obj/machinery/door/airlock/shuttle{name = "Cockpit"; req_access_txt = "109"},/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"r" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"s" = (/obj/structure/lattice,/obj/structure/lattice,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"t" = (/obj/machinery/plantgenes/seedvault,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"u" = (/obj/structure/closet/crate/secure/hydroponics,/obj/item/seeds/liberty,/obj/item/seeds/kudzu,/obj/item/seeds/chanter,/obj/item/seeds/cash,/obj/item/seeds/angel,/obj/item/seeds/watermelon,/obj/item/seeds/lime,/obj/item/seeds/lemon,/obj/item/seeds/grape,/obj/item/seeds/gatfruit,/obj/item/seeds/cocoapod,/obj/item/seeds/cherry,/obj/item/seeds/berry,/obj/item/seeds/apple,/obj/item/seeds/wheat,/obj/item/seeds/grass,/obj/item/seeds/cannabis,/obj/item/seeds/ambrosia,/obj/item/seeds/apple/gold,/obj/item/seeds/ambrosia/deus,/obj/item/seeds/chili/ice,/obj/item/seeds/coffee/robusta,/obj/item/seeds/wheat/meat,/obj/item/seeds/wheat/oat,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"v" = (/obj/machinery/biogenerator,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"w" = (/obj/machinery/seed_extractor,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"x" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"y" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"z" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"A" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"B" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"C" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"D" = (/obj/structure/window/reinforced,/obj/machinery/hydroponics,/turf/open/floor/plasteel/shuttle/white,/area/ruin/unpowered/no_grav)
+"E" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"F" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/open/space,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaabaaaaaaaaaaaaaaa
+aaaaaaaaccccaaaaaaaa
+aaaaccccccccccaaaaaa
+aaaacccdcccccccaaaaa
+aaacccddedccccccaaaa
+aaaccddddddcccccaaaa
+afghhidddddddcccaaaa
+ajklmnnddddddccccaaa
+ajommmpnnddddccccaaa
+ajjjqrpnsccccccccaaa
+ajtummvwnccccccccaaa
+ajmmmmxmjcccccccaaaa
+ajymxmmzjccccccaaaaa
+ajymmmAzjccccccaaaaa
+ajyAmmmzjcccccaaaaaa
+aBmmmmmmBccccaaaaaaa
+aCmmmmAmCcccaaaaaaaa
+ajDDDDDDjccaaaaaaaaa
+aEEEEEEEEcaaaaaaaaaa
+aFFFFFFFFaaaaaaaaaaa
+"}

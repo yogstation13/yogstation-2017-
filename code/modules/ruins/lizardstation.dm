@@ -496,7 +496,7 @@
 	desc = "Used to call and send the mining bus."
 	circuit = /obj/item/weapon/circuitboard/computer/miningbus
 	shuttleId = "miningbus"
-	possible_destinations = "mining_home;mining_djstation;mining_gas;mining_distress;mining_storage;mining_asteroid1;mining_asteroid2;mining_asteroid3;mining_asteroid4;mining_asteroid5;mining_field1;mining_field2;mining_field3;mining_field4;mining_field5;mining_field6;mining_field7;mining_field8;mining_field9;mining_field10;"
+	possible_destinations = "mining_home;mining_djstation;;mining_gas;mining_distress;mining_distress2;mining_distress3;mining_distress4;mining_storage;mining_asteroid1;mining_asteroid2;mining_asteroid3;mining_asteroid4;mining_asteroid5;mining_field1;mining_field2;mining_field3;mining_field4;mining_field5;mining_field6;mining_field7;mining_field8;mining_field9;mining_field10;"
 	no_destination_swap = 1
 	notification = SUPP_FREQ
 	cooldownlen = 50
@@ -516,7 +516,7 @@
 	desc = "Used to call and send the asteroid lander."
 	circuit = /obj/item/weapon/circuitboard/computer/miningasteroid
 	shuttleId = "miningasteroid"
-	possible_destinations = "mining_home;mining_away;mining_djstation;mining_distress;mining_field3b"
+	possible_destinations = "mining_home;mining_away;mining_djstation;mining_distress;mining_distress2;mining_corgi;mining_field3b"
 	no_destination_swap = 1
 	notification = SUPP_FREQ
 	cooldownlen = 50

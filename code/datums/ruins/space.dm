@@ -272,3 +272,39 @@
 	suffix = "ambush.dmm"
 	name= "ambush ship"
 	description = "A pirate ship sending a false distress signal to ambush space merchants."
+
+/datum/map_template/ruin/space/destroyedstationpiece
+	id = "destroyedstationpiece"
+	suffix = "destroyedstationpiece.dmm"
+	name= "Destroyed Station Part"
+	description = "A piece of a destroyed station."
+
+/datum/map_template/ruin/space/destroyedstationpiece2
+	id = "destroyedstationpiece2"
+	suffix = "destroyedstationpiece2.dmm"
+	name= "Destroyed Station Part"
+	description = "A piece of a destroyed station."
+
+/datum/map_template/ruin/space/corgiland
+	id = "corgiland"
+	suffix = "corgiland.dmm"
+	name= "Corgiland"
+	description = "A hollow asteroid filled with corgis."
+
+/datum/map_template/ruin/space/crashedseedshuttle
+	id = "crashedseedshuttle"
+	suffix = "crashedseedshuttle.dmm"
+	name= "crashed seed shuttle"
+	description = "I don't even know anymore, some of these ruins they sent me doesn't make much sense."
+
+/datum/map_template/ruin/space/alienshuttle
+	id = "alienshuttle"
+	suffix = "alienshuttle.dmm"
+	name= "Syndie-Alien Shuttle"
+	description = "A syndicate shuttle filled with xenomorphs."
+
+/datum/map_template/ruin/space/asteroidsurvivor
+	id = "asteroidsurvivor"
+	suffix = "asteroidsurvivor.dmm"
+	name= "crashland survivor"
+	description = "A lone survivor stuck to a asteroid awaiting response to his distress signal."

@@ -1,0 +1,53 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"c" = (/obj/structure/girder,/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"d" = (/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"e" = (/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"f" = (/turf/closed/wall,/area/ruin/unpowered/no_grav)
+"g" = (/obj/item/stack/sheet/metal,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"h" = (/obj/machinery/light_construct/small{dir = 4},/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"i" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_distress4"; name = "DISTRESS Signal"; width = 8},/turf/open/space,/area/space)
+"j" = (/obj/machinery/light_construct/small{dir = 4},/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"k" = (/obj/item/stack/rods,/turf/open/space,/area/space)
+"l" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"m" = (/obj/item/weapon/shard,/turf/open/space,/area/space)
+"n" = (/obj/item/weapon/shard,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/lattice,/obj/item/stack/rods,/turf/open/space,/area/space)
+"p" = (/obj/structure/lattice,/obj/item/weapon/shard,/turf/open/space,/area/space)
+"q" = (/obj/machinery/light_construct/small,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"r" = (/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"s" = (/obj/effect/decal/remains/human{desc = "This guy seemed to have died in terrible way! Half his remains are dust."; icon_state = "remains"; name = "Syndicate agent remains"},/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"t" = (/obj/machinery/light_construct/small,/obj/structure/lattice,/turf/open/space,/area/space)
+"u" = (/obj/item/stack/sheet/metal,/obj/item/stack/sheet/metal,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"v" = (/obj/structure/table,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"w" = (/obj/machinery/vending/cola,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"x" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"y" = (/obj/item/chair,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"z" = (/obj/machinery/vending/snack,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"A" = (/obj/item/weapon/storage/firstaid,/turf/open/floor/plasteel,/area/ruin/unpowered/no_grav)
+"B" = (/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill,/turf/open/space,/area/space)
+"C" = (/obj/structure/girder,/turf/open/floor/plating,/area/ruin/unpowered/no_grav)
+"D" = (/obj/structure/lattice,/obj/item/stack/sheet/metal,/turf/open/space,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabbbaaaaaaaaaaaaabbbaaaaaaa
+aaaacdbbaaaaaaaaaaabbefaaaaaaa
+aaaafgbbaaaaaaaaaabbehfaaaaaaa
+aaaafddbaaaaaiaaaabfeefaaaaaaa
+aaaafejcaaaaaaaaaaafeefaaaaaaa
+aaaafeefaakaaaaaaaaflefaaaaaaa
+aaaafeefaaaamaaaaaafeefaaaaaaa
+aafffeefffnoaapbabffelfbbbaaaa
+aaeeeeeeegdbmobdeeeeeeeeebaaaa
+aaeqeersedbaotueeeeeeqeeebaaaa
+aafffffffbpadgdeeffffffffaaaaa
+aaaaaaaaaaabfeeeeeevvfaaaaaaaa
+aaaaaaaaaaaafweeleexyfaaaaaaaa
+aaaaaaaaaaaafzeeeAeeefaaaaaaaa
+aaaaaaaaaaaafeeeeeeddfaaaaaaaa
+aaaaaaaaaaaafeedddddbfaaaaaaaa
+aBaaaaaaaaaafddddgbbbbaaaaaaaa
+aaaaaaaaaaaaCbbbbbbbDbaaaaaaaa
+"}

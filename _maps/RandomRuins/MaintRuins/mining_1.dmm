@@ -17,7 +17,7 @@
 "aq" = (/obj/machinery/computer/security/mining,/obj/machinery/camera{c_tag = "Mining Dock"; dir = 4; network = list("SS13")},/turf/open/floor/plasteel,/area/quartermaster/miningdock)
 "ar" = (/turf/open/floor/plasteel,/area/quartermaster/miningdock)
 "as" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/turf/open/floor/plasteel,/area/quartermaster/miningdock)
-"at" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/turf/open/floor/plasteel,/area/quartermaster/miningdock)
+"at" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/effect/landmark/start{name = "Shaft Miner"},/turf/open/floor/plasteel,/area/quartermaster/miningdock)
 "au" = (/obj/machinery/airalarm{dir = 8; icon_state = "alarm0"; pixel_x = 24},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/structure/closet/secure_closet/miner,/turf/open/floor/plasteel,/area/quartermaster/miningdock)
 "av" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/turf/closed/wall,/area/quartermaster/miningdock)
 "aw" = (/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/labor)
