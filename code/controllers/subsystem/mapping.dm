@@ -26,9 +26,10 @@ var/datum/subsystem/mapping/SSmapping
 		make_mining_asteroid_secrets()
 
 	// deep space ruins
-	seedRuins(7, rand(0,2), /area/space, space_ruins_templates)
-	seedRuins(8, rand(0,2), /area/space, space_ruins_templates)
-	seedRuins(9, rand(0,2), /area/space, space_ruins_templates)
+	seedRuins(4, rand(2,4), /area/space, space_ruins_templates)
+	seedRuins(7, rand(2,4), /area/space, space_ruins_templates)
+	seedRuins(8, rand(2,4), /area/space, space_ruins_templates)
+	seedRuins(9, rand(2,4), /area/space, space_ruins_templates)
 
 	// Set up Z-level transistions.
 	setup_map_transitions()

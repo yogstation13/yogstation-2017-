@@ -1,29 +1,31 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/open/floor/plating/asteroid/airless,/area/space)
-"c" = (/turf/closed/mineral,/area/space)
-"d" = (/turf/closed/mineral/random/high_chance,/area/space)
-"e" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/airless,/area/space)
-"f" = (/obj/item/weapon/pickaxe/diamond,/turf/open/floor/plating/asteroid/airless,/area/space)
+"a" = (/turf/closed/mineral/iron,/area/ruin/unpowered/no_grav)
+"b" = (/turf/open/space,/area/space)
+"c" = (/obj/docking_port/stationary{dwidth = 5; height = 15; id = "freebus_asteroid3"; name = "Asteroid Readings: UNKNOWN"; width = 15},/turf/open/space,/area/space)
+"d" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"e" = (/turf/closed/mineral/uranium,/area/ruin/unpowered/no_grav)
+"f" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"g" = (/obj/docking_port/stationary{dir = 4; dwidth = 3; height = 5; id = "mining_asteroid3"; name = "Asteroid Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"h" = (/obj/item/weapon/pickaxe/diamond,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aabbbaaaaaaaaabaaaaa
-aabbbbabbbbaaaaaaaaa
-baabccbbbbbbbbbbaaba
-aabbccbccccdddcbbaaa
-aabccccccccdddcbbaaa
-aabcccdccbcccccccaaa
-aaabcccccbccccccccaa
-abbbcccbbbccccccddaa
-bbbcccbbbbbcdcccddaa
-cdddccbbebbccccccaaa
-cdddcbbfbbcccccccaaa
-ccccccbbbbcccccbbaaa
-cccccccbbccccccbbaba
-bcdddccccccccbbaaaaa
-acdddcccccddcbaaaaaa
-acdddccbccddbbaaaaaa
-aabbcbbbbcbbbaaaaaba
-aaaaaaabbbbbaabaaaaa
+abbbbbbbcbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbb
+bbdddbbbbbbbbbebbbbb
+bbdaadbdaadbbbbbbbbb
+ebbaaaaaaaaaddddbbeb
+bbdaaaaaaeeaaaaddbbb
+bbaaaaaeeeaeeaaadbbb
+bbaaaaeeadaaeaaaabbb
+bbbaaeeaadaaeaaaaabb
+bddaeeadddaaeaaaaabb
+ddaaeadddddaeaaaaabb
+aaaeeaddfddaeaaaabbg
+aaeeaadhddaeeaaaabbb
+aeeaaaddddaeeaaddbbb
+aeeeaaaddaeeaaaddbeb
+aaaeeeaaaeeeaadbbbbb
+baaaaeeeeeeaadbbbbbb
+baaaaaaeeaaaadbbbbbb
+bbddaddaaaaaabbbbbeb
+abbbbbbdaaaabbebbbbb
 "}

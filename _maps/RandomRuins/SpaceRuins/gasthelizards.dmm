@@ -47,6 +47,7 @@
 "U" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel,/area/ruin/unpowered)
 "V" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/unpowered)
 "W" = (/turf/open/floor/plating,/area/ruin/unpowered)
+"X" = (/obj/docking_port/stationary{dir = 2; dwidth = 3; height = 5; id = "mining_gas"; name = "Signal UNKNOWN Source UNKNOWN"; width = 8},/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaaababababbaaaaaaa
@@ -62,5 +63,5 @@ abcJBBBKLMNOOcPQRcb
 abcSTBUcccccccccccb
 aacccVccbbbbbbaabba
 aabbcWcbbaaaaaaabaa
-aaabcVcbaaaaaaaaaaa
+aaabcVcbaaaaaaXaaaa
 "}

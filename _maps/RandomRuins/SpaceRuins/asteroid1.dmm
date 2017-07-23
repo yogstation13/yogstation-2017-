@@ -1,26 +1,27 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/turf/open/floor/plating/asteroid/airless,/area/space)
-"c" = (/turf/closed/mineral/random/high_chance,/area/space)
+"b" = (/turf/closed/mineral/iron,/area/ruin/unpowered/no_grav)
+"c" = (/obj/docking_port/stationary{dwidth = 5; height = 15; id = "freebus_asteroid1"; name = "Asteroid Readings: UNKNOWN"; width = 15},/turf/open/space,/area/space)
+"d" = (/obj/docking_port/stationary{dir = 4; dwidth = 3; height = 5; id = "mining_asteroid1"; name = "Asteroid Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaabaa
-aaaabbaaaaaaaaaaaaaa
-aaaabbbaaaaaaaaaaaaa
-aaaaaaaaabbcbaaaaaaa
-aaaaaaaaaabbaaaaaaaa
-aaaaaaaaaabaaaaaaaaa
-aaaaaaabaaaaaaaaaaaa
-aaaaabbcbaaaaabbbaaa
-aaaaabccbaaaaabcbaaa
-aaaaccccaaabbccbbaaa
-aaabcccbaaabbccaaaaa
-aaabccaaaaaabbaaaaaa
-aaabbbaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaabcaaaaaaa
-aaaabaaaaaabbaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
+abbbbaaaaacaaaaaaabb
+abbbbaaaaaaaaaaaaabb
+bbbbbbbbaaabbbbbbaaa
+bbbbbbbbaabbbbbbaaaa
+abbbbbbbabbbbbbaaaaa
+aabbbbaaabbbbaaaaaaa
+aaaaaaaaaabbaaabbbba
+aaaaabbbbabaaabbbbba
+aaabbbbbbaaaaabbbbba
+aabbbbbbbaaaabbbbbba
+aabbbbbbbaaaabbbbbba
+abbbbbbbbaabbbbbbbaa
+abbbbbbbbaabbbbbbaaa
+bbbbbbbbbaaabbbbbaaa
+bbbbbbbbaaaaabbaaaaa
+bbbbbbbaaaaaaaaaaaaa
+abbbbaaaaaabbbbaaaad
+aaaaaaaaaaabbbbaaaaa
+aaabbaaaaaabbbbaaaaa
+aaabbaaaaaabbbbaaaaa
 "}

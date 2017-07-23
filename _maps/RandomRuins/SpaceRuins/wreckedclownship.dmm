@@ -1,0 +1,45 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
+"c" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"d" = (/turf/open/space,/area/ruin/unpowered/no_grav)
+"e" = (/turf/closed/wall/mineral/clown,/area/ruin/unpowered/no_grav)
+"f" = (/obj/machinery/door/airlock/clown,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"g" = (/obj/effect/mob_spawn/human/clown,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"h" = (/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"i" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"j" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"k" = (/obj/structure/closet/secure_closet{name = "clown locker"; req_access_txt = "46"},/obj/item/clothing/shoes/clown_shoes/banana_shoes,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"l" = (/obj/structure/shuttle/engine/heater{color = "#FFFF00"; dir = 4; icon_state = "heater"},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/ruin/unpowered/no_grav)
+"m" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"n" = (/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"o" = (/obj/item/weapon/shard{icon_state = "medium"},/obj/structure/chair{dir = 8},/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"p" = (/obj/effect/mob_spawn/human/clown{name = "Clown Pilot"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"q" = (/obj/item/weapon/paper{info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"r" = (/obj/structure/grille{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 4},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/ruin/unpowered/no_grav)
+"s" = (/obj/item/weapon/shard,/obj/structure/chair{dir = 8},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"t" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"u" = (/obj/item/weapon/storage/bag/ore,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"v" = (/obj/item/weapon/pickaxe,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"w" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"x" = (/obj/item/weapon/shovel,/turf/open/floor/mineral/bananium/airless,/area/ruin/unpowered/no_grav)
+"y" = (/turf/closed/wall/mineral/clown,/area/ruin/unpowered)
+
+(1,1,1) = {"
+abbaaaaccccccaaaaaaaaaaaaaa
+bbbbaabbbbbccbbbaaaaaaaaaaa
+bbbbbbbbbbbccbbaaaaaaaaaaaa
+abbbbbbbbbbbbbbaaaaaaaaaaaa
+abbbbbbbbbbbbccddeeeffeeeee
+aabbbbbbbbbbbbceeecghhiijkl
+aaabbbbbbbbbbbbbbbmhhhhhnhl
+aabbbbbbbbbbbbbbbophqnhnhnl
+aabbbbbbbbbbbbbrhshthghhhnl
+aabbbbbbbbbbbbbeeeuvhhwwixl
+aabbbbbbbbbbbbbbbeeeffeeeyy
+abbbbbbbbbbbbbbbbbbbbbbbbaa
+abbabbbbbccbbbbbbbbbbbaaaaa
+aaaabbbbcccbbbbbbbbbaaaaaaa
+aaaabbaaaaccbcbbcccaaaaaaaa
+aaaabaaaaaacbbbbbbcaaaaaaaa
+aaaaaaaaaaaaaabbbbcaaaaaaaa
+"}
