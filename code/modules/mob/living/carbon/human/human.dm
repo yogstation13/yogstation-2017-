@@ -919,10 +919,12 @@
 		if(H.bloody_hands)
 			H.bloody_hands = 0
 			H.update_inv_gloves()
+	if(H.shoes)
+		H.shoes.clean_blood()
 	update_icons()	//apply the now updated overlays to the mob
 
 
-/mob/living/carbon/human/wash_cream()
+/mob/living/carbon/human/proc/wash_cream()
 	//clean both to prevent a rare bug
 	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
 	overlays -=image('icons/effects/creampie.dmi', "creampie_human")

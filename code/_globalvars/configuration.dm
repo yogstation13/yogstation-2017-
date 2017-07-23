@@ -38,5 +38,6 @@ var/MAX_EX_LIGHT_RANGE = 14
 var/MAX_EX_FLASH_RANGE = 14
 var/MAX_EX_FLAME_RANGE = 14
 
-var/discord_token = "nodiscord"
+var/webhook_address = null
+var/webhook_key = null
 
