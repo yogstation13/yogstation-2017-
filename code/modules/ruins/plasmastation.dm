@@ -28,7 +28,7 @@
 /obj/effect/mob_spawn/human/plasmaman/primum
 	name = "Synthetic Plasmaman"
 	helmet = /obj/item/clothing/head/helmet/space/plasmaman
-	uniform = /obj/item/clothing/under/golem
+	uniform = /obj/item/clothing/under/plasmaman
 	suit = /obj/item/clothing/suit/space/eva/plasmaman
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/weapon/storage/backpack/dufflebag
@@ -41,7 +41,7 @@
 /obj/effect/mob_spawn/human/plasmaman/original
 	name = "Original Plasmaman"
 	helmet = /obj/item/clothing/head/helmet/space/plasmaman
-	uniform = /obj/item/clothing/under/golem
+	uniform = /obj/item/clothing/under/plasmaman
 	suit = /obj/item/clothing/suit/space/eva/plasmaman
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	back = /obj/item/weapon/storage/backpack/dufflebag
@@ -94,7 +94,6 @@
 	M.real_name = "CLONIUM"
 	M.name = "CLONIUM"
 	M.set_species(/datum/species/plasmaman)
-	M.equip_to_slot_or_del(new /obj/item/clothing/under/golem(M), slot_w_uniform)
 
 //Plasmaman jumpsuits
 /obj/item/clothing/under/plasmaman/radium
