@@ -1355,9 +1355,31 @@
 
 
 /datum/supply_pack/misc/yeezy
-	name = "One Singular Pair Of Sneakers"
-	cost = 450
-	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
+	name = "A Pair Of Sneakers"
+	cost = 700
+	contains =
+	(var/loot = rand(1,10)
+	switch(loot)
+			if(1)
+					/obj/item/clothing/shoes/sneakers/nmd/collab,
+ 			if(2)
+ 					/obj/item/clothing/shoes/sneakers/nmd,
+ 			if(3)
+ 					/obj/item/clothing/shoes/sneakers/yeezy/black,
+ 			if(4)
+ 					/obj/item/clothing/shoes/sneakers/yeezy/orange,
+ 			if(5)
+ 					/obj/item/clothing/shoes/sneakers/yeezy,
+ 			if(6)
+ 					/obj/item/clothing/shoes/sneakers/yeezy,
+ 			if(7)
+ 					/obj/item/clothing/shoes/sneakers/yeezy,
+ 			if(8)
+ 					/obj/item/clothing/shoes/sneakers/yeezy,
+ 			if(9)
+ 					/obj/item/clothing/shoes/sneakers/yeezy/black,
+ 			if(10)
+ 					/obj/item/clothing/shoes/sneakers/yeezy)
 	crate_name = "Small Sneaker Crate"
 
 
