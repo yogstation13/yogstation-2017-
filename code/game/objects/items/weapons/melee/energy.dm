@@ -198,13 +198,13 @@
 	return 0
 
 /obj/item/weapon/melee/energy/clown/AltClick(mob/living/user)
-if(!spam_flag)
-	spam_flag = 1
-	playsound(get_turf(src), honksound, 50, 1)
-	src.add_fingerprint(user)
-	spawn(cooldowntime)
-		spam_flag = 0
-return
+	if(!spam_flag)
+		spam_flag = 1
+		playsound(get_turf(src), honksound, 50, 1)
+		src.add_fingerprint(user)
+		spawn(cooldowntime)
+			spam_flag = 0
+	return
 
 /obj/item/weapon/melee/energy/sword/saber/blue
 	item_color = "blue"
