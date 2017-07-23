@@ -231,6 +231,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/melee/energy/sword/saber
 	cost = 7
 
+/datum/uplink_item/dangerous/clownsword
+	name = "Honk Sword"
+	desc = "A well obscured device that looks like a bikehorn, functions like a bikehorn, and is cool like a bikehorn.\
+	BUT IT IS ACTUALLY AN ENERGY SWORD."
+	item = /obj/item/weapon/melee/energy/clown
+	restricted_roles = list("Clown")
+	cost = 7
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains five EMP grenades and an EMP implant. Useful to disrupt communication, \

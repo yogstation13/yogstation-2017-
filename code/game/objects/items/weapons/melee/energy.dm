@@ -144,6 +144,68 @@
 
 /obj/item/weapon/melee/energy/sword/saber
 
+/obj/item/weapon/melee/energy/clown
+	name = "bike horn"
+	desc = "A horn off of a bicycle."
+	icon_state = "bikehorn-sword"
+	force = 3
+	throwforce = 5
+	hitsound = "sound/items/bikehorn.ogg" //it starts deactivated
+	throw_speed = 3
+	throw_range = 5
+	sharpness = IS_SHARP
+	embed_chance = 75
+	embedded_impact_pain_multiplier = 10
+	armour_penetration = 35
+	origin_tech = "combat=3;magnets=4;syndicate=4"
+	block_chance = 50
+	icon_state_on = "bikehorn-sword_on"
+
+/obj/item/weapon/melee/energy/clown/attack_self(mob/living/carbon/user)
+	active = !active
+	if (active)
+		force = force_on
+		throwforce = throwforce_on
+		hitsound = 'sound/items/bikehorn.ogg'
+		name = "Horn blade"
+		desc = "A horn off of a bi- WAIT WHAT THE FUCK?"
+		throw_speed = 4
+		if(attack_verb_on.len)
+			attack_verb = attack_verb_on
+		icon_state = icon_state_on
+		w_class = w_class_on
+		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
+		user << "<span class='notice'>[src] is now active.</span>"
+	else
+		force = initial(force)
+		throwforce = initial(throwforce)
+		hitsound = initial(hitsound)
+		throw_speed = initial(throw_speed)
+		name = initial(name)
+		desc = initial(desc)
+		if(attack_verb_on.len)
+			attack_verb = list()
+		icon_state = initial(icon_state)
+		w_class = initial(w_class)
+		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
+		user << "<span class='notice'>[src] can now be concealed.</span>"
+	add_fingerprint(user)
+	return
+
+/obj/item/weapon/melee/energy/clown/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
+	if(active)
+		return ..()
+	return 0
+
+/obj/item/weapon/melee/energy/clown/AltClick(mob/living/user)
+if(!spam_flag)
+	spam_flag = 1
+	playsound(get_turf(src), honksound, 50, 1)
+	src.add_fingerprint(user)
+	spawn(cooldowntime)
+		spam_flag = 0
+return
+
 /obj/item/weapon/melee/energy/sword/saber/blue
 	item_color = "blue"
 
