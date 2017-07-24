@@ -336,3 +336,262 @@ research holder datum.
 		var/datum/tech/T = new V()
 		tech_stored += T
 		T.level = 8
+
+//Just gonna throw coding standards out the window, because this is gonna be spammy
+/obj/item/weapon/disk/tech_disk/materials/one
+	name = "materials one"
+	tech_stored = list("materials"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/materials/two
+	name = "materials two"
+	tech_stored = list("materials"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/materials/three
+	name = "materials three"
+	tech_stored = list("materials"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/materials/four
+	name = "materials four"
+	tech_stored = list("materials"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/materials/five
+	name = "materials five"
+	tech_stored = list("materials"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/materials/six
+	name = "materials six"
+	tech_stored = list("materials"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/engineering/one
+	name = "engineering one"
+	tech_stored = list("engineering"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/engineering/two
+	name = "engineering two"
+	tech_stored = list("engineering"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/engineering/three
+	name = "engineering three"
+	tech_stored = list("engineering"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/engineering/four
+	name = "engineering four"
+	tech_stored = list("engineering"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/engineering/five
+	name = "engineering five"
+	tech_stored = list("engineering"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/engineering/six
+	name = "engineering six"
+	tech_stored = list("engineering"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/plasmatech/one
+	name = "plasmatech one"
+	tech_stored = list("plasmatech"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/plasmatech/two
+	name = "plasmatech two"
+	tech_stored = list("plasmatech"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/plasmatech/three
+	name = "plasmatech three"
+	tech_stored = list("plasmatech"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/plasmatech/four
+	name = "plasmatech four"
+	tech_stored = list("plasmatech"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/plasmatech/five
+	name = "plasmatech five"
+	tech_stored = list("plasmatech"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/plasmatech/six
+	name = "plasmatech six"
+	tech_stored = list("plasmatech"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/powerstorage/one
+	name = "powerstorage one"
+	tech_stored = list("powerstorage"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/powerstorage/two
+	name = "powerstorage two"
+	tech_stored = list("powerstorage"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/powerstorage/three
+	name = "powerstorage three"
+	tech_stored = list("powerstorage"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/powerstorage/four
+	name = "powerstorage four"
+	tech_stored = list("powerstorage"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/powerstorage/five
+	name = "powerstorage five"
+	tech_stored = list("powerstorage"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/powerstorage/six
+	name = "powerstorage six"
+	tech_stored = list("powerstorage"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/bluespace/one
+	name = "bluespace one"
+	tech_stored = list("bluespace"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/bluespace/two
+	name = "bluespace two"
+	tech_stored = list("bluespace"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/bluespace/three
+	name = "bluespace three"
+	tech_stored = list("bluespace"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/bluespace/four
+	name = "bluespace four"
+	tech_stored = list("bluespace"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/bluespace/five
+	name = "bluespace five"
+	tech_stored = list("bluespace"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/bluespace/six
+	name = "bluespace six"
+	tech_stored = list("bluespace"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/biotech/one
+	name = "biotech one"
+	tech_stored = list("biotech"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/biotech/two
+	name = "biotech two"
+	tech_stored = list("biotech"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/biotech/three
+	name = "biotech three"
+	tech_stored = list("biotech"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/biotech/four
+	name = "biotech four"
+	tech_stored = list("biotech"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/biotech/five
+	name = "biotech five"
+	tech_stored = list("biotech"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/biotech/six
+	name = "biotech six"
+	tech_stored = list("biotech"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/combat/one
+	name = "combat one"
+	tech_stored = list("combat"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/combat/two
+	name = "combat two"
+	tech_stored = list("combat"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/combat/three
+	name = "combat three"
+	tech_stored = list("combat"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/combat/four
+	name = "combat four"
+	tech_stored = list("combat"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/combat/five
+	name = "combat five"
+	tech_stored = list("combat"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/combat/six
+	name = "combat six"
+	tech_stored = list("combat"=6)
+	max_tech_stored = 6
+
+/obj/item/weapon/disk/tech_disk/magnets/one
+	name = "magnets one"
+	tech_stored = list("magnets"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/magnets/two
+	name = "magnets two"
+	tech_stored = list("magnets"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/magnets/three
+	name = "magnets three"
+	tech_stored = list("magnets"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/magnets/four
+	name = "magnets four"
+	tech_stored = list("magnets"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/magnets/five
+	name = "magnets five"
+	tech_stored = list("magnets"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/magnets/six
+	name = "magnets six"
+	tech_stored = list("magnets"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/programming/one
+	name = "programming one"
+	tech_stored = list("programming"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/programming/two
+	name = "programming two"
+	tech_stored = list("programming"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/programming/three
+	name = "programming three"
+	tech_stored = list("programming"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/programming/four
+	name = "programming four"
+	tech_stored = list("programming"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/programming/five
+	name = "programming five"
+	tech_stored = list("programming"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/programming/six
+	name = "programming six"
+	tech_stored = list("programming"=6)
+	max_tech_stored = 6
+
+
+/obj/item/weapon/disk/tech_disk/syndicate/one
+	name = "syndicate one"
+	tech_stored = list("syndicate"=1)
+	max_tech_stored = 1
+/obj/item/weapon/disk/tech_disk/syndicate/two
+	name = "syndicate two"
+	tech_stored = list("syndicate"=2)
+	max_tech_stored = 2
+/obj/item/weapon/disk/tech_disk/syndicate/three
+	name = "syndicate three"
+	tech_stored = list("syndicate"=3)
+	max_tech_stored = 3
+/obj/item/weapon/disk/tech_disk/syndicate/four
+	name = "syndicate four"
+	tech_stored = list("syndicate"=4)
+	max_tech_stored = 4
+/obj/item/weapon/disk/tech_disk/syndicate/five
+	name = "syndicate five"
+	tech_stored = list("syndicate"=5)
+	max_tech_stored = 5
+/obj/item/weapon/disk/tech_disk/syndicate/six
+	name = "syndicate six"
+	tech_stored = list("syndicate"=6)
+	max_tech_stored = 6

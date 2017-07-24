@@ -80,7 +80,7 @@
 "bB" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/effect/gibspawner,/turf/open/floor/plasteel/shuttle/white,/area/mine/asteroidmine2)
 "bC" = (/obj/effect/gibspawner,/turf/open/floor/plasteel/shuttle/white,/area/mine/asteroidmine2)
 "bD" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/effect/gibspawner,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel/shuttle/white,/area/mine/asteroidmine2)
-"bE" = (/obj/machinery/light,/obj/machinery/telecomms/relay/preset/mining,/turf/open/floor/plating,/area/mine/asteroidmine2)
+"bE" = (/obj/machinery/telecomms/relay/preset/mining,/obj/machinery/light,/turf/open/floor/plating/airless,/area/mine/asteroidmine2)
 "bF" = (/obj/machinery/power/apc{pixel_x = 1; pixel_y = -24},/obj/structure/cable,/turf/open/floor/plating,/area/mine/asteroidmine2)
 "bG" = (/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plating,/area/mine/asteroidmine2)
 "bH" = (/turf/open/floor/plating/asteroid/airless/cave,/area/mine/asteroidmine2)

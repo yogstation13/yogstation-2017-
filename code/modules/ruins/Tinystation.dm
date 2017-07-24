@@ -162,67 +162,7 @@
 	strip_delay = 20
 	dog_fashion = /datum/dog_fashion/head/warden
 
-
-//lizard handheld spawner
-
-/obj/item/weapon/antag_spawner/lizard
-    name = "lizard spawner"
-    desc = "spawns a lizard"
-    icon = 'icons/obj/device.dmi'
-    icon_state = "locator"
-    var/polling
-
-/obj/item/weapon/antag_spawner/lizard/proc/check_usability(mob/user)
-	if(used)
-		user << "<span class='warning'>[src] is out of power!</span>"
-		return 0
-	return 1
-
-
-/obj/item/weapon/antag_spawner/lizard/attack_self(mob/user)
-	if(!(check_usability(user)))
-		return
-	if(polling)
-		return
-	user << "<span class='notice'>You begin searching for a lizard...</span>"
-	polling = TRUE
-	var/list/lizard_candidates = pollCandidates("Do you want to play as a lizard?")
-	polling = FALSE
-	if(lizard_candidates.len > 0)
-		used = 1
-		var/mob/dead/observer/O = pick(lizard_candidates)
-		var/client/C = O.client
-		spawn_antag(C, get_turf(src.loc))
-		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
-		S.set_up(4, 1, src)
-		S.start()
-		qdel(src)
-	else
-		user << "<span class='warning'>Unable to spawn a lizard friend</span>"
-
-/obj/item/weapon/antag_spawner/lizard/spawn_antag(client/C, turf/T)
-	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	M.key = C.key
-	M.mind.name = "codesss-the-lizard"
-	M.real_name = "codesss-the-lizard"
-	M.name = "codesss-the-lizard"
-	M.set_species(/datum/species/lizard)
-    // Add equipment code here if needed
-	var/obj/item/weapon/card/id/I = new(M)
-	I.registered_name = "codesss-the-lizard"
-	I.access = list() //Ill figure this out in a sec for custom access
-	I.icon_state = "data"
-	M.wear_id = I
-	M.equip_to_slot_or_del(I, slot_wear_id)
-	M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(M), slot_wear_suit)
-	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/blue(M), slot_shoes)
-	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/blue(M), slot_gloves)
-	M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-	M.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(M), slot_r_store)
-	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag/syndie(M), slot_back)
-	M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/jeans(M), slot_w_uniform)
-// /obj/item/weapon/storage/backpack/dufflebag/syndie
-
+//lizard ids
 /obj/item/weapon/card/id/lizocorp
 	desc = "A card used to provide access and identification across lizocorp settlements and stations."
 	icon_state = "data"
@@ -293,7 +233,7 @@
 	registered_name = "Breaks-The-Window"
 	assignment = "Helper"
 
-//Tinystation
+//Tinystation Areas
 /area/ruinstation
 	name = "Ruin Stations"
 	icon_state = "green"
