@@ -1197,7 +1197,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		"Combat System Research" = 1,
 		"Electromagnetic Spectrum Research" = 1,
 		"Data Theory Research" = 1,
-		"Illegal Technologies Research" = 1
+		"Illegal Technologies Research" = 1,
+		"Reinforcements" = 1
 		)
 
 	products = list("Materials Research" = list(/obj/item/weapon/disk/tech_disk/materials/one = 6,
@@ -1253,7 +1254,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 									/obj/item/weapon/disk/tech_disk/syndicate/three = 6,
 									/obj/item/weapon/disk/tech_disk/syndicate/four = 6,
 									/obj/item/weapon/disk/tech_disk/syndicate/five = 6,
-									/obj/item/weapon/disk/tech_disk/syndicate/six = 6
+									/obj/item/weapon/disk/tech_disk/syndicate/six = 6,
+					"Reinforcements" = list(/obj/item/weapon/antag_spawner/lizard/digger = 18,
+									/obj/item/weapon/antag_spawner/lizard/digger/digger2 = 18,
+									/obj/item/weapon/antag_spawner/lizard/deputy = 18,
+									/obj/item/weapon/antag_spawner/lizard/deputy/deputy2 = 18,
+									/obj/item/weapon/antag_spawner/lizard/cheff = 18,
+									/obj/item/weapon/antag_spawner/lizard/brewer = 18,
+									/obj/item/weapon/antag_spawner/lizard/thinkerer = 18)
 									))
 
 /obj/machinery/vending/tech/vend(datum/data/vending_product/R, mob/user)
