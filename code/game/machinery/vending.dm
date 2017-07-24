@@ -61,8 +61,9 @@
 
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
-	var/fallen_over
-	var/health = 100
+	var/obj/currency            //Whatever the machine accepts for stuff. Please notice having this makes the supply amount the items cost. Sorry.
+	var/points = 0              //Current amount of points
+	var/currency_name = "Forgetium" //Name of the product you want the vending machine to use
 
 /obj/machinery/vending/New()
 	..()
@@ -152,8 +153,6 @@
 	if(!qdeleted(src))
 		if(prob(25))
 			malfunction()
-		if(!fallen_over)
-			fallover()
 
 /obj/machinery/vending/blob_act(obj/effect/blob/B)
 	malfunction()
@@ -188,6 +187,8 @@
 				product_records += R
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, list/datum/data/vending_product/machine, var/charge_type = STANDARD_CHARGE)
+	if(currency)
+		return 0
 	var/total = 0
 	var/to_restock = 0
 	for(var/V in machine)
@@ -221,9 +222,6 @@
 	return ""
 
 /obj/machinery/vending/snack/attackby(obj/item/weapon/W, mob/user, params)
-	if(fallen_over)
-		user << "<span class='warning'>[src] is on the ground.</span>"
-		return
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!compartment_access_check(user))
 			return
@@ -258,6 +256,7 @@
 			user << "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>"
 		updateUsrDialog()
 		return
+
 	else
 		return ..()
 
@@ -299,20 +298,16 @@
 	dat += "</div>"
 	return dat
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user, params)
-	if(fallen_over)
-		user << "<span class='warning'>[src] is on the ground.</span>"
-		return
-
+/obj/machinery/vending/attackby(obj/item/I, mob/user, params)
 	if(panel_open)
-		if(default_unfasten_wrench(user, W, time = 60))
+		if(default_unfasten_wrench(user, I, time = 60))
 			return
 
 	if(component_parts)
-		if(default_deconstruction_crowbar(W))
+		if(default_deconstruction_crowbar(I))
 			return
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(anchored)
 			panel_open = !panel_open
 			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
@@ -323,23 +318,37 @@
 		else
 			user << "<span class='warning'>You must first secure [src].</span>"
 		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/device/multitool)||istype(I, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			attack_hand(user)
 		return
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
+	else if(istype(I, /obj/item/weapon/coin) && premium.len > 0)
 		if(!user.drop_item())
 			return
-		W.loc = src
-		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		I.loc = src
+		coin = I
+		user << "<span class='notice'>You insert [I] into [src].</span>"
 		return
-	else if(istype(W, refill_canister) && refill_canister != null)
+	if(istype(I, currency))
+		if(isrobot(user))
+			return ..()
+		var/amount = 1
+		if(istype(I, /obj/item/stack))
+			var/obj/item/stack/S = I
+			amount = S.amount
+		points += amount
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.drop_item()
+		qdel(I)
+		visible_message("<span class='warning'>[user] inserts the [I.name] into [src]!</span>")
+		return
+	else if(istype(I, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			user << "<span class='notice'>It does nothing.</span>"
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/weapon/vending_refill/canister = W
+			var/obj/item/weapon/vending_refill/canister = I
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
@@ -353,50 +362,9 @@
 			return
 		else
 			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
-	else if(W.force)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		take_damage(W.force, W.damtype)
-		var/attacked = pick(W.attack_verb)
-		visible_message("<span class='warning'>[user] [attacked] [src] with [W]!</span>",\
-						"<span class='warning'>[user] [attacked] [src] with [W]!</span>")
 	else
 		return ..()
 
-/obj/machinery/vending/take_damage(damage, damage_type, sound_effect = 1)
-	switch(damage_type)
-		if(BRUTE)
-			if(sound_effect)
-				if(damage)
-					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
-				else
-					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			if(sound_effect)
-				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
-
-	if(health)
-		health -= damage
-
-	if(health <= 0)
-		fallover()
-
-/obj/machinery/vending/proc/fallover()
-	visible_message("<span class='warning'>[src] falls over!</span>",\
-					"<span class='warning'>[src] falls over!</span>")
-	overlays.Cut()
-	icon_state = initial(icon_state) + "-down"
-	fallen_over = TRUE
-	playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
-	health = 0
-	anchored = FALSE
-
-/obj/machinery/vending/proc/putbackup()
-	health = 100
-	icon_state = initial(icon_state)
-	power_change() // updates the vendor if it's run out of power.
-	anchored = TRUE
-	fallen_over = FALSE
 
 /obj/machinery/vending/deconstruction()
 	var/product_list = list(product_records, hidden_records, coin_records)
@@ -426,29 +394,6 @@
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_hand(mob/user)
-	if(fallen_over)
-		if(user.a_intent == HELP)
-			visible_message("<span class='notice'>[user] begins to pick up [src].</span>",\
-							"<span class='notice'>[user] begins to pick up [src].</span>")
-			if(do_after(user, 50, target = src))
-				visible_message("<span class='notice'>[user] picks up [src]!</span>",\
-								"<span class='notice'>[user] picks up [src]</span>")
-				putbackup()
-			return
-		user << "<span class='warning'>[src] is on the ground.</span>"
-		return
-
-	if(user.a_intent == HARM)
-		visible_message("<span class='warning'>[user] smacks [src]!</span>",\
-						"<span class='warning'>[user] smacks [src]!</span>")
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		var/punch = pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg')
-		playsound(get_turf(src), punch, 25, 1)
-		if(prob(50))
-			take_damage(rand(5,10))
-		return
-
 	var/dat = ""
 	if(panel_open && !isAI(user))
 		return wires.interact(user)
@@ -595,11 +540,15 @@
 			message_admins("Vending machine exploit attempted by [key_name(usr, usr.client)]!")
 			return
 
-		if (R.amount <= 0)
+		if(!(points >= R.amount) && currency)
+			vend_ready = 1
+			src.say("Insert [R.amount - points] more units of [currency_name]")
+			return
+		else if (R.amount <= 0)
 			usr << "<span class='warning'>Sold out.</span>"
 			vend_ready = 1
 			return
-		else
+		if(!currency)
 			R.amount--
 
 		if(((last_reply + (vend_delay + 200)) <= world.time) && vend_reply)
@@ -610,7 +559,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		spawn(vend_delay)
-			R.spawn_product(get_turf(src))
+			vend(R, usr)
 			vend_ready = 1
 			return
 
@@ -622,6 +571,9 @@
 
 	updateUsrDialog()
 
+/obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
+	R.spawn_product(get_turf(src))
+	return
 
 /obj/machinery/vending/process()
 	if(stat & (BROKEN|NOPOWER))
@@ -664,6 +616,8 @@
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
+	if(currency)
+		return 0
 	for(var/datum/data/vending_product/R in product_records)
 		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
@@ -788,9 +742,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Try our new nougat bar!;Twice the calories for half the price!"
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
-	products = list("Snacks" = list(/obj/item/weapon/storage/byummie = 3, /obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
+	products = list("Snacks" = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6, /obj/item/weapon/reagent_containers/food/snacks/toritose = 6))
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6, /obj/item/weapon/reagent_containers/food/snacks/toritose = 6, /obj/item/weapon/storage/byummie = 3))
 	contraband = list("Snacks" = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6))
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
@@ -1089,8 +1043,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
 	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
 	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
-	/obj/item/clothing/suit/hooded/wintercoat/bape=1,/obj/item/clothing/suit/hooded/wintercoat/superb=1,/obj/item/clothing/under/color/palace=4,
-	/obj/item/clothing/shoes/sneakers/yeezy=2,/obj/item/clothing/shoes/sneakers/nmd=1,/obj/item/device/pda/iwatch=2,
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
 	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
@@ -1123,8 +1075,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 									/obj/item/device/camera_film = 30,
 									/obj/item/weapon/storage/photo_album = 5,
 									/obj/item/weapon/storage/photobook = 5,
-									/obj/item/toy/frisbee = 2,
-									/obj/item/toy/boomerang = 2,
 									/obj/item/weapon/storage/bag/photo = 5),
 					"Clothing" = list(/datum/data/vending_product/random/uniform = 4,
 									/datum/data/vending_product/random/shoes = 4,
@@ -1226,6 +1176,103 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/gloves/color/grey,
 		/obj/item/clothing/gloves/color/light_brown,
 		/obj/item/clothing/gloves/color/brown)
+
+/obj/machinery/vending/tech
+	name = "tech dispenser"
+	desc = "Recycling plasma into tech!"
+	icon_state = "gifts"
+	icon_deny = "gifts-deny"
+	currency = /obj/item/stack/sheet/mineral/plasma
+	product_slogans = "Recyclying plasma into tech!;HEIL TINY STATION!"
+	vend_delay = 15
+	vend_reply = "Thank you for working with the dech dispenser!"
+	currency_name = "solid plasma"
+	var/list/product_level = list(
+		"Materials Research" = 1,
+		"Engineering Research" = 1,
+		"Plasmatech Research" = 1,
+		"Power Storage Research" = 1,
+		"Blue-Space Research" = 1,
+		"Biological Technology" = 1,
+		"Combat System Research" = 1,
+		"Electromagnetic Spectrum Research" = 1,
+		"Data Theory Research" = 1,
+		"Illegal Technologies Research" = 1
+		)
+
+	products = list("Materials Research" = list(/obj/item/weapon/disk/tech_disk/materials/one = 6,
+									/obj/item/weapon/disk/tech_disk/materials/two = 6,
+									/obj/item/weapon/disk/tech_disk/materials/three = 6,
+									/obj/item/weapon/disk/tech_disk/materials/four = 6,
+									/obj/item/weapon/disk/tech_disk/materials/five = 6,
+									/obj/item/weapon/disk/tech_disk/materials/six = 6),
+					"Engineering Research" = list(/obj/item/weapon/disk/tech_disk/engineering/one = 6,
+									/obj/item/weapon/disk/tech_disk/engineering/two = 6,
+									/obj/item/weapon/disk/tech_disk/engineering/three = 6,
+									/obj/item/weapon/disk/tech_disk/engineering/four = 6,
+									/obj/item/weapon/disk/tech_disk/engineering/five = 6,
+									/obj/item/weapon/disk/tech_disk/engineering/six = 6),
+					"Plasmatech Research" = list(/obj/item/weapon/disk/tech_disk/plasmatech/one = 6,
+									/obj/item/weapon/disk/tech_disk/plasmatech/two = 6,
+									/obj/item/weapon/disk/tech_disk/plasmatech/three = 6,
+									/obj/item/weapon/disk/tech_disk/plasmatech/four = 6,
+									/obj/item/weapon/disk/tech_disk/plasmatech/five = 6,
+									/obj/item/weapon/disk/tech_disk/plasmatech/six = 6),
+					"Power Storage Research" = list(/obj/item/weapon/disk/tech_disk/powerstorage/one = 6,
+									/obj/item/weapon/disk/tech_disk/powerstorage/two = 6,
+									/obj/item/weapon/disk/tech_disk/powerstorage/three = 6,
+									/obj/item/weapon/disk/tech_disk/powerstorage/four = 6,
+									/obj/item/weapon/disk/tech_disk/powerstorage/five = 6,
+									/obj/item/weapon/disk/tech_disk/powerstorage/six = 6),
+					"Blue-Space Research" = list(/obj/item/weapon/disk/tech_disk/bluespace/one = 6,
+									/obj/item/weapon/disk/tech_disk/bluespace/two = 6,
+									/obj/item/weapon/disk/tech_disk/bluespace/three = 6,
+									/obj/item/weapon/disk/tech_disk/bluespace/four = 6,
+									/obj/item/weapon/disk/tech_disk/bluespace/five = 6,
+									/obj/item/weapon/disk/tech_disk/bluespace/six = 6),
+					"Biological Technology" = list(/obj/item/weapon/disk/tech_disk/biotech/one = 6,
+									/obj/item/weapon/disk/tech_disk/biotech/two = 6,
+									/obj/item/weapon/disk/tech_disk/biotech/three = 6,
+									/obj/item/weapon/disk/tech_disk/biotech/four = 6,
+									/obj/item/weapon/disk/tech_disk/biotech/five = 6,
+									/obj/item/weapon/disk/tech_disk/biotech/six = 6),
+					"Combat System Research" = list(/obj/item/weapon/disk/tech_disk/combat/one = 6,
+									/obj/item/weapon/disk/tech_disk/combat/two = 6,
+									/obj/item/weapon/disk/tech_disk/combat/three = 6,
+									/obj/item/weapon/disk/tech_disk/combat/four = 6,
+									/obj/item/weapon/disk/tech_disk/combat/five = 6,
+									/obj/item/weapon/disk/tech_disk/combat/six = 6),
+					"Data Theory Research" = list(/obj/item/weapon/disk/tech_disk/programming/one = 6,
+									/obj/item/weapon/disk/tech_disk/programming/two = 6,
+									/obj/item/weapon/disk/tech_disk/programming/three = 6,
+									/obj/item/weapon/disk/tech_disk/programming/four = 6,
+									/obj/item/weapon/disk/tech_disk/programming/five = 6,
+									/obj/item/weapon/disk/tech_disk/programming/six = 6),
+					"Illegal Technologies Research" = list(/obj/item/weapon/disk/tech_disk/syndicate/one = 6,
+									/obj/item/weapon/disk/tech_disk/syndicate/two = 6,
+									/obj/item/weapon/disk/tech_disk/syndicate/three = 6,
+									/obj/item/weapon/disk/tech_disk/syndicate/four = 6,
+									/obj/item/weapon/disk/tech_disk/syndicate/five = 6,
+									/obj/item/weapon/disk/tech_disk/syndicate/six = 6
+									))
+
+/obj/machinery/vending/tech/vend(datum/data/vending_product/R, mob/user)
+	var/list/productsCategory = products[R.category]
+	if(product_level[R.category] > productsCategory.Find(R.product_path))
+		R.spawn_product(get_turf(src))
+	else if(product_level[R.category] == productsCategory.Find(R.product_path))
+		product_level[R.category] += 1
+		R.spawn_product(get_turf(src))
+	else
+		user << "<span class='warning'>Previous tech disks need to be purchased before being able to acces [R.product_name]</span>"
+		return
+	points -= R.amount
+
+/obj/machinery/vending/tech/examine(mob/user)
+	..()
+	user << "<span class='notice'>[points] units of [currency_name] loaded.</span>"
+
+
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
