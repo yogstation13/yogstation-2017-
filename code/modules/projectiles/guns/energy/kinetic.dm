@@ -1,3 +1,6 @@
+#define PRESHOT "preShot"
+#define PREDAMAGE "preDamage"
+#define AFTERDAMAGE "afterDamage"
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
@@ -12,24 +15,72 @@
 	can_flashlight = 1
 	origin_tech = "combat=3;powerstorage=3;engineering=3"
 	weapon_weight = WEAPON_LIGHT
+	var/hasPS //preShot
+	var/hasPD //preDamage
+	var/hasAD //afterDamage
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
 	var/list/parts = list(
-	"barrel" = new /obj/item/kinetic_part/barrel(),
-	"barrel_end" = new /obj/item/kinetic_part/barrel_end(),
-	"core" = new /obj/item/kinetic_part/core(),
-	"charger" = new /obj/item/kinetic_part/charger(),
-	"grip" = new /obj/item/kinetic_part/grip()
+	"barrel" = /obj/item/kinetic_part/barrel,
+	"barrel_end" = /obj/item/kinetic_part/barrel_end,
+	"core" = /obj/item/kinetic_part/core,
+	"charger" = /obj/item/kinetic_part/charger,
+	"grip" = /obj/item/kinetic_part/grip
 	)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/New()
 	..()
+	buildParts()
 	update_icons()
+	updateParts()
+
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/buildParts()
+	for(var/A in parts)
+		var/obj/item/kinetic_part/KP = parts[A]
+		if(KP)
+			parts[A] = new KP(src)
+
+/obj/item/kinetic_part/afterattack(obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user)
+	if(istype(KA, /obj/item/weapon/gun/energy/kinetic_accelerator))
+		playsound(user, 'sound/machines/click.ogg', 60, 1)
+		user.changeNext_move(CLICK_CD_MELEE)
+		KA.switchPart(src,user)
+	else
+		..()
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/switchPart(obj/item/kinetic_part/KP, mob/user)
+	if(!KP)
+		return
+	var/obj/item/kinetic_part/KPOLD = parts[KP.part]
+	KPOLD.forceMove(get_turf(src))
+	parts[KP.part] = KP
+	if(user)
+		user.unEquip(KP)
+	KP.forceMove(src)
+	update_icons()
+	updateParts()
+	if(user)
+		user.put_in_active_hand(KPOLD)
+		user << "<span class='notice'>You switch the [KPOLD.name] out with the [KP.name].</span>"
+
+
+
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/updateParts()
 	overheat_time = getPartsCooldown()
 	update_icons()
+	hasPS = FALSE
+	hasPD = FALSE
+	hasAD = FALSE
+	for(var/obj/item/kinetic_part/KP in contents)
+		if(KP.PS)
+			hasPS = TRUE
+		if(KP.PD)
+			hasPD = TRUE
+		if(KP.AD)
+			hasAD = TRUE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/update_icons()
 	overlays.Cut()
@@ -45,25 +96,35 @@
 			KI.pixel_y = B.pixel_y_extra
 		overlays += KI
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/prepare_projectile(obj/item/projectile/kinetic/K)
+/obj/item/weapon/gun/energy/kinetic_accelerator/proc/prepare_projectile(obj/item/projectile/kinetic/K,mob/user)
+	K.gun = src
 	K.damage = getPartsDamage()
 	K.range = getPartsRange()
+	var/turf/proj_turf = get_turf(K)
+	if(!istype(proj_turf, /turf))
+		return
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure > 49)
+		K.name = "weakened kinetic force"
+		K.damage *= 0.25
+	K.specialShot(PRESHOT,src,user)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/getPartsDamage()
 	var/totalDamage = 0
-	for(var/obj/item/kinetic_part/KP in parts)
+	for(var/obj/item/kinetic_part/KP in contents)
 		totalDamage += KP.damageBonus
 	return totalDamage
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/getPartsRange()
 	var/totalRange = 0
-	for(var/obj/item/kinetic_part/KP in parts)
+	for(var/obj/item/kinetic_part/KP in contents)
 		totalRange += KP.rangeBonus
 	return totalRange
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/getPartsCooldown()
 	var/totalCooldown = 0
-	for(var/obj/item/kinetic_part/KP in parts)
+	for(var/obj/item/kinetic_part/KP in contents)
 		totalCooldown += KP.cooldownBonus
 	return totalCooldown
 
@@ -80,6 +141,12 @@
 	var/rangeBonus = 0
 	var/cooldownBonus = 0 //Normal KA is 16, the lower the better
 
+	var/datum/kinetic/preShot/PS //Right after we give the projectile its damage, it hasnt left the gun yet.
+	var/datum/kinetic/preDamage/PD //The projectile hit our target, but hasnt done any damage yet
+	var/datum/kinetic/afterDamage/AD //The damage has been done
+
+
+//Standard
 /obj/item/kinetic_part/barrel
 	name = "standard barrel"
 	icon_state = "barrel_standard"
@@ -98,7 +165,7 @@
 
 /obj/item/kinetic_part/core
 	name = "kinetic core"
-	icon_state = "core_standard"
+	icon_state = "core_kinetic"
 	rank = "standard"
 	part = "core"
 	damageBonus = 2
@@ -115,10 +182,71 @@
 	name = "standard grip"
 	icon_state = "grip_standard"
 	rank = "standard"
-	part = "charger"
+	part = "grip"
 	rangeBonus = 1
 	cooldownBonus = 2
 	damageBonus = 3
+
+//Super
+
+/obj/item/kinetic_part/barrel/super
+	name = "super barrel"
+	icon_state = "barrel_super"
+	rank = "super"
+	part = "barrel"
+	damageBonus = 12
+	rangeBonus = 3
+	cooldownBonus = 2
+	AD = new /datum/kinetic/afterDamage/splash()
+
+/obj/item/kinetic_part/barrel_end/super
+	name = "super barrel end"
+	icon_state = "barrel_end_super"
+	rank = "super"
+	part = "barrel_end"
+	damageBonus = 30
+
+/obj/item/kinetic_part/charger/super
+	name = "super charger"
+	icon_state = "charger_super"
+	rank = "super"
+	part = "charger"
+	cooldownBonus = 8
+
+/obj/item/kinetic_part/grip/super
+	name = "standard grip"
+	icon_state = "grip_super"
+	rank = "super"
+	part = "grip"
+	rangeBonus = 1
+	cooldownBonus = 1
+	damageBonus = 4
+
+
+
+/datum/kinetic/proc/Trigger()
+
+/datum/kinetic/preShot/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/user)
+
+/datum/kinetic/preDamage/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,turf/T)
+
+/datum/kinetic/afterDamage/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,atom/target)
+
+/datum/kinetic/afterDamage/splash/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,atom/target)
+	world << "6"
+	for(var/turf/T in range(1, get_turf(target)))
+		world << "7"
+		if(istype(T, /turf/closed/mineral))
+			world << "8"
+			var/turf/closed/mineral/M = T
+			M.gets_drilled(firer)
+			world << "9"
+
+
+
+
+
+
 
 
 /obj/item/projectile/kinetic
@@ -128,22 +256,33 @@
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 3
-	var/splash = 0
+	var/gun
+
+/obj/item/projectile/kinetic/proc/specialShot(var/when,obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user,atom/target)
+	switch(when)
+		if(PRESHOT)
+			if(KA.hasPS)
+				for(var/obj/item/kinetic_part/KP in KA.contents)
+					var/datum/kinetic/preShot/D = KP.PS
+					D.Trigger(KA,src,user) //No way of knowing what it will hit, so no target
+		if(PREDAMAGE)
+			if(KA.hasPD)
+				for(var/obj/item/kinetic_part/KP in KA.contents)
+					var/datum/kinetic/preDamage/D = KP.PD
+					D.Trigger(KA,src,user,target)
+		if(AFTERDAMAGE)
+			if(KA.hasAD)
+				for(var/obj/item/kinetic_part/KP in KA.contents)
+					var/datum/kinetic/afterDamage/D = KP.AD
+					D.Trigger(KA,src,user,target)
+
 
 /obj/item/projectile/kinetic/on_range()
-
 	new /obj/effect/kinetic_blast(src.loc)
 	..()
 
 /obj/item/projectile/kinetic/prehit()
-	var/turf/proj_turf = get_turf(src)
-	if(!istype(proj_turf, /turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure > 49)
-		name = "weakened kinetic force"
-		damage *= 0.25
+	specialShot(PREDAMAGE,gun,firer,get_turf(src))
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
 	. = ..()
@@ -152,12 +291,8 @@
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/effect/kinetic_blast(target_turf)
-	if(src.splash)
-		for(var/turf/T in range(splash, target_turf))
-			if(istype(T, /turf/closed/mineral))
-				var/turf/closed/mineral/M = T
-				M.gets_drilled(firer)
-
+	world << "1"
+	specialShot(AFTERDAMAGE,gun,firer,target)
 
 /obj/effect/kinetic_blast
 	name = "kinetic explosion"
@@ -180,7 +315,7 @@
 	..()
 	if(loc && istype(loc, /obj/item/weapon/gun/energy/kinetic_accelerator))
 		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = loc
-		KA.prepare_projectile(BB)
+		KA.prepare_projectile(BB,user)
 
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
@@ -260,3 +395,7 @@
 		if(F.on)
 			iconF = "flight_on"
 		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
+
+#undef PRESHOT
+#undef PREDAMAGE
+#undef AFTERDDAMAGE
