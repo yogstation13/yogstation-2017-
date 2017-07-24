@@ -90,7 +90,6 @@
 	M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest/alt(M), slot_wear_suit)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/blue(M), slot_shoes)
 	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/blue(M), slot_gloves)
-	M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 	M.equip_to_slot_or_del(new /obj/item/weapon/restraints/handcuffs(M), slot_r_store)
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag/syndie(M), slot_back)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/jeans(M), slot_w_uniform)
@@ -141,7 +140,6 @@
 	M.equip_to_slot_or_del(new /obj/item/clothing/suit/apron/chef(M), slot_wear_suit)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/white(M), slot_shoes)
 	M.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/white(M), slot_gloves)
-	M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(M), slot_back)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/jeans(M), slot_w_uniform)
 
@@ -189,7 +187,6 @@
 	M.equip_to_slot_or_del(I, slot_wear_id)
 	M.equip_to_slot_or_del(new /obj/item/clothing/suit/jacket(M), slot_wear_suit)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/brown(M), slot_shoes)
-	M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(M), slot_back)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/jeans(M), slot_w_uniform)
 
@@ -236,7 +233,6 @@
 	M.wear_id = I
 	M.equip_to_slot_or_del(I, slot_wear_id)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(M), slot_shoes)
-	M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(M), slot_back)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/jeans(M), slot_w_uniform)
 
@@ -284,6 +280,5 @@
 	M.equip_to_slot_or_del(I, slot_wear_id)
 	M.equip_to_slot_or_del(new /obj/item/clothing/suit/toggle/labcoat/science(M), slot_wear_suit)
 	M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(M), slot_shoes)
-	M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 	M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/dufflebag(M), slot_back)
 	M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/khaki(M), slot_w_uniform)

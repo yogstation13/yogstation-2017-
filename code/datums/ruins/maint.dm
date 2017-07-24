@@ -42,30 +42,6 @@
 	name = "tinystation1"
 	description = "A small idependent station built and maintained by filthy lizards."
 
-/datum/map_template/ruin/maint/plasmastation
-	id = "tinystation2"
-	suffix = "tinystation2.dmm"
-	name = "tinystation3"
-	description = "A small idependent station built and maintained by plasmaman."
-
-/datum/map_template/ruin/maint/robotstation
-	id = "tinystation3"
-	suffix = "tinystation3.dmm"
-	name = "tinystation3"
-	description = "A small idependent station built and maintained by preternis."
-
-/datum/map_template/ruin/maint/clonestation
-	id = "tinystation4"
-	suffix = "tinystation4.dmm"
-	name = "tinystation4"
-	description = "A small idependent station built and maintained by clones."
-
-/datum/map_template/ruin/maint/sovietstation
-	id = "tinystation5"
-	suffix = "tinystation5.dmm"
-	name = "tinystation5"
-	description = "A small idependent station built and maintained by space russians."
-
 //Asteroid Fields
 /datum/map_template/ruin/maint/asteroidfield1
 	id = "asteroidfield1"
