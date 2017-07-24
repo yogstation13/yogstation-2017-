@@ -90,39 +90,3 @@
 	suffix = "asteroidfield4.dmm"
 	name = "asteroidfield4"
 	description = "Its a asteroid field you thot."
-
-/datum/map_template/ruin/maint/asteroidfield5
-	id = "asteroidfield5"
-	suffix = "asteroidfield5.dmm"
-	name = "asteroidfield5"
-	description = "Its a asteroid field you thot."
-
-/datum/map_template/ruin/maint/asteroidfield6
-	id = "asteroidfield6"
-	suffix = "asteroidfield6.dmm"
-	name = "asteroidfield6"
-	description = "Its a asteroid field you thot."
-
-/datum/map_template/ruin/maint/asteroidfield7
-	id = "asteroidfield7"
-	suffix = "asteroidfield7.dmm"
-	name = "asteroidfield7"
-	description = "Its a asteroid field you thot."
-
-/datum/map_template/ruin/maint/asteroidfield8
-	id = "asteroidfield8"
-	suffix = "asteroidfield8.dmm"
-	name = "asteroidfield8"
-	description = "Its a asteroid field you thot."
-
-/datum/map_template/ruin/maint/asteroidfield9
-	id = "asteroidfield9"
-	suffix = "asteroidfield9.dmm"
-	name = "asteroidfield9"
-	description = "Its a asteroid field you thot."
-
-/datum/map_template/ruin/maint/asteroidfield10
-	id = "asteroidfield10"
-	suffix = "asteroidfield10.dmm"
-	name = "asteroidfield10"
-	description = "Its a asteroid field you thot."

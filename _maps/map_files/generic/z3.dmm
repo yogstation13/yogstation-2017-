@@ -1,6 +1,6 @@
 "a" = (/turf/open/space,/area/space)
 "b" = (/obj/effect/landmark/maintroom{template_names = list("tinystation1")},/turf/open/space,/area/space)
-"c" = (/obj/effect/landmark/maintroom{template_names = list("asteroidfield1","asteroidfield2","asteroidfield3")},/turf/open/space,/area/space)
+"c" = (/obj/effect/landmark/maintroom{template_names = list("asteroidfield1","asteroidfield2","asteroidfield3","asteroidfield4")},/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
