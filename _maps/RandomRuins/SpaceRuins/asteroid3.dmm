@@ -1,10 +1,10 @@
 "a" = (/turf/closed/mineral/iron,/area/ruin/unpowered/no_grav)
 "b" = (/turf/open/space,/area/space)
-"c" = (/obj/docking_port/stationary{dwidth = 5; height = 15; id = "freebus_asteroid3"; name = "Asteroid Readings: UNKNOWN"; width = 15},/turf/open/space,/area/space)
+"c" = (/obj/docking_port/stationary{dwidth = 5; height = 15; id = "freebus_asteroid3"; name = "Signal Readings: UNKNOWN"; width = 15},/turf/open/space,/area/space)
 "d" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 "e" = (/turf/closed/mineral/uranium,/area/ruin/unpowered/no_grav)
 "f" = (/obj/effect/decal/remains/human,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
-"g" = (/obj/docking_port/stationary{dir = 4; dwidth = 3; height = 5; id = "mining_asteroid3"; name = "Asteroid Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"g" = (/obj/docking_port/stationary{dir = 4; dwidth = 3; height = 5; id = "mining_asteroid3"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
 "h" = (/obj/item/weapon/pickaxe/diamond,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

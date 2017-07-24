@@ -1,6 +1,6 @@
 "aa" = (/turf/open/space,/area/space)
 "ab" = (/turf/closed/mineral/random/low_chance,/area/ruin/unpowered)
-"ac" = (/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 5; id = "mining_storage"; name = "Asteroid Signal: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"ac" = (/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 5; id = "mining_storage"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
 "ad" = (/turf/closed/wall/mineral/iron,/area/ruin/unpowered)
 "ae" = (/obj/structure/closet/cardboard,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/gold,/turf/open/floor/plasteel/floorgrime,/area/ruin/unpowered)
 "af" = (/obj/structure/closet/cardboard,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/box/monkeycubes,/obj/item/weapon/storage/toolbox/drone,/obj/item/weapon/storage/toolbox/drone,/turf/open/floor/plasteel/floorgrime,/area/ruin/unpowered)
@@ -114,7 +114,7 @@
 "cj" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/plating,/area/ruin/unpowered)
 "ck" = (/obj/machinery/door/poddoor{id = "bunker2"; name = "Bunker Door"; tag = "outer"},/turf/open/floor/plating,/area/ruin/unpowered)
 "cl" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
-"cm" = (/obj/docking_port/stationary{dir = 2; dwidth = 5; height = 15; id = "freebus_storage"; name = "Asteroid Signal: UNKNOWN"; width = 15},/turf/open/space,/area/space)
+"cm" = (/obj/docking_port/stationary{dir = 2; dwidth = 5; height = 15; id = "freebus_storage"; name = "Signal Readings: UNKNOWN"; width = 15},/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
