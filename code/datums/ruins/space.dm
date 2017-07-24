@@ -1,6 +1,8 @@
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
+	allow_duplicates = FALSE
+	allow_duplicates_global = FALSE
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
@@ -162,7 +164,6 @@
 	suffix = "asteroid22.dmm"
 	name = "asteroid22"
 	description = "A big, heavy, ugly blob of rock!"
-
 
 /datum/map_template/ruin/space/freeminer_asteroid
 	id = "freeminer_asteroid"
@@ -426,3 +427,5 @@
 	suffix = "asteroidsurvivor.dmm"
 	name= "crashland survivor"
 	description = "A lone survivor stuck to a asteroid awaiting response to his distress signal."
+	allow_duplicates = TRUE
+	allow_duplicates_global = TRUE

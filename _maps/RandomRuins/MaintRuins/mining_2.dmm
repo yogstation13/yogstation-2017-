@@ -49,7 +49,7 @@
 "aW" = (/obj/machinery/suit_storage_unit/mining/void,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel{dir = 1; icon_state = "brown"},/area/quartermaster/miningdock)
 "aX" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/item/device/radio/intercom{dir = 4; name = "Station Intercom (General)"; pixel_x = 27},/turf/open/floor/plasteel{dir = 5; icon_state = "brown"},/area/quartermaster/miningdock)
 "aY" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/bot,/area/shuttle/miningbus)
-"aZ" = (/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "miningbus"; name = "mining bus"; travelDir = 180; width = 8},/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 5; id = "mining_home"; name = "Tinystation docking"; width = 8},/turf/open/floor/plating,/area/shuttle/miningbus)
+"aZ" = (/obj/docking_port/mobile{dir = 8; dwidth = 3; height = 5; id = "miningbus"; name = "mining bus"; travelDir = 180; width = 8},/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 5; id = "mining_home"; name = "Mining Wing"; width = 8},/turf/open/floor/plating,/area/shuttle/miningbus)
 "ba" = (/obj/machinery/door/airlock/external{name = "Mining Dock Airlock"; req_access = null; req_access_txt = "48"},/turf/open/floor/plasteel,/area/quartermaster/miningdock)
 "bb" = (/turf/open/floor/plasteel,/area/quartermaster/miningdock)
 "bc" = (/obj/machinery/door/airlock/glass_mining{name = "Mining Dock"; req_access_txt = "48"},/turf/open/floor/plasteel,/area/quartermaster/miningdock)

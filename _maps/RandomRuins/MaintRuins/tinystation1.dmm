@@ -464,7 +464,7 @@
 "iV" = (/obj/structure/rack,/obj/item/weapon/gun/projectile/shotgun/lethal,/turf/open/floor/plasteel/darkblue,/area/ruinstation/lstation/larmory)
 "iW" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall3 (SOUTHWEST)"; icon_state = "wall3"; dir = 10; layer = 2},/area/shuttle/freebus)
 "iX" = (/obj/structure/chair,/turf/open/floor/plating,/area/shuttle/freebus)
-"iY" = (/obj/docking_port/mobile{dir = 1; dwidth = 3; height = 3; id = "freebus"; name = "freebus"; width = 8},/obj/docking_port/stationary{dir = 1; dwidth = 3; height = 3; id = "freebus_home"; width = 8},/obj/structure/chair,/turf/open/floor/plating,/area/shuttle/freebus)
+"iY" = (/obj/docking_port/mobile{dir = 1; dwidth = 3; height = 3; id = "freebus"; name = "freebus"; width = 8},/obj/docking_port/stationary{dir = 1; dwidth = 3; height = 3; id = "freebus_home"; name = "Home"; width = 8},/obj/structure/chair,/turf/open/floor/plating,/area/shuttle/freebus)
 "iZ" = (/turf/open/space,/turf/closed/wall/shuttle{tag = "icon-wall3 (SOUTHEAST)"; icon_state = "wall3"; dir = 6; layer = 2},/area/shuttle/freebus)
 "ja" = (/obj/structure/lattice/catwalk,/turf/open/space,/area/space)
 "jb" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruinstation/lstation/lminingwing)
