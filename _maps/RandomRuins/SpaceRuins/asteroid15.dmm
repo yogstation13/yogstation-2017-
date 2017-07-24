@@ -1,0 +1,32 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_asteroid15"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
+"d" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaabaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaacccccdddddddaaa
+aaaaaaaacccccccddddddddaa
+aaccaaaacccccccddddddddaa
+aaccaaacccccdddddddddddaa
+acccaaaccccddddddddddcdaa
+acccaaccccdddddddddddccaa
+accaaccccddddddddddddccaa
+accacccccddddddddddddccaa
+acaacccccdddddddddddccaaa
+aaaccccccddddddddcccccaaa
+aaccccccddddddddccccccaaa
+acccccddddddddccccccccaaa
+acccdddddddddccccccccaaaa
+acccdddddddccccccccccaaaa
+acccddddddccccccccccaaaaa
+aaccdddddddccccccccaaaaaa
+aaccdddddcccccccccaaaaaaa
+aaadddddcccccccccaaaaaaaa
+aaaaddddcccccaaaaaaaaaaaa
+aaaaaadccccccaaaaaaaaaaaa
+aaaaaaaaaaacaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+"}

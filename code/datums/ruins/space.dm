@@ -46,6 +46,124 @@
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
 
+/datum/map_template/ruin/space/asteroid6
+	id = "asteroid6"
+	suffix = "asteroid6.dmm"
+	name = "asteroid6"
+	description = "A big, heavy, ugly blob of rock!"
+
+/datum/map_template/ruin/space/asteroid7
+	id = "asteroid7"
+	suffix = "asteroid7.dmm"
+	name = "asteroid7"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid8
+	id = "asteroid8"
+	suffix = "asteroid8.dmm"
+	name = "asteroid8"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid9
+	id = "asteroid9"
+	suffix = "asteroid9.dmm"
+	name = "asteroid9"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid10
+	id = "asteroid10"
+	suffix = "asteroid10.dmm"
+	name = "asteroid10"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid11
+	id = "asteroid11"
+	suffix = "asteroid11.dmm"
+	name = "asteroid11"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid12
+	id = "asteroid12"
+	suffix = "asteroid12.dmm"
+	name = "asteroid12"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid13
+	id = "asteroid13"
+	suffix = "asteroid13.dmm"
+	name = "asteroid13"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid14
+	id = "asteroid14"
+	suffix = "asteroid14.dmm"
+	name = "asteroid14"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid15
+	id = "asteroid15"
+	suffix = "asteroid15.dmm"
+	name = "asteroid15"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid16
+	id = "asteroid16"
+	suffix = "asteroid16.dmm"
+	name = "asteroid16"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid17
+	id = "asteroid17"
+	suffix = "asteroid17.dmm"
+	name = "asteroid17"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid18
+	id = "asteroid18"
+	suffix = "asteroid18.dmm"
+	name = "asteroid18"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid19
+	id = "asteroid19"
+	suffix = "asteroid19.dmm"
+	name = "asteroid19"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid20
+	id = "asteroid20"
+	suffix = "asteroid20.dmm"
+	name = "asteroid20"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid21
+	id = "asteroid21"
+	suffix = "asteroid21.dmm"
+	name = "asteroid21"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid22
+	id = "asteroid22"
+	suffix = "asteroid22.dmm"
+	name = "asteroid22"
+	description = "A big, heavy, ugly blob of rock!"
+
+
 /datum/map_template/ruin/space/freeminer_asteroid
 	id = "freeminer_asteroid"
 	suffix = "freeminer_asteroid.dmm"

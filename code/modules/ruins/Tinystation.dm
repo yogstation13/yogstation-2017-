@@ -486,7 +486,7 @@
 	desc = "Used to call and send the mining bus."
 	circuit = /obj/item/weapon/circuitboard/computer/freebus
 	shuttleId = "freebus"
-	possible_destinations = "freebus_home;freebus_away;freebus_storage;freebus_asteroid0;freebus_asteroid1;freebus_asteroid2;freebus_asteroid3;freebus_asteroid4;freebus_asteroid5"
+	possible_destinations = "freebus_home;freebus_away;freebus_storage;freebus_asteroid0;freebus_asteroid1;freebus_asteroid2;freebus_asteroid3;freebus_asteroid4;freebus_asteroid5;freebus_asteroid6"
 	no_destination_swap = 1
 	cooldownlen = 50
 
@@ -496,7 +496,7 @@
 	desc = "Used to call and send the mining bus."
 	circuit = /obj/item/weapon/circuitboard/computer/miningbus
 	shuttleId = "miningbus"
-	possible_destinations = "mining_home;mining_djstation;;mining_gas;mining_distress;mining_distress2;mining_distress3;mining_distress4;mining_storage;mining_asteroid1;mining_asteroid2;mining_asteroid3;mining_asteroid4;mining_asteroid5;mining_field1;mining_field2;mining_field3;mining_field4;mining_field5;mining_field6;mining_field7;mining_field8;mining_field9;mining_field10;"
+	possible_destinations = "mining_home;mining_djstation;;mining_gas;mining_distress;mining_distress2;mining_distress3;mining_distress4;mining_storage;mining_asteroid1;mining_asteroid2;mining_asteroid3;mining_asteroid4;mining_asteroid5;mining_asteroid6;mining_asteroid7;mining_asteroid8;mining_asteroid9;mining_asteroid10;mining_asteroid11;mining_asteroid12;mining_asteroid13;mining_asteroid14;mining_asteroid15;mining_asteroid16;mining_asteroid17;mining_asteroid18;mining_asteroid19;mining_asteroid20;mining_asteroid21;mining_asteroid22;mining_field1;mining_field2;mining_field3;mining_field4;mining_field5;mining_field6;mining_field7;mining_field8;mining_field9;mining_field10;"
 	no_destination_swap = 1
 	notification = SUPP_FREQ
 	cooldownlen = 50

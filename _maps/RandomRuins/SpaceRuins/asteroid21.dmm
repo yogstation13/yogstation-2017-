@@ -1,0 +1,46 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_asteroid21"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
+"d" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
+"e" = (/turf/closed/wall,/area/ruin/unpowered)
+"f" = (/obj/structure/closet/crate/secure/loot,/turf/open/floor/plating,/area/ruin/unpowered)
+"g" = (/obj/effect/spawner/lootdrop/crate_spawner,/turf/open/floor/plating,/area/ruin/unpowered)
+"h" = (/obj/effect/spawner/lootdrop/snowdin/dungeonheavy,/turf/open/floor/plating,/area/ruin/unpowered)
+"i" = (/obj/structure/closet/crate/secure/weapon,/turf/open/floor/plating,/area/ruin/unpowered)
+"j" = (/obj/structure/closet/crate/secure/engineering,/turf/open/floor/plating,/area/ruin/unpowered)
+"k" = (/obj/structure/closet/crate/secure/loot,/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,/turf/open/floor/plating,/area/ruin/unpowered)
+"l" = (/obj/structure/closet/crate/secure/loot,/obj/effect/spawner/lootdrop/snowdin/dungeonmid,/turf/open/floor/plating,/area/ruin/unpowered)
+"m" = (/turf/open/floor/plating,/area/ruin/unpowered)
+"n" = (/obj/structure/closet/crate/large,/obj/effect/spawner/lootdrop/gambling,/turf/open/floor/plating,/area/ruin/unpowered)
+"o" = (/obj/structure/closet/crate/large,/obj/effect/spawner/lootdrop/snowdin/dungeonmisc,/turf/open/floor/plating,/area/ruin/unpowered)
+"p" = (/obj/structure/closet/crate/large,/obj/effect/spawner/lootdrop/toy_mech,/obj/effect/spawner/lootdrop/toy_mech,/obj/effect/spawner/lootdrop/toy_mech,/obj/effect/spawner/lootdrop/toy_mech,/obj/effect/spawner/lootdrop/toy_mech,/obj/effect/spawner/lootdrop/toy_mech,/turf/open/floor/plating,/area/ruin/unpowered)
+"q" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaabaaaaaaaaaaaa
+accaaaaaaaaaaaaaaaaaaaa
+accccaaaaaaaaaaaaaaaaaa
+accccdaaaaaaaaaaaaaaaaa
+accccddaaaddddddaaaaaaa
+acccccdaaddddddddaaaaaa
+adcccccaaddcdddddaaaaaa
+adcccccaadeeeeeeedaaaaa
+adddcddaadefgghfecdaaaa
+aaadddaaadeffffiecddaaa
+aaaaaaaaadefjkffedddaaa
+aaaaaaaeeeeffffkeccdaaa
+aaaaaaaelfffffffecddaaa
+aadddccefmmmmmnfedddaaa
+aadeeeeefmmmmmofecddaaa
+addeffnmmmmfeeeeeddaaaa
+addeffmmmmmfedddddaaaaa
+adceffmmmmeeeaaaaaaaaaa
+adceffpmmmqmqaaaaacccca
+adceeeeeeeeeeaaaaccccca
+adcccccdddddaaaacccccca
+addcccccccddaaaccccccca
+adddccccccdaaacccccccaa
+aaddccccdaaaccccccccaaa
+aaaaaaaaaaaacccccccaaaa
+aaaaaaaaaaaaaaaaaaaaaaa
+"}
