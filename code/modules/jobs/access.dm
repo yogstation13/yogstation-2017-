@@ -469,7 +469,7 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_job_fluff()
-	return list ("Boxer","Fighter","Fireman","Fire Fighter","Deputy","Bodyguard","Security Deputy", "Animal Control", "Zoo Keeper", "Captain's Assistant")
+	return list ("Boxer","Fighter","Fireman","Fire Fighter","Deputy","Bodyguard","Security Deputy", "Animal Control", "Zoo Keeper", "Captain Assistant", "Peacekeeper", "Cheff", "Commander", "Brewer", "Digger", "Thinkerer", "Repairer")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
