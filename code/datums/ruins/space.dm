@@ -1,6 +1,8 @@
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
+	allow_duplicates = FALSE
+	allow_duplicates_global = FALSE
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
@@ -45,6 +47,123 @@
 	suffix = "asteroid5.dmm"
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
+
+/datum/map_template/ruin/space/asteroid6
+	id = "asteroid6"
+	suffix = "asteroid6.dmm"
+	name = "asteroid6"
+	description = "A big, heavy, ugly blob of rock!"
+
+/datum/map_template/ruin/space/asteroid7
+	id = "asteroid7"
+	suffix = "asteroid7.dmm"
+	name = "asteroid7"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid8
+	id = "asteroid8"
+	suffix = "asteroid8.dmm"
+	name = "asteroid8"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid9
+	id = "asteroid9"
+	suffix = "asteroid9.dmm"
+	name = "asteroid9"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid10
+	id = "asteroid10"
+	suffix = "asteroid10.dmm"
+	name = "asteroid10"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid11
+	id = "asteroid11"
+	suffix = "asteroid11.dmm"
+	name = "asteroid11"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid12
+	id = "asteroid12"
+	suffix = "asteroid12.dmm"
+	name = "asteroid12"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid13
+	id = "asteroid13"
+	suffix = "asteroid13.dmm"
+	name = "asteroid13"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid14
+	id = "asteroid14"
+	suffix = "asteroid14.dmm"
+	name = "asteroid14"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid15
+	id = "asteroid15"
+	suffix = "asteroid15.dmm"
+	name = "asteroid15"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid16
+	id = "asteroid16"
+	suffix = "asteroid16.dmm"
+	name = "asteroid16"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid17
+	id = "asteroid17"
+	suffix = "asteroid17.dmm"
+	name = "asteroid17"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid18
+	id = "asteroid18"
+	suffix = "asteroid18.dmm"
+	name = "asteroid18"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid19
+	id = "asteroid19"
+	suffix = "asteroid19.dmm"
+	name = "asteroid19"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid20
+	id = "asteroid20"
+	suffix = "asteroid20.dmm"
+	name = "asteroid20"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid21
+	id = "asteroid21"
+	suffix = "asteroid21.dmm"
+	name = "asteroid21"
+	description = "A big, heavy, ugly blob of rock!"
+
+
+/datum/map_template/ruin/space/asteroid22
+	id = "asteroid22"
+	suffix = "asteroid22.dmm"
+	name = "asteroid22"
+	description = "A big, heavy, ugly blob of rock!"
 
 /datum/map_template/ruin/space/freeminer_asteroid
 	id = "freeminer_asteroid"
@@ -194,3 +313,119 @@
 	suffix = "hippie_shuttle"
 	name= "Hippie Shuttle"
 	description = "These hippies went a little too far out..."
+
+/datum/map_template/ruin/space/colony
+	id = "colony"
+	suffix = "colony.dmm"
+	name= "colony"
+	description = "A station forgotten by time filled with cryopods."
+
+/datum/map_template/ruin/space/wreckedship
+	id = "wreckedship"
+	suffix = "wreckedship.dmm"
+	name= "Wrecked Ship"
+	description = "A crashed ship wrecked beyond repair."
+
+/datum/map_template/ruin/space/powerstation
+	id = "powerstation"
+	suffix = "powerstation.dmm"
+	name= "power station"
+	description = "A old power station forgotten by the original corp who built it."
+
+/datum/map_template/ruin/space/orionship
+	id = "orionship"
+	suffix = "orionship.dmm"
+	name= "orion ship"
+	description = "Man, i don't have the slightest idea, ask kmc who this is supposed to be."
+
+/datum/map_template/ruin/space/colonistship
+	id = "colonistship"
+	suffix = "colonistship.dmm"
+	name= "colonist ship"
+	description = "A ship full of colonists ready to start a colony."
+
+/datum/map_template/ruin/space/abandonedteleporter
+	id = "abandonedteleporter"
+	suffix = "abandonedteleporter.dmm"
+	name= "abandoned teleporter"
+	description = "Its a abandoned teleporter, duh."
+
+/datum/map_template/ruin/space/djstation
+	id = "djstation"
+	suffix = "djstation.dmm"
+	name= "djstation"
+	description = "Some bullshit from the old derelict station."
+
+/datum/map_template/ruin/space/derelictbig
+	id = "derelictbig"
+	suffix = "derelictbig.dmm"
+	name= "derelict station"
+	description = "Its the old KSS13, but now random."
+
+/datum/map_template/ruin/space/derelicttcom
+	id = "derelicttcom"
+	suffix = "derelicttcom.dmm"
+	name= "derelict telecoms"
+	description = "Its the tcoms minisat from z3 but now random."
+
+/datum/map_template/ruin/space/derelictteleroom
+	id = "derelictteleroom"
+	suffix = "derelictteleroom.dmm"
+	name= "derelict teleroom"
+	description = "Its the teleporter station from z3 but now random."
+
+/datum/map_template/ruin/space/wreckedclownship
+	id = "wreckedclownship"
+	suffix = "wreckedclownship.dmm"
+	name= "wrecked clown ship"
+	description = "A ship trying to get back to the clown planet crashed into a asteroid."
+
+/datum/map_template/ruin/space/lostshuttle
+	id = "lostshuttle"
+	suffix = "lostshuttle.dmm"
+	name= "long lost ship"
+	description = "A ship lost long ago during crew transfer."
+
+/datum/map_template/ruin/space/ambush
+	id = "ambush"
+	suffix = "ambush.dmm"
+	name= "ambush ship"
+	description = "A pirate ship sending a false distress signal to ambush space merchants."
+
+/datum/map_template/ruin/space/destroyedstationpiece
+	id = "destroyedstationpiece"
+	suffix = "destroyedstationpiece.dmm"
+	name= "Destroyed Station Part"
+	description = "A piece of a destroyed station."
+
+/datum/map_template/ruin/space/destroyedstationpiece2
+	id = "destroyedstationpiece2"
+	suffix = "destroyedstationpiece2.dmm"
+	name= "Destroyed Station Part"
+	description = "A piece of a destroyed station."
+
+/datum/map_template/ruin/space/corgiland
+	id = "corgiland"
+	suffix = "corgiland.dmm"
+	name= "Corgiland"
+	description = "A hollow asteroid filled with corgis."
+
+/datum/map_template/ruin/space/crashedseedshuttle
+	id = "crashedseedshuttle"
+	suffix = "crashedseedshuttle.dmm"
+	name= "crashed seed shuttle"
+	description = "I don't even know anymore, some of these ruins they sent me doesn't make much sense."
+
+/datum/map_template/ruin/space/alienshuttle
+	id = "alienshuttle"
+	suffix = "alienshuttle.dmm"
+	name= "Syndie-Alien Shuttle"
+	description = "A syndicate shuttle filled with xenomorphs."
+
+/datum/map_template/ruin/space/asteroidsurvivor
+	id = "asteroidsurvivor"
+	suffix = "asteroidsurvivor.dmm"
+	name= "crashland survivor"
+	description = "A lone survivor stuck to a asteroid awaiting response to his distress signal."
+	allow_duplicates = TRUE
+	allow_duplicates_global = TRUE

@@ -87,6 +87,14 @@
 /var/const/access_syndicate = 150//General Syndicate Access
 /var/const/access_syndicate_leader = 151//Nuke Op Leader Access
 
+    //Free station
+/var/const/access_free_command = 152
+/var/const/access_free_security = 153
+/var/const/access_free_medical = 154
+/var/const/access_free_service = 155
+/var/const/access_free_engineering = 156
+/var/const/access_free_mine = 157
+
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null
@@ -461,7 +469,7 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_job_fluff()
-	return list ("Boxer","Fighter","Fireman","Fire Fighter","Deputy","Bodyguard","Security Deputy", "Animal Control", "Zoo Keeper", "Captain's Assistant")
+	return list ("Boxer","Fighter","Fireman","Fire Fighter","Deputy","Bodyguard","Security Deputy", "Animal Control", "Zoo Keeper", "Captain Assistant", "Peacekeeper", "Cheff", "Commander", "Brewer", "Digger", "Thinkerer", "Repairer")
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")

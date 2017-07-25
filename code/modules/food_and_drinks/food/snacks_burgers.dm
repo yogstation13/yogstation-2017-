@@ -196,4 +196,4 @@
 	name = "rat burger"
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)

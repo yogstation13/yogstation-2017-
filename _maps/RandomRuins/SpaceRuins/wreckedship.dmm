@@ -1,0 +1,63 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/mineral/ash_rock,/area/ruin/unpowered)
+"c" = (/turf/closed/mineral/gold/volcanic,/area/ruin/unpowered)
+"d" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"e" = (/turf/open/floor/plating{icon_state = "panelscorched"},/area/ruin/unpowered)
+"f" = (/turf/closed/mineral/uranium/volcanic,/area/ruin/unpowered)
+"g" = (/obj/item/weapon/shard,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"h" = (/turf/closed/wall/shuttle/smooth,/area/ruin/unpowered)
+"i" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/pod,/area/ruin/unpowered)
+"j" = (/obj/structure/shuttle/engine/propulsion{icon_state = "burst_l";dir = 8},/turf/open/floor/pod,/area/ruin/unpowered)
+"k" = (/obj/structure/grille,/turf/open/space,/area/ruin/unpowered)
+"l" = (/obj/item/bodypart/r_arm,/turf/open/floor/pod,/area/ruin/unpowered)
+"m" = (/turf/open/floor/pod,/area/ruin/unpowered)
+"n" = (/obj/structure/chair,/turf/open/floor/pod,/area/ruin/unpowered)
+"o" = (/obj/structure/chair,/obj/item/clothing/mask/facehugger/lamarr{name = "Unknown Life-form"},/turf/open/floor/pod,/area/ruin/unpowered)
+"p" = (/obj/effect/gibspawner/human,/turf/open/floor/pod,/area/ruin/unpowered)
+"q" = (/obj/structure/foamedmetal,/turf/open/floor/pod,/area/ruin/unpowered)
+"r" = (/obj/item/weapon/shard,/obj/item/weapon/shard,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"s" = (/obj/structure/grille,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"t" = (/obj/structure/chair{dir = 8},/turf/open/floor/pod,/area/ruin/unpowered)
+"u" = (/obj/machinery/telecomms/broadcaster,/turf/open/floor/pod,/area/ruin/unpowered)
+"v" = (/obj/machinery/telecomms/receiver,/turf/open/floor/pod,/area/ruin/unpowered)
+"w" = (/obj/structure/grille{density = 0;icon_state = "brokengrille"},/obj/item/weapon/shard,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"x" = (/obj/item/bodypart/chest,/turf/open/floor/pod,/area/ruin/unpowered)
+"y" = (/obj/item/bodypart/head,/turf/open/floor/pod,/area/ruin/unpowered)
+"z" = (/obj/machinery/telecomms/bus{name = "distress beacon"},/obj/item/weapon/paper{info = "Tether, this is NT0-56 here, requesting permission to dock. \[br] NTS you are cleared for docking, sending you the coordinates via tightbeam. \[br] Confirmed, thank you control, see you soon! \[br] NTS. We're suffering an ION storm here, can you check the coordinates? repeat. check your coordinates. \[br] NTS here, we're having trouble breaking through the static, please repeat. \[br] NTS DISABLE YOUR AUTOPILOT NOW THE COORDINATES AR---.... --Transmission distorted beyond repair. Recording end.";name = "black box recording"},/turf/open/floor/pod,/area/ruin/unpowered)
+"A" = (/obj/machinery/telecomms/relay/preset/telecomms{name = "distress beacon"},/turf/open/floor/pod,/area/ruin/unpowered)
+"B" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile/ice,/turf/open/space,/area/ruin/unpowered)
+"C" = (/obj/structure/chair{dir = 1},/turf/open/floor/pod,/area/ruin/unpowered)
+"D" = (/obj/item/bodypart/head,/obj/structure/chair{dir = 1},/turf/open/floor/pod,/area/ruin/unpowered)
+"E" = (/obj/structure/foamedmetal,/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"F" = (/turf/closed/wall/shuttle/survival/pod,/area/ruin/unpowered)
+"G" = (/obj/item/weapon/shard,/turf/closed/wall/shuttle/survival/pod,/area/ruin/unpowered)
+"H" = (/turf/open/floor/plating{tag = "icon-platingdmg3";icon_state = "platingdmg3"},/area/ruin/unpowered)
+"I" = (/obj/structure/rack,/obj/item/weapon/pen{desc = "Writes upside down!";name = "astronaut pen"},/obj/item/seeds/cash,/obj/item/weapon/paper{info = "To anyone who reads this...beware of the beast in the ship. I've lived out my remaining years alone...constantly watching out for...that THING...please, I don't ask you to care about who I am but, kill it..so I may rest in peace";name = "last words"},/obj/item/weapon/twohanded/spear,/turf/open/floor/pod,/area/ruin/unpowered)
+"J" = (/obj/item/weapon/bedsheet,/obj/structure/bed,/turf/open/floor/pod,/area/ruin/unpowered)
+"K" = (/obj/item/seeds/carrot,/obj/item/seeds/carrot,/obj/item/seeds/carrot,/obj/item/seeds/carrot,/obj/item/seeds/carrot,/obj/item/seeds/carrot,/turf/open/floor/pod,/area/ruin/unpowered)
+"L" = (/turf/closed/mineral/silver/volcanic,/area/ruin/unpowered)
+"M" = (/obj/machinery/hydroponics/soil,/turf/open/floor/pod,/area/ruin/unpowered)
+"N" = (/obj/structure/sink/puddle,/turf/open/floor/pod,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aabbbbbabbbcbbaaaaaa
+abbbbbbbbbbbbbbaaaaa
+bbcddddbddeedbcbaaaa
+bbbddddbddeedbbbbaaa
+fbbddddbddddebbbbbaa
+fbbddddddddddddcbbaa
+bcddedgddhhihhhhhhja
+bbdddddkhhlmnopmqmja
+abbbdrdsmtmemmmquvha
+aabbdddwmtmmxmmyzAha
+abffdggBhhpmCDqmjEEa
+bFFFFGdddhhihhhhjEEa
+bFHIJFdEddddddddbbaa
+bFKmmHeddEdddddbLaaa
+bFMNHFdddLddddLbaaaa
+bFFFFFbbfbbdLdbbaaaa
+bbbLbbbLbaLbaLbaaaaa
+abbbbLaaaaabaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}

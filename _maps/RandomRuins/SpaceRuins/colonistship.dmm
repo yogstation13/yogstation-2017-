@@ -1,0 +1,93 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/open/floor/plasteel/solarpanel,/area/space)
+"c" = (/turf/closed/mineral,/area/space)
+"d" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"e" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l";dir = 4},/turf/open/space,/area/ruin/unpowered/no_grav)
+"f" = (/turf/closed/wall/r_wall,/area/ruin/unpowered/no_grav)
+"g" = (/obj/machinery/door/airlock/external,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"h" = (/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"i" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"j" = (/obj/machinery/door/airlock/glass_large,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"k" = (/obj/machinery/computer,/turf/open/floor/pod/light,/area/ruin/unpowered/no_grav)
+"l" = (/turf/open/floor/pod/light,/area/ruin/unpowered/no_grav)
+"m" = (/obj/structure/fluff/empty_cryostasis_sleeper{icon_state = "cryostasis_sleeper";name = "hypersleep pod"},/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"n" = (/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/closet/crate/freezer/blood,/turf/open/floor/plasteel/darkblue,/area/ruin/unpowered/no_grav)
+"p" = (/obj/structure/table/reinforced,/obj/item/weapon/vending_refill/boozeomat,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/uranium,/obj/item/stack/sheet/mineral/uranium,/obj/item/stack/sheet/mineral/uranium,/obj/item/weapon/pickaxe/drill/jackhammer,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"q" = (/obj/structure/table/reinforced,/obj/item/weapon/vending_refill/boozeomat,/obj/item/weapon/storage/belt/mining,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"r" = (/obj/structure/table/reinforced,/obj/item/weapon/vending_refill/autodrobe,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"s" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"t" = (/obj/structure/table/reinforced,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"u" = (/obj/structure/window/reinforced/fulltile,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"v" = (/obj/structure/chair,/turf/open/floor/pod/light,/area/ruin/unpowered/no_grav)
+"w" = (/obj/machinery/vending/coffee,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"x" = (/obj/machinery/vending/snack,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"y" = (/obj/machinery/vending/sustenance,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"z" = (/obj/structure/chair{dir = 1},/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"A" = (/turf/open/floor/plasteel/whiteyellow,/area/ruin/unpowered/no_grav)
+"B" = (/obj/machinery/computer/crew,/turf/open/floor/plasteel/whiteyellow,/area/ruin/unpowered/no_grav)
+"C" = (/obj/machinery/computer/communications,/turf/open/floor/plasteel/whiteyellow,/area/ruin/unpowered/no_grav)
+"D" = (/turf/open/floor/plasteel/white,/area/ruin/unpowered/no_grav)
+"E" = (/obj/machinery/door/airlock/centcom,/turf/open/floor/pod/light,/area/ruin/unpowered/no_grav)
+"F" = (/obj/structure/window/reinforced/fulltile,/obj/structure/grille,/turf/open/floor/pod/light,/area/ruin/unpowered/no_grav)
+"G" = (/obj/structure/fluff/empty_cryostasis_sleeper{icon_state = "cryostasis_sleeper";name = "hypersleep pod"},/turf/open/floor/plasteel/white,/area/ruin/unpowered/no_grav)
+"H" = (/obj/machinery/door/airlock/glass_research,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"I" = (/obj/machinery/door/airlock/mining,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"J" = (/obj/structure/chair{dir = 1},/turf/open/floor/pod/light,/area/ruin/unpowered/no_grav)
+"K" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white,/area/ruin/unpowered/no_grav)
+"L" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/white,/area/ruin/unpowered/no_grav)
+"M" = (/obj/machinery/computer/security,/turf/open/floor/plasteel/white,/area/ruin/unpowered/no_grav)
+"N" = (/obj/machinery/computer/card,/turf/open/floor/plasteel/white,/area/ruin/unpowered/no_grav)
+"O" = (/obj/structure/table/wood/poker,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"P" = (/obj/structure/table/reinforced,/obj/item/weapon/vending_refill/clothing,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"Q" = (/obj/structure/table/reinforced,/obj/item/weapon/vending_refill/clothing,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"R" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma,/obj/item/stack/sheet/mineral/plasma,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"S" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/diamond,/obj/item/stack/sheet/mineral/diamond,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"T" = (/obj/structure/chair,/turf/open/floor/pod/dark,/area/ruin/unpowered/no_grav)
+"U" = (/turf/open/floor/plasteel/solarpanel,/area/ruin/unpowered/no_grav)
+"V" = (/obj/structure/lattice,/turf/open/space,/area/ruin/unpowered/no_grav)
+"W" = (/turf/open/space,/area/ruin/unpowered/no_grav)
+"X" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aabaaaaaabbaaabbaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaabbaaaaaabbaaabaaaaa
+aaaaacaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaa
+acaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaa
+aaaaaaaaccdaaaaaaabaaaaaaaaaaaaaaabaaaaa
+aaaaaddaccaaaaaaaaaaaaaaaaccaaacaaaaaaaa
+aaadaaaaaaaccaaaaaaaaaaaaaaddaacaaccaaaa
+aaaaaaaaaaacccaaaaadaaaaaaaaaaaaadccaaaa
+aadaaaaaaaabaddaaaadaaabbaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaddddefggfaaaaaaaaaaaaaaaaaa
+aaacaaaaaaaaaddaaefhhfaaaaaaaaaefffffffa
+ffffffffhiiffffffffjhffffffffiifklllllkf
+fmmnmmoofpqrstulvvvllvvvluhwxxyfzABCAAzf
+fDDDDDDDfhhhhuhllllllllllhuhhhhEADDDDDAF
+fGGnGGnDHhhhhIhlJJJllJJJlhHhhhhFAKKKLMAF
+fGGnGGnDHhhhhIhlvvvllvvvlhHhhhhFAKKKLNAF
+fDDDDDDDfhhhhuhllllllllllhuhOOhEADDDDDAF
+fmmnmmoofPQRStulJJJllJJJluhhOOhfTABCAATf
+ffffffffhiiffffffffjhffffffffiifklllllkf
+UVVUaaadaaaaUVVUaefhhfaVaaaaaaaefffffffa
+UVVUddddddddUVVUdefggfVVVVVVVVVVVVVUVVUa
+UVVUaaadaaaaUVVUaaaaaaaVaaaaaaUUUUUUVVUa
+UVVUUUUUUUUUUVVUUUUUUUUUWXXWWWUVVVVVVVUa
+aUVVVVVVVVVVVVVVVVVVVVVVWWWWWWVVVVVVVVUa
+aUVVVVVVaaaaVVVVVVVVVVVVWWWWWWVUUUUUUUUa
+aaUUXUUUaaaaXUUUUUUUUUUUUUUUUUUaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacaaa
+aaaaaaaaccaaaaaaaaaaaacccccaaaaaaaaaacaa
+aaaaaaaaaaaaaaaaaaaacccccccaaaaaaaaaacaa
+accaaaaaaaaaaaaaaaaacccccccaaaaaaaaaaaaa
+aaccaaaaaaaaaaaaaaaaacccccaaaaaaaaaaaaaa
+aacccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

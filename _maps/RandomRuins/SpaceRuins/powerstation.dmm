@@ -1,0 +1,116 @@
+"aa" = (/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"ab" = (/turf/open/space,/area/space)
+"ac" = (/obj/structure/lattice/catwalk,/turf/open/space,/area/space)
+"ad" = (/obj/machinery/hydroponics/constructable,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"ae" = (/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/item/seeds/potato,/obj/structure/rack,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/reagent_containers/glass/bucket,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"af" = (/obj/structure/sign/radiation,/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"ag" = (/obj/machinery/vending/hydronutrients,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"ah" = (/obj/structure/sink/puddle,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"ai" = (/obj/machinery/seed_extractor,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aj" = (/obj/effect/mob_spawn/human/alive,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"ak" = (/obj/item/clothing/under/soviet,/obj/item/clothing/under/soviet,/obj/item/clothing/under/syndicate/soviet,/obj/structure/rack,/obj/item/clothing/head/ushanka,/obj/item/clothing/head/ushanka,/obj/item/clothing/shoes/jackboots,/obj/item/clothing/shoes/jackboots,/obj/item/weapon/crowbar,/obj/item/weapon/crowbar,/obj/item/weapon/storage/toolbox/mechanical,/obj/item/clothing/gloves/color/red/insulated,/obj/item/device/radio,/obj/item/device/radio,/obj/item/device/flashlight,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"al" = (/obj/machinery/vending/sovietsoda,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"am" = (/turf/open/floor/plasteel,/area/ruin/unpowered)
+"an" = (/obj/machinery/door/airlock/centcom,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"ao" = (/obj/machinery/airalarm,/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"ap" = (/obj/machinery/door/airlock/centcom,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aq" = (/obj/machinery/power/apc{dir = 0;name = "Worn-out APC";pixel_y = -24},/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"ar" = (/turf/open/floor/mineral/uranium,/area/ruin/unpowered)
+"as" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"at" = (/obj/machinery/power/rad_collector,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"au" = (/obj/machinery/power/rad_collector,/turf/open/floor/mineral/uranium,/area/ruin/unpowered)
+"av" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aw" = (/obj/machinery/light{icon_state = "tube1";dir = 4},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"ax" = (/turf/open/floor/plasteel/vault,/area/ruin/unpowered)
+"ay" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/vault,/area/ruin/unpowered)
+"az" = (/obj/structure/table,/obj/structure/cable{icon_state = "0-2";pixel_y = 1;d2 = 2},/turf/open/floor/plasteel/vault,/area/ruin/unpowered)
+"aA" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aB" = (/turf/open/floor/plasteel,/turf/open/floor/plasteel/warningline,/area/ruin/unpowered)
+"aC" = (/obj/machinery/door/airlock/hatch,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aD" = (/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aE" = (/obj/structure/cable{d1 = 2;d2 = 4;icon_state = "2-4"},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aF" = (/obj/machinery/door/airlock/hatch,/obj/structure/cable{d1 = 4;d2 = 8;icon_state = "4-8";pixel_x = 0},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aG" = (/obj/structure/cable{d1 = 4;d2 = 8;icon_state = "4-8";pixel_x = 0},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aH" = (/obj/structure/cable{d1 = 1;d2 = 8;icon_state = "1-8"},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aI" = (/obj/structure/table,/obj/machinery/recharger,/obj/item/weapon/gun/energy/laser/retro,/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aJ" = (/obj/machinery/button/ignition{id = "nuclear"},/obj/structure/table,/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aK" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple{dir = 6;initialize_directions = 6;initialize_directions_he = 6},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aL" = (/obj/machinery/atmospherics/pipe/heat_exchanging/junction{dir = 8},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aM" = (/turf/open/floor/plasteel,/turf/open/floor/plasteel/warningline,/obj/machinery/atmospherics/components/unary/tank/toxins{desc = "Through the decay of the mysterious element blutonium-235 this reactor is able to produce plasma through sigma decay of the blutonium nuclei using its own type of fission";icon_state = "reactor";name = "nuclear reactor"},/turf/open/floor/plasteel/warningline{tag = "icon-warningline (WEST)";icon_state = "warningline";dir = 8},/area/ruin/unpowered)
+"aN" = (/turf/open/floor/plasteel,/obj/machinery/atmospherics/components/binary/pump{dir = 4;name = "reactor outlet pump"},/turf/open/floor/plasteel/warningline{dir = 8},/area/ruin/unpowered)
+"aO" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/simple{dir = 4},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aP" = (/obj/machinery/atmospherics/components/binary/pump{dir = 4;name = "Mix to Incinerator";on = 0},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aQ" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 4},/obj/machinery/door/airlock/hatch,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aR" = (/obj/machinery/atmospherics/pipe/manifold{dir = 1},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aS" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 10},/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aT" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aU" = (/obj/structure/table,/obj/machinery/button/door{id = "nuclear";name = "EMERGENCY CORE SHUTDOWN"},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aV" = (/obj/structure/chair/office/light{dir = 8},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aW" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"aX" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/sign/fire{pixel_x = -32;pixel_y = 0},/obj/machinery/shower{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aY" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/obj/machinery/light{icon_state = "tube1";dir = 4},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"aZ" = (/obj/structure/sign/fire{pixel_x = -32;pixel_y = 0},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"ba" = (/obj/structure/table,/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"bb" = (/obj/machinery/door/window,/obj/machinery/firealarm{dir = 8;pixel_x = -24},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"bc" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple,/turf/open/floor/mineral/uranium,/area/ruin/unpowered)
+"bd" = (/obj/machinery/suit_storage_unit/engine,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"be" = (/obj/machinery/suit_storage_unit/engine,/obj/machinery/light,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bf" = (/obj/structure/tank_dispenser/oxygen,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bg" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/mechanical,/obj/item/clothing/head/welding,/obj/item/clothing/suit/radiation,/obj/item/clothing/head/radiation,/obj/item/stack/cable_coil/yellow,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bh" = (/obj/structure/rack,/obj/item/clothing/head/welding,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/mineral/uranium,/area/ruin/unpowered)
+"bi" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/machinery/shower{dir = 4},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"bj" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/turf/open/floor/plasteel/grimy,/area/ruin/unpowered)
+"bk" = (/obj/machinery/light,/turf/open/floor/plasteel/vault,/area/ruin/unpowered)
+"bl" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple,/obj/machinery/door/airlock/external,/obj/machinery/door/firedoor,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bm" = (/turf/open/floor/plasteel,/obj/machinery/door/airlock/glass,/obj/machinery/door/firedoor,/turf/open/floor/plasteel/warningline,/area/ruin/unpowered)
+"bn" = (/turf/open/floor/plasteel,/obj/machinery/door/airlock/glass,/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/warningline,/area/ruin/unpowered)
+"bo" = (/obj/structure/lattice/catwalk,/obj/machinery/door/firedoor,/turf/open/space,/area/space)
+"bp" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/machinery/atmospherics/pipe/heat_exchanging/simple,/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bq" = (/obj/machinery/door/firedoor,/turf/open/space,/area/space)
+"br" = (/obj/machinery/flood_lamp/assembled,/turf/open/floor/engine,/area/ruin/unpowered)
+"bs" = (/turf/open/floor/engine,/area/ruin/unpowered)
+"bt" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/sign/fire{pixel_x = -32;pixel_y = 0},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bu" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/turf/open/floor/plasteel,/area/ruin/unpowered)
+"bv" = (/obj/structure/sign/fire{pixel_x = -32;pixel_y = 0},/turf/open/floor/engine,/area/ruin/unpowered)
+"bw" = (/obj/structure/railing,/turf/open/floor/engine,/area/ruin/unpowered)
+"bx" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/turf/open/floor/engine,/area/ruin/unpowered)
+"by" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/cable{d1 = 1;d2 = 2;icon_state = "1-2"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bz" = (/obj/structure/cable{d1 = 2;d2 = 4;icon_state = "2-4"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bA" = (/obj/structure/cable{d1 = 4;d2 = 8;icon_state = "4-8";pixel_x = 0},/turf/open/floor/engine,/area/ruin/unpowered)
+"bB" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/cable{d1 = 4;d2 = 8;icon_state = "4-8";pixel_x = 0},/turf/open/floor/engine,/area/ruin/unpowered)
+"bC" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 2},/obj/structure/cable{d1 = 4;d2 = 8;icon_state = "4-8";pixel_x = 0},/obj/structure/cable{d1 = 1;d2 = 4;icon_state = "1-4"},/obj/structure/cable{d1 = 1;d2 = 8;icon_state = "1-8"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bD" = (/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{dir = 4},/obj/structure/cable{d1 = 2;d2 = 8;icon_state = "2-8"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bE" = (/obj/machinery/atmospherics/components/binary/valve{dir = 4;name = "Incinerator to Space"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bF" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{dir = 4},/turf/closed/wall/r_wall,/area/ruin/unpowered)
+"bG" = (/obj/machinery/atmospherics/components/unary/outlet_injector{dir = 8;on = 1},/obj/structure/lattice/catwalk,/turf/open/space,/area/space)
+"bH" = (/obj/machinery/power/compressor{comp_id = "incineratorturbine";dir = 1;luminosity = 2},/obj/structure/cable/orange,/obj/structure/cable/orange{d2 = 2;icon_state = "0-2"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bI" = (/obj/machinery/atmospherics/components/unary/outlet_injector/on{dir = 1;frequency = 1443;id = "air_in"},/turf/open/floor/engine,/area/ruin/unpowered)
+"bJ" = (/obj/structure/fans/tiny,/turf/open/floor/plating/beach/water,/area/ruin/unpowered)
+"bK" = (/obj/machinery/atmospherics/pipe/heat_exchanging/simple,/turf/open/floor/plating/beach/water,/area/ruin/unpowered)
+"bL" = (/obj/machinery/power/turbine{luminosity = 2},/obj/structure/cable/orange,/turf/open/floor/engine,/area/ruin/unpowered)
+"bM" = (/obj/machinery/igniter{icon_state = "igniter0";id = "nuclear";luminosity = 2;on = 0},/turf/open/floor/engine,/area/ruin/unpowered)
+"bN" = (/obj/machinery/atmospherics/pipe/heat_exchanging/junction{dir = 1},/turf/open/floor/plating/beach/water,/area/ruin/unpowered)
+"bO" = (/obj/machinery/door/poddoor{id = "nuclear";name = "emergency core shutters"},/turf/open/floor/plasteel,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaabacacacacacacacacabababababab
+aaadaeadaaabacafaaaaaaaaafacabababababab
+aaagahaiaaabacaaajakalajaaacabababababab
+aaadamadaaacacaaamamamamaaacacacacacacac
+aaaaanaoaaaaaaaaaaapapaaaaaaaaaqaaaaaaac
+acafaramasamatauafavawaaaxayaxazayaxafac
+acaAamamaBamamamaCaDaEaFaGaGaGaHaIaJaaac
+acaAaKaLaMaNaOaPaQaRaSaTaDaDaDaDaUaVaaac
+acaAaWamamamamamaaaXaYaaaZaDaDaDbabbaaac
+acafbcbdbebfbgbhafbibjaaaxbkaxaxbkaxafac
+acaablaaaaaaaaaaaabmbnaaaaaaaaaaaaaaaaac
+acbobpbqabaabrbsaabtbuaabvbraaacacacacac
+abbobpbqabaabwbsaabmbnaabsbwaaacabababab
+abbobpbqabaabsbsbsbxbybsbsbsaaacabababab
+abbobpbqabaabsbzbAbBbCbAbDbEbFbGabababab
+aaaablaaaaaabsbHbsbIbIbsbHbsaaacabababab
+aabJbKbJaaaabsbLbsbMbMbsbLbsaaacabababab
+aabJbNbJaaaabsbsbsbsbsbsbsbsaaacabababab
+aaaaaaaaaaaabsbsbsbsbsbsbsbsaaacabababab
+abababababafaaaabObObObOaaaaafacabababab
+"}

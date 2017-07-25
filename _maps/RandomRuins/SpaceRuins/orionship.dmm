@@ -1,0 +1,36 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/wall/shuttle/smooth,/area/ruin/unpowered/no_grav)
+"c" = (/obj/structure/window/reinforced/fulltile/ice,/turf/open/space,/area/ruin/unpowered/no_grav)
+"d" = (/turf/closed/wall/ice,/area/ruin/unpowered/no_grav)
+"e" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion";dir = 4},/turf/open/space,/area/ruin/unpowered/no_grav)
+"f" = (/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"g" = (/obj/structure/chair,/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"h" = (/obj/structure/chair,/obj/item/weapon/paper{info = "Mat' skazala, chto my tak blizki k Orionu! No eto tak kholodno, ya ne dumayu, chto my dvizhemsya voobshche, ona skazala, chto kapitan tol'ko chto otklyuchil kontrol' nad okruzhayushchey sredoy, chtoby sekonomit' energiyu, kotoruyu ya prosto ne mogu dozhdat'sya, chtoby dobrat'sya tuda!";name = "Travel diary DO NOT READ!"},/obj/item/weapon/pen,/obj/item/toy/carpplushie,/obj/effect/decal/remains/human,/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"i" = (/turf/open/floor/plasteel/grimy,/area/ruin/unpowered/no_grav)
+"j" = (/obj/structure/closet/crate/radiation,/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"k" = (/obj/structure/closet/crate/hydroponics,/turf/open/floor/plasteel/grimy,/area/ruin/unpowered/no_grav)
+"l" = (/turf/open/floor/plasteel/vault{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;dir = 8;icon_state = "vault";tag = "icon-vault (WEST)"},/area/ruin/unpowered/no_grav)
+"m" = (/turf/open/floor/plating/ice,/area/ruin/unpowered/no_grav)
+"n" = (/obj/machinery/door/firedoor/heavy,/obj/machinery/door/airlock,/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"o" = (/obj/structure/clockwork/wall_gear{desc = "The latest in soviet computing technology (for the time), Ivan! curses to those American computers with parts, we only need clockwork to pilot our ships like old times yes?";name = "Gachnov computatronic unit"},/turf/closed/wall/shuttle/smooth,/area/ruin/unpowered/no_grav)
+"p" = (/obj/item/clothing/head/ushanka,/obj/item/clothing/head/ushanka,/obj/structure/table,/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"q" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel/vault{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;dir = 8;icon_state = "vault";tag = "icon-vault (WEST)"},/area/ruin/unpowered/no_grav)
+"r" = (/obj/effect/decal/remains/human,/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"s" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/space,/area/ruin/unpowered/no_grav)
+"t" = (/obj/structure/clockwork/wall_gear{name = "Gachnov computatronic unit"},/turf/closed/wall/shuttle/smooth,/area/ruin/unpowered/no_grav)
+"u" = (/obj/machinery/atmospherics/components/unary/tank/toxins{desc = "Through the decay of the mysterious element blutonium-235 this reactor is able to produce plasma through sigma decay of the blutonium nuclei using its own type of fission";icon_state = "reactor";name = "nuclear reactor"},/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"v" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+"w" = (/obj/structure/chair{dir = 1},/obj/effect/decal/remains/human,/turf/open/floor/plasteel/showroomfloor,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaa
+abcccbbdddbbaaa
+ebbfggghggibbbd
+ejbfklllllibfmb
+efnfkfomfpiqfrs
+efnfkftfmpiqfrs
+eubfklllllibffb
+ebbfvvvvvwibbdb
+abcccbdbbbbbaaa
+aaaaaaaaaaaaaaa
+"}

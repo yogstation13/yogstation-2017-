@@ -1,0 +1,29 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3;height = 5;id = "mining_asteroid9";name = "Signal Readings: UNKNOWN";width = 8},/turf/open/space,/area/space)
+"c" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
+"d" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
+"e" = (/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+"f" = (/mob/living/simple_animal/hostile/asteroid/goldgrub,/turf/open/floor/plating/asteroid/airless/cave,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaabaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaa
+aaaaaacccccccccaaaaaaa
+aaaaccccccccccccaaaaaa
+aaaccccccccccccccaaaaa
+aacccccccccccccccaaaaa
+aaccdddddddcccccccaaaa
+accddddddddddcccccaaaa
+adddddddddddddccccaaaa
+adddddddeddddddcccaaaa
+adddddddeddddddcccaaaa
+addddddeeddddddcccaaaa
+addddddedddddddccccaaa
+adddddeeddddddcccccaaa
+accddeedddddddcccccaaa
+accdeeddddddddcccccaaa
+aacdfedddddddccccccaaa
+aaadddddddddccccccaaaa
+aaaaaddddcccccccccaaaa
+aaaaaaaaaaaaaaaaaaaaaa
+"}
