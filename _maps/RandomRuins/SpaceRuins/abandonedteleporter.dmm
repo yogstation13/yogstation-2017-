@@ -10,9 +10,9 @@
 "j" = (/obj/machinery/teleport/station,/turf/open/floor/plasteel/airless,/area/derelict/teleporter)
 "k" = (/obj/machinery/teleport/hub,/turf/open/floor/plasteel/airless,/area/derelict/teleporter)
 "l" = (/obj/machinery/light_construct/small{dir = 4},/turf/open/floor/plating/airless,/area/derelict/teleporter)
-"m" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell{charge = 100; maxcharge = 15000},/turf/open/floor/plasteel/airless,/area/derelict/teleporter)
+"m" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell{charge = 100;maxcharge = 15000},/turf/open/floor/plasteel/airless,/area/derelict/teleporter)
 "n" = (/turf/open/floor/plasteel/airless{icon_state = "damaged4"},/area/derelict/teleporter)
-"o" = (/obj/machinery/power/apc{dir = 0; name = "Worn-out APC"; pixel_y = -24},/turf/open/floor/plasteel/airless,/area/derelict/teleporter)
+"o" = (/obj/machinery/power/apc{dir = 0;name = "Worn-out APC";pixel_y = -24},/turf/open/floor/plasteel/airless,/area/derelict/teleporter)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaababbbbbaaba

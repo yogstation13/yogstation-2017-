@@ -2,7 +2,7 @@
 "i" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/tea,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "j" = (/obj/machinery/biogenerator,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "l" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"n" = (/obj/structure/sink{dir = 8; pixel_x = -12},/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
+"n" = (/obj/structure/sink{dir = 8;pixel_x = -12},/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "r" = (/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "u" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/whitebeet,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
 "A" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/ambrosia,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
@@ -24,4 +24,3 @@ TRrrUT
 TAiDuT
 TTTTTT
 "}
-

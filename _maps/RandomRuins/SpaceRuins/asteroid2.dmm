@@ -1,11 +1,11 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/obj/docking_port/stationary{dwidth = 5; height = 15; id = "freebus_asteroid2"; name = "Asteroid DC-152"; width = 15},/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 5;height = 15;id = "freebus_asteroid2";name = "Asteroid DC-152";width = 15},/turf/open/space,/area/space)
 "c" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
 "d" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
 "e" = (/turf/closed/mineral/diamond,/area/ruin/unpowered/no_grav)
 "f" = (/mob/living/simple_animal/hostile/asteroid/hivelord,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
-"g" = (/obj/docking_port/stationary{dir = 4; dwidth = 3; height = 5; id = "mining_asteroid2"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
-"h" = (/obj/docking_port/stationary{dir = 2; dwidth = 11; height = 22; id = "whiteship_mining2"; name = "Medium Asteroid"; width = 35},/turf/open/space,/area/space)
+"g" = (/obj/docking_port/stationary{dir = 4;dwidth = 3;height = 5;id = "mining_asteroid2";name = "Signal Readings: UNKNOWN";width = 8},/turf/open/space,/area/space)
+"h" = (/obj/docking_port/stationary{dir = 2;dwidth = 11;height = 22;id = "whiteship_mining2";name = "Medium Asteroid";width = 35},/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -1,7 +1,7 @@
 "a" = (/turf/open/space,/area/space)
 "b" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
 "c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
-"d" = (/obj/docking_port/stationary{dir = 2; dwidth = 3; height = 5; id = "mining_asteroid16"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"d" = (/obj/docking_port/stationary{dir = 2;dwidth = 3;height = 5;id = "mining_asteroid16";name = "Signal Readings: UNKNOWN";width = 8},/turf/open/space,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaabbbbbbbbaaaaaa

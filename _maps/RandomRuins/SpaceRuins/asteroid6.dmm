@@ -1,9 +1,9 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_asteroid6"; name = "Signal Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3;height = 5;id = "mining_asteroid6";name = "Signal Readings: UNKNOWN";width = 8},/turf/open/space,/area/space)
 "c" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
 "d" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
 "e" = (/turf/closed/mineral/bscrystal,/area/ruin/unpowered/no_grav)
-"f" = (/obj/docking_port/stationary{dir = 4; dwidth = 5; height = 15; id = "freebus_asteroid6"; name = "Signal Readings: UNKNOWN"; width = 15},/turf/open/space,/area/space)
+"f" = (/obj/docking_port/stationary{dir = 4;dwidth = 5;height = 15;id = "freebus_asteroid6";name = "Signal Readings: UNKNOWN";width = 15},/turf/open/space,/area/space)
 "g" = (/turf/closed/mineral/random,/area/space)
 "h" = (/turf/closed/mineral/random/high_chance,/area/space)
 

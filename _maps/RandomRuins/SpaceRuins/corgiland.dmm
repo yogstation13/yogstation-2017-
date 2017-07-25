@@ -1,5 +1,5 @@
 "a" = (/turf/open/space,/area/space)
-"b" = (/obj/docking_port/stationary{dwidth = 3; height = 5; id = "mining_corgi"; name = "Asteroid Readings: UNKNOWN"; width = 8},/turf/open/space,/area/space)
+"b" = (/obj/docking_port/stationary{dwidth = 3;height = 5;id = "mining_corgi";name = "Asteroid Readings: UNKNOWN";width = 8},/turf/open/space,/area/space)
 "c" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
 "d" = (/turf/open/floor/vines,/area/ruin/unpowered/no_grav)
 "e" = (/turf/open/floor/grass,/area/ruin/unpowered/no_grav)
