@@ -21,6 +21,8 @@
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
+	var/core_icon_state
+	var/image/core_overlay
 	var/list/parts = list(
 	"barrel" = /obj/item/kinetic_part/barrel,
 	"barrel_end" = /obj/item/kinetic_part/barrel_end,
@@ -90,7 +92,10 @@
 			part_obj += parts[a]
 	for(var/obj/item/kinetic_part/KP in part_obj)
 		var/image/KI = image(icon_state = KP.icon_state, icon = KP.icon)
-		if(istype(KP, /obj/item/kinetic_part/barrel_end))
+		if(istype(KP, /obj/item/kinetic_part/core))
+			core_overlay = KI
+			core_icon_state = KI.icon_state
+		else if(istype(KP, /obj/item/kinetic_part/barrel_end))
 			var/obj/item/kinetic_part/barrel/B = parts["barrel"]
 			KI.pixel_x = B.pixel_x_extra
 			KI.pixel_y = B.pixel_y_extra
@@ -259,6 +264,7 @@
 	var/gun
 
 /obj/item/projectile/kinetic/proc/specialShot(var/when,obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user,atom/target)
+	world << "2"
 	switch(when)
 		if(PRESHOT)
 			if(KA.hasPS)
@@ -271,10 +277,14 @@
 					var/datum/kinetic/preDamage/D = KP.PD
 					D.Trigger(KA,src,user,target)
 		if(AFTERDAMAGE)
+			world << "3"
 			if(KA.hasAD)
+				world << "4"
 				for(var/obj/item/kinetic_part/KP in KA.contents)
+					world << "5"
 					var/datum/kinetic/afterDamage/D = KP.AD
 					D.Trigger(KA,src,user,target)
+					world << "6"
 
 
 /obj/item/projectile/kinetic/on_range()
@@ -387,14 +397,10 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	if(!can_shoot())
-		icon_state = "[initial(icon_state)]_empty"
+		core_overlay.icon_state = "[core_overlay.icon_state]_off"
 	else
-		icon_state = initial(icon_state)
-	if(F && can_flashlight)
-		var/iconF = "flight"
-		if(F.on)
-			iconF = "flight_on"
-		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
+		core_overlay.icon_state = core_icon_state
+
 
 #undef PRESHOT
 #undef PREDAMAGE
