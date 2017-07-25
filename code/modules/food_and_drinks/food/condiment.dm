@@ -23,7 +23,8 @@
 	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
 	 "blackpepper" = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
-	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
+	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"),
+	 "cinnamon" = list("cinnamonshaker", "cinnamon shaker", "A spice obtained from the bark of a cinnamomum tree"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
@@ -182,6 +183,23 @@
 	list_reagents = list("soysauce" = 50)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/cinnamon
+	name = "cinnamon shaker"
+	desc = "A spice obtained from the bark of a cinnamomum tree"
+	icon_state = "cinnamonshaker"
+	list_reagents = list("cinnamon" = 50)
+	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/cinnamon/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is attempting the cinnamon challenge! It looks like \he's trying to commit suicide!</span>");
+	sleep(20)
+	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
+	B1.reagents.add_reagent("cinnamon", 25)
+	B1.reagents.add_reagent("potassium", 2)
+	B1.reagents.add_reagent("phosphorus", 2)
+	B1.reagents.add_reagent("sugar", 2)
+	playsound(loc, 'sound/effects/smoke.ogg', 50, 1, -3)
+	return (OXYLOSS)
 
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!

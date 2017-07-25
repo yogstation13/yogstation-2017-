@@ -136,6 +136,16 @@
 	list_reagents = list("nutriment" = 8, "mushroomhallucinogen" = 2, "vitamin" = 2)
 	filling_color = "#00BFFF"
 
+/obj/item/weapon/reagent_containers/food/snacks/pancakes
+	name = "pancakes"
+	desc = "Stacked precariously high. All part of a balanced breakfast"
+	icon_state = "pancakes"
+	trash = /obj/item/trash/plate
+	bitesize = 6
+	bonus_reagents = list("vitamin" = 1)
+	list_reagents = list("nutriment" = 20, "vitamin" = 7)
+	filling_color = "#D2691E"
+
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/cookie
@@ -289,3 +299,19 @@
 	bonus_reagents = list("nutriment" = 1, "honey" = 1)
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
+
+/obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	name = "cinnamon roll"
+	desc = "Too perfect for this world, too pure"
+	icon_state = "cinnamonroll"
+	bonus_reagents = list("nutriment" = 1, "cinnamon" = 1)
+	list_reagents = list("nutriment" = 5, "cinnamon" = 5, "sugar" = 5)
+	filling_color = "#D2691E"
+
+/obj/item/weapon/reagent_containers/food/snacks/churro
+	name = "churro"
+	desc = "If you're having food troubles, I feel for you son. I got 99 churros and the clown ate one."
+	icon_state = "churro"
+	bonus_reagents = list("nutriment" = 1, "cinnamon" = 1)
+	list_reagents = list("nutriment" = 5, "cinnamon" = 5, "sugar" = 5)
+	filling_color = "#D2691E"

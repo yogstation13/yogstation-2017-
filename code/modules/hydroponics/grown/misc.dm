@@ -95,3 +95,32 @@
 	origin_tech = "combat=6"
 	trash = /obj/item/weapon/gun/projectile/revolver
 	bitesize_mod = 2
+
+
+// Cinnamon
+/obj/item/seeds/cinnamomum
+	name = "pack of cinnamomum tree seeds"
+	desc = "These seeds grow into a cinnamomum tree, which can be harvested for cinnamon."
+	icon_state = "seed-cinnamomum"
+	species = "cinnamomum"
+	plantname = "Cinnamomum Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon_stick
+	lifespan = 50
+	endurance = 50
+	maturation = 5
+	production = 1
+	yield = 3
+	potency = 35
+	oneharvest = 1
+	growthstages = 4
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	icon_dead = "cinnamomum-dead"
+	reagents_add = list("cinnamon" = 0.15)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon_stick
+	seed = /obj/item/seeds/cinnamomum
+	name = "Cinnamon"
+	desc = "Straight from the bark!"
+	icon_state = "cinnamon_stick"
+	filling_color = "#FFD700"
+	bitesize_mod = 2
