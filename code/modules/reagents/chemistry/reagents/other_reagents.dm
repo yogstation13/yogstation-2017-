@@ -1473,15 +1473,3 @@ datum/reagent/romerol
 
 /datum/reagent/laughter/overdose_process(mob/living/M)
 	M.emote(pick(list("laugh","giggle")))
-
-
-/datum/reagent/pukonium
-	name = "pukonium"
-	id = "pukonium"
-	description = "Refined faraway in the lands of Adam El-Tablawania, this liquid is known to be the most vile thing on earth."
-	color = "360f0f"
-	metabolization_rate = 4
-
-/datum/reagent/pukonium/on_mob_life(mob/living/M)
-	M.adjust_disgust(10)
-	..()
