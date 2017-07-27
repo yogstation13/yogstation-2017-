@@ -8,6 +8,22 @@
 	icon_state = "rockvault"
 	floor_tile = /obj/item/stack/tile/plasteel
 
+/turf/open/floor/tech
+	icon_state = "tech"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/steel
+	icon_state = "steel"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/ridged
+	icon_state = "ridged"
+	floor_tile = /obj/item/stack/tile/plasteel
+
+/turf/open/floor/lighttile
+	icon_state = "lighttile"
+	floor_tile = /obj/item/stack/tile/plasteel
+
 /turf/open/floor/plating/glass
 	icon_state = "glass9"
 	desc = "A thick duraglass tile, you can see space from here!"
