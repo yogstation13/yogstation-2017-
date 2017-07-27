@@ -16,6 +16,9 @@
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
 
+	var/obj/screen/scope/increase/increase_scopedisplay
+	var/obj/screen/scope/decrease/decrease_scopedisplay
+
 	var/obj/screen/blobpwrdisplay
 
 	var/obj/screen/alien_plasma_display

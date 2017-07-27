@@ -897,6 +897,22 @@ var/global/list/friendly_animal_types = list()
 	final_image.text = initial(SA.name)
 	return final_image
 
+/proc/getThermalIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "thermal_base")
+	blank_icon.AddAlphaMask(flat_icon)
+	return blank_icon
+
+/proc/getInvsThermalIcon(icon/A, safety=1)
+	var/icon/flat_icon = safety ? A : new(A)
+	flat_icon.Blend(rgb(255,255,255))
+	flat_icon.BecomeAlphaMask()
+	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "invsthermal_base")
+	blank_icon.AddAlphaMask(flat_icon)
+	return blank_icon
+
 //Find's the average colour of the icon
 //By vg's ComicIronic
 /proc/AverageColour(icon/I)

@@ -99,7 +99,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return src.attack_hand(user)
 
-
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder))
 		if(istype(src, /turf/closed/wall/mineral/cult))

@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, var/is_global)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, var/is_global, sNoiseLevel, sNoiseDesc, sNoiseMult =  0.5)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -19,6 +19,15 @@
 			if(T && T.z == turf_source.z)
 				M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, surround, is_global)
 
+	var/noiselevel = sNoiseLevel
+	if(!sNoiseLevel)
+		noiselevel = vol
+	var/obj/effect/noise/N = new /obj/effect/noise(turf_source)
+	N.desc = sNoiseDesc
+	N.echolength = noiselevel
+	N.channel()
+	if(sNoiseMult < 1)	sNoiseMult = 1
+	N.echo(sNoiseMult)
 
 /atom/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, var/is_global)
 	soundin = get_sfx(soundin)

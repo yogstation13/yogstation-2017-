@@ -36,7 +36,7 @@
 	icon_state = "plasma"
 	origin_tech = "biotech=5;plasmatech=4"
 	w_class = 3
-	zone = "chest"
+	zone = "neck"
 	slot = "plasmavessel"
 	alien_powers = list(/obj/effect/proc_holder/alien/plant, /obj/effect/proc_holder/alien/transfer)
 
@@ -44,6 +44,25 @@
 	var/max_plasma = 250
 	var/heal_rate = 5
 	var/plasma_rate = 10
+	var/regen_rate
+
+/obj/effect/proc_holder/alien/plant
+	name = "Plant Weeds"
+	desc = "Plants some alien weeds"
+	plasma_cost = 50
+	check_turf = 1
+	action_icon_state = "alien_plant"
+
+/obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
+	if(locate(/obj/structure/alien/weeds) in get_turf(user))
+		src << "There's already a weed node here."
+		return 0
+	user.visible_message("<span class='alertalien'>[user] has planted some alien weeds!</span>")
+	new/obj/structure/alien/weeds/node(user.loc, null, 1)
+	return 1
+
+
+
 
 /obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
@@ -61,6 +80,7 @@
 /obj/item/organ/alien/plasmavessel/large/queen
 	origin_tech = "biotech=6;plasmatech=4"
 	plasma_rate = 20
+	regen_rate = 2
 
 /obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
@@ -91,6 +111,10 @@
 			owner.adjustFireLoss(-heal_amt)
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
+			owner.adjust_eye_damage(-heal_amt)
+
+	if(regen_rate)
+		owner.adjustPlasma(regen_rate)
 
 /obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	if(..())
@@ -115,6 +139,7 @@
 	w_class = 1
 	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
+	var/csuffix
 
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	if(..())
@@ -164,25 +189,6 @@
 	origin_tech = "biotech=5;materials=4"
 	alien_powers = list(/obj/effect/proc_holder/alien/resin)
 
-
-/obj/item/organ/alien/acid
-	name = "acid gland"
-	icon_state = "acid"
-	zone = "mouth"
-	slot = "acidgland"
-	origin_tech = "biotech=5;materials=2;combat=2"
-	alien_powers = list(/obj/effect/proc_holder/alien/acid)
-
-
-/obj/item/organ/alien/neurotoxin
-	name = "neurotoxin gland"
-	icon_state = "neurotox"
-	zone = "mouth"
-	slot = "neurotoxingland"
-	origin_tech = "biotech=5;combat=5"
-	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin)
-
-
 /obj/item/organ/alien/eggsac
 	name = "egg sac"
 	icon_state = "eggsac"
@@ -191,3 +197,56 @@
 	w_class = 4
 	origin_tech = "biotech=6"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)
+
+/obj/item/organ/alien/neurotoxinthroat
+	name = "xenomorphic throat canal"
+	icon_state = "plasma"
+	origin_tech = "biotech=6;plasmatech=5"
+	w_class = 5
+	zone = "neck"
+	slot = "throatcanal"
+	alien_powers = list(/obj/effect/proc_holder/alien/coughneuro, /obj/effect/proc_holder/alien/neurotoxin)
+	var/neurotoxinStorage = 0
+	var/neurotoxinStorageLimit
+	var/ache
+
+/obj/item/organ/alien/neurotoxinthroat/process()
+	if(!owner)
+		return
+
+	if(neurotoxinStorage)
+		if(prob(25))
+			drool()
+		if(neurotoxinStorage == neurotoxinStorageLimit)
+			drool()
+
+/obj/item/organ/alien/neurotoxinthroat/proc/drool()
+	if(!owner)
+		return
+
+	new /obj/effect/decal/cleanable/xenodrool(get_turf(owner))
+
+/obj/item/organ/alien/neurotoxinthroat/proc/start_ache()
+	ache = TRUE
+	addtimer(src.loc, "stop_ache", 1000)
+
+/obj/item/organ/alien/neurotoxinthroat/proc/stop_ache()
+	ache = FALSE
+
+///obj/item/organ/alien/neurotoxinthroat/Insert(mob/living/carbon/M)
+//	..()
+//	stat("Throat Canal Storage:", "[neurotoxinStorage]/[neurotoxinStorageLimit]")
+
+/obj/item/organ/alien/neurotoxinthroat/frail
+	name = "weak xenomorphic throat canal"
+	origin_tech = "biotech=3;plasmatech=5"
+	neurotoxinStorageLimit = 5
+
+/obj/item/organ/alien/neurotoxinthroat/normal
+	origin_tech = "biotech=3;plasmatech=5"
+	neurotoxinStorageLimit = 15
+
+/obj/item/organ/alien/neurotoxinthroat/strong
+	name = "strong xenomorphic throat canal"
+	origin_tech = "biotech=7;plasmatech=8"
+	neurotoxinStorageLimit = 25

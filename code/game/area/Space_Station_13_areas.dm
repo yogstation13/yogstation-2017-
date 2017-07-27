@@ -27,6 +27,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/valid_territory = 1 // If it's a valid territory for gangs to claim
 	var/blob_allowed = 1 // Does it count for blobs score? By default, all areas count.
+	var/infestation_allowed = 1 // Does it count for an infestation score? By default, all areas count.
 
 	var/eject = null
 
@@ -114,7 +115,7 @@ var/list/teleportlocs = list()
 	valid_territory = 0
 	outdoors = 1
 	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg','sound/ambience/space.ogg' )
-	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
+	infestation_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/mapgen_protected
 	mapgen_protected = 1
@@ -176,6 +177,9 @@ var/list/teleportlocs = list()
 /area/shuttle/assault_pod
 	name = "Steel Rain"
 
+/area/shuttle/predator_pod
+	name = "Yautija Pod"
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	sound_env = LARGE_ENCLOSED
@@ -197,7 +201,8 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
-	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	 //Should go without saying, no blobs should take over centcom as a win condition.
+	infestation_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
 	sound_env = LARGE_ENCLOSED
 
 /area/centcom/control
@@ -224,8 +229,16 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
-	blob_allowed = 0
+	
+	infestation_allowed = 0
 
+// PREDATORS
+
+/area/predator
+	name = "Predator Ship"
+	requires_power = 0
+	noteleport = 1
+	has_gravity = 1
 
 //SYNDICATES
 
@@ -235,7 +248,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
-	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	infestation_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
 	sound_env = LARGE_ENCLOSED
 	ambientsounds = list('sound/ambience/syndicate.ogg')
 
@@ -254,7 +267,8 @@ var/list/teleportlocs = list()
 	icon_state = "asteroid"
 	requires_power = 0
 	has_gravity = 1
-	blob_allowed = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
+	 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
+	infestation_allowed = 0 //Nope, no winning on the asteroid as a blob. Gotta eat the station.
 	valid_territory = 0
 	sound_env = ASTEROID
 
@@ -1160,7 +1174,8 @@ var/list/teleportlocs = list()
 	name = "Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = 1
-	blob_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
+	
+	infestation_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
 
 /area/djstation/solars
 	name = "DJ Station Solars"
@@ -1172,7 +1187,8 @@ var/list/teleportlocs = list()
 /area/derelict
 	name = "Derelict Station"
 	icon_state = "storage"
-	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
+	
+	infestation_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"

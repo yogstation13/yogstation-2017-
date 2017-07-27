@@ -20,6 +20,9 @@ Sorry Giacom. Please don't be mad :(
 				else //no choice? force static
 					D.staticOverlays |= staticOverlays["static"]
 					D.client.images |= staticOverlays["static"]
+
+	if(!thermalOverlay)
+		UpdateAlienThermal()
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -46,7 +49,8 @@ Sorry Giacom. Please don't be mad :(
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-	return QDEL_HINT_HARDDEL
+	RemoveAlienThermal()
+	return QDEL_HINT_HARDDEL_NOW
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -1025,3 +1029,17 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form to [new_mob]!</span>"
+
+/mob/living/carbon/alien/proc/UpdateThermalEffects()
+	if(!client)
+		return
+
+	for(var/i in client.images)
+		client.images.Remove(i)
+
+	for(var/mob/living/L in mob_list)
+		if(isalien(L))
+			continue
+		L.thermalOverlay = image(getThermalIcon(new/icon(L.icon,L.icon_state)), loc = L)
+		L.thermalOverlay.override = 1
+		client.images |= L.thermalOverlay

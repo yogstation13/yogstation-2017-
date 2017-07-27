@@ -467,6 +467,10 @@
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return 1
 
+/mob/living/carbon/proc/is_face_and_mouth_protected()
+	if(( wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.flags_inv & HIDEFACE) ))
+		return 1
+
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
 		return -6
@@ -539,6 +543,11 @@
 		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
+
+		var/obj/item/organ/alien/neurotoxinthroat/NTT = getorganslot("throatcanal")
+		if(NTT)
+			stat("Throat Canal Storage:", "[NTT.neurotoxinStorage]/[NTT.neurotoxinStorageLimit]")
+
 		if(locate(/obj/item/device/assembly/health) in src)
 			stat(null, "Health: [health]")
 

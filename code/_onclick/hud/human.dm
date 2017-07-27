@@ -267,6 +267,10 @@
 	lingstingdisplay = new /obj/screen/ling/sting()
 	infodisplay += lingstingdisplay
 
+	increase_scopedisplay = new /obj/screen/scope/increase()
+	infodisplay += increase_scopedisplay
+	decrease_scopedisplay = new /obj/screen/scope/decrease()
+	infodisplay += decrease_scopedisplay
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

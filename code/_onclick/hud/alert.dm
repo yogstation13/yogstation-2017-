@@ -232,6 +232,40 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "alien_noqueen"
 	alerttooltipstyle = "alien"
 
+/obj/screen/alert/tutorial
+	name = "Tutorial"
+	desc = "These aliens are pretty different! Instead of relying on disarms, you'll have to adjust to your sting intent to incapaciatate humans. It's suggested that you swallow them whole (aggressive grab -> click on yourself) in order to carry them back to the hive."
+	icon_state = "default"
+	alerttooltipstyle = "alien"
+
+/obj/screen/alert/alien_objective
+	name = "Hivemind Objective"
+	desc = "You do not have an objective. Consult with the Queen."
+	alerttooltipstyle = "alien"
+//	icon_state = ""
+
+/obj/screen/alert/alien_findqueen
+	name = "Find Queen"
+	desc = "The Queen is somewhere. Hopefully not with the Captain again."
+	alerttooltipstyle = "alien"
+
+/obj/screen/alert/alien_findqueen/MouseEntered(location,control,params)
+	var/msg = "You can't find the Queen!"
+	if(isalien(usr))
+		var/mob/living/carbon/alien/humanoid/H = usr
+		for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in living_mob_list)
+			if(compareAlienSuffix(Q, H))
+				var/area/A = get_area(Q)
+				if(A)
+					msg = "The Queen is in [A.name]"
+				else
+					msg = "You can't detect the queen!"
+				break
+
+	openToolTip(usr,src,params,title = name,content = msg,theme = alerttooltipstyle)
+
+
+
 //BLOBS
 
 /obj/screen/alert/nofactory

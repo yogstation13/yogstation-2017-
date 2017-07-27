@@ -633,6 +633,343 @@ macro "robot-hotkeys"
 		name = "F12"
 		command = "F12"
 
+macro "xeno-default"
+	elem 
+		name = "Tab"
+		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
+	elem 
+		name = "Center+REP"
+		command = ".center"
+	elem 
+		name = "Northeast"
+		command = ".northeast"
+	elem 
+		name = "Southeast"
+		command = ".southeast"
+	elem 
+		name = "Southwest"
+		command = ".southwest"
+	elem 
+		name = "Northwest"
+		command = ".northwest"
+	elem 
+		name = "CTRL+West"
+		command = "westface"
+	elem 
+		name = "West+REP"
+		command = ".west"
+	elem 
+		name = "CTRL+North"
+		command = "northface"
+	elem 
+		name = "North+REP"
+		command = ".north"
+	elem 
+		name = "CTRL+East"
+		command = "eastface"
+	elem 
+		name = "East+REP"
+		command = ".east"
+	elem 
+		name = "CTRL+South"
+		command = "southface"
+	elem 
+		name = "South+REP"
+		command = ".south"
+	elem 
+		name = "Insert"
+		command = "a-intent right"
+	elem 
+		name = "Delete"
+		command = "delete-key-pressed"
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+	elem 
+		name = "CTRL+4"
+		command = "a-intent harm"
+	elem 
+		name = "CTRL+5"
+		command = "a-intent sting"
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+	elem 
+		name = "CTRL+B"
+		command = "resist"
+	elem 
+		name = "CTRL+D+REP"
+		command = ".east"
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+	elem 
+		name = "CTRL+S+REP"
+		command = ".south"
+	elem 
+		name = "CTRL+W+REP"
+		command = ".north"
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+	elem 
+		name = "F1"
+		command = "adminhelp"
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+	elem 
+		name = "F5"
+		command = "Aghost"
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+	elem 
+		name = "F8"
+		command = "Invisimin"
+	elem 
+		name = "F9"
+		command = "Adminlisttickets"
+	elem 
+		name = "F12"
+		command = "F12"
+
+macro "xeno-hotkeys"
+	elem 
+		name = "Tab"
+		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
+	elem 
+		name = "Center+REP"
+		command = ".center"
+	elem 
+		name = "Northeast"
+		command = ".northeast"
+	elem 
+		name = "Southeast"
+		command = ".southeast"
+	elem 
+		name = "Southwest"
+		command = ".southwest"
+	elem 
+		name = "Northwest"
+		command = ".northwest"
+	elem 
+		name = "CTRL+West"
+		command = "westface"
+	elem 
+		name = "West+REP"
+		command = ".west"
+	elem 
+		name = "CTRL+North"
+		command = "northface"
+	elem 
+		name = "North+REP"
+		command = ".north"
+	elem 
+		name = "CTRL+East"
+		command = "eastface"
+	elem 
+		name = "East+REP"
+		command = ".east"
+	elem 
+		name = "CTRL+South"
+		command = "southface"
+	elem 
+		name = "South+REP"
+		command = ".south"
+	elem 
+		name = "Insert"
+		command = "a-intent right"
+	elem 
+		name = "Delete"
+		command = "delete-key-pressed"
+	elem 
+		name = "1"
+		command = "a-intent help"
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+	elem 
+		name = "2"
+		command = "a-intent disarm"
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+	elem 
+		name = "3"
+		command = "a-intent grab"
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+	elem 
+		name = "4"
+		command = "a-intent harm"
+	elem 
+		name = "CTRL+4"
+		command = "a-intent harm"
+	elem 
+		name = "5"
+		command = "a-intent sting"
+	elem 
+		name = "CTRL+5"
+		command = "a-intent sting"
+	elem 
+		name = "A+REP"
+		command = ".west"
+	elem 
+		name = "CTRL+A+REP"
+		command = ".west"
+	elem 
+		name = "B"
+		command = "resist"
+	elem 
+		name = "CTRL+B"
+		command = "resist"
+	elem 
+		name = "D+REP"
+		command = ".moveright"
+	elem 
+		name = "CTRL+D+REP"
+		command = ".moveright"
+	elem 
+		name = "E"
+		command = "quick-equip"
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+	elem 
+		name = "F"
+		command = "a-intent left"
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+	elem 
+		name = "G"
+		command = "a-intent right"
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+	elem 
+		name = "M"
+		command = "me"
+	elem 
+		name = "O"
+		command = "ooc"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+	elem 
+		name = "Q"
+		command = ".northwest"
+	elem 
+		name = "CTRL+Q"
+		command = ".northwest"
+	elem 
+		name = "R"
+		command = ".southwest"
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+	elem "s_key"
+		name = "S+REP"
+		command = ".movedown"
+	elem 
+		name = "CTRL+S+REP"
+		command = ".movedown"
+	elem 
+		name = "T"
+		command = "say"
+	elem "w_key"
+		name = "W+REP"
+		command = ".moveup"
+	elem 
+		name = "CTRL+W+REP"
+		command = ".moveup"
+	elem 
+		name = "X"
+		command = ".northeast"
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+	elem 
+		name = "Y"
+		command = "Activate-Held-Object"
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+	elem 
+		name = "Z"
+		command = "Activate-Held-Object"
+	elem 
+		name = "CTRL+Z"
+		command = "Activate-Held-Object"
+	elem 
+		name = "F1"
+		command = "adminhelp"
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+	elem 
+		name = "F5"
+		command = "Aghost"
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+	elem 
+		name = "F8"
+		command = "Invisimin"
+	elem 
+		name = "F9"
+		command = "Adminlisttickets"
+	elem 
+		name = "F12"
+		command = "F12"
+
 
 menu "menu"
 	elem 

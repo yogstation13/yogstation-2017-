@@ -10723,6 +10723,10 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
+/obj/effect/landmark{
+	name = "xeno_game_spawn";
+	pixel_x = -1
+	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
 "atF" = (
@@ -62198,6 +62202,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark{
+	name = "xeno_game_spawn";
+	pixel_x = -1
+	},
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "ctW" = (
@@ -62514,6 +62522,10 @@
 /area/maintenance/incinerator)
 "cuy" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/effect/landmark{
+	name = "xeno_game_spawn";
+	pixel_x = -1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -69133,6 +69145,25 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zyf" = (
+/obj/effect/landmark{
+	name = "xeno_game_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating/airless,
+/area/space)
+"Zyg" = (
+/obj/structure/lattice,
+/turf/open/floor/plating/airless,
+/area/space)
+"Zyh" = (
+/obj/structure/lattice,
+/obj/effect/landmark{
+	name = "xeno_game_spawn";
+	pixel_x = -1
+	},
+/turf/open/space,
+/area/space)
 "Zyi" = (
 /turf/closed/wall,
 /area/security/medical)
@@ -69141,6 +69172,13 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/medical)
+"Zyk" = (
+/obj/effect/landmark{
+	name = "xeno_game_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
 "Zyl" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
@@ -85274,7 +85312,7 @@ aaA
 aaA
 aaC
 aaC
-aaC
+Zyf
 aaA
 aaC
 aaC
@@ -95829,7 +95867,7 @@ cfd
 cgf
 cge
 cgd
-cjc
+cfd
 ceg
 aaA
 bQV
@@ -103549,7 +103587,7 @@ cph
 cqc
 cqQ
 crL
-csN
+csP
 csP
 bUb
 aaA
@@ -115364,7 +115402,7 @@ ciI
 cjI
 bny
 clj
-bUI
+Zyk
 bUI
 bUI
 cmU
@@ -115379,7 +115417,7 @@ bny
 bny
 bny
 bUI
-bUI
+Zyk
 bUI
 cdS
 aaa
@@ -122295,8 +122333,8 @@ aaa
 aaa
 aaa
 aaA
-aaa
-aaa
+Zyg
+aaA
 aaa
 aaa
 aaa
@@ -122552,8 +122590,8 @@ aaa
 aaa
 aaa
 aaC
-aaa
-aaa
+Zyh
+Zyg
 aaa
 aae
 aaa
@@ -122809,8 +122847,8 @@ aaa
 aaa
 aaa
 aaC
-aaa
-aaa
+aaA
+Zyg
 aaa
 aaa
 aaa
@@ -123067,7 +123105,7 @@ aaa
 aaa
 aaA
 aaa
-aaa
+aaA
 aaa
 aaa
 aaa

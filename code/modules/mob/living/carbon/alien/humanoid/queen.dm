@@ -10,6 +10,7 @@
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	tackle_chance = 5
 
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
@@ -22,6 +23,7 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
+	has_fine_manipulation = TRUE
 
 
 /mob/living/carbon/alien/humanoid/royal/queen/New()
@@ -36,19 +38,23 @@
 			break
 
 	real_name = src.name
+	HD = new /datum/huggerdatum/queen
+	var/datum/huggerdatum/queen/QHD = HD
+	QHD.assemble(src)
 
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
 	internal_organs += new /obj/item/organ/alien/resinspinner
-	internal_organs += new /obj/item/organ/alien/acid
-	internal_organs += new /obj/item/organ/alien/neurotoxin
+	internal_organs += new /obj/item/organ/alien/neurotoxinthroat/strong
 	internal_organs += new /obj/item/organ/alien/eggsac
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/directobjective())
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/globalobjective())
 	..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
 	. = ..()
-	. += 5
+	. += 3
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
@@ -63,7 +69,12 @@
 		user << "There's already an egg here."
 		return 0
 	user.visible_message("<span class='alertalien'>[user] has laid an egg!</span>")
-	new /obj/structure/alien/egg(user.loc)
+	var/grabbedcosuff
+	if(isalien(user))
+		var/mob/living/carbon/alien/A = user
+		grabbedcosuff = A.HD.colony_suffix
+
+	new /obj/structure/alien/egg(user.loc, suffix = grabbedcosuff)
 	return 1
 
 //Button to let queen choose her praetorian.
@@ -130,3 +141,74 @@
 /obj/item/queenpromote/attack_self(mob/user)
 	user << "<span class='noticealien'>You discard [src].</span>"
 	qdel(src)
+
+/obj/effect/proc_holder/alien/royal/queen/directobjective
+	name = "Direct Objective"
+	desc = "Give a xenomorph nearbly an objective."
+	plasma_cost = 0
+	action_icon_state =  "direct-order"
+
+/obj/effect/proc_holder/alien/royal/queen/directobjective/fire(mob/living/carbon/alien/user)
+	var/list/xenomorphs = list()
+	xenomorphs += "None"
+	for(var/mob/living/carbon/alien/humanoid/H in viewers(7,user))
+		if(compareAlienSuffix(user, H))
+			xenomorphs += H
+
+	var/mob/living/carbon/alien/humanoid/chosenxeno = input(user,"Choose a xenomorph",null) as anything in xenomorphs
+	if(!chosenxeno || chosenxeno == "None")
+		user << "<span class='warning'>You chose not to give out another objective.</span>"
+		return
+	var/objective = stripped_input(user, "Print out a message", "Create an objective")
+
+	if(!objective)
+		return
+
+	user << "<span class='noticealien'>You give [chosenxeno.name] the objective <span class='alertalien'>[objective].</span></span>"
+	chosenxeno << "<span class='alertalien'>Your queen has given you the objective:</span> <span class='alertalien'>[objective]</span> <span class='noticealien'>(Use the alert at the top right of your screen to see it as well.)</span>"
+	var/obj/screen/alert/alien_objective/A = chosenxeno.alerts["alienobjective"]
+	if(A)
+		A.desc = objective
+		playsound(chosenxeno.loc, 'sound/voice/hiss5.ogg', 50, 1, 1)
+	log_game("Alien Queen ([user.ckey]) has given [chosenxeno] the objective: [objective]")
+	return 1
+
+/obj/effect/proc_holder/alien/royal/queen/globalobjective
+	name = "Global Objective"
+	desc = "Sends a new objective to every single xenomorph.."
+	plasma_cost = 10
+	action_icon_state = "global-order"
+
+/obj/effect/proc_holder/alien/royal/queen/globalobjective/fire(mob/living/carbon/alien/user)
+	var/objective = stripped_input(user, "What objective do you want to give to your xenomorphs?", "Choose a Global Objective")
+	if(!objective)
+		return
+
+	for(var/mob/living/carbon/alien/humanoid/H in living_mob_list)
+		if(compareAlienSuffix(user, H))
+			var/obj/screen/alert/alien_objective/A = H.alerts["alienobjective"]
+			if(A)
+				A.desc = objective
+				H << 'sound/voice/hiss5.ogg'
+				H << "<span class='aliensmallannounce'>New Objective!</span><span class='notice'>(Check the alert at the top right corner)</span>"
+
+	user << "<span class='alertalien'>Your Colony's Currrent Objective:</span> <span class='notice'>[objective]</span>"
+	log_game("Alien Queen ([user.ckey]) has globaly given out the objective: [objective]")
+	return 1
+
+/obj/effect/proc_holder/alien/royal/queen/hivebalance
+	name = "Toggle Hive Balance"
+	desc = "With this toggled on, when the hives number of hunters and workers do not equal each other, new-evolving \
+		Aliens will be forced to evolve into the smaller caste."
+	plasma_cost = 10
+	action_icon_state = "global-order"
+
+/obj/effect/proc_holder/alien/royal/queen/hivebalance/fire(mob/living/carbon/alien/user)
+	user.HD.hivebalance = !user.HD.hivebalance
+
+	for(var/mob/living/carbon/alien/humanoid/H in living_mob_list)
+		if(compareAlienSuffix(user, H))
+			H << "<span class=''>The Queen has [user.HD.hivebalance ? "enabled" : "disabled"] the hives balancing system."
+
+	log_game("Alien Queen ([user.ckey]) has toggeled their hives balance [user.HD.hivebalance ? "on" : "off"]")
+	return 1

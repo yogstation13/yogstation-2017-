@@ -234,7 +234,7 @@
 	if(!istext(ckey))
 		return 0
 
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
+	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Worker","Larva")
 	var/obj/effect/landmark/spawn_here = xeno_spawn.len ? pick(xeno_spawn) : pick(latejoin)
 	var/mob/living/carbon/alien/new_xeno
 	switch(alien_caste)
@@ -244,10 +244,8 @@
 			new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(spawn_here)
 		if("Hunter")
 			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
+		if("Worker")
+			new_xeno = new /mob/living/carbon/alien/humanoid/worker(spawn_here)
 		if("Larva")
 			new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
 		else
@@ -298,9 +296,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					if("Hunter")
 						new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
 					if("Sentinel")
-						new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
+						new_xeno = new /mob/living/carbon/alien/humanoid/worker(T)
 					if("Drone")
-						new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
+						new_xeno = new /mob/living/carbon/alien/humanoid/worker(T)
 					if("Praetorian")
 						new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
 					if("Queen")

@@ -7,7 +7,7 @@
 	var/hotkey_macro = "hotkeys"
 	var/current_setting
 
-	var/list/default_macros = list("default", "robot-default")
+	var/list/default_macros = list("default", "robot-default", "xeno-default")
 
 	if(from_pref)
 		current_setting = (prefs.hotkeys ? hotkey_macro : hotkey_default)

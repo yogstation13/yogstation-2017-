@@ -112,9 +112,9 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/alien/plasmavessel/small = 1,
-							/obj/item/organ/alien/hivenode = 1,
-							/obj/item/organ/alien/acid = 1,
-							/obj/item/organ/alien/neurotoxin = 1)
+							/obj/item/organ/alien/hivenode = 1)
+						//	/obj/item/organ/alien/acid = 1,
+						//	/obj/item/organ/alien/neurotoxin = 1)
 
 
 /mob/living/simple_animal/hostile/alien/sentinel/adjustHealth(amount)
@@ -199,8 +199,8 @@
 							/obj/item/organ/alien/plasmavessel/large/queen = 1,
 							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/resinspinner = 1,
-							/obj/item/organ/alien/acid = 1,
-							/obj/item/organ/alien/neurotoxin = 1,
+			//				/obj/item/organ/alien/acid = 1,
+			//				/obj/item/organ/alien/neurotoxin = 1,
 							/obj/item/organ/alien/eggsac = 1,
 							/obj/item/organ/brain/alien = 1) //only the queen is smart
 	mob_size = MOB_SIZE_LARGE
@@ -268,9 +268,9 @@
 							/obj/item/stack/sheet/animalhide/xeno = 2,
 							/obj/item/organ/alien/plasmavessel = 1,
 							/obj/item/organ/alien/hivenode = 1,
-							/obj/item/organ/alien/resinspinner = 1,
-							/obj/item/organ/alien/acid = 1,
-							/obj/item/organ/alien/neurotoxin = 1)
+							/obj/item/organ/alien/resinspinner = 1)
+						//	/obj/item/organ/alien/acid = 1,
+						//	/obj/item/organ/alien/neurotoxin = 1)
 	projectilesound = 'sound/weapons/pierce.ogg'
 	projectiletype = /obj/item/projectile/neurotox/heavy
 	status_flags = list()
