@@ -353,6 +353,7 @@
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
 	var/selecting = "chest"
+	var/icon_overlay = 'icons/mob/screen_gen.dmi'
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(usr.client && usr.client.prefs.afreeze)
@@ -407,25 +408,27 @@
 							selecting = "eyes"
 
 	if(old_selecting != selecting)
+		usr.zone_selected = selecting
+		selecting = null
 		update_icon(usr)
 	return 1
 
 /obj/screen/zone_sel/update_icon(mob/user)
 	overlays.Cut()
-	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
-	user.zone_selected = selecting
+	if(selecting)
+		usr.zone_selected = selecting
+		selecting = null
+	if(!usr.zone_selected)
+		usr.zone_selected = "chest"
+	overlays += image(icon_overlay, "[usr.zone_selected]")
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/zone_sel/alien/update_icon(mob/user)
-	overlays.Cut()
-	overlays += image('icons/mob/screen_alien.dmi', "[selecting]")
-	user.zone_selected = selecting
+	icon_overlay = 'icons/mob/screen_alien.dmi'
 
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_cyborg.dmi'
-
+	icon_overlay = 'icons/mob/screen_gen.dmi'
 
 /obj/screen/flash
 	name = "flash"
