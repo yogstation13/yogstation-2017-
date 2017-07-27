@@ -24279,7 +24279,7 @@
 /turf/closed/wall,
 /area/crew_quarters/locker/locker_toilet)
 "aWv" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -50504,7 +50504,7 @@
 /turf/open/floor/plasteel/black,
 /area/teleporter)
 "bSs" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -50921,7 +50921,7 @@
 /turf/open/floor/plasteel/darkred/side,
 /area/security/prison)
 "bTd" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /turf/open/floor/plasteel{
