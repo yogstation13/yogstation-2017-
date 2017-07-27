@@ -3,6 +3,7 @@
 /area/mine
 	icon_state = "mining"
 	has_gravity = 1
+	ambientsounds = list('sound/ambience/lavaland_effect.ogg')
 
 /area/mine/explored
 	name = "Mine"
@@ -15,7 +16,7 @@
 	power_equip = 0
 	power_light = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambientmystery.ogg')
 
 /area/mine/unexplored
 	name = "Mine"
@@ -28,7 +29,7 @@
 	power_equip = 0
 	power_light = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambientmystery.ogg')
 	sound_env = CAVE // implies that lavaland has torn it into pieces.
 
 /area/mine/lobby
