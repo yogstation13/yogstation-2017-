@@ -58,11 +58,11 @@
 	if(rawScaling >= 100 && rawScaling <= 115)
 		var/prefix = "fiery"
 		name = "[prefix] [name]"
-		loot += /obj/item/weapon/ore/diamond
 		return
 	if(rawScaling > 115 && rawScaling < 130)
 		var/prefix = "blazing"
 		name = "[prefix] [name]"
+		loot += /obj/item/weapon/ore/diamond
 		return
 	if(rawScaling >= 130)
 		var/prefix = "infernal"
@@ -158,6 +158,8 @@
 			swoop_attack()
 			swoop_attack()
 			swoop_attack()
+	else if(prob(5) && !istype(src,/mob/living/simple_animal/hostile/megafauna/dragon/lesser))
+		xoxo_and_friends()
 	else
 		fire_walls()
 
@@ -240,6 +242,20 @@
 	stop_automated_movement = FALSE
 	swooping = 0
 	density = 1
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/xoxo_and_friends()
+	visible_message("<span class='danger'>[src] shoots fire into the sky!</span>")
+	var/xoxofiring = rand(1, 2)
+	for(var/turf/turf in range(round(12*scaling,1),get_turf(src)))
+		if(IsOdd(xoxofiring))
+			new /obj/effect/overlay/temp/target(turf)
+			xoxofiring++
+		else
+			xoxofiring++
+	spawn(25)
+	visible_message("<span class='danger'>[src] roars and calls for aid!</span>")	
+	var/mob/living/simple_animal/hostile/megafauna/dragon/lesser/L = new(src.loc)
+	L.faction = list("mining")
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
