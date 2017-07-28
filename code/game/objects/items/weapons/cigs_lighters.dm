@@ -667,13 +667,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user << "<span class='warning'>[src] is full!</span>"
 			return
 		else
-			++(amount_of_stubs)
+			amount_of_stubs++
 			update_icon()
-			user << "<span class='notice'>You stub [O] in [src].</span>"
+			user.visible_message("[user] stubs [O] in [src].", "<span class='notice'>You stub [O] in [src].</span>")
 			qdel(O)
 
 /obj/item/weapon/ashtray/attack_self(mob/living/user)
-	if(amount_of_stubs == 0)
+	if(!amount_of_stubs)
 		return
 	else
 		user << "<span class='notice'>You empty the [src] onto the ground.</span>"
