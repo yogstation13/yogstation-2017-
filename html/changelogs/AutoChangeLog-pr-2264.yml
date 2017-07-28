@@ -1,0 +1,6 @@
+author: Kayozz11
+delete-after: True
+changes: 
+  - rscadd: "Adds a new ambience sound to medbay!"
+  - rscadd: "Adds a new ambience sound to the abandoned teleporter and lavaland ruins!"
+  - rscadd: "Adds a new ambience sound to lavaland in general!"

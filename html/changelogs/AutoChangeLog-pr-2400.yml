@@ -1,0 +1,4 @@
+author: nichlas0010
+delete-after: True
+changes: 
+  - bugfix: "Intellicards now display whether an AI is operative or not."
