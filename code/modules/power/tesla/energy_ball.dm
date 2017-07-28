@@ -63,8 +63,8 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 							L << 'sound/effects/supermatter.ogg'
 							L << 'sound/magic/lightningbolt.ogg'
 							L << "<i>Your skin tingles as a wave of energy passes through the air.</i>"
-					empulse(loc, 45, 70)
-					explosion(loc, 10, 20, 30)
+					empulse(loc, 10, 30)
+					explosion(loc, 5, 10, 20)
 					qdel(EB)
 					qdel(src)
 					return

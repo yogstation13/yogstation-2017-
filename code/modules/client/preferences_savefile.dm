@@ -92,7 +92,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 					if(32768)
 						be_special += ROLE_REVENANT
 
-
 /datum/preferences/proc/update_preferences(current_version)
 	if(current_version < 10)
 		toggles |= MEMBER_PUBLIC
