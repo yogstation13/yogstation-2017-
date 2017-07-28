@@ -803,7 +803,7 @@ var/list/teleportlocs = list()
 	name = "Abandoned Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
-	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambientmystery.ogg')
 
 /area/gateway
 	name = "Gateway"
@@ -817,6 +817,7 @@ var/list/teleportlocs = list()
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/mysteriousambience.ogg')
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/medbay2
@@ -949,6 +950,14 @@ var/list/teleportlocs = list()
 /area/security/medical
 	name = "Brig Medical"
 	icon_state = "medbay"
+
+/area/security/Cells
+	name = "Holding Cell"
+	icon_state = "brig"
+
+/area/security/Permabrig
+	name = "Permanent Cell"
+	icon_state = "sec_prison"
 
 /*
 /area/security/transfer/New()

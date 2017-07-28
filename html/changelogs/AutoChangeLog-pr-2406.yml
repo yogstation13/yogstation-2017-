@@ -1,0 +1,4 @@
+author: nichlas0010
+delete-after: True
+changes: 
+  - rscadd: "All brig cells are now radproof"
