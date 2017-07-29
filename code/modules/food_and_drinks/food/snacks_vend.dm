@@ -10,6 +10,7 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 3)
 	junkiness = 25
 	filling_color = "#D2691E"
+	foodtype = JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
@@ -21,6 +22,7 @@
 	filling_color = "#8B0000"
 	requires_opening = TRUE
 	open = FALSE
+	foodtype = JUNKFOOD | MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -33,6 +35,7 @@
 	filling_color = "#FFD700"
 	requires_opening = TRUE
 	open = FALSE
+	foodtype = JUNKFOOD | FRIED
 
 /obj/item/weapon/reagent_containers/food/snacks/chips/attack(mob/M, mob/user)
 	if(ishuman(M))
@@ -57,6 +60,7 @@
 	list_reagents = list("nutriment" = 2, "sugar" = 4)
 	junkiness = 25
 	filling_color = "#8B0000"
+	foodtype = JUNKFOOD | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
@@ -65,6 +69,7 @@
 	list_reagents = list("sugar" = 4)
 	junkiness = 25
 	filling_color = "#FFD700"
+	foodtype = JUNKFOOD | GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "cheesie honkers"
@@ -76,6 +81,7 @@
 	filling_color = "#FFD700"
 	requires_opening = TRUE
 	open = FALSE
+	foodtype = JUNKFOOD | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"
@@ -84,6 +90,7 @@
 	trash = /obj/item/trash/syndi_cakes
 	list_reagents = list("nutriment" = 4, "doctorsdelight" = 5)
 	filling_color = "#F5F5DC"
+	foodtype = GRAIN | FRUIT | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/toritose
 	name = "toritos"
@@ -95,6 +102,7 @@
 	filling_color = "#FF0000"
 	requires_opening = TRUE
 	open = FALSE
+	foodtype = JUNKFOOD | GRAIN | FRIED
 
 /obj/item/weapon/reagent_containers/food/snacks/borer
 	name = "borer yummies"
@@ -103,3 +111,4 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 1, "sugar" = 2)
 	junkiness = 12
+	foodtype = JUNKFOOD | FRIED

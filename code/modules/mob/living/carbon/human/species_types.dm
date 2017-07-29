@@ -14,6 +14,8 @@
 	use_skintones = 1
 	roundstart = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	disliked_food = GROSS
+	toxic_food = TOXIC | RAW
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
@@ -50,6 +52,8 @@
 	specflags = list()
 	roundstart = 0
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
+	disliked_food = null //atleast they got that going for them
+	toxic_food = TOXIC
 
 
 /datum/species/human/fly/handle_speech(message)
@@ -111,6 +115,9 @@
 	low_temp_level_3 = BODYTEMP_COLD_DAMAGE_LEVEL_3
 	highpressure_mod = 0.75
 	lowpressure_mod = 0.75
+
+	disliked_food = FRUIT //Lizards like eating shit and trash, they don't like fruit because its ripe and pure.
+	toxic_food = TOXIC //and raw meat
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time.</span>"
@@ -226,6 +233,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
 	default_color = "FFFFFF"
+	toxic_food = TOXIC
 
 /datum/species/lizard/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -283,6 +291,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	low_temp_level_1 = 280
 	low_temp_level_2 = 250
 	low_temp_level_3 = 190
+	toxic_food = null
+	disliked_food = null
 
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 	var/emagged = 0
@@ -511,6 +521,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_light_level = 0
 	var/last_light_message = -STATUS_MESSAGE_COOLDOWN
 	var/last_plantbgone_message = -STATUS_MESSAGE_COOLDOWN
+	disliked_food = MEAT | DAIRY | GRAIN //he's vegan
+	toxic_food = TOXIC | RAW
 
 
 /datum/species/plant/before_equip_job(datum/job/J, mob/living/carbon/human/H)
@@ -988,6 +1000,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/datum/action/innate/split_body/slime_split
 	var/datum/action/innate/swap_body/body_swap
 
+	disliked_food = null
+	toxic_food = MEAT | VEGETABLES | FRUIT | GRAIN | DAIRY //they like toxins though
+
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
@@ -1113,6 +1128,7 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	toxic_food = TOXIC
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -1146,6 +1162,8 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	disliked_food = null
+	toxic_food = null //I doubt a skeleton would care
 
 /*
  ZOMBIES
@@ -1162,6 +1180,8 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
+	disliked_food = null
+	toxic_food = null
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -1238,6 +1258,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
+	disliked_food = GROSS
+	toxic_food = TOXIC | RAW
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -1290,6 +1312,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = null
 	exotic_damage_overlay = "synth"
 	limbs_id = "synth"
+	disliked_food = null
+	toxic_food = null
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
