@@ -90,6 +90,16 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 	category = CAT_PASTRY
 
+/datum/crafting_recipe/food/pancakes
+	time = 15
+	name = "Pancakes"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 5,
+		/datum/reagent/consumable/sugar = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pancakes
+	category = CAT_PASTRY
+
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donkpocket
@@ -295,4 +305,24 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/honeybun
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/cinnamonroll
+	name = "Cinnamon Roll"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/cinnamon = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/cinnamonroll
+	category = CAT_PASTRY
+
+/datum/crafting_recipe/food/churro
+	name = "Churro"
+	reqs = list(
+		/obj/item/weapon/reagent_containers/food/snacks/pastrybase = 1,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/cinnamon = 5
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/churro
 	category = CAT_PASTRY
