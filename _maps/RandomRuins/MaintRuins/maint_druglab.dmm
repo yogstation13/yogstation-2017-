@@ -1,0 +1,23 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/item/stack/spacecash/c100,/obj/item/weapon/coin/gold,/turf/open/floor/plating,/area/template_noop)
+"c" = (/obj/item/weapon/screwdriver,/turf/open/floor/plating,/area/template_noop)
+"d" = (/obj/item/weapon/book/manual/wiki/chemistry,/turf/open/floor/plating,/area/template_noop)
+"e" = (/obj/item/weapon/coin/silver,/turf/open/floor/plating,/area/template_noop)
+"f" = (/obj/structure/frame/machine,/obj/item/stack/cable_coil/random,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/template_noop)
+"g" = (/obj/effect/decal/cleanable/chem_pile,/obj/item/weapon/reagent_containers/glass/bottle/drugs,/turf/open/floor/plating,/area/template_noop)
+"h" = (/obj/item/weapon/reagent_containers/glass/beaker,/turf/open/floor/plating,/area/template_noop)
+"i" = (/obj/structure/frame/machine,/obj/item/weapon/circuitboard/machine/chem_master,/turf/open/floor/plating{tag = "icon-platingdmg3"; icon_state = "platingdmg3"},/area/template_noop)
+"j" = (/obj/structure/sign/chemistry{pixel_x = 32},/obj/structure/chair{dir = 8},/obj/item/clothing/head/fedora,/turf/open/floor/plating,/area/template_noop)
+"k" = (/obj/item/stack/spacecash/c20,/turf/open/floor/plating,/area/template_noop)
+"l" = (/obj/effect/decal/cleanable/chem_pile,/turf/open/floor/plating,/area/template_noop)
+"m" = (/obj/item/weapon/paper/druglab,/turf/open/floor/plating,/area/template_noop)
+"n" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+aaaaa
+abcda
+aefga
+ahija
+aklma
+aaana
+"}
