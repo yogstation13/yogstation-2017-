@@ -23,6 +23,7 @@
 	var/overheat = FALSE
 	var/core_icon_state
 	var/image/core_overlay
+	var/shots = 1
 	var/list/parts = list(
 	"barrel" = /obj/item/kinetic_part/barrel,
 	"barrel_end" = /obj/item/kinetic_part/barrel_end,
@@ -66,16 +67,20 @@
 	if(user)
 		user.put_in_active_hand(KPOLD)
 		user << "<span class='notice'>You switch the [KPOLD.name] out with the [KP.name].</span>"
-
-
-
+	KPOLD.detach(src,user)
+	KP.attach(src,user)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/updateParts()
 	overheat_time = getPartsCooldown()
 	update_icons()
+	var/image/off = image('icons/obj/guns/kinetic.dmi',"[core_icon_state]_off")
+	core_overlay = off
 	hasPS = FALSE
 	hasPD = FALSE
 	hasAD = FALSE
+	var/obj/item/kinetic_part/charger/charger = parts["charger"]
+	shots = charger.shots
+	power_supply.maxcharge = 500*shots
 	for(var/obj/item/kinetic_part/KP in contents)
 		if(KP.PS)
 			hasPS = TRUE
@@ -150,6 +155,11 @@
 	var/datum/kinetic/preDamage/PD //The projectile hit our target, but hasnt done any damage yet
 	var/datum/kinetic/afterDamage/AD //The damage has been done
 
+/obj/item/kinetic_part/proc/attach(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
+	return
+
+/obj/item/kinetic_part/proc/detach(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
+	return
 
 //Standard
 /obj/item/kinetic_part/barrel
@@ -182,6 +192,7 @@
 	rank = "standard"
 	part = "charger"
 	cooldownBonus = 10
+	var/shots = 1
 
 /obj/item/kinetic_part/grip
 	name = "standard grip"
@@ -202,7 +213,6 @@
 	damageBonus = 12
 	rangeBonus = 3
 	cooldownBonus = 2
-	AD = new /datum/kinetic/afterDamage/splash()
 
 /obj/item/kinetic_part/barrel_end/super
 	name = "super barrel end"
@@ -227,31 +237,92 @@
 	cooldownBonus = 1
 	damageBonus = 4
 
+//Special
+
+/obj/item/kinetic_part/barrel/splash
+	name = "spread barrel"
+	desc = "Destroys rocks in a 3x3 area. The perfect tool for mining."
+	icon_state = "barrel_spread"
+	rank = "special"
+	part = "barrel"
+	damageBonus = 12
+	rangeBonus = 3
+	cooldownBonus = 4
+	pixel_x_extra = 1
+	AD = new /datum/kinetic/afterDamage/splash()
+
+/obj/item/kinetic_part/barrel_end/shotgun
+	name = "shotgun barrel end"
+	icon_state = "barrel_end_shotgun"
+	desc = "Extremely powerful, but comes at the chost of range."
+	rank = "special"
+	part = "barrel_end"
+	damageBonus = 50
+	rangeBonus = -2
+
+/obj/item/kinetic_part/grip/wide
+	name = "wide grip"
+	desc = "Has a wider grip for people with big hands."
+	icon_state = "grip_wide"
+	rank = "special"
+
+/obj/item/kinetic_part/grip/wide/attach(obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user)
+	KA.weapon_weight = WEAPON_MEDIUM
+	KA.trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+
+/obj/item/kinetic_part/grip/wide/detach(obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user)
+	KA.weapon_weight = WEAPON_LIGHT
+	KA.trigger_guard = TRIGGER_GUARD_NORMAL
+
+/obj/item/kinetic_part/charger/double_shot
+	name = "double charger"
+	icon_state = "charger_double"
+	rank = "special"
+	part = "charger"
+	cooldownBonus = 25
+	shots = 2
+
+/obj/item/kinetic_part/charger/triple_shot
+	name = "triple charger"
+	icon_state = "charger_triple"
+	rank = "special"
+	part = "charger"
+	cooldownBonus = 35
+	shots = 3
+
+
+
+
+//Ancient
+
+/obj/item/kinetic_part/core/vampiric
+	name = "vampiric core"
+	desc = "An ancient cursed core."
+	icon_state = "core_vampiric"
+	rank = "ancient"
+	var/leach = 1  //Amount we heal the user for every shot
+	AD = new/datum/kinetic/afterDamage/vampiric()
 
 
 /datum/kinetic/proc/Trigger()
 
-/datum/kinetic/preShot/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/user)
+/datum/kinetic/preShot/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/user,obj/item/kinetic_part/KP)
 
-/datum/kinetic/preDamage/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,turf/T)
+/datum/kinetic/preDamage/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,turf/T,obj/item/kinetic_part/KP)
 
-/datum/kinetic/afterDamage/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,atom/target)
+/datum/kinetic/afterDamage/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,atom/target,obj/item/kinetic_part/KP)
 
 /datum/kinetic/afterDamage/splash/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,atom/target)
-	world << "6"
 	for(var/turf/T in range(1, get_turf(target)))
-		world << "7"
 		if(istype(T, /turf/closed/mineral))
-			world << "8"
 			var/turf/closed/mineral/M = T
 			M.gets_drilled(firer)
-			world << "9"
 
 
-
-
-
-
+/datum/kinetic/afterDamage/vampiric/Trigger(obj/item/weapon/gun/energy/kinetic_accelerator/KA,obj/item/projectile/kinetic/K,mob/firer,atom/target,obj/item/kinetic_part/core/vampiric/KP)
+	if(isliving(firer) && isliving(target))
+		var/mob/living/L = firer
+		L.heal_overall_damage(KP.leach,KP.leach)
 
 
 /obj/item/projectile/kinetic
@@ -264,27 +335,30 @@
 	var/gun
 
 /obj/item/projectile/kinetic/proc/specialShot(var/when,obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user,atom/target)
-	world << "2"
+	if(!KA.hasPS && !KA.hasPD && !KA.hasAD)
+		return 0
 	switch(when)
 		if(PRESHOT)
 			if(KA.hasPS)
 				for(var/obj/item/kinetic_part/KP in KA.contents)
+					if(!KP.PS)
+						continue
 					var/datum/kinetic/preShot/D = KP.PS
-					D.Trigger(KA,src,user) //No way of knowing what it will hit, so no target
+					D.Trigger(KA,src,user,KP) //No way of knowing what it will hit, so no target
 		if(PREDAMAGE)
 			if(KA.hasPD)
 				for(var/obj/item/kinetic_part/KP in KA.contents)
+					if(!KP.PD)
+						continue
 					var/datum/kinetic/preDamage/D = KP.PD
-					D.Trigger(KA,src,user,target)
+					D.Trigger(KA,src,user,target,KP)
 		if(AFTERDAMAGE)
-			world << "3"
 			if(KA.hasAD)
-				world << "4"
 				for(var/obj/item/kinetic_part/KP in KA.contents)
-					world << "5"
+					if(!KP.AD)
+						continue
 					var/datum/kinetic/afterDamage/D = KP.AD
-					D.Trigger(KA,src,user,target)
-					world << "6"
+					D.Trigger(KA,src,user,target,KP)
 
 
 /obj/item/projectile/kinetic/on_range()
@@ -301,7 +375,6 @@
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	new /obj/effect/kinetic_blast(target_turf)
-	world << "1"
 	specialShot(AFTERDAMAGE,gun,firer,target)
 
 /obj/effect/kinetic_blast
@@ -387,7 +460,7 @@
 	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
-	power_supply.give(500)
+	power_supply.give(500 * shots)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
@@ -397,9 +470,9 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	if(!can_shoot())
-		core_overlay.icon_state = "[core_overlay.icon_state]_off"
+		overlays.Add(core_overlay)
 	else
-		core_overlay.icon_state = core_icon_state
+		overlays.Remove(core_overlay)
 
 
 #undef PRESHOT
