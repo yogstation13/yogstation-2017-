@@ -1,6 +1,0 @@
-author: Floyd (And sprites by Maya)
-delete-after: True
-changes: 
-  - rscadd: "Disgust system - If you are disgusted with something you will enter a level of disgust for a while, currently only implemented with food & pukonium"
-  - rscadd: "Food types - Now each food has types based on their ingredients, and not all races can eat the same food. Humans cant eat raw and gross food, Lizards can't eat fruit.)"
-  - rscadd: "You can eat rats now, but it's mainly reccomended for lizards."

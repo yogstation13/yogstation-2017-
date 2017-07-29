@@ -1,4 +1,0 @@
-author: matskuman5
-delete-after: True
-changes: 
-  - rscadd: "Adds in a bunch of new randomly selected rooms that replace some old, unused rooms in maintenance. Credit to Cruix for the framework and to Dagdammit for most of the ideas."
