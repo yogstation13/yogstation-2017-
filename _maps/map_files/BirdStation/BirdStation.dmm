@@ -7905,7 +7905,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "asR" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /obj/machinery/light/small{

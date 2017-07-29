@@ -1,0 +1,20 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/electrical,/turf/open/floor/plating,/area/template_noop)
+"c" = (/obj/item/weapon/circuitboard/machine/smes,/turf/open/floor/plating,/area/template_noop)
+"d" = (/obj/item/stack/cable_coil/yellow,/turf/open/floor/plating,/area/template_noop)
+"e" = (/obj/structure/rack,/obj/item/device/multitool,/turf/open/floor/plating,/area/template_noop)
+"f" = (/turf/open/floor/plating,/area/template_noop)
+"g" = (/obj/structure/table,/obj/machinery/cell_charger,/obj/item/weapon/stock_parts/cell/high,/turf/open/floor/plating,/area/template_noop)
+"h" = (/obj/structure/table,/obj/item/weapon/circuitboard/computer/powermonitor,/turf/open/floor/plating,/area/template_noop)
+"i" = (/obj/structure/table,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/plating,/area/template_noop)
+"j" = (/obj/item/weapon/stock_parts/capacitor,/turf/open/floor/plating,/area/template_noop)
+"k" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+aaaaa
+abcda
+aefga
+ahdfa
+aifja
+aaaka
+"}
