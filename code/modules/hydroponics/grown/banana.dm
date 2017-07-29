@@ -23,6 +23,7 @@
 	trash = /obj/item/weapon/grown/bananapeel
 	filling_color = "#FFFF00"
 	bitesize = 5
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")

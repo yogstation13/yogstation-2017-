@@ -136,7 +136,7 @@
 	//end_overlay = "light_ash"
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/shuttle)
+	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/shuttle, /area/security/Permabrig, /area/security/Cells)
 	target_z = ZLEVEL_STATION
 
 	immunity_type = "rad"

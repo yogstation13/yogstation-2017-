@@ -15,7 +15,16 @@
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
+
 #include "_maps\spacebardream.dmm"
+=======
+#include "_maps\RandomRuins\MaintRuins\maint_agent.dmm"
+#include "_maps\RandomRuins\MaintRuins\maint_detective.dmm"
+#include "_maps\RandomRuins\MaintRuins\maint_druglab.dmm"
+#include "_maps\RandomRuins\MaintRuins\maint_electric.dmm"
+#include "_maps\RandomRuins\MaintRuins\maint_greytide.dmm"
+#include "_maps\RandomRuins\MaintRuins\maint_kitchen.dmm"
+
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -33,6 +42,7 @@
 #include "code\__DEFINES\events.dm"
 #include "code\__DEFINES\files.dm"
 #include "code\__DEFINES\flags.dm"
+#include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\genetics.dm"
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\is_helpers.dm"

@@ -23,6 +23,7 @@ Pipelines + Other Objects -> Pipe network
 	var/obj/item/pipe/stored
 	var/global/list/iconsetids = list()
 	var/global/list/pipeimages = list()
+	var/placedby = null
 
 	var/image/pipe_vision_img = null
 
