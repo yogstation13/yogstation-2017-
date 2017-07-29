@@ -15,7 +15,7 @@
 	roundstart = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS
-  liked_food = JUNKFOOD | FRIED
+  	liked_food = JUNKFOOD | FRIED
 	toxic_food = TOXIC | RAW
 
 
@@ -54,7 +54,7 @@
 	roundstart = 0
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 	disliked_food = null //atleast they got that going for them
-  liked_food = GROSS
+  	liked_food = GROSS
 	toxic_food = TOXIC
 
 
@@ -119,7 +119,7 @@
 	lowpressure_mod = 0.75
 
 	disliked_food = DAIRY | GRAIN
-  liked_food = GROSS
+  	liked_food = GROSS
 	toxic_food = TOXIC //and raw meat
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
@@ -525,7 +525,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_light_message = -STATUS_MESSAGE_COOLDOWN
 	var/last_plantbgone_message = -STATUS_MESSAGE_COOLDOWN
 	disliked_food = MEAT | DAIRY //he's vegan
-  liked_food = VEGETABLES | FRUIT
+  	liked_food = VEGETABLES | FRUIT
 	toxic_food = TOXIC | RAW
 
 
@@ -1005,7 +1005,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/datum/action/innate/swap_body/body_swap
 
 	disliked_food = FRUIT
-  liked_food = TOXIC
+  	liked_food = TOXIC
 	toxic_food = null
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
@@ -1168,7 +1168,7 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 	disliked_food = null
-  liked_food = RAW | MEAT | GROSS
+  	liked_food = RAW | MEAT | GROSS
 	toxic_food = null //I doubt a skeleton would care
 
 /*
@@ -1187,7 +1187,7 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
 	disliked_food = null
-  liked_food = RAW | MEAT | GROSS
+  	liked_food = RAW | MEAT | GROSS
 	toxic_food = null
 
 /datum/species/zombie/infectious
@@ -1266,7 +1266,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	heatmod = 2
 	speedmod = 1
 	disliked_food = GROSS
-  liked_food = RAW | VEGETABLES
+  	liked_food = RAW | VEGETABLES
 	toxic_food = TOXIC | RAW
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
