@@ -43,6 +43,7 @@ var/list/ai_list = list()
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/donor_skin_chosen = 0 //chosen a custom skin?
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -175,8 +176,17 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
+	if(is_donator(src))
+		var/donoricon = input("[ckey], You appear to be a donator, if you have a custom skin, select custom, if you do not wish to use it, select cancel! if you don't have one but want one, message Kmc#7413 on discord!", null/*, null*/) in list("custom", "cancel")
+		if(donoricon == "custom")
+			icon_state = "[ckey]"
+			donor_skin_chosen = 1
+			return
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Blob")
-	if(icontype == "Clown")
+	donor_skin_chosen = 0
+	if(icontype == "Custom")
+		icon_state = "[ckey]"
+	else if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
 		icon_state = "ai-mono"
@@ -341,6 +351,13 @@ var/list/ai_list = list()
 	if(stat == DEAD)
 		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
+	if(donor_skin_chosen) //dont randomly change the skin
+		if(ckey == "kurugii") //snowflake check here, as he's the only one who needs this custom animation, add more as you wish with ||
+			if(!anchored)
+				icon_state = "kurugii-unbolt"
+			else if(anchored)
+				icon_state = "kurugii-rebolt"
+
 
 	src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
 	// the message in the [] will change depending whether or not the AI is anchored

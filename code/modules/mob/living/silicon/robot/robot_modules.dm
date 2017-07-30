@@ -14,6 +14,7 @@
 	var/list/skins = list()
 	var/list/donator_skins = list()
 
+
 /obj/item/weapon/robot_module/Destroy()
 	modules.Cut()
 	emag = null
@@ -86,6 +87,7 @@
 	modules += new /obj/item/device/assembly/flash/cyborg(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
+	get_skins()
 	return
 
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
@@ -124,6 +126,13 @@
 /obj/item/weapon/robot_module/proc/on_emag()
 	return
 
+
+/obj/item/weapon/robot_module/proc/get_skins() //yes we're doing it twice, once so it adds it when theyre made, and greets them, then this one so the list isn't overriden with the other donator_skins
+	var/mob/living/silicon/robot/R = loc
+	if(R.CustomSkinCheck) // if theyre a donator, who should have a custom borg skin
+		R << "<span class='warning'><font size=1>[R.ckey]'s custom skin added to skin options</font></span>"
+		donator_skins = list("custom" = "[R.ckey]") //the ckey of the player with the custom skin is added to their skins, hopefully!
+
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 	skins = list("Standard" = "robot", "Droid" = "droid")
@@ -145,7 +154,7 @@
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
 	skins = list("Mediborg" = "mediborg", "Medihover" = "medihover", "Smile Screen" = "mediborg+smile", "Medical Droid" = "droid-medical","Blue" = "mediborg-blue")
-	donator_skins = list("Eve" = "eve")
+	//donator_skins = list("custom" = "[get_skins()]")
 
 /obj/item/weapon/robot_module/medical/New()
 	..()
@@ -173,8 +182,8 @@
 
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
-	skins = list("Yellow" = "engiborg-yellow", "Engiborg" = "engiborg")
-	donator_skins = list("Wall-E" = "wall-eng")
+	skins = list("Yellow" = "engiborg-yellow", "Engiborg" = "engiborg","Wall-E" = "wall-eng")
+	//donator_skins = list("Wall-E" = "wall-eng")
 
 /obj/item/weapon/robot_module/engineering/New()
 	..()
@@ -285,8 +294,7 @@
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 	vending_access = TRUE
-	skins = list("Waitress" = "service_female", "Bro" = "brobot", "Butler" = "service_male", "Kent" = "toiletbot", "Rich" = "maximillion")
-	donator_skins = list("Eve" = "eve")
+	skins = list("Waitress" = "service_female", "Bro" = "brobot", "Butler" = "service_male", "Kent" = "toiletbot", "Rich" = "maximillion", "Eve" = "eve")
 
 /obj/item/weapon/robot_module/butler/New()
 	..()
@@ -314,9 +322,9 @@
 		O.reagents.add_reagent("enzyme", 2 * coeff)
 
 /obj/item/weapon/robot_module/miner
+	get_skins()
 	name = "miner robot module"
-	skins = list("Brown" = "minerborg", "Miner Droid" = "droid-miner", "Minerborg" = "minerborg")
-	donator_skins = list("Wall-E" = "wall-eng")
+	skins = list("Brown" = "minerborg", "Miner Droid" = "droid-miner", "Minerborg" = "minerborg", "Wall-E" = "wall-eng")
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
