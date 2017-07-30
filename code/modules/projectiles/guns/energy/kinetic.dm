@@ -439,7 +439,6 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload()
-	world << "[power_supply.charge]"
 	if(overheat || power_supply.charge)
 		return
 	overheat = TRUE
