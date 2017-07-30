@@ -10,7 +10,6 @@
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
-	var/CustomSkinCheck = 0 //Non donators cannot access the custom skins
 
 	var/custom_name = ""
 	var/braintype = "Cyborg"
@@ -165,12 +164,10 @@
 
 
 /mob/living/silicon/robot/proc/get_skins()
-	if(is_donator(src))
-		CustomSkinCheck = 1
-	if(CustomSkinCheck) // if theyre a donator, who should have a custom borg skin
+	if(is_donator(src)) // if theyre a donator, who should have a custom borg skin
 		module = new /obj/item/weapon/robot_module(src) //module must be present for skin check to work
 		module.get_skins()
-		src << "<span class='warning'><font size=3>Oh hi [src.ckey], thanks for donating! If you have NOT had a custom borg skin made for you, do not pick the skin option with your ckey, and message Kmc#7413 on discord to sort one out! , if you pick it, you'll go invisible!</font></span>"
+		src << "<span class='warning'><font size=3>Oh hi [src.ckey], thanks for donating! If you have NOT had a custom borg skin made for you, message Kmc#7413 on discord to sort one out!</font></span>"
 		module = null
 
 
@@ -266,7 +263,6 @@
 	var/list/skinOptions = module.skins.Copy()
 	if(is_donator(src))
 		skinOptions += module.donator_skins
-		CustomSkinCheck = 1 //donators who stop donating can't use their skins, and stops non donators accessing custom skins
 	var/icontype = input("Select an icon! (if you have a custom skin, pick the skin with your ckey)", "Robot", null, null) in skinOptions
 	if(!icontype)
 		icontype = skinOptions[1]

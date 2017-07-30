@@ -129,9 +129,16 @@
 
 /obj/item/weapon/robot_module/proc/get_skins() //yes we're doing it twice, once so it adds it when theyre made, and greets them, then this one so the list isn't overriden with the other donator_skins
 	var/mob/living/silicon/robot/R = loc
-	if(R.CustomSkinCheck) // if theyre a donator, who should have a custom borg skin
-		R << "<span class='warning'><font size=1>[R.ckey]'s custom skin added to skin options</font></span>"
-		donator_skins = list("custom" = "[R.ckey]") //the ckey of the player with the custom skin is added to their skins, hopefully!
+	var/list/donorskins = file2list("config/donor_skins.txt")
+	for(var/A in donorskins)
+		if(A == R.ckey && is_donator(R))
+			R.icon_state = "[donorskins[donorskins.Find(A) + 1]]"
+			A << "<span class='warning'><font size=1>[R.ckey]'s custom skin added to skin options</font></span>"
+			break
+		else if(is_donator(R))
+			src << "You seem to not have a custom borg skin! contact Kmc#7413 on discord to get one made"
+		else
+			src << " You are not a donator, no custom skin for you!, donate at https://www.yogstation.net/index.php?do=donate"
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
