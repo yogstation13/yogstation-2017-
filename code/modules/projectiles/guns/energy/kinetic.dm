@@ -161,6 +161,7 @@
 /obj/item/kinetic_part/proc/detach(obj/item/weapon/gun/energy/kinetic_accelerator/KA, mob/user)
 	return
 
+
 //Standard
 /obj/item/kinetic_part/barrel
 	name = "standard barrel"
@@ -254,7 +255,7 @@
 /obj/item/kinetic_part/barrel_end/shotgun
 	name = "shotgun barrel end"
 	icon_state = "barrel_end_shotgun"
-	desc = "Extremely powerful, but comes at the chost of range."
+	desc = "Extremely powerful, but comes at the cost of range."
 	rank = "special"
 	part = "barrel_end"
 	damageBonus = 50
@@ -282,17 +283,6 @@
 	cooldownBonus = 25
 	shots = 2
 
-/obj/item/kinetic_part/charger/triple_shot
-	name = "triple charger"
-	icon_state = "charger_triple"
-	rank = "special"
-	part = "charger"
-	cooldownBonus = 35
-	shots = 3
-
-
-
-
 //Ancient
 
 /obj/item/kinetic_part/core/vampiric
@@ -302,6 +292,16 @@
 	rank = "ancient"
 	var/leach = 1  //Amount we heal the user for every shot
 	AD = new/datum/kinetic/afterDamage/vampiric()
+
+/obj/item/kinetic_part/charger/triple_shot
+	name = "triple charger"
+	desc = "An ancient charger"
+	icon_state = "charger_triple"
+	rank = "ancient"
+	part = "charger"
+	cooldownBonus = 35
+	shots = 3
+
 
 
 /datum/kinetic/proc/Trigger()
@@ -416,7 +416,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
-	attempt_reload()
+	addtimer(src,"attempt_reload",1)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/equipped(mob/user)
 	. = ..()
@@ -439,7 +439,8 @@
 	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload()
-	if(overheat)
+	world << "[power_supply.charge]"
+	if(overheat || power_supply.charge)
 		return
 	overheat = TRUE
 
@@ -460,13 +461,21 @@
 	return
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
-	power_supply.give(500 * shots)
+	power_supply.give(power_supply.maxcharge)
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
 		loc << "<span class='warning'>[src] silently charges up.<span>"
 	update_icon()
 	overheat = FALSE
+
+/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
+	shoot_live_shot()
+	return (OXYLOSS)
+
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	if(!can_shoot())

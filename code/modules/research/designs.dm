@@ -197,16 +197,45 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
-/datum/design/modkit
-	name = "Modification Kit"
-	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
-	id = "modkit"
+/datum/design/wide_grip
+	name = "Wide Grip"
+	desc = "A wider KA grip to allow less dextrous humanoids to use it."
+	id = "wide_grip"
 	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
-	build_path = /obj/item/modkit
+	build_path = /obj/item/kinetic_part/grip/wide
 	category = list("Mining Designs")
 
+/datum/design/splash_barrel
+	name = "Splash Barrel"
+	desc = "Allows the mining of a 3x3 area."
+	id = "splash_barrel"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_DIAMOND = 4000, MAT_GOLD = 2000, MAT_URANIUM = 1000)
+	build_path = /obj/item/kinetic_part/barrel/splash
+	category = list("Mining Designs")
+
+/datum/design/shotgun_barrel_end
+	name = "Shotgun Barrel End"
+	desc = "A shotgun like barrel ending to deal devastating damage, but at the cost of range."
+	id = "shotgun_barrel_end"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_SILVER = 1000, MAT_URANIUM = 1000)
+	build_path = /obj/item/kinetic_part/barrel_end/shotgun
+	category = list("Mining Designs")
+
+/datum/design/double_charger
+	name = "Double Charger"
+	desc = "A stronger charger that holds 2 kinetic shots. Takes longer to reload."
+	id = "double_charger"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 8000, MAT_DIAMOND = 3000)
+	build_path = /obj/item/kinetic_part/charger/double_shot
+	category = list("Mining Designs")
 
 /datum/design/superresonator
 	name = "Upgraded Resonator"

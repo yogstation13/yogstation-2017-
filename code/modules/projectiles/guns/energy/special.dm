@@ -83,24 +83,37 @@
 	ammo_x_offset = 2
 
 
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+/obj/item/weapon/gun/energy/crossbow
 	name = "mini radiation crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = 2
+	cell_type = /obj/item/weapon/stock_parts/cell/emproof
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=4;magnets=4;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
 	unique_rename = 0
-	overheat_time = 20
-	holds_charge = TRUE
-	unique_frequency = TRUE
+	var/overheat_time = 20
+	var/overheat = FALSE
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+/obj/item/weapon/gun/energy/crossbow/shoot_live_shot()
+	..()
+	overheat = TRUE
+	addtimer(src,"reload",overheat_time)
+
+/obj/item/weapon/gun/energy/crossbow/proc/reload()
+	power_supply.give(500)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	else
+		loc << "<span class='warning'>[src] silently charges up.<span>"
+	overheat = FALSE
+
+
+/obj/item/weapon/gun/energy/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
@@ -110,13 +123,6 @@
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
-	shoot_live_shot()
-	return (OXYLOSS)
 
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"
