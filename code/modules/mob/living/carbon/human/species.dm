@@ -178,6 +178,8 @@
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+	var/obj/item/organ/liver/liver = C.getorganslot("liver")
+	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
 
 	if((NOBLOOD in specflags) && heart)
 		heart.Remove(C, 1, 1)
@@ -197,6 +199,16 @@
 	else if((!(NOHUNGER in specflags)) && (!appendix))
 		appendix = new()
 		appendix.Insert(C, 1)
+	if((NOSTOMACH in specflags) && stomach)
+		stomach.Remove(C,1, 1)
+	else if((!(NOSTOMACH in specflags)) && (!stomach))
+		stomach = new()
+		stomach.Insert(C, 1)
+	if((NOLIVER in specflags) && liver)
+		liver.Remove(C,1, 1)
+	else if((!(NOLIVER in specflags)) && (!liver))
+		liver = new()
+		liver.Insert(C, 1)
 
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
@@ -758,7 +770,7 @@
 	//LIFE//
 	////////
 
-/datum/species/proc/handle_chemicals_in_body(mob/living/carbon/human/H)
+/datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)

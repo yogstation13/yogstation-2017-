@@ -82,6 +82,8 @@
 #define EASYIMPLANTS	26
 #define PROTECTEDEYES	27
 #define PLANT           28
+#define NOLIVER         29
+#define NOSTOMACH       30
 
 #define FLYING	65536
 

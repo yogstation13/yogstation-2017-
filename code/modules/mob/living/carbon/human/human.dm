@@ -42,6 +42,12 @@
 	if(!(NOBLOOD in dna.species.specflags))
 		internal_organs += new /obj/item/organ/heart
 
+	if(!(NOLIVER in dna.species.specflags))
+		internal_organs += new /obj/item/organ/liver()
+
+	if(!(NOSTOMACH in dna.species.specflags))
+		internal_organs += new /obj/item/organ/stomach()
+
 	internal_organs += new /obj/item/organ/brain
 
 	//Note: Additional organs are generated/replaced on the dna.species level
