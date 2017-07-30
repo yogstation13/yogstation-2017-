@@ -373,9 +373,6 @@
 			user << "<span class='warning'>You can only enthrall humans!</span>"
 			revert_cast()
 			return
-		if(isloyal(target))
-			user << "<span class='warning'>The target's mind resists you!</span>"
-			return
 		if(enthralling)
 			user << "<span class='warning'>You are already enthralling!</span>"
 			revert_cast()
