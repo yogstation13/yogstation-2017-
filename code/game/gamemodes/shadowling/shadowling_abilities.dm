@@ -373,9 +373,6 @@
 			user << "<span class='warning'>You can only enthrall humans!</span>"
 			revert_cast()
 			return
-		if(isloyal(target))
-			user << "<span class='warning'>The target's mind resists you!</span>"
-			return
 		if(enthralling)
 			user << "<span class='warning'>You are already enthralling!</span>"
 			revert_cast()
@@ -410,7 +407,7 @@
 						user << "<span class='notice'>They are protected by a mindshield implant. You begin to shut down the nanobot implant - this will take some time.</span>"
 						user.visible_message("<span class='warning'>[user] pauses, then dips their head in concentration!</span>")
 						target << "<span class='boldannounce'>You feel your resolve begin to fade!</span>"
-						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
+						sleep(250) //15 seconds - not spawn() so the enthralling takes longer
 						user << "<span class='notice'>The nanobots composing the mindshield implant have been rendered inert. Now to continue.</span>"
 						user.visible_message("<span class='warning'>[user] relaxes again.</span>")
 						for(var/obj/item/weapon/implant/mindshield/L in target)
