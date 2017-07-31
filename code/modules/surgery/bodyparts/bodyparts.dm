@@ -1,4 +1,3 @@
-
 /obj/item/bodypart
 	name = "limb"
 	desc = "why is it detached..."
@@ -265,9 +264,11 @@
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 	else
 		if(should_draw_gender)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"=icon, "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			world << "1 [I.icon]"
 		else
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"=icon, "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			world << "2 [I.icon]"
 		return I
 
 

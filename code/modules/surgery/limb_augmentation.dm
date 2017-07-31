@@ -16,7 +16,7 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/robot_parts = 100)
+	implements = list(/obj/item/bodypart = 100)
 	time = 32
 	var/obj/item/bodypart/L = null // L because "limb"
 
