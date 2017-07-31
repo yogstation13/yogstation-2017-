@@ -162,10 +162,17 @@
 	return ..()
 
 
+/mob/living/silicon/robot/proc/get_skins()
+	if(is_donator(src)) // if theyre a donator, who should have a custom borg skin
+		module = new /obj/item/weapon/robot_module(src) //module must be present for skin check to work
+		module.get_skins()
+		src << "<span class='warning'><font size=3>Oh hi [src.ckey], thanks for donating! If you have NOT had a custom borg skin made for you, message Kmc#7413 on discord to sort one out!</font></span>"
+		module = null
+
+
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-
 	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
@@ -183,17 +190,20 @@
 	switch(designation)
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
+			desc += "They appear to be a standard borg" //testing
 			hands.icon_state = "standard"
 			modtype = "Stand"
 			feedback_inc("cyborg_standard",1)
 
 		if("Service")
+			desc += "They appear to be a service borg"
 			module = new /obj/item/weapon/robot_module/butler(src)
 			hands.icon_state = "service"
 			modtype = "Butler"
 			feedback_inc("cyborg_service",1)
 
 		if("Miner")
+			desc += "They appear to be a mining borg"
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			modtype = "Miner"
@@ -201,12 +211,14 @@
 
 
 		if("Medical")
+			desc += "They appear to be a medical borg"
 			module = new /obj/item/weapon/robot_module/medical(src)
 			hands.icon_state = "medical"
 			status_flags -= CANPUSH
 			feedback_inc("cyborg_medical",1)
 
 		if("Security")
+			desc += "They appear to be a security borg"
 			module = new /obj/item/weapon/robot_module/security(src)
 			hands.icon_state = "security"
 			modtype = "Sec"
@@ -215,6 +227,7 @@
 			feedback_inc("cyborg_security",1)
 
 		if("Peacekeeper")
+			desc += "They appear to be a peace-keeper borg"
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			hands.icon_state = "standard"
 			modtype = "Peace"
@@ -223,6 +236,7 @@
 			feedback_inc("cyborg_peacekeeper",1)
 
 		if("Engineering")
+			desc += "They appear to be an engineering borg borg"
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
 			modtype = "Eng"
@@ -230,12 +244,14 @@
 			magpulse = 1
 
 		if("Janitor")
+			desc += "They appear to be a janitorial borg"
 			module = new /obj/item/weapon/robot_module/janitor(src)
 			hands.icon_state = "janitor"
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
 		if("Clown")
+			desc += "They appear to be a clown borg"
 			module = new /obj/item/weapon/robot_module/clown(src)
 			hands.icon_state = "standard"
 			modtype = "Clown"
@@ -245,13 +261,14 @@
 	var/list/skinOptions = module.skins.Copy()
 	if(is_donator(src))
 		skinOptions += module.donator_skins
-	var/icontype = input("Select an icon!", "Robot", null, null) in skinOptions
+		get_skins()
+		skinOptions += module.donator_skins
+	var/icontype = input("Select an icon! (if you have a custom skin, pick the skin with your ckey)", "Robot", null, null) in skinOptions
 	if(!icontype)
 		icontype = skinOptions[1]
 	icon_state = skinOptions[icontype]
 	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
 	transform_animation(animation_length)
-
 	notify_ai(2)
 	update_icons()
 	update_headlamp()
