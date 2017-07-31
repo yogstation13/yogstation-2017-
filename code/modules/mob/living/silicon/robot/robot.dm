@@ -785,7 +785,7 @@
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/eye_icon_state = robot_skin.eye_icon_state
 		if(eye_icon_state)
-			overlays += eye_icon_state
+			overlays += "[eye_icon_state][is_servant_of_ratvar(src) ? "_r" : ""]"
 		if(lamp_intensity > 2)
 			var/headlamp_icon_state = robot_skin.headlight_icon_state
 			if(headlamp_icon_state)

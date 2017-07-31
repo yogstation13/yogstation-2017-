@@ -63,6 +63,7 @@
 /datum/robot_skin/medismile
 	name = "Smile Screen"
 	icon_state = "mediborg+smile"
+	eye_icon_state = "eyes-medihover"
 	transform_animation_icon_state = "mediborg+smile"
 	transform_animation_length = 36
 	headlight_icon_state = "eyes-mediborg-lights"
