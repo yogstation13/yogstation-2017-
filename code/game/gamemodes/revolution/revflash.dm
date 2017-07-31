@@ -46,7 +46,6 @@
 			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
 				if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
 					if(M.isActive())
-						world << "11"
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize() //give them a mind datum if they don't have one.
 							if(!isloyal(M))
