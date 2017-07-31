@@ -181,17 +181,18 @@ var/list/ai_list = list()
 		if(donoricon == "custom")
 			var/list/donorskins = file2list("config/donor_ai_skins.txt")
 			for(var/A in donorskins)
-				if(A == ckey && is_donator(src))
-					icon_state = "[donorskins[donorskins.Find(A) + 1]]"
-					src << "<span class='warning'><font size=1>[ckey]'s custom skin added to skin options</font></span>"
-					donor_skin_chosen = 1
-					return
-				else if(is_donator(src))
-					src << "You seem to not have a custom AI skin! contact Kmc#7413 on discord to get one made"
-					donor_skin_chosen = 0
-				else
-					src << " You are not a donator, no custom skin for you!, donate at https://www.yogstation.net/index.php?do=donate"
-					donor_skin_chosen = 0
+				if(A == ckey)
+					if(is_donator(src))
+						icon_state = "[donorskins[donorskins.Find(A) + 1]]"
+						src << "<span class='warning'><font size=1>[ckey]'s custom skin added to skin options</font></span>"
+						donor_skin_chosen = 1
+						return
+					else if(is_donator(src))
+						src << "You seem to not have a custom AI skin! contact Kmc#7413 on discord to get one made"
+						donor_skin_chosen = 0
+					else
+						src << " You are not a donator, no custom skin for you!, donate at https://www.yogstation.net/index.php?do=donate"
+						donor_skin_chosen = 0
 
 	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Blob")
 	donor_skin_chosen = 0

@@ -2,6 +2,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 	if(desc)
 		msg += "[desc]\n"
+	msg += "They seem to be a [modtype] borg"
 
 	var/obj/act_module = get_active_hand()
 	if(act_module)

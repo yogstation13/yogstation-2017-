@@ -130,7 +130,6 @@
 	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	toner = tonermax
-	get_skins()
 	diag_hud_set_borgcell()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
@@ -174,7 +173,6 @@
 /mob/living/silicon/robot/proc/pick_module()
 	if(module)
 		return
-	get_skins()
 	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
 	if(!config.forbid_peaceborg)
@@ -263,13 +261,14 @@
 	var/list/skinOptions = module.skins.Copy()
 	if(is_donator(src))
 		skinOptions += module.donator_skins
+		get_skins()
+		skinOptions += module.donator_skins
 	var/icontype = input("Select an icon! (if you have a custom skin, pick the skin with your ckey)", "Robot", null, null) in skinOptions
 	if(!icontype)
 		icontype = skinOptions[1]
 	icon_state = skinOptions[icontype]
 	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
 	transform_animation(animation_length)
-
 	notify_ai(2)
 	update_icons()
 	update_headlamp()
