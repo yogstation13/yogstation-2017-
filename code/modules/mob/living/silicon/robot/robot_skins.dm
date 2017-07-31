@@ -11,8 +11,6 @@
 
 	var/headlight_icon_state
 
-	var/dead_overlays_icon_state
-
 	var/open_cover_wires_icon_state = "ov-opencover +w"
 	var/open_cover_cell_icon_state  = "ov-opencover +c"
 	var/open_cover_empty_icon_state = "ov-opencover -c"
@@ -20,6 +18,14 @@
 	var/list/modules = list()
 
 	var/donator_only = FALSE
+	var/list/ckey_only
+
+/datum/robot_skin/proc/can_be_used_by(mob/M)
+	if(donator_only && !is_donator(M))
+		return FALSE
+	if(ckey_only && !(M.ckey in ckey_only))
+		return FALSE
+	return TRUE
 
 //Standard
 /datum/robot_skin/standard
@@ -50,8 +56,6 @@
 /datum/robot_skin/medihover
 	name = "Medihover"
 	icon_state = "medihover"
-	transform_animation_icon_state = "medihover"
-	transform_animation_length = 10
 	eye_icon_state = "eyes-medihover"
 	headlight_icon_state = "eyes-medihover-lights"
 	modules = list(/obj/item/weapon/robot_module/medical)
@@ -61,7 +65,7 @@
 	icon_state = "mediborg+smile"
 	transform_animation_icon_state = "mediborg+smile"
 	transform_animation_length = 36
-	headlight_icon_state = "eyes-mediborg+smile-lights"
+	headlight_icon_state = "eyes-mediborg-lights"
 	modules = list(/obj/item/weapon/robot_module/medical)
 
 /datum/robot_skin/medidroid
@@ -131,8 +135,6 @@
 /datum/robot_skin/disposal
 	name = "Disposal"
 	icon_state = "disposalbot"
-	transform_animation_icon_state = "disposalbot"
-	transform_animation_length = 6
 	eye_icon_state = "eyes-disposalbot"
 	headlight_icon_state = "eyes-disposalbot-lights"
 	modules = list(/obj/item/weapon/robot_module/janitor)

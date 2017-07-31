@@ -11,9 +11,6 @@
 	var/obj/item/emag = null
 	var/list/storages = list()
 
-	var/list/skins = list()
-	var/list/donator_skins = list()
-
 	var/hand_icon = "standard"
 	var/feedback_name
 
@@ -134,7 +131,6 @@
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
-	skins = list("Standard" = "robot", "Droid" = "droid")
 	hand_icon = "standard"
 	feedback_name = "cyborg_standard"
 
@@ -154,8 +150,6 @@
 
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
-	skins = list("Mediborg" = "mediborg", "Medihover" = "medihover", "Smile Screen" = "mediborg+smile", "Medical Droid" = "droid-medical","Blue" = "mediborg-blue")
-	donator_skins = list("Eve" = "eve")
 	hand_icon = "medical"
 	feedback_name = "cyborg_medical"
 
@@ -189,8 +183,6 @@
 
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
-	skins = list("Yellow" = "engiborg-yellow", "Engiborg" = "engiborg")
-	donator_skins = list("Wall-E" = "wall-eng")
 	hand_icon = "engineer"
 	feedback_name = "cyborg_engineering"
 
@@ -231,7 +223,6 @@
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
-	skins = list("Secborg" = "secborg")
 	hand_icon = "security"
 	feedback_name = "cyborg_security"
 
@@ -262,7 +253,6 @@
 
 /obj/item/weapon/robot_module/peacekeeper
 	name = "peacekeeper robot module"
-	skins = list("Peaceborg" = "peaceborg")
 	hand_icon = "standard"
 	feedback_name = "cyborg_peacekeeper"
 
@@ -284,7 +274,6 @@
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
-	skins = list("Janiborg" = "janiborg", "Disposal" = "disposalbot", "Purple" = "janiborg-purple")
 	var/obj/item/weapon/reagent_containers/spray/drying_agent
 	hand_icon = "janitor"
 	feedback_name = "cyborg_janitor"
@@ -323,8 +312,6 @@
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 	vending_access = TRUE
-	skins = list("Waitress" = "service_female", "Bro" = "brobot", "Butler" = "service_male", "Kent" = "toiletbot", "Rich" = "maximillion")
-	donator_skins = list("Eve" = "eve")
 	hand_icon = "service"
 	feedback_name = "cyborg_service"
 
@@ -355,8 +342,6 @@
 
 /obj/item/weapon/robot_module/miner
 	name = "miner robot module"
-	skins = list("Miner Droid" = "droid-miner", "Minerborg" = "minerborg")
-	donator_skins = list("Wall-E" = "wall-eng")
 	hand_icon = "miner"
 	feedback_name = "cyborg_miner"
 
@@ -377,7 +362,6 @@
 
 /obj/item/weapon/robot_module/clown
 	name = "clown robot module"
-	skins = list("Clown" = "ClownBot", "Wizard Bot" = "WizardBot", "Wizard Borg" = "WizardBorg", "Chicken" = "ChickenBot")
 	hand_icon = "standard"
 	feedback_name = "cyborg_clown"
 

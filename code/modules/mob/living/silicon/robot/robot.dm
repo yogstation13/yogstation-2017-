@@ -81,6 +81,8 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	robot_skin = new /datum/robot_skin/standard()
+
 	wires = new /datum/wires/robot(src)
 
 	robot_modules_background = new()
@@ -188,18 +190,41 @@
 
 	updatename()
 
-	module = new modulelist[designation](src)
+	var/module_type = modulelist[designation]
+	module = new module_type(src)
 	module.on_pick(src)
 
-	var/list/skinOptions = module.skins.Copy()
-	if(is_donator(src))
-		skinOptions += module.donator_skins
-	var/icontype = input("Select an icon!", "Robot", null, null) in skinOptions
-	if(!icontype)
-		icontype = skinOptions[1]
-	icon_state = skinOptions[icontype]
-	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
-	transform_animation(animation_length)
+	var/static/list/module_skins
+	if(!module_skins)
+		module_skins = subtypesof(/obj/item/weapon/robot_module)
+		for(var/V in module_skins)
+			module_skins[V] = list()
+
+		for(var/V in subtypesof(/datum/robot_skin))
+			var/datum/robot_skin/skin = new V()
+			for(var/M in skin.modules)
+				module_skins[M] += skin
+
+	var/list/skinOptions = list()
+	for(var/V in module_skins[module.type])
+		var/datum/robot_skin/skin = V
+		if(skin.can_be_used_by(src))
+			skinOptions[skin.name] = skin
+	if(!skinOptions)
+		return
+	var/selected_skin = input("Select an icon!", "Robot", null, null) in skinOptions
+	if(!selected_skin)
+		selected_skin = skinOptions[1]
+	robot_skin = skinOptions[selected_skin]
+	if(robot_skin.transform_animation_length)
+		icon = robot_skin.transform_animation_icon
+		src.dir = SOUTH
+		notransform = 1
+		flick(robot_skin.transform_animation_icon_state, src)
+		sleep(robot_skin.transform_animation_length)
+		notransform = 0
+	icon = robot_skin.icon
+	icon_state = robot_skin.icon_state
 
 	notify_ai(2)
 	update_icons()
@@ -210,6 +235,7 @@
 /mob/living/silicon/robot/proc/reset_module()
 	notify_ai(2)
 
+	robot_skin = new /datum/robot_skin/standard()
 	uneq_all()
 	hands.icon_state = "nomod"
 	icon_state = "robot"
@@ -228,17 +254,6 @@
 	weather_immunities = list("ash")
 
 	status_flags |= CANPUSH
-
-/mob/living/silicon/robot/proc/transform_animation(animation_length)
-	if(!animation_length)
-		return
-	icon = 'icons/mob/robot_transformations.dmi'
-	src.dir = SOUTH
-	notransform = 1
-	flick(icon_state, src)
-	sleep(animation_length+1)
-	notransform = 0
-	icon = 'icons/mob/robots.dmi'
 
 /mob/living/silicon/robot/proc/updatename()
 	var/changed_name = ""
@@ -768,7 +783,6 @@
 /mob/living/silicon/robot/update_icons()
 	overlays.Cut()
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
-		var/state_name = icon_state //For easy conversion and/or different names
 		var/eye_icon_state = robot_skin.eye_icon_state
 		if(eye_icon_state)
 			overlays += eye_icon_state
@@ -786,10 +800,6 @@
 			overlays += robot_skin.open_cover_empty_icon_state
 
 	update_fire()
-	if(stat == DEAD && icon_state == "mediborg+smile")
-		overlays += "dead-[icon_state]"
-	else if (stat != DEAD && icon_state == "mediborg+smile")
-		overlays -= "dead-[icon_state]"
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
@@ -1113,6 +1123,7 @@
 	..()
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
+	robot_skin = new /datum/robot_skin/syndicate()
 	laws = new /datum/ai_laws/syndicate_override()
 	var/obj/item/borg/upgrade/vtec/VTEC = new(src)
 	VTEC.action(src)
@@ -1133,6 +1144,7 @@
 /mob/living/silicon/robot/syndicate/medical/New(loc)
 	..()
 	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
+	robot_skin = new /datum/robot_skin/syndi_med()
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
