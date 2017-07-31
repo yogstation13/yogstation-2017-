@@ -145,7 +145,7 @@
 	var/rank = "standard"
 	var/part              //"barrel","barrel_end","core","charger","grip"
 	var/pixel_x_extra = 0  //If you make a part thats longer then the original, please write down how much pixels longer. Mainly for use in barrel and
-	var/pixel_y_extra = 0           //barell end
+	var/pixel_y_extra = 0           //barel end
 
 	var/damageBonus = 0  //All parts' damageBonus combined will be the actual damage.
 	var/rangeBonus = 0
@@ -230,7 +230,7 @@
 	cooldownBonus = 8
 
 /obj/item/kinetic_part/grip/super
-	name = "standard grip"
+	name = "super grip"
 	icon_state = "grip_super"
 	rank = "super"
 	part = "grip"
