@@ -119,7 +119,7 @@
 	lowpressure_mod = 0.75
 
 	disliked_food = DAIRY | GRAIN
-  	liked_food = GROSS
+	liked_food = GROSS
 	toxic_food = TOXIC //and raw meat
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
