@@ -12,6 +12,7 @@
 	bitesize = 3
 	filling_color = "#CD853F"
 	list_reagents = list("nutriment" = 6, "capsaicin" = 1)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
@@ -20,6 +21,7 @@
 	list_reagents = list("nutriment" = 3, "carpotoxin" = 2, "vitamin" = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/New()
 	..()
@@ -36,6 +38,7 @@
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/dolphinmeat/New()
 	..()
@@ -49,6 +52,7 @@
 	list_reagents = list("nutriment" = 4)
 	bitesize = 1
 	filling_color = "#CD853F"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips
 	name = "fish and chips"
@@ -57,6 +61,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#FA8072"
+	foodtype = MEAT | VEGETABLES | FRIED
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -66,6 +71,7 @@
 	icon_state = "tofu"
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#F0E68C"
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
@@ -74,6 +80,7 @@
 	list_reagents = list("nutriment" = 2, "toxin" = 2)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
 	filling_color = "#000000"
+	foodtype = MEAT | TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
 	name = "corned beef and cabbage"
@@ -82,6 +89,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 5)
+	foodtype = MEAT | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/bearsteak
 	name = "Filet migrawr"
@@ -90,6 +98,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
 	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
+	foodtype = MEAT | ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball
 	name = "meatball"
@@ -97,6 +106,7 @@
 	icon_state = "meatball"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "sausage"
@@ -105,6 +115,7 @@
 	filling_color = "#CD5C5C"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/New()
 	..()
@@ -115,26 +126,31 @@
 	icon_state = "kebab"
 	w_class = 3
 	list_reagents = list("nutriment" = 8)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 	name = "human-kebab"
 	desc = "A human meat, on a stick."
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
+	foodtype = MEAT | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/monkey
 	name = "meat-kebab"
 	desc = "Delicious meat, on a stick."
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/tofu
 	name = "tofu-kebab"
 	desc = "Vegan meat, on a stick."
 	bonus_reagents = list("nutriment" = 1)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/tail
 	name = "lizard-tail kebab"
 	desc = "Severed lizard tail on a stick."
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/rawkhinkali
 	name = "raw khinkali"
@@ -142,6 +158,7 @@
 	icon_state = "khinkali"
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/khinkali
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/khinkali
 	name = "khinkali"
@@ -150,6 +167,7 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 2)
 	bitesize = 3
 	filling_color = "#F0F0F0"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
@@ -158,6 +176,7 @@
 	bitesize = 12
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
@@ -172,6 +191,7 @@
 	bitesize = 4
 	filling_color = "#FFA07A"
 	list_reagents = list("nutriment" = 8, "capsaicin" = 6)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
 	name = "stewed soy meat"
@@ -181,6 +201,7 @@
 	bonus_reagents = list("nutriment" = 1)
 	list_reagents = list("nutriment" = 8)
 	filling_color = "#D2691E"
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/New()
 	..()
@@ -194,6 +215,7 @@
 	bonus_reagents = list("nutriment" = 1, "capsaicin" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 3, "capsaicin" = 2)
 	filling_color = "#000000"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 	name = "green eggs and ham"
@@ -204,6 +226,7 @@
 	list_reagents = list("nutriment" = 6)
 	bitesize = 4
 	filling_color = "#7FFF00"
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
 	name = "carp sashimi"
@@ -212,6 +235,7 @@
 	bonus_reagents = list("nutriment" = 1, "capsaicin" = 4, "vitamin" = 4)
 	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
 	filling_color = "#FA8072"
+	foodtype = MEAT | TOXIC
 
 #define LUMP "lump"
 #define STAR "star"
@@ -219,16 +243,17 @@
 #define CORGI "corgi"
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget
-    name = "chicken nugget"
-    filling_color = "#B22222"
-    bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-    list_reagents = list("nutriment" = 2)
+	name = "chicken nugget"
+	filling_color = "#B22222"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget/New()
-    ..()
-    var/shape = pick(LUMP, STAR, LIZARD, CORGI)
-    desc = "A 'chicken' nugget vaguely shaped like a [shape]."
-    icon_state = "nugget_[shape]"
+	..()
+	var/shape = pick(LUMP, STAR, LIZARD, CORGI)
+	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+	icon_state = "nugget_[shape]"
 
 #undef LUMP
 #undef STAR
