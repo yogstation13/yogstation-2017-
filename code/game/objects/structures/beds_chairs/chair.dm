@@ -19,6 +19,7 @@
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user)
 	. = ..()
+	playsound(loc, "buckle", 50, 1, -1)
 	if(.)
 		var/obj/item/whoopee/W = locate() in src
 		if(W)
