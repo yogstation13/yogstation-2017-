@@ -1,7 +1,7 @@
 /obj/item/weapon/reagent_containers/glass
 	name = "glass"
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
+	possible_transfer_amounts = list(1/3, 1, 5, 10, 15, 20, 25, 30, 50)
 	volume = 50
 	flags = OPENCONTAINER
 	spillable = 1
@@ -159,7 +159,7 @@
 	materials = list(MAT_GLASS=2500)
 	volume = 100
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	possible_transfer_amounts = list(1/3,1,5,10,15,20,25,30,50,100)
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
@@ -186,7 +186,7 @@
 	materials = list(MAT_GLASS=3000)
 	volume = 300
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
+	possible_transfer_amounts = list(1/3,1,5,10,15,20,25,30,50,100,300)
 	flags = OPENCONTAINER
 	origin_tech = "bluespace=5;materials=4;plasmatech=4"
 
