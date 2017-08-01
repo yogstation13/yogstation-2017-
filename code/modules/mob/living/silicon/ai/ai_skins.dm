@@ -204,5 +204,5 @@
 	var/selected_skin = input("Select a display!", "AI") as null|anything in skinOptions
 	if(!selected_skin)
 		return
-	var/datum/ai_skin/skin = skinOptions[selected_skin]
+	skin = skinOptions[selected_skin]
 	skin.apply_to(src)
