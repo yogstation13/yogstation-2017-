@@ -49,7 +49,7 @@
 	..()
 	handle_rotation()
 	if(creates_scraping_noise)
-		playsound(loc, scrapingsound, 100, 1)
+		playsound(loc, scrapingsound, 25, 1)
 
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)

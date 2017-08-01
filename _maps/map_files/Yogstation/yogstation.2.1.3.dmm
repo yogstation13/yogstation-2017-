@@ -10373,7 +10373,8 @@
 "asR" = (
 /obj/structure/table/wood,
 /obj/item/weapon/folder/red,
-/obj/item/weapon/hand_labeler,
+/obj/item/weapon/ashtray,
+/obj/item/weapon/hand_labeler/det,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "asS" = (
@@ -34344,9 +34345,14 @@
 /area/crew_quarters/captain)
 "bry" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = -3
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/item/weapon/ashtray{
+	pixel_x = 3
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/captain)
@@ -69255,32 +69261,32 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
-"ZxO" = (
+"ZxN" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
-"ZxP" = (
+"ZxO" = (
 /turf/closed/wall/r_wall,
 /area/security/Permabrig)
-"ZxQ" = (
+"ZxP" = (
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/Permabrig)
-"ZxR" = (
+"ZxQ" = (
 /turf/closed/wall,
 /area/security/Permabrig)
-"ZxS" = (
+"ZxR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/security/Permabrig)
-"ZxT" = (
+"ZxS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/security/Permabrig)
-"ZxU" = (
+"ZxT" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -69304,7 +69310,7 @@
 	dir = 1
 	},
 /area/security/Permabrig)
-"ZxV" = (
+"ZxU" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Isolation Cell";
 	req_access_txt = "2"
@@ -69313,7 +69319,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/Permabrig)
-"ZxW" = (
+"ZxV" = (
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
@@ -69321,13 +69327,13 @@
 	icon_state = "freezerfloor"
 	},
 /area/security/Cells)
-"ZxX" = (
+"ZxW" = (
 /turf/closed/wall,
 /area/security/Cells)
-"ZxY" = (
+"ZxX" = (
 /turf/closed/wall/r_wall,
 /area/security/Cells)
-"ZxZ" = (
+"ZxY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -69337,34 +69343,34 @@
 	},
 /turf/closed/wall,
 /area/crew_quarters/toilet)
-"Zya" = (
+"ZxZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"Zyb" = (
+"Zya" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"Zyc" = (
+"Zyb" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "bluecorner"
 	},
 /area/hallway/primary/central)
-"Zyd" = (
+"Zyc" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"Zye" = (
+"Zyd" = (
 /obj/structure/disposalpipe/junction{
 	tag = "icon-pipe-j2 (NORTH)";
 	icon_state = "pipe-j2";
@@ -69372,11 +69378,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"Zyf" = (
+"Zye" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"Zyf" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/ashtray,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/crew_quarters/bar)
 "Zyg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -80309,7 +80322,7 @@ aaa
 aaa
 aaa
 aah
-ZxO
+ZxN
 aaq
 aak
 aag
@@ -86797,7 +86810,7 @@ aPq
 aQM
 aSd
 aTD
-Zyf
+Zye
 aWI
 Zyg
 aZT
@@ -87053,7 +87066,7 @@ aMv
 aPr
 aQM
 aSe
-Zyd
+Zyc
 aVd
 aWJ
 aYb
@@ -87310,7 +87323,7 @@ aMv
 aPs
 aQM
 aSf
-Zyd
+Zyc
 aVe
 aWK
 aYa
@@ -87567,7 +87580,7 @@ aMv
 aPp
 aQN
 aSc
-Zyd
+Zyc
 aVf
 aWL
 aYc
@@ -87824,7 +87837,7 @@ aMv
 aPt
 aQO
 aSg
-Zye
+Zyd
 aVg
 aWM
 aYd
@@ -90610,7 +90623,7 @@ aaa
 aaa
 aaa
 aaa
-ZxP
+ZxO
 aaa
 aaa
 aaa
@@ -91124,7 +91137,7 @@ aaa
 aaa
 afq
 afQ
-ZxQ
+ZxP
 ahv
 aim
 aaa
@@ -91378,13 +91391,13 @@ aaa
 aaa
 aaA
 aaa
-ZxP
+ZxO
 afr
 afR
 agI
 ahw
 ain
-ZxP
+ZxO
 aaa
 aaa
 aaA
@@ -91638,7 +91651,7 @@ aaa
 aaa
 afq
 afS
-ZxQ
+ZxP
 ahx
 aim
 aaa
@@ -91895,7 +91908,7 @@ aaa
 aaa
 afs
 afT
-ZxV
+ZxU
 ahy
 aio
 aaa
@@ -94198,16 +94211,16 @@ aaa
 aaA
 aaa
 aaa
-ZxP
+ZxO
 abB
 abZ
 acC
 ada
-ZxR
+ZxQ
 ael
 aeP
+ZxS
 ZxT
-ZxU
 agP
 ahG
 aiq
@@ -94454,15 +94467,15 @@ aaA
 aaA
 aaA
 aaa
+ZxO
+ZxO
 ZxP
 ZxP
-ZxQ
-ZxQ
 acD
-ZxQ
+ZxP
 adJ
-ZxQ
-ZxQ
+ZxP
+ZxP
 afu
 agc
 agO
@@ -94717,7 +94730,7 @@ abC
 aca
 acE
 adb
-ZxR
+ZxQ
 aem
 aeQ
 adI
@@ -94734,7 +94747,7 @@ amc
 amP
 anF
 aop
-ZxY
+ZxX
 apu
 apR
 apV
@@ -94964,18 +94977,18 @@ aaa
 aaa
 aaa
 aaa
-ZxP
-ZxP
+ZxO
+ZxO
 aaR
-ZxP
-ZxP
+ZxO
+ZxO
 abu
-ZxQ
-ZxQ
+ZxP
+ZxP
 acF
 adc
-ZxS
-ZxS
+ZxR
+ZxR
 aeR
 adK
 age
@@ -94991,7 +95004,7 @@ amd
 amQ
 anG
 aoq
-ZxY
+ZxX
 apv
 apS
 apV
@@ -95221,17 +95234,17 @@ aaa
 aaa
 aaA
 aaA
-ZxP
+ZxO
 aaJ
 aaS
 abd
-ZxP
+ZxO
 abv
-ZxQ
+ZxP
 acc
 acG
 add
-ZxR
+ZxQ
 aen
 aeS
 adM
@@ -95247,8 +95260,8 @@ aiq
 ame
 amR
 anF
-ZxW
-ZxY
+ZxV
+ZxX
 apw
 apS
 apV
@@ -95489,8 +95502,8 @@ acd
 acH
 ade
 adL
-ZxQ
-ZxQ
+ZxP
+ZxP
 afv
 agf
 agQ
@@ -95504,8 +95517,8 @@ alw
 amf
 amS
 anH
+ZxW
 ZxX
-ZxY
 alM
 apT
 apV
@@ -95735,17 +95748,17 @@ aaa
 aaa
 aaa
 aaA
-ZxP
+ZxO
 aaL
-ZxQ
+ZxP
 abf
 abm
-ZxQ
+ZxP
 abE
 ace
 acI
 abf
-ZxR
+ZxQ
 aeo
 aeT
 adK
@@ -96002,9 +96015,9 @@ abF
 acf
 acJ
 adf
-ZxT
-ZxT
-ZxT
+ZxS
+ZxS
+ZxS
 adM
 agh
 agP
@@ -96249,17 +96262,17 @@ aaa
 aaa
 aaa
 aaa
-ZxP
+ZxO
 aaM
 aaW
 abh
+ZxO
 ZxP
-ZxQ
-ZxQ
-ZxQ
+ZxP
+ZxP
 acK
 adg
-ZxR
+ZxQ
 aep
 aeU
 adM
@@ -96506,11 +96519,11 @@ aaa
 aaa
 aaa
 aaa
-ZxP
-ZxP
+ZxO
+ZxO
 aaX
-ZxP
-ZxP
+ZxO
+ZxO
 abw
 abG
 acg
@@ -96532,8 +96545,8 @@ alA
 amj
 amW
 anL
-ZxX
-ZxX
+ZxW
+ZxW
 apz
 apU
 apV
@@ -96771,9 +96784,9 @@ aaG
 abx
 abH
 ach
+ZxP
+ZxP
 ZxQ
-ZxQ
-ZxR
 aer
 aeT
 adK
@@ -97024,15 +97037,15 @@ aaa
 aaA
 aaA
 aaA
-ZxP
-ZxP
-ZxP
-ZxP
+ZxO
+ZxO
+ZxO
+ZxO
 acM
 adi
-ZxR
-ZxR
-ZxR
+ZxQ
+ZxQ
+ZxQ
 adI
 agk
 agT
@@ -97284,7 +97297,7 @@ aaA
 aaA
 aaa
 aaa
-ZxP
+ZxO
 acN
 adj
 adO
@@ -97560,8 +97573,8 @@ alE
 amn
 ana
 anL
-ZxX
-ZxX
+ZxW
+ZxW
 apz
 apT
 apV
@@ -100927,7 +100940,7 @@ aIu
 aKb
 aLq
 aNd
-Zya
+ZxZ
 aPH
 aJQ
 aaa
@@ -102206,19 +102219,19 @@ aAD
 aAE
 aCM
 aBO
-ZxZ
+ZxY
 aGZ
 aIw
 aBO
 aAE
 aJU
-Zyb
+Zya
 bpZ
-Zyc
-Zyc
-Zyc
-Zyc
-Zyc
+Zyb
+Zyb
+Zyb
+Zyb
+Zyb
 aYW
 baE
 bca
@@ -105559,7 +105572,7 @@ aRm
 aSM
 aUl
 aVQ
-aXl
+Zyf
 aXl
 baG
 bch
