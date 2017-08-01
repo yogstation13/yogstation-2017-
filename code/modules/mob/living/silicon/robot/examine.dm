@@ -1,5 +1,7 @@
 /mob/living/silicon/robot/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	if(module)
+		msg += "It appears to have loaded \the [module.name]\n"
 	if(desc)
 		msg += "[desc]\n"
 
