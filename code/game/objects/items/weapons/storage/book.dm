@@ -7,6 +7,7 @@
 	throw_range = 5
 	w_class = 3
 	burn_state = FLAMMABLE
+	noisy = 0
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		user << "<span class='notice'>The pages of [title] have been cut out!</span>"
