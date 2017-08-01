@@ -20,7 +20,7 @@
 	var/donator_only = FALSE
 	var/list/ckey_only
 
-/datum/robot_skin/proc/can_be_used_by(mob/M)
+/datum/robot_skin/proc/can_be_used_by(mob/living/silicon/robot/M)
 	if(donator_only && !is_donator(M))
 		return FALSE
 	if(ckey_only && !(M.ckey in ckey_only))
