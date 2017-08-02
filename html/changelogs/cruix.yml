@@ -1,8 +1,0 @@
-
-author: Cruix
-
-# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
-delete-after: True
- your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
-changes: 
-  - rscadd: "Donators can now use their custom Cyborg and AI skins. If you are a donaotr, contact KMC2000 on discord to have one made for you, or submit a pre-made one to Cruix."
