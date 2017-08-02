@@ -10,7 +10,7 @@
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
-	var/imptype = /obj/item/weapon/implant
+	var/imptype = null
 
 /obj/item/weapon/implanter/New()
 	..()
