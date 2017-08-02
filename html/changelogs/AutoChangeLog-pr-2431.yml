@@ -1,5 +1,0 @@
-author: Floyd
-delete-after: True
-changes: 
-  - tweak: "lizards now dislike grain and dairy"
-  - tweak: "ports some of the stuff i did for my TG branch of this PR"
