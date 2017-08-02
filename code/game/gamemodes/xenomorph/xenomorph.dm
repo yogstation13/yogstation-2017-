@@ -1,3 +1,19 @@
+/*
+Welcome to XENOMORPH MODE.
+
+Xenomorph Mode is a battle for control over the station between an alien hive and the crew.
+
+xenomorph.dm - contains the gamemode, and procs for assigning the hive.
+xeno_helpers.dm - contains helpers for calculating hive ratio, messaging xenomorphs, comparing hive suffixes, and more.
+objectives.dm - contains objective definitions
+hugger_datum.dm - contains the xenomorph hugger datum.
+predators.dm - contains predator cyropods and predator objectives.
+predator_unsorted.dm - predator species
+predatorgear folder - contains all of the predator gear seperated into different files.
+
+*/
+
+
 /datum/game_mode/proc/FindHunters(dead)
 	var/hcount
 	for(var/datum/mind/H in xenomorphs["HUNTERS"])
@@ -59,7 +75,7 @@ var/list/turf/xenomorphweeds = list()
 /datum/game_mode/xenomorph/announce()
 	world << "<B>The current gamemode is - Alien Infestation!</B>"
 	world << "A transportation shuttle mysteriously dissapered while carrying live xenomorphs from a determined \
-	uninhabitable planet. Nanotrasen has identified the same creatures to be inhabitating SS13 but, was too late \
+	uninhabitable planet. Nanotrasen has identified the same creatures inhabitating SS13, but was too late \
 	to cancel the next shift.\n<B>Xenomorphs</B>: Restore the Queen's glory and take over the station! Turn it into your \
 	own colony! Planting weeds increases the growth of her colony, however make sure to use strategy to outsmart \
 	those puny meatbags! Always listen to your queen. You cannot disobey her.\n<B>Personnel</B> : Stop the xenomorphs at \
@@ -395,10 +411,8 @@ var/list/turf/xenomorphweeds = list()
 	else
 		world << "<B>The Yautja were not summoned this round.</B>"
 	..()
-	return 1
 
-/datum/game_mode/xenomorph/proc/auto_declare_completion_xenomorph()
-	world << "running auto declare!"
+/datum/game_mode/proc/auto_declare_completion_xenomorph()
 	if(ticker && istype(ticker.mode,/datum/game_mode/xenomorph))
 		if(length(xenomorphs["QUEEN"]))
 			var/queenlen = length(xenomorphs["QUEEN"])
@@ -412,7 +426,6 @@ var/list/turf/xenomorphweeds = list()
 			for(var/datum/mind/pred1 in predators)
 				text2 += printplayer(predators)
 			world << text2
-		world << "this shit just ran"
 		return 1
 
 /datum/game_mode/xenomorph/proc/translate_objective()
