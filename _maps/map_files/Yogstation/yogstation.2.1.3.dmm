@@ -31444,6 +31444,7 @@
 	},
 /area/assembly/robotics)
 "blF" = (
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whitered"
@@ -31457,7 +31458,23 @@
 	},
 /area/assembly/robotics)
 "blH" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/welding,
 /obj/machinery/button/door{
 	id = "robotics";
 	layer = 4;
@@ -31467,8 +31484,7 @@
 	req_access_txt = "29"
 	},
 /turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "whitered"
+	icon_state = "white"
 	},
 /area/assembly/robotics)
 "blI" = (
@@ -32301,27 +32317,16 @@
 	},
 /area/assembly/robotics)
 "bnp" = (
+/obj/structure/table,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
+/obj/item/device/assembly/flash/handheld,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
-/obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -33092,16 +33097,16 @@
 	},
 /area/assembly/robotics)
 "boU" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000
+	},
 /obj/machinery/ai_status_display{
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/assembly/flash/handheld,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -33935,10 +33940,31 @@
 /area/assembly/robotics)
 "bqC" = (
 /obj/structure/table,
-/obj/machinery/cell_charger,
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
+	},
+/obj/item/weapon/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -34604,32 +34630,21 @@
 /area/assembly/robotics)
 "brX" = (
 /obj/structure/table,
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+/obj/item/weapon/storage/firstaid/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
 	},
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+/obj/item/weapon/storage/firstaid/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
 	},
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+/obj/item/weapon/storage/firstaid/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
 	},
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000
-	},
-/obj/item/weapon/stock_parts/cell/high{
-	charge = 100;
-	maxcharge = 15000;
-	pixel_x = 5;
-	pixel_y = -5
-	},
+/obj/item/device/healthanalyzer,
+/obj/item/device/healthanalyzer,
+/obj/item/device/healthanalyzer,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -37071,24 +37086,13 @@
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
 "bws" = (
-/obj/structure/table,
-/obj/item/weapon/book/manual/robotics_cyborgs{
-	pixel_x = 2;
-	pixel_y = 5
+/obj/machinery/r_n_d/circuit_imprinter,
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/machinery/requests_console{
-	department = "Robotics";
-	departmentType = 2;
-	name = "Robotics RC";
-	pixel_y = -30
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
 /area/assembly/robotics)
 "bwt" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
 "bwu" = (
@@ -69255,6 +69259,17 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"ZxN" = (
+/obj/structure/table,
+/obj/item/weapon/book/manual/robotics_cyborgs{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/assembly/robotics)
 "ZxO" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
@@ -114826,8 +114841,8 @@ bnp
 boU
 bqC
 brX
-btw
 buT
+ZxN
 bwv
 brS
 bze

@@ -7,6 +7,7 @@
 	flags = CONDUCT
 	icon_state = "borg_l_arm"
 	status = ORGAN_ROBOTIC
+	limb_icon = 'icons/mob/augmentation/augments.dmi'
 
 
 /obj/item/bodypart/r_arm/robot
@@ -18,7 +19,7 @@
 	flags = CONDUCT
 	icon_state = "borg_r_arm"
 	status = ORGAN_ROBOTIC
-
+	limb_icon = 'icons/mob/augmentation/augments.dmi'
 
 /obj/item/bodypart/l_leg/robot
 	name = "cyborg left leg"
@@ -29,7 +30,7 @@
 	flags = CONDUCT
 	icon_state = "borg_l_leg"
 	status = ORGAN_ROBOTIC
-
+	limb_icon = 'icons/mob/augmentation/augments.dmi'
 
 /obj/item/bodypart/r_leg/robot
 	name = "cyborg right leg"
@@ -40,7 +41,7 @@
 	flags = CONDUCT
 	icon_state = "borg_r_leg"
 	status = ORGAN_ROBOTIC
-
+	limb_icon = 'icons/mob/augmentation/augments.dmi'
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -52,6 +53,7 @@
 	status = ORGAN_ROBOTIC
 	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
+	limb_icon = 'icons/mob/augmentation/augments.dmi'
 
 /obj/item/bodypart/chest/robot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
@@ -102,6 +104,7 @@
 	status = ORGAN_ROBOTIC
 	var/obj/item/device/assembly/flash/handheld/flash1 = null
 	var/obj/item/device/assembly/flash/handheld/flash2 = null
+	limb_icon = 'icons/mob/augmentation/augments.dmi'
 
 
 
@@ -165,6 +168,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "l_arm"
 	max_damage = 20
+	limb_icon = 'icons/mob/augmentation/surplus_augments.dmi'
 
 /obj/item/bodypart/r_arm/robot/surplus
 	name = "surplus prosthetic right arm"
@@ -172,6 +176,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "r_arm"
 	max_damage = 20
+	limb_icon = 'icons/mob/augmentation/surplus_augments.dmi'
 
 /obj/item/bodypart/l_leg/robot/surplus
 	name = "surplus prosthetic left leg"
@@ -179,6 +184,7 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "l_leg"
 	max_damage = 20
+	limb_icon = 'icons/mob/augmentation/surplus_augments.dmi'
 
 /obj/item/bodypart/r_leg/robot/surplus
 	name = "surplus prosthetic right leg"
@@ -186,3 +192,4 @@
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon_state = "r_leg"
 	max_damage = 20
+	limb_icon = 'icons/mob/augmentation/surplus_augments.dmi'

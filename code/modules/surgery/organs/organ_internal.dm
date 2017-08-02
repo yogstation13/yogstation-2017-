@@ -25,7 +25,7 @@
 /obj/item/organ/proc/handle_decay()
 	if(owner && !(owner.stat & DEAD))
 		decay = max(0, decay-1)
-	else if(decay_time != -1)
+	else
 		var/temperature
 		if(owner)
 			temperature = owner.bodytemperature

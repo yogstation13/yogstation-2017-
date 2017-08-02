@@ -152,9 +152,17 @@
 /obj/item/organ/heart/cybernetic
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Does not decay."
-	icon_state = "heart-c"
+	icon_base = "heart-c"
+	icon_state = "heart-c-on"
 	origin_tech = "biotech=5"
-	decay_time = -1
+	decay_time = 0
+	decay = 0
 
 /obj/item/organ/heart/cybernetic/emp_act()
-	Stop()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!H.heart_attack)
+		H.heart_attack = TRUE
+		if(H.stat == CONSCIOUS)
+			H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")

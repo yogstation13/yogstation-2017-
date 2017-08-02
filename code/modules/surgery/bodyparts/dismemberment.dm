@@ -125,6 +125,9 @@
 
 
 /obj/item/bodypart/chest/drop_limb(special)
+	if(special == 2) //Really only use this when you're directly replacing it, like augmentation. It's 2 so other procs dont call it on accident...
+		..()
+		qdel(src)
 	return
 
 /obj/item/bodypart/r_arm/drop_limb(special)
