@@ -466,6 +466,15 @@
 	required_reagents = list("humanmutationtoxin" = 1, "mutagen" = 1)
 	result_amount = 1
 
+////////////////////////////////// Test Chemical ///////////////////////////////////////////////////////////
+
+/datum/chemical_reaction/serum_of_despair
+	name = "Serum of Despair"
+	id = "serum_of_despair"
+	result = "serum_of_despair"
+	required_reagents = list("uranium" = 10, "charcoal" = 10, "plasma" = 10, "frostoil" = 10, "cornoil" = 10, "methamphetamine" = 10) //Placeholder name and recipe
+	result_amount = 5
+	mix_message = "Large amounts of colorless gases are produced in the reaction. The remaining mixture starts to thicken, forming a grey ooze."
 
 
 
