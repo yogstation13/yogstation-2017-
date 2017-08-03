@@ -52,7 +52,7 @@
 			if(loc != usr || (loc && loc.loc == usr))
 				return
 
-			if(noisy == 1)
+			if(noisy)
 				playsound(loc, "rustle", 50, 1, -5)
 
 
@@ -72,7 +72,7 @@
 /obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user) && dest_object.Adjacent(user))
 		if(dest_object.storage_contents_dump_act(src, user))
-			if(noisy == 1)
+			if(noisy)
 				playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
@@ -395,7 +395,7 @@
 		close(user)
 		return
 
-	if(noisy == 1)
+	if(noisy)
 		playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
