@@ -580,6 +580,42 @@
 	if(method != TOUCH)
 		M.ForceContractDisease(new /datum/disease/transformation/slime(0))
 
+
+////////////////////////////////// Test Chemical ///////////////////////////////////////////////////////////
+
+//Test Toxin
+
+/datum/reagent/stableslimetoxin/despair
+	name = "Serum of Despair"
+	id = "serum_of_despair"
+	description = "A dark ooze that is used to trap a person's soul."
+	color = "808080" //RGB: 128, 128, 128
+
+/datum/reagent/stableslimetoxin/despair/reaction_mob(mob/living/carbon/human/H, method=TOUCH, reac_volume)
+	if (H)
+		if(method != TOUCH && H.stat == UNCONSCIOUS){
+			var/mob/living/simple_animal/hostile/weeping_angel/S = new /mob/living/simple_animal/hostile/weeping_angel(H.loc)
+			S.name = "Statue of [H.name]"
+			if(H.mind)
+				H.mind.transfer_to(S)
+				S << "<span class='danger'>You start to feel... Rigid.</span>"
+				S << "<span class='userdanger'>You have been turned to stone. You cannot move when monitored, but are nearly invincible and deadly when unobserved! You serve whoever mutated you into this state. If that is unknown your master is the first person you see"
+			H.loc = S
+			qdel(src)
+			qdel(H)}
+		else
+			if(H.getBruteLoss() > 60 || H.getToxLoss() > 60)
+				var/mob/living/simple_animal/pet/cat/C = new /mob/living/simple_animal/pet/cat(H.loc)
+				if(H.mind)
+					H.mind.transfer_to(C)
+					C << "<span class='danger'>You morph into a cute animal."
+				qdel(src)
+				qdel(H)
+			else
+				H.adjustToxLoss(4)
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
 	id = "gluttonytoxin"
