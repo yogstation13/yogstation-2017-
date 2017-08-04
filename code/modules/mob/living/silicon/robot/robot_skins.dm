@@ -7,10 +7,11 @@
 	var/icon/icon = 'icons/mob/robots.dmi'
 	var/icon_state
 
+	var/headlamp_eye_icon = 'icons/mob/robots.dmi'
 	var/eye_icon_state
-
 	var/headlight_icon_state
 
+	var/open_cover_icon = 'icons/mob/robots.dmi'
 	var/open_cover_wires_icon_state = "ov-opencover +w"
 	var/open_cover_cell_icon_state  = "ov-opencover +c"
 	var/open_cover_empty_icon_state = "ov-opencover -c"

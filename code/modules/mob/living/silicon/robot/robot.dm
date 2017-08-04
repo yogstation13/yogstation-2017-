@@ -785,19 +785,19 @@
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/eye_icon_state = robot_skin.eye_icon_state
 		if(eye_icon_state)
-			overlays += "[eye_icon_state][is_servant_of_ratvar(src) ? "_r" : ""]"
+			overlays += icon(robot_skin.headlamp_eye_icon, "[eye_icon_state][is_servant_of_ratvar(src) ? "_r" : ""]")
 		if(lamp_intensity > 2)
 			var/headlamp_icon_state = robot_skin.headlight_icon_state
 			if(headlamp_icon_state)
-				overlays += headlamp_icon_state
+				overlays += icon(robot_skin.headlamp_eye_icon, headlamp_icon_state)
 
 	if(opened)
 		if(wiresexposed)
-			overlays += robot_skin.open_cover_wires_icon_state
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_wires_icon_state)
 		else if(cell)
-			overlays += robot_skin.open_cover_cell_icon_state
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_cell_icon_state)
 		else
-			overlays += robot_skin.open_cover_empty_icon_state
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_empty_icon_state)
 
 	update_fire()
 
