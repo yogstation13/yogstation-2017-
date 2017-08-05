@@ -226,6 +226,7 @@ var/list/airlock_overlays = list()
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
 	if(electrocute_mob(user, get_area(src), src))
+		actionstaken += "\[[time_stamp()]\]shocked [user]/[user.ckey]"
 		hasShocked = 1
 		spawn(10)
 			hasShocked = 0
@@ -616,11 +617,13 @@ var/list/airlock_overlays = list()
 					else if(src.aiDisabledIdScanner)
 						usr << "You've already disabled the IdScan feature."
 					else
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled IDScan"
 						src.aiDisabledIdScanner = 1
 						no_window_msg = "ID scan disabled."
 				if(2)
 					//disrupt main power
 					if(src.secondsMainPowerLost == 0)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled main power"
 						src.loseMainPower()
 						no_window_msg = "Airlock main power disabled."
 						update_icon()
@@ -629,6 +632,7 @@ var/list/airlock_overlays = list()
 				if(3)
 					//disrupt backup power
 					if(src.secondsBackupPowerLost == 0)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled backup power"
 						src.loseBackupPower()
 						no_window_msg = "Airlock backup power disabled."
 						update_icon()
@@ -639,6 +643,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_BOLTS))
 						usr << "You can't drop the door bolts - The door bolt dropping wire has been cut."
 					else
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] bolted"
 						bolt()
 						no_window_msg = "Door bolts dropped."
 				if(5)
@@ -646,6 +651,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_SHOCK))
 						usr << text("Can't un-electrify the airlock - The electrification wire is cut.")
 					else if(src.secondsElectrified==-1 || src.secondsElectrified>0)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] unelectrified"
 						src.secondsElectrified = 0
 						no_window_msg = "Door un-electrified."
 
@@ -654,6 +660,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_SAFETY))
 						usr << text("Control to door sensors is disabled.")
 					else if (src.safe)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled safeties"
 						safe = 0
 						no_window_msg = "Door safeties disabled."
 					else
@@ -684,6 +691,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_LIGHT))
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (src.lights)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled bolt lights"
 						lights = 0
 						update_icon()
 						no_window_msg = "Door bolt lights disabled."
@@ -708,6 +716,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_IDSCAN))
 						usr << "You can't enable IdScan - The IdScan wire has been cut."
 					else if(src.aiDisabledIdScanner)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] enabled IDScan"
 						src.aiDisabledIdScanner = 0
 						no_window_msg = "ID scan enabled."
 					else
@@ -720,6 +729,7 @@ var/list/airlock_overlays = list()
 						usr << text("The door bolts are already up.")
 					else
 						if(src.hasPower())
+							actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] unbolted"
 							unbolt()
 							no_window_msg = "Door bolts raised."
 						else
@@ -734,7 +744,7 @@ var/list/airlock_overlays = list()
 					else if(src.secondsElectrified!=0)
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.")
 					else
-						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] electrified"
 						add_logs(usr, src, "electrified")
 						src.secondsElectrified = 30
 						spawn(10)
@@ -753,7 +763,7 @@ var/list/airlock_overlays = list()
 					else if(src.secondsElectrified!=0)
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.")
 					else
-						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] electrified indefinitely"
 						add_logs(usr, src, "electrified")
 						src.secondsElectrified = -1
 						no_window_msg = "Door electrified"
@@ -763,6 +773,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_SAFETY))
 						usr << text("Control to door sensors is disabled.")
 					else if (!src.safe)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] enabled safeties"
 						safe = 1
 						src.updateUsrDialog()
 						no_window_msg = "Door safeties enabled."
@@ -795,6 +806,7 @@ var/list/airlock_overlays = list()
 					if(wires.is_cut(WIRE_LIGHT))
 						usr << text("Control to door bolt lights has been severed.</a>")
 					else if (!src.lights)
+						actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] enabled bolt lights"
 						lights = 1
 						update_icon()
 						src.updateUsrDialog()
@@ -850,6 +862,7 @@ var/list/airlock_overlays = list()
 			user << "<span class='warning'>The maintenance panel is destroyed!</span>"
 			return
 		user << "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>"
+		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has placed [C] on [src] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>(JMP)</a></span>")
 		user.drop_item()
 		panel_open = 0
 		update_icon()
@@ -874,6 +887,7 @@ var/list/airlock_overlays = list()
 					welded = !welded
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
+					actionstaken += "\[[time_stamp()]\][user]/[user.ckey] [welded?"welded":"unwelded"]"
 					update_icon()
 
 /obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
@@ -1147,6 +1161,7 @@ var/list/airlock_overlays = list()
 		if(!open())
 			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = 1
+		actionstaken += "\[[time_stamp()]\][user]/[user.ckey] emagged"
 		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = 0
 		locked = 1

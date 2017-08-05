@@ -10,7 +10,7 @@
 	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
-	var/shockedby = list()
+	var/actionstaken = list()
 	var/visible = 1
 	var/operating = 0
 	var/glass = 0
@@ -196,12 +196,13 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
-			shockedby += "\[[time_stamp()]\]EM Pulse"
+			actionstaken += "\[[time_stamp()]\]EM Pulse"
 			addtimer(src, "unelectrify", 300)
 	..()
 
 /obj/machinery/door/proc/unelectrify()
 	secondsElectrified = 0
+	actionstaken += "\[[time_stamp()]\]unelectrified"
 
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
@@ -311,8 +312,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		var/turf/location = get_turf(src)
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 		L.add_splatter_floor(location)
+		actionstaken += "\[[time_stamp()]\]crushed [L]/[L.ckey]"
+		
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
+		actionstaken += "\[[time_stamp()]\]crushed [M]/[M.occupant.name]/[M.occupant.ckey]"
 
 /obj/machinery/door/proc/autoclose()
 	if(!qdeleted(src) && !density && !operating && !locked && !welded && autoclose)
