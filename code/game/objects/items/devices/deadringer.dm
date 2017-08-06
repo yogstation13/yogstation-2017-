@@ -44,20 +44,25 @@
 	flags |= NODROP
 	user.next_move = world.time + 50 // Prevent the user from clicking on anything for the next 5 seconds.
 	icon_state = "motion1"
-	spawn(20)
-		dummy = null // Invulnerability wears off
-	spawn(50)
-		user.invisibility = old_invis
-		animate(user, alpha = old_alpha, time = 20)
-		if(revoke_sight)
-			user.sight &= ~SEE_SELF
-		playsound(user.loc, 'sound/effects/spy_uncloak_feigndeath.ogg', 100, FALSE)
-		flags &= ~NODROP
-		icon_state = "motion2"
-		spawn(600)
-			ready = TRUE
-			icon_state = "motion0"
+	addtimer(src, "lose_invuln", 20)
+	addtimer(src, "lose_invis", 50, FALSE, user, old_alpha, old_invis, revoke_sight)
 	return dummy
+
+/obj/item/device/deadringer/proc/lose_invuln()
+	dummy = null
+/obj/item/device/deadringer/proc/lose_invis(mob/user, old_alpha, old_invis, revoke_sight)
+	user.invisibility = old_invis
+	animate(user, alpha = old_alpha, time = 20)
+	if(revoke_sight)
+		user.sight &= ~SEE_SELF
+	playsound(user.loc, 'sound/effects/spy_uncloak_feigndeath.ogg', 100, FALSE)
+	flags &= ~NODROP
+	icon_state = "motion2"
+	addtimer(src, "recharge", 600)
+	
+/obj/item/device/deadringer/proc/recharge()
+	ready = TRUE
+	icon_state = "motion0"
 
 /obj/item/device/deadringer/proc/create_dummy_item(obj/item/I)
 	if(!I || I == src)
@@ -66,6 +71,7 @@
 	if(istype(I, /obj/item/clothing/under))
 		dummytype = /obj/item/clothing/under
 	var/obj/item/dummy_item = new dummytype
+	dummy_item.flags |= DROPDEL
 	dummy_item.appearance = I.appearance
 	dummy_item.item_state = I.item_state
 	dummy_item.lefthand_file = I.lefthand_file
