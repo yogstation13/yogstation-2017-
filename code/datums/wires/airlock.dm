@@ -16,7 +16,7 @@
 	..()
 
 /datum/wires/airlock/interactable(mob/user)
-	var/obj/machinery/door/airlock/A = holder	
+	var/obj/machinery/door/airlock/A = holder
 	if(!istype(user, /mob/living/silicon) && A.isElectrified() && A.shock(user, 100))
 		return FALSE
 	if(A.panel_open)
