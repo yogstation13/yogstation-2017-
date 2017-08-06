@@ -723,6 +723,7 @@
 #include "code\game\objects\items\weapons\pneumaticCannon.dm"
 #include "code\game\objects\items\weapons\Rapid_Engineering_Device.dm"
 #include "code\game\objects\items\weapons\RCD.dm"
+#include "code\game\objects\items\weapons\RCT.dm"
 #include "code\game\objects\items\weapons\RPD.dm"
 #include "code\game\objects\items\weapons\RSF.dm"
 #include "code\game\objects\items\weapons\RTD.dm"
