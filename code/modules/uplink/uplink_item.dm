@@ -1113,6 +1113,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 
+/datum/uplink_item/badass/moraledestroyer
+	name = "Morale Destroyer"
+	desc = "The most effective weapon in the arsenal of destroying people their hope and morale. \
+				Warning: Using this might cause a lynch mob."
+	item = /obj/item/device/moraledestroyer
+	cost = 20
+
 /datum/uplink_item/badass/bundle
 	name = "Syndicate Bundle"
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. \
