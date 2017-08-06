@@ -167,6 +167,7 @@
 
 	//crowbarring it !
 	var/turf/T = get_turf(src)
+	var/area/area = get_area(src)
 	if(default_deconstruction_crowbar(I))
 		message_admins("[src] has been deconstructed by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
 		log_game("SINGULO: [src] has been deconstructed by [key_name(user)] at ([area.name])")
@@ -246,6 +247,7 @@
 	return round(5.5*charge/capacity)
 
 /obj/machinery/power/smes/process()
+	var/area/area = get_area(src)
 
 	if(stat & BROKEN)
 		return
@@ -428,6 +430,7 @@
 				log_smes(usr.ckey)
 
 /obj/machinery/power/smes/proc/log_smes(user = "")
+	var/area/area = get_area(src)
 	investigate_log("input/output; [input_level>output_level?"<font color='green'>":"<font color='red'>"][input_level]/[output_level]</font> | Charge: [charge] | Output-mode: [output_attempt?"<font color='green'>on</font>":"<font color='red'>off</font>"] | Input-mode: [input_attempt?"<font color='green'>auto</font>":"<font color='red'>off</font>"] by [user] at ([area.name])", "singulo")
 	log_game("SINGULO: SMES input/output; [input_level]/[output_level] | Charge: [charge] | Output-mode: [output_attempt?"on":"off"] | Input-mode: [input_attempt?"auto":"off"] by [user] at ([area.name])")
 
