@@ -721,6 +721,10 @@ var/next_mob_id = 0
 
 
 /mob/proc/fall(forced)
+	var/mob/dummy = check_deadringer()
+	if(dummy)
+		dummy.fall(forced)
+		return
 	drop_l_hand()
 	drop_r_hand()
 
@@ -968,3 +972,8 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/check_deadringer()
+	if(istype(l_hand, /obj/item/device/deadringer) || istype(r_hand, /obj/item/device/deadringer))
+		var/obj/item/device/deadringer/DR = istype(l_hand, /obj/item/device/deadringer) ? l_hand : r_hand
+		return DR.trigger(src)
