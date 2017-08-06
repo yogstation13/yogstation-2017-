@@ -11,14 +11,25 @@
 	var/obj/item/emag = null
 	var/list/storages = list()
 
-	var/list/skins = list()
-	var/list/donator_skins = list()
+	var/hand_icon = "standard"
+	var/feedback_name
+
+/obj/item/weapon/robot_module/New()
+	modules += new /obj/item/device/assembly/flash/cyborg(src)
+	emag = new /obj/item/toy/sword(src)
+	emag.name = "Placeholder Emag Item"
+	return
 
 /obj/item/weapon/robot_module/Destroy()
 	modules.Cut()
 	emag = null
 	storages.Cut()
 	return ..()
+
+/obj/item/weapon/robot_module/proc/on_pick(mob/living/silicon/robot/R)
+	R.hands.icon_state = hand_icon
+	if(feedback_name)
+		feedback_inc(feedback_name,1)
 
 /obj/item/weapon/robot_module/emp_act(severity)
 	if(modules)
@@ -82,12 +93,6 @@
 	modules += I
 	rebuild()
 
-/obj/item/weapon/robot_module/New()
-	modules += new /obj/item/device/assembly/flash/cyborg(src)
-	emag = new /obj/item/toy/sword(src)
-	emag.name = "Placeholder Emag Item"
-	return
-
 /obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	for(var/datum/robot_energy_storage/st in storages)
 		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
@@ -126,7 +131,8 @@
 
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
-	skins = list("Standard" = "robot", "Droid" = "droid")
+	hand_icon = "standard"
+	feedback_name = "cyborg_standard"
 
 /obj/item/weapon/robot_module/standard/New()
 	..()
@@ -144,8 +150,12 @@
 
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
-	skins = list("Mediborg" = "mediborg", "Medihover" = "medihover", "Smile Screen" = "mediborg+smile", "Medical Droid" = "droid-medical","Blue" = "mediborg-blue")
-	donator_skins = list("Eve" = "eve")
+	hand_icon = "medical"
+	feedback_name = "cyborg_medical"
+
+/obj/item/weapon/robot_module/medical/on_pick(mob/living/silicon/robot/R)
+	..()
+	R.status_flags -= CANPUSH
 
 /obj/item/weapon/robot_module/medical/New()
 	..()
@@ -173,8 +183,12 @@
 
 /obj/item/weapon/robot_module/engineering
 	name = "engineering robot module"
-	skins = list("Yellow" = "engiborg-yellow", "Engiborg" = "engiborg")
-	donator_skins = list("Wall-E" = "wall-eng")
+	hand_icon = "engineer"
+	feedback_name = "cyborg_engineering"
+
+/obj/item/weapon/robot_module/engineering/on_pick(mob/living/silicon/robot/R)
+	..()
+	R.magpulse = 1
 
 /obj/item/weapon/robot_module/engineering/New()
 	..()
@@ -209,7 +223,13 @@
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
-	skins = list("Secborg" = "secborg")
+	hand_icon = "security"
+	feedback_name = "cyborg_security"
+
+/obj/item/weapon/robot_module/security/on_pick(mob/living/silicon/robot/R)
+	..()
+	R << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
+	R.status_flags -= CANPUSH
 
 /obj/item/weapon/robot_module/security/New()
 	..()
@@ -233,7 +253,13 @@
 
 /obj/item/weapon/robot_module/peacekeeper
 	name = "peacekeeper robot module"
-	skins = list("Peaceborg" = "peaceborg")
+	hand_icon = "standard"
+	feedback_name = "cyborg_peacekeeper"
+
+/obj/item/weapon/robot_module/peacekeeper/on_pick(mob/living/silicon/robot/R)
+	..()
+	R << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+	R.status_flags -= CANPUSH
 
 /obj/item/weapon/robot_module/peacekeeper/New()
 	..()
@@ -248,14 +274,15 @@
 
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
-	skins = list("Janiborg" = "janiborg", "Disposal" = "disposalbot", "Purple" = "janiborg-purple")
 	var/obj/item/weapon/reagent_containers/spray/drying_agent
+	hand_icon = "janitor"
+	feedback_name = "cyborg_janitor"
 
 /obj/item/weapon/robot_module/janitor/New()
 	..()
 	modules += new /obj/item/weapon/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash/cyborg(src)
-	modules += new /obj/item/weapon/mop/cyborg(src)
+	modules += new /obj/item/weapon/mop/advanced/cyborg(src)
 	modules += new /obj/item/device/lightreplacer/cyborg(src)
 	modules += new /obj/item/weapon/holosign_creator(src)
 	drying_agent = new(src)
@@ -285,8 +312,8 @@
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 	vending_access = TRUE
-	skins = list("Waitress" = "service_female", "Bro" = "brobot", "Butler" = "service_male", "Kent" = "toiletbot", "Rich" = "maximillion")
-	donator_skins = list("Eve" = "eve")
+	hand_icon = "service"
+	feedback_name = "cyborg_service"
 
 /obj/item/weapon/robot_module/butler/New()
 	..()
@@ -315,8 +342,8 @@
 
 /obj/item/weapon/robot_module/miner
 	name = "miner robot module"
-	skins = list("Brown" = "minerborg", "Miner Droid" = "droid-miner", "Minerborg" = "minerborg")
-	donator_skins = list("Wall-E" = "wall-eng")
+	hand_icon = "miner"
+	feedback_name = "cyborg_miner"
 
 /obj/item/weapon/robot_module/miner/New()
 	..()
@@ -335,7 +362,8 @@
 
 /obj/item/weapon/robot_module/clown
 	name = "clown robot module"
-	skins = list("Clown" = "ClownBot", "Wizard Bot" = "WizardBot", "Wizard Borg" = "WizardBorg", "Chicken" = "ChickenBot")
+	hand_icon = "standard"
+	feedback_name = "cyborg_clown"
 
 /obj/item/weapon/robot_module/clown/New()
 	..()

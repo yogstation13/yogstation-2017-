@@ -21,8 +21,8 @@
 	new /obj/item/clothing/head/soft/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
+	new /obj/item/weapon/mop/rag(src)
+	new /obj/item/weapon/mop/rag(src)
 	new /obj/item/weapon/storage/box/beanbag(src)
 	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)
@@ -50,7 +50,7 @@
 	new /obj/item/clothing/suit/toggle/chef(src)
 	new /obj/item/clothing/under/rank/chef(src)
 	new /obj/item/clothing/head/chefhat(src)
-	new /obj/item/weapon/reagent_containers/glass/rag(src)
+	new /obj/item/weapon/mop/rag(src)
 
 /obj/structure/closet/jcloset
 	name = "custodial closet"

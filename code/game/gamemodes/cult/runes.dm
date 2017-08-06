@@ -1,5 +1,6 @@
 /var/list/sacrificed = list() //a mixed list of minds and mobs
 var/list/non_revealed_runes = (subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
+var/global/manifest_construct_cooldown
 
 /*
 
@@ -648,7 +649,7 @@ var/list/teleport_runes = list()
 /obj/effect/rune/astral/examine(mob/user)
 	..()
 	if(affecting)
-		user << "<span class='cultitalic'>A translucent field encases [user] above the rune!</span>"
+		user << "<span class='cultitalic'>A translucent field encases [affecting] above the rune!</span>"
 
 /obj/effect/rune/astral/can_invoke(mob/living/user)
 	if(rune_in_use)
@@ -903,6 +904,8 @@ var/list/teleport_runes = list()
 	return ..()
 
 /obj/effect/rune/manifest/invoke(var/list/invokers)
+	var/living_humans
+	var/living_constructs
 	var/mob/living/user = invokers[1]
 	var/list/ghosts_on_rune = list()
 	for(var/mob/dead/observer/O in get_turf(src))
@@ -911,12 +914,25 @@ var/list/teleport_runes = list()
 	var/mob/dead/observer/ghost_to_spawn = pick(ghosts_on_rune)
 	for(var/obj/item/device/soulstone/S in get_turf(src))
 		user <<"<span class='warning'>You attempt to absorb the manifested soul of [ghost_to_spawn] through [S]!</span>"
+		if(manifest_construct_cooldown > world.time)
+			user <<"<span class='warning'>It's been too long since a spirit has been manifested into a stone. Wait [manifest_construct_cooldown - world.time] seconds.</span>"
+			return
+		for(var/mob/living/simple_animal/hostile/construct/C in mob_list) //don't need a living check because constructs gib when they die
+			if(iscultist(C))
+				living_constructs++
+		for(var/mob/living/carbon/human/H in mob_list)
+			if(iscultist(H) && H.stat != DEAD) // living cultists
+				living_humans++
+		if(living_constructs > living_humans / 2)
+			user <<"<span class='warning'>There are too many constructs active at this time. You can't transfer the spirit to the stone!</span>"
+			return
 		if(user.health <= 25)
 			user <<"<span class='warning'>You lack the energy to use this rune.</span>"
 			return
 		add_logs(user, ghost_to_spawn, "captured [ghost_to_spawn.name]'s soul", S)
 		S.transfer_soul("VICTIM", ghost_to_spawn, user)
 		user <<"<span class='userdanger'>Your life energy is drained by the rune, allowing [ghost_to_spawn] to return to the physical realm.</span>"
+		manifest_construct_cooldown = world.time + 1800 //3 minutes
 		user.apply_damage(25, BRUTE)
 		return
 	var/mob/living/carbon/human/new_human = new(get_turf(src))

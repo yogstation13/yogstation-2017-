@@ -18,6 +18,8 @@
 	var/list/bonus_reagents = list() //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 	var/can_always_eat = 0
+	var/open = TRUE
+	var/requires_opening = FALSE
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
@@ -72,7 +74,6 @@
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
 				M << "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>"
 				return 0
-
 			else if(fullness <= 50)
 				M << "<span class='notice'>You hungrily [eatverb] some of \the [src] and gobble it down!</span>"
 			else if(fullness > 50 && fullness < 150)
@@ -108,8 +109,19 @@
 			if(M.satiety > -200)
 				M.satiety -= junkiness
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			var/fraction = min(bitesize / reagents.total_volume, 1)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(foodtype & H.dna.species.toxic_food)
+					M << "<span class='notice'>What the hell was that thing?!</span>"
+					M.adjust_disgust(25 + 30 * fraction)
+				else if(foodtype & H.dna.species.disliked_food)
+					M << "<span class='notice'>That didn't taste very good...</span>"
+					M.adjust_disgust(11 + 15 * fraction)
+				else if(foodtype & H.dna.species.liked_food)
+					M << "<span class='notice'>I love this taste!</span>"
+					M.adjust_disgust(-5 + -2.5 * fraction)
 			if(reagents.total_volume)
-				var/fraction = min(bitesize/reagents.total_volume, 1)
 				reagents.reaction(M, INGEST, fraction)
 				reagents.trans_to(M, bitesize)
 				bitecount++

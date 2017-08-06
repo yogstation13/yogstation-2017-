@@ -517,6 +517,7 @@
 
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/match))
+		user << "<span class='notice'>You light the [W].</span>"
 		W.matchignite()
 
 /obj/item/weapon/storage/box/lights

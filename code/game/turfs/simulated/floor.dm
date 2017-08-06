@@ -31,6 +31,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	flags = GIRDERABLE
 	var/broken = 0
 	var/burnt = 0
+	var/placedby = null
 	var/floor_tile = null //tile that this floor drops
 	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -182,7 +183,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))//only cult things can interact with floors so far
+	if(istype(M,/mob/living/simple_animal/hostile/construct/builder))//only cult things can interact with floors so far
 		if(istype(src, /turf/open/floor/engine/cult))
 			return
 		src.ChangeTurf(/turf/open/floor/engine/cult)

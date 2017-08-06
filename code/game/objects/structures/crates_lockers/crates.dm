@@ -99,6 +99,17 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/blood/random(src)
 
+/obj/structure/closet/crate/freezer/xeno
+	name = "freezer"
+	desc = "It smells... funky."
+
+/obj/structure/closet/crate/freezer/xeno/New()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src)
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"

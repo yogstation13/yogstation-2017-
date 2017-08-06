@@ -96,6 +96,7 @@
 		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		return
 
+	playsound(src, 'sound/effects/paper_wrap.ogg', 50, 1)
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
 

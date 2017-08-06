@@ -65,7 +65,7 @@
 		data["wireless"] = !AI.control_disabled //todo disabled->enabled
 		data["radio"] = AI.radio_enabled
 		data["isDead"] = AI.stat == DEAD
-		data["isBraindead"] = AI.client ? TRUE : FALSE
+		data["isBraindead"] = AI.client ? FALSE : TRUE
 	data["wiping"] = flush
 	return data
 
@@ -88,7 +88,7 @@
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			AI << "[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"
+			AI << "Your wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!"
 			. = TRUE
 		if("radio")
 			AI.radio_enabled = !AI.radio_enabled

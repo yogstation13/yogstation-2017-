@@ -1,0 +1,28 @@
+"cY" = (/turf/open/floor/plating,/area/template_noop)
+"ej" = (/obj/effect/decal/cleanable/blood/old,/obj/structure/bed,/turf/open/floor/plating,/area/template_noop)
+"es" = (/obj/structure/barricade/wooden{layer = 2.6},/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/template_noop)
+"kM" = (/obj/structure/table,/obj/item/weapon/hatchet{pixel_x = 14},/obj/item/weapon/lighter{pixel_x = -6; pixel_y = -4},/obj/item/weapon/wirecutters,/obj/item/weapon/shard{pixel_x = 10; pixel_y = 6},/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating,/area/template_noop)
+"nV" = (/turf/template_noop,/area/template_noop)
+"oL" = (/obj/item/medical/bandage/destitute{pixel_y = 8},/obj/item/medical/bandage/improvised{pixel_x = 8; pixel_y = -2},/obj/item/medical/bandage/improvised,/obj/item/stack/medical/gauze/improvised{pixel_x = -6; pixel_y = -4},/turf/open/floor/plating,/area/template_noop)
+"qb" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating,/area/template_noop)
+"rr" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/item/clothing/suit/straight_jacket,/turf/open/floor/plating,/area/template_noop)
+"uE" = (/obj/item/weapon/surgicaldrill,/obj/item/weapon/weldingtool/mini,/obj/machinery/iv_drip,/obj/item/weapon/reagent_containers/blood/random,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating,/area/template_noop)
+"wz" = (/obj/structure/sink{pixel_y = 28},/turf/open/floor/plating,/area/template_noop)
+"zh" = (/obj/effect/decal/cleanable/blood/footprints{dir = 8},/turf/open/floor/plating,/area/template_noop)
+"Ap" = (/obj/effect/decal/cleanable/blood/old,/obj/item/severedtail,/turf/open/floor/plating,/area/template_noop)
+"Av" = (/obj/effect/decal/cleanable/blood/gibs/old,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"IA" = (/obj/structure/table,/obj/item/weapon/crowbar{pixel_x = -8},/obj/item/weapon/screwdriver,/obj/item/bodybag,/obj/item/clothing/mask/surgical,/turf/open/floor/plating,/area/template_noop)
+"Ow" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/item/weapon/reagent_containers/blood/OMinus,/turf/open/floor/plating,/area/template_noop)
+"PR" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"Zf" = (/obj/item/weapon/book/manual/wiki/surgery,/obj/item/clothing/torncloth,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating,/area/template_noop)
+"Zx" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+nVnVnVnVesnV
+nVkMIAwzqbnV
+nVZxZfAvcYnV
+nVejApzhOwnV
+nVoLPRuErrnV
+nVnVnVnVnVnV
+"}
+

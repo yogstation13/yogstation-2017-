@@ -5,11 +5,7 @@
 		visible_message("<b>[src]</b> lets out a flurry of sparks, its screen flickering as its systems slowly halt.")
 	stat = DEAD
 
-
-	if("[icon_state]_dead" in icon_states(src.icon,1))
-		icon_state = "[icon_state]_dead"
-	else
-		icon_state = "ai_dead"
+	skin.apply_to(src)
 
 	cameraFollow = null
 

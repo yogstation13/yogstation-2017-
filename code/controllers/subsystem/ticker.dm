@@ -73,7 +73,8 @@ var/datum/subsystem/ticker/ticker
 				'sound/ambience/title-halflife.ogg',
 				'sound/ambience/title-lanius.ogg',
 				'sound/ambience/title-mars.ogg',
-				'sound/ambience/title-musique.ogg'))
+				'sound/ambience/title-musique.ogg',
+				'sound/ambience/title-mrbluesky.ogg'))
 
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
@@ -119,6 +120,8 @@ var/datum/subsystem/ticker/ticker
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+			else
+				webhook_send_roundstatus("ingame")
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)

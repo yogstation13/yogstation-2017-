@@ -7905,7 +7905,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "asR" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -10213,7 +10213,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "ayL" = (
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -13272,7 +13272,7 @@
 	})
 "aFX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/wood,
 /area/crew_quarters/bar{
 	name = "\improper Bar and Kitchen"
@@ -21727,7 +21727,7 @@
 	name = "Security Maintenance"
 	})
 "aZZ" = (
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/plating,
 /area/maintenance/fore{
 	name = "Security Maintenance"

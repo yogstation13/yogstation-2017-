@@ -519,6 +519,7 @@ Sorry Giacom. Please don't be mad :(
 	SetStunned(0, 0)
 	SetWeakened(0, 0)
 	SetSleeping(0, 0)
+	set_disgust(0)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
 	bodytemperature = 310
@@ -799,9 +800,9 @@ Sorry Giacom. Please don't be mad :(
 			reagents.add_reagent("heparin", 5)
 		return 0
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/harvester, src, null, 0)
 	else
-		new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
+		new /mob/living/simple_animal/hostile/construct/builder/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return

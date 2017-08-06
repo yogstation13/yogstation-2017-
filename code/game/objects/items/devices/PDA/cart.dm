@@ -661,7 +661,7 @@
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 		if (56) //quartermaster stock viewer
 			menu = "<h4><img src=pda_crate.png> Stock Exchange Viewer</h4>"
-			var/logged_in = "/tg/ Station 13 Cargo Department"
+			var/logged_in = "[station_name()] Cargo Department"
 			menu += "<u><b>[logged_in]</b></u><br>"
 			menu += "<table border='1' bordercolor='#000000'>"
 			menu += "<tr><th>&nbsp</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th></tr>"
@@ -716,7 +716,7 @@
 				menu += "<h4>Located Mops:</h4>"
 
 				var/ldat
-				for (var/obj/item/weapon/mop/M in world)
+				for (var/obj/item/weapon/mop/M in janitorial_items)
 					var/turf/ml = get_turf(M)
 
 					if(ml)
@@ -733,7 +733,7 @@
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
-				for (var/obj/structure/janitorialcart/B in world)
+				for (var/obj/structure/mopbucket/janitorialcart/B in janitorial_items)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
