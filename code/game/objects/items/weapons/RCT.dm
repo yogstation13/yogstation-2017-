@@ -52,5 +52,10 @@
 
 			spark_system.start()
 			closet.opened = FALSE
-			closet.welded = TRUE
+			if(istype(closet, /obj/structure/closet/crate)
+				var/obj/structure/closet/crate/crate = closet
+				if(crate.can_weld_shut)
+					crate.welded = TRUE
+			else			
+				closet.welded = TRUE
 			closet.update_icon()
