@@ -5,7 +5,7 @@
 	var/mob/living/carbon/human/dummy
 
 /obj/item/device/deadringer/proc/trigger(mob/living/carbon/human/user)
-	// Called in /mob/proc/fall, 
+	// Called in /mob/proc/check_deadringer, 
 	if(dummy)
 		return dummy
 	if(!istype(user) || !ready)
