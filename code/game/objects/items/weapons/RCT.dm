@@ -3,6 +3,7 @@
 	desc = "A device used to rapidly teleport crates and closets around"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	origin_tech = "bluespace=4;syndicate=3"
 	var/abbreviated_name = "RCT"
 	var/datum/effect_system/spark_spread/spark_system
 	var/turf/setlocation
