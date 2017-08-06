@@ -46,9 +46,9 @@
 			if(!setlocation)
 				for(var/obj/effect/landmark/C in landmarks_list)
 					if(C.name == "carpspawn")
-						closet.loc = C.loc
+						closet.forceMove(C)
 			else
-				closet.loc = setlocation
+				closet.forceMove(setlocation)
 
 			spark_system.start()
 			closet.opened = FALSE
