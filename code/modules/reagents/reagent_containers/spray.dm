@@ -90,6 +90,7 @@
 		user.attack_log += "\[[time_stamp()]\] <font color='orange'>Sprayed \a [src] containing [english_list(sprayed)].</font>"
 		if(viruslist)
 			investigate_log("[user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]", "viro")
+			log_game("VIRO: [user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]")
 
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)
