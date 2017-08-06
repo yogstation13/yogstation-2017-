@@ -206,7 +206,7 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
-	user.gunfiring += "\[[time_stamp()]\]fired [src]"
+	user.gunfiring += "\[[time_stamp()]\] fired [src]"
 	log_attack("\[[time_stamp()]\] [user]/[user.ckey] fired [src]")
 
 	if(semicd)
