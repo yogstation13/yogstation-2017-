@@ -53,7 +53,7 @@
 	vampire.dna.species.specflags |= NOBLOOD
 	vampire.dna.species.specflags |= NOBREATH
 
-	vampire.faction += "Vampire"
+	vampire.faction |= "Vampire"
 
 /datum/vampire/proc/Hundred()
 	hundred_unlocked = TRUE
@@ -208,18 +208,15 @@
 
 // END TESTING STUFF
 
-// under get_limit() we are using the vampire's current unlock requirements as a limit towards \
- how much the vampire can do X (whatever you want to use the limit for).
-// For instance, this is used as a cap towards how much blood a vampire can regenerate back inside of \
- their coffin.
+// under get_limit() we are using the vampire's current unlock requirements as a limit towards how much the vampire can do X (whatever you want to use the limit for).
+// For instance, this is used as a cap towards how much blood a vampire can regenerate back inside of their coffin.
 
 /datum/vampire/proc/get_limit()
-	var/limit
-	if(bloodcount >= 100) limit = 100
-	if(bloodcount >= 200) limit = 200
-	if(bloodcount >= 300) limit = 300
-	if(bloodcount >= 400) limit = 400
-	if(bloodcount >= 600) limit = 600
-	if(bloodcount >= 800) limit = 800
-	if(bloodcount >= 1000) limit = 1000
-	return limit
+	if(thousand_unlocked) 		return 1000
+	if(eighthundred_unlocked)	return 800
+	if(sixhundred_unlocked)		return 600
+	if(fourhundred_unlocked)	return 400
+	if(threehundred_unlocked)	return 300
+	if(twohundred_unlocked)		return 200
+	if(hundred_unlocked)		return 100
+	return 0

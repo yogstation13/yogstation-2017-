@@ -19,13 +19,11 @@
 					delay = world.time + VAMP_COFFIN_CD
 					heal_vampire()
 					regenerate_blood()
-		if(qdeleted(src))
-			vdatum.coffin = null
-			vdatum = null
-			STOP_PROCESSING(SSobj, src)
-	//	else
-	//		STOP_PROCESSING(SSobj, src)
-			desc = "It doesn't look right... It's battered down and weakened."
+
+/obj/structure/closet/coffin/vampiric/Destroy()
+	vdatum.coffin = null
+	vdatum = null
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/closet/coffin/vampiric/proc/heal_vampire()
 	if(!vdatum || !vdatum.vampire)

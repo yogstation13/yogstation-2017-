@@ -68,12 +68,12 @@
 
 
 /obj/effect/proc_holder/vampire/bite/proc/check_status(mob/living/L, datum/vampire/V, mob/living/carbon/human/T, rate)
-	if(L.weakened || L.stunned || L.sleeping || L.stat == DEAD || L.stat == UNCONSCIOUS || get_dist(L, T) > 1 || !L.pulling)
+	if(L.incapacitated() && L.stat == CONSCIOUS || L.stat == DEAD || L.stat == UNCONSCIOUS || get_dist(L, T) > 1 || !L.pulling)
 		V.isDraining = FALSE
 		L << "<span class='alertvampire'>You've been interrupted!</span>"
 		return 0
 	if(!T.blood_volume || T.blood_volume < rate)
-		L << "<span class='noticevampire'>[T] has ran out of blood.</span>"
+		L << "<span class='noticevampire'>[T] has run out of blood.</span>"
 		V.isDraining = FALSE
 		return 0
 	return 1

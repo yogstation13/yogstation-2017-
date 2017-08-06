@@ -56,7 +56,7 @@
 	return 1
 
 /datum/game_mode/vampire/proc/greet_vampire(datum/mind/vampire)
-	vampire.current << "<B><span class='announcevampire'>You are a Vampire.</font></B>"
+	vampire.current << "<B><span class='announcevampire'>You are a Vampire.</span></B>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in vampire.objectives)
 		vampire.current << "<span class='noticevampire'><B>Objective #[obj_count]</B>: [objective.explanation_text]</span>"
@@ -108,7 +108,7 @@
 	return
 */
 
-/datum/game_mode/vampire/proc/auto_declare_completion_vampire()
+/datum/game_mode/proc/auto_declare_completion_vampire()
 	if(vampires.len)
 		var/text = "<br><font size=3><b>The creatures of the night were:</b></font>"
 		for(var/datum/mind/vamp in vampires)

@@ -418,7 +418,7 @@
 		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
 			var/allowed_access = checkHUDaccess(1)
 			if(allowed_access)
-				security_scan_status(src, A, allowed_access) // check hud.dm
+				security_scan_crime(src, A, allowed_access) // check hud.dm
 
 /mob/living/carbon/human/proc/checkHUDaccess(var/sec)
 	var/allowed_id = null

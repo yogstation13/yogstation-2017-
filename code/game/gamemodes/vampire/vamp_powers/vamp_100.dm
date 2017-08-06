@@ -84,7 +84,7 @@
 
 /obj/effect/proc_holder/vampire/hypno/proc/sleeptarget(mob/living, mob/user) // in the future, make it check for a range so that the target can get away? or make it check for a garlic necklace.
 	if (living)
-		if(get_dist(user, living) > 7) // 7 range
+		if(get_dist(user, living) <= 7) // 7 range
 			flash_color(living, color = "#472040", time = 30) // it's the vampires color!
 			living.AdjustSleeping(30)
 		else

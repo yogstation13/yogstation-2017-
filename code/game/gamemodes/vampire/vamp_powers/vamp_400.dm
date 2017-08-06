@@ -21,9 +21,6 @@
 		"<span class='warning'>[H] releases a horrifying screech!</span>")
 
 	for(var/turf/T in view(7,H))
-		if(istype(T, /obj/structure/window))
-			var/obj/structure/window/W = T
-			W.take_damage(100)
 		for(var/mob/living/L in T)
 			if(L == H)
 				continue
@@ -38,12 +35,15 @@
 				L.Weaken(4)
 				playsound(L, 'sound/machines/warning-buzzer.ogg', 50, 1)
 
-	for(var/obj/structure/window/reinforced/R in view(12, H))
+	for(var/obj/structure/window/R in view(7, H))
 		R.take_damage(100)
 	for(var/obj/structure/grille/G in view(7, H))
 		if(prob(60))
 			G.Break()
-	for(var/obj/machinery/computer/C in view(12, H))
+		else
+			G.visible_message("<span class='warning'>[src] whips back and forth repelling the scream!</span>",\
+					"<span class='warning'>[src] whips back and forth repelling the scream!</span>")
+	for(var/obj/machinery/computer/C in view(7, H))
 		C.take_damage(100)
 
 	feedback_add_details("vampire_powers","vampire_scream")

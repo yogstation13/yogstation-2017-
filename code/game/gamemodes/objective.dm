@@ -944,9 +944,9 @@ var/global/list/possible_items_special = list()
 		var/pass = FALSE
 		switch(bloodtarget)
 			if(800)
-				pass = owner.vampire.thousand_unlocked
-			if(1000)
 				pass = owner.vampire.eighthundred_unlocked
+			if(1000)
+				pass = owner.vampire.thousand_unlocked
 		if(pass)
 			return 1
 	return 0
@@ -978,7 +978,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/charmIan/check_completion()
 	var/pass = FALSE
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/I in living_mob_list)
-		if(I.faction == "Vampire")
+		if("Vampire" in I.faction)
 			pass = TRUE
 			break
 

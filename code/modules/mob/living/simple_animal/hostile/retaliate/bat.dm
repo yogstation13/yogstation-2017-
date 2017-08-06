@@ -48,11 +48,11 @@
 
 	src << "<span class='noticevampire'>You return to a humanoid form.</span>"
 	vamp.forceMove(loc)
-	vamp.status_flags &= GODMODE
+	vamp.status_flags &= ~GODMODE
 	mind.transfer_to(vamp)
 	vamp.adjustBruteLoss(maxHealth - health)
 	S.turnOnCD()
-	qdel(src)
 	S.vbat = null
 	for(var/obj/effect/proc_holder/vampire/battrans/B in vamp.abilities)
 		B.switchonCD(150)
+	qdel(src)

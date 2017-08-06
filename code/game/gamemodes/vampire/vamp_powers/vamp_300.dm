@@ -9,25 +9,20 @@
 	cooldown_immediately = FALSE
 	cooldownlen = 0
 	var/mob/living/simple_animal/hostile/bat/vampire/vbat = null
-	var/transformed = FALSE
 	action_icon_state = "batcrowd"
 
 /obj/effect/proc_holder/vampire/battrans/fire(mob/living/carbon/human/H, datum/vampire/V)
-	if(transformed)
-		return
-	else
-		H << "<span class='noticevampire'>You take the form of a bat. (Check the vampire tab to trasnform back)</span>"
-		if(V)
-			force_drainage(25, V)
-		if(!vbat)
-			vbat = new /mob/living/simple_animal/hostile/bat/vampire(H.loc)
-			vbat.vamp = H
-			vbat.S = src
-		H.forceMove(vbat)
-		H.status_flags |= GODMODE
-		vbat.verbs += /mob/living/simple_animal/hostile/bat/vampire/verb/humanform
-		H.mind.transfer_to(vbat)
-		vbat.adjustBruteLoss(H.maxHealth - H.health)
+	H << "<span class='noticevampire'>You take the form of a bat. (Check the vampire tab to trasnform back)</span>"
+	if(V)
+		force_drainage(25, V)
+	if(!vbat)
+		vbat = new /mob/living/simple_animal/hostile/bat/vampire(H.loc)
+		vbat.vamp = H
+		vbat.S = src
+	H.forceMove(vbat)
+	H.status_flags |= GODMODE
+	H.mind.transfer_to(vbat)
+	vbat.adjustBruteLoss(H.maxHealth - H.health)
 	feedback_add_details("vampire_powers","bat transformation")
 
 /obj/effect/proc_holder/vampire/radiomalf
@@ -46,19 +41,19 @@
 
 
 	for(var/obj/item/device/radio/R in view(5,H))
-		if(get_dist(H, get_turf(H)) > 5)
+		if(get_dist(H, get_turf(R)) > 5)
 			continue
 		R.listening = 0
 		R.broadcasting = 0
 
 	for(var/mob/living in view(5,H))
-		if(get_dist(H, get_turf(H)) > 5)
+		if(get_dist(H, get_turf(living)) > 5)
 			continue
 		var/turf/T = get_turf(living)
-		if(T && T.flags & NOJAUNT) // aka blessed.
+		if(T && (T.flags & NOJAUNT)) // aka blessed.
 			continue
 		if(ishuman(living))
-			for(var/obj/item/device/radio/radio in living.contents)
+			for(var/obj/item/device/radio/radio in living.GetAllContents())
 				living << "<span class='warning'>[radio] begins to malfunction!</span>"
 				radio.listening = 0
 				radio.broadcasting = 0

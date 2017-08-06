@@ -15,7 +15,7 @@
 		if(H.mind.vampire)
 			if(H.mind.vampire.isDraining)
 				src << "<span class='vampirenotice'>You can't escape from me....</span>"
-				H << "<span class='vampirealert'>[src] has attempted to suicide, but was prevented!</span>"
+				H << "<span class='vampirealert'>[src] has attempted to commit suicide, but was prevented!</span>"
 		return
 	if(confirm == "Yes")
 		suiciding = 1
