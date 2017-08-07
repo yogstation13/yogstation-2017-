@@ -163,7 +163,7 @@
 					AL.close()
 					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
-					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
+					AL.actionstaken += "\[[time_stamp()]\][src]/[src.ckey] hostile locked down"
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
