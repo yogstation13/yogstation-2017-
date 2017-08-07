@@ -46,6 +46,9 @@
 		handle_disabilities() // eye, ear, brain damages
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
+	if(mind)
+		if(mind.vampire)
+			mind.vampire.process()
 
 
 /mob/living/proc/handle_breathing()

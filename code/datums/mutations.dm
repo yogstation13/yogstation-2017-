@@ -622,6 +622,28 @@
 	if(owner.a_intent == "harm")
 		owner.LaserEyes(target)
 
+/datum/mutation/human/stealth
+	name = "Cloak Of Darkness"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>You begin to fade into the shadows.</span>"
+	text_lose_indication = "<span class='notice'>You become fully visible.</span>"
+
+/datum/mutation/human/stealth/on_life(mob/living/carbon/human/owner)
+	var/turf/open/T = get_turf(owner)
+	if(!istype(T))
+		return
+	if(T.lighting_lumcount <= 2)
+		owner.alpha -= 25
+	else
+		if(!owner.dna.check_mutation(CHAMELEON))
+			owner.alpha = round(255 * 0.80)
+
+/datum/mutation/human/stealth/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.alpha = 255
+
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

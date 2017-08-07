@@ -126,6 +126,8 @@
 
 	var/cold_slowdown_factor = COLD_SLOWDOWN_FACTOR //the lower this is the slower you go in the cold
 
+	var/update_life = TRUE
+
 	///////////
 	// PROCS //
 	///////////
@@ -1055,6 +1057,10 @@
 					H.forcesay(hit_appends)
 				else if(H.lying)
 					H.forcesay(hit_appends)
+				if(H.mind)
+					if(H.mind.vampire)
+						if(H.mind.vampire.fourhundred_unlocked)
+							H.mind.vampire.freeze_touch(M)
 		if("disarm")
 			if(attacker_style && attacker_style.disarm_act(M,H))
 				return 1

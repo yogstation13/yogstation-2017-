@@ -136,6 +136,11 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
 
+.noticevampire			{color: #472040}
+.alertvampire			{color: #472040; font-style: italic;}
+.announcevampire		{color: #472040; font-weight: bold; font-size: 5}
+
+
 .ticket-status {
 	color: #000099;
 	font-weight: bold;

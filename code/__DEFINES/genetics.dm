@@ -17,6 +17,7 @@
 #define BADSIGHT	"Near Sightness"
 #define LASEREYES	"Laser Eyes"
 #define CHAMELEON	"Chameleon"
+#define STEALTH		"Cloak of Darkness"
 #define WACKY		"Wacky"
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"

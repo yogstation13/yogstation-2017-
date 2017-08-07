@@ -248,6 +248,9 @@
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
 	for(var/mob/M in the_turf)
+		if(M.mind)
+			if(M.mind.vampire)
+				return
 		if(M.invisibility)
 			if(see_ghosts && istype(M,/mob/dead/observer))
 				var/mob/dead/observer/O = M

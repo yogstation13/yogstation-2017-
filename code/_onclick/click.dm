@@ -210,6 +210,9 @@
 	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
 		next_click = world.time + 5
 		mind.cyberman.initiate_hack(A)
+	else if(!src.stat && src.mind && src.mind.vampire && src.mind.vampire.chosen_click_attack && !(A == src))
+		next_click = world.time + mind.vampire.chosen_click_attack.clickdelay
+		mind.vampire.chosen_click_attack.action_on_click(src, mind.vampire, A)
 	else
 		swap_hand()
 
