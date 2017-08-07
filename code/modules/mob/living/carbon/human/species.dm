@@ -35,6 +35,7 @@
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
+	var/liked_food //Stuff the species likes to eat
 	var/disliked_food //Stuff the species dislikes to eat
 	var/toxic_food //Stuff thats toxic to a species
 	var/list/no_equip = list()	// slots the race can't equip stuff to
