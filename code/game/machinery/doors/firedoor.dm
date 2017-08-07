@@ -72,6 +72,7 @@
 	if(W.remove_fuel(0, user))
 		welded = !welded
 		user << "<span class='danger'>You [welded?"welded":"unwelded"] \the [src]</span>"
+		actionstaken += "\[[time_stamp()]\][user]/[user.ckey] [welded?"welded":"unwelded"]"
 		update_icon()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)

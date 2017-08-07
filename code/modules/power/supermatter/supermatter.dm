@@ -74,9 +74,11 @@
 	radio = new(src)
 	radio.listening = 0
 	investigate_log("has been created.", "supermatter")
+	log_game("SINGULO: Supermatter Shard created at ([x],[y],[z])")
 
 
 /obj/machinery/power/supermatter_shard/Destroy()
+	log_game("SINGULO: Supermatter Shard destroyed.")
 	investigate_log("has been destroyed.", "supermatter")
 	qdel(radio)
 	poi_list -= src
@@ -84,6 +86,7 @@
 
 /obj/machinery/power/supermatter_shard/proc/prep_explode()
 	investigate_log("has exploded.", "supermatter")
+	log_game("SINGULO: Supermatter Shard exploded at ([x],[y],[z])")
 	grav_pulling = 1
 	exploded = 1
 
@@ -245,6 +248,7 @@
 /obj/machinery/power/supermatter_shard/singularity_act()
 	var/gain = 100
 	investigate_log("Supermatter shard consumed by singularity.","singulo")
+	log_game("SINGULO: Supermatter Shard has been consumed by a singularity.")
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in mob_list)

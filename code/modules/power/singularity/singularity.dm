@@ -76,6 +76,7 @@
 			if(current_size <= STAGE_TWO)
 				if(notify_admins)
 					investigate_log("has been destroyed by a heavy explosion.","singulo")
+					log_game("SINGULO: Singularity has been destroyed by an explosion.")
 				qdel(src)
 				return
 			else
@@ -124,6 +125,7 @@
 	if(!count)
 		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
+	log_game("SINGULO: A singulo has been created without containment fields active at ([x],[y],[z])")
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)
@@ -229,6 +231,7 @@
 	if(energy <= 0)
 		if(notify_admins)
 			investigate_log("collapsed.","singulo")
+			log_game("SINGULO: Singularity collapsed.  For use of a better phrase, it's gone.")
 		qdel(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport

@@ -19,6 +19,7 @@
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user)
 	. = ..()
+	playsound(loc, "buckle", 50, 1, -1)
 	if(.)
 		var/obj/item/whoopee/W = locate() in src
 		if(W)
@@ -49,7 +50,7 @@
 	..()
 	handle_rotation()
 	if(creates_scraping_noise)
-		playsound(loc, scrapingsound, 100, 1)
+		playsound(loc, scrapingsound, 25, 1)
 
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)

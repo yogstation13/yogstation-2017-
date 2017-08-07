@@ -23,7 +23,7 @@
 	speed = -1
 	stop_automated_movement = 1
 	faction = list("cult")
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	flying = 1
 	loot = list(/obj/item/weapon/ectoplasm)
 	del_on_death = 1

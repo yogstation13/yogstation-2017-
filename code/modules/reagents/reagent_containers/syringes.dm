@@ -144,6 +144,7 @@
 
 				if(viruslist)
 					investigate_log("[user.real_name] ([user.ckey]) injected [L.real_name] ([L.ckey]) with [viruslist]", "viro")
+					log_game("VIRO: [user.real_name] ([user.ckey]) injected [L.real_name] ([L.ckey]) with [viruslist]")
 
 				if(L != user)
 					add_logs(user, L, "injected", src, addition=" which had [contained]")
