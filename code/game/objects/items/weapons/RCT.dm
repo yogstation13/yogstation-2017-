@@ -52,7 +52,7 @@
 
 			spark_system.start()
 			closet.opened = FALSE
-			if(istype(closet, /obj/structure/closet/crate)
+			if(istype(closet, /obj/structure/closet/crate))
 				var/obj/structure/closet/crate/crate = closet
 				if(crate.can_weld_shut)
 					crate.welded = TRUE
