@@ -208,7 +208,7 @@ effective or pretty fucking useless.
 		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
 
 /obj/item/device/moraledestroyer
-	name = "Morale Destroyer"
+	name = "morale destroyer"
 	desc = "Press this to kill all hope on the station"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
@@ -219,7 +219,7 @@ effective or pretty fucking useless.
 		return
 	used = TRUE
 	desc = "This was used to rob all friendly household pets from their life."
-	user << "<span class='notice'>You press the [src], you monster.</span>"
+	user << "<span class='notice'>You press \the [src], you monster.</span>"
 	priority_announce(text = "PET SELF DESTRUCT DEVICE ACTIVATED, PLEASE STAND CLEAR FROM ALL HOUSEHOLD ANIMALS.", title = "Pet Self Destruct", sound = 'sound/machines/Alarm.ogg')
 	for(var/mob/living/simple_animal/pet/P in mob_list)
 		P.visible_message("[P] looks around the room with despair in his eyes.")
