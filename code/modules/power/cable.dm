@@ -134,6 +134,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		log_game("WIRES: Cable was cut by [key_name(usr, usr.client)] in [user.loc.loc]") // I know this will be excessive, but hey, we agreed on it.
 		Deconstruct()
 		return
 
