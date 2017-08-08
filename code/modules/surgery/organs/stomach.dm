@@ -10,9 +10,15 @@
 
 /obj/item/organ/stomach/on_life()
 	var/mob/living/carbon/human/H = owner
-
+	
 	if(istype(H))
 		H.dna.species.handle_digestion(H)
+		H.dna.species.handle_disgust()
+
+/obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
+      var/mob/living/carbon/human/H = owner
+      if(istype(H))
+          H.clear_alert("disgust")
 
 /obj/item/organ/stomach/fly
 	name = "insectoid stomach"
