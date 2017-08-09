@@ -558,3 +558,33 @@
 
 /obj/item/clothing/head/winterhood/bape
 	icon_state = "winterhood_bape"
+
+
+//Track jackets
+
+/obj/item/clothing/suit/toggle/trackjacket
+	name = "oreo track jacket"
+	desc = "A sporty coat that can be unzipped."
+	icon_state = "trackjacket"
+	item_state = "trackjacket"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+	togglename = "zipper"
+
+/obj/item/clothing/suit/toggle/trackjacket/white
+	name = "blue and white track jacket"
+	desc = "A sporty coat that can be unzipped, it features blue accents."
+	icon_state = "trackjacket_white"
+	item_state = "trackjacket_white"
+
+/obj/item/clothing/suit/toggle/trackjacket/paint
+	name = "paint splat track jacket"
+	desc = "A track jacket that has a paint splat design on it, it looks kinda like a galaxy, neat."
+	icon_state = "trackjacket_paint"
+	item_state = "trackjacket_paint"
+
+/obj/item/clothing/suit/toggle/trackjacket/superb
+	name = "collab track jacket"
+	desc = "The production of a collab between superb(tm) and lewis wheaton(tm)."
+	icon_state = "trackjacket_lv"
+	item_state = "trackjacket_lv"

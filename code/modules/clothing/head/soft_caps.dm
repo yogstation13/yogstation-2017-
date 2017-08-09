@@ -66,6 +66,13 @@
 	item_color = "green"
 	dog_fashion = null
 
+/obj/item/clothing/head/soft/superb
+	name = "superb square logo cap"
+	desc = "A baseball hat with the word superb on the front, this one word is apparently worth 200 credits shipped."
+	icon_state = "supsoft"
+	item_color = "sup"
+	dog_fashion = null
+
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."
