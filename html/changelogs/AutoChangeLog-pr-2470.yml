@@ -1,0 +1,4 @@
+author: MoreRobustThanYou
+delete-after: True
+changes: 
+  - bugfix: "Server should appear on hub now"
