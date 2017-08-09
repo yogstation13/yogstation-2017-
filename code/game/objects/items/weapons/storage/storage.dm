@@ -10,6 +10,7 @@
 	icon = 'icons/obj/storage.dmi'
 	w_class = 3
 	var/silent = 0 // No message on putting items in
+	var/noisy = 1 //Does it make noise when interacted with?
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
@@ -51,7 +52,8 @@
 			if(loc != usr || (loc && loc.loc == usr))
 				return
 
-			playsound(loc, "rustle", 50, 1, -5)
+			if(noisy)
+				playsound(loc, "rustle", 50, 1, -5)
 
 
 			if(istype(over_object, /obj/screen/inventory/hand))
@@ -70,7 +72,8 @@
 /obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user) && dest_object.Adjacent(user))
 		if(dest_object.storage_contents_dump_act(src, user))
-			playsound(loc, "rustle", 50, 1, -5)
+			if(noisy)
+				playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
 
@@ -392,7 +395,8 @@
 		close(user)
 		return
 
-	playsound(loc, "rustle", 50, 1, -5)
+	if(noisy)
+		playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
