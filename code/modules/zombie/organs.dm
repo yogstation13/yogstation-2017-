@@ -18,18 +18,6 @@
 	zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/body_egg/zombie_infection/on_life() //heals the zombie a la legion soul, poisons non zombies
-	..()
-	if(owner)
-		if(iszombie(owner))
-			owner.adjustBruteLoss(-2)
-			owner.adjustFireLoss(-2)
-		else
-			if(prob(45))
-				if(prob(20))
-					owner <<"<span class='danger'>You feel sick.</span>"
-				owner.adjustToxLoss(3)
-
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
 	finder << "<span class='warning'>Inside the head is a disgusting black \
 		web of pus and vicera, bound tightly around the brain like some \
