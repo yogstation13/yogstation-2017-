@@ -79,7 +79,7 @@
 					target << "<span class='warning'>[H]'s paralyzing gaze is blocked by [M]!</span>"
 					return
 	target << "<span class='warning'>Your knees suddenly feel heavy. Your body begins to sink to the floor.</span>"
-	H << "<span class='alertvampire'>The [target] is now under your spell. In four seconds they will be rendered unconscious as long as they are within close range.</span>"
+	H << "<span class='alertvampire'>[target] is now under your spell. In four seconds they will be rendered unconscious as long as they are within close range.</span>"
 	addtimer(src, "sleeptarget", 40, FALSE, target, H) // 4 seconds...
 
 	feedback_add_details("vampire_powers","hypnotize")
