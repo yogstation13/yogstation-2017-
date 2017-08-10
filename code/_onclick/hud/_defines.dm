@@ -25,6 +25,7 @@
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
 #define ui_crafting	"12:-10,1:5"
 
+
 //Lower center, persistant menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
 #define ui_id "CENTER-4:12,SOUTH:5"
@@ -87,6 +88,7 @@
 #define ui_healthdoll "EAST-1:28,CENTER-2:13"
 #define ui_health "EAST-1:28,CENTER-1:15"
 #define ui_internal "EAST-1:28,CENTER:17"
+#define ui_vamp "EAST-1:28,CENTER-3:11"
 
 //borgs and aliens
 #define ui_alien_nightvision "EAST-1:28,CENTER:17"

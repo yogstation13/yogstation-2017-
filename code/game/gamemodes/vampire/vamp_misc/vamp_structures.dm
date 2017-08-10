@@ -3,7 +3,6 @@
 /obj/structure/closet/coffin/vampiric
 	desc = "There's something about this coffin that doesn't feel right..."
 	burn_state = null
-	anchored = TRUE
 	var/datum/vampire/vdatum
 	var/delay
 
@@ -19,6 +18,10 @@
 					delay = world.time + VAMP_COFFIN_CD
 					heal_vampire()
 					regenerate_blood()
+	if(pulledby)
+		if(vdatum.vampire != pulledby)
+			pulledby.stop_pulling()
+			pulledby << "<span class='notice'>You oddly lose grip of [src].</span>"
 
 /obj/structure/closet/coffin/vampiric/Destroy()
 	vdatum.coffin = null

@@ -662,6 +662,23 @@
 		text += "|Disabled in Prefs"
 	sections["devil"] = text
 
+	/**	vampires **/
+	text = "vampire"
+	if(ticker.mode.config_tag == "vampire")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.vampires)
+		text += "<b>VAMPIRE</b>|<a href='?src=\ref[src];vampire=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];vampire=vampire'>vampire</a>|<b>HUMAN</b>"
+
+	if(current && current.client && (ROLE_VAMPIRE in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["vampire"] = text
+
 
 	/** SILICON ***/
 
@@ -1449,6 +1466,21 @@
 				ticker.mode.add_cyberman(src, "<span class='userdanger'>Suddenly, you feel new, digital senses in your mind. You are now a cyberman!</span>")
 				message_admins("[key_name_admin(usr)] has cyberman'ed [current].")
 				log_admin("[key_name(usr)] has cyberman'ed [current].")
+
+	else if(href_list["vampire"])
+		switch(href_list["vampire"])
+			if("clear")
+				if(src in ticker.mode.vampires)
+					ticker.mode.devampire(src)
+					message_admins("[key_name_admin(usr)] has de-vampired [current].")
+					log_admin("[key_name(usr)] has de-vampired [current].")
+			if("vampire")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.transform_vampire(src)
+				message_admins("[key_name_admin(usr)] has vampired [current].")
+				log_admin("[key_name(usr)] has vampired [current].")
 
 	else if (href_list["common"])
 		switch(href_list["common"])

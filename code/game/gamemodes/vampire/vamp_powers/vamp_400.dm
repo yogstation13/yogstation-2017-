@@ -63,10 +63,9 @@
 		return
 	H.visible_message("<span class='warning'>[H] summons a swarm of bats!</span>")
 	playsound(get_turf(H), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
-	var/amount_to_spawn = 6
+	var/amount_to_spawn = rand(6,8)
 	for(var/i = 1, i <= amount_to_spawn, i++)
-		var/mob/living/simple_animal/hostile/bat/B
-		B = new /mob/living/simple_animal/hostile/bat(get_turf(B))
+		var/mob/living/simple_animal/hostile/bat/B = new /mob/living/simple_animal/hostile/bat(get_turf(H))
 		B.faction |= "Vampire"
 		if(prob(50))
 			for(var/j = 1, j <= rand(1, 3), j++)

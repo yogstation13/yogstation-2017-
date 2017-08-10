@@ -31,6 +31,8 @@
 	cooldownlen = 300
 	blood_cost = 20
 	action_icon_state = "hypnotize"
+	pay_blood_immediately = FALSE
+	cooldown_immediately = FALSE
 
 /obj/effect/proc_holder/vampire/hypno/fire(mob/living/carbon/human/H)
 	if(!..())
@@ -77,7 +79,8 @@
 					target << "<span class='warning'>[H]'s paralyzing gaze is blocked by [M]!</span>"
 					return
 	target << "<span class='warning'>Your knees suddenly feel heavy. Your body begins to sink to the floor.</span>"
-	addtimer(src, "sleeptarget", 400, FALSE, target, H) // 4 seconds...
+	H << "<span class='alertvampire'>The [target] is now under your spell. In four seconds they will be rendered unconscious as long as they are within close range.</span>"
+	addtimer(src, "sleeptarget", 40, FALSE, target, H) // 4 seconds...
 
 	feedback_add_details("vampire_powers","hypnotize")
 
@@ -87,5 +90,6 @@
 		if(get_dist(user, living) <= 7) // 7 range
 			flash_color(living, color = "#472040", time = 30) // it's the vampires color!
 			living.AdjustSleeping(30)
+			user << "<span class='alertvampire'>[living] has fallen asleep!</span>"
 		else
 			living << "<span class='notice'>You feel a whole lot better now.</span>"

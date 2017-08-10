@@ -41,6 +41,12 @@
 	icon_state = "power_display"
 	screen_loc = ui_lingchemdisplay
 
+/obj/screen/vamp
+	invisibility = INVISIBILITY_ABSTRACT
+	name = "blood gauge"
+	icon_state = "blood_display"
+	screen_loc = ui_vamp
+
 /mob/living/carbon/human/create_mob_hud()
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
@@ -266,6 +272,9 @@
 
 	lingstingdisplay = new /obj/screen/ling/sting()
 	infodisplay += lingstingdisplay
+
+	vampblooddisplay = new /obj/screen/vamp()
+	infodisplay += vampblooddisplay
 
 
 	zone_select =  new /obj/screen/zone_sel()

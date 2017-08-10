@@ -1,10 +1,12 @@
 /mob/living/carbon/proc/AddVampireSpell(obj/effect/proc_holder/vampire/A)
 	abilities.Add(A)
+	mob_spell_list += A // if mob_spell_list turns out to be buggy, make a new list under mob and use it the same way.
 	if(A.has_action)
 		A.action.Grant(src)
 
 /mob/living/carbon/proc/RemoveVampireSpell(obj/effect/proc_holder/vampire/A)
 	abilities.Remove(A)
+	mob_spell_list -= A
 	if(A.action)
 		A.action.Remove(src)
 
@@ -34,6 +36,8 @@ This is practically custom spell code like alien or changeling.
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "animal_love"
 	var/action_background_icon_state = "bg_default_on"
+
+	var/cooldowncount
 
 /obj/effect/proc_holder/vampire/New()
 	. = ..()
@@ -100,6 +104,7 @@ This is practically custom spell code like alien or changeling.
 	if(fire(H))
 		if(pay_blood_immediately)
 			force_drainage(blood_cost, H.mind.vampire)
+			start_recharge()
 
 /obj/effect/proc_holder/vampire/proc/turnOnCD()
 	onCD = TRUE
@@ -118,6 +123,8 @@ This is practically custom spell code like alien or changeling.
 			H << "<span class='noticevampire'>[src] is on a cooldown.</span>"
 		return 0
 	switchonCD(cooldownlen)
+	V.chosen_click_attack = null
+	start_recharge()
 	return 1
 
 /obj/effect/proc_holder/vampire/proc/checkout_click_attack(mob/M, datum/vampire/V)
@@ -131,7 +138,11 @@ This is practically custom spell code like alien or changeling.
 			return FALSE
 		else
 			M << "<span class='alertvampire'>You already have another click-attack technique active ([V.chosen_click_attack.name])</span>"
-			//turnOnCD()
 			return FALSE
 	else
 		return TRUE
+
+/obj/effect/proc_holder/vampire/proc/start_recharge()
+	while(cooldowncount < cooldownlen && !qdeleted(src))
+		sleep(1)
+		cooldowncount++

@@ -12,6 +12,7 @@
 	desc = "Sink your teeth into an adjacent target."
 	human_req = TRUE
 	action_icon_state = "bite"
+	cooldownlen = 25
 
 /obj/effect/proc_holder/vampire/bite/fire(mob/living/carbon/human/H)
 	if(!..())
@@ -25,37 +26,59 @@
 		H << "<span class='alertvampire'>This technique can only be used on human life forms!</span>"
 		return
 
+	if(vampire.isDraining)
+		return
+
 	var/mob/living/carbon/human/target = H.pulling
+
+	if(H.zone_selected == "head" || H.zone_selected == "eyes" || H.zone_selected == "mouth")
+		if(istype(target.head, /obj/item/clothing/head/helmet/space/hardsuit))
+			H << "<span class='alertvampire>[target] has their helmet engaged!</span>"
+			return
+	else
+		if(istype(target.wear_suit, /obj/item/clothing/suit/space/hardsuit))
+			H << "<span class='alertvampire'>[target] has a hardsuit on!</span>"
+			return
 
 	if(NOBLOOD in target.dna.species.specflags || !target.blood_volume)
 		H << "<span class='alertvampire'>They have no blood!</span>"
 		return
 
-	var/drainrate = 55
+
+	target << "<span class='notice'>[H] is getting pretty close...</span>"
+	H << "<span class='alertvampire'>You start leaning close to [target]'s neck.</span>"
+
+	if(!(do_after(H, 30, H.pulling)))
+		return
+
+	var/drainrate = 30
 	var/drainpayoff = 10
 
 	if(target.stat == DEAD)
-		drainrate = 70
-		drainpayoff = 3
-		H << "<span class='alertvampire'>This one has a strange odor.</span>"
+		drainrate = 30
+		drainpayoff = 1
+		H << "<span class='alertvampire'>This one has a strange odor. It won't do much for you because they're dead.</span>"
 
 	playsound(H.loc,'sound/magic/Demon_consume.ogg', rand(10,30), 1)
-	H << "<span class='noticevampire'>You sink your fangs into [target]!</span>"
+	H.visible_message("<span class='warning'>[H] sinks their fangs into [target]!.", \
+	"<span class='noticevampire'>You sink your fangs into [target]!</span>")
 	vampire.isDraining = TRUE
 	flash_color(H, color = "#FF0000", time = 25)
 	flash_color(vampire, color = "#FF0000", time = 3)
 
 	while(vampire.isDraining)
 		if(target.stat == DEAD)
-			drainrate = 70
-			drainpayoff = 3
+			drainrate = 30
+			drainpayoff = 1
 		if(check_status(H, vampire, target, drainrate))
 			target.blood_volume -= drainrate
 			vampire.add_blood(drainpayoff)
-			H << "<span class='noticevampire'>You have gained [drainrate] units of blood from [target]. They have [target.blood_volume] units remaining. You now have [vampire.bloodcount] units.</span>"
+			H.visible_message("<span class='warning'>[H] drains blood from [target]!.", \
+			"<span class='noticevampire'>You have gained [drainrate] units of blood from [target]. They have [target.blood_volume] units remaining. You now have [vampire.bloodcount] units.</span>")
 			playsound(H.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		if(target.job == "Chaplain")
-			H << "<span class='userdanger'>This one's blood is holy! It burns!</span>"
+			H.visible_message("<span class='warning'>[H] hacks and coughs from draining [target]'s blood.</span>",\
+				"<span class='userdanger'>[target]'s blood is holy! It burns!</span>")
 			H.reagents.add_reagent("sacid", 10)
 
 		vampire.check_for_new_ability()
@@ -63,7 +86,6 @@
 
 	H << "<span class='noticevampire'>You have finished draining [target]</span>"
 	feedback_add_details("vampire_powers","bite")
-
 	return 1
 
 
@@ -75,6 +97,7 @@
 	if(!T.blood_volume || T.blood_volume < rate)
 		L << "<span class='noticevampire'>[T] has run out of blood.</span>"
 		V.isDraining = FALSE
+		T.reagents.clear_reagents()
 		return 0
 	return 1
 
@@ -107,7 +130,6 @@
 /obj/effect/proc_holder/vampire/gaze/action_on_click(mob/living/carbon/human/H, datum/vampire/V, atom/target)
 	if(!..())
 		return
-
 	if(target)
 		if(!(ishuman(target)))
 			return

@@ -70,7 +70,7 @@
 			O << "<span class='warning'>[H] scratches at your floating waist, reeling you in!</span>"
 			chosenone = O
 			var/oldtransform = transform
-			animate(H, transform = matrix()*2, alpha = 0, time = 5) // rune invoke. this'll make it pop out.
+			animate(H, transform = matrix()*2, alpha = 0, time = 5) // from rune invoke. this'll make it pop out.
 			animate(transform = oldtransform, alpha = 255, time = 0)
 
 	H.visible_message("<span class='notice'>[H] reaches his hand into the air and grabs something.</span>",\

@@ -49,9 +49,9 @@
 
 /datum/game_mode/vampire/post_setup()
 	for(var/datum/mind/vamp in vampires)
-		transform_vampire(vamp)
 		forge_objectives(vamp)
 		greet_vampire(vamp)
+		transform_vampire(vamp)
 	..()
 	return 1
 
@@ -102,11 +102,10 @@
 	M.vampire = null
 	M.current << "<span class='alertvampire'>Your grip on the night is slipping away!</span>"
 
-/*
+
 /datum/game_mode/vampire/declare_completion()
 	..()
 	return
-*/
 
 /datum/game_mode/proc/auto_declare_completion_vampire()
 	if(vampires.len)
