@@ -111,27 +111,27 @@
 	name = "black and white striped trainers"
 	icon_state = "yeezy_white"
 	item_color = "yeezy_white"
-	desc = "They're SO BRIGHT!!!! AAAAHHHHHHH"
+	desc = "They're SO BRIGHT!!!! AAAAHHHHHHH."
 
 
 /obj/item/clothing/shoes/sneakers/yeezy/green
 	name = "khaki trainers"
 	icon_state = "yeezy_green"
 	item_color = "yeezy_green"
-	desc = "Slightly more practical trainers that don't glow in the dark"
+	desc = "Slightly more practical trainers that don't glow in the dark."
 
 /obj/item/clothing/shoes/sneakers/yeezy/red
 	name = "black and red trainers"
 	icon_state = "yeezy_red"
 	item_color = "yeezy_red"
-	desc = "Wait a minute these look...ehh probably not, the syndicate only wear combat boots"
+	desc = "Wait a minute these look...ehh probably not, the syndicate only wear combat boots."
 
 
 /obj/item/clothing/shoes/sneakers/nmd
 	name = "primeknit trainers"
 	icon_state = "nmd_pk"
 	item_color = "nmd_pk"
-	desc = "Stylish running shoes, the comfy soles give you a spring in your step"
+	desc = "Stylish running shoes, the comfy soles give you a spring in your step."
 
 /obj/item/clothing/shoes/sneakers/nmd/collab
 	name = "Nanotrasen collab trainers"
