@@ -1,6 +1,6 @@
 /obj/vehicle/sportscar
 	name = "Nanotrasen 558 SE sport"
-	desc = "A beautiful car, merging the modern NanoTrasen ideals with the classic Italian sports car aesthetic.This thing goes F A S T!"
+	desc = "A beautiful car, merging the modern NanoTrasen ideals with the classic Italian sports car aesthetic. This thing goes F A S T!"
 	icon = 'icons/obj/sportscar.dmi'
 	icon_state = "rari-open"
 	keytype = /obj/item/key
