@@ -124,14 +124,14 @@
 	name = "black and red trainers"
 	icon_state = "yeezy_red"
 	item_color = "yeezy_red"
-	desc = "Wait a minute these look...ehh probably not, the syndicate only wear combat boots"
+	desc = "Wait a minute, these look... eh, probably not. The syndicate only wear combat boots."
 
 
 /obj/item/clothing/shoes/sneakers/nmd
 	name = "primeknit trainers"
 	icon_state = "nmd_pk"
 	item_color = "nmd_pk"
-	desc = "Stylish running shoes, the comfy soles give you a spring in your step"
+	desc = "Stylish running shoes.The comfy soles give you a spring in your step."
 
 /obj/item/clothing/shoes/sneakers/nmd/collab
 	name = "Nanotrasen collab trainers"
