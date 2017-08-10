@@ -50,6 +50,7 @@
 		"mine_salve",
 		"toxin"
 	)
+	var/list/special_transfer_amounts = list(1)
 
 /obj/machinery/chem_dispenser/New()
 	..()
@@ -113,7 +114,7 @@
 	if (beaker)
 		data["beakerCurrentVolume"] = beakerCurrentVolume
 		data["beakerMaxVolume"] = beaker.volume
-		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerTransferAmounts"] = (special_transfer_amounts | beaker.possible_transfer_amounts)
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
@@ -133,7 +134,7 @@
 	switch(action)
 		if("amount")
 			var/target = text2num(params["target"])
-			if(target in beaker.possible_transfer_amounts)
+			if(target in (special_transfer_amounts | beaker.possible_transfer_amounts))
 				amount = target
 				. = TRUE
 		if("dispense")
@@ -150,7 +151,7 @@
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in (special_transfer_amounts | beaker.possible_transfer_amounts)) )
 				beaker.reagents.remove_all(amount)
 				. = TRUE
 		if("eject")
