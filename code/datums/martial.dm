@@ -8,13 +8,18 @@
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/help_verb = null
 	var/no_ranged_weapons = FALSE
+	var/no_slip = FALSE
 
-/datum/martial_art/proc/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj)
+/datum/martial_art/proc/item_attack(mob/living/carbon/human/user, obj/item/I, atom/target, silent = FALSE)
+ 	return FALSE
+
+/datum/martial_art/proc/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj, silent = FALSE)
 	if(user.incapacitated() || (user.dna && user.dna.check_mutation(HULK)))
 		return FALSE
 	if(prob(deflection_chance))
-		user.visible_message("<span class='danger'>[user] deflecs the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-		playsound(user, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+		if(!silent)
+			user.visible_message("<span class='danger'>[user] deflecs the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+			playsound(user, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
 		return TRUE
 	return FALSE
 
@@ -540,3 +545,27 @@
 			final_block_chance = max(final_block_chance, melee_block_chance)
 		return ..(owner, attack_text, final_block_chance, damage, attack_type, AT)
 	return 0
+
+/obj/item/weapon/martial_arts_scroll
+	name = "martial arts manual"
+	desc = "A scroll containing knowledge of martial combat"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	var/marital_art_type = /datum/martial_art
+	var/learned_message = null
+	var/visible_learned_message = null
+
+/obj/item/weapon/martial_arts_scroll/attack_self(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+	if(learned_message)
+		user << learned_message
+	var/datum/martial_art/M = new marital_art_type()
+	M.teach(user)
+	if(visible_learned_message)
+		user.visible_message("<span class='warning'>[src] [visible_learned_message]</span>")
+	afterteach(user)
+
+/obj/item/weapon/martial_arts_scroll/proc/afterteach(mob/living/carbon/human/user)
+	new /obj/effect/decal/cleanable/ash(get_turf(src))
+	qdel(src)

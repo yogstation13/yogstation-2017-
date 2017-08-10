@@ -67,18 +67,7 @@
 			user << "<span class='warning'>Your [name] is dry!</span>"
 			return
 		user << "<span class='notice'>You finish mopping.</span>"
-		if(reagents_do_clean())
-			T.clean_blood()
-			for(var/obj/effect/O in A)
-				if(is_cleanable(O))
-					qdel(O)
-			if(istype(A, /turf/closed))
-				var/turf/closed/C = A
-				if(C.thermite)
-					C.thermite = 0
-					C.overlays.Cut()
-		reagents.reaction(A, TOUCH, 5)	//Needed for proper floor wetting
-		reagents.remove_all(1)			//reaction() doesn't use up the reagents
+		clean_turf(T)
 	else if(user.a_intent != "harm")
 		A.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(!do_after(user,mopspeed, target = A))
@@ -112,6 +101,20 @@
 	J.put_in_cart(src, user)
 	J.mymop=src
 	J.update_icon()
+
+/obj/item/weapon/mop/proc/clean_turf(turf/T)
+	if(reagents_do_clean())
+		T.clean_blood()
+		for(var/obj/effect/O in T)
+			if(is_cleanable(O))
+				qdel(O)
+		if(istype(T, /turf/closed))
+			var/turf/closed/C = T
+			if(C.thermite)
+				C.thermite = 0
+				C.overlays.Cut()
+	reagents.reaction(T, TOUCH, 5)	//Needed for proper floor wetting
+	reagents.remove_all(1)			//reaction() doesn't use up the reagents
 
 /obj/item/weapon/mop/advanced
 	name = "advanced mop"
