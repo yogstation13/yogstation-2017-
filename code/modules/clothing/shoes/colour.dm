@@ -131,7 +131,7 @@
 	name = "primeknit trainers"
 	icon_state = "nmd_pk"
 	item_color = "nmd_pk"
-	desc = "Stylish running shoes.The comfy soles give you a spring in your step."
+	desc = "Stylish running shoes. The comfy soles give you a spring in your step."
 
 /obj/item/clothing/shoes/sneakers/nmd/collab
 	name = "Nanotrasen collab trainers"
