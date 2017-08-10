@@ -585,6 +585,6 @@
 
 /obj/item/clothing/suit/toggle/trackjacket/superb
 	name = "collab track jacket"
-	desc = "The production of a collab between superb(tm) and lewis wheaton(tm)."
+	desc = "The production of a collab between superb(tm) and Lewis Wheaton(tm)."
 	icon_state = "trackjacket_lv"
 	item_state = "trackjacket_lv"
