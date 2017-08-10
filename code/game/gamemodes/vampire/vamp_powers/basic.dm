@@ -48,7 +48,7 @@
 	target << "<span class='notice'>[H] is getting pretty close...</span>"
 	H << "<span class='alertvampire'>You start leaning close to [target]'s neck.</span>"
 
-	if(!(do_after(H, 30, H.pulling)))
+	if(!(do_after(H, 15, H.pulling)))
 		return
 
 	var/drainrate = 30
@@ -73,9 +73,8 @@
 		if(check_status(H, vampire, target, drainrate))
 			target.blood_volume -= drainrate
 			vampire.add_blood(drainpayoff)
-			H.visible_message("<span class='warning'>[H] drains blood from [target]!.", \
-			"<span class='noticevampire'>You have gained [drainrate] units of blood from [target]. They have [target.blood_volume] units remaining. You now have [vampire.bloodcount] units.</span>")
-			playsound(H.loc,'sound/items/drink.ogg', rand(10,50), 1)
+			H << "<span class='noticevampire'>You have gained [drainrate] units of blood from [target]. They have [target.blood_volume] units remaining. You now have [vampire.bloodcount] units.</span>"
+			playsound(H.loc,'sound/items/drink.ogg', 10, 1)
 		if(target.job == "Chaplain")
 			H.visible_message("<span class='warning'>[H] hacks and coughs from draining [target]'s blood.</span>",\
 				"<span class='userdanger'>[target]'s blood is holy! It burns!</span>")
