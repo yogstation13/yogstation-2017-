@@ -61,20 +61,14 @@
 /obj/item/stack/update_icon()
 	if(novariants)
 		return ..()
+	var/fifthOfStack = max_amount / 5
 	if(amount == 1)
 		icon_state = initial(icon_state)
-	else if (amount <= (max_amount * (1/5)))
-		icon_state = "[initial(icon_state)]_2"
-	else if (amount <= (max_amount * (2/5)))
-		icon_state = "[initial(icon_state)]_3"
-	else if (amount <= (max_amount * (3/5)))
-		icon_state = "[initial(icon_state)]_4"
-	else if (amount <= (max_amount * (4/5)))
-		icon_state = "[initial(icon_state)]_5"
-	else if (amount < (max_amount * (5/5)))
-		icon_state = "[initial(icon_state)]_6"
-	else if (amount == max_amount)
+	else if(amount == max_amount)
 		icon_state = "[initial(icon_state)]_7"
+	else
+		icon_state = "[initial(icon_state)]_[round(amount / fifthOfStack, 1)]"
+
 	..()
 
 
@@ -236,7 +230,6 @@
 	use(transfer)
 	S.add(transfer)
 	update_icon()
-	S.update_icon()
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)

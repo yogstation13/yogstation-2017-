@@ -29,18 +29,19 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 
 /obj/item/stack/rods/update_icon()
 	var/amount = get_amount()
-	if((amount <= 5) && (amount > 0))
-		icon_state = "rods_[amount]"
-	else if (amount <= 15)
-		icon_state = "[initial(icon_state)]_6"
-	else if (amount <= 30)
-		icon_state = "[initial(icon_state)]_7"
-	else if (amount <= (max_amount * (4/5)))
-		icon_state = "[initial(icon_state)]_8"
-	else if (amount < (max_amount * (5/5)))
-		icon_state = "[initial(icon_state)]_9"
-	else if (amount == max_amount)
-		icon_state = "[initial(icon_state)]_10"
+	switch(amount)
+		if(0 to 5)
+			icon_state = "rods_[amount]"
+		if (5 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if (15 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if (30 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if (40 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if (max_amount)
+			icon_state = "[initial(icon_state)]_10"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
