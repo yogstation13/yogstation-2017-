@@ -937,7 +937,7 @@ var/global/list/possible_items_special = list()
 	var/bloodtarget
 
 /datum/objective/blood/update_explanation_text()
-	explanation_text = "Earn [bloodtarget] before the shift ends."
+	explanation_text = "Earn [bloodtarget] units of blood before the shift ends."
 
 /datum/objective/blood/check_completion()
 	if(owner && owner.vampire)
