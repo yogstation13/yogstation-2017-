@@ -86,6 +86,18 @@
 					tear_clothes(user, target)
 
 /obj/item/zombie_hand/proc/tear_clothes(mob/user, mob/living/carbon/target) // 0 - full hit, 1 -- half hit
+
+	/*
+
+	Tear clothes work like this -
+
+	if the zombie aims at the head, it tears off whatever the target is wearing on their head.
+	if it's a NODROP sort of helmet, than it has a 45% chance of dis-engaging it.
+
+	if the zombie aims anywhere else, it tears off their suit. if the target doesn't have a suit, it starts shredding off
+	their clothes. it takes 2 hits to successfully tear off their clothes.
+
+	*/
 	if(user.zone_selected == "head" || user.zone_selected == "eyes" || user.zone_selected == "mouth")
 		if(!target.head)
 			return 0
@@ -94,14 +106,8 @@
 			if(prob(45))
 				target.head.attack_self(target) // technically hit, but they got off lucky.
 				return 1
-		if(target.head.armor["brute"])
-			if(!prob(target.head.armor["brute"]))
-				return 0
-			else
-				return 1
 		else
 			return 0
-	//if(user.zone_selected == "chest")
 	else
 		if(!ishuman(target))
 			return 0
@@ -113,15 +119,6 @@
 			target_h.wear_suit.visible_message("<span class='danger'>[user] tears through [target]'s [target_h.wear_suit].</span>",\
 									"<span class='danger'>[user] tears through [target]'s [target_h.wear_suit].</span>")
 			target_h.unEquip(target_h.wear_suit)
-			if(!prob(target_h.wear_suit.armor["brute"]))
-				return 0
-			if(target_h.w_uniform.armor["brute"]) // if we have armor, we roll for it.
-				if(!prob(target_h.w_uniform.armor["brute"])) // checks if armor failed
-					return 0
-				else
-					return 1 // blocked
-			else
-				return 0
 		else
 			if(target_h.w_uniform)
 				if(istype(target_h.w_uniform, /obj/item/clothing/under))
@@ -130,10 +127,10 @@
 					var/verbose = pick("shreds", "tears", "rips through", "slices", "breaks", "bites into")
 					target_h.w_uniform.visible_message("<span class='danger'>[user] [verbose] [target]'s [target_h.w_uniform].<span>",\
 								"<span class='danger'>[user] [verbose] [target]'s [target_h.w_uniform].<span>")
-					if(prob(U.tearhealth))
-						return 1
-					else
+					if(target_h.w_uniform)
 						return 0
+					else
+						return 1
 				return 0
 
 /obj/item/zombie_hand/proc/tear_airlock(obj/machinery/door/airlock/A, mob/user)
