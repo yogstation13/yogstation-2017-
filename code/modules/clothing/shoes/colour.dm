@@ -124,7 +124,7 @@
 	name = "black and red trainers"
 	icon_state = "yeezy_red"
 	item_color = "yeezy_red"
-	desc = "Wait a minute, these look... eh, probably not. The syndicate only wear combat boots."
+	desc = "Who said that syndicate operatives only wear combat boots?"
 
 
 /obj/item/clothing/shoes/sneakers/nmd
