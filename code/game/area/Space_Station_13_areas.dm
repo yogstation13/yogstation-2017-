@@ -991,7 +991,7 @@ var/list/teleportlocs = list()
 	sound_env = LARGE_ENCLOSED
 	ambientsounds = list('sound/ambience/ambimystery.ogg', 'sound/ambience/ambiruin7.ogg' ,'sound/ambience/ambiruin6.ogg',\
 	'sound/ambience/ambitech.ogg' ,'sound/ambience/ambitech2.ogg' ,'sound/ambience/ambitech3.ogg',\
-	'sound/ambience/ambidanger' ,'sound/ambience/ambidanger2.ogg')
+	'sound/ambience/ambidanger.ogg' ,'sound/ambience/ambidanger2.ogg')
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
@@ -1306,7 +1306,7 @@ var/list/teleportlocs = list()
 	sound_env = LARGE_ENCLOSED
 	ambientsounds = list('sound/ambience/ambimystery.ogg', 'sound/ambience/ambiruin7.ogg' ,'sound/ambience/ambiruin6.ogg',\
 	'sound/ambience/ambitech.ogg' ,'sound/ambience/ambitech2.ogg' ,'sound/ambience/ambitech3.ogg',\
-	'sound/ambience/ambidanger' ,'sound/ambience/ambidanger2.ogg')
+	'sound/ambience/ambidanger.ogg' ,'sound/ambience/ambidanger2.ogg')
 
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
