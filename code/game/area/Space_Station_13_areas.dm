@@ -172,8 +172,7 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	sound_env = LARGE_ENCLOSED
-	list(
-'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
+	list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
