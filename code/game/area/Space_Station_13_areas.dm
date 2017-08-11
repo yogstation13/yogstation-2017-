@@ -172,7 +172,7 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	sound_env = LARGE_ENCLOSED
-	list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
+	ambient sounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
@@ -180,10 +180,10 @@ var/list/teleportlocs = list()
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	sound_env = LARGE_ENCLOSED
-	list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
+	ambient sounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
 	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
-	  'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',
-		'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
+	  'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+	'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 
 /area/start
 	name = "start area"
@@ -999,7 +999,7 @@ var/list/teleportlocs = list()
 	sound_env = LARGE_ENCLOSED
 	ambientsounds = list('sound/ambience/ambimystery.ogg', 'sound/ambience/ambiruin7.ogg' ,'sound/ambience/ambiruin6.ogg',\
 	'sound/ambience/ambitech.ogg' ,'sound/ambience/ambitech2.ogg' ,'sound/ambience/ambitech3.ogg',\
-	'sound/ambience' ,'sound/ambience/ambidanger2.ogg')
+	'sound/ambience/ambidanger.ogg' ,'sound/ambience/ambidanger2.ogg')
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
