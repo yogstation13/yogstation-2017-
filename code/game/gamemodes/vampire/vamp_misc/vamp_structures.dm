@@ -21,7 +21,7 @@
 	if(pulledby)
 		if(vdatum.vampire != pulledby)
 			pulledby.stop_pulling()
-			pulledby << "<span class='notice'>You oddly lose grip of [src].</span>"
+			pulledby << "<span class='notice'>You somehow lose grip of [src].</span>"
 
 /obj/structure/closet/coffin/vampiric/Destroy()
 	vdatum.coffin = null

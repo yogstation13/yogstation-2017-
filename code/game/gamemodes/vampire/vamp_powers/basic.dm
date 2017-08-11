@@ -57,7 +57,7 @@
 	if(target.stat == DEAD)
 		drainrate = 30
 		drainpayoff = 1
-		H << "<span class='alertvampire'>This one has a strange odor. It won't do much for you because they're dead.</span>"
+		H << "<span class='alertvampire'>It's always harder to collect old blood from corpses.</span>"
 
 	playsound(H.loc,'sound/magic/Demon_consume.ogg', rand(10,30), 1)
 	H.visible_message("<span class='warning'>[H] sinks their fangs into [target]!.", \
