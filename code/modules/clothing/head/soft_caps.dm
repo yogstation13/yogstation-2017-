@@ -66,6 +66,13 @@
 	item_color = "green"
 	dog_fashion = null
 
+/obj/item/clothing/head/soft/superb
+	name = "square logo cap"
+	desc = "It has a strange logo on it which is apparently worth 200 credits."
+	icon_state = "supsoft"
+	item_color = "sup"
+	dog_fashion = null
+
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow colour."

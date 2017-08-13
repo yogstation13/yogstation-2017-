@@ -1968,6 +1968,7 @@
 #include "code\modules\vehicles\scooter.dm"
 #include "code\modules\vehicles\secway.dm"
 #include "code\modules\vehicles\speedbike.dm"
+#include "code\modules\vehicles\sportscar.dm"
 #include "code\modules\vehicles\vehicle.dm"
 #include "code\modules\webhook\webhook.dm"
 #include "code\modules\zombie\items.dm"

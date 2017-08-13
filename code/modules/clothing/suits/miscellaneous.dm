@@ -539,18 +539,18 @@
 //hoody
 
 /obj/item/clothing/suit/hooded/wintercoat/superb
-	name = "superb hoodie"
+	name = "red square logo hoodie"
 	icon_state = "coatsuperb"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	hoodtype = /obj/item/clothing/head/winterhood/superb
-	desc = "Superb's newest SS13 drop hoodie, even just looking at it makes you feel cool."
+	desc = "A hoodie with a strange red and white logo on it, even just looking at it makes you feel cool."
 
 /obj/item/clothing/head/winterhood/superb
 	icon_state = "winterhood_superb"
 
 
 /obj/item/clothing/suit/hooded/wintercoat/bape
-	name = "snape camo hoodie"
+	name = "camo hoodie"
 	icon_state = "coatbape"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	hoodtype = /obj/item/clothing/head/winterhood/bape
@@ -558,3 +558,33 @@
 
 /obj/item/clothing/head/winterhood/bape
 	icon_state = "winterhood_bape"
+
+
+//Track jackets
+
+/obj/item/clothing/suit/toggle/trackjacket
+	name = "oreo track jacket"
+	desc = "A sporty coat that can be unzipped."
+	icon_state = "trackjacket"
+	item_state = "trackjacket"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+	togglename = "zipper"
+
+/obj/item/clothing/suit/toggle/trackjacket/white
+	name = "blue and white track jacket"
+	desc = "A sporty coat that can be unzipped. It features blue accents."
+	icon_state = "trackjacket_white"
+	item_state = "trackjacket_white"
+
+/obj/item/clothing/suit/toggle/trackjacket/paint
+	name = "paint splat track jacket"
+	desc = "A track jacket that has a paint splat design on it. It looks kinda like a galaxy, neat."
+	icon_state = "trackjacket_paint"
+	item_state = "trackjacket_paint"
+
+/obj/item/clothing/suit/toggle/trackjacket/superb
+	name = "gold track jacket"
+	desc = "A track jacket that has golden accents and an odd design. A tag on it says Lewis Wheaton(tm)."
+	icon_state = "trackjacket_lv"
+	item_state = "trackjacket_lv"
