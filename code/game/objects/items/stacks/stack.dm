@@ -62,12 +62,12 @@
 	if(novariants)
 		return ..()
 	var/fifthOfStack = max_amount / 5
-	if(amount == 1)
+	if(amount <= 1)
 		icon_state = initial(icon_state)
-	else if(amount == max_amount)
+	else if(amount >= max_amount)
 		icon_state = "[initial(icon_state)]_7"
 	else
-		icon_state = "[initial(icon_state)]_[round(amount / fifthOfStack, 1)]"
+		icon_state = "[initial(icon_state)]_[max(2, round(amount / fifthOfStack, 1))]"
 
 	..()
 
