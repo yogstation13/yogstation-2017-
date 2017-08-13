@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - bugfix: "Lava can no longer spawn in the abductor terror ship."
+  - bugfix: "Fake ash storms no longer look like real ash storms."
