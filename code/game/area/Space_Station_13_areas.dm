@@ -117,6 +117,7 @@ var/list/teleportlocs = list()
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/mapgen_protected
+	icon_state = "mapgen_protect"
 	mapgen_protected = 1
 
 /area/space/nearstation
