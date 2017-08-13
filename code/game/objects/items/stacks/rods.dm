@@ -32,13 +32,13 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	switch(amount)
 		if(0 to 5)
 			icon_state = "rods_[amount]"
-		if (5 to 15)
+		if (6 to 15)
 			icon_state = "[initial(icon_state)]_6"
-		if (15 to 30)
+		if (16 to 30)
 			icon_state = "[initial(icon_state)]_7"
-		if (30 to 40)
+		if (31 to 40)
 			icon_state = "[initial(icon_state)]_8"
-		if (40 to 49)
+		if (41 to 49)
 			icon_state = "[initial(icon_state)]_9"
 		if (50)
 			icon_state = "[initial(icon_state)]_10"
