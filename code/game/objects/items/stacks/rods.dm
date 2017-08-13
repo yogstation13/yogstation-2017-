@@ -40,7 +40,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 			icon_state = "[initial(icon_state)]_8"
 		if (40 to 49)
 			icon_state = "[initial(icon_state)]_9"
-		if (max_amount)
+		if (50)
 			icon_state = "[initial(icon_state)]_10"
 
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
