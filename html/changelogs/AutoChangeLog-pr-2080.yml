@@ -1,0 +1,5 @@
+author: Super3222
+delete-after: True
+changes: 
+  - rscadd: "New Traitor Objective: Steal the Rapid Engineering Device!"
+  - rscdel: "The Syndicate are no longer interested in stealing the CE's magboots."
