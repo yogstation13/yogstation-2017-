@@ -1,0 +1,4 @@
+author: monster860
+delete-after: True
+changes: 
+  - tweak: "Chem dispensers can now always dispense 1 unit of chemicals."
