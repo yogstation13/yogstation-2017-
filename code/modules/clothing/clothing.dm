@@ -394,7 +394,7 @@ BLIND     // can't see anything
 	if(!canbetorn)
 		return
 
-	while(var/count = ripcount, count > 0, ripcount--)
+	for(var/count = ripcount, count > 0, ripcount--)
 		take_teardamage(20)
 		permeability_coefficient += 0.20
 		if (armor)
