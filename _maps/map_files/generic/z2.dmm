@@ -4256,7 +4256,7 @@
 	},
 /area/syndicate_mothership)
 "oj" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	icon_state = "toilet00";
 	dir = 8
 	},

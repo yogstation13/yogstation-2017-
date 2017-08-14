@@ -57,6 +57,7 @@
 
 			if(viruslist)
 				investigate_log("[user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]", "viro")
+				log_game("VIRO: [user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]")
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)

@@ -110,8 +110,23 @@
 	name = "collectable wizard's hat"
 	desc = "NOTE: Any magical powers gained from wearing this hat are purely coincidental."
 	icon_state = "wizard"
-
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+
+/obj/item/clothing/head/collectible/wizard/red
+	icon_state = "redwizard"
+	dog_fashion = /datum/dog_fashion/head/red_wizard
+
+/obj/item/clothing/head/collectible/wizard/yellow
+	icon_state = "yellowwizard"
+	dog_fashion = null
+
+/obj/item/clothing/head/collectible/wizard/black
+	icon_state = "blackwizard"
+	dog_fashion = null
+
+/obj/item/clothing/head/collectible/wizard/marisa
+	icon_state = "marisa"
+	dog_fashion = null
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"

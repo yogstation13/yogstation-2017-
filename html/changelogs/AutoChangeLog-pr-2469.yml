@@ -1,0 +1,4 @@
+author: Changelingrain
+delete-after: True
+changes: 
+  - rscadd: "The celestial gateway can now take damage, but not be immediately deleted by, bombs."

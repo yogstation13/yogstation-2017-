@@ -1,6 +1,6 @@
 /obj/structure/chair
 	name = "chair"
-	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "You sit in this. Either by will or force. Sometimes you can drag them. \n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = 1
@@ -19,6 +19,7 @@
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user)
 	. = ..()
+	playsound(loc, "buckle", 50, 1, -1)
 	if(.)
 		var/obj/item/whoopee/W = locate() in src
 		if(W)
@@ -49,7 +50,7 @@
 	..()
 	handle_rotation()
 	if(creates_scraping_noise)
-		playsound(loc, scrapingsound, 3, 1)
+		playsound(loc, scrapingsound, 25, 1)
 
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)
