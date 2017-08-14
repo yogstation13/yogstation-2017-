@@ -391,7 +391,10 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/proc/handle_tear(mob/user, ripcount = 1)
-	if (canbetorn)
+	if(!canbetorn)
+		return
+
+	while(var/count = ripcount, count > 0, ripcount--)
 		take_teardamage(20)
 		permeability_coefficient += 0.20
 		if (armor)
@@ -404,13 +407,7 @@ BLIND     // can't see anything
 				new /obj/item/clothing/torncloth(user.loc)
 				if(!qdeleted(src))
 					user.visible_message("You hear cloth tearing.", "A segment of [src] falls away to the floor, torn apart.", "*riiip*")
-
-		var/new_ripcount = ripcount - 1
-		if(ripcount)
-			handle_tear(user, ripcount = new_ripcount)
-		return 1
-	else
-		return 0
+	return 1
 
 /obj/item/clothing/under/break_message()
 	return "[src] falls away to tatters, stripped to its barest seams."
