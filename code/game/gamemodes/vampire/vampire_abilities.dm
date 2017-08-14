@@ -73,12 +73,12 @@ This is practically custom spell code like alien or changeling.
 /obj/effect/proc_holder/vampire/proc/checkbloodcost(mob/living/carbon/human/H)
 	if(blood_cost)
 		if(H.mind.vampire)
-			if(H.mind.vampire.bloodcount - blood_cost < 0)
+			if(H.mind.vampire.bloodcount - blood_cost <= 0)
 				H << "<span class='alertvampire'>You lack the blood to perform this technique...</span>"
 				return FALSE
 			else
 				if(req_bloodcount)
-					if(H.mind.vampire.bloodcount < req_bloodcount)
+					if(H.mind.vampire.bloodcount <= req_bloodcount)
 						H << "<span class='alertvampire'>You need at least [req_bloodcount] to use this technique...</span>"
 						return FALSE
 				return TRUE
