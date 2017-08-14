@@ -66,7 +66,7 @@
 			infection = new(target)
 
 /obj/item/zombie_hand/proc/check_feast(mob/living/target, mob/living/user)
-	if(target.stat == DEAD && target.health > -200 || target.resting)
+	if( (target.stat == DEAD && target.health > -200) || target.resting)
 		if(target.health > -200)
 			var/hp_gained = rand(5, 10)
 			target.adjustBruteLoss(force*2)
