@@ -50,7 +50,6 @@
 		D.dream.setInvisibility()	//If one new dude comes in, he will be visible, so redo the invisibility for all...
 	DB.forceMove(DS)
 	DB.ckey = C.ckey
-	C.ckey = "#[DB.ckey]"
 	setInvisibility()
 	DB.overlay_fullscreen("dream", /obj/screen/fullscreen/blind)
 	DB << dream.dream_message
