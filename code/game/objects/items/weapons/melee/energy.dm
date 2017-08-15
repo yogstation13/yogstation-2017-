@@ -101,6 +101,8 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
 	return
 
 /obj/item/weapon/melee/energy/proc/setIcon()
@@ -239,7 +241,7 @@
 /obj/item/weapon/melee/energy/sword/bikehorn
 	name = ""
 	desc = "An energy blade extends from the bikehorn. Where's your god now?"
-	var/image/blade
+	var/canSword = FALSE
 	var/obj/item/device/assembly/bikehorn/horn = new()
 
 /obj/item/weapon/melee/energy/sword/bikehorn/New()
@@ -247,7 +249,6 @@
 	name = horn.name
 	icon_state = horn.icon_state
 	icon = horn.icon
-	blade = image(layer=layer-0.1,icon=horn.icon)
 	horn.forceMove(src)
 
 /obj/item/weapon/melee/energy/sword/bikehorn/examine(mob/user)
@@ -257,14 +258,20 @@
 		..()
 
 /obj/item/weapon/melee/energy/sword/bikehorn/attack_self(mob/living/carbon/L)
-	horn.attack_self(L)
+	if(canSword)
+		activate(L)
+		playsound(loc, 'sound/items/bikehorn.ogg', 80, 1)
+	else
+		horn.attack_self(L)
 
 
 /obj/item/weapon/melee/energy/sword/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!active)
 		horn.attack(M,user)
 	else
+		playsound(loc, 'sound/items/bikehorn.ogg', 80, 1)
 		..()
+
 
 /obj/item/weapon/melee/energy/sword/bikehorn/Crossed(mob/living/L)
 	if(!active)
@@ -274,7 +281,7 @@
 
 /obj/item/weapon/melee/energy/sword/bikehorn/setIcon()
 	if(active)
-		item_state = "swordred"
+		item_state = "swordpink"
 		icon = 'icons/obj/weapons.dmi'
 		icon_state = "ehonk"
 	else
@@ -285,6 +292,11 @@
 
 
 /obj/item/weapon/melee/energy/sword/bikehorn/AltClick(mob/living/carbon/L)
-	activate(L)
-	L.update_inv_l_hand()
-	L.update_inv_r_hand()
+	if(L.mind.special_role)
+		canSword = !canSword
+		if(canSword)
+			L << "<span class='notice'>You squeeze the [name]. Honking it will now extend an esword.</span>"
+		else
+			L << "<span class='notice'>You squeeze the [name]. It functions like a normal bikehorn again.</span>"
+		if(active)
+			activate(L)
