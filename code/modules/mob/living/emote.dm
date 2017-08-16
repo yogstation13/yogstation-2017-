@@ -85,6 +85,11 @@
 			message = "<B>[src]</B> coughs!"
 			m_type = 2
 
+		if ("dab","dabs")
+			if (!src.restrained())
+				message = "<B>[src]</B> dabs."
+				m_type = 1
+
 		if ("dance","dances")
 			if (!src.restrained())
 				message = "<B>[src]</B> dances around happily."
