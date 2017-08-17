@@ -1077,7 +1077,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A bikehorn with a built-in energy sword. Activate through Alt-Click."
 	item = /obj/item/weapon/melee/energy/sword/bikehorn
 	restricted_roles = list("Clown")
-	cost = 7
+	cost = 9
 
 // Pointless
 /datum/uplink_item/badass
