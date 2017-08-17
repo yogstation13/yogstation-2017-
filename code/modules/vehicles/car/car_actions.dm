@@ -1,14 +1,16 @@
 /obj/vehicle/car/proc/GrantActions(mob/living/user)
 	if(horn_sound)
 		horn_action.Grant(user, src)
-	start_action.Grant(user, src)
 	eject_action.Grant(user, src)
+	start_action.Grant(user, src)
+	dump_action.Grant(user, src)
 
 /obj/vehicle/car/proc/RemoveActions(mob/living/user)
 	if(horn_sound)
 		horn_action.Remove(user)
-	start_action.Remove(user)
 	eject_action.Remove(user)
+	start_action.Remove(user)
+	dump_action.Remove(user)
 
 /datum/action/innate/car
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
@@ -39,7 +41,7 @@
 	var/last_honk_time
 
 /datum/action/innate/car/car_horn/Activate()
-	if(world.time - last_honk_time > car.horn.honk_spam_time)
+	if(world.time - last_honk_time > car.horn_spam_time)
 		car.visible_message("<span class='danger'>[car] loudly honks</span>")
 		car.driver << "<span class='notice'>You press the car horn.</span>"
 		playsound(car.loc, car.horn_sound, 100)
@@ -54,10 +56,20 @@
 /datum/action/innate/car/car_start/Activate()
 	if(car.CanStart())
 		if(car.on)
+			car.icon_state = "[initial(car.icon_state)]"
 			button_icon_state = "car_eject"
-			car.icon_state = "[initial(car.icon_state)]_drive"
 		else
 			button_icon_state = "car_horn"
-			car.icon_state = "[initial(car.icon_state)]"
+			car.icon_state = "[initial(car.icon_state)]_drive"
 			playsound(car.loc, 'sound/effects/car_start.ogg', 50)
 		car.on = !car.on
+
+/datum/action/innate/car/dump_load
+	name = "Dump contents"
+	button_icon_state = "car_horn"
+
+/datum/action/innate/car/dump_load/Activate()
+	car.visible_message("<span class='danger'>[car] dumps all of it's contents on the floor.	</span>")
+	if(car.loaded_humans.len)
+		car.unload_all_humans()
+	car.empty_object_contents()
