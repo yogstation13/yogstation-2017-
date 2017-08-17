@@ -66,12 +66,10 @@
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 		if(23)
 			new /obj/item/organ/heart/cursed/wizard(src)
-		else
-			switch(rand(1,2))
-				if(1)
-					new /obj/item/kinetic_part/core/vampiric(src)
-				if(2)
-					new /obj/item/kinetic_part/charger/triple_shot(src)
+		if(24)
+			new /obj/item/kinetic_part/core/vampiric(src)
+		if(25)
+			new /obj/item/kinetic_part/charger/triple_shot(src)
 
 
 //Spooky special loot
