@@ -1,13 +1,17 @@
 /obj/vehicle/car/proc/GrantActions(mob/living/user)
-	if(horn_sound)
-		horn_action.Grant(user, src)
 	eject_action.Grant(user, src)
 	start_action.Grant(user, src)
 	dump_action.Grant(user, src)
+	if(horn_sound)
+		horn_action.Grant(user, src)
+	if(can_load_people)
+		count_action.Grant(user, src)
 
 /obj/vehicle/car/proc/RemoveActions(mob/living/user)
 	if(horn_sound)
 		horn_action.Remove(user)
+	if(can_load_people)
+		count_action.Remove(user)
 	eject_action.Remove(user)
 	start_action.Remove(user)
 	dump_action.Remove(user)
@@ -51,23 +55,53 @@
 
 /datum/action/innate/car/car_start
 	name = "Toggle Ignition"
-	button_icon_state = "car_horn"
+	button_icon_state = "car_off"
 
 /datum/action/innate/car/car_start/Activate()
-	if(car.CanStart())
-		if(car.on)
-			button_icon_state = "car_eject"
-		else
-			button_icon_state = "car_horn"
-			playsound(car.loc, 'sound/effects/car_start.ogg', 50)
-		car.on = !car.on
+	if(car.on)
+		button_icon_state = "car_off"
+		car.on = FALSE
+	else if(car.CanStart())
+		button_icon_state = "car_on"
+		playsound(car.loc, 'sound/effects/car_start.ogg', 50)
+		car.on = TRUE
+	UpdateButtonIcon()
 
 /datum/action/innate/car/dump_load
 	name = "Dump contents"
-	button_icon_state = "car_horn"
+	button_icon_state = "car_dump"
 
 /datum/action/innate/car/dump_load/Activate()
 	car.visible_message("<span class='danger'>[car] dumps all of it's contents on the floor.	</span>")
-	if(car.loaded_humans.len)
-		car.unload_all_humans()
-	car.empty_object_contents()
+	car.dump_contents()
+
+/datum/action/innate/car/kidnap_count
+	name = "Kidnap Count"
+	button_icon_state = "car_count0"
+
+/datum/action/innate/car/kidnap_count/proc/update_counter()
+	var/count = car.loaded_humans.len
+	switch(count)
+		if(0)
+			button_icon_state = "car_count0"
+		if(1)
+			button_icon_state = "car_count1"
+		if(2)
+			button_icon_state = "car_count2"
+		if(3)
+			button_icon_state = "car_count3"
+		if(4)
+			button_icon_state = "car_count4"
+		if(5)
+			button_icon_state = "car_count5"
+		if(6)
+			button_icon_state = "car_count6"
+		if(7)
+			button_icon_state = "car_count7"
+		if(8)
+			button_icon_state = "car_count8"
+		if(9)
+			button_icon_state = "car_count9"
+		if(10 to INFINITY)
+			button_icon_state = "car_count10"
+	UpdateButtonIcon()

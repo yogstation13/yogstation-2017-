@@ -14,6 +14,10 @@
 	var/horn_sound = null //Leave empty to have no horn on the car
 	var/horn_spam_time = 20 //Cooldown inbetween indiviudal honks
 
+	var/last_enginesound_time //To prevent sound spam
+	var/engine_sound_length = 20 //Set this to the length of the engine sound
+	var/engine_sound = 'sound/effects/carrev.ogg'
+
 	var/ramming = FALSE //Whether or not this car is ramming people.
 	var/last_crash_time //to prevent double-crashing into walls.
 	var/list/ramming_sounds = list() //Sounds for when you hit a person
@@ -28,6 +32,7 @@
 	var/datum/action/innate/car/car_start/start_action = new
 	var/datum/action/innate/car/car_horn/horn_action = new
 	var/datum/action/innate/car/dump_load/dump_action = new
+	var/datum/action/innate/car/kidnap_count/count_action = new
 
 /obj/vehicle/car/Destroy()
 	exit_car()
@@ -48,7 +53,7 @@
 			H.Weaken(3)
 			if(ramming_sounds.len)
 				playsound(loc, pick(ramming_sounds), 75)
-		else if(world.time - last_crash_time > 20 && !istype(M, /obj/machinery/door) && istype(M, /obj) || istype(M, /turf/closed))
+		else if(world.time - last_crash_time > 20 && !istype(M, /obj/machinery/door) && (istype(M, /obj) || istype(M, /turf/closed)))
 			last_crash_time = world.time
 			src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 			if(crash_sounds.len)
@@ -56,16 +61,13 @@
 			if(driver) //avoid nasty runtimes
 				driver.Weaken(3)
 			exit_car()
-			if(loaded_humans.len)
-				unload_all_humans()
-			empty_object_contents()
+			dump_contents()
 
 /obj/vehicle/car/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if(user.incapacitated() || user.lying	|| !ishuman(user))
 		return
 	if(!istype(target) || target.buckled)
 		return
-
 	if(user == target)
 		if(driver)
 			user << "<span class='warning'>[name] is already occupied!</span>"
@@ -76,7 +78,7 @@
 				return
 			user.visible_message("<span class='danger'>[user] gets into [src]</span>")
 			enter_car(user)
-	else if(can_load_people)
+	else if(can_load_people && user == driver)
 		user.visible_message("<span class='danger'>[user] starts stuffing [target] into [src]</span>")
 		if(do_after(user, 20, target = src))
 			if(load_sounds.len)
@@ -84,12 +86,32 @@
 			user.visible_message("<span class='danger'>[user] stuffs [target] into [src]</span>")
 			load_human(target)
 
+/obj/vehicle/car/MouseDrop(atom/over_object)
+	if(driver)
+		usr.visible_message("<span class='danger'>[usr] starts dragging [driver] out of [src]</span>")
+		if(do_after(usr, 20, target = src))
+			usr.visible_message("<span class='danger'>[usr] drags [driver] out of [src]</span>")
+			exit_car()
+			dump_contents()
+
 /obj/vehicle/car/relaymove(mob/user, direction)
 	if(user != driver) //don't want our victims driving off now do we
 		return 0
 	if(!on)
 		return 0
+	if(world.time - last_enginesound_time > engine_sound_length && engine_sound)
+		last_enginesound_time = world.time
+		playsound(src, engine_sound, 75)
 	.=..()
+
+/obj/vehicle/car/container_resist(mob/living/user)
+	if(user == driver)
+		exit_car()
+	else
+		user << "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>"
+		if(do_after(user, 200, target = src))
+			user.visible_message("<span class='danger'>[user] gets out of [src]</span>")
+			unload_human(user)
 
 /obj/vehicle/car/proc/enter_car(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
@@ -121,14 +143,16 @@
 /obj/vehicle/car/proc/load_human(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
-	if(H && H in range(1))
+	if(H && H in range(1, src))
 		loaded_humans += H
-	H.forceMove(src)
+		H.forceMove(src)
+		count_action.UpdateButtonIcon()
 
 /obj/vehicle/car/proc/unload_human(mob/living/carbon/human/H)
 	var/targetturf = get_turf(src)
 	H.forceMove(targetturf)
 	loaded_humans -= H
+	count_action.UpdateButtonIcon()
 
 /obj/vehicle/car/proc/unload_all_humans()
 	for(var/mob/living/carbon/human/H in loaded_humans)
@@ -140,3 +164,8 @@
 		return 1
 	else
 		driver << "<span class='warning'>You need to hold the key to start [src]</span>"
+
+/obj/vehicle/car/proc/dump_contents()
+	if(loaded_humans.len)
+		unload_all_humans()
+	empty_object_contents()
