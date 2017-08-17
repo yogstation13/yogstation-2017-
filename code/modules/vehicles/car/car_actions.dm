@@ -44,7 +44,7 @@
 	if(world.time - last_honk_time > car.horn_spam_time)
 		car.visible_message("<span class='danger'>[car] loudly honks</span>")
 		car.driver << "<span class='notice'>You press the car horn.</span>"
-		playsound(car.loc, car.horn_sound, 100)
+		playsound(car.loc, car.horn_sound, 75)
 		last_honk_time = world.time
 	else
 		car.driver << "<span class='notice'>The horn needs to recover first.</span>"
@@ -56,11 +56,9 @@
 /datum/action/innate/car/car_start/Activate()
 	if(car.CanStart())
 		if(car.on)
-			car.icon_state = "[initial(car.icon_state)]"
 			button_icon_state = "car_eject"
 		else
 			button_icon_state = "car_horn"
-			car.icon_state = "[initial(car.icon_state)]_drive"
 			playsound(car.loc, 'sound/effects/car_start.ogg', 50)
 		car.on = !car.on
 

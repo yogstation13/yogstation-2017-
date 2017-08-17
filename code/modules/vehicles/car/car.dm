@@ -14,7 +14,7 @@
 	var/horn_spam_time = 20 //Cooldown inbetween indiviudal honks
 
 	var/ramming = FALSE //Whether or not this car is ramming people.
-	var/rammed //To prevent double-ramming due to lag
+	var/last_crash_time //to prevent double-crashing into walls.
 	var/list/ramming_sounds = list() //Sounds for when you hit a person
 	var/list/crash_sounds = list()  //Sounds for when you crash into a structure
 
@@ -40,15 +40,14 @@
 	. = ..()
 	if(auto_door_open && istype(M, /obj/machinery/door))
 		M.Bumped(driver)
-	if(ramming && !rammed)
-		rammed = TRUE
+	if(ramming)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			src.visible_message("<span class='danger'>[src] rams into [H] and knocks them down!</span>")
 			H.Weaken(3)
 			if(ramming_sounds.len)
 				playsound(loc, pick(ramming_sounds), 75)
-		else if(istype(M, /obj/structure) || istype(M, /turf/closed))
+		else if(!istype(M, /obj/machinery/door) && world.time - last_crash_time > 20 && istype(M, /obj) || istype(M, /turf/closed))
 			src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 			if(crash_sounds.len)
 				playsound(loc, pick(crash_sounds), 75)
@@ -58,7 +57,7 @@
 			if(loaded_humans.len)
 				unload_all_humans()
 			empty_object_contents()
-		rammed = FALSE
+			last_crash_time = world.time
 
 /obj/vehicle/car/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if(user.incapacitated() || user.lying	|| !ishuman(user))
@@ -82,9 +81,11 @@
 			user.visible_message("<span class='danger'>[user] stuffs [target] into [src]</span>")
 			load_human(target)
 
-/obj/vehicle/car/relaymove(driver, direction)
+/obj/vehicle/car/relaymove(mob/user, direction)
+	if(user != driver) //don't want our victims driving off now do we
+		return 0
 	if(!on)
-		return
+		return 0
 	.=..()
 
 /obj/vehicle/car/proc/enter_car(mob/living/carbon/human/H)
@@ -117,12 +118,12 @@
 /obj/vehicle/car/proc/load_human(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
-	if(H && H.client && H in range(1))
-		loaded_humans += H
+	loaded_humans += H
 	H.forceMove(src)
 
-/obj/vehicle/car/proc/unload_human(mob/living/carbon/human/H, var/atom/newloc = loc)
-	H.forceMove(newloc)
+/obj/vehicle/car/proc/unload_human(mob/living/carbon/human/H)
+	var/targetturf = get_turf(src)
+	H.forceMove(targetturf)
 	loaded_humans -= H
 
 /obj/vehicle/car/proc/unload_all_humans()
