@@ -3,6 +3,7 @@
 	icon_state = "car"
 	vehicle_move_delay = 1
 	anchored = 1
+	layer = ABOVE_ALL_MOB_LAYER
 
 	var/mob/living/carbon/driver
 	var/driver_visible =	FALSE  //Driver visible uses buckling, driver not visible uses contents. Using contents is preferable
@@ -47,7 +48,8 @@
 			H.Weaken(3)
 			if(ramming_sounds.len)
 				playsound(loc, pick(ramming_sounds), 75)
-		else if(!istype(M, /obj/machinery/door) && world.time - last_crash_time > 20 && istype(M, /obj) || istype(M, /turf/closed))
+		else if(world.time - last_crash_time > 20 && !istype(M, /obj/machinery/door) && istype(M, /obj) || istype(M, /turf/closed))
+			last_crash_time = world.time
 			src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 			if(crash_sounds.len)
 				playsound(loc, pick(crash_sounds), 75)
@@ -57,7 +59,6 @@
 			if(loaded_humans.len)
 				unload_all_humans()
 			empty_object_contents()
-			last_crash_time = world.time
 
 /obj/vehicle/car/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if(user.incapacitated() || user.lying	|| !ishuman(user))
@@ -71,6 +72,8 @@
 			return
 		user.visible_message("<span class='danger'>[user] starts getting into [src]</span>")
 		if(do_after(user, 20, target = src))
+			if(driver)//inb4 someone got in sneaky peaky like
+				return
 			user.visible_message("<span class='danger'>[user] gets into [src]</span>")
 			enter_car(user)
 	else if(can_load_people)
@@ -118,7 +121,8 @@
 /obj/vehicle/car/proc/load_human(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
-	loaded_humans += H
+	if(H && H in range(1))
+		loaded_humans += H
 	H.forceMove(src)
 
 /obj/vehicle/car/proc/unload_human(mob/living/carbon/human/H)
