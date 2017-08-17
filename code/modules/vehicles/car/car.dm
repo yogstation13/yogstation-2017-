@@ -8,21 +8,12 @@
 	var/maxhealth = 150
 	var/health = 150
 
-	//Car parts
-	var/list/obj/item/car_part/installed_parts = list()
-
-	var/obj/item/car_part/engine/engine
-	var/obj/item/car_part/trunk/trunk
-	var/obj/item/car_part/fuel_can/fuel_can
-	var/obj/item/car_part/horn/horn
-	var/obj/item/car_part/utility/utility
-	var/obj/item/car_part/weapon/weapon
+	var/horn_sound = null //Leave empty to have no horn on the car
 
 	//Action datums
 	var/datum/action/innate/car/car_eject/eject_action = new
 	var/datum/action/innate/car/car_start/start_action = new
 	var/datum/action/innate/car/car_horn/horn_action = new
-	var/datum/action/innate/car/car_weapon/weapon_action = new
 
 /obj/vehicle/car/Destroy()
 	exit_car()
@@ -31,67 +22,6 @@
 	..()
 	if(driver)
 		user << "It seems to be occupied"
-
-/obj/vehicle/car/AltClick(mob/living/user)
-	if(trunk)
-		trunk.Toggle(user)
-
-/obj/vehicle/car/attackby(obj/item/W, mob/user)
-	if(on)
-		. = ..()
-	else if(istype(W, /obj/item/car_part/engine))
-		if(!engine)
-			user.visible_message("<span class='danger'>[user] puts [W] into [src]</span>")
-			engine = W
-			qdel(W)
-			vehicle_move_delay = engine.strength
-			installed_parts += W
-		else
-			user << "<span class='warning'>There is no room for [W]</span>"
-	else if(istype(W, /obj/item/car_part/trunk))
-		if(!trunk)
-			user.visible_message("<span class='danger'>[user] puts [W] into [src]</span>")
-			trunk = W
-			qdel(W)
-			installed_parts += W
-		else
-			user << "<span class='warning'>There is no room for [W]</span>"
-	else if(istype(W, /obj/item/car_part/fuel_can))
-		if(!fuel_can)
-			user.visible_message("<span class='danger'>[user] puts [W] into [src]</span>")
-			fuel_can = W
-			qdel(W)
-			installed_parts += W
-		else
-			user << "<span class='warning'>There is no room for [W]</span>"
-	else if(istype(W, /obj/item/car_part/horn))
-		if(!horn)
-			user.visible_message("<span class='danger'>[user] puts [W] into [src]</span>")
-			horn = W
-			qdel(W)
-			installed_parts += W
-		else
-			user << "<span class='warning'>There is no room for [W]</span>"
-	else if(istype(W, /obj/item/car_part/utility))
-		if(!utility)
-			user.visible_message("<span class='danger'>[user] puts [W] into [src]</span>")
-			utility = W
-			qdel(W)
-			installed_parts += W
-		else
-			user << "<span class='warning'>There is no room for [W]</span>"
-	else if(istype(W, /obj/item/car_part/weapon))
-		if(!weapon)
-			user.visible_message("<span class='danger'>[user] puts [W] into [src]</span>")
-			weapon = W
-			qdel(W)
-			installed_parts += W
-		else
-			user << "<span class='warning'>There is no room for [W]</span>"
-	else if(istype(W, /obj/item/weapon/wrench))
-		var/removed_part = input(user, "Remove which equipment?", null, null) as null|anything in installed_parts
-		user.put_in_hands(removed_part)
-		installed_parts -= W
 
 /obj/vehicle/car/Bump(atom/movable/M)
 	. = ..()
@@ -115,12 +45,6 @@
 
 /obj/vehicle/car/relaymove(mob/user, direction)
 	if(!on)
-		return
-	if(world.time < next_vehicle_move)
-		return
-	fuel_can.fuel -= engine.fuel_use
-	if(fuel_can.fuel < 5)
-		on = FALSE
 		return
 	.=..()
 
@@ -152,29 +76,7 @@
 	driver = null
 
 /obj/vehicle/car/proc/CanStart()
-	if(engine || fuel_can)
-		if(fuel_can.fuel > 5)
-			return 1
-
-/obj/vehicle/car/regular
-	name = "basic car"
-	pixel_x = -15
-
-/obj/vehicle/car/regular/New()
-	engine = new /obj/item/car_part/engine
-	installed_parts += engine
-	trunk = new /obj/item/car_part/trunk
-	installed_parts += trunk
-	fuel_can = new /obj/item/car_part/fuel_can
-	installed_parts += fuel_can
-	horn = new /obj/item/car_part/horn
-	installed_parts += horn
-	utility = new /obj/item/car_part/utility
-	installed_parts += utility
-	weapon = new /obj/item/car_part/weapon/projectile/tazer
-	installed_parts += weapon
-	weapon.my_car = src
-
+	return 1
 
 /*
 /obj/vehicle/car/clown
