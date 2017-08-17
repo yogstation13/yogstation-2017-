@@ -1,0 +1,5 @@
+author: " Partheo (and code by Floyd)"
+delete-after: true 
+changes: 
+  - rscadd: "You can now see the amount of materials in a stack by its icon"
+  - imageadd: "sexy new sprites for metal/glass/plasteel and rods"
