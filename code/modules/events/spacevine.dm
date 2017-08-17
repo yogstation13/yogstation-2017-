@@ -349,6 +349,10 @@
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
+	
+/obj/structure/spacevine/New()
+	..()
+	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 
 /obj/effect/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
@@ -359,7 +363,7 @@
 		if(!master.vines.len)
 			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
-			KZ.potency = min(100, master.mutativness * 10)
+			KZ.potency = min(100, master.mutativeness * 10)
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
@@ -444,18 +448,19 @@
 	var/spread_multiplier = 5
 	var/spread_cap = 30
 	var/list/mutations_list = list()
-	var/mutativness = 1
+	var/mutativeness = 1
 
-/obj/effect/spacevine_controller/New(loc, list/muts, mttv, spreading)
+/obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
+	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
-	if(mttv != null)
-		mutativness = mttv / 10
-	if(spreading != null)
-		spread_cap *= spreading / 50
-		spread_multiplier /= spreading / 50
-
+	if(potency != null)
+		mutativeness = potency / 10
+	if(production != null)
+		spread_cap *= production / 5
+		spread_multiplier /= production / 5
+		..()
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
 	return
 
@@ -480,7 +485,7 @@
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
 		SV.desc = parent.desc
-		if(prob(mutativness))
+		if(prob(mutativeness))
 			SV.mutations |= pick(mutations_list)
 			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
 			SV.color = randmut.hue
@@ -554,7 +559,7 @@
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
 		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-		buckle_mob(V)
+		buckle_mob(V, 1)
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
