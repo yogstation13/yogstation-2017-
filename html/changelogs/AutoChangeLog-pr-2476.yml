@@ -1,4 +1,3 @@
 author: matskuman5
-delete-after: True
-changes: 
-  - tweak: "Hollowed out books no longer make noise like bags when you interact with them."
+changes: []
+delete-after: true
