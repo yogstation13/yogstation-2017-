@@ -1,11 +1,17 @@
 /obj/vehicle/car/proc/GrantActions(mob/living/user)
-	if(src.honk_sound)
+	if(src.horn)
 		horn_action.Grant(user, src)
+	if(src.weapon)
+		weapon_action.Grant(user, src)
+	start_action.Grant(user, src)
 	eject_action.Grant(user, src)
+
 
 /obj/vehicle/car/proc/RemoveActions(mob/living/user)
 	horn_action.Remove(user)
+	start_action.Remove(user)
 	eject_action.Remove(user)
+	weapon_action.Remove(user)
 
 /datum/action/innate/car
 	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
@@ -36,10 +42,32 @@
 	var/last_honk_time
 
 /datum/action/innate/car/car_horn/Activate()
-	if(world.time - last_honk_time > car.honk_spam_time)
-		car.visible_message("<span class='danger'>The [car] loudly honks</span>")
+	if(world.time - last_honk_time > car.horn.honk_spam_time)
+		car.visible_message("<span class='danger'>[car] loudly honks</span>")
 		car.driver << "<span class='notice'>You press the car horn.</span>"
-		playsound(car.loc, car.honk_sound, 50)
+		playsound(car.loc, car.horn.honk_sound, 50)
 		last_honk_time = world.time
 	else
 		car.driver << "<span class='notice'>The horn needs to recover first.</span>"
+
+/datum/action/innate/car/car_start
+	name = "Toggle Ignition"
+	button_icon_state = "car_horn"
+
+/datum/action/innate/car/car_start/Activate()
+	if(car.CanStart())
+		if(car.on)
+			button_icon_state = "car_eject"
+			car.icon_state = "[initial(car.icon_state)]_drive"
+		else
+			button_icon_state = "car_horn"
+			car.icon_state = "[initial(car.icon_state)]"
+			playsound(car.loc, car.engine.start_sound, 50)
+		car.on = !car.on
+
+/datum/action/innate/car/car_weapon
+	name = "Fire Weapon"
+	button_icon_state = "car_horn"
+
+/datum/action/innate/car/car_weapon/Activate()
+	car.weapon.Fire()
