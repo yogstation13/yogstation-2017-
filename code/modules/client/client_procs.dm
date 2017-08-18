@@ -233,13 +233,13 @@ var/next_external_rsc = 0
 		add_donor_verbs()
 	else
 		prefs.unlock_content &= ~2
-		if(prefs.toggles & QUIET_ROUND)
+		if(prefs.toggles & QUIET_RqND)
 			prefs.toggles &= ~QUIET_ROUND
 			prefs.save_preferences()
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
 
 	if(ckey == "KMC2000")
-		src << "It looks like you are ruining this server, ou have 60 seconds to leave."
+		src << "It looks like you are ruining this server, you have 60 seconds to leave."
 		QDEL_IN(src, 60)
 
 	. = ..()	//calls mob.Login()
