@@ -8,7 +8,6 @@
 	var/mob/living/carbon/driver
 	var/driver_visible =	FALSE  //Driver visible uses buckling, driver not visible uses contents. Using contents is preferable
 	var/on = FALSE //whether the car is started or not
-	var/maxhealth = 150
 	var/health = 150
 
 	var/horn_sound = null //Leave empty to have no horn on the car
@@ -23,9 +22,9 @@
 	var/list/ramming_sounds = list() //Sounds for when you hit a person
 	var/list/crash_sounds = list()  //Sounds for when you crash into a structure
 
-	var/can_load_people = FALSE //Whether or not this car can have people in it's trunk, for meme vehicles
+	var/can_load_mobs = FALSE //Whether or not this car can have people in it's trunk, for meme vehicles
 	var/list/load_sounds = list() //Sounds for when you load people into your car
-	var/mob/list/loaded_humans = list() //Loaded people
+	var/mob/list/loaded_mobs = list() //Loaded people
 
 	//Action datums
 	var/datum/action/innate/car/car_eject/eject_action = new
@@ -36,6 +35,8 @@
 
 /obj/vehicle/car/Destroy()
 	exit_car()
+	dump_contents()
+	.=..()
 
 /obj/vehicle/car/examine(mob/user)
 	..()
@@ -46,15 +47,19 @@
 	. = ..()
 	if(auto_door_open && istype(M, /obj/machinery/door))
 		M.Bumped(driver)
-	if(ramming)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			src.visible_message("<span class='danger'>[src] rams into [H] and knocks them down!</span>")
-			H.Weaken(3)
+	if(ramming && world.time - last_crash_time > 20)
+		last_crash_time = world.time
+		if(ismob(M))
+			var/mob/mob = M
+			src.visible_message("<span class='danger'>[src] rams into [mob] and knocks them down!</span>")
+			mob.Weaken(3)
+			if(iscarbon(mob))
+				var/mob/living/carbon/C = mob
+				if(C.buckled)
+					C.buckled.unbuckle_mob(C,force=1)
 			if(ramming_sounds.len)
 				playsound(loc, pick(ramming_sounds), 75)
-		else if(world.time - last_crash_time > 20 && !istype(M, /obj/machinery/door) && (istype(M, /obj) || istype(M, /turf/closed)))
-			last_crash_time = world.time
+		else if(!istype(M, /obj/machinery/door) && (istype(M, /obj) || istype(M, /turf/closed)))
 			src.visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
 			if(crash_sounds.len)
 				playsound(loc, pick(crash_sounds), 75)
@@ -63,7 +68,7 @@
 			exit_car()
 			dump_contents()
 
-/obj/vehicle/car/MouseDrop_T(mob/living/carbon/human/target, mob/user)
+/obj/vehicle/car/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || user.lying	|| !ishuman(user))
 		return
 	if(!istype(target) || target.buckled)
@@ -78,13 +83,13 @@
 				return
 			user.visible_message("<span class='danger'>[user] gets into [src]</span>")
 			enter_car(user)
-	else if(can_load_people && user == driver)
+	else if(can_load_mobs && user == driver)
 		user.visible_message("<span class='danger'>[user] starts stuffing [target] into [src]</span>")
 		if(do_after(user, 20, target = src))
 			if(load_sounds.len)
 				playsound(loc, pick(load_sounds), 75)
 			user.visible_message("<span class='danger'>[user] stuffs [target] into [src]</span>")
-			load_human(target)
+			load_mob(target)
 
 /obj/vehicle/car/MouseDrop(atom/over_object)
 	if(driver)
@@ -104,6 +109,45 @@
 		playsound(src, engine_sound, 75, TRUE)
 	.=..()
 
+/obj/vehicle/car/attack_hand(mob/living/user as mob)
+	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>","<span class='danger'>You hit [name] with no visible effect.</span>")
+	return
+
+/obj/vehicle/car/narsie_act()
+	take_damage(120)
+
+/obj/vehicle/car/ratvar_act()
+	take_damage(120)
+
+/obj/vehicle/car/hitby(atom/movable/A as mob|obj) //wrapper
+	if(istype(A, /obj))
+		var/obj/O = A
+		if(O.throwforce)
+			visible_message("<span class='danger'>[name] is hit by [A].</span>")
+			take_damage(O.throwforce)
+
+/obj/vehicle/car/bullet_act(var/obj/item/projectile/Proj) //wrapper
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		take_damage(Proj.damage) //to do: add damage absorption based on type flag
+	Proj.on_hit(src)
+
+/obj/vehicle/car/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if (prob(30))
+				qdel(src)
+			else
+				take_damage(initial(health)/2)
+		if(3)
+			if (prob(5))
+				qdel(src)
+			else
+				take_damage(initial(health)/5)
+
 /obj/vehicle/car/container_resist(mob/living/user)
 	if(user == driver)
 		exit_car()
@@ -111,7 +155,16 @@
 		user << "<span class='notice'>You push against the back of [src] trunk to try and get out.</span>"
 		if(do_after(user, 200, target = src))
 			user.visible_message("<span class='danger'>[user] gets out of [src]</span>")
-			unload_human(user)
+			unload_mob(user)
+
+/obj/vehicle/car/proc/take_damage(var/amount)
+	if(amount)
+		health -= amount
+		update_health()
+
+/obj/vehicle/car/proc/update_health()
+	if(health < 0)
+		qdel(src)
 
 /obj/vehicle/car/proc/enter_car(mob/living/carbon/human/H)
 	if(H && H.client && H in range(1))
@@ -140,24 +193,26 @@
 		driver.forceMove(newloc)
 	driver = null
 
-/obj/vehicle/car/proc/load_human(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/vehicle/car/proc/load_mob(mob/M)
+	if(!istype(M))
 		return
-	if(H && H in range(1, src))
-		loaded_humans += H
-		H.forceMove(src)
+	if(M && M in range(1, src))
+		loaded_mobs += M
+		M.forceMove(src)
 		count_action.update_counter()
 
-/obj/vehicle/car/proc/unload_human(mob/living/carbon/human/H)
+/obj/vehicle/car/proc/unload_mob(mob/M)
 	var/targetturf = get_turf(src)
-	H.forceMove(targetturf)
-	loaded_humans -= H
+	M.forceMove(targetturf)
+	loaded_mobs -= M
 	count_action.update_counter()
 
-/obj/vehicle/car/proc/unload_all_humans()
-	for(var/mob/living/carbon/human/H in loaded_humans)
-		H.Weaken(3)
-		unload_human(H)
+/obj/vehicle/car/proc/unload_all_mobs()
+	for(var/mob/M in loaded_mobs)
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.Weaken(3)
+		unload_mob(M)
 
 /obj/vehicle/car/proc/CanStart() //This exists if you want to add more conditions to starting up the car later on
 	if(keycheck(driver))
@@ -166,6 +221,6 @@
 		driver << "<span class='warning'>You need to hold the key to start [src]</span>"
 
 /obj/vehicle/car/proc/dump_contents()
-	if(loaded_humans.len)
-		unload_all_humans()
+	if(loaded_mobs.len)
+		unload_all_mobs()
 	empty_object_contents()

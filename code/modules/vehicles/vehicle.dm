@@ -107,7 +107,6 @@
 	else
 		user << "<span class='notice'>You'll need the keys in one of your hands to drive \the [name].</span>"
 
-
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
 	. = ..()
 	handle_vehicle_layer()

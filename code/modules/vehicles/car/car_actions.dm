@@ -4,13 +4,13 @@
 	dump_action.Grant(user, src)
 	if(horn_sound)
 		horn_action.Grant(user, src)
-	if(can_load_people)
+	if(can_load_mobs)
 		count_action.Grant(user, src)
 
 /obj/vehicle/car/proc/RemoveActions(mob/living/user)
 	if(horn_sound)
 		horn_action.Remove(user)
-	if(can_load_people)
+	if(can_load_mobs)
 		count_action.Remove(user)
 	eject_action.Remove(user)
 	start_action.Remove(user)
@@ -80,5 +80,5 @@
 	button_icon_state = "car_count0"
 
 /datum/action/innate/car/kidnap_count/proc/update_counter()
-	button_icon_state = "car_count[min(car.loaded_humans.len, 10)]"
+	button_icon_state = "car_count[min(car.loaded_mobs.len, 10)]"
 	UpdateButtonIcon()
