@@ -80,28 +80,5 @@
 	button_icon_state = "car_count0"
 
 /datum/action/innate/car/kidnap_count/proc/update_counter()
-	var/count = car.loaded_humans.len
-	switch(count)
-		if(0)
-			button_icon_state = "car_count0"
-		if(1)
-			button_icon_state = "car_count1"
-		if(2)
-			button_icon_state = "car_count2"
-		if(3)
-			button_icon_state = "car_count3"
-		if(4)
-			button_icon_state = "car_count4"
-		if(5)
-			button_icon_state = "car_count5"
-		if(6)
-			button_icon_state = "car_count6"
-		if(7)
-			button_icon_state = "car_count7"
-		if(8)
-			button_icon_state = "car_count8"
-		if(9)
-			button_icon_state = "car_count9"
-		if(10 to INFINITY)
-			button_icon_state = "car_count10"
+	button_icon_state = "car_count[min(car.loaded_humans.len, 10)]"
 	UpdateButtonIcon()

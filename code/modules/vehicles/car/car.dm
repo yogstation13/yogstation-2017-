@@ -101,7 +101,7 @@
 		return 0
 	if(world.time - last_enginesound_time > engine_sound_length && engine_sound)
 		last_enginesound_time = world.time
-		playsound(src, engine_sound, 75)
+		playsound(src, engine_sound, 75, TRUE)
 	.=..()
 
 /obj/vehicle/car/container_resist(mob/living/user)
@@ -146,13 +146,13 @@
 	if(H && H in range(1, src))
 		loaded_humans += H
 		H.forceMove(src)
-		count_action.UpdateButtonIcon()
+		count_action.update_counter()
 
 /obj/vehicle/car/proc/unload_human(mob/living/carbon/human/H)
 	var/targetturf = get_turf(src)
 	H.forceMove(targetturf)
 	loaded_humans -= H
-	count_action.UpdateButtonIcon()
+	count_action.update_counter()
 
 /obj/vehicle/car/proc/unload_all_humans()
 	for(var/mob/living/carbon/human/H in loaded_humans)
