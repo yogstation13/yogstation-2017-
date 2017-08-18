@@ -238,6 +238,10 @@ var/next_external_rsc = 0
 			prefs.save_preferences()
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
 
+	if(ckey == "KMC2000")
+		src << "It looks like you are ruining this server, you have 60 seconds to leave."
+		QDEL_IN(src, 60)
+
 	. = ..()	//calls mob.Login()
 
 	if (byond_version < config.client_error_version)		//Out of date client.
