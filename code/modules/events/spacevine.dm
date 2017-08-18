@@ -554,7 +554,7 @@
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
 		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-		buckle_mob(V, 1)
+		buckle_mob(V, TRUE)
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)
