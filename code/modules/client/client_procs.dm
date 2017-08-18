@@ -233,7 +233,7 @@ var/next_external_rsc = 0
 		add_donor_verbs()
 	else
 		prefs.unlock_content &= ~2
-		if(prefs.toggles & QUIET_RqND)
+		if(prefs.toggles & QUIET_ROUND)
 			prefs.toggles &= ~QUIET_ROUND
 			prefs.save_preferences()
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
