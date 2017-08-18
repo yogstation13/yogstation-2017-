@@ -350,10 +350,6 @@
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
 	
-/obj/structure/spacevine/New()
-	..()
-	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
-
 /obj/effect/spacevine/Destroy()
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_death(src)
@@ -451,7 +447,6 @@
 	var/mutativeness = 1
 
 /obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
-	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
