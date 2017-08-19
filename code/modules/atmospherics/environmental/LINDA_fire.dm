@@ -148,7 +148,7 @@
 			location.ReplaceWithSpace()
 			return 0*/
 	if(world.time - sound_start_time >= sound_length) //looping sound
-		playsound(src, 'sound/effects/fire.ogg', 50, 0, 0)
+		playsound(src, "fire", 30, 5, 3)
 		sound_start_time = world.time
 	return 1
 
