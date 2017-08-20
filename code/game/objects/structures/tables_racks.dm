@@ -164,6 +164,16 @@
 			table_deconstruct(user, 0)
 			return
 
+		if(istype(I, /obj/item/toy/beach_ball/holoball/chaos))
+			var/obj/item/toy/beach_ball/holoball/chaos/B = I
+			if(!B.jamming)
+				return
+			user.changeNext_move(CLICK_CD_MELEE)
+			user.do_attack_animation(src)
+			playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
+			table_destroy()
+			return
+
 	if(istype(I, /obj/item/weapon/storage/bag/tray))
 		var/obj/item/weapon/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty

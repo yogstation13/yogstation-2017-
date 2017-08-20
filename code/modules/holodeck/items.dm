@@ -92,10 +92,64 @@
 	color = "green"
 	actions_types = list(/datum/action/item_action/chaos_dunk)
 	var/fail = FALSE
+	var/instant_dunk = FALSE //If an admin wants to dunk without the whole warmup portion
+	var/jamming = FALSE
+	var/dunking = FALSE
+	var/asking = FALSE
+	var/mob/living/carbon/human/jammer = null
+	var/obj/structure/holohoop/spirit/hoop = null
+
+/obj/item/toy/beach_ball/holoball/chaos/New()
+	..()
+	notify_ghosts("Everybody get up, it's time to slam now!", source = src, action = NOTIFY_ORBIT)
+	poi_list |= src
+
+/obj/item/toy/beach_ball/holoball/chaos/Destroy()
+	poi_list -= src
+	..()
+
+/obj/item/toy/beach_ball/holoball/chaos/attack(atom/T, mob/user)
+	if(!jamming || fail)
+		return
+	if(isliving(T))
+		var/mob/living/M = T
+		M.Weaken(2)
+		user.do_attack_animation(M)
+		playsound(get_turf(user), 'sound/effects/hit_kick.ogg', 100, 0)
+		user.visible_message("<span class='danger'>[user] slams [M] onto the ground!</span>")
+		user.changeNext_move(CLICK_CD_MELEE) //Who the fuck mixed camelcase with snakecase?
+
+/obj/item/toy/beach_ball/holoball/chaos/afterattack(atom/target as mob|obj|turf|area, mob/user)
+	return
+
+/obj/item/toy/beach_ball/holoball/chaos/dropped(mob/living/user as mob)
+	unequipped(user) //Better safe than sorry?
+	..()
+
+/obj/item/toy/beach_ball/holoball/chaos/unequipped(mob/living/user as mob)
+	if(!dunking && jamming)
+		user << "<span class='danger'>Better luck next season, ball hog!</span>"
+		fail = TRUE
+		jamming = FALSE
+		STOP_PROCESSING(SSobj, src)
+		if(hoop)
+			qdel(hoop)
+	..()
+
+/obj/item/toy/beach_ball/holoball/chaos/process()
+	if(fail)
+		jammer << "<span class='userdanger'>You trip over your feet!</span>"
+		jammer.Weaken(5)
+		playsound(get_turf(jammer), 'sound/misc/sadtrombone.ogg', 100, 0)
+	if(prob(10))
+		for(var/mob/M in player_list)
+			M << "<span class='warning'><b>You hear the Space Jam theme coming from the [dir2text(get_dir(get_turf(M), get_turf(hoop)))]...</b></span>"
 
 /obj/item/toy/beach_ball/holoball/chaos/ui_action_click(mob/user, actiontype)
 	if(actiontype != /datum/action/item_action/chaos_dunk)
 		..()
+		return
+	if(asking)
 		return
 	if(fail)
 		user << "<span class='warning'>This ball is battered and burnt - it will not be able to handle a chaos slam.</span>"
@@ -103,8 +157,11 @@
 	if(!ishuman(user))
 		user << "<span class='warning'>You are not rad enough to perform this sick trick!</span>"
 		return
+	if(jamming)
+		user << "<span class='warning'>You are already jamming!</span>"
+		return
 	var/mob/living/carbon/human/H = user
-
+	
 	if(src != H.get_active_hand())
 		H << "<span class='warning'>You need to be holding the basketball in your active hand!</span>"
 		return
@@ -112,47 +169,111 @@
 	if(!T)
 		H << "<span class='warning'>You can't dunk here!</span>"
 		return
-	message_admins("[key_name_admin(user)] is performing a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[PREVENT\]</a>")
+
+	if(!instant_dunk)
+		asking = TRUE
+		if(alert("Are you ready to jam?",,"Let's slam!","Let's not!") != "Let's slam!")
+			asking = FALSE
+			return
+		asking = FALSE
+		if(blobstart.len > 0)
+			while(!hoop)
+				var/turf/targetturf = get_turf(pick(blobstart))
+				if(get_dist(user, targetturf) > 40)
+					hoop = new /obj/structure/holohoop/spirit(targetturf)
+		else
+			H << "bit of a fuckup here"
+			return
+		jamming = TRUE
+		jammer = H
+		
+		if(T.z == ZLEVEL_STATION)
+			priority_announce("[user] is attempting a Chaos Dunk in [get_area(user)]. Steal the ball at all costs!","Nanotrasen Basketball Association","sound/misc/notice1.ogg")
+		for(var/obj/item/I in H)
+			if(istype(I, /obj/item/toy/beach_ball/holoball/chaos))
+				continue
+			qdel(I)
+
+		var/obj/item/clothing/under/shorts/purple/barkleys_shorts = new
+		barkleys_shorts.name = "barkley's shorts"
+		barkleys_shorts.flags = NODROP
+		H.equip_to_appropriate_slot(barkleys_shorts)
+		var/obj/item/clothing/shoes/sneakers/yeezy/orange/jordans = new
+		jordans.flags = NODROP
+		H.equip_to_appropriate_slot(jordans)
+		//hey it works
+		H.dna.species.no_equip = list(slot_head, slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_l_store, slot_r_store, slot_belt, slot_back, slot_s_store, slot_wear_id)
+		H << "<span class='danger'>You call forth the spirit of Barkley and begin channeling his power...</span>"
+		H << "<span class='danger'>Show off your dribbling skills and evade your opponents!<span>"
+		H << "<span class='warning'><b>You hear the Space Jam theme coming from the [dir2text(get_dir(get_turf(H), get_turf(hoop)))]...</span>"
+		message_admins("[key_name_admin(user)] is warming up to a chaos dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'>\[TRIP UP\]</a>")
+		START_PROCESSING(SSobj, src)
+		return
+	else
+		jammer = H
+		dunk()
+
+/obj/item/toy/beach_ball/holoball/chaos/proc/dunk()
+	dunking = TRUE
+	STOP_PROCESSING(SSobj, src)
+	var/turf/T = jammer.loc
+	message_admins("[key_name_admin(jammer)] is about to dunk at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>(JMP)</a> <A href='?src=\ref[src];badmin_block=1'><span class='genesisred'>\[PREVENT\]</span></a>")
+	jammer.visible_message("<span class='userdanger'>[jammer] leaps into the air!</span>")
 	flags = NODROP
-	user.stunned = INFINITY
-	user.update_canmove()
+	jammer.stunned = INFINITY
+	jammer.status_flags |= GODMODE //So you can't get killed mid dunk
+	jammer.update_canmove()
 
 	spawn(0)
-		H.SpinAnimation(10, 3, 1, 3)
+		jammer.SpinAnimation(10, 3, 1, 3)
 	for(var/i = 0, i < 50, i++)
-		H.pixel_y += 8
+		jammer.pixel_y += 8
 		sleep(1)
 
-	H.alpha = 0
+	jammer.alpha = 0
 
 	sleep(20)
 	if(T.z == ZLEVEL_STATION)
-		priority_announce("A measured 19.7 MJs of negative b-ball protons has been detected in [get_area(user)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
+		priority_announce("A measured 19.7 MJs of negative b-ball protons has been detected in [get_area(jammer)]. A Chaos Dunk is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
 		for(var/mob/M in player_list)
 			M << 'sound/machines/Alarm.ogg'
-	sleep(100)
-
-	H.alpha = 255
-	H.adjust_fire_stacks(20)
-	H.IgniteMob()
+		sleep(40)
+		for(var/mob/M in player_list)
+			M << 'sound/misc/bloblarm.ogg' //drama
+		sleep(60)
+	else
+		sleep(100)
+	if(hoop)
+		jammer.loc = hoop.loc
+	jammer.alpha = 255
+	jammer.adjust_fire_stacks(20)
+	jammer.IgniteMob()
 
 	spawn(0)
-		H.SpinAnimation(3, 6, 1, 3)
+		jammer.SpinAnimation(3, 6, 1, 3)
 	for(var/i = 0, i < 20, i++)
-		H.pixel_y -= 20
+		jammer.pixel_y -= 20
 		sleep(1)
 
+	jammer.status_flags &= ~GODMODE
 	if(fail)
 		flags &= ~NODROP
-		H.visible_message("<span clas='danger'>[user] fails the chaos dunk and lands on his face!</span>")
-		H.adjustBruteLoss(200)
-		H.death()
-		H.stunned = 0
-		playsound(get_turf(H), 'sound/misc/sadtrombone.ogg', 100, 0)
+		if(hoop)
+			jammer.visible_message("<span clas='danger'>[jammer] misses the hoop and lands on his face!</span>")
+		else
+			jammer.visible_message("<span clas='danger'>[jammer] loses grip of the ball and lands on his face!</span>")
+		jammer.adjustBruteLoss(200)
+		jammer.death()
+		jammer.stunned = 0
+		playsound(get_turf(jammer), 'sound/misc/sadtrombone.ogg', 100, 0)
 	else
-		H.visible_message("<span class='userdanger'>[user] ascends into godhood!</span>")
-		explosion(get_turf(H), 14, 28, 56, 112, 1, 1)
-		H.gib() //In case they are wearing a bomb suit
+		jammer.visible_message("<span class='userdanger'>[jammer] ascends into godhood!</span>")
+		explosion(get_turf(jammer), 25, 60, 150, 250, 1, 1)
+		jammer.gib() //In case they are wearing a bomb suit
+	jamming = FALSE
+	dunking = FALSE
+	if(hoop)
+		qdel(hoop)
 
 /obj/item/toy/beach_ball/holoball/chaos/Topic(href, list/href_list)
 	if(..())
@@ -163,6 +284,10 @@
 		fail = TRUE
 		message_admins("[key_name_admin(usr)] prevented a chaos slam")
 		return TRUE
+
+/obj/item/toy/beach_ball/holoball/chaos/instant
+	desc = "Come on and SLAM immediately!"
+	instant_dunk = TRUE
 
 //
 // Structures
@@ -208,7 +333,27 @@
 	else
 		return ..()
 
+/obj/structure/holohoop/spirit
+	name = "spirit basketball hoop"
+	desc = "Hey, you, whatcha gonna do?"
+	density = 0
+	luminosity = 1
+	icon_state = "hoop-spirit"
 
+/obj/structure/holohoop/spirit/New()
+	..()
+	notify_ghosts("Here's your chance, do your dance at the Space Jam, alright...", source = src, action = NOTIFY_ORBIT)
+	poi_list |= src
+
+/obj/structure/holohoop/spirit/Destroy()
+	poi_list -= src
+	..()
+
+/obj/structure/holohoop/spirit/attackby(obj/item/toy/beach_ball/holoball/chaos/bball, mob/user, params)
+	if(!istype(bball))
+		return
+	if(get_dist(src,user)<2)
+		bball.dunk()
 
 //
 // Machines

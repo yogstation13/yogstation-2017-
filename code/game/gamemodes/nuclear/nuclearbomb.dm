@@ -150,7 +150,7 @@ var/bomb_set
 				else
 					user << "<span class='warning'>You need more metal to do that!</span>"
 				return
-			/*if(istype(I, /obj/item/toy/beach_ball/holoball))
+			if(istype(I, /obj/item/toy/beach_ball/holoball))
 				user << "<span class='notice'>You touch the b-ball to the plutonium core...</span>"
 				if(do_after(user, 100, target=src))
 					qdel(I)
@@ -160,7 +160,7 @@ var/bomb_set
 					deconstruction_state = NUKESTATE_CORE_REMOVED
 					update_icon()
 					user << "<span class='notice'>The basketball absorbs the plutonium core and drops to the floor.</span>" //Using flavor text to excuse your shitty code
-				return*/
+				return
 	return ..()
 
 /obj/machinery/nuclearbomb/proc/get_nuke_state()

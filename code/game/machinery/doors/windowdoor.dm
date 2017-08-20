@@ -298,6 +298,15 @@
 
 						qdel(src)
 				return
+		if(istype(I, /obj/item/toy/beach_ball/holoball/chaos))
+			var/obj/item/toy/beach_ball/holoball/chaos/B = I
+			if(!B.jamming)
+				return
+			user.changeNext_move(CLICK_CD_MELEE)
+			user.do_attack_animation(src)
+			shatter()
+			playsound(src, "shatter", 70, 1)
+			return
 	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)

@@ -58,6 +58,20 @@
 			queue_smooth_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
+	else if(istype(W, /obj/item/toy/beach_ball/holoball/chaos))
+		var/obj/item/toy/beach_ball/holoball/chaos/B = W
+		if( !istype(src, /turf/closed/wall) || !user || !W || !T || !B.jamming)
+			return 1
+		if( user.loc == T && user.get_active_hand() == W )
+			user.do_attack_animation(src)
+			if(prob(75))
+				playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
+				dismantle_wall(1)
+				visible_message("<span class='warning'>[user] smashes through the reinforced wall with the [W.name]!</span>", "<span class='italics'>You hear the slam of the verboten jam.</span>")
+				return 1
+			else
+				playsound(src, 'sound/effects/bang.ogg', 50, 1)
+				user << "<span class='notice'>You bounce off the wall.</span>"
 	return 0
 
 /turf/closed/wall/r_wall/try_decon(obj/item/weapon/W, mob/user, turf/T)

@@ -153,7 +153,14 @@
 			icon_state = initial(icon_state)
 			R.use(1)
 			return
-
+	else if(istype(W, /obj/item/toy/beach_ball/holoball/chaos))
+		var/obj/item/toy/beach_ball/holoball/chaos/B = W
+		if(!B.jamming)
+			return
+		user.do_attack_animation(src)
+		Break()
+		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+		return
 //window placing begin
 	else if(istype(W, /obj/item/stack/sheet/rglass) || istype(W, /obj/item/stack/sheet/glass))
 		if (!destroyed)
