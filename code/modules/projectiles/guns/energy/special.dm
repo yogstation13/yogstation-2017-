@@ -102,6 +102,7 @@
 /obj/item/weapon/gun/energy/crossbow/shoot_live_shot()
 	..()
 	overheat = TRUE
+	update_icon()
 	addtimer(src,"reload",overheat_time)
 
 /obj/item/weapon/gun/energy/crossbow/proc/reload()
@@ -111,6 +112,13 @@
 	else
 		loc << "<span class='warning'>[src] silently charges up.<span>"
 	overheat = FALSE
+	update_icon()
+
+/obj/item/weapon/gun/energy/crossbow/update_icon()
+	if(!can_shoot())
+		icon_state = "[initial(icon_state)]_empty"
+	else
+		icon_state = initial(icon_state)
 
 
 /obj/item/weapon/gun/energy/crossbow/large

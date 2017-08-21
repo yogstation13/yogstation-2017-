@@ -69,6 +69,8 @@
 		user << "<span class='notice'>You switch the [KPOLD.name] out with the [KP.name].</span>"
 	KPOLD.detach(src,user)
 	KP.attach(src,user)
+	empty()
+	attempt_reload()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/updateParts()
 	overheat_time = getPartsCooldown()
@@ -435,7 +437,7 @@
 		empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
-	power_supply.use(500)
+	power_supply.use(power_supply.charge)
 	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload()
