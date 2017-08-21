@@ -31,4 +31,5 @@
 	outdoors = 1
 
 /area/lavaland/surface/outdoors/mapgen_protected
+	icon_state = "mapgen_protect"
 	mapgen_protected = 1

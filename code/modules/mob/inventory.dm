@@ -257,7 +257,8 @@
 	S = M.get_item_by_slot(slot_back)	//else we put in backpack
 	if(istype(S) && S.can_be_inserted(src,1))
 		S.handle_item_insertion(src)
-		playsound(src.loc, "rustle", 50, 1, -5)
+		if(!S.silent)
+			playsound(src.loc, "rustle", 50, 1, -5)
 		return 1
 
 	M << "<span class='warning'>You are unable to equip that!</span>"

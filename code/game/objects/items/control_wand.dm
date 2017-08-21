@@ -47,8 +47,10 @@
 			if(WAND_BOLT)
 				if(D.locked)
 					D.unbolt()
+					D.actionstaken += "\[[time_stamp()]\][user]/[user.ckey] unbolted"
 				else
 					D.bolt()
+					D.actionstaken += "\[[time_stamp()]\][user]/[user.ckey] bolted"
 			if(WAND_EMERGENCY)
 				if(D.emergency)
 					D.emergency = 0

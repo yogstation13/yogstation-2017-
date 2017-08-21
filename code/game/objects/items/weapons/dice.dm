@@ -114,6 +114,7 @@
 	diceroll(user)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
+	playsound(loc, 'sound/effects/die_roll.ogg', 50, 1, -1)
 	result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)

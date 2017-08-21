@@ -23,6 +23,10 @@
 	cover_open = !cover_open
 	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
 	update_icon()
+	if(cover_open)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
+	else
+		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
@@ -52,7 +56,7 @@
 		magazine = null
 		update_icon()
 		user << "<span class='notice'>You remove the magazine from [src].</span>"
-
+	playsound(user, 'sound/weapons/magout.ogg', 60, 1)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	. = ..()

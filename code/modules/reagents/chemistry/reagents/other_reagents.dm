@@ -114,7 +114,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*0.2)
+		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume * 2, max_wet_time = 50)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
