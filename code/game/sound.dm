@@ -154,6 +154,8 @@
 				soundin = pick('sound/effects/write1.ogg', 'sound/effects/write2.ogg')
 			if ("buckle")
 				soundin = pick('sound/effects/buckle1.ogg', 'sound/effects/buckle2.ogg')
+			if ("fire")
+				soundin = pick('sound/effects/fire1.ogg', 'sound/effects/fire2.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
