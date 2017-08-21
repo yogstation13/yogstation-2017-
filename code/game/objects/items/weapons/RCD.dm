@@ -571,7 +571,6 @@ RCD AMMO
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	origin_tech = "materials=3"
-	w_class = 2
 	materials = list(MAT_METAL=3000, MAT_GLASS=2000)
 	var/ammoamt = 40
 
