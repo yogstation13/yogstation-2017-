@@ -305,8 +305,6 @@
 	if(usr)
 		if(!usr.unEquip(W))
 			return 0
-	if(silent)
-		prevent_warning = 1
 	if(W.pulledby)
 		W.pulledby.stop_pulling()
 	W.loc = src
@@ -317,17 +315,17 @@
 
 		add_fingerprint(usr)
 
-
-		if(prevent_warning)
-			usr << "<span class='notice'>You silently put [W] [preposition]to [src].</span>"
-		else
-			for(var/mob/M in viewers(usr, null))
-				if(M == usr)
-					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
-				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
-				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+		if(!prevent_warning)
+			if(silent)
+				usr << "<span class='notice'>You silently put [W] [preposition]to [src].</span>"
+			else
+				for(var/mob/M in viewers(usr, null))
+					if(M == usr)
+						usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
+					else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
+						M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+					else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
+						M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())
