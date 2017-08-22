@@ -125,7 +125,6 @@ var/global/list/RPD_recipes=list(
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
-	item_state = "rcd"
 	flags = CONDUCT
 	force = 10
 	throwforce = 10

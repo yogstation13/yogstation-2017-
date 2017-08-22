@@ -45,11 +45,14 @@
 
 	msg = pretty_filter(msg)
 
+	log_ooc("[mob.name]/[key] : [msg]")
 
 	var/raw_msg = msg
 
 
 	msg = pretty_filter(msg)
+
+	log_ooc("[mob.name]/[key] : [msg]")
 
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
