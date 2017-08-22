@@ -54,6 +54,7 @@
 	color = "#C73232"
 
 /obj/item/projectile/bullet/paintball //red paintball
+	damage = 0 //needs to be set from the default of 60
 	icon = 'icons/obj/guns/paintball.dmi'
 	icon_state = "paintball1"
 	color = "#C73232"
