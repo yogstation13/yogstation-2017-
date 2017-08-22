@@ -15975,6 +15975,10 @@
 	pixel_x = -28
 	},
 /obj/item/weapon/lipstick/random,
+/obj/item/ammo_box/magazine/paintball/violet,
+/obj/item/weapon/gun/projectile/automatic/paintball/red,
+/obj/item/ammo_box/magazine/paintball/violet,
+/obj/item/ammo_box/magazine/paintball/violet,
 /turf/open/floor/plasteel{
 	icon_state = "whitehall";
 	dir = 4

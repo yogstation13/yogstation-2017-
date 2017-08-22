@@ -1211,6 +1211,39 @@
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
 
+/datum/supply_pack/misc/paintball
+	name = "Mixed Paintball Supplies Crate"
+	cost = 2500
+	contains = list(/obj/item/weapon/gun/projectile/automatic/paintball,
+				/obj/item/weapon/gun/projectile/automatic/paintball,
+				/obj/item/weapon/gun/projectile/automatic/paintball/red,
+				/obj/item/weapon/gun/projectile/automatic/paintball/red,
+				/obj/item/weapon/gun/projectile/automatic/paintball/super,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/violet,
+				/obj/item/ammo_box/magazine/paintball/yellow,)
+	crate_name = "paintball starter pack"
+
+/datum/supply_pack/misc/paintball/ammo
+	name = "Paintball ammo crate"
+	cost = 500
+	contains = list(/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball/violet,
+					/obj/item/ammo_box/magazine/paintball/violet,
+					/obj/item/ammo_box/magazine/paintball/yellow,
+					/obj/item/ammo_box/magazine/paintball/yellow,)
+	crate_name = "paintball ammunition crate"
+
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"
 	cost = 5000
