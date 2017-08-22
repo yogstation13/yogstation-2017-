@@ -7,7 +7,7 @@
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/paintball
 	fire_sound = 'sound/weapons/paintball.ogg'
-	pin = /obj/item/device/firing_pin //may wanna change this idk
+	pin = /obj/item/device/firing_pin/paintball //paintball only, can't be removed nor added.
 	var/emagged = 0
 	burst_size = 2
 	needs_permit = 0 //it's a toy
