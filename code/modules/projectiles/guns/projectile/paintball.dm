@@ -1,7 +1,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/paintball
 	name = "DEAFCON Series 1 paintball gun"
-	desc = "An entry level paintball gun, this one comes in red"
+	desc = "An entry level paintball gun, this one comes in blue."
 	icon = 'icons/obj/guns/paintball.dmi'
 	icon_state = "paintball"
 	item_state = "gun"
@@ -14,14 +14,14 @@
 	clumsy_check = 0 //clown can terrorize people with paint
 
 /obj/item/weapon/gun/projectile/automatic/paintball/emag_act(mob/user)
-	user << "<span class='warning'>You override the safety on the [src]'s gas regulator, removing its firing limiter</span>"
+	user << "<span class='warning'>You override the safety on the [src]'s gas regulator, removing its firing limiter.</span>"
 	playsound(loc, 'sound/machines/warning-buzzer.ogg', 10, 0)
 	burst_size = 7
 	emagged = 1
 
 /obj/item/weapon/gun/projectile/automatic/paintball/red
 	name = "DEAFCON Series 1 red paintball gun"
-	desc = "An entry level paintball gun, this one comes in red"
+	desc = "An entry level paintball gun, this one comes in red."
 	icon = 'icons/obj/guns/paintball.dmi'
 	icon_state = "paintball_red"
 	item_state = "gun"
