@@ -1231,7 +1231,7 @@
 
 /datum/supply_pack/misc/paintball/ammo
 	name = "Paintball ammo crate"
-	cost = 500
+	cost = 700
 	contains = list(/obj/item/ammo_box/magazine/paintball/blue,
 					/obj/item/ammo_box/magazine/paintball/blue,
 					/obj/item/ammo_box/magazine/paintball/blue,
