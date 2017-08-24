@@ -252,14 +252,12 @@
 			xoxofiring++
 		else
 			xoxofiring++
-	and_friends()
+	addtimer(src, "and_friends", 25)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/and_friends()
-	spawn(25)
 	visible_message("<span class='danger'>[src] roars and calls for aid!</span>")
 	var/mob/living/simple_animal/hostile/megafauna/dragon/lesser/L = new(src.loc)
 	L.faction = list("mining")
-
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
