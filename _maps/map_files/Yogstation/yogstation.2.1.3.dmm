@@ -38467,11 +38467,11 @@
 	},
 /area/toxins/xenobiology)
 "byI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1;
 	name = "Firelock North"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -38479,11 +38479,11 @@
 	name = "Medbay Aft"
 	})
 "byJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/firedoor/border_only{
 	dir = 1;
 	name = "Firelock North"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -107619,7 +107619,7 @@ bth
 buD
 bwc
 bjX
-bIV
+byF
 bIV
 bIV
 bIV
@@ -107876,7 +107876,7 @@ bti
 buE
 bwd
 bll
-bBJ
+byI
 bBJ
 bBJ
 bBJ
@@ -108133,7 +108133,7 @@ btj
 buA
 bwe
 bxA
-bAp
+byJ
 bAp
 bAp
 bDp
