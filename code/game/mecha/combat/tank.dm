@@ -1,5 +1,5 @@
 /obj/mecha/combat/tank
-	desc = "A thundering beast of a tank, its metal plates loom over you as it shudders the very deck with its movement."
+	desc = "A thundering beast of a tank. Its metal plates loom over you as it shudders the very deck with its movement."
 	name = "NT-05 tank"
 	icon = 'icons/mecha/tank.dmi'
 	icon_state = "tank"
@@ -19,18 +19,18 @@
 	var/OP = 1
 
 /obj/mecha/combat/tank/balanced
-	desc = "A massive tank, it moves slowly and fires missiles."
+	desc = "A massive tank. It moves slowly and fires missiles."
 	name = "NT-01 tank"
 	icon = 'icons/mecha/tank.dmi'
 	icon_state = "tank"
 	step_in = 1
 	dir_in = 1 //Facing North.
-	health = 200
+	health = 500
 	deflect_chance = 20
 	damage_absorption = list("brute"=0.3,"fire"=1.1,"bullet"=0.65,"laser"=0.60,"energy"=0.9,"bomb"=0.3)
 	max_temperature = 30000
 	infra_luminosity = 8
-	op = 0
+	OP = 0
 
 /obj/mecha/combat/tank/balanced/New()
 	..()
