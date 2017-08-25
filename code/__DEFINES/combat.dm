@@ -96,5 +96,27 @@
  #define GRAB "grab"
  #define HELP "help"
 
+// Special Intent (SI) stuff
+
+// Help
+#define HUG "hug"
+#define HANDSHAKE "handshake"
+#define BROFIST "brofist"
+#define	GIVE	"give"
+
+// Disarm
+// DISARM is a special intent
+#define PARRY "parry"	//TODO later. Currently does nothing. Is planned out however.
+#define DEFEND "defend" //TODO later. Currently does nothing. Is planned out however.
+
+// Grab - no special intents
+
+
+// Harm
+#define PUNCH "punch"
+#define KICK "kick"
+#define BITE "bite"
+
+
 // Crit Stuff (nearcrit)
 #define HEALTH_THRESHOLD_DEEPCRIT -50

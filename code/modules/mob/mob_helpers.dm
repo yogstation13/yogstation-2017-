@@ -358,6 +358,13 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "[a_intent]"
 
+	if(istype(usr, /mob/living/carbon))
+		var/mob/living/carbon/H = usr
+		if(H.client)
+			if(H.hud_used)
+				for(var/obj/screen/specialintents/SI in H.hud_used.static_inventory)
+					SI.UpdateIntent()
+
 /proc/is_blind(A)
 	if(ismob(A))
 		var/mob/B = A
@@ -509,3 +516,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 /mob/proc/is_nearcrit()
 	return FALSE
+
+/mob/proc/reset_s_intent()
+	s_intent[HELP] = "hug"
+	s_intent[DISARM] = "disarm"
+	s_intent[HARM] = "punch"

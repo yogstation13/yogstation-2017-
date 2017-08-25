@@ -26,6 +26,8 @@
 	var/chew_probability = 1
 	var/hungry = 0 //If they're currently trying to eat wires, also acts as a multiplier.
 
+	can_be_kicked = TRUE
+
 /mob/living/simple_animal/mouse/New()
 	..()
 	if(!body_color)

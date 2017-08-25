@@ -46,6 +46,10 @@
 	playsound(src, "shatter", 70, 1)
 	desc = "Oh no, seven years of bad luck!"
 
+/obj/structure/mirror/kick_act()
+	..() // when it's attached to a wall it hurts to kick
+	shatter()
+
 
 /obj/structure/mirror/bullet_act(obj/item/projectile/P)
 	. = ..()

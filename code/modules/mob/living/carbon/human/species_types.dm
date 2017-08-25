@@ -108,6 +108,9 @@
 	radiation_effect_mod = 2
 	punchdamagelow = 4
 	punchdamagehigh = 9
+	kickdamagelow = 2
+	bitedamagelow = 6
+	bitedamagehigh = 10
 
 	high_temp_level_1 = BODYTEMP_HEAT_DAMAGE_LEVEL_2
 	high_temp_level_2 = BODYTEMP_HEAT_DAMAGE_LEVEL_3
@@ -296,6 +299,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	low_temp_level_3 = 190
 	toxic_food = null
 	disliked_food = null
+
+	kickdamagelow = 3
+	kickdamagehigh = 8
+	bitedamagelow = 2
+	bitedamagehigh = 5
 
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 	var/emagged = 0
@@ -899,6 +907,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 
+	bitedamagelow = 0
+	bitedamagehigh = 1
+
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -1189,6 +1200,8 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	disliked_food = null
 	liked_food = RAW | MEAT | GROSS
 	toxic_food = null
+	bitedamagelow = 5
+	bitedamagehigh = 15
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -1338,6 +1351,10 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	armor = 25
 	punchdamagelow = 10
 	punchdamagehigh = 19
+	kickdamagelow = 10
+	kickdamagehigh = 19
+	bitedamagelow = 0
+	bitedamagehigh = 5
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
 

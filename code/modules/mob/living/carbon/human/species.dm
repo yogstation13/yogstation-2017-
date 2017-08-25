@@ -66,6 +66,10 @@
 	var/radiation_effect_mod = 1
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
+	var/kickdamagelow = 0
+	var/kickdamagehigh = 5
+	var/bitedamagelow = 0
+	var/bitedamagehigh = 1
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/limb_default_status = ORGAN_ORGANIC
@@ -994,7 +998,7 @@
 	switch(M.a_intent)
 		if("help")
 			if(H.health >= 0)
-				H.help_shake_act(M)
+				H.help_act(M)
 				if(H != M)
 					add_logs(M, H, "shaked")
 				return 1
@@ -1024,11 +1028,37 @@
 			else
 				M.do_attack_animation(H)
 
-				var/atk_verb = M.dna.species.attack_verb
-				if(H.lying)
-					atk_verb = "kick"
+				var/atk_verb
+				var/damage
+				var/extra_message
+				var/include_ed = TRUE
+				var/attack_sound
 
-				var/damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
+				switch(M.s_intent[M.a_intent])
+					if(PUNCH)
+						atk_verb = M.dna.species.attack_verb // TODO: rename species.attack_verb to species.punch_verb
+						damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
+
+					if(KICK)
+						atk_verb = "kick"
+						damage = rand(M.dna.species.kickdamagelow, M.dna.species.kickdamagehigh)
+						attack_sound = "swing_hit"
+
+					if(BITE)
+						atk_verb = "bit"
+						if(M.dna.species.bitedamagelow >= 5)
+							atk_verb = "viciously bit"
+						damage = rand(M.dna.species.bitedamagelow, M.dna.species.bitedamagehigh)
+						include_ed = FALSE
+						attack_sound = 'sound/weapons/bite.ogg'
+
+				if(H.lying)
+					atk_verb = "crush"
+					if(!M.s_intent[M.a_intent] == KICK) // if we didn't already set it up
+						damage = rand(M.dna.species.kickdamagelow, M.dna.species.kickdamagehigh)
+					if(!include_ed)	include_ed = TRUE
+					damage = M.shoe_damage(damage) // extra damage when the enemy is lying down!
+					extra_message = " under their [M.shoes]"
 
 				if(!affecting)
 					affecting = H.get_bodypart(ran_zone(M.zone_selected))
@@ -1041,14 +1071,17 @@
 
 				var/armor_block = H.run_armor_check(affecting, "melee")
 
-				playsound(H.loc, M.dna.species.attack_sound, 25, 1, -1)
+				if(!attack_sound)
+					attack_sound = M.dna.species.attack_sound
 
-				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
-								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
+				playsound(H.loc, attack_sound, 25, 1, -1)
+
+				H.visible_message("<span class='danger'>[M] has [atk_verb][include_ed == TRUE ? "ed" : ""] [H][extra_message]!</span>", \
+								"<span class='userdanger'>[M] has [atk_verb][include_ed == TRUE ? "ed" : ""] [H][extra_message]!</span>")
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
-				add_logs(M, H, "punched")
-				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)
+				add_logs(M, H, atk_verb)
+				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold && M.s_intent[M.a_intent] == PUNCH)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)

@@ -135,10 +135,11 @@
 /obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("[user] knocks on [src].")
-	add_fingerprint(user)
-	playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
+	if(user.s_intent[user.a_intent] != KICK)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.visible_message("[user] knocks on [src].")
+		add_fingerprint(user)
+		playsound(loc, 'sound/effects/Glassknock.ogg', 50, 1)
 
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
@@ -423,12 +424,25 @@
 
 	return 1
 
+/obj/structure/window/kick_act(mob/living/carbon/human/H)
+	playsound(get_turf(src), "swing_hit", 100, 1)
+
+	H.visible_message("<span class='danger'>\The [H] kicks \the [src].</span>", \
+	"<span class='danger'>You kick \the [src].</span>")
+
+	take_damage(H.shoe_damage(rand(1,7)))
+
 /obj/structure/window/reinforced
 	name = "reinforced window"
 	icon_state = "rwindow"
 	reinf = 1
 	maxhealth = 50
 	explosion_block = 1
+
+/obj/structure/window/reinforced/kick_act(mob/living/carbon/human/H)
+
+	H.visible_message("<span class='danger'>\The [H] kicks \the [src], but it has no effect!</span>", \
+	"<span class='danger'>You kick \the [src], but it doesn't do anything!</span>")
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"

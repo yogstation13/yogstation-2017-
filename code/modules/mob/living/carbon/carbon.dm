@@ -119,7 +119,7 @@
 	else
 		mode() // Activate held item
 
-/mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
+/mob/living/carbon/proc/help_act(mob/living/carbon/M)
 	if(on_fire)
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
@@ -134,8 +134,8 @@
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
 							"<span class='notice'>You shake [src] trying to get them up!</span>")
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
-						"<span class='notice'>You hug [src] to make them feel better!</span>")
+			special_help_act(M)
+			return // hugging no longer heals you HAHAHAHAHAHAHAAHAHAH!
 
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
@@ -146,6 +146,28 @@
 			update_canmove()
 
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+
+/mob/living/carbon/proc/special_help_act(mob/living/carbon/M)
+	switch(M.s_intent[M.a_intent])
+		if(HUG)
+			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
+						"<span class='notice'>You hug [src] to make them feel better!</span>")
+			flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client, client), 20)
+			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		if(HANDSHAKE)
+			M.visible_message("<span class='notice'>[M] extends [M.gender == MALE ? "his" : "her"] hand to [src] for a handshake.</span>",\
+				"<span class='notice'>You extend your hand out to [src]!</span>")
+			src << "<span class='notice'>Shake [M]'s hand? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=handshake;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=handshake;choice=no;time=[world.time]'>No</a>)</font size>"
+		if(BROFIST)
+			M.visible_message("<span class='notice'>[M] raises [M.gender == MALE ? "his" : "her"] fist to [src] for a brofist.</span>",\
+				"<span class='notice'>You extend your fist to [src] for a sweet brofist!</span>")
+			src << "<span class='notice'>Brofist [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=brofist;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=brofist;choice=no;time=[world.time]'>No</a>)</font size>"
+		if(GIVE)
+			M.visible_message("<span class='notice'>[M] starts handing [M.get_active_hand()] to [src].</span>",\
+				"<span class='notice'>You start handing [M.get_active_hand()] to [src]!</span>")
+			var/obj/O = M.get_active_hand() // to prevent it from changing if they click too late.
+			src << "<span class='notice'>Accept [O] from [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=give;choice=yes;time=[world.time];obj=\ref[O]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=give;choice=no;time=[world.time]'>No</a>)</font size>"
+
 
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	. = ..()
@@ -306,6 +328,49 @@
 
 					visible_message("<span class='danger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>", \
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
+	if(href_list["help"])
+		var/mob/living/carbon/target = locate(href_list["target"]) // he's trying to do something too you
+		if(Adjacent(target))
+			if(href_list["help"] == HANDSHAKE)
+				if(text2num(href_list["time"]) + 100 > world.time)
+					if(href_list["choice"] == "no")
+						visible_message("<span class='notice'>[src] denys [target]'s handshake!</span>",
+											"<span class='notice'>You deny [target]'s handshake!</span>")
+					else
+						visible_message("<span class='notice'>[target] and [src] shake hands!</span>",
+										"<span class='notice'>You and [src] shake hands!</span>")
+					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+					// TODO: tie modular gloves to this, so like a reaction can happen. TODO 2: give the clown a joybuzzer.
+				else
+					src << "<span class='warning'>Too late.</span>"
+			if(href_list["help"] == BROFIST)
+				if(text2num(href_list["time"]) + 100 > world.time)
+					if(href_list["choice"] == "no")
+						visible_message("<span class='notice'>[src] <font size=2><span class='red'>DENIED!</span></font size> [target]'s brofist!</span>",\
+									"<span class='notice'>You <font size=2><span class='red'>DENIED!</span></font size> [target]'s brofist!</span>")
+					else
+						visible_message("<span class='notice'><font size=2>[src] and [target] lock knuckles in an epic <span class='red'>BROFIST!</span></font size></span>",\
+										"<span class='notice'><font size=2>[src] and [target.] lock knuckles in an epic <span class='red'>BROFIST!</span></font size></span>")
+						playsound(src.loc, "punch", 100, 1, -1)
+				else
+					src << "<span class='warning'>You're too slow! Brofist mission failed.</span>"
+
+			if(href_list["help"] == GIVE)
+				if(text2num(href_list["time"]) + 100 > world.time)
+					if(href_list["choice"] == "no")
+						visible_message("<span class='notice'>[src] denys [target]'s offer!</span>",
+											"<span class='notice'>You deny [target]'s offer!</span>")
+					else
+						var/obj/O = locate(href_list["obj"])
+						if(O.loc != target || (target.l_hand != O && target.r_hand != O))
+							return
+						if(target.unEquip(O))
+							src.put_in_hands(O)
+							visible_message("<span class='notice'>[target] hands [src] [O]!</span>",
+										"<span class='notice'>You take [O] from [target]!</span>")
+
+				else
+					src << "It's too late."
 
 
 /mob/living/carbon/fall(forced)
@@ -806,3 +871,22 @@
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
+
+
+/mob/living/carbon/open_special_intents()
+	var/list/options = list()
+	switch(a_intent)
+		if(HELP)
+			options += list("hug", "handshake", "brofist", "give")
+		if(DISARM)
+			options += list("disarm") //, "parry", "defend)
+		if(HARM)
+			options += list("punch", "kick", "bite")
+
+	if(!options)
+		message_admins("ALERT: [src] ([key]) was unable to access their special intents. Please contact a coder.")
+		return
+
+	var/choice = input(src,"",null) as anything in options
+
+	s_intent[a_intent] = choice

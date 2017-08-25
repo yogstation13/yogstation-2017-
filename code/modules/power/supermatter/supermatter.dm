@@ -96,7 +96,7 @@
 	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 	qdel(src)
 	return
-	
+
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/L = loc
 
@@ -110,14 +110,14 @@
 		supermatter_pull()
 	else if(isspaceturf(L))// Stop processing this stuff if we've been ejected.
 		return
-	
+
 	if(grav_pulling)
 		supermatter_pull()
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
 			var/stability = num2text(round((damage / explosion_point) * 100))
-				
+
 			if(damage > emergency_point)
 				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
 				lastwarning = world.timeofday
@@ -367,3 +367,20 @@
 /obj/machinery/power/supermatter_shard/hugbox
 	takes_damage = 0
 	produces_gas = 0
+
+
+/obj/machinery/power/supermatter_shard/kick_act(mob/living/carbon/human/H)
+	visible_message("<span class='danger'>[H] slams [H.gender == MALE ? "his" : "her"] foot into [src]!</span>")
+	if(!damage)
+		Consume(H)
+		visible_message("<span class='genesisred'>WHAT A DUMBASS!</span>")
+		return
+
+	if(prob(99))
+		Consume(H)
+		visible_message("<span class='genesisred'>WOW! HOLY SHIT! WHAT A DUMBASS!</span>")
+	else
+		damage = 0
+		playsound(H, 'sound/effects/meteorimpact.ogg', 100, 1, extrarange = 45)
+		visible_message("<span class='genesisred'>HOOOOLY SHIT!</span>")
+		radio.talk_into(src, "Attention crew. [H] has kicked the instability percent back to 0. Get that [H.gender == MALE ? "man" : "woman"] a goddamn medal.")

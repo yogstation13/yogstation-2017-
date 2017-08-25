@@ -115,7 +115,7 @@
 	//..()
 
 	if (M.a_intent == "help")
-		help_shake_act(M)
+		help_act(M)
 	else
 		if (M.a_intent == "harm" && !M.is_muzzled())
 			if (prob(50))
@@ -197,7 +197,7 @@
 		return
 
 	if (M.a_intent == "help")
-		help_shake_act(M)
+		help_act(M)
 
 	else
 		if (M.a_intent == "harm")

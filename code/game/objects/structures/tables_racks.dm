@@ -117,6 +117,13 @@
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
+/obj/structure/table/kick_act(mob/living/carbon/human/H)
+	..(H)
+
+	visible_message("<span class='warning'>[H] kicks [src]!<span>")
+	take_damage(rand(3,5), BRUTE) // someone make this flip over.
+
+
 /obj/structure/table/bullet_act(obj/item/projectile/P)
 	. = ..()
 	take_damage(P.damage, P.damage_type, 0)

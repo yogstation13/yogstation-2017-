@@ -21,6 +21,8 @@
 	var/obj/item/inventory_mask
 	gold_core_spawnable = 2
 
+	can_be_kicked = TRUE
+
 /mob/living/simple_animal/crab/Life()
 	..()
 	//CRAB movement

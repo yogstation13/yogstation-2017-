@@ -223,10 +223,10 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "help")
+	if(H.a_intent == HELP)
 		interact(H)
 	else
-		return ..()
+		return ..() // kick is handled in ..()
 
 /mob/living/simple_animal/bot/attack_ai(mob/user)
 	if(!topic_denied(user))
@@ -961,3 +961,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= "silicon"
+
+/mob/living/simple_animal/bot/kick_act(mob/living/carbon/human/H)
+	var/kick_word = pick("kicks", "punts", "roundhouse kicks", "whirlwinds")
+	visible_message("<span class='warning'>[H] [kick_word] [src]!</span>")
+	adjustBruteLoss(rand(1,8))
+	var/turf/T = get_edge_target_turf(loc, get_dir(H, src))
+	throw_at(T, H.shoe_damage(rand(3,5)), 1)

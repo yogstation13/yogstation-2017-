@@ -91,6 +91,7 @@
 	var/image/active_overlay
 	var/image/handcuff_overlay
 	var/image/blocked_overlay
+	var/image/kick_overlay
 
 /obj/screen/inventory/hand/update_icon()
 	..()
@@ -101,6 +102,8 @@
 		handcuff_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"=state)
 	if(!blocked_overlay)
 		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
+	if(!kick_overlay)
+		kick_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="leganimation")
 
 	overlays.Cut()
 
@@ -109,6 +112,8 @@
 			var/mob/living/carbon/C = hud.mymob
 			if(C.handcuffed)
 				overlays += handcuff_overlay
+			else if(C.s_intent[C.a_intent] == KICK) // we use else if here so that the kick overlay doesn't come up when you're handcuffed
+				overlays += kick_overlay
 			if(slot_id == slot_r_hand)
 				if(!C.has_right_hand())
 					overlays += blocked_overlay

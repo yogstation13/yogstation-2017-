@@ -13,6 +13,8 @@
 	speak_chance = 1
 	turns_per_move = 10
 
+	can_be_kicked = TRUE // BOOT!
+
 //Corgis and pugs are now under one dog subtype
 
 /mob/living/simple_animal/pet/dog/corgi

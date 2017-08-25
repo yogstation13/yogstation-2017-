@@ -91,6 +91,7 @@
 	strip_delay = 20
 	put_on_delay = 25
 	burn_state = FIRE_PROOF
+	var/can_be_crushed = FALSE
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -215,7 +216,7 @@ BLIND     // can't see anything
 	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
 	var/obj/held_item
 	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade, /obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.
-
+	var/extra_kick_damage = 0
 
 /obj/item/clothing/shoes/worn_overlays(var/isinhands = FALSE)
 	. = list()

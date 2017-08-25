@@ -1,51 +1,51 @@
 macro "default"
 	elem 
-		name = "TAB"
+		name = "Tab"
 		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem 
-		name = "CENTER+REP"
+		name = "Center+REP"
 		command = ".center"
 	elem 
-		name = "NORTHEAST"
+		name = "Northeast"
 		command = ".northeast"
 	elem 
-		name = "SOUTHEAST"
+		name = "Southeast"
 		command = ".southeast"
 	elem 
-		name = "SOUTHWEST"
+		name = "Southwest"
 		command = ".southwest"
 	elem 
-		name = "NORTHWEST"
+		name = "Northwest"
 		command = ".northwest"
 	elem 
-		name = "CTRL+WEST"
+		name = "CTRL+West"
 		command = "westface"
 	elem 
-		name = "WEST+REP"
+		name = "West+REP"
 		command = ".moveleft"
 	elem 
-		name = "CTRL+NORTH"
+		name = "CTRL+North"
 		command = "northface"
 	elem 
-		name = "NORTH+REP"
+		name = "North+REP"
 		command = ".moveup"
 	elem 
-		name = "CTRL+EAST"
+		name = "CTRL+East"
 		command = "eastface"
 	elem 
-		name = "EAST+REP"
+		name = "East+REP"
 		command = ".moveright"
 	elem 
-		name = "CTRL+SOUTH"
+		name = "CTRL+South"
 		command = "southface"
 	elem 
-		name = "SOUTH+REP"
+		name = "South+REP"
 		command = ".movedown"
 	elem 
-		name = "INSERT"
+		name = "Insert"
 		command = "a-intent right"
 	elem 
-		name = "DELETE"
+		name = "Delete"
 		command = "delete-key-pressed"
 	elem 
 		name = "CTRL+1"
@@ -77,6 +77,9 @@ macro "default"
 	elem 
 		name = "CTRL+G"
 		command = "a-intent right"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
 	elem 
 		name = "CTRL+Q"
 		command = ".northwest"
@@ -114,9 +117,6 @@ macro "default"
 		name = "F5"
 		command = "Aghost"
 	elem 
-		name = "CTRL+O"
-		command = "ooc"
-	elem 
 		name = "F6"
 		command = "Player-Panel"
 	elem 
@@ -139,6 +139,9 @@ macro "hotkeys"
 	elem 
 		name = "Center+REP"
 		command = ".center"
+	elem 
+		name = "SHIFT+Space"
+		command = "open-si"
 	elem 
 		name = "Northeast"
 		command = ".northeast"

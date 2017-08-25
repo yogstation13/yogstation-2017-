@@ -30,12 +30,30 @@
 	if(override)
 		return
 
+	if(s_intent[a_intent] == KICK)
+		if(istype(A, /obj) && !(A in GetAllContents())) // so we don't kick anything on ourselves
+			do_attack_animation(A)
+			changeNext_move(CLICK_CD_MELEE)
+			A.kick_act(src)
+			return
+
+	if(s_intent[a_intent] == BITE)
+		if(istype(A, /obj))
+			A.bite_act(src)
+			return
+
 	A.attack_hand(src)
 
 /atom/proc/attack_hand(mob/user)
 	return
 
 /atom/proc/interact(mob/user)
+	return
+
+/atom/proc/kick_act(mob/user)
+	return
+
+/atom/proc/bite_act(mob/user)
 	return
 
 /*

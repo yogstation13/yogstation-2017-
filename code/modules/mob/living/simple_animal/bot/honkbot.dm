@@ -56,6 +56,7 @@
 	var/honk_rate = 6
 	var/last_banana = 8
 	var/banana_rate = 8
+	can_be_kicked = TRUE
 
 
 /obj/item/weapon/storage/firstaid/attackby(var/obj/item/device/assembly/bikehorn/S, mob/user as mob)

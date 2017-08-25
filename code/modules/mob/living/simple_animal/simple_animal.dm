@@ -80,6 +80,8 @@
 	var/obj/item/weapon/storage/tactical_harness/harness = null
 	var/obj/item/device/radio/headset/headset
 
+	var/can_be_kicked = FALSE
+
 
 /mob/living/simple_animal/New()
 	..()
@@ -344,12 +346,29 @@
 				add_logs(M, src, "attacked")
 				updatehealth()
 				return 1
+
+			if(M.s_intent[M.a_intent] == KICK)
+				kick_act(M)
+				playsound(loc, "swing_hit", 25)
+				return 1
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
 			playsound(loc, "punch", 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
 			return 1
+
+/mob/living/simple_animal/kick_act(mob/living/carbon/human/H)
+	attack_threshold_check(harm_intent_damage)
+	add_logs(H, src, "kicked")
+	updatehealth()
+
+	if(can_be_kicked)
+		visible_message("<span class='warning'>[H] kicks [src]!</span>",\
+						"<span class='warning'>[H] kicks [src]!</span>")
+		var/turf/T = get_edge_target_turf(loc, get_dir(H, src))
+		throw_at(T, H.shoe_damage(rand(2,3)), 1)
+
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/monkey/M)
 	if(..()) //successful monkey bite.

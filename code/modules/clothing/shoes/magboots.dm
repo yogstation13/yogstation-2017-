@@ -10,6 +10,7 @@
 	put_on_delay = 70
 	burn_state = FIRE_PROOF
 	origin_tech = "materials=3;magnets=4;engineering=4"
+	extra_kick_damage = 2
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -58,6 +59,7 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	origin_tech = "magnets=2;syndicate=3"
+	extra_kick_damage = 3
 
 /obj/item/clothing/shoes/magboots/security
 	name = "combat magboots"

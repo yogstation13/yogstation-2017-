@@ -45,6 +45,33 @@
 	if(client && !hud_used)
 		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
 
+/obj/screen/specialintents
+	name = "special intent"
+	icon_state = "si-help"
+	screen_loc = ui_specialintent
+
+/obj/screen/specialintents/Click()
+	var/mob/living/carbon/C = usr
+	C.open_special_intents()
+
+/obj/screen/specialintents/proc/UpdateIntent()
+	var/mob/living/carbon/C = usr
+	if(!C)
+		return
+	switch(C.a_intent)
+		if(HELP)
+			icon_state = "si-help"
+
+		if(DISARM)
+			icon_state = "si-disarm"
+
+		if(GRAB)
+			icon_state = "si-grab"
+
+		if(HARM)
+			icon_state = "si-harm"
+
+	C.handle_intents() // to update overlays
 
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
@@ -66,6 +93,11 @@
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
 	static_inventory += using
+
+	using = new /obj/screen/specialintents()
+	using.icon_state = owner.s_intent[owner.a_intent]
+	static_inventory += using
+	owner.handle_intents()
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style

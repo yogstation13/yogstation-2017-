@@ -19,6 +19,8 @@
 		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
+	handle_intents()
+
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
@@ -216,6 +218,23 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_intents()
+	if(mind && hud_used)
+		var/obj/screen/specialintents/S
+		for(var/obj/screen/specialintents/SI in hud_used.static_inventory)
+			if(SI)
+				S = SI
+				break
+		if(!S)
+			return
+
+		var/mapintent = s_intent[a_intent]
+
+		S.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#000000'>[mapintent]</font></div>"
+
+		for(var/obj/screen/inventory/hand/H in hud_used.static_inventory) // kick overlay.
+			if(H)	H.update_icon()
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
