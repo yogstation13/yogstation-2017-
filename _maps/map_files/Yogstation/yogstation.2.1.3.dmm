@@ -29900,11 +29900,14 @@
 /turf/open/floor/plating,
 /area/medical/medbay)
 "bit" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "Firelock North"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/medical/medbay)
 "biu" = (
 /obj/machinery/door/firedoor/border_only{
@@ -32057,6 +32060,7 @@
 /area/medical/medbay)
 "bmS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel{
 	dir = 2;
 	icon_state = "whiteblue"
@@ -32066,6 +32070,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/britcup,
 /turf/open/floor/plasteel{
 	dir = 2;
 	icon_state = "whiteblue"
@@ -32075,6 +32081,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel{
 	dir = 2;
 	icon_state = "whiteblue"
@@ -32890,7 +32897,6 @@
 	},
 /area/medical/medbay)
 "boA" = (
-/obj/structure/table/reinforced,
 /obj/machinery/camera{
 	c_tag = "Medbay Foyer";
 	dir = 8;
@@ -32898,14 +32904,10 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	desc = "Kingston's personal cup."
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/item/weapon/book/manual/wiki/phytosian,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -34456,24 +34458,8 @@
 	},
 /area/medical/medbay)
 "brJ" = (
-/obj/machinery/airalarm{
-	dir = 1;
-	icon_state = "alarm0";
-	pixel_y = -22
-	},
-/obj/machinery/requests_console{
-	announcementConsole = 0;
-	department = "Medbay";
-	departmentType = 1;
-	name = "Medbay RC";
-	pixel_x = 30;
-	pixel_y = 0;
-	pixel_z = 0
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
+/obj/machinery/firealarm,
+/turf/closed/wall,
 /area/medical/medbay)
 "brK" = (
 /obj/machinery/door/airlock/glass_security{
@@ -36883,9 +36869,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay)
 "bwb" = (
 /obj/structure/cable/yellow{
@@ -36903,9 +36887,7 @@
 	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/medbay)
 "bwc" = (
 /obj/structure/cable/yellow{
@@ -37773,13 +37755,16 @@
 /turf/open/floor/plating,
 /area/storage/tech)
 "bxy" = (
-/obj/machinery/light,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "Firelock North"
+	},
 /turf/open/floor/plasteel{
-	icon_state = "white"
+	icon_state = "delivery"
 	},
 /area/medical/medbay)
 "bxz" = (
@@ -37788,6 +37773,21 @@
 	external_pressure_bound = 101.325;
 	on = 1;
 	pressure_checks = 1
+	},
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4;
+	name = "Firelock East"
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -38449,10 +38449,13 @@
 	},
 /area/medical/sleeper)
 "byF" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "Firelock North"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/medical/sleeper)
 "byG" = (
 /turf/closed/wall,
@@ -39200,8 +39203,7 @@
 "bAh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "whitehall"
+	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bAi" = (
@@ -39216,16 +39218,22 @@
 /turf/closed/wall,
 /area/medical/sleeper)
 "bAk" = (
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 7;
-	pixel_y = 1
-	},
 /obj/structure/table/glass,
-/turf/open/floor/plasteel,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/book/manual/wiki/preternis,
+/obj/item/weapon/reagent_containers/dropper,
+/obj/item/weapon/book/manual/wiki/plasmaman,
+/obj/item/weapon/wrench/medical,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bAl" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bAm" = (
 /obj/structure/table,
@@ -39244,7 +39252,18 @@
 	pixel_y = 0
 	},
 /obj/structure/table/glass,
-/turf/open/floor/plasteel,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4;
+	name = "Firelock East"
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bAo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -39975,25 +39994,19 @@
 	},
 /area/medical/sleeper)
 "bBz" = (
-/obj/structure/sink{
-	icon_state = "sink";
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
+/turf/closed/wall,
 /area/medical/sleeper)
 "bBA" = (
 /obj/machinery/hologram/holopad,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold-r-f (WEST)";
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -40004,6 +40017,9 @@
 	dir = 8;
 	on = 1;
 	scrub_Toxins = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -40019,7 +40035,16 @@
 	},
 /area/medical/sleeper)
 "bBD" = (
-/turf/open/floor/plasteel,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel{
+	icon_state = "delivery"
+	},
 /area/medical/sleeper)
 "bBE" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -40746,7 +40771,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/machinery/iv_drip,
+/obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -40799,10 +40824,12 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bDl" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/medical/sleeper)
 "bDm" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -40811,11 +40838,16 @@
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bDn" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+/obj/machinery/door/firedoor/border_only{
 	dir = 4;
-	initialize_directions = 11
+	name = "Firelock East"
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel{
+	icon_state = "delivery"
+	},
 /area/medical/sleeper)
 "bDo" = (
 /obj/machinery/door/firedoor/border_only{
@@ -41570,27 +41602,40 @@
 	},
 /area/medical/sleeper)
 "bEH" = (
-/obj/machinery/iv_drip,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bEI" = (
 /obj/machinery/light,
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/medical/sleeper)
 "bEJ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bEK" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench/medical,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bEL" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -41606,7 +41651,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bEM" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -41622,13 +41667,17 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bEN" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 1
 	},
-/turf/open/floor/plasteel,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4;
+	name = "Firelock East"
+	},
+/turf/open/floor/plasteel/whiteblue/side,
 /area/medical/sleeper)
 "bEO" = (
 /obj/machinery/dna_scannernew,
@@ -42445,21 +42494,25 @@
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "bGl" = (
-/obj/machinery/door/airlock/glass_medical{
-	id_tag = null;
-	name = "Recovery Room";
-	req_access_txt = "0"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "Firelock North"
+	},
+/obj/machinery/door/airlock/glass_large,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
 /area/medical/sleeper)
 "bGm" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/fulltile,
-/turf/open/floor/plating,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "Firelock North"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/medical/sleeper)
 "bGn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -69230,16 +69283,12 @@
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "YoV" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8;
-	name = "Firelock West"
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
 	},
-/obj/machinery/shower{
-	desc = "A showerhead found in school science labs and medbays alike, used to quickly wash off any dangerous fluids covering a person.";
-	name = "emergency shower";
-	pixel_y = 15
+/turf/open/floor/plasteel{
+	icon_state = "white"
 	},
-/turf/open/floor/noslip,
 /area/medical/sleeper)
 "YoW" = (
 /obj/structure/closet/emcloset,
@@ -69261,6 +69310,174 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zxy" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/folder/white,
+/obj/item/weapon/pen,
+/obj/item/weapon/book/manual/wiki/phytosian,
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "whiteblue"
+	},
+/area/medical/medbay)
+"Zxz" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/whiteblue/side,
+/area/medical/medbay)
+"ZxA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/iv_drip,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/machinery/door/window/eastleft{
+	name = "IV drip pod";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay)
+"ZxB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1;
+	name = "Firelock North"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "delivery"
+	},
+/area/medical/medbay)
+"ZxC" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/iv_drip,
+/obj/machinery/door/window/eastleft{
+	name = "IV drip pod";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxD" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4;
+	name = "Firelock East"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxE" = (
+/obj/machinery/atmospherics/components/unary/cryo_cell,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxF" = (
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 11;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxH" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 8;
+	name = "Firelock West"
+	},
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	icon_state = "delivery"
+	},
+/area/medical/sleeper)
+"ZxI" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
+"ZxK" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/sleeper)
 "ZxL" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
@@ -104832,14 +105049,14 @@ btc
 buy
 bvV
 bxr
-byC
-bAf
+byB
+ZxE
 bBz
 bDf
 bEH
-bGk
-XXK
+byG
 bIY
+bAf
 bKL
 bMj
 bNy
@@ -105091,9 +105308,9 @@ bvW
 bxt
 byD
 bAg
-bAg
+ZxG
 bDg
-bAg
+ZxG
 bGl
 bDg
 bAg
@@ -105350,7 +105567,7 @@ byE
 bAh
 bBA
 bDh
-bAh
+ZxJ
 bGm
 bHD
 bJa
@@ -105593,18 +105810,18 @@ beO
 bfT
 bhd
 bit
-bjW
+bll
 bll
 bmS
-box
 boy
+box
 brH
-brH
+bjX
 buA
 bvY
 bxv
 byF
-bAi
+bIV
 bBB
 bDi
 bEI
@@ -105853,18 +106070,18 @@ biu
 bjX
 bjX
 bmT
-boy
 bqe
-brI
+bjX
 btd
+bjX
 buA
 bvY
-bxw
-byG
-byG
+bxv
+byF
+ZxF
 YoV
-bBC
-byG
+bIV
+ZxK
 byG
 bHF
 bJc
@@ -106109,18 +106326,18 @@ bhc
 biu
 bjX
 bjX
-bmT
-boz
+Zxy
 bjX
 bjX
 bte
+bjX
 buA
-bvY
-bxv
-byF
+Zxz
+ZxA
+ZxC
 bAk
 bBD
-bBD
+ZxH
 bEJ
 byG
 bHG
@@ -106368,16 +106585,16 @@ bjX
 blm
 bmU
 boA
-bqf
+brI
 brJ
-brE
+bjX
 buA
-bvY
-bxv
-byG
+Zxz
+ZxB
+bIV
 bAl
-bBE
-bBD
+bIV
+ZxI
 bEK
 byG
 bHH
@@ -106627,13 +106844,13 @@ bjY
 biv
 biv
 biv
-brE
+bjX
 buA
-bvY
-bxv
-byF
-bAm
-bBF
+Zxz
+ZxB
+bIV
+bAl
+bIV
 bDl
 bEL
 byG
@@ -106888,10 +107105,10 @@ btf
 buB
 bwa
 bxy
-byG
+bIV
 bAl
-bBG
-bDm
+bIV
+bDl
 bEM
 byG
 bHJ
@@ -107145,9 +107362,9 @@ btg
 buC
 bwb
 bxz
-byF
+ZxD
 bAn
-bBH
+bBI
 bDn
 bEN
 byG
@@ -107402,11 +107619,11 @@ bth
 buD
 bwc
 bjX
-byG
-byG
-bBI
-bDo
-byG
+bIV
+bIV
+bIV
+bIV
+bIV
 byG
 bGi
 bJh
@@ -107659,8 +107876,8 @@ bti
 buE
 bwd
 bll
-byI
-bAo
+bBJ
+bBJ
 bBJ
 bBJ
 bBJ
@@ -107916,7 +108133,7 @@ btj
 buA
 bwe
 bxA
-byJ
+bAp
 bAp
 bAp
 bDp
