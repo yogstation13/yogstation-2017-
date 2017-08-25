@@ -16,6 +16,35 @@
 //	wreckage = /obj/structure/mecha_wreckage/tank
 	var/smash_damage = 120
 	var/list/creaks = list('sound/effects/creak1.ogg','sound/effects/creak2.ogg','sound/effects/creak3.ogg') //deck creaks and breaks as the tank steamrolls over it.
+	var/OP = 1
+
+/obj/mecha/combat/tank/balanced
+	desc = "A massive tank, it moves slowly and fires missiles."
+	name = "NT-01 tank"
+	icon = 'icons/mecha/tank.dmi'
+	icon_state = "tank"
+	step_in = 1
+	dir_in = 1 //Facing North.
+	health = 200
+	deflect_chance = 20
+	damage_absorption = list("brute"=0.3,"fire"=1.1,"bullet"=0.65,"laser"=0.60,"energy"=0.9,"bomb"=0.3)
+	max_temperature = 30000
+	infra_luminosity = 8
+	op = 0
+
+/obj/mecha/combat/tank/balanced/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine/tank/balanced
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/missile_rack
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	ME.attach(src)
+	return
+
+
 
 /obj/mecha/combat/tank/New()
 	..()
@@ -104,7 +133,10 @@
 
 
 /obj/mecha/combat/tank/Process_Spacemove(movement_dir = 0)
-	return 1 //it can also fly because it hovers:^)
+	if(OP) //if it's the OP one
+		return 1 //it can also fly because it hovers:^)
+	else
+		return 0 //only OP one can fly
 
 /obj/item/mecha_parts/mecha_equipment/weapon/tankbarrel
 	equip_cooldown = 10
@@ -118,6 +150,8 @@
 	fire_sound = 'sound/weapons/tankshell.ogg'
 
 
+
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine/tank
 	name = "FNX-2000 mounted machine gun"
 	desc = "A prototype weapon being developed by NT. It fires incendiary rounds."
@@ -128,4 +162,16 @@
 	projectiles = 200
 	projectile_energy_cost = 5
 	projectiles_per_shot = 10
+	fire_sound = 'sound/weapons/machinegun.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine/tank/balanced
+	name = "FNX-2000 mounted machine gun"
+	desc = "A standard tank mounted machine gun."
+	icon_state = "chad_carbine"
+	origin_tech = "materials=4;combat=4"
+	equip_cooldown = 1
+	projectile = /obj/item/projectile/bullet
+	projectiles = 40
+	projectile_energy_cost = 15
+	projectiles_per_shot = 4
 	fire_sound = 'sound/weapons/machinegun.ogg'
