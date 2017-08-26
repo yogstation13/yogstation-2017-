@@ -106,3 +106,9 @@
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
 #define BLOOD_VOLUME_SURVIVE		122
+
+//Might as well put grossed out levels here too huehuehue
+#define DISGUST_LEVEL_MAXEDOUT 150 //We can always add PTSD later
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25

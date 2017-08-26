@@ -49,6 +49,7 @@
 	var/real_name = null
 	var/bhunger = 0			//Carbon
 	var/druggy = 0			//Carbon
+	var/disgust = 0 		//Carbon
 	var/confused = 0		//Carbon
 	var/sleeping = 0		//Carbon
 	var/resting = 0			//Carbon

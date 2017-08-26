@@ -15,6 +15,7 @@
 	icon_state = "sheet-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
+	novariants = FALSE
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -137,6 +138,7 @@
 	icon_state = "sheet-rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
+	novariants = FALSE
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()

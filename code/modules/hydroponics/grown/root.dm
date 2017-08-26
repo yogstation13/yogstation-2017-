@@ -22,6 +22,7 @@
 	icon_state = "carrot"
 	filling_color = "#FFA500"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/hatchet))
@@ -52,6 +53,7 @@
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 
 // White-Beet
@@ -78,6 +80,7 @@
 	icon_state = "whitebeet"
 	filling_color = "#F4A460"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Red Beet
 /obj/item/seeds/redbeet
@@ -101,3 +104,4 @@
 	desc = "You can't beat red beet."
 	icon_state = "redbeet"
 	bitesize_mod = 2
+	foodtype = VEGETABLES

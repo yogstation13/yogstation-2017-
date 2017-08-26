@@ -8,6 +8,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
+	foodtype = GRAIN | VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
 	name = "toasted sandwich"
@@ -17,6 +18,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "carbon" = 2)
 	list_reagents = list("nutriment" = 6, "carbon" = 2)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
 	name = "grilled cheese sandwich"
@@ -26,6 +28,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 7, "vitamin" = 1)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich
 	name = "jelly sandwich"
@@ -34,14 +37,17 @@
 	icon_state = "jellysandwich"
 	trash = /obj/item/trash/plate
 	bitesize = 3
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/slime
 	bonus_reagents = list("slimejelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 2, "slimejelly" = 5, "vitamin" = 2)
+	foodtype  = GRAIN | TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/jellysandwich/cherry
 	bonus_reagents = list("cherryjelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 2, "cherryjelly" = 5, "vitamin" = 2)
+	foodtype = GRAIN | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	name = "icecream sandwich"
@@ -50,6 +56,7 @@
 	icon_state = "icecreamsandwich"
 	bonus_reagents = list("nutriment" = 1, "ice" = 2)
 	list_reagents = list("nutriment" = 2, "ice" = 2)
+	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/notasandwich
 	name = "not-a-sandwich"
@@ -59,6 +66,7 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("vitamin" = 6)
 	list_reagents = list("nutriment" = 6, "vitamin" = 6)
+	foodtype = GRAIN | GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast
 	name = "jellied toast"
@@ -67,14 +75,17 @@
 	icon_state = "jellytoast"
 	trash = /obj/item/trash/plate
 	bitesize = 3
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/cherry
 	bonus_reagents = list("cherryjelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 1, "cherryjelly" = 5, "vitamin" = 2)
+	foodtype = GRAIN | FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/jelliedtoast/slime
 	bonus_reagents = list("slimejelly" = 5, "vitamin" = 2)
 	list_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 2)
+	foodtype = GRAIN | TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/twobread
 	name = "two bread"
@@ -83,3 +94,4 @@
 	icon_state = "twobread"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 2, "vitamin" = 2)
+	foodtype = GRAIN

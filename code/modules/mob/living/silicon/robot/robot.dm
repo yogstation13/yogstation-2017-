@@ -16,6 +16,7 @@
 	var/modtype = "robot"
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
+	var/datum/robot_skin/robot_skin
 
 //Hud stuff
 
@@ -79,6 +80,8 @@
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+	robot_skin = new /datum/robot_skin/standard()
 
 	wires = new /datum/wires/robot(src)
 
@@ -166,91 +169,62 @@
 	if(module)
 		return
 
-	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
-	if(!config.forbid_peaceborg)
-		modulelist += "Peacekeeper"
-	if(!config.forbid_secborg)
-		modulelist += "Security"
+	var/static/list/modulelist
+	if(!modulelist)
+		modulelist = list("Standard" = /obj/item/weapon/robot_module/standard,
+							"Engineering" = /obj/item/weapon/robot_module/engineering,
+							"Medical" = /obj/item/weapon/robot_module/medical,
+							"Miner" = /obj/item/weapon/robot_module/miner,
+							"Janitor" = /obj/item/weapon/robot_module/janitor,
+							"Service" = /obj/item/weapon/robot_module/butler,
+							"Clown" = /obj/item/weapon/robot_module/clown)
+		if(!config.forbid_peaceborg)
+			modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
+		if(!config.forbid_secborg)
+			modulelist["Security"] = /obj/item/weapon/robot_module/security
 
 	designation = input("Please, select a module!", "Robot", null, null) in modulelist
 
-	if(module)
+	if(module || !designation)
 		return
 
 	updatename()
 
-	switch(designation)
-		if("Standard")
-			module = new /obj/item/weapon/robot_module/standard(src)
-			hands.icon_state = "standard"
-			modtype = "Stand"
-			feedback_inc("cyborg_standard",1)
+	var/module_type = modulelist[designation]
+	module = new module_type(src)
+	module.on_pick(src)
 
-		if("Service")
-			module = new /obj/item/weapon/robot_module/butler(src)
-			hands.icon_state = "service"
-			modtype = "Butler"
-			feedback_inc("cyborg_service",1)
+	var/static/list/module_skins
+	if(!module_skins)
+		module_skins = subtypesof(/obj/item/weapon/robot_module)
+		for(var/V in module_skins)
+			module_skins[V] = list()
 
-		if("Miner")
-			module = new /obj/item/weapon/robot_module/miner(src)
-			hands.icon_state = "miner"
-			modtype = "Miner"
-			feedback_inc("cyborg_miner",1)
+		for(var/V in subtypesof(/datum/robot_skin))
+			var/datum/robot_skin/skin = new V()
+			for(var/M in skin.modules)
+				module_skins[M] += skin
 
-
-		if("Medical")
-			module = new /obj/item/weapon/robot_module/medical(src)
-			hands.icon_state = "medical"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_medical",1)
-
-		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			hands.icon_state = "security"
-			modtype = "Sec"
-			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_security",1)
-
-		if("Peacekeeper")
-			module = new /obj/item/weapon/robot_module/peacekeeper(src)
-			hands.icon_state = "standard"
-			modtype = "Peace"
-			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_peacekeeper",1)
-
-		if("Engineering")
-			module = new /obj/item/weapon/robot_module/engineering(src)
-			hands.icon_state = "engineer"
-			modtype = "Eng"
-			feedback_inc("cyborg_engineering",1)
-			magpulse = 1
-
-		if("Janitor")
-			module = new /obj/item/weapon/robot_module/janitor(src)
-			hands.icon_state = "janitor"
-			modtype = "Jan"
-			feedback_inc("cyborg_janitor",1)
-
-		if("Clown")
-			module = new /obj/item/weapon/robot_module/clown(src)
-			hands.icon_state = "standard"
-			modtype = "Clown"
-			feedback_inc("cyborg_clown",1)
-	if(!module)
+	var/list/skinOptions = list()
+	for(var/V in module_skins[module.type])
+		var/datum/robot_skin/skin = V
+		if(skin.can_be_used_by(src))
+			skinOptions[skin.name] = skin
+	if(!skinOptions)
 		return
-	var/list/skinOptions = module.skins.Copy()
-	if(is_donator(src))
-		skinOptions += module.donator_skins
-	var/icontype = input("Select an icon!", "Robot", null, null) in skinOptions
-	if(!icontype)
-		icontype = skinOptions[1]
-	icon_state = skinOptions[icontype]
-	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
-	transform_animation(animation_length)
+	var/selected_skin = input("Select an icon!", "Robot", null, null) in skinOptions
+	if(!selected_skin)
+		selected_skin = skinOptions[1]
+	robot_skin = skinOptions[selected_skin]
+	if(robot_skin.transform_animation_length)
+		icon = robot_skin.transform_animation_icon
+		src.dir = SOUTH
+		notransform = 1
+		flick(robot_skin.transform_animation_icon_state, src)
+		sleep(robot_skin.transform_animation_length)
+		notransform = 0
+	icon = robot_skin.icon
+	icon_state = robot_skin.icon_state
 
 	notify_ai(2)
 	update_icons()
@@ -258,16 +232,28 @@
 
 	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
-/mob/living/silicon/robot/proc/transform_animation(animation_length)
-	if(!animation_length)
-		return
-	icon = 'icons/mob/robot_transformations.dmi'
-	src.dir = SOUTH
-	notransform = 1
-	flick(icon_state, src)
-	sleep(animation_length+1)
-	notransform = 0
-	icon = 'icons/mob/robots.dmi'
+/mob/living/silicon/robot/proc/reset_module()
+	notify_ai(2)
+
+	robot_skin = new /datum/robot_skin/standard()
+	uneq_all()
+	hands.icon_state = "nomod"
+	icon_state = "robot"
+	qdel(module)
+	module = null
+
+	designation = "Default"
+	updatename("Default")
+
+	update_icons()
+	update_headlamp()
+
+	speed = 0 // Remove upgrades.
+	ionpulse = FALSE
+	magpulse = FALSE
+	weather_immunities = list("ash")
+
+	status_flags |= CANPUSH
 
 /mob/living/silicon/robot/proc/updatename()
 	var/changed_name = ""
@@ -797,72 +783,23 @@
 /mob/living/silicon/robot/update_icons()
 	overlays.Cut()
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
-		var/state_name = icon_state //For easy conversion and/or different names
-		switch(icon_state)
-			if("robot")
-				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
-				state_name = "standard"
-			if("mediborg")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("toiletbot")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-				state_name = "mediborg"
-			if("secborg")
-				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("engiborg")
-				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("janiborg")
-				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg","ashborg")
-				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-				state_name = "minerborg"
-			if("peaceborg")
-				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("syndie_bloodhound")
-				overlays += "eyes-syndie_bloodhound"
-			if("medihover")
-				overlays += "eyes-medihover[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("disposalbot")
-				overlays += "eyes-disposalbot[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("eve")
-				overlays += "eyes-eve[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("wall-eng")
-				overlays += "eyes-wall-eng[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg-brown")
-				overlays += "eyes-minerborg-brown[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid-miner")
-				overlays += "eyes-droid-miner[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid-medical")
-				overlays += "eyes-droid-medical[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid")
-				overlays += "eyes-droid[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("mediborg-blue")
-				overlays += "eyes-mediborg-blue[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("janiborg-purple")
-				overlays += "eyes-janiborg-purple[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("secborg-red")
-				overlays += "eyes-secborg-red[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("engiborg-yellow")
-				overlays += "eyes-engiborg-yellow[is_servant_of_ratvar(src) ? "_r" : ""]"
-			else
-				overlays += "eyes"
-				state_name = "serviceborg"
+		var/eye_icon_state = robot_skin.eye_icon_state
+		if(eye_icon_state)
+			overlays += icon(robot_skin.headlamp_eye_icon, "[eye_icon_state][is_servant_of_ratvar(src) ? "_r" : ""]")
 		if(lamp_intensity > 2)
-			overlays += "eyes-[state_name]-lights"
+			var/headlamp_icon_state = robot_skin.headlight_icon_state
+			if(headlamp_icon_state)
+				overlays += icon(robot_skin.headlamp_eye_icon, headlamp_icon_state)
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-opencover +w"
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_wires_icon_state)
 		else if(cell)
-			overlays += "ov-opencover +c"
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_cell_icon_state)
 		else
-			overlays += "ov-opencover -c"
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_empty_icon_state)
 
 	update_fire()
-	if(stat == DEAD && icon_state == "mediborg+smile")
-		overlays += "dead-[icon_state]"
-	else if (stat != DEAD && icon_state == "mediborg+smile")
-		overlays -= "dead-[icon_state]"
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
@@ -1169,7 +1106,6 @@
 
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"
-	modtype = "Synd"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
 	designation = "Syndicate Assault"
@@ -1187,6 +1123,7 @@
 	..()
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
+	robot_skin = new /datum/robot_skin/syndicate()
 	laws = new /datum/ai_laws/syndicate_override()
 	var/obj/item/borg/upgrade/vtec/VTEC = new(src)
 	VTEC.action(src)
@@ -1207,6 +1144,7 @@
 /mob/living/silicon/robot/syndicate/medical/New(loc)
 	..()
 	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
+	robot_skin = new /datum/robot_skin/syndi_med()
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)

@@ -2641,13 +2641,6 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"hM" = (
-/turf/closed/wall/shuttle/smooth,
-/area/centcom)
-"hN" = (
-/obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth,
-/area/centcom)
 "hP" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
@@ -3144,17 +3137,6 @@
 /obj/structure/filingcabinet/medical,
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
 /area/centcom/control)
-"jK" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 12;
-	id = "ferry_away";
-	name = "Centcomm";
-	width = 5
-	},
-/turf/open/space,
-/area/space)
 "jL" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock";
@@ -3325,14 +3307,6 @@
 "kw" = (
 /obj/machinery/vending/wallmed,
 /turf/closed/indestructible/riveted,
-/area/centcom/control)
-"kx" = (
-/obj/machinery/door/airlock/centcom{
-	name = "briefing room";
-	opacity = 1;
-	req_access_txt = "101"
-	},
-/turf/open/indestructible,
 /area/centcom/control)
 "ky" = (
 /obj/structure/sign/barsign,
@@ -4256,7 +4230,7 @@
 	},
 /area/syndicate_mothership)
 "oj" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	icon_state = "toilet00";
 	dir = 8
 	},
@@ -6782,6 +6756,17 @@
 /obj/machinery/door/poddoor/shuttledock,
 /turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
+"Ka" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 12;
+	id = "ferry_away";
+	name = "Centcomm";
+	width = 5
+	},
+/turf/open/space,
+/area/centcom/ferry)
 "KK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Equipment Room";
@@ -6806,6 +6791,9 @@
 /obj/item/weapon/coin/silver,
 /turf/open/floor/plasteel/darkyellow,
 /area/centcom/supply)
+"Ms" = (
+/turf/open/space,
+/area/centcom/ferry)
 "ML" = (
 /obj/structure/sign/nosmoking_1,
 /turf/closed/indestructible/riveted,
@@ -35085,15 +35073,15 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+hg
+hg
+hg
+hg
+hg
+hg
+hg
+hg
+hg
 ab
 ab
 ab
@@ -35342,15 +35330,15 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+hg
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -35599,15 +35587,15 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+hg
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -35857,14 +35845,14 @@ hg
 hg
 hg
 hg
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -36114,14 +36102,14 @@ ir
 ir
 iI
 hg
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -36371,14 +36359,14 @@ ir
 ir
 iI
 iW
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -36628,14 +36616,14 @@ ir
 ir
 iJ
 iX
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -36885,14 +36873,14 @@ ir
 ir
 iK
 iX
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -37142,14 +37130,14 @@ ir
 ir
 iL
 iY
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -37399,14 +37387,14 @@ ir
 ir
 iL
 hg
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -37656,14 +37644,14 @@ is
 is
 hg
 hg
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -37913,14 +37901,14 @@ hl
 hl
 iM
 iW
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+hg
 ab
 ab
 ab
@@ -38170,13 +38158,13 @@ hl
 hl
 iN
 iX
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
+Ms
 gM
 gM
 gM
@@ -38427,13 +38415,13 @@ it
 hl
 hl
 iX
-ab
-ab
-ab
-jK
-ab
-ab
-ab
+Ms
+Ms
+Ms
+Ka
+Ms
+Ms
+Ms
 gM
 kS
 ze
@@ -38684,13 +38672,13 @@ hl
 hl
 hl
 iY
-ab
-ab
+Ms
+Ms
 jC
 jL
 jC
-ab
-ab
+Ms
+Ms
 gM
 im
 im
@@ -38941,13 +38929,13 @@ it
 hl
 hl
 hg
-ab
+Ms
 js
 jt
 hn
 jX
 kf
-ab
+Ms
 gM
 kT
 kT
@@ -39719,7 +39707,7 @@ hl
 hl
 hl
 hl
-kx
+gM
 im
 im
 im
@@ -40725,16 +40713,16 @@ ab
 ab
 ab
 ab
-ab
-ab
+hg
+hg
 hg
 ho
 hg
-ab
-ab
-ab
-ab
-ab
+hg
+hg
+hg
+hg
+hg
 ab
 hg
 iD
@@ -40982,7 +40970,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gV
 gV
 hp
@@ -40991,7 +40979,7 @@ gV
 gV
 gV
 gV
-ab
+hg
 ab
 iv
 iD
@@ -41239,7 +41227,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gW
 hh
 hh
@@ -41248,7 +41236,7 @@ hh
 hh
 hh
 gW
-ab
+hg
 ab
 hg
 iD
@@ -41496,7 +41484,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gV
 hh
 hh
@@ -41504,7 +41492,7 @@ hh
 hh
 hh
 hh
-hM
+gV
 hg
 hg
 hg
@@ -41753,7 +41741,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gV
 hi
 hi
@@ -41761,7 +41749,7 @@ hi
 hi
 hh
 hi
-hM
+gV
 hg
 Th
 iD
@@ -42010,7 +41998,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gV
 hi
 hi
@@ -42018,7 +42006,7 @@ hi
 hi
 hh
 hi
-hM
+gV
 hg
 Th
 Rv
@@ -42267,7 +42255,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gV
 hh
 hq
@@ -42275,7 +42263,7 @@ hh
 hh
 hh
 hh
-hM
+gV
 hg
 Th
 iD
@@ -42524,7 +42512,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gW
 hh
 hr
@@ -42532,7 +42520,7 @@ hu
 hh
 hh
 hh
-hN
+gW
 gX
 gX
 gX
@@ -42781,7 +42769,7 @@ ab
 ab
 ab
 ab
-ab
+hg
 gV
 gV
 gV
@@ -42789,7 +42777,7 @@ gV
 gV
 gV
 gV
-hM
+gV
 gX
 ih
 ik
@@ -43038,15 +43026,15 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+hg
+hg
+hg
+hg
+hg
+hg
+hg
+hg
+hg
 gX
 ik
 iy
