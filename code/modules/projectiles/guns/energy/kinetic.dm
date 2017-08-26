@@ -456,6 +456,8 @@
 	else
 		carried = 1
 
+	update_icon()
+
 	addtimer(src, "reload", overheat_time * carried)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
@@ -467,8 +469,8 @@
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
 		loc << "<span class='warning'>[src] silently charges up.<span>"
-	update_icon()
 	overheat = FALSE
+	update_icon()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
 	if(!suppressed)
@@ -479,10 +481,10 @@
 
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	overlays.Remove(core_overlay)
 	if(!can_shoot())
+
 		overlays.Add(core_overlay)
-	else
-		overlays.Remove(core_overlay)
 
 
 #undef PRESHOT
