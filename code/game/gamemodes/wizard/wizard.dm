@@ -54,51 +54,50 @@
 
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
-	switch(rand(1,100))
+	var/person_objectives = 0
+	var/item_objectives = 0
+	var/hijack = FALSE
+	var/glorious_death = FALSE
+
+	switch(rand(1, 100))
 		if(1 to 30)
-
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = wizard
-			kill_objective.find_target()
-			wizard.objectives += kill_objective
-
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
-		if(31 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = wizard
-			steal_objective.find_target()
-			wizard.objectives += steal_objective
-
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
-
-		if(61 to 85)
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = wizard
-			kill_objective.find_target()
-			wizard.objectives += kill_objective
-
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = wizard
-			steal_objective.find_target()
-			wizard.objectives += steal_objective
-
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
-				var/datum/objective/survive/survive_objective = new
-				survive_objective.owner = wizard
-				wizard.objectives += survive_objective
-
+			hijack = TRUE
+			item_objectives = 3
+		if(30 to 40)
+			glorious_death = TRUE
+			person_objectives = 3
 		else
-			if (!(locate(/datum/objective/hijack) in wizard.objectives))
-				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = wizard
-				wizard.objectives += hijack_objective
-	return
+			person_objectives = rand(2, 4)
+			item_objectives = 6 - person_objectives
+
+	for(var/i in 1 to person_objectives)
+		var/datum/objective/O
+		if(!hijack && !glorious_death && prob(10))
+			O = new /datum/objective/protect()
+		else
+			O = new /datum/objective/assassinate()
+		O.owner = wizard
+		O.find_target()
+		wizard.objectives += O
+
+	for(var/i in 1 to item_objectives)
+		var/datum/objective/steal/steal_objective = new /datum/objective/steal()
+		steal_objective.owner = wizard
+		steal_objective.find_target()
+		wizard.objectives += steal_objective
+
+	if(hijack)
+		var/datum/objective/hijack/hijack_objective = new /datum/objective/hijack()
+		hijack_objective.owner = wizard
+		wizard.objectives += hijack_objective
+	else if(glorious_death)
+		var/datum/objective/martyr/die = new /datum/objective/martyr()
+		die.owner = wizard
+		wizard.objectives += die
+	else
+		var/datum/objective/survive/survive_objective = new /datum/objective/survive()
+		survive_objective.owner = wizard
+		wizard.objectives += survive_objective
 
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
