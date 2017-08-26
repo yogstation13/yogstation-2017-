@@ -25,6 +25,7 @@
 	icon_state = "staffofhealing"
 	item_state = "staffofhealing"
 
+
 /obj/item/weapon/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
 

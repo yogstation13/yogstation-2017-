@@ -338,7 +338,7 @@
 	qdel(targeteffect)
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
-	name = "Tail Sweep"
+	name = "Tail Sweep"                             //Then fucking move it, instead of crying about it like a little bitch
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/Tail_swing.ogg'
 	charge_max = 150
@@ -356,3 +356,5 @@
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..()
+
+/obj/effect/proc_holder/spell/targeted/astral_form
