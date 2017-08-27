@@ -426,7 +426,7 @@ var/datum/subsystem/ticker/ticker
 	//Player status report
 	for(var/mob/Player in mob_list)
 		if(Player.mind && !isnewplayer(Player))
-			if(Player.stat != DEAD && !isbrain(Player))
+			if((Player.stat != DEAD && !isbrain(Player)) && !istype(Player, /mob/living/carbon/human/dream))
 				num_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					if(!Player.onCentcom() && !Player.onSyndieBase())

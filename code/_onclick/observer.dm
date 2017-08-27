@@ -13,6 +13,7 @@
 
 	// Things you might plausibly want to follow
 	if(istype(A, /atom/movable))
+
 		ManualFollow(A)
 
 	// Otherwise jump
@@ -23,7 +24,7 @@
 	if(client.prefs.afreeze)
 		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
-		
+
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return

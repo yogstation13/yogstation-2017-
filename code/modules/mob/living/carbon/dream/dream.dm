@@ -96,6 +96,12 @@
 	var/mob/living/carbon/body
 	pass_flags = PASSMOB
 
+/mob/living/carbon/human/dream/Life()
+	if(z != 10) //There's a bug where the dream body would spawn on the real body. z10 is the dream z-level
+		z = 10
+		x = 5
+		y = 5
+
 /mob/living/carbon/human/dream/New()
 	..()
 	var/datum/species/S = dna.species
