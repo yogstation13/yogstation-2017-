@@ -414,6 +414,7 @@ var/list/teleport_runes = list()
 		return FALSE
 	var/sacrifice_fulfilled = FALSE
 
+
 	if(sacrificial.mind)
 		sacrificed += sacrificial.mind
 		if(is_sacrifice_target(sacrificial.mind))

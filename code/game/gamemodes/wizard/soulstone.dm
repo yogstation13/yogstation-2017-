@@ -153,6 +153,8 @@
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
 				return 0
+			var/mob/living/carbon/C = target
+			C.stopDream()
 			if(contents.len)
 				return 0
 			var/mob/living/carbon/T = target

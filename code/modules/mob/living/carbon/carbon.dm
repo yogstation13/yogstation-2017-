@@ -824,11 +824,15 @@
 		return 1
 	return 0
 
+/mob/living/carbon/proc/stopDream()
+	if(dream)
+		dream.stopDream()
+
 /mob/living/carbon/isActive(var/pullClientBack = 1)
 	..()
 	if(dream)
 		if(pullClientBack)
-			pauseDream()
+			dream.stopDream()
 			return 1
 		else if(ishuman(dream.DB) && dream.DB.ckey)
 			return 1

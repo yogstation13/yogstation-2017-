@@ -6,13 +6,11 @@
 	var/mob/living/carbon/human/dream/DB = /mob/living/carbon/human/dream
 	var/dream
 	var/canDream = TRUE
-	var/initialized = FALSE
 
 /datum/dream/proc/Dream(mob/living/carbon/C)
 	if(dreaming || !C || !canDream || !C.client || (ishuman(DB) && DB.ckey))
 		return 0
 	owner = C
-	initialized = TRUE
 	var/area/current = get_area(owner)
 	if(current && current.dreamtype && prob(50))
 		dream = pick(get_dream(current.dreamtype))
@@ -71,21 +69,21 @@
 	if(!owner)
 		terminateDream()
 	if(owner.stat != UNCONSCIOUS)
-		STOP_PROCESSING(SSobj, src)
 		stopDream()
 		return
 	owner.reset_perspective(dream)
 
 
 /datum/dream/proc/stopDream()
+	if(!DB.ckey) //Some other code already did this. If we do it anyway, the active ckey gets turned to null
+		return                 //Wanna know what that does? It DC's the person and forces them to respawn
 	STOP_PROCESSING(SSobj, src)
-	if(!initialized)
-		return
-	else if(!owner)   //This is what happens when the body gets deleted. Never give a deleted body a ckey, the person will respawn instead
+	if(!owner)   //This is what happens when the body gets deleted. Never give a deleted body a ckey, the person will respawn instead
 		terminateDream()
 		return
 	dreaming = FALSE
 	owner.ckey = DB.ckey
+	DB.ckey = null //Tends to bug out otherwise
 
 /datum/dream/proc/terminateDream()
 	if(DB.client || DB.key) //Only do this if it didnt get caught by other code

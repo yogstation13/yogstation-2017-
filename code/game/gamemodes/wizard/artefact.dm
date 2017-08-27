@@ -150,7 +150,7 @@
 		user << "<span class='warning'>Kill or maim the victim first!</span>"
 		return
 
-	if(!M.mind || !M.isActive())
+	if(!M.isActive() || !M.mind)
 		user << "<span class='warning'>There is no soul connected to this body...</span>"
 		return
 
