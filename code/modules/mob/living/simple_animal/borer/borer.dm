@@ -38,6 +38,8 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	var/leaving = 0
 	var/obj/item/organ/borer_home/vessel = null
 
+	can_be_kicked = TRUE
+
 
 /mob/living/simple_animal/borer/New()
 	..()

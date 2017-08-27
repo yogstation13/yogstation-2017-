@@ -30,14 +30,14 @@
 	if(override)
 		return
 
-	if(s_intent[a_intent] == KICK)
-		if(istype(A, /obj) && !(A in GetAllContents())) // so we don't kick anything on ourselves
+	if(s_intent[a_intent] == SPECIAL_INTENT_KICK)
+		if(istype(A, /obj) && istype(A.loc, /turf)) // so we don't kick anything on ourselves
 			do_attack_animation(A)
 			changeNext_move(CLICK_CD_MELEE)
 			A.kick_act(src)
 			return
 
-	if(s_intent[a_intent] == BITE)
+	if(s_intent[a_intent] == SPECIAL_INTENT_BITE)
 		if(istype(A, /obj))
 			A.bite_act(src)
 			return

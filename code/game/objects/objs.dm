@@ -220,4 +220,26 @@
 /obj/proc/CanAStarPass()
 	. = !density
 
+/proc/kick_obj_structure_machinery(mob/living/carbon/human/H, obj/t)
+	playsound(get_turf(t), 'sound/effects/grillehit.ogg', 50, 1) //Zth: I couldn't find a proper sound, please replace it
+																	// Super: No
+	H.visible_message("<span class='danger'>[H] kicks [t].</span>", "<span class='danger'>You kick [t].</span>")
+	if(prob(70))
+		H.apply_damage(rand(2,4), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+
+	if(!t.anchored) //What could go wrong
+		var/kick_dir = get_dir(H, t)
+
+		if(!t.Move(get_step(t.loc, kick_dir))) //The structure that we kicked is up against a wall - this hurts our foot
+			H.apply_damage(rand(2,4), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+
+		var/strength = H.shoe_damage(rand(H.dna.species.kickdamagelow, H.dna.species.kickdamagehigh))
+
+		if(strength > 4) //Strong - kick further
+			addtimer(GLOBAL_PROC, "kick_obj_move_end", 3, FALSE, kick_dir, t)
+
+/proc/kick_obj_move_end(kickdir, obj/t)
+	for(var/i = 2 to rand(1,4))
+		if(!t.Move(get_step(t.loc, kickdir))) break
+		sleep(3)
 

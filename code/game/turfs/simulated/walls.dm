@@ -131,7 +131,7 @@
 
 /turf/closed/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.s_intent[user.a_intent] == KICK)
+	if(user.s_intent[user.a_intent] == SPECIAL_INTENT_KICK)
 		kick_act(user)
 	else
 		user << "<span class='notice'>You push the wall but nothing happens!</span>"
@@ -278,7 +278,7 @@
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
 
-/turf/simulated/wall/kick_act(mob/living/carbon/human/H)
+/turf/closed/wall/kick_act(mob/living/carbon/human/H)
 	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
 
 	if(prob(70))

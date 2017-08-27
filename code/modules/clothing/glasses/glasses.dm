@@ -1,14 +1,16 @@
 /obj/item/clothing/glasses/kick_act(mob/living/H) //Stomps the FUCK out of them
-	if(..()) return 1
+	if(can_be_crushed)
+		H.visible_message("<span class='danger'>[H] stomps on [src], crushing them!</span>", "<span class='danger'>You crush [src] under your foot.</span>")
+		playsound(get_turf(src), "shatter", 50, 1)
+		log_game("[H] ([H.ckey]) crushed [src]!")
 
-	H.visible_message("<span class='danger'>[H] stomps on \the [src], crushing them!</span>", "<span class='danger'>You crush \the [src] under your foot.</span>")
-	playsound(get_turf(src), "shatter", 50, 1)
-	log_game("[H] ([H.ckey]) crushed [src]!")
+		var/obj/item/weapon/shard/S = new(get_turf(src))
+		S.Crossed() //To punish user for stomping on sunglasses without shoes
 
-	var/obj/item/weapon/shard/S = new(get_turf(src))
-	S.Crossed() //To punish user for stomping on sunglasses without shoes
-
-	qdel(src)
+		qdel(src)
+	else
+		..()
+		return 1
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()

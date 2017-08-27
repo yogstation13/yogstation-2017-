@@ -347,7 +347,7 @@
 				updatehealth()
 				return 1
 
-			if(M.s_intent[M.a_intent] == KICK)
+			if(M.s_intent[M.a_intent] == SPECIAL_INTENT_KICK)
 				kick_act(M)
 				playsound(loc, "swing_hit", 25)
 				return 1

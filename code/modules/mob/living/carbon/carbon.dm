@@ -149,20 +149,20 @@
 
 /mob/living/carbon/proc/special_help_act(mob/living/carbon/M)
 	switch(M.s_intent[M.a_intent])
-		if(HUG)
+		if(SPECIAL_INTENT_HUG)
 			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
 						"<span class='notice'>You hug [src] to make them feel better!</span>")
 			flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client, client), 20)
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-		if(HANDSHAKE)
+		if(SPECIAL_INTENT_HANDSHAKE)
 			M.visible_message("<span class='notice'>[M] extends [M.gender == MALE ? "his" : "her"] hand to [src] for a handshake.</span>",\
 				"<span class='notice'>You extend your hand out to [src]!</span>")
 			src << "<span class='notice'>Shake [M]'s hand? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=handshake;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=handshake;choice=no;time=[world.time]'>No</a>)</font size>"
-		if(BROFIST)
-			M.visible_message("<span class='notice'>[M] raises [M.gender == MALE ? "his" : "her"] fist to [src] for a brofist.</span>",\
-				"<span class='notice'>You extend your fist to [src] for a sweet brofist!</span>")
-			src << "<span class='notice'>Brofist [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=brofist;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=brofist;choice=no;time=[world.time]'>No</a>)</font size>"
-		if(GIVE)
+		if(SPECIAL_INTENT_FISTBUMP)
+			M.visible_message("<span class='notice'>[M] raises [M.gender == MALE ? "his" : "her"] fist to [src] for a fistbump.</span>",\
+				"<span class='notice'>You extend your fist to [src] for a sweet fistbump!</span>")
+			src << "<span class='notice'>fistbump [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=no;time=[world.time]'>No</a>)</font size>"
+		if(SPECIAL_INTENT_GIVE)
 			M.visible_message("<span class='notice'>[M] starts handing [M.get_active_hand()] to [src].</span>",\
 				"<span class='notice'>You start handing [M.get_active_hand()] to [src]!</span>")
 			var/obj/O = M.get_active_hand() // to prevent it from changing if they click too late.
@@ -331,7 +331,7 @@
 	if(href_list["help"])
 		var/mob/living/carbon/target = locate(href_list["target"]) // he's trying to do something too you
 		if(Adjacent(target))
-			if(href_list["help"] == HANDSHAKE)
+			if(href_list["help"] == SPECIAL_INTENT_HANDSHAKE)
 				if(text2num(href_list["time"]) + 100 > world.time)
 					if(href_list["choice"] == "no")
 						visible_message("<span class='notice'>[src] denys [target]'s handshake!</span>",
@@ -343,19 +343,19 @@
 					// TODO: tie modular gloves to this, so like a reaction can happen. TODO 2: give the clown a joybuzzer.
 				else
 					src << "<span class='warning'>Too late.</span>"
-			if(href_list["help"] == BROFIST)
+			if(href_list["help"] == SPECIAL_INTENT_FISTBUMP)
 				if(text2num(href_list["time"]) + 100 > world.time)
 					if(href_list["choice"] == "no")
-						visible_message("<span class='notice'>[src] <font size=2><span class='red'>DENIED!</span></font size> [target]'s brofist!</span>",\
-									"<span class='notice'>You <font size=2><span class='red'>DENIED!</span></font size> [target]'s brofist!</span>")
+						visible_message("<span class='notice'>[src] <font size=2><span class='red'>DENIED!</span></font size> [target]'s fistbump!</span>",\
+									"<span class='notice'>You <font size=2><span class='red'>DENIED!</span></font size> [target]'s fistbump!</span>")
 					else
-						visible_message("<span class='notice'><font size=2>[src] and [target] lock knuckles in an epic <span class='red'>BROFIST!</span></font size></span>",\
-										"<span class='notice'><font size=2>[src] and [target.] lock knuckles in an epic <span class='red'>BROFIST!</span></font size></span>")
+						visible_message("<span class='notice'><font size=2>[src] and [target] lock knuckles in an epic <span class='red'>fistbump!</span></font size></span>",\
+										"<span class='notice'><font size=2>[src] and [target] lock knuckles in an epic <span class='red'>fistbump!</span></font size></span>")
 						playsound(src.loc, "punch", 100, 1, -1)
 				else
-					src << "<span class='warning'>You're too slow! Brofist mission failed.</span>"
+					src << "<span class='warning'>You're too slow! Fistbump mission failed.</span>"
 
-			if(href_list["help"] == GIVE)
+			if(href_list["help"] == SPECIAL_INTENT_GIVE)
 				if(text2num(href_list["time"]) + 100 > world.time)
 					if(href_list["choice"] == "no")
 						visible_message("<span class='notice'>[src] denys [target]'s offer!</span>",
@@ -877,7 +877,7 @@
 	var/list/options = list()
 	switch(a_intent)
 		if(HELP)
-			options += list("hug", "handshake", "brofist", "give")
+			options += list("hug", "handshake", "fistbump", "give")
 		if(DISARM)
 			options += list("disarm") //, "parry", "defend)
 		if(HARM)

@@ -157,7 +157,7 @@ Auto Patrol: []"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == HARM && H.s_intent[H.a_intent] != KICK) // kick is handled in ..()
+	if(H.a_intent == HARM && H.s_intent[H.a_intent] != SPECIAL_INTENT_KICK) // kick is handled in ..()
 		retaliate(H)
 	return ..()
 

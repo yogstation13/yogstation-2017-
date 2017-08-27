@@ -1035,16 +1035,16 @@
 				var/attack_sound
 
 				switch(M.s_intent[M.a_intent])
-					if(PUNCH)
+					if(SPECIAL_INTENT_PUNCH)
 						atk_verb = M.dna.species.attack_verb // TODO: rename species.attack_verb to species.punch_verb
 						damage = rand(M.dna.species.punchdamagelow, M.dna.species.punchdamagehigh)
 
-					if(KICK)
+					if(SPECIAL_INTENT_KICK)
 						atk_verb = "kick"
 						damage = rand(M.dna.species.kickdamagelow, M.dna.species.kickdamagehigh)
 						attack_sound = "swing_hit"
 
-					if(BITE)
+					if(SPECIAL_INTENT_BITE)
 						atk_verb = "bit"
 						if(M.dna.species.bitedamagelow >= 5)
 							atk_verb = "viciously bit"
@@ -1054,7 +1054,7 @@
 
 				if(H.lying)
 					atk_verb = "crush"
-					if(!M.s_intent[M.a_intent] == KICK) // if we didn't already set it up
+					if(!M.s_intent[M.a_intent] == SPECIAL_INTENT_KICK) // if we didn't already set it up
 						damage = rand(M.dna.species.kickdamagelow, M.dna.species.kickdamagehigh)
 					if(!include_ed)	include_ed = TRUE
 					damage = M.shoe_damage(damage) // extra damage when the enemy is lying down!
@@ -1081,7 +1081,7 @@
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, atk_verb)
-				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold && M.s_intent[M.a_intent] == PUNCH)
+				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold && M.s_intent[M.a_intent] == SPECIAL_INTENT_PUNCH)
 					H.visible_message("<span class='danger'>[M] has weakened [H]!</span>", \
 									"<span class='userdanger'>[M] has weakened [H]!</span>")
 					H.apply_effect(4, WEAKEN, armor_block)

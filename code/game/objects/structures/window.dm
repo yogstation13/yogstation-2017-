@@ -135,7 +135,7 @@
 /obj/structure/window/attack_hand(mob/user)
 	if(!can_be_reached(user))
 		return
-	if(user.s_intent[user.a_intent] != KICK)
+	if(user.s_intent[user.a_intent] != SPECIAL_INTENT_KICK)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.visible_message("[user] knocks on [src].")
 		add_fingerprint(user)

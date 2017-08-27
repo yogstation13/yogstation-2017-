@@ -112,7 +112,7 @@
 			var/mob/living/carbon/C = hud.mymob
 			if(C.handcuffed)
 				overlays += handcuff_overlay
-			else if(C.s_intent[C.a_intent] == KICK) // we use else if here so that the kick overlay doesn't come up when you're handcuffed
+			else if(C.s_intent[C.a_intent] == SPECIAL_INTENT_KICK) // we use else if here so that the kick overlay doesn't come up when you're handcuffed
 				overlays += kick_overlay
 			if(slot_id == slot_r_hand)
 				if(!C.has_right_hand())

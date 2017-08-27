@@ -631,6 +631,17 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 
+/obj/item/proc/throw_at_arc(atom/target, range, speed, mob/thrower, spin=1)
+	var/original_pixel_y = pixel_y
+	animate(src, pixel_y = original_pixel_y + 32, time = 10, easing = CUBIC_EASING)
+	while(loc)
+		if(!throwing)
+			animate(src, pixel_y = original_pixel_y, time = 5, easing = ELASTIC_EASING)
+			break
+		sleep(5)
+
+	throw_at(target, range, speed, thrower, spin)
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
@@ -685,17 +696,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
 
 	if(kick_power > 6) //Fly in an arc!
-		spawn()
-			var/original_pixel_y = pixel_y
-			animate(src, pixel_y = original_pixel_y + 32, time = 10, easing = CUBIC_EASING)
-
-			while(loc)
-				if(!throwing)
-					animate(src, pixel_y = original_pixel_y, time = 5, easing = ELASTIC_EASING)
-					break
-				sleep(5)
-
-	throw_at(T, kick_power, 1)
+		throw_at_arc(T, kick_power, 1)
+	else
+		throw_at(T, kick_power, 1)
 	Crossed(H) //So you can't kick shards while naked without suffering
 
 /obj/item/bite_act(mob/living/L)
