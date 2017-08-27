@@ -197,6 +197,20 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
+/datum/design/kineticaccelerator
+	name = "Kinetic Accelerator"
+	desc = "A kinetic accelerator. Perfect mining gear for low pressure environments.."
+	id = "kineticaccelerator"
+	req_tech = list("materials" = 3, "powerstorage" = 3, "engineering" = 3, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator
+	category = list("Mining Designs")
+
+
+
+
+
 /datum/design/wide_grip
 	name = "Wide Grip"
 	desc = "A wider KA grip to allow less dextrous humanoids to use it."
