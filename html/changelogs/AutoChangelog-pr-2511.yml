@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - bugfix: "If you set malf AI preference to off, you won't be malf anymore"
