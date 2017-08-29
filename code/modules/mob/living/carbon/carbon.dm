@@ -829,10 +829,11 @@
 		dream.stopDream()
 
 /mob/living/carbon/isActive(var/pullClientBack = 1)
-	..()
+	if(..())
+		return 1
 	if(dream)
 		if(pullClientBack)
 			dream.stopDream()
 			return 1
-		else if(ishuman(dream.DB) && dream.DB.ckey)
+		else if(dream && ishuman(dream.DB) && dream.DB.client)
 			return 1
