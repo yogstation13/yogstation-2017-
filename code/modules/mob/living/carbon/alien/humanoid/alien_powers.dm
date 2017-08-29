@@ -85,7 +85,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
+		log_say("[key_name(user)]->[M.key] : [msg]", "ALIENWHISPER")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
 		user << "<span class='noticealien'>You said: \"[msg]\" to [M]</span>"
 		for(var/ded in dead_mob_list)
@@ -153,7 +153,7 @@ Doesn't work on other aliens/AI.*/
 		// TURF CHECK
 		else if(istype(target, /turf))
 			var/turf/T = target
-      
+
 			if(T.unacidable)
 				user << "<span class='noticealien'>You cannot dissolve this object.</span>"
 				return 0

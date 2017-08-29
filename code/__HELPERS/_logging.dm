@@ -22,7 +22,7 @@
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
 		log_admin("ASAY: [text]")
-		
+
 /proc/log_dsay(text)
 	if (config.log_adminchat)
 		log_admin("DSAY: [text]")
@@ -39,9 +39,9 @@
 	if (config.log_access)
 		diary << "\[[time_stamp()]]ACCESS: [text]"
 
-/proc/log_say(text)
+/proc/log_say(text, channel = "SAY")
 	if (config.log_say)
-		diary << "\[[time_stamp()]]SAY: [text]"
+		diary << "\[[time_stamp()]][channel]: [text]"
 
 /proc/log_prayer(text)
 	if (config.log_prayer)
@@ -75,4 +75,3 @@
 	if (config.log_pda)
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		diary << "\[[time_stamp()]]COMMENT: [text]"
-

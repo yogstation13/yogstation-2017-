@@ -71,7 +71,7 @@
 					return
 				if(admin.ckey == bearer.ckey || admin.key == bearer.key)
 					admin << "You cannot approve your own station name."
-					log_admin("[admin] has attempted to approve their own station name: [pending_name]")
+	 				log_admin("[admin] has attempted to approve their own station name: [pending_name]")
 					message_admins("[admin] has attempted to approve their own station name: [pending_name]")
 					return
 
