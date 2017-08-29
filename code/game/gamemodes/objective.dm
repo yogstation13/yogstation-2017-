@@ -755,7 +755,7 @@ var/global/list/possible_items_special = list()
 	return 0
 
 /datum/objective/summon_magic
-	explanation_text = "Be the last living, human adept on the station."
+	explanation_text = "Be the last living, humanoid adept on the station."
 
 /datum/objective/summon_magic/check_completion()
 	if(!ishuman(owner.current) || (owner.current.stat & DEAD))
