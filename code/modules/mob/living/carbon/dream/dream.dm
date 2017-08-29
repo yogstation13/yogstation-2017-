@@ -106,7 +106,7 @@
 		z = 10
 		x = 5
 		y = 5
-	if(DB.client && owner.stat = CONSCIOUS)
+	if(client && bodystat = CONSCIOUS)
 		stopDream()
 
 /mob/living/carbon/human/dream/New()
