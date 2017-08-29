@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - bugfix: "Collectable Wizard's hats don't say you're wearing a head, but that you're wearing a hat"
