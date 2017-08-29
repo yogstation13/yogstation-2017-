@@ -186,7 +186,7 @@
 	var/mob/living/silicon/ai/AI
 	for(var/V in ai_list)
 		AI = V
-		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client))
+		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client) || !(ROLE_MALF in AI.client.prefs.be_special))
 			AI = null
 		else
 			break
