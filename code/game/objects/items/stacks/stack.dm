@@ -26,7 +26,7 @@
 		src.amount = amount
 	if(!merge_type)
 		merge_type = src.type
-		update_icon()
+	update_icon() // floyd was here
 	return
 
 /obj/item/stack/Destroy()
