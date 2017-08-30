@@ -48,7 +48,6 @@
 	for(var/mob/living/carbon/human/dream/D in mob_list)
 		D.dream.setInvisibility()	//If one new dude comes in, he will be visible, so redo the invisibility for all...
 	key = "@[C.ckey]"
-	world << "1 [key]"
 	DB.forceMove(DS)
 	DB.ckey = C.ckey
 	C.key = key
