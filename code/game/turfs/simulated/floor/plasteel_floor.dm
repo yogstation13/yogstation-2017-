@@ -388,6 +388,10 @@
 	icon_state = "cult"
 	name = "engraved floor"
 
+/turf/open/floor/plasteel/cult/dungeon/New()
+	slowdown = rand(0,2)
+
+
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"
 	name = "Commemorative Plaque"

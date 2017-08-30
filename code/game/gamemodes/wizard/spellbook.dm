@@ -301,6 +301,14 @@
 			user.dna.add_mutation(XRAY)
 	return 1
 
+/datum/spellbook_entry/vortex
+	name = "Vortex Wormhole"
+	desc = " Beings that enter may return, eventually. You are able to enter it freely in and out, collecting or killing what's inside. Every level also extends the lifespan of the vortex. Simpletons can exit through the vortex if they are in a wizards grab."
+	spell_type = /obj/effect/proc_holder/spell/thrown/vortex
+	log_name = "TV"
+	cost = 2
+	category = "Defensive"
+
 /datum/spellbook_entry/item/soulstones
 	name = "Six Soul Stone Shards and the spell Artificer"
 	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
