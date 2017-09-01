@@ -275,7 +275,7 @@ var/obj/effect/vortex_end/vortex_beacon
 /obj/effect/vortex_end/proc/Close()
 	opened = FALSE
 	icon_state = icon_state_closed
-	var/i 0
+	var/i = 0
 	for(var/obj/item/I in orange(6,src))
 		if(i >= 20)
 			break
@@ -302,3 +302,10 @@ var/obj/effect/vortex_end/vortex_beacon
 				vortex.stopVortex()
 				user << "<span class='warning'>You closed a vortex!</span>"
 				break
+
+/obj/effect/vortex_end/Destroy(force)
+	if(force)
+		..()
+		. = QDEL_HINT_HARDDEL_NOW
+	else
+		return QDEL_HINT_LETMELIVE
