@@ -391,16 +391,6 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
-/datum/spellbook_entry/astral_communion
-	name = "Astral Communion"
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall
-	log_name = "AC"
-	category = "Defensive"
-	cost = 2
-
-
-
-
 // /datum/spellbook_entry/item/cursed_heart
 //	name = "Cursed Heart"
 //	desc = "A heart that has been revived by dark magicks, the user must \
