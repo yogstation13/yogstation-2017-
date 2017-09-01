@@ -1,4 +1,4 @@
-/datum/round_event_control/wizard/telelockers //fashion disasters
+/datum/round_event_control/wizard/telelockers
 	name = "Telelockers"
 	weight = 10
 	typepath = /datum/round_event/wizard/telelockers
