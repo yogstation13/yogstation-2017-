@@ -390,6 +390,7 @@
 	explosion_block = 50
 
 /turf/open/floor/plasteel/cult/dungeon/New()
+	..()
 	slowdown = rand(0,2)
 
 
