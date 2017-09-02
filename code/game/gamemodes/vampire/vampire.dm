@@ -102,7 +102,6 @@
 	M.vampire = null
 	M.current << "<span class='alertvampire'>Your grip on the night is slipping away!</span>"
 
-
 /datum/game_mode/vampire/declare_completion()
 	..()
 	return

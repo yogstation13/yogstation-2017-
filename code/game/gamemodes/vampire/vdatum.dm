@@ -118,7 +118,7 @@
 	vampire.AddVampireSpell(new /obj/effect/proc_holder/vampire/cloakofdarkness(null))
 
 	vampire << "<span class='announcevampire'><B>You have become much stronger.</B></span>"
-	vampire << "<span class='noticevampire'>Your sight grows to even more powerful levels. <B>You can now see ghosts.</B></span>"
+	vampire << "<span class='noticevampire'>Your sight can now see between dimensions. <B>You can now see ghosts.</B></span>"
 	vampire << "<span class='noticevampire'><B>Clear Stuns</B> has been upgraded. It will now fill you with stimulants and omnizine.</span>"
 	vampire << "<span class='noticevampire'><B>Rend Ghost</B> will allow you to bite a ghost, as long as it is in an adjacent tile. This will assure you blood.</span>"
 	vampire << "<span class='noticevampire'><B>Cloak of Darkness</B> will allow you to fade into the dark.</span>"
@@ -160,6 +160,7 @@
 //	check_bright_turf()
 	check_burning_status()
 	check_for_chapel()
+	check_for_ghost_vision()
 
 /*
 /datum/vampire/proc/check_bright_turf()
@@ -177,6 +178,13 @@
 		vampire.apply_damage(5, BURN)
 		vampire << "<span class='genesisred'>THE LIGHT </span><span class='alertvampire'> IT BURNS!!!</span>"
 */
+
+/datum/vampire/proc/check_for_ghost_vision()
+	if(!sixhundred_unlocked)
+		return
+	if(vampire.see_invisible != SEE_INVISIBLE_OBSERVER)
+		vampire.see_invisible = SEE_INVISIBLE_OBSERVER
+
 
 /datum/vampire/proc/check_burning_status()
 	if(vampire.stat == DEAD)

@@ -55,15 +55,18 @@
 		return
 	if(!isliving(target))
 		return
-	if(istype(target, /mob))
-		var/mob/mob = target
-		if(mob.sleeping)
-			H << "<span class='vampirealert'>[target] is already asleep!</span>"
-			return
+	if(!ishuman(target))
+		H << "<span class='vampirealert'>Hypnotize will not work on this being.</span>"
+		return
+
+	var/mob/living/carbon/human/T = target
+	if(T.sleeping)
+		H << "<span class='vampirewarning'>[T] is already asleep!.</span>"
+		return
+
 	H.visible_message("<span class='warning'>[H]'s eyes flash red.</span>",\
 					"<span class='warning'>[H]'s eyes flash red.</span>")
 	if(istype(target, /mob/living/carbon/human))
-		var/mob/living/carbon/human/T = target
 		var/obj/item/clothing/glasses/G = T.glasses
 		if(G)
 			if(G.flash_protect)

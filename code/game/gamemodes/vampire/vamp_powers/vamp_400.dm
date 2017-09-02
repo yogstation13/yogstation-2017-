@@ -41,7 +41,7 @@
 		if(prob(60))
 			G.Break()
 		else
-			G.visible_message("<span class='warning'>[src] whips back and forth repelling the scream!</span>",\
+			G.visible_message("<span class='warning'>[G] whips back and forth repelling the scream!</span>",\
 					"<span class='warning'>[src] whips back and forth repelling the scream!</span>")
 	for(var/obj/machinery/computer/C in view(7, H))
 		C.take_damage(100)

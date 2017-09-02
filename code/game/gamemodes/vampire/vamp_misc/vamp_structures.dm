@@ -20,13 +20,14 @@
 					regenerate_blood()
 	if(pulledby)
 		if(vdatum.vampire != pulledby)
-			pulledby.stop_pulling()
 			pulledby << "<span class='notice'>You somehow lose grip of [src].</span>"
+			pulledby.stop_pulling()
 
 /obj/structure/closet/coffin/vampiric/Destroy()
 	vdatum.coffin = null
 	vdatum = null
 	STOP_PROCESSING(SSobj, src)
+	..()
 
 /obj/structure/closet/coffin/vampiric/proc/heal_vampire()
 	if(!vdatum || !vdatum.vampire)

@@ -181,53 +181,50 @@
 /obj/effect/proc_holder/vampire/bloodtracking/fire(mob/living/carbon/human/H)
 	if(!..())
 		return
-
 	var/datum/vampire/V = H.mind.vampire
-
-	if(!checkout_click_attack(H, V)) // good thing there's not an I inbetween those letters, am i right? up top
-		if(V.tracking)
-			H << "<span class='alertvampire'>You stop tracking.</span>"
-			V.tracking.RemoveBloodTracking()
-			V.tracking = null
+	if(!checkout_click_attack(H, V))
 		return
-
 	V.chosen_click_attack = src
 
-	H << "<span class='noticevampire'>[src] is active. (Use your middle mouse button on blood)</span>"
+	H << "<span class='noticevampire'>[src] is now active. Clicking on blood spills or trails will allow you to determine who they belong too. (Use your middle mouse button on blood)</span>"
 	return 1
 
 /obj/effect/proc_holder/vampire/bloodtracking/action_on_click(mob/living/carbon/human/H, datum/vampire/V, atom/target)
 	if(!..())
 		return
-
-	if(V)
-		if(V.tracking)
-			H << "<span class='noticevampire'>You stop tracking [V.tracking.name].</span>"
-			V.tracking.RemoveBloodTracking()
-			V.tracking = null
-
+	var/list/object_bloodDNA = list()
 	if(istype(target, /obj/effect/decal/cleanable/blood))
 		var/obj/effect/decal/cleanable/blood/B = target
-		var/mob/living/carbon/human/chosentarget
-		if(B.blood_DNA.len)
-			for(var/mob/living/carbon/human/L in mob_list)
-				if(chosentarget)
-					break
-				for(var/DNA in L.blood_DNA)
-					if(chosentarget)
-						break
-					if(DNA in B.blood_DNA)
-						chosentarget = L
-						H << "<span class='alertvampire'>You feel the presence of [L.real_name] rise from the blood. They have been marked with a red outline for you.</span>"
-						if(V)
-							V.tracking = chosentarget
-							V.tracking.UpdateBloodTracking()
+		object_bloodDNA += B.blood_DNA
+	if(istype(target, /obj/effect/decal/cleanable/trail_holder))
+		var/obj/effect/decal/cleanable/trail_holder/TH = target
+		object_bloodDNA += TH.blood_DNA
+
+	if(!(object_bloodDNA.len))
+		H << "<span class='alertvampire'>That's not blood.</span>"
+		return
+
+	var/list/humanscaught = list()
+	var/blood_DNA
+	for(var/mob/living/carbon/human/L in mob_list)
+		for(var/datum/reagent/R in L.reagents.reagent_list)
+			if(istype(R, /datum/reagent/blood))
+				if(R.data["blood_DNA"])
+					blood_DNA = R.data["blood_DNA"]
+				else
+					continue
+				if(blood_DNA in object_bloodDNA)
+					humanscaught += L
+
+	H << "<span class='alertvampire'>You search for who the blood belongs too.</span>"
+	for(var/mob/living/carbon/human/caughthuman in humanscaught)
+		H << "<span class='noticevampire'>[caughthuman] is in [get_area(caughthuman)], just [dir2text(get_dir(get_turf(caughthuman), get_turf(H)))] from you.</span>"
 
 	feedback_add_details("vampire_powers","blood track")
 
-////////////////////////////////
-////////	TRACING		////////
-////////////////////////////////
+////////////////////////////////////
+////////	TRACKING		////////
+////////////////////////////////////
 
 /obj/effect/proc_holder/vampire/digitaltracking
 	name = "Digital Tracking"

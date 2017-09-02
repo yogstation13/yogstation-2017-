@@ -1472,6 +1472,7 @@
 			if("clear")
 				if(src in ticker.mode.vampires)
 					ticker.mode.devampire(src)
+					src -= ticker.mode.vampires
 					message_admins("[key_name_admin(usr)] has de-vampired [current].")
 					log_admin("[key_name(usr)] has de-vampired [current].")
 			if("vampire")
@@ -1479,6 +1480,7 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				ticker.mode.transform_vampire(src)
+				src += ticker.mode.vampires
 				message_admins("[key_name_admin(usr)] has vampired [current].")
 				log_admin("[key_name(usr)] has vampired [current].")
 
