@@ -43,7 +43,7 @@ Also, you never added distance checking after target is selected. I've went ahea
 		user << "<span class='warning'>You don't particularly want to be dead!</span>"
 		return
 
-	if(!target.key || !target.mind)
+	if(!target.isActive() || !target.mind)
 		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
 		return
 

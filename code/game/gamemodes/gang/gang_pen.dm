@@ -20,7 +20,7 @@
 				if(cooldown)
 					user << "<span class='warning'>[src] needs more time to recharge before it can be used.</span>"
 					return
-				if(M.client)
+				if(M.isActive())
 					M.mind_initialize()		//give them a mind datum if they don't have one.
 					var/datum/gang/G = user.mind.gang_datum
 					var/recruitable = ticker.mode.add_gangster(M.mind,G)

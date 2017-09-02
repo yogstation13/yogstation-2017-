@@ -1,6 +1,8 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
 		return
+	if(!isActive())
+		return
 	//Handle items on mob
 
 	//first implants & organs
@@ -109,6 +111,8 @@
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_DEFAULTMSG))
 	if (notransform)
+		return
+	if(!isActive())
 		return
 	//Handle items on mob
 
@@ -234,6 +238,8 @@
 /mob/living/carbon/human/AIize()
 	if (notransform)
 		return
+	if(!isActive())
+		return
 	for(var/t in bodyparts)
 		qdel(t)
 
@@ -241,6 +247,8 @@
 
 /mob/living/carbon/AIize()
 	if (notransform)
+		return
+	if(!isActive())
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)
@@ -309,6 +317,8 @@
 /mob/living/carbon/human/proc/Robotize(delete_items = 0)
 	if (notransform)
 		return
+	if(!isActive())
+		return
 	for(var/obj/item/W in src)
 		if(delete_items)
 			qdel(W)
@@ -363,6 +373,8 @@
 /mob/living/carbon/human/proc/Alienize()
 	if (notransform)
 		return
+	if(!isActive())
+		return
 	for(var/obj/item/W in src)
 		unEquip(W)
 	regenerate_icons()
@@ -392,6 +404,8 @@
 
 /mob/living/carbon/human/proc/slimeize(reproduce as num)
 	if (notransform)
+		return
+	if(!isActive())
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)
@@ -426,6 +440,8 @@
 	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made)
 	if(mind)
 		mind.transfer_to(B)
+	if(!isActive())
+		return
 	else
 		B.key = key
 	. = B
@@ -434,6 +450,8 @@
 
 /mob/proc/become_god(var/side_colour)
 	var/mob/camera/god/G = new /mob/camera/god(loc)
+	if(!isActive())
+		return
 	G.side = side_colour
 	if(mind)
 		mind.transfer_to(G)
@@ -451,6 +469,8 @@
 
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)
+		return
+	if(!isActive())
 		return
 	for(var/obj/item/W in src)
 		unEquip(W)
@@ -471,6 +491,8 @@
 	qdel(src)
 
 /mob/living/carbon/human/Animalize()
+	if(!isActive())
+		return
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
@@ -505,6 +527,8 @@
 
 /mob/proc/Animalize()
 
+	if(!isActive())
+		return
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
 	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
 
@@ -527,7 +551,8 @@
  * This also gives a place to explain -why- players shouldnt be turn into certain mobs and hopefully someone can fix them.
  */
 /mob/proc/safe_animal(MP)
-
+	if(!isActive())
+		return
 //Bad mobs! - Remember to add a comment explaining what's wrong with the mob
 	if(!MP)
 		return 0	//Sanity, this should never happen.

@@ -357,7 +357,7 @@
 			user << "<span class='warning'>You need to be closer to enthrall [target]!</span>"
 			revert_cast()
 			return
-		if(!target.key || !target.mind)
+		if(!target.isActive() || !target.mind)
 			user << "<span class='warning'>The target has no mind!</span>"
 			revert_cast()
 			return
@@ -380,7 +380,7 @@
 			user << "<span class='warning'>You are already enthralling!</span>"
 			revert_cast()
 			return
-		if(!target.client)
+		if(!target.isActive())
 			user << "<span class='warning'>[target]'s mind is vacant of activity.</span>"
 			revert_cast()
 			return

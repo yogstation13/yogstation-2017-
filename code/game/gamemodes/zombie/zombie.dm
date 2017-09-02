@@ -56,7 +56,7 @@
 /datum/game_mode/zombies/proc/check_zombies_victory(roundend)
 	var/total_humans = 0
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(H.client && !iszombie(H))
+		if(H.isActive() && !iszombie(H))
 			total_humans++
 	if(total_humans == 0)
 		return 1

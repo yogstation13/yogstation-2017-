@@ -27,7 +27,7 @@
 			return
 	if(L.loc.density)
 		return
-	if(!L.client) //Only sentient people are going along with it!
+	if(!L.isActive()) //Only sentient people are going along with it!
 		return
 	L.adjustFireLoss(3)
 

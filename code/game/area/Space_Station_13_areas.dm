@@ -68,7 +68,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/sound_env = ROOM
 
-	var/dream_type //A special type of dream that occurs in the area. example: = "legion"
+	var/dreamtype //A special type of dream that occurs in the area. example: = "legion"
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
@@ -136,6 +136,7 @@ var/list/teleportlocs = list()
 	icon_state = "shuttle"
 	murders_plants = 0
 	sound_env = SMALL_ENCLOSED
+	dreamtype = "shuttle"
 
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
@@ -572,6 +573,7 @@ var/list/teleportlocs = list()
 	name = "Captain's Office"
 	icon_state = "captain"
 	sound_env = MEDIUM_SOFTFLOOR
+	dreamtype = "bar"
 
 /area/crew_quarters/courtroom
 	name = "Courtroom"
@@ -659,6 +661,7 @@ var/list/teleportlocs = list()
 	name = "Bar"
 	icon_state = "bar"
 	sound_env = LARGE_SOFTFLOOR
+	dreamtype = "bar"
 
 /area/crew_quarters/theatre
 	name = "Theatre"

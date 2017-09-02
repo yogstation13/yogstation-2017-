@@ -45,7 +45,7 @@
 			M.confused += power
 			if(ishuman(M) && ishuman(user) && M.stat != DEAD)
 				if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
-					if(M.client)
+					if(M.isActive())
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize() //give them a mind datum if they don't have one.
 							if(!isloyal(M))

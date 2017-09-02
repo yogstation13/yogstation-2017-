@@ -153,10 +153,12 @@
 		if("FORCE")
 			if(!iscarbon(target))		//TODO: Add sacrifice stoning for non-organics, just because you have no body doesnt mean you dont have a soul
 				return 0
+			var/mob/living/carbon/C = target
+			C.stopDream()
 			if(contents.len)
 				return 0
 			var/mob/living/carbon/T = target
-			if(T.client != null)
+			if(T.isActive())
 				for(var/obj/item/W in T)
 					T.unEquip(W)
 				init_shade(T, user)
@@ -177,7 +179,7 @@
 				user << "<span class='userdanger'>Capture failed!</span>: The soulstone is full! Free an existing soul to make room."
 			else
 				if(T.stat != CONSCIOUS)
-					if(T.client == null)
+					if(!T.isActive())
 						user << "<span class='userdanger'>Capture failed!</span>: The soul has already fled its mortal frame. You attempt to bring it back..."
 						getCultGhost(T,user)
 					else

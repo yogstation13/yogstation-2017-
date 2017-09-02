@@ -380,10 +380,10 @@
 		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss()
 	if (prob(50))
 		Paralyse(10)
-	if (stat == DEAD && client)
+	if (stat == DEAD && isActive())
 		gib()
 		return
-	if (stat == DEAD && !client)
+	if (stat == DEAD && !isActive())
 		gibs(loc, viruses)
 		qdel(src)
 		return

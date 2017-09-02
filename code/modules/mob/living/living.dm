@@ -1026,3 +1026,6 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form to [new_mob]!</span>"
+
+/mob/living/dreamClick(mob/living/carbon/C)
+	examine(C)

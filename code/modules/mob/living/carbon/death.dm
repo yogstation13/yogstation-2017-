@@ -4,6 +4,7 @@
 	..()
 
 /mob/living/carbon/gib(no_brain, no_organs)
+	pauseDream()
 	for(var/mob/M in src)
 		if(M in stomach_contents)
 			stomach_contents.Remove(M)

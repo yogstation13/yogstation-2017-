@@ -10,5 +10,6 @@
 		#define EMPTY_AREA_2 "Empty Area 2"
 		#define EMPTY_AREA_3 "Empty Area 3"
 		#define EMPTY_AREA_4 "Empty Area 4"
+		#define DREAMLAND "Dreamland"
 		#define AWAY_MISSION "Away Mission"
 		#define AWAY_MISSION_LIST list(AWAY_MISSION = SELFLOOPING)

@@ -385,12 +385,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/list/mobs = getpois(skip_mindless=1)
 	var/input = input("Please, select a mob!", "Haunt", null, null) as null|anything in mobs
 	var/mob/target = mobs[input]
-	ManualFollow(target)
+	ManualFollow(target,0)
 
 // This is the ghost's follow verb with an argument
-/mob/dead/observer/proc/ManualFollow(atom/movable/target)
+/mob/dead/observer/proc/ManualFollow(atom/movable/target,var/clicked = 1)
 	if (!istype(target))
 		return
+
+	if(clicked && istype(target, /mob/living/carbon/human/dream)) //We don't want it to redirect to the real body if they went through the list
+		var/mob/living/carbon/human/dream/DB = target
+		target = DB.body
 
 	var/icon/I = icon(target.icon,target.icon_state,target.dir)
 
