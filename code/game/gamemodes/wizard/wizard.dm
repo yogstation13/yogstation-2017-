@@ -220,7 +220,7 @@
 					wizardwin = 0
 				count++
 
-			if(wizard.current && wizard.current.stat!=2 && wizardwin)
+			if(wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
 				feedback_add_details("wizard_success","SUCCESS")
 			else
