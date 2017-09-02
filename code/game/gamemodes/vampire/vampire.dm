@@ -9,8 +9,8 @@
 	antag_flag = ROLE_VAMPIRE
 	restricted_jobs = list("AI", "Cyborg")
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chaplain")
-	required_players = 15
-	required_enemies = 3
+	required_players = 1 //15
+	required_enemies = 1 //3
 	recommended_enemies = 1
 	reroll_friendly = 1
 
