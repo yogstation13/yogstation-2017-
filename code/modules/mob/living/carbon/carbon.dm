@@ -873,7 +873,7 @@
 	..()
 
 
-/mob/living/carbon/open_special_intents()
+/mob/living/carbon/open_special_intents(shift=0)
 	var/list/options = list()
 	switch(a_intent)
 		if(HELP)
@@ -886,7 +886,24 @@
 	if(!options)
 		message_admins("ALERT: [src] ([key]) was unable to access their special intents. Please contact a coder.")
 		return
+	if(shift)
+		switch(s_intent[a_intent])
+			if(SPECIAL_INTENT_HUG)
+				s_intent[a_intent] = SPECIAL_INTENT_HANDSHAKE
+			if(SPECIAL_INTENT_HANDSHAKE)
+				s_intent[a_intent] = SPECIAL_INTENT_FISTBUMP
+			if(SPECIAL_INTENT_FISTBUMP)
+				s_intent[a_intent] = SPECIAL_INTENT_GIVE
+			if(SPECIAL_INTENT_GIVE)
+				s_intent[a_intent] = SPECIAL_INTENT_HUG
 
-	var/choice = input(src,"",null) as anything in options
+			if(SPECIAL_INTENT_PUNCH)
+				s_intent[a_intent] = SPECIAL_INTENT_KICK
+			if(SPECIAL_INTENT_KICK)
+				s_intent[a_intent] = SPECIAL_INTENT_BITE
+			if(SPECIAL_INTENT_BITE)
+				s_intent[a_intent] = SPECIAL_INTENT_PUNCH
+	else
+		var/choice = input(src,"",null) as anything in options
+		s_intent[a_intent] = choice
 
-	s_intent[a_intent] = choice

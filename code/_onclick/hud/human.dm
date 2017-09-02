@@ -50,9 +50,12 @@
 	icon_state = "si-help"
 	screen_loc = ui_specialintent
 
-/obj/screen/specialintents/Click()
+/obj/screen/specialintents/Click(location,control,params)
 	var/mob/living/carbon/C = usr
-	C.open_special_intents()
+	var/list/pa = params2list(params)
+	C.open_special_intents(pa.Find("left"))
+	// left click shifts to the next SI, right click/middle mouse button opens menu
+
 
 /obj/screen/specialintents/proc/UpdateIntent()
 	var/mob/living/carbon/C = usr
