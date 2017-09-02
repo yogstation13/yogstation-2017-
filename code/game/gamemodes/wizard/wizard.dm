@@ -226,8 +226,10 @@
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
-			if(wizard.spell_list.len>0)
-				text += "<br><B>[wizard.name] used the following spells: </B>"
+			text += "<br><B>[wizard.name] used the following spells: </B>"
+			if(wizardwin && wizard.spell_list && (wizard.spell_list.len == 0))
+				text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
+			else
 				var/i = 1
 				for(var/obj/effect/proc_holder/spell/S in wizard.spell_list)
 					text += "[S.name]"
