@@ -1,0 +1,4 @@
+author: "Jc1469"
+delete-after: true 
+changes: 
+  - tweak: "Offer runes no longer heal people that get converted."
