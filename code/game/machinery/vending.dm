@@ -390,6 +390,7 @@
 	playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 	health = 0
 	anchored = FALSE
+	desc += " It seems like it fell over though. Someone should probably pick it back up."
 
 /obj/machinery/vending/proc/putbackup()
 	health = 100
@@ -397,6 +398,7 @@
 	power_change() // updates the vendor if it's run out of power.
 	anchored = TRUE
 	fallen_over = FALSE
+	desc = initial(desc)
 
 /obj/machinery/vending/deconstruction()
 	var/product_list = list(product_records, hidden_records, coin_records)
