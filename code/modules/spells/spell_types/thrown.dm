@@ -162,6 +162,8 @@
 	..()
 
 /obj/effect/proc_holder/spell/thrown/vortex/cast(list/targets, mob/user)
+	if(!(user in vortex_beacon.casters))
+		vortex_beacon.casters.Add(user)
 	for(var/atom/target in targets)
 		var/obj/effect/vortex/vortex = new()
 		vortex.max_lifespan = vortex.max_lifespan += 2*spell_level
@@ -205,7 +207,7 @@ var/obj/effect/vortex_end/vortex_beacon
 	if(user == creator)
 		user << "<span class='notice'>You distort the [name].</span>"
 		stopVortex()
-	else if(!iswizard(user))
+	else if(!(user in vortex_beacon.casters))
 		suck(user)
 
 /obj/effect/vortex/proc/pullVortex()
@@ -215,7 +217,7 @@ var/obj/effect/vortex_end/vortex_beacon
 		if(pulled >= capacity)
 			return
 
-		if(!iswizard(L) && !iswizard(L.pulledby))
+		if(!(L in vortex_beacon.casters) && !(L.pulledby in vortex_beacon.casters))
 			step_towards(L,src)
 			pulled++
 
@@ -249,7 +251,7 @@ var/obj/effect/vortex_end/vortex_beacon
 	AM.forceMove(vortex_beacon.loc)
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!iswizard(L))
+		if(!(L in vortex_beacon.casters))
 			L.Stun(2)
 
 /obj/effect/vortex_end
@@ -263,6 +265,7 @@ var/obj/effect/vortex_end/vortex_beacon
 	var/list/vortexes = list()
 	var/opened = FALSE
 	var/turf/last_turf
+	var/list/casters = list()
 
 /obj/effect/vortex_end/New()
 	..()
@@ -283,11 +286,11 @@ var/obj/effect/vortex_end/vortex_beacon
 		i++
 
 /obj/effect/vortex_end/Bumped(mob/A)
-	if(iswizard(A) || iswizard(A.pulledby))
+	if((A in casters) || (A.pulledby in casters))
 		if(vortexes.len)
 			var/obj/effect/vortex/vortex = pick(vortexes)
 			A.forceMove(get_turf(vortex))
-		else if(iswizard(A))
+		else if(A in casters)
 			A << "<span class='warning'>The vortex is closed, cast the spell again or find another way out!</span>"
 	else if(isliving(A))
 		var/mob/living/L = A
@@ -296,9 +299,9 @@ var/obj/effect/vortex_end/vortex_beacon
 
 
 /obj/effect/vortex_end/attack_hand(mob/user)
-	if(iswizard(user) && opened)
+	if(user in casters && opened)
 		for(var/obj/effect/vortex/vortex in vortexes)
-			if(vortex.creator = user)
+			if(vortex.creator == user)
 				vortex.stopVortex()
 				user << "<span class='warning'>You closed a vortex!</span>"
 				break

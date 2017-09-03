@@ -114,6 +114,10 @@
 	magic_teleport = TRUE
 	anchored = 1
 
-/obj/structure/closet/teleport/Destroy()
-	return
+/obj/structure/closet/teleport/Destroy(force)
+	if(force)
+		..()
+		. = QDEL_HINT_HARDDEL_NOW
+	else
+		return QDEL_HINT_LETMELIVE
 

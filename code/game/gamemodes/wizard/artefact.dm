@@ -755,38 +755,3 @@ var/global/list/multiverse = list()
 
 /obj/structure/table/abductor/wabbajack/right
 	desc = "It wakes so you may sleep."
-
-/obj/item/weapon/tinkertool
-	name = "tinker tool"
-	desc = "One of the most powerful artefacts. Turns things into other things."
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "wrench_magic"
-	force = 15
-	throwforce = 10
-	w_class = 3
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	var/cooldown = 100
-	var/last_time = 0
-	var/upgrade_time = 30
-
-/obj/item/weapon/tinkertool/afterattack(atom/target, mob/user)
-	if(!(world.time - last_time >= cooldown))
-		user << "<span class='notice'>[src] isn't ready to be used again.</span>"
-	if(target == src || !(istype(target, /obj/item)))
-		return
-	var/obj/item/O = target
-	var/newType = pick(subtypesof(O))
-	playsound(get_turf(user), 'sound/items/Ratchet.ogg', 75,1)
-	if(do_after(user, upgrade_time, target = O))
-		if(newType == O.type)
-			newType = pick(subtypesof(/obj/item/toy))
-		playsound(get_turf(user), 'sound/magic/Ethereal_Exit.ogg', 50, 1, -1)
-		var/obj/item/I = new newType(get_turf(src))
-		log_admin("[user.name] turned a [O.name] into a [I.name] with the [src.name].")
-		qdel(O)
-		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-		sparks.set_up(1, 1, I)
-		sparks.start()
-		last_time = world.time
-
-
