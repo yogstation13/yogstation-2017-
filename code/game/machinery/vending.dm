@@ -390,7 +390,7 @@
 	playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 	health = 0
 	anchored = FALSE
-	desc += " It seems like it fell over though. Someone should probably pick it back up."
+	desc += " It seems like it fell over, though. Someone should probably pick it back up."
 
 /obj/machinery/vending/proc/putbackup()
 	health = 100
