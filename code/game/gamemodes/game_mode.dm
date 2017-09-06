@@ -576,7 +576,8 @@
 	var/list/crewmembers = list()
 	for(var/V in data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/living/carbon/human/H = R.fields["reference"]
+		var/datum/mind/M = R.fields["mindref"]
+		var/mob/living/carbon/human/H = M.current
 		if(istype(H) && H.client)
 			crewmembers += H
 	for(var/V in crewmembers)
