@@ -24,7 +24,7 @@
 /obj/machinery/telecomms/relay/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	// Add our level and send it back
 	if(can_send(signal))
-		signal.data["level"] |= listening_level
+		signal.data["broadcast_levels"] |= listening_level
 
 // Checks to see if it can send/receive.
 
