@@ -1,0 +1,21 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/item/weapon/book/manual/detective,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/template_noop)
+"c" = (/obj/item/clothing/head/det_hat,/turf/open/floor/wood,/area/template_noop)
+"d" = (/obj/structure/chair/wood,/turf/open/floor/wood,/area/template_noop)
+"e" = (/obj/item/weapon/cigbutt,/turf/open/floor/wood,/area/template_noop)
+"f" = (/obj/structure/rack,/obj/item/device/detective_scanner,/turf/open/floor/wood{tag = "icon-wood-broken4"; icon_state = "wood-broken4"},/area/template_noop)
+"g" = (/turf/open/floor/wood,/area/template_noop)
+"h" = (/obj/structure/table/wood,/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift,/obj/item/weapon/cigbutt,/turf/open/floor/wood,/area/template_noop)
+"i" = (/obj/structure/table/wood,/obj/item/weapon/paper_bin,/obj/item/weapon/reagent_containers/food/drinks/flask/det{pixel_x = -4; pixel_y = 5},/turf/open/floor/wood,/area/template_noop)
+"j" = (/turf/open/floor/wood{tag = "icon-wood-broken6"; icon_state = "wood-broken6"},/area/template_noop)
+"k" = (/obj/item/weapon/pen,/turf/open/floor/wood,/area/template_noop)
+"l" = (/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/open/floor/wood,/area/template_noop)
+"m" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/wood,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaa
+abcdefa
+aghijka
+agjgela
+aaamaaa
+"}

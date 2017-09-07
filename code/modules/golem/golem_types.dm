@@ -33,13 +33,12 @@
 	blacklisted = FALSE
 	dangerous_existence = FALSE
 
-/datum/species/golem/random/New()
+/datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
-	name = initial(golem_type.name)
-	id = initial(golem_type.id)
-	meat = initial(golem_type.meat)
+	var/datum/species/golem/golem_type = pick(typesof(/datum/species/golem) - src.type)
+	if(ishuman(C)) //Not risking it
+		var/mob/living/carbon/human/H = C
+		H.set_species(golem_type)
 
 /datum/species/golem/iron
 	name = "Iron Golem"

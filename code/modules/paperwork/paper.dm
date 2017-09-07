@@ -24,10 +24,10 @@
 	var/info		//What's actually written on the paper.
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
-	var/fields		//Amount of user created fields
 	var/list/stamped
 	var/rigged = 0
 	var/spam_flag = 0
+	var/last_field_id = 0
 
 
 /obj/item/weapon/paper/New()
@@ -116,51 +116,16 @@
 		onclose(usr, "[name]")
 
 
-/obj/item/weapon/paper/proc/addtofield(id, text, links = 0)
-	var/locid = 0
-	var/laststart = 1
-	var/textindex = 1
-	while(1)	//I know this can cause infinite loops and fuck up the whole server, but the if(istart==0) should be safe as fuck
-		var/istart = 0
-		if(links)
-			istart = findtext(info_links, "<span class=\"paper_field\">", laststart)
-		else
-			istart = findtext(info, "<span class=\"paper_field\">", laststart)
-
-		if(istart == 0)
-			return	//No field found with matching id
-
-		laststart = istart+1
-		locid++
-		if(locid == id)
-			var/iend = 1
-			if(links)
-				iend = findtext(info_links, "</span>", istart)
-			else
-				iend = findtext(info, "</span>", istart)
-
-			//textindex = istart+26
-			textindex = iend
-			break
-
-	if(links)
-		var/before = copytext(info_links, 1, textindex)
-		var/after = copytext(info_links, textindex)
-		info_links = before + text + after
-	else
-		var/before = copytext(info, 1, textindex)
-		var/after = copytext(info, textindex)
-		info = before + text + after
-		updateinfolinks()
+/obj/item/weapon/paper/proc/addtofield(id, text)
+	var/regex/finder = new /regex("<span class=\"paper_field\" data-fieldid=\"[id]\">", "g")
+	info = finder.Replace(info, "[text]$0")
+	updateinfolinks()
 
 
 /obj/item/weapon/paper/proc/updateinfolinks()
-	info_links = info
-	var/i = 0
-	for(i=1,i<=fields,i++)
-		addtofield(i, "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
-	info_links = info_links + "<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
-
+	info_links = "[info]<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+	var/regex/finder = new /regex("<span class=\"paper_field\" data-fieldid=\"(\[0-9\\.\]+)\">", "g")
+	info_links = finder.Replace(info_links, "$0<font face=\"[PEN_FONT]\"><A href='?src=\ref[src];write=$1'>write</A></font>")
 
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
@@ -189,7 +154,12 @@
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[sign\]", "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>")
-	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	//t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
+	var/regex/finder = new /regex("\\\[field\\\]")
+	var/lastindex = 1
+	while(finder.Find(t, lastindex))
+		t = finder.Replace(t, "<span class=\"paper_field\" data-fieldid=\"[++last_field_id]\"></span>", lastindex)
+		lastindex = finder.index + 1
 
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
@@ -212,15 +182,6 @@
 		t = "<font face=\"[CRAYON_FONT]\" color=[C.paint_color]><b>[t]</b></font>"
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
-
-//Count the fields
-	var/laststart = 1
-	while(1)
-		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
-		if(i == 0)
-			break
-		laststart = i+1
-		fields++
 
 	return t
 
@@ -275,6 +236,7 @@
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
 				updateinfolinks()
+			playsound(loc, "write", 50, 1, -1)
 
 			usr << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]") // Update the window
 			update_icon()
@@ -392,6 +354,14 @@
 	name = "paper- Smelting Operations Closed"
 	info = "<B>**NOTICE**</B><BR><BR>Smelting operations moved on-station.<BR><BR>Take your unrefined ore to the Redeption Machine in the Delivery Office to redeem points.<BR><BR>--SS13 Command"
 
+/obj/item/weapon/paper/druglab
+	name = "Security Notice"
+	info = "<small> On September 20th, 2551 </small> <br> <br> Janitor: Don't touch this until the detective's given you the all clear. We don't want to mess the evidence up now that we've caught the most notorious drug baron this side of Tau Ceti."
+
+/obj/item/weapon/paper/syndie_agent
+	name = "Briefing"
+	info = "<i> Good work. The info on the security protocols you've provided us with is of great value. As a token of our gratitude, the ship will approach the station sometime next week, so make sure you evacuate before that. Keep us updated with how your objectives are proceeding. <br> <br> Don't dissappoint us. <br> <br> <small> Syndicate High Command </small> </i>"
+
 /obj/item/weapon/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
@@ -405,6 +375,10 @@
 /obj/item/weapon/paper/crumpled/bloody/hippie
 	name = "Diary: Day 71"
 	info = "<i> The text is written in shaky handwriting, and is barely readable. <i> <br> <br> Rose achieved enlightenment yesterday. <br> <br> She didn't go as peacefully as she always said she would, so we had to give her a hand. We planned on giving her a... funeral of sorts by dumping her body outside, but we found out that when you've been stuck with no fuel for months, you'll do anything for a bite to eat. Her earthly remains didn't go to waste. <br> <br> Fuel's running low. Not sure how long the rest of us will last. <br> <br> I'm planning on giving myself a last ride with the sweet angel of ecstasy, but the others can't know. <br> <br> The stars are so fucking beautiful out here, man."
+
+/obj/item/weapon/paper/crumpled/bloody/xenokitchen
+	name = "Final Warning"
+	info = "<i> Samuel: While the crew deeply appreciates your role in dealing with the xeno infestation, we remain firmly disinterested in your culinary innovations. Any further attempts to serve 'alternative cuisine' to your fellow crew members will be considered grounds for your immediate reassignment.</i>"
 
 /obj/item/weapon/paper/bombcollars
 	name = "Bomb Collar User's Guide"

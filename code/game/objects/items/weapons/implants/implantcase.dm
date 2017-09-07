@@ -10,7 +10,7 @@
 	origin_tech = "materials=1;biotech=2"
 	materials = list(MAT_GLASS=500)
 	var/obj/item/weapon/implant/imp = null
-	var/imptype = /obj/item/weapon/implant
+	var/imptype = null
 
 /obj/item/weapon/implantcase/update_icon()
 	if(imp)
@@ -61,7 +61,8 @@
 
 /obj/item/weapon/implantcase/New()
 	..()
-	imp = new imptype(src)
+	if(imptype)
+		imp = new imptype(src)
 	update_icon()
 
 
