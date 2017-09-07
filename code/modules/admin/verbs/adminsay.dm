@@ -2,7 +2,8 @@
 	set category = "Special Verbs"
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
-	if(!check_rights(0))
+	if(!src.holder)
+		src << "Only administrators may use this command."
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -26,4 +27,3 @@
 	set category = "Admin"
 	set hidden = 1
 	src.cmd_admin_say(message)
-
