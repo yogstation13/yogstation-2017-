@@ -43,6 +43,7 @@ var/list/ai_list = list()
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/show_radio_jobs = TRUE
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -119,7 +120,8 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel,\
+		/mob/living/silicon/ai/proc/toggle_job_indicator)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -721,6 +723,14 @@ var/list/ai_list = list()
 	src << "Accessing Subspace Transceiver control..."
 	if (radio)
 		radio.interact(src)
+
+/mob/living/silicon/ai/proc/toggle_job_indicator()
+	set name = "Toggle Job Indicator"
+	set desc = "Toggle the automatic job display of radio messages"
+	set category = "AI Commands"
+
+	show_radio_jobs = !show_radio_jobs
+	src << "<span class='notice'>Radio job display [show_radio_jobs ? "enabled" : "disabled"].</span>"
 
 /mob/living/silicon/ai/proc/set_syndie_radio()
 	if(radio)
