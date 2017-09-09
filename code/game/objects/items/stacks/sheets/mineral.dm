@@ -43,6 +43,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 	origin_tech = "materials=1"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	sheettype = "sandstone"
+	merge_type = /obj/item/stack/sheet/mineral/sandstone
 
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
@@ -85,6 +86,7 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 	origin_tech = "materials=6"
 	sheettype = "diamond"
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/diamond
 
 var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	new/datum/stack_recipe("diamond door", /obj/structure/mineral_door/transparent/diamond, 10, one_per_turf = 1, on_floor = 1), \
@@ -110,6 +112,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	origin_tech = "materials=5"
 	sheettype = "uranium"
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/uranium
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
@@ -136,6 +139,7 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	burn_state = FLAMMABLE
 	burntime = 5
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/plasma
 
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
@@ -171,6 +175,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	origin_tech = "materials=4"
 	sheettype = "gold"
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/gold
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
@@ -198,6 +203,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	origin_tech = "materials=4"
 	sheettype = "silver"
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/silver
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
@@ -225,6 +231,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=4"
 	sheettype = "clown"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/mineral/bananium
 
 var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \
@@ -248,6 +255,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	throwforce = 2
 	origin_tech = "materials=1"
 	sheettype = "snow"
+	merge_type = /obj/item/stack/sheet/mineral/snow
 
 var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	new/datum/stack_recipe("Snow Wall",/turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
@@ -272,6 +280,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	singular_name = "enriched uranium sheet"
 	origin_tech = "materials=6"
 	materials = list(MAT_URANIUM=3000)
+	merge_type = /obj/item/stack/sheet/mineral/enruranium
 
 /*
  * Adamantine
@@ -281,6 +290,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	icon_state = "sheet-adamantine"
 	singular_name = "adamantine sheet"
 	origin_tech = "materials=4"
+	merge_type = /obj/item/stack/sheet/mineral/adamantine
 
 /*
  * Mythril
@@ -290,6 +300,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	icon_state = "sheet-mythril"
 	singular_name = "mythril sheet"
 	origin_tech = "materials=4"
+	merge_type = /obj/item/stack/sheet/mineral/mythril
 
 /*
  * Alien Alloy
@@ -301,6 +312,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 	singular_name = "alien alloy sheet"
 	origin_tech = "materials=6;abductor=1"
 	sheettype = "abductor"
+	merge_type = /obj/item/stack/sheet/mineral/abductor
 
 var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 /*	new/datum/stack_recipe("alien chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \ */

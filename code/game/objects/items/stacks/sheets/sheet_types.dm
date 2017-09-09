@@ -60,6 +60,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
@@ -97,6 +98,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=2"
 	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/plasteel
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
@@ -139,6 +141,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -178,6 +181,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	burn_state = FLAMMABLE
 	force = 0
 	throwforce = 0
+	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
 	recipes = cloth_recipes
@@ -209,6 +213,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/cardboard
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
@@ -237,6 +242,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon_state = "sheet-runed"
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
+	merge_type = /obj/item/stack/sheet/runed_metal
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -263,6 +269,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	singular_name = "lesser gem"
 	icon_state = "sheet-lessergem"
 	origin_tech = "materials=4"
+	merge_type = /obj/item/stack/sheet/lessergem
 
 
 /obj/item/stack/sheet/greatergem
@@ -271,6 +278,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
 	origin_tech = "materials=7"
+	merge_type = /obj/item/stack/sheet/greatergem
 
 	/*
  * Bones
@@ -287,3 +295,4 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
+	merge_type = /obj/item/stack/sheet/bone
