@@ -1,0 +1,6 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - bugfix: "Toilets have been refitted to have a regular toilet seat, instead of a plate of metal!"
+  - bugfix: "Asay hotkey now doesn't say you need no flags to use it"
+  - bugfix: "Wrenching an inactive AI core now accurately states whether you're fastening or unfastening"
