@@ -1,4 +1,3 @@
-author: "Cruix"
-delete-after: true 
-changes: 
-  - rscadd: "Hitting a telecomms traffic control console with an ID will now attempt to put that ID in the console."
+author: Cruix
+changes: []
+delete-after: true
