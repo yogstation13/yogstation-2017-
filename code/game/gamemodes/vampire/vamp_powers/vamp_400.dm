@@ -30,7 +30,7 @@
 				L.Weaken(2)
 			if(ishuman(L))
 				var/mob/living/carbon/human/human = L
-				human.setEarDamage(human.ear_damage + (10 / max(min(get_dist(L, H), 5), 1)))
+				human.setEarDamage(human.ear_damage + (20 / max(min(get_dist(L, H), 5), 1)))
 			if(issilicon(L))
 				L.Weaken(4)
 				playsound(L, 'sound/machines/warning-buzzer.ogg', 50, 1)

@@ -36,12 +36,11 @@
 /obj/effect/proc_holder/vampire/cloakofdarkness/fire(mob/living/carbon/human/H)
 	if(!..())
 		return
-	var/datum/mutation/human/HM = mutations_list[STEALTH]
-	if(HM in H.dna.mutations)
-		HM.force_lose(H)
-	else
-		HM.force_give(H)
-
+	if(H.dna)
+		if(STEALTH in H.dna.mutations)
+			H.dna.remove_mutation(STEALTH)
+		else
+			H.dna.add_mutation(STEALTH)
 	feedback_add_details("vampire_powers","cloak_of_dark")
 	return 1
 
@@ -50,7 +49,7 @@
 
 /obj/effect/proc_holder/vampire/rendghost
 	name = "Rend Ghost"
-	desc = "Devour a ghost, claim their soul, and regenerate lost blood."
+	desc = "Devour a ghost, claim their soul, and regenerate lost blood. The ghost must be floating within proximity of you."
 	cooldownlen = 1200
 	req_bloodcount = 250
 	action_icon_state = "biteghost"
@@ -77,9 +76,13 @@
 		"<span class='notice'>[H] reaches his hand into the air and grabs something.</span>")
 
 	H << "<span class='noticevampire'>You suck away [chosenone]'s soul!</span>"
+	var/oldname = chosenone.name
+	var/oldrealname = chosenone.real_name
 	chosenone.real_name = "lost soul"
 	chosenone.name = "lost soul [rand(1,1000)]"
 	chosenone.can_reenter_corpse = 0 // admins can hit aghost or edit their vars
+
+	log_game("[H] has taken away [oldname] ([oldrealname])'s soul. They are now [chosenone.name].")
 
 	chosenone.say("I'M LOST! THE VAMPIRE [H.real_name] HAS TAKEN MY SOUL!!!")
 	flash_color(chosenone, color = "#FF0000", time = 10)

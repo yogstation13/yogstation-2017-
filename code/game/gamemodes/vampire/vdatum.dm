@@ -88,7 +88,7 @@
 	// upon other things, ash reanimation works in
 	vampire << "<span class='announcevampire'><B>You have become stronger.</B></span>"
 	vampire << "<span class='noticevampire'><B>Your attraction to darkness becomes stronger.</B> You can now see further in the dark.</span>"
-	vampire << "<span class='noticevampire'><B>You can come back from ashes.</B> If you are ever creamated and your body is reduced to ashes you will ressurect whenever blood is spilt on them.</span>"
+	vampire << "<span class='noticevampire'><B>You can come back from ashes.</B> If blood is ever spilt on your ashes you will resurrect.</span>"
 
 /datum/vampire/proc/ThreeHundred()
 	threehundred_unlocked = TRUE
@@ -153,6 +153,16 @@
 	for(var/obj/effect/proc_holder/vampire/vampab in vampire.abilities)
 		vampire.RemoveVampireSpell(vampab)
 	//vampire.RemoveAbility()
+
+/datum/vampire/proc/GetAllPowers()
+	Basic()
+	Hundred()
+	TwoHundred()
+	ThreeHundred()
+	FourHundred()
+	SixHundred()
+	EightHundred()
+	Thousand()
 
 /datum/vampire/process() // called in carbon life.
 	if(!vampire)

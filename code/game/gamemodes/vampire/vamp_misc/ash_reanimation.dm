@@ -41,4 +41,4 @@
 	H.mind.vampire.vampire = H
 	H.mind.vampire.Basic()
 	H << "<span class='noticevampire'>Your body has regenerated from ashes... However,\
-		your powers have reverted. Your thirst <B>INTENSIFIES</b>.</span>"
+		your powers have reverted. Your thirst <font size=3><B>INTENSIFIES</b></font>.</span>"

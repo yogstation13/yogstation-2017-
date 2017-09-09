@@ -672,6 +672,8 @@
 	else
 		text += "<a href='?src=\ref[src];vampire=vampire'>vampire</a>|<b>HUMAN</b>"
 
+	text += "|<b><a href'?src=\ref[src];vampire=supervampire'>Super-Vampire</a>"
+
 	if(current && current.client && (ROLE_VAMPIRE in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
 	else
@@ -1472,7 +1474,7 @@
 			if("clear")
 				if(src in ticker.mode.vampires)
 					ticker.mode.devampire(src)
-					src -= ticker.mode.vampires
+					ticker.mode.vampires -= src
 					message_admins("[key_name_admin(usr)] has de-vampired [current].")
 					log_admin("[key_name(usr)] has de-vampired [current].")
 			if("vampire")
@@ -1480,9 +1482,21 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				ticker.mode.transform_vampire(src)
-				src += ticker.mode.vampires
+				ticker.mode.vampires -= src
 				message_admins("[key_name_admin(usr)] has vampired [current].")
 				log_admin("[key_name(usr)] has vampired [current].")
+
+			if("supervampire")
+				if(!(src in ticker.mode.vampires))
+					ticker.mode.vampires += src
+				ticker.mode.transform_vampire(src)
+				if(vampire)
+					vampire.GetAllPowers()
+					src << "<span class='vampirealert'>YOU FEEL <font size=4>SUPER</font> POWERFUL!</span>"
+					message_admins("[key_name_admin(usr)] has given [current] every vampire power.")
+					log_admin("[key_name(usr)] has given [current] every vampire power.")
+				else
+					usr << "SUPERVAMPIRE ERROR: Contact a coder, and report what happened."
 
 	else if (href_list["common"])
 		switch(href_list["common"])

@@ -73,7 +73,7 @@
 		if(check_status(H, vampire, target, drainrate))
 			target.blood_volume -= drainrate
 			vampire.add_blood(drainpayoff)
-			H << "<span class='noticevampire'>You have gained [drainrate] units of blood from [target]. They have [target.blood_volume] units remaining. You now have [vampire.bloodcount] units.</span>"
+			H << "<span class='noticevampire'>You have drained [drainrate] units of blood from [target]. They have [target.blood_volume] units remaining. You now have [vampire.bloodcount] units to use.</span>"
 			playsound(H.loc,'sound/items/drink.ogg', 10, 1)
 		if(target.job == "Chaplain")
 			H.visible_message("<span class='warning'>[H] hacks and coughs from draining [target]'s blood.</span>",\
@@ -195,31 +195,39 @@
 	var/list/object_bloodDNA = list()
 	if(istype(target, /obj/effect/decal/cleanable/blood))
 		var/obj/effect/decal/cleanable/blood/B = target
-		object_bloodDNA += B.blood_DNA
+		object_bloodDNA = B.blood_DNA.Copy()
 	if(istype(target, /obj/effect/decal/cleanable/trail_holder))
 		var/obj/effect/decal/cleanable/trail_holder/TH = target
-		object_bloodDNA += TH.blood_DNA
+		object_bloodDNA = TH.blood_DNA.Copy()
 
 	if(!(object_bloodDNA.len))
-		H << "<span class='alertvampire'>That's not blood.</span>"
+		H << "<span class='alertvampire'>That's not blood. [src] is now deactivated.</span>"
 		return
 
 	var/list/humanscaught = list()
-	var/blood_DNA
+	var/list/locatedblood_DNA = list()
+	var/stopsearching = FALSE
 	for(var/mob/living/carbon/human/L in mob_list)
-		for(var/datum/reagent/R in L.reagents.reagent_list)
-			if(istype(R, /datum/reagent/blood))
-				if(R.data["blood_DNA"])
-					blood_DNA = R.data["blood_DNA"]
-				else
-					continue
-				if(blood_DNA in object_bloodDNA)
-					humanscaught += L
+		locatedblood_DNA = L.get_blood_dna_list()
+		if(locatedblood_DNA)
+			if(locatedblood_DNA.len)
+				for(var/a in locatedblood_DNA, stopsearching != TRUE)
+					for(var/b in object_bloodDNA)
+						if(a == b)
+							stopsearching = TRUE
+							humanscaught += L
+							break
+		else
+			continue
+		stopsearching = FALSE
+		locatedblood_DNA = null
 
-	H << "<span class='alertvampire'>You search for who the blood belongs too.</span>"
-	for(var/mob/living/carbon/human/caughthuman in humanscaught)
-		H << "<span class='noticevampire'>[caughthuman] is in [get_area(caughthuman)], just [dir2text(get_dir(get_turf(caughthuman), get_turf(H)))] from you.</span>"
-
+	if(humanscaught.len)
+		H << "<span class='alertvampire'>You search for who the blood belongs too.</span>"
+		for(var/mob/living/carbon/human/caughthuman in humanscaught)
+			H << "<span class='noticevampire'>[caughthuman] is in the [get_area(caughthuman)], just [dir2text(get_dir(get_turf(caughthuman), get_turf(H)))] from your location.</span>"
+	else
+		H << "<span class='alertvampire'>You couldn't find who the blood belonged too.</span>"
 	feedback_add_details("vampire_powers","blood track")
 
 ////////////////////////////////////

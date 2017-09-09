@@ -44,7 +44,7 @@
 		return
 
 	V.chosen_click_attack = src
-	H << "<span class='vampirewarning'>[src] is now active. (Use your middle mouse button on anyone \
+	H << "<span class='vampirealert'>[src] is now active. (Use your middle mouse button on anyone \
 		to use.)"
 	H.visible_message("<span class='warning'>[H] twirls their finger in a circlular motion.</span>",\
 					"<span class='warning'>[H] twirls their finger in a circular motion.</span>")
