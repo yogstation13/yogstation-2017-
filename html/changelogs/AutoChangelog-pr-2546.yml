@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: true 
+changes: 
+  - rscadd: "NTSL can now use the $sector variable to detect what z-level a transmission was made from."
