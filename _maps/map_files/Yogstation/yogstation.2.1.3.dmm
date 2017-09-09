@@ -9500,7 +9500,7 @@
 /turf/open/floor/plating,
 /area/security/processing)
 "aqY" = (
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall,
 /area/security/detectives_office)
 "aqZ" = (
 /obj/structure/grille,
@@ -9521,10 +9521,10 @@
 /area/security/detectives_office)
 "arb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall,
 /area/lawoffice)
 "arc" = (
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall,
 /area/lawoffice)
 "ard" = (
 /obj/machinery/door/airlock{
@@ -10774,7 +10774,7 @@
 	tag = "icon-manifold-b-f (NORTH)";
 	dir = 1
 	},
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall,
 /area/security/detectives_office)
 "atL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11169,7 +11169,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall,
 /area/security/detectives_office)
 "auI" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -11585,11 +11585,17 @@
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "avC" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Law Office APC";
+	pixel_y = 24
+	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/closed/wall/mineral/wood,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
 /area/lawoffice)
 "avD" = (
 /obj/machinery/firealarm{
@@ -69331,7 +69337,7 @@
 /area/lawoffice)
 "ZxS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall,
 /area/security/detectives_office)
 "ZxT" = (
 /obj/machinery/door/airlock/maintenance{
@@ -96612,7 +96618,7 @@ atN
 asU
 atM
 auJ
-avC
+arc
 awE
 axM
 azg
