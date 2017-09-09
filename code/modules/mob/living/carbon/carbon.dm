@@ -163,6 +163,9 @@
 				"<span class='notice'>You extend your fist to [src] for a sweet fistbump!</span>")
 			src << "<span class='notice'>fistbump [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=no;time=[world.time]'>No</a>)</font size>"
 		if(SPECIAL_INTENT_GIVE)
+			if(!M.get_active_hand())
+				M << "<span class='notice'>You don't have anything in your hand...</span>"
+				return
 			M.visible_message("<span class='notice'>[M] starts handing [M.get_active_hand()] to [src].</span>",\
 				"<span class='notice'>You start handing [M.get_active_hand()] to [src]!</span>")
 			var/obj/O = M.get_active_hand() // to prevent it from changing if they click too late.
@@ -330,6 +333,8 @@
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 	if(href_list["help"])
 		var/mob/living/carbon/target = locate(href_list["target"]) // he's trying to do something too you
+		if(!target || target.incapacitated())
+			return
 		if(Adjacent(target))
 			if(href_list["help"] == SPECIAL_INTENT_HANDSHAKE)
 				if(text2num(href_list["time"]) + 100 > world.time)
@@ -362,7 +367,7 @@
 											"<span class='notice'>You deny [target]'s offer!</span>")
 					else
 						var/obj/O = locate(href_list["obj"])
-						if(O.loc != target || (target.l_hand != O && target.r_hand != O))
+						if(!O || O.loc != target || (target.l_hand != O && target.r_hand != O))
 							return
 						if(target.unEquip(O))
 							src.put_in_hands(O)
@@ -886,7 +891,7 @@
 	if(!options)
 		message_admins("ALERT: [src] ([key]) was unable to access their special intents. Please contact a coder.")
 		return
-	if(shift)
+	if(!shift)
 		switch(s_intent[a_intent])
 			if(SPECIAL_INTENT_HUG)
 				s_intent[a_intent] = SPECIAL_INTENT_HANDSHAKE
