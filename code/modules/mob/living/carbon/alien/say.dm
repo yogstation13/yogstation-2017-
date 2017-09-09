@@ -1,5 +1,5 @@
 /mob/living/proc/alien_talk(message, shown_name = name, obj/item/organ/alien/hivenode/speakerNode)
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] : [message]", "XENO HIVEMIND")
 	message = trim(message)
 	if(!message)
 		return

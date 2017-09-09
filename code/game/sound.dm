@@ -150,6 +150,12 @@
 				soundin = pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
 			if ("pour")
 				soundin = pick('sound/effects/water_pour1.ogg', 'sound/effects/water_pour2.ogg', 'sound/effects/water_pour3.ogg')
+			if ("write")
+				soundin = pick('sound/effects/write1.ogg', 'sound/effects/write2.ogg')
+			if ("buckle")
+				soundin = pick('sound/effects/buckle1.ogg', 'sound/effects/buckle2.ogg')
+			if ("fire")
+				soundin = pick('sound/effects/fire1.ogg', 'sound/effects/fire2.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)

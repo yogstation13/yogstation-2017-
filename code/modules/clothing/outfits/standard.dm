@@ -164,7 +164,7 @@
 		qdel(briefcase_item)
 	for(var/i=3, i>0, i--)
 		sec_briefcase.handle_item_insertion(new /obj/item/stack/spacecash/c1000,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)

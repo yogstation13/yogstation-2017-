@@ -1,0 +1,23 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/structure/table,/obj/item/clothing/head/ushanka,/turf/open/floor/plating,/area/template_noop)
+"c" = (/obj/item/weapon/rack_parts,/turf/open/floor/plating,/area/template_noop)
+"d" = (/obj/structure/table,/obj/item/weapon/twohanded/spear,/turf/open/floor/plating,/area/template_noop)
+"e" = (/obj/item/trash/chips,/turf/open/floor/plating,/area/template_noop)
+"f" = (/obj/structure/table,/obj/item/clothing/mask/bandana/red{pixel_x = -2; pixel_y = -1},/obj/item/toy/crayon/spraycan{pixel_x = 4; pixel_y = 4},/turf/open/floor/plating,/area/template_noop)
+"g" = (/obj/item/trash/candy,/turf/open/floor/plating,/area/template_noop)
+"h" = (/turf/open/floor/plating,/area/template_noop)
+"i" = (/obj/item/weapon/cigbutt/roach,/turf/open/floor/plating,/area/template_noop)
+"j" = (/obj/structure/table,/obj/item/weapon/book/manual/wiki/engineering_hacking,/obj/item/clothing/gloves/color/fyellow,/turf/open/floor/plating,/area/template_noop)
+"k" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating,/area/template_noop)
+"l" = (/obj/item/weapon/pen,/turf/open/floor/plating,/area/template_noop)
+"m" = (/obj/item/clothing/mask/gas,/turf/open/floor/plating,/area/template_noop)
+"n" = (/obj/structure/closet/wardrobe/grey,/turf/open/floor/plating,/area/template_noop)
+"o" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaa
+abcdefa
+aghihja
+ahklmna
+aaaoaaa
+"}

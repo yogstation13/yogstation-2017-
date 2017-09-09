@@ -40,7 +40,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [my_message]"
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_say("[user.real_name]/[user.key] : [message]", "NAR-SIE")
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"

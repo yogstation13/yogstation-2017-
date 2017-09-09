@@ -72,6 +72,7 @@ field_generator power level display
 					"<span class='italics'>You hear heavy droning.</span>")
 				turn_on()
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
+				log_game("SINGULO: Field Generator activated at ([x],[y],[z])")
 
 				add_fingerprint(user)
 	else
@@ -319,6 +320,7 @@ field_generator power level display
 					temp = 0
 					message_admins("A singulo exists and a containment field has failed.",1)
 					investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")
+					log_game("SINGULO: A singulo exists and a containment field has failed.")
 			O.last_warning = world.time
 
 /obj/machinery/field/generator/shock(mob/living/user)

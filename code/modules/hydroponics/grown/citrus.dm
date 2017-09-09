@@ -5,6 +5,7 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 // Lime
 /obj/item/seeds/lime
@@ -21,7 +22,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	mutatelist = list(/obj/item/seeds/orange)
 	reagents_add = list("vitamin" = 0.08, "limejuice" = 0.2, "nutriment" = 0.1)
-	
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime
 	seed = /obj/item/seeds/lime
 	name = "lime"
@@ -101,6 +102,7 @@
 	desc = "Looks like a lemon with someone buldging from the inside."
 	icon_state = "moneyfruit"
 	bitesize_mod = 2
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit/add_juice()
 	..()
