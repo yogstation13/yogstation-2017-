@@ -202,7 +202,7 @@ Mining Medic
 	outfit = /datum/outfit/job/miningmedic
 
 	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mailsorting, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mailsorting, access_mineral_storeroom, access_mining_station)
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"

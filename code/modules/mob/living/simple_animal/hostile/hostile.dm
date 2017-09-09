@@ -165,6 +165,8 @@
 	if(isobj(the_target))
 		if(is_type_in_list(the_target, wanted_objects))
 			return 1
+		else if (istype(the_target, /obj/effect/cyrogenicbubble))
+			return 1
 	return 0
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target

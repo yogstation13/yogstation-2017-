@@ -91,7 +91,7 @@ var/global/list/globalBlankCanvases[AMT_OF_CANVASES]
 		return
 
 	//Cleaning one pixel with a soap or rag
-	if(istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/reagent_containers/glass/rag))
+	if(istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/mop/rag))
 		//Pixel info created only when needed
 		var/icon/masterpiece = icon(icon,icon_state)
 		var/thePix = masterpiece.GetPixel(pixX,pixY)

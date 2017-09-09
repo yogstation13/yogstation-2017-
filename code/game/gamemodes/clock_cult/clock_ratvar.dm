@@ -83,7 +83,8 @@
 		glow.linked = src
 
 /obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
-	return 0 //Nice try, Toxins!
+	var/damage = max((health * 0.70) / severity, 100) //requires multiple bombs to take down
+	take_damage(damage, BRUTE)
 
 /obj/structure/clockwork/massive/celestial_gateway/proc/get_arrival_text(s_on_time)
 	. = "IMMINENT"

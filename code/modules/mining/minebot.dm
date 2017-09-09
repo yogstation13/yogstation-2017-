@@ -202,7 +202,6 @@
 	melee_damage_upper = 15
 	a_intent = "harm"
 	stop_automated_movement_when_pulled = 0
-	projectiletype = /obj/item/projectile/kinetic/traitor //double the damage. Very lethal in space, mildly lethal otherwise
 	icon_state = "mining_drone_emag"
 
 /mob/living/simple_animal/hostile/mining_drone/emag_act(mob/user)

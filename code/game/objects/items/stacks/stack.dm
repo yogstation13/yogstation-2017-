@@ -18,6 +18,7 @@
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
+	var/novariants = TRUE //If this object should change sprites based on amount
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -25,6 +26,7 @@
 		src.amount = amount
 	if(!merge_type)
 		merge_type = src.type
+		update_icon()
 	return
 
 /obj/item/stack/Destroy()
@@ -55,6 +57,21 @@
 		return round(source.energy / cost)
 	else
 		return (amount)
+
+/obj/item/stack/update_icon()
+	if(novariants)
+		return ..()
+	var/fifthOfStack = max_amount / 5
+	if(amount <= 1)
+		icon_state = initial(icon_state)
+	else if(amount >= max_amount)
+		icon_state = "[initial(icon_state)]_7"
+	else
+		icon_state = "[initial(icon_state)]_[max(2, round(amount / fifthOfStack, 1))]"
+
+	..()
+
+
 
 /obj/item/stack/attack_self(mob/user)
 	interact(user)
@@ -212,6 +229,7 @@
 	S.copy_evidences(src)
 	use(transfer)
 	S.add(transfer)
+	update_icon()
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)

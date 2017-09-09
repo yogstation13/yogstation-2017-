@@ -124,7 +124,6 @@ This file's folder contains:
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
-	forge_clock_objectives()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
@@ -136,21 +135,8 @@ This file's folder contains:
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
-	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
-	var/silicons_possible = FALSE
-	for(var/mob/living/silicon/S in living_mob_list)
-		silicons_possible = TRUE
-	if(silicons_possible)
-		possible_objectives += CLOCKCULT_SILICONS
-	clockwork_objective = pick(possible_objectives)
-	switch(clockwork_objective)
-		if(CLOCKCULT_ESCAPE)
-			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
-			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
-		if(CLOCKCULT_GATEWAY)
-			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
-		if(CLOCKCULT_SILICONS)
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
+	clockwork_objective = CLOCKCULT_GATEWAY
+	clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."	
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role

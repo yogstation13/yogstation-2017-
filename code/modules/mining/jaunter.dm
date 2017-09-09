@@ -203,7 +203,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			if(cooldown)
 				user << "<span class='warning'>[src] is on a cooldown...</span>"
 				return
-			var/obj/item/device/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
+			var/obj/machinery/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
 			if(!chosenjaunt)
 				if(0 == length(jauntbeacons))
 					user << "<span class='notice'>[src] cannot detect other jaunt beacons.</span>"
@@ -211,6 +211,9 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				user << "<span class='notice'>You decide not to use [src].</span>"
 				return
 			if(chosenjaunt.z != ZLEVEL_LAVALAND)
+				return
+			if(!chosenjaunt.on)
+				user << "<span class='notice'>[chosenjaunt] is offline.</span>"
 				return
 			togglecooldown(TRUE)
 			teleport(user, chosenjaunt)
@@ -230,6 +233,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	tunnel.target = J
 	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
 	user.throw_at_fast(tunnel, 5, 1)
+	new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(J), src, lifespan=3000) // 5 minutes
 
 /obj/machinery/jauntbeacon/mother/proc/togglecooldown(setting)
 	cooldown = setting

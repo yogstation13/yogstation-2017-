@@ -102,6 +102,7 @@
 	id = "water"
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	cleans = TRUE
 	var/cooling_temperature = 2
 
 /*
@@ -113,7 +114,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*0.2)
+		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume * 2, max_wet_time = 50)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -888,6 +889,7 @@
 	id = "cleaner"
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
+	cleans = TRUE
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/effect/decal/cleanable))

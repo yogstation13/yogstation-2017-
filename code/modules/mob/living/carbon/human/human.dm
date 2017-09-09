@@ -398,8 +398,7 @@
 					if(pocket_item == (pocket_id == slot_r_store ? r_store : l_store)) //item still in the pocket we search
 						unEquip(pocket_item)
 				else
-					if(place_item)
-						usr.unEquip(place_item)
+					if(place_item && usr.unEquip(place_item))
 						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 
 				// Update strip window
@@ -920,10 +919,12 @@
 		if(H.bloody_hands)
 			H.bloody_hands = 0
 			H.update_inv_gloves()
+	if(H.shoes)
+		H.shoes.clean_blood()
 	update_icons()	//apply the now updated overlays to the mob
 
 
-/mob/living/carbon/human/wash_cream()
+/mob/living/carbon/human/proc/wash_cream()
 	//clean both to prevent a rare bug
 	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
 	overlays -=image('icons/effects/creampie.dmi', "creampie_human")

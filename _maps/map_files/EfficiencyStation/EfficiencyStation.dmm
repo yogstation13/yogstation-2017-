@@ -524,7 +524,7 @@
 	},
 /area/shuttle/abandoned)
 "abl" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 9
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -10636,7 +10636,7 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/hor)
 "asl" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /obj/effect/landmark/start{
@@ -15747,7 +15747,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "aBl" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -15760,7 +15760,7 @@
 	name = "Medbay Central"
 	})
 "aBm" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -17521,7 +17521,7 @@
 	name = "Research Division"
 	})
 "aEt" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -17534,7 +17534,7 @@
 	name = "Research Division"
 	})
 "aEu" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 1
 	},
 /obj/machinery/light/small{
@@ -23996,7 +23996,7 @@
 	name = "Medical Maintenance"
 	})
 "aQj" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/effect/landmark/start{
@@ -31436,7 +31436,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "bez" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -31450,7 +31450,7 @@
 	name = "\improper Restrooms"
 	})
 "beA" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -31466,7 +31466,7 @@
 	name = "\improper Restrooms"
 	})
 "beB" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -32198,7 +32198,7 @@
 	},
 /area/shuttle/pod_4)
 "bfZ" = (
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -33456,7 +33456,7 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -34932,7 +34932,7 @@
 /turf/closed/wall,
 /area/engine/chiefs_office)
 "blz" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 1
 	},
 /obj/effect/landmark/start{
@@ -36548,7 +36548,7 @@
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains. They smell awful!"
 	},
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 8
 	},
 /obj/machinery/light_construct/small{
@@ -38081,7 +38081,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 8
 	},
 /obj/machinery/light_construct/small{
@@ -39473,7 +39473,7 @@
 	},
 /area/maintenance/starboard)
 "bup" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -42668,7 +42668,7 @@
 	name = "\improper Captain's Quarters"
 	})
 "bAn" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 1
 	},
 /obj/structure/window/reinforced/tinted{
@@ -53923,7 +53923,7 @@
 /area/maintenance/starboard)
 "bUP" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
@@ -55020,7 +55020,7 @@
 	},
 /area/security/hos)
 "bWJ" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 8
 	},
 /obj/effect/landmark/start{
@@ -56382,7 +56382,7 @@
 	name = "\improper Departure Lounge"
 	})
 "bZm" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/structure/sink{

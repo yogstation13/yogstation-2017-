@@ -3,6 +3,7 @@
 /*
 CONTAINS:
 RCD
+RCD AMMO
 */
 
 /obj/item/weapon/rcd

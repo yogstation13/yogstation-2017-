@@ -126,6 +126,7 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+	owner.SetParalysis(0)
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
