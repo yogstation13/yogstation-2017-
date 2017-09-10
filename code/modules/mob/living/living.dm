@@ -1032,8 +1032,8 @@ Sorry Giacom. Please don't be mad :(
 		var/mob/living/carbon/human/H
 		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
 			return 1
-	else if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
+	else if(isanimal(src))
+		var/mob/living/simple_animal/SA = src
 		if(SA.flying)
 			return 1
 

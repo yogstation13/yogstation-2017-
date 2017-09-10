@@ -48,7 +48,7 @@
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
 		return 0
-	if(is_living(AM))
+	if(isliving(AM))
 		var/mob/living/L = AM
 		if(L.flying())
 			return 0
