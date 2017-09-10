@@ -168,12 +168,11 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			anchored = bolted
 			user << "<span class='warning'>You [bolted ? "tighten" : "loosen"] [src]'s bolts.</span>"
 			desc = "[bolted ? "A beacon connected to wormhole jaunters. Whenever a wormhole jaunter is used, that person will be teleported to the nearest jaunter beacon." : "Probably needs to be wrenched."]"
-			if(bolted)
-				if(!cam)
-					cam = new(src)
-					cam.c_tag = name
-					cam.network = list("JAUNT")
-					visible_message("[src]'s teleportation and camera functions are now online!")
+			if(safe_camera_check())
+				cam = new(src)
+				cam.c_tag = name
+				cam.network = list("JAUNT")
+				visible_message("[src]'s teleportation and camera functions are now online!")
 			else
 				cam.network = null
 				qdel(cam)
@@ -195,6 +194,15 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				qdel(src)
 	else
 		..()
+
+/obj/machinery/jauntbeacon/proc/safe_camera_check()
+	if(z != ZLEVEL_LAVALAND)
+		return 0
+	if(cam)
+		return 0
+	if(!bolted)
+		return 0
+	return 1
 
 /obj/machinery/jauntbeacon/Destroy()
 	..()
