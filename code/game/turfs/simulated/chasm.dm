@@ -99,6 +99,14 @@
 	if(z+1 <= world.maxz)
 		drop_z = z+1
 
+/turf/open/chasm/vortex
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
+/turf/open/chasm/vortex/drop(atom/movable/AM)
+	drop_x = vortex_beacon.x
+	drop_y = vortex_beacon.y
+	drop_z = vortex_beacon.z
+	..()
 
 /turf/open/chasm/straight_down/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"

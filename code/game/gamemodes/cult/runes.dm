@@ -389,13 +389,7 @@ var/list/teleport_runes = list()
 			M << "<span class='warning'>Something is shielding [convertee]'s mind!</span>"
 		log_game("Offer rune failed - convertee had null rod")
 		return 0
-	var/brutedamage = convertee.getBruteLoss()
-	var/burndamage = convertee.getFireLoss()
-	if(brutedamage || burndamage)
-		convertee.adjustBruteLoss(-brutedamage)
-		convertee.adjustFireLoss(-burndamage)
-	convertee.visible_message("<span class='warning'>[convertee] writhes in pain \
-	[brutedamage || burndamage ? "even as their wounds heal and close" : "as the markings below them glow a bloody red"]!</span>", \
+	convertee.visible_message("<span class='warning'>[convertee] writhes in pain as the markings below them glow a bloody red!</span>", \
  	"<span class='cultlarge'><i>AAAAAAAAAAAAAA-</i></span>")
 	ticker.mode.add_cultist(convertee.mind, 1)
 	new /obj/item/weapon/tome(get_turf(src))

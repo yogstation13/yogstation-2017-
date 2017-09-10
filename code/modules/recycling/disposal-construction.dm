@@ -242,6 +242,7 @@
 						var/obj/structure/disposalpipe/P = new pipetype(loc, src)
 						P.updateicon()
 						transfer_fingerprints_to(P)
+						P.placedby = user
 
 						if(ptype == DISP_SORTJUNCTION || ptype == DISP_SORTJUNCTION_FLIP)
 							var/obj/structure/disposalpipe/sortjunction/SortP = P
@@ -251,14 +252,17 @@
 						var/obj/machinery/disposal/bin/B = new /obj/machinery/disposal/bin(loc,src)
 						B.mode = 0 // start with pump off
 						transfer_fingerprints_to(B)
+						B.placedby = user
 
 					else if(ptype == DISP_END_OUTLET)
 						var/obj/structure/disposaloutlet/P = new /obj/structure/disposaloutlet(loc,src)
 						transfer_fingerprints_to(P)
+						P.placedby = user
 
 					else if(ptype == DISP_END_CHUTE)
 						var/obj/machinery/disposal/deliveryChute/P = new /obj/machinery/disposal/deliveryChute(loc,src)
 						transfer_fingerprints_to(P)
+						P.placedby = user
 
 					return
 		else

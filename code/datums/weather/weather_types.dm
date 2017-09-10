@@ -109,7 +109,7 @@
 	weather_message = "<span class='notice'>Gentle embers waft down around you like grotesque snow. The storm seems to have passed you by...</span>"
 
 	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.</span>"
-
+	weather_overlay = "light_storm"
 	aesthetic = TRUE
 
 	probability = 10
@@ -120,8 +120,6 @@
 
 	telegraph_duration = 400
 	telegraph_message = "<span class='boldwarning'>The air begins to grow warm. Get to the maintenence tunnels!</span>"
-	//telegraph_sound = 'sound/lavaland/ash_storm_windup.ogg'	//TODO: Get sounds and sprite overlays
-	//telegraph_overlay = "light_ash"
 
 	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
 	weather_overlay = "ash_storm"
@@ -132,8 +130,6 @@
 
 
 	end_duration = 100
-	//end_sound = 'sound/lavaland/ash_storm_end.ogg'
-	//end_overlay = "light_ash"
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/shuttle, /area/security/Permabrig, /area/security/Cells)

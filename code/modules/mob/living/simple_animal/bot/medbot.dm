@@ -39,7 +39,7 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "bicaridine"
-	var/treatment_oxy = "dexalin"
+	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "kelotane"
 	var/treatment_tox = "antitoxin"
 	var/treatment_virus = "spaceacillin"

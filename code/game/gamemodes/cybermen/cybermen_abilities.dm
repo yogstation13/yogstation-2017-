@@ -136,7 +136,7 @@
 	var/input = stripped_input(user, "Enter a message to share with all other Cybermen.", "Cybermen Broadcast", "")
 	if(input)
 		cyberman_network.log_broadcast("[user.real_name]([user.ckey ? user.ckey : "No ckey"]) Sent a Cyberman Broadcast: [input]")
-		log_say("[key_name(user)] : [input]")
+		log_say("[key_name(user)] : [input]", "CYBERMAN")
 		//user.say_log_silent += "Cyberman Broadcast: [input]"
 		for(var/datum/mind/cyberman in cyberman_network.cybermen)
 			var/distorted_message = input

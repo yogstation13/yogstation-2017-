@@ -3,7 +3,6 @@
 /area/mine
 	icon_state = "mining"
 	has_gravity = 1
-	ambientsounds = list('sound/ambience/lavaland_effect.ogg')
 
 /area/mine/explored
 	name = "Mine"
@@ -16,7 +15,10 @@
 	power_equip = 0
 	power_light = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambientmystery.ogg')
+	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
+	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+	  'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+		'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 
 /area/mine/unexplored
 	name = "Mine"
@@ -29,7 +31,10 @@
 	power_equip = 0
 	power_light = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambientmystery.ogg')
+	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
+	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+	  'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+		'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 	sound_env = CAVE // implies that lavaland has torn it into pieces.
 
 /area/mine/lobby

@@ -866,6 +866,12 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'>[replacetext("Traitor", " ", "&nbsp")]</a></td>"
 
+		//Double Agent
+		if(jobban_isbanned(M, "double_agent") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=double_agent;jobban4=\ref[M]'><font color=red>[replacetext("Double Agent", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=double_agent;jobban4=\ref[M]'>[replacetext("Double Agent", " ", "&nbsp")]</a></td>"
+
 		//Changeling
 		if(jobban_isbanned(M, "changeling") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=changeling;jobban4=\ref[M]'><font color=red>[replacetext("Changeling", " ", "&nbsp")]</font></a></td>"

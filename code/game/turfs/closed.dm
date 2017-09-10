@@ -19,6 +19,9 @@
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
+/turf/closed/indestructible/cult
+	icon = 'icons/turf/walls/cult_wall.dmi'
+	icon_state = "cult"
 
 
 

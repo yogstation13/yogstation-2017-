@@ -186,7 +186,7 @@
 	var/mob/living/silicon/ai/AI
 	for(var/V in ai_list)
 		AI = V
-		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client))
+		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client) || !(ROLE_MALF in AI.client.prefs.be_special))
 			AI = null
 		else
 			break
@@ -576,7 +576,8 @@
 	var/list/crewmembers = list()
 	for(var/V in data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/living/carbon/human/H = R.fields["reference"]
+		var/datum/mind/M = R.fields["mindref"]
+		var/mob/living/carbon/human/H = M.current
 		if(istype(H) && H.client)
 			crewmembers += H
 	for(var/V in crewmembers)

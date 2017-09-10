@@ -29,10 +29,12 @@
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
+	var/magic_teleport = FALSE  //Having this to true will teleport the contents upon closing to another random locker. (WARNING: Extremely fun)
 
 /obj/structure/closet/New()
 	..()
 	update_icon()
+	closet_list.Add(src)
 
 /obj/structure/closet/initialize()
 	..()
@@ -41,6 +43,7 @@
 
 /obj/structure/closet/Destroy()
 	dump_contents()
+	closet_list.Remove(src)
 	return ..()
 
 /obj/structure/closet/update_icon()
@@ -180,6 +183,7 @@
 	opened = 0
 	density = 1
 	update_icon()
+	magicTeleport()      //This immediatly returns for normal lockers
 	return 1
 
 /obj/structure/closet/proc/toggle(mob/living/user)
@@ -432,3 +436,17 @@
 				req_access = list()
 				req_access += pick(get_all_accesses())
 	..()
+
+
+/obj/structure/closet/proc/magicTeleport()
+	if(!contents.len || !magic_teleport)
+		return
+	for(var/i in 1 to 20)
+		var/obj/structure/closet/C = pick(closet_list)
+		if(C.secure || C.opened || C.welded || C.locked || C.broken || C.z != 1)
+			continue
+		for(var/atom/movable/AM in src)
+			AM.forceMove(C)
+			if(!contents.len)
+				return
+
