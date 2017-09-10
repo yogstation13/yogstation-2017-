@@ -48,10 +48,9 @@
 	if(istype(AM, /obj/effect/portal))
 		//Portals aren't affected by gravity. Probably.
 		return 0
-	//Flies right over the chasm
-	if(isanimal(AM))
-		var/mob/living/simple_animal/SA = AM
-		if(SA.flying)
+	if(is_living(AM))
+		var/mob/living/L = AM
+		if(L.flying())
 			return 0
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
@@ -68,8 +67,6 @@
 				visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 				jaunter.chasm_react(H)
 				return 0
-		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
-			return 0
 	return 1
 
 /turf/open/chasm/proc/is_safe()
