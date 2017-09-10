@@ -133,12 +133,14 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 
 /obj/machinery/jauntbeacon
 	name = "deployed jaunt beacon"
+	desc = "Probably needs to be wrenched."
 	density = 0
 	icon = 'icons/obj/machines/jauntbeacon.dmi'
 	icon_state = "beacon-off"
 	var/bolted // 0 not anchored. 1 anchored. 2 cannot be unbolted.
 	var/on = FALSE
 	var/jauntlist = TRUE
+	var/obj/machinery/camera/portable/cam
 
 /obj/machinery/jauntbeacon/New()
 	..()
@@ -165,6 +167,16 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			bolted = !bolted
 			anchored = bolted
 			user << "<span class='warning'>You [bolted ? "tighten" : "loosen"] [src]'s bolts.</span>"
+			desc = "[bolted ? "A beacon connected to wormhole jaunters. Whenever a wormhole jaunter is used, that person will be teleported to the nearest jaunter beacon." : "Probably needs to be wrenched."]"
+			if(bolted)
+				if(!cam)
+					cam = new(src)
+					cam.c_tag = name
+					cam.network = list("JAUNT")
+					visible_message("[src]'s teleportation and camera functions are now online!")
+			else
+				cam.network = null
+				qdel(cam)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(bolted == 2)
 			user << "<span class='warning'>[src] cannot be unbolted.</span>"
@@ -178,6 +190,8 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				user << "<span class='warning'>You fork up [src] with [I].</span>"
 				jauntbeacons -= src
 				new /obj/item/device/jauntbeacon(get_turf(user))
+				if(cam)
+					qdel(cam)
 				qdel(src)
 	else
 		..()
