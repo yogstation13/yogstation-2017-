@@ -43,23 +43,17 @@
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	msg = pretty_filter(msg)
-
 	log_ooc("[mob.name]/[key] : [msg]")
+	
+	msg = pretty_filter(msg)
 
 	var/raw_msg = msg
 
-
 	msg = pretty_filter(msg)
-
-	log_ooc("[mob.name]/[key] : [msg]")
-
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
 		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
-
-	log_ooc("[mob.name]/[key] : [raw_msg]")
 
 	if(!holder && !bypass_ooc_approval)
 		var/regex/R = new("((\[a-z\]+://|www\\.)\\S+)", "ig")

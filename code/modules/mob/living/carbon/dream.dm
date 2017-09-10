@@ -18,7 +18,8 @@
 		return 0
 	owner.reset_perspective(dream)
 	owner.adjust_blindness(-1)
-	owner.hud_used.show_hud(3)
+	if(owner.hud_used)
+		owner.hud_used.show_hud(3)
 	START_PROCESSING(SSobj, src)
 	return 1
 
@@ -35,7 +36,8 @@
 	owner.sleeping = 0
 	owner.update_stat()
 	dreaming = FALSE
-	owner.hud_used.show_hud(1)
+	if(owner.hud_used)
+		owner.hud_used.show_hud(1)
 	owner.reset_perspective()
 
 /*Dreaming landmarks. (Yes, you can add mobs to it)

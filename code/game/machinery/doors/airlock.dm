@@ -443,7 +443,7 @@ var/list/airlock_overlays = list()
 
 	dat += "<tr><td>Door Lights</td>"
 	if(wires.is_cut(WIRE_LIGHT))
-		dat += "<td><span class='linkOff'>On</span><span class='linkOff'>Off</span></td><td><font color='red'>IDScan wire cut</font></td></tr>"
+		dat += "<td><span class='linkOff'>On</span><span class='linkOff'>Off</span></td><td><font color='red'>Lighting wire cut</font></td></tr>"
 	else if(lights)
 		dat += "<td><span class='linkOn'>On</span><A href='?src=\ref[src];aiDisable=10'>Off</A></td><td></td></tr>"
 	else

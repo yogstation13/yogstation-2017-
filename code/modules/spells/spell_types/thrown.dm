@@ -134,3 +134,181 @@
 			sleep(1)
 		explosion(loc,-1,-1,2,5)
 		qdel(src)
+
+
+/obj/effect/proc_holder/spell/thrown/vortex
+	name = "Vortex Wormhole"
+	desc = "A ball of gravitational bluespace energy. Throw to create a portal to suck everything in. Wizards are not affected by the pull."
+	clothes_req = 1
+	invocation = "Vreet Em"
+	invocation_type = "shout"
+	charge_max = 200
+	level_max = 3
+
+	action_icon_state = "vortex"
+	held_icon = 'icons/mob/actions.dmi'
+	held_icon_state = "vortex"
+
+
+/obj/effect/proc_holder/spell/thrown/vortex/choose_targets()
+	var/area/A = get_area(usr)
+	if(istype(A,/area/centcom/vortex))
+		var/obj/effect/vortex/vortex = new(vortex_beacon.last_turf)
+		vortex.max_lifespan = vortex.max_lifespan += 2*spell_level
+		vortex.creator = usr
+		invocation()
+		start_recharge()
+		return
+	..()
+
+/obj/effect/proc_holder/spell/thrown/vortex/cast(list/targets, mob/user)
+	if(!(user in vortex_beacon.casters))
+		vortex_beacon.casters.Add(user)
+	for(var/atom/target in targets)
+		var/obj/effect/vortex/vortex = new()
+		vortex.max_lifespan = vortex.max_lifespan += 2*spell_level
+		vortex.creator = user
+		var/turf/T = get_turf(target)
+		vortex.forceMove(T)
+		playsound(T,'sound/magic/blink.ogg',80,1)
+		break
+
+/area/centcom/vortex
+	name = "vortex"
+	requires_power = 1
+
+/obj/effect/vortex
+	name = "vortex"
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "vortex"
+	anchored = 1
+	density = 1
+	var/max_lifespan = 4 //In seconds. This is actually 7 since it gives you 3 seconds for ever level. Standard being 4 + 1*3
+	var/lifespan = 0
+	var/creator
+
+var/obj/effect/vortex_end/vortex_beacon
+
+/obj/effect/vortex/New()
+	..()
+	vortex_beacon.Open()
+	vortex_beacon.vortexes.Add(src)
+	START_PROCESSING(SSobj, src)
+
+/obj/effect/vortex/process()
+	if(lifespan >= max_lifespan)
+		stopVortex()
+		return
+	pullVortex()
+	lifespan += 2
+	addtimer(src, "pullVortex",10)
+
+/obj/effect/vortex/attack_hand(mob/user)
+	if(user == creator)
+		user << "<span class='notice'>You distort the [name].</span>"
+		stopVortex()
+	else if(!(user in vortex_beacon.casters))
+		suck(user)
+
+/obj/effect/vortex/proc/pullVortex()
+	var/pulled = 0
+	var/capacity = 10 //The spell is already too powerful, let's give it at least a small limit
+	for(var/mob/living/L in orange(7,src))
+		if(pulled >= capacity)
+			return
+
+		if(!(L in vortex_beacon.casters) && !(L.pulledby in vortex_beacon.casters))
+			step_towards(L,src)
+			pulled++
+
+	for(var/obj/item/I in orange(0,src))
+		if(!I.anchored)
+			suck(I)
+
+	for(var/obj/item/I in orange(7,src))
+		if(pulled >= capacity)
+			return
+		if(!I.anchored)
+			step_towards(I,src)
+			pulled++
+
+/obj/effect/vortex/proc/stopVortex()
+	visible_message("<span class='warning'>The [name] collapses.</span>")
+	vortex_beacon.vortexes.Remove(src)
+	if(!vortex_beacon.vortexes.len)
+		vortex_beacon.Close()
+	STOP_PROCESSING(SSobj, src)
+	vortex_beacon.last_turf = get_turf(src)
+	qdel(src)
+
+/obj/effect/vortex/Bumped(mob/A)
+	suck(A)
+
+/obj/effect/vortex/Bump(mob/A)
+	suck(A)
+
+/obj/effect/vortex/proc/suck(atom/movable/AM)
+	AM.forceMove(vortex_beacon.loc)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!(L in vortex_beacon.casters))
+			L.Stun(2)
+
+/obj/effect/vortex_end
+	name = "vortex"
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "vortex"
+	anchored = 1
+	density = 1
+	layer = 5
+	var/icon_state_closed = "vortex_closed"
+	var/list/vortexes = list()
+	var/opened = FALSE
+	var/turf/last_turf
+	var/list/casters = list()
+
+/obj/effect/vortex_end/New()
+	..()
+	vortex_beacon = src
+
+/obj/effect/vortex_end/proc/Open()
+	opened = TRUE
+	icon_state = initial(icon_state)
+
+/obj/effect/vortex_end/proc/Close()
+	opened = FALSE
+	icon_state = icon_state_closed
+	var/i = 0
+	for(var/obj/item/I in orange(6,src))
+		if(i >= 20)
+			break
+		step(I,pick(NORTH,SOUTH,EAST,WEST))
+		i++
+
+/obj/effect/vortex_end/Bumped(mob/A)
+	if((A in casters) || (A.pulledby in casters))
+		if(vortexes.len)
+			var/obj/effect/vortex/vortex = pick(vortexes)
+			A.forceMove(get_turf(vortex))
+		else if(A in casters)
+			A << "<span class='warning'>The vortex is closed, cast the spell again or find another way out!</span>"
+	else if(isliving(A))
+		var/mob/living/L = A
+		L.Stun(4)
+		playsound(get_turf(src), 'sound/magic/LightningShock.ogg', 30, 1, -1)
+
+
+/obj/effect/vortex_end/attack_hand(mob/user)
+	if(user in casters && opened)
+		for(var/obj/effect/vortex/vortex in vortexes)
+			if(vortex.creator == user)
+				vortex.stopVortex()
+				user << "<span class='warning'>You closed a vortex!</span>"
+				break
+
+/obj/effect/vortex_end/Destroy(force)
+	if(force)
+		..()
+		. = QDEL_HINT_HARDDEL_NOW
+	else
+		return QDEL_HINT_LETMELIVE
