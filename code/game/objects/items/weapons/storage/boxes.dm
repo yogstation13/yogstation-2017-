@@ -89,6 +89,18 @@
 	..()
 	new /obj/item/device/radio/off(src)
 
+// Miner survival box
+/obj/item/weapon/storage/box/miner/New()
+	..()
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
+	var/obj/item/weapon/wrench/W = new(src)
+	W.desc = "Use this to wrench down those damn jaunter beacons. Declare war against crowbar users."
+	var/obj/item/weapon/crowbar/C = new(src)
+	C.desc = "Use this to pry open unpowered doors on lavaland. Worship the crowbar, and cast down wrench users. Maybe defeat a colossus with it."
+
 // Syndie survival box
 /obj/item/weapon/storage/box/syndie/New()
 	..()
