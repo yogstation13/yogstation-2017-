@@ -291,10 +291,14 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/telecomms/traffic/attackby()
-	..()
+/obj/machinery/computer/telecomms/traffic/attackby(obj/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/card/id) && check_access(O) && user.drop_item())
+		O.loc = src
+		auth = O
+		create_log("has logged in.", usr)
+	else
+		..()
 	src.updateUsrDialog()
-	return
 
 /obj/machinery/computer/telecomms/traffic/emag_act(mob/user)
 	if(!emagged)
