@@ -60,7 +60,7 @@
 /proc/Broadcast_Message(var/atom/movable/AM,
 						var/vmask, var/obj/item/device/radio/radio,
 						var/message, var/name, var/job, var/realname,
-						var/data = BROADCAST_ALL_RADIOS, var/identifier, var/compression, var/encryption, var/list/level, var/freq, var/list/spans, var/languages,
+						var/data = BROADCAST_ALL_RADIOS, var/identifier, var/compression, var/encryption, var/list/broadcast_levels, var/freq, var/list/spans, var/languages,
 						var/verb_say, var/verb_ask, var/verb_exclaim, var/verb_yell)
 	message = copytext(message, 1, MAX_BROADCAST_LEN)
 
@@ -93,7 +93,7 @@
 
 	if(data == BROADCAST_INTERCOMMS_ONLY)
 		for(var/obj/item/device/radio/intercom/R in all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
+			if(R.receive_range(freq, broadcast_levels) > -1)
 				radios += R
 
 	// --- Broadcast only to intercoms and station-bounced radios ---
@@ -104,7 +104,7 @@
 			if(R.subspace_transmission)
 				continue
 
-			if(R.receive_range(freq, level) > -1)
+			if(R.receive_range(freq, broadcast_levels) > -1)
 				radios += R
 
 	// --- This space left blank for Syndicate data ---
@@ -117,14 +117,14 @@
 			if(!R.centcom)
 				continue
 
-			if(R.receive_range(freq, level) > -1)
+			if(R.receive_range(freq, broadcast_levels) > -1)
 				radios += R
 
 	// --- Broadcast to ALL radio devices ---
 
 	else
 		for(var/obj/item/device/radio/R in all_radios["[freq]"])
-			if(R.receive_range(freq, level) > -1)
+			if(R.receive_range(freq, broadcast_levels) > -1)
 				radios += R
 
 		var/freqtext = num2text(freq)
@@ -200,7 +200,7 @@
 /atom/proc/test_telecomms()
 	var/datum/signal/signal = src.telecomms_process()
 	var/turf/position = get_turf(src)
-	return (position.z in signal.data["level"] && signal.data["done"])
+	return (position.z in signal.data["broadcast_levels"]) && signal.data["done"]
 
 /atom/proc/telecomms_process()
 

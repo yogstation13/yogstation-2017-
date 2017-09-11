@@ -17,7 +17,6 @@
 		return
 
 	message = "[message]"
-	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)

@@ -123,7 +123,7 @@
 	req_tech = list("combat" = 5, "engineering" = 3, "magnet" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+	build_path = /obj/item/weapon/gun/energy/crossbow/large
 	category = list("Weapons")
 
 /datum/design/temp_gun

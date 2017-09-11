@@ -802,7 +802,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 					L.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
 				if(iscarbon(L) && L.stat)
 					L << "<span class='notice'>The room smells like leaves.</span>"
-		log_say("[H.name]/[H.key] : \[Pheromones\]: [message]")
+		log_say("[H.name]/[H.key] : [message]", "PHEROMONE")
 		H.say_log += "\[Pheromones\]: [message]"
 		return 1
 	return ..()
