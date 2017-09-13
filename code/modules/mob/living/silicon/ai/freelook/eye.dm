@@ -62,6 +62,11 @@
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
 
+/mob/living/silicon/ai/special_move(newloc, direction)
+	if(client)
+		client.AIMove(newloc, direction, src)
+	return TRUE
+
 /client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
 
 	var/initial = initial(user.sprint)
