@@ -223,11 +223,11 @@
 		locatedblood_DNA = null
 
 	if(humanscaught.len)
-		H << "<span class='alertvampire'>You search for who the blood belongs too.</span>"
+		H << "<span class='alertvampire'>You search for who the blood belongs to.</span>"
 		for(var/mob/living/carbon/human/caughthuman in humanscaught)
-			H << "<span class='noticevampire'>[caughthuman] is in the [get_area(caughthuman)], just [dir2text(get_dir(get_turf(caughthuman), get_turf(H)))] from your location.</span>"
+			H << "<span class='noticevampire'>[caughthuman] is in the [get_area(caughthuman)] [dir2text(get_dir(get_turf(caughthuman), get_turf(H)))] from your location.</span>"
 	else
-		H << "<span class='alertvampire'>You couldn't find who the blood belonged too.</span>"
+		H << "<span class='alertvampire'>You couldn't find who the blood belonged to.</span>"
 	feedback_add_details("vampire_powers","blood track")
 
 ////////////////////////////////////
