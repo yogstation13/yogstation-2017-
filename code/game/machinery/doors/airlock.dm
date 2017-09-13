@@ -443,7 +443,7 @@ var/list/airlock_overlays = list()
 
 	dat += "<tr><td>Door Lights</td>"
 	if(wires.is_cut(WIRE_LIGHT))
-		dat += "<td><span class='linkOff'>On</span><span class='linkOff'>Off</span></td><td><font color='red'>IDScan wire cut</font></td></tr>"
+		dat += "<td><span class='linkOff'>On</span><span class='linkOff'>Off</span></td><td><font color='red'>Lighting wire cut</font></td></tr>"
 	else if(lights)
 		dat += "<td><span class='linkOn'>On</span><A href='?src=\ref[src];aiDisable=10'>Off</A></td><td></td></tr>"
 	else
@@ -501,7 +501,7 @@ var/list/airlock_overlays = list()
 	user.set_machine(src)
 	var/datum/browser/popup = new /datum/browser(user, "airlock", "Airlock Control")
 	popup.set_content(dat)
-	popup.open(FALSE)
+	popup.open(TRUE)
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
@@ -1078,6 +1078,7 @@ var/list/airlock_overlays = list()
 	src.locked = 0
 	src.open()
 	src.locked = 1
+	src.actionstaken += "\[[time_stamp()]\]PRISON BREAK"
 	return
 
 

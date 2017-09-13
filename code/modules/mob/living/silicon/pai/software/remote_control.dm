@@ -32,7 +32,9 @@
 		user.pairing = 0
 	if(args["control"])
 		if(user.paired)
-			user.paired.attack_hand(user)
+			user.machine = user.paired
+			user.paired.attack_ai(user)
+			return TRUE
 	if(args["resetcamera"]) //manual camera override to fix camera viewing issues
 		if (user.paired && istype(user.paired, /obj/machinery/computer/security))
 			user.machine = user.paired
