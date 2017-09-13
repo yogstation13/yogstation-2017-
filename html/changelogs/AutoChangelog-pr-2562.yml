@@ -1,0 +1,7 @@
+author: "Time-Green"
+delete-after: true 
+changes: 
+  - bugfix: "fixes flying over lava killing you"
+  - bugfix: "fixes throwing stuff on lava not burning it"
+  - bugfix: "fixes changelings being blind after hatching"
+  - bugfix: "fixes ratvar spamming conversion on clock cultists"
