@@ -161,8 +161,8 @@
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
+	if(mob.special_move(n, direct))
+		return
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
@@ -339,6 +339,8 @@ proc/Can_ShadowWalk(var/mob/mob)
 				L.dir = direct
 	return 1
 
+/mob/proc/special_move(newLoc, direction)
+	return FALSE
 
 ///Process_Spacemove
 ///Called by /client/Move()
