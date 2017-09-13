@@ -136,13 +136,15 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	density = 0
 	icon = 'icons/obj/machines/jauntbeacon.dmi'
 	icon_state = "beacon-off"
+	var/specialname = FALSE
 	var/bolted // 0 not anchored. 1 anchored. 2 cannot be unbolted.
 	var/on = FALSE
 	var/jauntlist = TRUE
 
 /obj/machinery/jauntbeacon/New()
 	..()
-	name = "deployed jaunt beacon [rand(1,999)]"
+	if(!specialname)
+		name = "deployed jaunt beacon [rand(1,999)]"
 	if(jauntlist)
 		jauntbeacons += src
 
@@ -195,6 +197,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	on = TRUE
 	icon_state = "beacon"
 	jauntlist = FALSE
+	specialname = TRUE
 	var/cooldown = FALSE
 
 /obj/machinery/jauntbeacon/mother/attack_hand(mob/user)
