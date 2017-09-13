@@ -501,7 +501,7 @@ var/list/airlock_overlays = list()
 	user.set_machine(src)
 	var/datum/browser/popup = new /datum/browser(user, "airlock", "Airlock Control")
 	popup.set_content(dat)
-	popup.open(FALSE)
+	popup.open(TRUE)
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
