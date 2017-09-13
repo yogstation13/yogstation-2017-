@@ -880,6 +880,7 @@
 
 /mob/living/carbon/open_special_intents(shift=0)
 	var/list/options = list()
+	var/old_a_intent = a_intent
 	switch(a_intent)
 		if(HELP)
 			options += list("hug", "handshake", "fistbump", "give")
@@ -910,5 +911,8 @@
 				s_intent[a_intent] = SPECIAL_INTENT_PUNCH
 	else
 		var/choice = input(src,"",null) as anything in options
-		s_intent[a_intent] = choice
+		if(old_a_intent == a_intent)
+			s_intent[a_intent] = choice
+		else
+			src << "<span class='warning'>Special Intent change cancelled because you switched intents in the middle of operations.</span>"
 
