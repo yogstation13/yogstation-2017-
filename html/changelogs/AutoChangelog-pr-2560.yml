@@ -1,7 +1,0 @@
-author: "Super3222"
-delete-after: true 
-changes: 
-  - rscadd: "Miners can now access the mother jaunter beacon."
-  - tweak: "Jaunter beacons now come with helpful descriptions."
-  - tweak: "Remodeled the mining medics office."
-  - rscadd: "Added a jaunter beacon camera computer."

@@ -1,5 +1,0 @@
-author: "Super3222"
-delete-after: true 
-changes: 
-  - bugfix: "A knocked over secvend is no longer an invisible secvend."
-  - tweak: "Vendors now have a new desc when knocked over."

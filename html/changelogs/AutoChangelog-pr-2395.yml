@@ -1,6 +1,0 @@
-author: "Partheo"
-delete-after: true 
-changes: 
-  - imageadd: "Many food, chef item, booze, bureaucracy, and trash sprites have been changed."
-  - tweak: "Griffeater Gin has been renamed to Bomb-Bay 12 Gin to better reflect its new sprite."
-  - bugfix: "Dankpockets and Stuffed Legion have sprites now."
