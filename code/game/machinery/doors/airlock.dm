@@ -1078,6 +1078,7 @@ var/list/airlock_overlays = list()
 	src.locked = 0
 	src.open()
 	src.locked = 1
+	src.actionstaken += "\[[time_stamp()]\]PRISON BREAK"
 	return
 
 
