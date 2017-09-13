@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: true 
+changes: 
+  - bugfix: "The airlock control panel will not longer pop back up after being closed whenever and airlock's settings change or a timer counts down."
