@@ -171,7 +171,7 @@
 	var/blacklisted_turfs
 
 /obj/structure/alien/weeds/New(pos, node)
-	blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/floor/plating/lava))
+	blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/floor/plating/lava,/turf/open/chasm))
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
 	..()
