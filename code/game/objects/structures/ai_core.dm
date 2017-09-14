@@ -191,12 +191,12 @@
 					qdel(src)
 				else
 					state = 5
-					icon-state = "ai-empty"
+					icon_state = "ai-empty"
 				return
 		if(5)
-			if(istype(A, /obj/item/device/aicard))//Is it?
-				A.transfer_ai("INACTIVE","AICARD",src,user)
-			else if(istype(A, /obj/item/weapon/wrench))
+			if(istype(P, /obj/item/device/aicard))//Is it?
+				P.transfer_ai("INACTIVE","AICARD",src,user)
+			else if(istype(P, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message("[user] [anchored ? "unfastens" : "fastens"] [src].", \
 					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
@@ -209,7 +209,7 @@
 						if(do_after(user, 20, target = src))
 							user << "<span class='notice'>You unfasten the core.</span>"
 							anchored = 0
-			else if(istype(P, /obj/item/screwdriver))
+			else if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You disconnect the monitor.</span>"
 				state = 4
