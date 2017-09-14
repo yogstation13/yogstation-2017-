@@ -185,9 +185,35 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
-				new /mob/living/silicon/ai (loc, laws, brain)
-				feedback_inc("cyborg_ais_created",1)
-				qdel(src)
+				if(brain)
+					new /mob/living/silicon/ai (loc, laws, brain)
+					feedback_inc("cyborg_ais_created",1)
+					qdel(src)
+				else
+					state = 5
+					icon_state = "ai-empty"
+				return
+		if(5)
+			if(istype(P, /obj/item/device/aicard))//Is it?
+				P.transfer_ai("INACTIVE","AICARD",src,user)
+			else if(istype(P, /obj/item/weapon/wrench))
+				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+				user.visible_message("[user] [anchored ? "unfastens" : "fastens"] [src].", \
+					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
+				switch(anchored)
+					if(0)
+						if(do_after(user, 20, target = src))
+							user << "<span class='notice'>You fasten the core into place.</span>"
+							anchored = 1
+					if(1)
+						if(do_after(user, 20, target = src))
+							user << "<span class='notice'>You unfasten the core.</span>"
+							anchored = 0
+			else if(istype(P, /obj/item/weapon/screwdriver))
+				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				user << "<span class='notice'>You disconnect the monitor.</span>"
+				state = 4
+				icon_state = "4"
 				return
 	return ..()
 
@@ -196,26 +222,7 @@
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai-empty"
 	anchored = 1
-	state = 20//So it doesn't interact based on the above. Not really necessary.
-
-/obj/structure/AIcore/deactivated/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/device/aicard))//Is it?
-		A.transfer_ai("INACTIVE","AICARD",src,user)
-	else if(istype(A, /obj/item/weapon/wrench))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		user.visible_message("[user] [anchored ? "unfastens" : "fastens"] [src].", \
-					 "<span class='notice'>You start to [anchored ? "unfasten [src] from" : "fasten [src] to"] the floor...</span>")
-		switch(anchored)
-			if(0)
-				if(do_after(user, 20, target = src))
-					user << "<span class='notice'>You fasten the core into place.</span>"
-					anchored = 1
-			if(1)
-				if(do_after(user, 20, target = src))
-					user << "<span class='notice'>You unfasten the core.</span>"
-					anchored = 0
-	else
-		return ..()
+	state = 5 //I'm legitimately bothered that somebody thought 20 was any better than 5.
 
 /*
 This is a good place for AI-related object verbs so I'm sticking it here.
