@@ -1,6 +1,6 @@
 /obj/item/weapon/rct
 	name = "rapid-crate-teleporter (RCT)"
-	desc = "A device used to rapidly teleport crates and closets around"
+	desc = "A device used to rapidly teleport crates and closets around, alt-click to reset the location."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	origin_tech = "bluespace=4;syndicate=3"
@@ -18,7 +18,7 @@
 	spark_system = null
 
 /obj/item/weapon/rct/attack_self(mob/living/carbon/user)
-	if(istype(user/loc, /obj/structure/closet))
+	if(!isturf(user.loc)))
 		user << "<span class='notice'>the [abbreviated_name] makes an angry noise.</span>"
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
@@ -39,7 +39,7 @@
 	if(istype(O, /obj/structure/closet))
 		user << "<span class='notice'>You start teleporting the closet</span>"
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-		if(do_after(user, 20, target = O))
+		if(do_after(user, 30, target = O))
 			var/obj/structure/closet/closet = O
 			user.visible_message("<span class='warning'>Sparks fly from [abbreviated_name] as the [closet] dissapears!</span>")
 			spark_system.start()
@@ -51,11 +51,10 @@
 				closet.forceMove(setlocation)
 
 			spark_system.start()
-			closet.opened = FALSE
+			closet.close()
 			if(istype(closet, /obj/structure/closet/crate))
-				var/obj/structure/closet/crate/crate = closet
-				if(crate.can_weld_shut)
-					crate.welded = TRUE
-			else			
+				if(closet.can_weld_shut)
+					closet.welded = TRUE
+			else
 				closet.welded = TRUE
 			closet.update_icon()
