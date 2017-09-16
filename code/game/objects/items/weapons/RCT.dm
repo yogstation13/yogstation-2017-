@@ -18,7 +18,7 @@
 	spark_system = null
 
 /obj/item/weapon/rct/attack_self(mob/living/carbon/user)
-	if(!isturf(user.loc)))
+	if(!isturf(user.loc))
 		user << "<span class='notice'>the [abbreviated_name] makes an angry noise.</span>"
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
