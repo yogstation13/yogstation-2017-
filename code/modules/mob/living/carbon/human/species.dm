@@ -1031,7 +1031,6 @@
 				var/atk_verb
 				var/damage
 				var/extra_message
-				var/include_ed = TRUE
 				var/attack_sound
 
 				switch(M.s_intent[M.a_intent])
@@ -1049,23 +1048,24 @@
 						if(M.dna.species.bitedamagelow >= 5)
 							atk_verb = "viciously bit"
 						damage = rand(M.dna.species.bitedamagelow, M.dna.species.bitedamagehigh)
-						include_ed = FALSE
 						attack_sound = 'sound/weapons/bite.ogg'
 
 				if(H.lying)
-					atk_verb = "crush"
+					atk_verb = "stomp on"
 					if(!M.s_intent[M.a_intent] == SPECIAL_INTENT_KICK) // if we didn't already set it up
 						damage = rand(M.dna.species.kickdamagelow, M.dna.species.kickdamagehigh)
-					if(!include_ed)	include_ed = TRUE
-					damage = M.shoe_damage(damage) // extra damage when the enemy is lying down!
-					extra_message = " under their [M.shoes]"
+					var/shoedamage = M.shoe_damage(damage)
+					if(shoedamage != damage) // we only mention the shoe when it adds on to our damage
+						extra_message = " while wearing [M.shoes]"
+					damage = shoedamage
+					attack_sound = "swing_hit"
 
 				if(!affecting)
 					affecting = H.get_bodypart(ran_zone(M.zone_selected))
 
 				if(!damage || !affecting)
 					playsound(H.loc, M.dna.species.miss_sound, 25, 1, -1)
-					H.visible_message("<span class='warning'>[M] has attempted to [atk_verb] [H]!</span>")
+					H.visible_message("<span class='warning'>[M] has attempted to [atk_verb == "bit" ? "bite" : atk_verb] [H]!</span>")
 					return 0
 
 
@@ -1076,8 +1076,16 @@
 
 				playsound(H.loc, attack_sound, 25, 1, -1)
 
-				H.visible_message("<span class='danger'>[M] has [atk_verb][include_ed == TRUE ? "ed" : ""] [H][extra_message]!</span>", \
-								"<span class='userdanger'>[M] has [atk_verb][include_ed == TRUE ? "ed" : ""] [H][extra_message]!</span>")
+				switch(atk_verb)
+					if("punch")
+						atk_verb = "punched"
+					if("kicked")
+						atk_verb "kicked"
+					if("stomp on")
+						atk_verb = "stomped on"
+
+				H.visible_message("<span class='danger'>[M] has [atk_verb] [H][extra_message]!</span>", \
+								"<span class='userdanger'>[M] has [atk_verb] [H][extra_message]!</span>")
 
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, atk_verb)

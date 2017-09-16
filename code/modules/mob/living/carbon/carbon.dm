@@ -161,7 +161,7 @@
 		if(SPECIAL_INTENT_FISTBUMP)
 			M.visible_message("<span class='notice'>[M] raises [M.gender == MALE ? "his" : "her"] fist to [src] for a fistbump.</span>",\
 				"<span class='notice'>You extend your fist to [src] for a sweet fistbump!</span>")
-			src << "<span class='notice'>fistbump [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=no;time=[world.time]'>No</a>)</font size>"
+			src << "<span class='notice'>Fistbump [M]? <font size=3>(<a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=yes;time=[world.time]'>Yes</a> | <a href='byond://?src=\ref[src];target=\ref[M];help=fistbump;choice=no;time=[world.time]'>No</a>)</font size>"
 		if(SPECIAL_INTENT_GIVE)
 			if(!M.get_active_hand())
 				M << "<span class='notice'>You don't have anything in your hand...</span>"
@@ -333,7 +333,7 @@
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 	if(href_list["help"])
 		var/mob/living/carbon/target = locate(href_list["target"]) // he's trying to do something too you
-		if(!target || target.incapacitated())
+		if(!target || target.incapacitated() || target == src)
 			return
 		if(Adjacent(target))
 			if(href_list["help"] == SPECIAL_INTENT_HANDSHAKE)
@@ -343,7 +343,7 @@
 											"<span class='notice'>You deny [target]'s handshake!</span>")
 					else
 						visible_message("<span class='notice'>[target] and [src] shake hands!</span>",
-										"<span class='notice'>You and [src] shake hands!</span>")
+										"<span class='notice'>You and [target] shake hands!</span>")
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					// TODO: tie modular gloves to this, so like a reaction can happen. TODO 2: give the clown a joybuzzer.
 				else

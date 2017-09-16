@@ -538,6 +538,9 @@
 						 "<span class='danger'>You kick [src].</span>")
 	take_damage(rand(4,8), BRUTE)
 
+/obj/structure/rack/kick_act(mob/living/user)
+	attack_hand(user)
+
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
