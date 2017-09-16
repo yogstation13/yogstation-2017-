@@ -136,12 +136,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = FALSE
+		playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
 		..()
 		if(beaker)
 			beaker.loc = src
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
 		..(user)
 		return occupant
 

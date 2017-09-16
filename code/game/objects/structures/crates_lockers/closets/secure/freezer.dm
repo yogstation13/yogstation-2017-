@@ -2,6 +2,8 @@
 	icon_state = "freezer"
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
+	open_sound = 'sound/items/Deconstruct.ogg'
+	close_sound = 'sound/items/Deconstruct.ogg'
 
 /obj/structure/closet/secure_closet/freezer/return_air()
 	var/datum/gas_mixture/gas = ..()
