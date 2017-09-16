@@ -451,6 +451,7 @@
 		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
 		if(myhead)
 			myhead.dismember()
+		gibs(loc)
 	else
 		user.visible_message("<span class='suicide'>[user] smashes the chainsaw into \his neck, destroying \his esophagus! It looks like \he's trying to commit suicide!</span>")
 		playsound(src, 'sound/weapons/genhit1.ogg', 100, 1)
