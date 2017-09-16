@@ -1055,7 +1055,7 @@
 					if(!M.s_intent[M.a_intent] == SPECIAL_INTENT_KICK) // if we didn't already set it up
 						damage = rand(M.dna.species.kickdamagelow, M.dna.species.kickdamagehigh)
 					var/shoedamage = M.shoe_damage(damage)
-					if(shoedamage != damage) // we only mention the shoe when it adds on to our damage
+					if(shoedamage != damage && M.shoes) // we only mention the shoe when it adds on to our damage
 						extra_message = " while wearing [M.shoes]"
 					damage = shoedamage
 					attack_sound = "swing_hit"
