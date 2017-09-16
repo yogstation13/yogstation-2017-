@@ -1080,7 +1080,7 @@
 					if("punch")
 						atk_verb = "punched"
 					if("kicked")
-						atk_verb "kicked"
+						atk_verb = "kicked"
 					if("stomp on")
 						atk_verb = "stomped on"
 
