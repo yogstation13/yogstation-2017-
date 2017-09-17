@@ -119,7 +119,7 @@
 	set category = "pAI Commands"
 	set desc = "Kill yourself and become a ghost (You will receive a confirmation prompt)"
 	set name = "pAI Suicide"
-	var/answer = input("REALLY turn off your own life processes? This action can't be undone.", "Suicide", "No") in list ("Yes", "No")
+	var/answer = input("REALLY turn off your own life processes? This action can't be undone.", "Suicide", "No") as anything in list ("Yes", "No")
 	if(answer == "Yes")
 		card.removePersonality()
 		did_suicide = 1

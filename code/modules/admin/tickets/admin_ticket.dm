@@ -112,7 +112,7 @@ var/ticket_counter_visible_to_everyone = 0
 		spawn()	//so we don't hold the caller proc up
 			var/sender = usr.client
 			var/sendername = usr.client.key
-			var/reply = input(owner, title,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+			var/reply = stripped_input(owner, title,"Admin PM from-[sendername]", "")		//show message and await a reply
 			if(reply && sender)
 				owner.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
 

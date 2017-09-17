@@ -337,7 +337,7 @@
 			user << "<span class='warning'>[C] is already linked to a detonator!</span>"
 			return
 		user << "<span class='notice'>You link [C] to [src] and add it to the control interface.</span>"
-		var/newName = input(user, "Enter an ID for the collar.", "Collar ID")
+		var/newName = stripped_input(user, "Enter an ID for the collar.", "Collar ID")
 		if(!newName)
 			C.name = "[initial(C.name)] #[rand(1,99999)]"
 		else
@@ -355,7 +355,7 @@
 		user << "Implant updated with the latest collars"
 	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Status"))
 		if("Locks")
-			var/choice = input(user, "Select collar to change.", "Locking Control") in linkedCollars
+			var/choice = input(user, "Select collar to change.", "Locking Control") as anything in linkedCollars
 			if(!choice || !user.canUseTopic(src))
 				return
 			var/obj/item/clothing/head/bombCollar/collarToLock = choice
@@ -383,7 +383,7 @@
 			user << "<span class='notice'>You [collarToLock.locked ? "" : "dis"]engage [collarToLock]'s locks.</span>"
 			return
 		if("Detonation")
-			var/choice = input(user, "Select collar to detonate.", "Detonation Control") in linkedCollars
+			var/choice = input(user, "Select collar to detonate.", "Detonation Control") as anything in linkedCollars
 			if(!choice || !user.canUseTopic(src))
 				return
 			var/obj/item/clothing/head/bombCollar/collarToDetonate = choice

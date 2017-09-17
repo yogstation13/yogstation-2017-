@@ -478,7 +478,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = stripped_multiline_input("Global message to send:", "Admin Announce", null, null)
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
@@ -493,7 +493,7 @@ var/global/BSACooldown = 0
 	if(!check_rights(0))
 		return
 
-	var/new_admin_notice = input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice) as message|null
+	var/new_admin_notice = stripped_multiline_input(src,"Set a public notice for this round. Everyone who joins the server will see it.\n(Leaving it blank will delete the current notice):","Set Notice",admin_notice)
 	if(new_admin_notice == null)
 		return
 	if(new_admin_notice == admin_notice)
