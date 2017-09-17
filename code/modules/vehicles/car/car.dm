@@ -55,9 +55,8 @@
 		last_crash_time = world.time
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			src.visible_message("<span class='danger'>[src] rams into [mob] and knocks them down!</span>")
-			mob.Weaken(3)
-			var/mob/living/carbon/C = mob
+			src.visible_message("<span class='danger'>[src] rams into [C] and knocks them down!</span>")
+			C.Weaken(3)
 			if(C.buckled)
 				C.buckled.unbuckle_mob(C,force=1)
 			if(ram_damage)
