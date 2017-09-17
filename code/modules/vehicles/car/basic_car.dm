@@ -1,5 +1,6 @@
 /obj/vehicle/car/basic
-	name = "Tourist car"
+	name = "tourist car"
+	desc = "Fucking tourists..."
 	icon_state = "car"
 	vehicle_move_delay = 1
 

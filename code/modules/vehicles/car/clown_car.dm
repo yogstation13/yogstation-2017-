@@ -2,8 +2,8 @@
 	name = "clown car"
 	desc = "How someone could even fit in there is beyond me."
 	icon_state = "clowncar"
-	vehicle_move_delay = 0.6 //tick delay between movements, lower = faster, higher = slower
-	health = 250 //stronk
+	vehicle_move_delay = 0.6
+	health = 500 //stronk
 
 	horn_sound = 'sound/items/AirHorn.ogg'
 
@@ -13,4 +13,4 @@
 
 	ramming = TRUE
 	can_load_mobs = TRUE
-	//keytype = /obj/item/device/assembly/bikehorn
+	keytype = /obj/item/device/assembly/bikehorn

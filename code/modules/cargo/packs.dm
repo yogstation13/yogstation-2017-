@@ -1352,15 +1352,17 @@
 					/obj/item/clothing/suit/hooded/wintercoat/superb)
 	crate_name = "Designer clothes crate"
 
-
-
 /datum/supply_pack/misc/yeezy
 	name = "One Singular Pair Of Sneakers"
 	cost = 450
 	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
 	crate_name = "Small Sneaker Crate"
 
-
+/datum/supply_pack/misc/car
+	name = "A Tourist Car"
+	cost = 9000
+	contains = list(/obj/vehicle/car/basic)
+	crate_name = "Car crate"
 
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"

@@ -72,7 +72,7 @@
 	button_icon_state = "car_dump"
 
 /datum/action/innate/car/dump_load/Activate()
-	car.visible_message("<span class='danger'>[car] dumps all of it's contents on the floor.	</span>")
+	car.visible_message("<span class='danger'>[car] dumps all of its contents on the floor.	</span>")
 	car.dump_contents()
 
 /datum/action/innate/car/kidnap_count

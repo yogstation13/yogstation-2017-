@@ -8,7 +8,7 @@
 	var/mob/living/carbon/driver
 	var/driver_visible =	FALSE  //Driver visible uses buckling, driver not visible uses contents. Using contents is preferable
 	var/on = FALSE //whether the car is started or not
-	var/health = 150
+	var/health = 200
 
 	var/horn_sound = null //Leave empty to have no horn on the car
 	var/horn_spam_time = 20 //Cooldown inbetween indiviudal honks
@@ -18,13 +18,16 @@
 	var/engine_sound = 'sound/effects/carrev.ogg'
 
 	var/ramming = FALSE //Whether or not this car is ramming people.
+	var/ram_damage = 0 //how much pain does this bring
 	var/last_crash_time //to prevent double-crashing into walls.
 	var/list/ramming_sounds = list() //Sounds for when you hit a person
 	var/list/crash_sounds = list()  //Sounds for when you crash into a structure
 
-	var/can_load_mobs = FALSE //Whether or not this car can have people in it's trunk, for meme vehicles
+	var/can_load_mobs = FALSE //Whether or not this car can have people in its trunk, for meme vehicles
 	var/list/load_sounds = list() //Sounds for when you load people into your car
 	var/mob/list/loaded_mobs = list() //Loaded people
+
+	var/hacked = FALSE
 
 	//Action datums
 	var/datum/action/innate/car/car_eject/eject_action = new
@@ -36,6 +39,7 @@
 /obj/vehicle/car/Destroy()
 	exit_car()
 	dump_contents()
+	explosion(get_turf(loc), 0, 0, 1, 3)
 	.=..()
 
 /obj/vehicle/car/examine(mob/user)
@@ -47,7 +51,7 @@
 	. = ..()
 	if(auto_door_open && istype(M, /obj/machinery/door))
 		M.Bumped(driver)
-	if(ramming && world.time - last_crash_time > 20)
+	if(ramming && world.time - last_crash_time > 2) //Prevents spam. I know its weird but I can't fix it any other way
 		last_crash_time = world.time
 		if(ismob(M))
 			var/mob/mob = M
@@ -57,6 +61,8 @@
 				var/mob/living/carbon/C = mob
 				if(C.buckled)
 					C.buckled.unbuckle_mob(C,force=1)
+				if(ram_damage)
+					C.apply_damage(ram_damage, BRUTE)
 			if(ramming_sounds.len)
 				playsound(loc, pick(ramming_sounds), 75)
 		else if(!istype(M, /obj/machinery/door) && (istype(M, /obj) || istype(M, /turf/closed)))
@@ -92,7 +98,7 @@
 			load_mob(target)
 
 /obj/vehicle/car/MouseDrop(atom/over_object)
-	if(driver)
+	if(driver && usr != driver)
 		usr.visible_message("<span class='danger'>[usr] starts dragging [driver] out of [src]</span>")
 		if(do_after(usr, 20, target = src))
 			usr.visible_message("<span class='danger'>[usr] drags [driver] out of [src]</span>")
@@ -121,7 +127,7 @@
 /obj/vehicle/car/ratvar_act()
 	take_damage(120)
 
-/obj/vehicle/car/hitby(atom/movable/A as mob|obj) //wrapper
+/obj/vehicle/car/hitby(atom/movable/A) //wrapper
 	if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
@@ -138,15 +144,24 @@
 		if(1)
 			qdel(src)
 		if(2)
-			if (prob(30))
+			if(prob(30))
 				qdel(src)
 			else
 				take_damage(initial(health)/2)
 		if(3)
-			if (prob(5))
+			if(prob(5))
 				qdel(src)
 			else
 				take_damage(initial(health)/5)
+
+/obj/vehicle/car/emag_act(mob/user)
+	if(hacked)
+		return
+	hacked = TRUE
+	user << "<span class='notice'>You emag the [src] and turn off the safety systems.</span>"
+	ramming = TRUE
+	ram_damage = 10
+	horn_spam_time = 1 //oh boi
 
 /obj/vehicle/car/container_resist(mob/living/user)
 	if(user == driver)
@@ -167,7 +182,7 @@
 		qdel(src)
 
 /obj/vehicle/car/proc/enter_car(mob/living/carbon/human/H)
-	if(H && H.client && H in range(1))
+	if(H && H.client && H.z == z && get_dist(H, src) <= 1 && ishuman(H))
 		driver = H
 		GrantActions(H)
 
@@ -194,9 +209,9 @@
 	driver = null
 
 /obj/vehicle/car/proc/load_mob(mob/M)
-	if(!istype(M))
+	if(!istype(M) && !isliving(M))
 		return
-	if(M && M in range(1, src))
+	if(M && (M.z == z) && (get_dist(M, src) <= 1 ))
 		loaded_mobs += M
 		M.forceMove(src)
 		count_action.update_counter()
