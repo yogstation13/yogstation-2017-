@@ -924,18 +924,22 @@
 			active_mini_si = list("hug", "handshake", "fistbump","give")
 		if("harm")
 			active_mini_si = list("punch", "kick", "bite")
-	active_mini_si -= s_intent[a_intent]
-	var/screenlocnum = 1
-	for(var/obj/screen/minisibutton/MSI in client.screen)
-		MSI.invisibility = INVISIBILITY_ABSTRACT
-		if(active_mini_si.Find(MSI.name))
-			MSI.invisibility = 0
-			switch(screenlocnum)
-				if(1)
-					MSI.screen_loc = ui_mini_si_position_1
-				if(2)
-					MSI.screen_loc = ui_mini_si_position_2
-				if(3)
-					MSI.screen_loc = ui_mini_si_position_3
+	if(length(active_mini_si))
+		active_mini_si -= s_intent[a_intent]
+		var/screenlocnum = 1
+		for(var/obj/screen/minisibutton/MSI in client.screen)
+			MSI.invisibility = INVISIBILITY_ABSTRACT
+			if(active_mini_si.Find(MSI.name))
+				MSI.invisibility = 0
+				switch(screenlocnum)
+					if(1)
+						MSI.screen_loc = ui_mini_si_position_1
+					if(2)
+						MSI.screen_loc = ui_mini_si_position_2
+					if(3)
+						MSI.screen_loc = ui_mini_si_position_3
 
-			screenlocnum++
+				screenlocnum++
+	else // non si intents... like grab and disarm (for now!)
+		for(var/obj/screen/minisibutton/MSI in client.screen)
+			MSI.invisibility = INVISIBILITY_ABSTRACT
