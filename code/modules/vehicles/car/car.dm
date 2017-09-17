@@ -53,16 +53,15 @@
 		M.Bumped(driver)
 	if(ramming && world.time - last_crash_time > 2) //Prevents spam. I know its weird but I can't fix it any other way
 		last_crash_time = world.time
-		if(ismob(M))
-			var/mob/mob = M
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
 			src.visible_message("<span class='danger'>[src] rams into [mob] and knocks them down!</span>")
 			mob.Weaken(3)
-			if(iscarbon(mob))
-				var/mob/living/carbon/C = mob
-				if(C.buckled)
-					C.buckled.unbuckle_mob(C,force=1)
-				if(ram_damage)
-					C.apply_damage(ram_damage, BRUTE)
+			var/mob/living/carbon/C = mob
+			if(C.buckled)
+				C.buckled.unbuckle_mob(C,force=1)
+			if(ram_damage)
+				C.apply_damage(ram_damage, BRUTE)
 			if(ramming_sounds.len)
 				playsound(loc, pick(ramming_sounds), 75)
 		else if(!istype(M, /obj/machinery/door) && (istype(M, /obj) || istype(M, /turf/closed)))
@@ -70,7 +69,7 @@
 			if(crash_sounds.len)
 				playsound(loc, pick(crash_sounds), 75)
 			if(driver) //avoid nasty runtimes
-				driver.Weaken(3)
+				driver.Weaken(2)
 			exit_car()
 			dump_contents()
 
@@ -226,7 +225,7 @@
 	for(var/mob/M in loaded_mobs)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
-			C.Weaken(3)
+			C.Weaken(2)
 		unload_mob(M)
 
 /obj/vehicle/car/proc/CanStart() //This exists if you want to add more conditions to starting up the car later on
