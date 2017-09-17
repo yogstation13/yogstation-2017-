@@ -1076,7 +1076,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "The finest vehicle in the Clown Planet selection. This baby can fit atleast 4932004 unfortunate victims and comes with a built in horn. Drive around in style \
 	as you run down innocent mobs of people as they run from this beautiful creation of The Honkmother."
 	item = /obj/vehicle/car/clown
-	cost = 14
+	cost = 12
 	list/restricted_roles = list("Clown")
 
 // Pointless
