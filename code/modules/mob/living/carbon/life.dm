@@ -235,6 +235,8 @@
 
 		for(var/obj/screen/inventory/hand/H in hud_used.static_inventory) // kick overlay.
 			if(H)	H.update_icon()
+		if(client)
+			update_mini_si()
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)

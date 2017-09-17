@@ -70,6 +70,9 @@
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5"	//alternative intent switcher for when the interface is hidden (F12)
 #define ui_specialintent "EAST-3:24,SOUTH+1:1"
+#define ui_mini_si_position_1 "EAST-3:16,SOUTH+2:-14"
+#define ui_mini_si_position_2 "EAST-3:32,SOUTH+2:-14"
+#define ui_mini_si_position_3 "EAST-3:25,SOUTH+3:-30"
 
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
 #define ui_borg_radio "EAST-1:28,SOUTH+1:7"

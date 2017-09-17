@@ -76,6 +76,62 @@
 
 	C.handle_intents() // to update overlays
 
+
+/obj/screen/minisibutton
+	name = "mini si button"
+	var/image/selectoverlay
+	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/screen/minisibutton/Click(location, control, params)
+	var/mob/living/carbon/C = usr
+	C.s_intent[C.a_intent] = name
+
+	/*
+	NOTE: This adds a selection overlay over our HUD icon, but since we're just making the buttons turn invisible
+	we aren't using	it anymore.
+
+	for(var/obj/screen/minisibutton/MSI in C.client.screen)
+		overlays -= selectoverlay
+		MSI.overlays.Cut()
+		MSI.selectoverlay = null
+
+	selectoverlay = image('icons/mob/screen_gen.dmi', "selected")
+	selectoverlay.layer = ABOVE_MOB_LAYER
+	overlays += selectoverlay
+	*/
+	C << "<span class='boldnotice'>You are now using [name].</span>"
+	//log_game("[C] ([C.key]) has switched their special intent to [name].")
+
+/obj/screen/minisibutton/hug
+	name = "hug"
+	icon_state = "hug"
+	screen_loc = ui_mini_si_position_1
+
+/obj/screen/minisibutton/handshake
+	name = "handshake"
+	icon_state = "handshake"
+
+/obj/screen/minisibutton/fistbump
+	name = "fistbump"
+	icon_state = "fistbump"
+
+/obj/screen/minisibutton/give
+	name = "give"
+	icon_state = "give"
+
+/obj/screen/minisibutton/punch
+	name = "punch"
+	icon_state = "punch"
+
+/obj/screen/minisibutton/kick
+	name = "kick"
+	icon_state = "kick"
+
+/obj/screen/minisibutton/bite
+	name = "bite"
+	icon_state = "bite"
+
+
 /datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 
@@ -98,9 +154,40 @@
 	static_inventory += using
 
 	using = new /obj/screen/specialintents()
-	using.icon_state = owner.s_intent[owner.a_intent]
 	static_inventory += using
 	owner.handle_intents()
+
+	using = new /obj/screen/minisibutton/hug()
+	static_inventory += using
+
+	using = new /obj/screen/minisibutton/handshake()
+	static_inventory += using
+
+	using = new /obj/screen/minisibutton/fistbump()
+	static_inventory += using
+
+	using = new /obj/screen/minisibutton/give()
+	static_inventory += using
+
+	using = new /obj/screen/minisibutton/punch()
+	static_inventory += using
+
+	using = new /obj/screen/minisibutton/kick()
+	static_inventory += using
+
+	using = new /obj/screen/minisibutton/bite()
+	static_inventory += using
+
+	/*
+	var/list/mini_si_buttons = typesof(/obj/screen/minisibutton)
+	for(var/obj/screen/minisibutton/MSI in mini_si_buttons)
+		using = new MSI()
+		using.icon_state = MSI.icon_state
+		static_inventory += using
+
+
+	*/
+	owner.update_mini_si()
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style

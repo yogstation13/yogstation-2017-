@@ -915,4 +915,27 @@
 			s_intent[a_intent] = choice
 		else
 			src << "<span class='warning'>Special Intent change cancelled because you switched intents in the middle of operations.</span>"
+	update_mini_si()
 
+/mob/living/carbon/proc/update_mini_si()
+	var/list/active_mini_si
+	switch(a_intent)
+		if("help")
+			active_mini_si = list("hug", "handshake", "fistbump","give")
+		if("harm")
+			active_mini_si = list("punch", "kick", "bite")
+	active_mini_si -= s_intent[a_intent]
+	var/screenlocnum = 1
+	for(var/obj/screen/minisibutton/MSI in client.screen)
+		MSI.invisibility = INVISIBILITY_ABSTRACT
+		if(active_mini_si.Find(MSI.name))
+			MSI.invisibility = 0
+			switch(screenlocnum)
+				if(1)
+					MSI.screen_loc = ui_mini_si_position_1
+				if(2)
+					MSI.screen_loc = ui_mini_si_position_2
+				if(3)
+					MSI.screen_loc = ui_mini_si_position_3
+
+			screenlocnum++
