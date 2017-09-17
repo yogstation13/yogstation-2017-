@@ -175,11 +175,11 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				cam.c_tag = name
 				cam.network = list("JAUNT")
 				visible_message("<span class='notice'>[src]'s teleportation and camera functions are now online!</span>")
-				set_light(6) // for the cameras, lavaland is dark.
+				AddLuminosity(8) // for the cameras, lavaland is dark.
 			else
 				cam.network = null
 				qdel(cam)
-				set_light(0)
+				AddLuminosity(-8)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(bolted == 2)
 			user << "<span class='warning'>[src] cannot be unbolted.</span>"
