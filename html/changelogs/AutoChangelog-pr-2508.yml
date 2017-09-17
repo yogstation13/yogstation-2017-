@@ -1,0 +1,4 @@
+author: "MoreRobustThanYou"
+delete-after: true 
+changes: 
+  - tweak: "Blob rounds now end on blob death"
