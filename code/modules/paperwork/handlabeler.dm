@@ -59,6 +59,10 @@
 
 	user.visible_message("[user] labels [A] as [label].", \
 						 "<span class='notice'>You label [A] as [label].</span>")
+	A.add_fingerprint(user)
+	user.attack_log += "\[[time_stamp()]\]Labeled [A.name] as [label]"
+	log_game("\[[time_stamp()]\] [user]/[user.ckey] Labeled [A.name] as [label]")
+
 	A.name = "[A.name] ([label])"
 	labels_left--
 
