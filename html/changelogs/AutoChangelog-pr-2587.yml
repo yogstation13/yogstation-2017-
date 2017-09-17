@@ -1,0 +1,4 @@
+author: "matskuman5"
+delete-after: true 
+changes: 
+  - bugfix: "Fixes clothing accessories disappearing when the clothes are torn for pieces of cloth."
