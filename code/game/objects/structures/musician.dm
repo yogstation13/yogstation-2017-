@@ -192,12 +192,12 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = stripped_input(usr, "Please paste the entire song, formatted:", text("[]", name), t)
 			if(!in_range(instrumentObj, usr))
 				return
 
 			if(lentext(t) >= 3072)
-				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") as anything in list("yes", "no")
 				if(cont == "no")
 					break
 		while(lentext(t) > 3072)
@@ -246,7 +246,7 @@
 			playsong(usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
+		var/newline = stripped_input(usr, "Enter your line: ", instrumentObj.name)
 		if(!newline || !in_range(instrumentObj, usr))
 			return
 		if(lines.len > 50)
@@ -263,7 +263,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = stripped_input(usr, "Enter your line: ", instrumentObj.name, lines[num])
 		if(!content || !in_range(instrumentObj, usr))
 			return
 		if(lentext(content) > 50)

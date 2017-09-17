@@ -41,4 +41,4 @@
 	for(var/mob/C in targets)
 		if(!C.client)
 			continue
-		C.client.view = input("Select view range:", "Range", 4) in ranges
+		C.client.view = input("Select view range:", "Range", 4) as anything in ranges

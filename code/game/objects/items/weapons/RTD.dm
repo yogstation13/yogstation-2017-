@@ -161,7 +161,7 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/proc/toggle_gas_enrichment(mob/living/L)
 	L << "Higher settings use more synthesized gas."
-	var/enrich = input(user, "Select oxygen injection amount.") in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
+	var/enrich = input(user, "Select oxygen injection amount.") as anything in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
 	switch(enrich)
 		if("NONE")
 			o2ratio = 0
@@ -194,11 +194,11 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/proc/change_airlock_setting(mob/living/L)
 	airlockcost = initial(airlockcost)
-	var airlockcat = input(L, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+	var airlockcat = input(L, "Select whether the airlock is solid or glass.") as anything in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(L, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var airlockpaint = input(L, "Select the paintjob of the airlock.") as anything in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock
@@ -228,7 +228,7 @@ EMAGGED FUNCTIONS - TODO
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(L, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var airlockpaint = input(L, "Select the paintjob of the airlock.") as anything in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock/glass

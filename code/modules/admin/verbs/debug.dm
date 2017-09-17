@@ -67,7 +67,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			target = null
 			targetselected = 0
 
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+	var/procname = stripped_input(usr, "Proc path, eg: /proc/fake_blood","Path:", null)
 	if(!procname)
 		return
 	if(targetselected && !hascall(target,procname))
@@ -107,7 +107,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
+	var/procname = stripped_input(usr, "Proc name, eg: fake_blood","Proc:", null)
 	if(!procname)
 		return
 	if(!hascall(A,procname))
@@ -145,23 +145,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/class = null
 		// Make a list with each index containing one variable, to be given to the proc
 		if(src.holder && src.holder.marked_datum)
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","Marked datum ([holder.marked_datum.type])","CANCEL")
+			class = input("What kind of variable?","Variable Type") as anything in list("text","num","type","reference","mob reference","icon","file","client","mob's area","Marked datum ([holder.marked_datum.type])","CANCEL")
 			if(holder.marked_datum && class == "Marked datum ([holder.marked_datum.type])")
 				class = "Marked datum"
 		else
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+			class = input("What kind of variable?","Variable Type") as anything in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
 		switch(class)
 			if("CANCEL")
 				return null
 
 			if("text")
-				lst += input("Enter new text:","Text",null) as text
+				lst += stripped_input(usr, "Enter new text:","Text",null)
 
 			if("num")
 				lst += input("Enter new number:","Num",0) as num
 
 			if("type")
-				lst += input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+				lst += input("Enter type:","Type") as anything in typesof(/obj,/mob,/area,/turf)
 
 			if("reference")
 				lst += input("Select reference:","Reference",src) as mob|obj|turf|area in world
@@ -314,7 +314,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/mob/C in mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") as anything in available
 	if(!choice)
 		return 0
 	if(!istype(choice, /mob/dead/observer))
@@ -323,7 +323,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = stripped_input(choice, "Enter your pAI name:", "pAI Name", "Personal AI")
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
@@ -711,7 +711,7 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	switch(input("Which list?") as anything in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
 			usr << jointext(player_list,",")
 		if("Admins")

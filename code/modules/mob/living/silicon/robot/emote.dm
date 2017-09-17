@@ -89,10 +89,10 @@
 				if(client.prefs.muted & MUTE_IC)
 					src << "You cannot send IC messages (muted)."
 					return
-			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
+			var/input = stripped_input(usr, "Choose an emote to display.", null, null, null, MAX_MESSAGE_LEN)
 			if (!input)
 				return
-			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
+			var/input2 = input("Is this a visible or hearable emote?") as anything in list("Visible","Hearable")
 			if (input2 == "Visible")
 				m_type = 1
 			else if (input2 == "Hearable")

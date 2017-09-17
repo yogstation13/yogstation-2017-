@@ -166,7 +166,7 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(locked)
 		user << "<span class='notice'>The crate is locked with a Deca-code lock.</span>"
-		var/input = input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "") as text
+		var/input = stripped_input(usr, "Enter [codelen] digits.", "Deca-Code Lock", "")
 		if(user.canUseTopic(src, 1))
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"

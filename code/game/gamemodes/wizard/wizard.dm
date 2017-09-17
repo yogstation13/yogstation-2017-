@@ -106,7 +106,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
-		var/newname = copytext(sanitize(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+		var/newname = stripped_input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = randomname

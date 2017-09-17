@@ -396,7 +396,7 @@ var/time_last_changed_position = 0
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_text(stripped_input(usr, "Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
 
@@ -425,7 +425,7 @@ var/time_last_changed_position = 0
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
+				//var/t1 = stripped_input(usr, "What name?", "ID computer", null)
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
@@ -493,7 +493,7 @@ var/time_last_changed_position = 0
 
 			message_admins("[M.name] ([M.ckey]) is changing the arrival message.")
 			log_game("[M] ([M.ckey]) is attempting to change the arrivals message ([ticker.identification_console_message]).")
-			var/msg = input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
+			var/msg = stripped_input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
 			if(!allowed(usr) || !usr.canUseTopic(src,be_close=TRUE))
 				message_admins("[M.name] ([M.ckey] (ckey)) did not have the correct ID, or simply was interrupted when trying to change the arrival message.")
 				return
