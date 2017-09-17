@@ -1,5 +1,0 @@
-author: "matskuman5"
-delete-after: true 
-changes: 
-  - tweak: "Changed the sound of opening and closing fridges and freezers."
-  - soundadd: "Adds sounds to opening and closing sleepers, cryo cells and DNA scanners."
