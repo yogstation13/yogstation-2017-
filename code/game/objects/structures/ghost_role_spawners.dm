@@ -322,6 +322,7 @@
 	L.real_name = "NTP #LL-0[rand(111,999)]"
 	L.name = L.real_name
 	L.add_memory("You were convicted of [crime].")
+	message_admins("[L.name] did [crime] before escaping prison")
 
 /obj/effect/mob_spawn/human/prisoner_transport/New()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
