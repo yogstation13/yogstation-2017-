@@ -277,6 +277,8 @@
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
 				continue
+			if(L.flying())
+				continue
 			if(L.buckled)
 				if(isobj(L.buckled))
 					var/obj/O = L.buckled

@@ -183,7 +183,7 @@
 		if(!config.forbid_secborg)
 			modulelist["Security"] = /obj/item/weapon/robot_module/security
 
-	designation = input("Please, select a module!", "Robot", null, null) in modulelist
+	designation = input("Please, select a module!", "Robot", null, null) as anything in modulelist
 
 	if(module || !designation)
 		return
@@ -212,7 +212,7 @@
 			skinOptions[skin.name] = skin
 	if(!skinOptions)
 		return
-	var/selected_skin = input("Select an icon!", "Robot", null, null) in skinOptions
+	var/selected_skin = input("Select an icon!", "Robot", null, null) as anything in skinOptions
 	if(!selected_skin)
 		selected_skin = skinOptions[1]
 	robot_skin = skinOptions[selected_skin]

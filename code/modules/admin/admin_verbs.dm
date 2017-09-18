@@ -692,7 +692,7 @@ var/list/admin_verbs_hideable = list(
 				mob.name = initial(mob.name)
 				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+			var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key))
 			if(!new_key)
 				return
 			if(length(new_key) >= 26)
@@ -714,7 +714,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce?") in choices
+	var/choice = input("What size explosion would you like to produce?") as anything in choices
 	var/turf/epicenter = mob.loc
 	switch(choice)
 		if(null)
@@ -781,7 +781,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	var/message = stripped_input(usr, "What do you want the message to be?", "Make Sound")
 	if(!message)
 		return
 	var/templanguages = O.languages_spoken

@@ -38,7 +38,7 @@
 			usr << "<span class='ticket-status'>You are not the owner or primary admin of this ticket. You may not reply to it.</span>"
 			return
 
-		var/logtext = input("Please enter your [(!compare_ckey(usr, T.handling_admin) && !compare_ckey(usr, T.owner_ckey) ? "supplimentary comment" : "reply")]:") as text|null
+		var/logtext = stripped_input(usr, "Please enter your [(!compare_ckey(usr, T.handling_admin) && !compare_ckey(usr, T.owner_ckey) ? "supplimentary comment" : "reply")]:")
 
 		logtext = replacetext(logtext, "'", "\'")
 		logtext = sanitize(copytext(logtext,1,MAX_MESSAGE_LEN))
@@ -51,7 +51,7 @@
 				spawn()	//so we don't hold the caller proc up
 					var/sender = C
 					var/sendername = C.key
-					var/reply = input(T.owner, logtext,"Admin PM from-[sendername]", "") as text		//show message and await a reply
+					var/reply = stripped_input(T.owner, logtext,"Admin PM from-[sendername]", "")		//show message and await a reply
 					if(reply)
 						if(sender)
 							T.owner.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them

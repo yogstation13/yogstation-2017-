@@ -29,7 +29,7 @@
 		else
 			targets["(No Mob) - [T]"] = T
 	var/list/sorted = sortList(targets)
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) in sorted|null
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as anything in sorted|null
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -52,7 +52,7 @@
 			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+	var/msg = stripped_input(src,"Message:", "Private message to [key_name(C, 0, 0)]")
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
@@ -98,7 +98,7 @@
 		if(wasAlreadyClicked)
 			wasAlreadyClicked.pm_started_flag = 1
 
-		msg = input(src, instructions, "Reply to ticket") as text|null
+		msg = stripped_input(src, instructions, "Reply to ticket")
 
 		if(!msg)
 			// If the user was the user that started PM replying initially, then
@@ -146,7 +146,7 @@
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
-						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+						var/reply = stripped_input(C, msg,"Admin PM from-[sendername]", "")		//show message and await a reply
 						reply = replacetext(reply, "'", "�")
 						reply = replacetext(reply, "&#39;", "�")
 						if(C && reply)

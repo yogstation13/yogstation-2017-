@@ -308,7 +308,7 @@
 				switch(href_list["field"])
 					if("fingerprint")
 						if(active1)
-							var/t1 = stripped_input("Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null)
+							var/t1 = stripped_input(usr, "Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							src.active1.fields["fingerprint"] = t1
@@ -326,13 +326,13 @@
 							src.active1.fields["age"] = t1
 					if("species")
 						if(active1)
-							var/t1 = stripped_input("Please input species name", "Med. records", src.active1.fields["species"], null)
+							var/t1 = stripped_input(usr, "Please input species name", "Med. records", src.active1.fields["species"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1
 					if("mi_dis")
 						if(active2)
-							var/t1 = stripped_input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)
+							var/t1 = stripped_input(usr, "Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["mi_dis"] = t1
@@ -344,7 +344,7 @@
 							src.active2.fields["mi_dis_d"] = t1
 					if("ma_dis")
 						if(active2)
-							var/t1 = stripped_input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
+							var/t1 = stripped_input(usr, "Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["ma_dis"] = t1
@@ -356,7 +356,7 @@
 							src.active2.fields["ma_dis_d"] = t1
 					if("alg")
 						if(active2)
-							var/t1 = stripped_input("Please state allergies:", "Med. records", src.active2.fields["alg"], null)
+							var/t1 = stripped_input(usr, "Please state allergies:", "Med. records", src.active2.fields["alg"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["alg"] = t1
@@ -368,7 +368,7 @@
 							src.active2.fields["alg_d"] = t1
 					if("cdi")
 						if(active2)
-							var/t1 = stripped_input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null)
+							var/t1 = stripped_input(usr, "Please state diseases:", "Med. records", src.active2.fields["cdi"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["cdi"] = t1
@@ -395,7 +395,7 @@
 							src.temp = text("<B>Blood Type:</B><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=an'>A-</A> <A href='?src=\ref[];temp=1;blood_type=ap'>A+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=bn'>B-</A> <A href='?src=\ref[];temp=1;blood_type=bp'>B+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=abn'>AB-</A> <A href='?src=\ref[];temp=1;blood_type=abp'>AB+</A><BR>\n\t<A href='?src=\ref[];temp=1;blood_type=on'>O-</A> <A href='?src=\ref[];temp=1;blood_type=op'>O+</A><BR>", src, src, src, src, src, src, src, src)
 					if("b_dna")
 						if(active2)
-							var/t1 = stripped_input("Please input DNA hash:", "Med. records", src.active2.fields["b_dna"], null)
+							var/t1 = stripped_input(usr, "Please input DNA hash:", "Med. records", src.active2.fields["b_dna"], null)
 							if(!canUseMedicalRecordsConsole(usr, t1, null, a2))
 								return
 							src.active2.fields["b_dna"] = t1

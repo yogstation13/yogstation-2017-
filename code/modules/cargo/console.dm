@@ -141,7 +141,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = input("Reason:", name, "") as text|null
+				reason = stripped_input(usr, "Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 

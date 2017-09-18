@@ -501,7 +501,7 @@ var/list/airlock_overlays = list()
 	user.set_machine(src)
 	var/datum/browser/popup = new /datum/browser(user, "airlock", "Airlock Control")
 	popup.set_content(dat)
-	popup.open(FALSE)
+	popup.open(TRUE)
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
@@ -1078,6 +1078,7 @@ var/list/airlock_overlays = list()
 	src.locked = 0
 	src.open()
 	src.locked = 1
+	src.actionstaken += "\[[time_stamp()]\]PRISON BREAK"
 	return
 
 
@@ -1092,7 +1093,7 @@ var/list/airlock_overlays = list()
 	else
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
-	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
+	var/paintjob = input(user, "Please select a paintjob for this airlock.") as anything in optionlist
 	if((!in_range(src, usr) && src.loc != usr) || !W.use(user))
 		return
 	switch(paintjob)

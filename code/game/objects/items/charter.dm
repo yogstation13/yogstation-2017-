@@ -44,7 +44,7 @@
 
 	used = TRUE
 
-	var/new_name = input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.")  as text|null
+	var/new_name = stripped_input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.")
 	if(new_name)
 		pending_name = new_name
 		user << "You hear something crackle in your ears for a moment before a voice speaks.  \"Thank you for getting in touch with Central Command, one of our advisers will be with you shortly. You will now be put on hold. Message ends.\""

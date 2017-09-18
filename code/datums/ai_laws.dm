@@ -156,6 +156,8 @@
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_laws_config()
+	if(!config)
+		return
 	switch(config.default_laws)
 		if(0)
 			add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")

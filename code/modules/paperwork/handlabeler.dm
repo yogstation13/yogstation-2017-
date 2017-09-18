@@ -59,6 +59,10 @@
 
 	user.visible_message("[user] labels [A] as [label].", \
 						 "<span class='notice'>You label [A] as [label].</span>")
+	A.add_fingerprint(user)
+	user.attack_log += "\[[time_stamp()]\]Labeled [A.name] as [label]"
+	log_game("\[[time_stamp()]\] [user]/[user.ckey] Labeled [A.name] as [label]")
+
 	A.name = "[A.name] ([label])"
 	labels_left--
 
@@ -72,7 +76,7 @@
 	if(mode)
 		user << "<span class='notice'>You turn on [src].</span>"
 		//Now let them chose the text.
-		var/str = copytext(reject_bad_text(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = reject_bad_text(stripped_input(user,"Label text?","Set label",""))
 		if(!str || !length(str))
 			user << "<span class='warning'>Invalid text!</span>"
 			return

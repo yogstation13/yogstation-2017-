@@ -74,10 +74,12 @@
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
+		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		..()
 
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		..(user)
 		if(occupant && occupant.stat != DEAD)
 			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"

@@ -49575,6 +49575,7 @@
 "bUa" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	adminlog = 1;
 	dir = 10;
 	initialize_directions = 10
 	},
@@ -50179,8 +50180,11 @@
 /area/atmos)
 "bVn" = (
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	adminlog = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	adminlog = 1;
 	dir = 4
 	},
 /obj/structure/window/reinforced/fulltile,
@@ -50714,7 +50718,9 @@
 /area/atmos)
 "bWy" = (
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	adminlog = 1
+	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/atmos)
@@ -51354,7 +51360,9 @@
 /area/atmos)
 "bXP" = (
 /obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	adminlog = 1
+	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
@@ -52128,6 +52136,7 @@
 "bZf" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	adminlog = 1;
 	dir = 4;
 	initialize_directions = 11
 	},
@@ -57938,6 +57947,7 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	adminlog = 1;
 	dir = 9
 	},
 /turf/open/floor/plating,
@@ -60821,7 +60831,9 @@
 /turf/closed/wall,
 /area/maintenance/incinerator)
 "cqT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	adminlog = 1
+	},
 /turf/closed/wall,
 /area/maintenance/incinerator)
 "cqU" = (
@@ -61268,6 +61280,7 @@
 /area/maintenance/incinerator)
 "crQ" = (
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 4;
 	name = "atmospherics mix pump"
 	},
@@ -61281,9 +61294,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	tag = "icon-intact (SOUTHWEST)";
+	adminlog = 1;
+	dir = 10;
 	icon_state = "intact";
-	dir = 10
+	tag = "icon-intact (SOUTHWEST)"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -61294,7 +61308,9 @@
 	pixel_x = 0;
 	pixel_y = 26
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	adminlog = 1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -61762,7 +61778,9 @@
 	name = "Mix to Incinerator";
 	on = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	adminlog = 1
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
@@ -62225,7 +62243,9 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	adminlog = 1
+	},
 /mob/living/simple_animal/mouse,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -69221,7 +69241,15 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
-"ZxB" = (
+"ZxK" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	adminlog = 1;
+	dir = 4
+	},
+/turf/open/space,
+/area/space)
+"ZxL" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
@@ -104897,19 +104925,19 @@ bQj
 bDw
 bSE
 aaA
-bSE
+ZxK
 aaA
 bXQ
 aaA
-bSE
+ZxK
 aaA
 bXQ
 aaA
-bSE
+ZxK
 aaA
 bXQ
 aaA
-bSE
+ZxK
 aaA
 bXQ
 aaA

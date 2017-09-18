@@ -28,7 +28,7 @@
 			user << "<span class='notice'>None of this matters, why are you reading this?  You put the [title] down.</span>"
 			return
 		inUse = 1
-		var/devilName = copytext(sanitize(input(user, "What infernal being do you wish to research?", "Codex Gigas", null)  as text),1,MAX_MESSAGE_LEN)
+		var/devilName = stripped_input(user, "What infernal being do you wish to research?", "Codex Gigas", null, MAX_MESSAGE_LEN)
 		var/speed = 300
 		var/correctness = 85
 		if(U.job in list("Librarian")) // the librarian is both faster, and more accurate than normal crew members at research
