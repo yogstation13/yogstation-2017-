@@ -44,14 +44,14 @@
 	user.next_move = world.time + 50 // Prevent the user from clicking on anything for the next 5 seconds.
 	icon_state = "motion1"
 	addtimer(src, "lose_invuln", 20)
-	addtimer(src, "lose_invis", 50, FALSE, user, 255, old_invis, revoke_sight)
+	addtimer(src, "lose_invis", 50, FALSE, user, old_invis, revoke_sight)
 	return dummy
 
 /obj/item/device/deadringer/proc/lose_invuln()
 	dummy = null
-/obj/item/device/deadringer/proc/lose_invis(mob/user, old_alpha, old_invis, revoke_sight)
+/obj/item/device/deadringer/proc/lose_invis(mob/user, old_invis, revoke_sight)
 	user.invisibility = old_invis
-	animate(user, alpha = old_alpha, time = 20)
+	animate(user, alpha = 255, time = 20)
 	if(revoke_sight)
 		user.sight &= ~SEE_SELF
 	playsound(user.loc, 'sound/effects/spy_uncloak_feigndeath.ogg', 100, FALSE)
