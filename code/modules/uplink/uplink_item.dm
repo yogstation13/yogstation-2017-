@@ -1072,12 +1072,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
-	category = "item category"
 	desc = "The finest vehicle in the Clown Planet selection. This baby can fit atleast 4932004 unfortunate victims and comes with a built in horn. Drive around in style \
 	as you run down innocent mobs of people as they run from this beautiful creation of The Honkmother."
 	item = /obj/vehicle/car/clown
 	cost = 12
-	list/restricted_roles = list("Clown")
+	restricted_roles = list("Clown")
 
 // Pointless
 /datum/uplink_item/badass
