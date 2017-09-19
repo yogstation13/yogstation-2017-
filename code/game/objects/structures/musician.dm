@@ -192,15 +192,15 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = stripped_input(usr, "Please paste the entire song, formatted:", text("[]", name), t)
+			t = stripped_multiline_input(usr, "Please paste the entire song, formatted:", "[name]", t, 3072)
 			if(!in_range(instrumentObj, usr))
 				return
 
-			if(lentext(t) >= 3072)
+			if(lentext(t) >= 3071)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") as anything in list("yes", "no")
 				if(cont == "no")
 					break
-		while(lentext(t) > 3072)
+		while(lentext(t) >= 3071)
 
 		//split into lines
 		spawn()
