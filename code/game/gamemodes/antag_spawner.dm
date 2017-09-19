@@ -111,7 +111,7 @@
 	M.mind.special_role = "apprentice"
 	ticker.mode.update_wiz_icons_added(M.mind)
 	M << sound('sound/effects/magic.ogg')
-	var/newname = stripped_input(M, "You are the wizard's apprentice. Would you like to change your name to something else?", "Name change", randomname, MAX_MESSAGE_LEN)
+	var/newname = name_input(M, "You are the wizard's apprentice. Would you like to change your name to something else?", "Name change", randomname, TRUE)
 	if (!newname)
 		newname = randomname
 	M.mind.name = newname
