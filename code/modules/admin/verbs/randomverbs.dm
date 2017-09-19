@@ -471,7 +471,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = stripped_multiline_input(usr, "Please enter anything you want. Anything. Serious.", "What?", "")
+	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
 	if(!input)
 		return
 
