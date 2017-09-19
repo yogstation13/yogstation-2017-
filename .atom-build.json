@@ -1,9 +1,0 @@
-{
-	"cmd": "C:/Program Files (x86)/BYOND/bin/dm.exe",
-	"args": [ "D:/dev/repos/yogstation/yogstation.dme" ],
-	"sh": false,
-	"errorMatch":
-	[
-		"\n(?<file>[\\\\\/0-9a-zA-Z\\._]+):(?<line>\\d+).*"
-	]
-}
