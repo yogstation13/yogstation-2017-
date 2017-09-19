@@ -352,7 +352,7 @@
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
-			"uuid" = real_name,		// Used for tracking when $source is change
+			"uuid" = name,			// Used for tracking when $source is change
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
