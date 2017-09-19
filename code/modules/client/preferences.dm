@@ -901,7 +901,7 @@ var/list/preferences_datums = list()
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = reject_bad_name(stripped_input(user, "Choose your character's name:", "Character Preference"))
+					var/new_name = name_input(user, "Choose your character's name:", "Character Preference")
 					if(new_name)
 						real_name = new_name
 					else
@@ -1091,42 +1091,42 @@ var/list/preferences_datums = list()
 						backbag = new_backbag
 
 				if("clown_name")
-					var/new_clown_name = reject_bad_name(stripped_input(user, "Choose your character's clown name:", "Character Preference"))
+					var/new_clown_name = name_input(user, "Choose your character's clown name:", "Character Preference")
 					if(new_clown_name)
 						custom_names["clown"] = new_clown_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("mime_name")
-					var/new_mime_name = reject_bad_name(stripped_input(user, "Choose your character's mime name:", "Character Preference"))
+					var/new_mime_name = name_input(user, "Choose your character's mime name:", "Character Preference")
 					if(new_mime_name)
 						custom_names["mime"] = new_mime_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("ai_name")
-					var/new_ai_name = reject_bad_name(stripped_input(user, "Choose your character's AI name:", "Character Preference"), 1)
+					var/new_ai_name = name_input(user, "Choose your character's AI name:", "Character Preference", null, TRUE)
 					if(new_ai_name)
 						custom_names["ai"] = new_ai_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
 
 				if("cyborg_name")
-					var/new_cyborg_name = reject_bad_name(stripped_input(user, "Choose your character's cyborg name:", "Character Preference"), 1 )
+					var/new_cyborg_name = name_input(user, "Choose your character's cyborg name:", "Character Preference", null, 1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
 
 				if("religion_name")
-					var/new_religion_name = reject_bad_name(stripped_input(user, "Choose your character's religion:", "Character Preference"))
+					var/new_religion_name = name_input(user, "Choose your character's religion:", "Character Preference")
 					if(new_religion_name)
 						custom_names["religion"] = new_religion_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
 				if("deity_name")
-					var/new_deity_name = reject_bad_name(stripped_input(user, "Choose your character's deity:", "Character Preference"))
+					var/new_deity_name = name_input(user, "Choose your character's deity:", "Character Preference")
 					if(new_deity_name)
 						custom_names["deity"] = new_deity_name
 					else

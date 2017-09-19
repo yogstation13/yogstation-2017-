@@ -311,7 +311,7 @@
 		return
 
 	if(href_list["Name"])
-		var/new_name = reject_bad_name(stripped_input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name),1)
+		var/new_name = name_input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name, TRUE)
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		if(new_name)
