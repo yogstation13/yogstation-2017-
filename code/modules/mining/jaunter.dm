@@ -137,6 +137,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	density = 0
 	icon = 'icons/obj/machines/jauntbeacon.dmi'
 	icon_state = "beacon-off"
+	var/specialname = FALSE
 	var/bolted // 0 not anchored. 1 anchored. 2 cannot be unbolted.
 	var/on = FALSE
 	var/jauntlist = TRUE
@@ -144,7 +145,8 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 
 /obj/machinery/jauntbeacon/New()
 	..()
-	name = "deployed jaunt beacon [rand(1,999)]"
+	if(!specialname)
+		name = "deployed jaunt beacon [rand(1,999)]"
 	if(jauntlist)
 		jauntbeacons += src
 
@@ -172,10 +174,12 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				cam = new(src)
 				cam.c_tag = name
 				cam.network = list("JAUNT")
-				visible_message("[src]'s teleportation and camera functions are now online!")
+				visible_message("<span class='notice'>[src]'s teleportation and camera functions are now online!</span>")
+				AddLuminosity(8) // for the cameras, lavaland is dark.
 			else
 				cam.network = null
 				qdel(cam)
+				AddLuminosity(-8)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(bolted == 2)
 			user << "<span class='warning'>[src] cannot be unbolted.</span>"
@@ -217,6 +221,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	on = TRUE
 	icon_state = "beacon"
 	jauntlist = FALSE
+	specialname = TRUE
 	var/cooldown = FALSE
 
 /obj/machinery/jauntbeacon/mother/attack_hand(mob/user)

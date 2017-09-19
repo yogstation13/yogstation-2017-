@@ -90,6 +90,11 @@
 	new /obj/item/device/radio/off(src)
 
 // Miner survival box
+
+/obj/item/weapon/storage/box/miner
+	icon_state = "minerbox"
+
+
 /obj/item/weapon/storage/box/miner/New()
 	..()
 	new /obj/item/clothing/mask/breath(src)
