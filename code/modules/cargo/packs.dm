@@ -1451,7 +1451,7 @@
 
 /datum/supply_pack/misc/plushies
 	name = "Plushie Crate"
-	cost = 5000
+	cost = 2000
 	contains = list(/obj/item/toy/plushie/carpplushie,
 									/obj/item/toy/plushie/bubbleplush,
 									/obj/item/toy/plushie/plushvar,
