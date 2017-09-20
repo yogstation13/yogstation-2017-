@@ -1090,6 +1090,16 @@
 	user << "<span class='notice'>You pet [src]. D'awww.</span>"
 	return ..()
 
+//ratvar conversion
+/obj/item/toy/plushie/ratvar_act()
+	new /obj/item/toy/plushie/plushvar (src.loc)
+	qdel(src)
+
+//ratvar conversion
+/obj/item/toy/plushie/narsie_act()
+	new /obj/item/toy/plushie/narplush (src.loc)
+	qdel(src)
+
 //carp plushie
 /obj/item/toy/plushie/carpplushie
 	name = "space carp plushie"
@@ -1113,12 +1123,19 @@
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
 
+//plushvar conversion
+/obj/item/toy/plushie/plushvar/ratvar_act()
+	return
+
 //narsie plush
 /obj/item/toy/plushie/narplush
 	name = "nar-sie plushie"
 	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 
+//narplush conversion
+/obj/item/toy/plushie/narplush/narsie_act()
+	return
 //lizard plushie
 /obj/item/toy/plushie/Lizardplush
 	name = "lizard plushie"
