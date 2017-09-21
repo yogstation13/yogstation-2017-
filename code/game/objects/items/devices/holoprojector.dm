@@ -53,9 +53,13 @@
 			temp.layer = initial(target.layer) // scanning things in your inventory
 			current_item = temp.appearance
 			current_item_dir = target.dir
-			break
+			return
+
 	if(istype(target,/turf/open))
 		create_holograph(user, target)
+	else
+		user << "<span class='warning'>You cannot scan that!</span>"
+
 
 /obj/item/device/holoprojector/proc/create_holograph(mob/user, turf/open/floor/target)
 	if(!current_item)
@@ -143,6 +147,7 @@
 /obj/effect/dummy/holograph/Destroy()
 	var/msg = pick("[src] distorts for a moment, then disappears!","[src] flickers out of existence!","[src] suddenly disappears!","[src] warps wildly before disappearing!")
 	visible_message("<span class='danger'>[msg]</span>")
+	playsound(get_turf(src), "sparks", 100, 1)
 	if(parent_projector)
 		parent_projector.holographs -= src
 	return ..()
