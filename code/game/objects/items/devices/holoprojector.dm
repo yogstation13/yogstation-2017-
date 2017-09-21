@@ -23,7 +23,6 @@
 	var/replaced_parts = FALSE
 	var/range = 1
 
-
 /obj/item/device/holoprojector/New()
 	..()
 	laser = new(src)
@@ -60,7 +59,6 @@
 	else
 		user << "<span class='warning'>You cannot scan that!</span>"
 
-
 /obj/item/device/holoprojector/proc/create_holograph(mob/user, turf/open/floor/target)
 	if(!current_item)
 		user << "<span class='warning'>You have not scanned anything to replicate yet!</span>"
@@ -83,7 +81,6 @@
 			cap.loc = get_turf(src.loc)
 			cap = null
 			replaced_parts = TRUE
-
 		if(replaced_parts)
 			replaced_parts = FALSE
 			user << "<span class='notice'>You pop out the parts from [src].</span>"
@@ -120,7 +117,6 @@
 
 		max_holographs = 8*cap.rating
 
-
 /obj/item/device/holoprojector/attack_self(mob/user)
 	user << "<span class='notice'>You disable the projector.</span>"
 	for(var/obj/effect/dummy/holograph/H in holographs)
@@ -153,23 +149,23 @@
 	return ..()
 
 /obj/effect/dummy/holograph/attackby(obj/item/W, mob/user)
-	visible_message("<span class='danger'>[W] passes right through [src]!</span>")
+	user << "<span class='danger'>[W] passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_hand()
-	visible_message("<span class='danger'>Your hand passes right through [src]!</span>")
+/obj/effect/dummy/holograph/attack_hand(mob/user)
+	user << "<span class='danger'>Your hand passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_animal()
-	visible_message("<span class='danger'>Your appendage passes right through [src]!</span>")
+/obj/effect/dummy/holograph/attack_animal(mob/user)
+	user << "<span class='danger'>Your appendage passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_slime()
-	visible_message("<span class='danger'>Your blubber passes right through [src]!</span>")
+/obj/effect/dummy/holograph/attack_slime(mob/user)
+	user << "<span class='danger'>Your blubber passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_alien()
-	visible_message("<span class='danger'>Your claws pass right through [src]!</span>")
+/obj/effect/dummy/holograph/attack_alien(mob/user)
+	user << "<span class='danger'>Your claws pass right through [src]!</span>"
 	qdel(src)
 
 /obj/effect/dummy/holograph/ex_act(S, T)
@@ -181,15 +177,13 @@
 
 /obj/effect/dummy/holograph/CtrlClick(mob/user)
 	if(get_dist(src, user) > 1) return
-	visible_message("<span class='danger'>You pass through [src] as you try to grab it!</span>")
+	user << "<span class='danger'>You pass through [src] as you try to grab it!</span>"
 	qdel(src)
 
 /obj/item/device/holoprojector/debug
 	name = "debug holoprojector"
-
 	max_holographs = 24
-	allow_scanning_these = list(/obj, /mob) //upgrade microlaser to increase scanning abilities
-
+	allow_scanning_these = list(/obj, /mob)
 	range = 9
 
 /obj/item/device/holoprojector/debug/New()
