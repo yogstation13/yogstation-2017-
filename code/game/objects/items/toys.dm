@@ -1119,7 +1119,7 @@
 
 //ratvar plush
 /obj/item/toy/plushie/plushvar
-	name = "ratvar plushie"
+	name = "Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
 
@@ -1129,8 +1129,8 @@
 
 //narsie plush
 /obj/item/toy/plushie/narplush
-	name = "nar-sie plushie"
-	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
+	name = "Nar-sie plushie"
+	desc = "A small stuffed doll of the elder god Nar'sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 
 //narplush conversion
