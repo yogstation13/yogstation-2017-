@@ -231,9 +231,7 @@ var/allowed_translateable_langs = ALL
 	signal.data["message"] 	= interpreter.GetCleanVar("$content", signal.data["message"])
 	signal.frequency 		= interpreter.GetCleanVar("$freq", signal.frequency)
 
-	var/setname = reject_bad_name(interpreter.GetVar("$source"))
-	if(!setname)
-		setname = "Unknown"
+	var/setname = interpreter.GetCleanVar("$source", signal.data["name"])
 
 	if(signal.data["name"] != setname)
 		signal.data["realname"] = setname
