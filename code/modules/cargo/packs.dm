@@ -1459,7 +1459,8 @@
 									/obj/item/toy/plushie/Lizardplush,
 									/obj/item/toy/plushie/snakeplush,
 									/obj/item/toy/plushie/nukeplush,
-									/obj/item/toy/plushie/slimeplush)
+									/obj/item/toy/plushie/slimeplush,
+									/obj/item/toy/plushie/inorixplush)
 	crate_name = "plushie crate"
 
 /datum/supply_pack/misc/autodrobe

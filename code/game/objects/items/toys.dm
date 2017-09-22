@@ -1168,6 +1168,13 @@
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	plushsound = 'sound/magic/demon_attack1.ogg'
 
+//inorix plushie
+/obj/item/toy/plushie/inorixplush
+	name = "inorix plushie"
+	desc = "An adorable stuffed toy that resembles a giant robotic squid. It squirms around in your hand with realistic, buggy motion."
+	icon_state = "plushie_inorix"
+	attack_verb = list("harkened", "glared", "erased")
+
 /*
  * Toy big red button
  */

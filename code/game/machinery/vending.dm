@@ -1242,7 +1242,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/toy/plushie/Lizardplush,
 		/obj/item/toy/plushie/snakeplush,
 		/obj/item/toy/plushie/nukeplush,
-		/obj/item/toy/plushie/slimeplush)
+		/obj/item/toy/plushie/slimeplush,
+		/obj/item/toy/plushie/inorixplush)
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
