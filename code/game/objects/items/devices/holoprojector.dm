@@ -1,6 +1,6 @@
 /obj/item/device/holoprojector
 	name = "holographic object projector"
-	desc = "A device which has the ability to scan objects and create stationary holographs of them."
+	desc = "A device which has the ability to scan objects and create stationary holograms of them."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker"
 	item_state = "electronic"
@@ -11,9 +11,9 @@
 	throw_range = 7
 	origin_tech = "magnets=4;programming=4;syndicate=3"
 
-	var/max_holographs = 6 //upgrade capacitor to increase max holograms
-	var/list/holographs = list()
-	var/atom/current_item = null
+	var/max_holograms = 8 //upgrade capacitor to increase max holograms
+	var/list/holograms = list()
+	var/mutable_appearance/current_item = null
 	var/current_item_dir = null
 	var/list/allow_scanning_these = list(/obj/item) //upgrade microlaser to increase scanning abilities
 
@@ -28,6 +28,10 @@
 	laser = new(src)
 	cap = new(src)
 
+/obj/item/device/holoprojector/Destroy()
+	for(var/obj/effect/dummy/hologram/H in holograms)
+		qdel(H)
+
 /obj/item/device/holoprojector/attack(mob/living/M, mob/user)
 	return
 
@@ -38,9 +42,9 @@
 		user << "<span class='warning'>[src] is missing some parts!</span>"
 		return
 
-	if(istype(target, /obj/effect/dummy))
+	if(istype(target, /obj/effect/dummy/hologram))
 		qdel(target)
-		user << "<span class='notice'>You remove the holograph.</span>"
+		user << "<span class='notice'>You remove the hologram.</span>"
 		return
 
 	for(var/T in allow_scanning_these)
@@ -55,21 +59,22 @@
 			return
 
 	if(istype(target,/turf/open))
-		create_holograph(user, target)
+		if(target in view(range, user))
+			create_hologram(user, target)
 	else
 		user << "<span class='warning'>You cannot scan that!</span>"
 
-/obj/item/device/holoprojector/proc/create_holograph(mob/user, turf/open/floor/target)
+/obj/item/device/holoprojector/proc/create_hologram(mob/user, turf/open/target)
 	if(!current_item)
 		user << "<span class='warning'>You have not scanned anything to replicate yet!</span>"
 		return
 
-	if(holographs.len >= max_holographs)
-		qdel(holographs[1])
+	if(holograms.len >= max_holograms)
+		qdel(holograms[1])
 
 	user << "<span class='notice'>You create a fake [current_item.name].</span>"
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 1, -6)
-	new /obj/effect/dummy/holograph(target, src)
+	new /obj/effect/dummy/hologram(target, src)
 
 /obj/item/device/holoprojector/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -84,7 +89,7 @@
 		if(replaced_parts)
 			replaced_parts = FALSE
 			user << "<span class='notice'>You pop out the parts from [src].</span>"
-			for(var/obj/effect/dummy/holograph/H in holographs)
+			for(var/obj/effect/dummy/hologram/H in holograms)
 				qdel(H)
 		else
 			user << "<span class='warning'>[src] does not have any parts installed!</span>"
@@ -115,74 +120,73 @@
 		I.loc = src
 		user << "<span class='notice'>You insert [cap.name] into [src].</span>"
 
-		max_holographs = 8*cap.rating
+		max_holograms = 8*cap.rating
 
 /obj/item/device/holoprojector/attack_self(mob/user)
 	user << "<span class='notice'>You disable the projector.</span>"
-	for(var/obj/effect/dummy/holograph/H in holographs)
+	for(var/obj/effect/dummy/hologram/H in holograms)
 		qdel(H)
 
-/obj/effect/dummy/holograph
+/obj/effect/dummy/hologram
 	name = ""
 	desc = ""
 	density = 0
 	var/obj/item/device/holoprojector/parent_projector = null
 	var/datum/effect_system/spark_spread/spark_system
 
-/obj/effect/dummy/holograph/New(loc, parent)
+/obj/effect/dummy/hologram/New(loc, obj/item/device/holoprojector/parent)
 	if(parent)
 		parent_projector = parent
 		if(parent_projector.current_item)
 			appearance = parent_projector.current_item.appearance
 			dir = parent_projector.current_item_dir
-			if(prob(100 - (parent_projector.cap.rating*11.25 + parent_projector.laser.rating*11.25))) //Better parts, higher chance of quality hologram, up to 90%
-				desc += " <span class='italics'>It seems to be shimmering a little...</span>"
-		parent_projector.holographs += src
+			desc += " <span class='italics'>It seems to be shimmering a little...</span>"
+		parent_projector.holograms += src
 	..()
 
-/obj/effect/dummy/holograph/Destroy()
+/obj/effect/dummy/hologram/Destroy()
 	var/msg = pick("[src] distorts for a moment, then disappears!","[src] flickers out of existence!","[src] suddenly disappears!","[src] warps wildly before disappearing!")
 	visible_message("<span class='danger'>[msg]</span>")
 	playsound(get_turf(src), "sparks", 100, 1)
 	if(parent_projector)
-		parent_projector.holographs -= src
+		parent_projector.holograms -= src
 	return ..()
 
-/obj/effect/dummy/holograph/attackby(obj/item/W, mob/user)
+/obj/effect/dummy/hologram/attackby(obj/item/W, mob/user)
 	user << "<span class='danger'>[W] passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_hand(mob/user)
+/obj/effect/dummy/hologram/attack_hand(mob/user)
 	user << "<span class='danger'>Your hand passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_animal(mob/user)
+/obj/effect/dummy/hologram/attack_animal(mob/user)
 	user << "<span class='danger'>Your appendage passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_slime(mob/user)
+/obj/effect/dummy/hologram/attack_slime(mob/user)
 	user << "<span class='danger'>Your blubber passes right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/attack_alien(mob/user)
+/obj/effect/dummy/hologram/attack_alien(mob/user)
 	user << "<span class='danger'>Your claws pass right through [src]!</span>"
 	qdel(src)
 
-/obj/effect/dummy/holograph/ex_act(S, T)
+/obj/effect/dummy/hologram/ex_act(S, T)
 	qdel(src)
 
-/obj/effect/dummy/holograph/bullet_act()
+/obj/effect/dummy/hologram/bullet_act()
 	..()
 	qdel(src)
 
-/obj/effect/dummy/holograph/CtrlClick(mob/user)
+/obj/effect/dummy/hologram/CtrlClick(mob/user)
 	if(get_dist(src, user) > 1) return
 	user << "<span class='danger'>You pass through [src] as you try to grab it!</span>"
 	qdel(src)
 
 /obj/item/device/holoprojector/debug
 	name = "debug holoprojector"
-	max_holographs = 24
+	max_holograms = 24
 	allow_scanning_these = list(/obj, /mob)
 	range = 9
 
