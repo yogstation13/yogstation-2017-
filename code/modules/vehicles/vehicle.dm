@@ -95,7 +95,7 @@
 	if(user.incapacitated())
 		unbuckle_mob(user)
 
-	if(keycheck(user) || istype(src, /obj/vehicle/car)) //Cars dont use this horrible shitty check
+	if(keycheck(user))
 		if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
 			return
 		next_vehicle_move = world.time + vehicle_move_delay
