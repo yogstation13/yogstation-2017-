@@ -247,6 +247,9 @@
 					screen = 0
 
 			if("editcode")
+				if(jobban_isbanned(usr, "ntsl"))
+					usr << "<span class='warning'>You are banned from using NTSL.</span>"
+					return
 				if(editingcode == usr)
 					return
 				if(usr in viewingcode)
