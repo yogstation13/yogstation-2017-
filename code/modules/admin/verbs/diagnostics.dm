@@ -127,7 +127,7 @@
 	set desc = "This searches all the active jobban entries for the current round and outputs the results to standard output."
 	set category = "Debug"
 
-	var/filter = input("Contains what?","Filter") as text|null
+	var/filter = stripped_input(usr, "Contains what?","Filter")
 	if(!filter)
 		return
 

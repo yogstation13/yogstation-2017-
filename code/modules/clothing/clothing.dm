@@ -396,6 +396,7 @@ BLIND     // can't see anything
 		else
 			//no more cloth left on the item, so nix it
 			user.visible_message("[src] falls away to tatters, stripped to its barest seams.")
+			removetie() //remove accessories before qdel
 			qdel(src)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user

@@ -226,7 +226,7 @@
 	var/datum/data/record/R = find_record("name", perpname, data_core.general)
 	R = find_record("name", perpname, data_core.security)
 	if(R)
-		var/setcriminal = input(H, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
+		var/setcriminal = input(H, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) as anything in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
 		if(setcriminal != "Cancel")
 			if(H.canUseHUD())
 				H.investigate_log("[A.key] has been set from [R.fields["criminal"]] to [setcriminal] by [H.name] ([H.key]).", "records")

@@ -162,7 +162,7 @@
 					radio.recalculateChannels()
 			if(href_list["range"])
 				if(radio)
-					var/newrange = input("Set radio/microphone range", "Radio Range", 3) in list(0, 1, 2, 3, 4)
+					var/newrange = input("Set radio/microphone range", "Radio Range", 3) as anything in list(0, 1, 2, 3, 4)
 					if(radio)
 						radio.canhear_range = newrange
 			if(href_list["channel"])
@@ -171,7 +171,7 @@
 					radio.channels[channel] ^= radio.FREQ_LISTENING
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") as anything in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
 			var/pID = 1
 			switch(newImage)
 				if("Happy")
@@ -311,7 +311,7 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
-	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
+	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") as anything in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\

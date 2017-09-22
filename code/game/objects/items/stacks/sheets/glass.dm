@@ -175,7 +175,7 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.get_amount()] sheet\s left)"
-	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
+	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") as anything in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)
 				return 1
