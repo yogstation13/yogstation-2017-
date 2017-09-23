@@ -19,6 +19,7 @@ Contents:
 			return
 		s_active=!s_active
 		animate(U, alpha = 0,time = 15)
+		U.next_move = world.time + 99999
 		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
 						"<span class='notice'>You are now invisible to normal detection.</span>")
 	return
@@ -33,6 +34,7 @@ Contents:
 		animate(U, alpha = 255, time = 15)
 		U.visible_message("<span class='warning'>[U.name] appears from thin air!</span>", \
 						"<span class='notice'>You are now visible.</span>")
+		U.next_move = 0
 		return 1
 	return 0
 
