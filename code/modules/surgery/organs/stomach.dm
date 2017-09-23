@@ -13,7 +13,7 @@
 
 	if(istype(H))
 		H.dna.species.handle_digestion(H)
-		H.dna.species.handle_disgust()
+		H.dna.species.handle_disgust(H)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/M, special = 0)
 	var/mob/living/carbon/human/H = owner
