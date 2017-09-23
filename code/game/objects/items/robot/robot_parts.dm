@@ -3,6 +3,7 @@
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	attack_verb = list("borged", "stated the laws of", "robotized")
 	hitsound = 'sound/voice/liveagain.ogg'
+	icon = 'icons/obj/robot_parts.dmi'
 	icon_state = "robo_suit"
 	var/obj/item/bodypart/l_arm/robot/l_arm = null
 	var/obj/item/bodypart/r_arm/robot/r_arm = null
