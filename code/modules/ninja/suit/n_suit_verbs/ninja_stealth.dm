@@ -45,5 +45,5 @@ Contents:
 	if(!s_busy)
 		toggle_stealth()
 	else
-		affecting << "<span class='danger'>Stealth does not appear to work!</span>"!</span>"
+		affecting << "<span class='danger'>Stealth does not appear to work!</span>"
 
