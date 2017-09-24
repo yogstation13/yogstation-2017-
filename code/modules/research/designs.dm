@@ -197,58 +197,34 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
 	category = list("Mining Designs")
 
-/datum/design/kineticaccelerator
-	name = "Kinetic Accelerator"
-	desc = "A kinetic accelerator. Perfect mining gear for low pressure environments.."
-	id = "kineticaccelerator"
-	req_tech = list("materials" = 3, "powerstorage" = 3, "engineering" = 3, "combat" = 2)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
-	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator
-	category = list("Mining Designs")
-
-
-
-
-
-/datum/design/wide_grip
-	name = "Wide Grip"
-	desc = "A wider KA grip to allow less dextrous humanoids to use it."
-	id = "wide_grip"
+/datum/design/modkit
+	name = "Modification Kit"
+	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
+	id = "modkit"
 	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
-	build_path = /obj/item/kinetic_part/grip/wide
+	build_path = /obj/item/modkit
 	category = list("Mining Designs")
 
-/datum/design/splash_barrel
-	name = "Splash Barrel"
-	desc = "Allows the mining of a 3x3 area."
-	id = "splash_barrel"
+/datum/design/superaccelerator
+	name = "Super-Kinetic Accelerator"
+	desc = "An upgraded version of the proto-kinetic accelerator, with superior damage, speed and range."
+	id = "superaccelerator"
 	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 6000, MAT_DIAMOND = 4000, MAT_GOLD = 2000, MAT_URANIUM = 1000)
-	build_path = /obj/item/kinetic_part/barrel/splash
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/super
 	category = list("Mining Designs")
 
-/datum/design/shotgun_barrel_end
-	name = "Shotgun Barrel End"
-	desc = "A shotgun like barrel ending to deal devastating damage, but at the cost of range."
-	id = "shotgun_barrel_end"
-	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+/datum/design/hyperaccelerator
+	name = "Hyper-Kinetic Accelerator"
+	desc = "An upgraded version of the proto-kinetic accelerator, with even more superior damage, speed and range."
+	id = "hyperaccelerator"
+	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_SILVER = 1000, MAT_URANIUM = 1000)
-	build_path = /obj/item/kinetic_part/barrel_end/shotgun
-	category = list("Mining Designs")
-
-/datum/design/double_charger
-	name = "Double Charger"
-	desc = "A stronger charger that holds 2 kinetic shots. Takes longer to reload."
-	id = "double_charger"
-	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 8000, MAT_SILVER = 8000, MAT_DIAMOND = 3000)
-	build_path = /obj/item/kinetic_part/charger/double_shot
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
 	category = list("Mining Designs")
 
 /datum/design/superresonator
