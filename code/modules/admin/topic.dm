@@ -928,6 +928,16 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>[replacetext("Alien", " ", "&nbsp")]</a></td>"
 
+		//Misc (Black)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='000000'><th colspan='10'><font color=white>Miscellaneous</font></th></tr><tr align='center'>"
+
+		//NTSL
+		if(jobban_isbanned(M, "ntsl"))
+			jobs += "<td width='100%'><a href='?src=\ref[src];jobban3=ntsl;jobban4=\ref[M]'><font color=red>[replacetext("NTSL", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='100%'><a href='?src=\ref[src];jobban3=ntsl;jobban4=\ref[M]'>[replacetext("NTSL", " ", "&nbsp")]</a></td>"
+
 		jobs += "</tr></table>"
 
 		body = "<body>[jobs]</body>"
