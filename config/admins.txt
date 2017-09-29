@@ -9,7 +9,7 @@
 ###############################################################################################
 Kn0ss0s	=	Head Coder
 Oisin100	=	Head Coder
-Slovenian	=	Council Member
+Thefastfoodguy =	Council Member
 George99	=	Council Member
 Thee_Flame_Prince	=	Council Member
 Xantam	=	Council Member
