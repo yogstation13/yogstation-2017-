@@ -9,7 +9,7 @@
 ###############################################################################################
 Kn0ss0s	=	Head Coder
 Oisin100	=	Head Coder
-Thefastfoodguy =	Council Member
+Slovenian	=	Council Member
 George99	=	Council Member
 Thee_Flame_Prince	=	Council Member
 Xantam	=	Council Member
@@ -56,5 +56,4 @@ Blukey	=	Retired Admin
 Hadrin Alucard	=	Retired Admin
  
 Yogstation13-Bot	=	Bot
-
 
