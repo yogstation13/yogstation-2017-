@@ -9,7 +9,7 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = 3
-	var/silent = 0 // No message on putting items in
+	var/silent = 0 // No message or sound on putting items in
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
@@ -51,7 +51,8 @@
 			if(loc != usr || (loc && loc.loc == usr))
 				return
 
-			playsound(loc, "rustle", 50, 1, -5)
+			if(!silent)
+				playsound(loc, "rustle", 50, 1, -5)
 
 
 			if(istype(over_object, /obj/screen/inventory/hand))
@@ -70,7 +71,8 @@
 /obj/item/weapon/storage/proc/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user) && dest_object.Adjacent(user))
 		if(dest_object.storage_contents_dump_act(src, user))
-			playsound(loc, "rustle", 50, 1, -5)
+			if(!silent)
+				playsound(loc, "rustle", 50, 1, -5)
 			return 1
 	return 0
 
@@ -303,8 +305,6 @@
 	if(usr)
 		if(!usr.unEquip(W))
 			return 0
-	if(silent)
-		prevent_warning = 1
 	if(W.pulledby)
 		W.pulledby.stop_pulling()
 	W.loc = src
@@ -316,13 +316,16 @@
 		add_fingerprint(usr)
 
 		if(!prevent_warning)
-			for(var/mob/M in viewers(usr, null))
-				if(M == usr)
-					usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
-				else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
-				else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+			if(silent)
+				usr << "<span class='notice'>You silently put [W] [preposition]to [src].</span>"
+			else
+				for(var/mob/M in viewers(usr, null))
+					if(M == usr)
+						usr << "<span class='notice'>You put [W] [preposition]to [src].</span>"
+					else if(in_range(M, usr)) //If someone is standing close enough, they can tell what it is...
+						M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
+					else if(W && W.w_class >= 3) //Otherwise they can only see large or normal items from a distance...
+						M.show_message("<span class='notice'>[usr] puts [W] [preposition]to [src].</span>", 1)
 
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())
@@ -392,7 +395,8 @@
 		close(user)
 		return
 
-	playsound(loc, "rustle", 50, 1, -5)
+	if(!silent)
+		playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

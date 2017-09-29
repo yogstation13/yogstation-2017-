@@ -460,7 +460,7 @@
 	if(!text)
 		return
 	var/my_message = "<span class='shadowling'><b>\[Shadowling\]</b><i> [user.real_name]</i>: [text]</span>"
-	log_say("[key_name(user)] : [text]")
+	log_say("[key_name(user)] : [text]", "SHADOWLING")
 	//user.say_log_silent += "Shadowling Hivemind: [text]"
 	for(var/mob/M in mob_list)
 		if(is_shadow_or_thrall(M))
@@ -943,7 +943,7 @@
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [text]"
-	log_say("[user.real_name]/[user.key] : [text]")
+	log_say("[user.real_name]/[user.key] : [text]", "THRALL")
 
 /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind/proc/cooldownCheck(mob/living/carbon/human/user)
 	if(istype(user) && (user.dna.species.specflags & THRALLAPPTITUDE))
@@ -1091,7 +1091,7 @@
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, user)
 			M << "[link] [text]"
-	log_say("[user.real_name]/[user.key] : [text]")
+	log_say("[user.real_name]/[user.key] : [text]", "ASCENDANT")
 
 
 /obj/effect/proc_holder/spell/self/ascendant_transmit //Sends a message to the entire world. If this gets abused too much it can be removed safely

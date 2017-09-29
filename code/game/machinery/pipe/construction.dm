@@ -231,6 +231,7 @@ var/global/list/pipeID2State = list(
 	if(istype(T))
 		T.flipped = flipped
 	A.construction(pipe_type, color)
+	A.placedby = user.ckey
 
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \

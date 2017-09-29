@@ -269,7 +269,6 @@
 	// discontinue if the area isn't valid for tagging because gang "honour"
 	if(gang_mode && (!can_claim_for_gang(user, target)))
 		return
-
 	var/graf_rot
 	if(drawing in oriented)
 		switch(user.dir)
@@ -308,8 +307,9 @@
 				return
 			tag_for_gang(user, target)
 		else
-			new /obj/effect/decal/cleanable/crayon(target, paint_color,
+			var/obj/effect/decal/cleanable/Q = new /obj/effect/decal/cleanable/crayon(target, paint_color,
 				drawing, temp, graf_rot)
+			Q.placedby = user.ckey
 
 	user << "<span class='notice'>You finish \
 		[instant ? "spraying" : "drawing"] \the [temp].</span>"
@@ -393,7 +393,8 @@
 	var/gangID = user.mind.gang_datum
 	var/area/territory = get_area(target)
 
-	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
+	var/obj/effect/decal/cleanable/Q = new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
+	Q.placedby = user.ckey
 	user << "<span class='notice'>You tagged [territory] for your gang!</span>"
 
 /obj/item/toy/crayon/red

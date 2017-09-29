@@ -34,7 +34,7 @@
 /obj/item/device/assembly/control/airlock
 	name = "airlock controller"
 	desc = "A small electronic device able to control an airlock remotely."
-	id = "badmin" // Set it to null for MEGAFUN.
+	id = "badmin" // Set it to null for MEGAFaUNa.
 	var/specialfunctions = OPEN
 	/*
 	Bitflag, 	1= open (OPEN)
@@ -55,18 +55,22 @@
 					D.close()
 			if(specialfunctions & IDSCAN)
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
+				D.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] enabled IDScan"
 			if(specialfunctions & BOLTS)
 				if(!D.wires.is_cut(WIRE_BOLTS) && D.hasPower())
+					D.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] unbolted"
 					D.locked = !D.locked
 					D.update_icon()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
 					D.secondsElectrified = -1
-					D.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+					D.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] electrified"
 					add_logs(usr, D, "electrified")
 				else
+					D.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] unelectrified"
 					D.secondsElectrified = 0
 			if(specialfunctions & SAFE)
+				D.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled safeties"
 				D.safe = !D.safe
 	sleep(10)
 	cooldown = 0

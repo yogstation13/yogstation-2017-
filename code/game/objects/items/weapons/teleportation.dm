@@ -164,7 +164,9 @@ Frequency:
 		turfs += T
 	if(turfs.len)
 		L["None (Dangerous)"] = pick(turfs)
-	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
+	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") as null|anything in L
+	if(!t1)
+		return
 	if (user.get_active_hand() != src || user.incapacitated())
 		return
 	if(active_portals >= 3)

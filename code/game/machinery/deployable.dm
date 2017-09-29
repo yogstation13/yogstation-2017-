@@ -273,7 +273,7 @@
 							user << "Barrier lock toggled off."
 							return
 					if("Rename")
-						var/new_name = reject_bad_name(input(usr, "Enter the barriers new designated name", "Barrier Uplink", name),1)
+						var/new_name = reject_bad_name(stripped_input(usr, "Enter the barriers new designated name", "Barrier Uplink", name),1)
 						if(!in_range(src, usr) && loc != usr)
 							return
 						if(new_name)

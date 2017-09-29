@@ -7625,7 +7625,7 @@
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "py" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -7821,7 +7821,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/item/weapon/mop,
 /turf/open/floor/plasteel{
 	dir = 2;
@@ -8794,7 +8794,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/telecomms/bus/preset_one/ministation,
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";
@@ -16005,11 +16004,11 @@
 	},
 /area/shuttle/escape)
 "Is" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
@@ -16095,11 +16094,11 @@
 	},
 /area/shuttle/transport)
 "IF" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
@@ -60291,11 +60290,11 @@ Eg
 Ea
 Eh
 Ew
-sF
+EV
 Fk
 Fy
 FN
-GQ
+EV
 Gr
 Eh
 Ea
@@ -61062,7 +61061,7 @@ Eh
 Eu
 Eh
 Ew
-EW
+EV
 EV
 EV
 EV

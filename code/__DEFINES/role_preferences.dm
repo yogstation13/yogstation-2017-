@@ -8,7 +8,7 @@
 //then you MUST update the database!
 #define ROLE_TRAITOR			"traitor"
 #define ROLE_OPERATIVE			"operative"
-#define ROLE_DOUBLEAGENT 		"double agent"
+#define ROLE_DOUBLEAGENT 		"double_agent"
 #define ROLE_CHANGELING			"changeling"
 #define ROLE_WIZARD				"wizard"
 #define ROLE_MALF				"malf AI"

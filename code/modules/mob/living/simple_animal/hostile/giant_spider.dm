@@ -204,7 +204,7 @@
 		for(var/obj/O in src.loc)
 			if(Adjacent(O))
 				choices += O
-		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
+		cocoon_target = input(src,"What do you wish to cocoon?") as anything in null|choices
 
 	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
 		busy = SPINNING_COCOON

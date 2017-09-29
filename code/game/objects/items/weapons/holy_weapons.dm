@@ -80,7 +80,7 @@
 /obj/item/weapon/nullrod/genesis/attack_self(mob/living/user)
 	..()
 
-	var/genesis = input(usr, "Enter the message you want to deliever", "")
+	var/genesis = stripped_input(usr, "Enter the message you want to deliever", "")
 
 	if(!genesis)
 		return

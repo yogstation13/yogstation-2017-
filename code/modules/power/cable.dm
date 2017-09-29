@@ -134,6 +134,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		log_game("WIRES: Cable was cut by [key_name(usr, usr.client)] in [user.loc.loc]") // I know this will be excessive, but hey, we agreed on it.
 		Deconstruct()
 		return
 
@@ -488,7 +489,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
-	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	var/cable_color = input(user,"Pick a cable color.","Cable Color") as anything in list("red","yellow","green","blue","pink","orange","cyan","white")
 	item_color = cable_color
 	update_icon()
 

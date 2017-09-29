@@ -138,7 +138,7 @@
 		temp = disguises[i]
 		tempname = temp.name
 		entries["[tempname]"] = disguises[i]
-	var/entry_name = input( "Choose Disguise", "Disguise") in entries
+	var/entry_name = input( "Choose Disguise", "Disguise") as anything in entries
 	var/datum/icon_snapshot/chosen = entries[entry_name]
 	if(chosen && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)

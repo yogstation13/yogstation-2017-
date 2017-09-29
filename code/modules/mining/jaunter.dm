@@ -133,16 +133,20 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 
 /obj/machinery/jauntbeacon
 	name = "deployed jaunt beacon"
+	desc = "Probably needs to be wrenched."
 	density = 0
 	icon = 'icons/obj/machines/jauntbeacon.dmi'
 	icon_state = "beacon-off"
+	var/specialname = FALSE
 	var/bolted // 0 not anchored. 1 anchored. 2 cannot be unbolted.
 	var/on = FALSE
 	var/jauntlist = TRUE
+	var/obj/machinery/camera/portable/cam
 
 /obj/machinery/jauntbeacon/New()
 	..()
-	name = "deployed jaunt beacon [rand(1,999)]"
+	if(!specialname)
+		name = "deployed jaunt beacon [rand(1,999)]"
 	if(jauntlist)
 		jauntbeacons += src
 
@@ -165,6 +169,17 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			bolted = !bolted
 			anchored = bolted
 			user << "<span class='warning'>You [bolted ? "tighten" : "loosen"] [src]'s bolts.</span>"
+			desc = "[bolted ? "A beacon connected to wormhole jaunters. Whenever a wormhole jaunter is used, that person will be teleported to the nearest jaunter beacon." : "Probably needs to be wrenched."]"
+			if(safe_camera_check())
+				cam = new(src)
+				cam.c_tag = name
+				cam.network = list("JAUNT")
+				visible_message("<span class='notice'>[src]'s teleportation and camera functions are now online!</span>")
+				AddLuminosity(8) // for the cameras, lavaland is dark.
+			else
+				cam.network = null
+				qdel(cam)
+				AddLuminosity(-8)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(bolted == 2)
 			user << "<span class='warning'>[src] cannot be unbolted.</span>"
@@ -178,9 +193,20 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				user << "<span class='warning'>You fork up [src] with [I].</span>"
 				jauntbeacons -= src
 				new /obj/item/device/jauntbeacon(get_turf(user))
+				if(cam)
+					qdel(cam)
 				qdel(src)
 	else
 		..()
+
+/obj/machinery/jauntbeacon/proc/safe_camera_check()
+	if(z != ZLEVEL_LAVALAND)
+		return 0
+	if(cam)
+		return 0
+	if(!bolted)
+		return 0
+	return 1
 
 /obj/machinery/jauntbeacon/Destroy()
 	..()
@@ -195,6 +221,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	on = TRUE
 	icon_state = "beacon"
 	jauntlist = FALSE
+	specialname = TRUE
 	var/cooldown = FALSE
 
 /obj/machinery/jauntbeacon/mother/attack_hand(mob/user)
@@ -203,7 +230,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 			if(cooldown)
 				user << "<span class='warning'>[src] is on a cooldown...</span>"
 				return
-			var/obj/item/device/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
+			var/obj/machinery/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
 			if(!chosenjaunt)
 				if(0 == length(jauntbeacons))
 					user << "<span class='notice'>[src] cannot detect other jaunt beacons.</span>"
@@ -211,6 +238,9 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				user << "<span class='notice'>You decide not to use [src].</span>"
 				return
 			if(chosenjaunt.z != ZLEVEL_LAVALAND)
+				return
+			if(!chosenjaunt.on)
+				user << "<span class='notice'>[chosenjaunt] is offline.</span>"
 				return
 			togglecooldown(TRUE)
 			teleport(user, chosenjaunt)
@@ -230,6 +260,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	tunnel.target = J
 	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
 	user.throw_at_fast(tunnel, 5, 1)
+	new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(J), src, lifespan=3000) // 5 minutes
 
 /obj/machinery/jauntbeacon/mother/proc/togglecooldown(setting)
 	cooldown = setting

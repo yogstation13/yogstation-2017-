@@ -637,7 +637,7 @@ var/list/VVckey_edit = list("key", "ckey")
 				O.vars[variable] = var_new
 
 		if("type")
-			var/target_path = input("Enter type:", "Type", O.vars[variable]) as null|text
+			var/target_path = stripped_input(usr, "Enter type:", "Type", O.vars[variable])
 			if(!target_path)
 				return
 			var/var_new = text2path(target_path)

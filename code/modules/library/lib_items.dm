@@ -178,6 +178,7 @@
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
+	playsound(loc, 'sound/effects/page_flip.ogg', 50, 1, -1)
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
 		return
@@ -196,7 +197,7 @@
 		if(unique)
 			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"
 			return
-		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
+		var/choice = input("What would you like to change?") as anything in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))

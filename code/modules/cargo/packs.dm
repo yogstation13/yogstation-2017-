@@ -1286,7 +1286,7 @@
 					/obj/item/weapon/caution,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
-					/obj/item/weapon/reagent_containers/glass/rag,
+					/obj/item/weapon/mop/rag,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner)
@@ -1295,7 +1295,7 @@
 /datum/supply_pack/misc/janitor/janicart
 	name = "Janitorial Cart and Galoshes Crate"
 	cost = 2000
-	contains = list(/obj/structure/janitorialcart,
+	contains = list(/obj/structure/mopbucket/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large

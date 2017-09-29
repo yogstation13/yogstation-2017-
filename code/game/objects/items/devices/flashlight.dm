@@ -43,6 +43,7 @@
 	if(broken)
 		user << "<spawn class='warning'>The [src] refuses to turn on!</span>"
 		return 0
+	playsound(src.loc, 'sound/effects/click.ogg', 50, 1, -1)
 	on = !on
 	update_brightness(user)
 	for(var/X in actions)
@@ -246,6 +247,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	. = ..()
 	// All good, turn it on.
 	if(.)
+		playsound(loc, 'sound/effects/match_light.ogg', 50, 1, -1)
 		user.visible_message("<span class='notice'>[user] lights \the [src].</span>", "<span class='notice'>You light \the [src]!</span>")
 		force = on_damage
 		damtype = "fire"

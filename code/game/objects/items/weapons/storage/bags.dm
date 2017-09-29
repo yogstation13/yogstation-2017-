@@ -56,12 +56,12 @@
 
 /obj/item/weapon/storage/bag/trash/cyborg
 
-/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/weapon/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/mopbucket/janitorialcart/J)
 	J.put_in_cart(src, user)
 	J.mybag=src
 	J.update_icon()
 
-/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+/obj/item/weapon/storage/bag/trash/cyborg/janicart_insert(mob/user, obj/structure/mopbucket/janitorialcart/J)
 	return
 
 /obj/item/weapon/storage/bag/trash/bluespace
@@ -379,7 +379,7 @@
 	max_combined_w_class = 200
 	w_class = 1
 	preposition = "in"
-	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/trash/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
+	can_hold = list(/obj/item/slime_extract, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/hypospray/medipen, /obj/item/weapon/reagent_containers/food/snacks/deadmouse, /obj/item/weapon/reagent_containers/food/snacks/monkeycube)
 	burn_state = FLAMMABLE
 
 // -----------------------------

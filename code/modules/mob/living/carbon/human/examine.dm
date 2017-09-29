@@ -282,9 +282,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 45)
-			msg += "[t_He] [t_has] appears slightly stunted and pale.\n"
+			msg += "[t_He] appears slightly stunted and pale.\n"
 		else
-			msg += "<B>[t_He] [t_has] is severely deformed and bears a greyish pallor.</B>\n"
+			msg += "<B>[t_He] is severely deformed and bears a greyish pallor.</B>\n"
 
 	temp = getOxyLoss()
 	if (temp)
@@ -315,6 +315,13 @@
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
+
+	if(disgust >= DISGUST_LEVEL_DISGUSTED)
+		msg += "[t_He] looks disgusted.\n"
+	else if(disgust >= DISGUST_LEVEL_VERYGROSS)
+		msg += "[t_He] looks really grossed out.\n"
+	else if(disgust >= DISGUST_LEVEL_GROSS)
+		msg += "[t_He] looks a bit grossed out.\n"
 
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"

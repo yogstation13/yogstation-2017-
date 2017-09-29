@@ -21,7 +21,7 @@
 
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A as mob|obj, mob/user)
-	if(istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
+	if(istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/mopbucket) || istype(A, /obj/machinery/hydroponics))
 		return
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
@@ -90,6 +90,7 @@
 		user.attack_log += "\[[time_stamp()]\] <font color='orange'>Sprayed \a [src] containing [english_list(sprayed)].</font>"
 		if(viruslist)
 			investigate_log("[user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]", "viro")
+			log_game("VIRO: [user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]")
 
 	D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	var/wait_step = max(round(2+3/range), 2)

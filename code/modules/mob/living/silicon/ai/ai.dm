@@ -14,7 +14,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = 1
 	density = 1
@@ -43,6 +43,7 @@ var/list/ai_list = list()
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/show_radio_jobs = TRUE
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -79,9 +80,12 @@ var/list/ai_list = list()
 	var/acceleration = 1
 
 	var/obj/machinery/camera/portable/builtInCamera
+	var/datum/ai_skin/skin
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	..()
+	skin = new /datum/ai_skin/default()
+	skin.apply_to(src)
 	rename_self("ai")
 	name = real_name
 	anchored = 1
@@ -116,7 +120,8 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel,\
+		/mob/living/silicon/ai/proc/toggle_job_indicator)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -166,83 +171,6 @@ var/list/ai_list = list()
 	qdel(eyeobj) // No AI, no Eye
 	eyeobj = null
 	return ..()
-
-
-/mob/living/silicon/ai/verb/pick_icon()
-	set category = "AI Commands"
-	set name = "Set AI Core Display"
-	if(stat || aiRestorePowerRoutine)
-		return
-
-		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Blob")
-	if(icontype == "Clown")
-		icon_state = "ai-clown2"
-	else if(icontype == "Monochrome")
-		icon_state = "ai-mono"
-	else if(icontype == "Blue")
-		icon_state = "ai"
-	else if(icontype == "Inverted")
-		icon_state = "ai-u"
-	else if(icontype == "Firewall")
-		icon_state = "ai-magma"
-	else if(icontype == "Green")
-		icon_state = "ai-wierd"
-	else if(icontype == "Red")
-		icon_state = "ai-malf"
-	else if(icontype == "Static")
-		icon_state = "ai-static"
-	else if(icontype == "Red October")
-		icon_state = "ai-redoctober"
-	else if(icontype == "House")
-		icon_state = "ai-house"
-	else if(icontype == "Heartline")
-		icon_state = "ai-heartline"
-	else if(icontype == "Hades")
-		icon_state = "ai-hades"
-	else if(icontype == "Helios")
-		icon_state = "ai-helios"
-	else if(icontype == "President")
-		icon_state = "ai-pres"
-	else if(icontype == "Syndicat Meow")
-		icon_state = "ai-syndicatmeow"
-	else if(icontype == "Alien")
-		icon_state = "ai-alien"
-	else if(icontype == "Too Deep")
-		icon_state = "ai-toodeep"
-	else if(icontype == "Triumvirate")
-		icon_state = "ai-triumvirate"
-	else if(icontype == "Triumvirate-M")
-		icon_state = "ai-triumvirate-malf"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Matrix")
-		icon_state = "ai-matrix"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "Not Malf")
-		icon_state = "ai-notmalf"
-	else if(icontype == "Fuzzy")
-		icon_state = "ai-fuzz"
-	else if(icontype == "Goon")
-		icon_state = "ai-goon"
-	else if(icontype == "Database")
-		icon_state = "ai-database"
-	else if(icontype == "Glitchman")
-		icon_state = "ai-glitchman"
-	else if(icontype == "Murica")
-		icon_state = "ai-murica"
-	else if(icontype == "Nanotrasen")
-		icon_state = "ai-nanotrasen"
-	else if(icontype == "Gentoo")
-		icon_state = "ai-gentoo"
-	else if(icontype == "Blob")
-		icon_state = "ai-blob"
-	//else
-			//usr <<"You can only change your display once!"
-			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -317,7 +245,7 @@ var/list/ai_list = list()
 			usr << "Wireless control is disabled!"
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = stripped_input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -341,7 +269,9 @@ var/list/ai_list = list()
 	if(stat == DEAD)
 		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
-
+	if(skin.bolt_animation_icon)
+		flick(icon(skin.bolt_animation_icon, anchored ? skin.rebolt_animation_icon_state : skin.unbolt_animation_icon_state), src)
+	skin.apply_to(src)
 	src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
 	// the message in the [] will change depending whether or not the AI is anchored
 
@@ -669,7 +599,7 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = input("Please, select a status!", "AI Status", null, null) as anything in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
@@ -794,6 +724,14 @@ var/list/ai_list = list()
 	if (radio)
 		radio.interact(src)
 
+/mob/living/silicon/ai/proc/toggle_job_indicator()
+	set name = "Toggle Job Indicator"
+	set desc = "Toggle the automatic job display of radio messages"
+	set category = "AI Commands"
+
+	show_radio_jobs = !show_radio_jobs
+	src << "<span class='notice'>Radio job display [show_radio_jobs ? "enabled" : "disabled"].</span>"
+
 /mob/living/silicon/ai/proc/set_syndie_radio()
 	if(radio)
 		radio.make_syndie()
@@ -909,5 +847,5 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
 	if(..()) //successfully ressuscitated from death
-		icon_state = "ai"
+		skin.apply_to(src)
 		. = 1

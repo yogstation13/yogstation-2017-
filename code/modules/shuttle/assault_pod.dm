@@ -22,37 +22,60 @@
 	icon_state = "gangtool-red"
 	item_state = "walkietalkie"
 	desc = "Used to select a landing zone for assault pods."
-	var/shuttle_id = "steel_rain"
-	var/dwidth = 3
-	var/dheight = 0
-	var/width = 7
-	var/height = 7
-	var/lz_dir = 1
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/console
 
+/obj/item/device/assault_pod/New()
+	..()
+	console = new /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod(src)
 
 /obj/item/device/assault_pod/attack_self(mob/living/user)
-	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) in teleportlocs
-	var/area/picked_area = teleportlocs[target_area]
-	if(!src || qdeleted(src))
+	if(console.target_set)
+		user << "<span class='warning'>Landing zone already set.</span>"
 		return
+	console.attack_hand(user)
 
-	var/turf/T = safepick(get_area_turfs(picked_area))
-	if(!T)
-		return
-	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
-	landing_zone.id = "assault_pod(\ref[src])"
-	landing_zone.name = "Landing Zone"
-	landing_zone.dwidth = dwidth
-	landing_zone.dheight = dheight
-	landing_zone.width = width
-	landing_zone.height = height
-	landing_zone.dir = lz_dir
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod
+	name = "Assault Pod Targetting Device"
+	z_lock = ZLEVEL_STATION
+	shuttleId = "steel_rain"
+	shuttlePortId = "assault_pod"
+	shuttlePortName = "assault pod location"
+	x_offset = 0
+	y_offset = 3
+	rotate_action = null
+	var/target_set = FALSE
 
-	for(var/obj/machinery/computer/shuttle/S in machines)
-		if(S.shuttleId == shuttle_id)
-			S.possible_destinations = "[landing_zone.id]"
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/check_eye(mob/user)
+	if(!loc || (loc.loc != user) || user.eye_blind || user.incapacitated() )
+		user.unset_machine()
 
-	user << "Landing zone set."
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/is_interactable()
+	return TRUE
 
-	qdel(src)
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/checkLandingTurf(turf/T)
+	if(..())
+		return !target_set
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/placeLandingSpot()
+	if(..())
+		for(var/obj/machinery/computer/shuttle/S in machines)
+			if(S.shuttleId == shuttleId)
+				S.possible_destinations = "[my_port.id]"
+		target_set = TRUE
+		return TRUE
+
+/obj/machinery/computer/shuttle/syndicate/drop_pod
+	name = "syndicate assault pod control"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_available"
+	req_access = list(access_syndicate)
+	shuttleId = "steel_rain"
+	possible_destinations = null
+	clockwork = TRUE //it'd look weird
+
+/obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
+	if(href_list["move"])
+		if(z != ZLEVEL_CENTCOM)
+			usr << "<span class='warning'>Pods are one way!</span>"
+			return 0
+	..()

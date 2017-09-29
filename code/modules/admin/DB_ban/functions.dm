@@ -249,7 +249,7 @@
 	switch(param)
 		if("reason")
 			if(!value)
-				value = input("Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null) as null|text
+				value = stripped_input(usr, "Insert the new reason for [pckey]'s ban", "New Reason", "[reason]", null)
 				value = sanitizeSQL(value)
 				if(!value)
 					usr << "Cancelled"
@@ -506,4 +506,3 @@
 		output += pagination
 
 	usr << browse(output,"window=lookupbans;size=900x500")
-	

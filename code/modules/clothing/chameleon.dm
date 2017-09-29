@@ -338,7 +338,7 @@
 		var/obj/item/I = U
 		item_names += initial(I.name)
 	var/picked_name
-	picked_name = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]", picked_name) in item_names
+	picked_name = input("Select [chameleon_name] to change it to", "Chameleon [chameleon_name]", picked_name) as anything in item_names
 	if(!picked_name)
 		return
 	for(var/V in chameleon_list)
@@ -430,7 +430,6 @@
 	chameleon.chameleon_blacklist = list(/obj/item/clothing/under/shadowling,
 		/obj/item/clothing/under/changeling,
 		/obj/item/clothing/under/color/random,
-		/obj/item/clothing/under/golem,
 		/obj/item/clothing/under/predator)
 	chameleon.chameleon_name = "Jumpsuit"
 	chameleon.initialize_disguises()
