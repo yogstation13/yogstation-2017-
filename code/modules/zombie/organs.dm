@@ -1,4 +1,4 @@
-#define START_TIMER reanimation_timer = world.time + rand(600,1200)
+#define START_TIMER reanimation_timer = world.time + rand(60)
 
 /obj/item/organ/body_egg/zombie_infection
 	name = "festering ooze"
@@ -31,7 +31,7 @@
 			if(prob(5))
 				owner <<"<span class='danger'>You feel sick.</span>"
 				owner.adjustToxLoss(strength)
-			strength = min(strength + 1, 30)
+			strength = min(strength + 1, 10)
 
 /obj/item/organ/body_egg/zombie_infection/proc/ashify()
 	for(var/obj/item/I in owner)

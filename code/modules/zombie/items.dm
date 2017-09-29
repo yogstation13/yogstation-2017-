@@ -2,14 +2,15 @@
 	name = "zombie claw"
 	desc = "A zombie's claw is its primary tool, capable of infecting \
 		unconcious or dead humans, butchering all other living things to \
-		sustain the zombie, and forcing open airlock doors."
+		sustain the zombie, forcing open airlock doors and opening \
+		child-safe caps on bottles."
 	flags = NODROP|ABSTRACT|DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	var/icon_left = "bloodhand_left"
 	var/icon_right = "bloodhand_right"
 	hitsound = 'sound/hallucinations/growl1.ogg'
-	force = 15
+	force = 20
 	damtype = "brute"
 
 	var/removing_airlock = FALSE
@@ -41,7 +42,7 @@
 			check_infection(target, user)
 		check_feast(target, user)
 
-/obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user, force_infect = FALSE)
+/obj/item/zombie_hand/proc/check_infection(mob/living/carbon/human/target, mob/user)
 	CHECK_DNA_AND_SPECIES(target)
 
 	if(NOZOMBIE in target.dna.species.specflags)
@@ -50,23 +51,60 @@
 		return
 
 	var/infectionresult = tear_clothes(user, target) // true for block, false for hit
-	if(force_infect == TRUE)
-		infectionresult = 0
-
 	if(infectionresult)
-		if(prob(infectionresult)) // chance is rolled depending on how strong the armor is.
-			user.visible_message("<span class='warning'>[target] managed to block [user]'s claw!</span>",\
+		user.visible_message("<span class='warning'>[target] managed to block [user]'s claw!</span>",\
 								"<span class='warning'>[target] managed to block [user]'s claw!</span>")
+		return
+
+	var/obj/item/organ/body_egg/zombie_infection/infection
+	infection = target.getorganslot("zombie_infection")
+	if(!infection)
+		infection = new(target)
+
+
+
+/obj/item/zombie_hand/proc/tear_clothes(mob/user, mob/living/carbon/target)
+	if(user.zone_selected == "head" || user.zone_selected == "eyes" || user.zone_selected == "mouth")
+		if(!target.head)
+			return FALSE
+		if(target.unEquip(target.head))
+			if(istype(target.head, /obj/item/clothing/head/helmet/space/hardsuit)) // NODROP hardsuit has 45% chance.
+				if(prob(45))
+					target.head.attack_self(target) // technically hit, but they got off lucky.
+			return TRUE
 		else
-			check_infection(target, user, force_infect = TRUE)
+			return FALSE
 	else
-		var/obj/item/organ/body_egg/zombie_infection/infection
-		infection = target.getorganslot("zombie_infection")
-		if(!infection)
-			infection = new(target)
+		if(!ishuman(target))
+			return FALSE
+		var/mob/living/carbon/human/target_h = target
+		if(!target_h.wear_suit)
+			if(!target_h.w_uniform)
+				return FALSE
+		if(target_h.wear_suit)
+			target_h.wear_suit.visible_message("<span class='danger'>[user] tears through [target]'s [target_h.wear_suit.name].</span>",\
+									"<span class='danger'>[user] tears through [target]'s [target_h.wear_suit.name].</span>")
+			if(target_h.unEquip(target_h.wear_suit))
+				return FALSE
+			else
+				return TRUE
+		else
+			if(target_h.w_uniform)
+				if(istype(target_h.w_uniform, /obj/item/clothing/under))
+					var/obj/item/clothing/under/U = target_h.w_uniform
+					U.handle_tear(user, 4) // tearhealth is usually 100. this means it takes 2 tears to break this layer.
+					var/verbose = pick("shreds", "tears", "rips through", "slices", "breaks", "bites into")
+					target_h.w_uniform.visible_message("<span class='danger'>[user] [verbose] [target]'s [target_h.w_uniform.name].<span>",\
+								"<span class='danger'>[user] [verbose] [target]'s [target_h.w_uniform.name].<span>")
+					if(target_h.w_uniform)
+						return TRUE
+					else
+						return FALSE
+				return FALSE
+
 
 /obj/item/zombie_hand/proc/check_feast(mob/living/target, mob/living/user)
-	if( (target.stat == DEAD && target.health > -200) || target.resting)
+	if(target.stat == DEAD)
 		if(target.health > -200)
 			var/hp_gained = rand(5, 10)
 			target.adjustBruteLoss(force*2)
@@ -84,54 +122,6 @@
 					target.gib()
 				else if(target.stat != DEAD && iscarbon(target)) // so we can tear off something.
 					tear_clothes(user, target)
-
-/obj/item/zombie_hand/proc/tear_clothes(mob/user, mob/living/carbon/target) // 0 - full hit, 1 -- half hit
-
-	/*
-
-	Tear clothes work like this -
-
-	if the zombie aims at the head, it tears off whatever the target is wearing on their head.
-	if it's a NODROP sort of helmet, than it has a 45% chance of dis-engaging it.
-
-	if the zombie aims anywhere else, it tears off their suit. if the target doesn't have a suit, it starts shredding off
-	their clothes. it takes 2 hits to successfully tear off their clothes.
-
-	*/
-	if(user.zone_selected == "head" || user.zone_selected == "eyes" || user.zone_selected == "mouth")
-		if(!target.head)
-			return 0
-		target.unEquip(target.head)
-		if(istype(target.head, /obj/item/clothing/head/helmet/space/hardsuit)) // NODROP hardsuit has 45% chance.
-			if(prob(45))
-				target.head.attack_self(target) // technically hit, but they got off lucky.
-				return 1
-		else
-			return 0
-	else
-		if(!ishuman(target))
-			return 0
-		var/mob/living/carbon/human/target_h = target
-		if(!target_h.wear_suit)
-			if(!target_h.w_uniform)
-				return 0
-		if(target_h.wear_suit)
-			target_h.wear_suit.visible_message("<span class='danger'>[user] tears through [target]'s [target_h.wear_suit].</span>",\
-									"<span class='danger'>[user] tears through [target]'s [target_h.wear_suit].</span>")
-			target_h.unEquip(target_h.wear_suit)
-		else
-			if(target_h.w_uniform)
-				if(istype(target_h.w_uniform, /obj/item/clothing/under))
-					var/obj/item/clothing/under/U = target_h.w_uniform
-					U.handle_tear(user, 4) // tearhealth is usually 100. this means it takes 2 tears to break this layer.
-					var/verbose = pick("shreds", "tears", "rips through", "slices", "breaks", "bites into")
-					target_h.w_uniform.visible_message("<span class='danger'>[user] [verbose] [target]'s [target_h.w_uniform].<span>",\
-								"<span class='danger'>[user] [verbose] [target]'s [target_h.w_uniform].<span>")
-					if(target_h.w_uniform)
-						return 0
-					else
-						return 1
-				return 0
 
 /obj/item/zombie_hand/proc/tear_airlock(obj/machinery/door/airlock/A, mob/user)
 	removing_airlock = TRUE
