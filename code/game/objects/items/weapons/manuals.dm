@@ -6,6 +6,641 @@
 	due_date = 0 // Game time in 1/10th seconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
+/obj/item/weapon/book/manual/rpg
+	name = "Gareth's Roleplay Rulebook"
+	icon_state ="demonomicon"
+	author = "Gareth Gygax" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Gareth's Roleplay Rulebook"
+	desc = "A thick, leather-bound tome filled with rules. This could be a long read..."
+	dat = {"<html>
+				<head>
+					<b><center><large>Microlite20 Character Creation and Core Rules</large></center></b>
+				</head>
+				<body>
+					<br><br>
+					<center><b>Characters</b></center><br><br>
+					<b>Stats:</b><br><br>
+
+					There are 3 stats : Strength (STR), Dexterity (DEX) and Mind (MIND).<br>
+					Roll 4d6, drop lowest dice. Total remaining 3 dice and allocate to one of the stats. Repeat for remaining stats.
+					Stat bonus = (STAT-10)/2, round down.<br><br>
+					
+					Races:<br><br>
+					
+					Humans get +1 to all skill rolls<br>
+					Elves get +2 MIND<br>
+					Dwarves get +2 STR<br>
+					Halflings get +2 DEX<br><br>
+					
+					<b>Classes</b><br><br>
+					
+					The classes are Fighter, Rogue, Mage, Cleric. Characters begin at Level 1.<br><br>
+					
+					Fighters Wear any kind of armour and use shields. They have a +3 bonus to Physical and add +1 to all attack and damage rolls. This increases by +1 at 5th level and every five levels on.<br><br>
+					
+					Rogues can use light armour. They have a +3 bonus to Subterfuge. If they successfully Sneak (usually Subterfuge + DEX, but depends on situation) up on a foe they can add their Subterfuge skill rank to the damage of their first attack.<br><br>
+					
+					Magi Wear no armour. They can cast arcane spells, and gain a +3 bonus to Knowledge.<br><br>
+					
+					Clerics can wear light or medium armour. They cast divine spells and gain +3 bonus to Communication. A Cleric can Turn Undead with a successful Magic Attack. DC is the current Hit Points of the Undead. If the DC is exceeded by 10 it is destroyed. This can be used (2 + Level + MIND Bonus) times per day.<br><br>
+					
+					<b>Skills</b><br><br>
+					
+					There are just 4 skills : Physical, Subterfuge, Knowledge and Communication. Roll higher than the given Difficulty Class to succeed.<br>
+					Skill rank = your level + any bonus due to your class or race<br>
+					Skill roll = d20 + skill rank + whatever stat bonus is most applicable to the use + situation modifiers<br>
+					
+					For example, Climbing would use Physical + STR bonus. Dodging a falling rock is Physical + DEX bonus. Finding a trap is Subterfuge + MIND bonus. Disabling a trap is Subterfuge + DEX bonus.<br><br>
+					
+					Note that there are no saving throws in this game; use Physical + STR or DEX bonus for Fortitude and Reflex saves. Saving against magic (Will save) is usually MIND bonus + your level.<br><br>
+					
+					<b>Magic</b><br><br>
+					
+					Magi can cast any arcane spell, and Clerics any divine spell, with a spell level equal or below 1/2 their class level, rounded up. They have access to all arcane spells in the SRD spell list.<br><br>
+					
+					Casting a spell of any kind costs Hit Points. The cost is: 1 + double the level of the spell being cast.
+					So a Level 0 spell costs 1+2*0=1, a Level 1 spell 1+2*1=3 etc. etc.<br><br>
+					
+					This loss cannot be healed normally, but is recovered after 8 hours rest. There is no need to memorise spells in advance.<br><br>
+					
+					Just because a character can cast any spell, doesn't mean that they should. Choose spells that suit the character. Select one "signature" spell per level from 1st upward that they prefer to use over any other.<br>
+					These spells are easier to cast due to familiarity, costing 1 less HP to use.<br><br>
+					
+					The Difficulty Class (DC) for all spells: 10 + Caster Level + Caster MIND bonus<br><br>
+					
+					
+					<center><b>Combat</b></center><br><br>
+
+					Hit Points = STR Stat + 1d6/Level. If HP reach 0, character becomes unconscious and near death. Further damage directly reduces STR. If that reaches 0, the character dies.<br><br>
+					
+					Roll d20 + DEX bonus for initiative order. Everyone can do one thing each turn; move, attack, cast a spell, etc.<br><br>
+					
+					Melee attack bonus = STR bonus + Level<br><br>
+					
+					Missile attack bonus = DEX bonus + Level<br><br>
+					
+					Magic attack bonus = MIND bonus + Level<br><br>
+					
+					Add attack bonus to d20 roll. If higher than your opponent's Armour Class (AC), it's a hit.A Natural 20 is automatically a critical hit doing maximum damage.<br><br>
+					
+					Fighters and Rogues can use DEX bonus + Level as Melee attack bonus instead if wielding a light weapon. Fighters and Rogues can wield 2 light weapons and attack with both in around if they take a -2 penalty on all attack rolls that round. Rapiers count as light weapons, but you cannot wield two rapiers at the same time.<br><br>
+					
+					If the total bonus is +6 or more a second attack can be made with a -5 penalty. If the total bonus is +11 or more a third attack can be made at -10.<br>
+					For example, if the total bonus is +12, three attacks can be made at +12/+7/+2.<br><br>
+					
+					Add STR bonus to Melee damage, x2 for two handed weapons.<br>
+					Armour Class (AC) = 10 + DEX bonus + Armour bonus.<br><br>
+					
+					<b>Other Hazards:</b><br><br>
+					
+					Falling: 1d6 damage per 10ï¿½, half damage on Phys+DEX save. DC = depth fallen in feet.<br><br>
+					
+					Spikes: add +1 point to falling damage per 10ï¿½ fallen, max +10<br><br>
+					
+					Poison: Phys+STR save to avoid or for half, depending on poison. Effect varies with poison type.<br><br>
+					
+					Extreme Heat & Cold: If not wearing suitable protection, Phys+STR save once every 10 minutes (DC 15, +1 per previous check), taking 1d6 damage on each failed save.<br><br>
+					
+					
+					<center><b>Level Advancement</b></center><br><br>
+					
+					Encounter Level = Hit Dice of defeated monsters, or the given EL for the trap, situation, etc.<br>
+					Add +1 for each doubling of the number of foes. eg: 1 kobold = EL1. 2 kobolds = EL2. 4 kobolds = EL3, etc.<br><br>
+					
+					Add up the Encounter Levels (ELs) of every encounter you take part in.<br>
+					When the total = 10 x your current level, youï¿½ve advanced to the next level. Reset the total to 0 after advancing.<br><br>
+					
+					Each level adds:<br><br>
+					
+					+1d6 to Hit Points<br><br>
+					
+					+1 to all attack rolls<br><br>
+					
+					+1 to all skills<br><br>
+					
+					If the level divides by three (i.e. level 3,6,9, etc.), add 1 point to STR, DEX or MIND.<br><br>
+					
+					Fighters gain +1 to their attack and damage rolls at levels 5,10,15,etc.<br><br>
+					
+					Clerics and Magi gain access to new spell levels at levels 3,5,7,9,etc.<br><br>
+					
+					Example: The 1st level adventureres have just completed a dungeon and defeated 5 EL1 encounters, an EL2 trap and the EL3 leader. That's a total of EL10, so they all advance to level 2. They need to defeat another 20 Encounter Levels to advance to level 3.<br><br>
+
+					
+					<center><b>Equipment</b></center><br><br>
+
+					<b>Starting Wealth</b><br><br>
+
+					The most common coin is the gold piece (gp). A gold piece is worth 10 silver pieces. Each silver piece is worth 10 copper pieces (cp). In addition to copper, silver, and gold coins there are also platinum pieces (pp), which are each worth 10 gp.You begin with a certain amount of acquired wealth, determined by your character class.<br><br>
+
+					Fighter: 150 gp<br><br>
+					
+					Rogue: 125 gp<br><br>
+					
+					Mage: 75 gp<br><br>
+					
+					Cleric: 120 gp<br><br>
+					
+					The character uses this accumulated wealth to purchase his initial weapons, armour, and adventuring equipment.
+					Please consult the Equipment List book for a list of equipment and its prices.<br><br>
+					
+					<center>Have fun, and may RNG have mercy on you!</center>
+				</body>
+			</html>"}
+	
+/obj/item/weapon/book/manual/rpg/guide
+	name = "Microlite20 - Player's Guide"
+	icon_state ="bookDetective"
+	author = "Silas Colt" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Microlite20 - Player's Guide"
+	desc = "A fan-made guide to understanding the Microlite20 rules."
+	dat = {"<html>
+				<head>
+					<b><center><large>Microlite20 Core Rules - Abridged Version</large></center></b>
+				</head>
+				<body>
+					<br><br>
+					First, choose a name.<br>
+					Then a race.<br>
+					Race choices are <b>Human</b> (+1 to all skill checks), <b>Elf</b> (+2 to MIND), <b>Dwarf</b> (+2 to STRENGTH), and <b>Lizardman</b> (+2 to DEXTERITY). Your DM may have additional options at his discression.<br><br>
+
+					Next, choose your class.<br>
+					Class choices are <b>Fighter</b> (use any armour and shield. +3 to physical and 1 +1/5 levels to all attack and damage rolls), <b>Rogue</b> (not rouge. Rogues can use light armour. +3 to subterfuge. If they successfully sneak up on a foe they can add their subterfuge rank to the damage of their first attack), <b>Magic-User</b> (No armour, uses arcane spells, +3 to knowledge), and <b>Cleric</b> (Light or medium armour, cast divine spells, +3 to communication, ability to Turn Undead 2 + level + MIND bonus per day).<br><br>
+					
+					Then, your alignment.<br>
+					The alignment is made from two parts. Chaotic to Lawful and Evil to Good. For example: Lawful Good, Chaotic Neutral, Neutral Evil, etc.<br><br>
+					
+					<b>Skills:</b><br>
+					In Microlite20 there are jsut 4 skills: Physical, Subterfuge, Knowledge and Communication. Roll higher than the given Difficulty Class to succeed a skill check.<br>
+					Skill rank = your level + any bonus due to your class or race<br>
+					Skill roll = 1d20 + skill rank + whichever stat bonus is relevant + situational modifiers<br><br>
+					
+					<b>Combat:</b><br>
+					Hit Points = STR stat + 1d6/level. If HP reaches 0, you become unconcious and are near death. Further damage that takes you into a negative ammount greater than your strength will kill you.<br>
+					Roll 1D20 + DEX bonus for turn order. Everyone can do one thing per turn, in addition to moving; attack, cast a spell, use an item, etc.<br><br>
+					
+					Melee attack bonus = STR bonus + level<br>
+					Missile attack bonus = DEX bonus + level<br>
+					Magic attack bonus = MIND bonus + level<br><br>
+					
+					Add attack bonus to 1d20 roll. If higher than your opponent's AC it's a hit. Natural 20 is automatically a critical doing maximum damage.<br>
+					
+					Fighters and Rogues can use DEX bonus + level as Melee attack bonus instead, if weilding a light weapon.<br>
+					Fighters and Rogues can wield 2 light weapons and attack with both of them in a round if they take a -2 penalty on all attack rolls that round. Rapiers count as light weapons, but you cannot wield two rapiers at the same time.<br><br>
+					
+					If the total bonus is above +5 then extra attacks may be made at -5 per extra attack.<br>
+					For example: If the total bonus is +12 then three attacks can be made at +12/+7/+2<br><br>
+					
+					Add STR bonus to melee damage, x2 for two handed weapons.<br>
+					AC = 10 + DEX bonus + Armour bonus<br><br>
+					
+					<b>Level Advancement:</b><br>
+					More likely, your DM will just tell you to roll a character of the appropriate level for his campaign, but here you go:<br>
+					EL = Hit Dice of defeated monsters, or the given EL for the trap, situation, etc. Add +1 for each doubling of the number of foes. Add up the EL of each encounter you take part in. When the total = 10 x your current level, you've advanced to the next level. Reset the total to - after advancing.<br><br>
+					
+					<b>Each level adds:</b><br>
+					+1d6 HP<br>
+					+1 to all attack rolls<br>
+					+1 to all skills<br>
+					If the level divides by three add 1 point to STR, DEX or MIND.<br>
+					Fighters gain an additional +1 to their attack and damage rolls every five levels
+				</body>
+			</html>"}
+	
+/obj/item/weapon/book/manual/rpg/equipment
+	name = "Gareth's Equipment List"
+	icon_state ="bookDwarf"
+	author = "Gareth Gygax" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Gareth's Equipment List"
+	desc = "A book with lists of Microlite20 equipment."
+	dat = {"<html>
+				<head>
+					<b><center><large>Microlite20 Equipment List</large></center></b>
+				</head>
+				<body>
+					<br><br>
+					<center><b>Weapons:</b><br>
+					For weapons, the order is NAME, COST, DAMAGE, RANGE(if applicable)<br><br></center>
+					
+					<b>Light Weapons:</b><br>
+					Axe, throwing 8GP 1d6 10ft<br>
+					Dagger 2GP 1d4 10ft<br>
+					Gauntlet, spiked 5GP 1d4<br>
+					Hammer, light 1GP 1d6 20ft<br>
+					Handaxe 6GP 1d4<br>
+					Mace, light 5GP 1d6<br>
+					Pick, light 4GP 1d4<br>
+					Sap 1GP 1d6<br>
+					Sickle 6GP 1d6<br>
+					Sword, short 10GP 1d6<br><br>
+
+					<b>One-Handed Weapons:</b><br>
+					Battleaxe 10GP 1d8<br>
+					Club 1d6 10ft<br>
+					Flail 8GP 1d8<br>
+					Longsword 15GP 1d8<br>
+					Mace, heavy 12GP 1d8<br>
+					Morningstar 8GP 1d8<br>
+					Pick, heavy 8GP 1d6<br>
+					Rapier 20GP 1d6<br>
+					Scimitar 15GP 1d6<br>
+					Shortspear 1GP 1d6 20ft<br>
+					Sword, bastard 35GP 1d10<br>
+					Trident 15GP 1d8 10ft<br>
+					Waraxe, dwarven 30GP 1d10<br>
+					Warhammer 12GP 1d8<br>
+					Whip 1GP 1d3<br><br>
+
+					<b>Two Handed Weapons:</b><br>
+					Chain, spiked 25GP 2d4<br>
+					Falchion 75GP 1d6<br>
+					Flail, epic 15GP 1d8<br>
+					Glaive 8GP 1d8<br>
+					Greataxe 20GP 1d10<br>
+					Greatclub 5GP 1d8<br>
+					Greatsword 50GP 2d6<br>
+					Guisarme 9GP 2d4<br>
+					Halberd 10GP 1d10<br>
+					Lance 10GP 1d8<br>
+					Longspear 5GP 1d8<br>
+					Quarterstaff 1d6<br>
+					Scythe 18GP 2d4<br>
+					Spear 2GP 1d8 20ft<br><br>
+
+					<b>Ranged Weapons:</b><br>
+					Crossbow, hand 100GP 1d4 30ft<br>
+					Crossbow, heavy 50GP 1d10 120ft<br>
+					Crossbow, light 35GP 1d8 80ft<br>
+					Dart 5SP 1d4 20ft<br>
+					Javelin 1GP 1d6 30ft<br>
+					Longbow 75GP 1d8 100ft<br>
+					Net 20GP 10ft<br>
+					Shortbow 30GP 1d6 60ft<br>
+					Sling 1d4 50ft<br><br>
+
+					<center><b>Armour and Shields:</b><br>
+					For armour, the order is NAME, COST, AC BONUS<br><br></center>
+					
+					<b>Light Armour:</b><br><br>
+					Padded 2GP +1<br>
+					Leather 10GP +2<br>
+					Studded Leather 25GP +3<br>
+					Chain Shirt 100GP +4<br><br>
+
+					<b>Medium Armour:</b><br>
+					Hide 15GP +3<br>
+					Scale Armour 50GP +4<br>
+					Mail 150GP +5<br>
+					Breastplate 200GP +5<br><br>
+
+					<b>Heavy Armour:</b><br>
+					Splint Armour 200GP +6<br>
+					Banded Armour 250GP +6<br>
+					Half-Plate 600GP +7<br>
+					Full Plate 1500GP +8<br><br>
+
+					<b>Shields:</b><br>
+					Buckler 15GP +1<br>
+					Shield, light wooden 3GP +1<br>
+					Shield, light steel 9GP +1<br>
+					Shield, heavy wooden 7GP +2<br>
+					Shield, heavy steel 20GP +2<br>
+					Shield, tower 30GP +4<br><br>
+
+					<center><b>Adventuring Equipment:</b><br>
+					For Equipment, the order is NAME, COST<br><br></center>
+					
+					Acid Flask 10GP<br>
+					Antitoxin vial 50GP<br>
+					Artisan's Tools 5GP<br>
+					Backpack 2GP<br>
+					Barrel 2GP<br>
+					Basket 4SP<br>
+					Bedroll 1SP<br>
+					Bell 1GP<br>
+					Blanket 5SP<br>
+					Block and Tackle 5GP<br>
+					Bottle, wine, empty 2GP<br>
+					Bucket, empty 5SP<br>
+					Caltrops 1GP<br>
+					Candle 1CP<br>
+					Canvas (sq. yd.) 1SP<br>
+					Case, map or scroll 1GP<br>
+					Chain (10 ft.) 30GP<br>
+					Chalk, 1 piece 1CP<br>
+					Chest, empty 2GP<br>
+					Craftsman's tools 5GP<br>
+					Crowbar 2GP<br>
+					Disguise Kit 50GP<br>
+					Firewood (1 day) 1CP<br>
+					Fishhook 1SP<br>
+					Fishing Net(25 sq. ft.) 4GP<br>
+					Flask, empty 3CP<br>
+					Flint and Steel 1GP<br>
+					Grappling Hook 1GP<br>
+					Hammer 5SP<br>
+					Healer's Kit 50GP<br>
+					Holy Symbol, wooden 1GP<br>
+					Holy Symbol, silver 25GP<br>
+					Holy Water, flask 25GP<br>
+					Hourglass 25GP<br>
+					Ink, vial 8GP<br>
+					Inkpen 1SP<br>
+					Jug, clay 3CP<br>
+					Ladder, 10ft. 5CP<br>
+					Lamp, common 1SP<br>
+					Lantern, bullseye 12GP<br>
+					Lantern, hooded 7GP<br>
+					Lock S/A/G 20/40/80GP<br>
+					Magnifying Glass 100GP<br>
+					Manacles 15GP<br>
+					Mirror, small steel 10GP<br>
+					Mug/Tankard, clay 2CP<br>
+					Musical Instrument 5GP<br>
+					Oil, pint 1SP<br>
+					Paper, sheet 4SP<br>
+					Parchment, sheet 2SP<br>
+					Pick, miner's 3GP<br>
+					Pitcher, clay 2CP<br>
+					Piton 1SP<br>
+					Pole, 10ft. 2SP<br>
+					Pot, iron 5SP<br>
+					Pouch, belt 1GP<br>
+					Ram, portable 10GP<br>
+					Rations, trail (1day) 5SP<br>
+					Rope, hempen(50ft.) 1GP<br>
+					Rope, silk(50ft.) 10GP<br>
+					Sack 1SP<br>
+					Sealing Wax 1GP<br>
+					Sewing Needle 5SP<br>
+					Signal Whistle 8SP<br>
+					Signet Ring 5GP<br>
+					Sledge 1GP<br>
+					Soap (per LB) 5SP<br>
+					Spade or Shovel 2GP<br>
+					Spell material pouch 5GP<br>
+					Spellbook, blank 15GP<br>
+					Spyglass 1000GP<br>
+					Tent 10GP<br>
+					Thieves' Tools 30GP<br>
+					Torch 1CP<br>
+					Vial, ink or potion 1GP<br>
+					Waterskin 1GP<br>
+					Whetstone 2CP<br><br>
+
+					<b>For other gear, or nonstandard gear, consult your DM or await the next version of this equipment list.</b>
+					</body>
+				</html>"}
+		
+/obj/item/weapon/book/manual/rpg/spells
+	name = "Gareth's Spell List"
+	icon_state ="bookfireball"
+	author = "Gareth Gygax" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Gareth's Spell List"
+	desc = "A book containing lists of Microlite20 spells."
+	dat = {"<html>
+				<head>
+					<b><center><large>Microlite20 Spell List</large></center></b>
+				</head>
+				<body>
+					<br><br>
+					<b>The spell system:</b><br>
+					Mages cast arcane spells and Clerics cast divine spells. They can cast any of their respective spells of a spell level equal or below 1/2 their class level, rounded up.<br>
+					Casting a spell costs HP. The cost is 1 + double the level of the spell being cast. This loss cannot be healed normally, but is recovered after 8 hours rest.<br>
+					One signature spell can be chosen per player level, at a spell level which the player can cast at that level. These spells cost 1 less HP to cast.<br><br>
+					
+					<b>0-Level arcane spells (cantrips)</b><br>
+					
+					Arcane Mark: Inscribes a permanent personal rune (visible or invisible).<br>
+					Detect Magic: Detects spells and magic items within 60ft. for up to 1min./level or untill concentration ends.<br>
+					Ghost Sound: Figment sounds for 1 round/level.<br>
+					Light: Object shines like a torch for 10min./level.<br>
+					Mage Hand: 5-pound telekinesis. Lasts until concentration ends.<br>
+					Prestidigitation: performs minor tricks for 1 hour.<br>
+					Read Magic: Read scrolls and spellbooks for 10min./level.<br><br>
+					
+					<b>1st-Level arcane spells</b><br>
+					
+					Feather Fall: Objects or creatures fall slowly for 1 round/level or until landing.<br>
+					Floating Disk: Creates a disk of less than 3-ft + level diameter. lasts for 1 hour/level.<br>
+					Mage Armour: Gives subject +4 armour bonus for 1 hour/level.<br>
+					Magic Missile: 1d4+1 damage; +1 missile per two levels above 1st (max 5).<br>
+					Sleep: Puts 4HD of creatures into magical slumber for 1min./level.<br>
+					Shocking Grasp: Touch delivers 1d6/level electricity damage (max 5d6).<br><br>
+					
+					<b>2nd Level arcane spells</b><br>
+					
+					Acid Arrow: Ranged touch attack; 2d4 damage for 1 round + 1 round/3 levels.<br>
+					Flaming Sphere: Creates rolling ball fo fire, 2d6 damage, lasts 1 round/level.<br>
+					Invisibility: Subject is invisible for 1min./level or until it attacks.<br>
+					Knock: Opens locked or magically sealed door.<br>
+					Levitate: Subject moves up and down at your discression for 1min./level.<br>
+					Spider Climb: Grants ability to walk on walls and ceilings for 10min./level.<br><br>
+					
+					<b>3rd Level arcane spells</b><br>
+					
+					Clairaudience/Clairvoyance: Hear or see at a distance for 1 min./level.<br>
+					Dispell Magic: Cancels magical spells and effects.<br>
+					Fireball: 1d6 damage per level, 20ft. radius.<br>
+					Fly: Subject flies at speed of 60ft. for 1 min./level.<br>
+					Lightning bolt: Electricity deals 1d6/level damage.<br>
+					Vampiric touch: Touch deals 1d6/two levels damage; caster gains damage as HP which last for 1 hour.<br><br>
+					
+					<b>4th Level arcane spells</b><br>
+					
+					Animate Dead: Creates level X2 HD of undead skeletons or zombies.<br>
+					Arcane Eye: Invisible floating eye moves 30 ft./round for 1 min./level.<br>
+					Black Tentacles: Tentacles grapple all within 20 ft.<br>
+					Dimension Door: Teleports you a short distance.<br>
+					Polymorph: Gives one willing subject a new form for 1 min./level.<br>
+					Stoneskin: 10 points damage reduction for 10 min./level.<br><br>
+					
+					<b>5th Level arcane spells</b><br>
+					
+					Cloudkill: Kills 3HD or less; 4-6HD save or die, 6+ HD take STR damage. lasts for 1min./level.<br>
+					Feeblemind: Subject's mind score drops to 1.<br>
+					Passwall: Creates passage through wood or stone wall for 1 hour/level.<br>
+					Permanency: Makes certian spells permanent.<br>
+					Teleport: Instantly transports you as far as 100 miles/level.<br><br>
+					
+					<b>6th Level arcane spells</b><br>
+					
+					Antimagic Field: Negates magic within 10 ft + 5/2 levels for 10min./level.<br>
+					Chain Lightning: 1d6/level damage; bounces to new target for half damage until damage is less than 0.<br>
+					Contingency: Sets trigger condition for another spell. Lasts for 1 day/level or until discharged.<br>
+					Disintergrate: Destroys one creature (and it's equipment) or object.<br>
+					Geas: Commands any creature, binding it to a specific task. Lasts for 1 day/level or until discharged.<br>
+					True seeing: Lets you see all things as they really are for 1min./level.<br><br>
+					
+					<b>7th level arcane spells</b><br>
+					
+					Delayed Blast Fireball: 1d6/level fire damage; you can postpone blast for up to 5 rounds.<br>
+					Etheral Jaunt: You become ethereal for 1 round/level.<br>
+					Finger of Death: Subject must save vs instant death.<br>
+					Plane Shift: As many as eight subjects travel to another plane.<br>
+					Power Word Blind: Blinds creature with 200HP or less for 1d4+1 minutes.<br>
+					Spell Turning: Reflect 1d4+6 spell leves back at caster for 10min./level or untill expended.<br><br>
+					
+					<b>8th Level arcane spells</b><br>
+					
+					Clone: Duplicate awakens when original dies.<br>
+					Horrid Wilting: Deals 1d6/level damage within 30ft.<br>
+					Incendiary Cloud: Cloud deals 4d6 fire damage/round for 1 round/level.<br>
+					Irresistable Dance: Forces subject to dance for 1d4+1 rounds.<br>
+					Power Word Stun: Stuns creature with 150HP or less for 2d4 rounds.<br>
+					Trap the soul: Imprisons subject within gem.<br><br>
+					
+					<b>9th Level arcane spells</b><br>
+					
+					Astral Projection: Projects you and companions onto Astral Plane.<br>
+					Etherealness: Travel to Ethereal Plane with companions for 1 min./level.<br>
+					Gate: Connects two plains for travel or summoning. Open for 1 round/level.<br>
+					Meteor Swarm: Four exploding spheres each deal 6d6 fire damage.<br>
+					Power Word Kill: Kills one creature with 100HP or less.<br>
+					Soul Bind: Traps newly dead soul to prevent resurrection.<br><br>
+					
+					<b>0 Level divine spells (orisons)</b><br>
+					
+					Create Water: Creates 2 gallons/level of pure water.<br>
+					Guidance: +1 on one attack roll, save, or skill check. Lasts 1 min or untill discharged.<br>
+					Light: As arcane verion.<br>
+					Purify Food and Drink: Purifies 1cu. ft./level of food or water.<br>
+					Resistance: Subject gains +1 on saving throws for 1 minute.<br>
+					Virtue: Subject gains 1 temporary HP for 1 minute.<br><br>
+					
+					<b>1st Level divine spells</b><br>
+					
+					Bless: Allies gain +1 on attack rolls and communication + mind checks against fear for 1 min./level.<br>
+					Bless Water: Makes holy water.<br>
+					Cure Light Wounds: Cures 1d8 damage +1/level (max +5).<br>
+					Divine Favor: You gain +1 per three levels on attack and damage rolls for 1 minute.<br>
+					Magic stone: Three stones gain +1 on attack, deal 1d6+1 damage. lasts for one day or until discharged.<br>
+					Shield of Faith: Aura grants +2 AC bonus for 1 min./level.<br><br>
+					
+					<b>2nd Level divine spells</b><br>
+					
+					Aid: +1 on attack rolls and saves against fear. 1d8 temporary HP +1/level (max +10).<br>
+					Cure Moderate Wounds: Cures 2d8 damage +1/level (max +10).<br>
+					Delay Poison: Stops poison from harming subject for 1 hour/level.<br>
+					Gentle Repose: Preserves one corpse.<br>
+					Remove Paralysis: Frees one or more creatures from paralysis or slow effect.<br>
+					Restoration, lesser: Dispells magical ability penalty or repairs 1d4 ability damage.<br><br>
+					
+					<b>3rd Level divine spells</b><br>
+					
+					Create food and Water: Feeds three humans (or one horse)/level.<br>
+					Cure Serious Wounds: Cures 3d8 damage +1/level (max +15).<br>
+					Prayer: Allies get a +1 on every roll, enemies take a -1 penalty for 1 round/level.<br>
+					Remove Disease: Cures all diseases affecting subject.<br>
+					Searing Light: Ray deals 1d8/two levels damage, or 1d8/level against undead.<br>
+					Speak with Dead: Corpse answers one question/two levels.<br><br>
+					
+					<b>4th Level divine spells</b><br>
+					
+					Cure Critical Wounds: Cures 4d8 damage +1/level (max +20).<br>
+					Discern Lies: Reveals deliberate falsehoods for 1 round/level or until concentration ends.<br>
+					Freedom of Movement: Subject moves normally dispite impediments for 10 min./level.<br>
+					Neutralize Poison: Immunizes subject against poison for 10min./level, detoxifies venom on or in subject.<br>
+					Restoration: Restores level and ability score drains.<br>
+					Tongues: Speak any language for 10 min./level.<br><br>
+					
+					<b>5th Level divine spells</b><br>
+					
+					Cure Light Wounds, Mass: As Cure Light Wounds for 0 + level creatures.<br>
+					Flame Strike: Smite foes with divine fire (1d6/level damage).<br>
+					Raise dead: Restores life to subject who died as long as one day/level ago.<br>
+					True seeing: As arcane version.<br><br>
+					
+					<b>6th Level divine spells</b><br>
+					
+					Banishment: Banishes 2HD/level of extraplanar creatures.<br>
+					Cure Moderate Wounds, Mass: As Cure Moderate Wounds for 0 + level creatures.<br>
+					Harm: Deals 10 points/level of damage to target.<br>
+					Heal: Cures 10 points/level of damage, all diseases and mental conditions.<br>
+					Heroes' feast: Food for one creature/level cures disease and grants +1 combat bonus for 12 hours.<br>
+					Quest: Commands any creature, binding it to a specific task. Lasts for 1 day/level or until discharged.<br><br>
+					
+					<b>7th Level divine spells</b><br>
+					
+					Cure Serious Wounds, Mass: As Cure Serious Wounds for 0 + level creatures.<br>
+					Destruction: Subject must save vs instant death and destruction of remains.<br>
+					Ethereal Jaunt: As arcane version.<br>
+					Regenerate: Subject's severed limbs grow back, cured 4d8 damage +1/level (max +35).<br>
+					Restoration, Greater: As restoration, plus restores all levels and ability scores.<br>
+					Resurrection: Fully restores a dead subject from a small portion of the corpse.<br><br>
+					
+					<b>8th Level divine spells</b><br>
+					
+					Antimagic Field: As arcane version.<br>
+					Cure Critical Wounds, Mass: As Cure Critical Wounds for 0 + level creatures.<br>
+					Dimensional Lock: Teleportation and interplanar travel locked for 1 day/level.<br>
+					Discern Location: Reveals exact location of creature or object.<br>
+					Fire Storm: Deals 1d6/level fire damage.<br>
+					Holy Aura: +4 to AC +4 DR and SR25 against evil spells for 1 round/level.<br><br>
+					
+					<b>9th Level divine spells</b><br>
+					
+					Astral Projection: As arcane version.<br>
+					Etherealness: As arcane version.<br>
+					Gate: As arcane version.<br>
+					Heal, Mass: As heal for 0 + level subjects.<br>
+					Implosion: One creature/round must save vs instant gory death for 4 rounds or until concentration ends.<br>
+					Soul Bind: As arcane verison.
+				</body>
+			</html>"}
+
+/obj/item/weapon/book/manual/rpg/packs
+	name = "Microlite20 - Fast Packs"
+	icon_state ="bookCloning"
+	author = "Silas Colt" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Microlite20 - Fast Packs"
+	desc = "A fan-made guide with premade equipment packs. Read this to get started with your campaign quickly."
+	dat = {"<html>
+				<head>
+					<b><center><large>Microlite20 - Fast Packs</large></center></b>
+				</head>
+				<body>
+					<br><br>
+					Back in the day, there were standard equipment packages, pre-compiled and pre-calculated, to help new players get started quickly.<br>
+					This document is inspired by those lists and provides a way for a player to quickly equip his or her PC or a GM to equip an NPC or Hireling on the fly. Additionally, these optional kits can be used to give a starting point from which to customize new characters.<br><br><hr><br>
+					
+					50 GP each<br><br>
+					
+					<b>Pack A</b><br><br>
+					
+					Backpack, Belt Pouch, Bedroll, Lantern (hooded), 10 Oil Flasks, Flint & Steel, Shovel, 2 sets of Caltrops, Signal Whistle, Waterskin, Iron Rations (4 days)<br><br>
+					
+					<b>Pack B</b><br><br>
+					
+					Backpack, Belt Pouch, Bedroll, 10 Torches, 4 Oil Flasks, Flint & Steel, 10 pieces of chalk, 10' Pole, Mirror, Crowbar, Waterskin, Iron Rations (4 days)<br><br>
+					
+					<b>Pack C</b><br><br>
+					
+					Backpack, Belt Pouch, Bedroll, Tent, 10 Torches, 5 Oil Flasks, Flint & Steel, 50. Rope, Grappling Hook, 10' Pole, Waterskin,Iron Rations (4 days)<br><br>
+					
+					<b>Finally, add the following, based on your Class:</b><br><br>
+					
+					Cleric: Silver Holy symbol & 5 Gold Pieces<br><br>
+					
+					Fighter: Vial of Holy Water & 5 Gold Pieces<br><br>
+					
+					Mage: Spellbook & 2 Spell Pouches & 5 Gold Pieces<br><br>
+					
+					Rogue: Thieves Tools
+				</body>
+			</html>"}
+			
+/obj/item/weapon/book/manual/dwarf
+	name = "Slaves to Armok: God of Blood Chapter II: DF"
+	icon_state ="bookDwarf"
+	author = "Urist" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Slaves to Armok: God of Blood Chapter II: DF"
+	dat = {"<html>
+				</body>
+				It has been months since we left the safety of our mountainhome, but we have finally found a place to settle, a nearby river seems to offer plenty of food and the forest has wildlife, some of us are disturbed by the fact that it rains blood at times but i dont think that matters, anyways, enough writing, it's time to strike the earth!
+				</body>
+			</html>"}
+	
 /obj/item/weapon/book/manual/engineering_particle_accelerator
 	name = "Particle Accelerator User's Guide"
 	icon_state ="bookParticleAccelerator"

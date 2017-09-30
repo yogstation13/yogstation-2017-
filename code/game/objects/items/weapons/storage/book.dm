@@ -9,9 +9,15 @@
 	silent = TRUE
 	burn_state = FLAMMABLE
 	var/title = "book"
+
+// Dwarfism Book for maint ruin
+/obj/item/weapon/storage/book/dwarfism/New()
+	..()
+	new /obj/item/weapon/dnainjector/dwarf(src)
+	
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		user << "<span class='notice'>The pages of [title] have been cut out!</span>"
-
+	
 /obj/item/weapon/storage/book/bible
 	name = "bible"
 	desc = "Apply to head repeatedly."
