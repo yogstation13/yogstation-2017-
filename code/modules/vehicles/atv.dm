@@ -47,9 +47,11 @@
 		if(toggle)
 			ATV.AddLuminosity(8)
 			ATV.visible_message("<span class='notice'>[ATV]'s lights blink on.</span>")
+			button.icon_state = "mech_lights_on"
 		else
 			ATV.AddLuminosity(-8)
 			ATV.visible_message("<span class='notice'>[ATV]'s lights slowly diminish.</span>")
+			button.icon_state = "mech_lights_off"
 	return 1
 
 /obj/vehicle/atv/post_buckle_mob(mob/living/M)
@@ -115,4 +117,3 @@
 			if(WEST)
 				turret.pixel_x = 12
 				turret.pixel_y = 4
-

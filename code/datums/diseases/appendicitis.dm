@@ -28,7 +28,7 @@
 			if(prob(3))
 				affected_mob << "<span class='warning'>You feel a stabbing pain in your abdomen!</span>"
 				affected_mob.Stun(rand(2,3))
-				affected_mob.adjustToxLoss(1)
+				affected_mob.adjustToxLoss(1, 1, DAMAGE_DISEASE)
 		if(3)
 			if(prob(1))
 				affected_mob.vomit(95)

@@ -76,7 +76,8 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	if(occupant)
-		if(occupant.health >= 100) // Don't bother with fully healed people.
+		var/mob/living/carbon/human/H = occupant
+		if(occupant.health >= 100 || (istype(H) && H.dna && H.dna.species && (DAMAGE_CHEMICAL in H.dna.species.heal_immunities)) ) // Don't bother with fully healed people or people that cryo cannot heal.
 			on = FALSE
 			update_icon()
 			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
@@ -135,12 +136,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = FALSE
+		playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
 		..()
 		if(beaker)
 			beaker.loc = src
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
 		..(user)
 		return occupant
 

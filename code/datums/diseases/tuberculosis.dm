@@ -28,18 +28,18 @@
 				affected_mob.Dizzy(5)
 			if(prob(2))
 				affected_mob << "<span class='danger'>You feel a sharp pain from your lower chest!</span>"
-				affected_mob.adjustOxyLoss(5)
+				affected_mob.adjustOxyLoss(5, 1, DAMAGE_DISEASE)
 				affected_mob.emote("gasp")
 			if(prob(10))
 				affected_mob << "<span class='danger'>You feel air escape from your lungs painfully.</span>"
-				affected_mob.adjustOxyLoss(25)
+				affected_mob.adjustOxyLoss(25, 1, DAMAGE_DISEASE)
 				affected_mob.emote("gasp")
 		if(5)
 			if(prob(2))
 				affected_mob << "<span class='userdanger'>[pick("You feel your heart slowing...", "You relax and slow your heartbeat.")]</span>"
-				affected_mob.adjustStaminaLoss(70)
+				affected_mob.adjustStaminaLoss(70, 1, DAMAGE_DISEASE)
 			if(prob(10))
-				affected_mob.adjustStaminaLoss(100)
+				affected_mob.adjustStaminaLoss(100, 1, DAMAGE_DISEASE)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] faints!</span>", "<span class='userdanger'>You surrender yourself and feel at peace...</span>")
 				affected_mob.AdjustSleeping(5)
 			if(prob(2))

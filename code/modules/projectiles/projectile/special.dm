@@ -93,15 +93,6 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.dna.species.id == "pod")
-			randmuti(C)
-			randmut(C)
-			C.updateappearance()
-			C.domutcheck()
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
@@ -120,66 +111,6 @@
 		var/mob/living/carbon/human/M = target
 		M.adjustBrainLoss(20)
 		M.hallucination += 20
-
-/obj/item/projectile/kinetic
-	name = "kinetic force"
-	icon_state = null
-	damage = 10
-	damage_type = BRUTE
-	flag = "bomb"
-	range = 3
-	var/splash = 0
-
-/obj/item/projectile/kinetic/super
-	damage = 11
-	range = 4
-
-/obj/item/projectile/kinetic/hyper
-	damage = 12
-	range = 5
-	splash = 1
-
-/obj/item/projectile/kinetic/traitor
-	damage = 30
-
-/obj/item/projectile/kinetic/New()
-	var/turf/proj_turf = get_turf(src)
-	if(!istype(proj_turf, /turf))
-		return
-	var/datum/gas_mixture/environment = proj_turf.return_air()
-	var/pressure = environment.return_pressure()
-	if(pressure < 50)
-		name = "full strength kinetic force"
-		damage *= 4
-	..()
-
-/obj/item/projectile/kinetic/on_range()
-	new /obj/effect/kinetic_blast(src.loc)
-	..()
-
-/obj/item/projectile/kinetic/on_hit(atom/target)
-	. = ..()
-	var/turf/target_turf= get_turf(target)
-	if(istype(target_turf, /turf/closed/mineral))
-		var/turf/closed/mineral/M = target_turf
-		M.gets_drilled(firer)
-	new /obj/effect/kinetic_blast(target_turf)
-	if(src.splash)
-		for(var/turf/T in range(splash, target_turf))
-			if(istype(T, /turf/closed/mineral))
-				var/turf/closed/mineral/M = T
-				M.gets_drilled(firer)
-
-
-/obj/effect/kinetic_blast
-	name = "kinetic explosion"
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "kinetic_blast"
-	layer = ABOVE_ALL_MOB_LAYER
-
-/obj/effect/kinetic_blast/New()
-	spawn(4)
-		qdel(src)
 
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"

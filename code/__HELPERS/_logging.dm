@@ -32,7 +32,7 @@
 		log_admin("DSAY: [text]")
 
 /proc/log_game(text)
-	if (config.log_game)
+	if (config && config.log_game)
 		diary << "#[yog_round_number]# \[[time_stamp()]]GAME: [text]"
 
 /proc/log_vote(text)
@@ -43,9 +43,9 @@
 	if (config.log_access)
 		diary << "\[[time_stamp()]]ACCESS: [text]"
 
-/proc/log_say(text)
+/proc/log_say(text, channel = "SAY")
 	if (config.log_say)
-		diary << "\[[time_stamp()]]SAY: [text]"
+		diary << "\[[time_stamp()]][channel]: [text]"
 
 /proc/log_prayer(text)
 	if (config.log_prayer)
@@ -79,4 +79,3 @@
 	if (config.log_pda)
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		diary << "\[[time_stamp()]]COMMENT: [text]"
-

@@ -120,7 +120,7 @@
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton", "agent", "angel", "abomination", "military_synth")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "abomination", "military_synth","krampus")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -154,7 +154,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN)
 
 			if(!newname)
 				return

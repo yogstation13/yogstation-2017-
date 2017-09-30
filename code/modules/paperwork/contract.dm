@@ -210,7 +210,7 @@
 		return -1
 	user.dna.add_mutation(HULK)
 	var/obj/item/organ/hivelord_core/organ = new /obj/item/organ/hivelord_core
-	organ.Insert(user)
+	organ.Insert(user, 1)
 	return ..()
 
 /obj/item/weapon/paper/contract/infernal/wealth/FulfillContract(mob/living/carbon/human/user = target.current)

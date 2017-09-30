@@ -17,7 +17,7 @@
 	switch(stage)
 		if(2)
 			if(prob(45))
-				affected_mob.adjustToxLoss(5)
+				affected_mob.adjustToxLoss(5, 1, DAMAGE_DISEASE)
 				affected_mob.updatehealth()
 			if(prob(1))
 				affected_mob.emote("sneeze")
@@ -31,7 +31,7 @@
 		if(4)
 			if(prob(10))
 				affected_mob.emote("cough")
-			affected_mob.adjustToxLoss(5)
+			affected_mob.adjustToxLoss(5, 1, DAMAGE_DISEASE)
 			affected_mob.updatehealth()
 		if(5)
 			affected_mob << "<span class='danger'>Your body feels as if it's trying to rip itself open...</span>"

@@ -5,6 +5,7 @@
 	bitesize = 5
 	volume = 80
 	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/New()
 	..()
@@ -23,12 +24,14 @@
 		reagents.add_reagent("nutriment", 9)
 		reagents.add_reagent("vitamin", 1)
 		bonus_reagents = list("nutriment" = 9, "vitamin" = 1)
+		foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/meatball
 	name = "meatball soup"
 	desc = "You've got balls kid, BALLS!"
 	icon_state = "meatballsoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/slime
 	name = "slime soup"
@@ -36,6 +39,7 @@
 	icon_state = "slimesoup"
 	bonus_reagents = list("nutriment" = 1, "slimejelly" = 5, "vitamin" = 5)
 	list_reagents = list("nutriment" = 5, "slimejelly" = 5, "water" = 5, "vitamin" = 4)
+	foodtype = TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/blood
 	name = "tomato soup"
@@ -43,6 +47,7 @@
 	icon_state = "tomatosoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
 	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
+	foodtype = GROSS
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
 	name = "wing fang chu"
@@ -51,6 +56,7 @@
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "soysauce" = 5, "vitamin" = 2)
+	foodtype = MEAT
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	name = "clown's tears"
@@ -58,18 +64,21 @@
 	icon_state = "clownstears"
 	bonus_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8)
 	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 5, "vitamin" = 8)
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
 	name = "vegetable soup"
 	desc = "A true vegan meal."
 	icon_state = "vegetablesoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/nettle
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
 	icon_state = "nettlesoup"
 	bonus_reagents = list("nutriment" = 1, "omnizine" = 5, "vitamin" = 5)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mystery
 	name = "mystery soup"
@@ -90,6 +99,7 @@
 	icon_state = "hotchili"
 	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 5, "capsaicin" = 1, "tomatojuice" = 2, "vitamin" = 2)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/coldchili
 	name = "cold chili"
@@ -97,6 +107,7 @@
 	icon_state = "coldchili"
 	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 5, "frostoil" = 1, "tomatojuice" = 2, "vitamin" = 2)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
 	name = "monkey's delight"
@@ -104,6 +115,7 @@
 	icon_state = "monkeysdelight"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 	list_reagents = list("nutriment" = 10, "banana" = 5, "vitamin" = 5)
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/tomato
 	name = "tomato soup"
@@ -111,6 +123,7 @@
 	icon_state = "tomatosoup"
 	bonus_reagents = list("nutriment" = 1, "tomatojuice" = 10, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5, "tomatojuice" = 10, "vitamin" = 3)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/milo
 	name = "milosoup"
@@ -124,12 +137,14 @@
 	icon_state = "mushroomsoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 	list_reagents = list("nutriment" = 8, "vitamin" = 4)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beet
 	name = "beet soup"
 	desc = "Wait, how do you spell it again..?"
 	icon_state = "beetsoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beet/New()
 	..()
@@ -143,6 +158,7 @@
 	bitesize = 3
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 	list_reagents = list("nutriment" = 6, "mushroomhallucinogen" = 6)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/amanitajelly
 	name = "amanita jelly"
@@ -151,6 +167,7 @@
 	bitesize = 3
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 	list_reagents = list("nutriment" = 6, "mushroomhallucinogen" = 3, "amatoxin" = 6)
+	foodtype = VEGETABLES | TOXIC
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/stew
 	name = "stew"
@@ -160,18 +177,21 @@
 	list_reagents = list("nutriment" = 10, "oculine" = 5, "tomatojuice" = 5, "vitamin" = 5)
 	bitesize = 7
 	volume = 100
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
 	name = "sweet potato soup"
 	desc = "Delicious sweet potato in soup form."
 	icon_state = "sweetpotatosoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 5)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
 	name = "red beet soup"
 	desc = "Quite a delicacy."
 	icon_state = "redbeetsoup"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/dolphinsoup
 	name = "dolphin soup"
@@ -179,4 +199,4 @@
 	icon_state = "dolphinsoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
 	list_reagents = list("nutriment" = 10, "vitamin" = 5)
-
+	foodtype = MEAT

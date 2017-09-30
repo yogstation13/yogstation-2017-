@@ -74,6 +74,7 @@
 		that's what's important."
 	suffix = "lavaland_surface_greed.dmm"
 
+/*
 /datum/map_template/ruin/lavaland/hermit
 	name = "Makeshift Shelter"
 	id = "hermitcave"
@@ -81,6 +82,7 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+*/
 
 /datum/map_template/ruin/lavaland/syndicatepod
 	name = "Syndicate Pod"
@@ -129,7 +131,7 @@
 	suffix = "lavaland_surface_cugganscove.dmm"
 	allow_duplicates = FALSE
 	cost = 10
-
+/* //currently commented out due to it being sealed off permanently and rendered useless-should no longer cause conflicts with people turning off xeno pref, etc. 
 /datum/map_template/ruin/lavaland/xenofacility
 	name = "Xenomorph Facility"
 	id = "xenofacility"
@@ -137,6 +139,7 @@
 	suffix = "lavaland_surface_xenofacility.dmm"
 	allow_duplicates = FALSE
 	cost = 20
+*/
 
 /datum/map_template/ruin/lavaland/abductorterrorship
 	name = "Abductor Terror Ship"
@@ -146,6 +149,7 @@
 	allow_duplicates = FALSE
 	cost = 20
 
+/*
 /datum/map_template/ruin/lavaland/cultritual
 	name = "Cult Ritual"
 	id = "cultritual"
@@ -153,6 +157,7 @@
 	suffix = "lavaland_surface_cultritual.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+*/
 
 /datum/map_template/ruin/lavaland/cursedtoyshop
 	name = "Cursed Toy Shop"
@@ -218,6 +223,7 @@
 	allow_duplicates = FALSE
 	cost = 5
 
+/*
 /datum/map_template/ruin/lavaland/wizardden
 	name = "Wizard Den"
 	id = "wizardden"
@@ -225,6 +231,7 @@
 	suffix = "lavaland_surface_wizardden.dmm"
 	allow_duplicates = FALSE
 	cost = 15
+*/
 
 /datum/map_template/ruin/lavaland/travellingbard
 	name = "Travelling Bard"

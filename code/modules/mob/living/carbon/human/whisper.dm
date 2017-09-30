@@ -17,7 +17,6 @@
 		return
 
 	message = "[message]"
-	log_whisper("[src.name]/[src.key] : [message]")
 
 	if (src.client)
 		if (src.client.prefs.muted & MUTE_IC)
@@ -30,13 +29,17 @@
 
 	var/whispers = "whispers"
 	var/critical = InCritical()
+	var/nearcrit = is_nearcrit()
+
+	if(nearcrit)
+		whispers = "painfully whispers"
 
 	// We are unconscious but not in critical, so don't allow them to whisper.
 	if(stat == UNCONSCIOUS && !critical)
 		return
 
 	// If whispering your last words, limit the whisper based on how close you are to death.
-	if(critical)
+	if(critical && !nearcrit)
 		var/health_diff = round(-config.health_threshold_dead + health)
 		// If we cut our message short, abruptly end it with a-..
 		var/message_len = length(message)
@@ -45,6 +48,8 @@
 		whispers = "whispers in their final breath"
 
 	message = treat_message(message)
+	if(!message)
+		return
 
 	var/list/listening_dead = list()
 	for(var/mob/M in player_list)

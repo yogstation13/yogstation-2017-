@@ -149,7 +149,7 @@
 						return
 					usr << "<span class='notice'>You set the pinpointer to locate [targetitem].</span>"
 				if("DNA")
-					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
+					var/DNAstring = stripped_input(usr, "Input DNA string to search for." , "Please Enter String." , "")
 					if(!DNAstring)
 						return
 					for(var/mob/living/carbon/C in mob_list)

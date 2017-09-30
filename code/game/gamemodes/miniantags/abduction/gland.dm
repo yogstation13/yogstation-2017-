@@ -33,9 +33,10 @@
 	..()
 
 /obj/item/organ/gland/Insert(var/mob/living/carbon/M, special = 0)
-	..()
-	if(special != 2 && uses) // Special 2 means abductor surgery
-		Start()
+	if(..())
+		if(special != 2 && uses) // Special 2 means abductor surgery
+			Start()
+		return 1
 
 /obj/item/organ/gland/on_life()
 	if(!active)
@@ -106,7 +107,7 @@
 
 /obj/item/organ/gland/pop/activate()
 	owner << "<span class='notice'>You feel unlike yourself.</span>"
-	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/pod,/datum/species/fly))
+	var/species = pick(list(/datum/species/lizard,/datum/species/jelly/slime,/datum/species/plant/pod,/datum/species/fly, /datum/species/android))
 	owner.set_species(species)
 
 /obj/item/organ/gland/ventcrawling

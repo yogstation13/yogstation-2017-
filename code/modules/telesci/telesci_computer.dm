@@ -193,7 +193,7 @@
 				return
 			if(!random && (!selection || !selection.can_be_found(z_co)))
 				temp_msg = "ERROR!<BR>Beacon lock lost during power up sequence."
-				updateDialog()
+				updateUsrDialog()
 				return
 			var/turf/target
 			if(random)
@@ -202,13 +202,13 @@
 				target = selection.get_offset(offset_x, offset_y)
 			if(!target)
 				temp_msg = "ERROR!<BR>Bluespace instability. Please report this incident."
-				updateDialog()
+				updateUsrDialog()
 				return
 			last_target = target
 			var/area/A = get_area(target)
 			if(A.noteleport)
 				temp_msg = "ERROR!<BR>Bluespace functionalities are blocked in that region. Aborting."
-				updateDialog()
+				updateUsrDialog()
 				return
 
 			teleporting = 0
@@ -281,13 +281,13 @@
 				log_msg += "nothing"
 			log_msg += " [sending ? "to" : "from"] [target.x], [target.y], [target.z] ([A ? A.name : "null area"])"
 			investigate_log(log_msg, "telesci")
-			updateDialog()
+			updateUsrDialog()
 
 /obj/machinery/computer/telescience/Topic(href, href_list)
 	if(..())
 		return
 	if(!telepad)
-		updateDialog()
+		updateUsrDialog()
 		return
 	if(telepad.panel_open)
 		temp_msg = "ERROR!<BR>Telepad undergoing physical maintenance operations."
@@ -297,7 +297,7 @@
 		var/A = href_list["setz"]
 		A = text2num(A)
 		if(A < 1 || A > ZLEVEL_SPACEMAX || A == ZLEVEL_CENTCOM)
-			updateDialog()
+			updateUsrDialog()
 			return
 		z_co = A
 		selection = null
@@ -308,7 +308,7 @@
 		var/A = href_list["offsetx"]
 		A = text2num(A)
 		if(!selection || !selection.can_be_found(z_co) || A < -selection.range || A > selection.range)
-			updateDialog()
+			updateUsrDialog()
 			return
 		offset_x = A
 
@@ -316,14 +316,14 @@
 		var/A = href_list["offsety"]
 		A = text2num(A)
 		if(!selection || !selection.can_be_found(z_co) || A < -selection.range || A > selection.range)
-			updateDialog()
+			updateUsrDialog()
 			return
 		offset_y = A
 
 	if(href_list["select"])
 		var/obj/item/device/tsbeacon/TSB = locate(href_list["select"])
 		if(!TSB || !TSB.can_be_found(z_co))
-			updateDialog()
+			updateUsrDialog()
 			return
 		selection = TSB
 		offset_x = Clamp(offset_x, -selection.range, selection.range)
@@ -336,16 +336,16 @@
 
 	if(href_list["rename"])
 		if(!selection || !selection.can_be_found(z_co))
-			updateDialog()
+			updateUsrDialog()
 			return
 		var/t = stripped_input(usr, "Enter new name", name, null, 20)
 		if(!t || !usr.canUseTopic(src) || !selection || !selection.can_be_found(z_co))
-			updateDialog()
+			updateUsrDialog()
 			return
 		selection.update_name(t)
 	if(href_list["beaconaction"])
 		if(!selection || !selection.can_be_found(z_co) || !selection.has_action || !selection.action_available)
-			updateDialog()
+			updateUsrDialog()
 			return
 		selection.beacon_action()
 	if(href_list["ejectGPS"])
@@ -376,4 +376,4 @@
 		sending = 0
 		teleport(usr, 1)
 
-	updateDialog()
+	updateUsrDialog()

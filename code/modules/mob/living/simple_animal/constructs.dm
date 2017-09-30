@@ -8,7 +8,7 @@
 	response_harm   = "punches"
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
-	speed = 0
+	speed = 1
 	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = list(CANPUSH)
@@ -39,7 +39,7 @@
 		AddSpell(new spell(null))
 		if(_affiliation)
 			affiliation = _affiliation
-	addtimer(src, "set_affiliation", 1) //So the other code get's run first, wich might change the affiliation
+	addtimer(src, "set_affiliation", 1) //So the other code gets run first, which might change the affiliation
 
 /mob/living/simple_animal/hostile/construct/proc/set_affiliation(var/_affiliation)
 	if(_affiliation)
@@ -78,15 +78,19 @@
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
-		if(health < maxHealth)
-			adjustHealth(-5)
-			if(src != M)
-				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
-				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
-						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
-		else
-			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+		var/mob/living/simple_animal/hostile/construct/builder/C = M
+		if(affiliation == C.affiliation)//in the unlikely case that there's a wizard or a miner that got his hands on a soulstone
+			if(health < maxHealth)
+				adjustHealth(-5)
+				if(src != M)
+					Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+					M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
+							   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+			else
+				if(src != M)
+					M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+		else //if they aren't on our team, attack!
+			..()
 	else if(src != M)
 		..()
 
@@ -165,8 +169,8 @@
 	desc = "A wicked, clawed shell constructed to assassinate enemies and sow chaos behind enemy lines."
 	icon_state = "floating"
 	icon_living = "floating"
-	maxHealth = 75
-	health = 75
+	maxHealth = 40
+	health = 40
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	retreat_distance = 2 //AI wraiths will move in and out of combat
@@ -191,6 +195,7 @@
 	maxHealth = 55
 	health = 55
 	response_harm = "viciously beats"
+	speed = 2
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
@@ -271,27 +276,27 @@
 
 
 /////////////////////////////Harvester/////////////////////////
-/mob/living/simple_animal/hostile/construct/harvester
+/mob/living/simple_animal/hostile/construct/builder/harvester
 	name = "Harvester"
 	real_name = "Harvester"
 	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
 	icon_state = "harvester"
 	icon_living = "harvester"
-	maxHealth = 60
-	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
-	attacktext = "prods"
+	maxHealth = 250
+	health = 250
+	melee_damage_lower = 25
+	melee_damage_upper = 25
+	speed = 0
+	attacktext = "slams"
 	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
+	attack_sound = 'sound/weapons/punch3.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+							/obj/effect/proc_holder/spell/targeted/smoke/disable,
+							/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser)
+	playstyle_string = "<B>You are a Harvester. You are strong and fast. \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
-	phaser = TRUE
 
-/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
+/mob/living/simple_animal/hostile/construct/builder/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+	environment_smash = 2 //SMASH IT ALL

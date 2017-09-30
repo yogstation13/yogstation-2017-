@@ -12,18 +12,19 @@
 
 /obj/item/organ/body_egg/New(loc)
 	if(iscarbon(loc))
-		src.Insert(loc)
+		src.Insert(loc, 1)
 	return ..()
 
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
-	..()
-	owner.status_flags |= XENO_HOST
-	START_PROCESSING(SSobj, src)
-	owner.med_hud_set_status()
-	spawn(0)
-		AddInfectionImages(owner)
+	if(..())
+		owner.status_flags |= XENO_HOST
+		START_PROCESSING(SSobj, src)
+		owner.med_hud_set_status()
+		spawn(0)
+			AddInfectionImages(owner)
+		return 1
 
-/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0, del_after = 0)
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		owner.status_flags -= XENO_HOST

@@ -13,11 +13,10 @@
 #define WHOOPEE_CD 1000
 
 /obj/item/whoopee // in the name of all that is holy DESTROY THIS THE MOMENT YOU SEE IT, CREW.
-	name = "whopee cushion"
-	desc = "If you're reading this than you've probably already been pranked."
-	icon = ""
-	icon_state = ""
-	item_state = ""
+	name = "whoopee cushion"
+	desc = "If you're reading this than the clown, or some other sinister fiend, probably pranked you."
+	icon_state = "whoopee"
+	item_state = "whoopee"
 	var/list/fnoises = list('sound/items/fnoise1.ogg', 'sound/items/fnoise2.ogg', 'sound/items/fnoise3.ogg', 'sound/items/fnoise4.ogg')
 	var/cooldown
 
@@ -273,3 +272,6 @@
 /obj/structure/mecha_wreckage/honker/dark
 	name = "\improper Dark H.O.N.K wreckage"
 	icon_state = "darkhonker-broken"
+
+/obj/mecha/combat/honker/dark/loaded/aprilfools
+	operation_req_access = list(access_theatre)

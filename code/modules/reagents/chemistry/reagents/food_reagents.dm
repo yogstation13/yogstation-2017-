@@ -74,6 +74,14 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/sugar/on_mob_delete(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.dna.species, /datum/species/plant))
+			var/datum/species/plant/P = H.dna.species
+			P.light_heal_multiplier = 1
+			P.dark_damage_multiplier = 1
+
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
 	id = "virusfood"
@@ -159,7 +167,7 @@
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 5)
 		for(var/mob/living/simple_animal/slime/M in T)
-			M.adjustToxLoss(rand(15,30))
+			M.adjustToxLoss(rand(15,30), 1, DAMAGE_CHEMICAL)
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(istype(T, /turf/open))
 			var/turf/open/OT = T
@@ -181,16 +189,16 @@
 		//check for protection
 		var/mouth_covered = 0
 		var/eyes_covered = 0
-		var/obj/item/safe_thing = null
+		//var/obj/item/safe_thing = null
 
 		//monkeys and humans can have masks
 		if( victim.wear_mask )
 			if ( victim.wear_mask.flags_cover & MASKCOVERSEYES )
 				eyes_covered = 1
-				safe_thing = victim.wear_mask
+				//safe_thing = victim.wear_mask
 			if ( victim.wear_mask.flags_cover & MASKCOVERSMOUTH )
 				mouth_covered = 1
-				safe_thing = victim.wear_mask
+				//safe_thing = victim.wear_mask
 
 		//only humans can have helmets and glasses
 		if(istype(victim, /mob/living/carbon/human))
@@ -198,14 +206,19 @@
 			if( H.head )
 				if ( H.head.flags_cover & MASKCOVERSEYES )
 					eyes_covered = 1
-					safe_thing = H.head
+					//safe_thing = H.head
 				if ( H.head.flags_cover & MASKCOVERSMOUTH )
 					mouth_covered = 1
-					safe_thing = H.head
+					//safe_thing = H.head
 			if(H.glasses)
 				eyes_covered = 1
-				if ( !safe_thing )
-					safe_thing = H.glasses
+				//if ( !safe_thing )
+					//safe_thing = H.glasses
+
+			if(PROTECTEDEYES in H.dna.species.specflags)
+				eyes_covered = 1
+				//safe_thing = ???
+
 
 		//actually handle the pepperspray effects
 		if ( eyes_covered && mouth_covered )

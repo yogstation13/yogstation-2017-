@@ -223,7 +223,7 @@
 	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 75
+	block_chance = 25
 	var/hacked = 0
 	var/flip = FALSE
 
@@ -280,7 +280,7 @@
 	else
 		user.adjustStaminaLoss(25)
 
-/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, dammage, attack_type)
+/obj/item/weapon/twohanded/dualsaber/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(wielded)
 		if(attack_type == UNARMED_ATTACK)
 			return 1
@@ -443,6 +443,19 @@
 /obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
+
+/obj/item/weapon/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
+	if(on)
+		user.visible_message("<span class='suicide'>[user] begins to tear \his head off with the chainsaw! It looks like \he's trying to commit suicide!</span>")
+		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, 1)
+		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+		if(myhead)
+			myhead.dismember()
+		gibs(loc)
+	else
+		user.visible_message("<span class='suicide'>[user] smashes the chainsaw into \his neck, destroying \his esophagus! It looks like \he's trying to commit suicide!</span>")
+		playsound(src, 'sound/weapons/genhit1.ogg', 100, 1)
+	return(BRUTELOSS)
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide

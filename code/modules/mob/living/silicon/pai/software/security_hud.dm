@@ -15,7 +15,7 @@
 	if(args["toggle"])
 		user.secHUD = !user.secHUD
 		if(user.secHUD)
-			user.add_sec_hud()
+			user.add_hud(user.sec_hud)
 		else
 			var/datum/atom_hud/sec = huds[user.sec_hud]
 			sec.remove_hud_from(user)

@@ -33,6 +33,7 @@ var/global/mulebot_count = 0
 	bot_core_type = /obj/machinery/bot_core/mulebot
 
 	suffix = ""
+	path_image_color = "#7F5200"
 
 	var/atom/movable/load = null
 	var/mob/living/passenger = null
@@ -473,7 +474,7 @@ var/global/mulebot_count = 0
 				var/turf/next = path[1]
 				reached_target = 0
 				if(next == loc)
-					path -= next
+					remove_from_path(next)
 					return
 				if(istype( next, /turf))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
@@ -500,7 +501,7 @@ var/global/mulebot_count = 0
 					if(moved && oldloc!=loc)	// successful move
 						//world << "Successful move."
 						blockcount = 0
-						path -= loc
+						remove_from_path(loc)
 
 						if(destination == home_destination)
 							mode = BOT_GO_HOME
@@ -556,7 +557,7 @@ var/global/mulebot_count = 0
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
+	set_path(get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid))
 
 // sets the current destination
 // signals all beacons matching the delivery code

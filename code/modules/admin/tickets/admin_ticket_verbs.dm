@@ -22,9 +22,6 @@
 	if(!found_ticket)
 		var/datum/admin_ticket/T = new /datum/admin_ticket(src, ticket_title)
 
-		if(!total_admins_active())
-			send_discord_message("admin", "A new ticket has been created with no active admins online, There are now a total of [total_unresolved_tickets()] unresolved tickets.")
-
 		if(!T.error)
 			tickets_list.Add(T)
 		else
@@ -224,12 +221,12 @@
 		if(!M || !M.job)
 			src << "<p class='info-bar emboldened'>You do not appear to have a job, so reporting being AFK is not necessary.</p>"
 		else
-			var/time = input(src, "How long do you expect to be gone?") in list("5 minutes","10 minutes","15 minutes","30 minutes","Whole round","Unknown")
+			var/time = input(src, "How long do you expect to be gone?") as anything in list("5 minutes","10 minutes","15 minutes","30 minutes","Whole round","Unknown")
 
 			if(!time)
 				return
 
-			var/reason = input(src, "Do you have time to give a reason? If so, please give it:") as null|text
+			var/reason = stripped_input(src, "Do you have time to give a reason? If so, please give it:")
 
 			var/text = "I need to catch some shut-eye. Please keep an eye on the crew whilst I am resting this shift."
 			if(istype(M, /mob/living/silicon))

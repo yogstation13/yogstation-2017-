@@ -16,6 +16,7 @@
 	window_id = "autoclean"
 	window_name = "Automatic Station Cleaner v1.2"
 	pass_flags = PASSMOB
+	path_image_color = "#993299"
 
 	var/blood = 1
 	var/trash = 0
@@ -143,11 +144,11 @@
 
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
+			set_path(get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card))
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
-				path = list()
+				clear_path()
 				return
 			mode = BOT_MOVING
 		else if(!bot_move(target))
@@ -160,7 +161,7 @@
 			UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 		else
 			shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
-		path = list()
+		clear_path()
 
 	oldloc = loc
 

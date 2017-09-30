@@ -192,7 +192,7 @@
 
 
 /mob/camera/god/proc/god_speak(msg)
-	log_say("Hand of God: [capitalize(side)] God/[key_name(src)] : [msg]")
+	log_say("[capitalize(side)] God/[key_name(src)] : [msg]", "Hand of God")
 	msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	if(!msg)
 		return

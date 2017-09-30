@@ -85,17 +85,27 @@ Shaft Miner
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
 	r_pocket = /obj/item/device/pda/shaftminer
-	backpack_contents = list(/obj/item/weapon/crowbar=1,\
-		/obj/item/weapon/storage/bag/ore=1,\
+	backpack_contents = list(/obj/item/weapon/storage/bag/ore=1,\
 		/obj/item/device/flashlight/seclite=1,\
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
-		/obj/item/weapon/mining_voucher=1)
-
+		/obj/item/weapon/mining_voucher=1,\
+		/obj/item/orecapsule=1,\
+		/obj/item/device/jauntbeacon=1)
 	backpack = /obj/item/weapon/storage/backpack/explorer
 	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
-	box = /obj/item/weapon/storage/box/engineer
+	box = /obj/item/weapon/storage/box/miner
 
+
+/datum/outfit/job/miner/post_equip(mob/living/carbon/human/H, visualsOnly)
+	..()
+
+	if(!visualsOnly)
+		var/obj/item/clothing/under/U = H.w_uniform
+		var/obj/item/clothing/tie/medic/M = new(get_turf(H))
+		U.attachTie(M)
+		H << "<span class='notice'>You have a camera attached to your jumpsuit that allows the mining medic \
+			to monitor you. Whether you keep it on or not is up to you.</span>"
 /*
 Bartender
 */

@@ -18,8 +18,8 @@
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	spawn(20)
-		qdel(src)
+	animate(src, alpha = 0, time = 20)
+	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = src.loc

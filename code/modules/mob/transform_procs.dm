@@ -473,7 +473,7 @@
 /mob/living/carbon/human/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as anything in mobtypes
 
 	if(!safe_animal(mobpath))
 		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"
@@ -506,7 +506,7 @@
 /mob/proc/Animalize()
 
 	var/list/mobtypes = typesof(/mob/living/simple_animal)
-	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") in mobtypes
+	var/mobpath = input("Which type of mob should [src] turn into?", "Choose a type") as anything in mobtypes
 
 	if(!safe_animal(mobpath))
 		usr << "<span class='danger'>Sorry but this mob type is currently unavailable.</span>"

@@ -197,8 +197,8 @@
 
 	var/has_smitten = 0 //Hast thou been smitten, infidel?
 	for(var/mob/living/L in get_turf(src))
-		L.adjustFireLoss(20)
-		L.adjustBruteLoss(20)
+		L.adjustFireLoss(20, 1, DAMAGE_MAGIC)
+		L.adjustBruteLoss(20, 1, DAMAGE_MAGIC)
 		L << "<span class='danger'><B>You feel the wrath of [name]!<B></span>"
 		has_smitten = 1
 	if(has_smitten)

@@ -31,7 +31,7 @@
 		if(is_freq_listening(signal)) // detect subspace signals
 
 			//Remove the level and then start adding levels that it is being broadcasted in.
-			signal.data["level"] = list()
+			signal.data["broadcast_levels"] = list()
 
 			var/can_send = relay_information(signal, "/obj/machinery/telecomms/hub") // ideally relay the copied information to relays
 			if(!can_send)

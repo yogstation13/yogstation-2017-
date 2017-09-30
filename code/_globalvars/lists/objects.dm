@@ -10,6 +10,7 @@ var/global/list/deliverybeacons = list()			//list of all MULEbot delivery beacon
 var/global/list/deliverybeacontags = list()			//list of all tags associated with delivery beacons.
 var/global/list/nuke_list = list()
 var/global/list/nuke_tiles = list()					//list of all turfs that turn to animated red grids when a nuke is triggered
+var/global/list/closet_list = list()                //list of all lockers
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
@@ -25,3 +26,5 @@ var/global/list/poi_list = list()					//list of points of interest for observe/f
 var/global/list/pinpointer_list = list()			//list of all pinpointers. Used to change stuff they are pointing to all at once.
 // A list of all zombie_infection organs, for any mass "animation"
 var/global/list/zombie_infection_list = list()
+var/global/list/meteor_list = list() //list of all meteors
+var/global/list/janitorial_items = list() //for the janitor PDA's custodial locator

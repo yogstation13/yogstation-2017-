@@ -126,10 +126,11 @@
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/organ/cyberimp/chest/thrusters/Insert(mob/living/carbon/M, special = 0)
-	..()
-	if(!ion_trail)
-		ion_trail = new
-	ion_trail.set_up(M)
+	if(..())
+		if(!ion_trail)
+			ion_trail = new
+		ion_trail.set_up(M)
+		return 1
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/M, special = 0)
 	if(on)

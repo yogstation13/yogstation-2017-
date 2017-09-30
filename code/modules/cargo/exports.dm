@@ -58,6 +58,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(emagged && !emag)
 		return FALSE
+	if(O.flags & HOLOGRAM)
+		return FALSE
 	if(!include_subtypes && !(O.type in export_types))
 		return FALSE
 	if(include_subtypes && (!is_type_in_list(O, export_types) || is_type_in_list(O, exclude_types)))

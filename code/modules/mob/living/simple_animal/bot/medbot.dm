@@ -16,6 +16,7 @@
 
 	radio_key = /obj/item/device/encryptionkey/headset_med
 	radio_channel = "Medical"
+	path_image_color = "#DDDDFF"
 
 	bot_type = MED_BOT
 	model = "Medibot"
@@ -38,7 +39,7 @@
 	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
 	//Setting which reagents to use to treat what by default. By id.
 	var/treatment_brute = "bicaridine"
-	var/treatment_oxy = "dexalin"
+	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "kelotane"
 	var/treatment_tox = "antitoxin"
 	var/treatment_virus = "spaceacillin"
@@ -102,7 +103,7 @@
 	update_icon()
 
 /mob/living/simple_animal/bot/medbot/proc/soft_reset() //Allows the medibot to still actively perform its medical duties without being completely halted as a hard reset does.
-	path = list()
+	clear_path()
 	patient = null
 	mode = BOT_IDLE
 	last_found = world.time
@@ -191,7 +192,7 @@
 
 	else if(href_list["stationary"])
 		stationary_mode = !stationary_mode
-		path = list()
+		clear_path()
 		update_icon()
 
 	else if(href_list["virus"])
@@ -293,7 +294,7 @@
 
 	//Patient has moved away from us!
 	else if(patient && path.len && (get_dist(patient,path[path.len]) > 2))
-		path = list()
+		clear_path()
 		mode = BOT_IDLE
 		last_found = world.time
 
@@ -302,10 +303,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card)
+		set_path(get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,id=access_card))
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card)
+			set_path(get_path_to(src, get_turf(patient), /turf/proc/Distance_cardinal, 0, 30,1,id=access_card))
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

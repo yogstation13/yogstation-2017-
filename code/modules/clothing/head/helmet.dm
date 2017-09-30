@@ -343,3 +343,19 @@
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+/obj/item/clothing/head/helmet/laserproof
+	name = "reflector helmet"
+	desc = "A combat-efficient helmet which usually reflects energy based projectiles."
+	icon_state = "reflector"
+	item_state = "reflector"
+	flags_cover = HEADCOVERSEYES
+	armor = list(melee = 10, bullet = 10, laser = 80, energy = 80, bomb = 0, bio = 0, rad = 0)
+	dog_fashion = null
+	var/reflect_chance = 40
+
+/obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
+	if(!(def_zone in list("head", "eyes")))
+		return 0
+	if (prob(reflect_chance))
+		return 1

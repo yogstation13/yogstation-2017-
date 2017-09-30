@@ -159,7 +159,7 @@ Transponder Codes:<UL>"}
 		usr.set_machine(src)
 
 		if(href_list["locedit"])
-			var/newloc = copytext(sanitize(input("Enter New Location", "Navigation Beacon", location) as text|null),1,MAX_MESSAGE_LEN)
+			var/newloc = stripped_input(usr, "Enter New Location", "Navigation Beacon", location, MAX_MESSAGE_LEN)
 			if(newloc)
 				location = newloc
 				updateDialog()

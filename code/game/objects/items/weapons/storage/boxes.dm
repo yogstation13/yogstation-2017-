@@ -89,6 +89,23 @@
 	..()
 	new /obj/item/device/radio/off(src)
 
+// Miner survival box
+
+/obj/item/weapon/storage/box/miner
+	icon_state = "minerbox"
+
+
+/obj/item/weapon/storage/box/miner/New()
+	..()
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/device/flashlight/flare/emergency(src)
+	var/obj/item/weapon/wrench/W = new(src)
+	W.desc = "Use this to wrench down those damn jaunter beacons. Declare war against crowbar users."
+	var/obj/item/weapon/crowbar/C = new(src)
+	C.desc = "Use this to pry open unpowered doors on lavaland. Worship the crowbar, and cast down wrench users. Maybe defeat a colossus with it."
+
 // Syndie survival box
 /obj/item/weapon/storage/box/syndie/New()
 	..()
@@ -517,6 +534,7 @@
 
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/match))
+		user << "<span class='notice'>You light the [W].</span>"
 		W.matchignite()
 
 /obj/item/weapon/storage/box/lights
@@ -667,7 +685,7 @@
 			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
-		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in designs
+		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) as anything in designs
 		if(get_dist(usr, src) > 1)
 			usr << "<span class='warning'>You have moved too far away!</span>"
 			return

@@ -6,6 +6,7 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = 3
+	silent = TRUE
 	burn_state = FLAMMABLE
 	var/title = "book"
 /obj/item/weapon/storage/book/attack_self(mob/user)
@@ -140,7 +141,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 		return
 	if(!chaplain)
 		user << "<span class='danger'>The book sizzles in your hands.</span>"
-		user.take_organ_damage(0,10)
+		user.take_organ_damage(0, 10, 1, DAMAGE_DISEASE)
 		return
 
 	if (user.disabilities & CLUMSY && prob(50))
@@ -205,7 +206,3 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
-
-/obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W, mob/user, params)
-	playsound(src.loc, "rustle", 50, 1, -5)
-	return ..()

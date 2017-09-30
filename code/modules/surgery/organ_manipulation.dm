@@ -102,9 +102,11 @@
 	else if(current_type == "insert")
 		I = tool
 		user.drop_item()
-		I.Insert(target)
-		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
-			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		if(I.Insert(target))
+			user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
+				"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		else
+			user.visible_message("<span class='warning'>[target]'s body rejects [tool]!</span>")
 
 	else if(current_type == "extract")
 		if(I && I.owner == target)
@@ -112,7 +114,6 @@
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
-			I.loc = get_turf(target)
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")

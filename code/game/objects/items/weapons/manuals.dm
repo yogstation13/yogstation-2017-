@@ -963,3 +963,25 @@
 	author = "United Earth Surgical Association"
 	title = "Surgery for Dummies"
 	page_link = "Surgery"
+
+/obj/item/weapon/book/manual/wiki/preternis
+	name = "Managing your Preternis"
+	icon_state = "bookEngineering"
+	author = "United Earth Government"
+	title = "Managing your Preternis - a guide to the future of human lifestyle advancement"
+	page_link = "Preternis"
+
+/obj/item/weapon/book/manual/wiki/phytosian
+	name = "How to Treat a Phytosian"
+	icon_state = "bookHydroponicsPodPeople"
+	author = "United Earth Government"
+	title = "How to Treat a Phytosian"
+	page_link = "Phytosian"
+
+/obj/item/weapon/book/manual/wiki/plasmaman
+	name = "History of the Ossius Pyrus"
+	icon_state = "bookfireball"
+	author = "United Earth Government"
+	title = "History of the Ossius Pyrus"
+	desc = "Contains everything you didn't care about."
+	page_link = "Plasmamen"

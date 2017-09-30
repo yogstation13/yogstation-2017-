@@ -83,7 +83,6 @@
 							c.info += copied
 							c.info += "</font>"
 							c.name = copy.name
-							c.fields = copy.fields
 							c.updateinfolinks()
 							toner--
 					busy = 1
@@ -213,7 +212,7 @@
 				return
 			for(var/datum/picture/t in tempAI.aicamera.aipictures)
 				nametemp += t.fields["name"]
-			find = input("Select image (numbered in order taken)") in nametemp
+			find = input("Select image (numbered in order taken)") as anything in nametemp
 			var/obj/item/weapon/photo/p = new /obj/item/weapon/photo (loc)
 			for(var/datum/picture/q in tempAI.aicamera.aipictures)
 				if(q.fields["name"] == find)

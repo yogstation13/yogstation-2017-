@@ -86,6 +86,61 @@
 	icon_state = "orange"
 	item_color = "orange"
 
+
+/obj/item/clothing/shoes/sneakers/yeezy
+	name = "oreo trainers"
+	icon_state = "yeezy_oreo"
+	item_color = "yeezy_oreo"
+	desc = "A pair of shoes with a white accent, these shoes are worth more than your salary."
+
+/obj/item/clothing/shoes/sneakers/yeezy/orange
+	name = "flashy trainers"
+	icon_state = "yeezy_orange"
+	item_color = "yeezy_orange"
+	desc = "Deadstock. How you got a pair of these is beyond me..."
+
+
+/obj/item/clothing/shoes/sneakers/yeezy/black
+	name = "pirate black trainers"
+	icon_state = "yeezy_black"
+	item_color = "yeezy_black"
+	desc = "Whilst still uncomfortably expensive, these black lowkey trainers make for a great entry into the sneaker game."
+
+
+/obj/item/clothing/shoes/sneakers/yeezy/zebra
+	name = "black and white striped trainers"
+	icon_state = "yeezy_white"
+	item_color = "yeezy_white"
+	desc = "They're SO BRIGHT!!!! AAAAHHHHHHH"
+
+
+/obj/item/clothing/shoes/sneakers/yeezy/green
+	name = "khaki trainers"
+	icon_state = "yeezy_green"
+	item_color = "yeezy_green"
+	desc = "Slightly more practical trainers that don't glow in the dark"
+
+/obj/item/clothing/shoes/sneakers/yeezy/red
+	name = "black and red trainers"
+	icon_state = "yeezy_red"
+	item_color = "yeezy_red"
+	desc = "Who said that syndicate operatives only wear combat boots?"
+
+
+/obj/item/clothing/shoes/sneakers/nmd
+	name = "primeknit trainers"
+	icon_state = "nmd_pk"
+	item_color = "nmd_pk"
+	desc = "Stylish running shoes. The comfy soles give you a spring in your step."
+
+/obj/item/clothing/shoes/sneakers/nmd/collab
+	name = "Nanotrasen collab trainers"
+	icon_state = "nmd_nt"
+	item_color = "nmd_nt"
+	desc = "Very stylish shoes produced by nanotrasen in a collaboration with galactic sneakers inc."
+
+
+
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
 	if (src.chained)
 		src.chained = null

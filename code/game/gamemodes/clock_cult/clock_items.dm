@@ -1,3 +1,5 @@
+//set scarab_usable to FALSE if you don't want cogscarabs using your item.
+
 /obj/item/clockwork
 	name = "meme blaster"
 	desc = "What the fuck is this? It looks kinda like a frog."
@@ -5,6 +7,7 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "rare_pepe"
 	w_class = 2
+	scarab_usable = TRUE
 
 /obj/item/clockwork/New()
 	..()
@@ -101,8 +104,8 @@
 		if(/datum/action/item_action/clock/hierophant)
 			show_hierophant(user)
 		if(/datum/action/item_action/clock/guvax)
-			if(!nonhuman_usable && !ishuman(user))
-				return
+			/*if(!nonhuman_usable && !ishuman(user))
+				return*/
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/guvax/convert = new
 				convert.slab = src
@@ -111,8 +114,8 @@
 			else
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 		if(/datum/action/item_action/clock/vanguard)
-			if(!nonhuman_usable && !ishuman(user))
-				return
+			/*if(!nonhuman_usable && !ishuman(user))
+				return*/
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/vanguard/antistun = new
 				antistun.slab = src
@@ -185,9 +188,9 @@
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
-	if(!nonhuman_usable && !ishuman(user))
+	/*if(!nonhuman_usable && !ishuman(user))
 		user << "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
-		return 0
+		return 0*/
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
@@ -809,12 +812,12 @@
 		var/mob/living/silicon/S = target
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(25)
+			S.adjustFireLoss(25, 1, DAMAGE_MAGIC)
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
 		if(M.stat != DEAD)
 			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
-			M.adjustFireLoss(10)
+			M.adjustFireLoss(10, 1, DAMAGE_MAGIC)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)
@@ -957,8 +960,7 @@
 	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
 	"<span class='brass'>You extract [H]'s consciousness from their body, trapping it in the soul vessel.</span>")
 	transfer_personality(H)
-	B.Remove(H)
-	qdel(B)
+	B.Remove(H, 1, 1)
 	H.update_hair()
 
 /obj/item/clockwork/daemon_shell

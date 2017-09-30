@@ -27,69 +27,7 @@ var/list/barometers = list()
 				)
 
 
-//Free Golems
 
-/obj/item/weapon/disk/design_disk/golem_shell
-	name = "Golem Creation Disk"
-	desc = "A gift from the Liberator."
-	icon_state = "datadisk1"
-	max_blueprints = 1
-
-/obj/item/weapon/disk/design_disk/golem_shell/New()
-	..()
-	var/datum/design/golem_shell/G = new
-	blueprints[1] = G
-
-/datum/design/golem_shell
-	name = "Golem Shell Construction"
-	desc = "Allows for the construction of a Golem Shell."
-	id = "golem"
-	req_tech = list("materials" = 12)
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 40000)
-	build_path = /obj/item/golem_shell
-	category = list("Imported")
-
-/obj/item/golem_shell
-	name = "incomplete golem shell"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
-	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
-
-/obj/item/golem_shell/attackby(obj/item/I, mob/user, params)
-	..()
-	var/species
-	if(istype(I, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/O = I
-
-		if(istype(O, /obj/item/stack/sheet/metal))
-			species = /datum/species/golem
-
-		if(istype(O, /obj/item/stack/sheet/mineral/plasma))
-			species = /datum/species/golem/plasma
-
-		if(istype(O, /obj/item/stack/sheet/mineral/diamond))
-			species = /datum/species/golem/diamond
-
-		if(istype(O, /obj/item/stack/sheet/mineral/gold))
-			species = /datum/species/golem/gold
-
-		if(istype(O, /obj/item/stack/sheet/mineral/silver))
-			species = /datum/species/golem/silver
-
-		if(istype(O, /obj/item/stack/sheet/mineral/uranium))
-			species = /datum/species/golem/uranium
-
-		if(species)
-			if(O.use(10))
-				user << "You finish up the golem shell with ten sheets of [O]."
-				var/obj/effect/mob_spawn/human/golem/G = new(get_turf(src))
-				G.mob_species = species
-				qdel(src)
-			else
-				user << "You need at least ten sheets to finish a golem."
-		else
-			user << "You can't build a golem out of this kind of material."
 
 
 ///Syndicate Listening Post
@@ -111,6 +49,8 @@ var/list/barometers = list()
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
+	jobban_type = "lavaland"
+
 /obj/effect/mob_spawn/human/lavaland_syndicate/special(mob/living/L)
 	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Continue your research as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable. The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!")
 
@@ -123,6 +63,7 @@ var/list/barometers = list()
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base unless it is uninhabitable.</b> Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!</b>"
 	pocket2 = /obj/item/weapon/gun/projectile/automatic/pistol
 	id_job = "Syndicate Comms Agent"
+
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms/special(mob/living/L)
 	L.add_memory("You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunatley, your hated enemy, Nanotrasen, has begun mining in this sector. Monitor enemy activity as best you can, and try to keep a low profile. Do not abandon the base without good cause. Use the communication equipment to provide support to any field agents, and sow disinformation to throw Nanotrasen off your trail. Do not let the base fall into enemy hands!")
 
@@ -155,6 +96,8 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
+	jobban_type = "lavaland"
+
 /obj/effect/mob_spawn/human/syndicate_xenobiologist/special(mob/living/L)
 	L.add_memory("You have awoken from cryosleep, it is time to begin experimentation on these alien lifeforms known as 'xenomorphs' in the hopes of weaponising them against Nanotrasen and other corporate enemies. The egg chamber is located in the bottom right of the facility right beneath the prisoner cells, don't worry about them resisting; they have lost their will to think. The combat environment room is in the bottom left of the facility while surgery and containment is right below where your sleeper is installed. How you go about testing is up to you and your accomplices, however you are to exercise extreme caution, these lifeforms are not dumb animals; should any damage be sustained to the facility there is some spare construction materials in the observation room. DO NOT under any circumstances attempt to leave the Facility.")
 
@@ -187,6 +130,7 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
+	jobban_type = "lavaland"
 
 /obj/effect/mob_spawn/human/space_mercenary_leader
 	name = "Space Mercenary Leader"
@@ -209,7 +153,7 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-
+	jobban_type = "lavaland"
 
 ///Travelling Bard
 
@@ -232,6 +176,8 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
+	jobban_type = "lavaland"
+
 /obj/effect/mob_spawn/human/travelling_bard/special(mob/living/L)
 	L.add_memory("You are a travelling Bard! Your only purpose in life is to travel the galaxy, playing songs and telling epic tales of adventure, you have seen many things and you only wish to share your knowledge with all those who you pass. You are a very passive person and dislike the idea of killing another sentient person, if you cannot stop conflict through peace then you would rather remain neutral. Despite your peaceful demeanor, you are not immune to brainwashing or conversion techniques, if converted or brainwashed you are to follow the will of your masters.")
 
@@ -252,6 +198,8 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
+	jobban_type = "lavaland"
+
 /obj/effect/mob_spawn/human/orion_doctor/special(mob/living/L)
 	L.add_memory("You were working on a medical outpost on Orion when a bluespace translocation was reported in the vicinity, it seems to have moved the outpost to some strange ashen wasteland, regardless of the situation the medical supplies are low and medical scanners report you aren't the first here, time to put your expertise to use and see if there's anyone out there who needs help.")
 
@@ -276,5 +224,7 @@ var/list/barometers = list()
 	death = FALSE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper_s"
+	jobban_type = "lavaland"
+
 /obj/effect/mob_spawn/human/orion_security/special(mob/living/L)
 	L.add_memory("You are an Orion Spaceport officer, the outpost you were assigned to was moved due to a bluespace anomaly, you are to ensure that no harm comes to the outpost or its staff. You do not follow Space Law. You are the Law.")

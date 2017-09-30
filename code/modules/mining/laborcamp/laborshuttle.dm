@@ -5,7 +5,6 @@
 	shuttleId = "laborcamp"
 	possible_destinations = "laborcamp_home;laborcamp_away"
 	req_access = list(access_brig)
-	notification = SEC_FREQ
 
 
 /obj/machinery/computer/shuttle/labor/one_way
@@ -26,3 +25,6 @@
 			usr << "<span class='warning'>Shuttle is already at the outpost!</span>"
 			return 0
 	..()
+
+/obj/machinery/computer/shuttle/labor/awayspeech()
+	return "The [shuttleId] shuttle is flying to [current_destination == "laborcamp_home" ? "the station" : "lavaland"]!"

@@ -9,6 +9,8 @@
 	var/crate_name = "crate"
 	var/crate_type = /obj/structure/closet/crate
 	var/dangerous = FALSE // Should we message admins?
+	var/special = FALSE //Event/Station Goals/Admin enabled packs
+	var/special_enabled = FALSE
 
 /datum/supply_pack/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = new crate_type(T)
@@ -120,20 +122,22 @@
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
 	hidden = TRUE
-	cost = 2000
+	cost = 5000
 	contains = list(/obj/item/weapon/storage/box/emps,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/pen/sleepy,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
+					/obj/item/weapon/grenade/chem_grenade/incendiary,
+					/obj/item/weapon/grenade/chem_grenade/bioterrorfoam,
+					/obj/item/clothing/under/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 14000
+	cost = 20000
 	contains = list(/obj/item/weapon/storage/box/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
@@ -952,6 +956,17 @@
 					/obj/item/clothing/tie/petcollar)
 	crate_name = "fox crate"
 
+/datum/supply_pack/organic/critter/crabs
+	name = "Creb crate"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab)
+	crate_name = "Crab crate"
+
 /datum/supply_pack/organic/critter/butterfly
 	name = "Butterflies Crate"
 	contraband = TRUE
@@ -1271,7 +1286,7 @@
 					/obj/item/weapon/caution,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
-					/obj/item/weapon/reagent_containers/glass/rag,
+					/obj/item/weapon/mop/rag,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner)
@@ -1280,7 +1295,7 @@
 /datum/supply_pack/misc/janitor/janicart
 	name = "Janitorial Cart and Galoshes Crate"
 	cost = 2000
-	contains = list(/obj/structure/janitorialcart,
+	contains = list(/obj/structure/mopbucket/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
@@ -1317,6 +1332,35 @@
 					/obj/item/clothing/head/helmet/space/plasmaman,
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
+
+
+/datum/supply_pack/misc/superb
+	name = "Designer Clothes Bundle"
+	cost = 800
+	contains = list(/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/under/color/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/toggle/labcoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb,
+					/obj/item/clothing/suit/hooded/wintercoat/superb)
+	crate_name = "Designer clothes crate"
+
+
+
+/datum/supply_pack/misc/yeezy
+	name = "One Singular Pair Of Sneakers"
+	cost = 450
+	contains = list(/obj/item/clothing/shoes/sneakers/yeezy)
+	crate_name = "Small Sneaker Crate"
+
+
 
 /datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
@@ -1482,3 +1526,57 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name= "art supply crate"
+
+/datum/supply_pack/misc/bsa
+	name = "Bluespace Artillery Parts"
+	cost = 12000
+	special = TRUE
+	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
+					/obj/item/weapon/circuitboard/machine/bsa/middle,
+					/obj/item/weapon/circuitboard/machine/bsa/back,
+					/obj/item/weapon/circuitboard/computer/bsa_control
+					)
+	crate_name= "bluespace artillery parts crate"
+
+/datum/supply_pack/misc/dna_vault
+	name = "DNA Vault Parts"
+	cost = 10000
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/dna_vault
+					)
+	crate_name= "dna vault parts crate"
+
+/datum/supply_pack/misc/dna_probes
+	name = "DNA Vault Samplers"
+	cost = 2500
+	special = TRUE
+	contains = list(/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe,
+					/obj/item/device/dna_probe
+					)
+	crate_name= "dna samplers crate"
+
+
+/datum/supply_pack/misc/shield_sat
+	name = "Shield Generator Satellite"
+	cost = 2500
+	special = TRUE
+	contains = list(
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield,
+					/obj/machinery/satellite/meteor_shield
+					)
+	crate_name= "shield sat crate"
+
+
+/datum/supply_pack/misc/shield_sat_control
+	name = "Shield System Control Board"
+	cost = 3500
+	special = TRUE
+	contains = list(
+					/obj/item/weapon/circuitboard/machine/computer/sat_control
+					)
+	crate_name= "shield control board crate"

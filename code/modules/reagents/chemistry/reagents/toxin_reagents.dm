@@ -10,7 +10,7 @@
 
 /datum/reagent/toxin/on_mob_life(mob/living/M)
 	if(toxpwr)
-		M.adjustToxLoss(toxpwr*REM, 0)
+		M.adjustToxLoss(toxpwr*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	..()
 
@@ -98,7 +98,7 @@
 			. = FALSE
 
 	if(.)
-		M.adjustOxyLoss(5, 0)
+		M.adjustOxyLoss(5, 0, DAMAGE_CHEMICAL)
 		if(C)
 			C.losebreath += 2
 		if(prob(20))
@@ -115,7 +115,7 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
 	if(prob(10))
 		M << "<span class='danger'>Your insides are burning!</span>"
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustToxLoss(rand(20,60)*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	else if(prob(40))
 		M.heal_organ_damage(5*REM,0, 0)
@@ -151,7 +151,7 @@
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5*REM, 0)
+	M.adjustOxyLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
 	M.Weaken(5, 0)
 	M.silent = max(M.silent, 5)
 	M.tod = worldtime2text()
@@ -196,7 +196,7 @@
 			var/mob/living/carbon/C = M
 			if(!C.wear_mask) // If not wearing a mask
 				var/damage = min(round(0.4*reac_volume, 0.1),10)
-				C.adjustToxLoss(damage)
+				C.adjustToxLoss(damage, 1, DAMAGE_CHEMICAL)
 
 /datum/reagent/toxin/plantbgone/weedkiller
 	name = "Weed Killer"
@@ -217,7 +217,7 @@
 			var/mob/living/carbon/C = M
 			if(!C.wear_mask) // If not wearing a mask
 				var/damage = min(round(0.4*reac_volume, 0.1),10)
-				C.adjustToxLoss(damage)
+				C.adjustToxLoss(damage, 1, DAMAGE_CHEMICAL)
 
 /datum/reagent/toxin/spore
 	name = "Spore Toxin"
@@ -263,7 +263,7 @@
 			. = 1
 		if(51 to INFINITY)
 			M.Sleeping(2, 0)
-			M.adjustToxLoss((current_cycle - 50)*REM, 0)
+			M.adjustToxLoss((current_cycle - 50)*REM, 0, DAMAGE_CHEMICAL)
 			. = 1
 	..()
 
@@ -294,7 +294,7 @@
 			M.Sleeping(2, 0)
 		if(51 to INFINITY)
 			M.Sleeping(2, 0)
-			M.adjustToxLoss((current_cycle - 50)*REM, 0)
+			M.adjustToxLoss((current_cycle - 50)*REM, 0, DAMAGE_CHEMICAL)
 	return ..()
 
 /datum/reagent/toxin/coffeepowder
@@ -333,7 +333,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/staminatoxin/on_mob_life(mob/living/carbon/M)
-	M.adjustStaminaLoss(REM * data, 0)
+	M.adjustStaminaLoss(REM * data, 0, DAMAGE_CHEMICAL)
 	data = max(data - 1, 3)
 	..()
 	. = 1
@@ -374,14 +374,14 @@
 			if(4)
 				if(prob(75))
 					M << "You scratch at an itch."
-					M.adjustBruteLoss(2*REM, 0)
+					M.adjustBruteLoss(2*REM, 0, DAMAGE_CHEMICAL)
 					. = 1
 	..()
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
-	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
-	M.adjustToxLoss(2*REM, 0)
+	M.adjustOxyLoss(2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustBruteLoss(2*REM, 0, DAMAGE_CHEMICAL)
+	M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
 
@@ -412,7 +412,7 @@
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/M)
 	toxpwr = 0.2*volume
-	M.adjustBruteLoss((0.3*volume)*REM, 0)
+	M.adjustBruteLoss((0.3*volume)*REM, 0, DAMAGE_CHEMICAL)
 	. = 1
 	if(prob(15))
 		M.reagents.add_reagent("histamine", pick(5,10))
@@ -433,8 +433,8 @@
 	if(current_cycle >= 6)
 		M.confused = 1
 		if(M.toxloss <= 80)
-			M.adjustBrainLoss(1*REM)
-			M.adjustToxLoss(1*REM, 0)
+			M.adjustBrainLoss(1*REM, 0, DAMAGE_CHEMICAL)
+			M.adjustToxLoss(1*REM, 0, DAMAGE_CHEMICAL)
 			. = 1
 	if(current_cycle >= 16)
 		M.Sleeping(2, 0)
@@ -457,7 +457,7 @@
 	if(prob(10))
 		M << "You feel horrendously weak!"
 		M.Stun(2, 0)
-		M.adjustToxLoss(2*REM, 0)
+		M.adjustToxLoss(2*REM, 0, DAMAGE_CHEMICAL)
 	return ..()
 
 /datum/reagent/toxin/badfood // food poisoning
@@ -485,15 +485,15 @@
 /datum/reagent/toxin/itching_powder/on_mob_life(mob/living/M)
 	if(prob(15))
 		M << "You scratch at your head."
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	if(prob(15))
 		M << "You scratch at your leg."
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	if(prob(15))
 		M << "You scratch at your arm."
-		M.adjustBruteLoss(0.2*REM, 0)
+		M.adjustBruteLoss(0.2*REM, 0, DAMAGE_CHEMICAL)
 		. = 1
 	if(prob(3))
 		M.reagents.add_reagent("histamine",rand(1,3))
@@ -520,7 +520,7 @@
 				. = 1
 			if(2)
 				M.losebreath += 10
-				M.adjustOxyLoss(rand(5,25), 0)
+				M.adjustOxyLoss(rand(5,25), 0, DAMAGE_CHEMICAL)
 				. = 1
 			if(3)
 				if(istype(M, /mob/living/carbon/human))
@@ -531,7 +531,7 @@
 							H.visible_message("<span class='userdanger'>[H] clutches at their chest as if their heart stopped!</span>")
 					else
 						H.losebreath += 10
-						H.adjustOxyLoss(rand(5,25), 0)
+						H.adjustOxyLoss(rand(5,25), 0, DAMAGE_CHEMICAL)
 						. = 1
 	return ..() || .
 
@@ -564,9 +564,9 @@
 /datum/reagent/toxin/sodium_thiopental/on_mob_life(mob/living/M)
 	if(current_cycle >= 10)
 		M.Sleeping(2, 0)
-	M.adjustStaminaLoss(10*REM, 0)
+	M.adjustStaminaLoss(10*REM, 0, DAMAGE_CHEMICAL)
 	if(prob(10))
-		M.adjustBrainLoss(1*REM)
+		M.adjustBrainLoss(1*REM, 0, DAMAGE_CHEMICAL)
 	if(prob(15))
 		M.Stun(2, 0)
 	..()
@@ -596,7 +596,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	M.adjustToxLoss(current_cycle*3*REM)
+	M.adjustToxLoss(current_cycle*3*REM, 1, DAMAGE_CHEMICAL)
 	..()
 
 /datum/reagent/toxin/lipolicide
@@ -610,7 +610,7 @@
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
 	if(!holder.has_reagent("nutriment"))
-		M.adjustToxLoss(0.5*REM, 0)
+		M.adjustToxLoss(0.5*REM, 0, DAMAGE_CHEMICAL)
 	M.nutrition = max( M.nutrition - 5 * REAGENTS_METABOLISM, 0)
 	M.overeatduration = 0
 	return ..()
@@ -641,7 +641,7 @@
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
 		M.Weaken(3, 0)
-	M.adjustOxyLoss(1*REM, 0)
+	M.adjustOxyLoss(1*REM, 0, DAMAGE_CHEMICAL)
 	. = 1
 	..()
 
@@ -658,7 +658,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.bleed_rate = min(H.bleed_rate + 2, 8)
-		H.adjustBruteLoss(1, 0) //Brute damage increases with the amount they're bleeding
+		H.adjustBruteLoss(1, 0, DAMAGE_CHEMICAL) //Brute damage increases with the amount they're bleeding
 		. = 1
 	return ..() || .
 
@@ -705,10 +705,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr), 1, DAMAGE_CHEMICAL)
 		return
 	if(method == INJECT)
-		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr), 1, DAMAGE_CHEMICAL)
 		return
 	C.acid_act(acidpwr, toxpwr, reac_volume)
 
@@ -734,7 +734,7 @@
 	acidpwr = 42.0
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
-	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
+	M.adjustFireLoss(current_cycle/10, 0, DAMAGE_CHEMICAL) // I rode a tank, held a general's rank
 	. = 1 // When the blitzkrieg raged and the bodies stank
 	..() // Pleased to meet you, hope you guess my name
 
@@ -761,7 +761,7 @@
 
 /datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
 	if(M.staminaloss < 50)
-		M.adjustStaminaLoss(10)
+		M.adjustStaminaLoss(10, 1, DAMAGE_CHEMICAL)
 	if(prob(30))
 		M << "You should sit down and take a rest..."
 	..()

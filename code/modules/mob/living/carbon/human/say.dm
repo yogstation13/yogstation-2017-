@@ -110,6 +110,13 @@
 	if(name != GetVoice())
 		return " (as [get_id_name("Unknown")])"
 
+/mob/living/carbon/human/handle_inherent_channels(message, message_mode)
+	if(..())
+		return 1
+	if(dna.species.handle_inherent_channels(src, message, message_mode))
+		return 1
+	return 0
+
 /mob/living/carbon/human/proc/forcesay(list/append) //this proc is at the bottom of the file because quote fuckery makes notepad++ cri
 	if(stat == CONSCIOUS)
 		if(client)

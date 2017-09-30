@@ -51,6 +51,10 @@
 					user << "<span class='notice'>You transfer [trans] unit\s of the solution.</span>"
 					update_icon()
 					return
+				if(PROTECTEDEYES in victim.dna.species.specflags)
+					target << "<span class='danger'>[user] tries to squirt something into [target]'s eyes, but [target]'s lizard eyes ignore the fluid!</span>"
+					return
+
 			else if(isalien(target)) //hiss-hiss has no eyes!
 				target << "<span class='danger'>[target] does not seem to have any eyes!</span>"
 				return
@@ -79,6 +83,7 @@
 			add_logs(user, M, "squirted", R)
 			if(viruslist)
 				investigate_log("[user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]", "viro")
+				log_game("VIRO: [user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]")
 
 		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		user << "<span class='notice'>You transfer [trans] unit\s of the solution.</span>"

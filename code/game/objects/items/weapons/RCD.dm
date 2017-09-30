@@ -3,6 +3,7 @@
 /*
 CONTAINS:
 RCD
+RCD AMMO
 */
 
 /obj/item/weapon/rcd
@@ -168,11 +169,11 @@ RCD
 	set category = "Object"
 	set src in usr
 
-	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") in list("Solid", "Glass")
+	var airlockcat = input(usr, "Select whether the airlock is solid or glass.") as anything in list("Solid", "Glass")
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
+				var airlockpaint = input(usr, "Select the paintjob of the airlock.") as anything in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock
@@ -201,7 +202,7 @@ RCD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var airlockpaint = input(usr, "Select the paintjob of the airlock.") in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
+				var airlockpaint = input(usr, "Select the paintjob of the airlock.") as anything in list("Default", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining")
 				switch(airlockpaint)
 					if("Default")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -331,7 +332,14 @@ RCD
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
 				return 0
-
+			if(islavaturf(A))
+				var/turf/open/floor/plating/lava/L = A
+				if(useResource(floorcost*10, user))
+					user << "<span class='notice'>You fill in the lava with plating...</span>"
+					activate()
+					L.ChangeTurf(/turf/open/floor/plating)
+					return TRUE
+				return FALSE
 			if(istype(A, /turf/open/floor) && (A.flags & GIRDERABLE))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
@@ -405,7 +413,6 @@ RCD
 						return 1
 					return 0
 				return 0
-
 			if(istype(A, /turf/open/floor))
 				var/turf/open/floor/F = A
 				if(istype(F, /turf/open/floor/engine) && !canRturf)

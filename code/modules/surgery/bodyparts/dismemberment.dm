@@ -47,7 +47,6 @@
 		if(O.zone != "chest")
 			continue
 		O.Remove(owner)
-		O.loc = T
 		organ_spilled = 1
 	if(cavity_item)
 		cavity_item.loc = T
@@ -170,7 +169,6 @@
 
 /obj/item/bodypart/r_leg/drop_limb(special)
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
@@ -184,7 +182,6 @@
 
 /obj/item/bodypart/l_leg/drop_limb(special) //copypasta
 	if(owner && !special)
-		owner.Weaken(2)
 		if(owner.legcuffed)
 			owner.legcuffed.loc = owner.loc
 			owner.legcuffed.dropped(owner)
@@ -276,7 +273,7 @@
 		brainmob.loc = brain //Throw mob into brain.
 		brain.brainmob = brainmob //Set the brain to use the brainmob
 		brainmob = null //Set head brainmob var to null
-		brain.Insert(H) //Now insert the brain proper
+		brain.Insert(H, 1) //Now insert the brain proper
 		brain = null //No more brain in the head
 
 	H.hair_color = hair_color

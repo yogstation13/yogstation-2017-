@@ -35,12 +35,6 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/magboots
-	name = "the chief engineer's advanced magnetic boots"
-	targetitem =  /obj/item/clothing/shoes/magboots/advance
-	difficulty = 5
-	excludefromjob = list("Chief Engineer")
-
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
 	targetitem = /obj/item/clothing/tie/medal/gold/captain
@@ -80,9 +74,15 @@
 	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core"
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
+	altitems = list(/obj/item/toy/beach_ball/holoball/chaos)
 
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/weapon/storage/box/syndie_kit/nuke
+
+/datum/objective_item/steal/nuke_core/check_special_completion(obj/item/I)
+	if(I.type == /obj/item/nuke_core || I.type == /obj/item/toy/beach_ball/holoball/chaos)
+		return 1
+	return 0
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
@@ -90,6 +90,13 @@
 	targetitem = /obj/item/weapon/tank
 	difficulty = 3
 	excludefromjob = list("Chief Engineer","Research Director","Station Engineer","Scientist","Atmospheric Technician")
+
+
+/datum/objective_item/steal/rplasma
+	name = "outdated plasma tank"
+	targetitem = /obj/item/weapon/tank/internals/royalp
+	difficulty = 5
+	excludefromjob = list("Captain", "Chief Engineer", "Chief Medical Officer", "Head of Personnel", "Research Director")
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/weapon/tank/T)
 	var/target_amount = text2num(name)
@@ -103,10 +110,19 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
-			return 1
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/I)
+	var/obj/item/device/aicard/C
+
+	if(istype(I, /obj/item/weapon/stock_parts/cell/potato))
+		var/obj/item/weapon/stock_parts/cell/potato/P = I
+		C = P.storage // storage is defined as an intellicard
+	else
+		C = I
+
+	if(istype(C, /obj/item/device/aicard))
+		for(var/mob/living/silicon/ai/A in C)
+			if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
+				return 1
 	return 0
 
 /datum/objective_item/steal/blueprints
@@ -124,6 +140,12 @@
 		if(P.blueprints)	//if the blueprints are in frame
 			return 1
 	return 0
+
+/datum/objective_item/steal/rapidengineeringdevice
+	name = "the rapid engineering device"
+	targetitem = /obj/item/weapon/rapid_engineering_device
+	difficulty = 10
+	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract"

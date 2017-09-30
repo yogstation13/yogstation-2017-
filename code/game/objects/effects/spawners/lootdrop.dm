@@ -44,7 +44,7 @@
 			/obj/item/trash/cheesie = 1,
 			/obj/item/trash/candy = 1,
 			/obj/item/trash/chips = 1,
-			/obj/item/trash/deadmouse = 1,
+			/obj/item/weapon/reagent_containers/food/snacks/deadmouse = 1,
 			/obj/item/trash/pistachios = 1,
 			/obj/item/trash/plate = 1,
 			/obj/item/trash/popcorn = 1,
@@ -126,7 +126,7 @@
 				/obj/item/weapon/paper/crumpled = 1,
 				/obj/item/weapon/pen = 1,
 				/obj/item/weapon/reagent_containers/spray/pestspray = 1,
-				/obj/item/weapon/reagent_containers/glass/rag = 3,
+				/obj/item/weapon/mop/rag = 3,
 				/obj/item/weapon/stock_parts/cell = 3,
 				/obj/item/weapon/storage/belt/utility = 2,
 				/obj/item/weapon/storage/box = 2,
@@ -157,6 +157,8 @@
 				/obj/item/clothing/gloves/color/random = 8,
 				/obj/item/clothing/shoes/laceup = 1,
 				/obj/item/weapon/storage/secure/briefcase = 3,
+				/obj/item/clothing/shoes/sneakers/nmd = 3,
+				/obj/item/clothing/shoes/sneakers/yeezy = 1,
 				"" = 4
 				)
 

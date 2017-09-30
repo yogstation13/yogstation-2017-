@@ -738,7 +738,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+		var/new_memo = stripped_multiline_input("Write new memory", "Memory", memory, null, MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo
@@ -1281,8 +1281,7 @@
 					var/safty = 0
 					var/mob/living/carbon/human/H = current
 					for(var/obj/item/organ/thrall_tumor/T in H.internal_organs)
-						T.Remove(current,0,1)
-						qdel(T)
+						T.Remove(current,0,1,1)
 						safty = 1
 					if(!safty)
 						ticker.mode.remove_thrall(current,0)
@@ -1304,7 +1303,7 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				var/obj/item/organ/thrall_tumor/T = new/obj/item/organ/thrall_tumor(current)
-				T.Insert(current)
+				T.Insert(current, 1)
 				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
 				log_admin("[key_name(usr)] has thrall'ed [current].")
 
@@ -1635,7 +1634,7 @@
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
+	var/team = input("Abductor Team ?","Team ?") as anything in list(1,2,3,4)
 	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
 
 	if(!role || !team || !teleport)

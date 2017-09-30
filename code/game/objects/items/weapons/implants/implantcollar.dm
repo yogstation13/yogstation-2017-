@@ -15,7 +15,7 @@
 				imp_in << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
 			return
 		if("Bind")
-			var/choice = input(user, "Select collar to bind.", "Binding Control") in linkedCollars
+			var/choice = input(user, "Select collar to bind.", "Binding Control") as anything in linkedCollars
 			var/obj/item/clothing/head/bombCollar/collarToBind = choice
 			if(!collarToBind)
 				return
@@ -50,15 +50,10 @@
 
 /obj/item/weapon/implanter/bombcollar
 	name = "implanter (collar console)"
-
-/obj/item/weapon/implanter/bombcollar/New()
-	imp = new /obj/item/weapon/implant/bombcollar(src)
-	..()
+	imptype = /obj/item/weapon/implant/bombcollar
 
 /obj/item/weapon/implantcase/bombcollar
 	name = "implant case - 'Collar Console'"
 	desc = "A glass case containing an implant version of the collar detonator."
+	imptype = /obj/item/weapon/implant/bombcollar
 
-/obj/item/weapon/implantcase/bombcollar/New()
-	imp = new /obj/item/weapon/implant/bombcollar(src)
-	..()

@@ -276,11 +276,12 @@ Made by Xhuis
 		if(light_amount > LIGHT_DAM_THRESHOLD && !H.incorporeal_move) //Can survive in very small light levels. Also doesn't take damage while incorporeal, for shadow walk purposes
 			H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
 			if(H.stat != DEAD)
-				H << "<span class='userdanger'>The light burns you!</span>" //Message spam to say "GET THE FUCK OUT"
+				H.visible_message("<span class='warning'>[H]'s skin sizzles and burns in the light!</span>", "<span class='userdanger'>The light burns you!</span>") //Message spam to say "GET THE FUCK OUT"
 				H << 'sound/weapons/sear.ogg'
 		else if (light_amount < LIGHT_HEAL_THRESHOLD)
 			H.heal_overall_damage(5,5)
 			H.adjustToxLoss(-5)
+			H.adjustOxyLoss(-5)
 			H.adjustBrainLoss(-25) //Shad O. Ling gibbers, "CAN U BE MY THRALL?!!"
 			H.adjustCloneLoss(-1)
 			H.SetWeakened(0)

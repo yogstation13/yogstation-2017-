@@ -1,0 +1,25 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat{pixel_y = 3},/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider{pixel_x = 4; pixel_y = -2},/turf/open/floor/plating,/area/template_noop)
+"c" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/store/bread/spidermeat,/turf/open/floor/plasteel/freezer,/area/template_noop)
+"d" = (/obj/structure/closet/crate/freezer/xeno,/turf/open/floor/plating,/area/template_noop)
+"e" = (/obj/structure/table,/obj/item/weapon/kitchen/knife,/obj/item/clothing/head/chefhat,/turf/open/floor/plating,/area/template_noop)
+"f" = (/obj/effect/decal/cleanable/xenoblood/xgibs/core,/obj/item/stack/sheet/animalhide/xeno,/obj/structure/kitchenspike,/obj/effect/decal/cleanable/blood/xtracks,/turf/open/floor/plating,/area/template_noop)
+"g" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating,/area/template_noop)
+"h" = (/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider,/turf/open/floor/plating,/area/template_noop)
+"i" = (/obj/item/weapon/paper/crumpled/bloody/xenokitchen,/turf/open/floor/plating,/area/template_noop)
+"j" = (/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno,/obj/effect/decal/cleanable/xenoblood,/obj/effect/decal/cleanable/blood/xtracks{tag = "icon-xtracks (WEST)"; icon_state = "xtracks"; dir = 8},/turf/open/floor/plasteel/freezer,/area/template_noop)
+"k" = (/obj/effect/decal/cleanable/xenoblood/xgibs/limb,/obj/effect/decal/cleanable/blood/xtracks{tag = "icon-xtracks (SOUTHEAST)"; icon_state = "xtracks"; dir = 6},/turf/open/floor/plating,/area/template_noop)
+"l" = (/turf/open/floor/plasteel/freezer,/area/template_noop)
+"m" = (/turf/open/floor/plating,/area/template_noop)
+"n" = (/obj/item/weapon/reagent_containers/food/snacks/spiderleg,/turf/open/floor/plating,/area/template_noop)
+"o" = (/obj/effect/decal/cleanable/vomit/old,/turf/open/floor/plating,/area/template_noop)
+"p" = (/obj/structure/table,/obj/item/weapon/circuitboard/machine/microwave,/turf/open/floor/plasteel/freezer,/area/template_noop)
+"q" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaa
+abcdefa
+aghijka
+almnopa
+aaaqaaa
+"}

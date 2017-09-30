@@ -39,6 +39,8 @@
 	var/const/waittime_l = 600
 	var/const/waittime_h = 1800 // started at 1800
 
+	var/list/datum/station_goal/station_goals = list()
+
 
 /datum/game_mode/proc/announce() //to be called when round starts
 	world << "<B>Notice</B>: [src] did not define announce()"
@@ -94,6 +96,7 @@
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
 			send_intercept(0)
+	generate_station_goals()
 	start_state = new /datum/station_state()
 	start_state.count(1)
 	return 1
@@ -183,7 +186,7 @@
 	var/mob/living/silicon/ai/AI
 	for(var/V in ai_list)
 		AI = V
-		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client))
+		if(jobban_isbanned(AI, ROLE_TRAITOR) || jobban_isbanned(AI, "Syndicate") || !age_check(AI.client) || !(ROLE_MALF in AI.client.prefs.be_special))
 			AI = null
 		else
 			break
@@ -362,6 +365,12 @@
 			intercepttext += i_text.build(A)
 		else
 			intercepttext += i_text.build(A, pick(modePlayer))
+
+	if(station_goals.len)
+		intercepttext += "<hr><b fontsize = 10>Special Orders for [station_name()]:</b>"
+		for(var/datum/station_goal/G in station_goals)
+			G.on_report()
+			intercepttext += G.get_report()
 
 	print_command_report(intercepttext,"Centcom Status Summary")
 	priority_announce("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.", 'sound/AI/intercept.ogg')
@@ -567,7 +576,8 @@
 	var/list/crewmembers = list()
 	for(var/V in data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/living/carbon/human/H = R.fields["reference"]
+		var/datum/mind/M = R.fields["mindref"]
+		var/mob/living/carbon/human/H = M.current
 		if(istype(H) && H.client)
 			crewmembers += H
 	for(var/V in crewmembers)
@@ -748,3 +758,22 @@
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
+
+/datum/game_mode/proc/generate_station_goals()
+	var/list/possible = list()
+	for(var/T in subtypesof(/datum/station_goal))
+		var/datum/station_goal/G = T
+		if(config_tag in initial(G.gamemode_blacklist))
+			continue
+		possible += T
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		station_goals += new picked
+
+
+/datum/game_mode/proc/declare_station_goal_completion()
+	for(var/V in station_goals)
+		var/datum/station_goal/G = V
+		G.print_result()

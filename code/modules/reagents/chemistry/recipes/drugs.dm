@@ -36,7 +36,7 @@
 	name = "bath_salts"
 	id = "bath_salts"
 	result = "bath_salts"
-	required_reagents = list("badfood" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
+	required_reagents = list("badfood" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "soysauce" = 1, "tea" = 1, "mercury" = 1)
 	result_amount = 7
 	required_temp = 374
 

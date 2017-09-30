@@ -1,3 +1,5 @@
+#define LATEJOINCHARTERCAP 12000
+
 /*
 Captain
 */
@@ -56,7 +58,9 @@ Captain
 	L.implanted = 1
 	H.sec_hud_set_implants()
 
-	minor_announce("Captain [H.real_name] on deck!")
+	var/on_deck = list("on deck!", "has arrived!")
+
+	minor_announce("Captain [H.real_name] [pick(on_deck)]")
 
 /*
 Head of Personnel
@@ -110,3 +114,6 @@ Head of Personnel
 		return
 
 	announce_head(H, list("Supply", "Service"))
+
+
+#undef LATEJOINCHARTERCAP

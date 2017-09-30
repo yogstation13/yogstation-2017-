@@ -71,7 +71,11 @@
 	air_contents.gases["n2"][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 	return
 
-
+/obj/item/weapon/tank/internals/royalp
+	name = "outdated plasma tank"
+	desc = "The last of it's kind, used back in the discovery era for collecting plasma. As of today, it serves as a memorial for the effort former nanotrasen employees put together so we can have research facility's like these."
+	icon_state = "canister"
+	force = 10
 /*
  * Plasma
  */

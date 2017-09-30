@@ -8,6 +8,25 @@
 
 #define ismodule(O) (istype(O, /obj/item/module))
 
+
+//Turfs
+#define isopenturf(A) (istype(A, /turf/open))
+
+#define isspaceturf(A) (istype(A, /turf/open/space))
+
+#define isfloorturf(A) (istype(A, /turf/open/floor))
+
+#define isclosedturf(A) (istype(A, /turf/closed))
+
+#define iswallturf(A) (istype(A, /turf/closed/wall))
+
+#define ismineralturf(A) (istype(A, /turf/closed/mineral))
+
+
+#define islavaturf(A) (istype(A, /turf/open/floor/plating/lava))
+#define isminingturf(A) (istype(A, /turf/open/floor/plating/asteroid))
+#define ischasm(A) (istype(A, /turf/open/chasm))
+
 // MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
@@ -27,6 +46,9 @@
 #define isashwalker(A) (is_species(A, /datum/species/lizard/ashwalker))
 #define ischiefwalker(A) (is_species(A, /datum/species/lizard/ashwalker/chieftain))
 #define iskrampus(A) (is_species(A, /datum/species/demon))
+#define ispod(A) (is_species(A, /datum/species/plant/pod))
+#define isphytosian(A) (is_species(A, /datum/species/plant))
+#define isplant(A) (PLANT in A.dna.species.specflags)
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
@@ -37,6 +59,8 @@
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
+
+#define issimpleanimal(A) (istype(A, /mob/living/simple_animal))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
@@ -115,3 +139,5 @@
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+
+#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune))

@@ -9,6 +9,7 @@
 
 /datum/pai/software/proc/action_use(mob/user, var/args)
 	//thrown when the user accesses the software via the side menu once they've purchased it
+	//return TRUE to avoid refreshing the software interface screen, if you need to keep window focus on something else
 	return
 
 /datum/pai/software/proc/action_installed(mob/user)

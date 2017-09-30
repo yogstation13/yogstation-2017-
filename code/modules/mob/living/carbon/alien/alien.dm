@@ -47,7 +47,7 @@
 	internal_organs += new /obj/item/organ/tongue/alien
 
 	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+		I.Insert(src, 1)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
 	..()

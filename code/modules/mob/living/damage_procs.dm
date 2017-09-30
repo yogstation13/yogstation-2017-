@@ -8,23 +8,25 @@
 	Returns
 	standard 0 if fail
 */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0, application=DAMAGE_PHYSICAL)
 	blocked = (100-blocked)/100
 	if(!damage || (blocked <= 0))
 		return 0
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked)
+			adjustBruteLoss(damage * blocked, 0, application)
 		if(BURN)
-			adjustFireLoss(damage * blocked)
+			adjustFireLoss(damage * blocked, 0, application)
 		if(TOX)
-			adjustToxLoss(damage * blocked)
+			adjustToxLoss(damage * blocked, 0, application)
 		if(OXY)
-			adjustOxyLoss(damage * blocked)
+			adjustOxyLoss(damage * blocked, 0, application)
 		if(CLONE)
-			adjustCloneLoss(damage * blocked)
+			adjustCloneLoss(damage * blocked, 0, application)
 		if(STAMINA)
-			adjustStaminaLoss(damage * blocked)
+			adjustStaminaLoss(damage * blocked, 0, application)
+		if(BRAIN)
+			adjustBrainLoss(damage * blocked, 0, application)
 	updatehealth()
 	return 1
 

@@ -81,6 +81,53 @@
 			/datum/gang_item/equipment/dominator
 		)
 
+	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
+		if(name == "Donk")
+			fighting_style = "honking"
+			buyable_items = list(
+			/datum/gang_item/function/gang_ping,
+			/datum/gang_item/function/recall,
+			/datum/gang_item/equipment/spraycan,
+			/datum/gang_item/equipment/c4,
+			/datum/gang_item/equipment/implant_breaker,
+			/datum/gang_item/equipment/pen,
+			/datum/gang_item/equipment/gangtool,
+			/datum/gang_item/equipment/dominator,
+			/datum/gang_item/weapon/pistol,
+			/datum/gang_item/weapon/ammo/pistol_ammo,
+			/datum/gang_item/equipment/banana,
+			/datum/gang_item/equipment/clown_mask,
+			/datum/gang_item/equipment/golden_airhorn,
+			/datum/gang_item/weapon/bananium_esword,
+			/datum/gang_item/weapon/bananium_eshield,
+			/datum/gang_item/weapon/tearstache,
+			/datum/gang_item/weapon/clownbug,
+			/datum/gang_item/weapon/dark_honk
+			)
+
+		if(name == "Zero-G")
+			fighting_style = "miming"
+			buyable_items = list(
+			/datum/gang_item/function/gang_ping,
+			/datum/gang_item/function/recall,
+			/datum/gang_item/equipment/spraycan,
+			/datum/gang_item/equipment/c4,
+			/datum/gang_item/equipment/implant_breaker,
+			/datum/gang_item/equipment/pen,
+			/datum/gang_item/equipment/gangtool,
+			/datum/gang_item/equipment/dominator,
+			/datum/gang_item/weapon/pistol,
+			/datum/gang_item/weapon/ammo/pistol_ammo,
+			/datum/gang_item/equipment/bottleofnothing,
+			/datum/gang_item/equipment/mimemask,
+			/datum/gang_item/equipment/mimearts,
+			/datum/gang_item/equipment/mimewall,
+			/datum/gang_item/equipment/mutetoxin,
+			/datum/gang_item/equipment/invisibletouch,
+			/datum/gang_item/equipment/reactivestealth,
+			/datum/gang_item/weapon/reticence
+			)
+
 	ganghud = new()
 	log_game("The [name] Gang has been created. Their gang color is [color].")
 	build_item_list()

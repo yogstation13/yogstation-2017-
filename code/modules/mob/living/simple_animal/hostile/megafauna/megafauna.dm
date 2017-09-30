@@ -22,6 +22,8 @@
 	var/turf/aggroed_from = null
 	var/turf/aggro_log = null
 	var/lastTarget = "no target"
+	var/rawScaling = 100 //Base is 100 for 100%, basically.
+	var/scaling = 1 //Scaling/100, basically. Scaling for megafauna abilities.  Actual scaling/what is scaled is done in the faunas file instead.
 
 /mob/living/simple_animal/hostile/megafauna/New()
 	..()

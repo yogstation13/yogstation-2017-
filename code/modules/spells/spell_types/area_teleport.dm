@@ -54,6 +54,32 @@
 		if(target && target.buckled)
 			target.buckled.unbuckle_mob(target, force=1)
 
+		var/list/plebs = list()
+		var/mob/living/P = target
+		var/obj/obj_to_tele //In case we wanna teleport an object aswell
+		var/max_telees = 20// If it runs more then 20 times, we can assume it's stuck in a loop and we should do something about it
+		var/telees
+		while(P.pulledby)
+			if(P.pulledby in plebs)break
+			plebs += P.pulledby
+			P = P.pulledby
+			telees += 1
+			if(telees >= max_telees)
+				target << "<span class='notice'>Spell overload detected. Please remove the unnecessary plebs before casting.</span>"
+				revert_cast()
+				return
+		while(P.pulling)
+			if(isobj(P.pulling))
+				obj_to_tele = P.pulling
+				break
+			if(P.pulling in plebs)break
+			plebs += P.pulling
+			P = P.pulling
+			telees += 1
+			if(telees >= max_telees)
+				target << "<span class='notice'>Spell overload detected. Please remove the unnecessary plebs before casting.</span>"
+				revert_cast()
+				return
 		var/list/tempL = L
 		var/attempt = null
 		var/success = 0
@@ -63,12 +89,21 @@
 			if(get_turf(target) == attempt)
 				success = 1
 				break
+
 			else
 				tempL.Remove(attempt)
+
 
 		if(!success)
 			target.loc = pick(L)
 			playsound(get_turf(user), sound2, 50,1)
+		else
+			if(obj_to_tele)
+				obj_to_tele.forceMove(pick(tempL))
+			plebs -= target
+			for(var/mob/living/PLEB in plebs)
+				PLEB.forceMove(pick(tempL))
+
 
 	return
 

@@ -42,6 +42,9 @@
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[key_name_admin(Sender)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Sender]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[Sender]'>TP</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
 	admins << msg
+	for(var/client/X in admins)
+		if(X.prefs.toggles & SOUND_PRAYERS)
+			X << 'sound/effects/morse.ogg'
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
 
@@ -49,6 +52,9 @@
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[key_name_admin(Sender)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Sender]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[Sender]'>TP</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
 	admins << msg
+	for(var/client/X in admins)
+		if(X.prefs.toggles & SOUND_PRAYERS)
+			X << 'sound/effects/morse.ogg'
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()
 
@@ -57,5 +63,8 @@
 	msg = "<span class='adminnotice'><b><font color=orange>NUKE CODE REQUEST:</font>[key_name_admin(Sender)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[Sender]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[Sender]'>FLW</A>) (<A HREF='?_src_=holder;traitor=\ref[Sender]'>TP</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]</span>"
 	admins << msg
 	admins << "<span class='adminnotice'><b>At this current time, the nuke must have the code manually set via varedit.</b></span>"
+	for(var/client/X in admins)
+		if(X.prefs.toggles & SOUND_PRAYERS)
+			X << 'sound/effects/morse.ogg'
 	for(var/obj/machinery/computer/communications/C in machines)
 		C.overrideCooldown()

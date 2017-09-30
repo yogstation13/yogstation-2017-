@@ -74,7 +74,7 @@
 		else
 			link.approved = 0
 			link.admin = admin
-			var/why = input("Reason (or leave empty):")
+			var/why = stripped_input(usr, "Reason (or leave empty):")
 
 			poster << "<span class='boldnotice'>Your link was denied.[why ? " Reason: [why]." : ""]</span>"
 

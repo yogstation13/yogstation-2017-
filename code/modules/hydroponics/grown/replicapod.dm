@@ -53,7 +53,7 @@
 
 /obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
-	var/make_podman = 0
+	var/make_phytosian = 0
 	var/ckey_holder = null
 	if(config.revival_pod_plants)
 		if(ckey)
@@ -61,14 +61,14 @@
 				if(istype(M, /mob/dead/observer))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
-						make_podman = 1
+						make_phytosian = 1
 						break
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
-						make_podman = 1
+						make_phytosian = 1
 						if(istype(M, /mob/living))
 							var/mob/living/L = M
-							make_podman = !L.hellbound
+							make_phytosian = !L.hellbound
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in player_list)
@@ -77,30 +77,33 @@
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
-					make_podman = 1
+					make_phytosian = 1
 					if(istype(M, /mob/living))
 						var/mob/living/L = M
-						make_podman = !L.hellbound
+						make_phytosian = !L.hellbound
 					ckey_holder = M.ckey
 					break
 
-	if(make_podman)	//all conditions met!
-		var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
+	if(make_phytosian)	//all conditions met!
+		var/mob/living/carbon/human/phytosian = new /mob/living/carbon/human(parent.loc)
 		if(realName)
-			podman.real_name = realName
+			phytosian.real_name = realName
 		else
-			podman.real_name = "Pod Person [rand(0,999)]"
-		mind.transfer_to(podman)
+			phytosian.real_name = "Phytosian [rand(0,999)]"
+		mind.transfer_to(phytosian)
 		if(ckey)
-			podman.ckey = ckey
+			phytosian.ckey = ckey
 		else
-			podman.ckey = ckey_holder
-		podman.gender = blood_gender
-		podman.faction |= factions
+			phytosian.ckey = ckey_holder
+		phytosian.gender = blood_gender
+		phytosian.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		podman.hardset_dna(null,null,podman.real_name,blood_type,/datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
-		podman.set_cloned_appearance()
+		if(prob(90))
+			phytosian.hardset_dna(null,null,phytosian.real_name,blood_type,/datum/species/plant,features)
+		else
+			phytosian.hardset_dna(null,null,phytosian.real_name,blood_type,/datum/species/plant/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+		phytosian.set_cloned_appearance()
 
 	else //else, one packet of seeds. maybe two
 		var/seed_count = 1

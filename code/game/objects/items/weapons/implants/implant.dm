@@ -12,7 +12,6 @@
 	var/uses = -1
 	flags = DROPDEL
 
-
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
 	return
 

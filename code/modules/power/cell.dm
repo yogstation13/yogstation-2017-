@@ -79,52 +79,13 @@
 	charge += power_used
 	return power_used
 
-
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
-	if (istype(user, /mob/living/carbon/human))
+	if (ishuman(user))
 		var/mob/living/carbon/human/maybedroid = user
-		if (maybedroid.dna.species.id == "android" || maybedroid.dna.species.id == "flyternis")
-			//BEGIN THE NUTRITION RECHARGEEEE
-			if (charge)
-				if (rigged)
-					//oh, shit.
-					explode()
-
-				if (maybedroid.nutrition > NUTRITION_LEVEL_FED)
-					maybedroid << "<span class='notice'>CONSUME protocol reports no need for additional power at this time.</span>"
-					return
-
-				var/drain = maxcharge/40
-				var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-				var/ischarging = 1
-				spark_system.set_up(5, 0, maybedroid.loc)
-				spark_system.attach(maybedroid)
-				maybedroid.visible_message("[maybedroid] deftly inserts [src] into a slot within their torso. A low hum begins to fill the air.", "<span class='info'>Extracutaneous implants detect viable power source in location: HANDS. Activating CONSUME protocol..</span>")
-				while (ischarging)
-					if (drain > charge)
-						drain = charge
-
-					if (prob(35))
-						var/nutpercents
-						nutpercents = (maybedroid.nutrition / NUTRITION_LEVEL_WELL_FED)*100
-
-						maybedroid << "<span class='info'>CONSUME protocol continues. Current satiety level: [nutpercents]%."
-					if (do_after(maybedroid, 10, target = src))
-						spark_system.start()
-						playsound(maybedroid.loc, "sparks", 35, 1)
-
-					charge -= drain
-					src.update_icon()
-					maybedroid.nutrition += drain/22
-
-					if (maybedroid.nutrition >= NUTRITION_LEVEL_WELL_FED || maybedroid.get_active_hand() != src || !charge)
-						maybedroid.visible_message("A slight hiss emanates from [maybedroid] as [src] pops free from a slot in their torso.", "<span class='info>CONSUME protocol complete. Physical nourishment refreshed. Advise cell recharging.</span>")
-						ischarging = 0
-			else
-				user << "<span class='info'>You currently surmise via ocular sensors that this cell does not possess enough charge to be of use to you.</span>"
-				return
-		else
-			user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"
+		if(maybedroid.dna && maybedroid.dna.species && (CONSUMEPOWER in maybedroid.dna.species.specflags) )
+			maybedroid.dna.species.species_drain_act(maybedroid, src)
+			return
+	user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
@@ -313,7 +274,7 @@
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"
-	desc = "A rechargable starch based power cell."
+	desc = "A rechargable starch based power cell. Surprisingly, it's powerful enough to hold an entire AI."
 	icon = 'icons/obj/power.dmi' //'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "potato_cell" //"potato_battery"
 	origin_tech = "powerstorage=1;biotech=1"
@@ -321,6 +282,47 @@
 	maxcharge = 300
 	materials = list()
 	rating = 1
+	var/obj/item/device/aicard/storage
+
+/obj/item/weapon/stock_parts/cell/potato/New()
+	. = ..()
+	storage = new(src)
+
+/obj/item/weapon/stock_parts/cell/potato/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
+	if(!..())
+		return
+	if(!AI)
+		return
+	if(!card)
+		return
+	if(!AI.mind)
+		user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+		return
+
+	if(interaction == AI_TRANS_FROM_CARD)
+		if(storage.AI)
+			return
+		storage.AI = AI
+		AI.control_disabled = 1
+		AI.radio_enabled = 0
+		AI.forceMove(src)
+		AI << "You are a potato."
+		name = AI.name
+		desc = "This isn't your average potato..."
+		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully in a potato."
+		card.AI = null
+		card.update_icon()
+
+	else if(interaction == AI_TRANS_TO_CARD) //  [potato] -> [card]. handled in aicard.dm
+		AI.ai_restore_power()//So the AI initially has power.
+		AI.control_disabled = 1//Can't control things remotely if you're stuck in a card!
+		AI.radio_enabled = 0 	//No talking on the built-in radio for you either!
+		AI.forceMove(card)
+		AI.loc = card
+		card.AI = AI
+		AI << "You have been downloaded to a mobile storage device. Remote device connection severed."
+		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		card.update_icon()
 
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"

@@ -6,9 +6,14 @@
 	circuit = /obj/item/weapon/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
+	var/current_destination
 	var/admin_controlled
 	var/no_destination_swap = 0
 	var/notification // assign a frequency here - ex: SEC_FREQ, etc
+	var/cooldownlen
+	var/awayspeech // enables awayspeech()
+
+	var/sending
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
 	..()
@@ -68,18 +73,58 @@
 			if(M.mode != SHUTTLE_IDLE)
 				usr << "<span class='warning'>Shuttle already in transit.</span>"
 				return
+
+		if(processcooldown(shuttleId, href_list["move"]))
+			processnotification("cooldown")
+			current_destination = href_list["move"]
+
 		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
 			if(0)
 				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
-				if(notification)
-					for(var/obj/item/device/radio/R in src.contents)
-						if(R.frequency != notification)
-							R.frequency = notification
-						R.talk_into(src,"The [shuttleId] shuttle is taking off!",notification)
+				processnotification("awayspeech")
+
 			if(1)
 				usr << "<span class='warning'>Invalid shuttle requested.</span>"
+				endcooldown(noMove = TRUE)
+			if(3)
+				if(sending)
+					usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+					sending = FALSE
+				else
+					usr << "<span class='warning'>Shuttle is preparing to take off. Please wait.</span>"
+
 			else
 				usr << "<span class='notice'>Unable to comply.</span>"
+				endcooldown(noMove = TRUE)
+
+/obj/machinery/computer/shuttle/proc/processcooldown(shuttleID, moveID)
+	if(cooldownlen)
+		if(!(shuttleId in SSshuttle.cooldown_ids))
+			SSshuttle.cooldown_ids.Add("[shuttleId]")
+			addtimer(src, "endcooldown", cooldownlen, FALSE, shuttleID, moveID)
+			sending = TRUE
+			return 1
+	return 0
+
+/obj/machinery/computer/shuttle/proc/processnotification(type)
+	if(notification)
+		var/obj/item/device/radio/R = findradio()
+		switch(type)
+			if("cooldown")
+				if(!cooldownlen)
+					R.talk_into(src,"The [shuttleId] shuttle is taking off!",notification)
+				else
+					R.talk_into(src,"The [shuttleId] shuttle is leaving in [cooldownlen/10] seconds!",notification)
+
+			if("awayspeech")
+				R.talk_into(src, "[awayspeech()]", notification)
+
+/obj/machinery/computer/shuttle/proc/endcooldown(sID, mID, noMove)
+	SSshuttle.cooldown_ids.Remove(sID)
+	if(!noMove)
+		processnotification("awayspeech")
+		SSshuttle.moveShuttle(sID, mID, 1, TRUE)
+
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)
@@ -87,3 +132,17 @@
 		emagged = 1
 		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
+/obj/machinery/computer/shuttle/proc/awayspeech(destination)
+	return "The shuttle is blasting off to [current_destination]!"
+
+/obj/machinery/computer/shuttle/proc/findradio()
+	var/obj/item/device/radio/radio
+
+	for(var/obj/item/device/radio/R in src.contents)
+		if(R.frequency != notification)
+			R.frequency = notification
+		if(!radio)
+			radio = R
+
+	if(radio)
+		return radio

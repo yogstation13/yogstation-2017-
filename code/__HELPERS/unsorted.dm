@@ -266,7 +266,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) as anything in borgs
 		else
 			. = pick(borgs)
 	return .
@@ -275,7 +275,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/ais = active_ais()
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) as anything in ais
 		else
 			. = pick(ais)
 	return .

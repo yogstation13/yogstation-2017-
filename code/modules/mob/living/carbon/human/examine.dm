@@ -282,9 +282,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 45)
-			msg += "[t_He] [t_has] appears slightly stunted and pale.\n"
+			msg += "[t_He] appears slightly stunted and pale.\n"
 		else
-			msg += "<B>[t_He] [t_has] is severely deformed and bears a greyish pallor.</B>\n"
+			msg += "<B>[t_He] is severely deformed and bears a greyish pallor.</B>\n"
 
 	temp = getOxyLoss()
 	if (temp)
@@ -296,6 +296,8 @@
 		else
 			msg += "<B>[t_His] [t_surface] [t_is2] of a deep blue colour, mouth open in an desperate gasp for air!</B>\n"
 
+	if(is_nearcrit())
+		msg += "<B>[t_He] looks haunting as they crawl on the ground hanging on for dear life.</B>\n"
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"
@@ -313,6 +315,13 @@
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
+
+	if(disgust >= DISGUST_LEVEL_DISGUSTED)
+		msg += "[t_He] looks disgusted.\n"
+	else if(disgust >= DISGUST_LEVEL_VERYGROSS)
+		msg += "[t_He] looks really grossed out.\n"
+	else if(disgust >= DISGUST_LEVEL_GROSS)
+		msg += "[t_He] looks a bit grossed out.\n"
 
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
@@ -418,6 +427,7 @@
 						if(R)
 							criminal = R.fields["criminal"]
 
+						msg += "<span class='deptradio'>Operate your security HUD faster by using ALT + SHIFT + CLICK to operate a targets criminal status or CTRL + SHIFT + CLICK to add crimes or comments.</span>\n"
 						msg += "<span class='deptradio'>Criminal status:</span> <a href='?src=\ref[src];hud=s;status=1'>\[[criminal]\]</a>\n"
 						msg += "<span class='deptradio'>Security record:</span> <a href='?src=\ref[src];hud=s;view=1'>\[View\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "

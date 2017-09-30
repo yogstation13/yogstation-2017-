@@ -81,8 +81,9 @@
 #define TR_KEEPORGANS	256
 
 //Organ stuff, It's here because "Genetics" is the most relevant file for organs and bodyparts
-#define ORGAN_ORGANIC   1
-#define ORGAN_ROBOTIC   2
+#define ORGAN_ORGANIC   	 1
+#define ORGAN_SEMI_ROBOTIC   2
+#define ORGAN_ROBOTIC   	 3
 
 //Nutrition levels for humans. No idea where else to put it
 #define NUTRITION_LEVEL_FAT 600
@@ -91,6 +92,8 @@
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
+
+#define ELECTRICITY_TO_NUTRIMENT_FACTOR 0.06
 
 #define CLONER_FRESH_CLONE "fresh"
 #define CLONER_MATURE_CLONE "mature"
@@ -103,3 +106,9 @@
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
 #define BLOOD_VOLUME_SURVIVE		122
+
+//Might as well put grossed out levels here too huehuehue
+#define DISGUST_LEVEL_MAXEDOUT 150 //We can always add PTSD later
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25

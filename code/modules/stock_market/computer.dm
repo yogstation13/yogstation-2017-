@@ -54,7 +54,7 @@ a.updated {
 </style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
-	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
+	dat += "<span class='user'>Welcome, <b>[station_name()] Cargo Department</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
 	for (var/datum/stock/S in stockExchange.last_read)
 		var/list/LR = stockExchange.last_read[S]
 		if (!(logged_in in LR))

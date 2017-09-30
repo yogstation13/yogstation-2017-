@@ -46,24 +46,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
 	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
-
-
-/**********************Shuttle Computer**************************/
-
-/obj/machinery/computer/shuttle/mining
-	name = "Mining Shuttle Console"
-	desc = "Used to call and send the mining shuttle."
-	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
-	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away"
-	no_destination_swap = 1
-	notification = SUPP_FREQ
-
-/obj/machinery/computer/shuttle/mining/Topic(href, href_list)
-    ..()
-    if(href_list["move"])
-        investigate_log("[key_name(usr)] has moved the mining shuttle", "cargo")
-
+	new /obj/item/device/gps/mining(src)
 
 /*********************Pickaxe & Drills**************************/
 
@@ -214,6 +197,7 @@
 	icon_state = "away"
 	requires_power = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
@@ -584,6 +568,9 @@
 	else
 		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
+
+	new /obj/item/device/jauntbeacon(src)
+	new /obj/item/weapon/wrench(src)
 
 //Fans
 /obj/structure/fans

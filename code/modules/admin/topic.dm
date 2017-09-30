@@ -535,13 +535,13 @@
 					return
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
+				reason = stripped_multiline_input(usr,"Please State Reason","Reason",reason2)
 				if(!reason)
 					return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Please State Reason","Reason",reason2) as message
+				reason = stripped_multiline_input(usr,"Please State Reason","Reason",reason2)
 				if(!reason)
 					return
 
@@ -584,7 +584,7 @@
 
 		else switch(alert("Appearance ban [M.ckey]?",,"Yes","No", "Cancel"))
 			if("Yes")
-				var/reason = input(usr,"Please State Reason","Reason") as message
+				var/reason = stripped_multiline_input(usr,"Please State Reason","Reason")
 				if(!reason)
 					return
 				ban_unban_log_save("[key_name(usr)] appearance banned [key_name(M)]. reason: [reason]")
@@ -837,9 +837,21 @@
 
 		//Deathsquad
 		if(jobban_isbanned(M, "deathsquad"))
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'><font color=red>[replacetext("Deathsquad", " ", "&nbsp")]</font></a></td></tr><tr align='center'>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td>"
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=deathsquad;jobban4=\ref[M]'>[replacetext("Deathsquad", " ", "&nbsp")]</a></td></tr><tr align='center'>"
+
+		//Lavaland Roles
+		if(jobban_isbanned(M, "lavaland"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>[replacetext("Lavaland Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>[replacetext("Lavaland Roles", " ", "&nbsp")]</a></td>"
+
+		//Xenobio (sentience potions/golems/etc._
+		if(jobban_isbanned(M, "xenobio"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'><font color=red>[replacetext("Xenobio Roles", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=xenobio;jobban4=\ref[M]'>[replacetext("Xenobio Roles", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -853,6 +865,12 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'><font color=red>[replacetext("Traitor", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=traitor;jobban4=\ref[M]'>[replacetext("Traitor", " ", "&nbsp")]</a></td>"
+
+		//Double Agent
+		if(jobban_isbanned(M, "double_agent") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=double_agent;jobban4=\ref[M]'><font color=red>[replacetext("Double Agent", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=double_agent;jobban4=\ref[M]'>[replacetext("Double Agent", " ", "&nbsp")]</a></td>"
 
 		//Changeling
 		if(jobban_isbanned(M, "changeling") || isbanned_dept)
@@ -909,6 +927,16 @@
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>[replacetext("Alien", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>[replacetext("Alien", " ", "&nbsp")]</a></td>"
+
+		//Misc (Black)
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='000000'><th colspan='10'><font color=white>Miscellaneous</font></th></tr><tr align='center'>"
+
+		//NTSL
+		if(jobban_isbanned(M, "ntsl"))
+			jobs += "<td width='100%'><a href='?src=\ref[src];jobban3=ntsl;jobban4=\ref[M]'><font color=red>[replacetext("NTSL", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='100%'><a href='?src=\ref[src];jobban3=ntsl;jobban4=\ref[M]'>[replacetext("NTSL", " ", "&nbsp")]</a></td>"
 
 		jobs += "</tr></table>"
 
@@ -999,7 +1027,7 @@
 						continue
 					joblist += temp.title
 			if("ghostroles")
-				joblist += list("pAI", "posibrain", "drone", "deathsquad")
+				joblist += list("pAI", "posibrain", "drone", "deathsquad", "lavaland", "xenobio")
 			else
 				joblist += href_list["jobban3"]
 
@@ -1016,7 +1044,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = input(usr,"Please State Reason","Reason") as message
+					var/reason = stripped_multiline_input(usr,"Please State Reason","Reason")
 					if(!reason)
 						return
 
@@ -1033,7 +1061,7 @@
 							msg = job
 						else
 							msg += ", [job]"
-					add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
+					add_note(M.ckey, "Banned  from [msg] for [mins] minutes - [reason]", null, usr.ckey, 0)
 					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes</span>")
 					M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
 					M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1041,7 +1069,7 @@
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
-					var/reason = input(usr,"Please State Reason","Reason") as message
+					var/reason = stripped_multiline_input(usr,"Please State Reason","Reason")
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -1056,7 +1084,7 @@
 								msg = job
 							else
 								msg += ", [job]"
-						add_note(M.ckey, "Banned  from [msg] - [reason]", null, usr.ckey, 0)
+						add_note(M.ckey, "Permanently banned from [msg] - [reason]", null, usr.ckey, 0)
 						message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg]</span>")
 						M << "<span class='boldannounce'><BIG>You have been jobbanned by [usr.client.ckey] from: [msg].</BIG></span>"
 						M << "<span class='boldannounce'>The reason is: [reason]</span>"
@@ -1191,7 +1219,7 @@
 				var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 				if(!mins)
 					return
-				var/reason = input(usr,"Please State Reason","Reason") as message
+				var/reason = stripped_multiline_input(usr,"Please State Reason","Reason")
 				if(!reason)
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
@@ -1211,7 +1239,7 @@
 				del(M.client)
 				//qdel(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
-				var/reason = input(usr,"Please State Reason","Reason") as message
+				var/reason = stripped_multiline_input(usr,"Please State Reason","Reason")
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1390,7 +1418,7 @@
 		if(!ismob(M))
 			usr << "this can only be used on instances of type /mob"
 
-		var/speech = input("What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
+		var/speech = stripped_input(usr, "What will [key_name(M)] say?.", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins. //no we don't
 		if(!speech)
 			return
 		M.say(speech)
@@ -1842,7 +1870,7 @@
 			usr << "The person you are trying to contact is not wearing a headset"
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
+		var/input = stripped_input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
 		if(!input)
 			return
 
@@ -1860,7 +1888,7 @@
 			usr << "The person you are trying to contact is not wearing a headset"
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
+		var/input = stripped_input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
 		if(!input)
 			return
 
@@ -1917,8 +1945,8 @@
 		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
-		var/reason = input("","What reason are you giving an antag token?") as text
-		if(length(reason) < 5)
+		var/reason = stripped_input(usr, "","What reason are you giving an antag token?")
+		if(!reason || length(reason) < 5)
 			usr << "That reason isn't good enough! Cancelling."
 			return
 
@@ -1934,8 +1962,8 @@
 		if(!config.use_antag_tokens) return
 		if(!check_rights(R_ADMIN))	return
 
-		var/reason = input("","What reason are you giving an antag token?") as text
-		if(length(reason) < 5)
+		var/reason = stripped_input(usr, "","What reason are you giving an antag token?")
+		if(!reason || length(reason) < 5)
 			usr << "That reason isn't good enough! Cancelling."
 			return
 
@@ -1952,8 +1980,8 @@
 
 		var/mob/M = locate(href_list["toggle_whitelisted"])
 
-		var/reason = input("","What reason are you giving for toggling the whitelist for [get_ckey(M)]?") as text
-		if(length(reason) < 5)
+		var/reason = stripped_input(usr, "","What reason are you giving for toggling the whitelist for [get_ckey(M)]?")
+		if(!reason || length(reason) < 5)
 			usr << "That reason isn't good enough! Cancelling."
 			return
 
@@ -2186,11 +2214,11 @@
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") as anything in available_channels )
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
-		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story", "Network Channel Handler", ""))
+		src.admincaster_feed_message.body = adminscrub(input(usr, "Write your Feed story", "Network Channel Handler", "") as text)
 		while (findtext(src.admincaster_feed_message.returnBody(-1)," ") == 1)
 			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.returnBody(-1),2,lentext(src.admincaster_feed_message.returnBody(-1))+1)
 		src.access_news_network()
@@ -2237,13 +2265,13 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
-		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
+		src.admincaster_wanted_message.criminal = adminscrub(input(usr, "Provide the name of the Wanted person", "Network Security Handler", "") as text)
 		while(findtext(src.admincaster_wanted_message.criminal," ") == 1)
 			src.admincaster_wanted_message.criminal = copytext(admincaster_wanted_message.criminal,2,lentext(admincaster_wanted_message.criminal)+1)
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
-		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
+		src.admincaster_wanted_message.body = adminscrub(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", "") as text)
 		while (findtext(src.admincaster_wanted_message.body," ") == 1)
 			src.admincaster_wanted_message.body = copytext(src.admincaster_wanted_message.body,2,lentext(src.admincaster_wanted_message.body)+1)
 		src.access_news_network()
@@ -2328,7 +2356,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admin_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.admin_signature = adminscrub(input(usr, "Provide your desired signature", "Network Identity Handler", "") as text)
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])

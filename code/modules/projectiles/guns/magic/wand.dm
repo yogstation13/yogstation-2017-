@@ -69,7 +69,7 @@
 	var/message ="<span class='warning'>You irradiate yourself with pure energy! "
 	message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
 	user << message
-	user.adjustOxyLoss(500)
+	user.adjustOxyLoss(500, 1, DAMAGE_MAGIC)
 	charges--
 	..()
 

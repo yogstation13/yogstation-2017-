@@ -70,6 +70,8 @@
 	// should also remove/limit/filter reagents?
 	// this is an exercise left to others I'm afraid.  -Sayu
 	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !emagged)
+	for(var/obj/O in spawned)
+		O.flags |= HOLOGRAM
 	for(var/obj/machinery/M in spawned)
 		M.flags |= NODECONSTRUCT
 	for(var/obj/structure/S in spawned)

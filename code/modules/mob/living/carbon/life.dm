@@ -303,10 +303,7 @@
 	..()
 
 	if(staminaloss)
-		if(sleeping)
-			adjustStaminaLoss(-10)
-		else
-			adjustStaminaLoss(-3)
+		regenStamina()
 
 	if(sleeping)
 		handle_dreams()
@@ -383,6 +380,15 @@
 	if(hallucination)
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)
+
+	if(disgust)
+		adjust_disgust(-1)
+
+/mob/living/carbon/proc/regenStamina()
+	if(sleeping)
+		adjustStaminaLoss(-10)
+	else
+		adjustStaminaLoss(-3)
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

@@ -18,6 +18,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
+	var/canRecall = TRUE
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -32,6 +33,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/orderhistory = list()
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
+
+	var/list/cooldown_ids = list()
+
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -147,6 +151,8 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
 		return
+	if(!canRecall)
+		return
 	if(ticker.mode.name == "meteor")
 		return
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
@@ -198,8 +204,12 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
+/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed, ignoreCD)
+	for(var/a in cooldown_ids)
+		if(a == shuttleId)
+			if(!ignoreCD)
+				return 3
 
-/datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
 	var/obj/docking_port/stationary/D = getDock(dockId)
 

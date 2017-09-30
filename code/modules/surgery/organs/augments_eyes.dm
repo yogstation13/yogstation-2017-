@@ -17,16 +17,17 @@
 
 
 /obj/item/organ/cyberimp/eyes/Insert(var/mob/living/carbon/M, var/special = 0)
-	..()
-	if(istype(owner, /mob/living/carbon/human) && eye_color)
-		var/mob/living/carbon/human/HMN = owner
-		old_eye_color = HMN.eye_color
-		HMN.eye_color = eye_color
-		HMN.regenerate_icons()
-	if(aug_message && !special)
-		owner << "<span class='notice'>[aug_message]</span>"
+	if(..())
+		if(istype(owner, /mob/living/carbon/human) && eye_color)
+			var/mob/living/carbon/human/HMN = owner
+			old_eye_color = HMN.eye_color
+			HMN.eye_color = eye_color
+			HMN.regenerate_icons()
+		if(aug_message && !special)
+			owner << "<span class='notice'>[aug_message]</span>"
 
-	owner.update_sight()
+		owner.update_sight()
+		return 1
 
 /obj/item/organ/cyberimp/eyes/Remove(var/mob/living/carbon/M, var/special = 0)
 	M.sight ^= sight_flags
@@ -75,11 +76,12 @@
 	var/HUD_type = 0
 
 /obj/item/organ/cyberimp/eyes/hud/Insert(var/mob/living/carbon/M, var/special = 0)
-	..()
-	if(HUD_type)
-		var/datum/atom_hud/H = huds[HUD_type]
-		H.add_hud_to(M)
-		M.permanent_huds |= H
+	if(..())
+		if(HUD_type)
+			var/datum/atom_hud/H = huds[HUD_type]
+			H.add_hud_to(M)
+			M.permanent_huds |= H
+		return 1
 
 /obj/item/organ/cyberimp/eyes/hud/Remove(var/mob/living/carbon/M, var/special = 0)
 	if(HUD_type)

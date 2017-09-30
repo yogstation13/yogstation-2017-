@@ -39,7 +39,7 @@
 	if(..())
 		return
 	var/A
-	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
+	A = input("Area to jump bombard", "Open Fire", A) as anything in teleportlocs
 	var/area/thearea = teleportlocs[A]
 	if (usr.stat || usr.restrained()) return
 	if(src.reload < ARTILLERY_RELOAD_TIME) return
@@ -55,7 +55,7 @@
 
 /*/mob/proc/openfire()
 	var/A
-	A = input("Area to jump bombard", "Open Fire", A) in teleportlocs
+	A = input("Area to jump bombard", "Open Fire", A) as anything in teleportlocs
 	var/area/thearea = teleportlocs[A]
 	priority_announce("Bluespace artillery fire detected. Brace for impact.")
 	spawn(30)

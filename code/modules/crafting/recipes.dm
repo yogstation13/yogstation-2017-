@@ -42,7 +42,7 @@
 /datum/crafting_recipe/molotov
 	name = "Molotov"
 	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
-	reqs = list(/obj/item/weapon/reagent_containers/glass/rag = 1,
+	reqs = list(/obj/item/weapon/mop/rag = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/bottle = 1)
 	time = 40
@@ -325,7 +325,7 @@
 	result = /obj/item/weapon/bombcore/chemical
 	reqs = list(
 		/obj/item/weapon/stock_parts/matter_bin = 1,
-		/obj/item/weapon/grenade/plastic/c4 = 1,
+		/obj/item/weapon/c4 = 1,
 		/obj/item/weapon/grenade/chem_grenade = 2
 	)
 	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)

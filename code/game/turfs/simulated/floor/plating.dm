@@ -51,6 +51,7 @@
 			if(!W.use(1))
 				return
 			var/turf/open/floor/T = ChangeTurf(W.turf_type)
+			placedby = user.ckey
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
@@ -216,6 +217,11 @@
 	luminosity = 1
 	flags = 0
 	unacidable = 1
+	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
+
+/turf/open/floor/plating/lava/New()
+	. = ..()
+	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -237,9 +243,18 @@
 
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
+/turf/open/floor/plating/lava/proc/is_safe()
+	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	return LAZYLEN(found_safeties)
+
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)
 	. = 0
 	var/thing_to_check = src
+	if(is_safe())
+		slowdown = 0
+		return FALSE
+	else
+		slowdown = initial(slowdown)
 	if (AM)
 		thing_to_check = list(AM)
 	for(var/thing in thing_to_check)
@@ -261,6 +276,8 @@
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
+				continue
+			if(L.flying())
 				continue
 			if(L.buckled)
 				if(isobj(L.buckled))

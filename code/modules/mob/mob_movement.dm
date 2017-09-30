@@ -161,8 +161,8 @@
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
 
-	if(isAI(mob))
-		return AIMove(n,direct,mob)
+	if(mob.special_move(n, direct))
+		return
 
 	if(Process_Grab()) //are we restrained by someone's grip?
 		return
@@ -189,6 +189,17 @@
 			return
 
 	move_delay = mob.movement_delay() + world.time
+
+	if(isliving(mob))
+		var/mob/living/L = mob
+		if(L.is_nearcrit())
+			L.visible_message("<span class='danger'>[L] crawls forward!</span>",
+			"<span class='userdanger'>You crawl forward at the expense of some of your strength.</span>")
+			L.apply_damage(1, OXY)
+			playsound(L.loc, pick('sound/misc//bodyscrape-01.ogg', 'sound/misc/bodyscrape-02.ogg'), 20, 1, -4)
+		else if(L.lying) // legless people.
+			if(prob(25))
+				playsound(L.loc, pick('sound/misc/bodyscrape-01.ogg', 'sound/misc/bodyscrape-02.ogg'), 20, 1, -4)
 
 	if(mob.confused)
 		if(mob.confused > 40)
@@ -328,6 +339,8 @@ proc/Can_ShadowWalk(var/mob/mob)
 				L.dir = direct
 	return 1
 
+/mob/proc/special_move(newLoc, direction)
+	return FALSE
 
 ///Process_Spacemove
 ///Called by /client/Move()

@@ -31,27 +31,7 @@
 	if(..())
 		return
 
-	R.notify_ai(2)
-
-	R.uneq_all()
-	R.hands.icon_state = "nomod"
-	R.icon_state = "robot"
-	qdel(R.module)
-	R.module = null
-
-	R.modtype = "robot"
-	R.designation = "Default"
-	R.updatename("Default")
-
-	R.update_icons()
-	R.update_headlamp()
-
-	R.speed = 0 // Remove upgrades.
-	R.ionpulse = FALSE
-	R.magpulse = FALSE
-	R.weather_immunities = initial(R.weather_immunities)
-
-	R.status_flags |= CANPUSH
+	R.reset_module()
 
 	return 1
 
@@ -87,6 +67,9 @@
 		for(var/mob/dead/observer/ghost in player_list)
 			if(ghost.mind && ghost.mind.current == R)
 				R.key = ghost.key
+				ghost << "<span class='boldnotice'>An emergency reboot module has been installed \
+					into your servo. You are being revived.</span>"
+				ghost << 'sound/machines/ping.ogg'
 
 	R.revive()
 

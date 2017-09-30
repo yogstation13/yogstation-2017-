@@ -163,7 +163,7 @@
 					AL.close()
 					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
-					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
+					AL.actionstaken += "\[[time_stamp()]\][src]/[src.ckey] hostile locked down"
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
@@ -315,6 +315,9 @@
 		return
 
 	if (istype(M, /obj/machinery))
+		if(M.no_malf_ai_overloading)
+			src << "<span class='warning'> Can't overload this device.</span>"
+			return
 		for(var/datum/AI_Module/small/overload_machine/overload in current_modules)
 			if(overload.uses > 0)
 				overload.uses --
@@ -345,8 +348,9 @@
 		return
 
 	if (istype(M, /obj/machinery))
-		if(!M.can_be_overridden())
-			src << "Can't override this device."
+		if(M.no_malf_ai_overriding)
+			src << "<span class='warning'> Can't override this device.</span>"
+			return
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --

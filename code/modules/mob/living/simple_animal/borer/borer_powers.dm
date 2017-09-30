@@ -401,8 +401,9 @@ mob/living/carbon/proc/release_control()
 	set desc = "Release control of your host's body."
 
 	if(borer && borer.host_brain)
-		if(alert(src, "Sure you want to give up your control so soon?", "Confirm", "Yes", "No") != "Yes")
-			return
+		if(!borer.docile) //if the borer is docile they have to give up control regardless
+			if(alert(src, "Sure you want to give up your control so soon?", "Confirm", "Yes", "No") != "Yes")
+				return
 		src << "<span class='danger'>You withdraw your probosci, releasing control of [borer.host_brain]</span>"
 
 		borer.detatch()
@@ -414,19 +415,24 @@ mob/living/carbon/proc/release_control()
 	set category = "Borer"
 	set name = "Reproduce"
 	set desc = "Vomit out your younglings."
+	var/poll_time = 100
 
 	if(istype(src, /mob/living/carbon/brain))
 		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
 		return
+
 	if(!borer)
 		return
 
+	if(world.time < borer.next_spawn_time)
+		src << "<span class='warning'>We are already reproducing.</span>"
+		return
+
 	if(borer.chemicals >= 100)
-		var/list/candidates = get_candidates(ROLE_BORER, null, ROLE_BORER) // we use this to FIND candidates. not neccessairly use them.
-		for(var/client/C in candidates)
-			if(!(C.prefs.toggles & MIDROUND_ANTAG))
-				candidates -= C
-		if(!candidates.len)
+		src << "<span class='notice'>We prepare our host for the creation of a new borer.</span>"
+		borer.next_spawn_time = world.time + poll_time
+		var/list/Bcandidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, poll_time) // we use this to FIND candidates. not necessarily use them.
+		if(!Bcandidates.len)
 			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
 			return
 
@@ -434,13 +440,12 @@ mob/living/carbon/proc/release_control()
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
-		var/list/mob/dead/observer/Bcandidates = pollCandidatesForMob("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 100, newborer)
-		var/client/B = pick(Bcandidates)
-		newborer.key = B.key
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
+
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
+		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
+		var/mob/dead/observer/O = pick(Bcandidates)
+		newborer.key = O.key
 	else
 		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
 		return

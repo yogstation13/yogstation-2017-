@@ -83,6 +83,8 @@ Admin:
 \tF6 = player-panel
 \tF7 = admin-pm
 \tF8 = Invisimin
+\t,  = Asay
+\t.  = Dsay
 </font>"}
 
 	mob.hotkey_help()

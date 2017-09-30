@@ -5,6 +5,7 @@
  *		Photos
  *		Photo Albums
  *		AI Photography
+ *		Detective Album
  */
 
 /*
@@ -42,7 +43,7 @@
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
+		var/txt = stripped_input(user, "What would you like to write on the back?", "Photo Writing", null)
 		txt = copytext(txt, 1, 128)
 		if(loc == user && user.stat == 0)
 			scribble = txt
@@ -73,7 +74,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = stripped_input(usr, "What would you like to label the photo?", "Photo Labelling", null, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == 0 && usr.canmove && !usr.restrained())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
@@ -138,6 +139,20 @@
 	pictures_max = 30
 	pictures_left = 30
 
+/obj/item/weapon/storage/photobook/detective
+	name = "detective's journal"
+	desc = "October 12th, 1985. Tonight, a comedian died in New York. Somebody knows why."
+	can_hold = list(/obj/item/weapon/photo, /obj/item/weapon/hand_labeler, /obj/item/weapon/paper, /obj/item/device/camera)
+	max_w_class = 3
+
+/obj/item/weapon/storage/photobook/detective/New()
+	..()
+	new /obj/item/weapon/hand_labeler/det(src)
+
+/obj/item/weapon/hand_labeler/det
+	name = "detectives crime labeler"
+	desc = "Used to label and categorize investigation files inside of the detective's journal."
+	labels_left = 60
 
 /obj/item/device/camera/siliconcam //camera AI can take pictures with
 	name = "silicon photo camera"
@@ -391,7 +406,7 @@
 		return
 	for(var/datum/picture/t in targetloc.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = input("Select image (numbered in order taken)") as anything in nametemp
 	for(var/datum/picture/q in targetloc.aipictures)
 		if(q.fields["name"] == find)
 			return q
@@ -470,7 +485,7 @@
 		return
 	for(var/datum/picture/t in targetcam.aipictures)
 		nametemp += t.fields["name"]
-	find = input("Select image (numbered in order taken)") in nametemp
+	find = input("Select image (numbered in order taken)") as anything in nametemp
 	for(var/datum/picture/q in targetcam.aipictures)
 		if(q.fields["name"] == find)
 			selection = q

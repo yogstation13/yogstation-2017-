@@ -27,17 +27,17 @@
 		return
 	..()
 
-/obj/item/device/radio/headset/receive_range(freq, level, AIuser)
+/obj/item/device/radio/headset/receive_range(freq, list/broadcast_levels, AIuser)
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
 		if(H.ears == src)
-			return ..(freq, level)
+			return ..(freq, broadcast_levels)
 	else if(istype(loc, /mob/living/simple_animal/hostile))
 		var/mob/living/simple_animal/hostile/animal = loc
 		if(animal.headset == src)
-			return ..(freq, level)
+			return ..(freq, broadcast_levels)
 	else if(AIuser)
-		return ..(freq, level)
+		return ..(freq, broadcast_levels)
 	return -1
 
 /obj/item/device/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
@@ -256,8 +256,8 @@
 	name = "\proper Integrated Subspace Transceiver "
 	keyslot2 = new /obj/item/device/encryptionkey/ai
 
-/obj/item/device/radio/headset/ai/receive_range(freq, level)
-	return ..(freq, level, 1)
+/obj/item/device/radio/headset/ai/receive_range(freq, list/broadcast_levels)
+	return ..(freq, broadcast_levels, 1)
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user, params)
 	user.set_machine(src)

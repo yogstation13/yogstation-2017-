@@ -3,4 +3,4 @@
 	anchored = 1
 
 /obj/effect/decal/ex_act(severity, target)
-	qdel(src)
+	destroy_effect()

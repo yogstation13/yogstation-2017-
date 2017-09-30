@@ -158,6 +158,7 @@
 	density = 0
 	circuit = null
 	clockwork = TRUE //it'd look very weird
+	screen_crack = null
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -190,3 +191,11 @@
 	icon_keyboard = "mining_key"
 	network = list("MINE")
 	circuit = /obj/item/weapon/circuitboard/computer/mining
+
+/obj/machinery/computer/security/mining/medic
+	network = list("MEDIC")
+	desc = "An observational camera system hooked up to the cameras installed in the miners jumpsuits."
+
+/obj/machinery/computer/security/mining/jaunter
+	network = list("JAUNT")
+	desc = "Connected to every live jaunter in existence. As long as they're on lavaland."

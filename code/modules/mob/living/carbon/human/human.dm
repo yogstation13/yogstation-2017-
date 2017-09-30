@@ -47,7 +47,7 @@
 	//Note: Additional organs are generated/replaced on the dna.species level
 
 	for(var/obj/item/organ/I in internal_organs)
-		I.Insert(src)
+		I.Insert(src, 1)
 
 	martial_art = default_martial_art
 
@@ -286,7 +286,7 @@
 
 	for (var/obj/item/bodypart/org in bodyparts)
 		if (org.can_be_bandaged && org.bandaged)
-			dat += "<tr><td><i>[org.getDisplayName()]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
+			dat += "<tr><td><i>[getLimbDisplayName(org.name)]</i> wrapped with:</td><td><a href='byond://?src=\ref[src];unwrap=\ref[org.bandaged]'>[org.bandaged]</a></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A></td></tr>"
@@ -398,8 +398,7 @@
 					if(pocket_item == (pocket_id == slot_r_store ? r_store : l_store)) //item still in the pocket we search
 						unEquip(pocket_item)
 				else
-					if(place_item)
-						usr.unEquip(place_item)
+					if(place_item && usr.unEquip(place_item))
 						equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
 
 				// Update strip window
@@ -436,7 +435,7 @@
 				if(href_list["hud"] == "m")
 					if(istype(H.glasses, /obj/item/clothing/glasses/hud/health))
 						if(href_list["p_stat"])
-							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
+							var/health = input(usr, "Specify a new physical status for this person.", "Medical HUD", R.fields["p_stat"]) as anything in list("Active", "Physically Unfit", "*Unconscious*", "*Deceased*", "Cancel")
 							if(R)
 								if(!H.canUseHUD())
 									return
@@ -446,7 +445,7 @@
 									R.fields["p_stat"] = health
 							return
 						if(href_list["m_stat"])
-							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
+							var/health = input(usr, "Specify a new mental status for this person.", "Medical HUD", R.fields["m_stat"]) as anything in list("Stable", "*Watch*", "*Unstable*", "*Insane*", "Cancel")
 							if(R)
 								if(!H.canUseHUD())
 									return
@@ -522,7 +521,7 @@
 							R = find_record("name", perpname, data_core.security)
 							if(R)
 								if(href_list["status"])
-									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
+									var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) as anything in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
 									if(setcriminal != "Cancel")
 										if(R)
 											if(H.canUseHUD())
@@ -558,7 +557,7 @@
 									switch(alert("What crime would you like to add?","Security HUD","Minor Crime","Major Crime","Cancel"))
 										if("Minor Crime")
 											if(R)
-												var/t1 = stripped_input("Please input minor crime names:", "Security HUD", "", null)
+												var/t1 = stripped_input(usr, "Please input minor crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input minor crime details:", "Security HUD", "", null)
 												if(R)
 													if (!t1 || !t2 || !allowed_access)
@@ -573,7 +572,7 @@
 													return
 										if("Major Crime")
 											if(R)
-												var/t1 = stripped_input("Please input major crime names:", "Security HUD", "", null)
+												var/t1 = stripped_input(usr, "Please input major crime names:", "Security HUD", "", null)
 												var/t2 = stripped_multiline_input("Please input major crime details:", "Security HUD", "", null)
 												if(R)
 													if (!t1 || !t2 || !allowed_access)
@@ -920,10 +919,12 @@
 		if(H.bloody_hands)
 			H.bloody_hands = 0
 			H.update_inv_gloves()
+	if(H.shoes)
+		H.shoes.clean_blood()
 	update_icons()	//apply the now updated overlays to the mob
 
 
-/mob/living/carbon/human/wash_cream()
+/mob/living/carbon/human/proc/wash_cream()
 	//clean both to prevent a rare bug
 	overlays -=image('icons/effects/creampie.dmi', "creampie_lizard")
 	overlays -=image('icons/effects/creampie.dmi', "creampie_human")
@@ -1111,3 +1112,14 @@
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
 	..()
+
+/mob/living/carbon/human/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
+	if(dna && dna.species && dna.species.handle_flash(src, intensity, override_blindness_check, affect_silicon, visual))
+		return 0
+	return ..()
+
+/mob/living/carbon/human/is_nearcrit()
+	if(health <= config.health_threshold_crit && health > HEALTH_THRESHOLD_DEEPCRIT)
+		if(!(NOCRIT in status_flags))
+			return TRUE
+	return FALSE

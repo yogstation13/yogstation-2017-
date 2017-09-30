@@ -534,3 +534,57 @@
 	icon_state = "bedsheet"
 	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
 	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+
+
+//hoody
+
+/obj/item/clothing/suit/hooded/wintercoat/superb
+	name = "red square logo hoodie"
+	icon_state = "coatsuperb"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	hoodtype = /obj/item/clothing/head/winterhood/superb
+	desc = "A hoodie with a strange red and white logo on it, even just looking at it makes you feel cool."
+
+/obj/item/clothing/head/winterhood/superb
+	icon_state = "winterhood_superb"
+
+
+/obj/item/clothing/suit/hooded/wintercoat/bape
+	name = "camo hoodie"
+	icon_state = "coatbape"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	hoodtype = /obj/item/clothing/head/winterhood/bape
+	desc = "A canvas hoody which has a hood with a small monster on it."
+
+/obj/item/clothing/head/winterhood/bape
+	icon_state = "winterhood_bape"
+
+
+//Track jackets
+
+/obj/item/clothing/suit/toggle/trackjacket
+	name = "oreo track jacket"
+	desc = "A sporty coat that can be unzipped."
+	icon_state = "trackjacket"
+	item_state = "trackjacket"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|ARMS
+	togglename = "zipper"
+
+/obj/item/clothing/suit/toggle/trackjacket/white
+	name = "blue and white track jacket"
+	desc = "A sporty coat that can be unzipped. It features blue accents."
+	icon_state = "trackjacket_white"
+	item_state = "trackjacket_white"
+
+/obj/item/clothing/suit/toggle/trackjacket/paint
+	name = "paint splat track jacket"
+	desc = "A track jacket that has a paint splat design on it. It looks kinda like a galaxy, neat."
+	icon_state = "trackjacket_paint"
+	item_state = "trackjacket_paint"
+
+/obj/item/clothing/suit/toggle/trackjacket/superb
+	name = "gold track jacket"
+	desc = "A track jacket that has golden accents and an odd design. A tag on it says Lewis Wheaton(tm)."
+	icon_state = "trackjacket_lv"
+	item_state = "trackjacket_lv"

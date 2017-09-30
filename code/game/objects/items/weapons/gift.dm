@@ -7,6 +7,7 @@
 /*
  * Gifts
  */
+
 /obj/item/weapon/a_gift
 	name = "gift"
 	desc = "PRESENTS!!!! eek!"
@@ -30,44 +31,50 @@
 		M << "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>"
 		return
 
-	var/gift_type_list = list(/obj/item/weapon/sord,
-		/obj/item/weapon/storage/wallet,
-		/obj/item/weapon/storage/photo_album,
-		/obj/item/weapon/storage/box/snappops,
-		/obj/item/weapon/storage/crayons,
-		/obj/item/weapon/storage/backpack/holding,
-		/obj/item/weapon/storage/belt/champion,
-		/obj/item/weapon/soap/deluxe,
-		/obj/item/weapon/pickaxe/diamond,
-		/obj/item/weapon/pen/invisible,
-		/obj/item/weapon/lipstick/random,
-		/obj/item/weapon/grenade/smokebomb,
-		/obj/item/weapon/grown/corncob,
-		/obj/item/weapon/poster/contraband,
-		/obj/item/weapon/poster/legit,
-		/obj/item/weapon/book/manual/barman_recipes,
-		/obj/item/weapon/book/manual/chef_recipes,
-		/obj/item/device/assembly/bikehorn,
-		/obj/item/toy/beach_ball,
-		/obj/item/toy/beach_ball/holoball,
-		/obj/item/weapon/banhammer,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-		/obj/item/device/paicard,
-		/obj/item/device/instrument/violin,
-		/obj/item/device/instrument/guitar,
-		/obj/item/weapon/storage/belt/utility/full,
-		/obj/item/clothing/tie/horrible,
-		/obj/item/clothing/suit/jacket/leather,
-		/obj/item/clothing/suit/jacket/leather/overcoat,
-		/obj/item/clothing/suit/poncho,
-		/obj/item/clothing/suit/poncho/green,
-		/obj/item/clothing/suit/poncho/red,
-		/obj/item/clothing/suit/snowman,
-		/obj/item/clothing/head/snowman)
+	var/static/list/gift_type_list
+	if(!gift_type_list)
+		gift_type_list = list(/obj/item/weapon/sord,
+			/obj/item/weapon/storage/wallet,
+			/obj/item/weapon/storage/photo_album,
+			/obj/item/weapon/storage/box/snappops,
+			/obj/item/weapon/storage/crayons,
+			/obj/item/weapon/storage/backpack/holding,
+			/obj/item/weapon/storage/belt/champion,
+			/obj/item/weapon/soap/deluxe,
+			/obj/item/weapon/pickaxe/diamond,
+			/obj/item/weapon/pen/invisible,
+			/obj/item/weapon/lipstick/random,
+			/obj/item/weapon/grenade/smokebomb,
+			/obj/item/weapon/grown/corncob,
+			/obj/item/weapon/poster/contraband,
+			/obj/item/weapon/poster/legit,
+			/obj/item/weapon/book/manual/barman_recipes,
+			/obj/item/weapon/book/manual/chef_recipes,
+			/obj/item/device/assembly/bikehorn,
+			/obj/item/toy/beach_ball,
+			/obj/item/toy/beach_ball/holoball,
+			/obj/item/weapon/banhammer,
+			/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
+			/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+			/obj/item/device/paicard,
+			/obj/item/device/instrument/violin,
+			/obj/item/device/instrument/guitar,
+			/obj/item/weapon/storage/belt/utility/full,
+			/obj/item/clothing/tie/horrible,
+			/obj/item/clothing/suit/jacket/leather,
+			/obj/item/clothing/suit/jacket/leather/overcoat,
+			/obj/item/clothing/suit/poncho,
+			/obj/item/clothing/suit/poncho/green,
+			/obj/item/clothing/suit/poncho/red,
+			/obj/item/clothing/suit/snowman,
+			/obj/item/clothing/shoes/sneakers/yeezy/orange,
+			/obj/item/clothing/head/snowman)
 
-	gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
-	gift_type_list += subtypesof(/obj/item/toy) - (((typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo + /obj/item/toy/toy_mech + /obj/item/toy/toy_mech/ranged + /obj/item/toy/toy_mech/melee)) //All toys, except for abstract types and syndicate cards.
+		gift_type_list += subtypesof(/obj/item/clothing/head/collectable)
+		gift_type_list += subtypesof(/obj/item/toy)
+
+		var/list/gift_type_blacklist = typesof(/obj/item/toy/beach_ball/holoball/chaos) + (typesof(/obj/item/toy/cards) - /obj/item/toy/cards/deck) + /obj/item/toy/figure + /obj/item/toy/ammo + /obj/item/toy/toy_mech + /obj/item/toy/toy_mech/ranged + /obj/item/toy/toy_mech/melee
+		gift_type_list -= gift_type_blacklist
 
 	var/gift_type = pick(gift_type_list)
 

@@ -30,7 +30,7 @@
 		return
 
 	message_admins("[key_name_admin(src)] has started answering [key_name(M.key, 0, 0)]'s prayer.")
-	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text
+	var/msg = stripped_input(usr, "Message:", "Subtle PM to [M.key]")
 
 	if (!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [key_name(M.key, 0, 0)]'s prayer")
@@ -52,7 +52,7 @@
 		src << "Only administrators may use this command."
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone:")) as text
+	var/msg = stripped_input(usr, "Message:", "Enter the text you wish to appear to everyone:")
 
 	if (!msg)
 		return
@@ -75,7 +75,7 @@
 	if(!M)
 		return
 
-	var/msg = input("Message:", text("Enter the text you wish to appear to your target:")) as text
+	var/msg = stripped_input(usr, "Message:", "Enter the text you wish to appear to your target:")
 
 	if( !msg )
 		return
@@ -97,7 +97,7 @@
 	var/range = input("Range:", "Narrate to mobs within how many tiles:", 7) as num
 	if(!range)
 		return
-	var/msg = input("Message:", text("Enter the text you wish to appear to everyone within view:")) as text
+	var/msg = stripped_input(usr, "Message:", "Enter the text you wish to appear to everyone within view:")
 	if (!msg)
 		return
 	for(var/mob/M in view(range,A))
@@ -116,8 +116,8 @@
 	if(GODMODE in M.status_flags)
 		M.status_flags -= GODMODE
 	else
-		M.status_flags += GODMODE
-	usr << "<span class='adminnotice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>"
+		M.status_flags |= GODMODE
+	usr << "<span class='adminnotice'>Toggled [(GODMODE in M.status_flags) ? "ON" : "OFF"]</span>"
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
 	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(GODMODE in M.status_flags) ? "On" : "Off"]")
@@ -269,7 +269,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+	var/input = ckey(stripped_input(src, "Please specify which key will be respawned.", "Key", ""))
 	if(!input)
 		return
 
@@ -433,7 +433,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "") as text|null
+	var/input = stripped_input(usr, "Please enter anything you want the AI to do. Anything. Serious.", "What?", "")
 	if(!input)
 		return
 
@@ -471,7 +471,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
+	var/input = stripped_multiline_input(usr, "Please enter anything you want. Anything. Serious.", "What?", "")
 	if(!input)
 		return
 
@@ -493,7 +493,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	var/input = input(usr, "Please input a new name for Central Command.", "What?", "") as text|null
+	var/input = stripped_input(usr, "Please input a new name for Central Command.", "What?", "")
 	if(!input)
 		return
 	change_command_name(input)
@@ -532,15 +532,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
+	var/devastation = input("Range of total devastation. -1 to none", "Input")  as num|null
 	if(devastation == null) return
-	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
+	var/heavy = input("Range of heavy impact. -1 to none", "Input")  as num|null
 	if(heavy == null) return
-	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
+	var/light = input("Range of light impact. -1 to none", "Input")  as num|null
 	if(light == null) return
-	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
+	var/flash = input("Range of flash. -1 to none", "Input")  as num|null
 	if(flash == null) return
-	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
+	var/flames = input("Range of flames. -1 to none", "Input")  as num|null
 	if(flames == null) return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
@@ -564,9 +564,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		src << "Only administrators may use this command."
 		return
 
-	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
+	var/heavy = input("Range of heavy pulse.", "Input")  as num|null
 	if(heavy == null) return
-	var/light = input("Range of light pulse.", text("Input"))  as num|null
+	var/light = input("Range of light pulse.", "Input")  as num|null
 	if(light == null) return
 
 	if (heavy || light)
@@ -633,7 +633,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views"
 
 	if(view == world.view)
-		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
+		view = input("Select view range:", "FUCK YE", 7) as anything in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
 	else
 		view = world.view
 

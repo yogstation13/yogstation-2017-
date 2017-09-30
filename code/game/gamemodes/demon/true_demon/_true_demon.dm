@@ -28,7 +28,7 @@
 	internal_organs += new /obj/item/organ/tongue
 	for(var/X in internal_organs)
 		var/obj/item/organ/I = X
-		I.Insert(src)
+		I.Insert(src, 1)
 	..()
 
 

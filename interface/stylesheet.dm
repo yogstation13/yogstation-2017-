@@ -121,6 +121,7 @@ h1.alert, h2.alert		{color: #000000;}
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
+.pheromone				{color: #3b2769;}
 
 .command_headset       {font-weight: bold; font-size: 3;}
 .big					{font-size: 3;}

@@ -61,7 +61,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !emagged) || (P.contraband && !contraband))
+		if((P.hidden && !emagged) || (P.contraband && !contraband) || (P.special && !P.special_enabled))
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -141,7 +141,7 @@
 
 			var/reason = ""
 			if(requestonly)
-				reason = input("Reason:", name, "") as text|null
+				reason = stripped_input(usr, "Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 

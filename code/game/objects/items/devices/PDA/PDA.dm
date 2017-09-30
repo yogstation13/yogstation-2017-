@@ -2,7 +2,7 @@
 //The advanced pea-green monochrome lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
-
+var/list/obj/item/device/pda/hotline_pdas = list()
 
 /obj/item/device/pda
 	name = "\improper PDA"
@@ -41,6 +41,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/hidden = 0 // Is the PDA hidden from the PDA list?
 	var/emped = 0
 	var/scanning = 0 //for any scan function that takes time to complete
+	var/exempt = 0 //exempt a certain PDA from name checks This is used with smartwatches, but if anyone wants more wacky PDAs go ahead
 
 	var/obj/item/weapon/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
 	var/ownjob = null //related to above
@@ -49,6 +50,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/image/photo = null //Scanned photo
 	var/list/software = null
+
+	var/hotline_cd = FALSE
 
 
 /obj/item/device/pda/pickup(mob/user)
@@ -77,7 +80,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	new /obj/item/weapon/pen(src)
 
 /obj/item/device/pda/proc/update_label()
-	name = "PDA-[owner] ([ownjob])" //Name generalisation
+	if(!exempt)
+		name = "PDA-[owner] ([ownjob])" //Name generalisation
+	else //adding exemption for smartwatches so it doesn't fuck the name
+		name += "-[owner] ([ownjob])"
 
 /obj/item/device/pda/GetAccess()
 	if(id)
@@ -106,6 +112,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(cartridge)
 		cartridge.unlock(0) //refresh the cartridge screen
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if((NOMACHINERY in H.dna.species.specflags))
+			user << "<span class='warning'>It's some sort of rock! Good for throwing.</span>"
+			return 1
 	user.set_machine(src)
 
 	if(software)
@@ -152,6 +163,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=1'><img src=pda_notes.png> Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=\ref[src];choice=2'><img src=pda_mail.png> Messenger</a></li>"
+				dat += "<li><a href='byond://?src=\ref[src];choice=hotline'>Contact Emergency Hotline</a></li>"
 
 				if (cartridge)
 					if (cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS)
@@ -430,6 +442,30 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						U.AddLuminosity(f_lum)
 					else
 						SetLuminosity(f_lum)
+			if("hotline")
+				if(hotline_cd)
+					U << "<span class='notice'>[src] is still on its cooldown.</span>"
+					return
+				for(var/obj/item/device/pda/P in hotline_pdas)
+					playsound(get_turf(P), 'sound/machines/twobeep.ogg', 50, 0)
+					if(istype(P.loc, /mob/living/carbon/human))
+						var/mob/living/carbon/human/H = P.loc
+						var/datum/signal/signal = telecomms_process()
+						H << "<span class='warning'>[owner] has activated their emergency hotline alert.</span>"
+						if(signal)
+							if(signal.data["done"])
+								var/area/A = get_area(src)
+								var/inrange = FALSE
+								if(H.z in signal.data["broadcast_levels"])
+									inrange = TRUE
+								H << "<span class='warning'>[owner] is communicating from [inrange ? A.name : "an unknown area"].</span>"
+						H << "<span class='notice'>Your PDA prompts you with: \[<a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>Contact [owner]</a>\]</span>"
+					else
+						P.visible_message("<span class='warning'>[src] begins to emit a red light.</span>")
+				U << "<span class='notice'>Your alert went through. Hotline agents were notified.</span>"
+				hotline_cd = TRUE
+				addtimer(src, "reset_hotline_cooldown", PDA_HOTLINE_CD, TRUE)
+
 			if("Medical Scan Health")
 				if(scanmode == PDA_SCAN_MEDICAL_HEALTH)
 					scanmode = 0
@@ -528,7 +564,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = stripped_input(U, "Please enter new ringtone", name, ttone)
 				if(in_range(src, U) && loc == U)
 					if(t)
 						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
@@ -750,8 +786,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
 
 	if (!silent)
-		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-		audible_message("\icon[src] *[ttone]*", null, 3)
+		if(exempt) //re-using exempt from my watches / phones to make an appropriate ringtone
+			playsound(loc, 'sound/machines/vibrate.ogg', 50, 1)
+			audible_message("\icon[src] *[ttone]*", null, 3)
+
+		else
+			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+			audible_message("\icon[src] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))
@@ -794,7 +835,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(signal.data["done"])
 			useTC = 1
 			var/turf/pos = get_turf(P)
-			if(pos.z in signal.data["level"])
+			if(pos.z in signal.data["broadcast_levels"])
 				useTC = 2
 
 	if(useTC == 2)
@@ -820,6 +861,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			remove_id()
 		else
 			usr << "<span class='warning'>This PDA does not have an ID in it!</span>"
+
+/obj/item/device/pda/CtrlClick()
+	var/mob/M = usr
+	if(usr.canUseTopic(src))
+		return attack_self(M)
+	return
+//ctrl click your watch to use it without having to take it off, kinda redundant for other PDas but hotkeys == GOOD
+
 
 /obj/item/device/pda/verb/verb_remove_id()
 	set category = "Object"
@@ -1235,3 +1284,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		if(!P.owner || P.toff || P.hidden) continue
 		. += P
 	return .
+
+/obj/item/device/pda/proc/reset_hotline_cooldown()
+	hotline_cd = FALSE
+	if(isliving(loc))
+		var/mob/living/li = loc
+		li << "<span class='notice'>[src] is ready to contact hotline agents again.</span>"
