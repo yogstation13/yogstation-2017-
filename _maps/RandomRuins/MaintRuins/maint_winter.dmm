@@ -1,6 +1,6 @@
 "a" = (/turf/template_noop,/area/template_noop)
 "b" = (/obj/structure/rack,/obj/item/clothing/suit/cloak,/obj/item/clothing/gloves/color/random{pixel_y = -3},/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
-"c" = (/obj/item/toy/snowball,/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"c" = (/obj/item/toy/snowball,/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
 "d" = (/obj/machinery/space_heater{on = 1; targetTemperature = 253.15},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
 "e" = (/obj/machinery/vending/coffee,/turf/open/floor/plating/snowed{temperature = 253.15},/area/template_noop)
 "f" = (/obj/structure/rack,/obj/item/clothing/suit/jacket{pixel_x = -2},/obj/item/clothing/suit/hooded/wintercoat/medical{pixel_x = 5; pixel_y = 0},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
