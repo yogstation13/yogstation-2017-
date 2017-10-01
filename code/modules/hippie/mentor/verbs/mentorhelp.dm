@@ -1,18 +1,20 @@
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
-	set name = "mentorhelp"
+	set name = "Mentorhelp"
 
 	//remove out adminhelp verb temporarily to prevent spamming of mentors.
-	src.verbs -= /client/verb/mentorhelp
-	spawn(300)
-		src.verbs += /client/verb/mentorhelp	// 30 second cool-down for mentorhelp
+	//src.verbs -= /client/verb/mentorhelp
+	//spawn(300)
+	//	src.verbs += /client/verb/mentorhelp	// 30 second cool-down for mentorhelp
 
 	//clean the input msg
 	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	if(!mob)	return						//this doesn't happen
-
+	if(src.client && src.client.prefs.muted & MUTE_MENTORHELP)
+		src << "<font color='red'>You are unable to use mentorhelp (muted).</font>
+		return
 	var/show_char = config.mentors_mobname_only
 	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
