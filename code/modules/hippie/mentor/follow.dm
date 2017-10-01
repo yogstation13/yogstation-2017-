@@ -17,8 +17,8 @@
 	if(!holder)
 		var/datum/mentors/mentor = mentor_datums[usr.client.ckey]
 		mentor.following = M
-/*	else
-		holder.following = M*/
+	else
+		holder.following = M
 
 	usr.reset_perspective(M)
 	usr.client.click_intercept = new /datum/mentor_click_interceptor
@@ -48,8 +48,8 @@
 	if(!holder)
 		var/datum/mentors/mentor = mentor_datums[usr.client.ckey]
 		following = mentor.following
-	/*else
-		following = holder.following*/
+	else
+		following = holder.following
 
 
 	admins << "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(following)]</span>"
