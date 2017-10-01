@@ -22,6 +22,7 @@
 
 	usr.reset_perspective(M)
 	usr.client.click_intercept = new /datum/mentor_click_interceptor
+	usr.client.mob.notransform = TRUE
 	src.verbs += /client/proc/mentor_unfollow
 
 	admins << "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>"
@@ -40,6 +41,7 @@
 
 	usr.reset_perspective(null)
 	usr.client.click_intercept = null
+	usr.client.mob.notransform = FALSE
 	src.verbs -= /client/proc/mentor_unfollow
 
 	var/following = null
