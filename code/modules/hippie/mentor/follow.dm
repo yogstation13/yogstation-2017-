@@ -1,4 +1,9 @@
 //var/following = null //Gross, but necessary as we loose all concept of who we're following otherwise
+
+/datum/mentor_click_interceptor
+/datum/mentor_click_interceptor/proc/InterceptClickOn(mob/user, params, atom/target)
+	return TRUE
+
 /client/proc/mentor_follow(var/mob/living/M)
 	if(!check_mentor())
 		return
@@ -16,6 +21,7 @@
 		holder.following = M*/
 
 	usr.reset_perspective(M)
+	usr.client.click_intercept = new /datum/mentor_click_interceptor
 	src.verbs += /client/proc/mentor_unfollow
 
 	admins << "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>"
@@ -33,6 +39,7 @@
 		return
 
 	usr.reset_perspective(null)
+	usr.client.click_intercept = null
 	src.verbs -= /client/proc/mentor_unfollow
 
 	var/following = null
