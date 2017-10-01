@@ -12,8 +12,8 @@
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	if(!mob)	return						//this doesn't happen
-	if(src.client && src.client.prefs.muted & MUTE_MENTORHELP)
-		src << "<font color='red'>You are unable to use mentorhelp (muted).</font>
+	if(src.prefs.muted & MUTE_MENTORHELP)
+		src << "<font color='red'>You are unable to use mentorhelp (muted).</font>"
 		return
 	var/show_char = config.mentors_mobname_only
 	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
