@@ -51,16 +51,16 @@
 	var/show_char = config.mentors_mobname_only
 	if(check_mentor_other(C))
 		if(check_mentor())	//both are mentors
-			C << "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>"
+			C << "<font color='#3280ff'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>"
 			src << "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>"
 
 		else		//recipient is an mentor but sender is not
-			C << "<font color='purple'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</font>"
+			C << "<font color='#3280ff'>Reply PM from-<b>[key_name_mentor(src, C, 1, 0, show_char)]</b>: [msg]</font>"
 			src << "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, 0)]</b>: [msg]</font>"
 
 	else
 		if(check_mentor())	//sender is an mentor but recipient is not.
-			C << "<font color='purple'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>"
+			C << "<font color='#3280ff'>Mentor PM from-<b>[key_name_mentor(src, C, 1, 0, 0)]</b>: [msg]</font>"
 			src << "<font color='green'>Mentor PM to-<b>[key_name_mentor(C, C, 1, 0, show_char)]</b>: [msg]</font>"
 
 	//we don't use message_Mentors here because the sender/receiver might get it too

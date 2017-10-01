@@ -12,11 +12,11 @@
 
 
 	if(check_rights(R_ADMIN,0))
-		msg = "<span class='mentoradmin'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
+		msg = "<span class='mentoradmin'><span class='prefix'><font color='#3280ff'>MENTOR:</font></span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
 		mentors << msg
 		admins << msg
 
 	else
-		msg = "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
+		msg = "<span class='mentor'><span class='prefix'><font color='#3280ff'>MENTOR:</font></span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
 		mentors << msg
 		admins << msg

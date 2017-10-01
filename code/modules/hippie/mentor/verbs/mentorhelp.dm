@@ -16,7 +16,7 @@
 		src << "<font color='red'>You are unable to use mentorhelp (muted).</font>"
 		return
 	var/show_char = config.mentors_mobname_only
-	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
+	var/mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>:</font> [msg]</span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
 	for(var/client/X in mentors)
