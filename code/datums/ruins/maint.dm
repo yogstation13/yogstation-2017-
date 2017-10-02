@@ -63,3 +63,9 @@
 	suffix = "maint_neckbeard.dmm"
 	name = "Neckbeard"
 	description = "An odd room full of tabletop roleplay material that smells like ale. It seems the players might have taken their fantasy games too far..."
+	
+/datum/map_template/ruin/maint/cult
+	id = "cult"
+	suffix = "maint_cult.dmm"
+	name = "Cult"
+	description = "You feel your gut churn as you enter this room... The air is thick with the smell of rot. A large, strange rune lies on the floor."
