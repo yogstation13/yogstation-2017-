@@ -25,7 +25,7 @@
 
 /proc/log_mentor(text)
 	mentorlog.Add(text)
-	diary << "\[[time_stamp()]]MENTOR: [text]"
+	admindiary << "\[[time_stamp()]]MENTOR: [text]"
 
 /proc/log_dsay(text)
 	if (config.log_adminchat)
