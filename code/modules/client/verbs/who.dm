@@ -47,18 +47,19 @@
 				Lines += C.holder.fakekey
 			else
 				Lines += C.key
+	var/player_number = length(Lines)
 
 	if(length(mentors) > 0)
 		Lines += "<b>Mentors:</b>"
 		for(var/client/C in sortList(clients))
 			var/mentor = mentor_datums[C.ckey]
 			if(mentor)
-				Lines += "\t <font color='#0033CC'>[C.key]</font> - Mentor"
+				Lines += "<font color='#0033CC'>\t[C.key]</font> - Mentor"
 
 	for(var/line in sortList(Lines))
 		msg += "[line]\n"
 
-	msg += "<b>Total Players: [length(Lines)]</b>"
+	msg += "<b>Total Players: [player_number]</b>"
 	src << msg
 
 /client/proc/adminwhotoggle()
