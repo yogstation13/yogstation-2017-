@@ -22,7 +22,12 @@
 									/obj/item/weapon/tank/internals/royalp,
 									/obj/item/areaeditor/blueprints,
 									/obj/item/weapon/rapid_engineering_device,
-									/obj/item/weapon/pinpointer)
+									/obj/item/weapon/pinpointer,
+									/obj/item/clothing/suit/space,
+									/obj/item/clothing/shoes/magboots/advance,
+									/obj/item/clothing/shoes/magboots/security,
+									/obj/item/weapon/card/id/captains_spare,
+									/obj/item/key/janitor)
 
 /obj/structure/cryptosleep_casket/New()
 	..()
@@ -45,26 +50,29 @@
 	if(target != user) return //no forceful storage
 	var/list/found = list()
 	var/list/all_items = target.GetAllContents()
-	for(var/I in forbidden_items)
-		var/obj/item/FI = locate(I) in all_items
-		if(FI) found += FI
+	for(var/obj/item/I in all_items)
+		if(I.type in forbidden_items)
+			found += I
 	if(found.len)
 		say("The following items have been found on your person:")
 		for(var/obj/item/I in found)
 			say("[I].")
 		say("Please remove those items before proceeding.")
 		return
-	if(alert(user, "Are you sure you want to enter storage? This action cannot be undone!", , "Yes", "No") == "No") return
+	if(alert(user, "Are you sure you want to enter storage? This action cannot be undone!", , "Yes", "No") == "No")
+		return
 	target.loc = src
 	icon_state = "casket-storing"
 	sleep(10)
 	playsound(src.loc, 'sound/machines/juicer.ogg', 100, 1)
 
 	var/datum/job/j = SSjob.GetJob(target.mind.assigned_role)
-	if(j) j.current_positions--
+	if(j)
+		j.current_positions--
 
 	var/msg = "[target]"
-	if(j) msg += ", [target.mind.assigned_role], "
+	if(j)
+		msg += ", [target.mind.assigned_role], "
 	msg += "has entered long-term storage."
 	announcement_radio.talk_into(src, msg, 1459)
 	sleep(30)
