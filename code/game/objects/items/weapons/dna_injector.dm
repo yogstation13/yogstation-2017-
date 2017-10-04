@@ -146,6 +146,14 @@
 	desc = "Its a small world after all."
 	add_mutations_static = list(DWARFISM)
 
+/obj/item/weapon/dnainjector/dwarf/expired //fifty fifty chance of monkeying you, or giving you the correct mutation
+	name = "\improper Expired DNA injector (Dwarfism)"
+	desc = "You're not sure this still works as intended..."
+
+/obj/item/weapon/dnainjector/dwarf/expired/New()
+	if(prob(50))
+		add_mutations_static = list(RACEMUT)
+
 /obj/item/weapon/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"
 	desc = "Makes clown minions."
