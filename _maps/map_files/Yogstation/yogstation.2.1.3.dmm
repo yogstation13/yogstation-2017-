@@ -53170,6 +53170,9 @@
 	name = "Atmospherics Distribution"
 	})
 "cao" = (
+/obj/structure/sign/nosmoking_2{
+	pixel_x = 32
+	},
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "blueyellow"
@@ -53752,7 +53755,6 @@
 /obj/machinery/camera{
 	c_tag = "Virology Module"
 	},
-/mob/living/carbon/monkey,
 /turf/open/floor/plasteel{
 	dir = 9;
 	icon_state = "whiteyellow"
@@ -54595,8 +54597,11 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/weapon/storage/box/monkeycubes{
+	pixel_x = -6
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
@@ -55070,9 +55075,6 @@
 	dir = 4;
 	initialize_directions = 11
 	},
-/obj/structure/sign/nosmoking_2{
-	pixel_x = 32
-	},
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "blueyellow"
@@ -55105,7 +55107,6 @@
 	pixel_y = 0;
 	tag = ""
 	},
-/mob/living/carbon/monkey,
 /turf/open/floor/plasteel{
 	dir = 6;
 	icon_state = "whiteyellow"
@@ -55690,9 +55691,6 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Mix Tank";
 	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/atmos/pipes{
@@ -59488,9 +59486,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cmw" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
 	pixel_x = -1
@@ -103836,11 +103831,11 @@ cmw
 clv
 ccA
 cph
-cqg
+cph
 cph
 ccA
 ctv
-cuw
+ctv
 ctv
 ccA
 aaa
@@ -108458,15 +108453,15 @@ ciC
 aaa
 ccA
 clL
-cmF
+clL
 clL
 ccA
 cps
-cqn
+cps
 cps
 ccA
 ctF
-cuD
+ctE
 ctE
 ccA
 aaa
