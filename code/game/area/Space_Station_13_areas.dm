@@ -610,6 +610,11 @@ var/list/teleportlocs = list()
 	safe = 1
 	sound_env = SMALL_ENCLOSED
 
+/area/crew_quarters/storage
+	name = "Long Term Storage"
+	icon_state = "sleepstorage"
+	sound_env = SMALL_ENCLOSED
+
 /area/crew_quarters/toilet
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
