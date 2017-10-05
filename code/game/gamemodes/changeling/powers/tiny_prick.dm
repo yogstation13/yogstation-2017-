@@ -231,7 +231,7 @@
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
 	if(target.reagents)
-		target.reagents.add_reagent("mindbreaker", 10)
+		target.reagents.add_reagent("mindbreaker", 15)
 	feedback_add_details("changeling_powers","HS")
 	return 1
 
