@@ -55,7 +55,7 @@
 "bd" = (/obj/structure/bookcase/random,/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
 "be" = (/obj/structure/flora/kirbyplants{icon_state = "plant-01"; layer = 4.1},/turf/open/floor/plasteel/black,/area/ruin/powered/syndicate_lava_base)
 "bf" = (/obj/structure/bookcase/random,/turf/open/floor/plasteel/black,/area/ruin/powered/syndicate_lava_base)
-"bg" = (/obj/structure/toilet{tag = "icon-toilet00 (WEST)"; icon_state = "toilet00"; dir = 8},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
+"bg" = (/obj/machinery/disposal/bin/toilet{tag = "icon-toilet00 (WEST)"; icon_state = "toilet00"; dir = 8},/turf/open/floor/plasteel/vault{dir = 5},/area/ruin/powered/syndicate_lava_base)
 "bh" = (/obj/machinery/door/airlock/hatch{name = "Lounge"; req_access_txt = null},/turf/open/floor/plasteel/vault{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "bi" = (/obj/machinery/chem_dispenser,/turf/open/floor/plasteel/podhatch{dir = 8},/area/ruin/powered/syndicate_lava_base)
 "bj" = (/obj/structure/table/reinforced,/obj/item/weapon/reagent_containers/glass/beaker/large,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/syringe,/obj/structure/sign/nosmoking_2{pixel_y = 32},/turf/open/floor/plasteel/podhatch{tag = "icon-podhatch (NORTH)"; icon_state = "podhatch"; dir = 1},/area/ruin/powered/syndicate_lava_base)
