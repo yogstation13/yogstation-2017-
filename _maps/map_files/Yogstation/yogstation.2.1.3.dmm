@@ -9853,6 +9853,12 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "arM" = (
@@ -9862,6 +9868,11 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold-r-f (NORTH)";
 	dir = 1
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
@@ -10231,6 +10242,12 @@
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "asz" = (
@@ -10509,6 +10526,12 @@
 	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel{
 	icon_state = "neutral";
 	dir = 9
@@ -10525,33 +10548,32 @@
 	},
 /area/crew_quarters/sleep)
 "atg" = (
-/obj/structure/chair/stool{
-	pixel_y = 8
+/obj/structure/cryptosleep_casket{
+	pixel_y = 3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/storage)
 "ath" = (
-/obj/machinery/light/small{
-	dir = 1
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
+	dir = 6
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/area/crew_quarters/storage)
 "ati" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/structure/closet/secure_closet/personal/cabinet,
-/obj/effect/decal/cleanable/cobweb2,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/crew_quarters/storage)
 "atj" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -10905,28 +10927,27 @@
 	},
 /area/crew_quarters/sleep)
 "atW" = (
-/obj/structure/table/wood,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"atX" = (
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
-"atY" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
-/obj/machinery/button/door{
-	id = "Dorm5";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = -25;
-	req_access_txt = "0";
-	specialfunctions = 4
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/obj/structure/rack,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/crew_quarters/storage)
+"atX" = (
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/crew_quarters/storage)
+"atY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1
+	},
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/crew_quarters/storage)
 "atZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
@@ -11273,6 +11294,12 @@
 /area/hallway/primary/fore)
 "auO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel{
 	icon_state = "neutral";
 	dir = 8
@@ -11288,14 +11315,15 @@
 "auQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/crew_quarters/sleep)
+/area/crew_quarters/storage)
 "auR" = (
-/obj/machinery/door/airlock{
-	id_tag = "Dorm5";
-	name = "Cabin 1"
+/obj/machinery/door/airlock/glass_medical{
+	name = "Long Term Storage"
 	},
-/turf/open/floor/wood,
-/area/crew_quarters/sleep)
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
+/area/crew_quarters/storage)
 "auS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
@@ -11693,6 +11721,12 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	tag = "icon-manifold-b-f (EAST)";
 	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
 /turf/open/floor/plasteel{
 	icon_state = "neutral";
@@ -13524,6 +13558,11 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	tag = "icon-manifold-r-f (WEST)";
 	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
@@ -69281,6 +69320,114 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"ZxC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint)
+"ZxD" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	name = "Long Term Storage APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/storage)
+"ZxE" = (
+/turf/closed/wall,
+/area/crew_quarters/storage)
+"ZxF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "neutral";
+	dir = 8
+	},
+/area/crew_quarters/sleep)
+"ZxG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/crew_quarters/storage)
+"ZxH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "neutral";
+	dir = 8
+	},
+/area/crew_quarters/sleep)
+"ZxI" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold-b-f (WEST)";
+	dir = 8
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	icon_state = "neutral";
+	dir = 8
+	},
+/area/crew_quarters/sleep)
+"ZxJ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold-b-f (EAST)";
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4";
+	tag = ""
+	},
+/turf/open/floor/plasteel{
+	icon_state = "neutral";
+	dir = 8
+	},
+/area/crew_quarters/sleep)
 "ZxK" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
@@ -100707,12 +100854,12 @@ arj
 arL
 asy
 ate
-atU
+ZxF
 auO
 avG
-atU
-axU
-azp
+ZxH
+ZxI
+ZxJ
 atU
 aBK
 azp
@@ -101218,11 +101365,11 @@ apY
 aql
 apY
 aqv
-arK
-asx
-asx
-asx
-asx
+ZxC
+ZxE
+ZxE
+ZxE
+ZxE
 avI
 awM
 axW
@@ -101475,8 +101622,8 @@ apF
 alU
 aqO
 aqv
-arK
-asx
+ZxD
+ZxE
 atg
 atW
 auQ
@@ -101733,7 +101880,7 @@ aqm
 aqP
 aqv
 arK
-asx
+ZxE
 ath
 atX
 auR
@@ -101990,10 +102137,10 @@ aqn
 alp
 aqv
 arK
-asx
+ZxE
 ati
 atY
-auS
+ZxG
 avL
 awP
 axZ
