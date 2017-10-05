@@ -220,7 +220,7 @@
 	feedback_add_details("changeling_powers","BS")
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/LSD
+/*/obj/effect/proc_holder/changeling/sting/LSD
 	name = "Hallucinogenic Sting"
 	desc = "Causes terror in the target."
 	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs very quickly."
@@ -234,6 +234,7 @@
 		target.reagents.add_reagent("mindbreaker", 30)
 	feedback_add_details("changeling_powers","HS")
 	return 1
+*/
 
 /*
 /obj/effect/proc_holder/changeling/sting/cryo
