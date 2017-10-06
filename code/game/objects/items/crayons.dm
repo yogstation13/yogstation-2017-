@@ -307,7 +307,7 @@
 				drawing, temp, graf_rot)
 			Q.placedby = user.ckey
 
-	user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] the [temp].</span>"
+	user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>"
 
 	if(length(text_buffer))
 		text_buffer = copytext(text_buffer,2)
