@@ -1,0 +1,4 @@
+author: " Time-Green"
+delete-after: true 
+changes: 
+  - bugfix: "Fixes offhands dropping when you cut someones arm off"
