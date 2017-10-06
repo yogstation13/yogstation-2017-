@@ -201,7 +201,7 @@
 					occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
 					log_attack("\[[time_stamp()]\] [usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper")
 					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
-					audible_message("<span class='alert'>[src] buzzes and beeps madly!</span>")
+				audible_message("<span class='alert'>[src] buzzes and beeps madly!</span>")
 				emag_effect = 1
 				open_machine()
 				return
