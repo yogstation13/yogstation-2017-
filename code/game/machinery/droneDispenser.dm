@@ -4,7 +4,7 @@
 
 /obj/machinery/droneDispenser //Most customizable machine 2015
 	name = "drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a drone shell. Does not need to be manually operated."
+	desc = "A hefty machine that, when supplied with metal and glass, will periodically create drone shells. Does not need to be manually operated."
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
 	anchored = 1
