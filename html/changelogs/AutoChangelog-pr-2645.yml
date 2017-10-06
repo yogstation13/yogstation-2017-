@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - rscadd: "Admins can now see when you've said something without downloading the logs for the current round!"
