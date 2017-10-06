@@ -131,6 +131,9 @@
 		message_admins("[key_name_admin(mob)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has compiled and uploaded a NTSL script to [src.id]",0,1)
 
 /obj/machinery/telecomms/server/proc/compile(mob/user)
+	if(jobban_isbanned(user, "ntsl"))
+		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		return
 	if(Compiler)
 		admin_log(user)
 		return Compiler.Compile(rawcode)

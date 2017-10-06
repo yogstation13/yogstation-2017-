@@ -56,7 +56,7 @@
 	icon_state = "paint_neutral"
 
 	attack_self(mob/user)
-		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
+		var/t1 = input(user, "Please select a color:", "Locking Computer", null) as anything in list( "red", "blue", "green", "yellow", "violet", "black", "white")
 		if ((user.get_active_hand() != src || user.stat || user.restrained()))
 			return
 		switch(t1)

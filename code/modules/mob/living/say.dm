@@ -109,7 +109,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	spans += get_spans()
 
 	//Log of what we've said, plain message, no spans or junk
-	say_log += message
+	var/message_log = "\[[gameTimestamp()]\] [message]"
+	say_log += message_log
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)

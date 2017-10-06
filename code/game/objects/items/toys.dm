@@ -14,7 +14,7 @@
  *		Cards
  *		Toy nuke
  *		Fake meteor
- *		Carp plushie
+ *		Plushies
  *		Foam armblade
  *		Toy big red button
  *		Beach ball
@@ -1066,30 +1066,114 @@
 		qdel(src)
 
 /*
- * Carp plushie
+ * Plushies
  */
-
-/obj/item/toy/carpplushie
-	name = "space carp plushie"
-	desc = "An adorable stuffed toy that resembles a space carp."
+/obj/item/toy/plushie
+	name = "Plushie"
+	desc = "An adorable stuffed toy"
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
-	item_state = "carp_plushie"
+	icon_state = "debugplushie"
+	item_state = "debugplushie"
 	w_class = 2
-	attack_verb = list("bitten", "eaten", "fin slapped")
+	attack_verb = list("thumped", "whomped", "bumped")
 	burn_state = FLAMMABLE
-	var/bitesound = 'sound/weapons/bite.ogg'
+	var/plushsound = 'sound/items/bikehorn.ogg'
 
 //Attack mob
-/obj/item/toy/carpplushie/attack(mob/M, mob/user)
-	playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
+/obj/item/toy/plushie/attack(mob/M, mob/user)
+	playsound(loc, plushsound, 20, 1)	//Play bite sound in local area
 	return ..()
 
 //Attack self
-/obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src.loc, bitesound, 20, 1)
+/obj/item/toy/plushie/attack_self(mob/user)
+	playsound(src.loc, plushsound, 20, 1)
 	user << "<span class='notice'>You pet [src]. D'awww.</span>"
 	return ..()
+
+//ratvar conversion
+/obj/item/toy/plushie/ratvar_act()
+	new /obj/item/toy/plushie/plushvar (src.loc)
+	qdel(src)
+
+//ratvar conversion
+/obj/item/toy/plushie/narsie_act()
+	new /obj/item/toy/plushie/narplush (src.loc)
+	qdel(src)
+
+//carp plushie
+/obj/item/toy/plushie/carpplushie
+	name = "space carp plushie"
+	desc = "An adorable stuffed toy that resembles a space carp."
+	icon_state = "carpplushie"
+	item_state = "carp_plushie"
+	attack_verb = list("bitten", "eaten", "fin slapped")
+	plushsound = 'sound/weapons/bite.ogg'
+
+//bubblegum plush
+/obj/item/toy/plushie/bubbleplush
+	name = "bubblegum plushie"
+	desc = "The friendly red demon that gives good miners gifts."
+	icon_state = "bubbleplush"
+	attack_verb = list("rends")
+	plushsound = 'sound/magic/demon_attack1.ogg'
+
+//ratvar plush
+/obj/item/toy/plushie/plushvar
+	name = "Ratvar plushie"
+	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
+	icon_state = "plushvar"
+
+//plushvar conversion
+/obj/item/toy/plushie/plushvar/ratvar_act()
+	return
+
+//narsie plush
+/obj/item/toy/plushie/narplush
+	name = "Nar-sie plushie"
+	desc = "A small stuffed doll of the elder god Nar'sie. Who thought this was a good children's toy?"
+	icon_state = "narplush"
+
+//narplush conversion
+/obj/item/toy/plushie/narplush/narsie_act()
+	return
+//lizard plushie
+/obj/item/toy/plushie/Lizardplush
+	name = "lizard plushie"
+	desc = "An adorable stuffed toy that resembles a lizardperson."
+	icon_state = "plushie_lizard"
+	attack_verb = list("rended")
+	plushsound = 'sound/magic/demon_attack1.ogg'
+
+//snake plush
+/obj/item/toy/plushie/snakeplush
+	name = "snake plushie"
+	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
+	icon_state = "plushie_snake"
+	attack_verb = list("bitten", "hissed", "tail slapped")
+	plushsound = 'sound/weapons/bite.ogg'
+
+//nuke-op plushie
+/obj/item/toy/plushie/nukeplush
+	name = "operative plushie"
+	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
+	icon_state = "plushie_nuke"
+	attack_verb = list("shot", "nuked", "detonated")
+	plushsound = 'sound/effects/hit_punch.ogg'
+
+//slime plushie
+/obj/item/toy/plushie/slimeplush
+	name = "slime plushie"
+	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
+	icon_state = "plushie_slime"
+	attack_verb = list("blorbled", "slimed", "absorbed")
+	plushsound = 'sound/magic/demon_attack1.ogg'
+
+//inorix plushie
+/obj/item/toy/plushie/inorixplush
+	name = "inorix plushie"
+	desc = "An adorable stuffed toy that resembles a giant robotic squid. It squirms around in your hand with realistic, buggy motion."
+	icon_state = "plushie_inorix"
+	attack_verb = list("harkened", "glared", "erased")
 
 /*
  * Toy big red button

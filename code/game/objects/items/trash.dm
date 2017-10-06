@@ -84,7 +84,7 @@
 				user << "<span class='warning'>[src] hwas assigned to [src].</span>"
 				return
 			user << "<span class='warning'>Who do you want to assign this too?</span>"
-			var/naughty = reject_bad_name(input(user, "Assign someone to the naughty list.", "Naughty Inscription", name),1)
+			var/naughty = reject_bad_name(stripped_input(user, "Assign someone to the naughty list.", "Naughty Inscription", name),1)
 			if(!naughty)
 				return
 			var/accepted

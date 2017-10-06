@@ -738,7 +738,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+		var/new_memo = stripped_multiline_input("Write new memory", "Memory", memory, null, MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo
@@ -1634,7 +1634,7 @@
 
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
-	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
+	var/team = input("Abductor Team ?","Team ?") as anything in list(1,2,3,4)
 	var/teleport = alert("Teleport to ship ?","Teleport","Yes","No")
 
 	if(!role || !team || !teleport)

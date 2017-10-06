@@ -69,7 +69,7 @@
 		var/list/nodes = list()
 		for(var/i = 1; i <= blob_nodes.len; i++)
 			nodes["Blob Node #[i]"] = blob_nodes[i]
-		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
+		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") as anything in nodes
 		var/obj/effect/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			src.loc = chosen_node.loc
@@ -304,7 +304,7 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = stripped_input(src, "What would you like to say with your minions?", "Blob Broadcast", null)
 	if(!speak_text)
 		return
 	else

@@ -115,7 +115,7 @@
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = 5
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
@@ -443,6 +443,19 @@
 /obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
+
+/obj/item/weapon/twohanded/required/chainsaw/suicide_act(mob/living/carbon/user)
+	if(on)
+		user.visible_message("<span class='suicide'>[user] begins to tear \his head off with the chainsaw! It looks like \he's trying to commit suicide!</span>")
+		playsound(src, 'sound/weapons/chainsawhit.ogg', 100, 1)
+		var/obj/item/bodypart/head/myhead = user.get_bodypart("head")
+		if(myhead)
+			myhead.dismember()
+		gibs(loc)
+	else
+		user.visible_message("<span class='suicide'>[user] smashes the chainsaw into \his neck, destroying \his esophagus! It looks like \he's trying to commit suicide!</span>")
+		playsound(src, 'sound/weapons/genhit1.ogg', 100, 1)
+	return(BRUTELOSS)
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide

@@ -1029,7 +1029,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/flying()
 	if(ishuman(src))
-		var/mob/living/carbon/human/H
+		var/mob/living/carbon/human/H = src
 		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
 			return 1
 	else if(isanimal(src))

@@ -41,7 +41,16 @@
 		/obj/item/stack/tile/fakespace/loaded					= 2,
 		/obj/item/toy/toy_xeno									= 2,
 		/obj/item/weapon/restraints/handcuffs/fake              = 2,
-		/obj/item/scope/security/toy							= 2)
+		/obj/item/scope/security/toy							= 2,
+		/obj/item/toy/plushie/carpplushie										= 1,
+		/obj/item/toy/plushie/bubbleplush										= 1,
+		/obj/item/toy/plushie/plushvar										= 1,
+		/obj/item/toy/plushie/narplush									= 1,
+		/obj/item/toy/plushie/Lizardplush										= 1,
+		/obj/item/toy/plushie/snakeplush										= 1,
+		/obj/item/toy/plushie/nukeplush										= 1,
+		/obj/item/toy/plushie/slimeplush										= 1,
+		/obj/item/toy/plushie/inorixplush								=1)
 	paiAllowed = 1
 
 /obj/machinery/computer/arcade/New()

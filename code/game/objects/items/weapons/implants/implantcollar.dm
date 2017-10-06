@@ -15,7 +15,7 @@
 				imp_in << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
 			return
 		if("Bind")
-			var/choice = input(user, "Select collar to bind.", "Binding Control") in linkedCollars
+			var/choice = input(user, "Select collar to bind.", "Binding Control") as anything in linkedCollars
 			var/obj/item/clothing/head/bombCollar/collarToBind = choice
 			if(!collarToBind)
 				return

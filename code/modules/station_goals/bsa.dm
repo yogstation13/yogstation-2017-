@@ -286,7 +286,7 @@
 	var/list/options = gps_locators
 	if(area_aim)
 		options += teleportlocs
-	var/V = input(user,"Select target", "Select target",null) in options|null
+	var/V = input(user,"Select target", "Select target",null) as anything in options|null
 	target = options[V]
 
 

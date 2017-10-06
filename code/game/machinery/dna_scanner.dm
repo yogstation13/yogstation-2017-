@@ -103,6 +103,8 @@
 	if(!state_open)
 		return 0
 
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
 	..()
 
 	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
@@ -125,6 +127,8 @@
 /obj/machinery/dna_scannernew/open_machine()
 	if(state_open)
 		return 0
+
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	..()
 

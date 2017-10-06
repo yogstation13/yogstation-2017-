@@ -195,10 +195,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = reject_bad_text(input("Line 1", "Enter Message Text", stat_msg1) as text|null, 40)
+			stat_msg1 = reject_bad_text(stripped_input(usr, "Line 1", "Enter Message Text", stat_msg1), 40)
 			src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = reject_bad_text(input("Line 2", "Enter Message Text", stat_msg2) as text|null, 40)
+			stat_msg2 = reject_bad_text(stripped_input(usr, "Line 2", "Enter Message Text", stat_msg2), 40)
 			src.updateDialog()
 
 		// OMG CENTCOM LETTERHEAD

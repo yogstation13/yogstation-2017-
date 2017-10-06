@@ -131,7 +131,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		for(var/datum/tech/current_data in S.stored_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/datum/tech/analyzing_data in files.known_tech)
+				for(var/v in files.known_tech)
+					var/datum/tech/analyzing_data = files.known_tech[v]
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
 							H << "<span class='notice'>Database:</span> <b>UPDATED</b>."
@@ -162,7 +163,8 @@ They *could* go in their appropriate files, but this is supposed to be modular
 		for(var/datum/tech/current_data in S.stored_research)
 			H << "<span class='notice'>Checking \the [current_data.name] database.</span>"
 			if(do_after(H, S.s_delay, target = src) && G.candrain && src)
-				for(var/datum/tech/analyzing_data in files.known_tech)
+				for(var/v in files.known_tech)
+					var/datum/tech/analyzing_data = files.known_tech[v]
 					if(current_data.id == analyzing_data.id)
 						if(analyzing_data.level > current_data.level)
 							H << "<span class='notice'>Database:</span> <b>UPDATED</b>."
