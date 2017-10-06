@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: true 
+changes: 
+  - bugfix: "Ninja research objective works now"
