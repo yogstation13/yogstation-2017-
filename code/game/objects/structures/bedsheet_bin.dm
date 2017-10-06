@@ -158,7 +158,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/syndie
 	name = "syndicate bedsheet"
-	desc = "It has a syndicate emblem and it has an aura of evil."
+	desc = "It has a syndicate emblem and emanates an aura of evil."
 	icon_state = "sheetsyndie"
 	item_color = "syndie"
 

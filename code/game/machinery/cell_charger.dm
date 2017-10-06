@@ -30,7 +30,7 @@
 	..()
 	user << "There's [charging ? "a" : "no"] cell in the charger."
 	if(charging)
-		user << "Current charge: [round(charging.percent(), 1)]%"
+		user << "Current charge: [round(charging.percent(), 1)]%."
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))

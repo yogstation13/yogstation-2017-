@@ -62,7 +62,7 @@
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
-		user << "It contains [round(reagents.total_volume)] units."
+		user << "It contains [round(reagents.total_volume)] unit\s."
 	else
 		user << "It is empty."
 

@@ -126,8 +126,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		user << "<span class='warning'>There is no more of [src.name] \
-			left!</span>"
+		user << "<span class='warning'>There is no more of [src.name] left!</span>"
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -144,8 +143,7 @@
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
 	if(has_cap)
 		is_capped = !is_capped
-		user << "<span class='notice'>The cap on [src] is now \
-			[is_capped ? "on" : "off"].</span>"
+		user << "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>"
 		update_icon()
 
 /obj/item/toy/crayon/ui_data()
@@ -281,9 +279,7 @@
 			else
 				graf_rot = 0
 
-	user << "<span class='notice'>You start \
-		[instant ? "spraying" : "drawing"] a [temp] on the \
-		[target.name]...</span>"
+	user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -311,8 +307,7 @@
 				drawing, temp, graf_rot)
 			Q.placedby = user.ckey
 
-	user << "<span class='notice'>You finish \
-		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+	user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] the [temp].</span>"
 
 	if(length(text_buffer))
 		text_buffer = copytext(text_buffer,2)
@@ -533,15 +528,11 @@
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, but nothing \
-			happens!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, but nothing happens!</span>")
 		user.say("MEDIOCRE!!")
 		return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, spraying \
-			paint across their teeth!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, spraying paint across their teeth!</span>")
 		user.say("WITNESS ME!!")
 		if(pre_noise || post_noise)
 			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
@@ -572,7 +563,7 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
-		user << "It has [charges_left] uses left."
+		user << "It has [charges_left] use\s left."
 	else
 		user << "It is empty."
 

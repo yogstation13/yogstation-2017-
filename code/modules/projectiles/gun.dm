@@ -88,7 +88,7 @@
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(pin)
-		user << "It has [pin] installed."
+		user << "It has \a [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
 	if(unique_reskin && !current_skin)

@@ -25,7 +25,7 @@
 
 /obj/structure/beebox
 	name = "apiary"
-	desc = "Dr Miles Manners is just your average Wasp themed super hero by day, but by night he becomes DR BEES!"
+	desc = "Dr. Miles Manners is just your average Wasp themed super hero by day, but by night he becomes DR. BEES!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "beebox"
 	anchored = 1
@@ -138,7 +138,7 @@
 		user << "<span class='notice'>There [plural? "are" : "is"] [honeycombs.len] uncollected honeycomb[plural ? "s":""] in the apiary.</span>"
 
 	if(honeycombs.len >= get_max_honeycomb())
-		user << "<span class='warning'>there's no room for more honeycomb!</span>"
+		user << "<span class='warning'>There's no room for more honeycomb!</span>"
 
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)

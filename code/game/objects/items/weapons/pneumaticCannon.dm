@@ -23,9 +23,9 @@
 		user << "<span class='notice'>You'll need to get closer to see any more.</span>"
 		return
 	for(var/obj/item/I in loadedItems)
-		user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
+		user << "<span class='info'>\icon [I] It has \a [I] loaded.</span>"
 	if(tank)
-		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
+		user << "<span class='notice'>\icon [tank] It has \a [tank] mounted onto it.</span>"
 
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)

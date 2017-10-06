@@ -505,9 +505,9 @@
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		user << "<span class='notice'>[name] can be attached and modified.</span>"
+		user << "<span class='notice'>It can be attached and modified.</span>"
 	else
-		user << "<span class='notice'>[name] can not be modified or attached.</span>"
+		user << "<span class='notice'>It cannot be modified or attached.</span>"
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)

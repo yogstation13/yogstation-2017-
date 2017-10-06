@@ -39,7 +39,7 @@
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
-	user << "It contains [reagents.total_volume] units."
+	user << "It contains [reagents.total_volume] unit\s."
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank

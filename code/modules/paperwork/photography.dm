@@ -193,7 +193,7 @@
 
 /obj/item/device/camera/examine(mob/user)
 	..()
-	user << "It has [pictures_left] photos left."
+	user << "It has [pictures_left] photo\s left."
 
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
