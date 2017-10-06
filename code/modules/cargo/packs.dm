@@ -1379,6 +1379,7 @@
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,
 					/obj/item/weapon/storage/backpack/mime)
+
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -1501,6 +1502,19 @@
 					/obj/item/weapon/gun/projectile/shotgun/toy,
 					/obj/item/weapon/gun/projectile/shotgun/toy)
 	crate_name = "foam force crate"
+
+/datum/supply_pack/misc/rubberpigeon
+	name = "Rubber Pigeon Crate"
+	cost = 1000
+	contains = list(/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon)
+	crate_name = "rubber pigeon crate"
 
 /datum/supply_pack/misc/foamforce/bonus
 	name = "Foam Force Pistols Crate"
