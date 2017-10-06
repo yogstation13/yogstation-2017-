@@ -505,7 +505,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			hitsound = 'sound/items/welder.ogg'
 			attack_verb = list("burnt", "singed")
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
+				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and light [src] in one smooth movement.</span>")
 			else
 				var/mob/living/carbon/human/H = user
 				var/prot = 0
@@ -515,7 +515,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 						prot = (G.max_heat_protection_temperature > 360) // lazy code. nothing else seemed to work as properly as this though
 
 				if(!istype(src, /obj/item/weapon/lighter/greyscale))
-					user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
+					user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and light [src] in one smooth movement.</span>")
 				else
 					if(prot > 0)
 						user.visible_message("After a few attempts, [user] manages to light [src], without burning themself.", "<span class='notice'>After a few attempts, you manage to light [src]. Your fire-resistant gloves shield you from burning yourself.</span>")
