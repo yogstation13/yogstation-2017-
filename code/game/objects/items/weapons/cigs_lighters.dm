@@ -650,7 +650,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/capacity = 5
 
 /obj/item/weapon/ashtray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] dumps the contents of the [src] into his mouth!</span>")
+	user.visible_message("<span class='suicide'>[user] dumps the contents of [src] into his mouth!</span>")
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
@@ -675,7 +675,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!amount_of_stubs)
 		return
 	else
-		user << "<span class='notice'>You empty the [src] onto the ground.</span>"
+		user << "<span class='notice'>You empty [src] onto the ground.</span>"
 		new /obj/effect/decal/cleanable/ash(get_turf(src))
 		amount_of_stubs = 0
 		update_icon()

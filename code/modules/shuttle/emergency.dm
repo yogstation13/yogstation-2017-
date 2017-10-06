@@ -411,7 +411,7 @@
 
 /obj/item/weapon/storage/pod
 	name = "emergency space suits"
-	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
+	desc = "A wall-mounted safe containing space suits. Will only open in emergencies."
 	anchored = 1
 	density = 0
 	icon = 'icons/obj/storage.dmi'

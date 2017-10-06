@@ -137,7 +137,7 @@
 
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
-	desc = "This box contains sterile medical masks."
+	desc = "Contains sterile medical masks."
 	icon_state = "sterile"
 
 /obj/item/weapon/storage/box/masks/New()
@@ -148,7 +148,7 @@
 /obj/item/weapon/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
-	desc = "A biohazard alert warning is printed on the box"
+	desc = "A biohazard alert warning is printed on the box."
 	icon_state = "syringe"
 
 /obj/item/weapon/storage/box/syringes/New()
