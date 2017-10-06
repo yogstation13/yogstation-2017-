@@ -206,3 +206,23 @@ effective or pretty fucking useless.
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
 		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
+
+/obj/item/device/moraledestroyer
+	name = "morale destroyer"
+	desc = "Press this to kill all hope on the station"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gangtool-red"
+	var/used = FALSE
+
+/obj/item/device/moraledestroyer/attack_self(mob/user)
+	if(used)
+		return
+	used = TRUE
+	desc = "This was used to rob all friendly household pets from their life."
+	user << "<span class='notice'>You press \the [src], you monster.</span>"
+	priority_announce(text = "PET SELF DESTRUCT DEVICE ACTIVATED, PLEASE STAND CLEAR FROM ALL HOUSEHOLD ANIMALS.", title = "Pet Self Destruct", sound = 'sound/machines/Alarm.ogg')
+	for(var/mob/living/simple_animal/pet/P in mob_list)
+		P.visible_message("[P] looks around the room with despair in his eyes.")
+		spawn(60)
+			explosion(P.loc, 0, 1, 2, 2)
+			P.gib()
