@@ -142,8 +142,8 @@
 		cube.Expand()
 
 	// Dehydrated carp
-	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
-		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+	else if(istype(O,/obj/item/toy/plushie/carpplushie/dehy_carp))
+		var/obj/item/toy/plushie/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
 /*

@@ -1130,7 +1130,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 									/obj/item/weapon/storage/photobook = 5,
 									/obj/item/toy/frisbee = 2,
 									/obj/item/toy/boomerang = 2,
-									/obj/item/weapon/storage/bag/photo = 5),
+									/obj/item/weapon/storage/bag/photo = 5,
+									/datum/data/vending_product/random/plushies = 2),
 					"Clothing" = list(/datum/data/vending_product/random/uniform = 4,
 									/datum/data/vending_product/random/shoes = 4,
 									/obj/item/weapon/storage/backpack = 4,
@@ -1231,6 +1232,18 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/gloves/color/grey,
 		/obj/item/clothing/gloves/color/light_brown,
 		/obj/item/clothing/gloves/color/brown)
+
+/datum/data/vending_product/random/plushies
+	product_name = "random plushie"
+	items = list(/obj/item/toy/plushie/carpplushie,
+		/obj/item/toy/plushie/bubbleplush,
+		/obj/item/toy/plushie/plushvar,
+		/obj/item/toy/plushie/narplush,
+		/obj/item/toy/plushie/Lizardplush,
+		/obj/item/toy/plushie/snakeplush,
+		/obj/item/toy/plushie/nukeplush,
+		/obj/item/toy/plushie/slimeplush,
+		/obj/item/toy/plushie/inorixplush)
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

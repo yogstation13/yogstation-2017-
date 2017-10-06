@@ -126,7 +126,7 @@
 	/obj/item/toy/foamblade,
 	/obj/item/toy/toy_mech/melee/ripley,
 	/obj/item/toy/toy_mech/honk,
-	/obj/item/toy/carpplushie,
+	/obj/item/toy/plushie/carpplushie,
 	/obj/item/toy/redbutton,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)

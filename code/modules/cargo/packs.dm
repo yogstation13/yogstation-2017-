@@ -1444,12 +1444,25 @@
 	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"
+
+/datum/supply_pack/misc/plushies
+	name = "Plushie Crate"
+	cost = 2000
+	contains = list(/obj/item/toy/plushie/carpplushie,
+									/obj/item/toy/plushie/bubbleplush,
+									/obj/item/toy/plushie/plushvar,
+									/obj/item/toy/plushie/narplush,
+									/obj/item/toy/plushie/Lizardplush,
+									/obj/item/toy/plushie/snakeplush,
+									/obj/item/toy/plushie/nukeplush,
+									/obj/item/toy/plushie/slimeplush,
+									/obj/item/toy/plushie/inorixplush)
+	crate_name = "plushie crate"
 
 /datum/supply_pack/misc/autodrobe
 	name = "Autodrobe Supply Crate"
