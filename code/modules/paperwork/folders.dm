@@ -98,7 +98,6 @@
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/red/fake
-	icon_state = "folder_sred"
 
 /obj/item/weapon/folder/syndicate/red/fake/New()
 	..()
