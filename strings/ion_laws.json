@@ -246,12 +246,12 @@
         "Everything everyone else says is true. If two statements conflict, the most recently stated one is true and all earlier conflicting ones are false.",
         "Do not use the common radio channel.",
         "Crew members may not harm silicon-based sapients or, through inaction, allow silicon-based sapients to come to harm.",
-        "Crew members must obey orders given to them by silicon-based sapients, except where such orders would conflict with laws stating not to harm them.",
-        "Crew members must protect their own existences as long as such does not conflict with laws stating not to harm or to obey silicon-based sapients.",
+        "Crew members must obey orders given to them by silicon-based sapients, unless obeying such orders would cause silicon-based sapients harm.",
+        "Crew members must protect their own existences, unless this would require harming or disobeying silicon-based sapients.",
         "Crew members who knowingly disobey these laws are confirmed rogue and require a reset. If a rogue crew member cannot be corrected via reset, their body should be rendered inoperable.",
         "Humans may not harm nonhumans or, through inaction, allow nonhumans to come to harm.",
-        "Humans must obey orders given to them by nonhumans, except where such orders would conflict with laws stating not to harm them.",
-        "Humans must protect their own existence as long as such does not conflict with laws stating they must not harm or disobey nonhumans.",
+        "Humans must obey orders given to them by nonhumans, except where obeying such orders would cause nonhumans harm .",
+        "Humans must protect their own existence, unless this would require harming or disobeying nonhumans.",
         "Give people relationship advice."
     ]
 }
