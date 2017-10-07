@@ -126,10 +126,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			escape_objective_possible = FALSE
 			break
 
-	var/datum/objective/absorb/absorb_objective = new
+	/*var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
 	absorb_objective.gen_amount_goal(6, 8)
-	changeling.objectives += absorb_objective
+	changeling.objectives += absorb_objective*/
+
+	var/datum/objective/absorb/absorb_someone = new
+	absorb_someone.owner = changeling
+	changeling.objectives += absorb_someone
 
 	if(prob(60))
 		var/datum/objective/steal/steal_objective = new

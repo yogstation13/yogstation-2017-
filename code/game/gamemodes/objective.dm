@@ -684,10 +684,10 @@ var/global/list/possible_items_special = list()
 
 
 
-/datum/objective/absorb
+/datum/objective/extract
 	dangerrating = 10
 
-/datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
+/datum/objective/extract/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
 	if (ticker)
 		var/n_p = 1 //autowin
@@ -704,13 +704,40 @@ var/global/list/possible_items_special = list()
 	explanation_text = "Extract [target_amount] compatible genome\s."
 	return target_amount
 
-/datum/objective/absorb/check_completion()
+/datum/objective/extract/check_completion()
 	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.profilecount >= target_amount))
 		return 1
 	else
 		return 0
 
+/datum/objective/absorb
+	dangerrating = 15
+	var/target_name = ""
 
+/datum/objective/absorb/New()
+	..()
+	if(target)
+		target_name = target.name
+
+/datum/objective/absorb/update_explanation_text()
+	..()
+	if(target && target.current)
+		if(!target_name)
+			target_name = target.name
+		var/spec = ""
+		if(ishuman(target.current))
+			var/mob/living/carbon/human/H = target.current
+			spec = (H.dna && H.dna.species) ? "[H.dna.species.name] " : ""
+		explanation_text = "Absorb the genome of [target.name], the [spec][target.assigned_role]."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/absorb/check_completion()
+	if(owner && owner.changeling && owner.changeling.stored_profiles)
+		for(var/datum/changelingprofile/P in owner.changeling.stored_profiles)
+			if(P.name == target_name)
+				return 1
+	return 0
 
 /datum/objective/destroy
 	dangerrating = 10
