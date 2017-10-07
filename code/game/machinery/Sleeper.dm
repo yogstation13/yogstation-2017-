@@ -199,7 +199,7 @@
 				for(var/reagent_id in available_chems)
 					occupant.reagents.add_reagent(reagent_id, 30)
 					occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
-					log_attack("\[[time_stamp()]\] [usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper")
+					log_attack("[usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper")
 					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
 				audible_message("<span class='alert'>[src] buzzes and beeps madly!</span>")
 				emag_effect = 1
@@ -213,7 +213,7 @@
 		occupant.reagents.add_reagent(chem, 10)
 		occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 10 [chem] using a sleeper</font>")
 		usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper</font>")
-		log_attack("\[[time_stamp()]\] [usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper")
+		log_attack("[usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
