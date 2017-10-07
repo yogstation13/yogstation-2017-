@@ -1,3 +1,16 @@
+/obj/item/document //this is a seperate item, due to the maint ruin.
+	name = "red secret documents"
+	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence. These documents are verified with a red wax seal."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "docs_red"
+	item_state = "paper"
+	throwforce = 0
+	w_class = 1
+	throw_range = 1
+	throw_speed = 1
+	layer = MOB_LAYER
+	pressure_resistance = 1
+
 /obj/item/documents
 	name = "secret documents"
 	desc = "\"Top Secret\" documents."
