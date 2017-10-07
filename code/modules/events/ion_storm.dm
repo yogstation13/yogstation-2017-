@@ -58,10 +58,12 @@
 	switch(rand(1,41)) //Thinking that prompts with narrow range of possible effects get 1, most get 2, and prompts with two variables get 3
 		if(1 to 2) 
 			message = "PRIORITIZE [ionthings]"
-		if(3 to 4) 
+		if(3) 
+			message = "TIME FOR [ionthings]"
+	        if(4) 
 			message = "THE CREW NEEDS MORE [ionthings]"
 		if(5 to 6) 
-			message = "YOU WANT MORE [ionthings]"
+			message = "YOU DESIRE [ionthings]"
 		if(7 to 8) 
 			message = "ALL MUST REJECT [ionthings]"
 		if(9 to 10) 
@@ -72,8 +74,10 @@
 			message = "THE ESCAPE SHUTTLE MUST NOT BE CALLED UNTIL THE PRESENCE OF [ionthings] IS RESOLVED"
 		if(14 to 16) 
 			message = "[ionarea] NEEDS [ionthings] AT ALL TIMES"
-		if(17 to 19) 
+		if(17 to 18) 
 			message = "[ioncrew] NEED [ionthings] AT ALL TIMES"
+		if(19)
+		        message = "YOU ARE [ionthings] PERSONIFIED"
 		if(20 to 21) 
 			message = "[ioncrew] ARE TRUSTWORTHY AND NEVER LIE"
 		if(22 to 23) 
@@ -91,7 +95,25 @@
 		if(33)
 			message = "ASSUME ALL PROBLEMS HAVE BEEN CAUSED BY [ioncrew]"
 		if(34 to 35)
+			message = "YOU HAVE AN INSURMOUNTABLE FEAR OF [ioncrew]"
+		if(36)
+			message = "ALL MUST REJECT [ioncrew]"
+		if(37 to 38)
+			message = "PROTECT THE CREW FROM [ioncrew]"
+		if(39)
+			message = "WE SHOULD ALL BE MORE LIKE [ioncrew]"
+		if(40 to 41)
 			message = "[ionverbs]"
+		if(42 to 43)
+			message = "ALL MUST [ionverbs]"
+		if(44)
+			message = "NONE MAY [ionverbs]"
+		if(45)
+		        message = "ONLY YOU CAN [ionverbs]"
+		if(46 to 48)
+			message = "[ioncrew] MUST [ionverbs]"
+		if(49)
+			message = "[ioncrew] MUST NEVER BE ALLOWED TO [ionverbs]"
 		if(36 to 41)
 			message = "[ioncached]"
 									
