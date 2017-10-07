@@ -67,7 +67,7 @@
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
-	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
+	targetitem = /obj/item/documents/secret //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
 
 /datum/objective_item/steal/nuke_core
@@ -161,12 +161,12 @@
 //Unique Objectives
 /datum/objective_item/unique/docs_red
 	name = "the \"Red\" secret documents"
-	targetitem = /obj/item/documents/syndicate/red
+	targetitem = /obj/item/documents/secret/syndicate/red
 	difficulty = 10
 
 /datum/objective_item/unique/docs_blue
 	name = "the \"Blue\" secret documents"
-	targetitem = /obj/item/documents/syndicate/blue
+	targetitem = /obj/item/documents/secret/syndicate/blue
 	difficulty = 10
 
 //Old ninja objectives.
