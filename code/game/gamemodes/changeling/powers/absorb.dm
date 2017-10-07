@@ -58,7 +58,16 @@
 		changeling.remove_profile(target)
 		changeling.profilecount--
 		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
-	changeling.add_new_profile(target, user)
+	var/protect = 0
+	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
+		if(ewi.target == target.mind)
+			protect = 1
+			break
+	for(var/datum/objective/absorb/A in user.mind.objectives)
+		if(A.target_name == target.name)
+			protect = 1
+			break
+	changeling.add_new_profile(target, user, protect, TRUE)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
