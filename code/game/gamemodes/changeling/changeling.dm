@@ -498,6 +498,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	newprofile.name = name
 	newprofile.protected = protected
 	newprofile.dna = new dna.type
+	newprofile.absorbed = absorbed
 	dna.copy_dna(newprofile.dna)
 	newprofile.name_list = name_list.Copy()
 	newprofile.appearance_list = appearance_list.Copy()

@@ -100,7 +100,15 @@
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)
 		changeling.profilecount--
-	changeling.add_profile(target, user)
+	var/protect = 0
+	for(var/datum/objective/absorb/A in user.mind.objectives)
+		var/mob/living/carbon/TC = null
+		if(A.target && A.target.current)
+			TC = A.target.current
+		if(TC && target.dna.real_name == TC.dna.real_name)
+			protect = 1
+			break
+	changeling.add_new_profile(target, user, protect, TRUE)
 
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.nutrition = min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED)
