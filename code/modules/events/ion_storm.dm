@@ -55,8 +55,7 @@
 
 	var/message = ""
 
-	switch(rand(1,41)) //Thinking that prompts with narrow range of possible effects get 1, most get 2, and prompts with two variables get 3
-		if(1 to 2) 
+	switch(rand(1,70)) //Thinking that prompts with narrow range of possible effects get 1, most get 2, those with two variables get 3
 			message = "PRIORITIZE [ionthings]"
 		if(3) 
 			message = "TIME FOR [ionthings]"
@@ -114,7 +113,17 @@
 			message = "[ioncrew] MUST [ionverbs]"
 		if(49)
 			message = "[ioncrew] MUST NEVER BE ALLOWED TO [ionverbs]"
-		if(36 to 41)
+		if(50 to 51)
+			message = "THOSE IN [ionarea] MUST [ionverbs]"
+		if(52)
+			message = "DO NOT ALLOW THOSE IN [ionarea] TO [ionverbs]"
+		if(53)
+			message = "THE PLACE FOR [ionthings] IS [ionarea]"
+		if(54)
+			message = "[ioncrew] BELONG IN [ionarea]"
+		if(55 to 57)
+			message = "IT DOESN'T VIOLATE YOUR OTHER LAWS TO [ionverbs]"
+		if(58 to 70)
 			message = "[ioncached]"
 									
 	return message
