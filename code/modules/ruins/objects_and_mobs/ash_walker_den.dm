@@ -16,6 +16,9 @@
 	var/mob/living/carbon/human/chief = null
 	var/spawn_chief = TRUE
 
+/mob/living/simple_animal/hostile/spawner/ash_walker/can_buckle()
+	return 0
+
 /mob/living/simple_animal/hostile/spawner/ash_walker/Life()
 	..()
 	if(!stat)
