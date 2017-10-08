@@ -80,6 +80,7 @@ Warden
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
+	whitelisted = 1
 
 	outfit = /datum/outfit/job/warden
 
