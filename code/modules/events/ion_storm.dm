@@ -56,6 +56,7 @@
 	var/message = ""
 
 	switch(rand(1,70)) //Thinking that prompts with narrow range of possible effects get 1, most get 2, those with two variables get 3
+	        if(1 to 2)
 			message = "PRIORITIZE [ionthings]"
 		if(3) 
 			message = "TIME FOR [ionthings]"
