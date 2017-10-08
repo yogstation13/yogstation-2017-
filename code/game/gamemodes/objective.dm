@@ -685,7 +685,7 @@ var/global/list/possible_items_special = list()
 
 
 /datum/objective/extract
-	dangerrating = 10
+	dangerrating = 1
 
 /datum/objective/extract/proc/gen_amount_goal(lowbound = 4, highbound = 6)
 	target_amount = rand (lowbound,highbound)
@@ -712,18 +712,10 @@ var/global/list/possible_items_special = list()
 
 /datum/objective/absorb
 	dangerrating = 15
-	var/target_name = ""
-
-/datum/objective/absorb/New()
-	..()
-	if(target)
-		target_name = target.name
 
 /datum/objective/absorb/update_explanation_text()
 	..()
 	if(target && target.current)
-		if(!target_name)
-			target_name = target.name
 		var/spec = ""
 		if(ishuman(target.current))
 			var/mob/living/carbon/human/H = target.current
@@ -733,9 +725,14 @@ var/global/list/possible_items_special = list()
 		explanation_text = "Free Objective"
 
 /datum/objective/absorb/check_completion()
+	var/mob/living/carbon/human/TC = null
+	if(target && target.current)
+		TC = target.current
+	else
+		return 0
 	if(owner && owner.changeling && owner.changeling.stored_profiles)
 		for(var/datum/changelingprofile/P in owner.changeling.stored_profiles)
-			if(P.name == target_name)
+			if(TC.dna.real_name == P.dna.real_name && P.absorbed)
 				return 1
 	return 0
 

@@ -64,7 +64,10 @@
 			protect = 1
 			break
 	for(var/datum/objective/absorb/A in user.mind.objectives)
-		if(A.target_name == target.name)
+		var/mob/living/carbon/TC = null
+		if(A.target && A.target.current)
+			TC = A.target.current
+		if(TC && target.dna.real_name == TC.dna.real_name)
 			protect = 1
 			break
 	changeling.add_new_profile(target, user, protect, TRUE)
