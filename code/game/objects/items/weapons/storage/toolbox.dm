@@ -111,6 +111,24 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
+/obj/item/weapon/storage/toolbox/security
+	name = "security toolbox"
+	desc = "Danger. Very robust. This one has a broken latch."
+	icon_state = "red"
+	item_state = "toolbox_red"
+	attack_verb = list("shitcuritied", "robusted", "smashed", "crushed", "thrashed", "abused")
+
+/obj/item/weapon/storage/toolbox/security/New()
+	..()
+	var/color = pick("red","orange")
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/wrench/security(src)
+	new /obj/item/weapon/weldingtool(src)
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/stack/cable_coil(src,30,color)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/device/multitool(src)
+
 /obj/item/weapon/storage/toolbox/brass
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."

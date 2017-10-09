@@ -89,6 +89,7 @@
 
 /obj/structure/closet/secure_closet/warden/New()
 	..()
+	new /obj/item/weapon/extinguisher/mini(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/clothing/suit/armor/vest/warden(src)
 	new /obj/item/clothing/head/warden(src)
