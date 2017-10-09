@@ -25,7 +25,7 @@ var/global/BSACooldown = 0
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 
-	if(!check_rights())
+	if(!check_rights(R_BASIC))
 		return
 
 	if(!isobserver(usr))
