@@ -13,7 +13,7 @@
 
 /obj/item/documents/syndicate/red
 	name = "red secret documents"
-	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence. These documents are verified with a red wax seal."
+	desc = "\"Top Secret\" documents detailing sensitive Syndicate operational intelligence. The red seal looks as if it was made of plastic."
 	icon_state = "docs_red"
 
 /obj/item/documents/secret
