@@ -2,14 +2,21 @@
 var/global/BSACooldown = 0
 
 ////////////////////////////////
-/proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	admins << msg
+/proc/message_admins(msg, fuckholder = 0)
+	var/list/validmins = list()
+	if(fuckholder)
+		for(var/client/C in admins)
+			if(check_rights_for(C, R_BASIC))
+				validmins += C
+		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span> - MESSAGE NOT SENT TO PEOPLE WITHOUT +BASIC</span>"
+		validmins << msg
+	else
+		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+		admins << msg
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
 	admins << msg
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 

@@ -13,7 +13,7 @@
 	//set src in world
 
 
-	if(!usr.client || !usr.client.holder)
+	if(!usr.client || !usr.client.holder || !check_rights_for(usr.client, R_BASIC))
 		usr << "<span class='danger'>You need to be an administrator to access this.</span>"
 		return
 
