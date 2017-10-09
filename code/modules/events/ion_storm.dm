@@ -77,7 +77,7 @@
 		if(17 to 18) 
 			message = "[ioncrew] NEED [ionthings] AT ALL TIMES"
 		if(19)
-		        message = "YOU ARE [ionthings] PERSONIFIED"
+			message = "YOU ARE [ionthings] PERSONIFIED"
 		if(20 to 21) 
 			message = "[ioncrew] ARE TRUSTWORTHY AND NEVER LIE"
 		if(22 to 23) 
@@ -109,7 +109,7 @@
 		if(44)
 			message = "NONE MAY [ionverbs]"
 		if(45)
-		        message = "ONLY YOU CAN [ionverbs]"
+			message = "ONLY YOU CAN [ionverbs]"
 		if(46 to 48)
 			message = "[ioncrew] MUST [ionverbs]"
 		if(49)
