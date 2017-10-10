@@ -29,7 +29,7 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
-	var/phaser = FALSE
+	var/phaser = TRUE
 	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
@@ -178,7 +178,6 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
-	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -214,7 +213,6 @@
 						use magic missile, repair allied constructs (by clicking on them), \
 						</B><I>and most important of all create new constructs</I><B> \
 						(Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
-	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
