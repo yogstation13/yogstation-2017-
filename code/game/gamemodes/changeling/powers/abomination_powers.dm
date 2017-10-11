@@ -76,14 +76,15 @@
 	if(changeling.isabsorbing)
 		user << "<span class='warning'>We are already absorbing!</span>"
 		return
-	if(!user.pulling || !iscarbon(user.pulling))
+	if(!user.pulling || !ishuman(user.pulling))
 		user << "<span class='warning'>We must be grabbing a valid creature to devour them!</span>"
 		return
 	if(user.grab_state < GRAB_AGGRESSIVE)
 		user << "<span class='warning'>We must have a tighter grip to devour this creature!</span>"
 		return
 	var/mob/living/carbon/target = user.pulling
-	changeling.can_absorb_dna(user,target)
+	if(!changeling.can_absorb_dna(user,target))
+		return
 
 	changeling.isabsorbing = 1
 	user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
