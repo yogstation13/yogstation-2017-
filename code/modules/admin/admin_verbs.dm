@@ -129,6 +129,7 @@ var/list/admin_verbs_spawn = list(
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/lag_fixer,
+	/client/proc/remove_all_vines,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/end_round,
@@ -1044,10 +1045,29 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	var/chosen_player = pick(player_pool)
-	src << "[chosen_player] Has been chosen"
+	src << "[chosen_player] has been chosen"
 	holder.show_player_panel(chosen_player)
 
+/client/proc/remove_all_vines()
+	set category = "Admin"
+	set name = "Delete All Vines"
+	set desc = "Performs advanced magic to delete all vines in existence."
 
+	if(!holder)
+		return
 
+	SSobj.can_fire = 0 //So vines can't create more of themselves in their dying breath
+	CHECK_TICK
+	src << "<span class='notice'><b>Erasing vines, this might lag for a bit...</b></span>"
+	for(var/obj/effect/spacevine/SV in world)
+		SV.mutations.Cut()
+		qdel(SV)
+	for(var/obj/structure/alien/resin/flower_bud_enemy/FBE in world)
+		qdel(FBE)
+	for(var/mob/living/simple_animal/hostile/venus_human_trap/VHT in world)
+		qdel(VHT)
+	SSobj.can_fire = 1
+	src << "<span class='notice'><b>All vines have been deleted.</b></span>"
 
-
+	message_admins("[key_name_admin(usr)] has deleted all vines.")
+	log_admin("[key_name(usr)] has deleted all vines.")
