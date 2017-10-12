@@ -1,6 +1,8 @@
 /*
 Clown
 */
+FUCK
+
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
