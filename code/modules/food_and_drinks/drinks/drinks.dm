@@ -170,13 +170,16 @@
 	icon_state = "tea"
 	item_state = "coffee"
 	spillable = 1
+	var/staticicon = FALSE //If true, sprite does not update and remains the same
 
 /obj/item/weapon/reagent_containers/food/drinks/mug/on_reagent_change()
-	if(reagents.total_volume)
-		icon_state = "tea"
+	if(staticicon == TRUE)
 	else
-		icon_state = "tea_empty"
-
+		if(reagents.total_volume)
+			icon_state = "tea"
+		else
+			icon_state = "tea_empty"
+	
 /obj/item/weapon/reagent_containers/food/drinks/mug/tea
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
@@ -187,6 +190,21 @@
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
 
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug
+	desc = "A mug with the british flag emblazoned on it."
+	icon_state = "britmug"
+	staticicon = TRUE
+	
+/obj/item/weapon/reagent_containers/food/drinks/mug/canmug
+	desc = "A mug with the canadian flag emblazoned on it."
+	icon_state = "canmug"
+	staticicon = TRUE
+	
+/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug
+	desc = "A mug with the american flag emblazoned on it."
+	icon_state = "amerimug"
+	staticicon = TRUE
+	
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
 	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
@@ -253,27 +271,7 @@
 	desc = "The detective's only true friend."
 	icon_state = "detflask"
 	list_reagents = list("whiskey" = 30)
-
-/obj/item/weapon/reagent_containers/food/drinks/mug
-	name = "mug"
-	desc = "A mug. The only proper way to drink a warm coffee."
-	icon_state = "mug"
-	volume = 30
-	spillable = 1
 	
-/obj/item/weapon/reagent_containers/food/drinks/mug/britmug
-	desc = "A mug with the british flag emblazoned on it."
-	icon_state = "britmug"
-	
-/obj/item/weapon/reagent_containers/food/drinks/mug/canmug
-	desc = "A mug with the canadian flag emblazoned on it."
-	icon_state = "canmug"
-	
-/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug
-	desc = "A mug with the american flag emblazoned on it."
-	icon_state = "amerimug"
-
-
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm
 

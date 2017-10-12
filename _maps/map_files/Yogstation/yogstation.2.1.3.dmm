@@ -1100,6 +1100,11 @@
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug{
+	desc = "A mug with the american flag emblazoned on it. You can almost taste the freedom.";
+	list_reagents = list("coffee" = 30);
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -4834,13 +4839,8 @@
 "aiy" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_x = -4;
+	pixel_x = 0;
 	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug{
-	desc = "A mug with the american flag emblazoned on it. You can almost taste the freedom.";
-	list_reagents = list("coffee" = 30);
-	pixel_x = 9
 	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
@@ -69301,7 +69301,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/drinks/mug/britmug{
 	desc = "Kingston's personal cup.";
-	list_reagents = list("coffee" = 30)
+	list_reagents = list("tea" = 30)
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
