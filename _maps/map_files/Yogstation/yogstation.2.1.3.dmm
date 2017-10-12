@@ -4833,7 +4833,13 @@
 /area/security/warden)
 "aiy" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/food/drinks/americup{
+	pixel_x = 9
+	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -32897,9 +32903,6 @@
 	network = list("SS13");
 	pixel_x = 0;
 	pixel_y = 0
-	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	desc = "Kingston's personal cup."
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -69281,6 +69284,23 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"ZxI" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/cancup,
+/turf/open/floor/plasteel{
+	icon_state = "arrival";
+	dir = 4
+	},
+/area/quartermaster/office)
+"ZxJ" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/britcup{
+	desc = "Kingston's personal cup."
+	},
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay)
 "ZxK" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
@@ -93543,7 +93563,7 @@ bfA
 bgD
 bhZ
 bjt
-bjt
+ZxI
 bej
 bnX
 bpH
@@ -105881,7 +105901,7 @@ biu
 bjX
 bjX
 bmT
-boy
+ZxJ
 bqe
 brI
 btd

@@ -255,9 +255,23 @@
 	list_reagents = list("whiskey" = 30)
 
 /obj/item/weapon/reagent_containers/food/drinks/britcup
-	name = "cup"
-	desc = "A cup with the british flag emblazoned on it."
+	name = "mug"
+	desc = "A mug with the british flag emblazoned on it."
 	icon_state = "britcup"
+	volume = 30
+	spillable = 1
+	
+/obj/item/weapon/reagent_containers/food/drinks/cancup
+	name = "mug"
+	desc = "A mug with the canadian flag emblazoned on it."
+	icon_state = "cancup"
+	volume = 30
+	spillable = 1
+	
+/obj/item/weapon/reagent_containers/food/drinks/americup
+	name = "mug"
+	desc = "A mug with the american flag emblazoned on it."
+	icon_state = "americup"
 	volume = 30
 	spillable = 1
 
