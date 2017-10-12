@@ -26189,7 +26189,7 @@
 /area/security/checkpoint/medical)
 "aUy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug{
 	desc = "Kingston's personal cup."
 	},
 /turf/open/floor/plasteel{
@@ -60736,8 +60736,8 @@
 	},
 /area/shuttle/escape)
 "ciF" = (
-/obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
+/obj/structure/shuttle/engine/propulsion,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
@@ -60756,8 +60756,8 @@
 	},
 /area/shuttle/transport)
 "ciI" = (
-/obj/structure/shuttle/engine/propulsion,
 /turf/open/space,
+/obj/structure/shuttle/engine/propulsion,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f9";
 	dir = 2
