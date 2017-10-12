@@ -254,26 +254,25 @@
 	icon_state = "detflask"
 	list_reagents = list("whiskey" = 30)
 
-/obj/item/weapon/reagent_containers/food/drinks/britcup
+/obj/item/weapon/reagent_containers/food/drinks/mug
 	name = "mug"
+	desc = "A mug. The only proper way to drink a warm coffee."
+	icon_state = "mug"
+	volume = 30
+	spillable = 1
+	
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug
 	desc = "A mug with the british flag emblazoned on it."
-	icon_state = "britcup"
-	volume = 30
-	spillable = 1
+	icon_state = "britmug"
 	
-/obj/item/weapon/reagent_containers/food/drinks/cancup
-	name = "mug"
+/obj/item/weapon/reagent_containers/food/drinks/mug/canmug
 	desc = "A mug with the canadian flag emblazoned on it."
-	icon_state = "cancup"
-	volume = 30
-	spillable = 1
+	icon_state = "canmug"
 	
-/obj/item/weapon/reagent_containers/food/drinks/americup
-	name = "mug"
+/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug
 	desc = "A mug with the american flag emblazoned on it."
-	icon_state = "americup"
-	volume = 30
-	spillable = 1
+	icon_state = "amerimug"
+
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/weapon/grenade/ghettobomb.dm

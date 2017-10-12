@@ -4837,7 +4837,9 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/food/drinks/americup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug{
+	desc = "A mug with the american flag emblazoned on it. You can almost taste the freedom.";
+	list_reagents = list("coffee" = 30);
 	pixel_x = 9
 	},
 /turf/open/floor/plasteel{
@@ -69286,7 +69288,10 @@
 /area/toxins/xenobiology)
 "ZxI" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/cancup,
+/obj/item/weapon/reagent_containers/food/drinks/mug/canmug{
+	desc = "A mug with the canadian flag emblazoned on it. It's a bit cold.";
+	list_reagents = list("coffee" = 30)
+	},
 /turf/open/floor/plasteel{
 	icon_state = "arrival";
 	dir = 4
@@ -69294,8 +69299,9 @@
 /area/quartermaster/office)
 "ZxJ" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	desc = "Kingston's personal cup."
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug{
+	desc = "Kingston's personal cup.";
+	list_reagents = list("coffee" = 30)
 	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
