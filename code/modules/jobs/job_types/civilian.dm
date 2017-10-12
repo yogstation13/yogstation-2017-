@@ -1,7 +1,7 @@
 /*
 Clown
 */
-FUCK
+(break bitch(
 
 /datum/job/clown
 	title = "Clown"
