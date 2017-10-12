@@ -1058,7 +1058,7 @@ var/list/admin_verbs_hideable = list(
 
 	SSobj.can_fire = 0 //So vines can't create more of themselves in their dying breath
 	CHECK_TICK
-	src << "<span class='notice'><b>Erasing vines, this might lag for a bit...</b></span>"
+	src << "<span class='notice'>Erasing vines, this might lag for a bit...</span>"
 	for(var/obj/effect/spacevine/SV in world)
 		SV.mutations.Cut()
 		qdel(SV)
@@ -1067,7 +1067,7 @@ var/list/admin_verbs_hideable = list(
 	for(var/mob/living/simple_animal/hostile/venus_human_trap/VHT in world)
 		qdel(VHT)
 	SSobj.can_fire = 1
-	src << "<span class='notice'><b>All vines have been deleted.</b></span>"
+	src << "<span class='notice'>All vines have been deleted.</span>"
 
 	message_admins("[key_name_admin(usr)] has deleted all vines.")
 	log_admin("[key_name(usr)] has deleted all vines.")
