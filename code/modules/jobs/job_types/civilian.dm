@@ -1,7 +1,6 @@
 /*
 Clown
 */
-(break bitch(
 
 /datum/job/clown
 	title = "Clown"
