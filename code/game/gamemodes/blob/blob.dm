@@ -105,4 +105,4 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 			if(istype(ticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = ticker.mode
 				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
+					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
