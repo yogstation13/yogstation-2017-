@@ -1,7 +1,0 @@
-author: " Partheo"
-delete-after: true 
-changes: 
-  - imageadd: "Added more stacking sprites to metal, plasteel, glass, and reinforced glass"
-  - imageadd: "Wooden planks have a new sprite, and now stack as well"
-  - bugfix: "Stacks dispensed from the Ore Redemption Machine now display the proper sprite"
-  - imageadd: "The mining suit camera has a new sprite."
