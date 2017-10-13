@@ -141,6 +141,9 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/plasma
 
+/obj/item/stack/sheet/mineral/plasma/fifty
+	amount = 50
+	
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20), \
