@@ -70,7 +70,7 @@
 
 	var/regen_cooldown = 0
 
-/mob/living/simple_animal/hostile/carp/megacarp/new()
+/mob/living/simple_animal/hostile/carp/megacarp/New()
 	. = ..()
 	name = "[pick(megacarp_first_names)] [pick(megacarp_last_names)]"
 	melee_damage_lower += rand(2, 10)
