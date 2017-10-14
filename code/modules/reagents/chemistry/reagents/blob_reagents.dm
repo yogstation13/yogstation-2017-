@@ -152,9 +152,9 @@
 /datum/reagent/blob/energized_fibers/tesla_reaction(obj/effect/blob/B, power)
 	return 0
 
-/*/datum/reagent/blob/energized_fibers/emp_reaction(obj/effect/blob/B, severity) // commented out for the time being because tesla EMPs stuff
+/datum/reagent/blob/energized_fibers/emp_reaction(obj/effect/blob/B, severity) // commented out for the time being because tesla EMPs stuff
 	var/damage = rand(30, 50) - severity * rand(10, 15)
-	B.take_damage(damage, BURN)*/
+	B.take_damage(damage, BURN)
 
 //sets you on fire, does burn damage, weak to water
 /datum/reagent/blob/boiling_oil
