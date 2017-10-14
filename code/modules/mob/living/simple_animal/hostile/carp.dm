@@ -1,3 +1,5 @@
+#define REGENERATION_DELAY = 60 // After taking damage, how long it takes for automatic regeneration to begin for megacarps (ty robustin!)
+
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
@@ -58,14 +60,33 @@
 	icon_living = "megacarp"
 	icon_dead = "megacarp_dead"
 	icon_gib = "megacarp_gib"
-	maxHealth = 65
-	health = 65
+	maxHealth = 20
+	health = 20
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 
+	var/regen_cooldown = 0
+
+/mob/living/simple_animal/hostile/carp/megacarp/new()
+	. = ..()
+	name = "[pick(megacarp_first_names)] [pick(megacarp_last_names)]"
+	melee_damage_lower += rand(2, 10)
+	melee_damage_upper += rand(10, 20)
+	maxHealth += rand(30,60)
+	move_to_delay = rand(3,7)
+
+/mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(.)
+		regen_cooldown = world.time + REGENERATION_DELAY
+
+/mob/living/simple_animal/hostile/carp/megacarp/Life()
+	. = ..()
+	if(regen_cooldown < world.time)
+		heal_overall_damage(4)
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
@@ -74,3 +95,5 @@
 	gold_core_spawnable = 0
 	faction = list("syndicate")
 	AIStatus = AI_OFF
+
+#undef REGENERATION_DELAY
