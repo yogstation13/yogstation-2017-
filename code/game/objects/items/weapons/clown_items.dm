@@ -169,3 +169,16 @@
 				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue
 			M.emote("flip")
+
+/obj/item/device/assembly/bikehorn/rubber_pigeon
+	name = "rubber pigeon"
+	desc = "Rubber chickens are so 2316."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rubber_pigeon"
+	item_state = "rubber_pigeon"
+	w_class = 1
+	throw_speed = 3
+	throw_range = 7
+	attack_verb = list("Pigeoned")
+	honksound = 'sound/items/rubber_pigeon.ogg'
+	cooldowntime = 10
