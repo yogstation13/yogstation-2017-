@@ -158,7 +158,7 @@
 
 /obj/screen/drop/Click()
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	usr.drop_item_v()
 
@@ -170,7 +170,7 @@
 /obj/screen/act_intent/Click(location, control, params)
 
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 
 	if(ishuman(usr) && (usr.client.prefs.toggles & INTENT_STYLE))
@@ -208,7 +208,7 @@
 
 /obj/screen/internals/Click()
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	if(!iscarbon(usr))
 		return
@@ -273,7 +273,7 @@
 
 /obj/screen/mov_intent/Click()
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	switch(usr.m_intent)
 		if("run")
@@ -291,7 +291,7 @@
 
 /obj/screen/pull/Click()
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	usr.stop_pulling()
 
@@ -310,7 +310,7 @@
 
 /obj/screen/resist/Click()
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	if(isliving(usr))
 		var/mob/living/L = usr
@@ -323,7 +323,7 @@
 	if(world.time <= usr.next_move)
 		return 1
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
 		return 1
@@ -342,7 +342,7 @@
 
 /obj/screen/throw_catch/Click()
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
@@ -356,7 +356,7 @@
 
 /obj/screen/zone_sel/Click(location, control,params)
 	if(usr.client && usr.client.prefs.afreeze)
-		usr.to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		to_chat(usr.client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 1
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])

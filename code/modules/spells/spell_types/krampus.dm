@@ -18,8 +18,8 @@
 	H.silent += 10
 	if((H in naughty_list))
 		H.Stun(15)
-		to_chat(H, "<span class='warning'>You hear [user.real_name]'s cackling in the back of your head. Everything grows silent \)
-					Santa has betrayed you. Krampus is here because you are on the naughty list.</span>"
+		to_chat(H, "<span class='warning'>You hear [user.real_name]'s cackling in the back of your head. Everything grows silent \
+					Santa has betrayed you. Krampus is here because you are on the naughty list.</span>")
 	else
 		to_chat(user, "<span class='notice'>[H] is on the nice list!</span>")
 		H.Stun(1) // krampus get away!

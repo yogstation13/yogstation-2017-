@@ -1005,11 +1005,9 @@
 				if(we_breathe && we_lung)
 					M.do_cpr(H)
 				else if(we_breathe && !we_lung)
-					to_chat(M, "<span class='warning'>You have no lungs to breathe \)
-						with, so cannot peform CPR.</span>"
+					to_chat(M, "<span class='warning'>You have no lungs to breathe with, so cannot peform CPR.</span>")
 				else
-					to_chat(M, "<span class='notice'>You do not breathe, so \)
-						cannot perform CPR.</span>"
+					to_chat(M, "<span class='notice'>You do not breathe, so cannot perform CPR.</span>")
 
 		if("grab")
 			if(attacker_style && attacker_style.grab_act(M,H))

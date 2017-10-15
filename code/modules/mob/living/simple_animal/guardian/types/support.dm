@@ -85,8 +85,7 @@
 
 	beacon = new(beacon_loc, src)
 
-	to_chat(src, "<span class='danger'><B>Beacon placed! You may now warp targets \)
-		to it, including your user, via Alt+Click.</span></B>"
+	to_chat(src, "<span class='danger'><B>Beacon placed! You may now warp targets to it, including your user, via Alt+Click.</span></B>")
 
 	beacon_cooldown = world.time + 3000
 
@@ -113,26 +112,21 @@
 	if(!istype(A))
 		return
 	if(src.loc == summoner)
-		to_chat(src, "<span class='danger'><B>You must be manifested to warp a \)
-			target!</span></B>"
+		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")
 		return
 	if(!beacon)
-		to_chat(src, "<span class='danger'><B>You need a beacon placed to warp \)
-			things!</span></B>"
+		to_chat(src, "<span class='danger'><B>You need a beacon placed to warp things!</span></B>")
 		return
 	if(!Adjacent(A))
-		to_chat(src, "<span class='danger'><B>You must be adjacent to your \)
-			target!</span></B>"
+		to_chat(src, "<span class='danger'><B>You must be adjacent to your target!</span></B>")
 		return
 	if(A.anchored)
-		to_chat(src, "<span class='danger'><B>Your target cannot be \)
-			anchored!</span></B>"
+		to_chat(src, "<span class='danger'><B>Your target cannot be anchored!</span></B>")
 		return
 
 	var/turf/T = get_turf(A)
 	if(beacon.z != T.z)
-		to_chat(src, "<span class='danger'><B>The beacon is too far away to warp \)
-			to!</span></B>"
+		to_chat(src, "<span class='danger'><B>The beacon is too far away to warp to!</span></B>")
 		return
 
 	to_chat(src, "<span class='danger'><B>You begin to warp [A].</span></B>")

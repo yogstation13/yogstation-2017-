@@ -235,8 +235,8 @@ var/last_irc_status = 0
 							var/datum/ticket_log/log_item = null
 							log_item = new /datum/ticket_log(ticket, input["admin"], input["response"], 0)
 							ticket.log += log_item
-							ticket.to_chat(owner, "<span class='ticket-header-recieved'>-- Administrator private message --</span>")
-							ticket.to_chat(owner, "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>")
+							to_chat(ticket.owner, "<span class='ticket-header-recieved'>-- Administrator private message --</span>")
+							to_chat(ticket.owner, "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>")
 				return msg
 
 

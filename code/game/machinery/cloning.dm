@@ -192,7 +192,7 @@
 			as your body regenerates.</b><br><i>So this is what cloning \
 			feels like?</i></span>")
 	else if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.to_chat(current, "<span class='notice'>Your body is \
+		to_chat(clonemind.current, "<span class='notice'>Your body is \
 			beginning to regenerate in a cloning pod. You will \
 			become conscious when it is complete.</span>")
 

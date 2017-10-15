@@ -116,9 +116,9 @@ var/datum/cyberman_network/cyberman_network
 	var/datum/atom_hud/data/cybermen/hud = huds[DATA_HUD_CYBERMEN_HACK]
 	hud.add_hud_to(cyberman.current)
 	if(message_override)
-		cyberman.to_chat(current, message_override)
+		to_chat(cyberman.current, message_override)
 	else
-		cyberman.to_chat(current, "<span class='boldannounce'><b><font size=3>You are now a Cyberman! Work with your fellow cybermen and do not harm them.</font></b></span>")
+		to_chat(cyberman.current, "<span class='boldannounce'><b><font size=3>You are now a Cyberman! Work with your fellow cybermen and do not harm them.</font></b></span>")
 
 	var/mob/living/carbon/human/H = cyberman.current
 	if(cyberman.assigned_role == "Clown")
@@ -127,9 +127,9 @@ var/datum/cyberman_network/cyberman_network
 	if(isloyal(H))
 		to_chat(H, "<span class='notice'>Your loyalty implant has been deactivated, but not destroyed. While scanners will show that it is still active, you are no longer loyal to Nanotrasen.</span>")
 
-	cyberman.to_chat(current, "<span class='notice'>As a Cyberman, hacking is your most valuable ability. Click on \'Prepare Hacking\' in the Cybermen tab to use it.</span>")
-	cyberman.to_chat(current, "<span class='notice'>You can use the Cyberman Broadcast to undetectably communicate with your fellow Cybermen. You can also use robot talk with .b, but this will alert any unhacked cyborgs or AIs to your presence.</span>")
-	cyberman.to_chat(current, "<span class='notice'>\n\"Cybermen\" is an experimental gamemode. If you find any bugs, please submit an issue on the server's github. If a bug prevents you from completing an objective, or you are not properly assigned an objective, contact an admin via ahelp.</span>")
+	to_chat(cyberman.current, "<span class='notice'>As a Cyberman, hacking is your most valuable ability. Click on \'Prepare Hacking\' in the Cybermen tab to use it.</span>")
+	to_chat(cyberman.current, "<span class='notice'>You can use the Cyberman Broadcast to undetectably communicate with your fellow Cybermen. You can also use robot talk with .b, but this will alert any unhacked cyborgs or AIs to your presence.</span>")
+	to_chat(cyberman.current, "<span class='notice'>\n\"Cybermen\" is an experimental gamemode. If you find any bugs, please submit an issue on the server's github. If a bug prevents you from completing an objective, or you are not properly assigned an objective, contact an admin via ahelp.</span>")
 	cyberman_network.display_all_cybermen_objectives(cyberman)
 
 /datum/game_mode/proc/remove_cyberman(datum/mind/cyberman, var/message_override)
@@ -351,21 +351,21 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/proc/display_all_cybermen_objectives(datum/mind/M)
 	if(cybermen_objectives.len < 1)
-		M.to_chat(current, "<span class='notice'>No objectives to display.</span>")
+		to_chat(M.current, "<span class='notice'>No objectives to display.</span>")
 		return
 	var/datum/objective/cybermen/O
-	M.to_chat(current, "<span class='notice'>The objectives of the Cybermen aboard [station_name()] are as follows:</span>")
+	to_chat(M.current, "<span class='notice'>The objectives of the Cybermen aboard [station_name()] are as follows:</span>")
 	for(var/i = 1 to cybermen_objectives.len-1)
 		O = cybermen_objectives[i]
 		if(O)
 			O.check_completion()//needed for updating explanation text.
-			M.to_chat(current, "Phase [i]:[O.phase]")
-			M.to_chat(current, "[O.explanation_text]")
-			M.to_chat(current, "<font color='green'><b>Complete</b></font><br>")
+			to_chat(M.current, "Phase [i]:[O.phase]")
+			to_chat(M.current, "[O.explanation_text]")
+			to_chat(M.current, "<font color='green'><b>Complete</b></font><br>")
 	O = cybermen_objectives[cybermen_objectives.len]
-	M.to_chat(current, "Phase [cybermen_objectives.len]:[O.phase]")
-	M.to_chat(current, "[O.explanation_text]")
-	M.to_chat(current, (O.check_completion() ? "<font color='green'><b>Complete</b></font><br>" : "<font color='yellow'><b>In Progress</b></font>"))
+	to_chat(M.current, "Phase [cybermen_objectives.len]:[O.phase]")
+	to_chat(M.current, "[O.explanation_text]")
+	to_chat(M.current, (O.check_completion() ? "<font color='green'><b>Complete</b></font><br>" : "<font color='yellow'><b>In Progress</b></font>"))
 
 /datum/cyberman_network/proc/display_current_cybermen_objective()
 	if(cybermen_objectives.len > 0)
@@ -378,7 +378,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/proc/message_all_cybermen(message)
 	for(var/datum/mind/cyberman in cybermen)
-		cyberman.to_chat(current, message)
+		to_chat(cyberman.current, message)
 
 /datum/cyberman_network/proc/is_cyberman_or_being_converted(mob/living/carbon/human/H)//this one accepts mobs instead of minds, because conversion hacks target mobs, not minds.
 	if(!istype(H))

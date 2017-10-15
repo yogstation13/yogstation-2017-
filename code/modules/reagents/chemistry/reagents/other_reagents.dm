@@ -185,8 +185,8 @@
 				if("speech")
 					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
 				if("message")
-					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \)
-					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>"
+					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds

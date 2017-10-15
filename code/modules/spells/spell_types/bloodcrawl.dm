@@ -32,7 +32,7 @@
 		start_recharge()
 		return
 	revert_cast()
-	to_chat(user, "<span class='warning'>You are unable to blood crawl!</span>"*/)
+	to_chat(user, "<span class='warning'>You are unable to blood crawl!</span>")*/
 
 /obj/effect/decal/cleanable/blood/CtrlClick(mob/living/user)
 	..()

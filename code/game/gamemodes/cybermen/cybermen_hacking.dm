@@ -314,11 +314,11 @@
 	if(messageLimiter)
 		for(var/datum/mind/M in messageLimiter)
 			if(M && M.current)
-				M.to_chat(current, message)
+				to_chat(M.current, message)
 	else if (outputLimiter)
 		for(var/datum/mind/M in outputLimiter)
 			if(M && M.current)
-				M.to_chat(current, message)
+				to_chat(M.current, message)
 	else
 		cyberman_network.message_all_cybermen(message)
 

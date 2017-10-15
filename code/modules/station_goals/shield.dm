@@ -127,7 +127,7 @@
 
 /obj/machinery/satellite/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/multitool))
-		to_chat(user, "<span class='notice'>)
+		to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[emagged ? "DEBUG_MODE //" : ""]</span>")
 	else
 		return ..()
 

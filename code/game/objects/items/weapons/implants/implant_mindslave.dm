@@ -17,7 +17,7 @@
 /obj/item/weapon/implant/mindslave/implant(mob/source, var/mob/user)
 
 	if(!source.mind)
-		user.to_chat(mind, "<span class='notice'>[source] doesn't posses the mental capabilities to be a slave.</span>")
+		to_chat(user.mind, "<span class='notice'>[source] doesn't posses the mental capabilities to be a slave.</span>")
 		return 0
 
 	var/mob/living/carbon/human/target = source.mind.current

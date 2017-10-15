@@ -65,8 +65,7 @@
 		return
 
 	if(!(access_heads in ID.access))
-		to_chat(user, "<span class='warning'>The access level of \)
-			your card is not high enough.</span>"
+		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -158,8 +157,7 @@
 
 	if(ENGINES_STARTED)
 		// Give them a message anyway
-		to_chat(user, "<span class='warning'>The shuttle is already \)
-			about to launch!</span>"
+		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 	else
 		process()
 

@@ -818,7 +818,7 @@
 				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='byond:)
+					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
@@ -877,11 +877,9 @@
 			C.updatehealth()
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
 		else if(they_breathe && !they_lung)
-			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... \)
-				but you don't feel any better...</span>"
+			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
 		else
-			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... \)
-				which is a sensation you don't recognise...</span>"
+			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... which is a sensation you don't recognise...</span>")
 
 /mob/living/carbon/human/generateStaticOverlay()
 	var/image/staticOverlay = image(icon('icons/effects/effects.dmi', "static"), loc = src)

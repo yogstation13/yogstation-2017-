@@ -62,8 +62,7 @@
 			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
 			target.grab_ghost(force = TRUE) // even suicides
-			to_chat(target, "<span class='notice'>You rise with a start, \)
-				you're alive!!!</span>"
+			to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 		else if(target.stat != DEAD)
 			to_chat(target, "<span class='notice'>You feel great!</span>")
 

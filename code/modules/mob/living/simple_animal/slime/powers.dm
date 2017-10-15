@@ -88,10 +88,10 @@
 /mob/living/simple_animal/slime/proc/Feedstop(silent=0, living=1)
 	if(buckled)
 		if(!living)
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \)
+			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
 			"This subject does not have life energy", "This subject is empty", \
 			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>"
+			"I do not feel nourished", "This subject is not food")]!</span>")
 		if(!silent)
 			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
 							"<span class='notice'><i>I stopped feeding.</i></span>")

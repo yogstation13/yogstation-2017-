@@ -93,12 +93,12 @@ Doesn't work on other aliens/AI.*/
 				continue
 			var/follow_link_user = FOLLOW_LINK(ded, user)
 			var/follow_link_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_link_user] \)
+			to_chat(ded, "[follow_link_user] \
 				<span class='name'>[user]</span> \
 				<span class='alertalien'>Alien Whisper --> </span> \
 				[follow_link_whispee] \
 				<span class='name'>[M]</span> \
-				<span class='noticealien'>[msg]</span>"
+				<span class='noticealien'>[msg]</span>")
 	else
 		return 0
 	return 1

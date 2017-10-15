@@ -142,7 +142,7 @@
 			var/distorted_message = input
 			if(cyberman.cyberman.emp_hit)
 				distorted_message = Gibberish2(input, cyberman.cyberman.emp_hit*1.6)
-			cyberman.to_chat(current, "<span class='cyberman'>Cyberman Broadcast: [distorted_message]</span>")
+			to_chat(cyberman.current, "<span class='cyberman'>Cyberman Broadcast: [distorted_message]</span>")
 		for(var/mob/dead in dead_mob_list)
 			to_chat(dead, "<span class='cyberman'>Cyberman Broadcast: [input]</span>")
 	return 1
@@ -343,6 +343,6 @@ var/list/cybermen_debug_abilities = list(/datum/admins/proc/become_cyberman,
 	if(input)
 		cyberman_network.log_broadcast("[usr] Sent a Cyberman Collective Broadcast: [input]", 1)
 		for(var/datum/mind/cyberman in cyberman_network.cybermen)
-			cyberman.to_chat(current, "<span class='cybermancollective'>Cyberman Collective: [input]</span>")
+			to_chat(cyberman.current, "<span class='cybermancollective'>Cyberman Collective: [input]</span>")
 		for(var/mob/dead in dead_mob_list)
 			to_chat(dead, "<span class='cybermancollective'>Cyberman Collective: [input]</span>")

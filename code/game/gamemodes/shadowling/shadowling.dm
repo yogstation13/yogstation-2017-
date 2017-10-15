@@ -105,8 +105,8 @@ Made by Xhuis
 	for(var/datum/mind/shadow in shadows)
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
 		sleep(10)
-		shadow.to_chat(current, "<br>")
-		shadow.to_chat(current, "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>")
+		to_chat(shadow.current, "<br>")
+		to_chat(shadow.current, "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>")
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
@@ -129,7 +129,7 @@ Made by Xhuis
 		objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
 		shadow_objectives += "enthrall"
 		shadow_mind.memory += "<b>Objective #1</b>: [objective_explanation]"
-		shadow_mind.to_chat(current, "<b>Objective #1</b>: [objective_explanation]<br>")
+		to_chat(shadow_mind.current, "<b>Objective #1</b>: [objective_explanation]<br>")
 
 
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
@@ -154,12 +154,12 @@ Made by Xhuis
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/lesser_glare(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_vision(null))
-		new_thrall_mind.to_chat(current, "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
-		new_thrall_mind.to_chat(current, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
-		new_thrall_mind.to_chat(current, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
-		new_thrall_mind.to_chat(current, "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>")
-		new_thrall_mind.to_chat(current, "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>")
-		new_thrall_mind.to_chat(current, "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>")
 		if(jobban_isbanned(new_thrall_mind.current, ROLE_SHADOWLING))
 			replace_jobbaned_player(new_thrall_mind.current, ROLE_SHADOWLING, ROLE_SHADOWLING)
 		return 1

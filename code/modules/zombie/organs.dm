@@ -31,9 +31,7 @@
 				owner.adjustToxLoss(3)
 
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
-	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \)
-		web of pus and vicera, bound tightly around the brain like some \
-		biological harness.</span>"
+	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black web of pus and vicera, bound tightly around the brain like some biological harness.</span>")
 
 /obj/item/organ/body_egg/zombie_infection/egg_process()
 	if(!ishuman(owner)) // We do not support monkey or xeno zombies. Yet.

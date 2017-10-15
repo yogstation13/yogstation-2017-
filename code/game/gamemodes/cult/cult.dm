@@ -105,7 +105,7 @@
 
 /datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
 	var/objs = get_cult_objectives()
-	cult_mind.to_chat(current, objs)
+	to_chat(cult_mind.current, objs)
 	cult_mind.memory += objs + "<BR>"
 
 /datum/game_mode/cult/post_setup()
@@ -126,7 +126,7 @@
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		equip_cultist(cult_mind.current)
 		update_cult_icons_added(cult_mind)
-		cult_mind.to_chat(current, "<span class='userdanger'>You are a member of the cult!</span>")
+		to_chat(cult_mind.current, "<span class='userdanger'>You are a member of the cult!</span>")
 		add_cultist(cult_mind, 0)
 	..()
 

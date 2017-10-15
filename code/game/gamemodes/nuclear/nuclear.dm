@@ -82,7 +82,7 @@
 
 		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
-			synd_mind.to_chat(current, "The nuclear authorization code is: <B>[nuke_code]</B>")
+			to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 
 		if(!leader_selected)
 			prepare_syndicate_leader(synd_mind, nuke_code)
@@ -145,10 +145,10 @@
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
 	if(you_are)
-		syndicate.to_chat(current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
+		to_chat(syndicate.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
-		syndicate.to_chat(current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		to_chat(syndicate.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 

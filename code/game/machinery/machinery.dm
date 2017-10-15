@@ -331,10 +331,10 @@ Class Procs:
 					C.pai.pair(src)
 					to_chat(user, "<span class='notice'>A cheerful blip emanates from [C.pai] as it successfully interfaces with [src].</span>")
 				else
-					C.to_chat(pai, "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>")
+					to_chat(C.pai, "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>")
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
-				C.to_chat(pai, "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>")
+				to_chat(C.pai, "<span class='warning'><b>\[ERROR\]</b> Handshake failed. User not authorised to connect remote devices.</span>")
 	else
 		return ..()
 
