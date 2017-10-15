@@ -5,7 +5,7 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message) //Immersive pretty filters
-		to_chat(usr, "<span class='notice'>You fumble over your words. <a href='https:)
+		to_chat(usr, "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>")
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
 		log_say("[name]/[ckey]: [oldmsg]")
 		return
@@ -20,7 +20,7 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message)
-		to_chat(usr, "<span class='notice'>You fumble over your words. <a href='https:)
+		to_chat(usr, "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>")
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
 		log_whisper("[name]/[ckey]: [oldmsg]")
 		return
@@ -47,7 +47,7 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message)
-		to_chat(usr, "<span class='notice'>You fumble over your words. <a href='https:)
+		to_chat(usr, "<span class='notice'>You fumble over your words. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>")
 		message_admins("[key_name(usr)] just tripped a pretty filter: '[oldmsg]'.")
 		log_whisper("[name]/[ckey]: [oldmsg]")
 		return

@@ -60,9 +60,7 @@
 	set desc = "Toggle recieving a message in deadchat when sentient mobs \
 		die."
 	prefs.toggles ^= DISABLE_DEATHRATTLE
-	to_chat(usr, "You will \)
-		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
-		messages when a sentient mob dies."
+	to_chat(usr, "You will [(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get messages when a sentient mob dies.")
 	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
 
 /client/proc/toggleadminhelpsound()

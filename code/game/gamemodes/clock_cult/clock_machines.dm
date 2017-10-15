@@ -408,8 +408,7 @@
 
 /obj/structure/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
-	to_chat(user, "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" \)
-	: "vibrates in place and thrums with power"].</span>"
+	to_chat(user, "<span class='[recharging > world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging > world.time ? "has been breached by writhing tendrils of blackness that cover the totem" : "vibrates in place and thrums with power"].</span>")
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		to_chat(user, "<span class='nezbere_small'>It requires <b>[disrupt_cost]W</b> of power for each nearby disruptable electronic.</span>")
 		to_chat(user, "<span class='nezbere_small'>If it fails to both drain any power and disrupt any electronics, it will disable itself for <b>[round(recharge_time/600, 1)]</b> minutes.</span>")

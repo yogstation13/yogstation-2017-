@@ -1545,4 +1545,8 @@ proc/pick_closest_path(value)
 
 //easy conversion to goonchat later on
 /proc/to_chat(target, msg)
-	to_chat(target, msg)
+	if(istype(target, /datum/mind))
+		var/datum/mind/M = target
+		M.current << msg
+	else
+		target << msg

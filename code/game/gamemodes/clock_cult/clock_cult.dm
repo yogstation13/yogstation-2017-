@@ -160,10 +160,9 @@ This file's folder contains:
 			slot = "In your [B.name]"
 	if(slot == "At your feet")
 		new/obj/item/clockwork/slab/starter(get_turf(L))
-	to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \)
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
-	to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https:)
+	to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>")
+	to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective

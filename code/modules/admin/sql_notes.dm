@@ -213,5 +213,5 @@ this proc can take several minutes to execute fully if converting and cause DD t
 		convert_notes_sql(ckey)
 	to_chat(world, "Deleting NOTESFILE")
 	fdel(NOTESFILE)
-	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES"*/)
+	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES")*/
 #undef NOTESFILE

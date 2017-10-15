@@ -50,10 +50,7 @@
 		to_chat(user, "You hear something crackle in your ears for a moment before a voice speaks.  \"Thank you for getting in touch with Central Command, one of our advisers will be with you shortly. You will now be put on hold. Message ends.\"")
 		playsound(src,'sound/items/smoothelevator.ogg',40,1)
 
-		for(var/client/X in admins)
-			if(X.prefs.toggles & SOUND_ADMINHELP)
-				X << 'sound/effects/adminhelp.ogg'
-			to_chat(X, ("<b><span class='notice'>[user.real_name] ([user.ckey]) is changing the station's name to [pending_name]. (<a href='byond:)
+		message_admins("<b><span class='notice'>[user.real_name] ([user.ckey]) is changing the station's name to [pending_name]. (<a href='byond://?src=\ref[src];admin=\ref[X];bearer=\ref[user];choice=approve'>Approve</a> | <a href='byond://?src=\ref[src];admin=\ref[X];choice=deny'>Deny</a>)</span></b>")
 		log_game("[user.ckey] has attempted to change the station's name to [pending_name].")
 		scripter = user
 	else

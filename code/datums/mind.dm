@@ -1293,9 +1293,9 @@
 					return
 				ticker.mode.shadows += src
 				special_role = "shadowling"
-				to_chat(current, "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \)
+				to_chat(current, "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
 				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
-				</b></span>"
+				</b></span>")
 				ticker.mode.finalize_shadowling(src)
 				ticker.mode.update_shadow_icons_added(src)
 			if("thrall")

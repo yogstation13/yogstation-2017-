@@ -31,8 +31,8 @@
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>We begin to heal rapidly.</span>")
 	if(recent_uses > 1)
-		to_chat(user, "<span class='warning'>Our healing's effectiveness is reduced \)
-			by quick repeated use!</span>"
+		to_chat(user, "<span class='warning'>Our healing's effectiveness is reduced \
+			by quick repeated use!</span>")
 	spawn(0)
 		recent_uses++
 		if(ishuman(user))

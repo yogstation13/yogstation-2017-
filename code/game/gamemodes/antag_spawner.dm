@@ -297,8 +297,8 @@
 		while you're at it."
 	S.mind.objectives += new_objective2
 	to_chat(S, S.playstyle_string)
-	to_chat(S, "<B>You are currently not currently in the same plane of \)
-		existence as the station. Ctrl+Click a blood pool to manifest.</B>"
+	to_chat(S, "<B>You are currently not currently in the same plane of \
+		existence as the station. Ctrl+Click a blood pool to manifest.</B>")
 	to_chat(S, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
 	to_chat(S, "<B>Objective #[2]</B>: [new_objective2.explanation_text]")
 

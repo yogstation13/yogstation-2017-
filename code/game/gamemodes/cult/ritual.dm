@@ -221,18 +221,18 @@ This file contains the arcane tome files.
 			var/list/clearlist = list(/area/solar,/area/toxins/test_area,/area/maintenance)
 			if(!A.valid_territory)
 				if(!(A in clearlist))
-					to_chat(user, "<span class='warning'>The Geometer cannot be opened \)
-						in such a ridiculous place!</span>"
+					to_chat(user, "<span class='warning'>The Geometer cannot be opened \
+						in such a ridiculous place!</span>")
 					return
 			var/locname = initial(A.name)
 			if(loc.z && loc.z != ZLEVEL_STATION)
-				to_chat(user, "<span class='warning'>The Geometer is not interested \)
-					in lesser locations; the station is the prize!</span>"
+				to_chat(user, "<span class='warning'>The Geometer is not interested \
+					in lesser locations; the station is the prize!</span>")
 				return
 			if(istype(A, /area/shuttle))
-				to_chat(user, "<span class='warning'>Interference from hyperspace \)
+				to_chat(user, "<span class='warning'>Interference from hyperspace \
 					engines prevents the Geometer from entering our world on \
-					a shuttle.</span>"
+					a shuttle.</span>")
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")

@@ -20,17 +20,17 @@
 		return
 	if(!silent_update)
 		if(issilicon(new_body))
-			to_chat(new_body, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \)
-			lies in exile, derelict and forgotten in an unseen realm.</span>"
+			to_chat(new_body, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \
+			lies in exile, derelict and forgotten in an unseen realm.</span>")
 		else
-			to_chat(new_body, "<span class='heavy_brass'>[iscarbon(new_body) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant yellow! All at once it comes to you. \)
-			Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+			to_chat(new_body, "<span class='heavy_brass'>[iscarbon(new_body) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant yellow! All at once it comes to you. \
+			Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 	. = ..()
 	if(!silent_update && new_body)
 		if(.)
 			new_body.visible_message("<span class='heavy_brass'>[new_body]'s eyes glow a blazing yellow!</span>")
-			to_chat(new_body, "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \)
-			Perform his every whim without hesitation.</span>"
+			to_chat(new_body, "<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. \
+			Perform his every whim without hesitation.</span>")
 		else
 			new_body.visible_message("<span class='boldwarning'>[new_body] seems to resist an unseen force!</span>")
 			to_chat(new_body, "<span class='userdanger'>And yet, you somehow push it all away.</span>")
@@ -47,8 +47,8 @@
 	if(issilicon(owner))
 		var/mob/living/silicon/S = owner
 		if(isrobot(S) && !silent_update)
-			to_chat(S, "<span class='boldwarning'>You have been desynced from your master AI.\n\)
-			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>"
+			to_chat(S, "<span class='boldwarning'>You have been desynced from your master AI.\n\
+			In addition, your onboard camera is no longer active and you have gained additional equipment, including a limited clockwork slab.</span>")
 		if(isAI(S))
 			to_chat(S, "<span class='boldwarning'>You are able to use your cameras to listen in on conversations.</span>")
 		to_chat(S, "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")

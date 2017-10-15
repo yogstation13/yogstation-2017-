@@ -104,7 +104,7 @@
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
-		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http:)
+		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http://www.byond.com/membership'>Click Here to find out more</a>.")
 		return 0
 	return 1
 
@@ -245,7 +245,7 @@ var/next_external_rsc = 0
 		to_chat(src, config.client_error_message)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [config.client_error_version] or later")
-		to_chat(src, "Visit http:)
+		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 		if (holder)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
@@ -256,7 +256,7 @@ var/next_external_rsc = 0
 		to_chat(src, config.client_warn_message)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version to remove this message: [config.client_warn_version] or later")
-		to_chat(src, "Visit http:)
+		to_chat(src, "Visit http://www.byond.com/download/ to get the latest version of byond.")
 
 	if (connection == "web")
 		if (!config.allowwebclient)

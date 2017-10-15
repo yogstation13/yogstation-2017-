@@ -41,16 +41,16 @@
 
 /datum/game_mode/monkey/announce()
 	to_chat(world, "<B>The current game mode is - Monkey!</B>")
-	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to Centcom. \)
-				Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>"
+	to_chat(world, "<B>One or more crewmembers have been infected with Jungle Fever! Crew: Contain the outbreak. None of the infected monkeys may escape alive to Centcom. \
+				Monkeys: Ensure that your kind lives on! Rise up against your captors!</B>")
 
 
 /datum/game_mode/monkey/proc/greet_carrier(datum/mind/carrier)
-	carrier.to_chat(current, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>")
-	carrier.to_chat(current, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
-	carrier.to_chat(current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
-	carrier.to_chat(current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
-	carrier.to_chat(current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach Centcom.</b>")
+	to_chat(carrier.current, "<B><span class='notice'>You are the Jungle Fever patient zero!!</B>")
+	to_chat(carrier.current, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
+	to_chat(carrier.current, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
+	to_chat(carrier.current, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")
+	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected monkeys reach Centcom.</b>")
 	return
 
 /datum/game_mode/monkey/post_setup()

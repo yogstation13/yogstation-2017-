@@ -86,24 +86,21 @@
 		to_chat(user, "<span class='warning'>The wisp has gone missing!</span>")
 		return
 	if(wisp.loc == src)
-		to_chat(user, "<span class='notice'>You release the wisp. It begins to \)
-			bob around your head.</span>"
+		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
-		to_chat(user, "<span class='notice'>You return the wisp to the lantern.\)
-			</span>"
+		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
 
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				to_chat(M, "<span class='notice'>Your vision returns to \)
-					normal.</span>"
+				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
 
 		wisp.stop_orbit()
 		wisp.loc = src

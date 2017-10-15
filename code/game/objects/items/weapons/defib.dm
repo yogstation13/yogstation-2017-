@@ -408,8 +408,7 @@
 		return
 
 	if(user.zone_selected != "chest")
-		to_chat(user, "<span class='warning'>You need to target your patient's \)
-			chest with [src]!</span>"
+		to_chat(user, "<span class='warning'>You need to target your patient's \chest with [src]!</span>")
 		return
 	if(user.a_intent == "harm")
 		if(req_defib && defib.safety)

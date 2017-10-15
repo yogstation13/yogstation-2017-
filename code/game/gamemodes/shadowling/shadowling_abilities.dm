@@ -536,8 +536,8 @@
 
 	if(thralls >= 5 && !blind_smoke_acquired)
 		blind_smoke_acquired = 1
-		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \)
-			</i></span>"
+		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Blinding Smoke</b> ability. It will create a choking cloud that will blind any non-thralls who enter. \
+			</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/blindness_smoke(null))
 
 	if(thralls >= 7 && !drainLifeAcquired)
@@ -547,15 +547,15 @@
 
 	if(thralls >= 9 && !reviveThrallAcquired)
 		reviveThrallAcquired = 1
-		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \)
-		with no bodily defects.</i></span>"
+		to_chat(user, "<span class='shadowling'><i>The power of your thralls has granted you the <b>Black Recuperation</b> ability. This will, after a short time, bring a dead thrall completely back to life \
+		with no bodily defects.</i></span>")
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/revive_thrall(null))
 
 	if(thralls < victory_threshold)
 		to_chat(user, "<span class='shadowling'>You do not have the power to ascend. You require [victory_threshold] thralls, but only [thralls] living thralls are present.</span>")
 
 	else if(thralls >= victory_threshold)
-		to_chat(user, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready. <i>This will kill all of your thralls.</i></span>")
+		to_chat(user, "<span class='shadowling'><b>You are now powerful enough to ascend. Use the Ascendance ability when you are ready.</span>")
 		to_chat(user, "<span class='shadowling'><b>You may find Ascendance in the Shadowling Evolution tab.</b></span>")
 		for(M in living_mob_list)
 			if(is_shadow(M))

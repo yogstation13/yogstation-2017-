@@ -139,12 +139,12 @@
 					continue
 				var/follow_rev = FOLLOW_LINK(ded, user)
 				var/follow_whispee = FOLLOW_LINK(ded, M)
-				to_chat(ded, "[follow_rev] \)
+				to_chat(ded, "[follow_rev] \
 					<span class='name'>[user]</span> \
 					<span class='revenboldnotice'>Revenant Transmit --></span> \
 					[follow_whispee] \
 					<span class='name'>[M]</span> \
-					<span class='revennotice'>[msg]</span>"
+					<span class='revennotice'>[msg]</span>")
 
 
 

@@ -548,8 +548,8 @@
 	L.update_inv_glasses()
 	switch(active)
 		if(TRUE)
-			to_chat(L, "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\)
-			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>"
+			to_chat(L, "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
+			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>")
 		if(FALSE)
 			to_chat(L, "<span class='notice'>As you take off [src], its lens darkens once more.</span>")
 	return 1

@@ -1075,12 +1075,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
-		to_chat(invoker, "<span class='nezbere'>\"Abg whfg lrg, sevraq. Cngvrapr vf n iveghr.\"</span>\n\)
-		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
+		to_chat(invoker, "<span class='nezbere'>\"Abg whfg lrg, sevraq. Cngvrapr vf n iveghr.\"</span>\n\
+		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>")
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		to_chat(invoker, "<span class='nezbere'>\"Bhe znfgre vf urer nyernql. Lbh qb abg erdhver zl uryc, sevraq.\"</span>\n\)
-		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
+		to_chat(invoker, "<span class='nezbere'>\"Bhe znfgre vf urer nyernql. Lbh qb abg erdhver zl uryc, sevraq.\"</span>\n\
+		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>")
 		return 0
 	return 1
 
@@ -1130,12 +1130,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept-of waiting?")]\"</span>\n\)
-		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
+		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept-of waiting?")]\"</span>\n\
+		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>")
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\)
-		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
+		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\
+		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>")
 		return 0
 	return ..()
 
@@ -1158,8 +1158,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				visualsdistance = round(visualsdistance * 0.25)
 				minordistance = round(minordistance * 0.25)
 				majordistance = round(majordistance * 0.25)
-				to_chat(H, "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\)
-				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
+				to_chat(H, "<span class='sevtug'>[text2ratvar("Oh, a void weapon. How annoying, I may as well not bother.")]</span>\n\
+				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>")
 				messaged = TRUE
 			if(isloyal(H))
 				visualsdistance = round(visualsdistance * 0.5) //half effect for shielded targets
@@ -1194,8 +1194,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
-		to_chat(invoker, "<span class='nzcrentr'><b><i>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs v xvyyrq lbh? ...Ur jbhyq? Bx.\"</b></i></span>\n\)
-		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>"
+		to_chat(invoker, "<span class='nzcrentr'><b><i>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs v xvyyrq lbh? ...Ur jbhyq? Bx.\"</b></i></span>\n\
+		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>")
 		return 0
 	return 1
 
@@ -1254,8 +1254,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["inath-neq"] > world.time)
-		to_chat(invoker, "<span class='inathneq'>\"V pnaabg yraq lbh zl nvq lrg, punzcvba. Cyrnfr or pnershy.\"</span>\n\)
-		<span class='warning'>Inath-Neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>"
+		to_chat(invoker, "<span class='inathneq'>\"V pnaabg yraq lbh zl nvq lrg, punzcvba. Cyrnfr or pnershy.\"</span>\n\
+		<span class='warning'>Inath-Neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>")
 		return 0
 	return 1
 
@@ -1268,8 +1268,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
 			continue
-		to_chat(L, "<span class='inathneq'>\"V yraq lbh zl nvq, punzcvba! Yrg tybel thvqr lbhe oybjf!\"</span>\n\)
-		<span class='notice'>Inath-Neq's power flows through you!</span>"
+		to_chat(L, "<span class='inathneq'>\"V yraq lbh zl nvq, punzcvba! Yrg tybel thvqr lbhe oybjf!\"</span>\n\
+		<span class='notice'>Inath-Neq's power flows through you!</span>")
 		L.color = "#1E8CE1"
 		L.fully_heal()
 		L.add_stun_absorption("inathneq", total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!", " is glowing with a flickering blue light!")

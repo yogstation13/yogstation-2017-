@@ -1024,8 +1024,7 @@ Sorry Giacom. Please don't be mad :(
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G.summoner = new_mob
 		G.Recall()
-		to_chat(G, "<span class='holoparasite'>Your summoner has changed \)
-			form to [new_mob]!</span>"
+		to_chat(G, "<span class='holoparasite'>Your summoner has changed form to [new_mob]!</span>")
 
 /mob/living/proc/flying()
 	if(ishuman(src))

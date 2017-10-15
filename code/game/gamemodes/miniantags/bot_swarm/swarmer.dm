@@ -340,13 +340,13 @@
 		return
 
 	if(src.z != ZLEVEL_STATION)
-		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot \)
+		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot \
 			locate a viable bluespace link, our teleportation abilities \
-			are useless in this area.</span>"
+			are useless in this area.</span>")
 		return
 
-	to_chat(src, "<span class='info'>Attempting to remove this being from \)
-		our presence.</span>"
+	to_chat(src, "<span class='info'>Attempting to remove this being from \
+		our presence.</span>")
 
 	if(!do_mob(src, target, 30))
 		return

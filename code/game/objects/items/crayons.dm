@@ -126,8 +126,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		to_chat(user, "<span class='warning'>There is no more of [src.name] \)
-			left!</span>"
+		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -144,8 +143,7 @@
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
 	if(has_cap)
 		is_capped = !is_capped
-		to_chat(user, "<span class='notice'>The cap on [src] is now \)
-			[is_capped ? "on" : "off"].</span>"
+		to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 		update_icon()
 
 /obj/item/toy/crayon/ui_data()
@@ -281,9 +279,7 @@
 			else
 				graf_rot = 0
 
-	to_chat(user, "<span class='notice'>You start \)
-		[instant ? "spraying" : "drawing"] a [temp] on the \
-		[target.name]...</span>"
+	to_chat(user, "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>")
 
 	if(pre_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")
@@ -311,8 +307,7 @@
 				drawing, temp, graf_rot)
 			Q.placedby = user.ckey
 
-	to_chat(user, "<span class='notice'>You finish \)
-		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+	to_chat(user, "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>")
 
 	if(length(text_buffer))
 		text_buffer = copytext(text_buffer,2)
@@ -357,8 +352,7 @@
 	// Reject space, player-created areas, and non-station z-levels.
 	var/area/A = get_area(target)
 	if(!A || (A.z != ZLEVEL_STATION) || !A.valid_territory)
-		to_chat(user, "<span class='warning'>[A] is unsuitable for \)
-			tagging.</span>"
+		to_chat(user, "<span class='warning'>[A] is unsuitable for tagging.</span>")
 		return FALSE
 
 	var/spraying_over = FALSE
@@ -371,9 +365,7 @@
 
 	var/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
-		to_chat(user, "<span class='danger'>[A] has already been tagged \)
-			by the [occupying_gang] gang! You must get rid of or spray over \
-			the old tag first!</span>"
+		to_chat(user, "<span class='danger'>[A] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>")
 		return FALSE
 
 	// If you pass the gaunlet of checks, you're good to proceed
@@ -497,8 +489,7 @@
 				to_chat(usr, "This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				to_chat(usr, "This crayon is too powerful to be contained in this \)
-					box."
+				to_chat(usr, "This crayon is too powerful to be contained in this box.")
 				return
 		if(istype(W, /obj/item/toy/crayon/spraycan))
 			to_chat(user, "Spraycans are not crayons.")
@@ -594,8 +585,7 @@
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'>[user] sprays [src] \
 			into the face of [target]!</span>")
-		to_chat(target, "<span class='userdanger'>[user] sprays [src] into your \)
-			face!</span>"
+		to_chat(target, "<span class='userdanger'>[user] sprays [src] into your face!</span>")
 
 		if(C.client)
 			C.blur_eyes(3)

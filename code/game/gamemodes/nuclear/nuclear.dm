@@ -104,9 +104,9 @@
 		nukeops_lastname = nukelastname(synd_mind.current)
 		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
-	synd_mind.to_chat(current, "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
-	synd_mind.to_chat(current, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	synd_mind.to_chat(current, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+	to_chat(synd_mind.current, "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
+	to_chat(synd_mind.current, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
+	to_chat(synd_mind.current, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
 
 	var/obj/item/device/nuclear_challenge/challenge = new /obj/item/device/nuclear_challenge
 	synd_mind.current.equip_to_slot_or_del(challenge, slot_r_hand)

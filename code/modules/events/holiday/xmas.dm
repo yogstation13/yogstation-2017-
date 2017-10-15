@@ -493,8 +493,7 @@ var/krampusweak
 				for(var/mob/M in stored_mobs)
 					to_chat(user, "<span class='notice'>[M], the [M.job], is sitting inside.</span>")
 				return
-		to_chat(user, "<span class='warning'>You slowly look inside....</span><span clsss='genesisred'>AND A BLAST FLIES \)
-			THROUGH YOUR SOUL AS IT'S MERGED WITH THE FOUL DEMONS OF THE UNDERWORLD!</span>"
+		to_chat(user, "<span class='warning'>You slowly look inside....</span><span clsss='genesisred'>AND A BLAST FLIES THROUGH YOUR SOUL AS IT'S MERGED WITH THE FOUL DEMONS OF THE UNDERWORLD!</span>")
 		if(isliving(user))
 			var/mob/living/L = user
 			L.dust_animation()
@@ -505,8 +504,7 @@ var/krampusweak
 		user.forceMove(ash)
 		user.status_flags |= GODMODE
 		to_chat(b, "<span class='notice'>Nice job.</span>")
-		to_chat(activekrampus, "<span class='notice'>[user.real_name] has attempted to open up your christmas bag in \)
-			[get_area(user)]!</span>"
+		to_chat(activekrampus, "<span class='notice'>[user.real_name] has attempted to open up your christmas bag in [get_area(user)]!</span>")
 
 		sleep(200) // basically scared straight: but krampus style
 
@@ -514,8 +512,7 @@ var/krampusweak
 		user.key = b.key
 		user.forceMove(get_turf(ash))
 		qdel(b)
-		to_chat(user, "<span class='warning'>You hear the ghostly cackle of Krampus in the background. He knowns who you are \)
-			now. You better watch out...you best not cry...</span>"
+		to_chat(user, "<span class='warning'>You hear the ghostly cackle of Krampus in the background. He knowns who you are now. You better watch out...you best not cry...</span>")
 		user.status_flags -= GODMODE
 		return
 	if(krampusweak)

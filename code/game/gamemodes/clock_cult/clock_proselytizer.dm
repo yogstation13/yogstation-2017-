@@ -54,8 +54,7 @@
 		modify_stored_alloy(-REPLICANT_ALLOY_UNIT)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		new/obj/item/clockwork/component/replicant_alloy(user.loc)
-		to_chat(user, "<span class='brass'>You force [stored_alloy ? "some":"all"] of the alloy in [src]'s compartments to reform and solidify. \)
-		It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
+		to_chat(user, "<span class='brass'>You force [stored_alloy ? "some":"all"] of the alloy in [src]'s compartments to reform and solidify. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>")
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)

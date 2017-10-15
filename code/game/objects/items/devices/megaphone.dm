@@ -33,7 +33,7 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message)
-		to_chat(usr, "<span class='notice'>You fumble over your words as you try to think of what to say into the megaphone. <a href='https:)
+		to_chat(usr, "<span class='notice'>You fumble over your words as you try to think of what to say into the megaphone. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>")
 		message_admins("[key_name(user)] just attempted to trip a pretty filter using a megaphone: '[oldmsg]'.")
 		log_say("[user.name]/[user.ckey]: [oldmsg] - via [src.name] / [src.type]")
 		return

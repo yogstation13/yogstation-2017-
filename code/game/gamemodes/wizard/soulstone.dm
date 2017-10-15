@@ -62,8 +62,7 @@
 		to_chat(user, "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>")
 		to_chat(user, "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>")
 		if(spent)
-			to_chat(user, "<span class='cult'>This shard is spent; it is now just \)
-				a creepy rock.</span>"
+			to_chat(user, "<span class='cult'>This shard is spent; it is now just a creepy rock.</span>")
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
@@ -73,8 +72,7 @@
 		to_chat(user, "<span class='userdanger'>Your body is wracked with debilitating pain!</span>")
 		return
 	if(spent)
-		to_chat(user, "<span class='warning'>There is no power left in the shard.\)
-			</span>"
+		to_chat(user, "<span class='warning'>There is no power left in the shard.</span>")
 		return
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()

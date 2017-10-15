@@ -115,11 +115,11 @@ Made by Xhuis
 	return
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	shadow.to_chat(current, "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>")
-	shadow.to_chat(current, "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>")
-	shadow.to_chat(current, "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>")
-	shadow.to_chat(current, "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
-	shadow.to_chat(current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https:)
+	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>")
+	to_chat(shadow.current, "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>")
+	to_chat(shadow.current, "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>")
+	to_chat(shadow.current, "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
+	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>")
 
 
 /datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)

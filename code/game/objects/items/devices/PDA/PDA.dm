@@ -459,7 +459,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 								if(H.z in signal.data["broadcast_levels"])
 									inrange = TRUE
 								to_chat(H, "<span class='warning'>[owner] is communicating from [inrange ? A.name : "an unknown area"].</span>")
-						to_chat(H, "<span class='notice'>Your PDA prompts you with: \[<a href='byond:)
+						to_chat(H, "<span class='notice'>Your PDA prompts you with: \[<a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>Contact [owner]</a>\]</span>")
 					else
 						P.visible_message("<span class='warning'>[src] begins to emit a red light.</span>")
 				to_chat(U, "<span class='notice'>Your alert went through. Hotline agents were notified.</span>")
@@ -802,7 +802,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond:)
+		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)

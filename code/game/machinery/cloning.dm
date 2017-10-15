@@ -128,8 +128,7 @@
 		var/seconds = time_to_complete % 60
 		to_chat(user, "Estimated time until completion : [(time_to_complete-seconds)/60] minutes [(seconds)] seconds.")
 	else if(mess)
-		to_chat(user, "It's filled with blood and vicerea. You swear you can see \)
-			it moving..."
+		to_chat(user, "It's filled with blood and vicerea. You swear you can see it moving...")
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -189,13 +188,13 @@
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
 		H.ckey = ckey
-		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you \)
+		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you \
 			as your body regenerates.</b><br><i>So this is what cloning \
-			feels like?</i></span>"
+			feels like?</i></span>")
 	else if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.to_chat(current, "<span class='notice'>Your body is \)
+		clonemind.to_chat(current, "<span class='notice'>Your body is \
 			beginning to regenerate in a cloning pod. You will \
-			become conscious when it is complete.</span>"
+			become conscious when it is complete.</span>")
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 	if(H)
@@ -343,10 +342,10 @@
 		if(!clonemind.current || clonemind.current.stat == DEAD)
 			clonemind.transfer_to(occupant)
 			occupant.ckey = clonemind.ckey //For some reason, this doesn't initialize directly
-		to_chat(occupant, "<span class='notice'><b>The world is bright \)
+		to_chat(occupant, "<span class='notice'><b>The world is bright \
 			and loud!</b><br>\
 			<i>You feel your body weight, as your mind suddenly \
-			comprehends where you are and what is going on.</i></span>"
+			comprehends where you are and what is going on.</i></span>")
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
@@ -372,9 +371,9 @@
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		if(occupant.grab_ghost()) // We really just want to make you suffer, but only if you actually deserve it (which is most of the time)
 			flash_color(occupant, color="#960000", time=100)
-			to_chat(occupant, "<span class='warning'><b>Agony blazes across your \)
+			to_chat(occupant, "<span class='warning'><b>Agony blazes across your \
 				consciousness as your body is torn apart.</b><br>\
-				<i>Is this what dying is like? Yes it is.</i></span>"
+				<i>Is this what dying is like? Yes it is.</i></span>")
 			occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		spawn(40)
 			occupant.ghostize()

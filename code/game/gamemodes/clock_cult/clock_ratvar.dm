@@ -138,9 +138,9 @@
 				if(!ratvar_awakens)
 					new/obj/structure/clockwork/massive/ratvar(startpoint)
 			else
-				to_chat(world, "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\)
+				to_chat(world, "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
-				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>"
+				<span class='nzcrentr_large'>\"[text2ratvar("Gaze upon Engine's power")]!\"</span>")
 				world << 'sound/magic/clockwork/invoke_general.ogg'
 				var/x0 = startpoint.x
 				var/y0 = startpoint.y
@@ -267,13 +267,13 @@
 					meals += L
 			if(meals.len)
 				prey = pick(meals)
-				to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\)
-				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
+				to_chat(prey, "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
+				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>")
 				prey << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
-			to_chat(prey, "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\)
-			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
+			to_chat(prey, "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
+			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>")
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target

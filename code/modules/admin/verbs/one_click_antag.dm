@@ -155,9 +155,9 @@
 
 		for(var/i = 0, i<numCultists, i++)
 			H = pick(candidates)
-			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \)
+			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
 			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
-			Ratvar, and you will bring him back.</span>"
+			Ratvar, and you will bring him back.</span>")
 			add_servant_of_ratvar(H, TRUE)
 			ticker.mode.equip_servant(H)
 			candidates.Remove(H)
@@ -517,8 +517,8 @@
 		H = pick(candidates)
 		ticker.mode.shadows += H.mind
 		H.mind.special_role = "shadowling"
-		to_chat(H, "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \)
-		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
+		to_chat(H, "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
+		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>")
 		ticker.mode.finalize_shadowling(H.mind)
 		message_admins("[H] has been made into a shadowling.")
 		candidates.Remove(H)

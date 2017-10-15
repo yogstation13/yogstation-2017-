@@ -31,16 +31,16 @@
 
 /datum/game_mode/zombies/announce()
 	to_chat(world, "<B>The current game mode is - Zombie!</B>")
-	to_chat(world, "<B>One or more crewmembers have been infected with an unknown virus! Crew: Contain the outbreak. This infection can under no circumstances be. \)
-				allowed to leave the station. If the outbreak cannot be contained the station must be destroyed. Zombies: Eat brains and infect all crew members!</B>"
+	to_chat(world, "<B>One or more crewmembers have been infected with an unknown virus! Crew: Contain the outbreak. This infection can under no circumstances be. \
+				allowed to leave the station. If the outbreak cannot be contained the station must be destroyed. Zombies: Eat brains and infect all crew members!</B>")
 
 
 /datum/game_mode/zombies/proc/greet_carrier(datum/mind/carrier)
-	carrier.to_chat(current, "<font style = 3><B><span class = 'notice'>You are the infection patient zero!!</B></font>")
-	carrier.to_chat(current, "<b>You contracted an infection from your visit aboard a <span class='warning'>quarantined spacestation</span>.</b>")
-	carrier.to_chat(current, "<b>Soon you will become a <span class='warning'>flesh eating [pick("zombie", "muerto", "walker", "clicker")]</span>. Your sole purpose is to hunt for crew members to infect them.</b>")
-	carrier.to_chat(current, "<b>Eating <span class='warning'>brains</span> will make you stronger, so make sure you <span class='warning'>crack open some heads</span> for the delicious treats.</b>")
-	carrier.to_chat(current, "<b>Your mission will be deemed a success if any of the live infected zombies reach Centcom.</b>")
+	to_chat(carrier.current, "<font style = 3><B><span class = 'notice'>You are the infection patient zero!!</B></font>")
+	to_chat(carrier.current, "<b>You contracted an infection from your visit aboard a <span class='warning'>quarantined spacestation</span>.</b>")
+	to_chat(carrier.current, "<b>Soon you will become a <span class='warning'>flesh eating [pick("zombie", "muerto", "walker", "clicker")]</span>. Your sole purpose is to hunt for crew members to infect them.</b>")
+	to_chat(carrier.current, "<b>Eating <span class='warning'>brains</span> will make you stronger, so make sure you <span class='warning'>crack open some heads</span> for the delicious treats.</b>")
+	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected zombies reach Centcom.</b>")
 
 /datum/game_mode/zombies/post_setup()
 	for(var/datum/mind/carriermind in carriers)
