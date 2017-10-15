@@ -219,7 +219,7 @@
 								N.merge(S)
 						busy = 0
 						updateUsrDialog()
-						
+
 				else
 					spawn(32*coeff*multiplier)
 						use_power(power)
@@ -232,7 +232,7 @@
 							new_item.autolathe_crafted(src)
 							busy = 0
 							updateUsrDialog()
-							
+
 
 		if(href_list["search"])
 			matching_designs.Cut()
@@ -393,6 +393,8 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
+	if(!src.Adjacent(user))
+		return 0
 	if (electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
