@@ -17,61 +17,69 @@
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		admindiary << "#[yog_round_number]# \[[time_stamp()]]ADMIN: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|ADMIN|[text]"
 
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
-		log_admin("ASAY: [text]")
+		log_admin("|[yog_round_number]|[time_stamp()]|ASAY|[text]")
 
 /proc/log_dsay(text)
 	if (config.log_adminchat)
-		log_admin("DSAY: [text]")
+		log_admin("|[yog_round_number]|[time_stamp()]|DSAY|[text]")
 
 /proc/log_game(text)
-	if (config && config.log_game)
-		diary << "#[yog_round_number]# \[[time_stamp()]]GAME: [text]"
+	if (!config)
+		diary << "|[yog_round_number]|[time_stamp()]|GAME|[text]"
+	else if (config.log_game)
+		diary << "|[yog_round_number]|[time_stamp()]|GAME|[text]"
+
+/proc/log_server(text)
+	if (!config)
+		diary << "|[yog_round_number]|[time_stamp()]|SERVER|[text]"
+	else if(config.log_game)
+		diary << "|[yog_round_number]|[time_stamp()]|SERVER|[text]"
 
 /proc/log_vote(text)
 	if (config.log_vote)
-		diary << "\[[time_stamp()]]VOTE: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|VOTE|[text]"
 
 /proc/log_access(text)
 	if (config.log_access)
-		diary << "\[[time_stamp()]]ACCESS: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|ACCESS|[text]"
 
 /proc/log_say(text, channel = "SAY")
 	if (config.log_say)
-		diary << "\[[time_stamp()]][channel]: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|SAY/[channel]|[text]"
 
 /proc/log_prayer(text)
 	if (config.log_prayer)
-		diary << "\[[time_stamp()]]PRAY: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|PRAY|[text]"
 
 /proc/log_law(text)
 	if (config.log_law)
-		diary << "\[[time_stamp()]]LAW: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|LAW|[text]"
 
 /proc/log_ooc(text)
 	if (config.log_ooc)
-		diary << "\[[time_stamp()]]OOC: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|OOC|[text]"
 
 /proc/log_whisper(text)
 	if (config.log_whisper)
-		diary << "\[[time_stamp()]]WHISPER: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|WHISPER|[text]"
 
 /proc/log_emote(text)
 	if (config.log_emote)
-		diary << "\[[time_stamp()]]EMOTE: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|EMOTE|[text]"
 
 /proc/log_attack(text)
 	if (config.log_attack)
-		diaryofmeanpeople << "\[[time_stamp()]]ATTACK: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|ATTACK|[text]"
 
 /proc/log_pda(text)
 	if (config.log_pda)
-		diary << "\[[time_stamp()]]PDA: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|PDA|[text]"
 
 /proc/log_comment(text)
 	if (config.log_pda)
 		//reusing the PDA option because I really don't think news comments are worth a config option
-		diary << "\[[time_stamp()]]COMMENT: [text]"
+		diary << "|[yog_round_number]|[time_stamp()]|COMMENT|[text]"
