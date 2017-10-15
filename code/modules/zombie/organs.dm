@@ -31,7 +31,7 @@
 				owner.adjustToxLoss(3)
 
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
-	finder << "<span class='warning'>Inside the head is a disgusting black \
+	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black \)
 		web of pus and vicera, bound tightly around the brain like some \
 		biological harness.</span>"
 
@@ -66,7 +66,7 @@
 		if(DEAD, UNCONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] staggers to \
 				their feet!</span>")
-			owner << "<span class='danger'>You stagger to your feet!</span>"
+			to_chat(owner, "<span class='danger'>You stagger to your feet!</span>")
 		// Conscious conversions will generally only happen for an event
 		// or for a converts_living=TRUE infection
 		if(CONSCIOUS)
@@ -77,6 +77,6 @@
 			playsound(owner.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 			owner.do_jitter_animation(living_transformation_time)
 			owner.Stun(living_transformation_time)
-			owner << "<span class='alertalien'>You are now a zombie!</span>"
+			to_chat(owner, "<span class='alertalien'>You are now a zombie!</span>")
 
 #undef START_TIMER

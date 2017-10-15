@@ -67,13 +67,13 @@
 			var/diety = ticker.Bible_deity_name
 			if(!ticker.Bible_deity_name)
 				diety = "Christ"
-			R << "<span class='userdanger'>The power of [diety] compels you!</span>"
+			to_chat(R, "<span class='userdanger'>The power of [diety] compels you!</span>")
 			R.stun(20)
 			R.reveal(100)
 		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C) || is_handofgod_cultist(C) || C.dna.species.id == "shadowling" || C.dna.species.id == "l_shadowling")
-				C << "<span class='userdanger'>The divine explosion sears you!</span>"
+				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
@@ -333,9 +333,9 @@
 		C.Weaken(5)
 		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
 		if(C.ear_damage >= 15)
-			C << "<span class='warning'>Your ears start to ring badly!</span>"
+			to_chat(C, "<span class='warning'>Your ears start to ring badly!</span>")
 		else if(C.ear_damage >= 5)
-			C << "<span class='warning'>Your ears start to ring!</span>"
+			to_chat(C, "<span class='warning'>Your ears start to ring!</span>")
 
 /datum/chemical_reaction/sonic_powder_deafen
 	name = "sonic_powder_deafen"
@@ -356,9 +356,9 @@
 		C.Weaken(5)
 		C.setEarDamage(C.ear_damage + rand(0, 5), max(C.ear_deaf,15))
 		if(C.ear_damage >= 15)
-			C << "<span class='warning'>Your ears start to ring badly!</span>"
+			to_chat(C, "<span class='warning'>Your ears start to ring badly!</span>")
 		else if(C.ear_damage >= 5)
-			C << "<span class='warning'>Your ears start to ring!</span>"
+			to_chat(C, "<span class='warning'>Your ears start to ring!</span>")
 
 
 /datum/chemical_reaction/phlogiston

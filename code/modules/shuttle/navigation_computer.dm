@@ -194,9 +194,9 @@
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
 	if(origin.placeLandingSpot())
-		target << "<span class='notice'>Transit location designated</span>"
+		to_chat(target, "<span class='notice'>Transit location designated</span>")
 	else
-		target << "<span class='warning'>Invalid transit location</span>"
+		to_chat(target, "<span class='warning'>Invalid transit location</span>")
 
 /datum/action/innate/camera_jump/shuttle_docker
 	name = "Jump to Location"
@@ -224,4 +224,4 @@
 		var/turf/T = get_turf(L[selected])
 		if(T)
 			remote_eye.setLoc(T)
-			target << "<span class='notice'>Jumped to location [selected]</span>"
+			to_chat(target, "<span class='notice'>Jumped to location [selected]</span>")

@@ -15,11 +15,11 @@
 		if(!servantsonly && isobserver(M))
 			if(target)
 				var/link = FOLLOW_LINK(M, target)
-				M << "[link] [message]"
+				to_chat(M, "[link] [message]")
 			else
-				M << message
+				to_chat(M, message)
 		else if(is_servant_of_ratvar(M))
-			M << message
+			to_chat(M, message)
 
 //Hierophant Network action, allows a servant with it to communicate
 /datum/action/innate/hierophant
@@ -62,7 +62,7 @@
 
 /datum/action/innate/function_call/Activate()
 	if(owner.l_hand && owner.r_hand)
-		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
+		to_chat(usr, "<span class='warning'>You need an empty to hand to call forth your spear!</span>")
 		return 0
 	owner.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
@@ -102,7 +102,7 @@
 			possible_targets[resultkey] = L
 
 	if(!possible_targets.len)
-		invoker << "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>"
+		to_chat(invoker, "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>")
 		return 0
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]

@@ -15,12 +15,12 @@
 		qdel(src)
 		return
 	if(!istype(C))
-		user << "<span class='warning'>This kit can only modify kinetic \
+		to_chat(user, "<span class='warning'>This kit can only modify kinetic \)
 			accelerators!</span>"
 		return ..()
 	// RIP the 'improved improved improved improved kinetic accelerator
 	if(C.holds_charge && C.unique_frequency)
-		user << "<span class='warning'>This kinetic accelerator already has \
+		to_chat(user, "<span class='warning'>This kinetic accelerator already has \)
 			these upgrades.</span>"
 		return ..()
 

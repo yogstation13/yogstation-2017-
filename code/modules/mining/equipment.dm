@@ -87,7 +87,7 @@
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/M = target
 			if(M.sentience_type != revive_type)
-				user << "<span class='info'>[src] does not work on this sort of creature.</span>"
+				to_chat(user, "<span class='info'>[src] does not work on this sort of creature.</span>")
 				return
 			if(M.stat == DEAD)
 				M.faction = list("neutral")
@@ -109,10 +109,10 @@
 				icon_state = "lazarus_empty"
 				return
 			else
-				user << "<span class='info'>[src] is only effective on the dead.</span>"
+				to_chat(user, "<span class='info'>[src] is only effective on the dead.</span>")
 				return
 		else
-			user << "<span class='info'>[src] is only effective on lesser beings.</span>"
+			to_chat(user, "<span class='info'>[src] is only effective on lesser beings.</span>")
 			return
 
 /obj/item/weapon/lazarus_injector/emp_act()
@@ -122,9 +122,9 @@
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()
 	if(!loaded)
-		user << "<span class='info'>[src] is empty.</span>"
+		to_chat(user, "<span class='info'>[src] is empty.</span>")
 	if(malfunctioning)
-		user << "<span class='info'>The display on [src] seems to be flickering.</span>"
+		to_chat(user, "<span class='info'>The display on [src] seems to be flickering.</span>")
 
 /**********************Mining Scanners**********************/
 
@@ -258,14 +258,14 @@
 /obj/item/hardsuit_jetpack/afterattack(var/obj/item/clothing/suit/space/hardsuit/S, mob/user)
 	..()
 	if(!istype(S))
-		user << "<span class='warning'>This upgrade can only be applied to a hardsuit.</span>"
+		to_chat(user, "<span class='warning'>This upgrade can only be applied to a hardsuit.</span>")
 	else if(S.jetpack)
-		user << "<span class='warning'>[S] already has a jetpack installed.</span>"
+		to_chat(user, "<span class='warning'>[S] already has a jetpack installed.</span>")
 	else if(S == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
-		user << "<span class='warning'>You cannot install the upgrade to [S] while wearing it.</span>"
+		to_chat(user, "<span class='warning'>You cannot install the upgrade to [S] while wearing it.</span>")
 	else
 		S.jetpack = new /obj/item/weapon/tank/jetpack/suit(S)
-		user << "<span class='notice'>You successfully install the jetpack into [S].</span>"
+		to_chat(user, "<span class='notice'>You successfully install the jetpack into [S].</span>")
 		qdel(src)
 
 /*********************Hivelord stabilizer****************/
@@ -281,9 +281,9 @@
 /obj/item/weapon/hivelordstabilizer/afterattack(obj/item/organ/M, mob/user)
 	var/obj/item/organ/hivelord_core/C = M
 	if(!istype(C, /obj/item/organ/hivelord_core))
-		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
+		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
 		return ..()
 	C.preserved = 1
 	feedback_add_details("hivelord_core", "[C.type]|stabilizer") // preserved
-	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
+	to_chat(user, "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>")
 	qdel(src)

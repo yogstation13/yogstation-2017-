@@ -18,7 +18,7 @@
 	if(istype(I, /obj/item/device/gps/))
 		var/obj/item/device/gps/G = I
 		if(G.channel != "medical")
-			user << "<span class='warning'>Your GPS has an incompatiable channel!"
+			to_chat(user, "<span class='warning'>Your GPS has an incompatiable channel!")
 			return
 
 		var/list/trackedmobs = list()
@@ -43,7 +43,7 @@
 		var/turf/pos = get_turf(M)
 
 		G.savedlocation = "([pos.x], [pos.y], [pos.z])"
-		user << "<span class='notice'>Your GPS has saved the last position of [M.name].</span>"
+		to_chat(user, "<span class='notice'>Your GPS has saved the last position of [M.name].</span>")
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))

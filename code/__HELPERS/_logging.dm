@@ -17,7 +17,7 @@
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		admindiary << "#[yog_round_number]# \[[time_stamp()]]ADMIN: [text]"
+		to_chat(admindiary, "#[yog_round_number]# \[[time_stamp()]]ADMIN: [text]")
 
 /proc/log_adminsay(text)
 	if (config.log_adminchat)

@@ -40,7 +40,7 @@
 			if(H.dna && H.dna.species && (RADIMMUNE in H.dna.species.specflags))
 				pass = 0
 		if(pass && (!silent && blocked != 100))
-			src << "Your skin feels warm."
+			to_chat(src, "Your skin feels warm.")
 
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob
