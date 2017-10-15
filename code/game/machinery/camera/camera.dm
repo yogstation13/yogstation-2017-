@@ -124,7 +124,7 @@
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
-	if(src.Adjacent(user))
+	if(!src.Adjacent(user))
 		return 0
 	if(!istype(user))
 		return
