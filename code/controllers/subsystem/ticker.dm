@@ -289,7 +289,7 @@ var/datum/subsystem/ticker/ticker
 					if (!istype(M.loc, /obj/structure/closet/secure_closet/freezer/meat))
 						M.death(0) //no mercy
 					else
-						to_chat(M, "The freezer wobbles a bit, then stops. You let out a sigh of relief.";)
+						to_chat(M, "The freezer wobbles a bit, then stops. You let out a sigh of relief.")
 
 	//Now animate the cinematic
 	switch(station_missed)
