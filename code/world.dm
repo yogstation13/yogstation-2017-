@@ -30,7 +30,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
 	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	to_chat(admindiary, "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------")
+	admindiary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	var/roundfile = file("data/roundcount.txt")
@@ -355,7 +355,7 @@ var/inerror = 0
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	to_chat(F, the_mode)
+	F << the_mode
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
@@ -558,7 +558,7 @@ var/rebootingpendingmapchange = 0
 	mapchanging = 1
 	log_game("Changing map to [VM.name]([VM.friendlyname])")
 	var/file = file("setnewmap.bat")
-	to_chat(file, "\nset MAPROTATE=[VM.name]\n")
+	file << "\nset MAPROTATE=[VM.name]\n"
 	. = shell("..\\bin\\maprotate.bat")
 	mapchanging = 0
 	switch (.)

@@ -556,7 +556,7 @@
 			return
 
 		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
+			to_chat(usr, "<span class='warning'>Access denied.</span>")
 			flick(icon_deny,src)
 			return
 
