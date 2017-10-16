@@ -30399,7 +30399,7 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bjy" = (
-/obj/machinery/computer/slot_machine,
+/obj/machinery/vending/clothing,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bjz" = (
@@ -36538,7 +36538,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/vending/clothing,
+/obj/machinery/vending/cart,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bvy" = (
