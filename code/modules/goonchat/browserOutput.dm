@@ -104,7 +104,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 	sendClientData()
 
 	//do not convert to to_chat()
-	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
+	owner << "<span class=\"userdanger\">If you can see this, update byond.</span>"
 
 	pingLoop()
 
@@ -166,7 +166,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				log_admin_private("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				log_admin("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
 
@@ -176,7 +176,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 
 //Called by js client on js error
 /datum/chatOutput/proc/debug(error)
-	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
+	log_game("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
 
@@ -217,7 +217,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 			continue
 
 		//Send it to the old style output window.
-		SEND_TEXT(C, original_message)
+		C << original_message
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
