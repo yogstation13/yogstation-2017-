@@ -345,6 +345,6 @@
 	add_overlay(occupant_overlay)
 	add_overlay("cover-on")
 	// TODO: Update our timer system and change this to TIMER_UNIQUE
-	addtimer(src, "run_bob_anim", 7, TIMER_NORMAL, anim_up, occupant_overlay) //hey yog your addtimer system sucks. sincerely, a /tg/coder.
+	timer_id = addtimer(src, "run_bob_anim", 7, TIMER_NORMAL, anim_up, occupant_overlay) //hey yog your addtimer system sucks. sincerely, a /tg/coder.
 
 #undef CRYOMOBS
