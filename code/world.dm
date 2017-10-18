@@ -295,6 +295,9 @@ var/last_irc_status = 0
 		else
 			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
 	for(var/client/C in clients)
+		var/datum/chatOutput/co = C.chatOutput
+		if(co)
+			co.ehjax_send(data = "roundrestart")
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
 	..(0)
