@@ -54,7 +54,7 @@
 	if(seed)
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			if(T.examine_line)
-				user << T.examine_line
+				to_chat(user, T.examine_line)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
@@ -80,7 +80,7 @@
 		if(reag_txt)
 			msg += reag_txt
 			msg += "<br><span class='info'>*---------*</span>"
-		user << msg
+		to_chat(user, msg)
 		return
 	return
 
@@ -172,5 +172,5 @@
 		else
 			T = new trash(user.loc)
 		user.put_in_hands(T)
-		user << "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>"
+		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")
 	qdel(src)

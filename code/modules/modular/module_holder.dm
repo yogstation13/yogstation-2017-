@@ -13,9 +13,9 @@
 
 /obj/item/module_holder/attackby(obj/item/W, mob/user, params)
 	if(ismodholder(W))
-		user << "<span class='notice'>That would be an interesting topological exercise...</span>"
+		to_chat(user, "<span class='notice'>That would be an interesting topological exercise...</span>")
 	if(ismodule(W))
-		user << "<span class='notice'>You'll need to install the module holder into something before you do that.</span>"
+		to_chat(user, "<span class='notice'>You'll need to install the module holder into something before you do that.</span>")
 
 /obj/item/module_holder/New(obj/item/owner)
 	..()
@@ -195,7 +195,7 @@
 					var/obj/item/thing = I
 					user = thing.thrownby
 				resolved = module.on_hitby(I, user, victim)
-	
+
 		if(resolved)
 			. = TRUE
 
@@ -210,13 +210,13 @@
 	var/obj/item/module_holder/module_holder = current_holder.get_m_holder()
 
 	if(!module_holder)
-		usr << "<span class='notice'>This is an error : Please notify coders that the verb didn't find the module holder, despite you being able to use it!</span>"
+		to_chat(usr, "<span class='notice'>This is an error : Please notify coders that the verb didn't find the module holder, despite you being able to use it!</span>")
 		return
 	if(!ishuman(usr))
-		usr << "<span class='warning'>You don't have the slightest clue on how to do that.</span>"
+		to_chat(usr, "<span class='warning'>You don't have the slightest clue on how to do that.</span>")
 		return
 	if(!module_holder.installed_modules || !module_holder.installed_modules.len)
-		usr << "<span class='warning'>There are no modules to modify.</span>"
+		to_chat(usr, "<span class='warning'>There are no modules to modify.</span>")
 		return
 
 	module_holder.make_topic()

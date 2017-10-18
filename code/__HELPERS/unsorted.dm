@@ -886,20 +886,20 @@ var/list/WALLITEMS_INVERSE = list(
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
+	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
 	if(total_moles>0)
-		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
+		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
 		var/list/cached_gases = air_contents.gases
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(gas_concentration > 0.001)
-				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
+				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
+		to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>")
 	else
-		user << "<span class='notice'>[target] is empty!</span>"
+		to_chat(user, "<span class='notice'>[target] is empty!</span>")
 	return
 
 /proc/check_target_facings(mob/living/initator, mob/living/target)
@@ -1542,3 +1542,11 @@ proc/pick_closest_path(value)
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
+
+//easy conversion to goonchat later on
+/proc/to_chat(target, msg)
+	if(istype(target, /datum/mind))
+		var/datum/mind/M = target
+		M.current << msg
+	else
+		target << msg

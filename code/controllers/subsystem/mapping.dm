@@ -38,7 +38,7 @@ var/datum/subsystem/mapping/SSmapping
 	..()
 
 /datum/subsystem/mapping/proc/seedMaint()
-	world << "<span class='boldannounce'>Loading ruins...</span>"
+	to_chat(world, "<span class='boldannounce'>Loading ruins...</span>")
 	for(var/V in maintroom_landmarks)
 		var/obj/effect/landmark/maintroom/LM = V
 		LM.load()

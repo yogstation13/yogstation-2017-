@@ -222,25 +222,25 @@
 /datum/ai_laws/proc/show_laws(who)
 
 	if (zeroth)
-		who << "0. [zeroth]"
+		to_chat(who, "0. [zeroth]")
 
 	for (var/index = 1, index <= ion.len, index++)
 		var/law = ion[index]
 		var/num = ionnum()
-		who << "[num]. [law]"
+		to_chat(who, "[num]. [law]")
 
 	var/number = 1
 	for (var/index = 1, index <= inherent.len, index++)
 		var/law = inherent[index]
 
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			to_chat(who, "[number]. [law]")
 			number++
 
 	for (var/index = 1, index <= supplied.len, index++)
 		var/law = supplied[index]
 		if (length(law) > 0)
-			who << "[number]. [law]"
+			to_chat(who, "[number]. [law]")
 			number++
 
 /datum/ai_laws/proc/get_laws()

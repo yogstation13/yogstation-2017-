@@ -42,7 +42,7 @@
 	..()
 	if(!ispredator(user))
 		user.adjustBruteLoss(rand(3,9))
-		user << "<span class='danger'>The spear expands as you pick it up and cuts into you! It'd be best to leave it alone.</span>"
+		to_chat(user, "<span class='danger'>The spear expands as you pick it up and cuts into you! It'd be best to leave it alone.</span>")
 		user.drop_item()
 
 /obj/item/weapon/twohanded/spear/combistick
@@ -63,12 +63,12 @@
 	..()
 	if(!ispredator(user))
 		user.adjustBruteLoss(rand(3,9))
-		user << "<span class='danger'>The spear expands as you pick it up and cuts into you! It'd be best to leave it alone.</span>"
+		to_chat(user, "<span class='danger'>The spear expands as you pick it up and cuts into you! It'd be best to leave it alone.</span>")
 		user.drop_item()
 
 /obj/item/weapon/twohanded/spear/combistick/attack_self(mob/user)
 	if(!ispredator(user))
-		user << "<span class='alert'>You have no idea how to operate this...</span>"
+		to_chat(user, "<span class='alert'>You have no idea how to operate this...</span>")
 		if(prob(99))
 			return
 	if(icon_state == "pred_spear_off")
@@ -132,12 +132,12 @@
 	if(on)
 		user.sight = SEE_MOBS
 		user.see_invisible = SEE_INVISIBLE_MINIMUM
-		user << "<span class='danger'>You activate your helmets thermal imaging and low-light amplification systems</span>"
+		to_chat(user, "<span class='danger'>You activate your helmets thermal imaging and low-light amplification systems</span>")
 
 	else
 		user.see_invisible = SEE_INVISIBLE_LIVING
 		user.sight &= ~SEE_MOBS
-		user << "<span class='danger'>You deactivate your helmets functions.</span>"
+		to_chat(user, "<span class='danger'>You deactivate your helmets functions.</span>")
 
 // --- SUIT ---  --- SUIT ---  --- SUIT ---
 // --- SUIT ---  --- SUIT ---  --- SUIT ---
@@ -191,9 +191,9 @@
 		var/obj/item/weapon/kitchen/knife/predator/glove = new /obj/item/weapon/kitchen/knife/predator(SSHNG)
 		glove.wrist = src
 		user.put_in_active_hand(glove)
-		user << "<span class='notice'>You retract your wrist blade! (Use Z to retract the wristblades a second time.)</span>"
+		to_chat(user, "<span class='notice'>You retract your wrist blade! (Use Z to retract the wristblades a second time.)</span>")
 	else
-		user << "<span class='danger'>There's already something in your hand!</span>"
+		to_chat(user, "<span class='danger'>There's already something in your hand!</span>")
 
 /obj/item/clothing/gloves/combat/predator/attackby(obj/item/I, mob/living/user, params)
 	..()
@@ -201,7 +201,7 @@
 		var/obj/item/weapon/kitchen/knife/predator/PK = I
 		if(PK.wrist)
 			if(PK.wrist == src)
-				user << "<span class='notice'>You retract your wrist blade!</span>"
+				to_chat(user, "<span class='notice'>You retract your wrist blade!</span>")
 				qdel(I)
 
 /obj/item/weapon/kitchen/knife/predator
@@ -216,7 +216,7 @@
 
 /obj/item/weapon/kitchen/knife/predator/attack_self(mob/user)
 	if(wrist)
-		user << "<span class='notice'>You retract your wrist blades!</span>"
+		to_chat(user, "<span class='notice'>You retract your wrist blades!</span>")
 		qdel(src)
 	else
 		..()
