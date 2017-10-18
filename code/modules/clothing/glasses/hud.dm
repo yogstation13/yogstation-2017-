@@ -24,7 +24,7 @@
 /obj/item/clothing/glasses/hud/emag_act(mob/user)
 	if(emagged == 0)
 		emagged = 1
-		user << "<span class='warning'>PZZTTPFFFT</span>"
+		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
 		desc = desc + " The display flickers slightly."
 
 /obj/item/clothing/glasses/hud/health
@@ -81,8 +81,8 @@
 /obj/item/clothing/glasses/hud/security/examine(mob/user)
 	. = ..()
 	if(!syndicate)
-		user << "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>"
-		user << "<span class='notice'>To add crimes and comments to a person, hold CTRL + SHIFT and click on the target</span>"
+		to_chat(user, "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>")
+		to_chat(user, "<span class='notice'>To add crimes and comments to a person, hold CTRL + SHIFT and click on the target</span>")
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chameleon Security HUD"
@@ -199,7 +199,7 @@
 					if (!t1 || !t2) return
 					var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 					data_core.addMinorCrime(R.fields["id"], crime)
-					H << "<span class='notice'>Successfully added a minor crime.</span>"
+					to_chat(H, "<span class='notice'>Successfully added a minor crime.</span>")
 		if("Major Crime")
 			if(R)
 				var/t1 = stripped_input(H, "Please input major crime names:", "Security HUD", "", null)
@@ -208,7 +208,7 @@
 					if (!t1 || !t2) return
 					var/crime = data_core.createCrimeEntry(t1, t2, allowed_access, worldtime2text())
 					data_core.addMajorCrime(R.fields["id"], crime)
-					H << "<span class='notice'>Successfully added a major crime.</span>"
+					to_chat(H, "<span class='notice'>Successfully added a major crime.</span>")
 		if("Comment")
 			if(R)
 				var/t1 = stripped_multiline_input(H, "Add Comment:", "Secure. records", null, null)
@@ -218,7 +218,7 @@
 					while(R.fields[text("com_[]", counter)])
 						counter++
 					R.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
-					H << "<span class='notice'>Successfully added comment.</span>"
+					to_chat(H, "<span class='notice'>Successfully added comment.</span>")
 
 // ctrl + alt
 /proc/security_scan_status(var/mob/living/carbon/human/H, var/mob/living/carbon/human/A, allowed_access)

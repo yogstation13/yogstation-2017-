@@ -106,21 +106,21 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 			if(victim.reagents.has_reagent("sugar"))
 				if(!docile)
 					if(controlling)
-						victim << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
+						to_chat(victim, "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					else
-						src << "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>"
+						to_chat(src, "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
 					docile = 1
 			else
 				if(docile)
 					if(controlling)
-						victim << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
+						to_chat(victim, "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					else
-						src << "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>"
+						to_chat(src, "<span class='warning'>You shake off your lethargy as the sugar leaves your host's blood.</span>")
 					docile = 0
 			if(controlling)
 
 				if(docile)
-					victim << "<span class='warning'>You are feeling far too docile to continue controlling your host...</span>"
+					to_chat(victim, "<span class='warning'>You are feeling far too docile to continue controlling your host...</span>")
 					victim.release_control()
 					return
 
@@ -137,18 +137,18 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	if(dd_hasprefix(message, ";"))
 		message = copytext(message,2)
 		for(var/borer in borers)
-			borer << "<span class='borer'><b>HIVEMIND: </b>[name] transmits: \"[message]\""
+			to_chat(borer, "<span class='borer'><b>HIVEMIND: </b>[name] transmits: \"[message]\"")
 		for(var/mob/dead in dead_mob_list)
-			dead << "<span class='borer'><b>BORER HIVEMIND: </b>[name] transmits: \"[message]\""
+			to_chat(dead, "<span class='borer'><b>BORER HIVEMIND: </b>[name] transmits: \"[message]\"")
 		return
 	if(!victim)
-		src << "<span class='warning'>You cannot speak without a host!</span>"
+		to_chat(src, "<span class='warning'>You cannot speak without a host!</span>")
 		return
 	if(dd_hasprefix(message, "*"))
 		var/pass = TRUE
 		for(var/M in banned_borer_emotes)
 			if(M == message)
-				src << "<span class='warning'>You don't have the strength to do this...</span>"
+				to_chat(src, "<span class='warning'>You don't have the strength to do this...</span>")
 				pass = FALSE
 				break
 
@@ -161,8 +161,8 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		return
 	var/message2 = ""
 	message2 = addtext(uppertext(copytext(message, 1, 2)), copytext(message, 2) )
-	victim << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
-	src << "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\""
+	to_chat(victim, "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\"")
+	to_chat(src, "<span class='green'><b>[name] telepathically says... </b></span>\"[message2]\"")
 
 /mob/living/simple_animal/borer/UnarmedAttack(atom/A)
 	if(isliving(A))
@@ -182,15 +182,15 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		return
 
 	if(victim.borer)
-		src << "<span class='warning'>[victim] is already infected!</span>"
+		to_chat(src, "<span class='warning'>[victim] is already infected!</span>")
 		return
 
 	if(!victim.key || !victim.mind)
-		src << "<span class='warning'>[victim]'s mind seems unresponsive. Try someone else!</span>"
+		to_chat(src, "<span class='warning'>[victim]'s mind seems unresponsive. Try someone else!</span>")
 		return
 
 	if (victim && victim.dna && istype(victim.dna.species, /datum/species/skeleton))
-		src << "<span class='warning'>[victim] does not posess the vital systems needed to support us.</span>"
+		to_chat(src, "<span class='warning'>[victim] does not posess the vital systems needed to support us.</span>")
 		return
 
 	src.victim = victim
@@ -238,11 +238,10 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	if(mind)
 		mind.store_memory("You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
-	src << "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
-	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, \
-	your host and your eventual spawn safe and warm."
-	src << "You can speak to your victim with <b>say</b> and your fellow borers by prefixing your message with ';'. You can also force a host you have infested to speak by prefixing messages with *. Check out your borer tab to see your powers as a borer."
-	src << "You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle."
+	to_chat(src, "<span class='notice'>You are a cortical borer!</span> You are a brain slug that worms its way \
+	into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm.")
+	to_chat(src, "You can speak to your victim with <b>say</b> and your fellow borers by prefixing your message with ';'. You can also force a host you have infested to speak by prefixing messages with *. Check out your borer tab to see your powers as a borer.")
+	to_chat(src, "You <b>MUST</b> escape with atleast [total_borer_hosts_needed] borers with hosts on the shuttle.")
 
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling) return
@@ -312,20 +311,20 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 
 /obj/item/organ/borer_home/Remove(mob/living/carbon/M)
 	if(borer)
-		borer << "<span class='warning'>Your [src] is rising into the air! Something isn't right!"
+		to_chat(borer, "<span class='warning'>Your [src] is rising into the air! Something isn't right!")
 		borer.leave_victim()
 
 	if(M.borer) // if there's still a borer inside of them for whatever reason
 		M.borer.leave_victim()
 
-	M << "<span class='notice'>You feel the sweet embrace of dopamine as that parasite is cleansed from your mind.</span>"
+	to_chat(M, "<span class='notice'>You feel the sweet embrace of dopamine as that parasite is cleansed from your mind.</span>")
 //	qdel(src)
 	..()
 
 
 /mob/living/simple_animal/borer/proc/checkStrength()
 	if(weakened || stunned)
-		src << "<span class='warning'>You lack the strength to do this.</span>"
+		to_chat(src, "<span class='warning'>You lack the strength to do this.</span>")
 		return FALSE
 
 	else

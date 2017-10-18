@@ -10,11 +10,11 @@
 
 	for(var/datum/link_approval/test in link_approval_list)
 		if(test.link == hyperlink)
-			usr << "<span class='boldnotice'>Error: This link is already under approval.</span>"
+			to_chat(usr, "<span class='boldnotice'>Error: This link is already under approval.</span>")
 			return
 
 		//if(ckey(test.poster) == ckey(usr))
-			//usr << "<span class='boldnotice'>Error: You already have a link waiting for approval.</span>"
+			//to_chat(usr, "<span class='boldnotice'>Error: You already have a link waiting for approval.</span>")
 			//return
 			//This causes some bugs
 
@@ -24,7 +24,7 @@
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
-		X << "<span class='boldnotice'>[src] would like to <a href='?src=\ref[link];poster=\ref[src];admin=\ref[X];link=\ref[link];action=admin_link_approval;approved=1'>approve</a> | <a href='?src=\ref[link];poster=\ref[src];admin=\ref[X];link=\ref[link];action=admin_link_approval;approved=0'>deny</a> this link: [hyperlink]</span>"
+		to_chat(X, "<span class='boldnotice'>[src] would like to <a href='?src=\ref[link];poster=\ref[src];admin=\ref[X];link=\ref[link];action=admin_link_approval;approved=1'>approve</a> | <a href='?src=\ref[link];poster=\ref[src];admin=\ref[X];link=\ref[link];action=admin_link_approval;approved=0'>deny</a> this link: [hyperlink]</span>")
 
 /var/global/list/link_approval_list = list()
 
@@ -45,23 +45,23 @@
 		var/approved = href_list["approved"]
 
 		if(!istype(link, /datum/link_approval))
-			usr << "<span class='boldnotice'>Error: It may already have been accepted or denied.</span>"
+			to_chat(usr, "<span class='boldnotice'>Error: It may already have been accepted or denied.</span>")
 			return
 
 		if(!istype(admin, /client))
-			usr << "<span class='boldnotice'>Error: It may already have been accepted or denied.</span>"
+			to_chat(usr, "<span class='boldnotice'>Error: It may already have been accepted or denied.</span>")
 			return
 
 		if(!istype(poster, /client))
-			usr << "<span class='boldnotice'>Error: It may already have been accepted or denied.</span>"
+			to_chat(usr, "<span class='boldnotice'>Error: It may already have been accepted or denied.</span>")
 			return
 
 		if(!link)
-			usr << "<span class='boldnotice'>Error: No link was found. It may already have been accepted or denied.</span>"
+			to_chat(usr, "<span class='boldnotice'>Error: No link was found. It may already have been accepted or denied.</span>")
 			return
 
 		if(link.approved > -1)
-			admin << "<span class='boldnotice'>This link was already [link.approved == 1 ? "approved" : "denied"] by [link.admin]</span>"
+			to_chat(admin, "<span class='boldnotice'>This link was already [link.approved == 1 ? "approved" : "denied"] by [link.admin]</span>")
 			return
 
 		if(approved == "1")
@@ -76,10 +76,10 @@
 			link.admin = admin
 			var/why = stripped_input(usr, "Reason (or leave empty):")
 
-			poster << "<span class='boldnotice'>Your link was denied.[why ? " Reason: [why]." : ""]</span>"
+			to_chat(poster, "<span class='boldnotice'>Your link was denied.[why ? " Reason: [why]." : ""]</span>")
 
 			for(var/client/X in admins)
-				X << "<span class='boldnotice'>[admin] denied [poster]'s link: [link.link].[why ? " Reason: [why]." : ""]</span>"
+				to_chat(X, "<span class='boldnotice'>[admin] denied [poster]'s link: [link.link].[why ? " Reason: [why]." : ""]</span>")
 
 			log_admin("Link Denied: Poster=[poster] Admin=[admin] Link=[link.link]")
 

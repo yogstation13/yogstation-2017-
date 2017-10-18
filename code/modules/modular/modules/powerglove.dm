@@ -40,10 +40,10 @@
 			if(damage > 0)
 				break
 	if(!found_cable)
-		user << "<span class='warning'>You need to be adjacent to an exposed power cable!</span>"
+		to_chat(user, "<span class='warning'>You need to be adjacent to an exposed power cable!</span>")
 		return FALSE
 	if(!damage)
-		user << "<span class='warning'>There are no cables nearby that have enough power to harm someone!</span>"
+		to_chat(user, "<span class='warning'>There are no cables nearby that have enough power to harm someone!</span>")
 		return FALSE
 	return damage //I know this isn't proper, but why in view(1, user) twice if I can avoid it?
 
@@ -70,7 +70,7 @@
 				A.electrocute_act(damage, user)
 				. = TRUE
 			else
-				user << "<span class='warning'>[A] is out of your view!</span>"
+				to_chat(user, "<span class='warning'>[A] is out of your view!</span>")
 	if(.)
 		next_allowed_time = world.time + SHOCK_COOLDOWN
 		..() //Add attack logs

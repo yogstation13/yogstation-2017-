@@ -39,7 +39,7 @@
 
 /obj/item/device/pda/iwatch/examine(mob/user) //tells the time, yes it's a freaking watch duhhh
 	..()
-	user << " The time is: [gameTimestamp(format = "hh:mm:ss")]"
+	to_chat(user, " The time is: [gameTimestamp(format = "hh:mm:ss")]")
 
 /obj/item/device/pda/iwatch/rosegold
 	name = "Smartwatch"
@@ -51,8 +51,8 @@
 	icon_alert = "pda-rwatch" //custom alert icon for a watch that's not as gross
 
 /obj/item/device/pda/iwatch/rosegold/examine(mob/user) //tells the time, yes it's a freaking watch duhhh
-	user << desc
-	user << " The time is: [gameTimestamp(format = "hh:mm:ss")]"
+	to_chat(user, desc)
+	to_chat(user, " The time is: [gameTimestamp(format = "hh:mm:ss")]")
 
 //ACKNOWLEDGEMENT: The buzz sound for the phone and watches can be found here: https://www.youtube.com/watch?v=zn8ORi6UUJE
 
