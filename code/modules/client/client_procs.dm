@@ -171,6 +171,8 @@ var/next_external_rsc = 0
 
 	TopicData = null							//Prevent calls to client.Topic from connect
 
+	chatOutput = new /datum/chatOutput(src)
+
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
 		return null
 
