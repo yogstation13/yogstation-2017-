@@ -39,7 +39,7 @@ var/datum/cyberman_network/cyberman_network
 	//yogstat_name = "cybermen"
 
 /datum/game_mode/cybermen/announce()
-	world << "The gamemode is Cybermen."
+	to_chat(world, "The gamemode is Cybermen.")
 
 /datum/game_mode/cybermen/pre_setup()
 	if(!cyberman_network)
@@ -116,20 +116,20 @@ var/datum/cyberman_network/cyberman_network
 	var/datum/atom_hud/data/cybermen/hud = huds[DATA_HUD_CYBERMEN_HACK]
 	hud.add_hud_to(cyberman.current)
 	if(message_override)
-		cyberman.current << message_override
+		to_chat(cyberman.current, message_override)
 	else
-		cyberman.current << "<span class='boldannounce'><b><font size=3>You are now a Cyberman! Work with your fellow cybermen and do not harm them.</font></b></span>"
+		to_chat(cyberman.current, "<span class='boldannounce'><b><font size=3>You are now a Cyberman! Work with your fellow cybermen and do not harm them.</font></b></span>")
 
 	var/mob/living/carbon/human/H = cyberman.current
 	if(cyberman.assigned_role == "Clown")
-		H << "<span class='notice'>Your superior Cyberman form has allowed you to overcome your clownish genetics.</span>"
+		to_chat(H, "<span class='notice'>Your superior Cyberman form has allowed you to overcome your clownish genetics.</span>")
 		H.dna.remove_mutation(CLOWNMUT)
 	if(isloyal(H))
-		H << "<span class='notice'>Your loyalty implant has been deactivated, but not destroyed. While scanners will show that it is still active, you are no longer loyal to Nanotrasen.</span>"//I personnally am not a fan of this, but Alblaka said it so that's what I've done.
+		to_chat(H, "<span class='notice'>Your loyalty implant has been deactivated, but not destroyed. While scanners will show that it is still active, you are no longer loyal to Nanotrasen.</span>")
 
-	cyberman.current << "<span class='notice'>As a Cyberman, hacking is your most valuable ability. Click on \'Prepare Hacking\' in the Cybermen tab to use it.</span>"
-	cyberman.current << "<span class='notice'>You can use the Cyberman Broadcast to undetectably communicate with your fellow Cybermen. You can also use robot talk with .b, but this will alert any unhacked cyborgs or AIs to your presence.</span>"
-	cyberman.current << "<span class='notice'>\n\"Cybermen\" is an experimental gamemode. If you find any bugs, please submit an issue on the server's github. If a bug prevents you from completing an objective, or you are not properly assigned an objective, contact an admin via ahelp.</span>"
+	to_chat(cyberman.current, "<span class='notice'>As a Cyberman, hacking is your most valuable ability. Click on \'Prepare Hacking\' in the Cybermen tab to use it.</span>")
+	to_chat(cyberman.current, "<span class='notice'>You can use the Cyberman Broadcast to undetectably communicate with your fellow Cybermen. You can also use robot talk with .b, but this will alert any unhacked cyborgs or AIs to your presence.</span>")
+	to_chat(cyberman.current, "<span class='notice'>\n\"Cybermen\" is an experimental gamemode. If you find any bugs, please submit an issue on the server's github. If a bug prevents you from completing an objective, or you are not properly assigned an objective, contact an admin via ahelp.</span>")
 	cyberman_network.display_all_cybermen_objectives(cyberman)
 
 /datum/game_mode/proc/remove_cyberman(datum/mind/cyberman, var/message_override)
@@ -157,7 +157,7 @@ var/datum/cyberman_network/cyberman_network
 	else
 		H.visible_message("<span class='big'>[H] looks like their mind is their own again!</span>", message_override ? message_override : "<span class='userdanger'>Your mind is your own again! You are no longer a cyberman! Though you try, you cannot remember anything about the cybermen or your time as one...</span>")
 		if(isloyal(H))
-			H << "<span class='notice'>Your loyalty implant has been re-activated - you are once again unfailingly loyal to Nanotrasen.</span>"
+			to_chat(H, "<span class='notice'>Your loyalty implant has been re-activated - you are once again unfailingly loyal to Nanotrasen.</span>")
 
 /datum/game_mode/cybermen/check_finished()
 	return ..() || cyberman_network.cybermen_win
@@ -173,39 +173,39 @@ var/datum/cyberman_network/cyberman_network
 	//log_yogstat_data("gamemode.php?gamemode=cybermen&value=rounds&action=add&changed=1")
 
 	if(!cybermen_won && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
-		world << "<span class='redtext'>The Cybermen failed to take control of the station!</span>"
+		to_chat(world, "<span class='redtext'>The Cybermen failed to take control of the station!</span>")
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=crewwin&action=add&changed=1")
 	else if(cybermen_won && station_was_nuked)
-		world << "<span class='greentext'>The Cybermen win! They acivated the station's self-destruct device!</span>"
+		to_chat(world, "<span class='greentext'>The Cybermen win! They acivated the station's self-destruct device!</span>")
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=antagwin&action=add&changed=1")
 	else if(cybermen_won)
-		world << "<span class='greentext'>The Cybermen win! They have exterminated or stranded all of the non-cybermen!</span>"
+		to_chat(world, "<span class='greentext'>The Cybermen win! They have exterminated or stranded all of the non-cybermen!</span>")
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=antagwin&action=add&changed=1")
 	else
-		world << "<span class='redtext'>The Cybermen have failed!</span>"
+		to_chat(world, "<span class='redtext'>The Cybermen have failed!</span>")
 		//log_yogstat_data("gamemode.php?gamemode=cybermen&value=crewwin&action=add&changed=1")
 	return 1
 
 /datum/game_mode/proc/auto_declare_completion_cybermen()
 	if(cyberman_network && cyberman_network.cybermen.len > 0)
-		world << "<br><span class='big'><b>The Cybermens' Objectives were:</b></span>"
+		to_chat(world, "<br><span class='big'><b>The Cybermens' Objectives were:</b></span>")
 		var/datum/objective/cybermen/O
 		for(var/i = 1 to cyberman_network.cybermen_objectives.len-1)
 			O = cyberman_network.cybermen_objectives[i]
 			if(O)
-				world << "Phase [i]:[O.phase]"
-				world << "[O.explanation_text]"
-				world << "<font color='green'><b>Completed</b></font><br>"
+				to_chat(world, "Phase [i]:[O.phase]")
+				to_chat(world, "[O.explanation_text]")
+				to_chat(world, "<font color='green'><b>Completed</b></font><br>")
 		O = cyberman_network.cybermen_objectives[cyberman_network.cybermen_objectives.len]
-		world << "Phase [cyberman_network.cybermen_objectives.len]:[O.phase]"
-		world << "[O.explanation_text]"
-		world << (O.check_completion() ? "<font color='green'><b>Completed</b></font><br>" : "<font color='red'><b>Failed</b></font>")
+		to_chat(world, "Phase [cyberman_network.cybermen_objectives.len]:[O.phase]")
+		to_chat(world, "[O.explanation_text]")
+		to_chat(world, (O.check_completion() ? "<font color='green'><b>Completed</b></font><br>" : "<font color='red'><b>Failed</b></font>"))
 
 		var/text = ""
 		text += "<br><span class='big'><b>The Cybermen were:</b></span>"
 		for(var/datum/mind/cyberman in cyberman_network.cybermen)
 			text += printplayer(cyberman)
-		world << text
+		to_chat(world, text)
 
 datum/game_mode/proc/update_cybermen_icons_add(datum/mind/cyberman)
 	var/datum/atom_hud/antag/cyberman_hud = huds[ANTAG_HUD_CYBERMEN]
@@ -269,9 +269,9 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 			cybermen_hacked_objects -= I
 	#ifdef CYBERMEN_DEBUG
 	if(active_cybermen_hacks && active_cybermen_hacks.len)
-		world << "---------Active Hacks:-----------"
+		to_chat(world, "---------Active Hacks:-----------")
 		for(var/datum/cyberman_hack/H in active_cybermen_hacks)
-			world << "\t[H.target_name]"
+			to_chat(world, "\t[H.target_name]")
 	#endif
 	for(var/datum/mind/cyberman in cybermen)
 		if(!cyberman || qdeleted(cyberman))
@@ -351,21 +351,21 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/proc/display_all_cybermen_objectives(datum/mind/M)
 	if(cybermen_objectives.len < 1)
-		M.current << "<span class='notice'>No objectives to display.</span>"
+		to_chat(M.current, "<span class='notice'>No objectives to display.</span>")
 		return
 	var/datum/objective/cybermen/O
-	M.current << "<span class='notice'>The objectives of the Cybermen aboard [station_name()] are as follows:</span>"
+	to_chat(M.current, "<span class='notice'>The objectives of the Cybermen aboard [station_name()] are as follows:</span>")
 	for(var/i = 1 to cybermen_objectives.len-1)
 		O = cybermen_objectives[i]
 		if(O)
 			O.check_completion()//needed for updating explanation text.
-			M.current << "Phase [i]:[O.phase]"
-			M.current << "[O.explanation_text]"
-			M.current << "<font color='green'><b>Complete</b></font><br>"
+			to_chat(M.current, "Phase [i]:[O.phase]")
+			to_chat(M.current, "[O.explanation_text]")
+			to_chat(M.current, "<font color='green'><b>Complete</b></font><br>")
 	O = cybermen_objectives[cybermen_objectives.len]
-	M.current << "Phase [cybermen_objectives.len]:[O.phase]"
-	M.current << "[O.explanation_text]"
-	M.current << (O.check_completion() ? "<font color='green'><b>Complete</b></font><br>" : "<font color='yellow'><b>In Progress</b></font>")
+	to_chat(M.current, "Phase [cybermen_objectives.len]:[O.phase]")
+	to_chat(M.current, "[O.explanation_text]")
+	to_chat(M.current, (O.check_completion() ? "<font color='green'><b>Complete</b></font><br>" : "<font color='yellow'><b>In Progress</b></font>"))
 
 /datum/cyberman_network/proc/display_current_cybermen_objective()
 	if(cybermen_objectives.len > 0)
@@ -378,7 +378,7 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 
 /datum/cyberman_network/proc/message_all_cybermen(message)
 	for(var/datum/mind/cyberman in cybermen)
-		cyberman.current << message
+		to_chat(cyberman.current, message)
 
 /datum/cyberman_network/proc/is_cyberman_or_being_converted(mob/living/carbon/human/H)//this one accepts mobs instead of minds, because conversion hacks target mobs, not minds.
 	if(!istype(H))

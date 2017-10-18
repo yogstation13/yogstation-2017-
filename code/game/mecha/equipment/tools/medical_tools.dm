@@ -412,10 +412,10 @@
 		var/obj/item/weapon/stock_parts/cell/mech_cell = chassis.cell
 		var/cost = syr_diff * syringe_cost
 		if(mech_cell.charge < cost)
-			usr << "<span class='warning'>Not enough energy to replicate syringes, you need [cost].</span>"
+			to_chat(usr, "<span class='warning'>Not enough energy to replicate syringes, you need [cost].</span>")
 			return
 		var/time_to_replicate = syr_diff * 20 //2 seconds per syringe
-		usr << "<span class='notice'>Syringe replication process engaged, it will take [time_to_replicate/10] seconds. You must remain still during the entire process.</span>"
+		to_chat(usr, "<span class='notice'>Syringe replication process engaged, it will take [time_to_replicate/10] seconds. You must remain still during the entire process.</span>")
 		if(do_after(chassis.occupant, time_to_replicate, target = chassis))
 			syr_diff = min(syr_diff, max_syringes - syringes.len) //in case they put any in during the do_after
 			cost = syr_diff * syringe_cost
@@ -424,12 +424,12 @@
 			for(var/i in 1 to syr_diff)
 				STL = new(loc)
 				syringes += STL
-			usr << "<span class='notice'>Syringe replication complete!</span>"
+			to_chat(usr, "<span class='notice'>Syringe replication complete!</span>")
 			update_equip_info()
 		else
-			usr << "<span class='notice'>Replication process aborted!</span>"
+			to_chat(usr, "<span class='notice'>Replication process aborted!</span>")
 			return
-	return 1	
+	return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>

@@ -56,7 +56,7 @@ var/list/tsbeacon_list = list()
 /obj/item/device/tsbeacon/attack_self(mob/user)
 	if(emped) return
 	on = !on
-	user << "<span class='caution'>You switch [src] [on ? "on" : "off"].</span>"
+	to_chat(user, "<span class='caution'>You switch [src] [on ? "on" : "off"].</span>")
 	update_icon()
 
 /obj/item/device/tsbeacon/attackby(obj/item/I, mob/user, params)

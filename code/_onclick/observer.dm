@@ -1,6 +1,6 @@
 /mob/dead/observer/DblClickOn(var/atom/A, var/params)
 	if(client.prefs.afreeze)
-		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
@@ -21,9 +21,9 @@
 
 /mob/dead/observer/ClickOn(var/atom/A, var/params)
 	if(client.prefs.afreeze)
-		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
-		
+
 	if(client.click_intercept)
 		if(call(client.click_intercept,"InterceptClickOn")(src,params,A))
 			return
@@ -78,13 +78,13 @@
 	if(awaygate)
 		user.loc = awaygate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/machinery/gateway/centeraway/attack_ghost(mob/user)
 	if(stationgate)
 		user.loc = stationgate.loc
 	else
-		user << "[src] has no destination."
+		to_chat(user, "[src] has no destination.")
 
 /obj/item/weapon/storage/attack_ghost(mob/user)
 	orient2hud(user)

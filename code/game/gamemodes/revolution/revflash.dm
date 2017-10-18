@@ -58,27 +58,27 @@
 								resisted = 1
 
 							if(resisted)
-								user << "<span class='warning'>This mind seems resistant to conversion!</span>"
+								to_chat(user, "<span class='warning'>This mind seems resistant to conversion!</span>")
 						else
-							user << "<span class='warning'>They must be conscious before you can convert them!</span>"
+							to_chat(user, "<span class='warning'>They must be conscious before you can convert them!</span>")
 							return
 					else
-						user << "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>"
+						to_chat(user, "<span class='warning'>This mind is so vacant that it is not susceptible to influence!</span>")
 						return
 			M.Stun(1)
 			visible_message("<span class='disarm'>[user] holds something up to [M]'s face!</span>")
 			if(resisted)
-				user << "<span class='danger'>You fail to convert [M] with the device!</span>"
+				to_chat(user, "<span class='danger'>You fail to convert [M] with the device!</span>")
 			else
-				user << "<span class='danger'>You convert [M] to the cause!</span>"
-			M << "<span class='userdanger'>[user] holds something up to your face!</span>"
+				to_chat(user, "<span class='danger'>You convert [M] to the cause!</span>")
+			to_chat(M, "<span class='userdanger'>[user] holds something up to your face!</span>")
 			if(M.weakeyes)
 				M.Stun(2)
 				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shield your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] tries to hold something up to [M]'s face, but fails!</span>")
-			user << "<span class='warning'>You fail to convert [M] with the device!</span>"
-			M << "<span class='danger'>[user] tries to hold something up to your face, but nothing happens!</span>"
+			to_chat(user, "<span class='warning'>You fail to convert [M] with the device!</span>")
+			to_chat(M, "<span class='danger'>[user] tries to hold something up to your face, but nothing happens!</span>")
 	else
 		if(M.flash_eyes())
 			M.confused += power

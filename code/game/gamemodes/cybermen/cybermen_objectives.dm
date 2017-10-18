@@ -137,7 +137,7 @@
 		if(survivor.loc.z == ZLEVEL_STATION && survivor.key)
 			humans_on_station++
 	#ifdef CYBERMEN_DEBUG
-	world << "Humans on station: [humans_on_station]"
+	to_chat(world, "Humans on station: [humans_on_station]")
 	#endif
 	if(humans_on_station > 3)//needs a somewhat sane lower limit
 		target_cybermen_num = min(target_cybermen_num, humans_on_station)
@@ -278,10 +278,10 @@
 	while(remaining)
 		var/candidate = pick(analyze_target_candidates)
 		#ifdef CYBERMEN_DEBUG
-		world << "Analysis Candidates:"
+		to_chat(world, "Analysis Candidates:")
 		for(var/curcandidate in analyze_target_candidates)
-			world << "  [curcandidate]"
-		world << "Selected: [candidate]"
+			to_chat(world, "  [curcandidate]")
+		to_chat(world, "Selected: [candidate]")
 		#endif
 		if(candidate)
 			descriptions += candidate
@@ -298,9 +298,9 @@
 		remaining--
 	check_completion()//takes care of explanation text.
 	#ifdef CYBERMEN_DEBUG
-	world << "Targets:"
+	to_chat(world, "Targets:")
 	for(var/cur in targets)
-		world << "  [cur]"
+		to_chat(world, "  [cur]")
 	#endif
 
 /datum/objective/cybermen/exploit/analyze_and_hack/is_valid()
@@ -403,12 +403,12 @@
 	var/cybermen_escaped = 0
 	for(var/mob/living/player in player_list)
 		#ifdef CYBERMEN_DEBUG
-		world << "Checking Player [player]"
-		world << "Mind: [player.mind]"
-		world << "Stat: [player.stat]"
-		world << "Human: [istype(player, /mob/living/carbon/human)]"
-		world << "Area: [get_area(player) == A]"
-		world << ""
+		to_chat(world, "Checking Player [player]")
+		to_chat(world, "Mind: [player.mind]")
+		to_chat(world, "Stat: [player.stat]")
+		to_chat(world, "Human: [istype(player, /mob/living/carbon/human)]")
+		to_chat(world, "Area: [get_area(player) == A]")
+		to_chat(world, "")
 		#endif
 		if(player.mind && player.stat != DEAD && istype(player, /mob/living/carbon/human) && get_area(player) == A)
 			if(player.mind && !ticker.mode.is_cyberman(player.mind))

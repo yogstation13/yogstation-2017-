@@ -101,10 +101,10 @@
 			if(term && term.dir == turn(dir, 180))
 				terminal = term
 				terminal.master = src
-				user << "<span class='notice'>Terminal found.</span>"
+				to_chat(user, "<span class='notice'>Terminal found.</span>")
 				break
 		if(!terminal)
-			user << "<span class='alert'>No power source found.</span>"
+			to_chat(user, "<span class='alert'>No power source found.</span>")
 			return
 		stat &= ~BROKEN
 		update_icon()
@@ -121,25 +121,25 @@
 			return
 
 		if(terminal) //is there already a terminal ?
-			user << "<span class='warning'>This SMES already has a power terminal!</span>"
+			to_chat(user, "<span class='warning'>This SMES already has a power terminal!</span>")
 			return
 
 		if(!panel_open) //is the panel open ?
-			user << "<span class='warning'>You must open the maintenance panel first!</span>"
+			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
 		var/turf/T = get_turf(user)
 		if (T.intact) //is the floor plating removed ?
-			user << "<span class='warning'>You must first remove the floor plating!</span>"
+			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
 
 		var/obj/item/stack/cable_coil/C = I
 		if(C.amount < 10)
-			user << "<span class='warning'>You need more wires!</span>"
+			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
 
-		user << "<span class='notice'>You start building the power terminal...</span>"
+		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.amount >= 10)

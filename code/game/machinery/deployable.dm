@@ -55,7 +55,7 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(health < maxhealth)
 			if(WT.remove_fuel(0,user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 				if(do_after(user, 40/I.toolspeed, target = src))
 					health = Clamp(health + 20, 0, maxhealth)
@@ -172,7 +172,7 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	user << "[src] is now in [mode] mode."
+	to_chat(user, "[src] is now in [mode] mode.")
 
 /obj/item/weapon/grenade/barrier/prime()
 	new /obj/structure/barricade/security(get_turf(src.loc))
@@ -267,10 +267,10 @@
 						anchored = !anchored
 						icon_state = "barrier[src.locked]"
 						if ((locked == 1.0) && (emagged < 2.0))
-							user << "Barrier lock toggled on."
+							to_chat(user, "Barrier lock toggled on.")
 							return
 						else if ((locked == 0.0) && (emagged < 2.0))
-							user << "Barrier lock toggled off."
+							to_chat(user, "Barrier lock toggled off.")
 							return
 					if("Rename")
 						var/new_name = reject_bad_name(stripped_input(usr, "Enter the barriers new designated name", "Barrier Uplink", name),1)
@@ -287,10 +287,10 @@
 					if("Toggle Functionality Report")
 						if(healthreport)
 							healthreport = !healthreport
-							user << "<span class='notice'>You toggle off the barrier's functionality report. It will no longer report how much health it is has remaining.</span>"
+							to_chat(user, "<span class='notice'>You toggle off the barrier's functionality report. It will no longer report how much health it is has remaining.</span>")
 						else
 							healthreport = 1
-							user << "<span class='notice'>You toggle on the barrier's functionality report. It will now report how much health it is has remaining.</span>"
+							to_chat(user, "<span class='notice'>You toggle on the barrier's functionality report. It will now report how much health it is has remaining.</span>")
 			else
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 				s.set_up(2, 1, src)
@@ -315,7 +315,7 @@
 	else if (istype(W, /obj/item/weapon/screwdriver))
 
 		if (src.locked == 1.0)
-			user << "<span class='danger'>You can't eject anything from the barrier while it's locked!</span>"
+			to_chat(user, "<span class='danger'>You can't eject anything from the barrier while it's locked!</span>")
 			return
 
 		if (SIGNALLER)
@@ -340,19 +340,19 @@
 
 
 		if (!installedkey && !SIGNALLER)
-			user << "<span class='danger'>[src] doesn't have anything to eject.</span>"
+			to_chat(user, "<span class='danger'>[src] doesn't have anything to eject.</span>")
 			return
 
 	else if (istype(W, /obj/item/device/encryptionkey))
 
 		if (src.locked == 1.0)
-			user << "<span class='danger'>You can't install anything while the barrier is locked!</span>"
+			to_chat(user, "<span class='danger'>You can't install anything while the barrier is locked!</span>")
 			return
 
 		var/initialkey = installedkey
 
 		if(installedkey)
-			user << "[src] already has an encryption key installed!"
+			to_chat(user, "[src] already has an encryption key installed!")
 			return
 
 		installedkey = W
@@ -373,7 +373,7 @@
 	else if(issignaler(W))
 
 		if(SIGNALLER)
-			user << "<span class='notice'>There's a signaler attatched to the barrier!</span>"
+			to_chat(user, "<span class='notice'>There's a signaler attatched to the barrier!</span>")
 			return
 
 		SIGNALLER = W
@@ -384,7 +384,7 @@
 			return
 
 		if(!radio_freq)
-			user << "<span class='danger'>There isn't an encryption key associated with the barrier to attach the signaler to!</span>"
+			to_chat(user, "<span class='danger'>There isn't an encryption key associated with the barrier to attach the signaler to!</span>")
 			SIGNALLER = null
 			return
 
@@ -463,7 +463,7 @@
 	if (src.emagged == 0)
 		src.emagged = 1
 		src.req_access = null
-		user << "<span class='notice'>You break the ID authentication lock on \the [src].</span>"
+		to_chat(user, "<span class='notice'>You break the ID authentication lock on \the [src].</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
@@ -471,7 +471,7 @@
 		return
 	else if (src.emagged == 1)
 		src.emagged = 2
-		user << "<span class='notice'>You short out the anchoring mechanism on \the [src].</span>"
+		to_chat(user, "<span class='notice'>You short out the anchoring mechanism on \the [src].</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()

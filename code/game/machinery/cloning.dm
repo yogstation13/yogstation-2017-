@@ -92,11 +92,11 @@
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
-	user << "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>"
+	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/data/examine(mob/user)
 	..()
-	user << "The write-protect tab is set to [read_only ? "protected" : "unprotected"]."
+	to_chat(user, "The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
 
 //Health Tracker Implant
 
@@ -123,13 +123,12 @@
 	if (isnull(occupant) || !is_operational())
 		return
 	if ((!isnull(occupant)) && (occupant.stat != DEAD))
-		user << "Current clone cycle is [round(get_completion())]% complete."
+		to_chat(user, "Current clone cycle is [round(get_completion())]% complete.")
 		var/time_to_complete = (occupant.cloneloss - (100-heal_level)) / (speed_coeff/4) //Can you guess why I divide speed_coeff by 4 instead of 2?
 		var/seconds = time_to_complete % 60
-		user << "Estimated time until completion : [(time_to_complete-seconds)/60] minutes [(seconds)] seconds."
+		to_chat(user, "Estimated time until completion : [(time_to_complete-seconds)/60] minutes [(seconds)] seconds.")
 	else if(mess)
-		user << "It's filled with blood and vicerea. You swear you can see \
-			it moving..."
+		to_chat(user, "It's filled with blood and vicerea. You swear you can see it moving...")
 
 /obj/machinery/clonepod/proc/get_completion()
 	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
@@ -189,13 +188,13 @@
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
 		H.ckey = ckey
-		H << "<span class='notice'><b>Consciousness slowly creeps over you \
+		to_chat(H, "<span class='notice'><b>Consciousness slowly creeps over you \
 			as your body regenerates.</b><br><i>So this is what cloning \
-			feels like?</i></span>"
+			feels like?</i></span>")
 	else if(grab_ghost_when == CLONER_MATURE_CLONE)
-		clonemind.current << "<span class='notice'>Your body is \
+		to_chat(clonemind.current, "<span class='notice'>Your body is \
 			beginning to regenerate in a cloning pod. You will \
-			become conscious when it is complete.</span>"
+			become conscious when it is complete.</span>")
 
 	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
 	if(H)
@@ -280,23 +279,23 @@
 
 	if (W.GetID())
 		if (!check_access(W))
-			user << "<span class='danger'>Access Denied.</span>"
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
 		if (!locked || !occupant)
 			return
 		if (occupant.health < -20 && occupant.stat != DEAD)
-			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
+			to_chat(user, "<span class='danger'>Access Refused. Patient status still unstable.</span>")
 			return
 		else
 			locked = FALSE
-			user << "System unlocked."
+			to_chat(user, "System unlocked.")
 	else
 		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(occupant))
 		return
-	user << "<span class='notice'>You force an emergency ejection.</span>"
+	to_chat(user, "<span class='notice'>You force an emergency ejection.</span>")
 	locked = FALSE
 	go_out()
 
@@ -343,10 +342,10 @@
 		if(!clonemind.current || clonemind.current.stat == DEAD)
 			clonemind.transfer_to(occupant)
 			occupant.ckey = clonemind.ckey //For some reason, this doesn't initialize directly
-		occupant << "<span class='notice'><b>The world is bright \
+		to_chat(occupant, "<span class='notice'><b>The world is bright \
 			and loud!</b><br>\
 			<i>You feel your body weight, as your mind suddenly \
-			comprehends where you are and what is going on.</i></span>"
+			comprehends where you are and what is going on.</i></span>")
 		occupant.flash_eyes()
 
 	var/turf/T = get_turf(src)
@@ -372,9 +371,9 @@
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		if(occupant.grab_ghost()) // We really just want to make you suffer, but only if you actually deserve it (which is most of the time)
 			flash_color(occupant, color="#960000", time=100)
-			occupant << "<span class='warning'><b>Agony blazes across your \
+			to_chat(occupant, "<span class='warning'><b>Agony blazes across your \
 				consciousness as your body is torn apart.</b><br>\
-				<i>Is this what dying is like? Yes it is.</i></span>"
+				<i>Is this what dying is like? Yes it is.</i></span>")
 			occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
 		spawn(40)
 			occupant.ghostize()
